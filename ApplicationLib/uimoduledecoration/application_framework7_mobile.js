@@ -13,7 +13,14 @@ function(gate){
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponent();
 	
-	var loc_getUIStack = function(){ return loc_gate.getStateValue(CONSTANT_UISTACK_DATANAME);  };
+	var loc_getUIStack = function(){ 
+		var out = loc_gate.getStateValue(CONSTANT_UISTACK_DATANAME);  
+		if(out==undefined){
+			out = [];
+			loc_gate.setStateValue(CONSTANT_UISTACK_DATANAME, out);
+		}
+		return out;
+	};
 	
 	var loc_getUpdatePageStatusRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSet(undefined, handlers, request);
@@ -72,13 +79,14 @@ function(gate){
 				},
 			}
 		},
-			
+		
+		getDeactiveRequest :function(handlers, request){
+			loc_view.router.clearPreviousHistory();
+		},
+		
 		getInitRequest :function(handlers, requestInfo){
 			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
 			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-				//init ui stack
-				loc_gate.setStateValue(CONSTANT_UISTACK_DATANAME, []);
-
 				//put ui to root
 				_.each(loc_uiModule.getUIs(), function(ui, index){
 					var uiPageContainer = $("<div class='page stacked' data-name="+ui.getName()+"/>"); 

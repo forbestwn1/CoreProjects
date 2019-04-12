@@ -37,7 +37,15 @@ function(gate){
 					return loc_out.getInterface().getComponent(componentId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
 				},
 			};
-		}
+		},
+		
+		getDeactiveRequest :function(handlers, request){
+			return loc_gate.getComponent().getInitIOContextRequest(handlers, request);
+		},
+		
+		getInitRequest :function(handlers, request){
+			return loc_gate.getComponent().getInitIOContextRequest(handlers, request);
+		}		
 	};
 	return loc_out;
 }

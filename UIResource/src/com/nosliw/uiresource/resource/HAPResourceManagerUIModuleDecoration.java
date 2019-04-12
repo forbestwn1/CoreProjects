@@ -19,7 +19,7 @@ public class HAPResourceManagerUIModuleDecoration extends HAPResourceManagerImp{
 		String file = HAPFileUtility.getUIModuleDecorationFolder()+id.getId()+".js";
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
-		return new HAPResource(resourceId, HAPResourceDataFactory.createJSValueResourceData(HAPFileUtility.readFile(file)), info);
+		return new HAPResource(resourceId, HAPResourceDataFactory.createJSValueResourceData(HAPFileUtility.readFile(file)), null);
 	}
 
 }

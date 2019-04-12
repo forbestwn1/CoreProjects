@@ -22,10 +22,10 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
-var node_createUIModuleRequest = function(uiModuleDef, decorations, handlers, request){
+var node_createUIModuleRequest = function(uiModuleDef, ioInput, decorations, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
-	var module = loc_createUIModule(uiModuleDef);
+	var module = loc_createUIModule(uiModuleDef, ioInput);
 
 	//prepare decoration first
 	var decorationInfo = {};
@@ -67,15 +67,17 @@ var node_createUIModuleRequest = function(uiModuleDef, decorations, handlers, re
 	return out;
 };	
 	
-var loc_createUIModule = function(uiModuleDef){
-
+var loc_createUIModule = function(uiModuleDef, ioInput){
+	var loc_ioInput = ioInput;
+	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 
 	var loc_updateIOContext = function(input){
-		 loc_out.ioContext.setData(undefined, loc_out.uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input));
+		var data = loc_out.prv_module.uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input);
+		loc_out.prv_module.ioContext.setData(undefined, data);
 	};
 	
 	var loc_out = {
@@ -120,6 +122,22 @@ var loc_createUIModule = function(uiModuleDef){
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
+		getInitIOContextRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			if(loc_ioInput!=undefined){
+				out.addRequest(loc_ioInput.getGetDataValueRequest(undefined, {
+					success : function(request, data){
+						loc_updateIOContext(data);
+					}
+				}));
+			}
+			else{
+				loc_updateIOContext();
+			}
+			
+			return out;
+		},
+		
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
 		getComponent : function(componentId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, componentId); }
 		

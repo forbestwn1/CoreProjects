@@ -16,12 +16,17 @@
 </head>
 
 <body>
+	<a id="restartBtn">Restart</a>
+	<p/>
+
 	<div id="appDiv">
 		<div class="view view-main" id="moduleDiv"></div>
 	</div>
 </body>
 
 <script>
+
+var moduleRuntime;
 
 $(document).on("nosliwActive", function(){
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
@@ -56,11 +61,19 @@ $(document).on("nosliwActive", function(){
 			decoration : decorations
 		}
 	};
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, configure, ["base", "uidecoration", moduleDecId], {
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, configure, ["base", "uidecoration", moduleDecId], {
 		success : function(requestInfo, uiModuleRuntime){
-			node_getComponentLifecycleInterface(uiModuleRuntime).active(requestInfo);
+			moduleRuntime = uiModuleRuntime;
+			node_getComponentLifecycleInterface(moduleRuntime).active(requestInfo);
 		}
 	});
+});
+
+document.getElementById("restartBtn").addEventListener("click", function(event){
+	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
+
+	event.preventDefault();
+	node_getComponentLifecycleInterface(moduleRuntime).restart();
 });
 
 nosliw.init();

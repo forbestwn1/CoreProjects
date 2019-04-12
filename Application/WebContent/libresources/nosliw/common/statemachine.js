@@ -51,6 +51,7 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 		loc_currentNext++;
 		if(loc_currentNext>=loc_nexts.length){
 			//finish
+			loc_stateMachine.finishTask();
 			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, undefined, request);
 		}
 		else{
@@ -62,6 +63,7 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 				else if (eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
 					loc_currentNext = loc_currentNext - 2;
 					loc_rollBack(request);
+					loc_stateMachine.finishTask();
 					//finish
 					loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, undefined, request);
 				}
@@ -160,13 +162,22 @@ var node_createStateMachine = function(state, thisContext){
 		}
 		else if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
 			//if return request, then build wrapper request
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ProcessLifecycleResult", {}), undefined, request);
-			out.addRequest(result, {
+
+			result.addPostProcessor({
 				success : function(request){	loc_successTransit(request);		},
 				error : function(request){		loc_failTransit(request);			},
 				exception : function(request){	loc_failTransit(request);			}
 			});
-			node_requestServiceProcessor.processRequest(out);
+			node_requestServiceProcessor.processRequest(result);
+			
+//			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ProcessLifecycleResult", {}), undefined, request);
+//			out.addRequest(result, {
+//				success : function(request){	loc_successTransit(request);		},
+//				error : function(request){		loc_failTransit(request);			},
+//				exception : function(request){	loc_failTransit(request);			}
+//			});
+//			node_requestServiceProcessor.processRequest(out);
+
 			return;
 		}
 	};

@@ -75,7 +75,7 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 		destroy : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD]).process(request);	},
 
 		restart : function(request){
-			loc_out.registerEventListener();
+			loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]).process(request);
 		},
 
 		transitSuccess : function(request){   loc_successTransit(request);	},

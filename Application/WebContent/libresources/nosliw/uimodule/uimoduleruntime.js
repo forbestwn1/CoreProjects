@@ -14,9 +14,9 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleRuntimeRequest = function(uiModuleDef, configure, componentDecorationInfos, handlers, request){
+var node_createModuleRuntimeRequest = function(uiModuleDef, ioInput, configure, componentDecorationInfos, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
-	out.addRequest(node_createUIModuleRequest(uiModuleDef, undefined, {
+	out.addRequest(node_createUIModuleRequest(uiModuleDef, ioInput, undefined, {
 		success : function(request, uiModule){
 			var runtime = loc_createModuleRuntime(uiModule, configure, componentDecorationInfos);
 			return runtime.prv_getInitRequest({
@@ -74,6 +74,19 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		return out;
 	};
 	
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]=
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_START_REVERSE] = function(request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DeactiveUIModuleRuntime", {}), undefined, request);
+		//start module
+		_.each(loc_moduleComplex, function(part, i){
+			if(part.getDeactiveRequest!=undefined){
+				out.addRequest(part.getDeactiveRequest());
+			}
+		});
+		loc_state.clear();
+		return out;
+	};	
+	
 	var loc_out = {
 		
 		prv_getInitRequest : function(handlers, request){
@@ -88,7 +101,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 			
 		getModule : function(){  return loc_getModule();  },
 
-		registerEventListener : function(listener, handler){	return loc_getCurrentModuleFacad().registerEventListener(listener, handler);	},
+		registerEventListener : function(listener, handler, thisContext){	return loc_getCurrentModuleFacad().registerEventListener(listener, handler, thisContext);	},
 		
 		getExecuteCommandRequest : function(command, parms, handlers, request){	return loc_getCurrentModuleFacad().getExecuteCommandRequest(command, parms, handlers, request);	}
 		

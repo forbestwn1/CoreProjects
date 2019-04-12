@@ -17,22 +17,15 @@ function (nosliw, env) {
     var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
     var node_objectOperationUtility = nosliw.getNodeData("common.utility.objectOperationUtility");
     var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
-    var node_ioTaskUtility = nosliw.getNodeData("iotask.ioTaskUtility");
+    var node_ioTaskProcessor = nosliw.getNodeData("iotask.ioTaskProcessor");
     var loc_out = {getExecuteActivityRequest: function (activity, input, env, handlers, request) {
         var service = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_SERVICE];
         var provider = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_PROVIDER];
         var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName": service}), handlers, request);
-        var output = {};
-        return node_ioTaskUtility.getExecuteIOTaskRequest(input, service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PARMMAPPING], function (input, handlers, request) {
-            var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
-            serviceRequest.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceByProviderRequest(provider, input, {success: function (request, serviceResult) {
-                return new node_IOTaskResult(serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTNAME], serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_OUTPUT]);
-            }}));
-            return serviceRequest;
-        }, service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_RESULTMAPPING], output, {success: function (request, taskResult) {
-            var activityOutput = taskResult.resultValue;
+        out.addRequest(nosliw.runtime.getDataService().getExecuteEmbededDataServiceByProviderRequest(provider, service, input, {success: function (request, taskResult) {
+            var activityOutput = taskResult.resultValue.getData();
             return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
-        }});
+        }}));
         return out;
     }};
     return loc_out;

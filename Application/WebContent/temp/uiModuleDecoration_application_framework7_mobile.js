@@ -79,7 +79,11 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				},
 			}
 		},
-			
+		
+		getDeactiveRequest :function(handlers, request){
+			loc_view.router.clearPreviousHistory();
+		},
+		
 		getInitRequest :function(handlers, requestInfo){
 			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
 			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){

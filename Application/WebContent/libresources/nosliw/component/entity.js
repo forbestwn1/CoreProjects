@@ -27,6 +27,10 @@ var node_createState = function(){
 		
 		setStateValue : function(component, name, value){
 			loc_out.getState(component)[name] = value;
+		},
+		
+		clear : function(){
+			loc_state = {};
 		}
 	};
 	return loc_out;

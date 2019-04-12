@@ -21,7 +21,7 @@ var node_createUIModuleService = function(){
 	
 	var loc_out = {
 
-		getGetUIModuleRuntimeRequest : function(module, configure, componentDecorationFactorys, handlers, requester_parent){
+		getGetUIModuleRuntimeRequest : function(module, ioInput, configure, componentDecorationFactorys, handlers, requester_parent){
 			configure = node_createConfigure(configure);
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"module":module}), handlers, requestInfo);
@@ -72,7 +72,7 @@ var node_createUIModuleService = function(){
 					if(moduleId!=undefined)  uiModuleDef = node_resourceUtility.getResourceFromTree(resourceTree, moduleId).resourceData;
 					
 					//create ui module runtime
-					return node_createModuleRuntimeRequest(uiModuleDef, configure, componentDecorationInfos, {
+					return node_createModuleRuntimeRequest(uiModuleDef, ioInput, configure, componentDecorationInfos, {
 						success : function(request, uiModuleRuntime){
 							return uiModuleRuntime;
 						}
@@ -83,8 +83,8 @@ var node_createUIModuleService = function(){
 			return out;
 		},
 			
-		executeGetUIModuleRuntimeRequest : function(id, configure, componentDecorationFactorys, handlers, requester_parent){
-			var requestInfo = this.getGetUIModuleRuntimeRequest(id, configure, componentDecorationFactorys, handlers, requester_parent);
+		executeGetUIModuleRuntimeRequest : function(id, ioInput, configure, componentDecorationFactorys, handlers, requester_parent){
+			var requestInfo = this.getGetUIModuleRuntimeRequest(id, ioInput, configure, componentDecorationFactorys, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 	};

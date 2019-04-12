@@ -66,7 +66,7 @@ var node_createIODataSet = function(value){
 	var loc_out = {
 		
 		setData : function(name, data){  
-//			if(name==undefined)  name = node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+			if(name==undefined)  name = node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 			loc_dataSet[name] = data;   
 		},
 		
