@@ -17,14 +17,9 @@ function(gate){
 	var loc_out = {
 			
 		processComponentEvent : function(eventName, eventData, request){
-			loc_processUIEvent(eventData.eventName, eventData.uiName, eventData.eventData, request);
 		},
 		
 		getExecuteCommandRequest : function(command, parms, handlers, request){
-//			var eventProcessor = loc_uiModule.getStatelessData().eventProcessor;
-//			if(eventProcessor!=undefined){
-//				eventProcessor(eventName, uiName, eventData, request);
-//			}
 		},
 
 		getInitRequest :function(handlers, requestInfo){

@@ -29,11 +29,56 @@
 						},
 						"defaultValue": {
 							"dataTypeId": "test.float;1.0.0",
-							"value": 90.0
+							"value": 9.0
 						}
 					}
 				}
 			}
+		}
+	},
+	"process": {
+		"init": {
+			"activity": [{
+					"id": "startActivityId",
+					"name": "startActivity",
+					"type": "start",
+					"flow": {
+						"target": "refreshSchoolSetting"
+					}
+				},
+				{
+					"id": "refreshSchoolSetting",
+					"name": "refreshSchoolSetting",
+					"type": "UI_executeCommand",
+					"componentId": "ui.settingUI",
+					"command": "refresh",
+					"input": {
+						"element": {
+							"schoolType": {
+								"definition": { 
+									"path": "schoolTypeInModule"
+								}
+							},
+							"schoolRating": {
+								"definition": { 
+									"path": "schoolRatingInModule"
+								}
+							}
+						}
+					},
+					"result": [{
+						"name": "success",
+						"flow": {
+							"target": "successEndId"
+						}
+					}]
+				},
+				{
+					"id": "successEndId",
+					"name": "successEnd",
+					"type": "end"
+				}
+			]
 		}
 	},
 	ui :[
