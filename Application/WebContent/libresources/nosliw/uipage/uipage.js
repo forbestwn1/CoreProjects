@@ -115,10 +115,6 @@ var node_createUIPage = function(uiView){
 		getGetPageStateRequest : function(handlers, requestInfo){
 			return node_contextUtility.getContextStateRequest(loc_getCurrent().getContextElements(), handlers, requestInfo);
 		},
-		
-		getSetPageStateRequest : function(pageState, handlers, requestInfo){
-			return node_contextUtility.setContextStateRequest(pageState, loc_getCurrent().getContextElements(), handlers, requestInfo);
-		}
 	};
 
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);

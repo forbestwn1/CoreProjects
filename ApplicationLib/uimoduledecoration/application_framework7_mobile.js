@@ -22,6 +22,10 @@ function(gate){
 		return out;
 	};
 	
+	var loc_clearUIStack = function(){
+		loc_gate.setStateValue(CONSTANT_UISTACK_DATANAME, []);
+	};
+	
 	var loc_getUpdatePageStatusRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSet(undefined, handlers, request);
 		_.each(loc_getUIStack(), function(uiName, index){
@@ -90,8 +94,10 @@ function(gate){
 		getResumeRequest :function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var uiStack = loc_getUIStack();
+			loc_clearUIStack();
 			_.each(uiStack, function(stackEle, index){
-				out.addRequest(loc_getTransferToRequest(stackEle));
+				loc_view.router.navigate(loc_getRoutePathByUiName(stackEle));
+				loc_getUIStack().push(stackEle);
 			});
 			return out;	
 		},

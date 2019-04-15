@@ -95,7 +95,10 @@ var node_utility = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextState", {}), handlers, request);
 			var calContextValue = node_createServiceRequestInfoSet(undefined, {
 				success : function(request, resultSet){
-					var state = resultSet.getResults();
+					var state = {};
+					_.each(resultSet.getResults(), function(eleData, eleName){
+						if(eleData!=undefined)			state[eleName] = eleData.value;
+					});
 					return state;
 				}
 			});
@@ -115,25 +118,6 @@ var node_utility = function(){
 			out.addRequest(calContextValue);
 			return out;
 		},
-
-		setContextStateRequest : function(state, contextItems, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextState", {}), handlers, request);
-			var calContextValue = node_createServiceRequestInfoSet(undefined, {
-				success : function(request, resultSet){
-				}
-			});
-	
-			_.each(contextItems, function(contextItem, eleName){
-				if(contextItem.variable.prv_variable.prv_isBase==true){
-					//only base element
-					calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createSetOperationService(undefined, state[eleName])));
-				}
-			});
-			
-			out.addRequest(calContextValue);
-			return out;
-		},
-		
 
 		//build context according to context definition and parent context
 		buildContext : function(contextDef, parentContext, requestInfo){

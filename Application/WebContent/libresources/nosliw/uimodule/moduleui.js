@@ -102,7 +102,7 @@ var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 		addDecoration : function(decoration){		loc_page.addDecoration(decoration);	},	
 
 		getGetStateRequest : function(handlers, requestInfo){  return loc_page.getGetPageStateRequest(handlers, requestInfo);  },
-		getSetStateRequest : function(stateData, handlers, requestInfo){  return loc_page.getSetPageStateRequest(stateData, handlers, requestInfo);  },
+		getSetStateRequest : function(stateData, handlers, requestInfo){  return loc_page.getUpdateContextRequest(stateData, handlers, requestInfo);  },
 		
 		setExtraContextData : function(name, extraContextData){  loc_extraContextData[name] = extraContextData;  },
 		getExtraContextData : function(name){  return loc_extraContextData[name];  },

@@ -6,6 +6,8 @@
 	<br>
 <!--	SchoolNameInfo: <%=#|?(schoolData)?.schoolName|#.value%>      -->
 
+	<nosliw-contextvalue/>
+
 </body>
 
 		<!-- This part can be used to define context (variable)
