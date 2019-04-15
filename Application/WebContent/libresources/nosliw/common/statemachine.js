@@ -83,7 +83,10 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 	
 	var loc_out = {
 			
-		process : function(request){	loc_processNext(request);	},
+		process : function(request){	
+			loc_processNext(request);
+			return loc_out;
+		},
 		
 		getProcessRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
@@ -126,16 +129,20 @@ var node_createStateMachine = function(state, thisContext){
 	var loc_startTransit = function(next, request){
 		//if in the same state, then just do nothing
 		if(next == loc_out.getCurrentState()){
-			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION, "Same state", request);
+			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION, next+"|Samestate", request);
 			return;
 		}
 		//if in transit, do nothing
 		if(loc_inTransit!=undefined){
-			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION, "In Transiting", request);
+			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION, next+"|InTransiting", request);
 			return;
 		}
 		
 		var nextStateInfo = loc_allStates[loc_out.getCurrentState()].nextStates[next];
+		if(nextStateInfo==undefined){
+			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION, next+"|Notvalidtransit", request);
+			return;
+		}
 		
 		loc_inTransit = new node_TransitInfo(loc_currentState, next); 
 		var callBack = nextStateInfo.callBack;

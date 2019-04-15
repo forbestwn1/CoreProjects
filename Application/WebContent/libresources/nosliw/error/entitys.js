@@ -16,7 +16,7 @@ var node_Error = function(code, message, data){
 	this.code = code;
 	this.message = message;
 	this.data = data;
-	node_makeObjectWithType(this, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_ERROR);
+	node_makeObjectWithType(this, node_CONSTANT.TYPEDOBJECT_TYPE_ERROR);
 };
 
 //*******************************************   End Node Definition  ************************************** 	

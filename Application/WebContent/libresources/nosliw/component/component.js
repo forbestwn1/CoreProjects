@@ -39,7 +39,7 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 	//life cycle call back including all call back method
 	var loc_lifecycleCallback = lifecycleCallback==undefined? {}:lifecycleCallback;
 	
-	var loc_stateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START, loc_thisContext);
+	var loc_stateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_thisContext);
 
 	var loc_createStateTransit = function(from, to){
 		loc_stateMachine.addStateInfo(from, to, 
@@ -56,35 +56,40 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 	};
 
 	var loc_init = function(){
-		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE);
-		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD);
+		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE);
+		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD);
 		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED);
-		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START);
+		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT);
 		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE);
-		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START);
+		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT);
 	};
 
+	var loc_processNext = function(nexts, request){
+		var task = loc_stateMachine.newTask(nexts);
+		if(task!=undefined){
+			return task.process(request);
+		}
+	};
+	
 	var loc_out = {
 			
-		active : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]).process(request);	},
-		deactive : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START]).process(request);	},
+		active : function(request){	 return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE], request);	},
+		deactive : function(request){ return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT], request);	},
 		
-		suspend : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED]).process(request);	},
-		resume : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]).process(request);	},
+		suspend : function(request){ return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED], request);	},
+		resume : function(request){	return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE], request);	},
 		
-		destroy : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD]).process(request);	},
+		destroy : function(request){ return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD], request);	},
 
-		restart : function(request){
-			loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]).process(request);
-		},
+		restart : function(request){ return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE], request);	},
 
 		transitSuccess : function(request){   loc_successTransit(request);	},
 		transitFail : function(request){   loc_failTransit(request);	},
 
 		getComponentStatus : function(){		return loc_stateMachine.getCurrentState();		},
 
-		registerEventListener : function(listener, handler){	return loc_stateMachine.registerEventListener(listener, handler, thisContext);	},
-		unregisterEventListener : function(listener){  loc_stateMachine.unregisterEventListener(listener);  },
+		registerEventListener : function(listener, handler){	return loc_stateMachine.prv_registerEventListener(listener, handler, thisContext);	},
+		unregisterEventListener : function(listener){  loc_stateMachine.prv_unregisterEventListener(listener);  },
 
 		bindBaseObject : function(baseObject){		loc_baseObject = baseObject;	}
 	};

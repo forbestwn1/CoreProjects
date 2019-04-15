@@ -91,6 +91,50 @@ var node_utility = function(){
 			return out;
 		},
 		
+		getContextStateRequest : function(contextItems, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextState", {}), handlers, request);
+			var calContextValue = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, resultSet){
+					var state = resultSet.getResults();
+					return state;
+				}
+			});
+	
+			var validVariable = {};
+			_.each(contextItems, function(contextItem, eleName){
+				var variable = contextItem.variable.prv_variable;
+				if(variable.prv_isBase==true){
+					if(validVariable[variable.prv_id]==undefined){
+						validVariable[variable.prv_id] = variable;
+						//only base element
+						calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+					}
+				}
+			});
+			
+			out.addRequest(calContextValue);
+			return out;
+		},
+
+		setContextStateRequest : function(state, contextItems, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextState", {}), handlers, request);
+			var calContextValue = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, resultSet){
+				}
+			});
+	
+			_.each(contextItems, function(contextItem, eleName){
+				if(contextItem.variable.prv_variable.prv_isBase==true){
+					//only base element
+					calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createSetOperationService(undefined, state[eleName])));
+				}
+			});
+			
+			out.addRequest(calContextValue);
+			return out;
+		},
+		
+
 		//build context according to context definition and parent context
 		buildContext : function(contextDef, parentContext, requestInfo){
 			//build context element first

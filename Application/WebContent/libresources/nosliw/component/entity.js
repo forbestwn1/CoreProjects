@@ -12,6 +12,10 @@ var node_createState = function(){
 	var loc_state = {};
 	
 	var loc_out = {
+		
+		getAllState : function(){   return loc_state;   },
+		setAllState : function(state){  loc_state = state; },
+		
 		getState : function(component){
 			var out = loc_state[component];
 			if(out==undefined){
@@ -44,7 +48,8 @@ var node_createConfigure = function(configure){
 		
 		getConfigure : function(component){
 			var out = {};
-			_.extend(out, loc_configure.global, loc_configure.components==undefined?undefined : loc_configure.components[component]);
+			if(component!=undefined)	_.extend(out, loc_configure.global, loc_configure.components==undefined?undefined : loc_configure.components[component]);
+			else  _.extend(out, loc_configure.global);
 			return out;
 		}
 	};

@@ -84,6 +84,18 @@ function(gate){
 			loc_view.router.clearPreviousHistory();
 		},
 		
+		getSuspendRequest :function(handlers, request){
+		},
+		
+		getResumeRequest :function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var uiStack = loc_getUIStack();
+			_.each(uiStack, function(stackEle, index){
+				out.addRequest(loc_getTransferToRequest(stackEle));
+			});
+			return out;	
+		},
+
 		getInitRequest :function(handlers, requestInfo){
 			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
 			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
@@ -92,8 +104,6 @@ function(gate){
 					var uiPageContainer = $("<div class='page stacked' data-name="+ui.getName()+"/>"); 
 					ui.getPage().appendTo(uiPageContainer);
 					uiPageContainer.appendTo(loc_gate.getConfigure().root);
-
-//					ui.getPage().appendTo(loc_gate.getConfigure().root);
 				});
 				
 				//view configure

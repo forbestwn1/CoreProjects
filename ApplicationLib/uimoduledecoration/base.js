@@ -3,9 +3,11 @@ function(gate){
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
 	
 	var loc_gate = gate;
-	
+	var loc_uiModule = loc_gate.getComponent();
+
 	var loc_out = {
 			
 		processComponentEvent : function(eventName, eventData, request){
@@ -39,13 +41,35 @@ function(gate){
 			};
 		},
 		
-		getDeactiveRequest :function(handlers, request){
-			return loc_gate.getComponent().getInitIOContextRequest(handlers, request);
-		},
+		getDeactiveRequest :function(handlers, request){	return loc_gate.getComponent().getInitIOContextRequest(handlers, request);	},
 		
-		getInitRequest :function(handlers, request){
-			return loc_gate.getComponent().getInitIOContextRequest(handlers, request);
-		}		
+		getInitRequest :function(handlers, request){	return loc_gate.getComponent().getInitIOContextRequest(handlers, request);	},		
+
+		getSuspendRequest :function(handlers, request){
+			var out = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, resultSet){
+					var uiData = {};
+					_.each(resultSet.getResults(), function(uiDataEle, uiName){
+						uiData[uiName] = uiDataEle;
+					});
+					loc_gate.setStateValue("uiData", uiData);
+				}
+			}, handlers, request);
+			_.each(loc_uiModule.getUIs(), function(ui, index){	out.addRequest(ui.getName(), ui.getGetStateRequest());	});
+			return out;	
+		},
+
+		getResumeRequest :function(handlers, request){
+			var out = node_createServiceRequestInfoSet(undefined, handlers, request);
+		
+			var uiData = loc_gate.getStateValue("uiData");
+			
+			_.each(loc_uiModule.getUIs(), function(ui, index){
+				out.addRequest(ui.getName(), ui.getSetStateRequest(uiData[ui.getName()]));	
+			});
+			return out;	
+		},
+
 	};
 	return loc_out;
 }

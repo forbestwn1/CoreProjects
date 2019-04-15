@@ -34,13 +34,15 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	var loc_moduleComplex = [];
 	var loc_processEnv = {};
 	var loc_state = node_createState();
+	var loc_configure;
 
 	var loc_init = function(uiModule, configure, componentDecorationInfos){
+		loc_configure = configure;
 		loc_moduleComplex.push(uiModule);
 		
 		for(var i in componentDecorationInfos){
 			var componentDecorationInfo = componentDecorationInfos[i];
-			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, loc_processEnv, configure, loc_state);
+			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, loc_processEnv, loc_configure, loc_state);
 			loc_moduleComplex.push(decoration);
 			if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
 		}
@@ -52,6 +54,8 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	
 	var loc_getModule = function(){  return  loc_moduleComplex[0]; };
 	
+	var loc_getIOContext = function(){  return loc_getModule().getIOContext();   };
+	
 	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
 		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessRequest(process, loc_getModule().getIOContext(), extraInput, handlers, request);
 	};
@@ -61,8 +65,9 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
 	};
 	
-	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_START] = function(request){
+	var loc_getGoActiveRequest = function(request){
+		configure.getConfigure().__store.clearState();
+
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
 		//start module
 		_.each(loc_moduleComplex, function(part, i){
@@ -70,12 +75,45 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 				out.addRequest(part.getStartRequest());
 			}
 		});
-		out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
+		out.addRequest(loc_getExecuteModuleProcessByNameRequest("active"));
 		return out;
 	};
 	
+	var loc_getResumeActiveRequest = function(request){
+		
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ResumeUIModuleRuntime", {}), undefined, request);
+		var backupData = configure.getConfigure().__store.retrieveState();
+
+		loc_state.setAllState(backupData.state);
+		
+		var backupContextData = backupData.context;
+		_.each(backupContextData, function(contextData, name){
+			out.addRequest(loc_getIOContext().getSetDataValueRequest(name, contextData, true));
+		});
+		
+		_.each(loc_moduleComplex, function(part, i){
+			if(part.getResumeRequest!=undefined){
+				out.addRequest(part.getResumeRequest());
+			}
+		});
+		
+		out.addRequest(loc_getExecuteModuleProcessByNameRequest("resume"));
+		return out;
+	};
+	
+	
+	var lifecycleCallback = {};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
+		if(configure.getConfigure().__store.retrieveState()==undefined){
+			return loc_getGoActiveRequest(request);
+		}
+		else{
+			return loc_getResumeActiveRequest(request);
+		}
+	};
+	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]=
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_START_REVERSE] = function(request){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DeactiveUIModuleRuntime", {}), undefined, request);
 		//start module
 		_.each(loc_moduleComplex, function(part, i){
@@ -86,6 +124,31 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		loc_state.clear();
 		return out;
 	};	
+
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND] = function(request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SuspendUIModuleRuntime", {}), undefined, request);
+		out.addRequest(loc_getExecuteModuleProcessByNameRequest("suspend"));
+		_.each(loc_moduleComplex, function(part, i){
+			if(part.getSuspendRequest!=undefined){
+				out.addRequest(part.getSuspendRequest());
+			}
+		});
+		
+		out.addRequest(loc_getIOContext().getGetDataSetValueRequest({
+			success : function(request, contextDataSet){
+				var backupData = {
+						state : loc_state.getAllState(),
+						context : contextDataSet,
+					};
+				configure.getConfigure().__store.saveState(backupData);
+			}
+		}));
+		
+		return out;
+	};
+	
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME] = function(request){
+	};
 	
 	var loc_out = {
 		

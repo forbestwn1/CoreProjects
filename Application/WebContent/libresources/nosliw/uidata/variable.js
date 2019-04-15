@@ -253,7 +253,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 	};
 
 	var loc_out = {
-	
+			
 			//update wrapper when parent's wrapper changed
 			prv_updateWrapperInRelativeVariable : function(requestInfo){
 				var parentVar = loc_relativeVariableInfo.parent;
