@@ -14,7 +14,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivityNormal{
 
 	@HAPAttribute
-	public static String COMPONENTID = "componentId";
+	public static String PARTID = "partId";
  
 	@HAPAttribute
 	public static String COMMAND = "command";
@@ -28,7 +28,7 @@ public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivity
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(COMPONENTID, this.getDefinition().getComponentId());
+		jsonMap.put(PARTID, this.getDefinition().getComponentId());
 		jsonMap.put(COMMAND, this.getDefinition().getCommand());
 	}
 

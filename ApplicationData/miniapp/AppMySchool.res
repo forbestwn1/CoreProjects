@@ -97,7 +97,7 @@
 					{
 						"id": "readSetting",
 						"type": "UI_executeCommand",
-						"componentId": "module.setting.outputMapping.syncWithApp",
+						"partId": "module.setting.outputMapping.syncWithApp",
 						"command": "execute",
 						"result": [{
 							"name": "success",
@@ -109,7 +109,7 @@
 					{
 						"id": "updateApplicationData",
 						"type": "UI_executeCommand",
-						"componentId": "module.application.inputMapping.syncWithApp",
+						"partId": "module.application.inputMapping.syncWithApp",
 						"command": "execute",
 						"result": [{
 							"name": "success",
@@ -122,7 +122,7 @@
 						"id": "updateApplication",
 						"name": "updateApplication",
 						"type": "UI_executeCommand",
-						"componentId": "module.application",
+						"partId": "module.application",
 						"command": "restart",
 						"result": [{
 							"name": "success",

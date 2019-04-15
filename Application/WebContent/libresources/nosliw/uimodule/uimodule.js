@@ -139,7 +139,7 @@ var loc_createUIModule = function(uiModuleDef, ioInput){
 		},
 		
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
-		getComponent : function(componentId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, componentId); }
+		getPart : function(partId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, partId); }
 		
 	};
 

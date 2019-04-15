@@ -10,7 +10,7 @@ import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 public class HAPExecuteUICommandActivityDefinition extends HAPDefinitionActivityNormal{
 
 	@HAPAttribute
-	public static String COMPONENTID = "componentId";
+	public static String PARTID = "partId";
 
 	@HAPAttribute
 	public static String COMMAND = "command";
@@ -33,14 +33,14 @@ public class HAPExecuteUICommandActivityDefinition extends HAPDefinitionActivity
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.setCommand(jsonObj.optString(COMMAND));
-		this.m_componentId = (String)jsonObj.opt(COMPONENTID);
+		this.m_componentId = (String)jsonObj.opt(PARTID);
 		return true;  
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(COMPONENTID, this.m_componentId);
+		jsonMap.put(PARTID, this.m_componentId);
 		jsonMap.put(COMMAND, this.m_command);
 	}
 

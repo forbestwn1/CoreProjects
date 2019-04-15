@@ -50,7 +50,7 @@
 					"id": "refreshSchoolSetting",
 					"name": "refreshSchoolSetting",
 					"type": "UI_executeCommand",
-					"componentId": "ui.settingUI",
+					"partId": "ui.settingUI",
 					"command": "refresh",
 					"input": {
 						"element": {

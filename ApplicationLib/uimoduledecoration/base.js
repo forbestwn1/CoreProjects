@@ -33,10 +33,10 @@ function(gate){
 		
 		getInterface : function(){
 			return {
-				getComponent : function(componentId){  return loc_gate.getComponent().getComponent(componentId);	},
+				getPart : function(partId){  return loc_gate.getComponent().getPart(partId);	},
 
-				getExecuteComponentCommandRequest : function(componentId, commandName, commandData, handlers, requestInfo){
-					return loc_out.getInterface().getComponent(componentId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+				getExecutePartCommandRequest : function(partId, commandName, commandData, handlers, requestInfo){
+					return loc_out.getInterface().getPart(partId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
 				},
 			};
 		},

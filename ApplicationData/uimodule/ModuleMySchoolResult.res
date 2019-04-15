@@ -151,8 +151,7 @@
 					"id": "refreshSchoolList",
 					"name": "refreshSchoolList",
 					"type": "UI_executeCommand",
-					"componentId": "ui.schoolListUI",
-					"ui11": "schoolListUI",
+					"partId": "ui.schoolListUI",
 					"command": "refresh",
 					"input": {
 						"element": {
@@ -247,7 +246,7 @@
 								"id": "refreshSchoolInfo",
 								"name": "refreshSchoolInfo",
 								"type": "UI_executeCommand",
-								"componentId": "ui.schoolInfoUI",
+								"partId": "ui.schoolInfoUI",
 								"ui11": "schoolInfoUI",
 								"command": "refresh",
 								"input": {
