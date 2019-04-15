@@ -60,7 +60,7 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 				if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
 					loc_processNext();
 				}
-				else if (eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
+				else if (eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION || eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
 					loc_currentNext = loc_currentNext - 2;
 					loc_rollBack(request);
 					loc_stateMachine.finishTask();
@@ -176,15 +176,6 @@ var node_createStateMachine = function(state, thisContext){
 				exception : function(request){	loc_failTransit(request);			}
 			});
 			node_requestServiceProcessor.processRequest(result);
-			
-//			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ProcessLifecycleResult", {}), undefined, request);
-//			out.addRequest(result, {
-//				success : function(request){	loc_successTransit(request);		},
-//				error : function(request){		loc_failTransit(request);			},
-//				exception : function(request){	loc_failTransit(request);			}
-//			});
-//			node_requestServiceProcessor.processRequest(out);
-
 			return;
 		}
 	};
