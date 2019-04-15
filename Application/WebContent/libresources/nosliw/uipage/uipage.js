@@ -62,7 +62,7 @@ var node_createUIPage = function(uiView){
 	};
 	
 	var loc_out = {
-		getUIView :function(){ return loc_decorations[0];  },
+		getUIView :function(){ return loc_decorations[0];  },  
 			
 		addDecoration : function(decoration){
 			if(Array.isArray(decoration)){
