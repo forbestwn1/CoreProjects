@@ -14,11 +14,11 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleRuntimeRequest = function(uiModuleDef, ioInput, configure, componentDecorationInfos, handlers, request){
+var node_createModuleRuntimeRequest = function(id, uiModuleDef, ioInput, configure, componentDecorationInfos, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
 	out.addRequest(node_createUIModuleRequest(uiModuleDef, ioInput, undefined, {
 		success : function(request, uiModule){
-			var runtime = loc_createModuleRuntime(uiModule, configure, componentDecorationInfos);
+			var runtime = loc_createModuleRuntime(id, uiModule, configure, componentDecorationInfos);
 			return runtime.prv_getInitRequest({
 				success : function(request){
 					return request.getData();
@@ -29,8 +29,10 @@ var node_createModuleRuntimeRequest = function(uiModuleDef, ioInput, configure, 
 	return out;
 };
 
-var loc_createModuleRuntime = function(uiModule, configure, componentDecorationInfos){
+var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorationInfos){
 	
+	var loc_id = id;
+	var loc_version = "1.0.0";
 	var loc_moduleComplex = [];
 	var loc_processEnv = {};
 	var loc_state = node_createState();
@@ -50,6 +52,26 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		loc_getCurrentModuleFacad().registerEventListener(undefined, function(eventName, eventData, request){});
 	};
 
+	var loc_getStateData = function(){  
+		var storeData = loc_configure.getConfigure().__store.retrieveData("module", loc_id);
+		if(storeData==undefined)   return;
+		if(storeData.version!=loc_version){
+			loc_clearStateData();
+			return;
+		}
+		return storeData.data;
+	};
+	var loc_saveStateData = function(stateData){
+		var storeData = {
+			version : loc_version,
+			data : stateData
+		};
+		loc_configure.getConfigure().__store.saveData("module", loc_id, storeData);  
+	};
+	var loc_clearStateData = function(){  
+		loc_configure.getConfigure().__store.clearData("module", loc_id);  
+	};
+	
 	var loc_getCurrentModuleFacad = function(){   return loc_moduleComplex[loc_moduleComplex.length-1];  };
 	
 	var loc_getModule = function(){  return  loc_moduleComplex[0]; };
@@ -66,8 +88,6 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	};
 	
 	var loc_getGoActiveRequest = function(request){
-		configure.getConfigure().__store.clearState();
-
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
 		//start module
 		_.each(loc_moduleComplex, function(part, i){
@@ -79,14 +99,12 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		return out;
 	};
 	
-	var loc_getResumeActiveRequest = function(request){
-		
+	var loc_getResumeActiveRequest = function(stateData, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ResumeUIModuleRuntime", {}), undefined, request);
-		var backupData = configure.getConfigure().__store.retrieveState();
 
-		loc_state.setAllState(backupData.state);
+		loc_state.setAllState(stateData.state);
 		
-		var backupContextData = backupData.context;
+		var backupContextData = stateData.context;
 		_.each(backupContextData, function(contextData, name){
 			out.addRequest(loc_getIOContext().getSetDataValueRequest(name, contextData, true));
 		});
@@ -104,14 +122,14 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
-		if(configure.getConfigure().__store.retrieveState()==undefined){
-			return loc_getGoActiveRequest(request);
-		}
-		else{
-			return loc_getResumeActiveRequest(request);
-		}
+		var out;
+		var stateData = loc_getStateData();
+		loc_clearStateData();
+		if(stateData==undefined)	out = loc_getGoActiveRequest(request);
+		else	out = loc_getResumeActiveRequest(stateData, request);
+		return out;
 	};
-	
+
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]=
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DeactiveUIModuleRuntime", {}), undefined, request);
@@ -140,7 +158,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 						state : loc_state.getAllState(),
 						context : contextDataSet,
 					};
-				configure.getConfigure().__store.saveState(backupData);
+				loc_saveStateData(backupData);
 			}
 		}));
 		
@@ -148,8 +166,9 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	};
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME] = function(request){
+		loc_clearStateData();
 	};
-	
+
 	var loc_out = {
 		
 		prv_getInitRequest : function(handlers, request){

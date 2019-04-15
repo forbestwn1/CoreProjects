@@ -61,7 +61,6 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED);
 		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT);
 		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE);
-		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT);
 	};
 
 	var loc_processNext = function(nexts, request){

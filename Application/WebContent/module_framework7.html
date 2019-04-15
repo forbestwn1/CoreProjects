@@ -65,22 +65,22 @@ $(document).on("nosliwActive", function(){
 			}),
 			decoration : decorations,
 			__store :{
-				saveState : function(state){
-					localStorage.setItem("state", JSON.stringify(state));
+				saveData : function(categary, id, data){
+					localStorage.setItem(categary+"_"+id, JSON.stringify(data));
 				},
 				
-				retrieveState : function(){
-					return JSON.parse(localStorage.getItem("state"));
+				retrieveData : function(categary, id){
+					return JSON.parse(localStorage.getItem(categary+"_"+id));
 				},
 				
-				clearState : function(){
-					return localStorage.removeItem("state");
+				clearData : function(categary, id){
+					return localStorage.removeItem(categary+"_"+id);
 				}
 			}
 			
 		}
 	};
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, configure, ["base", "uidecoration", moduleDecId], {
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, moduleId, undefined, configure, ["base", "uidecoration", moduleDecId], {
 		success : function(requestInfo, uiModuleRuntime){
 			moduleRuntime = uiModuleRuntime;
 

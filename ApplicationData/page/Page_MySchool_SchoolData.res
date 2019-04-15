@@ -6,7 +6,7 @@
 	<br>
 <!--	SchoolNameInfo: <%=#|?(schoolData)?.schoolName|#.value%>      -->
 
-	<nosliw-contextvalue/>
+<!--	<nosliw-contextvalue/>  -->
 
 </body>
 
