@@ -14,11 +14,6 @@ import com.nosliw.miniapp.entity.HAPMiniAppEntryInstance;
 import com.nosliw.miniapp.entity.HAPSettingData;
 import com.nosliw.miniapp.entity.HAPUser;
 import com.nosliw.miniapp.entity.HAPUserInfo;
-//import com.nosliw.miniapp.HAPAppManager;
-//import com.nosliw.miniapp.data.HAPInstanceData;
-//import com.nosliw.miniapp.instance.HAPInstanceMiniAppEntry;
-//import com.nosliw.miniapp.user.HAPUser;
-//import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.servlet.HAPServiceServlet;
 
 @HAPEntityWithAttribute

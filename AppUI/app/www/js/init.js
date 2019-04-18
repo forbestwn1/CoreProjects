@@ -1,7 +1,7 @@
 /**
  * 
  */
-var init = function(baseServer, callBackFunction){
+var init = function(rootNode, baseServer, callBackFunction){
 
 	//load lib utility function
 	var loadLibrary = function(libs, callBackFunction){
@@ -48,7 +48,7 @@ var init = function(baseServer, callBackFunction){
 			var minapp = nosliw.getNodeData("miniapp.createMiniApp")();
 			nosliw.miniapp = minapp;
 			nosliw.createNode("miniapp", minapp);
-			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest({
+			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(rootNode, {
 				success : function(requestInfo, data){
 			  		$(document).trigger("miniappActive");
 				}

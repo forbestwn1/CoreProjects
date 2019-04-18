@@ -11,21 +11,25 @@ var packageObj = library.getChildPackage();
 	var node_makeObjectWithLifecycle;
 	var node_createMiniAppService;
 	var node_createModuleUserApps;
+	var node_miniAppUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "minApp";
 
-var node_createMiniApp = function(){
+var node_createMiniApp = function(rootNode){
 
-	
 	var loc_miniAppService;
+
+	var loc_framwork7App;
+	
+	var loc_vue;
 	
 	var loc_modulesInfo = [{
 		name : "userApps",
 		factory : "miniapp.module.userapps.createModuleUserApps",
 		init : {
-			success : function(requestInfo, data){
-				$("#leftpanel").append(data);
+			success : function(requestInfo, view){
+				$("#leftpanel").append(view);
 			}
 		}
 	}];
@@ -34,17 +38,52 @@ var node_createMiniApp = function(){
 	var loc_userappsModule;
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(rootNode){
 
 		loc_miniAppService = node_createMiniAppService();
 
-		var out = node_createServiceRequestInfoSet(new node_ServiceInfo("InitMiniAppModules", {})); 
+		var out = node_createServiceRequestInfoSequence(undefined);
+		var mainHtml = "js/miniapp/main.html";
+		out.addRequest(node_miniAppUtility.getLoadFilesRequest([mainHtml], {
+			success : function(request, mainSource){
+				$(mainSource[mainHtml]).appendTo(rootNode);
+				
+				loc_framwork7App = new Framework7({
+					  // App root element
+					  root: rootNode,
+					  name: 'My App',
+					  id: 'com.myapp.test',
+					  panel: {
+						    swipe: 'both',
+					  },				
+				});
+			}
+		}));	
 
+		var initAppModules = node_createServiceRequestInfoSet(new node_ServiceInfo("InitMiniAppModules"), {
+			success : function(request){
+				
+				var vueModules = {};
+				_.each(loc_modules, function(module, name){
+					vueModules[name] = module.getVueModule();
+				});
+				
+				loc_vue = new Vue({
+					  el: "#appModuleDiv",
+					  data: {
+					    message: 'Hello Vue!'
+					  },
+					  components : vueModules,
+					  template : `<userApps/>`
+				});
+			}
+		}); 
 		_.each(loc_modulesInfo, function(moduleInfo, index){
 			var module = nosliw.getNodeData(moduleInfo.factory)();
 			loc_modules[moduleInfo.name] = module;
-			out.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.init, undefined));
+			initAppModules.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.init, undefined));
 		});
+		out.addRequest(initAppModules);
 		
 		return out;
 	};
@@ -70,12 +109,11 @@ var node_createMiniApp = function(){
 			out.addRequest(loc_miniAppService.getLoginRequest(userInfo, {
 				success : function(requestInfo, userInfo){
 					localStorage.userId = userInfo.user.id;
-//					return loc_refreshRequest(userInfo, {
-//						success : function(requestInfo){
-//							return userInfo;
-//						}
-//					});
-					return userInfo;
+					return loc_refreshRequest(userInfo, {
+						success : function(requestInfo){
+							return userInfo;
+						}
+					});
 				}
 			}));
 			return out;
@@ -108,6 +146,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.createMiniAppService", function(){node_createMiniAppService = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createModuleUserApps", function(){node_createModuleUserApps = this.getData();});
+nosliw.registerSetNodeDataEvent("miniapp.utility", function(){node_miniAppUtility = this.getData();});
 
 
 //Register Node by Name

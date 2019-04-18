@@ -1,12 +1,12 @@
 {
 	"roleConfigure" : {
 		"application" : {
-			"decorations" : ["Decoration_application_framework7"],
-			"moduleEnvFactoryId" : "module_application_framework7_mobile"
+			"uiDecorations" : ["Decoration_application_framework7"],
+			"moduleDecoration" : "application_framework7_mobile"
 		},
 		"setting" : {
-			"decorations" : ["Decoration_setting_framework7"],
-			"moduleEnvFactoryId" : "module_setting_framework7_mobile"
+			"uiDecorations" : ["Decoration_setting_framework7"],
+			"moduleDecoration" : "setting_framework7_mobile"
 		}
 	}
 }

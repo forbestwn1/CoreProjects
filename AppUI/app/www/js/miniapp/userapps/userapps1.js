@@ -23,21 +23,47 @@ var loc_mduleName = "userApps";
 
 var node_createModuleUserApps = function(){
 
-	var loc_userInfo = {
-		group : [
-			{
-				name : "name1"
-			},
-			{
-				name : "name2"
-			}
-		]
-	};
+	//template name and files
+	var loc_templatesInfo = [
+		{
+			name : "main",
+			file : "js/miniapp/userapps/userapps.html"
+		},
+		{
+			name : "appitem",
+			file : "js/miniapp/userapps/appitem.html"
+		},
+		{
+			name : "appgroup",
+			file : "js/miniapp/userapps/appgroup.html"
+		}
+	];
+	
+	//built templates
+	var loc_templates = {};
+	
+	var loc_view;
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("userAppsInit", {}), handlers, requestInfo);
 
+		//build templates
+		out.addRequest(node_miniAppUtility.getBuildTemplateRequest(loc_templatesInfo, {
+			success : function(requestInfo, templates){
+				loc_templates = templates;
+			}
+		}));
+		
+		//init ui
+		out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("UIInit", {}), 
+			function(requestInfo){
+				loc_view = $(loc_templates.main.template());
+				loc_view.listview();
+				return loc_view;
+			}, 
+		));
+		
 		return out;
 	};
 
@@ -51,14 +77,48 @@ var node_createModuleUserApps = function(){
 		});
 	};
 	
+	var appendMiniApp = function(parentView, miniApp, userId){
+		var miniAppId = miniApp[node_COMMONATRIBUTECONSTANT.USERMINIAPPINFO_APPID];
+		var viewId = "miniAppInstanceId_" + miniAppId;
+		var miniAppName = miniApp[node_COMMONATRIBUTECONSTANT.USERMINIAPPINFO_APPNAME];
+		
+		var mininAppItemView = $(loc_templates.appitem.template({
+			viewId : viewId,
+			miniAppName : miniAppName
+		}));
+		
+		parentView.append(mininAppItemView);
+//		onClickMiniApp(viewId, miniAppId, userId, miniAppName);
+	};
+	
+	var appendMiniAppGroup = function(parentView, miniAppGroup, userId){
+		var groupId = miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_ID];
+		var groupName = miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_NAME];
+		var groupViewId = "groupMiniAppId_" + groupId;
+		
+		var groupView = $(loc_templates.appgroup.template({
+			groupViewId : groupViewId,
+			groupName : groupName,
+		}));
+		parentView.append(groupView);
+		
+		_.each(miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_MINIAPPS], function(miniApp, index){
+			appendMiniApp($("#"+groupViewId), miniApp, userId);
+		});
+		$("#"+groupViewId).listview();
+		$("#collapsible_"+groupViewId).collapsible();
+		
+	};
+
+	
+	
 	var loc_out = {
 		
 		refreshRequest : function(userInfo, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshUserApps", {}), handlers, requestInfo);
 			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUserApps", {}), 
 				function(requestInfo){
-					loc_userInfo = userInfo;
-//					showUserInfo(userInfo);
+					showUserInfo(userInfo);
 				})); 
 			return out;
 		},
@@ -66,24 +126,10 @@ var node_createModuleUserApps = function(){
 		
 		addMiniApp : function(){
 			
-		},
-		
-		getVueModule : function(){
-			return {
-				data : function(){
-					return loc_userInfo;
-				},
-				template : `
-					<div>
-						<p v-for="group in group">
-							{{group.name}}
-						</p>
-					
-					</div>
-				`
-			};
 		}
+		
 	};
+	
 	
 	node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	node_makeObjectWithName(loc_out, loc_mduleName);
@@ -110,6 +156,6 @@ nosliw.registerSetNodeDataEvent("miniapp.utility", function(){node_miniAppUtilit
 
 
 //Register Node by Name
-packageObj.createChildNode("createModuleUserApps", node_createModuleUserApps); 
+packageObj.createChildNode("createModuleUserApps1", node_createModuleUserApps); 
 
 })(packageObj);

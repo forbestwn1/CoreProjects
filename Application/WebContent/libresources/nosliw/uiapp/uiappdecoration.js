@@ -26,10 +26,17 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 var loc_app;
 
-
 var loc_ioContext;
 
-
+var loc_env = function(){
+	
+	var loc_out = {
+		getParent : function(){		return loc_app;	},
+		
+	};
+	return loc_out;
+}();	
+	
 var loc_createApplicationModuleRequest = function(module, root, appStatelessData, decorations, envFactoryId){
 	var statelessData = {
 		app : appStatelessData.app,
