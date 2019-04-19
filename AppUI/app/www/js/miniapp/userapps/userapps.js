@@ -23,16 +23,33 @@ var loc_mduleName = "userApps";
 
 var node_createModuleUserApps = function(){
 
-	var loc_userInfo = {
-		group : [
-			{
-				name : "name1"
-			},
-			{
-				name : "name2"
-			}
-		]
+	var loc_vueModel = {
+		userInfo : {
+			groups : [
+				{
+					name : "name1"
+				},
+				{
+					name : "name2"
+				}
+			]
+		}
 	};
+	
+	var loc_vueComponent = {
+		data : function(){
+			return loc_vueModel;
+		},
+		template : `
+			<div>
+				<p v-for="group in userInfo.groups">
+					{{group.name}}
+				</p>
+			
+			</div>
+		`
+	};
+	
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
@@ -57,7 +74,8 @@ var node_createModuleUserApps = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshUserApps", {}), handlers, requestInfo);
 			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUserApps", {}), 
 				function(requestInfo){
-					loc_userInfo = userInfo;
+				loc_vueModel.userInfo = userInfo;
+//				loc_vueModel.userInfo = userInfo;
 //					showUserInfo(userInfo);
 				})); 
 			return out;
@@ -69,19 +87,7 @@ var node_createModuleUserApps = function(){
 		},
 		
 		getVueModule : function(){
-			return {
-				data : function(){
-					return loc_userInfo;
-				},
-				template : `
-					<div>
-						<p v-for="group in group">
-							{{group.name}}
-						</p>
-					
-					</div>
-				`
-			};
+			return loc_vueComponent;
 		}
 	};
 	

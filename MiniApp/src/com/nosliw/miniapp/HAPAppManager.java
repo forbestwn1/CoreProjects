@@ -37,11 +37,9 @@ public class HAPAppManager {
 	}
 	
 	public HAPUserInfo createUser() {
-		HAPUserInfo out = new HAPUserInfo();
 		HAPUser user = this.m_dataAccess.createUser();
-		out.setUser(user);
 		this.m_dataAccess.createSampleDataForUser(user.getId());
-		return out;
+		return getUserInfo(user.getId());
 	}
 	
 	public HAPUserInfo getUserInfo(String id) {
