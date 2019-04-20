@@ -12,7 +12,11 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createAppRuntime = function(appDef, decoration){
+var node_createAppRuntimeRequest = function(id, appDef, appDecorationFac, configure, ioInput, handlers, request){
+	
+};
+	
+var node_createAppRuntime = function(id, appDef, appDecorationFac){
 	
 	var loc_appDefinition;
 	

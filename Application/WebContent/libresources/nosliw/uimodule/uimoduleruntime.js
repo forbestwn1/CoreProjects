@@ -14,9 +14,9 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleRuntimeRequest = function(id, uiModuleDef, ioInput, configure, componentDecorationInfos, handlers, request){
+var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, componentDecorationInfos, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
-	out.addRequest(node_createUIModuleRequest(uiModuleDef, ioInput, undefined, {
+	out.addRequest(node_createUIModuleRequest(uiModuleDef, undefined, ioInput, {
 		success : function(request, uiModule){
 			var runtime = loc_createModuleRuntime(id, uiModule, configure, componentDecorationInfos);
 			return runtime.prv_getInitRequest({

@@ -83,8 +83,6 @@ var node_createModuleUserApps = function(){
 			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUserApps", {}), 
 				function(requestInfo){
 				loc_vueModel.userInfo = userInfo;
-//				loc_vueModel.userInfo = userInfo;
-//					showUserInfo(userInfo);
 				})); 
 			return out;
 		},

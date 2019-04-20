@@ -22,7 +22,7 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
-var node_createUIModuleRequest = function(uiModuleDef, ioInput, decorations, handlers, request){
+var node_createUIModuleRequest = function(uiModuleDef, decorations, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
 	var module = loc_createUIModule(uiModuleDef, ioInput);

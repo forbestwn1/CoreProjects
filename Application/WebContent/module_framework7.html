@@ -57,13 +57,8 @@ $(document).on("nosliwActive", function(){
 	var configure = {
 		global : {
 			root : $('#moduleDiv').get(),
-			app : new Framework7({
-				  // App root element
-				  root: $("#appDiv").get(),
-				  name: 'My App',
-				  id: 'com.myapp.test',
-			}),
 			decoration : decorations,
+			moduleDecoration : ["base", "uidecoration", moduleDecId],
 			__store :{
 				saveData : function(categary, id, data){
 					localStorage.setItem(categary+"_"+id, JSON.stringify(data));
@@ -77,10 +72,19 @@ $(document).on("nosliwActive", function(){
 					return localStorage.removeItem(categary+"_"+id);
 				}
 			}
-			
+		},
+		components : {
+			application_framework7_mobile : {
+				app : new Framework7({
+					  // App root element
+					  root: $("#appDiv").get(),
+					  name: 'My App',
+					  id: 'com.myapp.test',
+				}),
+			}
 		}
 	};
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, moduleId, undefined, configure, ["base", "uidecoration", moduleDecId], {
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, moduleId, configure, undefined, {
 		success : function(requestInfo, uiModuleRuntime){
 			moduleRuntime = uiModuleRuntime;
 

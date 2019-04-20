@@ -46,27 +46,52 @@ $(document).on("nosliwActive", function(){
 	var currentSearchString = window.location.search;
 	var appEntryId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 
-	var appStatelessData = {
-		nodes : {
-			application : $('#appModuleDiv').get(),
-			setting : $('#settingModuleDiv').get(),
+	var configure = {
+		global : {
+			
 		},
-		app : new Framework7({
-			  // App root element
-			  root: $("#appDiv").get(),
-			  name: 'My App',
-			  id: 'com.myapp.test',
-			  panel: {
-				    swipe: 'both',
-			  },		
-		})
+		components : {
+			application : {
+				"roleConfigure" : {
+					"application" : {
+						global : {
+							"root" : $('#appModuleDiv').get(),
+							"uiDecorations" : ["Decoration_application_framework7"],
+							"moduleDecoration" : "application_framework7_mobile"
+						}
+					},
+					"setting" : {
+						global : {
+							"root" : $('#settingModuleDiv').get(),
+							"uiDecorations" : ["Decoration_setting_framework7"],
+							"moduleDecoration" : "setting_framework7_mobile"
+						}
+						components : {
+							application_framework7_mobile : {
+								app : new Framework7({
+									  // App root element
+									  root: $("#appDiv").get(),
+									  name: 'My App',
+									  id: 'com.myapp.test',
+									  panel: {
+										    swipe: 'both',
+									  },		
+								}),
+							}
+						}
+					}
+				}
+				
+			}
+			
+		}
 	};
 	
 	//create module runtime
-	nosliw.runtime.getUIAppService().executeGetUIAppEntryRuntimeRequest(appEntryId, "application_normal", appStatelessData,
+	nosliw.runtime.getUIAppService().executeGetUIAppEntryRuntimeRequest(appEntryId, appEntryId, configure, undefined,
 		{
 			success : function(requestInfo, uiAppRuntime){
-//				uiAppRuntime.executeStartRequest();			
+				node_getComponentLifecycleInterface(uiAppRuntime).active();
 			}
 		}
 	);
