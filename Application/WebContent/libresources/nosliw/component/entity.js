@@ -5,9 +5,46 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
+	var node_makeObjectWithType;
+	var node_getObjectType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_createComponentComplex = function(){
+
+	var loc_elements = [];
+
+	var loc_interface = {};
+	
+	var loc_out = {
+		
+		addElement : function(element){
+			
+		},
+		
+		addDecorations : function(){
+			for(var i in componentDecorationInfos){
+				var componentDecorationInfo = componentDecorationInfos[i];
+				var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, loc_processEnv, loc_configure, loc_state);
+				loc_moduleComplex.push(decoration);
+				if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
+			}
+
+		},
+
+		addDecoration : function(componentDecorationInfo){
+			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, loc_processEnv, loc_configure, loc_state);
+			loc_moduleComplex.push(decoration);
+			if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
+		},
+		
+		getInterface : function(){  return loc_interface;   },
+			
+			
+	};
+	return loc_out;
+};
+	
 var node_createState = function(){
 	var loc_state = {};
 	
@@ -40,9 +77,17 @@ var node_createState = function(){
 	return loc_out;
 };
 	
-var node_createConfigure = function(configure){
+var node_createConfigure = function(value){
 	
-	var loc_configure = configure;
+	if(value!=undefined){
+		var valueType = node_getObjectType(value);
+		if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE){
+			return value;
+		}
+		else{
+			var loc_configure = value;
+		}
+	}
 	
 	var loc_out = {
 		
@@ -53,7 +98,8 @@ var node_createConfigure = function(configure){
 			return out;
 		}
 	};
-	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE);
+
 	return loc_out;
 };
 
@@ -82,5 +128,7 @@ packageObj.createChildNode("createState", node_createState);
 packageObj.createChildNode("createConfigure", node_createConfigure); 
 packageObj.createChildNode("commandResult", node_commandResult); 
 packageObj.createChildNode("commandRequestInfo", node_commandRequestInfo); 
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 })(packageObj);

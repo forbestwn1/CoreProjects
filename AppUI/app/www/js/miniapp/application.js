@@ -69,7 +69,7 @@ var node_createApplication = function(rootNode){
 				});
 				
 				loc_vue = new Vue({
-					  el: "#appModuleDiv",
+					  el: "#userInfoDiv",
 					  data: {
 					    message: 'Hello Vue!'
 					  },
@@ -81,7 +81,7 @@ var node_createApplication = function(rootNode){
 		_.each(loc_modulesInfo, function(moduleInfo, index){
 			var module = nosliw.getNodeData(moduleInfo.factory)();
 			loc_modules[moduleInfo.name] = module;
-			initAppModules.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.init, undefined));
+//			initAppModules.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.init, undefined));
 		});
 		out.addRequest(initAppModules);
 		

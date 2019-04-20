@@ -37,6 +37,9 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	@HAPAttribute
 	public static final String OUTPUTMAPPING = "outputMapping";
 
+	@HAPAttribute
+	public static final String APPDATA = "appData";
+
 	private HAPExecutableModule m_module;
 	
 	private HAPExecutableGroupDataAssociation m_inputMapping;
@@ -45,11 +48,14 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 
 	private HAPDefinitionAppModule m_definition;
 	
+	private List<String> m_appDataNames;
+	
 	public HAPExecutableAppModule(HAPDefinitionAppModule def) {
 		super(def);
 		this.m_definition = def;
 		this.m_inputMapping = new HAPExecutableGroupDataAssociation();
 		this.m_outputMapping = new HAPExecutableGroupDataAssociation();
+		this.m_appDataNames = new ArrayList<String>();
 	}
 
 	public void setModule(HAPExecutableModule module) {  this.m_module = module;  }
@@ -66,6 +72,7 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 		jsonMap.put(MODULE, HAPJsonUtility.buildJson(this.m_module, HAPSerializationFormat.JSON));
 		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(APPDATA, HAPJsonUtility.buildJson(this.m_appDataNames, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

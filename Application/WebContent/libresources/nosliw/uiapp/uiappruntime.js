@@ -13,20 +13,39 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createAppRuntimeRequest = function(id, appDef, appDecorationFac, configure, ioInput, handlers, request){
-	
+	loc_appDefinition(appDef, ioInput);
 };
 	
-var node_createAppRuntime = function(id, appDef, appDecorationFac){
+var node_createAppRuntime = function(id, app, configure, componentDecorationInfos){
 	
-	var loc_appDefinition;
-	
-	var loc_appDecoration;
-	
+	var loc_id = id;
+	var loc_version = "1.0.0";
+	var loc_appComplex = [];
+	var loc_processEnv = {};
+	var loc_state = node_createState();
+	var loc_configure;
 	var loc_applicationDataService;
+	
+	var loc_init = function(app, configure, componentDecorationInfos){
+		loc_configure = configure;
+		loc_appComplex.push(app);
+		
+		for(var i in componentDecorationInfos){
+			var componentDecorationInfo = componentDecorationInfos[i];
+			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_appComplex[i], componentDecorationInfo.coreFun, loc_processEnv, loc_configure, loc_state);
+			loc_appComplex.push(decoration);
+			if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
+		}
+		
+		loc_getCurrentModuleFacad().registerEventListener(undefined, function(eventName, eventData, request){});
+
+	};	
 	
 	var loc_executeProcess = function(){
 		
 	};
+	
+	
 	
 	var loc_out = {
 		
