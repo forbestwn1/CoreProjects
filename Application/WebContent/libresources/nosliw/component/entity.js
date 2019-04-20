@@ -10,41 +10,6 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createComponentComplex = function(){
-
-	var loc_elements = [];
-
-	var loc_interface = {};
-	
-	var loc_out = {
-		
-		addElement : function(element){
-			
-		},
-		
-		addDecorations : function(){
-			for(var i in componentDecorationInfos){
-				var componentDecorationInfo = componentDecorationInfos[i];
-				var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, loc_processEnv, loc_configure, loc_state);
-				loc_moduleComplex.push(decoration);
-				if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
-			}
-
-		},
-
-		addDecoration : function(componentDecorationInfo){
-			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, loc_processEnv, loc_configure, loc_state);
-			loc_moduleComplex.push(decoration);
-			if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
-		},
-		
-		getInterface : function(){  return loc_interface;   },
-			
-			
-	};
-	return loc_out;
-};
-	
 var node_createState = function(){
 	var loc_state = {};
 	
@@ -122,13 +87,13 @@ var node_commandRequestInfo = function(name, parms, handlers, request){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createState", node_createState); 
 packageObj.createChildNode("createConfigure", node_createConfigure); 
 packageObj.createChildNode("commandResult", node_commandResult); 
 packageObj.createChildNode("commandRequestInfo", node_commandRequestInfo); 
-nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
-nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 })(packageObj);

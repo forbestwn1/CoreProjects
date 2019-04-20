@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_createState;
 	var node_createComponentDecoration;
 	var node_makeObjectWithComponentLifecycle;
+	var node_createComponentComplex;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -34,22 +35,18 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 	var loc_id = id;
 	var loc_version = "1.0.0";
 	var loc_moduleComplex = [];
-	var loc_processEnv = {};
-	var loc_state = node_createState();
+//	var loc_processEnv = {};
 	var loc_configure;
+	var loc_componentComplex = node_createComponentComplex(configure);
 
 	var loc_init = function(uiModule, configure, componentDecorationInfos){
 		loc_configure = configure;
-		loc_moduleComplex.push(uiModule);
 		
-		for(var i in componentDecorationInfos){
-			var componentDecorationInfo = componentDecorationInfos[i];
-			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, loc_processEnv, loc_configure.getConfigureData(componentDecorationInfo.name), loc_state);
-			loc_moduleComplex.push(decoration);
-			if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
-		}
+		loc_componentComplex.addComponent(uiModule);
 		
-		loc_getCurrentModuleFacad().registerEventListener(undefined, function(eventName, eventData, request){});
+		loc_componentComplex.addDecorations(componentDecorationInfos);
+
+//		loc_getCurrentModuleFacad().registerEventListener(undefined, function(eventName, eventData, request){});
 	};
 
 	var loc_getStateData = function(){  
@@ -72,14 +69,14 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 		loc_configure.getConfigureData().__store.clearData("module", loc_id);  
 	};
 	
-	var loc_getCurrentModuleFacad = function(){   return loc_moduleComplex[loc_moduleComplex.length-1];  };
-	
-	var loc_getModule = function(){  return  loc_moduleComplex[0]; };
-	
 	var loc_getIOContext = function(){  return loc_getModule().getIOContext();   };
 	
+	var loc_getModule = function(){  return loc_componentComplex.getComponent();   };
+	
+	var loc_getProcessEnv = function(){   return loc_componentComplex.getInterface();    };
+	
 	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
-		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessRequest(process, loc_getModule().getIOContext(), extraInput, handlers, request);
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteProcessRequest(process, loc_getModule().getIOContext(), extraInput, handlers, request);
 	};
 	
 	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){
@@ -90,11 +87,7 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 	var loc_getGoActiveRequest = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
 		//start module
-		_.each(loc_moduleComplex, function(part, i){
-			if(part.getStartRequest!=undefined){
-				out.addRequest(part.getStartRequest());
-			}
-		});
+		out.addRequest(loc_componentComplex.getStartRequest());
 		out.addRequest(loc_getExecuteModuleProcessByNameRequest("active"));
 		return out;
 	};
@@ -102,18 +95,14 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 	var loc_getResumeActiveRequest = function(stateData, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ResumeUIModuleRuntime", {}), undefined, request);
 
-		loc_state.setAllState(stateData.state);
+		loc_componentComplex.setAllStateData(stateData.state);
 		
 		var backupContextData = stateData.context;
 		_.each(backupContextData, function(contextData, name){
 			out.addRequest(loc_getIOContext().getSetDataValueRequest(name, contextData, true));
 		});
 		
-		_.each(loc_moduleComplex, function(part, i){
-			if(part.getResumeRequest!=undefined){
-				out.addRequest(part.getResumeRequest());
-			}
-		});
+		out.addRequest(loc_componentComplex.getResumeRequest());
 		
 		out.addRequest(loc_getExecuteModuleProcessByNameRequest("resume"));
 		return out;
@@ -133,29 +122,20 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]=
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DeactiveUIModuleRuntime", {}), undefined, request);
-		//start module
-		_.each(loc_moduleComplex, function(part, i){
-			if(part.getDeactiveRequest!=undefined){
-				out.addRequest(part.getDeactiveRequest());
-			}
-		});
-		loc_state.clear();
+		out.addRequest(loc_componentComplex.getDeactiveRequest());
+		loc_componentComplex.clearState();
 		return out;
 	};	
 
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SuspendUIModuleRuntime", {}), undefined, request);
 		out.addRequest(loc_getExecuteModuleProcessByNameRequest("suspend"));
-		_.each(loc_moduleComplex, function(part, i){
-			if(part.getSuspendRequest!=undefined){
-				out.addRequest(part.getSuspendRequest());
-			}
-		});
+		out.addRequest(loc_componentComplex.getSuspendRequest());
 		
 		out.addRequest(loc_getIOContext().getGetDataSetValueRequest({
 			success : function(request, contextDataSet){
 				var backupData = {
-						state : loc_state.getAllState(),
+						state : loc_componentComplex.getAllStateData(),
 						context : contextDataSet,
 					};
 				loc_saveStateData(backupData);
@@ -173,11 +153,7 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 		
 		prv_getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
-			_.each(loc_moduleComplex, function(facad, i){
-				if(facad.getInitRequest!=undefined){
-					out.addRequest(facad.getInitRequest());
-				}
-			});
+			out.addRequest(loc_componentComplex.getInitRequest());
 			return out;
 		},
 			
@@ -207,6 +183,7 @@ nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){nod
 nosliw.registerSetNodeDataEvent("component.createState", function(){node_createState = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentDecoration", function(){node_createComponentDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createComponentComplex", function(){node_createComponentComplex = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleRuntimeRequest", node_createModuleRuntimeRequest); 
