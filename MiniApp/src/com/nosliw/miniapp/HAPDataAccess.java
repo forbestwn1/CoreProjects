@@ -120,7 +120,7 @@ public class HAPDataAccess {
 			PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM miniapp_miniapp where id='"+id+"';");
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()) {
-				out = new HAPMiniApp((String)resultSet.getObject(HAPGroup.ID), (String)resultSet.getObject(HAPGroup.NAME));
+				out = new HAPMiniApp((String)resultSet.getObject(HAPGroup.ID), (String)resultSet.getObject(HAPMiniApp.NAME));
 				break;
 			}
 		} catch (Exception e) {

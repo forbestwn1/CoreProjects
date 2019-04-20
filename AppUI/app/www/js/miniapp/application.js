@@ -16,7 +16,7 @@ var packageObj = library.getChildPackage();
 
 var loc_mduleName = "minApp";
 
-var node_createMiniApp = function(rootNode){
+var node_createApplication = function(rootNode){
 
 	var loc_miniAppService;
 
@@ -150,6 +150,6 @@ nosliw.registerSetNodeDataEvent("miniapp.utility", function(){node_miniAppUtilit
 
 
 //Register Node by Name
-packageObj.createChildNode("createMiniApp", node_createMiniApp); 
+packageObj.createChildNode("createApplication", node_createApplication); 
 
 })(packageObj);

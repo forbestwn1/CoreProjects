@@ -549,27 +549,11 @@ var COMMONATRIBUTECONSTANT=
   "_DATA": "data",
   "USER_ID": "id",
   "USERGROUPMINIAPP_GROUP": "group",
-  "USERGROUPMINIAPP_MINIAPPS": "miniApps",
+  "USERGROUPMINIAPP_MINIAPP": "miniApp",
   "USERINFO_USER": "user",
-  "USERINFO_GROUPS": "groups",
-  "USERINFO_MINIAPPS": "miniApps",
-  "USERINFO_GROUPMINIAPP": "groupMiniApp",
-  "_COMMAND_LOGIN": "login",
-  "_COMMAND_LOADMINIAPP": "loadMiniApp",
-  "_COMMAND_LOADMINIAPP_APPID": "appId",
-  "_COMMAND_LOADMINIAPP_USERID": "userId",
-  "_COMMAND_LOADMINIAPP_ENTRY": "entry",
-  "_COMMAND_CREATEDATA": "saveData",
-  "_COMMAND_CREATEDATA_USERID": "userId",
-  "_COMMAND_CREATEDATA_APPID": "appId",
-  "_COMMAND_CREATEDATA_DATANAME": "dataName",
-  "_COMMAND_CREATEDATA_DATAINFO": "dataInfo",
-  "_COMMAND_UPDATEDATA": "updateData",
-  "_COMMAND_UPDATEDATA_ID": "id",
-  "_COMMAND_UPDATEDATA_DATAINFO": "dataInfo",
-  "_COMMAND_DELETEDATA": "deleteData",
-  "_COMMAND_DELETEDATA_DATATYPE": "dataType",
-  "_COMMAND_DELETEDATA_ID": "id"
+  "USERINFO_GROUP": "group",
+  "USERINFO_MINIAPP": "miniApp",
+  "USERINFO_GROUPMINIAPP": "groupMiniApp"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

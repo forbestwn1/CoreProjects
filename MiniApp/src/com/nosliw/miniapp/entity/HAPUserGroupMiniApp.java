@@ -21,7 +21,7 @@ public class HAPUserGroupMiniApp extends HAPSerializableImp{
 	public static String GROUP = "group";
 
 	@HAPAttribute
-	public static String MINIAPPS = "miniApps";
+	public static String MINIAPP = "miniApp";
 
 	private HAPGroup m_group;
 	
@@ -37,7 +37,7 @@ public class HAPUserGroupMiniApp extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(GROUP, HAPJsonUtility.buildJson(m_group, HAPSerializationFormat.JSON));
-		jsonMap.put(MINIAPPS, HAPJsonUtility.buildJson(m_miniApps, HAPSerializationFormat.JSON));
+		jsonMap.put(MINIAPP, HAPJsonUtility.buildJson(m_miniApps, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public class HAPUserGroupMiniApp extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		JSONObject groupJsonObj = jsonObj.optJSONObject(GROUP);
 		this.m_group = (HAPGroup)HAPSerializeManager.getInstance().buildObject(HAPGroup.class.getName(), groupJsonObj, HAPSerializationFormat.JSON);
-		this.m_miniApps = HAPSerializeUtility.buildListFromJsonArray(HAPMiniApp.class.getName(), jsonObj.optJSONArray(MINIAPPS));
+		this.m_miniApps = HAPSerializeUtility.buildListFromJsonArray(HAPMiniApp.class.getName(), jsonObj.optJSONArray(MINIAPP));
 		return true;
 	}
 

@@ -17,6 +17,8 @@ var packageObj = library.getChildPackage("module.userapps");
 	var node_makeObjectWithLifecycle;
 	var node_createMiniAppService;
 	var node_miniAppUtility;
+	var node_createComponentGroup;
+	var node_createComponentMiniApp;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "userApps";
@@ -25,14 +27,8 @@ var node_createModuleUserApps = function(){
 
 	var loc_vueModel = {
 		userInfo : {
-			groups : [
-				{
-					name : "name1"
-				},
-				{
-					name : "name2"
-				}
-			]
+			group : [],
+			miniApp : []
 		}
 	};
 	
@@ -40,12 +36,24 @@ var node_createModuleUserApps = function(){
 		data : function(){
 			return loc_vueModel;
 		},
+		components : {
+			group : node_createComponentGroup(),
+			miniapp : node_createComponentMiniApp()
+		},
 		template : `
 			<div>
-				<p v-for="group in userInfo.groups">
-					{{group.name}}
-				</p>
+				<group 
+					v-for="groupMiniApp in userInfo.groupMiniApp"
+					v-bind:group="groupMiniApp.group"
+					v-bind:miniapps="groupMiniApp.miniApp"
+				>
+				</group>
 			
+				<miniapp 
+					v-for="miniapp in userInfo.miniApp"
+					v-bind:miniapp="miniapp"
+				>
+				</miniapp>
 			</div>
 		`
 	};
@@ -113,7 +121,8 @@ nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.createMiniAppService", function(){node_createMiniAppService = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.utility", function(){node_miniAppUtility = this.getData();});
-
+nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createComponentGroup", function(){node_createComponentGroup = this.getData();});
+nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createComponentMiniApp", function(){node_createComponentMiniApp = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleUserApps", node_createModuleUserApps); 
