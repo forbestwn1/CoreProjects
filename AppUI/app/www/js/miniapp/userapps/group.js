@@ -27,6 +27,14 @@ var node_createComponentGroup = function(){
 		methods : {
 			onSelectMiniApp : function(miniAppId){
 				console.log(miniAppId);
+			},
+			onDeleteMiniApp : function(miniAppId){
+				for(var i in this.miniapps){
+					if(miniAppId==this.miniapps[i].id){
+						break;
+					}
+				}
+				this.miniapps.splice(i, 1);
 			}
 		},
 		template :
@@ -43,6 +51,7 @@ var node_createComponentGroup = function(){
 						v-for="miniapp in miniapps"
 						v-bind:miniapp="miniapp"
 						v-on:selectMiniApp="onSelectMiniApp"
+						v-on:deleteMiniApp="onDeleteMiniApp"
 					>
 					</miniapp>
 			    </div>
