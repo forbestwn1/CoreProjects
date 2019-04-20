@@ -109,7 +109,7 @@ function(gate){
 				_.each(loc_uiModule.getUIs(), function(ui, index){
 					var uiPageContainer = $("<div class='page stacked' data-name="+ui.getName()+"/>"); 
 					ui.getPage().appendTo(uiPageContainer);
-					uiPageContainer.appendTo(loc_gate.getConfigure().root);
+					uiPageContainer.appendTo(loc_gate.getConfigureData().root);
 				});
 				
 				//view configure
@@ -128,7 +128,7 @@ function(gate){
 					viewConfigure.routes.push(route);
 				});
 
-				loc_view = loc_gate.getConfigure().app.views.create(loc_gate.getConfigure().root, viewConfigure);
+				loc_view = loc_gate.getConfigureData().app.views.create(loc_gate.getConfigureData().root, viewConfigure);
 
 				out.executeSuccessHandler();
 			}));

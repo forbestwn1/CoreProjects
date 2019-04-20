@@ -44,7 +44,7 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 		
 		for(var i in componentDecorationInfos){
 			var componentDecorationInfo = componentDecorationInfos[i];
-			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, loc_processEnv, loc_configure, loc_state);
+			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, loc_processEnv, loc_configure.getConfigureData(componentDecorationInfo.name), loc_state);
 			loc_moduleComplex.push(decoration);
 			if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
 		}
@@ -53,7 +53,7 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 	};
 
 	var loc_getStateData = function(){  
-		var storeData = loc_configure.getConfigure().__store.retrieveData("module", loc_id);
+		var storeData = loc_configure.getConfigureData().__store.retrieveData("module", loc_id);
 		if(storeData==undefined)   return;
 		if(storeData.version!=loc_version){
 			loc_clearStateData();
@@ -66,10 +66,10 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 			version : loc_version,
 			data : stateData
 		};
-		loc_configure.getConfigure().__store.saveData("module", loc_id, storeData);  
+		loc_configure.getConfigureData().__store.saveData("module", loc_id, storeData);  
 	};
 	var loc_clearStateData = function(){  
-		loc_configure.getConfigure().__store.clearData("module", loc_id);  
+		loc_configure.getConfigureData().__store.clearData("module", loc_id);  
 	};
 	
 	var loc_getCurrentModuleFacad = function(){   return loc_moduleComplex[loc_moduleComplex.length-1];  };

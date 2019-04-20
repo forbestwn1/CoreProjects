@@ -91,7 +91,7 @@ var node_createConfigure = function(value){
 	
 	var loc_out = {
 		
-		getConfigure : function(component){
+		getConfigureData : function(component){
 			var out = {};
 			if(component!=undefined)	_.extend(out, loc_configure.global, loc_configure.components==undefined?undefined : loc_configure.components[component]);
 			else  _.extend(out, loc_configure.global);

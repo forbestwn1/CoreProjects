@@ -40,7 +40,7 @@ var node_createUIModuleService = function(){
 			}
 
 			var decFacResourcesInfo = [];
-			var componentDecorationFactorys = configure.getConfigure().moduleDecoration;
+			var componentDecorationFactorys = configure.getConfigureData().moduleDecoration;
 			if(componentDecorationFactorys!=undefined){
 				_.each(componentDecorationFactorys, function(decFacDef, i){
 					var decFacInfo = {};

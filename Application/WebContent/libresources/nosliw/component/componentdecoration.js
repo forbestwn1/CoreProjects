@@ -14,10 +14,10 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createComponentDecoration = function(id, child, coreGenerator, processEnv, configure, state){
+var node_createComponentDecoration = function(id, child, coreGenerator, processEnv, configureData, state){
 	
 	var loc_id = id;
-	var loc_configure = configure;
+	var loc_configureData = configureData;
 	var loc_state = state;
 	var loc_processEnv = processEnv;
 	
@@ -52,7 +52,7 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 		
 		getComponent : function(){   return loc_component;		},
 		
-		getConfigure : function(){  return loc_configure.getConfigure(loc_id);	},
+		getConfigureData : function(){  return loc_configureData;	},
 		
 		getStateValue : function(name){  return loc_state.getStateValue(loc_id, name);	},
 		

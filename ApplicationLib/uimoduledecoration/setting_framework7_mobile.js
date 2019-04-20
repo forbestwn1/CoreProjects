@@ -27,7 +27,7 @@ function(gate){
 			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 				//put ui to root
 				_.each(loc_uiModule.getUIs(), function(ui, index){
-					ui.getPage().appendTo(loc_gate.getConfigure().root);
+					ui.getPage().appendTo(loc_gate.getConfigureData().root);
 				});
 				
 				out.executeSuccessHandler();
