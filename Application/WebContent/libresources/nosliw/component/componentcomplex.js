@@ -60,7 +60,7 @@ var node_createComponentComplex = function(configure){
 		
 		getAllStateData : function(){   return loc_state.getAllState();   },
 		clearState : function(){   loc_state.clear();   },	
-		setAllStateData : function(stateData){  loc_state.setAllState(stateData.state)  },
+		setAllStateData : function(stateData){  loc_state.setAllState(stateData)  },
 		
 		getInitRequest : function(handlers, request){  return loc_getLifeCycleRequest("getInitRequest", handlers, request);  },
 		getStartRequest : function(handlers, request){  return loc_getLifeCycleRequest("getStartRequest", handlers, request);  },
