@@ -10,38 +10,6 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createState = function(){
-	var loc_state = {};
-	
-	var loc_out = {
-		
-		getAllState : function(){   return loc_state;   },
-		setAllState : function(state){  loc_state = state; },
-		
-		getState : function(component){
-			var out = loc_state[component];
-			if(out==undefined){
-				out = {};
-				loc_state[component] = out;
-			}
-			return out;
-		},
-		
-		getStateValue : function(component, name){
-			return loc_out.getState(component)[name];
-		},
-		
-		setStateValue : function(component, name, value){
-			loc_out.getState(component)[name] = value;
-		},
-		
-		clear : function(){
-			loc_state = {};
-		}
-	};
-	return loc_out;
-};
-	
 var node_createConfigure = function(value){
 	
 	if(value!=undefined){
@@ -91,7 +59,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createState", node_createState); 
 packageObj.createChildNode("createConfigure", node_createConfigure); 
 packageObj.createChildNode("commandResult", node_commandResult); 
 packageObj.createChildNode("commandRequestInfo", node_commandRequestInfo); 
