@@ -15,43 +15,36 @@ var packageObj = library.getChildPackage("service");
 var node_createUIAppService = function(){
 	
 	var loc_out = {
-			
-		getGetUIAppEntryRuntimeRequest : function(id, appEntryId, configure, ioInput, handlers, requester_parent){
+
+		getGetUIAppEntryRuntimeRequest : function(id, app, configure, ioInput, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIAppResource"), handlers, request);
+
 			configure = node_createConfigure(configure);
-
-			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetUIAppRuntime", {}), handlers, requestInfo);
-
-			var appEntryResourceId = {};
-			appEntryResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = appEntryId; 
-			appEntryResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY; 
-
-//			var appConfigureResourceId = {};
-//			appConfigureResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = appConfigureId; 
-//			appConfigureResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE; 
-			
-			//load ui module resource and env factory resource
-			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest([appEntryResourceId, appConfigureResourceId], {
-				success : function(requestInfo, resourceTree){
-					var appEntryDef = node_resourceUtility.getResourceFromTree(resourceTree, appEntryResourceId).resourceData;
-//					var appConfigure = node_resourceUtility.getResourceFromTree(resourceTree, appConfigureResourceId).resourceData;
-					
-					//create ui app runtime
-					return node_createAppRuntimeRequest(appEntryDef, appConfigure, appConfigure, {
-						success : function(request, uiAppRuntime){
-//							return uiAppRuntime.getInitRequest({
-//								success :function(request, data){
-//									return uiAppRuntime;
-//								}
-//							});
-						}
-					});
-				}
-			}));
+			var componentDecorationInfo = configure.getConfigureData().appDecoration;
+			out.addRequest(node_loadComponentResourceRequest(
+				typeof app === 'string'? 
+					{
+						id : app,
+						type : node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY
+					} : app, 
+				componentDecorationInfo==undefined?undefined:
+					{
+						decoration : componentDecorationInfo,
+						type : node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPDECORATION
+					},
+				{
+					success : function(request, componentInfo){
+						//create ui module runtime
+						return node_createAppRuntimeRequest(id, componentInfo.component, configure, componentInfo.decoration, ioInput, {
+							success : function(request, uiAppRuntime){
+								return uiAppRuntime;
+							}
+						});
+					}
+				}));
 			
 			return out;
-			
-		},	
+		},			
 			
 		executeGetUIAppEntryRuntimeRequest : function(id, appEntryId, appConfigureId, appStatelessData, handlers, requester_parent){
 			var requestInfo = this.getGetUIAppEntryRuntimeRequest(id, appEntryId, appConfigureId, appStatelessData, handlers, requester_parent);
@@ -75,7 +68,7 @@ nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-
+nosliw.registerSetNodeDataEvent("component.loadComponentResourceRequest", function(){node_loadComponentResourceRequest = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIAppService", node_createUIAppService); 

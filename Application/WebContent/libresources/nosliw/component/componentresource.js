@@ -43,6 +43,7 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationInfo, 
 				decFacInfo.id = decFacDef.id;
 				decFacInfo.name = decFacDef.name;
 				decFacInfo.coreFun = decFacDef.coreFun;
+				if(decFacInfo.name==undefined)  decFacInfo.name = decFacInfo.id;
 			}
 			decorationFactoryInfos.push(decFacInfo);
 

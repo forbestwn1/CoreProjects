@@ -12,8 +12,13 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createAppRuntimeRequest = function(id, appDef, appDecorationFac, configure, ioInput, handlers, request){
-	loc_appDefinition(appDef, ioInput);
+var node_createAppRuntimeRequest = function(id, appDef, configure, componentDecorationInfos, ioInput, handlers, request){
+	var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("createUIModule"), function(request){
+		var app = node_createApp(appDef, ioInput);
+		var runtime = node_createAppRuntime(id, app, configure, componentDecorationInfos);
+		return runtime;
+	}, handlers, request);
+	return out;
 };
 	
 var node_createAppRuntime = function(id, uiApp, configure, componentDecorationInfos){
@@ -43,6 +48,25 @@ var node_createAppRuntime = function(id, uiApp, configure, componentDecorationIn
 	var loc_getExecuteAppProcessByNameRequest = function(processName, extraInput, handlers, request){
 		var process = loc_getApp().getProcess(processName);
 		if(process!=undefined)  return loc_getExecuteAppProcessRequest(process, extraInput, handlers, request);
+	};
+
+	var loc_getGoActiveRequest = function(request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
+		//start module
+		out.addRequest(loc_componentComplex.getStartRequest());
+		out.addRequest(loc_getExecuteModuleProcessByNameRequest("active"));
+		return out;
+	};
+
+	
+	
+	var lifecycleCallback = {};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
+		var out;
+		var stateData = loc_stateBackupService.getBackupData();
+		if(stateData==undefined)	out = loc_getGoActiveRequest(request);
+		else	out = loc_getResumeActiveRequest(stateData, request);
+		return out;
 	};
 
 	

@@ -542,6 +542,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULE" value="uiModule"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION" value="uiModuleDecoration"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPENTRY" value="uiAppEntry"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPDECORATION" value="uiAppDecoration"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE" value="uiAppConfigure"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESS" value="process"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
