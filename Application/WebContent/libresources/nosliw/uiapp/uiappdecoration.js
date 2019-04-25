@@ -8,10 +8,8 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-	
-	
-var node_createAppDecoration = function(app, appDef, appDataService, configure){
-	
+var node_createAppDecoration = function(gate){
+
 	var loc_appDefinition = appDef;
 	
 	var loc_applicationDataService = appDataService;
@@ -33,8 +31,7 @@ var node_createAppDecoration = function(app, appDef, appDataService, configure){
 	};
 	
 	return loc_out;
-};	
-	
+};
 	
 	
 //*******************************************   End Node Definition  ************************************** 	
@@ -44,6 +41,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 
 //Register Node by Name
-//packageObj.createChildNode("createAppRuntimeRequest", node_createAppRuntimeRequest); 
+packageObj.createChildNode("createAppDecoration", node_createAppDecoration); 
 
 })(packageObj);

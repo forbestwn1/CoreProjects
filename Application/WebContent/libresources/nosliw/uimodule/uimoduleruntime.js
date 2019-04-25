@@ -35,39 +35,15 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 	
 	var loc_id = id;
 	var loc_version = "1.0.0";
-	var loc_moduleComplex = [];
 	var loc_componentComplex = node_createComponentComplex(configure);
-	var loc_localStore = configure.getConfigureData().__store;
+	var loc_localStore = configure.getConfigureData().__storeService;
 	var loc_stateBackupService = node_createStateBackupService("module", loc_id, loc_version, loc_localStore);
 
 	var loc_init = function(uiModule, configure, componentDecorationInfos){
 		loc_componentComplex.addComponent(uiModule);
-		
 		loc_componentComplex.addDecorations(componentDecorationInfos);
+	};
 
-//		loc_getCurrentModuleFacad().registerEventListener(undefined, function(eventName, eventData, request){});
-	};
-/*
-	var loc_getStateData = function(){  
-		var storeData = loc_localStore.retrieveData("module", loc_id);
-		if(storeData==undefined)   return;
-		if(storeData.version!=loc_version){
-			loc_clearStateData();
-			return;
-		}
-		return storeData.data;
-	};
-	var loc_saveStateData = function(stateData){
-		var storeData = {
-			version : loc_version,
-			data : stateData
-		};
-		loc_localStore.saveData("module", loc_id, storeData);  
-	};
-	var loc_clearStateData = function(){  
-		loc_localStore.clearData("module", loc_id);  
-	};
-	*/
 	var loc_getIOContext = function(){  return loc_getModule().getIOContext();   };
 	
 	var loc_getModule = function(){  return loc_componentComplex.getComponent();   };
@@ -157,9 +133,9 @@ var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorat
 			
 		getModule : function(){  return loc_getModule();  },
 
-		registerEventListener : function(listener, handler, thisContext){	return loc_getCurrentModuleFacad().registerEventListener(listener, handler, thisContext);	},
+		registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
 		
-		getExecuteCommandRequest : function(command, parms, handlers, request){	return loc_getCurrentModuleFacad().getExecuteCommandRequest(command, parms, handlers, request);	}
+		getExecuteCommandRequest : function(command, parms, handlers, request){	return loc_componentComplex.getExecuteCommandRequest(command, parms, handlers, request);	}
 		
 	};
 	

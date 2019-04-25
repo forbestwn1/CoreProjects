@@ -10,6 +10,7 @@ var packageObj = library;
 	var node_createComponentDecoration;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
+	var node_createEventObject;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -20,6 +21,9 @@ var node_createComponentComplex = function(configure){
 	var loc_state = node_createState();
 	var loc_parts = [];
 	var loc_interface = {};
+
+	var loc_eventSource = node_createEventObject();
+	var loc_eventListener = node_createEventObject();
 	
 	var loc_getCurrentFacad = function(){   return loc_parts[loc_parts.length-1];  };
 	
@@ -36,11 +40,19 @@ var node_createComponentComplex = function(configure){
 		return out;
 	}
 	
-	
+	var loc_unregisterPartListener = function(part){	part.unregisterEventListener(loc_eventListener);	};
+
+	var loc_registerPartListener = function(part){
+		part.registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
+			loc_eventSource.triggerEvent(event, eventData, requestInfo);
+		});
+	}
+
 	var loc_out = {
 		
 		addComponent : function(component){
 			loc_parts.push(component);
+			loc_registerPartListener(component);
 		},
 		
 		addDecorations : function(componentDecorationInfos){
@@ -48,8 +60,10 @@ var node_createComponentComplex = function(configure){
 		},
 
 		addDecoration : function(componentDecorationInfo){
+			var current = loc_getCurrentFacad();
+			loc_unregisterPartListener(current);
 			var decName = componentDecorationInfo.name;
-			var decoration = node_createComponentDecoration(decName, loc_getCurrentFacad(), componentDecorationInfo.coreFun, loc_interface, loc_configure.getConfigureData(decName), loc_state);
+			var decoration = node_createComponentDecoration(decName, current, componentDecorationInfo.coreFun, loc_interface, loc_configure.getConfigureData(decName), loc_state);
 			loc_parts.push(decoration);
 			if(decoration.getInterface!=undefined)	_.extend(loc_interface, decoration.getInterface());
 		},
@@ -57,6 +71,11 @@ var node_createComponentComplex = function(configure){
 		getInterface : function(){  return loc_interface;   },
 		
 		getComponent : function(){   return loc_getComponent();    },
+		
+		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
+
+		getExecuteCommandRequest : function(command, parms, handlers, request){	return loc_getCurrentFacad().getExecuteCommandRequest(command, parms, handlers, request);	},
 		
 		getAllStateData : function(){   return loc_state.getAllState();   },
 		clearState : function(){   loc_state.clear();   },	
@@ -82,6 +101,7 @@ nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_cre
 nosliw.registerSetNodeDataEvent("component.createComponentDecoration", function(){node_createComponentDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentComplex", node_createComponentComplex); 

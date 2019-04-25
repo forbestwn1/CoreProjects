@@ -59,7 +59,7 @@ $(document).on("nosliwActive", function(){
 			root : $('#moduleDiv').get(),
 			decoration : decorations,
 			moduleDecoration : ["base", "uidecoration", moduleDecId],
-			__store :{
+			__storeService :{
 				saveData : function(categary, id, data){
 					localStorage.setItem(categary+"_"+id, JSON.stringify(data));
 				},

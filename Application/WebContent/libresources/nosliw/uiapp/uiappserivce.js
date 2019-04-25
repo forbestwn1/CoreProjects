@@ -16,7 +16,9 @@ var node_createUIAppService = function(){
 	
 	var loc_out = {
 			
-		getGetUIAppEntryRuntimeRequest : function(id, appEntryId, appConfigure, ioInput, handlers, requester_parent){
+		getGetUIAppEntryRuntimeRequest : function(id, appEntryId, configure, ioInput, handlers, requester_parent){
+			configure = node_createConfigure(configure);
+
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetUIAppRuntime", {}), handlers, requestInfo);
 

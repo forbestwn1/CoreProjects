@@ -16,41 +16,43 @@ var node_createAppRuntimeRequest = function(id, appDef, appDecorationFac, config
 	loc_appDefinition(appDef, ioInput);
 };
 	
-var node_createAppRuntime = function(id, app, configure, componentDecorationInfos){
+var node_createAppRuntime = function(id, uiApp, configure, componentDecorationInfos){
 	
 	var loc_id = id;
 	var loc_version = "1.0.0";
-	var loc_appComplex = [];
-	var loc_processEnv = {};
-	var loc_state = node_createState();
-	var loc_configure;
-	var loc_applicationDataService;
+	var loc_componentComplex = node_createComponentComplex(configure);
+	var loc_localStore = configure.getConfigureData().__storeService;
+	var loc_applicationDataService = configure.getConfigureData().__appDataService;
+	var loc_stateBackupService = node_createStateBackupService("app", loc_id, loc_version, loc_localStore);
 	
-	var loc_init = function(app, configure, componentDecorationInfos){
-		loc_configure = configure;
-		loc_appComplex.push(app);
-		
-		for(var i in componentDecorationInfos){
-			var componentDecorationInfo = componentDecorationInfos[i];
-			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_appComplex[i], componentDecorationInfo.coreFun, loc_processEnv, loc_configure, loc_state);
-			loc_appComplex.push(decoration);
-			if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
-		}
-		
-		loc_getCurrentModuleFacad().registerEventListener(undefined, function(eventName, eventData, request){});
-
-	};	
-	
-	var loc_executeProcess = function(){
-		
+	var loc_init = function(uiApp, configure, componentDecorationInfos){
+		loc_componentComplex.addComponent(uiApp);
+		loc_componentComplex.addDecorations(componentDecorationInfos);
 	};
 	
+	var loc_getIOContext = function(){  return loc_getApp().getIOContext();   };
 	
+	var loc_getApp = function(){  return loc_componentComplex.getComponent();   };
+	
+	var loc_getProcessEnv = function(){   return loc_componentComplex.getInterface();    };
+	
+	var loc_getExecuteAppProcessRequest = function(process, extraInput, handlers, request){
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteProcessRequest(process, loc_getApp().getIOContext(), extraInput, handlers, request);
+	};
+	
+	var loc_getExecuteAppProcessByNameRequest = function(processName, extraInput, handlers, request){
+		var process = loc_getApp().getProcess(processName);
+		if(process!=undefined)  return loc_getExecuteAppProcessRequest(process, extraInput, handlers, request);
+	};
+
 	
 	var loc_out = {
 		
 	};
 	
+	loc_init(uiApp, configure, componentDecorationInfos);
+	
+	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback);
 	return loc_out;
 };
 	

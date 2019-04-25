@@ -49,6 +49,8 @@ var node_createApp = function(appDef, ioInput){
 			ioContext : node_createIODataSet(),
 		},
 			
+		getIOContext : function(){  return loc_out.prv_app.ioContext;  },
+		
 		getPart : function(partId){		return loc_partMatchers.match(partId);	},
 		
 		addModule : function(role, module, version){
@@ -80,10 +82,6 @@ var node_createApp = function(appDef, ioInput){
 		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
-		
-//		getEventProcess : function(eventName){
-//			return loc_out.prv_app.appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][eventName];
-//		}
 		
 	};
 	return loc_out;

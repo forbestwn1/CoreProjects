@@ -41,14 +41,30 @@ $(document).on("nosliwActive", function(){
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-
+	var node_appDataService = nosliw.getNodeData("uiapp.appDataService");
+	var node_createAppDecoration = nosliw.getNodeData("uiapp.createAppDecoration");
+	
     // Our initialization code here
 	var currentSearchString = window.location.search;
 	var appEntryId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 
 	var configure = {
 		global : {
-			appDataService : {}
+			appDecoration : [node_createAppDecoration],
+			__appDataService : node_appDataService,
+			__storeService :{
+				saveData : function(categary, id, data){
+					localStorage.setItem(categary+"_"+id, JSON.stringify(data));
+				},
+				
+				retrieveData : function(categary, id){
+					return JSON.parse(localStorage.getItem(categary+"_"+id));
+				},
+				
+				clearData : function(categary, id){
+					return localStorage.removeItem(categary+"_"+id);
+				}
+			}
 		},
 		components : {
 			application : {
