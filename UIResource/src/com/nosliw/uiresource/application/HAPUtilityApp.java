@@ -17,4 +17,5 @@ public class HAPUtilityApp {
 		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
 		return out;
 	}
+
 }

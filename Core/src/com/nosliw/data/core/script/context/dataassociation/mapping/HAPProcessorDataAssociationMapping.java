@@ -2,6 +2,7 @@ package com.nosliw.data.core.script.context.dataassociation.mapping;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstant;
@@ -36,12 +37,12 @@ public class HAPProcessorDataAssociationMapping {
 		HAPDefinitionDataAssociationMapping dataAssociation = (HAPDefinitionDataAssociationMapping)out.getDefinition();
 		Map<String, HAPContext> associations = dataAssociation.getAssociations();
 		for(String targetName : associations.keySet()) {
-			HAPExecutableAssociation associationExe = processAssociation(input, associations.get(targetName), output.getContext(targetName), daProcessConfigure, out.getProcessConfigure(), contextProcessRequirement);
+			HAPExecutableAssociation associationExe = processAssociation(input, associations.get(targetName), output.getContext(targetName), out.getInputDependency(), daProcessConfigure, out.getProcessConfigure(), contextProcessRequirement);
 			out.addAssociation(targetName, associationExe);
 		}
 	}
 	
-	private static HAPExecutableAssociation processAssociation(HAPParentContext input, HAPContext associationDef, HAPContextStructure outputStructure, HAPInfo daProcessConfigure, HAPConfigureContextProcessor processConfigure, HAPRequirementContextProcessor contextProcessRequirement) {
+	private static HAPExecutableAssociation processAssociation(HAPParentContext input, HAPContext associationDef, HAPContextStructure outputStructure, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPConfigureContextProcessor processConfigure, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableAssociation out = new HAPExecutableAssociation(input, associationDef, outputStructure);
 
 		if(outputStructure instanceof HAPContextGroup) {
@@ -58,7 +59,7 @@ public class HAPProcessorDataAssociationMapping {
 		}
 		
 		//process mapping
-		HAPContext daContextProcessed = HAPProcessorContext.process(associationDef, input, processConfigure, contextProcessRequirement);
+		HAPContext daContextProcessed = HAPProcessorContext.process(associationDef, input, parentDependency, processConfigure, contextProcessRequirement);
 		out.setMapping(daContextProcessed);
 		buildPathMappingInDataAssociation(out);
 

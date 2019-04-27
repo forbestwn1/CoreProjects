@@ -10,16 +10,24 @@ var packageObj = library;
 
 var node_createAppDecoration = function(gate){
 
-	var loc_appDefinition = appDef;
-	
-	var loc_applicationDataService = appDataService;
-	
-	var loc_configure = configure;
-	
-	var loc_app = app;
+//	var loc_appDefinition = appDef;
+//	
+//	var loc_applicationDataService = appDataService;
+//	
+//	var loc_configure = configure;
+//	
+//	var loc_app = app;
 	
 	var loc_out = {
-		
+			
+		getInitRequest : function(handlers, request){
+			
+		},
+
+		getStartRequest : function(handlers, request){
+			
+		},
+			
 		getInterface : function(){
 			
 		},

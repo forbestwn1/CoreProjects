@@ -40,8 +40,8 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	public static String PROCESS = "process";
 	
 	@HAPAttribute
-	public static String DATADEFINITION = "dataDefinition";
-	  
+	public static String APPLICATIONDATA = "applicationData";
+
 	@HAPAttribute
 	public static String INITSCRIPT = "initScript";
 	
@@ -53,13 +53,13 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 
 	private HAPContextGroup m_context;
 	
-	private Map<String, HAPContext> m_dataDefinition;
+	private Map<String, HAPContext> m_applicationData;
 
 	public HAPExecutableAppEntry(String entryName, HAPDefinitionApp appDef) {
 		super(appDef.getEntry(entryName));
 		this.m_processes = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
 		this.m_modules = new LinkedHashMap<String, HAPExecutableAppModule>();
-		this.m_dataDefinition = new LinkedHashMap<String, HAPContext>();
+		this.m_applicationData = new LinkedHashMap<String, HAPContext>();
 	}
 
 	public String getId() {  return this.m_id;   }
@@ -68,11 +68,11 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	public HAPContextGroup getContext() {   return this.m_context;   }
 	public void setContext(HAPContextGroup context) {   this.m_context = context;  }
 
-	public void addDataDefinition(String dataName, HAPContext dataDef) {  this.m_dataDefinition.put(dataName, dataDef);   }
+	public void addApplicationData(String dataName, HAPContext dataDef) {  this.m_applicationData.put(dataName, dataDef);   }
 	public Map<String, HAPContextStructure> getExtraContext(){  
 		Map<String, HAPContextStructure> out = new LinkedHashMap<String, HAPContextStructure>();
-		for(String dataName : this.m_dataDefinition.keySet()) {
-			out.put("appdata_"+dataName, this.m_dataDefinition.get(dataName));
+		for(String dataName : this.m_applicationData.keySet()) {
+			out.put(APPLICATIONDATA+"."+dataName, this.m_applicationData.get(dataName));
 		}
 		return out;
 	}
@@ -88,7 +88,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 		jsonMap.put(MODULE, HAPSerializeManager.getInstance().toStringValue(this.m_modules, HAPSerializationFormat.JSON));
 		jsonMap.put(CONTEXT, HAPSerializeManager.getInstance().toStringValue(this.m_context, HAPSerializationFormat.JSON));
 		jsonMap.put(PROCESS, HAPSerializeManager.getInstance().toStringValue(this.m_processes, HAPSerializationFormat.JSON));
-		jsonMap.put(DATADEFINITION, HAPSerializeManager.getInstance().toStringValue(this.m_dataDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(APPLICATIONDATA, HAPSerializeManager.getInstance().toStringValue(this.m_applicationData, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

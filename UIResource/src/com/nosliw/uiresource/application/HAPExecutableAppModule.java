@@ -1,9 +1,11 @@
 package com.nosliw.uiresource.application;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -38,7 +40,7 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	public static final String OUTPUTMAPPING = "outputMapping";
 
 	@HAPAttribute
-	public static final String APPDATA = "appData";
+	public static final String DATADEPENDENCY = "dataDependency";
 
 	private HAPExecutableModule m_module;
 	
@@ -48,21 +50,27 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 
 	private HAPDefinitionAppModule m_definition;
 	
-	private List<String> m_appDataNames;
+	private Set<String> m_dataDependency;
 	
 	public HAPExecutableAppModule(HAPDefinitionAppModule def) {
 		super(def);
 		this.m_definition = def;
 		this.m_inputMapping = new HAPExecutableGroupDataAssociation();
 		this.m_outputMapping = new HAPExecutableGroupDataAssociation();
-		this.m_appDataNames = new ArrayList<String>();
+		this.m_dataDependency = new HashSet<String>();
 	}
 
 	public void setModule(HAPExecutableModule module) {  this.m_module = module;  }
 	
-	public void addInputDataAssociation(String name, HAPExecutableDataAssociation dataAssociation) {    this.m_inputMapping.addDataAssociation(name, dataAssociation);   }
+	public void addInputDataAssociation(String name, HAPExecutableDataAssociation dataAssociation) {    
+		this.m_inputMapping.addDataAssociation(name, dataAssociation);
+		this.m_dataDependency.addAll(dataAssociation.getInput().getNames());
+	}
 	
 	public void addOutputDataAssociation(String name, HAPExecutableDataAssociation dataAssociation) {   this.m_outputMapping.addDataAssociation(name, dataAssociation);  }
+	
+	public void addDataDependency(String name) {   this.m_dataDependency.add(name);  }
+	public void addDataDependency(Set<String> names) {   this.m_dataDependency.addAll(names);  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
@@ -72,7 +80,7 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 		jsonMap.put(MODULE, HAPJsonUtility.buildJson(this.m_module, HAPSerializationFormat.JSON));
 		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
-		jsonMap.put(APPDATA, HAPJsonUtility.buildJson(this.m_appDataNames, HAPSerializationFormat.JSON));
+		jsonMap.put(DATADEPENDENCY, HAPJsonUtility.buildJson(this.m_dataDependency, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

@@ -1,7 +1,9 @@
 package com.nosliw.data.core.script.context.dataassociation.mapping;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -21,11 +23,25 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	
 	private HAPConfigureContextProcessor m_processConfigure;
 	
+	private Set<String> m_inputDependency;
+	
 	public HAPExecutableDataAssociationMapping(HAPDefinitionDataAssociationMapping definition, HAPParentContext input) {
 		super(definition, input);
 		this.m_associations = new LinkedHashMap<String, HAPExecutableAssociation>();
+		this.m_inputDependency = new HashSet<String>();
 	}
 	
+	public Set<String> getInputDependency(){   return this.m_inputDependency;    }
+	
+	@Override
+	public HAPParentContext getInput() {
+		HAPParentContext out = new HAPParentContext();
+		for(String dependencyName : this.m_inputDependency) {
+			out.addContext(dependencyName, super.getInput().getContext(dependencyName));
+		}
+		return out;
+	}
+
 	@Override
 	public HAPOutputStructure getOutput() {
 		HAPOutputStructure out = new HAPOutputStructure();

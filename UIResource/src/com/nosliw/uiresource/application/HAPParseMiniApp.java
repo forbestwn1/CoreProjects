@@ -46,7 +46,7 @@ public class HAPParseMiniApp {
 
 		out.buildEntityInfoByJson(jsonObj);
 		out.setId(jsonObj.optString(HAPDefinitionApp.ID));
-		out.setDataDefinition(HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(HAPDefinitionApp.APPLICATIONDATA)));
+		out.setApplicationData(HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(HAPDefinitionApp.APPLICATIONDATA)));
 		out.setContext(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionApp.CONTEXT))); 
 
 		JSONArray entryArray = jsonObj.optJSONArray(HAPDefinitionApp.ENTRY);

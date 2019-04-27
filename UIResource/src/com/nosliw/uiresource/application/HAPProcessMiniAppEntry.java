@@ -62,9 +62,9 @@ public class HAPProcessMiniAppEntry {
 		out.setContext(HAPProcessorContext.process(entryDefinition.getContext(), HAPParentContext.createDefault(miniAppDef.getContext()), contextProcessConfg, contextProcessRequirement));
 
 		//data definition
-		Map<String, HAPDefinitionAppData> dataDefs = miniAppDef.getDataDefinition();
+		Map<String, HAPDefinitionAppData> dataDefs = miniAppDef.getApplicationData();
 		for(String dataDefName : dataDefs.keySet()) { 
-			 out.addDataDefinition(dataDefName, HAPProcessorContext.process(dataDefs.get(dataDefName), HAPParentContext.createDefault(miniAppDef.getContext()), contextProcessConfg, contextProcessRequirement));
+			 out.addApplicationData(dataDefName, HAPProcessorContext.process(dataDefs.get(dataDefName), HAPParentContext.createDefault(miniAppDef.getContext()), contextProcessConfg, contextProcessRequirement));
 		}
 		
 		//process

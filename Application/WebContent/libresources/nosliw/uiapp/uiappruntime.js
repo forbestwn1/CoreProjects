@@ -9,7 +9,11 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
-	
+	var node_createApp;
+	var node_createComponentComplex;
+	var node_makeObjectWithComponentLifecycle;
+	var node_createStateBackupService;
+
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createAppRuntimeRequest = function(id, appDef, configure, componentDecorationInfos, ioInput, handlers, request){
@@ -54,7 +58,7 @@ var node_createAppRuntime = function(id, uiApp, configure, componentDecorationIn
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
 		//start module
 		out.addRequest(loc_componentComplex.getStartRequest());
-		out.addRequest(loc_getExecuteModuleProcessByNameRequest("active"));
+		out.addRequest(loc_getExecuteAppProcessByNameRequest("active"));
 		return out;
 	};
 
@@ -62,11 +66,7 @@ var node_createAppRuntime = function(id, uiApp, configure, componentDecorationIn
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
-		var out;
-		var stateData = loc_stateBackupService.getBackupData();
-		if(stateData==undefined)	out = loc_getGoActiveRequest(request);
-		else	out = loc_getResumeActiveRequest(stateData, request);
-		return out;
+		return loc_getGoActiveRequest(request);
 	};
 
 	
@@ -91,8 +91,12 @@ nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("uiapp.createApp", function(){node_createApp = this.getData();	});
+nosliw.registerSetNodeDataEvent("component.createComponentComplex", function(){node_createComponentComplex = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 
 //Register Node by Name
-//packageObj.createChildNode("createAppRuntimeRequest", node_createAppRuntimeRequest); 
+packageObj.createChildNode("createAppRuntimeRequest", node_createAppRuntimeRequest); 
 
 })(packageObj);

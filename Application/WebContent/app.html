@@ -43,14 +43,19 @@ $(document).on("nosliwActive", function(){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_appDataService = nosliw.getNodeData("uiapp.appDataService");
 	var node_createAppDecoration = nosliw.getNodeData("uiapp.createAppDecoration");
-	
+	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
+
     // Our initialization code here
 	var currentSearchString = window.location.search;
 	var appEntryId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 
 	var configure = {
 		global : {
-			appDecoration : [node_createAppDecoration],
+			appDecoration : [
+				{
+					coreFun: node_createAppDecoration,
+					id : "application"
+				}],
 			__appDataService : node_appDataService,
 			__storeService :{
 				saveData : function(categary, id, data){
@@ -81,7 +86,7 @@ $(document).on("nosliwActive", function(){
 							"root" : $('#settingModuleDiv').get(),
 							"uiDecorations" : ["Decoration_setting_framework7"],
 							"moduleDecoration" : "setting_framework7_mobile"
-						}
+						},
 						components : {
 							application_framework7_mobile : {
 								app : new Framework7({

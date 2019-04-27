@@ -6,6 +6,10 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_buildServiceProvider;
+	var node_createPatternMatcher;
+	var node_Pattern;
+	var node_createEventObject;
+	var node_createIODataSet;
 	
 //*******************************************   Start Node Definition  **************************************
 
@@ -53,6 +57,9 @@ var node_createApp = function(appDef, ioInput){
 		
 		getPart : function(partId){		return loc_partMatchers.match(partId);	},
 		
+		getProcess : function(name){  return loc_out.prv_app.appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][name];  },
+
+		
 		addModule : function(role, module, version){
 			var modules = loc_out.prv_app.modulesByRole[role];
 			if(modules==undefined){
@@ -93,8 +100,13 @@ var node_createApp = function(appDef, ioInput){
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
+nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
+nosliw.registerSetNodeDataEvent("common.patternmatcher.createPatternMatcher", function(){node_createPatternMatcher = this.getData();});
+nosliw.registerSetNodeDataEvent("common.patternmatcher.Pattern", function(){node_Pattern = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("node_createApp", node_createApp); 
+packageObj.createChildNode("createApp", node_createApp); 
 
 })(packageObj);

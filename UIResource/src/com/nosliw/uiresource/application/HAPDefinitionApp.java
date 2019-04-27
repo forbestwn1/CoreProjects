@@ -36,17 +36,17 @@ public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 	
 	//global data definition 
 	//it can be stateful data(the data that can retrieve next time you use the app)
-	private Map<String, HAPDefinitionAppData> m_dataDefinition;
+	private Map<String, HAPDefinitionAppData> m_applicationData;
 
 	public HAPDefinitionApp() {
 		this.m_entries = new LinkedHashMap<String, HAPDefinitionAppEntryUI>();
-		this.m_dataDefinition = new LinkedHashMap<String, HAPDefinitionAppData>();
+		this.m_applicationData = new LinkedHashMap<String, HAPDefinitionAppData>();
 	}
 	
 	public void setId(String id) {  this.m_id = id;   }
 	
-	public Map<String, HAPDefinitionAppData> getDataDefinition(){   return this.m_dataDefinition;   }
-	public void setDataDefinition(Map<String, HAPDefinitionAppData> dataDef) {		if(dataDef!=null)   this.m_dataDefinition = dataDef;	}
+	public Map<String, HAPDefinitionAppData> getApplicationData(){   return this.m_applicationData;   }
+	public void setApplicationData(Map<String, HAPDefinitionAppData> dataDef) {		if(dataDef!=null)   this.m_applicationData = dataDef;	}
 	
 	public HAPContextGroup getContext() {
 		if(this.m_context==null)  this.m_context = new HAPContextGroup();
@@ -67,7 +67,7 @@ public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, m_id);
 		jsonMap.put(ENTRY, HAPJsonUtility.buildJson(this.m_entries, HAPSerializationFormat.JSON));
-		jsonMap.put(APPLICATIONDATA, HAPJsonUtility.buildJson(this.m_dataDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(APPLICATIONDATA, HAPJsonUtility.buildJson(this.m_applicationData, HAPSerializationFormat.JSON));
 		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
 	}
 }

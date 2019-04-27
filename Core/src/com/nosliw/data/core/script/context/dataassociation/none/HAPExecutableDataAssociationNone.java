@@ -14,6 +14,9 @@ public class HAPExecutableDataAssociationNone extends HAPExecutableDataAssociati
 	}
 	
 	@Override
+	public HAPParentContext getInput() {	return new HAPParentContext();	}
+	
+	@Override
 	public HAPOutputStructure getOutput() {
 		HAPOutputStructure out = new HAPOutputStructure();
 		return out;
