@@ -16,9 +16,9 @@ var packageObj = library;
 
 var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, componentDecorationInfos, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
-	out.addRequest(node_createUIModuleRequest(uiModuleDef, undefined, ioInput, {
+	out.addRequest(node_createUIModuleRequest(id, uiModuleDef, undefined, ioInput, {
 		success : function(request, uiModule){
-			var runtime = loc_createModuleRuntime(id, uiModule, configure, componentDecorationInfos);
+			var runtime = loc_createModuleRuntime(uiModule, configure, componentDecorationInfos);
 			return runtime.prv_getInitRequest({
 				success : function(request){
 					return request.getData();
@@ -29,13 +29,11 @@ var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, compo
 	return out;
 };
 
-var loc_createModuleRuntime = function(id, uiModule, configure, componentDecorationInfos){
+var loc_createModuleRuntime = function(uiModule, configure, componentDecorationInfos){
 	
-	var loc_id = id;
-	var loc_version = "1.0.0";
 	var loc_componentComplex = node_createComponentComplex(configure);
 	var loc_localStore = configure.getConfigureData().__storeService;
-	var loc_stateBackupService = node_createStateBackupService("module", loc_id, loc_version, loc_localStore);
+	var loc_stateBackupService = node_createStateBackupService("module", uiModule.getId(), uiModule.getVersion(), loc_localStore);
 
 	var loc_init = function(uiModule, configure, componentDecorationInfos){
 		loc_componentComplex.addComponent(uiModule);

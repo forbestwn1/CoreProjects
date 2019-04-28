@@ -29,7 +29,7 @@ var node_createUIModuleService = function(){
 			out.addRequest(node_loadComponentResourceRequest(
 				typeof module === 'string'? 
 					{
-						id : module,
+						componentResourceId : module,
 						type : node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE
 					} : module, 
 				componentDecorationInfo==undefined?undefined:

@@ -28,7 +28,7 @@ var node_createUIAppService = function(){
 			out.addRequest(node_loadComponentResourceRequest(
 				typeof app === 'string'? 
 					{
-						id : app,
+						componentResourceId : app,
 						type : node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY
 					} : app, 
 				componentDecorationInfo==undefined?undefined:

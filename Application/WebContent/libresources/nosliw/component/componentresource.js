@@ -21,9 +21,9 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationInfo, 
 	var resourceIds = [];
 	var componentResourceId;
 	var component;
-	if(componentInfo.id != undefined){
+	if(componentInfo.componentResourceId != undefined){
 		componentResourceId = {};
-		componentResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = componentInfo.id; 
+		componentResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = componentInfo.componentResourceId; 
 		componentResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = componentInfo.type; 
 		resourceIds.push(componentResourceId);
 	}

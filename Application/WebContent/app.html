@@ -42,9 +42,11 @@ $(document).on("nosliwActive", function(){
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_appDataService = nosliw.getNodeData("uiapp.appDataService");
-	var node_createAppDecoration = nosliw.getNodeData("uiapp.createAppDecoration");
 	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
+	var node_createAppDecoration = nosliw.getNodeData("uiapp.createAppDecoration");
+	var node_createBaseAppDecoration = nosliw.getNodeData("uiapp.createBaseAppDecoration");
 
+	
     // Our initialization code here
 	var currentSearchString = window.location.search;
 	var appEntryId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
@@ -55,7 +57,8 @@ $(document).on("nosliwActive", function(){
 				{
 					coreFun: node_createAppDecoration,
 					id : "application"
-				}],
+				}
+				],
 			__appDataService : node_appDataService,
 			__storeService :{
 				saveData : function(categary, id, data){
@@ -69,37 +72,33 @@ $(document).on("nosliwActive", function(){
 				clearData : function(categary, id){
 					return localStorage.removeItem(categary+"_"+id);
 				}
-			}
+			},
+			app : new Framework7({
+				  // App root element
+				  root: $("#appDiv").get(),
+				  name: 'My App',
+				  id: 'com.myapp.test',
+				  panel: {
+					    swipe: 'both',
+				  },		
+			}),
 		},
 		components : {
 			application : {
-				"roleConfigure" : {
+				"components" : {
 					"application" : {
 						global : {
 							"root" : $('#appModuleDiv').get(),
-							"uiDecorations" : ["Decoration_application_framework7"],
-							"moduleDecoration" : "application_framework7_mobile"
+							"decoration" : ["Decoration_application_framework7"],
+							"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile"]
 						}
 					},
 					"setting" : {
 						global : {
 							"root" : $('#settingModuleDiv').get(),
-							"uiDecorations" : ["Decoration_setting_framework7"],
-							"moduleDecoration" : "setting_framework7_mobile"
+							"decoration" : ["Decoration_setting_framework7"],
+							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile"]
 						},
-						components : {
-							application_framework7_mobile : {
-								app : new Framework7({
-									  // App root element
-									  root: $("#appDiv").get(),
-									  name: 'My App',
-									  id: 'com.myapp.test',
-									  panel: {
-										    swipe: 'both',
-									  },		
-								}),
-							}
-						}
 					}
 				}
 				

@@ -18,21 +18,19 @@ var packageObj = library;
 
 var node_createAppRuntimeRequest = function(id, appDef, configure, componentDecorationInfos, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("createUIModule"), function(request){
-		var app = node_createApp(appDef, ioInput);
-		var runtime = node_createAppRuntime(id, app, configure, componentDecorationInfos);
+		var app = node_createApp(id, appDef, ioInput);
+		var runtime = node_createAppRuntime(app, configure, componentDecorationInfos);
 		return runtime;
 	}, handlers, request);
 	return out;
 };
 	
-var node_createAppRuntime = function(id, uiApp, configure, componentDecorationInfos){
+var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos){
 	
-	var loc_id = id;
-	var loc_version = "1.0.0";
 	var loc_componentComplex = node_createComponentComplex(configure);
 	var loc_localStore = configure.getConfigureData().__storeService;
 	var loc_applicationDataService = configure.getConfigureData().__appDataService;
-	var loc_stateBackupService = node_createStateBackupService("app", loc_id, loc_version, loc_localStore);
+	var loc_stateBackupService = node_createStateBackupService("app", uiApp.getId(), uiApp.getVersion(), loc_localStore);
 	
 	var loc_init = function(uiApp, configure, componentDecorationInfos){
 		loc_componentComplex.addComponent(uiApp);

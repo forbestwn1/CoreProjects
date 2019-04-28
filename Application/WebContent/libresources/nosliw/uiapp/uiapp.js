@@ -13,15 +13,16 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  **************************************
 
-var node_ModuleInfo = function(role, module, version){
+var node_ModuleInfo = function(role){
 	this.role = role;
-	this.module = module;
-	this.version = version;
+	this.module = undefined;
+	this.version = undefined;
 	this.inputMapping = {};
+	this.currentInputMapping = undefined;
 	this.outputMapping = {};
 };
 	
-var node_createApp = function(appDef, ioInput){
+var node_createApp = function(id, appDef, ioInput){
 	var loc_ioInput = ioInput;
 	
 	var loc_partMatchers = node_createPatternMatcher([
@@ -45,6 +46,9 @@ var node_createApp = function(appDef, ioInput){
 	var loc_out = {
 
 		prv_app : {
+			id : id,
+			version : "1.0.0",
+			
 			appDef : appDef,
 			
 			modulesByRole : {},
@@ -53,30 +57,48 @@ var node_createApp = function(appDef, ioInput){
 			ioContext : node_createIODataSet(),
 		},
 			
+		getId : function(){  return loc_out.prv_app.id;  },
+		getVersion : function(){   return "1.0.0";   },
+		
 		getIOContext : function(){  return loc_out.prv_app.ioContext;  },
 		
 		getPart : function(partId){		return loc_partMatchers.match(partId);	},
 		
 		getProcess : function(name){  return loc_out.prv_app.appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][name];  },
 
-		
-		addModule : function(role, module, version){
+		addModuleInfo : function(moduleInfo){
+			var role = moduleInfo.role;
+			var module = moduleInfo.module;
+			
 			var modules = loc_out.prv_app.modulesByRole[role];
 			if(modules==undefined){
 				modules = [];
 				loc_out.prv_app.modulesByRole[role] = modules;
 			}
-			var out = new node_ModuleInfo(role, module, version);
-			modules.push(out);
+			modules.push(moduleInfo);
 			loc_out.prv_app.currentModuleByRole[role] = modules.length-1;
 			
-			module.registerEventListener(loc_eventListener, loc_moduleEventProcessor, out);
-			
-			return out;
+			module.registerEventListener(loc_eventListener, loc_moduleEventProcessor, moduleInfo);
+			return moduleInfo;
 		},
+		
+//		addModule : function(role, module, version){
+//			var out = new node_ModuleInfo(role, module, version);
+//			return addModuleInfo(out);
+//		},
 		
 		getCurrentModuleInfo : function(role){
 			return loc_out.prv_app.modulesByRole[role][loc_out.prv_app.currentModuleByRole[role]];
+		},
+		
+		getAllModuleInfo : function(){
+			var out = [];
+			_.each(loc_out.prv_app.modulesByRole, function(modulesByRole, role){
+				_.each(modulesByRole, function(moduleInfo){
+					out.push(moduleInfo);
+				});
+			});
+			return out;
 		},
 		
 		getModuleInfo : function(role, version){
@@ -108,5 +130,6 @@ nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node
 
 //Register Node by Name
 packageObj.createChildNode("createApp", node_createApp); 
+packageObj.createChildNode("ModuleInfo", node_ModuleInfo); 
 
 })(packageObj);
