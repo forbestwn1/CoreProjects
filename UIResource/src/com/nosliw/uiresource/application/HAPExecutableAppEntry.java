@@ -72,7 +72,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	public Map<String, HAPContextStructure> getExtraContext(){  
 		Map<String, HAPContextStructure> out = new LinkedHashMap<String, HAPContextStructure>();
 		for(String dataName : this.m_applicationData.keySet()) {
-			out.put(APPLICATIONDATA+"."+dataName, this.m_applicationData.get(dataName));
+			out.put(APPLICATIONDATA+"_"+dataName, this.m_applicationData.get(dataName));
 		}
 		return out;
 	}

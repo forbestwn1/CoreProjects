@@ -26,6 +26,7 @@ var packageObj = library;
 var node_appDataService = function(){
 	var loc_data = [
 		{
+			id : "id1",
 			version : "version1",
 			data : {
 				schoolTypeInData : {
@@ -38,22 +39,6 @@ var node_appDataService = function(){
 				schoolRatingInData : {
 					"dataTypeId": "test.float;1.0.0",
 					"value": 5.0
-				}
-			}
-		},
-		{
-			version : "version2",
-			data : {
-				schoolTypeInData : {
-					"dataTypeId": "test.options;1.0.0",
-					"value": {
-						"value" : "Public",
-						"optionsId" : "schoolType"
-					}
-				},
-				schoolRatingInData : {
-					"dataTypeId": "test.float;1.0.0",
-					"value": 8.0
 				}
 			}
 		}

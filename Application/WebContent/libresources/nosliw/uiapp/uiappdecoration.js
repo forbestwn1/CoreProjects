@@ -25,6 +25,7 @@ var node_createAppDecoration = function(gate){
 	var loc_uiApp = loc_gate.getComponent();
 	var loc_uiAppDef = loc_uiApp.prv_app.appDef;
 	var loc_configureData = loc_gate.getConfigureData();
+	var loc_appDataService = loc_configureData.__appDataService;
 	
 	var loc_createModuleOutputMapping = function(moduleRuntime, moduleDef){
 		var outputMappings = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_OUTPUTMAPPING].element;
@@ -35,18 +36,17 @@ var node_createAppDecoration = function(gate){
 		return out;
 	};
 
-	var loc_createModuleInputMapping = function(moduleDef){
+	var loc_createModuleInputMapping = function(inputIO, moduleDef){
 		var inputMappings = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element;
 		var out = {};
 		_.each(inputMappings, function(mapping, name){
-			out[name] = node_createDataAssociation(loc_uiApp.getIOContext(), mapping);
+			out[name] = node_createDataAssociation(inputIO, mapping);
 		});
 		return out;
 	};
 
 	var loc_buildMoudleInputIO = function(moduleInfo){
 		var out = node_createIODataSet();
-
 		var dynamicData = node_createDynamicData(
 			function(handlers, request){
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -58,18 +58,75 @@ var node_createAppDecoration = function(gate){
 				return out;
 			} 
 		);
-		
 		out.setData(undefined, dynamicData);
 		return out;
 	};
+
+	var loc_getApplicationDataName = function(moduleDef){
+		var dataDependency = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_DATADEPENDENCY];
+		for(var i in dataDependency){
+			var dataName = dataDependency[i];
+			var appDataPrefex = "applicationData_";
+			if(dataName.startsWith(appDataPrefex)){
+				return dataName.substring(appDataPrefex.length);
+			}
+		}
+	};
+
+	var loc_createSettingModuleRequest = function(parentNode, settingData, moduleDef, configureData, handlers, request){
+		configureData.root = parentNode;
+		
+		var moduleInfo = new node_ModuleInfo(ROLE_SETTING);
+
+		var inputMappingIO = node_createIODataSet();
+		var dynamicData = node_createDynamicData(
+			function(handlers, request){
+				return loc_uiApp.getIOContext().getGetDataValueRequest(undefined, handlers, request);
+			} 
+		);
+		inputMappingIO.setData(undefined, dynamicData);
+		inputMappingIO.setData(settingData.dataName, settingData.data);
+		moduleInfo.inputMapping = loc_createModuleInputMapping(inputMappingIO, moduleDef);
+
+		moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];
+		
+		var moduleId = loc_uiApp.getId()+"."+ROLE_SETTING+"."+settingData.id;
+		return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleId, moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], configureData, loc_buildMoudleInputIO(moduleInfo), {
+			success : function(requestInfo, uiModuleRuntime){
+				moduleInfo.module = uiModuleRuntime;
+				moduleInfo = loc_uiApp.addModuleInfo(moduleInfo);
+			}
+		}, request);
+	};
 	
-	var loc_createApplicationModuleRequest = function(module, configureData, handlers, request){
+	var loc_createSettingRoleRequest = function(moduleDef, configureData, handlers, request){
+		var settingRoots = [];
+		var settingsRequest = node_createServiceRequestInfoSequence(undefined);
+		var appDataName = loc_getApplicationDataName(moduleDef);
+		settingsRequest.addRequest(loc_appDataService.getGetAppDataRequest(appDataName, {
+			success : function(request, allSettings){
+				var settingRequest = node_createServiceRequestInfoSequence(undefined);
+				_.each(allSettings, function(settingData, index){
+					var root = $('<div></div>');
+					root.appendTo(configureData.root);
+					
+					settingData.dataName = "applicationData_"+appDataName;
+					settingRequest.addRequest(loc_createSettingModuleRequest(root.get(), settingData, moduleDef, configureData));
+				});
+				return settingRequest;
+			}
+		}));
+		return settingsRequest;
+
+	};
+	
+	var loc_createApplicationModuleRequest = function(moduleDef, configureData, handlers, request){
 		var moduleInfo = new node_ModuleInfo(ROLE_APPLICATION);
-		moduleInfo.inputMapping = loc_createModuleInputMapping(module);
+		moduleInfo.inputMapping = loc_createModuleInputMapping(loc_uiApp.getIOContext(), moduleDef);
 		moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];
 		
 		var moduleId = loc_uiApp.getId()+"."+ROLE_APPLICATION;
-		return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleId, module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], loc_getModuleConfigureData(ROLE_APPLICATION), loc_buildMoudleInputIO(moduleInfo), {
+		return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleId, moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], configureData, loc_buildMoudleInputIO(moduleInfo), {
 			success : function(requestInfo, uiModuleRuntime){
 				moduleInfo.module = uiModuleRuntime;
 				moduleInfo = loc_uiApp.addModuleInfo(moduleInfo);
@@ -107,6 +164,7 @@ var node_createAppDecoration = function(gate){
 					modulesRequest.addRequest(loc_createApplicationModuleRequest(module, moduleConfigureData));
 				}
 				else if(role==ROLE_SETTING){
+					modulesRequest.addRequest(loc_createSettingRoleRequest(module, moduleConfigureData));
 //					out.addRequest(loc_createSettingsModuleRequest(module, appStatelessData.nodes[role], appStatelessData, decorations, moduleConfigure.moduleEnvFactoryId));
 				}
 			});

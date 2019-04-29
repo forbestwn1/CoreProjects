@@ -17,6 +17,7 @@ var packageObj = library;
 var node_ModuleInfo = function(role){
 	this.role = role;
 	this.module = undefined;
+	this.id = undefined;
 	this.version = undefined;
 	this.inputMapping = {};
 	this.currentInputMapping = undefined;
@@ -122,11 +123,11 @@ var node_createApp = function(id, appDef, ioInput){
 			return out;
 		},
 		
-		getModuleInfo : function(role, version){
-			if(version==undefined)  return this.getCurrentModuleInfo(role);
+		getModuleInfo : function(role, id){
+			if(id==undefined)  return this.getCurrentModuleInfo(role);
 			var modules = loc_out.prv_app.modulesByRole[role];
 			for(var i in modules){
-				if(modules[i].version==version)  return modules[i];
+				if(modules[i].id==id)  return modules[i];
 			}
 		},
 		
