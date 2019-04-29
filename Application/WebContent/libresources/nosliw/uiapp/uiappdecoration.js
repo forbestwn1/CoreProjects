@@ -39,7 +39,7 @@ var node_createAppDecoration = function(gate){
 		var inputMappings = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element;
 		var out = {};
 		_.each(inputMappings, function(mapping, name){
-			out[name] = node_createDataAssociation(loc_uiApp.ioContext, mapping);
+			out[name] = node_createDataAssociation(loc_uiApp.getIOContext(), mapping);
 		});
 		return out;
 	};
@@ -66,7 +66,7 @@ var node_createAppDecoration = function(gate){
 	var loc_createApplicationModuleRequest = function(module, configureData, handlers, request){
 		var moduleInfo = new node_ModuleInfo(ROLE_APPLICATION);
 		moduleInfo.inputMapping = loc_createModuleInputMapping(module);
-		moduleInfo.currentInputMapping = moduleInfo.inputMapping;
+		moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];
 		
 		var moduleId = loc_uiApp.getId()+"."+ROLE_APPLICATION;
 		return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleId, module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], loc_getModuleConfigureData(ROLE_APPLICATION), loc_buildMoudleInputIO(moduleInfo), {

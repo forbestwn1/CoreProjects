@@ -67,7 +67,6 @@
 				"module": "ModuleMySchoolResult",
 				"inputMapping": [
 					{
-						"name" : "syncWithApp",
 						"element": {
 							"schoolTypeInModule": {
 								"definition": {

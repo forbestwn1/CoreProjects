@@ -10,6 +10,7 @@ var packageObj = library;
 	var node_Pattern;
 	var node_createEventObject;
 	var node_createIODataSet;
+	var node_createServiceRequestInfoSequence;
 	
 //*******************************************   Start Node Definition  **************************************
 
@@ -41,6 +42,11 @@ var node_createApp = function(id, appDef, ioInput){
 		}, request);
 	};
 	
+	var loc_updateIOContext = function(input){
+		var data = loc_out.prv_app.appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_INITSCRIPT](input);
+		loc_out.prv_app.ioContext.setData(undefined, data);
+	};
+
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 
 	var loc_out = {
@@ -66,6 +72,21 @@ var node_createApp = function(id, appDef, ioInput){
 		
 		getProcess : function(name){  return loc_out.prv_app.appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][name];  },
 
+		getInitIOContextRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			if(loc_ioInput!=undefined){
+				out.addRequest(loc_ioInput.getGetDataValueRequest(undefined, {
+					success : function(request, data){
+						loc_updateIOContext(data);
+					}
+				}));
+			}
+			else{
+				loc_updateIOContext();
+			}
+			return out;
+		},
+		
 		addModuleInfo : function(moduleInfo){
 			var role = moduleInfo.role;
 			var module = moduleInfo.module;
@@ -127,6 +148,7 @@ nosliw.registerSetNodeDataEvent("common.patternmatcher.createPatternMatcher", fu
 nosliw.registerSetNodeDataEvent("common.patternmatcher.Pattern", function(){node_Pattern = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createApp", node_createApp); 

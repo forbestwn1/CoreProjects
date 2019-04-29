@@ -44,7 +44,6 @@ $(document).on("nosliwActive", function(){
 	var node_appDataService = nosliw.getNodeData("uiapp.appDataService");
 	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
 	var node_createAppDecoration = nosliw.getNodeData("uiapp.createAppDecoration");
-	var node_createBaseAppDecoration = nosliw.getNodeData("uiapp.createBaseAppDecoration");
 
 	
     // Our initialization code here
@@ -89,14 +88,18 @@ $(document).on("nosliwActive", function(){
 					"application" : {
 						global : {
 							"root" : $('#appModuleDiv').get(),
-							"decoration" : ["Decoration_application_framework7"],
+							"decoration" : {
+								global : ["Decoration_application_framework7"]
+							},
 							"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile"]
 						}
 					},
 					"setting" : {
 						global : {
 							"root" : $('#settingModuleDiv').get(),
-							"decoration" : ["Decoration_setting_framework7"],
+							"decoration" : {
+								global : ["Decoration_setting_framework7"]
+							},
 							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile"]
 						},
 					}

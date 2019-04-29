@@ -85,7 +85,7 @@ var node_createIODataSet = function(value){
 		getGetDataValueRequest : function(name, handlers, request){
 			var dataEle = this.getData(name);
 			var dataEleType = node_getObjectType(dataEle);
-			if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
+			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
 				return dataEle.getGetValueRequest(handlers, request);
 			}
 			else{

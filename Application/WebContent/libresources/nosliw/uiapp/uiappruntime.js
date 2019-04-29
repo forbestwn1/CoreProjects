@@ -20,7 +20,11 @@ var node_createAppRuntimeRequest = function(id, appDef, configure, componentDeco
 	var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("createUIModule"), function(request){
 		var app = node_createApp(id, appDef, ioInput);
 		var runtime = node_createAppRuntime(app, configure, componentDecorationInfos);
-		return runtime;
+		return runtime.prv_getInitRequest({
+			success : function(request){
+				return request.getData();
+			}
+		}).withData(runtime);
 	}, handlers, request);
 	return out;
 };
@@ -69,6 +73,13 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 
 	
 	var loc_out = {
+			
+		prv_getInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
+			out.addRequest(loc_componentComplex.getInitRequest());
+			out.addRequest(loc_getApp().getInitIOContextRequest());
+			return out;
+		},
 		
 	};
 	
