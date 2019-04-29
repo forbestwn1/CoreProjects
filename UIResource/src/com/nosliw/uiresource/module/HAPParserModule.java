@@ -15,6 +15,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
+import com.nosliw.uiresource.common.HAPUtilityParser;
 
 public class HAPParserModule {
 
@@ -111,14 +112,7 @@ public class HAPParserModule {
 		}
 
 		JSONObject eventHandlersJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.EVENTHANDLER);
-		if(eventHandlersJson!=null) {
-			for(Object key : eventHandlersJson.keySet()) {
-				HAPDefinitionModuleUIEventHander eventHandler = new HAPDefinitionModuleUIEventHander();
-				JSONObject eventHandlerJson = eventHandlersJson.getJSONObject((String)key);
-				eventHandler.setProcess(HAPParserProcessDefinition.parseEmbededProcess(eventHandlerJson.optJSONObject(HAPDefinitionModuleUIEventHander.PROCESS), activityPluginMan));
-				out.addEventHandler((String)key, eventHandler);
-			}
-		}
+		out.addEventHandler(HAPUtilityParser.parseEventHandlers(eventHandlersJson, activityPluginMan));
 		return out;
 	}
 	

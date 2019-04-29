@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.module;
+package com.nosliw.uiresource.common;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -19,7 +19,7 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
 @HAPEntityWithAttribute
-public class HAPExecutableModuleUIEventHandler  extends HAPEntityInfoImpWrapper implements HAPExecutable{
+public class HAPExecutableEventHandler  extends HAPEntityInfoImpWrapper implements HAPExecutable{
 
 	@HAPAttribute
 	public static String PROCESS = "process";
@@ -29,7 +29,7 @@ public class HAPExecutableModuleUIEventHandler  extends HAPEntityInfoImpWrapper 
 	public HAPExecutableWrapperTask<HAPExecutableProcess> getProcess() {   return this.m_process;   }
 	
 	
-	public HAPExecutableModuleUIEventHandler(HAPDefinitionModuleUIEventHander eventHandlerDefinition) {
+	public HAPExecutableEventHandler(HAPDefinitionEventHandler eventHandlerDefinition) {
 		super(eventHandlerDefinition);
 	}
 

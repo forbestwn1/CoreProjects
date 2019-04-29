@@ -58,7 +58,64 @@
 							}
 						}
 					}
-				]
+				],
+				"eventHandler" : {
+					"submitSetting": {
+						"process": {
+							"activity": [{
+									"id": "startActivityId",
+									"name": "startActivity",
+									"type": "start",
+									"flow": {
+										"target": "readSetting"
+									}
+								},
+								{
+									"id": "readSetting",
+									"type": "UI_executeCommand",
+									"partId": "module.setting.outputMapping.syncWithApp",
+									"command": "execute",
+									"result": [{
+										"name": "success",
+										"flow": {
+											"target": "updateApplicationData"
+										}
+									}]
+								},
+								{
+									"id": "updateApplicationData",
+									"type": "UI_executeCommand",
+									"partId": "module.application.inputMapping.syncWithApp",
+									"command": "execute",
+									"result": [{
+										"name": "success",
+										"flow": {
+											"target": "updateApplication"
+										}
+									}]
+								},
+								{
+									"id": "updateApplication",
+									"name": "updateApplication",
+									"type": "UI_executeCommand",
+									"partId": "module.application",
+									"command": "restart",
+									"result": [{
+										"name": "success",
+										"flow": {
+											"target": "successEndId"
+										}
+									}]
+								},
+								{
+									"id": "successEndId",
+									"name": "successEnd",
+									"type": "end"
+								}
+							]
+						}
+					}
+				}
 			},
 			{
 				"status": "disabled",

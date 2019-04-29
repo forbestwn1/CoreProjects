@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.module;
+package com.nosliw.uiresource.common;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionModuleUIEventHander extends HAPEntityInfoWritableImp{
+public class HAPDefinitionEventHandler extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String PROCESS = "process";

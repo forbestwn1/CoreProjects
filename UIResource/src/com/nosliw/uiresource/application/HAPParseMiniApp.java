@@ -5,6 +5,7 @@ import java.io.File;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
@@ -12,6 +13,8 @@ import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.uiresource.common.HAPUtilityParser;
+import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 public class HAPParseMiniApp {
 
@@ -61,7 +64,11 @@ public class HAPParseMiniApp {
 	private HAPDefinitionAppEntryUI parseAppEntry(JSONObject jsonObj) {
 		HAPDefinitionAppEntryUI out = new HAPDefinitionAppEntryUI();
 		out.buildEntityInfoByJson(jsonObj);
-		out.addModules(HAPSerializeUtility.buildListFromJsonArray(HAPDefinitionAppModule.class.getName(), jsonObj.optJSONArray(HAPDefinitionAppEntryUI.MODULE)));
+		
+		JSONArray moduleArrayJson = jsonObj.optJSONArray(HAPDefinitionAppEntryUI.MODULE);
+		for(int i=0; i<moduleArrayJson.length(); i++) {
+			out.addModule(parseModule(moduleArrayJson.getJSONObject(i), m_activityPluginMan));
+		}
 		
 		JSONObject processesJson = jsonObj.optJSONObject(HAPDefinitionAppEntryUI.PROCESS);
 		if(processesJson!=null) {
@@ -79,4 +86,18 @@ public class HAPParseMiniApp {
 		return out;
 	}
 	
+	private HAPDefinitionAppModule parseModule(JSONObject moduleJson, HAPManagerActivityPlugin activityPluginMan) {
+		HAPDefinitionAppModule out = new HAPDefinitionAppModule();
+		out.buildEntityInfoByJson(moduleJson);
+		out.setRole((String)moduleJson.opt(HAPDefinitionAppModule.ROLE));
+		out.setModule((String)moduleJson.opt(HAPDefinitionAppModule.MODULE));
+		out.setStatus((String)moduleJson.opt(HAPDefinitionModuleUI.STATUS));
+		out.getInputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.INPUTMAPPING), HAPSerializationFormat.JSON);
+		out.getOutputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.OUTPUTMAPPING), HAPSerializationFormat.JSON);
+		
+		JSONObject eventHandlersJson = moduleJson.optJSONObject(HAPDefinitionAppModule.EVENTHANDLER);
+		out.addEventHandler(HAPUtilityParser.parseEventHandlers(eventHandlersJson, activityPluginMan));
+
+		return out;
+	}
 }

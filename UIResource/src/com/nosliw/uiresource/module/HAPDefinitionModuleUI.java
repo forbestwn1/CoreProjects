@@ -9,6 +9,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
 
 //each module ui is page unit in module that is alive in a module
 //as it defined:
@@ -42,7 +43,7 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	private String m_page;
 
 	//event handlers
-	private Map<String, HAPDefinitionModuleUIEventHander> m_eventHandlers;
+	private Map<String, HAPDefinitionEventHandler> m_eventHandlers;
 	
 	//data mapping (from data definition in module to public data definition in page)
 	private HAPDefinitionDataAssociation m_inputMapping;
@@ -54,7 +55,7 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	private String m_status;
 	
 	public HAPDefinitionModuleUI() {
-		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionModuleUIEventHander>();
+		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionEventHandler>();
 	}
 	
 	public String getPage() {   return this.m_page;    }
@@ -72,8 +73,9 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	public HAPDefinitionDataAssociation getOutputMapping() {   return this.m_outputMapping;   }
 	public void setOutputMapping(HAPDefinitionDataAssociation contextMapping) {   this.m_outputMapping = contextMapping;   }
 
-	public Map<String, HAPDefinitionModuleUIEventHander> getEventHandlers(){   return this.m_eventHandlers;   }
-	public void addEventHandler(String name, HAPDefinitionModuleUIEventHander eventHandler) {  this.m_eventHandlers.put(name, eventHandler);   }
+	public Map<String, HAPDefinitionEventHandler> getEventHandlers(){   return this.m_eventHandlers;   }
+	public void addEventHandler(String name, HAPDefinitionEventHandler eventHandler) {  this.m_eventHandlers.put(name, eventHandler);   }
+	public void addEventHandler(Map<String, HAPDefinitionEventHandler> eventHandler) {  this.m_eventHandlers.putAll(eventHandler);   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

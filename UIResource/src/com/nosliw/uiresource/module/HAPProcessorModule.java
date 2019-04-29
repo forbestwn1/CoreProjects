@@ -30,6 +30,8 @@ import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
+import com.nosliw.uiresource.common.HAPExecutableEventHandler;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
@@ -109,10 +111,10 @@ public class HAPProcessorModule {
 		out.setOutputMapping(outputDataAssocation);
 		
 		//event handler
-		Map<String, HAPDefinitionModuleUIEventHander> eventHandlerDefs = moduleUIDefinition.getEventHandlers();
+		Map<String, HAPDefinitionEventHandler> eventHandlerDefs = moduleUIDefinition.getEventHandlers();
 		for(String eventName :eventHandlerDefs.keySet()) {
-			HAPDefinitionModuleUIEventHander eventHandlerDef = eventHandlerDefs.get(eventName);
-			HAPExecutableModuleUIEventHandler eventHandlerExe = new HAPExecutableModuleUIEventHandler(eventHandlerDef);
+			HAPDefinitionEventHandler eventHandlerDef = eventHandlerDefs.get(eventName);
+			HAPExecutableEventHandler eventHandlerExe = new HAPExecutableEventHandler(eventHandlerDef);
 
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getEventDefinition(eventName));
 			HAPContextGroup eventContext = moduleExe.getContext().cloneContextGroup();

@@ -19,6 +19,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableGroupDataAssociation;
+import com.nosliw.uiresource.common.HAPExecutableEventHandler;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 
 @HAPEntityWithAttribute
@@ -42,6 +43,9 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	@HAPAttribute
 	public static final String DATADEPENDENCY = "dataDependency";
 
+	@HAPAttribute
+	public static String EVENTHANDLER = "eventHandler";
+	
 	private HAPExecutableModule m_module;
 	
 	private HAPExecutableGroupDataAssociation m_inputMapping;
@@ -52,8 +56,11 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	
 	private Set<String> m_dataDependency;
 	
+	private Map<String, HAPExecutableEventHandler> m_eventHandlers;
+	
 	public HAPExecutableAppModule(HAPDefinitionAppModule def) {
 		super(def);
+		this.m_eventHandlers = new LinkedHashMap<String, HAPExecutableEventHandler>();
 		this.m_definition = def;
 		this.m_inputMapping = new HAPExecutableGroupDataAssociation();
 		this.m_outputMapping = new HAPExecutableGroupDataAssociation();
@@ -62,6 +69,8 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 
 	public void setModule(HAPExecutableModule module) {  this.m_module = module;  }
 	
+	public void addEventHandler(String eventName, HAPExecutableEventHandler eventHander) {   this.m_eventHandlers.put(eventName, eventHander);   }
+
 	public void addInputDataAssociation(String name, HAPExecutableDataAssociation dataAssociation) {    
 		this.m_inputMapping.addDataAssociation(name, dataAssociation);
 		this.m_dataDependency.addAll(dataAssociation.getInput().getNames());
@@ -81,6 +90,7 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(DATADEPENDENCY, HAPJsonUtility.buildJson(this.m_dataDependency, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -91,6 +101,11 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 		jsonMap.put(MODULE, this.m_module.toResourceData(runtimeInfo).toString());
 		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toResourceData(runtimeInfo).toString());
 		jsonMap.put(OUTPUTMAPPING, this.m_outputMapping.toResourceData(runtimeInfo).toString());
+
+		Map<String, String> eventJsonMap = new LinkedHashMap<String, String>();
+		for(String eventName :this.m_eventHandlers.keySet()) eventJsonMap.put(eventName, this.m_eventHandlers.get(eventName).toResourceData(runtimeInfo).toString());
+		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildMapJson(eventJsonMap));
+		
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 

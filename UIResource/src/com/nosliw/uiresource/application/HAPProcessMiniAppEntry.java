@@ -14,6 +14,7 @@ import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
@@ -27,6 +28,8 @@ import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
+import com.nosliw.uiresource.common.HAPExecutableEventHandler;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
@@ -81,7 +84,7 @@ public class HAPProcessMiniAppEntry {
 		//module
 		for(HAPDefinitionAppModule moduleDef : entryDefinition.getModules()) {
 			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(moduleDef.getStatus())) {
-				HAPExecutableAppModule module = process(moduleDef, out, extraContext, entryServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
+				HAPExecutableAppModule module = processModule(moduleDef, out, extraContext, entryServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
 				out.addUIModule(moduleDef.getName(), module);
 			}
 		}
@@ -89,7 +92,7 @@ public class HAPProcessMiniAppEntry {
 		return out;
 	}
 	
-	private static HAPExecutableAppModule process(
+	private static HAPExecutableAppModule processModule(
 			HAPDefinitionAppModule module,
 			HAPExecutableAppEntry entryExe,
 			Map<String, HAPContextStructure> extraContexts,
@@ -126,6 +129,20 @@ public class HAPProcessMiniAppEntry {
 			HAPExecutableDataAssociation outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleDef.getContext()), outputMapping.get(outputTargetName), parentContext, daConfigure, contextProcessRequirement);
 			out.addOutputDataAssociation(outputTargetName, outputMappingByTarget);
 		}
+		
+		//event handler
+		Map<String, HAPDefinitionEventHandler> eventHandlerDefs = module.getEventHandlers();
+		for(String eventName :eventHandlerDefs.keySet()) {
+			HAPDefinitionEventHandler eventHandlerDef = eventHandlerDefs.get(eventName);
+			HAPExecutableEventHandler eventHandlerExe = new HAPExecutableEventHandler(eventHandlerDef);
+
+			HAPContextGroup eventContext = entryExe.getContext().cloneContextGroup();
+			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(eventHandlerDef.getProcess().getTaskDefinition(), eventName, eventContext, null, serviceProviders, processMan, contextProcessRequirement, processTracker);
+			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getProcess(), eventProcessor, HAPParentContext.createDefault(moduleExe.getContext()), null, contextProcessRequirement);			
+			eventHandlerExe.setProcess(processExeWrapper);
+			out.addEventHandler(eventName, eventHandlerExe);
+		}	
+		
 		return out;
 	}
 }

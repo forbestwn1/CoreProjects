@@ -16,6 +16,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.uiresource.common.HAPExecutableEventHandler;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 
 @HAPEntityWithAttribute
@@ -46,16 +47,16 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	private HAPExecutableDataAssociation m_inputMapping;
 	private HAPExecutableDataAssociation m_outputMapping;
 	
-	private Map<String, HAPExecutableModuleUIEventHandler> m_eventHandlers;
+	private Map<String, HAPExecutableEventHandler> m_eventHandlers;
 	
 	public HAPExecutableModuleUI(HAPDefinitionModuleUI moduleUIDefinition, String id) {
 		super(moduleUIDefinition);
-		this.m_eventHandlers = new LinkedHashMap<String, HAPExecutableModuleUIEventHandler>();
+		this.m_eventHandlers = new LinkedHashMap<String, HAPExecutableEventHandler>();
 		this.m_moduleUIDefinition = moduleUIDefinition;
 		this.m_id = id;
 	}
 
-	public void addEventHandler(String eventName, HAPExecutableModuleUIEventHandler eventHander) {   this.m_eventHandlers.put(eventName, eventHander);   }
+	public void addEventHandler(String eventName, HAPExecutableEventHandler eventHander) {   this.m_eventHandlers.put(eventName, eventHander);   }
 	
 	public void setInputMapping(HAPExecutableDataAssociation contextMapping) {   this.m_inputMapping = contextMapping;	}
 	public HAPExecutableDataAssociation getInputMapping() {   return this.m_inputMapping;   }
@@ -98,7 +99,7 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
 		out.addAll(this.m_page.getResourceDependency(runtimeInfo));
-		for(HAPExecutableModuleUIEventHandler eventHandler : this.m_eventHandlers.values()) 	out.addAll(eventHandler.getResourceDependency(runtimeInfo));
+		for(HAPExecutableEventHandler eventHandler : this.m_eventHandlers.values()) 	out.addAll(eventHandler.getResourceDependency(runtimeInfo));
 		out.addAll(this.m_inputMapping.getResourceDependency(runtimeInfo));
 		out.addAll(this.m_outputMapping.getResourceDependency(runtimeInfo));
 		return out;
