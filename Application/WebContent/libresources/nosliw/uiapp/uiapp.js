@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_createIODataSet;
 	var node_createServiceRequestInfoSequence;
+	var node_ModuleEventData;
 	
 //*******************************************   Start Node Definition  **************************************
 
@@ -37,10 +38,7 @@ var node_createApp = function(id, appDef, ioInput){
 	var loc_eventListener = node_createEventObject();
 
 	var loc_moduleEventProcessor = function(eventName, eventData, request){
-		loc_trigueEvent(eventName, {
-			moduleInfo : this,
-			data : eventData
-		}, request);
+		loc_trigueEvent(node_CONSTANT.APP_EVENT_MODULEEVENT, new node_ModuleEventData(this, eventName, eventData), request);
 	};
 	
 	var loc_updateIOContext = function(input){
@@ -104,11 +102,6 @@ var node_createApp = function(id, appDef, ioInput){
 			return moduleInfo;
 		},
 		
-//		addModule : function(role, module, version){
-//			var out = new node_ModuleInfo(role, module, version);
-//			return addModuleInfo(out);
-//		},
-		
 		getCurrentModuleInfo : function(role){
 			return loc_out.prv_app.modulesByRole[role][loc_out.prv_app.currentModuleByRole[role]];
 		},
@@ -150,6 +143,7 @@ nosliw.registerSetNodeDataEvent("common.patternmatcher.Pattern", function(){node
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("uiapp.ModuleEventData", function(){node_ModuleEventData = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createApp", node_createApp); 

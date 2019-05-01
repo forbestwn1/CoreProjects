@@ -13,6 +13,8 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createConfigure;
 	var node_getComponentLifecycleInterface;
+	var node_createEventObject;
+	var node_requestServiceProcessor;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -27,6 +29,11 @@ var node_createAppDecoration = function(gate){
 	var loc_configureData = loc_gate.getConfigureData();
 	var loc_appDataService = loc_configureData.__appDataService;
 	
+	var loc_eventSource = node_createEventObject();
+	var loc_eventListener = node_createEventObject();
+
+	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
+
 	var loc_createModuleOutputMapping = function(moduleRuntime, moduleDef){
 		var outputMappings = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_OUTPUTMAPPING].element;
 		var out = {};
@@ -95,6 +102,13 @@ var node_createAppDecoration = function(gate){
 			success : function(requestInfo, uiModuleRuntime){
 				moduleInfo.module = uiModuleRuntime;
 				moduleInfo = loc_uiApp.addModuleInfo(moduleInfo);
+				
+//				uiModuleRuntime.registerEventListener(undefined, function(eventName, eventData, request){
+//					if(eventName=="submitSetting"){
+//						loc_trigueEvent("executeProcess", "applicationsetting;submitsetting", request);
+//					}
+//				});
+				
 			}
 		}, request);
 	};
@@ -140,6 +154,15 @@ var node_createAppDecoration = function(gate){
 	
 	
 	var loc_out = {
+		
+		processComponentEvent : function(eventName, eventData, request){
+			if(eventName==node_CONSTANT.APP_EVENT_MODULEEVENT){
+				if(eventData.eventData.eventName=="submitSetting"){
+					var processRequest = loc_gate.getExecuteProcessResourceRequest("applicationsetting;submitsetting", undefined, undefined, request);
+					node_requestServiceProcessor.processRequest(processRequest);
+				}
+			}
+		},
 			
 		getInitRequest : function(handlers, request){
 			
@@ -165,7 +188,6 @@ var node_createAppDecoration = function(gate){
 				}
 				else if(role==ROLE_SETTING){
 					modulesRequest.addRequest(loc_createSettingRoleRequest(module, moduleConfigureData));
-//					out.addRequest(loc_createSettingsModuleRequest(module, appStatelessData.nodes[role], appStatelessData, decorations, moduleConfigure.moduleEnvFactoryId));
 				}
 			});
 			
@@ -200,6 +222,8 @@ nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo =
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createAppDecoration", node_createAppDecoration); 

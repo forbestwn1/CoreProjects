@@ -13,6 +13,7 @@ var packageObj = library;
 	var node_createComponentComplex;
 	var node_makeObjectWithComponentLifecycle;
 	var node_createStateBackupService;
+	var node_createEventObject;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -31,14 +32,31 @@ var node_createAppRuntimeRequest = function(id, appDef, configure, componentDeco
 	
 var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos){
 	
-	var loc_componentComplex = node_createComponentComplex(configure);
+	var loc_interface = {
+			getPart : function(partId){  return loc_componentComplex.getComponent().getPart(partId);	},
+
+			getExecutePartCommandRequest : function(partId, commandName, commandData, handlers, requestInfo){
+				return this.getPart(partId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+			},
+	};
+	
+	var loc_componentComplex = node_createComponentComplex(configure, loc_interface);
 	var loc_localStore = configure.getConfigureData().__storeService;
 	var loc_applicationDataService = configure.getConfigureData().__appDataService;
 	var loc_stateBackupService = node_createStateBackupService("app", uiApp.getId(), uiApp.getVersion(), loc_localStore);
 	
+	var loc_eventSource = node_createEventObject();
+	var loc_eventListener = node_createEventObject();
+
 	var loc_init = function(uiApp, configure, componentDecorationInfos){
 		loc_componentComplex.addComponent(uiApp);
 		loc_componentComplex.addDecorations(componentDecorationInfos);
+		
+		loc_componentComplex.registerEventListener(loc_eventListener, function(eventName, eventData, request){
+			if(eventName=="executeProcess"){
+				nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).executeProcessResourceRequest(eventData, undefined, undefined, undefined, request);
+			}
+		}, loc_out);
 	};
 	
 	var loc_getIOContext = function(){  return loc_getApp().getIOContext();   };
@@ -71,7 +89,6 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 		return loc_getGoActiveRequest(request);
 	};
 
-	
 	var loc_out = {
 			
 		prv_getInitRequest : function(handlers, request){
@@ -104,6 +121,7 @@ nosliw.registerSetNodeDataEvent("uiapp.createApp", function(){node_createApp = t
 nosliw.registerSetNodeDataEvent("component.createComponentComplex", function(){node_createComponentComplex = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createAppRuntimeRequest", node_createAppRuntimeRequest); 

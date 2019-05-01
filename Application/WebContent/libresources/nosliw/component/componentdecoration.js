@@ -66,6 +66,9 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessRequest(process, this.getComponent().getIOContext(), extraInput, handlers, request);
 		},
 
+		getExecuteProcessResourceRequest : function(processId, input, handlers, request){
+			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessResourceRequest(processId, input, handlers, request);
+		},
 	});
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };

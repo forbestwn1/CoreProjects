@@ -206,7 +206,9 @@ var node_CONSTANT=
 	  
 	  "PAGE_COMMAND_REFRESH" : "refresh",
 	  
-	  "MODULE_EVENT_UIEVENT" : "MODULE_EVENT_UIEVENT"
+	  "MODULE_EVENT_UIEVENT" : "MODULE_EVENT_UIEVENT",
+
+	  "APP_EVENT_MODULEEVENT" : "APP_EVENT_MODULEEVENT"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

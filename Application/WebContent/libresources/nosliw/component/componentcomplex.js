@@ -14,13 +14,13 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createComponentComplex = function(configure){
+var node_createComponentComplex = function(configure, envInterface){
 
 	var loc_configure = node_createConfigure(configure);
 	
 	var loc_state = node_createState();
 	var loc_parts = [];
-	var loc_interface = {};
+	var loc_interface = _.extend({}, envInterface);
 
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -40,10 +40,10 @@ var node_createComponentComplex = function(configure){
 		return out;
 	}
 	
-	var loc_unregisterPartListener = function(part){	part.unregisterEventListener(loc_eventListener);	};
+	var loc_unregisterPartListener = function(){	loc_getCurrentFacad().unregisterEventListener(loc_eventListener);	};
 
-	var loc_registerPartListener = function(part){
-		part.registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
+	var loc_registerPartListener = function(){
+		loc_getCurrentFacad().registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
 			loc_eventSource.triggerEvent(event, eventData, requestInfo);
 		});
 	}
@@ -52,7 +52,7 @@ var node_createComponentComplex = function(configure){
 		
 		addComponent : function(component){
 			loc_parts.push(component);
-			loc_registerPartListener(component);
+			loc_registerPartListener();
 		},
 		
 		addDecorations : function(componentDecorationInfos){
@@ -61,11 +61,12 @@ var node_createComponentComplex = function(configure){
 
 		addDecoration : function(componentDecorationInfo){
 			var current = loc_getCurrentFacad();
-			loc_unregisterPartListener(current);
+			loc_unregisterPartListener();
 			var decName = componentDecorationInfo.name;
 			var decoration = node_createComponentDecoration(decName, current, componentDecorationInfo.coreFun, loc_interface, loc_configure.getConfigureData(decName), loc_state);
 			loc_parts.push(decoration);
 			if(decoration.getInterface!=undefined)	_.extend(loc_interface, decoration.getInterface());
+			loc_registerPartListener();
 		},
 		
 		getInterface : function(){  return loc_interface;   },
