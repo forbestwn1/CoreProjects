@@ -80,6 +80,10 @@ var node_createIODataSet = function(value){
 			return out;
 		},
 
+		generateDataEle : function(name){
+			return loc_out.getData(name);
+		},
+		
 		getDataSet : function(){   return loc_dataSet;   },
 		
 		getGetDataValueRequest : function(name, handlers, request){
@@ -134,7 +138,9 @@ var node_createIODataSet = function(value){
 			}
 			return out;
 		},
-				
+		
+		
+		
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET);

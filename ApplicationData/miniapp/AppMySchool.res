@@ -85,7 +85,7 @@
 								{
 									"id": "updateApplicationData",
 									"type": "UI_executeCommand",
-									"partId": "module.application.inputMapping.syncWithApp",
+									"partId": "module.application.inputMapping.default",
 									"command": "execute",
 									"result": [{
 										"name": "success",

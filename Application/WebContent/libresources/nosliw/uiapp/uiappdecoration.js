@@ -15,6 +15,8 @@ var packageObj = library;
 	var node_getComponentLifecycleInterface;
 	var node_createEventObject;
 	var node_requestServiceProcessor;
+	var node_appUtility;
+	var node_ApplicationDataInfo;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -69,21 +71,12 @@ var node_createAppDecoration = function(gate){
 		return out;
 	};
 
-	var loc_getApplicationDataName = function(moduleDef){
-		var dataDependency = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_DATADEPENDENCY];
-		for(var i in dataDependency){
-			var dataName = dataDependency[i];
-			var appDataPrefex = "applicationData_";
-			if(dataName.startsWith(appDataPrefex)){
-				return dataName.substring(appDataPrefex.length);
-			}
-		}
-	};
-
 	var loc_createSettingModuleRequest = function(parentNode, settingData, moduleDef, configureData, handlers, request){
 		configureData.root = parentNode;
 		
 		var moduleInfo = new node_ModuleInfo(ROLE_SETTING);
+		moduleInfo.version = settingData.version;
+		moduleInfo.id = settingData.id;
 
 		var inputMappingIO = node_createIODataSet();
 		var dynamicData = node_createDynamicData(
@@ -95,19 +88,20 @@ var node_createAppDecoration = function(gate){
 		inputMappingIO.setData(settingData.dataName, settingData.data);
 		moduleInfo.inputMapping = loc_createModuleInputMapping(inputMappingIO, moduleDef);
 
+		moduleInfo.externalIO = node_appUtility.buildModuleExternalIO(loc_uiApp.getIOContext(), [new node_ApplicationDataInfo(settingData.dataName, settingData.id, settingData.version)], loc_appDataService);
+		moduleInfo.inputMapping = node_appUtility.buildModuleInputMapping(moduleInfo.externalIO, moduleDef);
+		
+		
 		moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];
 		
 		var moduleId = loc_uiApp.getId()+"."+ROLE_SETTING+"."+settingData.id;
 		return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleId, moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], configureData, loc_buildMoudleInputIO(moduleInfo), {
 			success : function(requestInfo, uiModuleRuntime){
 				moduleInfo.module = uiModuleRuntime;
-				moduleInfo = loc_uiApp.addModuleInfo(moduleInfo);
+
+				moduleInfo.outputMapping = node_appUtility.buildModuleOutputMapping(moduleInfo.externalIO, uiModuleRuntime, moduleDef);
 				
-//				uiModuleRuntime.registerEventListener(undefined, function(eventName, eventData, request){
-//					if(eventName=="submitSetting"){
-//						loc_trigueEvent("executeProcess", "applicationsetting;submitsetting", request);
-//					}
-//				});
+				moduleInfo = loc_uiApp.addModuleInfo(moduleInfo);
 				
 			}
 		}, request);
@@ -116,7 +110,7 @@ var node_createAppDecoration = function(gate){
 	var loc_createSettingRoleRequest = function(moduleDef, configureData, handlers, request){
 		var settingRoots = [];
 		var settingsRequest = node_createServiceRequestInfoSequence(undefined);
-		var appDataName = loc_getApplicationDataName(moduleDef);
+		var appDataName = node_appUtility.getApplicationDataName(moduleDef);
 		settingsRequest.addRequest(loc_appDataService.getGetAppDataRequest(appDataName, {
 			success : function(request, allSettings){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined);
@@ -124,7 +118,7 @@ var node_createAppDecoration = function(gate){
 					var root = $('<div></div>');
 					root.appendTo(configureData.root);
 					
-					settingData.dataName = "applicationData_"+appDataName;
+					settingData.dataName = appDataName;
 					settingRequest.addRequest(loc_createSettingModuleRequest(root.get(), settingData, moduleDef, configureData));
 				});
 				return settingRequest;
@@ -224,6 +218,8 @@ nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_cre
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.utility", function(){node_appUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataInfo", function(){node_ApplicationDataInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createAppDecoration", node_createAppDecoration); 

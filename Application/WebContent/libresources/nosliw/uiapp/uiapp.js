@@ -15,11 +15,19 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  **************************************
 
+var node_ApplicationDataInfo = function(dataName, dataId, dataVersion){
+	this.dataName = dataName;
+	this.dataId = dataId;
+	this.dataVersion = dataVersion;
+};
+	
 var node_ModuleInfo = function(role){
 	this.role = role;
 	this.module = undefined;
 	this.id = undefined;
 	this.version = undefined;
+	this.applicationData = [];
+	this.externalIO = undefined;
 	this.inputMapping = {};
 	this.currentInputMapping = undefined;
 	this.outputMapping = {};
@@ -148,5 +156,6 @@ nosliw.registerSetNodeDataEvent("uiapp.ModuleEventData", function(){node_ModuleE
 //Register Node by Name
 packageObj.createChildNode("createApp", node_createApp); 
 packageObj.createChildNode("ModuleInfo", node_ModuleInfo); 
+packageObj.createChildNode("ApplicationDataInfo", node_ApplicationDataInfo); 
 
 })(packageObj);

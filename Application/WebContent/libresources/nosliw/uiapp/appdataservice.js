@@ -64,6 +64,18 @@ var node_appDataService = function(){
 			}, handlers, requester_parent);
 		},	
 
+		getGetAppDataByIdRequest : function(dataName, id, handlers, requester_parent){
+			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+				var out;
+				_.each(loc_data, function(data, index){
+					if(data.id==id){
+						out = data;
+					}
+				});
+				return out;
+			}, handlers, requester_parent);
+		},	
+
 		getAddAppDataRequest : function(dataName, data, handlers, requester_parent){
 			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
 				loc_data.push(data);
@@ -82,10 +94,21 @@ var node_appDataService = function(){
 			}, handlers, requester_parent);
 		},	
 
-		getUpdateAppDataRequest : function(dataName, dataVersion, data, handlers, requester_parent){
+//		getUpdateAppDataRequest : function(dataName, dataVersion, data, handlers, requester_parent){
+//			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+//				for(var i in loc_data){
+//					if(loc_data[i].version==dataVersion){
+//						loc_data[i].data = data;
+//						return data;
+//					}
+//				}
+//			}, handlers, requester_parent);
+//		},	
+
+		getUpdateAppDataRequest : function(dataName, dataId, data, handlers, requester_parent){
 			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
 				for(var i in loc_data){
-					if(loc_data[i].version==dataVersion){
+					if(loc_data[i].id==dataId){
 						loc_data[i].data = data;
 						return data;
 					}

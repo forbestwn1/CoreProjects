@@ -11,6 +11,8 @@ var packageObj = library;
 	var node_makeObjectWithComponentLifecycle;
 	var node_createComponentComplex;
 	var node_createStateBackupService;
+	var node_getComponentLifecycleInterface;
+	var node_createServiceRequestInfoSimple;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -132,7 +134,16 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
 		unregisterEventListener : function(listener){	return loc_componentComplex.unregisterEventListener(listener); },
 		
-		getExecuteCommandRequest : function(command, parms, handlers, request){	return loc_componentComplex.getExecuteCommandRequest(command, parms, handlers, request);	}
+		getExecuteCommandRequest : function(command, parms, handlers, request){	
+			if(command=="restart"){
+				return node_createServiceRequestInfoSimple(undefined, function(request){
+					node_getComponentLifecycleInterface(loc_out).restart();
+				}, handlers, request);
+			}
+			else{
+				return loc_componentComplex.getExecuteCommandRequest(command, parms, handlers, request);	
+			}
+		}
 		
 	};
 	
@@ -152,8 +163,10 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentComplex", function(){node_createComponentComplex = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleRuntimeRequest", node_createModuleRuntimeRequest); 
