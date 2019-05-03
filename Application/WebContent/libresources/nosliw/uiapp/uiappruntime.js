@@ -33,11 +33,11 @@ var node_createAppRuntimeRequest = function(id, appDef, configure, componentDeco
 var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos){
 	
 	var loc_interface = {
-			getPart : function(partId){  return loc_componentComplex.getComponent().getPart(partId);	},
+		getPart : function(partId){  return loc_out.getPart(partId);	},
 
-			getExecutePartCommandRequest : function(partId, commandName, commandData, handlers, requestInfo){
-				return this.getPart(partId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
-			},
+		getExecutePartCommandRequest : function(partId, commandName, commandData, handlers, requestInfo){
+			return this.getPart(partId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+		},
 	};
 	
 	var loc_componentComplex = node_createComponentComplex(configure, loc_interface);
@@ -97,7 +97,11 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 			out.addRequest(loc_getApp().getInitIOContextRequest());
 			return out;
 		},
+	
+		getContextRequest : function(handlers, request){	return loc_getIOContext().getGetDataSetValueRequest(handlers, request);	},
 		
+		getPart : function(partId){  return loc_componentComplex.getComponent().getPart(partId);	},
+
 	};
 	
 	loc_init(uiApp, configure, componentDecorationInfos);

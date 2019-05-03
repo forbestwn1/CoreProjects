@@ -16,12 +16,14 @@
 </head>
 
 <body>
+
 	<div id="appDiv">
 		<div class="panel panel-left panel-cover">
       		<div class="block" id="userInfoDiv">
-	            <h2>Left Panel content</h2>
-	            <p><a href = "#" class = "close-panel">Close me</a></p>
-	            <p><a href = "#" data-panel = "right" class = "open-panel">Open Right Panel</a></p>
+				<a id="appContext">AppContext</a><p>
+				<a id="appModuleContext">appModuleContext</a><p>
+				<a id="settingModuleContext">settingModuleContext</a><p>
+				<textarea rows="15" cols="150" id="debug" style="resize: none;" data-role="none"></textarea>
          	</div>
     	</div>
 
@@ -115,6 +117,38 @@ $(document).on("nosliwActive", function(){
 		{
 			success : function(requestInfo, uiAppRuntime){
 				node_getComponentLifecycleInterface(uiAppRuntime).active();
+				
+				document.getElementById("appContext").addEventListener("click", function(event){
+					event.preventDefault();
+					var r = uiAppRuntime.getContextRequest({
+						success : function(request, contextData){
+							$("#debug").val(JSON.stringify(contextData, null, 4));
+						}
+					});
+					node_requestServiceProcessor.processRequest(r);
+				});
+
+				document.getElementById("settingModuleContext").addEventListener("click", function(event){
+					event.preventDefault();
+					var module = uiAppRuntime.getPart("module.setting");
+					var r = module.getContextRequest({
+						success : function(request, contextData){
+							$("#debug").val(JSON.stringify(contextData, null, 4));
+						}
+					});
+					node_requestServiceProcessor.processRequest(r);
+				});
+
+				document.getElementById("appModuleContext").addEventListener("click", function(event){
+					event.preventDefault();
+					var module = uiAppRuntime.getPart("module.application");
+					var r = module.getContextRequest({
+						success : function(request, contextData){
+							$("#debug").val(JSON.stringify(contextData, null, 4));
+						}
+					});
+					node_requestServiceProcessor.processRequest(r);
+				});
 			}
 		}
 	);

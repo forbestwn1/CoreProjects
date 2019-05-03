@@ -27,8 +27,8 @@ var packageObj = library;
 
 var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIODataSet){
 	
-	if(node_getObjectType(inputIO)==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE)  inputIO = node_createIODataSet(inputIO);
-	var loc_inputIO = inputIO;
+//	if(node_getObjectType(inputIO)==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE)  inputIO = node_createIODataSet(inputIO);
+	var loc_inputIO = node_createIODataSet(inputIO);
 
 	var loc_outputIODataSet = node_createIODataSet(outputIODataSet);
 	var loc_dataAssociationDef = dataAssociationDef;

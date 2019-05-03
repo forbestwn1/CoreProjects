@@ -134,6 +134,8 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
 		unregisterEventListener : function(listener){	return loc_componentComplex.unregisterEventListener(listener); },
 		
+		getContextRequest : function(handlers, request){	return loc_getIOContext().getGetDataSetValueRequest(handlers, request);	},
+		
 		getExecuteCommandRequest : function(command, parms, handlers, request){	
 			if(command=="restart"){
 				return node_createServiceRequestInfoSimple(undefined, function(request){
