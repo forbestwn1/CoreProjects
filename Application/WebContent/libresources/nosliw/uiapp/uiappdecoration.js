@@ -78,15 +78,15 @@ var node_createAppDecoration = function(gate){
 		moduleInfo.version = settingData.version;
 		moduleInfo.id = settingData.id;
 
-		var inputMappingIO = node_createIODataSet();
-		var dynamicData = node_createDynamicData(
-			function(handlers, request){
-				return loc_uiApp.getIOContext().getGetDataValueRequest(undefined, handlers, request);
-			} 
-		);
-		inputMappingIO.setData(undefined, dynamicData);
-		inputMappingIO.setData(settingData.dataName, settingData.data);
-		moduleInfo.inputMapping = loc_createModuleInputMapping(inputMappingIO, moduleDef);
+//		var inputMappingIO = node_createIODataSet();
+//		var dynamicData = node_createDynamicData(
+//			function(handlers, request){
+//				return loc_uiApp.getIOContext().getGetDataValueRequest(undefined, handlers, request);
+//			} 
+//		);
+//		inputMappingIO.setData(undefined, dynamicData);
+//		inputMappingIO.setData(settingData.dataName, settingData.data);
+//		moduleInfo.inputMapping = loc_createModuleInputMapping(inputMappingIO, moduleDef);
 
 		moduleInfo.externalIO = node_appUtility.buildModuleExternalIO(loc_uiApp.getIOContext(), [new node_ApplicationDataInfo(settingData.dataName, settingData.id, settingData.version)], loc_appDataService);
 		moduleInfo.inputMapping = node_appUtility.buildModuleInputMapping(moduleInfo.externalIO, moduleDef);
@@ -130,8 +130,14 @@ var node_createAppDecoration = function(gate){
 	
 	var loc_createApplicationModuleRequest = function(moduleDef, configureData, handlers, request){
 		var moduleInfo = new node_ModuleInfo(ROLE_APPLICATION);
-		moduleInfo.inputMapping = loc_createModuleInputMapping(loc_uiApp.getIOContext(), moduleDef);
+
+//		moduleInfo.inputMapping = loc_createModuleInputMapping(loc_uiApp.getIOContext(), moduleDef);
+//		moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];
+
+		moduleInfo.externalIO = node_appUtility.buildModuleExternalIO(loc_uiApp.getIOContext(), [], loc_appDataService);
+		moduleInfo.inputMapping = node_appUtility.buildModuleInputMapping(moduleInfo.externalIO, moduleDef);
 		moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];
+
 		
 		var moduleId = loc_uiApp.getId()+"."+ROLE_APPLICATION;
 		return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleId, moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], configureData, loc_buildMoudleInputIO(moduleInfo), {

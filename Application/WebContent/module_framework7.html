@@ -16,13 +16,7 @@
 </head>
 
 <body>
-	<span id="states"></span></p>
-	<span id="currentState"></span></p>
-	<a id="startBtn">Start</a>
-	<a id="restartBtn">Restart</a>
-	<a id="suspendBtn">Suspend</a>
-	<a id="resumeBtn">Resume</a>
-	<p/>
+	<div id="lifecycleDebug"></div>
 
 	<div id="appDiv">
 		<div class="view view-main" id="moduleDiv"></div>
@@ -39,7 +33,9 @@ $(document).on("nosliwActive", function(){
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
+	var node_createComponentLifeCycleDebugView = nosliw.getNodeData("component.createComponentLifeCycleDebugView");
 
+	
     // Our initialization code here
 	var currentSearchString = window.location.search;
 	var parmValue = currentSearchString.substring(currentSearchString.indexOf("=")+1);
@@ -86,50 +82,8 @@ $(document).on("nosliwActive", function(){
 	};
 	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, moduleId, configure, undefined, {
 		success : function(requestInfo, uiModuleRuntime){
-			moduleRuntime = uiModuleRuntime;
-
-			var lifecycle = node_getComponentLifecycleInterface(moduleRuntime);
-			document.getElementById("currentState").innerHTML = lifecycle.getComponentStatus();
-			document.getElementById("states").innerHTML = lifecycle.getComponentStatus();
-			lifecycle.registerEventListener(undefined, function(eventName, eventData, request){
-				if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
-					document.getElementById("states").innerHTML = document.getElementById("states").innerHTML + " -- " + lifecycle.getComponentStatus();
-				}
-				else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
-					document.getElementById("states").innerHTML = document.getElementById("states").innerHTML + " XX " + lifecycle.getComponentStatus();
-				}
-				else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
-					document.getElementById("states").innerHTML = document.getElementById("states").innerHTML + " XX " + lifecycle.getComponentStatus();
-				}
-				document.getElementById("currentState").innerHTML = lifecycle.getComponentStatus();
-			});
-
-			
-			document.getElementById("startBtn").addEventListener("click", function(event){
-				var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
-				event.preventDefault();
-				node_getComponentLifecycleInterface(moduleRuntime).active();
-			});
-
-			document.getElementById("restartBtn").addEventListener("click", function(event){
-				var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
-				event.preventDefault();
-				node_getComponentLifecycleInterface(moduleRuntime).restart();
-			});
-
-			document.getElementById("suspendBtn").addEventListener("click", function(event){
-				var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
-				event.preventDefault();
-				node_getComponentLifecycleInterface(moduleRuntime).suspend();
-			});
-
-			document.getElementById("resumeBtn").addEventListener("click", function(event){
-				var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
-				event.preventDefault();
-				node_getComponentLifecycleInterface(moduleRuntime).resume();
-			});
-
-			
+			var lifecycleDebugView = node_createComponentLifeCycleDebugView(uiModuleRuntime);
+			$('#lifecycleDebug').append(lifecycleDebugView);
 		}
 	});
 });

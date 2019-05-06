@@ -14,6 +14,10 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSimple;
 	var node_createStateMachine;
+	var node_CommandInfo;
+	var createStateMachineDef;
+	var node_TransitInfo;
+	var node_requestServiceProcessor;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -31,6 +35,8 @@ var node_getComponentLifecycleInterface = function(baseObject){
 };
 
 var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
+	var loc_stateMachineDef;
+	
 	//this context for lifycycle callback method
 	var loc_thisContext = thisContext;
 	
@@ -39,52 +45,63 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 	//life cycle call back including all call back method
 	var loc_lifecycleCallback = lifecycleCallback==undefined? {}:lifecycleCallback;
 	
-	var loc_stateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_thisContext);
-
-	var loc_createStateTransit = function(from, to){
-		loc_stateMachine.addStateInfo(from, to, 
-			function(){
-				var fun = loc_lifecycleCallback[from+"_"+to];
-				if(fun!=undefined)   return fun.apply(loc_thisContext, arguments);
-				else  return true;
-			}, 
-			function(){
-				var fun = loc_lifecycleCallback["_"+from+"_"+to];
-				if(fun!=undefined)   return fun.apply(loc_thisContext, arguments);
-				else  return true;
-			});
-	};
+	var loc_stateMachine;
 
 	var loc_init = function(){
-		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE);
-		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD);
-		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED);
-		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT);
-		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE);
+		loc_stateMachineDef = node_createStateMachineDef();
+		var loc_validTransits = [
+			new node_TransitInfo(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE),
+			new node_TransitInfo(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD),
+			new node_TransitInfo(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED),
+			new node_TransitInfo(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT),
+			new node_TransitInfo(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE),
+		];
+
+		var loc_commands = [
+			new node_CommandInfo("activate", undefined, [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]),
+			new node_CommandInfo("deactive", undefined, [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT]),
+			new node_CommandInfo("suspend", undefined, [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED]),
+			new node_CommandInfo("resume", [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED], [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]),
+			new node_CommandInfo("destroy", undefined, [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD]),
+			new node_CommandInfo("restart", undefined, [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]),
+		];
+
+		_.each(loc_validTransits, function(transit, i){		
+			var from = transit.from;
+			var to = transit.to;
+			loc_stateMachineDef.addStateInfo(transit, 
+				function(){
+					var fun = loc_lifecycleCallback[transit.from+"_"+transit.to];
+					if(fun!=undefined)   return fun.apply(loc_thisContext, arguments);
+					else  return true;
+				}, 
+				function(){
+					var fun = loc_lifecycleCallback["_"+transit.from+"_"+transit.to];
+					if(fun!=undefined)   return fun.apply(loc_thisContext, arguments);
+					else  return true;
+				});
+		});
+		_.each(loc_commands, function(commandInfo, i){      loc_stateMachineDef.addCommand(commandInfo);      });
+
+		loc_stateMachine = node_createStateMachine(loc_stateMachineDef, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_thisContext);
 	};
 
-	var loc_processNext = function(nexts, request){
-		var task = loc_stateMachine.newTask(nexts);
-		if(task!=undefined){
-			return task.process(request);
-		}
-	};
-	
 	var loc_out = {
+
+		command : function(commandName, request){  
+			var task = loc_stateMachine.newTask(commandName);
+			if(task!=undefined)  	return task.process(request);
+		},
+		getCommandRequest : function(commandName, handlers, request){
+			var task = loc_stateMachine.newTask(commandName);
+			if(task!=undefined)  	return task.getProcessRequest(handlers, request);
+		},
+		executeCommandRequest : function(commandName, handlers, request){
+			var request = loc_out.getCommandRequest(commandName, handlers, request);
+			node_requestServiceProcessor.processRequest(request);
+		},
 			
-		active : function(request){	 return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE], request);	},
-		deactive : function(request){ return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT], request);	},
-		
-		suspend : function(request){ return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED], request);	},
-		resume : function(request){	return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE], request);	},
-		
-		destroy : function(request){ return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD], request);	},
-
-		restart : function(request){ return loc_processNext([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE], request);	},
-
-		transitSuccess : function(request){   loc_successTransit(request);	},
-		transitFail : function(request){   loc_failTransit(request);	},
-
+		getStateMachine : function(){  return loc_stateMachine;   },
 		getComponentStatus : function(){		return loc_stateMachine.getCurrentState();		},
 
 		registerEventListener : function(listener, handler){	return loc_stateMachine.prv_registerEventListener(listener, handler, thisContext);	},
@@ -111,6 +128,11 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("common.statemachine.createStateMachine", function(){node_createStateMachine = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.statemachine.CommandInfo", function(){node_CommandInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.statemachine.createStateMachineDef", function(){node_createStateMachineDef = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.statemachine.TransitInfo", function(){node_TransitInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("makeObjectWithComponentLifecycle", node_makeObjectWithComponentLifecycle); 
