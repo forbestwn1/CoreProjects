@@ -17,6 +17,8 @@
 
 <body>
 	<div id="lifecycleDebug"></div>
+	<div id="dataDebug"></div>
+	<div id="eventDebug"></div>
 
 	<div id="appDiv">
 		<div class="view view-main" id="moduleDiv"></div>
@@ -34,7 +36,8 @@ $(document).on("nosliwActive", function(){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
 	var node_createComponentLifeCycleDebugView = nosliw.getNodeData("component.createComponentLifeCycleDebugView");
-
+	var node_createComponentDataView = nosliw.getNodeData("component.createComponentDataView");
+	var node_createComponentEventView = nosliw.getNodeData("component.createComponentEventView");
 	
     // Our initialization code here
 	var currentSearchString = window.location.search;
@@ -84,6 +87,11 @@ $(document).on("nosliwActive", function(){
 		success : function(requestInfo, uiModuleRuntime){
 			var lifecycleDebugView = node_createComponentLifeCycleDebugView(uiModuleRuntime);
 			$('#lifecycleDebug').append(lifecycleDebugView);
+			
+			$('#dataDebug').append(node_createComponentDataView(uiModuleRuntime));
+			
+			$('#eventDebug').append(node_createComponentEventView(uiModuleRuntime));
+			
 		}
 	});
 });

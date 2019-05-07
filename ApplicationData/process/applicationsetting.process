@@ -55,7 +55,7 @@
 					"name": "updateApplication",
 					"type": "UI_executeCommand",
 					"partId": "module.application",
-					"command": "restart",
+					"command": "lifecycle.restart",
 					"result": [{
 						"name": "success",
 						"flow": {

@@ -6,6 +6,7 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_getComponentLifecycleInterface;
+	var node_getComponentInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -22,13 +23,37 @@ var loc_updateCandidateView = function(all, candidates, views){
 
 var node_createComponentDataView = function(component){
 	var out = $('<div></div>');
+	var textView = $('<textarea rows="5" cols="150" id="debug" style="resize: none;" data-role="none"></textarea>');
+	out.append(textView);
 
-	component.
-	
-	getContextRequest
+	var comInterface = node_getComponentInterface(component);
+	comInterface.registerDataChangeEventListener(undefined, function(eventName, dataSet){
+		textView.val(JSON.stringify(dataSet, null, 4));
+	});
 	
 	return out;
 };
+
+var node_createComponentEventView = function(component){
+	var out = $('<div></div>');
+	var textView = $('<textarea rows="5" cols="150" id="debug" style="resize: none;" data-role="none"></textarea>');
+	out.append(textView);
+
+	var comInterface = node_getComponentInterface(component);
+	comInterface.registerEventListener(undefined, function(eventName, eventData, request){
+		var content = textView.val();
+		content = content + "\n\n*****************************************\n\n";
+		content = content + JSON.stringify({
+			eventName : eventName,
+			eventData : eventData
+		}, null, 4);
+		
+		textView.val(content);
+	});
+	
+	return out;
+};
+
 
 var node_createComponentLifeCycleDebugView = function(component){
 
@@ -109,8 +134,11 @@ var node_createComponentLifeCycleDebugView = function(component){
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentLifeCycleDebugView", node_createComponentLifeCycleDebugView); 
+packageObj.createChildNode("createComponentDataView", node_createComponentDataView); 
+packageObj.createChildNode("createComponentEventView", node_createComponentEventView); 
 
 })(packageObj);

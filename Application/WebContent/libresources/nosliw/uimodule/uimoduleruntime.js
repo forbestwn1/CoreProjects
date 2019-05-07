@@ -9,6 +9,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createUIModuleRequest;
 	var node_makeObjectWithComponentLifecycle;
+	var node_makeObjectWithComponentInterface;
 	var node_createComponentComplex;
 	var node_createStateBackupService;
 	var node_getComponentLifecycleInterface;
@@ -128,7 +129,13 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 			out.addRequest(loc_componentComplex.getInitRequest());
 			return out;
 		},
-			
+
+		prv_getExecuteCommandRequest : function(command, parms, handlers, request){	
+			return loc_componentComplex.getExecuteCommandRequest(command, parms, handlers, request);	
+		},
+
+		prv_getIODataSet : function(){  return loc_getIOContext();	},
+		
 		getModule : function(){  return loc_getModule();  },
 		
 		registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
@@ -137,14 +144,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		getContextRequest : function(handlers, request){	return loc_getIOContext().getGetDataSetValueRequest(handlers, request);	},
 		
 		getExecuteCommandRequest : function(command, parms, handlers, request){	
-			if(command=="restart"){
-				return node_createServiceRequestInfoSimple(undefined, function(request){
-					node_getComponentLifecycleInterface(loc_out).restart();
-				}, handlers, request);
-			}
-			else{
-				return loc_componentComplex.getExecuteCommandRequest(command, parms, handlers, request);	
-			}
+			return node_getComponentInterface(loc_out).getExecuteCommandRequest(command, parms, handlers, request);
 		}
 		
 	};
@@ -152,6 +152,9 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	loc_init(uiModule, configure, componentDecorationInfos);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback);
+	
+	loc_out = node_makeObjectWithComponentInterface(loc_out, loc_out);
+	
 	return loc_out;
 };
 
@@ -165,6 +168,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentInterface", function(){node_makeObjectWithComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentComplex", function(){node_createComponentComplex = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
