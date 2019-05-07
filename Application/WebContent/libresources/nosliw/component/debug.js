@@ -47,7 +47,7 @@ var node_createComponentLifeCycleDebugView = function(component){
 		allStatesView.append($('<span>&nbsp;&nbsp;</span>'));
 		stateView.on('click', function(){
 			event.preventDefault();
-			lifecycle.command(state);
+			lifecycle.command([state]);
 		});
 		loc_stateView[state] = stateView;
 	});
@@ -60,7 +60,12 @@ var node_createComponentLifeCycleDebugView = function(component){
 		allCommandsView.append($('<span>&nbsp;&nbsp;</span>'));
 		commandView.on('click', function(){
 			event.preventDefault();
-			lifecycle.command("activate");
+//			lifecycle.command(command);
+			lifecycle.executeCommandRequest(command, {
+				success : function(request){
+					console.log('aaa');
+				}
+			});
 		});
 		loc_commandView[command] = commandView;
 	});

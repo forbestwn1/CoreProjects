@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoCommon;
 	var node_ServiceRequestExecuteInfo;
+	var node_buildServiceProvider;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -36,7 +37,7 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 			var listener = loc_stateMachine.prv_registerEventListener(undefined, function(eventName, eventData, request){
 				loc_stateMachine.prv_unregisterEventListener(listener);
 				if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
-					loc_processNext();
+					loc_processNext(request);
 				}
 				else if (eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION || eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
 					loc_currentNext = loc_currentNext - 2;
@@ -62,11 +63,13 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 	var loc_out = {
 		
 		process : function(request){	
+			var request = loc_out.getRequestInfo(request);
 			loc_processNext(request);
-			return loc_out;
+			return request;
 		},
 		
 		getProcessRequest : function(handlers, request){
+			var request = loc_out.getRequestInfo(request);
 			var out = node_createServiceRequestInfoCommon(undefined, handlers, request);
 			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(request){
 				var listener = loc_out.registerEventListener(undefined, function(eventName, eventData, request){
@@ -89,6 +92,9 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventObj.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventObj.unregister(listener); },
 	};
+	
+	loc_out = node_buildServiceProvider(loc_out, "stateMachineTask");
+
 	return loc_out;
 };
 
@@ -228,6 +234,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){	node_createServiceRequestInfoCommon = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){	node_ServiceRequestExecuteInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
 
 nosliw.registerSetNodeDataEvent("statemachine.TransitInfo", function(){node_TransitInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("statemachine.CommandInfo", function(){node_CommandInfo = this.getData();});
