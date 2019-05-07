@@ -31,6 +31,7 @@ nosliw.init = function(serverBase){
 		"nosliw.uimodule",
 		"nosliw.uiapp",
 		"nosliw.iotask",
+		"nosliw.statemachine",
 		"nosliw.runtimebrowsertest",
 	];
 

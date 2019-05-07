@@ -19,7 +19,17 @@ var loc_updateCandidateView = function(all, candidates, views){
 		}
 	});		
 };
+
+var node_createComponentDataView = function(component){
+	var out = $('<div></div>');
+
+	component.
 	
+	getContextRequest
+	
+	return out;
+};
+
 var node_createComponentLifeCycleDebugView = function(component){
 
 	var out = $('<div></div>');

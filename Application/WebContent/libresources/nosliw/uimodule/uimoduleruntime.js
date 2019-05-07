@@ -130,7 +130,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		},
 			
 		getModule : function(){  return loc_getModule();  },
-
+		
 		registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
 		unregisterEventListener : function(listener){	return loc_componentComplex.unregisterEventListener(listener); },
 		

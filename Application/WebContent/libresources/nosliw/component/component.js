@@ -127,10 +127,10 @@ nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtilit
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
-nosliw.registerSetNodeDataEvent("common.statemachine.createStateMachine", function(){node_createStateMachine = this.getData();	});
-nosliw.registerSetNodeDataEvent("common.statemachine.CommandInfo", function(){node_CommandInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("common.statemachine.createStateMachineDef", function(){node_createStateMachineDef = this.getData();	});
-nosliw.registerSetNodeDataEvent("common.statemachine.TransitInfo", function(){node_TransitInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("statemachine.createStateMachine", function(){node_createStateMachine = this.getData();	});
+nosliw.registerSetNodeDataEvent("statemachine.CommandInfo", function(){node_CommandInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("statemachine.createStateMachineDef", function(){node_createStateMachineDef = this.getData();	});
+nosliw.registerSetNodeDataEvent("statemachine.TransitInfo", function(){node_TransitInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 

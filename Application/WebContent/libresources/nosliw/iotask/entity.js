@@ -13,6 +13,7 @@ var packageObj = library.getChildPackage("entity");
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSet;
 	var node_ioTaskUtility;
+	var node_createEventObject;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //task result 
@@ -52,6 +53,9 @@ var node_createIODataSet = function(value){
 	
 	var loc_dataSet = {};
 	
+	var loc_eventSource = node_createEventObject();
+	var loc_eventListener = node_createEventObject();
+	
 	if(value!=undefined){
 		var valueType = node_getObjectType(value);
 		if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET){
@@ -63,6 +67,8 @@ var node_createIODataSet = function(value){
 		}
 	}
 	
+	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
+
 	var loc_out = {
 		
 		setData : function(name, data){  
@@ -99,7 +105,6 @@ var node_createIODataSet = function(value){
 			}
 		},
 
-
 		getGetDataSetValueRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var getDataItemRequest = node_createServiceRequestInfoSet(undefined, {
@@ -127,19 +132,27 @@ var node_createIODataSet = function(value){
 				out.addRequest(loc_out.getGetDataValueRequest(name, {
 					success : function(request, value){
 						var output = node_ioTaskUtility.mergeContext(request.getData('value'), value, isDataFlat);
-						return loc_out.getData(request.getData('name')).getSetValueRequest(output);
+						return loc_out.getData(request.getData('name')).getSetValueRequest(output, {
+							success : function(request, data){
+								loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
+								return data;
+							}
+						});
 					}
 				}).withData(name, 'name').withData(value, 'value'));
 			}
 			else{
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					return node_ioTaskUtility.mergeContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
+					var data = node_ioTaskUtility.mergeContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
+					loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
+					return data;
 				}).withData(name, 'name').withData(value, 'value'));
 			}
 			return out;
 		},
 		
-		
+		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 		
 	};
 	
@@ -161,6 +174,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("IOTaskResult", node_IOTaskResult); 
