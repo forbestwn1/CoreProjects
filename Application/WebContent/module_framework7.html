@@ -17,6 +17,7 @@
 
 <body>
 	<div id="lifecycleDebug"></div>
+	<div id="inputDebug"></div>
 	<div id="dataDebug"></div>
 	<div id="eventDebug"></div>
 
@@ -27,9 +28,9 @@
 
 <script>
 
-var moduleRuntime;
 
 $(document).on("nosliwActive", function(){
+
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
@@ -38,8 +39,21 @@ $(document).on("nosliwActive", function(){
 	var node_createComponentLifeCycleDebugView = nosliw.getNodeData("component.createComponentLifeCycleDebugView");
 	var node_createComponentDataView = nosliw.getNodeData("component.createComponentDataView");
 	var node_createComponentEventView = nosliw.getNodeData("component.createComponentEventView");
+	var node_createComponentInputView = nosliw.getNodeData("component.createComponentInputView");
+
+	var loc_debugInputView = node_createComponentInputView();
+	$('#dataDebug').append(loc_debugInputView.getView());
+
+	var loc_debugLifecycleView = node_createComponentLifeCycleDebugView();
+	$('#lifecycleDebug').append(loc_debugLifecycleView.getView());
 	
-    // Our initialization code here
+	var loc_debugDataView = node_createComponentDataView();
+	$('#dataDebug').append(loc_debugDataView.getView());
+
+	var loc_debugEventView = node_createComponentEventView();
+	$('#eventDebug').append(loc_debugEventView.getView());
+	
+	// Our initialization code here
 	var currentSearchString = window.location.search;
 	var parmValue = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 	var index = parmValue.indexOf(";");
@@ -83,15 +97,13 @@ $(document).on("nosliwActive", function(){
 			}
 		}
 	};
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, moduleId, configure, undefined, {
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, moduleId, configure, loc_debugInputView.getInputIODataSet(), {
 		success : function(requestInfo, uiModuleRuntime){
-			var lifecycleDebugView = node_createComponentLifeCycleDebugView(uiModuleRuntime);
-			$('#lifecycleDebug').append(lifecycleDebugView);
+			loc_debugLifecycleView.setComponent(uiModuleRuntime);
 			
-			$('#dataDebug').append(node_createComponentDataView(uiModuleRuntime));
+			loc_debugDataView.setComponent(uiModuleRuntime);
 			
-			$('#eventDebug').append(node_createComponentEventView(uiModuleRuntime));
-			
+			loc_debugEventView.setComponent(uiModuleRuntime);
 		}
 	});
 });

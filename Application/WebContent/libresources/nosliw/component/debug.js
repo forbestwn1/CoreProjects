@@ -7,125 +7,223 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_getComponentLifecycleInterface;
 	var node_getComponentInterface;
+	var node_createServiceRequestInfoSimple;
+	var node_createIODataSet;
+	var node_createDynamicData;
+	var node_requestServiceProcessor;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_updateCandidateView = function(all, candidates, views){
-	_.each(all, function(ele, i){
-		if(candidates.includes(ele)){
-			views[ele].css('color', 'green');
-		}
-		else{
-			views[ele].css('color', 'red');
-		}
-	});		
-};
-
-var node_createComponentDataView = function(component){
-	var out = $('<div></div>');
-	var textView = $('<textarea rows="5" cols="150" id="debug" style="resize: none;" data-role="none"></textarea>');
-	out.append(textView);
-
-	var comInterface = node_getComponentInterface(component);
-	comInterface.registerDataChangeEventListener(undefined, function(eventName, dataSet){
-		textView.val(JSON.stringify(dataSet, null, 4));
-	});
+var node_createComponentDataView = function(){
+	var loc_component;
 	
-	return out;
-};
+	var loc_view = $('<div>Component Data: </div>');
+	var loc_textView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
+	loc_view.append(loc_textView);
 
-var node_createComponentEventView = function(component){
-	var out = $('<div></div>');
-	var textView = $('<textarea rows="5" cols="150" id="debug" style="resize: none;" data-role="none"></textarea>');
-	out.append(textView);
+	var loc_listener;
 
-	var comInterface = node_getComponentInterface(component);
-	comInterface.registerEventListener(undefined, function(eventName, eventData, request){
-		var content = textView.val();
-		content = content + "\n\n*****************************************\n\n";
-		content = content + JSON.stringify({
-			eventName : eventName,
-			eventData : eventData
-		}, null, 4);
+	var loc_clearup = function(){
+		if(loc_component!=undefined){
+			var comInterface = node_getComponentInterface(loc_component);
+			comInterface.unregisterDataChangeEventListener(loc_listener);
+			loc_component = undefined;
+		}
+	};
+
+	var loc_showDataSet = function(dataSet){	loc_textView.val(JSON.stringify(dataSet, null, 4));	};
+	
+	var loc_setup = function(){
+		var comInterface = node_getComponentInterface(loc_component);
+		comInterface.registerDataChangeEventListener(undefined, function(eventName, dataSet){
+			loc_showDataSet(dataSet);
+		});
+		node_requestServiceProcessor.processRequest(comInterface.getContextDataSetRequest({
+			success : function(request, dataSet){
+				loc_showDataSet(dataSet);
+			}
+		}));
+	};
+	
+	var loc_out = {
+		getView : function(){  return loc_view;   },
 		
-		textView.val(content);
-	});
+		setComponent : function(component){
+			loc_clearup();
+			loc_component = component;
+			loc_setup();
+		}
+	};
 	
-	return out;
+	return loc_out;
+};
+
+var node_createComponentInputView = function(){
+	var loc_view = $('<div>Component Input: </div>');
+	var loc_textView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
+	loc_view.append(loc_textView);
+
+	var loc_inputIODataSet = node_createIODataSet();
+	var loc_viewIO = node_createDynamicData(
+		function(handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				var content = loc_textView.val();
+				if(content=='')  return;
+				return JSON.parse(content); 
+			}, handlers, request); 
+		} 
+	);
+	loc_inputIODataSet.setData(undefined, loc_viewIO);
+	
+	var loc_out = {
+		getView : function(){  return loc_view;   },
+		
+		getInputIODataSet : function(){
+			return loc_inputIODataSet;
+		}
+	}
+	
+	return loc_out;
+};
+
+var node_createComponentEventView = function(){
+	var loc_component;
+	var loc_view = $('<div>Component Event: </div>');
+	var loc_textView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
+	loc_view.append(loc_textView);
+
+	var loc_clearup = function(){};
+	
+	var loc_setup = function(){
+		var comInterface = node_getComponentInterface(loc_component);
+		comInterface.registerEventListener(undefined, function(eventName, eventData, request){
+			var content = loc_textView.val();
+			content = content + "\n\n*****************************************\n\n";
+			content = content + JSON.stringify({
+				eventName : eventName,
+				eventData : eventData
+			}, null, 4);
+			
+			loc_textView.val(content);
+		});
+	};
+	
+	var loc_out = {
+		getView : function(){  return loc_view;   },
+		
+		setComponent : function(component){
+			loc_clearup();
+			loc_component = component;
+			loc_setup();
+		}
+	};
+	return loc_out;
 };
 
 
-var node_createComponentLifeCycleDebugView = function(component){
+var node_createComponentLifeCycleDebugView = function(){
 
-	var out = $('<div></div>');
+	var loc_view = $('<div></div>');
+	
+	var loc_component;
 	
 	var loc_stateView = {};
 	var loc_commandView = {};
 	
-	var lifecycle = node_getComponentLifecycleInterface(component);
-	var stateMachine = lifecycle.getStateMachine();
+	var loc_lifecycle;
+	var loc_stateMachine;
 
-	var allStatesView = $('<div>All States : </div>');
-	_.each(stateMachine.getAllStates(), function(state, i){
-		var stateView = $('<a>'+state+'</a>');
-		allStatesView.append(stateView);
-		allStatesView.append($('<span>&nbsp;&nbsp;</span>'));
-		stateView.on('click', function(){
-			event.preventDefault();
-			lifecycle.command([state]);
-		});
-		loc_stateView[state] = stateView;
-	});
-	out.append(allStatesView);
+	var loc_updateCandidateView = function(all, candidates, views){
+		_.each(all, function(ele, i){
+			if(candidates.includes(ele)){
+				views[ele].css('color', 'green');
+			}
+			else{
+				views[ele].css('color', 'red');
+			}
+		});		
+	};
 
-	var allCommandsView = $('<div>All Commands : </div>');
-	_.each(stateMachine.getAllCommands(), function(command, i){
-		var commandView = $('<a>'+command+'</a>');
-		allCommandsView.append(commandView);
-		allCommandsView.append($('<span>&nbsp;&nbsp;</span>'));
-		commandView.on('click', function(){
-			event.preventDefault();
-//			lifecycle.command(command);
-			lifecycle.executeCommandRequest(command, {
-				success : function(request){
-					console.log('aaa');
-				}
+	var loc_setup = function(){
+		loc_view.empty();
+		loc_stateView = {};
+		loc_commandView = {};
+		
+		loc_lifecycle = node_getComponentLifecycleInterface(loc_component);
+		loc_stateMachine = loc_lifecycle.getStateMachine();
+		
+		var allStatesView = $('<div>All States : </div>');
+		_.each(loc_stateMachine.getAllStates(), function(state, i){
+			var stateView = $('<a>'+state+'</a>');
+			allStatesView.append(stateView);
+			allStatesView.append($('<span>&nbsp;&nbsp;</span>'));
+			stateView.on('click', function(){
+				event.preventDefault();
+				loc_lifecycle.command([state]);
 			});
+			loc_stateView[state] = stateView;
 		});
-		loc_commandView[command] = commandView;
-	});
-	out.append(allCommandsView);
+		loc_view.append(allStatesView);
+
+		var allCommandsView = $('<div>All Commands : </div>');
+		_.each(loc_stateMachine.getAllCommands(), function(command, i){
+			var commandView = $('<a>'+command+'</a>');
+			allCommandsView.append(commandView);
+			allCommandsView.append($('<span>&nbsp;&nbsp;</span>'));
+			commandView.on('click', function(){
+				event.preventDefault();
+//				loc_lifecycle.command(command);
+				loc_lifecycle.executeCommandRequest(command, {
+					success : function(request){
+						console.log('aaa');
+					}
+				});
+			});
+			loc_commandView[command] = commandView;
+		});
+		loc_view.append(allCommandsView);
+		
+		var stateHistoryBlockView = $('<div>State History : </div>');
+		var currentStateBlockView = $('<div>Current State : </div>');
+		var stateHistoryView = $('<span></span>');
+		stateHistoryBlockView.append(stateHistoryView);
+		var currentStateView = $('<span></span>');
+		currentStateBlockView.append(currentStateView);
+		loc_view.append(stateHistoryBlockView);
+		loc_view.append(currentStateBlockView);
+		stateHistoryView.text(loc_stateMachine.getCurrentState());
+		currentStateView.text(loc_stateMachine.getCurrentState());
+		loc_updateCandidateView(loc_stateMachine.getAllStates(), loc_stateMachine.getNextStateCandidates(), loc_stateView);
+		loc_updateCandidateView(loc_stateMachine.getAllCommands(), loc_stateMachine.getCommandCandidates(), loc_commandView);
+		loc_lifecycle.registerEventListener(undefined, function(eventName, eventData, request){
+			if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
+				stateHistoryView.text(stateHistoryView.text() + " -- " + loc_stateMachine.getCurrentState());
+			}
+			else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
+				stateHistoryView.text(stateHistoryView.text() + " XX " + loc_stateMachine.getCurrentState());
+			}
+			else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
+				stateHistoryView.text(stateHistoryView.text() + " XX " + loc_stateMachine.getCurrentState());
+			}
+			currentStateView.text(loc_stateMachine.getCurrentState());
+			loc_updateCandidateView(loc_stateMachine.getAllStates(), loc_stateMachine.getNextStateCandidates(), loc_stateView);
+			loc_updateCandidateView(loc_stateMachine.getAllCommands(), loc_stateMachine.getCommandCandidates(), loc_commandView);
+		});
+		
+	};
 	
-	var stateHistoryBlockView = $('<div>State History : </div>');
-	var currentStateBlockView = $('<div>Current State : </div>');
-	var stateHistoryView = $('<span></span>');
-	stateHistoryBlockView.append(stateHistoryView);
-	var currentStateView = $('<span></span>');
-	currentStateBlockView.append(currentStateView);
-	out.append(stateHistoryBlockView);
-	out.append(currentStateBlockView);
-	stateHistoryView.text(stateMachine.getCurrentState());
-	currentStateView.text(stateMachine.getCurrentState());
-	loc_updateCandidateView(stateMachine.getAllStates(), stateMachine.getNextStateCandidates(), loc_stateView);
-	loc_updateCandidateView(stateMachine.getAllCommands(), stateMachine.getCommandCandidates(), loc_commandView);
-	lifecycle.registerEventListener(undefined, function(eventName, eventData, request){
-		if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
-			stateHistoryView.text(stateHistoryView.text() + " -- " + stateMachine.getCurrentState());
+	var loc_out = {
+		
+		getView : function(){   return loc_view;   },
+		
+		setComponent : function(component){
+			loc_component = component;
+			loc_setup();
 		}
-		else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
-			stateHistoryView.text(stateHistoryView.text() + " XX " + stateMachine.getCurrentState());
-		}
-		else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
-			stateHistoryView.text(stateHistoryView.text() + " XX " + stateMachine.getCurrentState());
-		}
-		currentStateView.text(stateMachine.getCurrentState());
-		loc_updateCandidateView(stateMachine.getAllStates(), stateMachine.getNextStateCandidates(), loc_stateView);
-		loc_updateCandidateView(stateMachine.getAllCommands(), stateMachine.getCommandCandidates(), loc_commandView);
-	});
+	};
 	
-	return out;
+	return loc_out;
 };
-	
 	
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -135,10 +233,16 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicData = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createComponentLifeCycleDebugView", node_createComponentLifeCycleDebugView); 
 packageObj.createChildNode("createComponentDataView", node_createComponentDataView); 
 packageObj.createChildNode("createComponentEventView", node_createComponentEventView); 
+packageObj.createChildNode("createComponentInputView", node_createComponentInputView); 
 
 })(packageObj);

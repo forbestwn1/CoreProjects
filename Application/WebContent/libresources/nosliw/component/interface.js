@@ -70,6 +70,10 @@ var loc_createComponentInterfaceObj = function(thisContext, baseObj, interfaceOb
 				}, loc_baseObj);	
 		},
 
+		getContextDataSetRequest : function(handlers, request){
+			return loc_idDataSet.getGetDataSetValueRequest(handlers, request);
+		},
+		
 		unregisterDataChangeEventListener : function(listener){  loc_idDataSet.unregisterEventListener(listener);  },
 		
 		registerEventListener : function(listener, handler){	return loc_interfaceObj.registerEventListener(listener, handler, loc_thisContext);	},
