@@ -7,6 +7,12 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_StateTransitPath = function(from, to, path){
+	this.from = from;
+	this.to = to;
+	this.path = path;
+};
+	
 var node_CommandInfo = function(name, froms, nexts){
 	this.name = name;
 	this.froms = froms;
@@ -44,6 +50,8 @@ var node_createStateMachineDef = function(){
 
 	var loc_nextCommandsByState;
 
+	var loc_transitPath = {};
+	
 	var loc_addState = function(stateInfo){   loc_states[stateInfo.name] = stateInfo;    };
 	
 	var loc_getStateInfo = function(state){
@@ -84,6 +92,10 @@ var node_createStateMachineDef = function(){
 		});
 	};
 	
+	var loc_discoverTransitPath = function(from, to){
+		
+	};
+	
 	var loc_out = {
 
 		getStateInfo : function(state){		return loc_getStateInfo(state);	},	
@@ -115,7 +127,32 @@ var node_createStateMachineDef = function(){
 			_.each(loc_commands, function(commandInfo, commandName){ out.push(commandName);  });
 			return out;
 		},
-		getCommandInfo : function(command){		return loc_commands[command];	}
+		getCommandInfo : function(command){		return loc_commands[command];	},
+		
+		addTransitPath : function(stateTransitPath){
+			var fromTransit = loc_transitPath[stateTransitPath.from];
+			if(fromTransit==undefined){
+				fromTransit = {};
+				loc_transitPath[stateTransitPath.from] = fromTransit;
+			}
+			fromTransit[stateTransitPath.to] = stateTransitPath;
+		},
+		
+		getTransitPath : function(from, to){
+			var fromTransit = loc_transitPath[from];
+			if(fromTransit==undefined){
+				fromTransit = {};
+				loc_transitPath[from] = fromTransit;
+			}
+			var out = fromTransit[to];
+			if(out==undefined){
+				var out = loc_discoverTransitPath(from, to);
+				if(out!=undefined){
+					fromTransit[to] = out;
+				}
+			}
+			return out;
+		}
 		
 	};
 	
@@ -127,6 +164,7 @@ var node_createStateMachineDef = function(){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 
 //Register Node by Name
+packageObj.createChildNode("StateTransitPath", node_StateTransitPath); 
 packageObj.createChildNode("TransitInfo", node_TransitInfo); 
 packageObj.createChildNode("CommandInfo", node_CommandInfo); 
 packageObj.createChildNode("NextStateInfo", node_NextStateInfo); 

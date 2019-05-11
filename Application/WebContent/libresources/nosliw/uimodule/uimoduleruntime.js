@@ -17,11 +17,11 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, componentDecorationInfos, ioInput, handlers, request){
+var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, componentDecorationInfos, rootView, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
 	out.addRequest(node_createUIModuleRequest(id, uiModuleDef, undefined, ioInput, {
 		success : function(request, uiModule){
-			var runtime = loc_createModuleRuntime(uiModule, configure, componentDecorationInfos);
+			var runtime = loc_createModuleRuntime(uiModule, configure, componentDecorationInfos, rootView);
 			return runtime.prv_getInitRequest({
 				success : function(request){
 					return request.getData();
@@ -32,15 +32,16 @@ var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, compo
 	return out;
 };
 
-var loc_createModuleRuntime = function(uiModule, configure, componentDecorationInfos){
+var loc_createModuleRuntime = function(uiModule, configure, componentDecorationInfos, rootView){
 	
 	var loc_componentComplex = node_createComponentComplex(configure);
 	var loc_localStore = configure.getConfigureData().__storeService;
 	var loc_stateBackupService = node_createStateBackupService("module", uiModule.getId(), uiModule.getVersion(), loc_localStore);
 
-	var loc_init = function(uiModule, configure, componentDecorationInfos){
+	var loc_init = function(uiModule, configure, componentDecorationInfos, rootView){
 		loc_componentComplex.addComponent(uiModule);
 		loc_componentComplex.addDecorations(componentDecorationInfos);
+		loc_componentComplex.updateView(rootView);
 	};
 
 	var loc_getIOContext = function(){  return loc_getModule().getIOContext();   };
@@ -135,13 +136,14 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		},
 
 		prv_getIODataSet : function(){  return loc_getIOContext();	},
+
+		prv_registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
+		prv_unregisterEventListener : function(listener){	return loc_componentComplex.unregisterEventListener(listener); },
+
+//		getModule : function(){  return loc_getModule();  },
 		
-		getModule : function(){  return loc_getModule();  },
 		
-		registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
-		unregisterEventListener : function(listener){	return loc_componentComplex.unregisterEventListener(listener); },
-		
-		getContextRequest : function(handlers, request){	return loc_getIOContext().getGetDataSetValueRequest(handlers, request);	},
+//		getContextRequest : function(handlers, request){	return loc_getIOContext().getGetDataSetValueRequest(handlers, request);	},
 		
 		getExecuteCommandRequest : function(command, parms, handlers, request){	
 			return node_getComponentInterface(loc_out).getExecuteCommandRequest(command, parms, handlers, request);
@@ -149,12 +151,12 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		
 	};
 	
-	loc_init(uiModule, configure, componentDecorationInfos);
+	loc_init(uiModule, configure, componentDecorationInfos, rootView);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback);
 	
 	loc_out = node_makeObjectWithComponentInterface(loc_out, loc_out);
-	
+
 	return loc_out;
 };
 

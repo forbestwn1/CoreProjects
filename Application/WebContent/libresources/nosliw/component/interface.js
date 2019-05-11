@@ -76,8 +76,8 @@ var loc_createComponentInterfaceObj = function(thisContext, baseObj, interfaceOb
 		
 		unregisterDataChangeEventListener : function(listener){  loc_idDataSet.unregisterEventListener(listener);  },
 		
-		registerEventListener : function(listener, handler){	return loc_interfaceObj.registerEventListener(listener, handler, loc_thisContext);	},
-		unregisterEventListener : function(listener){  loc_interfaceObj.unregisterEventListener(listener);  },
+		registerEventListener : function(listener, handler){	return loc_interfaceObj.prv_registerEventListener(listener, handler, loc_thisContext);	},
+		unregisterEventListener : function(listener){  loc_interfaceObj.prv_unregisterEventListener(listener);  },
 	};
 
 	loc_init();

@@ -213,7 +213,17 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 			if(loc_currentTask!=undefined)  return undefined;
 			if(typeof nexts === 'string' || nexts instanceof String){
 				//command
-				nexts = loc_stateDef.getCommandInfo(nexts).nexts;
+				var commandInfo = loc_stateDef.getCommandInfo(nexts);
+				if(commandInfo!=undefined){
+					//command
+					nexts = commandInfo.nexts;
+				}
+				else{
+					//target state
+					var transitPath = loc_stateDef.getTransitPath(loc_currentState, nexts);
+					nexts = transitPath.path.slice();
+					nexts = nexts.push(transitPath.to);
+				}
 			}
 			loc_currentTask = node_createStateMachineTask(nexts, loc_out);
 			return loc_currentTask;

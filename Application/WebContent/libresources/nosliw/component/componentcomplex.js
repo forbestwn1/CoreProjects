@@ -38,7 +38,15 @@ var node_createComponentComplex = function(configure, envInterface){
 			}
 		});
 		return out;
-	}
+	};
+	
+	var loc_updateView = function(view){
+		for(var i=loc_parts.length-1; i>=0; i--){
+			var updated = loc_parts[i].updateView(view);
+			if(updated!=undefined)  view = updated;  
+			else break;
+		}
+	};
 	
 	var loc_unregisterPartListener = function(){	loc_getCurrentFacad().unregisterEventListener(loc_eventListener);	};
 
@@ -46,7 +54,7 @@ var node_createComponentComplex = function(configure, envInterface){
 		loc_getCurrentFacad().registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
 			loc_eventSource.triggerEvent(event, eventData, requestInfo);
 		});
-	}
+	};
 
 	var loc_out = {
 		
@@ -81,6 +89,8 @@ var node_createComponentComplex = function(configure, envInterface){
 		getAllStateData : function(){   return loc_state.getAllState();   },
 		clearState : function(){   loc_state.clear();   },	
 		setAllStateData : function(stateData){  loc_state.setAllState(stateData)  },
+		
+		updateView : function(view){  loc_updateView(view);  },
 		
 		getInitRequest : function(handlers, request){  return loc_getLifeCycleRequest("getInitRequest", handlers, request);  },
 		getStartRequest : function(handlers, request){  return loc_getLifeCycleRequest("getStartRequest", handlers, request);  },

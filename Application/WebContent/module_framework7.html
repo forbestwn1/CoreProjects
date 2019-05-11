@@ -5,8 +5,8 @@
         <title>Nosliw Go Go !!</title>
 
     	<link rel="stylesheet" href="libresources/external/framework7/css/framework7.bundle.min.css">
+        <script src="libresources/external/framework7/4.1.1/framework7.bundle.min.js"></script>
         <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
-        <script src="libresources/external/framework7/4.1.1/framework7.js"></script>
         
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
 		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
@@ -16,14 +16,26 @@
 </head>
 
 <body>
-	<div id="lifecycleDebug"></div>
-	<div id="inputDebug"></div>
-	<div id="dataDebug"></div>
-	<div id="eventDebug"></div>
 
 	<div id="appDiv">
+		<div class="panel panel-left panel-cover">
+      		<div class="block" id="debugDiv">
+				<div id="lifecycleDebug"></div>
+				<div id="inputDebug"></div>
+         	</div>
+    	</div>
+
 		<div class="view view-main" id="moduleDiv"></div>
+		
+		<div class="panel panel-right panel-cover">
+      		<div class="block" id="debugDiv">
+				<div id="dataDebug"></div>
+				<div id="eventDebug"></div>
+         	</div>
+    	</div>
 	</div>
+	
+	
 </body>
 
 <script>
@@ -39,11 +51,64 @@ $(document).on("nosliwActive", function(){
 	var node_createComponentLifeCycleDebugView = nosliw.getNodeData("component.createComponentLifeCycleDebugView");
 	var node_createComponentDataView = nosliw.getNodeData("component.createComponentDataView");
 	var node_createComponentEventView = nosliw.getNodeData("component.createComponentEventView");
-	var node_createComponentInputView = nosliw.getNodeData("component.createComponentInputView");
+	var node_createComponentResetView = nosliw.getNodeData("component.createComponentResetView");
 
-	var loc_debugInputView = node_createComponentInputView();
-	$('#dataDebug').append(loc_debugInputView.getView());
-
+	var loc_moduleId;
+	
+	var loc_uiModuleRuntime;
+	
+	var loc_configure = function(){
+		// Our initialization code here
+		var currentSearchString = window.location.search;
+		var parmValue = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+		var index = parmValue.indexOf(";");
+		loc_moduleId = parmValue.substring(0, index);
+		
+		var moduleparms = parmValue.substring(index+1);
+		index = moduleparms.indexOf(";");
+		var moduleDecId = moduleparms.substring(0, index);
+		var decoration = moduleparms.substring(index+1);
+		
+		//create module runtime
+		var decorations = {};
+		decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = [decoration];
+		var configure = {
+			global : {
+				root : $('#moduleDiv').get(),
+				decoration : decorations,
+				moduleDecoration : ["base", "uidecoration", moduleDecId, "debug"],
+				__storeService :{
+					saveData : function(categary, id, data){
+						localStorage.setItem(categary+"_"+id, JSON.stringify(data));
+					},
+					
+					retrieveData : function(categary, id){
+						return JSON.parse(localStorage.getItem(categary+"_"+id));
+					},
+					
+					clearData : function(categary, id){
+						return localStorage.removeItem(categary+"_"+id);
+					}
+				}
+			},
+			components : {
+				application_framework7_mobile : {
+					app : new Framework7({
+						  // App root element
+						  root: $("#appDiv").get(),
+						  name: 'My App',
+						  id: 'com.myapp.test',
+						  panel: {
+							    swipe: 'both',
+						  },		
+					}),
+				}
+			}
+		};
+		return configure;
+	}();
+	
+	
 	var loc_debugLifecycleView = node_createComponentLifeCycleDebugView();
 	$('#lifecycleDebug').append(loc_debugLifecycleView.getView());
 	
@@ -52,60 +117,24 @@ $(document).on("nosliwActive", function(){
 
 	var loc_debugEventView = node_createComponentEventView();
 	$('#eventDebug').append(loc_debugEventView.getView());
+
 	
-	// Our initialization code here
-	var currentSearchString = window.location.search;
-	var parmValue = currentSearchString.substring(currentSearchString.indexOf("=")+1);
-	var index = parmValue.indexOf(";");
-	var moduleId = parmValue.substring(0, index);
-	
-	var moduleparms = parmValue.substring(index+1);
-	index = moduleparms.indexOf(";");
-	var moduleDecId = moduleparms.substring(0, index);
-	var decoration = moduleparms.substring(index+1);
-	
-	//create module runtime
-	var decorations = {};
-	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = [decoration];
-	var configure = {
-		global : {
-			root : $('#moduleDiv').get(),
-			decoration : decorations,
-			moduleDecoration : ["base", "uidecoration", moduleDecId],
-			__storeService :{
-				saveData : function(categary, id, data){
-					localStorage.setItem(categary+"_"+id, JSON.stringify(data));
-				},
-				
-				retrieveData : function(categary, id){
-					return JSON.parse(localStorage.getItem(categary+"_"+id));
-				},
-				
-				clearData : function(categary, id){
-					return localStorage.removeItem(categary+"_"+id);
-				}
-			}
-		},
-		components : {
-			application_framework7_mobile : {
-				app : new Framework7({
-					  // App root element
-					  root: $("#appDiv").get(),
-					  name: 'My App',
-					  id: 'com.myapp.test',
-				}),
-			}
+	var loc_debugResetView = node_createComponentResetView(function(){
+		if(loc_uiModuleRuntime!=undefined){
+			loc_lifecycle = node_getComponentLifecycleInterface(loc_uiModuleRuntime);
+			loc_lifecycle.transit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD);
+			loc_uiModuleRuntime = undefined;
 		}
-	};
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, moduleId, configure, loc_debugInputView.getInputIODataSet(), {
-		success : function(requestInfo, uiModuleRuntime){
-			loc_debugLifecycleView.setComponent(uiModuleRuntime);
-			
-			loc_debugDataView.setComponent(uiModuleRuntime);
-			
-			loc_debugEventView.setComponent(uiModuleRuntime);
-		}
+		nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(loc_moduleId, loc_moduleId, loc_configure, loc_debugResetView.getInputIODataSet(), {
+			success : function(requestInfo, uiModuleRuntime){
+				loc_uiModuleRuntime = uiModuleRuntime;
+				loc_debugLifecycleView.setComponent(uiModuleRuntime);
+				loc_debugDataView.setComponent(uiModuleRuntime);
+				loc_debugEventView.setComponent(uiModuleRuntime);
+			}
+		});
 	});
+	$('#inputDebug').append(loc_debugResetView.getView());
 });
 
 

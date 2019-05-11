@@ -106,6 +106,11 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 
 		getInterface : function(){   return loc_core.getInterface();	},
 		
+		updateView : function(view){   
+			if(loc_core.updateView==undefined)  return view;
+			return loc_core.updateView(view);
+		},
+		
 		getInitRequest : function(handlers, request){  return loc_core.getInitRequest==undefined?undefined:loc_core.getInitRequest(handlers, request);	},
 		getSuspendRequest : function(handlers, request){  return loc_core.getSuspendRequest==undefined?undefined:loc_core.getSuspendRequest(handlers, request);	},
 		getResumeRequest : function(handlers, request){  return loc_core.getResumeRequest==undefined?undefined:loc_core.getResumeRequest(handlers, request);	},

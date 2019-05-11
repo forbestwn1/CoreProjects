@@ -14,6 +14,40 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_createComponentResetView = function(resetCallBack, restartCallBack){
+	var loc_view = $('<div>Component Input: </div>');
+	var loc_textView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
+	var loc_submitView = $('<button>Reset</button>')
+	loc_view.append(loc_textView);
+	loc_view.append(loc_submitView);
+	
+	loc_submitView.on('click', function(){
+		resetCallBack();
+	});
+
+	var loc_inputIODataSet = node_createIODataSet();
+	var loc_viewIO = node_createDynamicData(
+		function(handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				var content = loc_textView.val();
+				if(content=='')  return;
+				return JSON.parse(content); 
+			}, handlers, request); 
+		} 
+	);
+	loc_inputIODataSet.setData(undefined, loc_viewIO);
+	
+	var loc_out = {
+		getView : function(){  return loc_view;   },
+		
+		getInputIODataSet : function(){
+			return loc_inputIODataSet;
+		}
+	}
+	
+	return loc_out;
+};
+
 var node_createComponentDataView = function(){
 	var loc_component;
 	
@@ -54,34 +88,6 @@ var node_createComponentDataView = function(){
 			loc_setup();
 		}
 	};
-	
-	return loc_out;
-};
-
-var node_createComponentInputView = function(){
-	var loc_view = $('<div>Component Input: </div>');
-	var loc_textView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
-	loc_view.append(loc_textView);
-
-	var loc_inputIODataSet = node_createIODataSet();
-	var loc_viewIO = node_createDynamicData(
-		function(handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){
-				var content = loc_textView.val();
-				if(content=='')  return;
-				return JSON.parse(content); 
-			}, handlers, request); 
-		} 
-	);
-	loc_inputIODataSet.setData(undefined, loc_viewIO);
-	
-	var loc_out = {
-		getView : function(){  return loc_view;   },
-		
-		getInputIODataSet : function(){
-			return loc_inputIODataSet;
-		}
-	}
 	
 	return loc_out;
 };
@@ -159,7 +165,7 @@ var node_createComponentLifeCycleDebugView = function(){
 			allStatesView.append($('<span>&nbsp;&nbsp;</span>'));
 			stateView.on('click', function(){
 				event.preventDefault();
-				loc_lifecycle.command([state]);
+				loc_lifecycle.transit([state]);
 			});
 			loc_stateView[state] = stateView;
 		});
@@ -173,7 +179,7 @@ var node_createComponentLifeCycleDebugView = function(){
 			commandView.on('click', function(){
 				event.preventDefault();
 //				loc_lifecycle.command(command);
-				loc_lifecycle.executeCommandRequest(command, {
+				loc_lifecycle.executeTransitRequest(command, {
 					success : function(request){
 						console.log('aaa');
 					}
@@ -243,6 +249,6 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 packageObj.createChildNode("createComponentLifeCycleDebugView", node_createComponentLifeCycleDebugView); 
 packageObj.createChildNode("createComponentDataView", node_createComponentDataView); 
 packageObj.createChildNode("createComponentEventView", node_createComponentEventView); 
-packageObj.createChildNode("createComponentInputView", node_createComponentInputView); 
+packageObj.createChildNode("createComponentResetView", node_createComponentResetView); 
 
 })(packageObj);

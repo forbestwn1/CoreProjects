@@ -7,13 +7,12 @@ function(gate){
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_createComponentDataView = nosliw.getNodeData("component.createComponentDataView");
 
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponent();
 	var loc_view;
-	
-	//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
-	loc_processRequest = function(request){     node_requestServiceProcessor.processRequest(request);   };
+	var loc_componentDataView;
 	
 	var loc_out = {
 			
@@ -21,29 +20,36 @@ function(gate){
 		},
 		
 		getExecuteCommandRequest : function(command, parms, handlers, request){
+			
 		},
 		
 		updateView : function(view){
 			loc_view = view;
-		},
-
-		getInitRequest :function(handlers, requestInfo){
-			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
-			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-				//put ui to root
-				_.each(loc_uiModule.getUIs(), function(ui, index){
-//					ui.getPage().appendTo(loc_gate.getConfigureData().root);
-					ui.getPage().appendTo(loc_view);
-				});
-				
-				out.executeSuccessHandler();
-			}));
-			return out;
+			
+			loc_componentDataView = node_createComponentDataView();
+			$(loc_view).append(loc_componentDataView.getView());
+			
+			var childRoot = $('<div></div>');
+			$(loc_view).append(childRoot);
+			return childRoot.get();
 		},
 		
 		getInterface : function(){
 			return {
 			}
+		},
+		
+		getDeactiveRequest :function(handlers, request){
+		},
+		
+		getSuspendRequest :function(handlers, request){
+		},
+		
+		getResumeRequest :function(handlers, request){
+		},
+
+		getInitRequest :function(handlers, requestInfo){
+			loc_componentDataView.setComponent(loc_uiModule);
 		},
 	};
 	return loc_out;

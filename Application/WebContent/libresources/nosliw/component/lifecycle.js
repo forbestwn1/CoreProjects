@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_CommandInfo;
 	var createStateMachineDef;
 	var node_TransitInfo;
+	var node_StateTransitPath;
 	var node_requestServiceProcessor;
 
 //*******************************************   Start Node Definition  ************************************** 	
@@ -66,6 +67,10 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 			new node_CommandInfo("restart", undefined, [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]),
 		];
 
+		var loc_statePaths = [
+			new node_StateTransitPath(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD, [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT])
+		];
+		
 		_.each(loc_validTransits, function(transit, i){		
 			var from = transit.from;
 			var to = transit.to;
@@ -82,22 +87,23 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 				});
 		});
 		_.each(loc_commands, function(commandInfo, i){      loc_stateMachineDef.addCommand(commandInfo);      });
-
+		_.each(loc_statePaths, function(statePath, index){  loc_stateMachineDef.addTransitPath(statePath);  });
+		
 		loc_stateMachine = node_createStateMachine(loc_stateMachineDef, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_thisContext);
 	};
 
 	var loc_out = {
 
-		command : function(commandName, request){  
+		transit : function(commandName, request){  
 			var task = loc_stateMachine.newTask(commandName);
 			if(task!=undefined)  	return task.process(request);
 		},
-		getCommandRequest : function(commandName, handlers, request){
+		getTransitRequest : function(commandName, handlers, request){
 			var task = loc_stateMachine.newTask(commandName);
 			if(task!=undefined)  	return task.getProcessRequest(handlers, request);
 		},
-		executeCommandRequest : function(commandName, handlers, request){
-			var request = loc_out.getCommandRequest(commandName, handlers, request);
+		executeTransitRequest : function(commandName, handlers, request){
+			var request = loc_out.getTransitRequest(commandName, handlers, request);
 			node_requestServiceProcessor.processRequest(request);
 		},
 			
@@ -131,6 +137,7 @@ nosliw.registerSetNodeDataEvent("statemachine.createStateMachine", function(){no
 nosliw.registerSetNodeDataEvent("statemachine.CommandInfo", function(){node_CommandInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("statemachine.createStateMachineDef", function(){node_createStateMachineDef = this.getData();	});
 nosliw.registerSetNodeDataEvent("statemachine.TransitInfo", function(){node_TransitInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("statemachine.StateTransitPath", function(){node_StateTransitPath = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 
