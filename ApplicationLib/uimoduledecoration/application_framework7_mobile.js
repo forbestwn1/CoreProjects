@@ -99,7 +99,7 @@ function(gate){
 					  panel: {
 						  swipe: 'both',
 					  },		
-				}				
+				});			
 			}
 			else{
 				loc_moduleView = $('<div class="view view-main" style="height:600px;"></div>');
@@ -140,7 +140,6 @@ function(gate){
 				_.each(loc_uiModule.getUIs(), function(ui, index){
 					var uiPageContainer = $("<div class='page stacked' data-name="+ui.getName()+"/>"); 
 					ui.getPage().appendTo(uiPageContainer);
-//					uiPageContainer.appendTo(loc_gate.getConfigureData().root);
 					uiPageContainer.appendTo(loc_moduleView);
 				});
 				
@@ -160,7 +159,6 @@ function(gate){
 					viewConfigure.routes.push(route);
 				});
 
-//				loc_view = loc_app.views.create(loc_gate.getConfigureData().root, viewConfigure);
 				loc_view = loc_app.views.create(loc_moduleView, viewConfigure);
 
 				out.executeSuccessHandler();
