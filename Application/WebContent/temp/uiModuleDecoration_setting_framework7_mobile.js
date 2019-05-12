@@ -17,6 +17,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponent();
+	var loc_view;
 	
 	//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
 	loc_processRequest = function(request){     node_requestServiceProcessor.processRequest(request);   };
@@ -24,14 +25,13 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_out = {
 			
 		processComponentEvent : function(eventName, eventData, request){
-			loc_processUIEvent(eventData.eventName, eventData.uiName, eventData.eventData, request);
 		},
 		
 		getExecuteCommandRequest : function(command, parms, handlers, request){
-//			var eventProcessor = loc_uiModule.getStatelessData().eventProcessor;
-//			if(eventProcessor!=undefined){
-//				eventProcessor(eventName, uiName, eventData, request);
-//			}
+		},
+		
+		updateView : function(view){
+			loc_view = view;
 		},
 
 		getInitRequest :function(handlers, requestInfo){
@@ -39,7 +39,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 				//put ui to root
 				_.each(loc_uiModule.getUIs(), function(ui, index){
-					ui.getPage().appendTo(loc_gate.getConfigure().root);
+//					ui.getPage().appendTo(loc_gate.getConfigureData().root);
+					ui.getPage().appendTo(loc_view);
 				});
 				
 				out.executeSuccessHandler();

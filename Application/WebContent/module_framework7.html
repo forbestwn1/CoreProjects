@@ -5,7 +5,7 @@
         <title>Nosliw Go Go !!</title>
 
     	<link rel="stylesheet" href="libresources/external/framework7/css/framework7.bundle.min.css">
-        <script src="libresources/external/framework7/4.1.1/framework7.bundle.min.js"></script>
+        <script src="libresources/external/framework7/4.3.1/framework7.bundle.js"></script>
         <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
         
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
@@ -13,28 +13,40 @@
 
  		<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
+<style>
+#moduleDiv {
+	height:600px;
+	border-style: dotted;
+}
+h1   {color: blue;}
+p    {color: red;}
+</style>
+
 </head>
 
 <body>
-
-	<div id="appDiv">
 		<div class="panel panel-left panel-cover">
-      		<div class="block" id="debugDiv">
+      		<div class="view panel-view block" id="debugDiv">
+      		aaa
 				<div id="lifecycleDebug"></div>
 				<div id="inputDebug"></div>
          	</div>
     	</div>
 
-		<div class="view view-main" id="moduleDiv"></div>
+	<div id="appDiv">
+
+		<div id="moduleDiv"></div>
+<!-- 		<div class="view view-main" id="moduleDiv"></div>   -->
 		
+	</div>
+	
 		<div class="panel panel-right panel-cover">
+		bbb
       		<div class="block" id="debugDiv">
 				<div id="dataDebug"></div>
 				<div id="eventDebug"></div>
          	</div>
     	</div>
-	</div>
-	
 	
 </body>
 
@@ -93,6 +105,7 @@ $(document).on("nosliwActive", function(){
 			},
 			components : {
 				application_framework7_mobile : {
+
 					app : new Framework7({
 						  // App root element
 						  root: $("#appDiv").get(),

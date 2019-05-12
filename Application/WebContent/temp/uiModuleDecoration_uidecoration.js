@@ -31,7 +31,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			var decorationInfo = loc_gate.getConfigure().decoration;
+			var decorationInfo = loc_gate.getConfigureData().decoration;
 			if(decorationInfo!=undefined){
 				_.each(loc_gate.getComponent().getUIs(), function(ui, uiName){
 					var decs;
