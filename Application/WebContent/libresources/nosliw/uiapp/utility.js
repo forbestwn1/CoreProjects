@@ -9,6 +9,7 @@ var packageObj = library;
 	var node_createIODataSet;
 	var node_createDynamicData;
 	var node_createServiceRequestInfoSequence;
+	var node_getComponentInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
@@ -68,8 +69,10 @@ var node_utility = function(){
 		buildModuleOutputMapping : function(externalDataIO, moduleRuntime, moduleDef){
 			var outputMappings = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_OUTPUTMAPPING].element;
 			var out = {};
+			var comInterface = node_getComponentInterface(moduleRuntime);
+
 			_.each(outputMappings, function(mapping, name){
-				out[name] = node_createDataAssociation(moduleRuntime.getModule().getIOContext(), mapping, externalDataIO);
+				out[name] = node_createDataAssociation(comInterface.getIOContext(), mapping, externalDataIO);
 			});
 			return out;
 		},
@@ -89,6 +92,7 @@ nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicData = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

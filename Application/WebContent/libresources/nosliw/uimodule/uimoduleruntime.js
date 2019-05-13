@@ -10,6 +10,7 @@ var packageObj = library;
 	var node_createUIModuleRequest;
 	var node_makeObjectWithComponentLifecycle;
 	var node_makeObjectWithComponentInterface;
+	var node_getComponentInterface;
 	var node_createComponentComplex;
 	var node_createStateBackupService;
 	var node_getComponentLifecycleInterface;
@@ -172,6 +173,7 @@ nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){nod
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentInterface", function(){node_makeObjectWithComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentComplex", function(){node_createComponentComplex = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});

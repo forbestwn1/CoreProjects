@@ -106,7 +106,7 @@ var node_createApp = function(id, appDef, ioInput){
 			modules.push(moduleInfo);
 			loc_out.prv_app.currentModuleByRole[role] = modules.length-1;
 			
-			module.registerEventListener(loc_eventListener, loc_moduleEventProcessor, moduleInfo);
+			module.prv_registerEventListener(loc_eventListener, loc_moduleEventProcessor, moduleInfo);
 			return moduleInfo;
 		},
 		

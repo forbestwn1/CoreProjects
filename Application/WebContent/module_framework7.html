@@ -18,7 +18,6 @@
 <body>
 		<div class="panel panel-left panel-cover">
       		<div class="view panel-view block" id="debugDiv">
-      		aaa
 				<div id="lifecycleDebug"></div>
 				<div id="inputDebug"></div>
          	</div>
@@ -27,7 +26,6 @@
 		<div id="moduleDiv"></div>
 	
 		<div class="panel panel-right panel-cover">
-		bbb
       		<div class="block" id="debugDiv">
 				<div id="dataDebug"></div>
 				<div id="eventDebug"></div>
@@ -52,7 +50,6 @@ $(document).on("nosliwActive", function(){
 	var node_createComponentResetView = nosliw.getNodeData("component.createComponentResetView");
 
 	var loc_moduleId;
-	
 	var loc_uiModuleRuntime;
 	
 	var loc_configure = function(){
@@ -93,7 +90,7 @@ $(document).on("nosliwActive", function(){
 				application_framework7_mobile : {
 					app : new Framework7({
 						  // App root element
-						  root: $("#appDiv").get(),
+						  root: $("#moduleDiv").get(),
 						  name: 'My App',
 						  id: 'com.myapp.test',
 						  panel: {

@@ -10,6 +10,7 @@ var packageObj = library;
 	var node_getObjectName;
 	var node_getObjectType;
 	var node_requestServiceProcessor;
+	var node_getComponentLifecycleInterface;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -51,7 +52,7 @@ var loc_createComponentInterfaceObj = function(thisContext, baseObj, interfaceOb
 			var lifycyclePrefix = 'lifecycle.';
 			if(command.startsWith(lifycyclePrefix)){
 				var lifecycle = node_getComponentLifecycleInterface(loc_baseObj);
-				return lifecycle.getCommandRequest(command.substring(lifycyclePrefix.length()), handlers, request);
+				return lifecycle.getTransitRequest(command.substring(lifycyclePrefix.length), handlers, request);
 			}
 			else{
 				return loc_interfaceObj.prv_getExecuteCommandRequest(command, parms, handlers, request);
@@ -74,6 +75,8 @@ var loc_createComponentInterfaceObj = function(thisContext, baseObj, interfaceOb
 			return loc_idDataSet.getGetDataSetValueRequest(handlers, request);
 		},
 		
+		getIOContext : function(){  return loc_idDataSet;   },
+		
 		unregisterDataChangeEventListener : function(listener){  loc_idDataSet.unregisterEventListener(listener);  },
 		
 		registerEventListener : function(listener, handler){	return loc_interfaceObj.prv_registerEventListener(listener, handler, loc_thisContext);	},
@@ -94,6 +97,7 @@ nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUti
 nosliw.registerSetNodeDataEvent("common.objectwithname.getObjectName", function(){node_getObjectName = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 
 
 //Register Node by Name

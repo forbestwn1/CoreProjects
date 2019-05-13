@@ -16,24 +16,20 @@
 </head>
 
 <body>
+	<div class="panel panel-left panel-cover">
+  		<div class="view panel-view block" id="debugDiv">
+			<div id="lifecycleDebug"></div>
+			<div id="inputDebug"></div>
+			<div id="dataDebug"></div>
+			<div id="eventDebug"></div>
+       	</div>
+   	</div>
 
-	<div id="appDiv">
-		<div class="panel panel-left panel-cover">
-      		<div class="block" id="userInfoDiv">
-				<a id="appContext">AppContext</a><p>
-				<a id="appModuleContext">appModuleContext</a><p>
-				<a id="settingModuleContext">settingModuleContext</a><p>
-				<textarea rows="15" cols="150" id="debug" style="resize: none;" data-role="none"></textarea>
-         	</div>
-    	</div>
+	<div id="appModuleDiv"></div>
 
-		<div class="view view-main" id="appModuleDiv"></div>
-		
-		<div class="panel panel-right panel-cover">
-      		<div class="block" id="settingModuleDiv"></div>
-    	</div>
-	</div>
-
+	<div class="panel panel-right panel-cover">
+     	<div class="block" id="settingModuleDiv"></div>
+   	</div>
 </body>
 
 <script>
@@ -46,8 +42,14 @@ $(document).on("nosliwActive", function(){
 	var node_appDataService = nosliw.getNodeData("uiapp.appDataService");
 	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
 	var node_createAppDecoration = nosliw.getNodeData("uiapp.createAppDecoration");
-
+	var node_createComponentLifeCycleDebugView = nosliw.getNodeData("component.createComponentLifeCycleDebugView");
+	var node_createComponentDataView = nosliw.getNodeData("component.createComponentDataView");
+	var node_createComponentEventView = nosliw.getNodeData("component.createComponentEventView");
+	var node_createComponentResetView = nosliw.getNodeData("component.createComponentResetView");
 	
+	var loc_appId;
+	var loc_appRuntime;
+
     // Our initialization code here
 	var currentSearchString = window.location.search;
 	var appEntryId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
@@ -76,7 +78,7 @@ $(document).on("nosliwActive", function(){
 			},
 			app : new Framework7({
 				  // App root element
-				  root: $("#appDiv").get(),
+				  root: $("#appModuleDiv").get(),
 				  name: 'My App',
 				  id: 'com.myapp.test',
 				  panel: {
@@ -93,7 +95,7 @@ $(document).on("nosliwActive", function(){
 							"decoration" : {
 								global : ["Decoration_application_framework7"]
 							},
-							"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile"]
+							"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile", "debug"]
 						}
 					},
 					"setting" : {
@@ -102,7 +104,7 @@ $(document).on("nosliwActive", function(){
 							"decoration" : {
 								global : ["Decoration_setting_framework7"]
 							},
-							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile"]
+							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile", "debug"]
 						},
 					}
 				}
@@ -112,47 +114,30 @@ $(document).on("nosliwActive", function(){
 		}
 	};
 	
-	//create module runtime
-	nosliw.runtime.getUIAppService().executeGetUIAppEntryRuntimeRequest(appEntryId, appEntryId, configure, undefined,
-		{
-			success : function(requestInfo, uiAppRuntime){
-				node_getComponentLifecycleInterface(uiAppRuntime).active();
-				
-				document.getElementById("appContext").addEventListener("click", function(event){
-					event.preventDefault();
-					var r = uiAppRuntime.getContextRequest({
-						success : function(request, contextData){
-							$("#debug").val(JSON.stringify(contextData, null, 4));
-						}
-					});
-					node_requestServiceProcessor.processRequest(r);
-				});
+	var loc_debugLifecycleView = node_createComponentLifeCycleDebugView();
+	$('#lifecycleDebug').append(loc_debugLifecycleView.getView());
+	
+	var loc_debugDataView = node_createComponentDataView();
+	$('#dataDebug').append(loc_debugDataView.getView());
 
-				document.getElementById("settingModuleContext").addEventListener("click", function(event){
-					event.preventDefault();
-					var module = uiAppRuntime.getPart("module.setting");
-					var r = module.getContextRequest({
-						success : function(request, contextData){
-							$("#debug").val(JSON.stringify(contextData, null, 4));
-						}
-					});
-					node_requestServiceProcessor.processRequest(r);
-				});
+	var loc_debugEventView = node_createComponentEventView();
+	$('#eventDebug').append(loc_debugEventView.getView());
 
-				document.getElementById("appModuleContext").addEventListener("click", function(event){
-					event.preventDefault();
-					var module = uiAppRuntime.getPart("module.application");
-					var r = module.getContextRequest({
-						success : function(request, contextData){
-							$("#debug").val(JSON.stringify(contextData, null, 4));
-						}
-					});
-					node_requestServiceProcessor.processRequest(r);
-				});
+	
+	var loc_debugResetView = node_createComponentResetView(function(){
+		nosliw.runtime.getUIAppService().executeGetUIAppEntryRuntimeRequest(appEntryId, appEntryId, configure, undefined,
+			{
+				success : function(requestInfo, appRuntime){
+					loc_appRuntime = appRuntime;
+					loc_debugLifecycleView.setComponent(appRuntime);
+					loc_debugDataView.setComponent(appRuntime);
+					loc_debugEventView.setComponent(appRuntime);
+				}
 			}
-		}
-	);
-
+		);
+	});
+	$('#inputDebug').append(loc_debugResetView.getView());
+	
 });
 
 nosliw.init();

@@ -175,7 +175,7 @@ var node_createAppDecoration = function(gate){
 				success : function(request){
 					var allModules = loc_uiApp.getAllModuleInfo();
 					_.each(allModules, function(moduleInfo){
-						node_getComponentLifecycleInterface(moduleInfo.module).active();
+						node_getComponentLifecycleInterface(moduleInfo.module).transit("activate");
 					});
 				}
 			});

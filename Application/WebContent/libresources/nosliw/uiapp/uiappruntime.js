@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_createApp;
 	var node_createComponentComplex;
 	var node_makeObjectWithComponentLifecycle;
+	var node_makeObjectWithComponentInterface;
 	var node_createStateBackupService;
 	var node_createEventObject;
 
@@ -33,7 +34,10 @@ var node_createAppRuntimeRequest = function(id, appDef, configure, componentDeco
 var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos){
 	
 	var loc_interface = {
-		getPart : function(partId){  return loc_out.getPart(partId);	},
+		getPart : function(partId){  
+			return loc_componentComplex.getComponent().getPart(partId);
+//			return loc_out.getPart(partId);	
+		},
 
 		getExecutePartCommandRequest : function(partId, commandName, commandData, handlers, requestInfo){
 			return this.getPart(partId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
@@ -98,15 +102,27 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 			return out;
 		},
 	
-		getContextRequest : function(handlers, request){	return loc_getIOContext().getGetDataSetValueRequest(handlers, request);	},
+		prv_getExecuteCommandRequest : function(command, parms, handlers, request){	
+			return loc_componentComplex.getExecuteCommandRequest(command, parms, handlers, request);	
+		},
+
+		prv_getIODataSet : function(){  return loc_getIOContext();	},
+
+		prv_registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
+		prv_unregisterEventListener : function(listener){	return loc_componentComplex.unregisterEventListener(listener); },
 		
-		getPart : function(partId){  return loc_componentComplex.getComponent().getPart(partId);	},
+		
+//		getContextRequest : function(handlers, request){	return loc_getIOContext().getGetDataSetValueRequest(handlers, request);	},
+		
+//		getPart : function(partId){  return loc_componentComplex.getComponent().getPart(partId);	},
 
 	};
 	
 	loc_init(uiApp, configure, componentDecorationInfos);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback);
+	loc_out = node_makeObjectWithComponentInterface(loc_out, loc_out);
+
 	return loc_out;
 };
 	
@@ -124,6 +140,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("uiapp.createApp", function(){node_createApp = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.createComponentComplex", function(){node_createComponentComplex = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentInterface", function(){node_makeObjectWithComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
