@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -42,17 +41,13 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
-		entityInfo.setInfo(this.m_info.cloneInfo());
-		entityInfo.setName(this.m_name);
-		entityInfo.setDescription(this.m_description);
+		HAPEntityInfoUtility.cloneTo(this, entityInfo);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(NAME, this.m_name);
-		jsonMap.put(DESCRIPTION, this.m_description);
-		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
+		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
 	}
 
 	@Override

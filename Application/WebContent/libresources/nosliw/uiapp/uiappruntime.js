@@ -105,17 +105,12 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 		prv_getExecuteCommandRequest : function(command, parms, handlers, request){	
 			return loc_componentComplex.getExecuteCommandRequest(command, parms, handlers, request);	
 		},
-
+		
 		prv_getIODataSet : function(){  return loc_getIOContext();	},
 
 		prv_registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
 		prv_unregisterEventListener : function(listener){	return loc_componentComplex.unregisterEventListener(listener); },
 		
-		
-//		getContextRequest : function(handlers, request){	return loc_getIOContext().getGetDataSetValueRequest(handlers, request);	},
-		
-//		getPart : function(partId){  return loc_componentComplex.getComponent().getPart(partId);	},
-
 	};
 	
 	loc_init(uiApp, configure, componentDecorationInfos);

@@ -80,4 +80,5 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 		}
 		jsonMap.put(ASSOCIATION, HAPJsonUtility.buildMapJson(assocationJsonMap));
 	}
+
 }

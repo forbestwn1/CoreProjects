@@ -19,7 +19,11 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponent();
+	
+	var loc_app = loc_gate.getConfigureData().app;
+	
 	var loc_root;
+	var loc_appView;
 	var loc_moduleView;
 	var loc_view;
 	
@@ -88,9 +92,26 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		
 		updateView : function(view){
 			loc_root = $(view);
-			loc_moduleView = $('<div class="view view-main"></div>');
-//			loc_moduleView = $('<div class="view"></div>');
-			loc_root.append(loc_moduleView);
+			
+			if(loc_app==undefined){
+				loc_appView = $('<div></div>');
+				loc_moduleView = $('<div class="view view-main" style="height:600px;"></div>');
+				loc_appView.append(loc_moduleView);
+				loc_root.append(loc_appView);
+				loc_app = new Framework7({
+					  // App root element
+					  root: loc_appView.get(),
+					  name: 'My App',
+					  id: 'com.myapp.test',
+					  panel: {
+						  swipe: 'both',
+					  },		
+				});			
+			}
+			else{
+				loc_moduleView = $('<div class="view view-main" style="height:600px;"></div>');
+				loc_root.append(loc_moduleView);
+			}
 		},
 
 		getInterface : function(){
@@ -126,7 +147,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				_.each(loc_uiModule.getUIs(), function(ui, index){
 					var uiPageContainer = $("<div class='page stacked' data-name="+ui.getName()+"/>"); 
 					ui.getPage().appendTo(uiPageContainer);
-//					uiPageContainer.appendTo(loc_gate.getConfigureData().root);
 					uiPageContainer.appendTo(loc_moduleView);
 				});
 				
@@ -146,8 +166,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 					viewConfigure.routes.push(route);
 				});
 
-//				loc_view = loc_gate.getConfigureData().app.views.create(loc_gate.getConfigureData().root, viewConfigure);
-				loc_view = loc_gate.getConfigureData().app.views.create(loc_moduleView, viewConfigure);
+				loc_view = loc_app.views.create(loc_moduleView, viewConfigure);
 
 				out.executeSuccessHandler();
 			}));

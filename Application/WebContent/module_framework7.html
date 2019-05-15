@@ -123,9 +123,9 @@ $(document).on("nosliwActive", function(){
 		nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(loc_moduleId, loc_moduleId, loc_configure, loc_debugResetView.getInputIODataSet(), {
 			success : function(requestInfo, uiModuleRuntime){
 				loc_uiModuleRuntime = uiModuleRuntime;
-				loc_debugLifecycleView.setComponent(uiModuleRuntime);
-				loc_debugDataView.setComponent(uiModuleRuntime);
-				loc_debugEventView.setComponent(uiModuleRuntime);
+				loc_debugLifecycleView.setComponent(uiModuleRuntime, requestInfo);
+				loc_debugDataView.setComponent(uiModuleRuntime, requestInfo);
+				loc_debugEventView.setComponent(uiModuleRuntime, requestInfo);
 			}
 		});
 	});

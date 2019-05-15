@@ -25,20 +25,21 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_dataView;
 	var loc_childRoot;
 
-	var loc_updateDataSet = function(){	
+	var loc_updateDataSet = function(request){	
 		node_requestServiceProcessor.processRequest(loc_componentIOContext.getGetDataSetValueRequest({
 			success : function(request, dataSet){
+				var kkkk = loc_componentIOContext;
 				loc_dataView.val(JSON.stringify(dataSet, null, 4));	
 			}
-		}));
+		}, request));
 	};
 	
 
-	var loc_setup = function(){
-		loc_componentIOContext.registerEventListener(undefined, function(eventName){
-			loc_updateDataSet();
+	var loc_setup = function(request){
+		loc_componentIOContext.registerEventListener(undefined, function(eventName, eventData, request){
+			loc_updateDataSet(request);
 		});
-		loc_updateDataSet();
+		loc_updateDataSet(request);
 	};
 	
 	
@@ -51,7 +52,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			
 		},
 		
-		updateView : function(view){
+		updateView : function(view, request){
 			loc_view = $(view);
 
 			loc_debugView = $('<div>Component Data: </div>'); 
@@ -77,8 +78,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		getResumeRequest :function(handlers, request){
 		},
 
-		getInitRequest :function(handlers, requestInfo){
-			loc_setup();
+		getInitRequest :function(handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_setup(request);
+			}, handlers, request);
 		},
 	};
 	return loc_out;

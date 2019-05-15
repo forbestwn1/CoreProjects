@@ -51,37 +51,37 @@ var node_createDynamicData = function(getValueRequestFun, setValueRequestFun){
 
 var node_createIODataSet = function(value){
 	
-	var loc_dataSet = {};
-	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 	
-	if(value!=undefined){
-		var valueType = node_getObjectType(value);
-		if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET){
-			return value;
-		}
-		else{
-			//value is default value
-			loc_dataSet[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT] = value;
-		}
+	if(value!=undefined&&node_getObjectType(value)==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET){
+		return value;
 	}
+
+	var loc_init = function(value){
+		//value is default value
+		if(value!=undefined) loc_out.prv_dataSet[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT] = value;
+	};
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 
 	var loc_out = {
 		
-		setData : function(name, data){  
+		prv_dataSet : {},
+		prv_id : nosliw.generateId(),
+			
+		setData : function(name, data, request){  
 			if(name==undefined)  name = node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
-			loc_dataSet[name] = data;   
+			loc_out.prv_dataSet[name] = data;   
+			loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
 		},
 		
 		getData : function(name){
 			if(name==undefined)  name = node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
-			var out = loc_dataSet[name];
+			var out = loc_out.prv_dataSet[name];
 			if(out==undefined){
 				out = {};
-				loc_dataSet[name] = out;
+				loc_out.prv_dataSet[name] = out;
 			}
 			return out;
 		},
@@ -90,7 +90,7 @@ var node_createIODataSet = function(value){
 			return loc_out.getData(name);
 		},
 		
-		getDataSet : function(){   return loc_dataSet;   },
+		getDataSet : function(){   return loc_out.prv_dataSet;   },
 		
 		getGetDataValueRequest : function(name, handlers, request){
 			var dataEle = this.getData(name);
@@ -100,8 +100,8 @@ var node_createIODataSet = function(value){
 			}
 			else{
 				return node_createServiceRequestInfoSimple(undefined, function(request){
-					return request.getData();
-				}, handlers, request).withData(dataEle);
+					return dataEle;
+				}, handlers, request);
 			}
 		},
 
@@ -117,7 +117,7 @@ var node_createIODataSet = function(value){
 				}
 			});
 			
-			_.each(loc_dataSet, function(dataSetEle, name){
+			_.each(loc_out.prv_dataSet, function(dataSetEle, name){
 				getDataItemRequest.addRequest(name, loc_out.getGetDataValueRequest(name));
 			});
 			out.addRequest(getDataItemRequest);
@@ -128,7 +128,7 @@ var node_createIODataSet = function(value){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var dataEle = this.getData(name);
 			var dataEleType = node_getObjectType(dataEle);
-			if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
+			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
 				out.addRequest(loc_out.getGetDataValueRequest(name, {
 					success : function(request, value){
 						var output = node_ioTaskUtility.mergeContext(request.getData('value'), value, isDataFlat);
@@ -155,6 +155,8 @@ var node_createIODataSet = function(value){
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 		
 	};
+	
+	loc_init(value);
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET);
 	

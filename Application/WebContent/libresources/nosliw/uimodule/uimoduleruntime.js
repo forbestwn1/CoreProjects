@@ -22,7 +22,7 @@ var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, compo
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
 	out.addRequest(node_createUIModuleRequest(id, uiModuleDef, undefined, ioInput, {
 		success : function(request, uiModule){
-			var runtime = loc_createModuleRuntime(uiModule, configure, componentDecorationInfos, rootView);
+			var runtime = loc_createModuleRuntime(uiModule, configure, componentDecorationInfos, rootView, request);
 			return runtime.prv_getInitRequest({
 				success : function(request){
 					return request.getData();
@@ -33,16 +33,16 @@ var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, compo
 	return out;
 };
 
-var loc_createModuleRuntime = function(uiModule, configure, componentDecorationInfos, rootView){
+var loc_createModuleRuntime = function(uiModule, configure, componentDecorationInfos, rootView, request){
 	
 	var loc_componentComplex = node_createComponentComplex(configure);
 	var loc_localStore = configure.getConfigureData().__storeService;
 	var loc_stateBackupService = node_createStateBackupService("module", uiModule.getId(), uiModule.getVersion(), loc_localStore);
 
-	var loc_init = function(uiModule, configure, componentDecorationInfos, rootView){
+	var loc_init = function(uiModule, configure, componentDecorationInfos, rootView, request){
 		loc_componentComplex.addComponent(uiModule);
 		loc_componentComplex.addDecorations(componentDecorationInfos);
-		loc_componentComplex.updateView(rootView);
+		loc_componentComplex.updateView(rootView, request);
 	};
 
 	var loc_getIOContext = function(){  return loc_getModule().getIOContext();   };
@@ -152,7 +152,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		
 	};
 	
-	loc_init(uiModule, configure, componentDecorationInfos, rootView);
+	loc_init(uiModule, configure, componentDecorationInfos, rootView, request);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback);
 	

@@ -66,7 +66,7 @@
 					if(data==undefined)  loc_view.val();
 					else loc_view.val(data.value.value.value);
 				}
-			});
+			}, request);
 		};
 
 		var loc_setupUIEvent = function(){
@@ -98,9 +98,9 @@
 								text: optionsValue.value
 							}));
 						});
-						loc_updateView();
+						loc_updateView(request);
 					}
-				});
+				}, requestInfo);
 				return loc_view;
 			},
 				

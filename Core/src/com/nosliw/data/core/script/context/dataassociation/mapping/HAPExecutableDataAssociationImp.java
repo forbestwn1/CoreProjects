@@ -3,6 +3,8 @@ package com.nosliw.data.core.script.context.dataassociation.mapping;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.info.HAPEntityInfoUtility;
+import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -34,15 +36,25 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImp 
 	public String getName() {   return this.m_definition.getName();   }
 	@Override
 	public HAPInfo getInfo() {  return this.m_definition.getInfo();  }
+	
+	@Override
+	public String getDescription() {   return this.m_definition.getDescription();   }
  
 	@Override
 	public HAPDefinitionDataAssociation getDefinition() {   return this.m_definition;   }
 
 	@Override
+	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
+		HAPEntityInfoUtility.cloneTo(this, entityInfo);
+	}
+
+	@Override
+	public void buildEntityInfoByJson(Object json) {	}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TYPE, this.getType());
-		jsonMap.put(NAME, this.getName());
+		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
 		jsonMap.put(DEFINITION, this.m_definition.toStringValue(HAPSerializationFormat.JSON));
 
 		Map<String, String> outputFlatMap = new LinkedHashMap<String, String>();

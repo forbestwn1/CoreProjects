@@ -34,7 +34,7 @@
 					"result": [{
 						"name": "success",
 						"flow": {
-							"target": "updateApplicationData"
+							"target": "successEndId"
 						}
 					}]
 				},

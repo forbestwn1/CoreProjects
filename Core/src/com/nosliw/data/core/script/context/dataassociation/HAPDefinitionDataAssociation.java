@@ -12,5 +12,5 @@ public interface HAPDefinitionDataAssociation extends HAPEntityInfo, HAPSerializ
 	String getType();
 
 	HAPDefinitionDataAssociation cloneDataAssocation();
-	
+
 }

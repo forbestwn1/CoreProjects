@@ -22,9 +22,7 @@ public class HAPEntityInfoImpWrapper extends HAPSerializableImp implements HAPEn
 
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
-		entityInfo.setName(this.getName());
-		entityInfo.setDescription(this.getDescription());
-		entityInfo.setInfo(this.getInfo().cloneInfo());
+		HAPEntityInfoUtility.cloneTo(this, entityInfo);
 	}
 
 	@Override

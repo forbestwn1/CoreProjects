@@ -67,7 +67,7 @@ var node_createComponentDataView = function(){
 
 	var loc_showDataSet = function(dataSet){	loc_textView.val(JSON.stringify(dataSet, null, 4));	};
 	
-	var loc_setup = function(){
+	var loc_setup = function(request){
 		var comInterface = node_getComponentInterface(loc_component);
 		comInterface.registerDataChangeEventListener(undefined, function(eventName, dataSet){
 			loc_showDataSet(dataSet);
@@ -76,16 +76,16 @@ var node_createComponentDataView = function(){
 			success : function(request, dataSet){
 				loc_showDataSet(dataSet);
 			}
-		}));
+		}, request));
 	};
 	
 	var loc_out = {
 		getView : function(){  return loc_view;   },
 		
-		setComponent : function(component){
+		setComponent : function(component, request){
 			loc_clearup();
 			loc_component = component;
-			loc_setup();
+			loc_setup(request);
 		}
 	};
 	

@@ -1,20 +1,26 @@
 package com.nosliw.data.core.resource;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPResourceManagerImp implements HAPResourceManager{
  
+	private Map<HAPResourceId, HAPResource> m_cachedResource = new LinkedHashMap<HAPResourceId, HAPResource>();
+	
 	@Override
 	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId, HAPRuntimeInfo runtimeInfo) {
 		HAPLoadResourceResponse out = new HAPLoadResourceResponse();
 		for(HAPResourceId resourceId : resourcesId){
-			HAPResource resource = this.getResource(resourceId, runtimeInfo);
+			HAPResource resource = this.m_cachedResource.get(resourceId);
+			if(resource==null)		resource = this.getResource(resourceId, runtimeInfo);
 			if(resource!=null) {
 				out.addLoadedResource(resource);
+				this.m_cachedResource.put(resourceId, resource);
 
 				System.out.println();
 				System.out.println("*********************** Load Resource Start ************************");
