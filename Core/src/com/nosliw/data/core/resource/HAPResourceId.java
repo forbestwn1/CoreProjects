@@ -1,12 +1,14 @@
 package com.nosliw.data.core.resource;
 
 import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 /**
@@ -97,6 +99,12 @@ public class HAPResourceId extends HAPSerializableImp{
 		}
 	}
 	
+	@Override
+	public int hashCode() {
+		return this.toStringValue(HAPSerializationFormat.LITERATE).hashCode();
+	}
+	
+	@Override
 	public HAPResourceId clone(){
 		HAPResourceId out = new HAPResourceId();
 		out.cloneFrom(this);
