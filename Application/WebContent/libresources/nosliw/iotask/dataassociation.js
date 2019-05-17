@@ -51,7 +51,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 //			out.addRequest(loc_outputIODataSet.getGetDataValueRequest(targetName));
 		}
 		else{
-			out.addRequest(loc_outputIODataSet.getSetDataValueRequest(targetName, value, isTargetFlat));
+			out.addRequest(loc_outputIODataSet.getMergeDataValueRequest(targetName, value, isTargetFlat));
 		}
 		return out;
 	};

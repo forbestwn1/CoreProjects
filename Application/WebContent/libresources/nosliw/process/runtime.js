@@ -65,7 +65,12 @@ var node_createProcessRuntime = function(envObj){
 			var output = {};
 			out.addRequest(node_createDataAssociation(input, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], output).getExecuteDataAssociationRequest(extraInputDataSet, {
 				success : function(request, input){
-					return node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(input.getData(), outputMappingsByResult);
+					return input.getGetDataValueRequest(undefined, {
+						success : function(request, inputData){
+							return node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(inputData, outputMappingsByResult);
+						}
+					}, request);
+//					return node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(input.getData(), outputMappingsByResult);
 				}
 			}));
 			return out;

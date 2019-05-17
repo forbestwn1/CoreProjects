@@ -130,7 +130,7 @@ $(document).on("nosliwActive", function(){
 				success : function(requestInfo, appRuntime){
 					loc_appRuntime = appRuntime;
 					loc_debugLifecycleView.setComponent(appRuntime);
-					loc_debugDataView.setComponent(appRuntime);
+					loc_debugDataView.setComponent(appRuntime, requestInfo);
 					loc_debugEventView.setComponent(appRuntime);
 				}
 			}

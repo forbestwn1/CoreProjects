@@ -75,7 +75,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		
 		var backupContextData = stateData.context;
 		_.each(backupContextData, function(contextData, name){
-			out.addRequest(loc_getIOContext().getSetDataValueRequest(name, contextData, true));
+			out.addRequest(loc_getIOContext().getSetDataValueRequest(name, contextData));
 		});
 		
 		out.addRequest(loc_componentComplex.getResumeRequest());

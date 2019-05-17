@@ -54,6 +54,7 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImp 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.getType());
 		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
 		jsonMap.put(DEFINITION, this.m_definition.toStringValue(HAPSerializationFormat.JSON));
 
