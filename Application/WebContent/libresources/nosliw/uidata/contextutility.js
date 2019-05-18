@@ -73,7 +73,7 @@ var node_utility = function(){
 							categaryContext = {};
 							value[eleNameInfo.categary] = categaryContext;
 						}
-						categaryContext[eleNameInfo.name] = eleValue;
+						categaryContext[eleNameInfo.name] = eleValue==undefined? undefined:eleValue.value;
 					});
 					return value;
 				}
