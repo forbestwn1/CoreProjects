@@ -26,6 +26,23 @@ var packageObj = library;
 var node_appDataService = function(){
 	var loc_data = [
 		{
+			id : "id2",
+			version : "version1",
+			data : {
+				schoolTypeInData : {
+					"dataTypeId": "test.options;1.0.0",
+					"value": {
+						"value" : "Public",
+						"optionsId" : "schoolType"
+					}
+				},
+				schoolRatingInData : {
+					"dataTypeId": "test.float;1.0.0",
+					"value": 9.0
+				}
+			}
+		},
+		{
 			id : "id1",
 			version : "version1",
 			data : {
@@ -46,19 +63,11 @@ var node_appDataService = function(){
 	
 	var loc_out = {
 			
-		getGetAppDataRequest : function(dataName, handlers, requester_parent){
+		getGetAppDataInfoRequest : function(dataName, handlers, requester_parent){
 			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-				return loc_data;
-			}, handlers, requester_parent);
-		},	
-
-		getGetAppDataByVersionRequest : function(dataName, version, handlers, requester_parent){
-			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-				var out;
-				_.each(loc_data, function(data, index){
-					if(data.version==version){
-						out = data;
-					}
+				var out = [];
+				_.each(loc_data, function(dataEle, i){
+					out.push(new node_ApplicationDataInfo(dataName, dataEle.id, dataEle.version));
 				});
 				return out;
 			}, handlers, requester_parent);
@@ -76,17 +85,22 @@ var node_appDataService = function(){
 			}, handlers, requester_parent);
 		},	
 
-		getAddAppDataRequest : function(dataName, data, handlers, requester_parent){
+		getAddAppDataRequest : function(dataName, data, version, handlers, requester_parent){
 			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-				loc_data.push(data);
-				return data;
+				var appData = {
+					id : nosliw.generateId(),
+					version : version,
+					data : data,
+				};
+				loc_data.push(appData);
+				return appData;
 			}, handlers, requester_parent);
 		},	
 			
-		getDeleteAppDataRequest : function(dataName, dataVersion, handlers, requester_parent){
+		getDeleteAppDataRequest : function(dataName, id, handlers, requester_parent){
 			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
 				for(var i in loc_data){
-					if(data[i].version==dataVersion){
+					if(data[i].id==id){
 						loc_data.splice(i, 1);
 						return;
 					}
@@ -94,22 +108,11 @@ var node_appDataService = function(){
 			}, handlers, requester_parent);
 		},	
 
-//		getUpdateAppDataRequest : function(dataName, dataVersion, data, handlers, requester_parent){
-//			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-//				for(var i in loc_data){
-//					if(loc_data[i].version==dataVersion){
-//						loc_data[i].data = data;
-//						return data;
-//					}
-//				}
-//			}, handlers, requester_parent);
-//		},	
-
-		getUpdateAppDataRequest : function(dataName, dataId, data, handlers, requester_parent){
+		getUpdateAppDataRequest : function(dataName, appData, handlers, requester_parent){
 			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
 				for(var i in loc_data){
-					if(loc_data[i].id==dataId){
-						loc_data[i].data = data;
+					if(loc_data[i].id==appData.id){
+						loc_data[i] = appData;
 						return data;
 					}
 				}
@@ -140,6 +143,7 @@ nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestI
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.createAppRuntimeRequest", function(){node_createAppRuntimeRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataInfo", function(){node_ApplicationDataInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 
 

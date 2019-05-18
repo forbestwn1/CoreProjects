@@ -10,12 +10,13 @@ var packageObj = library;
 
 var node_ApplicationDataInfo = function(dataName, dataId, dataVersion){
 	this.dataName = dataName;
-	this.dataId = dataId;
-	this.dataVersion = dataVersion;
+	this.id = dataId;
+	this.version = dataVersion;
 };
 	
 var node_ModuleInfo = function(moduleDef){
 	this.id = undefined;
+	this.root = undefined;
 	this.module = undefined;
 	this.moduleDef = moduleDef;
 	this.role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];

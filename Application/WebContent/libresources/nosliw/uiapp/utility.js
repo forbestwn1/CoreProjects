@@ -38,7 +38,7 @@ var node_utility = function(){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			var moduleInfo = new node_ModuleInfo(moduleDef);
-		
+			moduleInfo.root = configureData.root;
 			moduleInfo.id = uiApp.getId()+"."+nosliw.generateId();
 			if(applicationDataInfo!=undefined) moduleInfo.applicationDataInfo = applicationDataInfo;
 			
@@ -67,7 +67,7 @@ var node_utility = function(){
 				externalDataIO.setData(dataIOName, node_createDynamicData(
 					function(handlers, request){
 						var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-						out.addRequest(appDataService.getGetAppDataByIdRequest(appDataInfo.dataName, appDataInfo.dataId, {
+						out.addRequest(appDataService.getGetAppDataByIdRequest(appDataInfo.dataName, appDataInfo.id, {
 							success : function(request, dataInfo){
 								return dataInfo.data;
 							}
@@ -75,7 +75,7 @@ var node_utility = function(){
 						return out;
 					},
 					function(value, handlers, request){
-						return appDataService.getUpdateAppDataRequest(appDataInfo.dataName, appDataInfo.dataId, value, handlers, request);
+						return appDataService.getUpdateAppDataRequest(appDataInfo.dataName, appDataInfo.id, value, handlers, request);
 					}
 				));
 			});

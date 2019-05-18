@@ -31,38 +31,49 @@ var node_createAppDecoration = function(gate){
 	var loc_configureData = loc_gate.getConfigureData();
 	var loc_appDataService = loc_configureData.__appDataService;
 	
+	var loc_getModuleConfigureData = function(role){
+		return node_createConfigure(loc_configureData).getConfigureData(role);
+	};
+	
+	var loc_settingParentView = loc_getModuleConfigureData(ROLE_SETTING).root;
+	var loc_settingModules = [];
+	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 
+	var loc_createSettingModuleRequest = function(moduleDef, dataInfo, handlers, request){
+		var configureData = loc_getModuleConfigureData(ROLE_SETTING); 
+		configureData.root = $('<div></div>').get();
+		$(configureData.root).appendTo(loc_settingParentView);
+		var moduleInfoRequest = node_createServiceRequestInfoSequence();
+		moduleInfoRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, dataInfo==undefined?undefined:[dataInfo], configureData, loc_appDataService, {
+			success : function(request, moduleInfo){
+				loc_settingModules.push(moduleInfo);
+				return moduleInfo;
+			}
+		}));
+		return moduleInfoRequest;
+	};
+	
 	var loc_createSettingRoleRequest = function(moduleDef, handlers, request){
 		var settingRoots = [];
 		var settingsRequest = node_createServiceRequestInfoSequence(handlers, request);
 		var appDataName = node_appUtility.getApplicationDataName(moduleDef);
-		settingsRequest.addRequest(loc_appDataService.getGetAppDataRequest(appDataName, {
-			success : function(request, allSettings){
-				var settingRequest = node_createServiceRequestInfoSequence(undefined);
-				_.each(allSettings, function(settingData, index){
-					var configureData = loc_getModuleConfigureData(ROLE_SETTING); 
-					var root = $('<div></div>');
-					root.appendTo(configureData.root);
-					
-					settingData.dataName = appDataName;
-
-					configureData.root = root.get();
-					
-					settingRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, [new node_ApplicationDataInfo(settingData.dataName, settingData.id, settingData.version)], configureData, loc_appDataService, handlers, request));
+		settingsRequest.addRequest(loc_appDataService.getGetAppDataInfoRequest(appDataName, {
+			success : function(request, settingDataInfos){
+				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
+				_.each(settingDataInfos, function(dataInfo, index){
+					settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, dataInfo));
 				});
+				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef));
 				return settingRequest;
 			}
 		}));
 		return settingsRequest;
 	};
 	
-	var loc_getModuleConfigureData = function(role){
-		return node_createConfigure(loc_configureData).getConfigureData(role);
-	};
 	
 
 	var loc_out = {
