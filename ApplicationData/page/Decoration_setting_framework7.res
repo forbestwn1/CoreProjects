@@ -2,6 +2,7 @@
 <html>
 <body nosliwattribute_placeholder="id:pleaseEmbed">
 	<br>
+	
 	<div>
 		<a href="" nosliw-event="click:submit:">Submit</a>
 		<a href="" nosliw-event="click:new:">New</a>
@@ -42,6 +43,13 @@
 		"group" : {
 			"public" : {
 				"element" : {
+					"nosliw_moduleStatus" : {
+						"definition": {
+							"child" : {
+								"index" : {},
+							}
+						}
+					},
 				}
 			}
 		}

@@ -88,15 +88,15 @@ var node_createApp = function(id, appDef, ioInput){
 				loc_out.prv_app.modulesByRole[role] = modules;
 			}
 			modules.push(moduleInfo);
-			loc_out.prv_app.currentModuleByRole[role] = modules.length-1;
+			loc_out.setCurrentModuleInfo(role, moduleInfo.id);
 			
 			module.prv_registerEventListener(loc_eventListener, loc_moduleEventProcessor, moduleInfo);
 			return moduleInfo;
 		},
 		
-		getCurrentModuleInfo : function(role){
-			return loc_out.prv_app.modulesByRole[role][loc_out.prv_app.currentModuleByRole[role]];
-		},
+		getCurrentModuleInfo : function(role){	return loc_out.getModuleInfo(role);	},
+		
+		setCurrentModuleInfo : function(role, moduleId){	loc_out.prv_app.currentModuleByRole[role] = moduleId;	},
 		
 		getAllModuleInfo : function(){
 			var out = [];
@@ -109,7 +109,9 @@ var node_createApp = function(id, appDef, ioInput){
 		},
 		
 		getModuleInfo : function(role, id){
-			if(id==undefined)  return this.getCurrentModuleInfo(role);
+			if(id==undefined){
+				id = loc_out.prv_app.currentModuleByRole[role];
+			}
 			var modules = loc_out.prv_app.modulesByRole[role];
 			for(var i in modules){
 				if(modules[i].id==id)  return modules[i];

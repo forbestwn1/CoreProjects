@@ -81,6 +81,7 @@ var node_createAppDecoration = function(gate){
 		processComponentEvent : function(eventName, eventData, request){
 			if(eventName==node_CONSTANT.APP_EVENT_MODULEEVENT){
 				if(eventData.eventData.eventName=="submitSetting"){
+					loc_uiApp.setCurrentModuleInfo(ROLE_SETTING, eventData.moduleInfo.id);
 					var processRequest = loc_gate.getExecuteProcessResourceRequest("applicationsetting;submitsetting", undefined, undefined, request);
 					node_requestServiceProcessor.processRequest(processRequest);
 				}

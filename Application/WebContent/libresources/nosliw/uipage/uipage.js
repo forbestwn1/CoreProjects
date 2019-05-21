@@ -28,7 +28,7 @@ var node_createUIPage = function(uiView){
 		var current = loc_getCurrent();
 		if(current!=undefined){
 			loc_viewEventListener = loc_unregisterViewListener(current);
-			ele.setParent(current);
+			ele.setChild(current);
 		}
 		loc_decorations.push(ele);
 		loc_registerViewListener(loc_getCurrent());
