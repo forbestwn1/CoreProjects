@@ -7,10 +7,12 @@ function(gate){
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_createUIDecorationsRequest = nosliw.getNodeData("uipage.createUIDecorationsRequest");
 
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponent();
 	var loc_view;
+	var loc_decoration;
 	
 	//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
 	loc_processRequest = function(request){     node_requestServiceProcessor.processRequest(request);   };
@@ -25,8 +27,20 @@ function(gate){
 		
 		updateView : function(view){
 			loc_view = view;
+			loc_decoration.appendTo(view);
+			return loc_decoration.getPlaceHolderView();
 		},
 
+		getPreDisplayInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(node_createUIDecorationsRequest([loc_gate.getConfigureData().uiResource], {
+				success : function(request, decs){
+					loc_decoration = decs[0];
+				}
+			}));
+			return out;
+		},
+		
 		getInitRequest :function(handlers, requestInfo){
 			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
 			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){

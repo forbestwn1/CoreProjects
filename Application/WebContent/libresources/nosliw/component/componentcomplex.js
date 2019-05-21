@@ -39,9 +39,9 @@ var node_createComponentComplex = function(configure, envInterface){
 		});
 		return out;
 	};
-	
+
 	var loc_updateView = function(view, request){
-		for(var i=loc_parts.length-1; i>=0; i--){
+		for(var i=loc_parts.length-1; i>0; i--){
 			var updated = loc_parts[i].updateView(view, request);
 			if(updated!=undefined)  view = updated;  
 			else break;
@@ -92,6 +92,7 @@ var node_createComponentComplex = function(configure, envInterface){
 		
 		updateView : function(view, request){  loc_updateView(view, request);  },
 		
+		getPreDisplayInitRequest : function(handlers, request){  return loc_getLifeCycleRequest("getPreDisplayInitRequest", handlers, request);  },
 		getInitRequest : function(handlers, request){  return loc_getLifeCycleRequest("getInitRequest", handlers, request);  },
 		getStartRequest : function(handlers, request){  return loc_getLifeCycleRequest("getStartRequest", handlers, request);  },
 		getResumeRequest : function(handlers, request){  return loc_getLifeCycleRequest("getResumeRequest", handlers, request);  },

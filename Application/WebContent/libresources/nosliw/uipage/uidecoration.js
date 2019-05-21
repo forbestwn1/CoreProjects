@@ -101,6 +101,7 @@ var loc_createDecoration = function(uiView){
 		appendTo : function(ele){	loc_uiView.appendTo(ele);	},
 		insertAfter : function(ele){	loc_uiView.insertAfter(ele);	},
 		detachViews : function(){	loc_uiView.detachViews();  },
+		getPlaceHolderView : function(){    return loc_getPlaceHolderView();  },
 		
 		getContextElements : function(){
 			var out = {};

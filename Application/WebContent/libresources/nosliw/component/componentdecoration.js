@@ -111,6 +111,7 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 			return loc_core.updateView(view);
 		},
 		
+		getPreDisplayInitRequest : function(handlers, request){  return loc_core.getPreDisplayInitRequest==undefined?undefined:loc_core.getPreDisplayInitRequest(handlers, request);	},
 		getInitRequest : function(handlers, request){  return loc_core.getInitRequest==undefined?undefined:loc_core.getInitRequest(handlers, request);	},
 		getDeactiveRequest : function(handlers, request){  return loc_core.getDeactiveRequest==undefined?undefined:loc_core.getDeactiveRequest(handlers, request);	},
 		getSuspendRequest : function(handlers, request){  return loc_core.getSuspendRequest==undefined?undefined:loc_core.getSuspendRequest(handlers, request);	},

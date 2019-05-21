@@ -102,15 +102,17 @@ $(document).on("nosliwActive", function(){
 						global : {
 							"root" : $('#settingModuleDiv').get(),
 							"decoration" : {
-								global : ["Decoration_setting_framework7"]
 							},
 							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile", "debug"]
 						},
+						components : {
+							"setting_framework7_mobile" : {
+								uiResource : "Decoration_setting_framework7"
+							}
+						}
 					}
 				}
-				
 			}
-			
 		}
 	};
 	

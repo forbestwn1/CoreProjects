@@ -42,7 +42,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	var loc_init = function(uiModule, configure, componentDecorationInfos, rootView, request){
 		loc_componentComplex.addComponent(uiModule);
 		loc_componentComplex.addDecorations(componentDecorationInfos);
-		loc_componentComplex.updateView(rootView, request);
+//		loc_componentComplex.updateView(rootView, request);
 	};
 
 	var loc_getIOContext = function(){  return loc_getModule().getIOContext();   };
@@ -128,6 +128,10 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		
 		prv_getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
+			out.addRequest(loc_componentComplex.getPreDisplayInitRequest());
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_componentComplex.updateView(rootView, request);
+			}));
 			out.addRequest(loc_componentComplex.getInitRequest());
 			return out;
 		},
