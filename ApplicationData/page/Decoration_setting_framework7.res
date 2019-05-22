@@ -6,9 +6,13 @@
 	<div>
 		<a href="" nosliw-event="click:submit:">Submit</a>
 		<a href="" nosliw-event="click:new:">New</a>
-		<a href="" nosliw-event="click:delete:">Delete</a>
-		<a href="" nosliw-event="click:save:">Save</a>
+		<a href="" nosliw-event="click:delete:" style="display:<%=?(nosliw_moduleStatus.persist)?==true?'inline':'none'%>">Delete</a>
+		<a href="" nosliw-event="click:save:" style="display:<%=?(nosliw_moduleStatus.persist)?==true?'inline':'none'%>">Save</a>
 	</div>
+
+	<nosliw-contextvalue/>
+
+
 
 	<div id="pleaseEmbed"/>
 	<br>
@@ -46,7 +50,8 @@
 					"nosliw_moduleStatus" : {
 						"definition": {
 							"child" : {
-								"index" : {},
+								"persist" : {},
+								"modified" : {},
 							}
 						}
 					},

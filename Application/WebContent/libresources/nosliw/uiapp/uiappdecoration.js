@@ -51,7 +51,16 @@ var node_createAppDecoration = function(gate){
 		moduleInfoRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, dataInfo==undefined?undefined:[dataInfo], configureData, loc_appDataService, {
 			success : function(request, moduleInfo){
 				loc_settingModules.push(moduleInfo);
-				return moduleInfo;
+				return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
+					moduleStatus : {
+						persist : dataInfo==undefined?false:true,
+						modified : false
+					}
+				}, {
+					success : function(request){
+						return moduleInfo;
+					}
+				}, request);
 			}
 		}));
 		return moduleInfoRequest;
@@ -80,7 +89,7 @@ var node_createAppDecoration = function(gate){
 		
 		processComponentEvent : function(eventName, eventData, request){
 			if(eventName==node_CONSTANT.APP_EVENT_MODULEEVENT){
-				if(eventData.eventData.eventName=="submitSetting"){
+				if(eventData.eventName=="submitSetting"){
 					loc_uiApp.setCurrentModuleInfo(ROLE_SETTING, eventData.moduleInfo.id);
 					var processRequest = loc_gate.getExecuteProcessResourceRequest("applicationsetting;submitsetting", undefined, undefined, request);
 					node_requestServiceProcessor.processRequest(processRequest);

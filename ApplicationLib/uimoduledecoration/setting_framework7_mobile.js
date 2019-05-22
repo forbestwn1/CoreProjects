@@ -8,6 +8,7 @@ function(gate){
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_createUIDecorationsRequest = nosliw.getNodeData("uipage.createUIDecorationsRequest");
+	var node_commandResult = nosliw.getNodeData("component.commandResult");
 
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponent();
@@ -23,6 +24,12 @@ function(gate){
 		},
 		
 		getExecuteCommandRequest : function(command, parms, handlers, request){
+			if(command=="updateModuleInfo"){
+				var contextUpdate = {
+					nosliw_moduleStatus : parms.moduleStatus	
+				};
+				return new node_commandResult(loc_decoration.getUpdateContextRequest(contextUpdate, handlers, request));
+			}
 		},
 		
 		updateView : function(view){
@@ -36,6 +43,9 @@ function(gate){
 			out.addRequest(node_createUIDecorationsRequest([loc_gate.getConfigureData().uiResource], {
 				success : function(request, decs){
 					loc_decoration = decs[0];
+					loc_decoration.registerEventListener(undefined, function(eventName, eventData, request){
+						loc_gate.trigueEvent(eventName, eventData);
+					});
 				}
 			}));
 			return out;
