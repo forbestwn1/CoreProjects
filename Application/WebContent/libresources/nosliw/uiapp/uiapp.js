@@ -29,8 +29,15 @@ var node_createApp = function(id, appDef, ioInput){
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
+	var loc_valueChangeEventSource = node_createEventObject();
+	var loc_valueChangeEventListener = node_createEventObject();
+
 	var loc_moduleEventProcessor = function(eventName, eventData, request){
 		loc_trigueEvent(node_CONSTANT.APP_EVENT_MODULEEVENT, new node_ModuleEventData(this, eventName, eventData), request);
+	};
+
+	var loc_moduleValueChangeEventProcessor = function(eventName, eventData, request){
+		loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, new node_ModuleEventData(this, eventName, eventData), request);
 	};
 	
 	var loc_updateIOContext = function(input){
@@ -39,6 +46,7 @@ var node_createApp = function(id, appDef, ioInput){
 	};
 
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
+	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo); };
 
 	var loc_out = {
 
@@ -91,6 +99,7 @@ var node_createApp = function(id, appDef, ioInput){
 			loc_out.setCurrentModuleInfo(role, moduleInfo.id);
 			
 			module.prv_registerEventListener(loc_eventListener, loc_moduleEventProcessor, moduleInfo);
+			module.prv_registerValueChangeEventListener(loc_valueChangeEventListener, loc_moduleValueChangeEventProcessor, moduleInfo);
 			return moduleInfo;
 		},
 		
@@ -120,7 +129,10 @@ var node_createApp = function(id, appDef, ioInput){
 		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
-		
+
+		registerValueChangeEventListener : function(listener, handler, thisContext){  return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener); },
+
 	};
 	return loc_out;
 };

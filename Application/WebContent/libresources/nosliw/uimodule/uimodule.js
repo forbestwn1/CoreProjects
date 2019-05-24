@@ -73,11 +73,21 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 	
+	var loc_valueChangeEventListener = node_createEventObject();
+	var loc_valueChangeEventSource = node_createEventObject();
+	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
+	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo); };
 
 	var loc_updateIOContext = function(input){
 		var data = loc_out.prv_module.uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input);
 		loc_out.prv_module.ioContext.setData(undefined, data);
+	};
+	
+	var loc_init = function(){
+		loc_out.prv_module.ioContext.registerEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
+			loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, undefined, request);
+		});
 	};
 	
 	var loc_out = {
@@ -90,10 +100,6 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 			uiArray : [],
 			ui : {},
 
-			eventSource : node_createEventObject(),
-			eventListener : node_createEventObject(),
-
-			valueChangeEventListener : node_createEventObject(),
 		},
 		
 		prv_addUI : function(ui){
@@ -103,7 +109,7 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 			ui.registerEventListener(loc_out.prv_module.eventListener, function(eventName, eventData, requestInfo){
 				loc_trigueEvent(node_CONSTANT.MODULE_EVENT_UIEVENT, new node_uiEventData(this.getName(), eventName, eventData), requestInfo);
 			}, ui);
-			ui.registerValueChangeEventListener(loc_out.prv_module.valueChangeEventListener, function(eventName, eventData, requestInfo){
+			ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
 				//handle ui value change, update value in module
 				this.executeSynOutDataRequest(undefined, undefined, requestInfo);
 			}, ui);
@@ -126,6 +132,9 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
+		registerValueChangeEventListener : function(listener, handler, thisContext){  return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener); },
+
 		getInitIOContextRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			if(loc_ioInput!=undefined){
@@ -142,10 +151,13 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 		},
 		
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
-		getPart : function(partId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, partId); }
+		getPart : function(partId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, partId); },
+		
 		
 	};
 
+	loc_init();
+	
 	loc_out = node_buildServiceProvider(loc_out, "processService");
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIMODULE);

@@ -24,6 +24,9 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
+	var loc_valueChangeEventSource = node_createEventObject();
+	var loc_valueChangeEventListener = node_createEventObject();
+
 	var loc_child = child;
 	loc_child.registerEventListener(loc_eventListener, function(eventName, eventData, request){
 		if(loc_core.processComponentEvent!=undefined){
@@ -45,7 +48,15 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 			loc_trigueEvent(eventName, eventData, request);
 		}
 	});
-	
+
+	loc_child.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
+		if(loc_core.processComponentValueChangeEvent!=undefined){
+			loc_core.processComponentValueChangeEvent(eventName, eventData, request);
+		}
+		//propagate the same event
+		loc_trigueValueChangeEvent(eventName, eventData, request);
+	});
+
 	var loc_component = loc_child.prv_getComponent==undefined? loc_child : loc_child.prv_getComponent();
 	
 	var loc_core = coreGenerator({
@@ -74,6 +85,7 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 	});
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
+	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo); };
 
 	var loc_out = {
 		
@@ -85,6 +97,9 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 			
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
+
+		registerValueChangeEventListener : function(listener, handler, thisContext){	return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener); },
 
 		getExecuteCommandRequest : function(command, parms, handlers, request){
 			if(loc_core.getExecuteCommandRequest!=undefined){

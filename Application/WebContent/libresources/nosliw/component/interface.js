@@ -81,6 +81,12 @@ var loc_createComponentInterfaceObj = function(thisContext, baseObj, interfaceOb
 		
 		registerEventListener : function(listener, handler){	return loc_interfaceObj.prv_registerEventListener(listener, handler, loc_thisContext);	},
 		unregisterEventListener : function(listener){  loc_interfaceObj.prv_unregisterEventListener(listener);  },
+
+		registerValueChangeEventListener : function(listener, handler){	return loc_interfaceObj.prv_registerValueChangeEventListener(listener, handler, loc_thisContext);	},
+		unregisterValueChangeEventListener : function(listener){  loc_interfaceObj.prv_unregisterValueChangeEventListener(listener);  },
+
+		registerValueChangeEventListener : function(listener, handler){	return loc_interfaceObj.prv_registerValueChangeEventListener(listener, handler, loc_thisContext);	},
+		unregisterValueChangeEventListener : function(listener){  loc_interfaceObj.prv_unregisterValueChangeEventListener(listener);  },
 	};
 
 	loc_init();

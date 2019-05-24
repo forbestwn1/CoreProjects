@@ -145,6 +145,9 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		prv_registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
 		prv_unregisterEventListener : function(listener){	return loc_componentComplex.unregisterEventListener(listener); },
 
+		prv_registerValueChangeEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerValueChangeEventListener(listener, handler, thisContext);	},
+		prv_unregisterValueChangeEventListener : function(listener){	return loc_componentComplex.unregisterValueChangeEventListener(listener); },
+
 //		getModule : function(){  return loc_getModule();  },
 		
 		

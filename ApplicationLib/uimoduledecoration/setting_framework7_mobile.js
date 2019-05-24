@@ -26,7 +26,8 @@ function(gate){
 		getExecuteCommandRequest : function(command, parms, handlers, request){
 			if(command=="updateModuleInfo"){
 				var contextUpdate = {
-					nosliw_moduleStatus : parms.moduleStatus	
+					nosliw_moduleStatus_persist : parms.persist,	
+					nosliw_moduleStatus_modified : parms.modified	
 				};
 				return new node_commandResult(loc_decoration.getUpdateContextRequest(contextUpdate, handlers, request));
 			}

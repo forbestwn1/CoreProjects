@@ -52,10 +52,8 @@ var node_createAppDecoration = function(gate){
 			success : function(request, moduleInfo){
 				loc_settingModules.push(moduleInfo);
 				return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
-					moduleStatus : {
-						persist : dataInfo==undefined?false:true,
-						modified : false
-					}
+					persist : dataInfo==undefined?false:true,
+					modified : false
 				}, {
 					success : function(request){
 						return moduleInfo;
@@ -87,6 +85,13 @@ var node_createAppDecoration = function(gate){
 
 	var loc_out = {
 		
+		processComponentValueChangeEvent : function(eventName, eventData, request){
+			var out = eventData.moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
+				modified : true
+			}, undefined, request);
+			node_requestServiceProcessor.processRequest(out);
+		},	
+			
 		processComponentEvent : function(eventName, eventData, request){
 			if(eventName==node_CONSTANT.APP_EVENT_MODULEEVENT){
 				if(eventData.eventName=="submitSetting"){

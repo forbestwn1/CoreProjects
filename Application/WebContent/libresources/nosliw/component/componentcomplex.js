@@ -24,7 +24,10 @@ var node_createComponentComplex = function(configure, envInterface){
 
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
-	
+
+	var loc_valueChangeEventSource = node_createEventObject();
+	var loc_valueChangeEventListener = node_createEventObject();
+
 	var loc_getCurrentFacad = function(){   return loc_parts[loc_parts.length-1];  };
 	
 	var loc_getComponent = function(){  return  loc_parts[0]; };
@@ -48,11 +51,18 @@ var node_createComponentComplex = function(configure, envInterface){
 		}
 	};
 	
-	var loc_unregisterPartListener = function(){	loc_getCurrentFacad().unregisterEventListener(loc_eventListener);	};
+	var loc_unregisterPartListener = function(){	
+		loc_getCurrentFacad().unregisterEventListener(loc_eventListener);	
+		loc_getCurrentFacad().unregisterValueChangeEventListener(loc_eventListener);	
+	};
 
 	var loc_registerPartListener = function(){
 		loc_getCurrentFacad().registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
 			loc_eventSource.triggerEvent(event, eventData, requestInfo);
+		});
+
+		loc_getCurrentFacad().registerValueChangeEventListener(loc_valueChangeEventListener, function(event, eventData, requestInfo){
+			loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);
 		});
 	};
 
@@ -83,6 +93,9 @@ var node_createComponentComplex = function(configure, envInterface){
 		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
+
+		registerValueChangeEventListener : function(listener, handler, thisContext){  return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener); },
 
 		getExecuteCommandRequest : function(command, parms, handlers, request){	return loc_getCurrentFacad().getExecuteCommandRequest(command, parms, handlers, request);	},
 		
