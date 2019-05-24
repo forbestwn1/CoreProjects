@@ -27,7 +27,8 @@ function(gate){
 			if(command=="updateModuleInfo"){
 				var contextUpdate = {
 					nosliw_moduleStatus_persist : parms.persist,	
-					nosliw_moduleStatus_modified : parms.modified	
+					nosliw_moduleStatus_modified : parms.modified,	
+					nosliw_moduleStatus_name : parms.name	
 				};
 				return new node_commandResult(loc_decoration.getUpdateContextRequest(contextUpdate, handlers, request));
 			}

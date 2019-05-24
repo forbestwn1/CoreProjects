@@ -16,6 +16,7 @@ var node_ApplicationDataInfo = function(dataName, dataId, dataVersion){
 	
 var node_ModuleInfo = function(moduleDef){
 	this.id = undefined;
+	this.name = undefined;
 	this.root = undefined;
 	this.module = undefined;
 	this.moduleDef = moduleDef;

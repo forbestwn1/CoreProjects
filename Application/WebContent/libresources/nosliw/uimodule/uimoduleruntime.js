@@ -42,7 +42,6 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	var loc_init = function(uiModule, configure, componentDecorationInfos, rootView, request){
 		loc_componentComplex.addComponent(uiModule);
 		loc_componentComplex.addDecorations(componentDecorationInfos);
-//		loc_componentComplex.updateView(rootView, request);
 	};
 
 	var loc_getIOContext = function(){  return loc_getModule().getIOContext();   };
@@ -165,6 +164,8 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	
 	loc_out = node_makeObjectWithComponentInterface(loc_out, loc_out);
 
+	loc_componentComplex.getComponent().setLifecycle(node_getComponentLifecycleInterface(loc_out));
+	
 	return loc_out;
 };
 

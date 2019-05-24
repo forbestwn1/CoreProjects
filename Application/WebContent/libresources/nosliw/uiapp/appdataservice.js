@@ -26,7 +26,7 @@ var packageObj = library;
 var node_appDataService = function(){
 	var loc_data = [
 		{
-			id : "id2",
+			id : "id1",
 			version : "version1",
 			data : {
 				schoolTypeInData : {
@@ -43,8 +43,8 @@ var node_appDataService = function(){
 			}
 		},
 		{
-			id : "id1",
-			version : "version1",
+			id : "id2",
+			version : "version2",
 			data : {
 				schoolTypeInData : {
 					"dataTypeId": "test.options;1.0.0",
@@ -100,7 +100,7 @@ var node_appDataService = function(){
 		getDeleteAppDataRequest : function(dataName, id, handlers, requester_parent){
 			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
 				for(var i in loc_data){
-					if(data[i].id==id){
+					if(loc_data[i].id==id){
 						loc_data.splice(i, 1);
 						return;
 					}

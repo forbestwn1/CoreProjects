@@ -47,6 +47,10 @@ var node_utility = function(){
 			moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];
 			loc_out.buildMoudleInputIO(moduleInfo);
 			
+			if(applicationDataInfo!=undefined && applicationDataInfo.length==1){
+				moduleInfo.name = applicationDataInfo[0].version;
+			}
+			
 			out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleInfo.id, moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], configureData, moduleInfo.inputIO, {
 				success : function(requestInfo, uiModuleRuntime){
 					moduleInfo.module = uiModuleRuntime;

@@ -109,7 +109,8 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 			
 		getStateMachine : function(){  return loc_stateMachine;   },
 		getComponentStatus : function(){		return loc_stateMachine.getCurrentState();		},
-
+		isActive : function(){  return this.getComponentStatus()==node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE;    },
+		
 		registerEventListener : function(listener, handler){	return loc_stateMachine.prv_registerEventListener(listener, handler, thisContext);	},
 		unregisterEventListener : function(listener){  loc_stateMachine.prv_unregisterEventListener(listener);  },
 

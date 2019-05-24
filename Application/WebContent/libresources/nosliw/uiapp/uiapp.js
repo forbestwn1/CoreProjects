@@ -103,6 +103,22 @@ var node_createApp = function(id, appDef, ioInput){
 			return moduleInfo;
 		},
 		
+		removeModuleInfo : function(role, moduleId){
+			var modules = loc_out.prv_app.modulesByRole[role];
+			var currentId = loc_out.prv_app.currentModuleByRole[role];
+			for(var index in modules){
+				if(moduleId==modules[index].id){
+					break;
+				}
+			}
+			
+			if(currentId==moduleId){
+				loc_out.prv_app.currentModuleByRole[role] = modules[index-1].id;
+			}
+			
+			modules.splice(index, 1);
+		},
+		
 		getCurrentModuleInfo : function(role){	return loc_out.getModuleInfo(role);	},
 		
 		setCurrentModuleInfo : function(role, moduleId){	loc_out.prv_app.currentModuleByRole[role] = moduleId;	},

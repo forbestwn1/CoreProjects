@@ -86,7 +86,9 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 	
 	var loc_init = function(){
 		loc_out.prv_module.ioContext.registerEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
-			loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, undefined, request);
+			if(loc_out.prv_module.lifecycle.isActive()==true){
+				loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, undefined, request);
+			}
 		});
 	};
 	
@@ -100,6 +102,7 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 			uiArray : [],
 			ui : {},
 
+			lifecycle : undefined
 		},
 		
 		prv_addUI : function(ui){
@@ -115,6 +118,8 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 			}, ui);
 		},
 	
+		setLifecycle : function(lifecycle){  this.prv_module.lifecycle = lifecycle;   },
+		
 		getId : function(){  return loc_out.prv_module.id;  },
 		getVersion : function(){   return "1.0.0";   },
 		

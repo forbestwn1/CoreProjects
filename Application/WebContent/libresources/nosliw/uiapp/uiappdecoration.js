@@ -36,7 +36,6 @@ var node_createAppDecoration = function(gate){
 	};
 	
 	var loc_settingParentView = loc_getModuleConfigureData(ROLE_SETTING).root;
-	var loc_settingModules = [];
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -50,10 +49,10 @@ var node_createAppDecoration = function(gate){
 		var moduleInfoRequest = node_createServiceRequestInfoSequence();
 		moduleInfoRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, dataInfo==undefined?undefined:[dataInfo], configureData, loc_appDataService, {
 			success : function(request, moduleInfo){
-				loc_settingModules.push(moduleInfo);
 				return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
 					persist : dataInfo==undefined?false:true,
-					modified : false
+					modified : false,
+					name : moduleInfo.name
 				}, {
 					success : function(request){
 						return moduleInfo;
@@ -89,7 +88,7 @@ var node_createAppDecoration = function(gate){
 			var out = eventData.moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
 				modified : true
 			}, undefined, request);
-			node_requestServiceProcessor.processRequest(out);
+			if(out!=undefined)		node_requestServiceProcessor.processRequest(out);
 		},	
 			
 		processComponentEvent : function(eventName, eventData, request){
@@ -98,6 +97,21 @@ var node_createAppDecoration = function(gate){
 					loc_uiApp.setCurrentModuleInfo(ROLE_SETTING, eventData.moduleInfo.id);
 					var processRequest = loc_gate.getExecuteProcessResourceRequest("applicationsetting;submitsetting", undefined, undefined, request);
 					node_requestServiceProcessor.processRequest(processRequest);
+				}
+				else if(eventData.eventName=="deleteSetting"){
+					var moduleInfo = eventData.moduleInfo;
+					var applicationDataInfo = moduleInfo.applicationDataInfo[0];
+					
+					node_requestServiceProcessor.processRequest(loc_appDataService.getDeleteAppDataRequest(applicationDataInfo.dataName, applicationDataInfo.id, {
+						success : function(request){
+							loc_uiApp.removeModuleInfo(ROLE_SETTING, moduleInfo.id);
+							$(moduleInfo.root).detach();
+						}
+					}, request));
+					
+				}
+				else if(eventData.eventName=="saveSetting"){
+					
 				}
 			}
 		},
@@ -111,10 +125,12 @@ var node_createAppDecoration = function(gate){
 			
 			var modulesRequest = node_createServiceRequestInfoSequence(undefined, {
 				success : function(request){
+					var modulesStartRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 					var allModules = loc_uiApp.getAllModuleInfo();
 					_.each(allModules, function(moduleInfo){
-						node_getComponentLifecycleInterface(moduleInfo.module).transit("activate", request);
+						modulesStartRequest.addRequest(node_getComponentLifecycleInterface(moduleInfo.module).getTransitRequest("activate"));
 					});
+					return modulesStartRequest;
 				}
 			});
 			var modules = loc_uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE];

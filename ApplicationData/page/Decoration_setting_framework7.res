@@ -2,6 +2,7 @@
 <html>
 <body nosliwattribute_placeholder="id:pleaseEmbed">
 	<br>
+	SettingName : <%=?(nosliw_moduleStatus_name)?%>
 	
 	<div>
 		<a href="" nosliw-event="click:submit:">Submit</a>
@@ -56,6 +57,11 @@
 						"definition" : {
 						},
 						defaultValue: true
+					},
+					"nosliw_moduleStatus_name" : {
+						"definition" : {
+						},
+						defaultValue: ""
 					},
 				}
 			}
