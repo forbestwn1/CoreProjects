@@ -118,7 +118,7 @@
 				}
 			},
 			{
-				"status": "disabled111",
+				"status": "disabled",
 				"role": "application",
 				"name": "MySchool",
 				"module": "ModuleMySchoolResult",

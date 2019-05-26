@@ -10,6 +10,16 @@ var packageObj = library;
 
 var node_utility = function(){
 	var loc_out = {
+			
+			buildService : function(service){
+				if(service!=undefined)  return service;
+				else{
+					return {
+						name : loc_out.buildService.caller.caller.name,
+					};
+				} 
+			},
+			
 			/**
 			 * last one in argus should be request info
 			 */

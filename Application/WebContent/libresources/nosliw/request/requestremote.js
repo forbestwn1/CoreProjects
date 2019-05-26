@@ -7,6 +7,7 @@ var packageObj = library.getChildPackage("request");
 	var node_createServiceRequestInfoCommon;
 	var node_CONSTANT;
 	var node_RemoteServiceTask;
+	var node_requestUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -15,7 +16,7 @@ var packageObj = library.getChildPackage("request");
 var node_createServiceRequestInfoRemote = function(syncName, service, setting, handlers, requester_parent){
 
 	var loc_syncName = syncName;
-	var loc_service = service;
+	var loc_service = node_requestUtility.buildService(service);
 	var loc_setting = setting;
 	
 	/*
@@ -59,6 +60,7 @@ nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", func
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){node_createServiceRequestInfoCommon = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.entity.RemoteServiceTask", function(){node_RemoteServiceTask = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 
 
 //Register Node by Name

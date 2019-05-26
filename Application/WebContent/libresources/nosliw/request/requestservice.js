@@ -7,6 +7,7 @@ var packageObj = library.getChildPackage("request");
 	var node_createServiceRequestInfoCommon;
 	var node_requestProcessor;
 	var node_CONSTANT;
+	var node_requestUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -16,6 +17,8 @@ var packageObj = library.getChildPackage("request");
  */
 var node_createServiceRequestInfoService = function(service, handlers, requester_parent){
 	
+	service = node_requestUtility.buildService(service);
+
 	var loc_constructor = function(service, handlers, requester_parent){
 		//dependent service
 		loc_out.pri_dependentService = undefined;
@@ -118,6 +121,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){node_ServiceRequestExecuteInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){node_createServiceRequestInfoCommon = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 
 
 //Register Node by Name

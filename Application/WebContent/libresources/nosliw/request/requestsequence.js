@@ -8,6 +8,7 @@ var packageObj = library.getChildPackage("request");
 	var node_ServiceRequestExecuteInfo;
 	var node_requestProcessor;
 	var node_CONSTANT;
+	var node_requestUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -25,6 +26,8 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 
 	var loc_startOutDataName = "startOutDataName";
 	
+	service = node_requestUtility.buildService(service);
+
 	var loc_constructor = function(service, handlers, requester_parent){
 		//store all request info objects 
 		loc_out.pri_requestInfos = [];
@@ -166,6 +169,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon"
 nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){node_ServiceRequestExecuteInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 
 
 //Register Node by Name

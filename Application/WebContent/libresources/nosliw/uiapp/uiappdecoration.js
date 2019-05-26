@@ -73,7 +73,7 @@ var node_createAppDecoration = function(gate){
 				_.each(settingDataInfos, function(dataInfo, index){
 					settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, dataInfo));
 				});
-				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef));
+//				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef));
 				return settingRequest;
 			}
 		}));
@@ -105,7 +105,7 @@ var node_createAppDecoration = function(gate){
 					node_requestServiceProcessor.processRequest(loc_appDataService.getDeleteAppDataRequest(applicationDataInfo.dataName, applicationDataInfo.id, {
 						success : function(request){
 							loc_uiApp.removeModuleInfo(ROLE_SETTING, moduleInfo.id);
-							$(moduleInfo.root).detach();
+							$(moduleInfo.root).remove();
 						}
 					}, request));
 					

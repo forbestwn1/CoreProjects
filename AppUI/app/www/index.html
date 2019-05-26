@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <meta charset="utf-8" />
-        <title>Nosliw Go Go !!</title>
+   <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Color theme for statusbar -->
+    <meta name="theme-color" content="#2196f3">
+    <!-- Your app title -->
+    <title>My App</title>
+    <!-- Path to Framework7 Library Bundle CSS -->
+   	<link rel="stylesheet" href="libs/framework7/4.4.0/css/framework7.bundle.css">
 
-    	<link rel="stylesheet" href="libs/framework7/4.1.1/css/framework7.bundle.css">
         <script src="libs/jQuery/2.1.0/jquery.js"></script>
         <script src="libs/vue/vue.js"></script>
         <script type="text/javascript" src="js/init.js"></script>
-        
- 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 
@@ -17,7 +22,7 @@
 	<div id="appDiv">
 	</div>
 
-</body>
+<script src="libs/framework7/4.4.0/js/framework7.bundle.js"></script>
 
 <script>
 
@@ -27,10 +32,12 @@ $(document).on("miniappActive", function(){
 	
 });
 
-init(document.getElementById("appDiv"), "http://192.168.56.1:8082/Application/");
+init(document.getElementById("appDiv"), "http://192.168.56.1:8082/Application/"); 
 
 </script>
 
-        <script src="libs/framework7/4.1.1/js/framework7.bundle.js"></script>
+</body>
+
+
 
 </html>

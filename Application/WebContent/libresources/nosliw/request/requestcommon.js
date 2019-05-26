@@ -19,7 +19,9 @@ var packageObj = library.getChildPackage("request");
 var node_createServiceRequestInfoCommon = function(service, handlers, requester_parent){
 	
 	var loc_moduleName = "requestInfo";
-	
+
+	service = node_requestUtility.buildService(service);
+
 	var loc_constructor = function(service, handlers, requester_parent){
 		//parse requester_parent parm to get parent or requester info
 		var parent = undefined;
@@ -39,6 +41,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		
 		//what want to do 
 		loc_out.pri_service = service;
+		
 		//original request handlers
 		if(handlers!=undefined)		loc_out.pri_handlers = handlers;
 		else loc_out.pri_handlers = {};
