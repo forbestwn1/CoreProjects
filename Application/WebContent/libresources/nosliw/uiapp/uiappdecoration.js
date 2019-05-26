@@ -65,7 +65,7 @@ var node_createAppDecoration = function(gate){
 	
 	var loc_createSettingRoleRequest = function(moduleDef, handlers, request){
 		var settingRoots = [];
-		var settingsRequest = node_createServiceRequestInfoSequence(handlers, request);
+		var settingsRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var appDataName = node_appUtility.getApplicationDataName(moduleDef);
 		settingsRequest.addRequest(loc_appDataService.getGetAppDataInfoRequest(appDataName, {
 			success : function(request, settingDataInfos){
@@ -87,7 +87,7 @@ var node_createAppDecoration = function(gate){
 		processComponentValueChangeEvent : function(eventName, eventData, request){
 			var out = eventData.moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
 				modified : true
-			}, undefined, request);
+			});
 			if(out!=undefined)		node_requestServiceProcessor.processRequest(out);
 		},	
 			

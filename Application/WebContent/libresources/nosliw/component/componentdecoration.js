@@ -103,12 +103,12 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 
 		getExecuteCommandRequest : function(command, parms, handlers, request){
 			if(loc_core.getExecuteCommandRequest!=undefined){
-				var commandResult = loc_core.getExecuteCommandRequest(command, parms, handlers, request);
+				var commandResult = loc_core.getExecuteCommandRequest(command, parms, undefined, undefined);
 				if(commandResult==undefined){
 					return loc_child.getExecuteCommandRequest(command, parms, handlers, request);
 				}
 				else{
-					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
+					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 					out.addRequest(commandResult.requestResult);
 					if(commandResult.commandInfo!=undefined){
 						out.addRequest(loc_child.getExecuteCommandRequest(command, parms));
