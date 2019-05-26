@@ -135,11 +135,12 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		var initResult = true;      
 		if(callBack!=undefined)	initResult = callBack.call(loc_thisContext, request);
 		
-		return loc_processStatuesResult(initResult, request);
+		loc_processStatuesResult(initResult, request);
 	};
 	
 	
 	var loc_processStatuesResult = function(result, request){
+
 		if(result==true || result==undefined){
 			//success finish
 			loc_successTransit(request);
@@ -154,14 +155,21 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 			return;
 		}
 		else if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
-			//if return request, then build wrapper request
-
-			result.addPostProcessor({
+			var transitRequest = node_createServiceRequestInfoSequence(undefined, {
 				success : function(request){	loc_successTransit(request);		},
 				error : function(request){		loc_failTransit(request);			},
 				exception : function(request){	loc_failTransit(request);			}
-			});
-			node_requestServiceProcessor.processRequest(result);
+			}, request);
+
+			//if return request, then build wrapper request
+			transitRequest.addRequest(result);
+			
+//			result.addPostProcessor({
+//				success : function(request){	loc_successTransit(request);		},
+//				error : function(request){		loc_failTransit(request);			},
+//				exception : function(request){	loc_failTransit(request);			}
+//			});
+			node_requestServiceProcessor.processRequest(transitRequest);
 			return;
 		}
 	};

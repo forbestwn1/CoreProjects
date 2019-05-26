@@ -53,7 +53,7 @@ var node_createComponentComplex = function(configure, envInterface){
 	
 	var loc_unregisterPartListener = function(){	
 		loc_getCurrentFacad().unregisterEventListener(loc_eventListener);	
-		loc_getCurrentFacad().unregisterValueChangeEventListener(loc_eventListener);	
+		loc_getCurrentFacad().unregisterValueChangeEventListener(loc_valueChangeEventListener);	
 	};
 
 	var loc_registerPartListener = function(){
