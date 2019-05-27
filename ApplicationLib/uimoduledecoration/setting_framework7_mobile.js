@@ -26,9 +26,9 @@ function(gate){
 		getExecuteCommandRequest : function(command, parms, handlers, request){
 			if(command=="updateModuleInfo"){
 				var contextUpdate = {};
-				if(parms.persist!=undefined)  contextUpdate.nosliw_moduleStatus_persist = parms.persist;
-				if(parms.modified!=undefined)  contextUpdate.nosliw_moduleStatus_modified = parms.modified;
-				if(parms.name!=undefined)  contextUpdate.nosliw_moduleStatus_name = parms.name;
+				if(parms.persist!=undefined)  contextUpdate.persist = parms.persist;
+				if(parms.modified!=undefined)  contextUpdate.modified = parms.modified;
+				if(parms.name!=undefined)  contextUpdate.name = parms.name;
 				
 				return new node_commandResult(loc_decoration.getUpdateContextRequest(contextUpdate, handlers, request));
 			}

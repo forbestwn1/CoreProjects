@@ -73,7 +73,7 @@ var node_createAppDecoration = function(gate){
 				_.each(settingDataInfos, function(dataInfo, index){
 					settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, dataInfo));
 				});
-//				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef));
+				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef));
 				return settingRequest;
 			}
 		}));

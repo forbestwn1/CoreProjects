@@ -42,6 +42,23 @@ var node_appDataService = function(){
 				}
 			}
 		},
+		{
+			id : "id2",
+			version : "version2",
+			data : {
+				schoolTypeInData : {
+					"dataTypeId": "test.options;1.0.0",
+					"value": {
+						"value" : "Public",
+						"optionsId" : "schoolType"
+					}
+				},
+				schoolRatingInData : {
+					"dataTypeId": "test.float;1.0.0",
+					"value": 9.0
+				}
+			}
+		},
 	];
 	
 	var loc_out = {

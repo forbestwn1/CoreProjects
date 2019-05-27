@@ -2,13 +2,13 @@
 <html>
 <body nosliwattribute_placeholder="id:pleaseEmbed">
 	<br>
-	SettingName : <%=?(nosliw_moduleStatus_name)?%>
+	SettingName : <%=?(name)?%>
 	
 	<div>
 		<a href="" nosliw-event="click:submit:">Submit</a>
 		<a href="" nosliw-event="click:new:">New</a>
-		<a href="" nosliw-event="click:delete:" style="display:<%=?(nosliw_moduleStatus_persist)?==true?'inline':'none'%>">Delete</a>
-		<a href="" nosliw-event="click:save:" style="display:<%=(!?(nosliw_moduleStatus_persist)?)||?(nosliw_moduleStatus_modified)?==true?'inline':'none'%>">Save</a>
+		<a href="" nosliw-event="click:delete:" style="display:<%=?(persist)?==true?'inline':'none'%>">Delete</a>
+		<a href="" nosliw-event="click:save:" style="display:<%=(!?(persist)?)||?(modified)?==true?'inline':'none'%>">Save</a>
 	</div>
 
 	<nosliw-contextvalue/>
@@ -48,17 +48,17 @@
 		"group" : {
 			"public" : {
 				"element" : {
-					"nosliw_moduleStatus_persist" : {
+					"persist" : {
 						"definition" : {
 						},
 						defaultValue: true
 					},
-					"nosliw_moduleStatus_modified" : {
+					"modified" : {
 						"definition" : {
 						},
 						defaultValue: true
 					},
-					"nosliw_moduleStatus_name" : {
+					"name" : {
 						"definition" : {
 						},
 						defaultValue: ""
