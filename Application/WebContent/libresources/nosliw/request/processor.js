@@ -7,9 +7,10 @@ var packageObj = library;
 	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_RequestInfo = function(request, processRemote){
+var loc_RequestInfo = function(request, processRemote, attchedTo){
 	this.request = request;
 	this.processRemote = processRemote;
+	this.attchedTo = attchedTo;
 };
 	
 var loc_processRequest = function(request, processRemote, processedCallBack){
@@ -89,6 +90,8 @@ var loc_createRequestGroup = function(){
 
 	var loc_doneCallBack;
 	
+	var loc_attached = [];
+	
 	var loc_status = node_CONSTANT.REQUEST_STATUS_INIT;
 	
 	var loc_requestProcessed = function(request){
@@ -128,7 +131,10 @@ var loc_createRequestGroup = function(){
 	var loc_out = {
 			
 		getId : function(){  return loc_rootRequest.getId();  },
-			
+		
+		addAttached : function(request){			loc_attached.push(request);		},
+		getAttached : function(){  return loc_attached;   },
+		
 		addRequestInfo : function(requestInfo){
 			if(loc_rootRequest==undefined){
 				loc_rootRequest = requestInfo.request.getRootRequest();
@@ -170,18 +176,32 @@ var node_requestServiceProcessor = function(){
 	
 	var loc_groupQueue = [];
 	
-	var loc_findGroup = function(request){
+	var loc_findGroupInQueue = function(request){
+		var out;
+		_.each(loc_groupQueue, function(group, index){
+			if(group.getId()==request.getId())  out = group;
+			_.each(group.getAttached(), function(attached, index){
+				if(attached.getId()==request.getId())  out = attached;
+			});
+		});
+		return out;
+	};
+	
+	var loc_findGroupInProcessing = function(request){
 		var out;
 		_.each(loc_groups, function(group, id){
 			if(group.getId()==request.getId())  out = group;
-		});
-		
-		if(out!=undefined)  return out;
-		
-		_.each(loc_groupQueue, function(group, index){
-			if(group.getId()==request.getId())  out = group;
+			_.each(group.getAttached(), function(attached, index){
+				if(attached.getId()==request.getId())  out = attached;
+			});
 		});
 		return out;
+	};
+
+	var loc_findGroup = function(request){
+		var out = loc_findGroupInQueue(request);
+		if(out!=undefined)  return out;
+		return loc_findGroupInProcessing(request);
 	};
 	
 	var loc_addGroupToQueue = function(group){
@@ -199,6 +219,10 @@ var node_requestServiceProcessor = function(){
 			delete loc_groups[group.getId()];
 			loc_processingGroupSum--;
 			loc_processNextGroup();
+		});
+		//process attached group
+		_.each(group.getAttached(), function(attached, index){
+			loc_processGroup(attached);
 		});
 	};
 	
@@ -223,30 +247,46 @@ var node_requestServiceProcessor = function(){
 		else{
 			group = loc_createRequestGroup();
 			group.addRequestInfo(requestInfo);
-			loc_addGroupToQueue(group);
+			if(requestInfo.attchedTo==undefined){
+				loc_addGroupToQueue(group);
+			}
+			else{
+				var attachedGroup = loc_findGroupInQueue(requestInfo.attchedTo);
+				if(attachedGroup!=undefined){
+					//attached in queue, then append to it
+					attachedGroup.addAttached(group);
+				}
+				else{
+					attachedGroup = loc_findGroupInProcessing(requestInfo.attchedTo);
+					if(attachedGroup!=undefined){
+						//attached in processing, then add to processing
+						loc_processGroup(group);
+					}
+					else{
+						//otherwise, treat it as normal request
+						loc_addGroupToQueue(group);
+					}
+				}
+			}
 		}
 	};
 	
 	var loc_out = {
-		processRequest : function(request, processRemote){
+		processRequest : function(request, configure){
 			var loc_moduleName = "requestManager";
 			nosliw.logging.info(loc_moduleName, request.getInnerId(), "Start Request");
 			
-			if(processRemote==undefined){
-				processRemote = true;
-			}
-			return loc_addRequest(new loc_RequestInfo(request, processRemote));
-		},	
-
-		processRequest1 : function(requestInfo, processRemote){
-			nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start Request");
-			
-			if(processRemote==undefined){
-				processRemote = true;
+			var processRemote = true;
+			if(configure!=undefined && configure.processRemote!=undefined){
+				processRemote = configure.processRemote;
 			}
 			
-			loc_addRequest(requestInfo);
-			return loc_processRequest(requestInfo, processRemote);
+			var attchedTo = undefined;
+			if(configure!=undefined && configure.attchedTo!=undefined){
+				attchedTo = configure.attchedTo;
+			}
+			
+			return loc_addRequest(new loc_RequestInfo(request, processRemote, attchedTo));
 		},	
 
 	};

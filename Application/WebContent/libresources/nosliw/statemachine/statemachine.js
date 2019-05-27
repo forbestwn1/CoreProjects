@@ -109,24 +109,32 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 	var loc_currentTask;
 	var loc_currentState = initState;
 	var loc_inTransit = undefined;
+	var loc_finishTransit = true;
 	
 	var loc_trigueEvent = function(eventName, eventData, request){	loc_eventObj.triggerEvent(eventName, eventData, request);	};
 
 	var loc_startTransit = function(next, request){
+		loc_finishTransit = false;
+		
+		request = node_createServiceRequestInfoCommon(undefined, undefined, request);
+
 		//if in the same state, then just do nothing
 		if(next == loc_out.getCurrentState()){
 			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION, next+"|Samestate", request);
+			loc_finishTransit = true;
 			return;
 		}
 		//if in transit, do nothing
 		if(loc_inTransit!=undefined){
 			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION, next+"|InTransiting", request);
+			loc_finishTransit = true;
 			return;
 		}
 		
 		var nextStateInfo = loc_stateDef.getStateInfo(loc_out.getCurrentState()).nextStates[next];
 		if(nextStateInfo==undefined){
 			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION, next+"|Notvalidtransit", request);
+			loc_finishTransit = true;
 			return;
 		}
 		
@@ -156,20 +164,25 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		}
 		else if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
 			var transitRequest = node_createServiceRequestInfoSequence(undefined, {
-				success : function(request){	loc_successTransit(request);		},
+				success : function(request){			},
 				error : function(request){		loc_failTransit(request);			},
 				exception : function(request){	loc_failTransit(request);			}
-			}, request);
+			});
 
 			//if return request, then build wrapper request
 			transitRequest.addRequest(result);
+
+			transitRequest.registerEventListener(undefined, function(eventName, eventData){
+				if(loc_finishTransit==false){
+					if(eventName==node_CONSTANT.REQUEST_EVENT_DONE){
+						loc_successTransit(request);
+					}
+				}
+			});
 			
-//			result.addPostProcessor({
-//				success : function(request){	loc_successTransit(request);		},
-//				error : function(request){		loc_failTransit(request);			},
-//				exception : function(request){	loc_failTransit(request);			}
-//			});
-			node_requestServiceProcessor.processRequest(transitRequest);
+			node_requestServiceProcessor.processRequest(transitRequest, {
+				attchedTo : request
+			});
 			return;
 		}
 	};
@@ -182,6 +195,7 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		loc_inTransit = undefined;
 		loc_currentState = inTransit.to;
 		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, inTransit, request);
+		loc_finishTransit = true;
 	};
 
 	var loc_failTransit = function(request){
@@ -189,6 +203,7 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		loc_rollBack(inTransit, request);
 		loc_inTransit = undefined;
 		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, inTransit, request);
+		loc_finishTransit = true;
 	};
 	
 	var loc_rollBack = function(transitInfo, request){

@@ -87,7 +87,7 @@ var node_createAppDecoration = function(gate){
 		processComponentValueChangeEvent : function(eventName, eventData, request){
 			var out = eventData.moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
 				modified : true
-			});
+			}, request);
 			if(out!=undefined)		node_requestServiceProcessor.processRequest(out);
 		},	
 			
