@@ -44,7 +44,7 @@ var node_createAppDecoration = function(gate){
 
 	var loc_createSettingModuleRequest = function(moduleDef, dataInfo, handlers, request){
 		var configureData = loc_getModuleConfigureData(ROLE_SETTING); 
-		configureData.root = $('<div id="11111"></div>').get(0);
+		configureData.root = $('<div></div>').get(0);
 		$(configureData.root).appendTo(loc_settingParentView);
 		var moduleInfoRequest = node_createServiceRequestInfoSequence();
 		moduleInfoRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, dataInfo==undefined?undefined:[dataInfo], configureData, loc_appDataService, {

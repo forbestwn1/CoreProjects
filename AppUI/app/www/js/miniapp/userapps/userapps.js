@@ -41,19 +41,21 @@ var node_createModuleUserApps = function(){
 			miniapp : node_createComponentMiniApp()
 		},
 		template : `
-			<div>
-				<group 
-					v-for="groupMiniApp in userInfo.groupMiniApp"
-					v-bind:group="groupMiniApp.group"
-					v-bind:miniapps="groupMiniApp.miniApp"
-				>
-				</group>
-			
-				<miniapp 
-					v-for="miniapp in userInfo.miniApp"
-					v-bind:miniapp="miniapp"
-				>
-				</miniapp>
+			<div class="list accordion-list">
+				<ul>
+					<group 
+						v-for="groupMiniApp in userInfo.groupMiniApp"
+						v-bind:group="groupMiniApp.group"
+						v-bind:miniapps="groupMiniApp.miniApp"
+					>
+					</group>
+				
+					<miniapp 
+						v-for="miniapp in userInfo.miniApp"
+						v-bind:miniapp="miniapp"
+					>
+					</miniapp>
+				</ul>
 			</div>
 		`
 	};

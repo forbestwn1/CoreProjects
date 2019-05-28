@@ -39,29 +39,27 @@ var node_createComponentGroup = function(){
 		},
 		template :
 			`
-			<div class="block accordion-list custom-accordion">
-			  <div class="accordion-item">
-			    <div class="accordion-item-toggle">
-			      <i class="icon icon-plus">+</i>
-			      <i class="icon icon-minus">-</i>
-			      <span>{{group.name}}</span>
-			    </div>
-			    <div class="accordion-item-content">
-					<miniapp 
-						v-for="miniapp in miniapps"
-						v-bind:miniapp="miniapp"
-						v-on:selectMiniApp="onSelectMiniApp"
-						v-on:deleteMiniApp="onDeleteMiniApp"
-					>
-					</miniapp>
-			    </div>
-			  </div>
-			</div>
-		`
+		    <li class="accordion-item"><a href="#" class="item-content item-link">
+				<div class="item-inner">
+					<div class="item-title">{{group.name}}</div>
+				</div></a>
+				<div class="accordion-item-content">
+				    <div class="block">
+						<miniapp 
+							v-for="miniapp in miniapps"
+							v-bind:miniapp="miniapp"
+							v-on:selectMiniApp="onSelectMiniApp"
+							v-on:deleteMiniApp="onDeleteMiniApp"
+						></miniapp>
+				    </div>
+				</div>
+		    </li>
+			`
+			
+			
 	};
 	
 	return loc_vueComponent;
-
 };	
 	
 

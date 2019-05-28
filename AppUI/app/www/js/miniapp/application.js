@@ -74,7 +74,7 @@ var node_createApplication = function(rootNode){
 					    message: 'Hello Vue!'
 					  },
 					  components : vueModules,
-					  template : `<userApps/>`
+					  template : `<userApps></userApps>`
 				});
 			}
 		}); 
