@@ -11,27 +11,23 @@ var packageObj = library.getChildPackage("module.userapps");
 
 var node_createComponentMiniApp = function(){
 
-	var loc_miniAppModel = {
-//		minApp : {}
-	};
-	
 	var loc_vueComponent = {
 		data : function(){
-			return loc_miniAppModel;
+			return {};
 		},
-		props : ['miniapp'],
+		props : ['mini-app'],
 		methods : {
 			chooseMiniApp : function(event) {
-				this.$emit("selectMiniApp", this.miniapp.id);
+				this.$emit("selectMiniApp", this.mini-app.id);
 			},
 			deleteMiniApp : function(event) {
-				this.$emit("deleteMiniApp", this.miniapp.id);
+				this.$emit("deleteMiniApp", this.mini-app.id);
 			}
 		},
 		template : `
 			<div>
 				<p>
-					<a v-on:click.prevent="chooseMiniApp">{{miniapp.name}}</a>
+					<a v-on:click.prevent="chooseMiniApp">{{mini-app.name}}</a>
 					<a v-on:click.prevent="deleteMiniApp">XXX</a>
 				</p>
 			

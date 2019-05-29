@@ -25,7 +25,7 @@ var node_createApplication = function(rootNode){
 	var loc_vue;
 	
 	var loc_modulesInfo = [{
-		name : "userApps",
+		name : "user-apps",
 		factory : "miniapp.module.userapps.createModuleUserApps",
 		init : {
 			success : function(requestInfo, view){
@@ -74,7 +74,7 @@ var node_createApplication = function(rootNode){
 					    message: 'Hello Vue!'
 					  },
 					  components : vueModules,
-					  template : `<userApps></userApps>`
+					  template : `<user-apps></user-apps>`
 				});
 			}
 		}); 

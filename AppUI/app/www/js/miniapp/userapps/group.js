@@ -12,17 +12,13 @@ var packageObj = library.getChildPackage("module.userapps");
 
 var node_createComponentGroup = function(){
 
-	var loc_groupModel = {
-//		group : {},
-	};
-	
 	var loc_vueComponent = {
 		data : function(){
-			return loc_groupModel;
+			return {};
 		},
-		props : ['group', 'miniapps'],
+		props : ['group', 'mini-apps'],
 		components : {
-			miniapp : node_createComponentMiniApp()
+			mini-app : node_createComponentMiniApp()
 		},
 		methods : {
 			onSelectMiniApp : function(miniAppId){
@@ -45,12 +41,12 @@ var node_createComponentGroup = function(){
 				</div></a>
 				<div class="accordion-item-content">
 				    <div class="block">
-						<miniapp 
+						<mini-app 
 							v-for="miniapp in miniapps"
-							v-bind:miniapp="miniapp"
+							v-bind:mini-app="miniapp"
 							v-on:selectMiniApp="onSelectMiniApp"
 							v-on:deleteMiniApp="onDeleteMiniApp"
-						></miniapp>
+						></mini-app>
 				    </div>
 				</div>
 		    </li>
