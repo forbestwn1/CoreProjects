@@ -63,18 +63,16 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 		}, loc_out);
 	};
 	
-	var loc_getIOContext = function(){  return loc_getApp().getIOContext();   };
-	
-	var loc_getApp = function(){  return loc_componentComplex.getComponent();   };
+	var loc_getIOContext = function(){  return loc_out.prv_getComponent().getIOContext();   };
 	
 	var loc_getProcessEnv = function(){   return loc_componentComplex.getInterface();    };
 	
 	var loc_getExecuteAppProcessRequest = function(process, extraInput, handlers, request){
-		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteProcessRequest(process, loc_getApp().getIOContext(), extraInput, handlers, request);
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteProcessRequest(process, loc_out.prv_getComponent().getIOContext(), extraInput, handlers, request);
 	};
 	
 	var loc_getExecuteAppProcessByNameRequest = function(processName, extraInput, handlers, request){
-		var process = loc_getApp().getProcess(processName);
+		var process = loc_out.prv_getComponent().getProcess(processName);
 		if(process!=undefined)  return loc_getExecuteAppProcessRequest(process, extraInput, handlers, request);
 	};
 
@@ -98,7 +96,7 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 		prv_getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
 			out.addRequest(loc_componentComplex.getInitRequest());
-			out.addRequest(loc_getApp().getInitIOContextRequest());
+			out.addRequest(loc_out.prv_getComponent().getInitIOContextRequest());
 			return out;
 		},
 	
@@ -106,11 +104,13 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 			return loc_componentComplex.getExecuteCommandRequest(command, parms, handlers, request);	
 		},
 		
+		prv_getComponent : function(){  return loc_componentComplex.getComponent();   },
 		prv_getIODataSet : function(){  return loc_getIOContext();	},
 
 		prv_registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
 		prv_unregisterEventListener : function(listener){	return loc_componentComplex.unregisterEventListener(listener); },
 		
+		getInterface : function(){   return node_getComponentInterface(loc_out);  },
 	};
 	
 	loc_init(uiApp, configure, componentDecorationInfos);

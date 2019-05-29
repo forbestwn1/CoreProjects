@@ -108,12 +108,12 @@ var node_appDataService = function(){
 			}, handlers, requester_parent);
 		},	
 
-		getUpdateAppDataRequest : function(dataName, appData, handlers, requester_parent){
+		getUpdateAppDataRequest : function(dataName, id, appData, handlers, requester_parent){
 			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
 				for(var i in loc_data){
-					if(loc_data[i].id==appData.id){
-						loc_data[i] = appData;
-						return data;
+					if(loc_data[i].id==id){
+						loc_data[i].data = appData;
+						return appData;
 					}
 				}
 			}, handlers, requester_parent);

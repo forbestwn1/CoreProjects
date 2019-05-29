@@ -111,7 +111,10 @@ var node_createAppDecoration = function(gate){
 					
 				}
 				else if(eventData.eventName=="saveSetting"){
-					
+					var moduleInfo = eventData.moduleInfo;
+//					var saveRequest = moduleInfo.module.getInterface().getComponent().getPart("outputMapping.persistance").getExecuteCommandRequest("execute", undefined, undefined, request);
+					var saveRequest = moduleInfo.outputMapping["persistance"].getExecuteCommandRequest("execute", undefined, undefined, request);
+					node_requestServiceProcessor.processRequest(saveRequest);
 				}
 			}
 		},

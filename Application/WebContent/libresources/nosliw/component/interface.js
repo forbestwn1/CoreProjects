@@ -70,14 +70,15 @@ var loc_createComponentInterfaceObj = function(thisContext, baseObj, interfaceOb
 					node_requestServiceProcessor.processRequest(dataRequest);
 				}, loc_baseObj);	
 		},
-
+		unregisterDataChangeEventListener : function(listener){  loc_idDataSet.unregisterEventListener(listener);  },
+		
 		getContextDataSetRequest : function(handlers, request){
 			return loc_idDataSet.getGetDataSetValueRequest(handlers, request);
 		},
 		
 		getIOContext : function(){  return loc_idDataSet;   },
 		
-		unregisterDataChangeEventListener : function(listener){  loc_idDataSet.unregisterEventListener(listener);  },
+		getComponent : function()  {  return loc_interfaceObj.prv_getComponent(); },
 		
 		registerEventListener : function(listener, handler){	return loc_interfaceObj.prv_registerEventListener(listener, handler, loc_thisContext);	},
 		unregisterEventListener : function(listener){  loc_interfaceObj.prv_unregisterEventListener(listener);  },

@@ -44,18 +44,16 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		loc_componentComplex.addDecorations(componentDecorationInfos);
 	};
 
-	var loc_getIOContext = function(){  return loc_getModule().getIOContext();   };
-	
-	var loc_getModule = function(){  return loc_componentComplex.getComponent();   };
+	var loc_getIOContext = function(){  return loc_out.prv_getComponent().getIOContext();   };
 	
 	var loc_getProcessEnv = function(){   return loc_componentComplex.getInterface();    };
 	
 	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
-		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteProcessRequest(process, loc_getModule().getIOContext(), extraInput, handlers, request);
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteProcessRequest(process, loc_out.prv_getComponent().getIOContext(), extraInput, handlers, request);
 	};
 	
 	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){
-		var process = loc_getModule().getProcess(processName);
+		var process = loc_out.prv_getComponent().getProcess(processName);
 		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
 	};
 	
@@ -139,6 +137,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 			return loc_componentComplex.getExecuteCommandRequest(command, parms, handlers, request);	
 		},
 
+		prv_getComponent : function(){  return loc_componentComplex.getComponent();   },
 		prv_getIODataSet : function(){  return loc_getIOContext();	},
 
 		prv_registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
@@ -149,7 +148,9 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 
 		getExecuteCommandRequest : function(command, parms, handlers, request){	
 			return node_getComponentInterface(loc_out).getExecuteCommandRequest(command, parms, handlers, request);
-		}
+		},
+		
+		getInterface : function(){   return node_getComponentInterface(loc_out);  },
 		
 	};
 	
