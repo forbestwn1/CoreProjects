@@ -19,7 +19,7 @@ var node_utility = function(){
 
 	loc_out = {
 			
-		getLoadTemplateRequest : function(files, handlers, requestInfo){
+		getLoadFilesRequest : function(files, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSet(new node_ServiceInfo("LoadTemplates", {"files":files}), handlers, requestInfo); 
 			
 			_.each(files, function(file, index){
@@ -52,7 +52,7 @@ var node_utility = function(){
 			});
 			
 			var out = node_createServiceRequestInfoService(new node_ServiceInfo("BuildTemplate", {}), handlers, requestInfo);
-			var requestDependency = new node_DependentServiceRequestInfo(this.getLoadTemplateRequest(templatesFile), {
+			var requestDependency = new node_DependentServiceRequestInfo(this.getLoadFilesRequest(templatesFile), {
 				success : function(requestInfo, templateSources){
 					_.each(templateSources, function(source, fileName){
 						templates[templatesInfoByFile[fileName].name].template = Handlebars.compile(source); 

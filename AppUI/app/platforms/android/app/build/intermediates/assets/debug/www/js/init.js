@@ -1,7 +1,7 @@
 /**
  * 
  */
-var init = function(baseServer, callBackFunction){
+var init = function(rootNode, baseServer, callBackFunction){
 
 	//load lib utility function
 	var loadLibrary = function(libs, callBackFunction){
@@ -40,15 +40,17 @@ var init = function(baseServer, callBackFunction){
 			"js/miniapp/0_package_service.js",
 			"js/miniapp/utility.js",
 			"js/miniapp/service.js",
-			"js/miniapp/miniapp.js",
+			"js/miniapp/application.js",
 			"js/miniapp/userapps/userapps.js",
+			"js/miniapp/userapps/group.js",
+			"js/miniapp/userapps/miniapp.js",
 			"js/miniapp/main/main.js",
 		], function(){
 			//create miniapp
-			var minapp = nosliw.getNodeData("miniapp.createMiniApp")();
+			var minapp = nosliw.getNodeData("miniapp.createApplication")();
 			nosliw.miniapp = minapp;
 			nosliw.createNode("miniapp", minapp);
-			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest({
+			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(rootNode, {
 				success : function(requestInfo, data){
 			  		$(document).trigger("miniappActive");
 				}
@@ -59,7 +61,7 @@ var init = function(baseServer, callBackFunction){
 
 	//nosliw init first
 	loadLibrary([
-		baseServer+"libresources/external/log4javascript/1.0.0/log4javascript.js",
+//		baseServer+"libresources/external/log4javascript/1.0.0/log4javascript.js",
 		baseServer+"libresources/nosliw/runtimebrowserinit/init.js",
 	], function(){
 		nosliw.init(baseServer);

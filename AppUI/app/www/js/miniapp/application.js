@@ -26,10 +26,10 @@ var node_createApplication = function(rootNode){
 	
 	var loc_modulesInfo = [{
 		name : "user-apps",
+		root : function(){ return $("#userInfoDiv").get(0); },
 		factory : "miniapp.module.userapps.createModuleUserApps",
 		init : {
 			success : function(requestInfo, view){
-				$("#leftpanel").append(view);
 			}
 		}
 	}];
@@ -57,39 +57,26 @@ var node_createApplication = function(rootNode){
 						    swipe: 'both',
 					  },				
 				});
+			
+				var initAppModules = node_createServiceRequestInfoSet(new node_ServiceInfo("InitMiniAppModules"), {
+					success : function(request){
+					}
+				}); 
+				_.each(loc_modulesInfo, function(moduleInfo, index){
+					var module = nosliw.getNodeData(moduleInfo.factory)(moduleInfo.root());
+					loc_modules[moduleInfo.name] = module;
+					initAppModules.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.init, undefined));
+				});
+				return initAppModules;
 			}
 		}));	
 
-		var initAppModules = node_createServiceRequestInfoSet(new node_ServiceInfo("InitMiniAppModules"), {
-			success : function(request){
-				
-				var vueModules = {};
-				_.each(loc_modules, function(module, name){
-					vueModules[name] = module.getVueModule();
-				});
-				
-				loc_vue = new Vue({
-					  el: "#userInfoDiv",
-					  data: {
-					    message: 'Hello Vue!'
-					  },
-					  components : vueModules,
-					  template : `<user-apps></user-apps>`
-				});
-			}
-		}); 
-		_.each(loc_modulesInfo, function(moduleInfo, index){
-			var module = nosliw.getNodeData(moduleInfo.factory)();
-			loc_modules[moduleInfo.name] = module;
-//			initAppModules.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.init, undefined));
-		});
-		out.addRequest(initAppModules);
 		
 		return out;
 	};
 
 	var loc_refreshRequest = function(userInfo){
-		return loc_modules["userApps"].refreshRequest(userInfo);
+		return loc_modules["user-apps"].refreshRequest(userInfo);
 	};
 	
 	var loc_out = {

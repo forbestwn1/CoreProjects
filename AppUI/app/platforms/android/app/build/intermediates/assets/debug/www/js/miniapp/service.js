@@ -34,7 +34,7 @@ var node_createMiniAppService = function(){
 
 		getLoginRequest : function(userInfo, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOGIN, userInfo), undefined, handlers, requestInfo);
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_LOGIN, userInfo), undefined, handlers, requestInfo);
 			return remoteRequest;
 		},
 
@@ -48,10 +48,10 @@ var node_createMiniAppService = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("LoadMiniAppUIEntry", {"userId":userId,"minAppId":miniAppId,"uiEntry":uiEntry}), handlers, requester_parent);
 			
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP_APPID] = miniAppId;
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP_USERID] = userId;
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP_ENTRY] = uiEntry;
-			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP, parms), undefined, {
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_LOADMINIAPP_APPID] = miniAppId;
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_LOADMINIAPP_USERID] = userId;
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_LOADMINIAPP_ENTRY] = uiEntry;
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_LOADMINIAPP, parms), undefined, {
 				success : function(requestInfo, uiEntry){
 					var depResourceIds = uiEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_RESOURCES];
 					var loadResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest(depResourceIds, {
@@ -74,11 +74,11 @@ var node_createMiniAppService = function(){
 		getSaveDataRequest : function(userId, appId, dataName, dataInfo, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_CREATEDATA_USERID] = userId;
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_CREATEDATA_APPID] = appId;
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_CREATEDATA_DATANAME] = dataName;
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_CREATEDATA_DATAINFO] = dataInfo;
-			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_CREATEDATA, parms), undefined, handlers, requestInfo);
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_CREATEDATA_USERID] = userId;
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_CREATEDATA_APPID] = appId;
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_CREATEDATA_DATANAME] = dataName;
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_CREATEDATA_DATAINFO] = dataInfo;
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_CREATEDATA, parms), undefined, handlers, requestInfo);
 			return remoteRequest;
 		},
 
@@ -90,9 +90,9 @@ var node_createMiniAppService = function(){
 		getUpdateDataRequest : function(dataId, dataInfo, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_UPDATEDATA_ID] = dataId;
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_UPDATEDATA_DATAINFO] = dataInfo;
-			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_UPDATEDATA, parms), undefined, handlers, requestInfo);
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_UPDATEDATA_ID] = dataId;
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_UPDATEDATA_DATAINFO] = dataInfo;
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_UPDATEDATA, parms), undefined, handlers, requestInfo);
 			return remoteRequest;
 		},
 
@@ -104,9 +104,9 @@ var node_createMiniAppService = function(){
 		getDeleteDataRequest : function(dataId, dataType, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_DELETEDATA_ID] = dataId;
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_DELETEDATA_DATATYPE] = dataType;
-			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_DELETEDATA, parms), undefined, handlers, requestInfo);
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_DELETEDATA_ID] = dataId;
+			parms[node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_DELETEDATA_DATATYPE] = dataType;
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_DELETEDATA, parms), undefined, handlers, requestInfo);
 			return remoteRequest;
 		},
 

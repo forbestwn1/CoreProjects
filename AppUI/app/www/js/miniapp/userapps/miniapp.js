@@ -15,19 +15,19 @@ var node_createComponentMiniApp = function(){
 		data : function(){
 			return {};
 		},
-		props : ['mini-app'],
+		props : ['data'],
 		methods : {
 			chooseMiniApp : function(event) {
-				this.$emit("selectMiniApp", this.mini-app.id);
+				this.$emit("selectMiniApp", this.data.id);
 			},
 			deleteMiniApp : function(event) {
-				this.$emit("deleteMiniApp", this.mini-app.id);
+				this.$emit("deleteMiniApp", this.data.id);
 			}
 		},
 		template : `
 			<div>
 				<p>
-					<a v-on:click.prevent="chooseMiniApp">{{mini-app.name}}</a>
+					<a v-on:click.prevent="chooseMiniApp">{{data.name}}</a>
 					<a v-on:click.prevent="deleteMiniApp">XXX</a>
 				</p>
 			

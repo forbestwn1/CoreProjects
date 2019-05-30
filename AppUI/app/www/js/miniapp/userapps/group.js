@@ -16,9 +16,9 @@ var node_createComponentGroup = function(){
 		data : function(){
 			return {};
 		},
-		props : ['group', 'mini-apps'],
+		props : ['data'],
 		components : {
-			mini-app : node_createComponentMiniApp()
+			"mini-app" : node_createComponentMiniApp()
 		},
 		methods : {
 			onSelectMiniApp : function(miniAppId){
@@ -26,7 +26,7 @@ var node_createComponentGroup = function(){
 			},
 			onDeleteMiniApp : function(miniAppId){
 				for(var i in this.miniapps){
-					if(miniAppId==this.miniapps[i].id){
+					if(miniAppId==this.miniApps[i].id){
 						break;
 					}
 				}
@@ -37,13 +37,13 @@ var node_createComponentGroup = function(){
 			`
 		    <li class="accordion-item"><a href="#" class="item-content item-link">
 				<div class="item-inner">
-					<div class="item-title">{{group.name}}</div>
+					<div class="item-title">{{data.group.name}}</div>
 				</div></a>
 				<div class="accordion-item-content">
 				    <div class="block">
 						<mini-app 
-							v-for="miniapp in miniapps"
-							v-bind:mini-app="miniapp"
+							v-for="miniapp in data.miniApp"
+							v-bind:data="miniapp"
 							v-on:selectMiniApp="onSelectMiniApp"
 							v-on:deleteMiniApp="onDeleteMiniApp"
 						></mini-app>
@@ -51,8 +51,6 @@ var node_createComponentGroup = function(){
 				</div>
 		    </li>
 			`
-			
-			
 	};
 	
 	return loc_vueComponent;

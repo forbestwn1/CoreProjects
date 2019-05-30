@@ -44,6 +44,7 @@ var init = function(rootNode, baseServer, callBackFunction){
 			"js/miniapp/userapps/userapps.js",
 			"js/miniapp/userapps/group.js",
 			"js/miniapp/userapps/miniapp.js",
+			"js/miniapp/userapps/usermodule.js",
 			"js/miniapp/main/main.js",
 		], function(){
 			//create miniapp
@@ -61,7 +62,7 @@ var init = function(rootNode, baseServer, callBackFunction){
 
 	//nosliw init first
 	loadLibrary([
-		baseServer+"libresources/external/log4javascript/1.0.0/log4javascript.js",
+//		baseServer+"libresources/external/log4javascript/1.0.0/log4javascript.js",
 		baseServer+"libresources/nosliw/runtimebrowserinit/init.js",
 	], function(){
 		nosliw.init(baseServer);

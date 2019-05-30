@@ -96,10 +96,12 @@ var node_createServiceRequestInfoSet = function(service, handlers, requester_par
 		},
 		
 		addRequest : function(name, childRequest){
-			childRequest.setParentRequest(this);
-			this.pri_requests[name] = childRequest;
-			loc_updateChildRequestHandlers(name, childRequest);
-			this.pri_requestSum++;
+			if(childRequest!=undefined){
+				childRequest.setParentRequest(this);
+				this.pri_requests[name] = childRequest;
+				loc_updateChildRequestHandlers(name, childRequest);
+				this.pri_requestSum++;
+			}
 		},
 			
 	};

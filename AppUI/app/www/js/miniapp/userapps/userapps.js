@@ -17,26 +17,25 @@ var node_createComponentUserApps = function(){
 		data : function(){
 			return {};
 		},
-		props : ['user-info'],
+		props : ['data'],
 		components : {
-			group : node_createComponentGroup(),
-			mini-app : node_createComponentMiniApp()
+			"group" : node_createComponentGroup(),
+			"mini-app" : node_createComponentMiniApp()
 		},
 		template : `
 			<div class="list accordion-list">
 				<ul>
 					<group 
-						v-for="miniAppGroup in user-info.groupMiniApp"
-						v-bind:group="miniAppGroup.group"
-						v-bind:mini-apps="miniAppGroup.miniApp"
+						v-for="miniAppGroup in data.groupMiniApp"
+						v-bind:data="miniAppGroup"
 					>
 					</group>
 				
 					<mini-app 
-						v-for="miniApp in user-info.miniApp"
-						v-bind:mini-app="miniApp"
+						v-for="miniApp in data.miniApp"
+						v-bind:data="miniApp"
 					>
-					</miniapp>
+					</mini-app>
 				</ul>
 			</div>
 		`
