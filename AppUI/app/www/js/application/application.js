@@ -20,22 +20,45 @@ var node_createApplication = function(rootNode){
 
 	var loc_miniAppService;
 
-	var loc_framwork7App;
+	var loc_framework7App;
 	
 	var loc_vue;
 	
-	var loc_modulesInfo = [{
-		name : "user-apps",
-		root : function(){ return $("#userInfoDiv").get(0); },
-		factory : "miniapp.module.userapps.createModuleUserApps",
-		init : {
-			success : function(requestInfo, view){
+	var loc_modulesInfo = [
+		{
+			name : "user-apps",
+			initParm : function(){ 
+				return $("#userInfoDiv").get(0); 
+			},
+			factory : "miniapp.module.userapps.createModuleUserApps",
+			init : {
+				success : function(requestInfo, module){
+					module.registerEventListener(undefined, function(eventName, eventData, request){
+						if(eventName=="selectMiniApp"){
+							loc_modules["mini-app"].refreshRequest(eventData);
+						}
+					});
+				}
+			}
+		},
+		{
+			name : "mini-app",
+			initParm : function(){ 
+				return {
+					main : $("#miniAppMainDiv").get(0),
+					setting : $("#miniAppSettingDiv").get(0),
+					framework7App : loc_framework7App
+				}; 
+			},
+			factory : "miniapp.module.userapps.createModuleMiniApp",
+			init : {
+				success : function(requestInfo, module){
+					
+				}
 			}
 		}
-	}];
+	];
 	var loc_modules = {};
-	
-	var loc_userappsModule;
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(rootNode){
@@ -43,14 +66,14 @@ var node_createApplication = function(rootNode){
 		loc_miniAppService = node_createMiniAppService();
 
 		var out = node_createServiceRequestInfoSequence(undefined);
-		var mainHtml = "js/miniapp/main.html";
+		var mainHtml = "js/application/main.html";
 		out.addRequest(node_miniAppUtility.getLoadFilesRequest([mainHtml], {
 			success : function(request, mainSource){
 				$(mainSource[mainHtml]).appendTo(rootNode);
 				
-				loc_framwork7App = new Framework7({
+				loc_framework7App = new Framework7({
 					  // App root element
-					  root: rootNode,
+					  root: $("#appDiv").get(),
 					  name: 'My App',
 					  id: 'com.myapp.test',
 					  panel: {
@@ -63,7 +86,7 @@ var node_createApplication = function(rootNode){
 					}
 				}); 
 				_.each(loc_modulesInfo, function(moduleInfo, index){
-					var module = nosliw.getNodeData(moduleInfo.factory)(moduleInfo.root());
+					var module = nosliw.getNodeData(moduleInfo.factory)(moduleInfo.initParm());
 					loc_modules[moduleInfo.name] = module;
 					initAppModules.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.init, undefined));
 				});

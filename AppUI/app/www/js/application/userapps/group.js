@@ -22,7 +22,7 @@ var node_createComponentGroup = function(){
 		},
 		methods : {
 			onSelectMiniApp : function(miniAppId){
-				console.log(miniAppId);
+				this.$emit("selectMiniApp", miniAppId);
 			},
 			onDeleteMiniApp : function(miniAppId){
 				for(var i in this.miniapps){
@@ -43,6 +43,7 @@ var node_createComponentGroup = function(){
 				    <div class="block">
 						<mini-app 
 							v-for="miniapp in data.miniApp"
+							v-bind:key="miniapp.id"
 							v-bind:data="miniapp"
 							v-on:selectMiniApp="onSelectMiniApp"
 							v-on:deleteMiniApp="onDeleteMiniApp"

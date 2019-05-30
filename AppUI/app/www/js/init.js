@@ -37,15 +37,15 @@ var init = function(rootNode, baseServer, callBackFunction){
 	$(document).on("nosliwActive", function(){
 		//load mini libs
 		loadLibrary([
-			"js/miniapp/0_package_service.js",
-			"js/miniapp/utility.js",
-			"js/miniapp/service.js",
-			"js/miniapp/application.js",
-			"js/miniapp/userapps/userapps.js",
-			"js/miniapp/userapps/group.js",
-			"js/miniapp/userapps/miniapp.js",
-			"js/miniapp/userapps/usermodule.js",
-			"js/miniapp/main/main.js",
+			"js/application/0_package_service.js",
+			"js/application/utility.js",
+			"js/application/service.js",
+			"js/application/application.js",
+			"js/application/userapps/userapps.js",
+			"js/application/userapps/group.js",
+			"js/application/userapps/miniapp.js",
+			"js/application/userapps/usermodule.js",
+			"js/application/miniapp/miniappmodule.js",
 		], function(){
 			//create miniapp
 			var minapp = nosliw.getNodeData("miniapp.createApplication")();

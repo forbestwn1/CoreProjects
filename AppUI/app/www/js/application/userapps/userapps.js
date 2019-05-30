@@ -22,18 +22,27 @@ var node_createComponentUserApps = function(){
 			"group" : node_createComponentGroup(),
 			"mini-app" : node_createComponentMiniApp()
 		},
+		methods : {
+			onSelectMiniApp : function(miniAppId) {
+				this.$emit("selectMiniApp", miniAppId);
+			},
+		},
 		template : `
 			<div class="list accordion-list">
 				<ul>
 					<group 
 						v-for="miniAppGroup in data.groupMiniApp"
+						v-bind:key="miniAppGroup.group.id"
 						v-bind:data="miniAppGroup"
+						v-on:selectMiniApp="onSelectMiniApp"
 					>
 					</group>
 				
 					<mini-app 
 						v-for="miniApp in data.miniApp"
+						v-bind:key="miniApp.id"
 						v-bind:data="miniApp"
+						v-on:selectMiniApp="onSelectMiniApp"
 					>
 					</mini-app>
 				</ul>

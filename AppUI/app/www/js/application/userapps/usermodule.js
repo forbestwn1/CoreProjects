@@ -18,9 +18,12 @@ var packageObj = library.getChildPackage("module.userapps");
 
 var loc_mduleName = "userApps";
 
-var node_createModuleUserApps = function(root){
+var node_createModuleUserApps = function(parm){
 
-	var loc_root = root;
+	var loc_root = parm;
+
+	var loc_eventSource = node_createEventObject();
+	var loc_eventListener = node_createEventObject();
 
 	var loc_componentData = {
 		userInfo : {}
@@ -28,21 +31,34 @@ var node_createModuleUserApps = function(root){
 	
 	var loc_vue;
 
+	var loc_triggerEvent = function(eventName, eventData, request){
+		loc_eventSource.triggerEvent(eventName, eventData, request);
+	};
+	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
 		return node_createServiceRequestInfoSimple(undefined, function(request){
 			loc_vue = new Vue({
-				  el: loc_root,
-				  data: loc_componentData,
-				  components : {
-					  "user-apps" : node_createComponentUserApps()
-				  },
-				  template : `
-					  <div>
-					  	<user-apps v-bind:data="userInfo"></user-apps>
-					  </div>
-				  `
+				el: loc_root,
+				data: loc_componentData,
+				components : {
+					"user-apps" : node_createComponentUserApps()
+				},
+				methods : {
+					onSelectMiniApp : function(miniAppId) {
+						loc_triggerEvent("selectMiniApp", miniAppId);
+					},
+				},
+				template : `
+					<div>
+					  	<user-apps 
+					  		v-bind:data="userInfo"
+					  		v-on:selectMiniApp="onSelectMiniApp"
+					  	></user-apps>
+					</div>
+				`
 			});
+			return loc_out;
 		}, handlers, requestInfo);
 	};
 
@@ -56,6 +72,9 @@ var node_createModuleUserApps = function(root){
 				})); 
 			return out;
 		},
+
+		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
 	};
 	
