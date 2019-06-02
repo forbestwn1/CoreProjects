@@ -31,14 +31,13 @@ var node_createApplication = function(rootNode){
 				return $("#userInfoDiv").get(0); 
 			},
 			factory : "miniapp.module.userapps.createModuleUserApps",
-			init : {
-				success : function(requestInfo, module){
-					module.registerEventListener(undefined, function(eventName, eventData, request){
-						if(eventName=="selectMiniApp"){
-							loc_modules["mini-app"].refreshRequest(eventData);
-						}
-					});
-				}
+			init : function(module, request){
+				module.registerEventListener(undefined, function(eventName, eventData, request){
+					if(eventName=="selectMiniApp"){
+						eventData = "AppMySchool;main";    //kkkkkk
+						loc_modules["mini-app"].executeRefreshRequest(eventData);
+					}
+				});
 			}
 		},
 		{
@@ -50,22 +49,19 @@ var node_createApplication = function(rootNode){
 					framework7App : loc_framework7App
 				}; 
 			},
-			factory : "miniapp.module.userapps.createModuleMiniApp",
-			init : {
-				success : function(requestInfo, module){
-					
-				}
+			factory : "miniapp.module.miniapp.createModuleMiniApp",
+			init : function(module, request){
 			}
 		}
 	];
 	var loc_modules = {};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(rootNode){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(rootNode, handlers, request){
 
 		loc_miniAppService = node_createMiniAppService();
 
-		var out = node_createServiceRequestInfoSequence(undefined);
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var mainHtml = "js/application/main.html";
 		out.addRequest(node_miniAppUtility.getLoadFilesRequest([mainHtml], {
 			success : function(request, mainSource){
@@ -80,17 +76,14 @@ var node_createApplication = function(rootNode){
 						    swipe: 'both',
 					  },				
 				});
-			
-				var initAppModules = node_createServiceRequestInfoSet(new node_ServiceInfo("InitMiniAppModules"), {
-					success : function(request){
-					}
-				}); 
+
 				_.each(loc_modulesInfo, function(moduleInfo, index){
 					var module = nosliw.getNodeData(moduleInfo.factory)(moduleInfo.initParm());
 					loc_modules[moduleInfo.name] = module;
-					initAppModules.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.init, undefined));
+					module.interfaceObjectLifecycle.init();
+					moduleInfo.init(module, request);
+					
 				});
-				return initAppModules;
 			}
 		}));	
 

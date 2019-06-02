@@ -49,14 +49,18 @@ var init = function(rootNode, baseServer, callBackFunction){
 		], function(){
 			//create miniapp
 			var minapp = nosliw.getNodeData("miniapp.createApplication")();
+			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+
 			nosliw.miniapp = minapp;
 			nosliw.createNode("miniapp", minapp);
-			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(rootNode, {
+			var out = node_createServiceRequestInfoSequence(undefined, {
 				success : function(requestInfo, data){
 			  		$(document).trigger("miniappActive");
 				}
-			}, undefined);
-			nosliw.getNodeData("request.requestServiceProcessor").processRequest(miniappInitRequest);
+			});
+			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(rootNode, undefined, out);
+			out.addRequest(miniappInitRequest);
+			nosliw.getNodeData("request.requestServiceProcessor").processRequest(out);
 		});
 	});
 
