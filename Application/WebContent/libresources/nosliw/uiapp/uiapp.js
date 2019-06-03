@@ -22,8 +22,12 @@ var node_createApp = function(id, appDef, ioInput){
 	
 	var loc_partMatchers = node_createPatternMatcher([
 		new node_Pattern(new RegExp("module\.(\\w+)$"), function(result){return loc_out.getCurrentModuleInfo(result[1]).module;}),
-		new node_Pattern(new RegExp("module\.(\\w+)\.outputMapping\.(\\w+)$"), function(result){return loc_out.getCurrentModuleInfo(result[1]).outputMapping[result[2]]}),
-		new node_Pattern(new RegExp("module\.(\\w+)\.inputMapping\.(\\w+)$"), function(result){return loc_out.getCurrentModuleInfo(result[1]).inputMapping[result[2]]}),
+		new node_Pattern(new RegExp("module\.(\\w+)\.outputMapping\.(\\w+)$"), function(result){
+			return loc_out.getCurrentModuleInfo(result[1]).outputMapping[result[2]]
+		}),
+		new node_Pattern(new RegExp("module\.(\\w+)\.inputMapping\.(\\w+)$"), function(result){
+			return loc_out.getCurrentModuleInfo(result[1]).inputMapping[result[2]]
+		}),
 	]);
 	
 	var loc_eventSource = node_createEventObject();

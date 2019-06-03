@@ -40,6 +40,8 @@ $(document).on("nosliwActive", function(){
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_appDataService = nosliw.getNodeData("uiapp.appDataService");
+	var node_storeService = nosliw.getNodeData("uiapp.storeService");
+	var node_createTypicalConfigure = nosliw.getNodeData("uiapp.createTypicalConfigure");
 	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
 	var node_createAppDecoration = nosliw.getNodeData("uiapp.createAppDecoration");
 	var node_createComponentLifeCycleDebugView = nosliw.getNodeData("component.createComponentLifeCycleDebugView");
@@ -54,67 +56,16 @@ $(document).on("nosliwActive", function(){
 	var currentSearchString = window.location.search;
 	var appEntryId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 
-	var configure = {
-		global : {
-			appDecoration : [
-				{
-					coreFun: node_createAppDecoration,
-					id : "application"
-				}
-				],
-			__appDataService : node_appDataService,
-			__storeService :{
-				saveData : function(categary, id, data){
-					localStorage.setItem(categary+"_"+id, JSON.stringify(data));
-				},
-				
-				retrieveData : function(categary, id){
-					return JSON.parse(localStorage.getItem(categary+"_"+id));
-				},
-				
-				clearData : function(categary, id){
-					return localStorage.removeItem(categary+"_"+id);
-				}
-			},
-			app : new Framework7({
-				  // App root element
-				  root: $("#appModuleDiv").get(),
-				  name: 'My App',
-				  id: 'com.myapp.test',
-				  panel: {
-					    swipe: 'both',
-				  },		
-			}),
-		},
-		components : {
-			application : {
-				"components" : {
-					"application" : {
-						global : {
-							"root" : $('#appModuleDiv').get(),
-							"decoration" : {
-								global : ["Decoration_application_framework7"]
-							},
-							"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile", "debug"]
-						}
-					},
-					"setting" : {
-						global : {
-							"root" : $('#settingModuleDiv').get(),
-							"decoration" : {
-							},
-							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile", "debug"]
-						},
-						components : {
-							"setting_framework7_mobile" : {
-								uiResource : "Decoration_setting_framework7"
-							}
-						}
-					}
-				}
-			}
-		}
-	};
+	var framework7App = new Framework7({
+		  // App root element
+		  root: $("#appModuleDiv").get(),
+		  name: 'My App',
+		  id: 'com.myapp.test',
+		  panel: {
+			    swipe: 'both',
+		  },		
+	});
+	var configure = node_createTypicalConfigure($('#appModuleDiv').get(), $('#settingModuleDiv').get(), node_appDataService, node_storeService, framework7App);
 	
 	var loc_debugLifecycleView = node_createComponentLifeCycleDebugView();
 	$('#lifecycleDebug').append(loc_debugLifecycleView.getView());

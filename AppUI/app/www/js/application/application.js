@@ -34,7 +34,6 @@ var node_createApplication = function(rootNode){
 			init : function(module, request){
 				module.registerEventListener(undefined, function(eventName, eventData, request){
 					if(eventName=="selectMiniApp"){
-						eventData = "AppMySchool;main";    //kkkkkk
 						loc_modules["mini-app"].executeRefreshRequest(eventData);
 					}
 				});
@@ -126,15 +125,12 @@ var node_createApplication = function(rootNode){
 		getRefreshRequest(userInfo){
 			
 		},
-		
 	};
-	
 	
 	node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	node_makeObjectWithName(loc_out, loc_mduleName);
 	
 	return loc_out;
-
 };	
 	
 

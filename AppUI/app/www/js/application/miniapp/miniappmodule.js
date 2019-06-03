@@ -19,6 +19,8 @@ var packageObj = library.getChildPackage("module.miniapp");
 	var node_appDataService;
 	var node_requestServiceProcessor;
 	var node_getComponentLifecycleInterface;
+	var node_createTypicalConfigure;
+	var node_storeService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "userApps";
@@ -37,78 +39,29 @@ var node_createModuleMiniApp = function(root){
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
-		loc_appConfigure = {
-				global : {
-					appDecoration : [
-						{
-							coreFun: node_createAppDecoration,
-							id : "application"
-						}
-					],
-					__appDataService : node_appDataService,
-					__storeService :{
-						saveData : function(categary, id, data){
-							localStorage.setItem(categary+"_"+id, JSON.stringify(data));
-						},
-						
-						retrieveData : function(categary, id){
-							return JSON.parse(localStorage.getItem(categary+"_"+id));
-						},
-						
-						clearData : function(categary, id){
-							return localStorage.removeItem(categary+"_"+id);
-						}
-					},
-					app : loc_framework7App,
-				},
-				components : {
-					application : {
-						"components" : {
-							"application" : {
-								global : {
-									"root" : loc_mainModuleRoot,
-									"decoration" : {
-										global : ["Decoration_application_framework7"]
-									},
-									"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile", "debug"]
-								}
-							},
-							"setting" : {
-								global : {
-									"root" : loc_settingModuleRoot,
-									"decoration" : {
-									},
-									"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile", "debug"]
-								},
-								components : {
-									"setting_framework7_mobile" : {
-										uiResource : "Decoration_setting_framework7"
-									}
-								}
-							}
-						}
-					}
-				}
-			};
+		loc_appConfigure = node_createTypicalConfigure(loc_mainModuleRoot, loc_settingModuleRoot, node_appDataService, node_storeService, loc_framework7App);
 	};
 
 	var loc_out = {
 		
 		getRefreshRequest : function(miniAppEntryId, handlers, requestInfo){
-			var out = nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, loc_appConfigure, undefined,
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshMiniApp", {}), handlers, requestInfo);
+			
+			if(loc_appRuntime!=undefined)	out.addRequest(node_getComponentLifecycleInterface(loc_appRuntime).getTransitRequest("destroy"), {
+				success : function(request){
+					loc_appRuntime = undefined;
+				}
+			});
+			
+			out.addRequest(nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, loc_appConfigure, undefined,
 				{
 					success : function(requestInfo, appRuntime){
 						loc_appRuntime = appRuntime;
 						lifecycle = node_getComponentLifecycleInterface(loc_appRuntime);
-						lifecycle.executeTransitRequest("activate", {
-							success : function(request){
-								console.log('aaa');
-							}
-						});
-
+						return lifecycle.getTransitRequest("activate");
 					}
 				}
-			);
+			));
 			return out;
 		},
 
@@ -142,6 +95,8 @@ nosliw.registerSetNodeDataEvent("uiapp.createAppDecoration", function(){node_cre
 nosliw.registerSetNodeDataEvent("uiapp.appDataService", function(){node_appDataService = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.createTypicalConfigure", function(){node_createTypicalConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.storeService", function(){node_storeService = this.getData();});
 
 
 //Register Node by Name

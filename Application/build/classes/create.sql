@@ -62,3 +62,4 @@ INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('SchoolApp1', 'SchoolApp1'
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('SchoolApp2', 'SchoolApp2');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('MyRealtor', 'MyRealtor');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('Airplane Arrival', 'Airplane Arrival');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('AppMySchool;main', 'MySchool');

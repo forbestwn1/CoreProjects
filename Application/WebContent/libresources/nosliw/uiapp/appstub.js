@@ -123,6 +123,26 @@ var node_appDataService = function(){
 	return loc_out;
 }();
 
+
+var node_storeService = function(){
+	
+	var loc_out = {
+		saveData : function(categary, id, data){
+			localStorage.setItem(categary+"_"+id, JSON.stringify(data));
+		},
+		
+		retrieveData : function(categary, id){
+			return JSON.parse(localStorage.getItem(categary+"_"+id));
+		},
+		
+		clearData : function(categary, id){
+			return localStorage.removeItem(categary+"_"+id);
+		}
+	};
+	return loc_out;
+	
+}();
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -149,5 +169,6 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 
 //Register Node by Name
 packageObj.createChildNode("appDataService", node_appDataService); 
+packageObj.createChildNode("storeService", node_storeService); 
 
 })(packageObj);
