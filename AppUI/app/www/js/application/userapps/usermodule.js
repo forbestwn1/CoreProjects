@@ -14,6 +14,7 @@ var packageObj = library.getChildPackage("module.userapps");
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
 	var node_createComponentUserApps;
+	var node_createComponentUserInfo;
 	var node_createEventObject;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -42,7 +43,13 @@ var node_createModuleUserApps = function(parm){
 			el: loc_root,
 			data: loc_componentData,
 			components : {
-				"user-apps" : node_createComponentUserApps()
+				"user-apps" : node_createComponentUserApps(),
+				"user-info" : node_createComponentUserInfo(),
+			},
+			computed : {
+				user : function(){
+					return this.userInfo.user;
+				},
 			},
 			methods : {
 				onSelectMiniApp : function(miniAppId) {
@@ -51,6 +58,9 @@ var node_createModuleUserApps = function(parm){
 			},
 			template : `
 				<div>
+					<user-info
+						v-bind:user="user"
+					></user-info>
 				  	<user-apps 
 				  		v-bind:data="userInfo"
 				  		v-on:selectMiniApp="onSelectMiniApp"
@@ -66,7 +76,7 @@ var node_createModuleUserApps = function(parm){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshUserApps", {}), handlers, requestInfo);
 			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUserApps", {}), 
 				function(requestInfo){
-				loc_componentData.userInfo = userInfo;
+					loc_componentData.userInfo = userInfo;
 				})); 
 			return out;
 		},
@@ -94,7 +104,9 @@ nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createComponentUserApps", function(){node_createComponentUserApps = this.getData();});
+nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createComponentUserInfo", function(){node_createComponentUserInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createModuleUserApps", node_createModuleUserApps); 

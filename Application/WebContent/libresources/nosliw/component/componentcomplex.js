@@ -37,7 +37,7 @@ var node_createComponentComplex = function(configure, envInterface){
 		//start module
 		_.each(loc_parts, function(part, i){
 			if(part[requestFunName]!=undefined){
-				out.addRequest(part[requestFunName]());
+				out.addRequest(part[requestFunName](handlers, request));
 			}
 		});
 		return out;
@@ -111,6 +111,7 @@ var node_createComponentComplex = function(configure, envInterface){
 		getResumeRequest : function(handlers, request){  return loc_getLifeCycleRequest("getResumeRequest", handlers, request);  },
 		getDeactiveRequest : function(handlers, request){  return loc_getLifeCycleRequest("getDeactiveRequest", handlers, request);  },
 		getSuspendRequest : function(handlers, request){  return loc_getLifeCycleRequest("getSuspendRequest", handlers, request);  },
+		getDestroyRequest : function(handlers, request){  return loc_getLifeCycleRequest("getDestroyRequest", handlers, request);  },
 
 	};
 	return loc_out;

@@ -29,6 +29,13 @@ var node_getLifecycleInterface = function(baseObject){
 	return node_getInterface(baseObject, INTERFACENAME);
 };
 
+var node_destroyUtil = function(baseObject, request){
+	if(baseObject.destroy!=undefined)    baseObject.destroy(request);
+	else{
+		var lifecycle = node_getLifecycleInterface(baseObject);
+		if(lifecycle!=undefined)	lifecycle.destroy(request);
+	}
+};
 
 /**
  * create resource lifecycle object which provide basic lifecycle method and status
@@ -296,5 +303,6 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 //Register Node by Name
 packageObj.createChildNode("getLifecycleInterface", node_getLifecycleInterface); 
 packageObj.createChildNode("makeObjectWithLifecycle", node_makeObjectWithLifecycle); 
+packageObj.createChildNode("destroyUtil", node_destroyUtil); 
 
 })(packageObj);

@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_createIODataSet;
 	var node_objectOperationUtility;
 	var node_uiEventData;
+	var node_destroyUtil;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
@@ -102,7 +103,7 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 			uiArray : [],
 			ui : {},
 
-			lifecycle : undefined
+			lifecycle : undefined    //module's lifecycle obj
 		},
 		
 		prv_addUI : function(ui){
@@ -124,7 +125,6 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 		getVersion : function(){   return "1.0.0";   },
 		
 		getIOContext : function(){  return loc_out.prv_module.ioContext;  },
-//		setContext : function(context){ loc_setContext(context);  },
 		
 		getUIs : function(){  return loc_out.prv_module.uiArray;  },
 		getUI : function(name) {  return loc_out.prv_module.ui[name];   },
@@ -158,7 +158,19 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
 		getPart : function(partId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, partId); },
 		
-		
+		getDestroyRequest : function(handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				node_destroyUtil(loc_out.prv_module.ioContext, request);
+				
+				_.each(loc_out.prv_module.uiArray, function(ui, i){
+					node_destroyUtil(ui, request);
+				});
+				loc_out.prv_module.uiArray = undefined;
+				loc_out.prv_module.ui = undefined;
+				loc_out.prv_module.uiModuleDef = undefined;
+				loc_out.prv_module.lifecycle = undefined;
+			}, handlers, request);
+		}
 	};
 
 	loc_init();
@@ -190,6 +202,7 @@ nosliw.registerSetNodeDataEvent("uipage.createUIDecorationsRequest", function(){
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.uiEventData", function(){node_uiEventData = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_destroyUtil = this.getData();});
 
 
 //Register Node by Name

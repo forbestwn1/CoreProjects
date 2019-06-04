@@ -6,6 +6,7 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_createEventObject;
 	var node_makeObjectWithLifecycle;
+	var node_destroyUtil;
 	var node_makeObjectWithType;
 	var node_getLifecycleInterface;
 	var node_requestServiceProcessor;
@@ -40,6 +41,15 @@ var node_createUIPage = function(uiView){
 	};	
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
+		loc_valueChangeEventSource.clearup();
+		loc_valueChangeEventListener.clearup();
+		loc_eventSource.clearup();
+		loc_eventListener.clearup();
+		
+		_.each(loc_decorations, function(decoration, name){
+			node_destroyUtil(decoration, requestInfo);
+		});
+		loc_decorations = undefined;
 	};	
 
 	var loc_unregisterViewListener = function(ele){
@@ -115,6 +125,8 @@ var node_createUIPage = function(uiView){
 		getGetPageStateRequest : function(handlers, requestInfo){
 			return node_contextUtility.getContextStateRequest(loc_getCurrent().getContextElements(), handlers, requestInfo);
 		},
+		
+		destroy : function(request){  node_getLifecycleInterface(loc_out).destroy(request);  },
 	};
 
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
@@ -133,6 +145,7 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_destroyUtil = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});

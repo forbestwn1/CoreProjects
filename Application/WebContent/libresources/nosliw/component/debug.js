@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_createIODataSet;
 	var node_createDynamicData;
 	var node_requestServiceProcessor;
+	var node_createEventObject;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -55,7 +56,7 @@ var node_createComponentDataView = function(){
 	var loc_textView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
 	loc_view.append(loc_textView);
 
-	var loc_listener;
+	var loc_listener = node_createEventObject();
 
 	var loc_clearup = function(){
 		if(loc_component!=undefined){
@@ -69,7 +70,7 @@ var node_createComponentDataView = function(){
 	
 	var loc_setup = function(request){
 		var comInterface = node_getComponentInterface(loc_component);
-		comInterface.registerDataChangeEventListener(undefined, function(eventName, dataSet){
+		comInterface.registerDataChangeEventListener(loc_listener, function(eventName, dataSet){
 			loc_showDataSet(dataSet);
 		});
 		node_requestServiceProcessor.processRequest(comInterface.getContextDataSetRequest({
@@ -140,6 +141,7 @@ var node_createComponentLifeCycleDebugView = function(){
 	var loc_stateMachine;
 
 	var loc_updateCandidateView = function(all, candidates, views){
+		if(candidates==undefined)  candidates = [];
 		_.each(all, function(ele, i){
 			if(candidates.includes(ele)){
 				views[ele].css('color', 'green');
@@ -243,6 +245,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicData = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 
 //Register Node by Name

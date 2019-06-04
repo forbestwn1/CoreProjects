@@ -83,6 +83,13 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	
 	
 	var lifecycleCallback = {};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DestroyUIModuleRuntime", {}), undefined, request);
+		//start module
+		out.addRequest(loc_componentComplex.getDestroyRequest());
+		return out;
+	};
+	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
 		var out;
 		var stateData = loc_stateBackupService.getBackupData();

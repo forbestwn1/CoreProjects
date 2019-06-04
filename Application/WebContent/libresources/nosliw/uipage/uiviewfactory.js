@@ -520,7 +520,8 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		unregisterValueChangeEventListener : function(listener){	return loc_context.unregisterValueChangeEventListener(listener); },
 		
 		command : function(command, data, requestInfo){			return this.prv_callScriptFunctionDown("command_"+command, data, requestInfo);		},
-		findFunctionDown : function(funName){  return this.prv_findFunctionDown(funName);  }
+		findFunctionDown : function(funName){  return this.prv_findFunctionDown(funName);  },
+		
 	};
 
 	

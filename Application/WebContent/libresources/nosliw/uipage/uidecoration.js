@@ -7,6 +7,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_createEventObject;
 	var node_makeObjectWithLifecycle;
+	var node_destroyUtil;
 	var node_makeObjectWithType;
 	var node_getLifecycleInterface;
 	var node_requestServiceProcessor;
@@ -136,6 +137,18 @@ var loc_createDecoration = function(uiView){
 
 		registerValueChangeEventListener : function(listener, handler, thisContext){	return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext);},
 		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener);},
+		
+		destroy : function(request){
+			loc_eventSource.clearup();
+			loc_eventListenerForDec.clearup();
+			loc_eventListenerForParent.clearup();
+
+			loc_valueChangeEventSource.clearup();
+			loc_valueChangeEventListenerForDec.clearup();
+			loc_valueChangeEventListenerForParent.clearup();
+			
+			node_destroyUtil(loc_uiView);
+		}
 	};
 	
 	return loc_out;
@@ -148,6 +161,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_destroyUtil = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});

@@ -44,6 +44,7 @@ var init = function(rootNode, baseServer, callBackFunction){
 			"js/application/userapps/userapps.js",
 			"js/application/userapps/group.js",
 			"js/application/userapps/miniapp.js",
+			"js/application/userapps/userinfo.js",
 			"js/application/userapps/usermodule.js",
 			"js/application/miniapp/miniappmodule.js",
 		], function(){

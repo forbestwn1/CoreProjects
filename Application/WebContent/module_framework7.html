@@ -117,7 +117,9 @@ $(document).on("nosliwActive", function(){
 	var loc_debugResetView = node_createComponentResetView(function(){
 		if(loc_uiModuleRuntime!=undefined){
 			loc_lifecycle = node_getComponentLifecycleInterface(loc_uiModuleRuntime);
-			loc_lifecycle.transit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD);
+			if(loc_lifecycle.getComponentStatus()!=node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD){
+				loc_lifecycle.transit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD);
+			}
 			loc_uiModuleRuntime = undefined;
 		}
 		nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(loc_moduleId, loc_moduleId, loc_configure, loc_debugResetView.getInputIODataSet(), {

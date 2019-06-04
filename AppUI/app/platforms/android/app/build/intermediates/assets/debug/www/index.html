@@ -13,12 +13,13 @@
    	<link rel="stylesheet" href="libs/framework7/4.4.0/css/framework7.bundle.css">
 
         <script src="libs/jQuery/2.1.0/jquery.js"></script>
-        <script src="libs/vue/vue.js"></script>
         <script type="text/javascript" src="js/init.js"></script>
 
 </head>
 
 <body>
+	<div id="app">
+	</div>
 	<div id="appDiv">
 	</div>
 
@@ -36,6 +37,11 @@ init(document.getElementById("appDiv"), "http://192.168.56.1:8082/Application/")
 
 </script>
 
+<script src="libs/vue/vue.js"></script>
+    <script type="text/javascript">
+      // creating a root Vue instance here
+      var vm = new Vue({el: '#app'});
+    </script>
 </body>
 
 

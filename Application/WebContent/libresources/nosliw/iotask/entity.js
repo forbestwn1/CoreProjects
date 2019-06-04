@@ -14,6 +14,7 @@ var packageObj = library.getChildPackage("entity");
 	var node_createServiceRequestInfoSet;
 	var node_ioTaskUtility;
 	var node_createEventObject;
+	var node_destroyUtil;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //task result 
@@ -182,6 +183,14 @@ var node_createIODataSet = function(value){
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 		
+		destroy : function(request){
+			loc_eventSource.clearup();
+			loc_eventListener.clearup();
+			_.each(loc_out.prv_dataSet, function(data, name){
+				node_destroyUtil(data, request);
+			});
+			loc_out.prv_dataSet = undefined;
+		}
 	};
 	
 	loc_init(value);
@@ -205,6 +214,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_destroyUtil = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("IOTaskResult", node_IOTaskResult); 

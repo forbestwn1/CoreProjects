@@ -105,6 +105,7 @@ function(gate){
 				loc_moduleView = $('<div class="view view-main" style="height:600px;"></div>');
 				loc_root.append(loc_moduleView);
 			}
+			return loc_moduleView.get();
 		},
 
 		getInterface : function(){
@@ -113,6 +114,10 @@ function(gate){
 					return loc_getTransferToRequest(uiName, mode, handlers, requestInfo);
 				},
 			}
+		},
+		
+		getDestroyRequest :function(handlers, request){
+			
 		},
 		
 		getDeactiveRequest :function(handlers, request){

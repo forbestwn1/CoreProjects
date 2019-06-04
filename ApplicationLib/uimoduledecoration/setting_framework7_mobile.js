@@ -9,6 +9,7 @@ function(gate){
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_createUIDecorationsRequest = nosliw.getNodeData("uipage.createUIDecorationsRequest");
 	var node_commandResult = nosliw.getNodeData("component.commandResult");
+	var node_destroyUtil = nosliw.getNodeData("common.lifecycle.destroyUtil");
 
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponent();
@@ -51,6 +52,10 @@ function(gate){
 				}
 			}));
 			return out;
+		},
+
+		getDestroyRequest :function(handlers, requestInfo){
+			node_destroyUtil(loc_decoration);
 		},
 		
 		getInitRequest :function(handlers, requestInfo){
