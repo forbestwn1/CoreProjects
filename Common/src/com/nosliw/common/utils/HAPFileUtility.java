@@ -25,19 +25,19 @@ import org.apache.commons.io.FileUtils;
 
 public class HAPFileUtility {
 	
-	public static String getApplicationLibFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/ApplicationLib/";   }
+	public static String getApplicationLibFolder(){ return HAPSystemUtility.getApplicationLibFolder(); }
 	public static String getTagDefinitionFolder(){  return getApplicationLibFolder() + "uitag/";   }
 	public static String getActivityPluginFolder(){  return getApplicationLibFolder() + "activity/";   }
 	public static String getUIModuleDecorationFolder(){  return getApplicationLibFolder() + "uimoduledecoration/";  }
 	public static String getUIAppConfigureFolder(){  return getApplicationLibFolder() + "uiappconfigure/";  }
 
-	public static String getApplicationDataFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/ApplicationData/";   }
+	public static String getApplicationDataFolder(){  return HAPSystemUtility.getApplicationDataFolder();  }
 	public static String getProcessFolder(){  return getApplicationDataFolder() + "process/";   }
-	public static String getTempFolder(){		return "C:/Temp/nosliw/";	}
+	public static String getTempFolder(){		return HAPSystemUtility.getTempFolder();	}
 	public static String getScriptExportFolder(){  return HAPFileUtility.getTempFolder()+"scriptexport/scripts/";  }
 	public static String getTaskLogFolder(){  return HAPFileUtility.getTempFolder()+"tasklog/";  }
 	public static String getResourceTempFileFolder(){  return getJSFolder() + "temp/";  }
-	public static String getJSFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/Application/WebContent/";  }
+	public static String getJSFolder(){  return HAPSystemUtility.getJSFolder();  }
 	public static String getNosliwJSFolder(String lib){  return getJSFolder()+"libresources/nosliw/"+lib+"/";  }
 	public static String getUIPageFolder(){  return getApplicationDataFolder() + "page/";  }
 	public static String getUIModuleFolder(){  return getApplicationDataFolder() + "uimodule/";  }
