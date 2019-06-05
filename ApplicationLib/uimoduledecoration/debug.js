@@ -61,7 +61,11 @@ function(gate){
 			return {
 			}
 		},
-		
+
+		getDestroyRequest :function(handlers, request){
+			loc_debugView.remove();
+		},
+
 		getDeactiveRequest :function(handlers, request){
 		},
 		

@@ -134,6 +134,7 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 		getSuspendRequest : function(handlers, request){  return loc_core.getSuspendRequest==undefined?undefined:loc_core.getSuspendRequest(handlers, request);	},
 		getResumeRequest : function(handlers, request){  return loc_core.getResumeRequest==undefined?undefined:loc_core.getResumeRequest(handlers, request);	},
 		getStartRequest : function(handlers, request){  return loc_core.getStartRequest==undefined?undefined:loc_core.getStartRequest(handlers, request);	},
+		getDestroyRequest : function(handlers, request){  return loc_core.getDestroyRequest==undefined?undefined:loc_core.getDestroyRequest(handlers, request);	},
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION);
