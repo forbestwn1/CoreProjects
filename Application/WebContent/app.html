@@ -52,6 +52,17 @@ $(document).on("nosliwActive", function(){
 	var loc_appId;
 	var loc_appRuntime;
 
+	var requestProcessor = nosliw.runtime.getRequestProcessor();
+	requestProcessor.registerEventListener(undefined, function(eventName, requestId){
+		if(eventName==node_CONSTANT.REQUESTPROCESS_EVENT_START){
+//			framework7App.preloader.show();
+		}
+		else if(eventName==node_CONSTANT.REQUESTPROCESS_EVENT_DONE){
+//			framework7App.preloader.hide();
+		}
+	});
+	
+	
     // Our initialization code here
 	var currentSearchString = window.location.search;
 	var appEntryId = currentSearchString.substring(currentSearchString.indexOf("=")+1);

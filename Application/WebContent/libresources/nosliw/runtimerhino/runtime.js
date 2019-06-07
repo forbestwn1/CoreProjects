@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_createGatewayService;
 	var node_createProcessRuntimeFactory;
 	var node_createDataService;
+	var node_createRequestServiceProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -40,6 +41,8 @@ var node_createRuntime = function(name){
 	
 	var loc_dataService;
 
+	var loc_requestProcessor;
+	
 	var loc_out = {
 		
 		start : function(){
@@ -58,8 +61,10 @@ var node_createRuntime = function(name){
 
 		getProcessRuntimeFactory(){   return loc_processRuntimeFactory;  },
 
-		getDataService(){   return loc_dataService;   }
-};
+		getDataService(){   return loc_dataService;   },
+		
+		getRequestProcessor(){   return  loc_requestProcessor;  }
+	};
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
@@ -71,6 +76,9 @@ var node_createRuntime = function(name){
 		loc_processRuntimeFactory = node_createProcessRuntimeFactory();
 		loc_dataService = node_createDataService();
 
+		loc_requestProcessor = node_createRequestServiceProcessor();
+		nosliw.createNode("request.requestServiceProcessor", loc_requestProcessor); 
+		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
 		 nosliw.generateId = loc_out.getIdService().generateId;
@@ -104,6 +112,7 @@ nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){nod
 nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
 nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(){node_createProcessRuntimeFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node_createDataService = this.getData();});
+nosliw.registerSetNodeDataEvent("request.createRequestServiceProcessor", function(){ node_createRequestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

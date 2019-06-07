@@ -76,7 +76,7 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 };
 	
 	
-var loc_createRequestGroup = function(){
+var loc_createRequestGroup = function(attachTo){
 	nosliw.logging.info("Request Group New !!!!!!");
 	
 	var loc_requestSum = 0;
@@ -91,6 +91,7 @@ var loc_createRequestGroup = function(){
 	var loc_doneCallBack;
 	
 	var loc_attached = [];
+	var loc_attachTo = attachTo;
 	
 	var loc_status = node_CONSTANT.REQUEST_STATUS_INIT;
 	
@@ -135,6 +136,8 @@ var loc_createRequestGroup = function(){
 		addAttached : function(request){			loc_attached.push(request);		},
 		getAttached : function(){  return loc_attached;   },
 		
+		getAttachTo : function(){  return loc_attachTo;  },
+		
 		addRequestInfo : function(requestInfo){
 			if(loc_rootRequest==undefined){
 				loc_rootRequest = requestInfo.request.getRootRequest();
@@ -160,13 +163,14 @@ var loc_createRequestGroup = function(){
 		
 		destroy : function(){
 			loc_eventObject.clearup();
-		}
+		},
+		
 	};
 	return loc_out;
 };
 	
 	
-var node_requestServiceProcessor = function(){
+var node_createRequestServiceProcessor = function(){
 	//store all the live requests
 	//request organized according to root request
 	//{root request id  -- {  current request id --- request  }  } 
@@ -174,6 +178,9 @@ var node_requestServiceProcessor = function(){
 	var loc_processingGroupSum = 0;
 	var loc_requestsSum = 0;
 	
+	var loc_eventSource = node_createEventObject();
+	var loc_eventListener = node_createEventObject();
+
 	var loc_groupQueue = [];
 	
 	var loc_findGroupInQueue = function(request){
@@ -210,10 +217,12 @@ var node_requestServiceProcessor = function(){
 	};
 	
 	var loc_processGroup = function(group){
+		if(group.getAttachTo()==undefined) loc_eventSource.triggerEvent(node_CONSTANT.REQUESTPROCESS_EVENT_START, group.getId());
 		nosliw.logging.info("Request Group : ", group.getId(), " Start Processing !!!!!!");
 		loc_processingGroupSum++;
 		loc_groups[group.getId()] = group;
 		group.startProcess(function(group){
+			if(group.getAttachTo()==undefined) loc_eventSource.triggerEvent(node_CONSTANT.REQUESTPROCESS_EVENT_DONE, group.getId());
 			nosliw.logging.info("Request Group : ", group.getId(), " Done !!!!!!");
 			group.destroy();
 			delete loc_groups[group.getId()];
@@ -245,7 +254,7 @@ var node_requestServiceProcessor = function(){
 			group.addRequestInfo(requestInfo);
 		}
 		else{
-			group = loc_createRequestGroup();
+			group = loc_createRequestGroup(requestInfo.attchedTo);
 			group.addRequestInfo(requestInfo);
 			if(requestInfo.attchedTo==undefined){
 				loc_addGroupToQueue(group);
@@ -289,10 +298,12 @@ var node_requestServiceProcessor = function(){
 			return loc_addRequest(new loc_RequestInfo(request, processRemote, attchedTo));
 		},	
 
+		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 	};
 
 	return loc_out;
-}();
+};
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -301,6 +312,6 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("requestServiceProcessor", node_requestServiceProcessor); 
+packageObj.createChildNode("createRequestServiceProcessor", node_createRequestServiceProcessor); 
 
 })(packageObj);
