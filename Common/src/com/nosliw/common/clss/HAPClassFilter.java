@@ -1,7 +1,6 @@
 package com.nosliw.common.clss;
 
 import java.io.IOException;
-import java.lang.reflect.Modifier;
 import java.util.Set;
 
 import com.google.common.reflect.ClassPath;
@@ -13,8 +12,10 @@ public abstract class HAPClassFilter {
 		try {
 			ClassLoader cl = HAPClassFilter.class.getClassLoader();
 			ClassPath classPath;
+
 			classPath = ClassPath.from(cl);
 		    Set<ClassPath.ClassInfo> classeInfos = classPath.getAllClasses();
+		    
 		    //loop all the classes
 			for(ClassPath.ClassInfo classInfo : classeInfos){
 				if(HAPSystemUtility.isHAPClass(classInfo.getName())){

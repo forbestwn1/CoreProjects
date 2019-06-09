@@ -76,9 +76,7 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 };
 	
 	
-var loc_createRequestGroup = function(attachTo){
-	nosliw.logging.info("Request Group New !!!!!!");
-	
+var loc_createRequestGroup = function(firstRequest, attachTo){
 	var loc_requestSum = 0;
 	
 	var loc_rootRequest;
@@ -166,6 +164,10 @@ var loc_createRequestGroup = function(attachTo){
 		},
 		
 	};
+	
+	loc_out.addRequestInfo(firstRequest);
+	nosliw.logging.info("Request Group New !!!!!!  " + loc_id + (attachTo==undefined?"":("   Attached to : "+ attachTo.getId())));
+	
 	return loc_out;
 };
 	
@@ -254,8 +256,8 @@ var node_createRequestServiceProcessor = function(){
 			group.addRequestInfo(requestInfo);
 		}
 		else{
-			group = loc_createRequestGroup(requestInfo.attchedTo);
-			group.addRequestInfo(requestInfo);
+			group = loc_createRequestGroup(requestInfo, requestInfo.attchedTo);
+//			group.addRequestInfo(requestInfo);
 			if(requestInfo.attchedTo==undefined){
 				loc_addGroupToQueue(group);
 			}
