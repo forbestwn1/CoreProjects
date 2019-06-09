@@ -6,14 +6,31 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPImporterDataSourceDefinition {
 
+	private static String[] serviceClasses = {
+			"com.nosliw.service.school.HAPServiceImp",
+			"com.nosliw.service.realtor.HAPServiceImp",
+	};
+	
 	public static List<HAPDefinitionService> loadDataSourceDefinition() {
 		List<HAPDefinitionService> out = new ArrayList<HAPDefinitionService>();
+
+		for(String serviceClasse : serviceClasses) {
+			Class cls;
+			try {
+				cls = Class.forName(serviceClasse);
+				HAPDefinitionService dataSourceDef = loadDataSourceDefinition(cls);
+				if(dataSourceDef!=null)		out.add(dataSourceDef);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		
+/*		
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class cls, Object data) {
@@ -32,7 +49,7 @@ public class HAPImporterDataSourceDefinition {
 				return false;
 			}
 		}.process(null);
-		
+*/		
 		return out;
 	}
 	

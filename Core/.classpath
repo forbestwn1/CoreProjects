@@ -18,7 +18,6 @@
 	<classpathentry kind="lib" path="libs/org.apache.commons.collections.jar"/>
 	<classpathentry kind="lib" path="libs/org.apache.commons.beanutils.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CriteriaParser"/>
-	<classpathentry exported="true" kind="lib" path="libs/guava-23.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/rhino-1.7.9.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
