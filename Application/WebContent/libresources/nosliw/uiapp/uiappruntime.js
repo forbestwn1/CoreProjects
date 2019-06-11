@@ -91,6 +91,20 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 		return loc_getGoActiveRequest(request);
 	};
 
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]=
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DeactiveUIAppRuntime", {}), undefined, request);
+		out.addRequest(loc_componentComplex.getDeactiveRequest());
+		loc_componentComplex.clearState();
+		return out;
+	};	
+
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DestroyUIAppRuntime", {}), undefined, request);
+		out.addRequest(loc_componentComplex.getDestroyRequest());
+		return out;
+	};
+
 	var loc_out = {
 			
 		prv_getInitRequest : function(handlers, request){

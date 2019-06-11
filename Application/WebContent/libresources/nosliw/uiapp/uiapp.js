@@ -143,6 +143,11 @@ var node_createApp = function(id, appDef, ioInput){
 			}
 		},
 		
+		clearModuleInfo : function(){
+			loc_out.prv_app.modulesByRole = {};
+			loc_out.prv_app.currentModuleByRole = {};
+		},
+		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 

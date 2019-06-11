@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_appUtility;
 	var node_ApplicationDataInfo;
+	var node_createServiceRequestInfoSimple;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -151,6 +152,21 @@ var node_createAppDecoration = function(gate){
 			return out;
 		},
 			
+		getDeactiveRequest :function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+			var moduleInfos = loc_uiApp.getAllModuleInfo();
+			_.each(moduleInfos, function(moduleInfo, index){
+				out.addRequest(node_getComponentLifecycleInterface(moduleInfo.module).getTransitRequest("destroy"));
+			});
+
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_uiApp.clearModuleInfo();
+			}));
+			
+			return out;
+		},
+		
 		getInterface : function(){	},
 	};
 	
@@ -175,6 +191,7 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.utility", function(){node_appUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataInfo", function(){node_ApplicationDataInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createAppDecoration", node_createAppDecoration); 

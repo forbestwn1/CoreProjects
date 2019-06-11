@@ -55,10 +55,10 @@ $(document).on("nosliwActive", function(){
 	var requestProcessor = nosliw.runtime.getRequestProcessor();
 	requestProcessor.registerEventListener(undefined, function(eventName, requestId){
 		if(eventName==node_CONSTANT.REQUESTPROCESS_EVENT_START){
-//			framework7App.preloader.show();
+			framework7App.preloader.show();
 		}
 		else if(eventName==node_CONSTANT.REQUESTPROCESS_EVENT_DONE){
-//			framework7App.preloader.hide();
+			framework7App.preloader.hide();
 		}
 	});
 	

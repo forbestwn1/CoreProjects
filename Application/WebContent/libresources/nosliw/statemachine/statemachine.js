@@ -165,7 +165,10 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		else if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
 			var transitRequest = node_createServiceRequestInfoSequence(undefined, {
 				success : function(request){			},
-				error : function(request){		loc_failTransit(request);			},
+				error : function(request){
+					loc_thisContext;
+					loc_failTransit(request);			
+				},
 				exception : function(request){	loc_failTransit(request);			}
 			});
 

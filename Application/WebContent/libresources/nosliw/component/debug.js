@@ -175,7 +175,7 @@ var node_createComponentLifeCycleDebugView = function(){
 
 		var allCommandsView = $('<div>All Commands : </div>');
 		_.each(loc_stateMachine.getAllCommands(), function(command, i){
-			var commandView = $('<a>'+command+'</a>');
+			var commandView = $('<br><a>'+command+'</a>');
 			allCommandsView.append(commandView);
 			allCommandsView.append($('<span>&nbsp;&nbsp;</span>'));
 			commandView.on('click', function(){

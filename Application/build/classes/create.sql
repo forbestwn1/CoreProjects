@@ -15,6 +15,7 @@ CREATE TABLE nosliw.MINIAPP_USER(
 CREATE TABLE nosliw.MINIAPP_GROUP(
 	ID   				VARCHAR(20)			NOT NULL ,
 	NAME				VARCHAR(20)			NOT NULL,
+	DESCRIPTION			VARCHAR(500)		NOT NULL,
 	
 	PRIMARY KEY (ID)	
 );
@@ -56,6 +57,12 @@ CREATE TABLE nosliw.MINIAPP_SETTING(
 	PRIMARY KEY (ID)	
 );
 
+INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SoccerGroup', 'SoccerGroup', 'no description');
+INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SchoolGroup', 'SchoolGroup', 'no description');
+INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SoccerForFun', 'Soccer For Fun', 'Soccer for fun group in Toronto');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('PlayerInformation', 'Player Information');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('Register', 'Register');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('Position', 'Position');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('SoccerApp1', 'SoccerApp1');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('SoccerApp2', 'SoccerApp2');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('SchoolApp1', 'SchoolApp1');
