@@ -19,21 +19,34 @@
 		},
 		
 	},
-	script : function(context, parentResourceView, uiTagResource, attributes, env){
+	script : function(env){
 
+		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+		
 		var loc_env = env;
 		var loc_resourceView;
+		var loc_view;
 		var loc_caseValue = env.getAttributeValue("value");
 		
 		var loc_out = 
 		{
-			ovr_initViews : function(startEle, endEle, requestInfo){
-				loc_resourceView = loc_env.createDefaultUIView(requestInfo);
+			initViews : function(requestInfo){
+				loc_view = $('<div/>');	
+				return loc_view;
 			},
-			
-			ovr_postInit : function(){},
 
-			ovr_preInit : function(){},
+			postInit : function(requestInfo){
+				var out = node_createServiceRequestInfoSequence(undefined);
+				out.addRequest(loc_env.getCreateDefaultUIViewRequest({
+					success : function(requestInfo, uiView){
+						loc_resourceView = uiView;
+						loc_resourceView.appendTo(loc_view);
+					}
+				}));
+				return out;
+			},
+
+			preInit : function(){},
 			
 			valueChanged : function(value){
 				if(value==loc_caseValue){

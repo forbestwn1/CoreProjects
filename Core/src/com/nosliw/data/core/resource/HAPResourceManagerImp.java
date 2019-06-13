@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.erro.HAPErrorUtility;
+import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPResourceManagerImp implements HAPResourceManager{
@@ -20,7 +21,9 @@ public abstract class HAPResourceManagerImp implements HAPResourceManager{
 			HAPResource resource = this.m_cachedResource.get(resourceId);
 			if(resource==null) {
 				resource = this.getResource(resourceId, runtimeInfo);
-				if(resource!=null)  this.m_cachedResource.put(resourceId, resource);
+				if(HAPSystemUtility.getResourceCached()) {
+					if(resource!=null)  this.m_cachedResource.put(resourceId, resource);
+				}
 			}
 			if(resource!=null) {
 				out.addLoadedResource(resource);
@@ -47,7 +50,9 @@ public abstract class HAPResourceManagerImp implements HAPResourceManager{
 		List<HAPResourceDependent> dependencys = this.m_cachedDependency.get(resourceId);
 		if(dependencys==null) {
 			dependencys = this.getResourceDependency(resourceId, runtimeInfo);
-			if(dependencys!=null)   this.m_cachedDependency.put(resourceId, dependencys);
+			if(HAPSystemUtility.getResourceCached()) {
+				if(dependencys!=null)   this.m_cachedDependency.put(resourceId, dependencys);
+			}
 		}
 		if(dependencys!=null) {
 			for(HAPResourceDependent dependency : dependencys){

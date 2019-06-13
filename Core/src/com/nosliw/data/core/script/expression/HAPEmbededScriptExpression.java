@@ -9,12 +9,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependent;
-import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -76,13 +74,20 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 	
 	public boolean isConstant(){
 		boolean out = true;
-		for(Object ele : this.m_definition.getElements()){
+		for(Object ele : this.m_elements){
 			if(ele instanceof HAPScriptExpression){
 				if(!((HAPScriptExpression)ele).isConstant()){
 					out = false;
 				}
 			}
 		}
+//		for(Object ele : this.m_definition.getElements()){
+//			if(ele instanceof HAPScriptExpression){
+//				if(!((HAPScriptExpression)ele).isConstant()){
+//					out = false;
+//				}
+//			}
+//		}
 		return out;
 	}
 	

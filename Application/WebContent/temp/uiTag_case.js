@@ -1,11 +1,11 @@
 
-if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"include",
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"case",
 "type":"uiTag"
 },
 "children":[],
 "dependency":{},
 "info":{}
-}, {"name":"include",
+}, {"name":"case",
 "context":{"group":{"public":{"element":{}
 },
 "protected":{"element":{}
@@ -15,17 +15,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "private":{"element":{}
 }
 },
-"info":{"inherit":"false",
-"escalate":"true"
-}
+"info":{}
 },
-"attributes":{"source":{"name":"source",
-"description":""
-},
-"context":{"name":"context",
-"description":""
-},
-"event":{"name":"event",
+"attributes":{"value":{"name":"value",
 "description":""
 }
 },
@@ -36,9 +28,8 @@ function (env) {
     var loc_env = env;
     var loc_resourceView;
     var loc_view;
-    var loc_out = {findFunctionDown: function (name) {
-        return loc_resourceView.findFunctionDown(name);
-    }, initViews: function (requestInfo) {
+    var loc_caseValue = env.getAttributeValue("value");
+    var loc_out = {initViews: function (requestInfo) {
         loc_view = $("<div/>");
         return loc_view;
     }, postInit: function (requestInfo) {
@@ -48,9 +39,15 @@ function (env) {
             loc_resourceView.appendTo(loc_view);
         }}));
         return out;
-    }, destroy: function () {
-        loc_resourceView.detachViews();
-        loc_resourceView.destroy();
+    }, preInit: function () {
+    }, valueChanged: function (value) {
+        if (value == loc_caseValue) {
+            loc_resourceView.insertAfter(loc_env.getStartElement());
+            return true;
+        } else {
+            loc_resourceView.detachViews();
+            return false;
+        }
     }};
     return loc_out;
 }

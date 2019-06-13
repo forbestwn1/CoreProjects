@@ -29,6 +29,8 @@
 		}
 	},
 	script : function(env){
+		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+		
 		var loc_env = env;
 		
 		var loc_resourceView;

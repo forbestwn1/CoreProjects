@@ -1,5 +1,5 @@
 
-nosliw.runtime.getResourceService().importResource({"id":{"id":"floatinput",
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"floatinput",
 "type":"uiTag"
 },
 "children":[],
@@ -15,7 +15,24 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"floatinput",
 },
 "internal":{"element":{}
 },
-"private":{"element":{}
+"private":{"element":{"internal_data":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"false",
+"path":{"rootEleName":"<%=&(nosliwattribute_data)&%>"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+}
+}
+}
+}
 }
 },
 "info":{"inherit":"false"
@@ -36,10 +53,14 @@ function (env) {
     var loc_getViewData = function () {
         return {dataTypeId: "test.float;1.0.0", value: parseFloat(loc_view.val())};
     };
-    var loc_updateView = function () {
+    var loc_updateView = function (request) {
         env.executeDataOperationRequestGet(loc_dataVariable, "", {success: function (requestInfo, data) {
-            loc_view.val(data.value.value + "");
-        }});
+            if (data == undefined) {
+                loc_view.val("");
+            } else {
+                loc_view.val(data.value.value);
+            }
+        }}, request);
     };
     var loc_setupUIEvent = function () {
         loc_view.bind("change", function () {
@@ -50,11 +71,11 @@ function (env) {
     }, initViews: function (requestInfo) {
         loc_view = $("<input type=\"text\"/>");
         return loc_view;
-    }, postInit: function () {
-        loc_updateView();
+    }, postInit: function (request) {
+        loc_updateView(request);
         loc_setupUIEvent();
-        loc_dataVariable.registerDataOperationEventListener(undefined, function () {
-            loc_updateView();
+        loc_dataVariable.registerDataOperationEventListener(undefined, function (event, eventData, request) {
+            loc_updateView(request);
         }, this);
     }, processAttribute: function (name, value) {
     }, destroy: function () {

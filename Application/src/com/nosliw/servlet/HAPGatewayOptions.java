@@ -23,6 +23,9 @@ public class HAPGatewayOptions extends HAPGatewayImp{
 			case "buildingType":
 				values = new String[] {"House", "Townhouse", "Appartment"};
 				break;
+			case "players2019Summer":
+				values = new String[] {"Kaida", "Wilson", "Ning"};
+				break;
 			}
 			return this.createSuccessWithObject(values);
 		}

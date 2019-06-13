@@ -1,14 +1,11 @@
 
-if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"textinput",
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"boolean",
 "type":"uiTag"
 },
 "children":[],
-"dependency":{"op1":{"id":"test.integer;1.0.0;add",
-"type":"operation"
-}
-},
+"dependency":{},
 "info":{}
-}, {"name":"textinput",
+}, {"name":"boolean",
 "context":{"group":{"public":{"element":{}
 },
 "protected":{"element":{}
@@ -26,7 +23,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "definition":{"type":"data",
 "processed":"false",
 "criteria":{"status":"close",
-"criteria":"test.string;1.0.0",
+"criteria":"test.boolean;1.0.0",
 "info":{}
 }
 }
@@ -66,15 +63,15 @@ function (env) {
     var loc_revertChange = function () {
     };
     var loc_getViewData = function () {
-        return {dataTypeId: "test.string;1.0.0", value: loc_view.val()};
+        return {dataTypeId: "test.boolean;1.0.0", value: loc_view.prop("checked")};
     };
     var loc_updateView = function (request) {
         loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {success: function (requestInfo, data) {
-            if (data == undefined) {
-                loc_view.val("");
-            } else {
-                loc_view.val(data.value.value);
+            var value = false;
+            if (data != undefined) {
+                value = data.value.value;
             }
+            loc_view.prop("checked", value);
         }}, request);
     };
     var loc_setupUIEvent = function () {
@@ -85,7 +82,7 @@ function (env) {
         });
     };
     var loc_out = {initViews: function (requestInfo) {
-        loc_view = $("<input type=\"text\"/>");
+        loc_view = $("<input type=\"checkbox\"/>");
         return loc_view;
     }, postInit: function (requestInfo) {
         loc_updateView(requestInfo);

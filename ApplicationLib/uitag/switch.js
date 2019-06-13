@@ -3,70 +3,73 @@
 	description : "",
 	attributes : [
 		{
-			name : "variable"
+			name : "value"
 		}
 	],
 	context: {
 		public : {
 		},
 		internal : {
-			"internal_switchVariable" : {
-				path : "<%=&(variable)&%>"
+			"internal_switchValue" : {
+				path : "<%=&(value)&%>"
 			},
 			"internal_found" : {
 				"default" : false
 			}
 		}
 	},
-	script : function(context, parentResourceView, uiTagResource, attributes, env){
+	script : function(env){
 
+		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+		
 		var loc_env = env;
 
-		var loc_valueContextEleName = "internal_switchVariable";
-	
-		var loc_valueVariable = env.createVariable(loc_valueContextEleName);
-
+		var loc_value;
+		
 		var loc_resourceView;
-
+		
+		var loc_view;
 
 		var loc_updateView = function(requestInfo){
-			
-			loc_env.executeDataOperationRequestGet(loc_valueVariable, "", {
-				success : function(request, data){
-					var value;
-					if(data!=undefined)		value = data.value;
-							
-					var found = false;
-					var caseTags = loc_resourceView.getTagsByName("case");
-					_.each(caseTags, function(caseTag, name){
-						var matched = caseTag.getTagObject().valueChanged(value);
-						if(matched==true)  found = true;
-					});
-							
-					var defaultTags = loc_resourceView.getTagsByName("casedefault");
-					_.each(defaultTags, function(defaultTag, name){
-						defaultTag.getTagObject().found(found);
-					});
-				}
-			}, requestInfo);
+
+			if(loc_resourceView!=undefined){
+				var found = false;
+				var caseTags = loc_resourceView.getTagsByName("case");
+				_.each(caseTags, function(caseTag, name){
+					var matched = caseTag.getTagObject().valueChanged(loc_value+"");
+					if(matched==true)  found = true;
+				});
+			}
 		};
 		
 		var loc_out = 
 		{
-			ovr_postInit : function(requestInfo){
-				loc_valueVariable.registerDataChangeEventListener(undefined, function(){
+			postInit : function(requestInfo){
+				var out = node_createServiceRequestInfoSequence(undefined);
+				out.addRequest(loc_env.getCreateDefaultUIViewRequest({
+					success : function(requestInfo, uiView){
+						loc_resourceView = uiView;
+						loc_resourceView.appendTo(loc_view);
 						loc_updateView();
-				}, this);
-				loc_updateView();
+					}
+				}));
+				return out;
 			},
 
-			ovr_preInit : function(requestInfo){
+			preInit : function(requestInfo){
 			},
 		
-			ovr_initViews : function(startEle, endEle, requestInfo){
-				loc_resourceView = loc_env.createDefaultUIView(requestInfo);
-				return loc_resourceView.getViews();
-			}
+			initViews : function(requestInfo){
+				loc_view = $('<div/>');	
+				return loc_view;
+			},
+
+			processAttribute : function(name, value){
+				if(name=='value'){
+					loc_value = value;
+					loc_updateView();
+				}
+			},
 		};
 		
 		return loc_out;

@@ -42,4 +42,5 @@ public class HAPSystemUtility {
 	public static String getApplicationDataFolder() {   return prop.getProperty("ApplicationDataFolder");  }
 	public static String getTempFolder() {  return prop.getProperty("TempFolder");    }
 	public static String getJSFolder() {   return prop.getProperty("JSFolder");  }
+	public static boolean getResourceCached() {   return Boolean.valueOf(prop.getProperty("ResourceCached", "false"));   }
 }

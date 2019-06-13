@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html>
 <body>
-	<br>
-	请提供信息，你是谁，包括
-	<br>
-		名字： 
-	<br>
-		邮件地址
-	<br>
 	
 	Are you registered player:
-	<nosliw-bolean id="players2019Summer" data="player.registered"/>
+	<nosliw-boolean id="players2019Summer" data="player.registered"/>
 	
 	<br>
-	SchoolType:<nosliw-options id="players2019Summer" data="player.name"/>
+	<nosliw-switch value="<%=?(player.registered)?.value%>">
+		<nosliw-case value="true">
+			<br>
+			Your name:<nosliw-string-options id="players2019Summer" data="player.name"/>
+			<br>
+		</nosliw-case>
+
+		<nosliw-case value="false">
+			<br>
+			Your name:<nosliw-textinput data="player.name"/>  
+			<br>
+		</nosliw-case>
+	</nosliw-switch>
+	
 	<br>
-	
-	
-	Name : 
-	TextInput:<nosliw-textinput data="player.name"/>  
-	<br>
-	
-	Email : 
-	TextInput:<nosliw-textinput data="player.email"/>  
+	Email:<nosliw-textinput data="player.email"/>  
 	<br>
 	
 	<br>
 	<br><a href='' nosliw-event="click:save:">Save</a><br>
 	<br>
 	
+	<nosliw-contextvalue/>
 
 </body>
 
@@ -48,11 +48,11 @@
 						"defaultValue": {
 							registered : {
 								dataTypeId: "test.boolean;1.0.0",
-								value: undefined
+								value: false
 							},
 							name : {
 								dataTypeId: "test.string;1.0.0",
-								value: ""
+								value: "Wilson"
 							},
 							email : {
 								dataTypeId: "test.string;1.0.0",

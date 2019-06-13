@@ -57,6 +57,8 @@
 		var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
 		var node_uiDataOperationServiceUtility  = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
 		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
+		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 		
 		var loc_env = env;
 		//container data variable

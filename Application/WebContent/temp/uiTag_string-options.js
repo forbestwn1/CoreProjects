@@ -1,11 +1,11 @@
 
-if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"options",
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"string-options",
 "type":"uiTag"
 },
 "children":[],
 "dependency":{},
 "info":{}
-}, {"name":"options",
+}, {"name":"string-options",
 "context":{"group":{"public":{"element":{}
 },
 "protected":{"element":{}
@@ -23,7 +23,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "definition":{"type":"data",
 "processed":"false",
 "criteria":{"status":"close",
-"criteria":"test.options;1.0.0",
+"criteria":"test.string;1.0.0",
 "info":{}
 }
 }
@@ -52,14 +52,14 @@ function (env) {
     var loc_revertChange = function () {
     };
     var loc_getViewData = function () {
-        return {dataTypeId: "test.options;1.0.0", value: {value: loc_view.val(), optionsId: loc_env.getAttributeValue("id")}};
+        return {dataTypeId: "test.string;1.0.0", value: loc_view.val()};
     };
     var loc_updateView = function (request) {
         loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {success: function (requestInfo, data) {
             if (data == undefined) {
                 loc_view.val();
             } else {
-                loc_view.val(data.value.value.value);
+                loc_view.val(data.value.value);
             }
         }}, request);
     };

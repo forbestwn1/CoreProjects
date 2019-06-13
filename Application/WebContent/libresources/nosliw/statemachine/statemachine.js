@@ -239,7 +239,7 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 			if(loc_currentTask!=undefined)  return undefined;
 			if(typeof nexts === 'string' || nexts instanceof String){
 				//command
-				var commandInfo = loc_stateDef.getCommandInfo(nexts);
+				var commandInfo = loc_stateDef.getCommandInfo(nexts, loc_currentState);
 				if(commandInfo!=undefined){
 					//command
 					nexts = commandInfo.nexts;

@@ -13,9 +13,9 @@ var node_StateTransitPath = function(from, to, path){
 	this.path = path;
 };
 	
-var node_CommandInfo = function(name, froms, nexts){
+var node_CommandInfo = function(name, from, nexts){
 	this.name = name;
-	this.froms = froms;
+	this.from = from;
 	this.nexts = nexts;
 };
 	
@@ -78,18 +78,32 @@ var node_createStateMachineDef = function(){
 
 	var loc_buildNextCommandsByState = function(){
 		loc_nextCommandsByState = {};
+		
 		_.each(loc_getAllStates(), function(state, i){
 			var commands = [];
-			var candidates = loc_getNextCandidateStates(state);
-			_.each(loc_commands, function(commandInfo, command){
-				if(candidates.includes(commandInfo.nexts[0])){
-					if(commandInfo.froms==undefined || commandInfo.froms.includes(state)){
+			_.each(loc_commands, function(byName, command){
+				_.each(byName, function(commandInfo, from){
+					if(from==state){
 						commands.push(command);
 					}
-				}
+				});
 			});
 			loc_nextCommandsByState[state] = commands;
 		});
+		
+		
+//		_.each(loc_getAllStates(), function(state, i){
+//			var commands = [];
+//			var candidates = loc_getNextCandidateStates(state);
+//			_.each(loc_commands, function(commandInfo, command){
+//				if(candidates.includes(commandInfo.nexts[0])){
+//					if(commandInfo.froms==undefined || commandInfo.froms.includes(state)){
+//						commands.push(command);
+//					}
+//				}
+//			});
+//			loc_nextCommandsByState[state] = commands;
+//		});
 	};
 	
 	var loc_discoverTransitPath = function(from, to){
@@ -101,11 +115,19 @@ var node_createStateMachineDef = function(){
 		getStateInfo : function(state){		return loc_getStateInfo(state);	},	
 			
 		addStateInfo : function(transitInfo, callBack, reverseCallBack){
-			var stateInfo = loc_getStateInfo(transitInfo.from);
-			stateInfo.addNextState(transitInfo.to, callBack, reverseCallBack);
+			var stateInfoFrom = loc_getStateInfo(transitInfo.from);
+			var stateInfoTo = loc_getStateInfo(transitInfo.to);
+			stateInfoFrom.addNextState(transitInfo.to, callBack, reverseCallBack);
 		},
 
-		addCommand : function(commandInfo){		loc_commands[commandInfo.name] = commandInfo;		},
+		addCommand : function(commandInfo){
+			var byName = loc_commands[commandInfo.name];
+			if(byName==undefined){
+				byName = {};
+				loc_commands[commandInfo.name] = byName;
+			}
+			byName[commandInfo.from] = commandInfo;
+		},
 		
 		getCandidateCommands : function(state){
 			if(loc_nextCommandsByState==undefined){
@@ -127,7 +149,9 @@ var node_createStateMachineDef = function(){
 			_.each(loc_commands, function(commandInfo, commandName){ out.push(commandName);  });
 			return out;
 		},
-		getCommandInfo : function(command){		return loc_commands[command];	},
+		getCommandInfo : function(command, from){		
+			return loc_commands[command][from];	
+		},
 		
 		addTransitPath : function(stateTransitPath){
 			var fromTransit = loc_transitPath[stateTransitPath.from];

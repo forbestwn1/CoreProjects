@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_uiResourceUtility;
 	var node_createEmbededScriptExpressionInContent;
 	var node_createEmbededScriptExpressionInAttribute;
+	var node_createEmbededScriptExpressionInTagAttribute;
 	var node_getLifecycleInterface;
 	var node_basicUtility;
 	var node_createUITagRequest;
@@ -46,6 +47,7 @@ var loc_createUIViewFactory = function(){
 							uiView.prv_addUITag(uiTagId, uiTag);
 						});
 						uiView.prv_initCustomTagEvent();
+						uiView.prv_initCustomTagExpressionAttribute();
 						return uiView;
 				}});
 				
@@ -272,7 +274,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONINATTRIBUTES], function(expressionAttr, key, list){
 			loc_expressionContents.push(node_createEmbededScriptExpressionInAttribute(expressionAttr, loc_out, requestInfo));
 		});
-		
+
 		//init regular tag event
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ELEMENTEVENTS], function(eleEvent, key, list){
 			loc_elementEvents.push(loc_initElementEvent(eleEvent));
@@ -346,6 +348,13 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 			//init customer tag event
 			_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGEVENTS], function(tagEvent, key, list){
 				loc_tagEvents.push(loc_initTagEvent(tagEvent));
+			});
+		},
+		
+		prv_initCustomTagExpressionAttribute : function(){
+			//init tag expression attribute
+			_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONINTAGATTRIBUTES], function(expressionAttr, key, list){
+				loc_expressionContents.push(node_createEmbededScriptExpressionInTagAttribute(expressionAttr, loc_out, requestInfo));
 			});
 		},
 		
@@ -551,6 +560,7 @@ nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtili
 nosliw.registerSetNodeDataEvent("uipage.utility", function(){node_uiResourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInAttribute", function(){node_createEmbededScriptExpressionInAttribute = this.getData();});
+nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInTagAttribute", function(){node_createEmbededScriptExpressionInTagAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createUITagRequest", function(){node_createUITagRequest = this.getData();});
