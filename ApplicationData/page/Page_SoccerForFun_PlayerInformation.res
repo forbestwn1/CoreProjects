@@ -56,10 +56,9 @@
 							},
 							email : {
 								dataTypeId: "test.string;1.0.0",
-								value: ""
+								value: "wilson@hotmail.com"
 							},
 						}
-						
 					}
 				}
 			}
@@ -69,8 +68,8 @@
 
 	<scripts>
 	{
-		save : function(data, info, env){
-		
+		save : function(info, env){
+			env.trigueEvent("savePlayerInformation", info.eventData);
 		},
 	}
 	</scripts>
