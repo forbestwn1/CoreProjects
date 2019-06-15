@@ -71,6 +71,11 @@ var node_createApp = function(id, appDef, ioInput){
 		
 		getProcess : function(name){  return loc_out.prv_app.appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][name];  },
 
+		getEventHandler : function(moduleName, eventName){
+			var moduleDef = loc_out.prv_app.appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE][moduleName];
+			return moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_EVENTHANDLER][eventName];
+		},
+
 		getInitIOContextRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			if(loc_ioInput!=undefined){

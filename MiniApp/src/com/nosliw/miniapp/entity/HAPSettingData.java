@@ -5,10 +5,12 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
+@HAPEntityWithAttribute
 public class HAPSettingData extends HAPSerializableImp{
 
 	@HAPAttribute
@@ -18,14 +20,11 @@ public class HAPSettingData extends HAPSerializableImp{
 	public static final String NAME = "name";
 
 	@HAPAttribute
-	public static final String TYPE = "type";
+	public static final String OWNERTYPE = "ownerType";
 
 	@HAPAttribute
-	public static final String STATUS = "status";
-	
-	@HAPAttribute
-	public static final String VERSION = "version";
-	
+	public static final String OWNERID = "ownerId";
+
 	@HAPAttribute
 	public static final String DATA = "data";
 	
@@ -33,11 +32,9 @@ public class HAPSettingData extends HAPSerializableImp{
 	
 	private String m_name;
 	
-	private String m_type;
+	private String m_ownerId;
 	
-	private String m_status;
-	
-	private String m_version;
+	private String m_ownerType;
 	
 	private Object m_data;
 	
@@ -47,15 +44,12 @@ public class HAPSettingData extends HAPSerializableImp{
 	public String getName() {  return this.m_name;  }
 	public void setName(String name) {  this.m_name = name;  }
 
-	public String getType() {  return this.m_type;  }
-	public void setType(String type) {  this.m_type = type;  }
+	public String getOwnerId() {  return this.m_ownerId;  }
+	public void setOwnerId(String ownerId) {  this.m_ownerId = ownerId;  }
 
-	public String getStatus() {  return this.m_status;  }
-	public void setStatus(String status) {  this.m_status = status;   }
+	public String getOwnerType() {  return this.m_ownerType;  }
+	public void setOwnerType(String ownerType) {  this.m_ownerType = ownerType;  }
 
-	public String getVersion() {  return this.m_version;   }
-	public void setVersion(String version) {  this.m_version = version;   }
-	
 	public Object getData() {   return this.m_data;   }
 	public String getDataStr() { return this.m_data.toString();  }
 	public void setData(Object data) {   this.m_data = data;   }
@@ -65,9 +59,8 @@ public class HAPSettingData extends HAPSerializableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(NAME, this.m_name);
-		jsonMap.put(TYPE, this.m_type);
-		jsonMap.put(STATUS, this.m_status);
-		jsonMap.put(VERSION, this.m_version);
+		jsonMap.put(OWNERID, this.m_ownerId);
+		jsonMap.put(OWNERTYPE, this.m_ownerType);
 		jsonMap.put(DATA, HAPJsonUtility.buildJson(this.m_data, HAPSerializationFormat.JSON));
 	}
 	
@@ -77,9 +70,8 @@ public class HAPSettingData extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_id = (String)jsonObj.opt(ID);
 		this.m_name = (String)jsonObj.opt(NAME);
-		this.m_type = (String)jsonObj.opt(TYPE);
-		this.m_status = (String)jsonObj.opt(STATUS);
-		this.m_version = (String)jsonObj.opt(VERSION);
+		this.m_ownerId = (String)jsonObj.opt(OWNERID);
+		this.m_ownerType = (String)jsonObj.opt(OWNERTYPE);
 		this.m_data = jsonObj.optJSONObject(DATA);
 		return true;
 	}

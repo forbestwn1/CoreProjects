@@ -117,6 +117,21 @@ var node_createAppDecoration = function(gate){
 					var saveRequest = moduleInfo.outputMapping["persistance"].getExecuteCommandRequest("execute", undefined, undefined, request);
 					node_requestServiceProcessor.processRequest(saveRequest);
 				}
+				else{
+					var eventHandler = loc_gate.getComponent().getEventHandler(eventData.moduleInfo.name, eventData.eventName);
+					//if within module, defined the process for this event
+					if(eventHandler!=undefined){
+						var extraInput = {
+							public : {
+								EVENT : {
+									event : eventData.eventName,
+									data : eventData.eventData
+								} 
+							}
+						};
+						loc_gate.processRequest(loc_gate.getExecuteProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEEVENTHANDLER_PROCESS], extraInput, undefined, request));
+					}
+				}
 			}
 		},
 			

@@ -6,17 +6,14 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
-import com.nosliw.miniapp.entity.HAPMiniAppEntryInstance;
 import com.nosliw.miniapp.entity.HAPMiniAppSettingData;
-import com.nosliw.miniapp.entity.HAPSettingData;
+import com.nosliw.miniapp.entity.HAPOwnerInfo;
 import com.nosliw.miniapp.entity.HAPUser;
 import com.nosliw.miniapp.entity.HAPUserInfo;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
-import com.nosliw.uiresource.application.HAPExecutableAppEntry;
 
 public class HAPAppManager {
 
@@ -54,6 +51,19 @@ public class HAPAppManager {
 		return out;
 	}
 
+	public HAPMiniAppSettingData getAppData(HAPOwnerInfo ownerInfo) {
+		return this.m_dataAccess.getSettingData(ownerInfo);
+	}
+
+	public HAPMiniAppSettingData getAppData(HAPOwnerInfo ownerInfo, String[] dataNames) {
+		return this.m_dataAccess.getSettingData(ownerInfo, dataNames);
+	}
+
+	public HAPMiniAppSettingData updateAppData(HAPMiniAppSettingData miniAppSettingData) {
+		return this.m_dataAccess.updateSettingData(miniAppSettingData);
+	}
+
+	/*
 	public HAPSettingData createMiniAppData(String userId, String appId, String dataName, HAPSettingData dataInfo) {
 		HAPSettingData out = null;
 		out = this.m_dataAccess.addSettingData(userId, appId, dataName, dataInfo);
@@ -94,6 +104,7 @@ public class HAPAppManager {
 		
 		return out;
 	}
+	*/
 	
 /*	
 	public HAPInstanceMiniAppUIEntry getMiniAppInstance(String instanceId) {

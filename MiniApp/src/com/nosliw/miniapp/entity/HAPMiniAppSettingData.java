@@ -1,37 +1,42 @@
 package com.nosliw.miniapp.entity;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
+@HAPEntityWithAttribute
 public class HAPMiniAppSettingData extends HAPSerializableImp{
 
-	private Map<String, List<HAPSettingData>> m_data;
+	@HAPAttribute
+	public static final String OWNERINFO = "ownerInfo";
+
+	@HAPAttribute
+	public static final String DATABYNAME = "dataByName";
+
+	private HAPOwnerInfo m_ownerInfo;
 	
-	public HAPMiniAppSettingData() {
-		this.m_data = new LinkedHashMap<String, List<HAPSettingData>>();
-	}
+	private Map<String, HAPSettingData> m_dataByName;
 	
-	public void addData(HAPSettingData data) {
-		String dataName = data.getName();
-		List<HAPSettingData> dataByName = this.m_data.get(dataName);
-		if(dataByName==null) {
-			dataByName = new ArrayList<HAPSettingData>();
-			this.m_data.put(dataName, dataByName);
-		}
-		dataByName.add(data);
+	public HAPMiniAppSettingData(HAPOwnerInfo ownerInfo) {
+		this.m_ownerInfo = ownerInfo;
+		this.m_dataByName = new LinkedHashMap<String, HAPSettingData>();
 	}
+
+	public HAPOwnerInfo getOwnerInfo() {   return this.m_ownerInfo;   }
+	
+	public void addData(HAPSettingData data) {	this.m_dataByName.put(data.getName(), data);	}
+	
+	public Map<String, HAPSettingData> getDatas(){  return this.m_dataByName;    }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		for(String dataName : this.m_data.keySet()) {
-			jsonMap.put(dataName, HAPJsonUtility.buildJson(this.m_data.get(dataName), HAPSerializationFormat.JSON));
-		}
+		jsonMap.put(OWNERINFO, HAPJsonUtility.buildJson(this.m_ownerInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(DATABYNAME, HAPJsonUtility.buildJson(this.m_dataByName, HAPSerializationFormat.JSON));
 	}
 }

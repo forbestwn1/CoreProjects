@@ -563,4 +563,14 @@ public class HAPConstant {
 		public static final String DATAASSOCIATION_TYPE_NONE = "none";
 
 
+
+		public static final String MINIAPP_DATAOWNER_APP = "app";
+		public static final String MINIAPP_DATAOWNER_GROUP = "group";
+
+
+
+		public static final String GATEWAY_OPTIONS = "options";
+		public static final String GATEWAY_APPDATA = "appData";
+
+
 }

@@ -71,6 +71,7 @@ function (env) {
     var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
     var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
     var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+    var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
     var loc_env = env;
     var loc_containerVariable;
     var loc_childResourceViews = [];

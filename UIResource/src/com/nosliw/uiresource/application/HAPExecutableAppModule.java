@@ -44,7 +44,7 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	public static final String DATADEPENDENCY = "dataDependency";
 
 	@HAPAttribute
-	public static String EVENTHANDLER = "eventHandler";
+	public static final String EVENTHANDLER = "eventHandler";
 	
 	private HAPExecutableModule m_module;
 	

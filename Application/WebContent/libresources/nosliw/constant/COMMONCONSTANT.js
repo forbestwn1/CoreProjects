@@ -353,7 +353,11 @@ var COMMONCONSTANT=
   "CONTEXTSTRUCTURE_TYPE_EMPTY": "empty",
   "DATAASSOCIATION_TYPE_MAPPING": "mapping",
   "DATAASSOCIATION_TYPE_MIRROR": "mirror",
-  "DATAASSOCIATION_TYPE_NONE": "none"
+  "DATAASSOCIATION_TYPE_NONE": "none",
+  "MINIAPP_DATAOWNER_APP": "app",
+  "MINIAPP_DATAOWNER_GROUP": "group",
+  "GATEWAY_OPTIONS": "options",
+  "GATEWAY_APPDATA": "appData"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

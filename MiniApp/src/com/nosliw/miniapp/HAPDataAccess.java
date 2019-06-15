@@ -5,12 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.miniapp.entity.HAPGroup;
 import com.nosliw.miniapp.entity.HAPMiniApp;
 import com.nosliw.miniapp.entity.HAPMiniAppSettingData;
+import com.nosliw.miniapp.entity.HAPOwnerInfo;
 import com.nosliw.miniapp.entity.HAPSettingData;
 import com.nosliw.miniapp.entity.HAPUser;
 import com.nosliw.miniapp.entity.HAPUserInfo;
@@ -136,7 +137,6 @@ public class HAPDataAccess {
 		return out;
 	}
 	
-
 	public void updateUserInfoWithMiniApp(HAPUserInfo userInfo) {
 		PreparedStatement statement;
 		try {
@@ -153,10 +153,10 @@ public class HAPDataAccess {
 		}
 	}
 	
-	public HAPMiniAppSettingData getSettingData(String userId, String appId) {
-		HAPMiniAppSettingData out = new HAPMiniAppSettingData();
+	public HAPMiniAppSettingData getSettingData(HAPOwnerInfo ownerInfo) {
+		HAPMiniAppSettingData out = new HAPMiniAppSettingData(ownerInfo);
 		try {
-			PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_INSTANCEDATA_SETTING where userid='"+userId+"' AND appid='"+appId+"';");
+			PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_INSTANCEDATA_SETTING where userid='"+ownerInfo.getUserId()+"' AND ownerid='"+ownerInfo.getComponentId()+"' AND ownertype='"+ownerInfo.getComponentType()+"';");
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				out.addData(buildSettingDataFromResult(resultSet));
@@ -167,11 +167,11 @@ public class HAPDataAccess {
 		return out;
 	}
 
-	public HAPMiniAppSettingData getSettingData(String userId, String appId, Set<String> dataNames) {
-		HAPMiniAppSettingData out = new HAPMiniAppSettingData();
+	public HAPMiniAppSettingData getSettingData(HAPOwnerInfo ownerInfo, String[] dataNames) {
+		HAPMiniAppSettingData out = new HAPMiniAppSettingData(ownerInfo);
 		try {
 			for(String dataName : dataNames) {
-				PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_INSTANCEDATA_SETTING where userid='"+userId+"' AND appid='"+appId+"' AND dataname='"+dataName+"';");
+				PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_INSTANCEDATA_SETTING where userid='"+ownerInfo.getUserId()+"' AND ownerid='"+ownerInfo.getComponentId()+"' AND ownertype='"+ownerInfo.getComponentType()+"' AND dataname='"+dataName+"';");
 				ResultSet resultSet = statement.executeQuery();
 				while(resultSet.next()) {
 					out.addData(buildSettingDataFromResult(resultSet));
@@ -182,13 +182,41 @@ public class HAPDataAccess {
 		}
 		return out;
 	}
-	
+
+	public HAPMiniAppSettingData updateSettingData(HAPMiniAppSettingData miniAppSettingData) {
+		HAPMiniAppSettingData out = miniAppSettingData;
+		
+		Map<String, HAPSettingData> datas = out.getDatas();
+		for(String dataName : datas.keySet()) {
+			try {
+				HAPSettingData data = datas.get(dataName);
+				if(data.getId()==null) {
+					//create
+					String id = this.generateId();
+					PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_INSTANCEDATA_SETTING (ID,USERID,OWNERID,OWNERTYPE, DATANAME,DATA) VALUES ('"+
+								id+"', '"+miniAppSettingData.getOwnerInfo().getUserId()+"', '"+out.getOwnerInfo().getComponentId()+"', '"+out.getOwnerInfo().getComponentType()+"', '"+dataName+"', '"+data.getDataStr()+"');");
+					statement.execute();
+					data.setId(id);
+				}
+				else {
+					//update
+					PreparedStatement statement = this.getConnection().prepareStatement("UPDATE MINIAPP_INSTANCEDATA_SETTING SET DATA='"+data.getDataStr()+"'  WHERE ID='"+data.getId()+"'");
+					statement.execute();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return out;
+	}
+
 	private HAPSettingData buildSettingDataFromResult(ResultSet resultSet) {
 		HAPSettingData data = new HAPSettingData();
 		try {
-			data.setVersion(resultSet.getString("version"));
-			data.setStatus(resultSet.getString("status"));
 			data.setData(resultSet.getString("data"));
+			data.setName(resultSet.getString("name"));
+			data.setOwnerId(resultSet.getString("ownerid"));
+			data.setOwnerType(resultSet.getString("ownertype"));
 			data.setId(resultSet.getString("id"));
 		}
 		catch(Exception e) {
@@ -196,20 +224,26 @@ public class HAPDataAccess {
 		}
 		return data;
 	}
-	
-	public HAPSettingData addSettingData(String userId, String appId, String dataName, HAPSettingData dataInfo) {
-		HAPSettingData out = dataInfo;
-		out.setId(this.generateId());
-		try {
-			PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_INSTANCEDATA_SETTING (ID,USERID,APPID,DATANAME,VERSION,STATUS,DATA) VALUES ('"+
-						out.getId()+"', '"+userId+"', '"+appId+"', '"+dataName+"', '"+dataInfo.getVersion()+"', '"+dataInfo.getStatus()+"', '"+dataInfo.getData()+"');");
-			statement.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
+/*
+	public HAPMiniAppSettingData createSettingData(String userId, HAPMiniAppSettingData miniAppSettingData) {
+		HAPMiniAppSettingData out = miniAppSettingData;
+		
+		Map<String, HAPSettingData> datas = out.getDatas();
+		for(String dataName : datas.keySet()) {
+			HAPSettingData data = datas.get(dataName);
+			try {
+				String id = this.generateId();
+				PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_INSTANCEDATA_SETTING (ID,USERID,OWNERID,OWNERTYPE, DATANAME,DATA) VALUES ('"+
+							id+"', '"+userId+"', '"+out.getOwnerId()+"', '"+out.getOwnerType()+"', '"+dataName+"', '"+data.getDataStr()+"');");
+				statement.execute();
+				data.setId(id);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return out;
 	}
-
+*/
 	public void deleteSettingData(String dataId) {
 		try {
 			PreparedStatement statement = this.getConnection().prepareStatement("DELETE FROM MINIAPP_INSTANCEDATA_SETTING WHERE ID='"+dataId+"';");
@@ -218,19 +252,7 @@ public class HAPDataAccess {
 			e.printStackTrace();
 		}
 	}
-	
-	public HAPSettingData updateSettingData(String id, HAPSettingData dataInfo) {
-		HAPSettingData out = dataInfo;
-		try {
-			PreparedStatement statement = this.getConnection().prepareStatement("UPDATE MINIAPP_INSTANCEDATA_SETTING SET VERSION='"+dataInfo.getVersion()+"',STATUS='"+dataInfo.getStatus()+"', DATA='"+dataInfo.getDataStr()+"'  WHERE ID='"+id+"'");
-			statement.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return out;
-	}
 
-	
 	private String generateId() {  return i+++"";   }
 	
 	protected Connection getConnection(){		return this.m_dbSource.getConnection();	}

@@ -1,5 +1,7 @@
 package com.nosliw.common.info;
 
+import java.util.Map;
+
 import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
@@ -28,5 +30,10 @@ public class HAPEntityInfoImpWrapper extends HAPSerializableImp implements HAPEn
 	@Override
 	public void buildEntityInfoByJson(Object json) {
 		HAPErrorUtility.invalid("This entity info is not writable");
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
 	}
 }
