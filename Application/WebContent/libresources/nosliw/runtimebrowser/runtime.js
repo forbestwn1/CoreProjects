@@ -59,6 +59,8 @@ var node_createRuntime = function(name){
 
 	var loc_requestProcessor;
 	
+	var loc_securityService;
+	
 
 	var loc_out = {
 		
@@ -88,7 +90,9 @@ var node_createRuntime = function(name){
 
 		getUIAppService(){   return loc_uiAppService; },
 
-		getRequestProcessor(){   return  loc_requestProcessor;  }
+		getRequestProcessor(){   return  loc_requestProcessor;  },
+
+		getSecurityService(){  return  loc_securityService;  },
 	};
 	
 	var lifecycleCallback = {};
@@ -103,6 +107,8 @@ var node_createRuntime = function(name){
 		if(node_createUIPageService!=undefined)  loc_uiPageService = node_createUIPageService();
 		loc_processRuntimeFactory = node_createProcessRuntimeFactory();
 		loc_dataService = node_createDataService();
+		loc_securityService = node_createSecurityService();
+		
 		loc_uiModuleService = node_createUIModuleService();
 		loc_uiAppService = node_createUIAppService();
 		loc_uiVariableManager = node_createVariableManager();

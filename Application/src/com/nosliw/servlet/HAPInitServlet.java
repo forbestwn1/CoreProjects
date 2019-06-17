@@ -54,6 +54,6 @@ public class HAPInitServlet  extends HttpServlet{
 			
 			HAPAppManager appManager = new HAPAppManager(uiResourceMan);
 			this.getServletContext().setAttribute("minAppMan", appManager);
-			runtimeEnvironment.getGatewayManager().registerGateway(HAPConstant.GATEWAY_APPDATA, new HAPGatewayAppData(appManager));
+			runtimeEnvironment.getGatewayManager().registerGateway(HAPGatewayAppData.GATEWAY_APPDATA, new HAPGatewayAppData(appManager));
 	   }
 }

@@ -20,21 +20,16 @@ public class HAPSettingData extends HAPSerializableImp{
 	public static final String NAME = "name";
 
 	@HAPAttribute
-	public static final String OWNERTYPE = "ownerType";
-
-	@HAPAttribute
-	public static final String OWNERID = "ownerId";
+	public static final String OWNERINFO = "ownerInfo";
 
 	@HAPAttribute
 	public static final String DATA = "data";
 	
 	private String m_id;
 	
+	private HAPOwnerInfo m_ownerInfo;
+	
 	private String m_name;
-	
-	private String m_ownerId;
-	
-	private String m_ownerType;
 	
 	private Object m_data;
 	
@@ -44,11 +39,8 @@ public class HAPSettingData extends HAPSerializableImp{
 	public String getName() {  return this.m_name;  }
 	public void setName(String name) {  this.m_name = name;  }
 
-	public String getOwnerId() {  return this.m_ownerId;  }
-	public void setOwnerId(String ownerId) {  this.m_ownerId = ownerId;  }
-
-	public String getOwnerType() {  return this.m_ownerType;  }
-	public void setOwnerType(String ownerType) {  this.m_ownerType = ownerType;  }
+	public HAPOwnerInfo getOwnerInfo() {  return this.m_ownerInfo;  }
+	public void setOwnerInfo(HAPOwnerInfo ownerInfo) {  this.m_ownerInfo = ownerInfo;  }
 
 	public Object getData() {   return this.m_data;   }
 	public String getDataStr() { return this.m_data.toString();  }
@@ -59,8 +51,7 @@ public class HAPSettingData extends HAPSerializableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(NAME, this.m_name);
-		jsonMap.put(OWNERID, this.m_ownerId);
-		jsonMap.put(OWNERTYPE, this.m_ownerType);
+		jsonMap.put(OWNERINFO, HAPJsonUtility.buildJson(this.m_ownerInfo, HAPSerializationFormat.JSON));
 		jsonMap.put(DATA, HAPJsonUtility.buildJson(this.m_data, HAPSerializationFormat.JSON));
 	}
 	
@@ -70,8 +61,13 @@ public class HAPSettingData extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_id = (String)jsonObj.opt(ID);
 		this.m_name = (String)jsonObj.opt(NAME);
-		this.m_ownerId = (String)jsonObj.opt(OWNERID);
-		this.m_ownerType = (String)jsonObj.opt(OWNERTYPE);
+
+		JSONObject ownerInfoJson = jsonObj.optJSONObject(OWNERINFO);
+		if(ownerInfoJson!=null) {
+			this.m_ownerInfo = new HAPOwnerInfo();
+			this.m_ownerInfo.buildObject(ownerInfoJson, HAPSerializationFormat.JSON);
+		}
+		
 		this.m_data = jsonObj.optJSONObject(DATA);
 		return true;
 	}

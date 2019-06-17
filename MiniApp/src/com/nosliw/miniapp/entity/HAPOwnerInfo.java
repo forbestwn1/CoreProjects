@@ -38,6 +38,10 @@ public class HAPOwnerInfo extends HAPSerializableImp{
 	public String getComponentId() {   return this.m_componentId;   }
 	public String getComponentType() {   return this.m_componentType;   }
 	
+	public void setUserId(String userId) {   this.m_userId = userId;    }
+	public void setComponentId(String componentId) {   this.m_componentId = componentId;    }
+	public void setComponentType(String componentType) {    this.m_componentType = componentType;    }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

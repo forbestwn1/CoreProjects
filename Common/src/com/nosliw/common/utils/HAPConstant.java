@@ -570,7 +570,6 @@ public class HAPConstant {
 
 
 		public static final String GATEWAY_OPTIONS = "options";
-		public static final String GATEWAY_APPDATA = "appData";
 
 
 }

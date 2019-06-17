@@ -34,7 +34,7 @@
 					},
 				],
 				"eventHandler": {
-					"savePlayerInformation": {
+					"save": {
 						"process": {
 							"activity": [{
 									"id": "startActivityId",

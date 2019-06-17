@@ -68,7 +68,7 @@ var node_createAppDecoration = function(gate){
 		var settingRoots = [];
 		var settingsRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var appDataName = node_appUtility.getApplicationDataName(moduleDef);
-		settingsRequest.addRequest(loc_appDataService.getGetAppDataInfoRequest(appDataName, {
+		settingsRequest.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest({}, appDataName, {
 			success : function(request, settingDataInfos){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 				_.each(settingDataInfos, function(dataInfo, index){
@@ -103,7 +103,7 @@ var node_createAppDecoration = function(gate){
 					var moduleInfo = eventData.moduleInfo;
 					var applicationDataInfo = moduleInfo.applicationDataInfo[0];
 					
-					node_requestServiceProcessor.processRequest(loc_appDataService.getDeleteAppDataRequest(applicationDataInfo.dataName, applicationDataInfo.id, {
+					node_requestServiceProcessor.processRequest(loc_appDataService.getDeleteAppDataSegmentRequest({}, applicationDataInfo.dataName, applicationDataInfo.id, {
 						success : function(request){
 							loc_uiApp.removeModuleInfo(ROLE_SETTING, moduleInfo.id);
 							moduleInfo.root.remove();

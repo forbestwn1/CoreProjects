@@ -637,7 +637,6 @@
 
 			<definition type="space"/>
 			<definition name="GATEWAY_OPTIONS" value="options"/>
-			<definition name="GATEWAY_APPDATA" value="appData"/>
 
 		</definitions>
 	</constants>

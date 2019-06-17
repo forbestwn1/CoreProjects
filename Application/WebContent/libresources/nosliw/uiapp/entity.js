@@ -13,7 +13,13 @@ var node_ApplicationDataInfo = function(dataName, dataId, dataVersion){
 	this.id = dataId;
 	this.version = dataVersion;
 };
-	
+
+var node_ApplicationDataSegment = function(data, dataId, dataVersion){
+	this.data = data;
+	this.id = dataId;
+	this.version = dataVersion;
+};
+
 var node_ModuleInfo = function(moduleDef){
 	this.id = undefined;
 	this.name = moduleDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
@@ -46,5 +52,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 packageObj.createChildNode("ModuleInfo", node_ModuleInfo); 
 packageObj.createChildNode("ApplicationDataInfo", node_ApplicationDataInfo); 
 packageObj.createChildNode("ModuleEventData", node_ModuleEventData); 
+packageObj.createChildNode("ApplicationDataSegment", node_ApplicationDataSegment); 
 
 })(packageObj);

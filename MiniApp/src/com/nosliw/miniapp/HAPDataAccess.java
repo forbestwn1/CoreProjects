@@ -3,6 +3,7 @@ package com.nosliw.miniapp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -211,19 +212,27 @@ public class HAPDataAccess {
 	}
 
 	private HAPSettingData buildSettingDataFromResult(ResultSet resultSet) {
-		HAPSettingData data = new HAPSettingData();
 		try {
-			data.setData(resultSet.getString("data"));
-			data.setName(resultSet.getString("name"));
-			data.setOwnerId(resultSet.getString("ownerid"));
-			data.setOwnerType(resultSet.getString("ownertype"));
+			HAPSettingData data = new HAPSettingData();
 			data.setId(resultSet.getString("id"));
+			data.setOwnerInfo(this.buildOwnerInfoFromResult(resultSet));
+			data.setName(resultSet.getString("name"));
+			return data;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			return null;
 		}
-		return data;
 	}
+	
+	private HAPOwnerInfo buildOwnerInfoFromResult(ResultSet resultSet) throws SQLException {
+		HAPOwnerInfo out = new HAPOwnerInfo();
+		out.setUserId(resultSet.getString(HAPOwnerInfo.USERID));
+		out.setComponentId(resultSet.getString(HAPOwnerInfo.COMPONENTID));
+		out.setComponentType(resultSet.getString(HAPOwnerInfo.COMPONENTTYPE));
+		return out;
+	}
+	
 /*
 	public HAPMiniAppSettingData createSettingData(String userId, HAPMiniAppSettingData miniAppSettingData) {
 		HAPMiniAppSettingData out = miniAppSettingData;

@@ -356,8 +356,7 @@ var COMMONCONSTANT=
   "DATAASSOCIATION_TYPE_NONE": "none",
   "MINIAPP_DATAOWNER_APP": "app",
   "MINIAPP_DATAOWNER_GROUP": "group",
-  "GATEWAY_OPTIONS": "options",
-  "GATEWAY_APPDATA": "appData"
+  "GATEWAY_OPTIONS": "options"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -15,8 +16,12 @@ import com.nosliw.miniapp.entity.HAPMiniAppSettingData;
 import com.nosliw.miniapp.entity.HAPOwnerInfo;
 import com.nosliw.miniapp.entity.HAPSettingData;
 
+@HAPEntityWithAttribute
 public class HAPGatewayAppData extends HAPGatewayImp{
 
+	@HAPAttribute
+	final public static String GATEWAY_APPDATA = "appData";
+	
 	@HAPAttribute
 	final public static String COMMAND_GETAPPDATA = "getAppData";
 	@HAPAttribute

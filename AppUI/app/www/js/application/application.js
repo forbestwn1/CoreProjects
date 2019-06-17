@@ -113,6 +113,7 @@ var node_createApplication = function(rootNode){
 					localStorage.userId = userInfo.user.id;
 					return loc_refreshRequest(userInfo, {
 						success : function(requestInfo){
+							nosliw.runtime.getSecurity().setToken(userInfo.user.id);
 							return userInfo;
 						}
 					});

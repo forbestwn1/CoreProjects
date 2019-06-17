@@ -33,6 +33,7 @@ nosliw.init = function(serverBase){
 		"nosliw.iotask",
 		"nosliw.statemachine",
 		"nosliw.runtimebrowsertest",
+		"nosliw.security",
 	];
 
 	
