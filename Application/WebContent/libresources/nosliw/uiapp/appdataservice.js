@@ -50,16 +50,8 @@ var node_appDataService = function(){
 		else appDataByName[dataName] = [];
 	};
 	
-	var loc_updateOwnerInfoWithUserId = function(ownerInfo){
-		var userToken = nosliw.runtime.getSecurityService().getToken();
-		ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_USERID] = userToken;
-		return ownerInfo;
-		
-	};
-
 	var loc_getGetAppDataRequest = function(ownerInfo, dataName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var ownerInfo = loc_updateOwnerInfoWithUserId(ownerInfo);
 		
 		var dataNames;
 		if(dataName!=undefined){
@@ -130,7 +122,6 @@ var node_appDataService = function(){
 	var loc_getUpdateAppDataRequest = function(ownerInfo, dataByName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
-		var ownerInfo = loc_updateOwnerInfoWithUserId(ownerInfo);
 		//gateway request
 		var gatewayId = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_GATEWAY_APPDATA;
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_UPDATEAPPDATA;
@@ -175,7 +166,7 @@ var node_appDataService = function(){
 					success : function(request, appData){
 						var dataInfo = [];
 						_.each(appData[dataName], function(dataEle, i){
-							dataInfo.push(new node_ApplicationDataInfo(ownerInfo, dataName, dataEle.id, dataEle.version));
+							dataInfo.push(new node_ApplicationDataSegmentInfo(ownerInfo, dataName, dataEle.id, dataEle.version));
 						});
 						return dataInfo;
 					}
@@ -268,6 +259,8 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
+nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegmentInfo", function(){node_ApplicationDataSegmentInfo = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("appDataService", node_appDataService); 

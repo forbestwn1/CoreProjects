@@ -68,7 +68,7 @@ var node_createAppDecoration = function(gate){
 		var settingRoots = [];
 		var settingsRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var appDataName = node_appUtility.getApplicationDataName(moduleDef);
-		settingsRequest.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest({}, appDataName, {
+		settingsRequest.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest(node_appUtility.getCurrentOwnerInfo(), appDataName, {
 			success : function(request, settingDataInfos){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 				_.each(settingDataInfos, function(dataInfo, index){

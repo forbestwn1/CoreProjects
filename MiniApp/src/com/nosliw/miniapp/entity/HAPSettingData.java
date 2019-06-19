@@ -43,7 +43,7 @@ public class HAPSettingData extends HAPSerializableImp{
 	public void setOwnerInfo(HAPOwnerInfo ownerInfo) {  this.m_ownerInfo = ownerInfo;  }
 
 	public Object getData() {   return this.m_data;   }
-	public String getDataStr() { return this.m_data.toString();  }
+	public String getDataStr() { return HAPJsonUtility.buildJson(this.m_data, HAPSerializationFormat.JSON);  }
 	public void setData(Object data) {   this.m_data = data;   }
 
 	@Override
@@ -52,7 +52,7 @@ public class HAPSettingData extends HAPSerializableImp{
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(NAME, this.m_name);
 		jsonMap.put(OWNERINFO, HAPJsonUtility.buildJson(this.m_ownerInfo, HAPSerializationFormat.JSON));
-		jsonMap.put(DATA, HAPJsonUtility.buildJson(this.m_data, HAPSerializationFormat.JSON));
+		jsonMap.put(DATA, this.getDataStr());
 	}
 	
 	@Override

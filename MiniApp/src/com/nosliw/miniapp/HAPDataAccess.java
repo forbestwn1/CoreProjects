@@ -157,7 +157,7 @@ public class HAPDataAccess {
 	public HAPMiniAppSettingData getSettingData(HAPOwnerInfo ownerInfo) {
 		HAPMiniAppSettingData out = new HAPMiniAppSettingData(ownerInfo);
 		try {
-			PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_SETTING where userid='"+ownerInfo.getUserId()+"' AND ownerid='"+ownerInfo.getComponentId()+"' AND ownertype='"+ownerInfo.getComponentType()+"';");
+			PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_SETTING where userid='"+ownerInfo.getUserId()+"' AND componentid='"+ownerInfo.getComponentId()+"' AND componenttype='"+ownerInfo.getComponentType()+"';");
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				out.addData(buildSettingDataFromResult(resultSet));
@@ -172,7 +172,7 @@ public class HAPDataAccess {
 		HAPMiniAppSettingData out = new HAPMiniAppSettingData(ownerInfo);
 		try {
 			for(String dataName : dataNames) {
-				PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_SETTING where userid='"+ownerInfo.getUserId()+"' AND ownerid='"+ownerInfo.getComponentId()+"' AND ownertype='"+ownerInfo.getComponentType()+"' AND dataname='"+dataName+"';");
+				PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_SETTING where userid='"+ownerInfo.getUserId()+"' AND componentid='"+ownerInfo.getComponentId()+"' AND componenttype='"+ownerInfo.getComponentType()+"' AND name='"+dataName+"';");
 				ResultSet resultSet = statement.executeQuery();
 				while(resultSet.next()) {
 					out.addData(buildSettingDataFromResult(resultSet));
@@ -194,7 +194,7 @@ public class HAPDataAccess {
 				if(data.getId()==null) {
 					//create
 					String id = this.generateId();
-					PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_SETTING (ID,USERID,OWNERID,OWNERTYPE, DATANAME,DATA) VALUES ('"+
+					PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_SETTING (ID,USERID,COMPONENTID,COMPONENTTYPE, NAME,DATA) VALUES ('"+
 								id+"', '"+miniAppSettingData.getOwnerInfo().getUserId()+"', '"+out.getOwnerInfo().getComponentId()+"', '"+out.getOwnerInfo().getComponentType()+"', '"+dataName+"', '"+data.getDataStr()+"');");
 					statement.execute();
 					data.setId(id);
@@ -214,9 +214,10 @@ public class HAPDataAccess {
 	private HAPSettingData buildSettingDataFromResult(ResultSet resultSet) {
 		try {
 			HAPSettingData data = new HAPSettingData();
-			data.setId(resultSet.getString("id"));
+			data.setId(resultSet.getString(HAPSettingData.ID));
 			data.setOwnerInfo(this.buildOwnerInfoFromResult(resultSet));
-			data.setName(resultSet.getString("name"));
+			data.setName(resultSet.getString(HAPSettingData.NAME));
+			data.setData(resultSet.getString(HAPSettingData.DATA));
 			return data;
 		}
 		catch(Exception e) {
