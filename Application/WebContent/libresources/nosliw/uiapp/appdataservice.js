@@ -12,7 +12,43 @@ var packageObj = library;
 
 var node_appDataService = function(){
 
-	var loc_appDataByName = {};
+	var loc_catchedAppData = {};
+	
+	var loc_getCachedAppData = function(ownerInfo, dataName){
+		var ownerType = ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE];
+		if(ownerType==undefined)  ownerType = node_COMMONCONSTANT.MINIAPP_DATAOWNER_APP;
+		var appDataByOwnerId = loc_catchedAppData[ownerType];
+		if(appDataByOwnerId==undefined)   return;
+		
+		var ownerId = ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENID];
+		var appDataByName = appDataByOwnerId[ownerId];
+		if(appDataByName==undefined)  return;
+		
+		return appDataByName[dataName];
+	};
+	
+	var loc_updateCachedAppData = function(ownerInfo, dataName, appData){
+		var ownerType = ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE];
+		if(ownerType==undefined)  ownerType = node_COMMONCONSTANT.MINIAPP_DATAOWNER_APP;
+		var appDataByOwnerId = loc_catchedAppData[ownerType];
+		if(appDataByOwnerId==undefined){
+			appDataByOwnerId = {};
+			loc_catchedAppData[ownerType] = appDataByOwnerId;
+		}
+		
+		var ownerId = ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENID];
+		var appDataByName = appDataByOwnerId[ownerId];
+		if(appDataByName==undefined){
+			appDataByName = {};
+			appDataByOwnerId[ownerId] = appDataByName;
+		}
+		
+		var appData = appDataByName[dataName];
+		if(appData)
+		
+		if(appData!=undefined)  appDataByName[dataName] = appData;
+		else appDataByName[dataName] = [];
+	};
 	
 	var loc_updateOwnerInfoWithUserId = function(ownerInfo){
 		var userToken = nosliw.runtime.getSecurityService().getToken();
@@ -24,10 +60,32 @@ var node_appDataService = function(){
 	var loc_getGetAppDataRequest = function(ownerInfo, dataName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var ownerInfo = loc_updateOwnerInfoWithUserId(ownerInfo);
-		var appData = loc_appDataByName[dataName];
-		if(appData!=undefined){
+		
+		var dataNames;
+		if(dataName!=undefined){
+			if(Array.isArray(dataName))   dataNames = dataName;
+			else dataNames = [dataName];
+		}
+		
+		var appDataByName = {};
+
+		if(dataNames!=undefined){
+			var notCached = [];
+			_.each(dataNames, function(name, index){
+				var appData = loc_getCachedAppData(ownerInfo, name);
+				if(appData!=undefined){
+					appDataByName[name] = appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA];
+				}
+				else{
+					notCached.push(name);
+				}
+			});
+			dataNames = notCached;
+		}
+		
+		if(dataNames!=undefined && dataNames.length==0){
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				return appData;
+				return appDataByName;
 			}));
 		}
 		else{
@@ -36,18 +94,40 @@ var node_appDataService = function(){
 			var command = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_GETAPPDATA;
 			var parms = {};
 			parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_GETAPPDATA_OWNER] = ownerInfo;
-			parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_GETAPPDATA_DATANAME] = dataName;
+			parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_GETAPPDATA_DATANAME] = dataNames;
+
 			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, {
-				success : function(request, appData){
-					loc_appDataByName[dataName] = appData;
+				success : function(request, appDataInfo){
+					var dataByName = appDataInfo[node_COMMONATRIBUTECONSTANT.MINIAPPSETTINGDATA_DATABYNAME];
+					if(dataNames==undefined){
+						_.each(dataByName, function(appData, dataName){
+							if(appData==undefined)   appData = [];
+							loc_updateCachedAppData(ownerInfo, dataName, appData);
+							appDataByName[dataName] = appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA];
+						});
+					}
+					else{
+						_.each(dataNames, function(dataName, index){
+							var appData = dataByName[dataName];
+							if(appData==undefined){
+								appData = {};
+								appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA] = [];
+								appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_NAME] = dataName;
+							}
+							loc_updateCachedAppData(ownerInfo, dataName, appData);
+							appDataByName[dataName] = appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA];
+						});
+					}
+					return appDataByName;
 				}
 			});
 			out.addRequest(gatewayRequest);
 		}
+		
 		return out;
 	};
 
-	var loc_getUpdateAppDataRequest = function(ownerInfo, appDataByName, handlers, request){
+	var loc_getUpdateAppDataRequest = function(ownerInfo, dataByName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		var ownerInfo = loc_updateOwnerInfoWithUserId(ownerInfo);
@@ -56,14 +136,31 @@ var node_appDataService = function(){
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_UPDATEAPPDATA;
 		var parms = {};
 		parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_UPDATEAPPDATA_OWNER] = ownerInfo;
+		
+		var appDataByName = {};
+		_.each(dataByName, function(data, name){
+			var appData = loc_getCachedAppData(ownerInfo, name);
+			if(appData!=undefined){
+				appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA] = data;
+			}
+			else{
+				appData = {};
+				appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA] = data;
+				appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_NAME] = name;
+			}
+			appDataByName[name] = appData;
+		});
 		parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_UPDATEAPPDATA_DATABYNAME] = appDataByName;
+
 		var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, {
 			success : function(request, updatedUserData){
+				var out = {};
 				var updatedDataByName = updatedUserData[node_COMMONATRIBUTECONSTANT.MINIAPPSETTINGDATA_DATABYNAME];
 				_.each(updatedDataByName, function(updatedData, name){
-					loc_appDataByName[name] = updatedData;
+					loc_updateCachedAppData(ownerInfo, name, updatedData);
+					out[name] = updatedData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA];
 				});
-				return updatedDataByName;
+				return out;
 			}
 		}, request);
 		out.addRequest(gatewayRequest);
@@ -77,8 +174,8 @@ var node_appDataService = function(){
 				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
 					success : function(request, appData){
 						var dataInfo = [];
-						_.each(appData, function(dataEle, i){
-							out.push(new node_ApplicationDataInfo(dataName, dataEle.id, dataEle.version));
+						_.each(appData[dataName], function(dataEle, i){
+							dataInfo.push(new node_ApplicationDataInfo(ownerInfo, dataName, dataEle.id, dataEle.version));
 						});
 						return dataInfo;
 					}
@@ -99,19 +196,17 @@ var node_appDataService = function(){
 				return out;
 			},	
 
-			getAddAppDataSegmentRequest : function(ownerInfo, dataName, index, data, version, handlers, request){
+			getAddAppDataSegmentRequest : function(ownerInfo, dataName, index, id, data, version, handlers, request){
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 				
 				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
-					success : function(request, appData){
+					success : function(request, appDataByName){
 						var appDataSegment = {
-							id : nosliw.generateId(),
+							id : id,
 							version : version,
 							data : data,
 						};
-						appData.splice(index, 0, appDataSegment);
-						var appDataByName = {};
-						appDataByName[dataName] = appData;
+						appDataByName[dataName].splice(index, 0, appDataSegment);
 						return loc_getUpdateAppDataRequest(ownerInfo, appDataByName, {
 							success : function(request, appData){
 								return appDataSegment;
@@ -119,6 +214,7 @@ var node_appDataService = function(){
 						});
 					}
 				}));
+				return out;
 			},	
 				
 			getDeleteAppDataSegmentRequest : function(ownerInfo, dataName, id, handlers, requester_parent){

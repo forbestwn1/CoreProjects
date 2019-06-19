@@ -11,6 +11,8 @@ var packageObj = library;
 var node_createSecurityService = function(){
 
 	var loc_token;
+
+	var loc_ownerInfo;
 	
 	var loc_out = {
 	
@@ -20,11 +22,25 @@ var node_createSecurityService = function(){
 		
 		setToken : function(token){
 			loc_token = token;
+		},
+		
+		getOwnerInfo : function(){
+			if(loc_ownerInfo==undefined){
+				loc_ownerInfo = {};
+				loc_ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_USERID] = "testUser";
+				loc_ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTID] = "testApp";
+				loc_ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE] = "app";
+			}
+			return loc_ownerInfo;
+		},
+		
+		setOwnerInfo : function(ownerInfo){
+			loc_ownerInfo = ownerInfo;
 		}
 	};
 
 	return loc_out;
-}();
+};
 
 //*******************************************   End Node Definition  ************************************** 	
 

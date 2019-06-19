@@ -16,7 +16,7 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_requestServiceProcessor;
 	var node_appUtility;
-	var node_ApplicationDataInfo;
+	var node_ApplicationDataSegmentInfo;
 	var node_createServiceRequestInfoSimple;
 	
 //*******************************************   Start Node Definition  ************************************** 	
@@ -51,7 +51,7 @@ var node_createAppDecoration = function(gate){
 		moduleInfoRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, dataInfo==undefined?undefined:[dataInfo], configureData, loc_appDataService, {
 			success : function(request, moduleInfo){
 				return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
-					persist : dataInfo==undefined?false:true,
+					persist : dataInfo==undefined?false:dataInfo.persist,
 					modified : false,
 					name : moduleInfo.name
 				}, {
@@ -74,7 +74,7 @@ var node_createAppDecoration = function(gate){
 				_.each(settingDataInfos, function(dataInfo, index){
 					settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, dataInfo));
 				});
-				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef));
+				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "New Setting", false)));
 				return settingRequest;
 			}
 		}));
@@ -205,7 +205,7 @@ nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", func
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.utility", function(){node_appUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataInfo", function(){node_ApplicationDataInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegmentInfo", function(){node_ApplicationDataSegmentInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 
 //Register Node by Name

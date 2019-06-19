@@ -155,6 +155,8 @@ nosliw.registerSetNodeDataEvent("uimodule.service.createUIModuleService", functi
 nosliw.registerSetNodeDataEvent("uiapp.service.createUIAppService", function(){node_createUIAppService = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
 nosliw.registerSetNodeDataEvent("request.createRequestServiceProcessor", function(){ node_createRequestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("security.createSecurityService", function(){ node_createSecurityService = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

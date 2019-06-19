@@ -92,10 +92,11 @@ public class HAPGatewayAppData extends HAPGatewayImp{
 
 		out = new HAPMiniAppSettingData(ownerInfo);
 		
-		JSONArray dataByNameJson = parms.getJSONArray(COMMAND_UPDATEAPPDATA_DATABYNAME);
-		for(int i=0; i<dataByNameJson.length(); i++) {
+		JSONObject dataByNameJson = parms.getJSONObject(COMMAND_UPDATEAPPDATA_DATABYNAME);
+		for(Object key : dataByNameJson.keySet()) {
+			String dataName = (String)key;
 			HAPSettingData settingData = new HAPSettingData();
-			settingData.buildObject(dataByNameJson.getJSONObject(i), HAPSerializationFormat.JSON);
+			settingData.buildObject(dataByNameJson.getJSONObject(dataName), HAPSerializationFormat.JSON);
 			out.addData(settingData);
 		}
 		

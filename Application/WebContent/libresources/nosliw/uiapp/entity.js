@@ -8,10 +8,13 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_ApplicationDataInfo = function(dataName, dataId, dataVersion){
+var node_ApplicationDataSegmentInfo = function(ownerInfo, dataName, dataId, dataVersion, persist){
+	this.ownerInfo = ownerInfo;
 	this.dataName = dataName;
 	this.id = dataId;
 	this.version = dataVersion;
+	this.persist = persist;
+	if(this.persist==undefined)   this.persist = true;
 };
 
 var node_ApplicationDataSegment = function(data, dataId, dataVersion){
@@ -50,7 +53,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 
 //Register Node by Name
 packageObj.createChildNode("ModuleInfo", node_ModuleInfo); 
-packageObj.createChildNode("ApplicationDataInfo", node_ApplicationDataInfo); 
+packageObj.createChildNode("ApplicationDataSegmentInfo", node_ApplicationDataSegmentInfo); 
 packageObj.createChildNode("ModuleEventData", node_ModuleEventData); 
 packageObj.createChildNode("ApplicationDataSegment", node_ApplicationDataSegment); 
 

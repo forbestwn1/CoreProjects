@@ -168,7 +168,7 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 
 
 //Register Node by Name
-packageObj.createChildNode("appDataService", node_appDataService); 
+packageObj.createChildNode("appDataService1", node_appDataService); 
 packageObj.createChildNode("storeService", node_storeService); 
 
 })(packageObj);

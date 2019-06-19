@@ -52,7 +52,7 @@ public class HAPOwnerInfo extends HAPSerializableImp{
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
-		super.buildObjectByFullJson(json);
+		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_userId = (String)jsonObj.opt(USERID);
 		this.m_componentId = (String)jsonObj.opt(COMPONENTID);

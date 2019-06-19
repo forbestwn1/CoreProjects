@@ -57,7 +57,7 @@ public class HAPSettingData extends HAPSerializableImp{
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
-		super.buildObjectByFullJson(json);
+		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_id = (String)jsonObj.opt(ID);
 		this.m_name = (String)jsonObj.opt(NAME);
@@ -68,7 +68,7 @@ public class HAPSettingData extends HAPSerializableImp{
 			this.m_ownerInfo.buildObject(ownerInfoJson, HAPSerializationFormat.JSON);
 		}
 		
-		this.m_data = jsonObj.optJSONObject(DATA);
+		this.m_data = jsonObj.opt(DATA);
 		return true;
 	}
 
