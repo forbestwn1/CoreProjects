@@ -86,7 +86,7 @@ var node_utility = function(){
 				function(handlers, request){
 					if(appDataInfo.persist==true){
 						var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-						out.addRequest(appDataService.getGetAppDataSegmentByIdRequest({}, appDataInfo.dataName, appDataInfo.id, {
+						out.addRequest(appDataService.getGetAppDataSegmentByIdRequest(loc_out.getCurrentOwnerInfo(), appDataInfo.dataName, appDataInfo.id, {
 							success : function(request, dataInfo){
 								return dataInfo.data;
 							}

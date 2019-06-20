@@ -71,18 +71,16 @@ var node_createAppDecoration = function(gate){
 		settingsRequest.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest(node_appUtility.getCurrentOwnerInfo(), appDataName, {
 			success : function(request, settingDataInfos){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
+				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "New Setting", false)));   
 				_.each(settingDataInfos, function(dataInfo, index){
 					settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, dataInfo));
 				});
-				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "New Setting", false)));
 				return settingRequest;
 			}
 		}));
 		return settingsRequest;
 	};
 	
-	
-
 	var loc_out = {
 		
 		processComponentValueChangeEvent : function(eventName, eventData, request){
@@ -103,7 +101,7 @@ var node_createAppDecoration = function(gate){
 					var moduleInfo = eventData.moduleInfo;
 					var applicationDataInfo = moduleInfo.applicationDataInfo[0];
 					
-					node_requestServiceProcessor.processRequest(loc_appDataService.getDeleteAppDataSegmentRequest({}, applicationDataInfo.dataName, applicationDataInfo.id, {
+					node_requestServiceProcessor.processRequest(loc_appDataService.getDeleteAppDataSegmentRequest(node_appUtility.getCurrentOwnerInfo(), applicationDataInfo.dataName, applicationDataInfo.id, {
 						success : function(request){
 							loc_uiApp.removeModuleInfo(ROLE_SETTING, moduleInfo.id);
 							moduleInfo.root.remove();
@@ -113,9 +111,19 @@ var node_createAppDecoration = function(gate){
 				}
 				else if(eventData.eventName=="saveSetting"){
 					var moduleInfo = eventData.moduleInfo;
-//					var saveRequest = moduleInfo.module.getInterface().getComponent().getPart("outputMapping.persistance").getExecuteCommandRequest("execute", undefined, undefined, request);
-					var saveRequest = moduleInfo.outputMapping["persistance"].getExecuteCommandRequest("execute", undefined, undefined, request);
-					node_requestServiceProcessor.processRequest(saveRequest);
+					var dataInfo = moduleInfo.applicationDataInfo[0];
+					var outRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
+					var saveRequest = moduleInfo.outputMapping["persistance"].getExecuteCommandRequest("execute", undefined, {
+						success : function(request){
+							dataInfo.persist = true;
+							return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
+								persist : dataInfo==undefined?false:dataInfo.persist,
+								modified : false,
+							}, undefined, request);
+						}
+					});
+					outRequest.addRequest(saveRequest);
+					node_requestServiceProcessor.processRequest(outRequest);
 				}
 				else{
 					var eventHandler = loc_gate.getComponent().getEventHandler(eventData.moduleInfo.name, eventData.eventName);

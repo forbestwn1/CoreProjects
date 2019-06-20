@@ -118,7 +118,8 @@ var node_createApp = function(id, appDef, ioInput){
 			}
 			
 			if(currentId==moduleId){
-				loc_out.prv_app.currentModuleByRole[role] = modules[index-1].id;
+				if(index-1>=0)		loc_out.prv_app.currentModuleByRole[role] = modules[index-1].id;
+				else loc_out.prv_app.currentModuleByRole[role] = undefined;
 			}
 			
 			modules.splice(index, 1);

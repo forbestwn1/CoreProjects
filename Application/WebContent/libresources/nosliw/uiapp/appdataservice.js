@@ -20,7 +20,7 @@ var node_appDataService = function(){
 		var appDataByOwnerId = loc_catchedAppData[ownerType];
 		if(appDataByOwnerId==undefined)   return;
 		
-		var ownerId = ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENID];
+		var ownerId = ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTID];
 		var appDataByName = appDataByOwnerId[ownerId];
 		if(appDataByName==undefined)  return;
 		
@@ -36,18 +36,14 @@ var node_appDataService = function(){
 			loc_catchedAppData[ownerType] = appDataByOwnerId;
 		}
 		
-		var ownerId = ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENID];
+		var ownerId = ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTID];
 		var appDataByName = appDataByOwnerId[ownerId];
 		if(appDataByName==undefined){
 			appDataByName = {};
 			appDataByOwnerId[ownerId] = appDataByName;
 		}
 		
-		var appData = appDataByName[dataName];
-		if(appData)
-		
-		if(appData!=undefined)  appDataByName[dataName] = appData;
-		else appDataByName[dataName] = [];
+		appDataByName[dataName] = appData;
 	};
 	
 	var loc_getGetAppDataRequest = function(ownerInfo, dataName, handlers, request){
@@ -177,11 +173,12 @@ var node_appDataService = function(){
 			getGetAppDataSegmentByIdRequest : function(ownerInfo, dataName, id, handlers, request){
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
-					success : function(request, appData){
+					success : function(request, appDataByName){
+						var appData = appDataByName[dataName];
 						var find = _.find(appData, function(dataSeg, index){
 							return dataSeg.id==id;
 						});
-						return appData[find];
+						return find;
 					}
 				}));
 				return out;
@@ -208,14 +205,41 @@ var node_appDataService = function(){
 				return out;
 			},	
 				
-			getDeleteAppDataSegmentRequest : function(ownerInfo, dataName, id, handlers, requester_parent){
+			getUpdateAppDataSegmentRequest : function(ownerInfo, dataName, segmentId, value, handlers, request){
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
-					success : function(request, appData){
+					success : function(request, appDataByName){
+						var appData = appDataByName[dataName];
 						var find = _.find(appData, function(dataSeg, index){
-							return dataSeg.id==id;
+							return dataSeg.id==segmentId;
 						});
-						appData.splice(i, 1);
+						find.data = value;
+						var appDataByName = {};
+						appDataByName[dataName] = appData;
+						return loc_getUpdateAppDataRequest(ownerInfo, appDataByName, {
+							success : function(request){
+								return value;
+							}
+						});
+					}
+				}));
+				return out;
+			},	
+
+			getDeleteAppDataSegmentRequest : function(ownerInfo, dataName, segmentId, handlers, request){
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
+					success : function(request, appDataByName){
+						var appData = appDataByName[dataName];
+						var findIndex = -1;
+						var find = _.find(appData, function(dataSeg, index){
+							if(dataSeg.id==segmentId){
+								findIndex = index;
+								return true;
+							}
+							else return false;
+						});
+						appData.splice(findIndex, 1);
 						var appDataByName = {};
 						appDataByName[dataName] = appData;
 						return loc_getUpdateAppDataRequest(ownerInfo, appDataByName, {
@@ -228,25 +252,6 @@ var node_appDataService = function(){
 				return out;
 			},	
 
-			getUpdateAppDataSegmentRequest : function(ownerInfo, dataName, appDataSegment, handlers, request){
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
-					success : function(request, appData){
-						var find = _.find(appData, function(dataSeg, index){
-							return dataSeg.id==appDataSegment.id;
-						});
-						appData[find] = appDataSegment;
-						var appDataByName = {};
-						appDataByName[dataName] = appData;
-						return loc_getUpdateAppDataRequest(ownerInfo, appDataByName, {
-							success : function(request){
-								return appDataSegment;
-							}
-						});
-					}
-				}));
-				return out;
-			},	
 	};
 
 	return loc_out;
