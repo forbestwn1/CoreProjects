@@ -115,9 +115,9 @@ var node_createAppDecoration = function(gate){
 					var outRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 					var saveRequest = moduleInfo.outputMapping["persistance"].getExecuteCommandRequest("execute", undefined, {
 						success : function(request){
-							dataInfo.persist = true;
+//							dataInfo.persist = true;
 							return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
-								persist : dataInfo==undefined?false:dataInfo.persist,
+								persist : dataInfo.persist,
 								modified : false,
 							}, undefined, request);
 						}

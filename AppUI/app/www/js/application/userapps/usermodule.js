@@ -52,8 +52,8 @@ var node_createModuleUserApps = function(parm){
 				},
 			},
 			methods : {
-				onSelectMiniApp : function(miniAppId) {
-					loc_triggerEvent("selectMiniApp", miniAppId);
+				onSelectMiniApp : function(miniApp) {
+					loc_triggerEvent("selectMiniApp", miniApp);
 				},
 			},
 			template : `

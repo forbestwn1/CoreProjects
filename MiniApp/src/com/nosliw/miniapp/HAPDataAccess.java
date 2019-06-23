@@ -46,11 +46,11 @@ public class HAPDataAccess {
 			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"SchoolApp1"+"', '"+"SchoolApp1"+"', '"+"SchoolGroup"+"');").execute();
 			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"SchoolApp2"+"', '"+"SchoolApp2"+"', '"+"SchoolGroup"+"');").execute();
 
-			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"PlayerInformation"+"', '"+"PlayerInformation"+"', '"+"SoccerForFun"+"');").execute();
+			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"App_SoccerForFun_PlayerInformation"+"', '"+"PlayerInformation"+"', '"+"SoccerForFun"+"');").execute();
 			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"Register"+"', '"+"Register"+"', '"+"SoccerForFun"+"');").execute();
 			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"Position"+"', '"+"Position"+"', '"+"SoccerForFun"+"');").execute();
 
-			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"AppMySchool;main"+"', '"+"MySchool"+"');").execute();
+			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"AppMySchool"+"', '"+"MySchool"+"');").execute();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -129,7 +129,7 @@ public class HAPDataAccess {
 			PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM miniapp_miniapp where id='"+id+"';");
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()) {
-				out = new HAPMiniApp((String)resultSet.getObject(HAPGroup.ID), (String)resultSet.getObject(HAPMiniApp.NAME));
+				out = new HAPMiniApp((String)resultSet.getObject(HAPGroup.ID), (String)resultSet.getObject(HAPMiniApp.NAME), (String)resultSet.getObject(HAPMiniApp.DATAOWNERTYPE));
 				break;
 			}
 		} catch (Exception e) {

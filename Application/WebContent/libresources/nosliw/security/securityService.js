@@ -12,31 +12,26 @@ var node_createSecurityService = function(){
 
 	var loc_token;
 
-	var loc_ownerInfo;
+	var loc_ownerType;
+	var loc_ownerId;
 	
 	var loc_out = {
 	
-		getToken : function(){
-			return loc_token;
-		},
+		getToken : function(){		return loc_token;	},
 		
-		setToken : function(token){
-			loc_token = token;
-		},
+		setToken : function(token){		loc_token = token;		},
 		
 		getOwnerInfo : function(){
-			if(loc_ownerInfo==undefined){
-				loc_ownerInfo = {};
-				loc_ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_USERID] = "testUser";
-				loc_ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTID] = "testApp";
-				loc_ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE] = "app";
-			}
-			return loc_ownerInfo;
+			var out = {};
+			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_USERID] = loc_token || "testUser";
+			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE] = loc_ownerType || "app";
+			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTID] = loc_ownerId || "testApp";
+			return out;
 		},
 		
-		setOwnerInfo : function(ownerInfo){
-			loc_ownerInfo = ownerInfo;
-		}
+		setOwnerType : function(ownerType){ 	loc_ownerType = ownerType;	},
+		
+		setOwnerId : function(ownerId){  loc_ownerId = ownerId;   }
 	};
 
 	return loc_out;

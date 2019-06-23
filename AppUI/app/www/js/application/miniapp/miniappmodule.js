@@ -44,8 +44,10 @@ var node_createModuleMiniApp = function(root){
 
 	var loc_out = {
 		
-		getRefreshRequest : function(miniAppEntryId, handlers, requestInfo){
+		getRefreshRequest : function(miniApp, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshMiniApp", {}), handlers, requestInfo);
+			
+			var miniAppEntryId = miniApp.id + ";main";
 			
 			if(loc_appRuntime!=undefined)	out.addRequest(node_getComponentLifecycleInterface(loc_appRuntime).getTransitRequest("destroy"), {
 				success : function(request){
@@ -53,6 +55,12 @@ var node_createModuleMiniApp = function(root){
 				}
 			});
 			
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				//update owner info
+				nosliw.runtime.getSecurityService().setOwnerType(miniApp[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERTYPE]);
+				nosliw.runtime.getSecurityService().setOwnerId(miniApp[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERID]);
+			}));
+
 			out.addRequest(nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, loc_appConfigure, undefined,
 				{
 					success : function(requestInfo, appRuntime){

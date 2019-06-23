@@ -18,7 +18,7 @@ var node_createComponentMiniApp = function(){
 		props : ['data'],
 		methods : {
 			onSelectMiniApp : function(event) {
-				this.$emit("selectMiniApp", this.data.id);
+				this.$emit("selectMiniApp", this.data);
 			},
 			onDeleteMiniApp : function(event) {
 				this.$emit("deleteMiniApp", this.data.id);
