@@ -34,7 +34,7 @@
 					},
 				],
 				"eventHandler": {
-					"save": {
+					"savePlayerInformation": {
 						"process": {
 							"activity": [{
 									"id": "startActivityId",
@@ -83,6 +83,20 @@
 				"player" : {
 					"definition" : {
 						"path" : "player"
+					},
+					"defaultValue": {
+						registered : {
+							dataTypeId: "test.boolean;1.0.0",
+							value: false
+						},
+						name : {
+							dataTypeId: "test.string;1.0.0",
+							value: "Wilson"
+						},
+						email : {
+							dataTypeId: "test.string;1.0.0",
+							value: ""
+						},
 					}
 				}
 			}

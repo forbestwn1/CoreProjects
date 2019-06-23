@@ -67,12 +67,12 @@ var node_createAppDecoration = function(gate){
 	var loc_createSettingRoleRequest = function(moduleDef, handlers, request){
 		var settingRoots = [];
 		var settingsRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var appDataName = node_appUtility.getApplicationDataName(moduleDef);
+		var appDataName = node_appUtility.getApplicationDataNames(moduleDef)[0];
 		settingsRequest.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest(node_appUtility.getCurrentOwnerInfo(), appDataName, {
 			success : function(request, settingDataInfos){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "New Setting", false)));   
-				_.each(settingDataInfos, function(dataInfo, index){
+				_.each(settingDataInfos[appDataName], function(dataInfo, index){
 					settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, dataInfo));
 				});
 				return settingRequest;
@@ -126,7 +126,7 @@ var node_createAppDecoration = function(gate){
 					node_requestServiceProcessor.processRequest(outRequest);
 				}
 				else{
-					var eventHandler = loc_gate.getComponent().getEventHandler(eventData.moduleInfo.name, eventData.eventName);
+					var eventHandler = loc_gate.getComponent().getEventHandler(eventData.moduleInfo.name, eventData.eventData.eventName);
 					//if within module, defined the process for this event
 					if(eventHandler!=undefined){
 						var extraInput = {
@@ -164,7 +164,8 @@ var node_createAppDecoration = function(gate){
 			_.each(modules, function(moduleDef, name){
 				var role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
 				if(role==ROLE_APPLICATION){
-					modulesRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, [], loc_getModuleConfigureData(role), loc_appDataService));
+					modulesRequest.addRequest(node_appUtility.buildApplicationModuleInfoRequest(moduleDef, loc_uiApp, loc_getModuleConfigureData(role), loc_appDataService));
+//					modulesRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, [], loc_getModuleConfigureData(role), loc_appDataService));
 				}
 				else if(role==ROLE_SETTING){
 					modulesRequest.addRequest(loc_createSettingRoleRequest(moduleDef));

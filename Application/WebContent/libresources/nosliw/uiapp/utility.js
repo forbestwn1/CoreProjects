@@ -29,20 +29,49 @@ var node_utility = function(){
 		},
 			
 		//find which application data this module depend on
-		getApplicationDataName : function(moduleDef){
+		getApplicationDataNames : function(moduleDef){
+			var out = [];
 			var dataDependency = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_DATADEPENDENCY];
 			for(var i in dataDependency){
 				var dataName = dataDependency[i];
 				if(dataName.startsWith(loc_appDataPrefex)){
-					return dataName.substring(loc_appDataPrefex.length);
+					out.push(dataName.substring(loc_appDataPrefex.length));
 				}
 			}
+			return out;
 		},
 			
 		getApplicationDataIOName : function(appDataName){
 			return loc_appDataPrefex+appDataName;
 		},
 
+		buildApplicationModuleInfoRequest : function(moduleDef, uiApp, configureData, appDataService, handlers, request){
+			var appDataNames = loc_out.getApplicationDataNames(moduleDef);
+			
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			if(appDataNames.length==0){
+				out.addRequest(loc_out.buildModuleInfoRequest(moduleDef, uiApp, [], configureData, appDataService));
+			}
+			else{
+				out.addRequest(appDataService.getGetAppDataSegmentInfoRequest(loc_out.getCurrentOwnerInfo(), appDataNames, {
+					success : function(request, appDataInfosByName){
+						var appDatas = [];
+						_.each(appDataNames, function(appDataName, index){
+							var appDataInfos = appDataInfosByName[appDataName];
+							if(appDataInfos==undefined || appDataInfos.length==0){
+								appDatas.push(new node_ApplicationDataSegmentInfo(loc_out.getCurrentOwnerInfo(), appDataName, loc_out.createAppDataSegmentId(), "", false));
+							}
+							else{
+								appDatas.push(appDataInfos[0]);
+							}
+						});
+						return loc_out.buildModuleInfoRequest(moduleDef, uiApp, appDatas, configureData, appDataService);
+					}
+				}));
+			}
+			return out;
+		},
+		
 		buildModuleInfoRequest : function(moduleDef, uiApp, applicationDataInfo, configureData, appDataService, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
@@ -53,15 +82,15 @@ var node_utility = function(){
 			
 			moduleInfo.externalIO = node_createIODataSet();
 			moduleInfo.externalIO.setData(undefined, uiApp.getIOContext().generateDataEle());
-			loc_out.buildModuleExternalAppDataIO(uiApp.getIOContext(), moduleInfo, appDataService);
+			loc_out.buildModuleExternalAppDataIO(uiApp.getIOContext(), moduleInfo, appDataService, uiApp.prv_app.appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_APPLICATIONDATA]);
 			
 			loc_out.buildModuleInputMapping(moduleInfo);
 			moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];
 			loc_out.buildMoudleInputIO(moduleInfo);
 			
-			if(applicationDataInfo!=undefined && applicationDataInfo.length==1){
-				moduleInfo.name = applicationDataInfo[0].version;
-			}
+//			if(applicationDataInfo!=undefined && applicationDataInfo.length==1){
+//				moduleInfo.name = applicationDataInfo[0].version;
+//			}
 			
 			out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleInfo.id, moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], configureData, moduleInfo.inputIO, {
 				success : function(requestInfo, uiModuleRuntime){
@@ -74,13 +103,13 @@ var node_utility = function(){
 			return out;
 		},
 
-		buildModuleExternalAppDataIO : function(appIOContext, moduleInfo, appDataService){
+		buildModuleExternalAppDataIO : function(appIOContext, moduleInfo, appDataService, appDataDefs){
 			_.each(moduleInfo.applicationDataInfo, function(appDataInfo, index){
-				loc_out.buildExternalDataIOForAppDataInfo(moduleInfo.externalIO, appDataInfo, appDataService);
+				loc_out.buildExternalDataIOForAppDataInfo(moduleInfo.externalIO, appDataInfo, appDataService, appDataDefs[appDataInfo.dataName]);
 			});
 		},
 		
-		buildExternalDataIOForAppDataInfo : function(externalIO, appDataInfo, appDataService){
+		buildExternalDataIOForAppDataInfo : function(externalIO, appDataInfo, appDataService, appDef){
 			var dataIOName = loc_out.getApplicationDataIOName(appDataInfo.dataName);
 			externalIO.setData(dataIOName, node_createDynamicData(
 				function(handlers, request){
@@ -95,7 +124,11 @@ var node_utility = function(){
 					}
 					else{
 						return node_createServiceRequestInfoSimple(undefined, function(request){
-							return undefined;
+							var out = {};
+							_.each(appDef[node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], function(ele, name){
+								out[name] = ele[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFAULT];
+							});
+							return out;
 						}, handlers, request);
 					}
 				},
@@ -106,7 +139,13 @@ var node_utility = function(){
 					}
 					else{
 						//new
-						return appDataService.getAddAppDataSegmentRequest(appDataInfo.ownerInfo, appDataInfo.dataName, 0, appDataInfo.id, value, appDataInfo.version, handlers, request);
+						var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+						out.addRequest(appDataService.getAddAppDataSegmentRequest(appDataInfo.ownerInfo, appDataInfo.dataName, 0, appDataInfo.id, value, appDataInfo.version, {
+							success : function(request){
+								appDataInfo.persist=true;
+							}
+						}));
+						return out;
 					}
 				}
 			));

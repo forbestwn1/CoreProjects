@@ -160,11 +160,19 @@ var node_appDataService = function(){
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
 					success : function(request, appData){
-						var dataInfo = [];
-						_.each(appData[dataName], function(dataEle, i){
-							dataInfo.push(new node_ApplicationDataSegmentInfo(ownerInfo, dataName, dataEle.id, dataEle.version));
+						var dataNames;
+						if(Array.isArray(dataName))   dataNames = dataName;
+						else dataNames = [dataName];
+
+						var dataInfos = {};
+						_.each(dataNames, function(name, i){
+							var dataInfo = [];
+							_.each(appData[name], function(dataEle, i){
+								dataInfo.push(new node_ApplicationDataSegmentInfo(ownerInfo, name, dataEle.id, dataEle.version));
+							});
+							dataInfos[name] = dataInfo;
 						});
-						return dataInfo;
+						return dataInfos;
 					}
 				}));
 				return out;
