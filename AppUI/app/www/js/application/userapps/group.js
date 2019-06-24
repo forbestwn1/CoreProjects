@@ -21,8 +21,9 @@ var node_createComponentGroup = function(){
 			"mini-app" : node_createComponentMiniApp()
 		},
 		methods : {
-			onSelectMiniApp : function(miniAppId){
-				this.$emit("selectMiniApp", miniAppId);
+			onSelectMiniApp : function(miniApp){
+				miniApp.groupId = this.data.group.id;
+				this.$emit("selectMiniApp", miniApp);
 			},
 			onDeleteMiniApp : function(miniAppId){
 				for(var i in this.miniapps){

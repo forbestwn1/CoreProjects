@@ -29,6 +29,14 @@ var node_createSecurityService = function(){
 			return out;
 		},
 		
+		createOwnerInfo : function(ownerType, ownerId){
+			var out = {};
+			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_USERID] = loc_token;
+			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE] = ownerType;
+			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTID] = ownerId;
+			return out;
+		},
+		
 		setOwnerType : function(ownerType){ 	loc_ownerType = ownerType;	},
 		
 		setOwnerId : function(ownerId){  loc_ownerId = ownerId;   }

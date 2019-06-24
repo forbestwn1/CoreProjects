@@ -156,6 +156,10 @@ var node_appDataService = function(){
 	
 	var loc_out = {
 			
+			getGetAppDataRequest : function(ownerInfo, dataName, handlers, request){
+				return loc_getGetAppDataRequest(ownerInfo, dataName, handlers, request);
+			},
+			
 			getGetAppDataSegmentInfoRequest : function(ownerInfo, dataName, handlers, request){
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {

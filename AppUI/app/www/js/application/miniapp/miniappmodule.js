@@ -7,6 +7,7 @@ var packageObj = library.getChildPackage("module.miniapp");
 (function(packageObj){
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
+	var node_COMMONCONSTANT;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSequence;
 	var node_createServiceRequestInfoSimple;
@@ -47,21 +48,35 @@ var node_createModuleMiniApp = function(root){
 		getRefreshRequest : function(miniApp, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshMiniApp", {}), handlers, requestInfo);
 			
-			var miniAppEntryId = miniApp.id + ";main";
-			
+			var miniAppEntryId = miniApp.app.id + ";main";
+
+			//destroy current app first
 			if(loc_appRuntime!=undefined)	out.addRequest(node_getComponentLifecycleInterface(loc_appRuntime).getTransitRequest("destroy"), {
 				success : function(request){
 					loc_appRuntime = undefined;
 				}
 			});
 			
+			//get group app data
+			var groupData;
+			var groupId = miniApp.groupId;
+			if(groupId!=undefined){
+				out.addRequest(node_appDataService.getGetAppDataRequest(nosliw.runtime.getSecurityService().createOwnerInfo(node_COMMONCONSTANT.MINIAPP_DATAOWNER_GROUP, groupId), undefined, {
+					success : function(request, dataByName){
+						groupData = _.find(dataByName, function(data, name){
+							return true;
+						});
+					}
+				}));
+			}
+			
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				//update owner info
-				nosliw.runtime.getSecurityService().setOwnerType(miniApp[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERTYPE]);
-				nosliw.runtime.getSecurityService().setOwnerId(miniApp[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERID]);
+				nosliw.runtime.getSecurityService().setOwnerType(miniApp.app[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERTYPE]);
+				nosliw.runtime.getSecurityService().setOwnerId(miniApp.app[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERID]);
 			}));
 
-			out.addRequest(nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, loc_appConfigure, undefined,
+			out.addRequest(nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, loc_appConfigure, groupData,
 				{
 					success : function(requestInfo, appRuntime){
 						loc_appRuntime = appRuntime;
@@ -91,6 +106,7 @@ var node_createModuleMiniApp = function(root){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});

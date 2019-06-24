@@ -90,8 +90,8 @@ var node_createApplication = function(rootNode){
 		return out;
 	};
 
-	var loc_refreshRequest = function(userInfo){
-		return loc_modules["user-apps"].refreshRequest(userInfo);
+	var loc_refreshRequest = function(userInfo, handlers, request){
+		return loc_modules["user-apps"].refreshRequest(userInfo, handlers, request);
 	};
 	
 	var loc_out = {
@@ -113,7 +113,7 @@ var node_createApplication = function(rootNode){
 					localStorage.userId = userInfo.user.id;
 					return loc_refreshRequest(userInfo, {
 						success : function(requestInfo){
-							nosliw.runtime.getSecurity().setToken(userInfo.user.id);
+							nosliw.runtime.getSecurityService().setToken(userInfo.user.id);
 							return userInfo;
 						}
 					});
