@@ -59,7 +59,11 @@
 								value: "wilson@hotmail.com"
 							},
 						}
+					},
+					"lineup" : {
+					
 					}
+					
 				}
 			}
 		}

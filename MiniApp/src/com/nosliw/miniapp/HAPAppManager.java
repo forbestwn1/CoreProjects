@@ -1,6 +1,10 @@
 package com.nosliw.miniapp;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -21,9 +25,12 @@ public class HAPAppManager {
 	
 	private HAPUIResourceManager m_uiResourceMan;
 	
+	private Map<String, Map<String, List<HAPAppDataProcessor>>> m_appDataProcessors;
+	
 	public HAPAppManager(HAPUIResourceManager resourceMan) {
 		this.m_dataAccess = new HAPDataAccess(HAPDBSource.getDefaultDBSource());
 		this.m_uiResourceMan = resourceMan;
+		this.m_appDataProcessors = new LinkedHashMap<String, Map<String, List<HAPAppDataProcessor>>>();
 	}
 	
 	public HAPDefinitionApp getMinAppDefinition(String minAppDefId) {
@@ -60,9 +67,36 @@ public class HAPAppManager {
 	}
 
 	public HAPMiniAppSettingData updateAppData(HAPMiniAppSettingData miniAppSettingData) {
+		List<HAPAppDataProcessor> processores = this.findProcessors(miniAppSettingData.getOwnerInfo());
+		if(processores!=null) {
+			for(HAPAppDataProcessor processor : processores) {
+				processor.updateSettingData(miniAppSettingData);
+			}
+		}
 		return this.m_dataAccess.updateSettingData(miniAppSettingData);
 	}
 
+	private List<HAPAppDataProcessor> findProcessors(HAPOwnerInfo ownerInfo) {
+		Map<String, List<HAPAppDataProcessor>> processByName = this.m_appDataProcessors.get(ownerInfo.getComponentType());
+		if(processByName==null)  return null;
+		return processByName.get(ownerInfo.getComponentId());
+	}
+	
+	public void addProcessor(HAPOwnerInfo ownerInfo, HAPAppDataProcessor appDataProcessor) {
+		Map<String, List<HAPAppDataProcessor>> processByName = this.m_appDataProcessors.get(ownerInfo.getComponentType());
+		if(processByName==null) {
+			processByName = new LinkedHashMap<String, List<HAPAppDataProcessor>>();
+			this.m_appDataProcessors.put(ownerInfo.getComponentType(), processByName);
+		}
+		
+		List<HAPAppDataProcessor> processes = processByName.get(ownerInfo.getComponentId());
+		if(processes==null) {
+			processes = new ArrayList<HAPAppDataProcessor>();
+			processByName.put(ownerInfo.getComponentId(), processes);
+		}
+		processes.add(appDataProcessor);
+	}
+	
 	/*
 	public HAPSettingData createMiniAppData(String userId, String appId, String dataName, HAPSettingData dataInfo) {
 		HAPSettingData out = null;

@@ -18,10 +18,10 @@ import com.nosliw.data.core.service.provide.HAPResultService;
 import com.nosliw.data.core.service.provide.HAPUtilityService;
 import com.nosliw.service.realtor.HAPDataImporter;
 
-public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
+public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProviderService{
 
 	public static void main(String[] argus) throws Exception{
-		HAPServiceImp dataSource = new HAPServiceImp();
+		HAPServiceUpdateLineup dataSource = new HAPServiceUpdateLineup();
 		HAPResultService result = dataSource.execute(null);
 		System.out.println(result);
 	}
