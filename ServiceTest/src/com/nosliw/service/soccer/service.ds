@@ -10,31 +10,12 @@
 					"name" : "success",
 					"output" : {
 						"outputInService": {
-							"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
+							"criteria" : "test.data;1.0.0"
 						}
 					},			
 				}
 			],
 			"parm" : [ 
-				{
-					name : "schoolTypeInService",
-					criteria : "test.options;1.0.0",
-					default :{
-						dataTypeId: "test.options;1.0.0",
-						value: {
-							value : "public",
-							optionsId : "schoolType"
-						}
-					},
-				},
-				{
-					name : "schoolRatingInService",
-					criteria : "test.float;1.0.0",
-					default :{
-						dataTypeId: "test.float;1.0.0",
-						value: "8"
-					},
-				}
 			]
 		},
 	},
@@ -42,39 +23,31 @@
 	{
 		"id": "registerService",
 		"name": "registerService",
-	    "implementation" : "com.nosliw.service.soccer.HAPRegisterServiceImp",
+	    "implementation" : "com.nosliw.service.soccer.HAPServiceUpdateLineup",
 		"description" : "all element school rank in ontario",
 		"interface" : {
 			"result" : [
 				{
 					"name" : "success",
 					"output" : {
-						"outputInService": {
-							"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
+						"action": {
+							"criteria" : "test.string;1.0.0"
+						},
+						"status": {
+							"criteria" : "test.string;1.0.0"
 						}
 					},			
 				}
 			],
 			"parm" : [ 
 				{
-					name : "schoolTypeInService",
-					criteria : "test.options;1.0.0",
-					default :{
-						dataTypeId: "test.options;1.0.0",
-						value: {
-							value : "public",
-							optionsId : "schoolType"
-						}
-					},
+					name : "player",
+					criteria : "test.string;1.0.0",
 				},
 				{
-					name : "schoolRatingInService",
-					criteria : "test.float;1.0.0",
-					default :{
-						dataTypeId: "test.float;1.0.0",
-						value: "8"
-					},
-				}
+					name : "action",
+					criteria : "test.string;1.0.0",
+				},
 			]
 		},
 	},

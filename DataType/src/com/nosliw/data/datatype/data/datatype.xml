@@ -1,0 +1,9 @@
+<definition name="base.data;1.0.0">
+	
+	<info description="Data type for any data."/>
+
+	<operations>
+	
+	</operations>
+
+</definition>

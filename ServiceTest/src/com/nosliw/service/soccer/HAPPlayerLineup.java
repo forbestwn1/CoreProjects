@@ -6,7 +6,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HAPPlayerLineup {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
+
+@HAPEntityWithAttribute
+public class HAPPlayerLineup extends HAPExecutableImp{
 
 	public final static String STATUS_LINEUP = "lineup";
 	public final static String STATUS_WAITINGLIST = "waitinglist";
@@ -25,16 +35,33 @@ public class HAPPlayerLineup {
 		m_validActions.put(STATUS_NOTHING, Arrays.asList(new String[] {ACTION_LOOKINGFOR}));
 	}
 	
+	@HAPAttribute
+	public static final String WAITINGLIST = "waitingList";
+
+	@HAPAttribute
+	public static final String LINEUP = "lineUp";
+
+	@HAPAttribute
+	public static final String VACANT = "vacant";
+
+	
 	private List<String> m_waitingList;
 	
 	private List<HAPSpot> m_lineUp;
 	
 	private List<Integer> m_vacant;
-	
-	public HAPPlayerLineup(List<String> lineUp) {
+
+	public HAPPlayerLineup() {
 		this.m_waitingList = new ArrayList<String>();
 		this.m_vacant = new ArrayList<Integer>();
 		this.m_lineUp = new ArrayList<HAPSpot>();
+	}
+
+	public HAPPlayerLineup(List<String> players) {
+		this();
+		for(String player : players) {
+			this.m_lineUp.add(new HAPSpot(player));
+		}
 	}
 
 	public HAPActionResult action(String player, String action) {
@@ -124,6 +151,39 @@ public class HAPPlayerLineup {
 			}
 		}
 		return new HAPPlayerStatus(status, statusData, m_validActions.get(status));
-		
 	}
+
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(WAITINGLIST, HAPJsonUtility.buildJson(this.m_waitingList, HAPSerializationFormat.JSON));
+		jsonMap.put(LINEUP, HAPJsonUtility.buildJson(this.m_lineUp, HAPSerializationFormat.JSON));
+
+		List<String> vacantStringList = new ArrayList<String>();
+		for(Integer i : this.m_vacant)  vacantStringList.add(i.toString());  
+		jsonMap.put(VACANT, HAPJsonUtility.buildArrayJson(vacantStringList.toArray(new String[0]), Integer.class));
+	}
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		super.buildObjectByJson(jsonObj);
+
+		JSONArray waitingListArray = jsonObj.optJSONArray(WAITINGLIST);
+		for(int i=0; i<waitingListArray.length(); i++) { 	this.m_waitingList.add(waitingListArray.getString(i));	}
+	
+		JSONArray vacantArray = jsonObj.optJSONArray(VACANT);
+		for(int i=0; i<vacantArray.length(); i++) { 	this.m_vacant.add(Integer.valueOf(vacantArray.getInt(i)));	}
+
+		JSONArray lineupListArray = jsonObj.optJSONArray(LINEUP);
+		for(int i=0; i<lineupListArray.length(); i++) {
+			JSONObject spotJson = lineupListArray.getJSONObject(i);
+			HAPSpot spot = new HAPSpot();
+			spot.buildObject(spotJson, HAPSerializationFormat.JSON);
+			this.m_lineUp.add(spot);
+		}
+
+		return true;  
+	}
+
 }

@@ -1,4 +1,4 @@
-{
+[{
 	"id": "schoolService",
 	"name": "schoolService",
     "implementation" : "com.nosliw.service.school.HAPServiceImp",
@@ -36,4 +36,4 @@
 			}
 		]
 	},
-}
+}]

@@ -25,13 +25,13 @@ import org.apache.commons.io.FileUtils;
 
 public class HAPFileUtility {
 	
-	public static String getApplicationLibFolder(){ return HAPSystemUtility.getApplicationLibFolder(); }
+	public static String getApplicationLibFolder(){ return HAPSystemUtility.getApplicationResourceLibFolder(); }
 	public static String getTagDefinitionFolder(){  return getApplicationLibFolder() + "uitag/";   }
 	public static String getActivityPluginFolder(){  return getApplicationLibFolder() + "activity/";   }
 	public static String getUIModuleDecorationFolder(){  return getApplicationLibFolder() + "uimoduledecoration/";  }
 	public static String getUIAppConfigureFolder(){  return getApplicationLibFolder() + "uiappconfigure/";  }
 
-	public static String getApplicationDataFolder(){  return HAPSystemUtility.getApplicationDataFolder();  }
+	public static String getApplicationDataFolder(){  return HAPSystemUtility.getApplicationResourceDataFolder();  }
 	public static String getProcessFolder(){  return getApplicationDataFolder() + "process/";   }
 	public static String getTempFolder(){		return HAPSystemUtility.getTempFolder();	}
 	public static String getScriptExportFolder(){  return HAPFileUtility.getTempFolder()+"scriptexport/scripts/";  }
@@ -108,7 +108,9 @@ public class HAPFileUtility {
 		try {
 			fileName = getValidFileName(fileName);
 			File file = new File(fileName);
- 
+			//create dir if not exist
+			file.getParentFile().mkdirs();
+			
 			FileUtils.writeStringToFile(file, content, Charset.forName("UTF-8"));
 /*			
 			// if file doesnt exists, then create it
@@ -179,6 +181,7 @@ public class HAPFileUtility {
 		}
 		catch(Exception e){
 			e.printStackTrace();
+			return null;
 		}
 		return out.toString();
 	}

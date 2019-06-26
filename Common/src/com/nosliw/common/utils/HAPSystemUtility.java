@@ -38,9 +38,10 @@ public class HAPSystemUtility {
 		return className.startsWith("HAP");
 	}
 
-	public static String getApplicationLibFolder() {	return prop.getProperty("ApplicationLibFolder");	}
-	public static String getApplicationDataFolder() {   return prop.getProperty("ApplicationDataFolder");  }
+	public static String getApplicationResourceLibFolder() {	return prop.getProperty("ApplicationResourceLibFolder");	}
+	public static String getApplicationResourceDataFolder() {   return prop.getProperty("ApplicationResourceDataFolder");  }
 	public static String getTempFolder() {  return prop.getProperty("TempFolder");    }
 	public static String getJSFolder() {   return prop.getProperty("JSFolder");  }
+	public static String getAppDataFolder() {   return prop.getProperty("AppDataFolder");   }
 	public static boolean getResourceCached() {   return Boolean.valueOf(prop.getProperty("ResourceCached", "false"));   }
 }

@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -23,8 +23,10 @@ public class HAPImporterDataSourceDefinition {
 			Class cls;
 			try {
 				cls = Class.forName(serviceClasse);
-				HAPDefinitionService dataSourceDef = loadDataSourceDefinition(cls);
-				if(dataSourceDef!=null)		out.add(dataSourceDef);
+				List<HAPDefinitionService> dataSourceDefs = loadDataSourceDefinition(cls);
+				for(HAPDefinitionService dataSourceDef : dataSourceDefs) {
+					out.add(dataSourceDef);
+				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -53,14 +55,18 @@ public class HAPImporterDataSourceDefinition {
 		return out;
 	}
 	
-	private static HAPDefinitionService loadDataSourceDefinition(Class cls){
-		HAPDefinitionService out = null;
+	private static List<HAPDefinitionService> loadDataSourceDefinition(Class cls){
+		List<HAPDefinitionService> out = new ArrayList<HAPDefinitionService>();
 		try{
 			InputStream inputStream = cls.getResourceAsStream("service.ds");
 			if(inputStream!=null) {
 				String content = HAPFileUtility.readFile(inputStream);
-				out = new HAPDefinitionService();
-				out.buildObject(new JSONObject(content), HAPSerializationFormat.JSON);
+				JSONArray serviceDefArray = new JSONArray(content);
+				for(int i=0; i<serviceDefArray.length(); i++) {
+					HAPDefinitionService serviceDef = new HAPDefinitionService();
+					serviceDef.buildObject(serviceDefArray.get(i), HAPSerializationFormat.JSON);
+					out.add(serviceDef);
+				}
 			}
 		}
 		catch(Exception e){

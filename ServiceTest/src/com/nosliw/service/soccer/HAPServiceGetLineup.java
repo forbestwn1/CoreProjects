@@ -13,18 +13,11 @@ import com.nosliw.data.core.service.provide.HAPUtilityService;
 
 public class HAPServiceGetLineup implements HAPExecutableService, HAPProviderService{
 
-	public static void main(String[] argus) throws Exception{
-		HAPServiceGetLineup dataSource = new HAPServiceGetLineup();
-		HAPResultService result = dataSource.execute(null);
-		System.out.println(result);
-	}
-	
 	@Override
 	public HAPResultService execute(Map<String, HAPData> parms){
 		Map<String, HAPData> output = new LinkedHashMap<String, HAPData>();
-		output.put("outputInService", new HAPDataWrapper(new HAPDataTypeId("test.array;1.0.0"), schoolArrayData));
+		output.put("lineup", new HAPDataWrapper(new HAPDataTypeId("test.data;1.0.0"), HAPPlayerLineupManager.getInstance().getLineup()));
 		return HAPUtilityService.generateSuccessResult(output);
-		return HAPUtilityService.generateSuccessResult(HAPPlayerLineupManager.getInstance().getLineup());
 	}
 
 }

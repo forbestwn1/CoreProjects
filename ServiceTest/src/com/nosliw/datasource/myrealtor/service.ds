@@ -1,4 +1,4 @@
-{
+[{
 	"name": "myrealtor",
     "implementation" : "task",
 	"description" : "my realtor data source",
@@ -305,4 +305,4 @@
 		"variables" : {
 		},
 	}
-}
+}]

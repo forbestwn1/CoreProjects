@@ -1,4 +1,4 @@
-{
+[{
 	"name": "test",
     "implementation" : "task",
 	"description" : "test data source",
@@ -61,4 +61,4 @@
 		"variables" : {
 		},
 	}
-}
+}]

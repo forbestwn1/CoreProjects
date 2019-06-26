@@ -1,4 +1,4 @@
-{
+[{
 	"id": "realtor",
 	"name": "realtor",
     "implementation" : "com.nosliw.service.realtor.HAPServiceImp",
@@ -63,4 +63,4 @@
 			},
 		]
 	}
-}
+}]
