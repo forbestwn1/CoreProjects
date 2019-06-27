@@ -60,6 +60,8 @@ INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SoccerGroup', 
 INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SchoolGroup', 'SchoolGroup', 'no description');
 INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SoccerForFun', 'Soccer For Fun', 'Soccer for fun group in Toronto');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME, DATAOWNERTYPE) VALUES ('App_SoccerForFun_PlayerInformation', 'Player Information', 'group');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME, DATAOWNERTYPE) VALUES ('App_SoccerForFun_PlayerUpdate', 'Player Update');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME, DATAOWNERTYPE) VALUES ('App_SoccerForFun_Lineup', 'Player Lineup');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('Register', 'Register');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('Position', 'Position');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('SoccerApp1', 'SoccerApp1');

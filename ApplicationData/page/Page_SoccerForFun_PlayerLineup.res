@@ -2,31 +2,29 @@
 <html>
 <body>
 	
-	Are you registered player:
-	<nosliw-boolean id="players2019Summer" data="player.registered"/>
-	
-	<br>
-	<nosliw-switch value="<%=?(player.registered)?.value%>">
-		<nosliw-case value="true">
-			<br>
-			Your name:<nosliw-string-options id="players2019Summer" data="player.name"/>
-			<br>
-		</nosliw-case>
+	<br>  
+	Lineup:
+	<br>  
+	<nosliw-loop data="lineup.lineUp" element="spot" index="index">  
+		<nosliw-loop data="spot.players" element="player" index="index">  
+			<%=?(player)?%>&nbsp; 
+		</nosliw-loop>
 
-		<nosliw-case value="false">
-			<br>
-			Your name:<nosliw-textinput data="player.name"/>  
-			<br>
-		</nosliw-case>
-	</nosliw-switch>
+		<nosliw-switch value="<%=?(spot.vacant)?%>">
+			<nosliw-case value="true">
+				??
+			</nosliw-case>
+		</nosliw-switch>
+		
+	</nosliw-loop>
 	
-	<br>
-	Email:<nosliw-textinput data="player.email"/>  
-	<br>
-	
-	<br>
-	<br><a href='' nosliw-event="click:save:">Save</a><br>
-	<br>
+	<br>  
+	Waiting List:
+	<nosliw-loop data="lineup.waitingList" element="spot" index="index">
+		<br>  
+		<%=?(spot)?%>
+		<br>  
+	</nosliw-loop>
 	
 	<nosliw-contextvalue/>
 
@@ -37,33 +35,33 @@
 		"group" : {
 			"public" : {
 				"element" : {
-					"player" : {
+					"lineup" : {
 						"definition" : {
-							"child" : {
-								"registered" : {criteria:"test.boolean;1.0.0"},
-								"name" : {criteria:"test.string;1.0.0"},
-								"email" : {criteria:"test.string;1.0.0"},
-							}
 						},
 						"defaultValue": {
-							registered : {
-								dataTypeId: "test.boolean;1.0.0",
-								value: false
-							},
-							name : {
-								dataTypeId: "test.string;1.0.0",
-								value: "Wilson"
-							},
-							email : {
-								dataTypeId: "test.string;1.0.0",
-								value: "wilson@hotmail.com"
-							},
+							  "waitingList": ["Peter", "David"],
+							  "lineUp": [
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "ning"
+							      ]
+							    },
+							    {
+							      "vacant" : false,
+							      "players": [
+							        "Wilson"
+							      ]
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "kaida", "tom"
+							      ]
+							    }
+							  ],
 						}
 					},
-					"lineup" : {
-					
-					}
-					
 				}
 			}
 		}
@@ -72,12 +70,59 @@
 
 	<scripts>
 	{
-		save : function(info, env){
-			env.trigueEvent("savePlayerInformation", info.eventData);
+		command_updateData : function(data, request, env){
+			event.preventDefault();
+
+			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
+			var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
+			var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
+			var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
+			
+			var requestInfo = env.getServiceRequest("lineupService", {
+				success : function(request){
+				}
+			});
+			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
+
 	}
 	</scripts>
 
+	<services>
+	{
+		"use" : [
+			{
+				"name" : "lineupService",
+				"provider" : "lineupService",
+				"serviceMapping" :{
+					"inputMapping" : {
+						"element" : {
+						}
+					},
+					"outputMapping" : {
+						"success" : {
+							"element" : {
+								"lineup" : {
+									"definition" : {
+										"path" : "lineup.value"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		],
+		"provider" : [
+			{	
+				"name" : "lineupService",
+				"serviceId" : "lineupService"
+			}		
+		]
+	}	
+	</services>
 
 </html>
-

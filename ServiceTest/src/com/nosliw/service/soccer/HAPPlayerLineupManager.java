@@ -72,7 +72,7 @@ public class HAPPlayerLineupManager {
 	}
 	
 	private void writeLineUp(HAPPlayerLineup lineup) {
-		HAPFileUtility.writeFile(this.getLineupFile(), lineup.toStringValue(HAPSerializationFormat.JSON));
+		HAPFileUtility.writeFile(this.getLineupFile(), HAPJsonUtility.formatJson(lineup.toStringValue(HAPSerializationFormat.JSON)));
 	}
 	
 	private void savePlayerInfos(Map<String, HAPPlayerInfo> playerInfos) {

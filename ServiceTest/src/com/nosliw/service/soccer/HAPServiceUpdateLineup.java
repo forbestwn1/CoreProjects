@@ -20,9 +20,18 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 		String action = (String)parms.get("action").getValue();
 		
 		HAPActionResult actionResult = HAPPlayerLineupManager.getInstance().updateLineUp(player, action);
+		
+		HAPPlayerStatus playerStatus;
+		if(actionResult==null) {
+			playerStatus = HAPPlayerLineupManager.getInstance().getLineup().getPlayerStatus(player);
+		}
+		else {
+			playerStatus = actionResult.getPlayerStatus();
+		}
+		
 		Map<String, HAPData> output = new LinkedHashMap<String, HAPData>();
-		output.put("action", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), actionResult.getPlayerStatus().getActions().get(0)));
-		output.put("status", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), actionResult.getPlayerStatus().getStatus()));
+		output.put("action", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), playerStatus.getActions().get(0)));
+		output.put("status", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), playerStatus.getStatus()));
 
 		return HAPUtilityService.generateSuccessResult(output);
 	}

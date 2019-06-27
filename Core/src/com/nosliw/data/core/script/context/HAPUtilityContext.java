@@ -357,10 +357,16 @@ public class HAPUtilityContext {
 				if(HAPConstant.CONTEXT_ELEMENTTYPE_DATA.equals(candidateNode.getType())) {
 					//data type node
 					HAPContextDefinitionLeafData dataLeafEle = (HAPContextDefinitionLeafData)candidateNode;
-					HAPDataTypeCriteria parentCriteria = HAPCriteriaUtility.getChildCriteriaByPath(dataLeafEle.getCriteria().getCriteria(), out.remainPath);
-					if(parentCriteria!=null) {
-						out.resolvedNode = new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(parentCriteria)); 
+					HAPDataTypeCriteria childCriteria = HAPCriteriaUtility.getChildCriteriaByPath(dataLeafEle.getCriteria().getCriteria(), out.remainPath);
+					if(childCriteria!=null) {
+						out.resolvedNode = new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(childCriteria)); 
 					}
+					else {
+						out.resolvedNode = new HAPContextDefinitionLeafValue();
+					}
+				}
+				else if(HAPConstant.CONTEXT_ELEMENTTYPE_VALUE.equals(candidateNode.getType())){
+					out.resolvedNode = candidateNode;
 				}
 			}
 		}

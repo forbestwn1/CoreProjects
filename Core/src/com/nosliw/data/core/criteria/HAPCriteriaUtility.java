@@ -80,7 +80,8 @@ public class HAPCriteriaUtility {
 	public static HAPDataTypeCriteria getChildCriteria(HAPDataTypeCriteria criteria, String childName) {
 		HAPDataTypeCriteria out = null;
 		if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
-			out = ((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria().getSubCriteria(childName);
+			HAPDataTypeSubCriteriaGroup subGroup = ((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria();
+			if(subGroup!=null)		out = subGroup.getSubCriteria(childName);
 		}
 		return out;
 	}

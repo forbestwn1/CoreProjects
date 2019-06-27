@@ -119,7 +119,7 @@ var loc_createDecoration = function(uiView){
 		
 		command : function(command, parms, requestInfo){
 			//decoration process command first
-			var result = loc_uiView.command(node_COMMONCONSTANT[DECORATION_COMMAND_COMMANDPROCESS], 
+			var result = loc_uiView.command(node_COMMONCONSTANT.DECORATION_COMMAND_COMMANDPROCESS, 
 				{
 					commnad : command,
 					parms : parms

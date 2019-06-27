@@ -1,15 +1,15 @@
 [
 	{
-		"id": "soccerLineupService",
-		"name": "soccerLineupService",
-	    "implementation" : "com.nosliw.service.soccer.HAPLineupServiceImp",
+		"id": "lineupService",
+		"name": "lineupService",
+	    "implementation" : "com.nosliw.service.soccer.HAPServiceGetLineup",
 		"description" : "all element school rank in ontario",
 		"interface" : {
 			"result" : [
 				{
 					"name" : "success",
 					"output" : {
-						"outputInService": {
+						"lineup": {
 							"criteria" : "test.data;1.0.0"
 						}
 					},			
@@ -21,8 +21,8 @@
 	},
 
 	{
-		"id": "registerService",
-		"name": "registerService",
+		"id": "updateLineupService",
+		"name": "updateLineupService",
 	    "implementation" : "com.nosliw.service.soccer.HAPServiceUpdateLineup",
 		"description" : "all element school rank in ontario",
 		"interface" : {

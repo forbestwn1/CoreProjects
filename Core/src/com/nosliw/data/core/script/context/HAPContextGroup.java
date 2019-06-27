@@ -138,7 +138,7 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 		}
 		return out;
 	}
-	public void setContext(String type, HAPContext context) {   this.m_contexts.put(type, context);   }
+	public void setContext(String type, HAPContext context) {   if(context!=null) this.m_contexts.put(type, context);   }
 	public HAPContext removeContext(String type) { 
 		HAPContext out = this.m_contexts.get(type);
 		this.m_contexts.put(type, new HAPContext());

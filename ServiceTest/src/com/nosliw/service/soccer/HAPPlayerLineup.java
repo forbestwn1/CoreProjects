@@ -64,6 +64,10 @@ public class HAPPlayerLineup extends HAPExecutableImp{
 		}
 	}
 
+	public List<String> getWaitingList(){  return this.m_waitingList;   }
+	public List<Integer> getVacant(){  return this.m_vacant;   }
+	public List<HAPSpot> getLineUp(){    return this.m_lineUp;    }
+	
 	public HAPActionResult action(String player, String action) {
 		HAPPlayerStatus playerStatus = this.getPlayerStatus(player);
 		if(playerStatus.getActions().indexOf(action)==-1)  return null;  //invalid

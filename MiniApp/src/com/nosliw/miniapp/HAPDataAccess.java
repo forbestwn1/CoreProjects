@@ -47,6 +47,8 @@ public class HAPDataAccess {
 			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"SchoolApp2"+"', '"+"SchoolApp2"+"', '"+"SchoolGroup"+"');").execute();
 
 			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"App_SoccerForFun_PlayerInformation"+"', '"+"PlayerInformation"+"', '"+"SoccerForFun"+"');").execute();
+			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"App_SoccerForFun_PlayerUpdate"+"', '"+"PlayerUpdate"+"', '"+"SoccerForFun"+"');").execute();
+			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"App_SoccerForFun_PlayerLineup"+"', '"+"PlayerLineup"+"', '"+"SoccerForFun"+"');").execute();
 			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"Register"+"', '"+"Register"+"', '"+"SoccerForFun"+"');").execute();
 			this.getConnection().prepareStatement("INSERT INTO MINIAPP_USERAPP (ID, USERID, APPID, APPNAME, GROUPID) VALUES ('"+this.generateId()+"', '"+userId+"', '"+"Position"+"', '"+"Position"+"', '"+"SoccerForFun"+"');").execute();
 

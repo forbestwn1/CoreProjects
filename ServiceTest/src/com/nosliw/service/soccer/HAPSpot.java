@@ -29,6 +29,7 @@ public class HAPSpot extends HAPExecutableImp{
 		this.m_players = new ArrayList<String>();
 	}
 
+	public List<String> getPlayers(){   return this.m_players;   }
 	public String getPlayer() {   return this.m_players.get(this.m_players.size()-1);    }
 	
 	public void addPlayer(String player) {   this.m_players.add(player);   }
