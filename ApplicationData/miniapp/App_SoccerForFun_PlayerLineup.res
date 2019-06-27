@@ -9,6 +9,8 @@
 				"role": "application",
 				"name": "application",
 				"module": "Module_SoccerForFun_PlayerLineup",
+				"inputMapping": [
+				],
 			}
 		],
 		"process": {
