@@ -15,13 +15,30 @@
 							"player": {
 								"definition": {
 									"path": "player",
-								}
+								},
 							},
 						}
 					}
 				],
 			}
 		],
+		"context" : {
+			"group" : {
+				"public" : {
+					"element" : {
+						"player" : {
+							"definition" : {
+								"criteria":"test.string;1.0.0"
+							},
+							"defaultValue": {
+								dataTypeId: "test.string;1.0.0",
+								value: "peter"
+							}
+						},
+					}
+				}
+			}			
+		},
 		"process": {
 
 		}
@@ -42,10 +59,6 @@
 						"definition" : {
 							"criteria":"test.string;1.0.0"
 						},
-						"defaultValue": {
-							dataTypeId: "test.string;1.0.0",
-							value: "peter"
-						}
 					},
 				}
 			}

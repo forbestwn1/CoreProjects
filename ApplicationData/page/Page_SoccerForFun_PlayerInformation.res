@@ -69,6 +69,7 @@
 	<scripts>
 	{
 		save : function(info, env){
+			event.preventDefault();
 			env.trigueEvent("savePlayerInformation", info.eventData);
 		},
 	}
