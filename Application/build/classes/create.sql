@@ -61,13 +61,7 @@ INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SchoolGroup', 
 INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SoccerForFun', 'Soccer For Fun', 'Soccer for fun group in Toronto');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME, DATAOWNERTYPE) VALUES ('App_SoccerForFun_PlayerInformation', 'Player Information', 'group');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('App_SoccerForFun_PlayerUpdate', 'Player Update');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('App_SoccerForFun_Lineup', 'Player Lineup');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('Register', 'Register');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('Position', 'Position');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('SoccerApp1', 'SoccerApp1');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('SoccerApp2', 'SoccerApp2');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('SchoolApp1', 'SchoolApp1');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('SchoolApp2', 'SchoolApp2');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('App_SoccerForFun_PlayerLineup', 'Player Lineup');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('MyRealtor', 'MyRealtor');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('Airplane Arrival', 'Airplane Arrival');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('AppMySchool', 'MySchool');

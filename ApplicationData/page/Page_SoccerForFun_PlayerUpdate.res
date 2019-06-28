@@ -50,19 +50,11 @@
 						"definition" : {
 							"criteria":"test.string;1.0.0"
 						},
-						"defaultValue": {
-							dataTypeId: "test.string;1.0.0",
-							value: "provider"
-						}
 					},
 					"action" : {
 						"definition" : {
 							"criteria":"test.string;1.0.0"
 						},
-						"defaultValue": {
-							dataTypeId: "test.string;1.0.0",
-							value: "withdraw"
-						}
 					},
 				}
 			}

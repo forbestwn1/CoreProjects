@@ -128,7 +128,7 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 		
 		getUIs : function(){  return loc_out.prv_module.uiArray;  },
 		getUI : function(name) {  return loc_out.prv_module.ui[name];   },
-		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getSynInDataRequest(undefined, handlers, request);	},
+		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getSynInDataRequest(handlers, request);	},
 		
 		getEventHandler : function(uiName, eventName){   return this.getUI(uiName).getEventHandler(eventName);   },
 		

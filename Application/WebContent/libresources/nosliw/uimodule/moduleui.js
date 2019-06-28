@@ -120,13 +120,20 @@ var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},
 
 		//take command
-		getExecuteCommandRequest : function(commandName, parms, handlers, request){		return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	},
+		getExecuteCommandRequest : function(commandName, parms, handlers, request){		
+			if(commandName=="syncInData"){
+				return loc_out.getSynInDataRequest(handlers, request);
+			}
+			else{
+				return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	
+			}
+		},
 		executeCommandRequest : function(commandName, parms, handlers, request){	node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(commandName, parms, handlers, request));	},
 
 		registerEventListener : function(listener, handler, thisContext){		return loc_page.registerEventListener(listener, handler, thisContext);	},
 		registerValueChangeEventListener : function(listener, handler, thisContext){	return	loc_page.registerValueChangeEventListener(listener, handler, thisContext);	},
 		
-		getSynInDataRequest : function(name, handlers, request){  return loc_inputDataAssociation.getExecuteRequest(handlers, request);  },
+		getSynInDataRequest : function(handlers, request){  return loc_inputDataAssociation.getExecuteRequest(handlers, request);  },
 		
 		getSynOutDataRequest : function(name, handlers, request){	return loc_outputDataAssociation.getExecuteRequest(handlers, request);	},
 		executeSynOutDataRequest : function(name, handlers, request){	node_requestServiceProcessor.processRequest(this.getSynOutDataRequest(name, handlers, request));	}

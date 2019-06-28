@@ -17,7 +17,9 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 	public HAPResultService execute(Map<String, HAPData> parms){
 
 		String player = (String)parms.get("player").getValue();
-		String action = (String)parms.get("action").getValue();
+		
+		HAPData actionData = parms.get("action");
+		String action = actionData==null? null : (String)actionData.getValue();
 		
 		HAPActionResult actionResult = HAPPlayerLineupManager.getInstance().updateLineUp(player, action);
 		

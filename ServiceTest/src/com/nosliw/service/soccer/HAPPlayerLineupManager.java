@@ -38,8 +38,14 @@ public class HAPPlayerLineupManager {
 	
 	public HAPActionResult updateLineUp(String player, String action) {
 		HAPPlayerLineup lineup = this.getLineup();
-		HAPActionResult out = lineup.action(player, action);
-		this.writeLineUp(lineup);
+		HAPActionResult out = null;
+		if(action!=null) {
+			out = lineup.action(player, action);
+			this.writeLineUp(lineup);
+		}
+		else {
+			out = new HAPActionResult(lineup.getPlayerStatus(player), null);
+		}
 		return out;
 	}
 	

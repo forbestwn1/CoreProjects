@@ -31,8 +31,23 @@
 					"name": "startActivity",
 					"type": "start",
 					"flow": {
-						"target": "refreshUI"
+						"target": "syncInData"
 					}
+				},
+				{
+					"id": "syncInData",
+					"name": "syncInData",
+					"type": "UI_executeCommand",
+					"partId": "ui.main",
+					"command": "syncInData",
+					"input": {
+					},
+					"result": [{
+						"name": "success",
+						"flow": {
+							"target": "refreshUI"
+						}
+					}]
 				},
 				{
 					"id": "refreshUI",
@@ -41,8 +56,6 @@
 					"partId": "ui.main",
 					"command": "updateData",
 					"input": {
-						"element": {
-						}
 					},
 					"result": [{
 						"name": "success",
