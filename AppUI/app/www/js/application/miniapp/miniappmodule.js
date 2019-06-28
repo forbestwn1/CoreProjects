@@ -68,7 +68,9 @@ var node_createModuleMiniApp = function(root){
 						groupData = _.find(dataByName, function(data, name){
 							return true;
 						});
-						if(groupData!=undefined)	inputIODataSet.setData(undefined, groupData);
+						if(groupData!=undefined && groupData.length==1){
+							inputIODataSet.setData(undefined, groupData[0].data);
+						}
 						
 						
 						

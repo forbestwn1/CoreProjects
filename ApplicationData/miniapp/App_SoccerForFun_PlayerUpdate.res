@@ -14,7 +14,7 @@
 						"element": {
 							"player": {
 								"definition": {
-									"path": "player",
+									"path": "player.name",
 								},
 							},
 						}
@@ -28,13 +28,13 @@
 					"element" : {
 						"player" : {
 							"definition" : {
-								"criteria":"test.string;1.0.0"
+								"child" : {
+									"registered" : {criteria:"test.boolean;1.0.0"},
+									"name" : {criteria:"test.string;1.0.0"},
+									"email" : {criteria:"test.string;1.0.0"},
+								}
 							},
-							"defaultValue": {
-								dataTypeId: "test.string;1.0.0",
-								value: "peter"
-							}
-						},
+						}
 					}
 				}
 			}			
@@ -51,17 +51,4 @@
 	"applicationData" : {
 	},
 
-	"context" : {
-		"group" : {
-			"public" : {
-				"element" : {
-					"player" : {
-						"definition" : {
-							"criteria":"test.string;1.0.0"
-						},
-					},
-				}
-			}
-		}			
-	}
 }
