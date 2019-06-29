@@ -91,7 +91,7 @@
 						},
 						name : {
 							dataTypeId: "test.string;1.0.0",
-							value: "Wilson"
+							value: ""
 						},
 						email : {
 							dataTypeId: "test.string;1.0.0",

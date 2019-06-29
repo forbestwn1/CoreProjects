@@ -58,9 +58,11 @@ var node_createModuleUserApps = function(parm){
 			},
 			template : `
 				<div>
+<!--
 					<user-info
 						v-bind:user="user"
 					></user-info>
+-->					
 				  	<user-apps 
 				  		v-bind:data="userInfo"
 				  		v-on:selectMiniApp="onSelectMiniApp"

@@ -36,7 +36,7 @@ var node_createComponentGroup = function(){
 		},
 		template :
 			`
-		    <li class="accordion-item"><a href="#" class="item-content item-link">
+		    <li class="accordion-item-opened"><a href="#" class="item-content item-link">
 				<div class="item-inner">
 					<div class="item-title">{{data.group.name}}</div>
 				</div></a>

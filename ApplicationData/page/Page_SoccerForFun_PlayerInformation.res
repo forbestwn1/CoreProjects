@@ -2,6 +2,8 @@
 <html>
 <body>
 	
+	<br>
+	<br>
 	Are you registered player:
 	<nosliw-boolean id="players2019Summer" data="player.registered"/>
 	
@@ -25,7 +27,7 @@
 	<br>
 	
 	<br>
-	<br><a href='' nosliw-event="click:save:">Save</a><br>
+	<a href='' nosliw-event="click:save:">Save</a>
 	<br>
 	
 </body>
@@ -50,7 +52,7 @@
 							},
 							name : {
 								dataTypeId: "test.string;1.0.0",
-								value: "Wilson"
+								value: ""
 							},
 							email : {
 								dataTypeId: "test.string;1.0.0",

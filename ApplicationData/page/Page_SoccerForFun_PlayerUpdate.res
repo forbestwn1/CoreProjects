@@ -2,28 +2,22 @@
 <html>
 <body>
 	
+	<br>
 	<%=?(player)?.value%> status:  <%=?(status)?.value%>
 
 	<br>
 	Action: 
-	<br>
 	<nosliw-switch value="<%=?(action)?.value%>">
 		<nosliw-case value="offer">
-			<br>
-			<br><a href='' nosliw-event="click:update:">Offer</a><br>
-			<br>
+			<a href='' nosliw-event="click:update:">Offer</a>
 		</nosliw-case>
 
 		<nosliw-case value="withdraw">
-			<br>
-			<br><a href='' nosliw-event="click:update:">withdraw</a><br>
-			<br>
+			<a href='' nosliw-event="click:update:">withdraw</a>
 		</nosliw-case>
 
 		<nosliw-case value="lookingfor">
-			<br>
-			<br><a href='' nosliw-event="click:update:">lookingfor</a><br>
-			<br>
+			<a href='' nosliw-event="click:update:">lookingfor</a>
 		</nosliw-case>
 
 	</nosliw-switch>
