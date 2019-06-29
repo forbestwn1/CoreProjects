@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -84,6 +83,14 @@ public class HAPFileUtility {
 	}
 	
 	public static String readFile(String filePath, String nextLine){
+		try {
+			return FileUtils.readFileToString(new File(filePath) , Charset.forName("UTF-8"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return null;
+		}
+
+/*		
 		StringBuffer out = new StringBuffer();
 		try{
 			FileReader inputFile = new FileReader(filePath);
@@ -98,6 +105,7 @@ public class HAPFileUtility {
 			e.printStackTrace();
 		}
 		return out.toString();
+*/		
 	}
 
 	public static String readFile(InputStream stream){

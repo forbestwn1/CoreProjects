@@ -3,6 +3,16 @@
  */
 var init = function(rootNode, baseServer, callBackFunction){
 
+	var loc_framework7App = new Framework7({
+		  // App root element
+		  root: $("#appDiv").get(),
+		  name: 'My App',
+		  id: 'com.myapp.test',
+		  panel: {
+			    swipe: 'both',
+		  },				
+	});
+	
 	//load lib utility function
 	var loadLibrary = function(libs, callBackFunction){
 		var count = 0;
@@ -48,6 +58,20 @@ var init = function(rootNode, baseServer, callBackFunction){
 			"js/application/userapps/usermodule.js",
 			"js/application/miniapp/miniappmodule.js",
 		], function(){
+			loc_framework7App.preloader.hide();
+			
+			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+			var requestProcessor = nosliw.runtime.getRequestProcessor();
+			requestProcessor.registerEventListener(undefined, function(eventName, requestId){
+				if(eventName==node_CONSTANT.REQUESTPROCESS_EVENT_START){
+					loc_framework7App.preloader.show();
+				}
+				else if(eventName==node_CONSTANT.REQUESTPROCESS_EVENT_DONE){
+					loc_framework7App.preloader.hide();
+				}
+			});
+			
+			
 			//create miniapp
 			var minapp = nosliw.getNodeData("miniapp.createApplication")();
 			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
@@ -59,12 +83,15 @@ var init = function(rootNode, baseServer, callBackFunction){
 			  		$(document).trigger("miniappActive");
 				}
 			});
-			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(rootNode, undefined, out);
+
+			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(rootNode, loc_framework7App, undefined, out);
 			out.addRequest(miniappInitRequest);
 			nosliw.getNodeData("request.requestServiceProcessor").processRequest(out);
 		});
 	});
 
+	loc_framework7App.preloader.show();
+	
 	//nosliw init first
 	loadLibrary([
 //		baseServer+"libresources/external/log4javascript/1.0.0/log4javascript.js",

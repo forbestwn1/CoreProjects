@@ -30,6 +30,7 @@ public class HAPBaseServlet  extends HttpServlet{
 	
 	 protected void printContent(HAPServiceData serviceData, HttpServletResponse response) throws IOException {
 			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 			//cross domain
 			response.addHeader("Access-Control-Allow-Origin", "*");
 			PrintWriter writer = response.getWriter();

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
+import com.nosliw.service.soccer.HAPPlayerLineupManager;
 
 public class HAPGatewayOptions extends HAPGatewayImp{
 
@@ -24,7 +25,7 @@ public class HAPGatewayOptions extends HAPGatewayImp{
 				values = new String[] {"House", "Townhouse", "Appartment"};
 				break;
 			case "players2019Summer":
-				values = new String[] {"Kaida", "Wilson", "Ning"};
+				values = HAPPlayerLineupManager.getInstance().getInitialLineupPlayers().toArray(new String[0]);
 				break;
 			}
 			return this.createSuccessWithObject(values);

@@ -3,31 +3,35 @@
 <body>
 	
 	<br>  
-	Lineup:
+	<span style="color:green">Lineup:</span>
 	<br>  
 	<nosliw-loop data="lineup.lineUp" element="spot" index="index">  
+		<%=?(index)?%>.&nbsp;
+		
 		<nosliw-loop data="spot.players" element="player" index="index">  
-			<%=?(player)?%>&nbsp; 
+			<%=?(player)?%>&nbsp;&nbsp; 
 		</nosliw-loop>
+		<br>  
 
+<!--
 		<nosliw-switch value="<%=?(spot.vacant)?%>">
 			<nosliw-case value="true">
 				??
 			</nosliw-case>
 		</nosliw-switch>
+-->
 		
 	</nosliw-loop>
 	
 	<br>  
-	Waiting List:
+	<span style="color:red">Waiting List:</span>
+	<br>  
 	<nosliw-loop data="lineup.waitingList" element="spot" index="index">
-		<br>  
+		<%=?(index)?%>.&nbsp;
 		<%=?(spot)?%>
 		<br>  
 	</nosliw-loop>
 	
-	<nosliw-contextvalue/>
-
 </body>
 
 	<contexts>

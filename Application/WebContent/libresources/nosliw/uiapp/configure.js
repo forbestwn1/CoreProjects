@@ -31,7 +31,8 @@ var node_createTypicalConfigure = function(mainModuleRoot, settingModuleRoot, da
 							"decoration" : {
 								global : ["Decoration_application_framework7"]
 							},
-							"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile", "debug"]
+							"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile"]
+//							"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile", "debug"]
 						}
 					},
 					"setting" : {
@@ -39,7 +40,8 @@ var node_createTypicalConfigure = function(mainModuleRoot, settingModuleRoot, da
 							"root" : settingModuleRoot,
 							"decoration" : {
 							},
-							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile", "debug"]
+							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile"]
+//							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile", "debug"]
 						},
 						components : {
 							"setting_framework7_mobile" : {

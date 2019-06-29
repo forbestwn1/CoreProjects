@@ -156,11 +156,13 @@ var node_utility = function(){
 			var dynamicData = node_createDynamicData(
 				function(handlers, request){
 					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-					out.addRequest(moduleInfo.currentInputMapping.getExecuteRequest({
-						success : function(request, dataIo){
-							return dataIo.getGetDataValueRequest();
-						}
-					}));
+					if(moduleInfo.currentInputMapping!=undefined){
+						out.addRequest(moduleInfo.currentInputMapping.getExecuteRequest({
+							success : function(request, dataIo){
+								return dataIo.getGetDataValueRequest();
+							}
+						}));
+					}
 					return out;
 				} 
 			);

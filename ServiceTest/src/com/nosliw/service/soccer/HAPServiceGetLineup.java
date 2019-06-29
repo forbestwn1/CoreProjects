@@ -29,7 +29,13 @@ public class HAPServiceGetLineup implements HAPExecutableService, HAPProviderSer
 			HAPResponseSpot spot = new HAPResponseSpot();
 			List<String> players = s.getPlayers();
 			spot.addPlayer(players.get(0));
-			if(players.size()>1)   spot.addPlayer(players.get(players.size()-1));
+			if(players.size()>1) {
+				String player1 = players.get(players.size()-1);
+				if(!players.get(0).equals(player1)) {
+					spot.addPlayer(player1);
+				}
+				if(spot.getVacant())  spot.addPlayer("????");
+			}
 			spots.add(spot);
 		}
 		for(int i : lineUp.getVacant()) spots.get(i).setVacant();

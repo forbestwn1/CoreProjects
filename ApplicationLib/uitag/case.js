@@ -31,7 +31,7 @@
 		var loc_out = 
 		{
 			initViews : function(requestInfo){
-				loc_view = $('<div/>');	
+				loc_view = $('<span/>');	
 				return loc_view;
 			},
 

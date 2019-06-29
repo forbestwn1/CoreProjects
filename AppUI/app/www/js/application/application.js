@@ -16,7 +16,7 @@ var packageObj = library.getChildPackage();
 
 var loc_mduleName = "minApp";
 
-var node_createApplication = function(rootNode){
+var node_createApplication = function(rootNode, framework7App){
 
 	var loc_miniAppService;
 
@@ -56,8 +56,10 @@ var node_createApplication = function(rootNode){
 	var loc_modules = {};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(rootNode, handlers, request){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(rootNode, framework7App, handlers, request){
 
+		loc_framework7App = framework7App;
+		
 		loc_miniAppService = node_createMiniAppService();
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -66,15 +68,17 @@ var node_createApplication = function(rootNode){
 			success : function(request, mainSource){
 				$(mainSource[mainHtml]).appendTo(rootNode);
 				
-				loc_framework7App = new Framework7({
-					  // App root element
-					  root: $("#appDiv").get(),
-					  name: 'My App',
-					  id: 'com.myapp.test',
-					  panel: {
-						    swipe: 'both',
-					  },				
-				});
+				if(loc_framework7App==undefined){
+					loc_framework7App = new Framework7({
+						  // App root element
+						  root: $("#appDiv").get(),
+						  name: 'My App',
+						  id: 'com.myapp.test',
+						  panel: {
+							    swipe: 'both',
+						  },				
+					});
+				}
 
 				_.each(loc_modulesInfo, function(moduleInfo, index){
 					var module = nosliw.getNodeData(moduleInfo.factory)(moduleInfo.initParm());

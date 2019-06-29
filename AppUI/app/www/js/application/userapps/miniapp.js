@@ -28,7 +28,7 @@ var node_createComponentMiniApp = function(){
 			<div>
 				<p>
 					<a v-on:click.prevent="onSelectMiniApp">{{data.name}}</a>
-					<a v-on:click.prevent="onDeleteMiniApp">XXX</a>
+<!--					<a v-on:click.prevent="onDeleteMiniApp">XXX</a>  -->
 				</p>
 			
 			</div>

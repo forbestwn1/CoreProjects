@@ -31,7 +31,8 @@ public class HAPResponseSpot extends HAPExecutableImp{
 	public void addPlayer(String player) {   this.m_players.add(player);   }
 	
 	public void setVacant() {   this.m_vacant = true;   }
-
+	public boolean getVacant() {  return this.m_vacant;  }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(PLAYERS, HAPJsonUtility.buildJson(this.m_players, HAPSerializationFormat.JSON));

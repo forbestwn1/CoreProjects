@@ -27,6 +27,14 @@ public class HAPPlayerLineupManager {
 		return m_instance;
 	}
 	
+	public List<String> getInitialLineupPlayers(){
+		List<String> players = new ArrayList<String>();
+		String lineUpContent = HAPFileUtility.readFile(this.getOriginalLineupFile());
+		JSONArray lineUpArray = new JSONArray(lineUpContent);
+		for(int i=0; i<lineUpArray.length(); i++) players.add(lineUpArray.getString(i));
+		return players;
+	}
+
 	public HAPPlayerLineup getLineup() {
 		HAPPlayerLineup out = this.readLineUp();
 		if(out==null) {
@@ -60,14 +68,11 @@ public class HAPPlayerLineupManager {
 	}
 	
 	private HAPPlayerLineup getInitialLineup(){
-		List<String> players = new ArrayList<String>();
-		String lineUpContent = HAPFileUtility.readFile(this.getOriginalLineupFile());
-		JSONArray lineUpArray = new JSONArray(lineUpContent);
-		for(int i=0; i<lineUpArray.length(); i++) players.add(lineUpArray.getString(i));
+		List<String> players = this.getInitialLineupPlayers();
 		HAPPlayerLineup out = new HAPPlayerLineup(players);
 		return out;
 	}
-	
+
 	private HAPPlayerLineup readLineUp() {
 		if(!new File(this.getLineupFile()).exists()) return null;
 		

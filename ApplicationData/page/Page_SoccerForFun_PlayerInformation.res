@@ -28,8 +28,6 @@
 	<br><a href='' nosliw-event="click:save:">Save</a><br>
 	<br>
 	
-	<nosliw-contextvalue/>
-
 </body>
 
 	<contexts>

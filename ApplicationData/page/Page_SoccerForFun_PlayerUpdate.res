@@ -28,8 +28,6 @@
 
 	</nosliw-switch>
 
-	<nosliw-contextvalue/>
-
 </body>
 
 	<contexts>
