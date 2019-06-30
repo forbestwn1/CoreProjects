@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html>
 <body>
-	
-	<br>
-	<%=?(player)?.value%> status:  <%=?(status)?.value%>
+<%=?(player)?.value==''+''%>
+	<nosliw-switch value="<%=?(player)?.value==''+''%>">
+		<nosliw-case value="false">
+			<br>
+			<%=?(player)?.value%>目前在 :  <%=?(status)?.value%>
+		
+			<br>
+			<br>
+			你可以选择: 
+			<a href='' nosliw-event="click:update:"><%=?(action)?.value%></a>
+		</nosliw-case>
 
-	<br>
-	Action: 
+		<nosliw-case value="true">
+			你还没有注册你的名字，请到球员信息注册你的名字！！
+		</nosliw-case>
+
+	</nosliw-switch>
+
+	
+
+<!--
 	<nosliw-switch value="<%=?(action)?.value%>">
 		<nosliw-case value="offer">
 			<a href='' nosliw-event="click:update:">Offer</a>
@@ -21,6 +36,7 @@
 		</nosliw-case>
 
 	</nosliw-switch>
+-->
 
 </body>
 

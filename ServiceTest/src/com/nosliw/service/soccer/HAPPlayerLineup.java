@@ -18,20 +18,21 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 @HAPEntityWithAttribute
 public class HAPPlayerLineup extends HAPExecutableImp{
 
-	public final static String STATUS_LINEUP = "lineup";
-	public final static String STATUS_WAITINGLIST = "waitinglist";
-	public final static String STATUS_PROVIDER = "provider";
-	public final static String STATUS_NOTHING = "nothing";
+	public final static String STATUS_LINEUP = "占着坑";
+	public final static String STATUS_WAITINGLIST = "排队等坑";
+	public final static String STATUS_PROVIDER = "转让坑";
+	public final static String STATUS_NOTHING = "围观群众";
 
-	public final static String ACTION_OFFER = "offer";
-	public final static String ACTION_WITHDRAW = "withdraw";
-	public final static String ACTION_LOOKINGFOR = "lookingfor";
+	public final static String ACTION_OFFER = "来不了，出让坑";
+	public final static String ACTION_WITHDRAW_WAITINGLIST = "放弃等坑位";
+	public final static String ACTION_WITHDRAW_PROVIDE = "放弃转让坑位";
+	public final static String ACTION_LOOKINGFOR = "求一坑位";
 
 	private static Map<String, List<String>> m_validActions = new LinkedHashMap<String, List<String>>();
 	static {
 		m_validActions.put(STATUS_LINEUP, Arrays.asList(new String[] {ACTION_OFFER}));
-		m_validActions.put(STATUS_WAITINGLIST, Arrays.asList(new String[] {ACTION_WITHDRAW}));
-		m_validActions.put(STATUS_PROVIDER, Arrays.asList(new String[] {ACTION_WITHDRAW}));
+		m_validActions.put(STATUS_WAITINGLIST, Arrays.asList(new String[] {ACTION_WITHDRAW_WAITINGLIST}));
+		m_validActions.put(STATUS_PROVIDER, Arrays.asList(new String[] {ACTION_WITHDRAW_PROVIDE}));
 		m_validActions.put(STATUS_NOTHING, Arrays.asList(new String[] {ACTION_LOOKINGFOR}));
 	}
 	
@@ -90,13 +91,13 @@ public class HAPPlayerLineup extends HAPExecutableImp{
 			}
 		}
 		else if(status.equals(STATUS_WAITINGLIST)) {
-			if(action.equals(ACTION_WITHDRAW)) {
+			if(action.equals(ACTION_WITHDRAW_WAITINGLIST)) {
 				int waitingListIndex = (Integer)playerStatus.getStatusData();
 				this.m_waitingList.remove(waitingListIndex);
 			}
 		}
 		else if(status.equals(STATUS_PROVIDER)) {
-			if(action.equals(ACTION_WITHDRAW)) {
+			if(action.equals(ACTION_WITHDRAW_PROVIDE)) {
 				int vacantListIndex = (Integer)playerStatus.getStatusData();
 				this.m_vacant.remove(vacantListIndex);
 			}
