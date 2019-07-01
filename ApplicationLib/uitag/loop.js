@@ -100,6 +100,7 @@
 					_.each(eles, function(ele, index){
 						addEleRequest.addRequest(loc_getAddEleRequest(ele.elementVar, ele.indexVar, index));
 					});
+					addEleRequest.setParmData("processMode", "eventBased");
 					return addEleRequest;
 				}
 			}));

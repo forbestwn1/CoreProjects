@@ -70,6 +70,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			pri_input : undefined,
 			//event object
 			pri_eventObject : node_createEventObject(),
+			pri_eventObjectIndividual : node_createEventObject(),
 		};
 		
 		//construct handlers
@@ -366,8 +367,13 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			getInput : function(){  return this.pri_metaData.pri_input; },
 			setInput : function(input){  this.pri_metaData.pri_input = input; },
 			
+			registerIndividualEventListener : function(listener, handler, thisContext){	return this.pri_metaData.pri_eventObjectIndividual.registerListener(undefined, listener, handler, thisContext);	},
+			unregisterIndividualEventListener : function(listener){	this.pri_metaData.pri_eventObjectIndividual.unregister(listener);	},
+			trigueIndividualEvent : function(event, eventData){	this.pri_metaData.pri_eventObjectIndividual.triggerEvent(event, eventData, this);	},
+			
+			
 			//it is for root request only
-			registerEventListener : function(listener, handler, thisContext){	this.pri_metaData.pri_eventObject.registerListener(undefined, listener, handler, thisContext);	},
+			registerEventListener : function(listener, handler, thisContext){	return this.pri_metaData.pri_eventObject.registerListener(undefined, listener, handler, thisContext);	},
 			unregisterEventListener : function(listener){	this.pri_metaData.pri_eventObject.unregister(listener);	},
 			trigueEvent : function(event, eventData){	this.pri_metaData.pri_eventObject.triggerEvent(event, eventData, this);	},
 

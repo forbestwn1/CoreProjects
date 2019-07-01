@@ -16,25 +16,35 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 	@Override
 	public HAPResultService execute(Map<String, HAPData> parms){
 
-		String player = (String)parms.get("player").getValue();
-		
-		HAPData actionData = parms.get("action");
-		String action = actionData==null? null : (String)actionData.getValue();
-		
-		HAPActionResult actionResult = HAPPlayerLineupManager.getInstance().updateLineUp(player, action);
-		
-		HAPPlayerStatus playerStatus;
-		if(actionResult==null) {
-			playerStatus = HAPPlayerLineupManager.getInstance().getLineup().getPlayerStatus(player);
+		String actionStr = null;
+		String statusStr = null;
+		if(parms.get("player")!=null) {
+			String player = (String)parms.get("player").getValue();
+			
+			HAPData actionData = parms.get("action");
+			String action = actionData==null? null : (String)actionData.getValue();
+			
+			HAPActionResult actionResult = null;
+			actionResult = HAPPlayerLineupManager.getInstance().updateLineUp(player, action);
+			
+			HAPPlayerStatus playerStatus = null;
+			if(actionResult==null) {
+				playerStatus = HAPPlayerLineupManager.getInstance().getLineup().getPlayerStatus(player);
+			}
+			else {
+				playerStatus = actionResult.getPlayerStatus();
+			}
+			actionStr = playerStatus.getActions().get(0);
+			statusStr = player + "目前在 :  " + playerStatus.getStatus();
 		}
 		else {
-			playerStatus = actionResult.getPlayerStatus();
+			actionStr = "";
+			statusStr = "还没有提供你的名字，请首先提供你的名字！！";
 		}
 		
 		Map<String, HAPData> output = new LinkedHashMap<String, HAPData>();
-		output.put("action", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), playerStatus.getActions().get(0)));
-		output.put("status", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), playerStatus.getStatus()));
-
+		output.put("action", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), actionStr));
+		output.put("status", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), statusStr));
 		return HAPUtilityService.generateSuccessResult(output);
 	}
 

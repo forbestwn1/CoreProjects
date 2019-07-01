@@ -109,19 +109,36 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 			//pass the result from previous request to input of current request
 			if(previousRequest!=undefined)		requestInfo.setInput(previousRequest.getResult());
 			
-			requestInfo.addPostProcessor({
-				success : function(requestInfo, out){
-					loc_out.pri_cursor++;
-					loc_processNextRequestInSequence(requestInfo, out);
-				},
-				error : function(requestInfo, serviceData){
-					loc_out.executeErrorHandler(serviceData, loc_out);
-				},
-				exception : function(requestInfo, serviceData){
-					loc_out.executeExceptionHandler(serviceData, loc_out);
-				},
-			});
-			
+			var processMode = requestInfo.getParmData('processMode');
+			if(processMode=="eventBased"){
+				var listener = requestInfo.registerIndividualEventListener(undefined, function(eventName, eventData){
+					if(eventName==node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_SUCCESS){
+						loc_out.pri_cursor++;
+						loc_processNextRequestInSequence(requestInfo, eventData);
+					}
+					else if(eventName==node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR){
+						loc_out.executeErrorHandler(eventData, loc_out);
+					}
+					if(eventName==node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION){
+						loc_out.executeExceptionHandler(eventData, loc_out);
+					}
+					requestInfo.unregisterIndividualEventListener(listener);
+				}, requestInfo);
+			}
+			else{
+				requestInfo.addPostProcessor({
+					success : function(requestInfo, out){
+						loc_out.pri_cursor++;
+						loc_processNextRequestInSequence(requestInfo, out);
+					},
+					error : function(requestInfo, serviceData){
+						loc_out.executeErrorHandler(serviceData, loc_out);
+					},
+					exception : function(requestInfo, serviceData){
+						loc_out.executeExceptionHandler(serviceData, loc_out);
+					},
+				});
+			}
 			node_requestProcessor.processRequest(requestInfo);
 		}
 		

@@ -51,7 +51,7 @@ CREATE TABLE nosliw.MINIAPP_SETTING(
 	COMPONENTTYPE		VARCHAR(200)			NOT NULL ,
 	COMPONENTID			VARCHAR(200)			NOT NULL ,
 	NAME				VARCHAR(200)			NOT NULL ,
-	DATA 				BLOB		NOT NULL ,
+	DATA 				TEXT		NOT NULL ,
 	
 	PRIMARY KEY (ID)	
 );
@@ -59,9 +59,9 @@ CREATE TABLE nosliw.MINIAPP_SETTING(
 INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SoccerGroup', 'SoccerGroup', 'no description');
 INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SchoolGroup', 'SchoolGroup', 'no description');
 INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SoccerForFun', 'Soccer For Fun', 'Soccer for fun group in Toronto');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME, DATAOWNERTYPE) VALUES ('App_SoccerForFun_PlayerInformation', 'Player Information', 'group');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('App_SoccerForFun_PlayerUpdate', 'Player Update');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('App_SoccerForFun_PlayerLineup', 'Player Lineup');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME, DATAOWNERTYPE) VALUES ('App_SoccerForFun_PlayerInformation', '请提供你的名字', 'group');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('App_SoccerForFun_PlayerUpdate', '操作');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('App_SoccerForFun_PlayerLineup', '阵容');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('MyRealtor', 'MyRealtor');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('Airplane Arrival', 'Airplane Arrival');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('AppMySchool', 'MySchool');

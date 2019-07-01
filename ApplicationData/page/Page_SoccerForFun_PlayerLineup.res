@@ -3,7 +3,7 @@
 <body>
 	
 	<br>  
-	<span style="color:green">Lineup:</span>
+	<span style="color:green">当前阵容:</span>
 	<br>  
 	<nosliw-loop data="lineup.lineUp" element="spot" index="index">  
 		<%=?(index)?%>.&nbsp;
@@ -21,6 +21,15 @@
 		</nosliw-switch>
 -->
 		
+	</nosliw-loop>
+
+	<nosliw-loop data="lineup.lineUp1" element="spot" index="index">  
+		<%=?(index)?+12%>.&nbsp;
+		
+		<nosliw-loop data="spot.players" element="player" index="index">  
+			<%=?(player)?%>&nbsp;&nbsp; 
+		</nosliw-loop>
+		<br>  
 	</nosliw-loop>
 	
 	<br>  
@@ -75,8 +84,6 @@
 	<scripts>
 	{
 		command_updateData : function(data, request, env){
-			event.preventDefault();
-
 			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");

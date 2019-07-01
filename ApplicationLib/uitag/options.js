@@ -82,7 +82,7 @@
 			preInit : function(){	},
 				
 			initViews : function(requestInfo){	
-				loc_view = $('<select/>');	
+				loc_view = $('<select style="background:#e6dedc;border:solid red"/>');	
 				var operationParms = [];
 				operationParms.push(new node_OperationParm(
 					{

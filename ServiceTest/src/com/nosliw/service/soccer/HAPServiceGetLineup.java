@@ -34,11 +34,15 @@ public class HAPServiceGetLineup implements HAPExecutableService, HAPProviderSer
 				if(!players.get(0).equals(player1)) {
 					spot.addPlayer(player1);
 				}
-				if(spot.getVacant())  spot.addPlayer("????");
 			}
 			spots.add(spot);
 		}
 		for(int i : lineUp.getVacant()) spots.get(i).setVacant();
+
+		for(HAPResponseSpot spot : spots) {
+			if(spot.getVacant())  spot.addPlayer("????");
+		}
+		
 		response.setSpots(spots);
 		
 		output.put("lineup", new HAPDataWrapper(new HAPDataTypeId("test.data;1.0.0"), response));

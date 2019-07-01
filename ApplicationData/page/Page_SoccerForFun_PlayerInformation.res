@@ -4,20 +4,20 @@
 	
 	<br>
 	<br>
-	Are you registered player:
+	如果你是最初注册的球员，请勾选：
 	<nosliw-boolean id="players2019Summer" data="player.registered"/>
 	
 	<br>
 	<nosliw-switch value="<%=?(player.registered)?.value%>">
 		<nosliw-case value="true">
 			<br>
-			Your name:<nosliw-string-options id="players2019Summer" data="player.name"/>
+			注册球员列表，请选择你的名字:<nosliw-string-options id="players2019Summer" data="player.name"/>
 			<br>
 		</nosliw-case>
 
 		<nosliw-case value="false">
 			<br>
-			Your name:<nosliw-textinput data="player.name"/>  
+			请输入你的名字:<nosliw-textinput data="player.name"/>  
 			<br>
 		</nosliw-case>
 	</nosliw-switch>
@@ -69,7 +69,6 @@
 	<scripts>
 	{
 		save : function(info, env){
-			event.preventDefault();
 			env.trigueEvent("savePlayerInformation", info.eventData);
 		},
 	}

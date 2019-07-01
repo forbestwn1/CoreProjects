@@ -87,7 +87,7 @@
 		var loc_out = 
 		{
 			initViews : function(requestInfo){	
-				loc_view = $('<input type="text"/>');	
+				loc_view = $('<input type="text" style="background:#e6dedc"/>');	
 				return loc_view;
 			},
 				

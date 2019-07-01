@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <body>
+
+<!--
 <%=?(player)?.value==''+''%>
 	<nosliw-switch value="<%=?(player)?.value==''+''%>">
 		<nosliw-case value="false">
@@ -18,25 +20,17 @@
 		</nosliw-case>
 
 	</nosliw-switch>
+-->
 
 	
+			<br>
+			<%=?(status)?.value%>
+		
+			<br>
+			<br>
+			 
+			你可以选择:<a href='' nosliw-event="click:update:"><%=?(action)?.value%></a>
 
-<!--
-	<nosliw-switch value="<%=?(action)?.value%>">
-		<nosliw-case value="offer">
-			<a href='' nosliw-event="click:update:">Offer</a>
-		</nosliw-case>
-
-		<nosliw-case value="withdraw">
-			<a href='' nosliw-event="click:update:">withdraw</a>
-		</nosliw-case>
-
-		<nosliw-case value="lookingfor">
-			<a href='' nosliw-event="click:update:">lookingfor</a>
-		</nosliw-case>
-
-	</nosliw-switch>
--->
 
 </body>
 
@@ -74,8 +68,6 @@
 	{
 		update : function(info, env){
 
-			event.preventDefault();
-
 			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
@@ -92,7 +84,6 @@
 		},
 		
 		command_updateData : function(data, request, env){
-			event.preventDefault();
 
 			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
