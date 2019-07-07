@@ -37,14 +37,6 @@
 		<br>  
 	</nosliw-loop>
 	
-	<nosliw-loop data="lineup.lineUp4" element="spot" index="index">  
-		<%=?(index)?+16%>.&nbsp;
-		<nosliw-loop data="spot.players" element="player" index="index">  
-			<%=?(player)?%>&nbsp;&nbsp; 
-		</nosliw-loop>
-		<br>  
-	</nosliw-loop>
-	
 	<br>  
 	<span style="color:red">Waiting List:</span>
 	<br>  
@@ -67,114 +59,6 @@
 						"defaultValue": {
 							  "waitingList": ["Peter", "David"],
 							  "lineUp": [
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "ning"
-							      ]
-							    },
-							    {
-							      "vacant" : false,
-							      "players": [
-							        "Wilson"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "kaida", "tom"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "ning"
-							      ]
-							    },
-							    {
-							      "vacant" : false,
-							      "players": [
-							        "Wilson"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "kaida", "tom"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "ning"
-							      ]
-							    },
-							    {
-							      "vacant" : false,
-							      "players": [
-							        "Wilson"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "kaida", "tom"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "ning"
-							      ]
-							    },
-							    {
-							      "vacant" : false,
-							      "players": [
-							        "Wilson"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "kaida", "tom"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "ning"
-							      ]
-							    },
-							    {
-							      "vacant" : false,
-							      "players": [
-							        "Wilson"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "kaida", "tom"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "ning"
-							      ]
-							    },
-							    {
-							      "vacant" : false,
-							      "players": [
-							        "Wilson"
-							      ]
-							    },
-							    {
-							      "vacant" : true,
-							      "players": [
-							        "kaida", "tom"
-							      ]
-							    },
 							  ],
 						}
 					},

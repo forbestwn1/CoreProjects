@@ -88,7 +88,7 @@ function(gate){
 			
 			if(loc_app==undefined){
 				loc_appView = $('<div></div>');
-				loc_moduleView = $('<div class="view view-main" style="height:1200px;overflow-y: scroll; "></div>');
+				loc_moduleView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; "></div>');
 				loc_appView.append(loc_moduleView);
 				loc_root.append(loc_appView);
 				loc_app = new Framework7({
@@ -102,7 +102,7 @@ function(gate){
 				});			
 			}
 			else{
-				loc_moduleView = $('<div class="view view-main" style="height:1200px;overflow-y: scroll; "></div>');
+				loc_moduleView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; "></div>');
 				loc_root.append(loc_moduleView);
 			}
 			return loc_moduleView.get();
