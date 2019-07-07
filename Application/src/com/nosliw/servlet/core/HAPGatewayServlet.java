@@ -1,4 +1,4 @@
-package com.nosliw.servlet;
+package com.nosliw.servlet.core;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.json.JSONObject;
@@ -12,6 +12,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.browser.HAPRuntimeBrowserUtility;
+import com.nosliw.servlet.HAPServiceServlet;
 
 /**
  * Servlet for gateway

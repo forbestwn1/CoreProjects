@@ -1,4 +1,4 @@
-package com.nosliw.servlet;
+package com.nosliw.servlet.core;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

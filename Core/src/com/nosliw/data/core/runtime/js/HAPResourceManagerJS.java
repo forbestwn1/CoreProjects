@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.resource.HAPLoadResourceResponse;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependent;
@@ -20,23 +21,40 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 
 	private Map<String, HAPResourceManager> m_resourceMans = new LinkedHashMap<String, HAPResourceManager>();
 
+	private Map<HAPResourceId, HAPResource> m_cachedResource = new LinkedHashMap<HAPResourceId, HAPResource>();
+	private Map<HAPResourceId, List<HAPResourceInfo>> m_cachedDependency = new LinkedHashMap<HAPResourceId, List<HAPResourceInfo>>();
+	
+
 	@Override
 	public void registerResourceManager(String type, HAPResourceManager resourceMan){
 		this.m_resourceMans.put(type, resourceMan);
 	}
 	
 	@Override
+	public void clearCache() {
+		m_cachedResource = new LinkedHashMap<HAPResourceId, HAPResource>();
+		m_cachedDependency = new LinkedHashMap<HAPResourceId, List<HAPResourceInfo>>();
+	}
+	
+	@Override
 	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId, HAPRuntimeInfo runtimeInfo) {
 		//sort out resource by type, so that we can do bulk load resources for one type  
 		Map<String, List<HAPResourceId>> sortedResourcesId = new LinkedHashMap<String, List<HAPResourceId>>();
+		Map<HAPResourceId, HAPResource> cachedResources = new LinkedHashMap<HAPResourceId, HAPResource>();
 		for(HAPResourceId resourceId : resourcesId){
-			String type = resourceId.getType();
-			List<HAPResourceId> typedResourcesId = sortedResourcesId.get(type);
-			if(typedResourcesId==null){
-				typedResourcesId = new ArrayList<HAPResourceId>();
-				sortedResourcesId.put(type, typedResourcesId);
+			HAPResource cachedResource = this.m_cachedResource.get(resourceId);
+			if(cachedResource!=null) {
+				cachedResources.put(resourceId, cachedResource);
 			}
-			typedResourcesId.add(resourceId);
+			else {
+				String type = resourceId.getType();
+				List<HAPResourceId> typedResourcesId = sortedResourcesId.get(type);
+				if(typedResourcesId==null){
+					typedResourcesId = new ArrayList<HAPResourceId>();
+					sortedResourcesId.put(type, typedResourcesId);
+				}
+				typedResourcesId.add(resourceId);
+			}
 		}
 
 		//load all resources according to type
@@ -49,13 +67,20 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 		//merge all the response for different type, make sure the response follow the same squence as input
 		HAPLoadResourceResponse out = new HAPLoadResourceResponse();
 		for(HAPResourceId resourceId : resourcesId){
-			HAPLoadResourceResponse resourceResponse = resourceResponses.get(resourceId.getType());
-			HAPResource resource = resourceResponse.getLoadedResource(resourceId);
-			if(resource!=null){
+			HAPResource resource = cachedResources.get(resourceId);
+			if(resource!=null) {
 				out.addLoadedResource(resource);
 			}
-			else{
-				out.addFaildResourceId(resourceId);
+			else {
+				HAPLoadResourceResponse resourceResponse = resourceResponses.get(resourceId.getType());
+				resource = resourceResponse.getLoadedResource(resourceId);
+				if(resource!=null){
+					out.addLoadedResource(resource);
+					if(HAPSystemUtility.getResourceCached()) this.m_cachedResource.put(resourceId, resource);
+				}
+				else{
+					out.addFaildResourceId(resourceId);
+				}
 			}
 		}
 		return out;
@@ -67,7 +92,14 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 		Set<HAPResourceId> processedResources = new HashSet<HAPResourceId>();
 	
 		for(HAPResourceId resourceId : resourceIds){
-			this.discoverResource(resourceId, out, processedResources, runtimeInfo);
+			List<HAPResourceInfo> cached = this.m_cachedDependency.get(resourceId);
+			if(cached==null) {
+				this.discoverResource(resourceId, out, processedResources, runtimeInfo);
+				if(HAPSystemUtility.getResourceCached()) this.m_cachedDependency.put(resourceId, out);
+			}
+			else {
+				out.addAll(cached);
+			}
 		}
 		
 		return out;
@@ -90,4 +122,5 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 	private HAPResourceManager getResourceManager(String resourceType){
 		return this.m_resourceMans.get(resourceType);
 	}
+
 }

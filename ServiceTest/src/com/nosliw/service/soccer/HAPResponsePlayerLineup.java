@@ -22,16 +22,31 @@ public class HAPResponsePlayerLineup extends HAPExecutableImp{
 	@HAPAttribute
 	public static final String LINEUP1 = "lineUp1";
 
+	@HAPAttribute
+	public static final String LINEUP2 = "lineUp2";
+
+	@HAPAttribute
+	public static final String LINEUP3 = "lineUp3";
+
+	@HAPAttribute
+	public static final String LINEUP4 = "lineUp4";
+
 	private List<String> m_waitingList;
 	
 	private List<HAPResponseSpot> m_lineUp;
 
 	private List<HAPResponseSpot> m_lineUp1;
+	private List<HAPResponseSpot> m_lineUp2;
+	private List<HAPResponseSpot> m_lineUp3;
+	private List<HAPResponseSpot> m_lineUp4;
 
 	public void setWaitingList(List<String> wl) {   this.m_waitingList = wl;    }
 	public void addSpot(HAPResponseSpot spot) {
-		if(this.m_lineUp.size()<12)		this.m_lineUp.add(spot);   
-		else 		this.m_lineUp1.add(spot);
+		if(this.m_lineUp.size()<5)		this.m_lineUp.add(spot);   
+		else if(this.m_lineUp.size()<9)		this.m_lineUp1.add(spot);
+		else if(this.m_lineUp.size()<13)		this.m_lineUp2.add(spot);
+		else if(this.m_lineUp.size()<27)		this.m_lineUp3.add(spot);
+		else	this.m_lineUp4.add(spot);
 	}
 	public void setSpots(List<HAPResponseSpot> spots) {
 		for(HAPResponseSpot spot :spots) {
@@ -43,6 +58,9 @@ public class HAPResponsePlayerLineup extends HAPExecutableImp{
 		this.m_waitingList = new ArrayList<String>();
 		this.m_lineUp = new ArrayList<HAPResponseSpot>();
 		this.m_lineUp1 = new ArrayList<HAPResponseSpot>();
+		this.m_lineUp2 = new ArrayList<HAPResponseSpot>();
+		this.m_lineUp3 = new ArrayList<HAPResponseSpot>();
+		this.m_lineUp4 = new ArrayList<HAPResponseSpot>();
 	}
 	
 	@Override
@@ -50,5 +68,8 @@ public class HAPResponsePlayerLineup extends HAPExecutableImp{
 		jsonMap.put(WAITINGLIST, HAPJsonUtility.buildJson(this.m_waitingList, HAPSerializationFormat.JSON));
 		jsonMap.put(LINEUP, HAPJsonUtility.buildJson(this.m_lineUp, HAPSerializationFormat.JSON));
 		jsonMap.put(LINEUP1, HAPJsonUtility.buildJson(this.m_lineUp1, HAPSerializationFormat.JSON));
+		jsonMap.put(LINEUP2, HAPJsonUtility.buildJson(this.m_lineUp2, HAPSerializationFormat.JSON));
+		jsonMap.put(LINEUP3, HAPJsonUtility.buildJson(this.m_lineUp3, HAPSerializationFormat.JSON));
+		jsonMap.put(LINEUP4, HAPJsonUtility.buildJson(this.m_lineUp4, HAPSerializationFormat.JSON));
 	}
 }

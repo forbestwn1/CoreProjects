@@ -7,25 +7,38 @@
 	<br>  
 	<nosliw-loop data="lineup.lineUp" element="spot" index="index">  
 		<%=?(index)?%>.&nbsp;
-		
 		<nosliw-loop data="spot.players" element="player" index="index">  
 			<%=?(player)?%>&nbsp;&nbsp; 
 		</nosliw-loop>
 		<br>  
-
-<!--
-		<nosliw-switch value="<%=?(spot.vacant)?%>">
-			<nosliw-case value="true">
-				??
-			</nosliw-case>
-		</nosliw-switch>
--->
-		
 	</nosliw-loop>
 
 	<nosliw-loop data="lineup.lineUp1" element="spot" index="index">  
+		<%=?(index)?+5%>.&nbsp;
+		<nosliw-loop data="spot.players" element="player" index="index">  
+			<%=?(player)?%>&nbsp;&nbsp; 
+		</nosliw-loop>
+		<br>  
+	</nosliw-loop>
+	
+	<nosliw-loop data="lineup.lineUp2" element="spot" index="index">  
+		<%=?(index)?+8%>.&nbsp;
+		<nosliw-loop data="spot.players" element="player" index="index">  
+			<%=?(player)?%>&nbsp;&nbsp; 
+		</nosliw-loop>
+		<br>  
+	</nosliw-loop>
+	
+	<nosliw-loop data="lineup.lineUp3" element="spot" index="index">  
 		<%=?(index)?+12%>.&nbsp;
-		
+		<nosliw-loop data="spot.players" element="player" index="index">  
+			<%=?(player)?%>&nbsp;&nbsp; 
+		</nosliw-loop>
+		<br>  
+	</nosliw-loop>
+	
+	<nosliw-loop data="lineup.lineUp4" element="spot" index="index">  
+		<%=?(index)?+16%>.&nbsp;
 		<nosliw-loop data="spot.players" element="player" index="index">  
 			<%=?(player)?%>&nbsp;&nbsp; 
 		</nosliw-loop>
@@ -71,7 +84,97 @@
 							      "players": [
 							        "kaida", "tom"
 							      ]
-							    }
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "ning"
+							      ]
+							    },
+							    {
+							      "vacant" : false,
+							      "players": [
+							        "Wilson"
+							      ]
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "kaida", "tom"
+							      ]
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "ning"
+							      ]
+							    },
+							    {
+							      "vacant" : false,
+							      "players": [
+							        "Wilson"
+							      ]
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "kaida", "tom"
+							      ]
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "ning"
+							      ]
+							    },
+							    {
+							      "vacant" : false,
+							      "players": [
+							        "Wilson"
+							      ]
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "kaida", "tom"
+							      ]
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "ning"
+							      ]
+							    },
+							    {
+							      "vacant" : false,
+							      "players": [
+							        "Wilson"
+							      ]
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "kaida", "tom"
+							      ]
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "ning"
+							      ]
+							    },
+							    {
+							      "vacant" : false,
+							      "players": [
+							        "Wilson"
+							      ]
+							    },
+							    {
+							      "vacant" : true,
+							      "players": [
+							        "kaida", "tom"
+							      ]
+							    },
 							  ],
 						}
 					},

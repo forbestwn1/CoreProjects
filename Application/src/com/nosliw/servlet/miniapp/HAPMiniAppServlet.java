@@ -1,4 +1,4 @@
-package com.nosliw.miniapp.servlet;
+package com.nosliw.servlet.miniapp;
 
 import org.json.JSONObject;
 

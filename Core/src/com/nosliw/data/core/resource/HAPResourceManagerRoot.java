@@ -27,6 +27,8 @@ public interface HAPResourceManagerRoot{
 	 * @param type
 	 * @param resourceMan
 	 */
-	public void registerResourceManager(String type, HAPResourceManager resourceMan);
+	void registerResourceManager(String type, HAPResourceManager resourceMan);
 
+	void clearCache();
+	
 }
