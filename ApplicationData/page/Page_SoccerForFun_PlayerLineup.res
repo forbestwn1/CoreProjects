@@ -6,7 +6,7 @@
 	<span style="color:green">当前阵容:</span>
 	<br>  
 	<nosliw-loop data="lineup.lineUp" element="spot" index="index">  
-		<%=?(index)?%>.&nbsp;
+		<%=?(index)?+1%>.&nbsp;
 		<nosliw-loop data="spot.players" element="player" index="index">  
 			<%=?(player)?%>&nbsp;&nbsp; 
 		</nosliw-loop>
@@ -14,7 +14,7 @@
 	</nosliw-loop>
 
 	<nosliw-loop data="lineup.lineUp1" element="spot" index="index">  
-		<%=?(index)?+5%>.&nbsp;
+		<%=?(index)?+6%>.&nbsp;
 		<nosliw-loop data="spot.players" element="player" index="index">  
 			<%=?(player)?%>&nbsp;&nbsp; 
 		</nosliw-loop>
@@ -22,7 +22,7 @@
 	</nosliw-loop>
 	
 	<nosliw-loop data="lineup.lineUp2" element="spot" index="index">  
-		<%=?(index)?+8%>.&nbsp;
+		<%=?(index)?+11%>.&nbsp;
 		<nosliw-loop data="spot.players" element="player" index="index">  
 			<%=?(player)?%>&nbsp;&nbsp; 
 		</nosliw-loop>
@@ -30,13 +30,21 @@
 	</nosliw-loop>
 	
 	<nosliw-loop data="lineup.lineUp3" element="spot" index="index">  
-		<%=?(index)?+12%>.&nbsp;
+		<%=?(index)?+16%>.&nbsp;
 		<nosliw-loop data="spot.players" element="player" index="index">  
 			<%=?(player)?%>&nbsp;&nbsp; 
 		</nosliw-loop>
 		<br>  
 	</nosliw-loop>
 	
+	<nosliw-loop data="lineup.lineUp4" element="spot" index="index">  
+		<%=?(index)?+21%>.&nbsp;
+		<nosliw-loop data="spot.players" element="player" index="index">  
+			<%=?(player)?%>&nbsp;&nbsp; 
+		</nosliw-loop>
+		<br>  
+	</nosliw-loop>
+
 	<br>  
 	<span style="color:red">Waiting List:</span>
 	<br>  
