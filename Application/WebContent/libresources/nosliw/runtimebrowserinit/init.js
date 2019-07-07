@@ -76,18 +76,30 @@ nosliw.init = function(serverBase){
 				var loadScriptInOrder = function(){
 					var url = result[count];
 					
-					var script = document.createElement('script');
-					script.setAttribute('src', nosliw.serverBase+url);
-					script.setAttribute('defer', "defer");
-					script.setAttribute('type', 'text/javascript');
+					jQuery.getScript(nosliw.serverBase+url, function(data, textStatus, jqxhr){
+						callBack();
+					});
+					console.log(url);
+				};
+				
+				var loadScriptInOrder1 = function(){
+					var url = result[count];
+					
+					var scriptEle = document.createElement('script');
+					scriptEle.setAttribute('src', nosliw.serverBase+url);
+					scriptEle.setAttribute('defer', "defer");
+					scriptEle.setAttribute('type', 'text/javascript');
 
 					script.onload = callBack;
-					document.getElementsByTagName("head")[0].appendChild(script);
+					document.getElementsByTagName("head")[0].appendChild(scriptEle);
+					
+					console.log(url);
 				};
 				
 				var callBack = function(){
+					console.log(count+"/"+fileNumber);
 					count++;
-					if(count==fileNumber){
+					if(count>=fileNumber){
 						callBackFunction.call();
 					}
 					else{

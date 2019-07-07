@@ -89,13 +89,15 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 	@Override
 	public List<HAPResourceInfo> discoverResources(List<HAPResourceId> resourceIds, HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceInfo> out = new ArrayList<HAPResourceInfo>();
-		Set<HAPResourceId> processedResources = new HashSet<HAPResourceId>();
 	
 		for(HAPResourceId resourceId : resourceIds){
 			List<HAPResourceInfo> cached = this.m_cachedDependency.get(resourceId);
 			if(cached==null) {
-				this.discoverResource(resourceId, out, processedResources, runtimeInfo);
-				if(HAPSystemUtility.getResourceCached()) this.m_cachedDependency.put(resourceId, out);
+				List<HAPResourceInfo> resourceDis = new ArrayList<HAPResourceInfo>();
+				Set<HAPResourceId> processedResources = new HashSet<HAPResourceId>();
+				this.discoverResource(resourceId, resourceDis, processedResources, runtimeInfo);
+				out.addAll(resourceDis);
+				if(HAPSystemUtility.getResourceCached()) this.m_cachedDependency.put(resourceId, resourceDis);
 			}
 			else {
 				out.addAll(cached);
