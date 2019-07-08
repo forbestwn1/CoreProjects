@@ -29,6 +29,8 @@ var packageObj = library;
 /**
  * 
  */
+nosliw.createNode("runtime.name", "browser");
+
 var node_createRuntime = function(name){
 	
 	var loc_name = name;
