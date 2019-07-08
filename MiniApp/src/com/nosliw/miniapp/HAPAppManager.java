@@ -31,6 +31,7 @@ public class HAPAppManager {
 		this.m_dataAccess = new HAPDataAccess(HAPDBSource.getDefaultDBSource());
 		this.m_uiResourceMan = resourceMan;
 		this.m_appDataProcessors = new LinkedHashMap<String, Map<String, List<HAPAppDataProcessor>>>();
+		addSoccerProcessor();
 	}
 	
 	public HAPDefinitionApp getMinAppDefinition(String minAppDefId) {
@@ -80,6 +81,17 @@ public class HAPAppManager {
 		Map<String, List<HAPAppDataProcessor>> processByName = this.m_appDataProcessors.get(ownerInfo.getComponentType());
 		if(processByName==null)  return null;
 		return processByName.get(ownerInfo.getComponentId());
+	}
+	
+	private void addSoccerProcessor() {
+		try {
+			HAPOwnerInfo ownerInfo = new HAPOwnerInfo(null, "SoccerForFun", "group");
+			HAPAppDataProcessor appDataProcessor = (HAPAppDataProcessor)Class.forName("com.nosliw.service.soccer.HAPAppDataProcessorImp").newInstance();
+			this.addProcessor(ownerInfo, appDataProcessor);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void addProcessor(HAPOwnerInfo ownerInfo, HAPAppDataProcessor appDataProcessor) {

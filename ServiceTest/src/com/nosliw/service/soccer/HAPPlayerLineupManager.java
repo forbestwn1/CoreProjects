@@ -88,7 +88,7 @@ public class HAPPlayerLineupManager {
 	
 	private void savePlayerInfos(Map<String, HAPPlayerInfo> playerInfos) {
 		String content = HAPJsonUtility.buildJson(playerInfos, HAPSerializationFormat.JSON);
-		HAPFileUtility.writeFile(this.getPlayerInfoFile(), content);
+		HAPFileUtility.writeFile(this.getPlayerInfoFile(), HAPJsonUtility.formatJson(content));
 	}
 	
 	private Map<String, HAPPlayerInfo> getPlayerInfos(){

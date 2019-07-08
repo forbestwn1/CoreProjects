@@ -42,7 +42,7 @@ public class HAPResponsePlayerLineup extends HAPExecutableImp{
 
 	public void setWaitingList(List<String> wl) {   this.m_waitingList = wl;    }
 	public void addSpot(HAPResponseSpot spot) {
-		if(this.m_lineUp.size()<5)		this.m_lineUp.add(spot);   
+		if(this.m_lineUp.size()<21)		this.m_lineUp.add(spot);   
 		else if(this.m_lineUp1.size()<5)		this.m_lineUp1.add(spot);
 		else if(this.m_lineUp2.size()<5)		this.m_lineUp2.add(spot);
 		else if(this.m_lineUp3.size()<5)		this.m_lineUp3.add(spot);
