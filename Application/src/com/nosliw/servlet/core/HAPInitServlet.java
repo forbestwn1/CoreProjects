@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServlet;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.miniapp.HAPGatewayAppData;
@@ -56,4 +57,9 @@ public class HAPInitServlet  extends HttpServlet{
 			this.getServletContext().setAttribute("minAppMan", appManager);
 			runtimeEnvironment.getGatewayManager().registerGateway(HAPGatewayAppData.GATEWAY_APPDATA, new HAPGatewayAppData(appManager));
 	   }
+	
+	@Override
+    public void destroy() {
+		HAPDBSource.getDefaultDBSource().destroy();
+    }
 }

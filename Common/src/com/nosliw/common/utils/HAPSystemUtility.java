@@ -46,4 +46,5 @@ public class HAPSystemUtility {
 	public static boolean getResourceCached() {   return Boolean.valueOf(prop.getProperty("ResourceCached", "false"));   }
 	public static String getJSTempFolder() {   return prop.getProperty("JSTempFolder");   }
 	public static boolean getConsolidateLib() {   return Boolean.valueOf(prop.getProperty("ConsolidateLib", "false"));   }
+	public static int getItemsPerLoop() {   return Integer.valueOf(prop.getProperty("ItemsPerLoop", "5"));   }
 }

@@ -2,6 +2,7 @@ package com.nosliw.data.core.imp.io;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
@@ -41,5 +42,13 @@ public class HAPDBSource  extends HAPConfigurableImp{
 
 	public Connection getConnection(){
 		return this.m_connection;
+	}
+	
+	public void destroy() {
+		try {
+			this.m_connection.abort(null);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

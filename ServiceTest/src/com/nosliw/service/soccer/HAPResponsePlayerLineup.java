@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 @HAPEntityWithAttribute
@@ -31,6 +32,8 @@ public class HAPResponsePlayerLineup extends HAPExecutableImp{
 	@HAPAttribute
 	public static final String LINEUP4 = "lineUp4";
 
+	private int itemsPerLoop = HAPSystemUtility.getItemsPerLoop();
+	
 	private List<String> m_waitingList;
 	
 	private List<HAPResponseSpot> m_lineUp;
@@ -42,10 +45,10 @@ public class HAPResponsePlayerLineup extends HAPExecutableImp{
 
 	public void setWaitingList(List<String> wl) {   this.m_waitingList = wl;    }
 	public void addSpot(HAPResponseSpot spot) {
-		if(this.m_lineUp.size()<21)		this.m_lineUp.add(spot);   
-		else if(this.m_lineUp1.size()<5)		this.m_lineUp1.add(spot);
-		else if(this.m_lineUp2.size()<5)		this.m_lineUp2.add(spot);
-		else if(this.m_lineUp3.size()<5)		this.m_lineUp3.add(spot);
+		if(this.m_lineUp.size()<itemsPerLoop)		this.m_lineUp.add(spot);   
+		else if(this.m_lineUp1.size()<itemsPerLoop)		this.m_lineUp1.add(spot);
+		else if(this.m_lineUp2.size()<itemsPerLoop)		this.m_lineUp2.add(spot);
+		else if(this.m_lineUp3.size()<itemsPerLoop)		this.m_lineUp3.add(spot);
 		else	this.m_lineUp4.add(spot);
 	}
 	public void setSpots(List<HAPResponseSpot> spots) {

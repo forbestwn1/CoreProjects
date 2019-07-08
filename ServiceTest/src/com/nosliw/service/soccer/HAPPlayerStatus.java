@@ -19,4 +19,23 @@ public class HAPPlayerStatus {
 	public Object getStatusData() {   return this.m_statusData;   }
 	public List<String> getActions(){   return this.m_actions;    }
 	
+	public String getStatusDescription() {
+		StringBuffer out = new StringBuffer();
+		out.append(this.m_status);
+		if(this.m_status.equals(HAPPlayerLineup.STATUS_LINEUP)) {
+			
+		}
+		else if(this.m_status.equals(HAPPlayerLineup.STATUS_WAITINGLIST)) {
+			out.append(" 前面有"+this.m_statusData);
+		}
+		else if(this.m_status.equals(HAPPlayerLineup.STATUS_PROVIDER)) {
+			out.append(" 前面有"+this.m_statusData);
+		}
+		else if(this.m_status.equals(HAPPlayerLineup.STATUS_NOTHING)) {
+			
+		}
+		
+		return out.toString();
+	}
+	
 }

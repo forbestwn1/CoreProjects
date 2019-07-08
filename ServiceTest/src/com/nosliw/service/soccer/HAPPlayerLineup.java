@@ -73,15 +73,15 @@ public class HAPPlayerLineup extends HAPExecutableImp{
 		HAPPlayerStatus playerStatus = this.getPlayerStatus(player);
 		if(playerStatus.getActions().indexOf(action)==-1)  return null;  //invalid
 		
-		String affectedPlayer = null;
+		List<String> affectedPlayers = new ArrayList<String>();
 		String status = playerStatus.getStatus();
 		if(status.equals(STATUS_LINEUP)) {
 			if(action.equals(ACTION_OFFER)) {
 				int lineupIndex = (Integer)playerStatus.getStatusData();
+				for(String p : this.m_waitingList)   affectedPlayers.add(p);
 				if(this.m_waitingList.size()>0) {
 					//someone from waiting list replace you
-					affectedPlayer = this.m_waitingList.get(0);
-					this.m_lineUp.get(lineupIndex).addPlayer(affectedPlayer);
+					this.m_lineUp.get(lineupIndex).addPlayer(this.m_waitingList.get(0));
 					this.m_waitingList.remove(0);
 				}
 				else {
@@ -94,12 +94,20 @@ public class HAPPlayerLineup extends HAPExecutableImp{
 			if(action.equals(ACTION_WITHDRAW_WAITINGLIST)) {
 				int waitingListIndex = (Integer)playerStatus.getStatusData();
 				this.m_waitingList.remove(waitingListIndex);
+				while(waitingListIndex<this.m_waitingList.size()) {
+					affectedPlayers.add(this.m_waitingList.get(waitingListIndex));
+					waitingListIndex++;
+				}
 			}
 		}
 		else if(status.equals(STATUS_PROVIDER)) {
 			if(action.equals(ACTION_WITHDRAW_PROVIDE)) {
 				int vacantListIndex = (Integer)playerStatus.getStatusData();
 				this.m_vacant.remove(vacantListIndex);
+				while(vacantListIndex<this.m_vacant.size()) {
+					affectedPlayers.add(this.m_lineUp.get(this.m_vacant.get(vacantListIndex)).getPlayer());
+					vacantListIndex++;
+				}
 			}
 		}
 		else if(status.equals(STATUS_NOTHING)) {
@@ -108,7 +116,7 @@ public class HAPPlayerLineup extends HAPExecutableImp{
 					//spot available
 					int lineUpIndex = this.m_vacant.get(0);
 					HAPSpot spot = this.m_lineUp.get(lineUpIndex);
-					affectedPlayer = spot.getPlayer();
+					affectedPlayers.add(spot.getPlayer());
 					spot.addPlayer(player);
 					this.m_vacant.remove(0);
 				}
@@ -119,7 +127,7 @@ public class HAPPlayerLineup extends HAPExecutableImp{
 			}
 		}
 		
-		return new HAPActionResult(this.getPlayerStatus(player), affectedPlayer);
+		return new HAPActionResult(this.getPlayerStatus(player), affectedPlayers);
 		
 	}
 	
