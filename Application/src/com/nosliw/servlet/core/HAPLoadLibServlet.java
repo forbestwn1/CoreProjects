@@ -42,17 +42,17 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 
 		if(HAPSystemUtility.getConsolidateLib()) {
 			if(this.m_libraryTempFile==null) {
-				this.m_libraryTempFile = "temp/libs/"+System.currentTimeMillis()+"/library.js";
+				this.m_libraryTempFile = System.currentTimeMillis()+"/library.js";
 				HAPGatewayOutput gatewayOutput = (HAPGatewayOutput)serviceData.getData();
 				List<String> fileNames = (List<String>)gatewayOutput.getData();
 				StringBuffer libraryContent = new StringBuffer();
 				for(String fileName : fileNames) {
 					libraryContent.append(HAPFileUtility.readFile(HAPFileUtility.getJSFolder()+fileName));
 				}
-				HAPFileUtility.writeFile(HAPFileUtility.getJSFolder()+""+m_libraryTempFile, libraryContent.toString());
+				HAPFileUtility.writeFile(HAPSystemUtility.getJSTempFolder()+"libs/"+m_libraryTempFile, libraryContent.toString());
 			}
 			List<String> tempNames = new ArrayList<String>();
-			tempNames.add(this.m_libraryTempFile);
+			tempNames.add("temp/libs/"+this.m_libraryTempFile);
 			serviceData = HAPServiceData.createSuccessData(new HAPGatewayOutput(null, tempNames));
 		}
 		this.printContent(serviceData, response);

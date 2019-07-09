@@ -8888,6 +8888,29 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 					requestInfo.unregisterIndividualEventListener(listener);
 				}, requestInfo);
 			}
+			else if(processMode=="promiseBased"){
+				requestInfo.addPostProcessor({
+					success : function(requestInfo, out){
+						var promise = new Promise(function(resolve, reject) {
+							  resolve({
+								  request : requestInfo,
+								  data : out
+							  });
+						});
+
+						promise.then(function(result) {
+							loc_out.pri_cursor++;
+							loc_processNextRequestInSequence(requestInfo, out);
+						}, function(err) {});
+					},
+					error : function(requestInfo, serviceData){
+						loc_out.executeErrorHandler(serviceData, loc_out);
+					},
+					exception : function(requestInfo, serviceData){
+						loc_out.executeExceptionHandler(serviceData, loc_out);
+					},
+				});
+			}
 			else{
 				requestInfo.addPostProcessor({
 					success : function(requestInfo, out){
