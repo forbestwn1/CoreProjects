@@ -50,7 +50,7 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 			actionStr = playerStatus.getActions().get(0);
 			statusStr = player + "目前在 :  " + playerStatus.getStatusDescription();
 
-			if(action!=null) {
+			if(action!=null && actionResult!=null) {
 				List<String> affectedPlayers = new ArrayList<String>();
 				affectedPlayers.add(player);
 				if(actionResult.getAffectedPlayer()!=null)  affectedPlayers.addAll(actionResult.getAffectedPlayer());
@@ -71,10 +71,13 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 	
 	private void sendEmailToPlayers(List<String> players) {
 		for(String player : players) {
-			String email = HAPPlayerLineupManager.getInstance().getPlayerInfo(player).getEmail();
-			if(HAPBasicUtility.isStringNotEmpty(email)) {
-				HAPPlayerStatus playerStatus = HAPPlayerLineupManager.getInstance().getLineup().getPlayerStatus(player);
-				this.sendEmail(email, "你在soccer for fun的状态更新", player+", 你在soccer for fun group的状态为"+playerStatus.getStatusDescription());
+			HAPPlayerInfo playerInfo = HAPPlayerLineupManager.getInstance().getPlayerInfo(player);
+			if(playerInfo!=null) {
+				String email = playerInfo.getEmail();
+				if(HAPBasicUtility.isStringNotEmpty(email)) {
+					HAPPlayerStatus playerStatus = HAPPlayerLineupManager.getInstance().getLineup().getPlayerStatus(player);
+					this.sendEmail(email, "你在soccer for fun的状态更新", player+", 你在soccer for fun group的状态为"+playerStatus.getStatusDescription());
+				}
 			}
 		}
 	}
