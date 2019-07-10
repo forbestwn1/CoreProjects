@@ -41,6 +41,13 @@ public class HAPDBSource  extends HAPConfigurableImp{
 	}
 
 	public Connection getConnection(){
+		try {
+			if(this.m_connection.isClosed()) {
+				this.setupDbConnection();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return this.m_connection;
 	}
 	
