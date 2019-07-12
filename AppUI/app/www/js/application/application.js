@@ -25,7 +25,9 @@ var node_createApplicationConfigure = function(modulesConfigure, layout, data){
 	var loc_out = {
 		getModulesConfigure : function(){   return loc_modulesConfigure;   },
 		getLayout : function(){  return loc_layout;    },
-		getData : function(){   return loc_data;   }
+		getData : function(){   return loc_data;   },
+		addData : function(name, value){   loc_data[name] = value;    },
+		addDataSet : function(dataSet){    loc_data = _.extend(loc_data, dataSet);     }
 	};
 	return loc_out;
 };
@@ -65,10 +67,10 @@ var node_createApplication = function(){
 		return out;
 	};
 
-	var loc_refreshRequest = function(userInfo, handlers, request){
+	var loc_refreshRequest = function(userInfo, configureData, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		_.each(loc_modules, function(module, name){
-			if(module.refreshRequest!=undefined)  out.addRequest(module.refreshRequest(userInfo));
+			if(module.refreshRequest!=undefined)  out.addRequest(module.refreshRequest(userInfo, configureData));
 		});
 		return out;
 	};
@@ -80,7 +82,7 @@ var node_createApplication = function(){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_loginService.getLoginRequest(userInfo, {
 				success : function(request, userInfo){
-					return loc_refreshRequest(userInfo, {
+					return loc_refreshRequest(userInfo, loc_appConfigure.getData(), {
 						success : function(requestInfo){
 							return userInfo;
 						}

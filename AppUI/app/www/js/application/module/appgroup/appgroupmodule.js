@@ -2,7 +2,7 @@
  * 
  */
 //get/create package
-var packageObj = library.getChildPackage("module.userapps");    
+var packageObj = library.getChildPackage("module.appgroup");    
 
 (function(packageObj){
 	//get used node
@@ -20,7 +20,7 @@ var packageObj = library.getChildPackage("module.userapps");
 
 var loc_mduleName = "userApps";
 
-var node_createModuleUserApps = function(parm){
+var node_createModuleAppGroup = function(parm){
 
 	var loc_root = parm;
 
@@ -28,7 +28,7 @@ var node_createModuleUserApps = function(parm){
 	var loc_eventListener = node_createEventObject();
 
 	var loc_componentData = {
-		userInfo : {}
+		group : {}
 	};
 	
 	var loc_vue;
@@ -43,8 +43,6 @@ var node_createModuleUserApps = function(parm){
 			el: loc_root,
 			data: loc_componentData,
 			components : {
-				"user-apps" : node_createComponentUserApps(),
-				"user-info" : node_createComponentUserInfo(),
 			},
 			computed : {
 				user : function(){
@@ -56,19 +54,14 @@ var node_createModuleUserApps = function(parm){
 					loc_triggerEvent("selectMiniApp", miniApp);
 				},
 			},
-			template : `
+			template : 
+				`
 				<div>
-<!--
-					<user-info
-						v-bind:user="user"
-					></user-info>
--->					
-				  	<user-apps 
-				  		v-bind:data="userInfo"
-				  		v-on:selectMiniApp="onSelectMiniApp"
-				  	></user-apps>
+					<p>
+						<a v-for="miniapp in group.miniApp" v-on:click.prevent="onSelectMiniApp">{{miniapp.name}}</a>
+					</p>
 				</div>
-			`
+				`
 		});
 	};
 
@@ -78,7 +71,10 @@ var node_createModuleUserApps = function(parm){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshUserApps", {}), handlers, requestInfo);
 			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUserApps", {}), 
 				function(requestInfo){
-					loc_componentData.userInfo = userInfo;
+					var group = _.find(userInfo.groupMiniApp, function(group, i){
+						return group.group.id==configureData.groupId;
+					});
+					loc_componentData.group = group;
 				})); 
 			return out;
 		},
@@ -111,6 +107,6 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 
 
 //Register Node by Name
-packageObj.createChildNode("createModuleUserApps", node_createModuleUserApps); 
+packageObj.createChildNode("createModuleAppGroup", node_createModuleAppGroup); 
 
 })(packageObj);

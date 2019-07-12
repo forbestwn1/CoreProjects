@@ -1,7 +1,7 @@
 /**
  * 
  */
-var init = function(rootNode, baseServer, configureName, callBackFunction){
+var init = function(rootNode, baseServer, configureName, dataInput, callBackFunction){
 
 	var loc_librarys = [
 		"js/application/0_package_service.js",
@@ -18,7 +18,7 @@ var init = function(rootNode, baseServer, configureName, callBackFunction){
 	];
 	
 	//
-	loc_librarys.push("js/application/configure/configure_"+configureName+".js");
+	loc_librarys.push("js/application/configure/"+configureName+"/configure.js");
 	
 	var loc_framework7App = new Framework7({
 		  // App root element
@@ -91,7 +91,8 @@ var init = function(rootNode, baseServer, configureName, callBackFunction){
 			});
 
 			var minappConfigure = nosliw.getNodeData("miniapp.configure");
-			minappConfigure.getData().framework7App = loc_framework7App;
+			minappConfigure.addData("framework7App", loc_framework7App);
+			minappConfigure.addDataSet(dataInput);
 			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(rootNode, minappConfigure, undefined, out);
 			out.addRequest(miniappInitRequest);
 			nosliw.getNodeData("request.requestServiceProcessor").processRequest(out);
