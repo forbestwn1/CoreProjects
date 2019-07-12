@@ -72,8 +72,6 @@ var node_createModuleMiniApp = function(root){
 							inputIODataSet.setData(undefined, groupData[0].data);
 						}
 						
-						
-						
 						return node_createServiceRequestInfoSimple(undefined, function(request){
 							//update owner info
 							nosliw.runtime.getSecurityService().setOwnerType(miniApp.app[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERTYPE]);

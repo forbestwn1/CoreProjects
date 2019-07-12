@@ -1,4 +1,43 @@
-//get/create package
+var modulesInfo = [
+	{
+		name : "user-apps",
+		initParm : function(env){ 
+			return $("#userInfoDiv").get(0); 
+		},
+		factory : "miniapp.module.userapps.createModuleUserApps",
+		init : function(module, env, request){
+			module.registerEventListener(undefined, function(eventName, eventData, request){
+				if(eventName=="selectMiniApp"){
+					env.getModule("mini-app").executeRefreshRequest(eventData);
+				}
+			});
+		}
+	},
+	{
+		name : "mini-app",
+		initParm : function(env){ 
+			return {
+				main : $("#miniAppMainDiv").get(0),
+				setting : $("#miniAppSettingDiv").get(0),
+				framework7App : env.getData("framework7App")
+			}; 
+		},
+		factory : "miniapp.module.miniapp.createModuleMiniApp",
+		init : function(module, env, request){
+		}
+	}
+];
+
+var data = {
+};
+
+var createApplicationConfigure = nosliw.getNodeData("miniapp.createApplicationConfigure");
+nosliw.createNode("miniapp.configure", createApplicationConfigure(modulesInfo, "js/application/main.html", data));
+
+
+
+/*
+get/create package
 var packageObj = library.getChildPackage();    
 
 (function(packageObj){
@@ -20,57 +59,94 @@ var loc_mduleName = "minApp";
 var node_createApplicationConfigure = function(modulesConfigure, layout, data){
 	var loc_modulesConfigure = modulesConfigure;
 	var loc_layout = layout;
-	var loc_data = data==undefined?{}:data;
+	var loc_data = data;
 	
 	var loc_out = {
-		getModulesConfigure : function(){   return loc_modulesConfigure;   },
-		getLayout : function(){  return loc_layout;    },
-		getData : function(){   return loc_data;   }
+			
 	};
 	return loc_out;
 };
 
-var node_createApplication = function(){
+var node_createApplication = function(rootNode, framework7App){
 
 	var loc_miniAppService = node_createMiniAppService();
 
 	var loc_loginService = node_createLoginService(loc_miniAppService);
 	
-	var loc_appConfigure;
+	var loc_framework7App;
 	
+	var loc_vue;
+	
+	var loc_modulesInfo = [
+		{
+			name : "user-apps",
+			initParm : function(env){ 
+				return $("#userInfoDiv").get(0); 
+			},
+			factory : "miniapp.module.userapps.createModuleUserApps",
+			init : function(module, env, request){
+				module.registerEventListener(undefined, function(eventName, eventData, request){
+					if(eventName=="selectMiniApp"){
+						loc_modules["mini-app"].executeRefreshRequest(eventData);
+					}
+				});
+			}
+		},
+		{
+			name : "mini-app",
+			initParm : function(env){ 
+				return {
+					main : $("#miniAppMainDiv").get(0),
+					setting : $("#miniAppSettingDiv").get(0),
+					framework7App : loc_framework7App
+				}; 
+			},
+			factory : "miniapp.module.miniapp.createModuleMiniApp",
+			init : function(module, env, request){
+			}
+		}
+	];
 	var loc_modules = {};
 	
-	var loc_env = {
-		getModule : function(name){  return loc_modules[name];   },
-		getData : function(name){   return loc_appConfigure.getData()[name];  }
-	};
-	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(rootNode, appConfigure, handlers, request){
-		loc_appConfigure = appConfigure;
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(rootNode, framework7App, handlers, request){
+
+		loc_framework7App = framework7App;
 		
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_miniAppUtility.getLoadFilesRequest([loc_appConfigure.getLayout()], {
+		var mainHtml = "js/application/main.html";
+		out.addRequest(node_miniAppUtility.getLoadFilesRequest([mainHtml], {
 			success : function(request, mainSource){
-				$(mainSource[loc_appConfigure.getLayout()]).appendTo(rootNode);
-				_.each(loc_appConfigure.getModulesConfigure(), function(moduleInfo, index){
-					var module = nosliw.getNodeData(moduleInfo.factory)(moduleInfo.initParm(loc_env));
+				$(mainSource[mainHtml]).appendTo(rootNode);
+				
+				if(loc_framework7App==undefined){
+					loc_framework7App = new Framework7({
+						  // App root element
+						  root: $("#appDiv").get(),
+						  name: 'My App',
+						  id: 'com.myapp.test',
+						  panel: {
+							    swipe: 'both',
+						  },				
+					});
+				}
+
+				_.each(loc_modulesInfo, function(moduleInfo, index){
+					var module = nosliw.getNodeData(moduleInfo.factory)(moduleInfo.initParm());
 					loc_modules[moduleInfo.name] = module;
 					module.interfaceObjectLifecycle.init();
-					moduleInfo.init(module, loc_env, request);
+					moduleInfo.init(module, request);
+					
 				});
 			}
 		}));	
 
+		
 		return out;
 	};
 
 	var loc_refreshRequest = function(userInfo, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		_.each(loc_modules, function(module, name){
-			if(module.refreshRequest!=undefined)  out.addRequest(module.refreshRequest(userInfo));
-		});
-		return out;
+		return loc_modules["user-apps"].refreshRequest(userInfo, handlers, request);
 	};
 	
 	var loc_out = {
@@ -118,6 +194,6 @@ nosliw.registerSetNodeDataEvent("miniapp.createLoginService", function(){node_cr
 
 //Register Node by Name
 packageObj.createChildNode("createApplication", node_createApplication); 
-packageObj.createChildNode("createApplicationConfigure", node_createApplicationConfigure); 
 
 })(packageObj);
+*/

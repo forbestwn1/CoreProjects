@@ -1,8 +1,25 @@
 /**
  * 
  */
-var init = function(rootNode, baseServer, callBackFunction){
+var init = function(rootNode, baseServer, configureName, callBackFunction){
 
+	var loc_librarys = [
+		"js/application/0_package_service.js",
+		"js/application/utility.js",
+		"js/application/service.js",
+		"js/application/loginservice.js",
+		"js/application/application.js",
+		"js/application/module/userapps/userapps.js",
+		"js/application/module/userapps/group.js",
+		"js/application/module/userapps/miniapp.js",
+		"js/application/module/userapps/userinfo.js",
+		"js/application/module/userapps/usermodule.js",
+		"js/application/module/miniapp/miniappmodule.js",
+	];
+	
+	//
+	loc_librarys.push("js/application/configure/configure_"+configureName+".js");
+	
 	var loc_framework7App = new Framework7({
 		  // App root element
 		  root: $("#appDiv").get(),
@@ -46,18 +63,7 @@ var init = function(rootNode, baseServer, callBackFunction){
 	//when nosliw active
 	$(document).on("nosliwActive", function(){
 		//load mini libs
-		loadLibrary([
-			"js/application/0_package_service.js",
-			"js/application/utility.js",
-			"js/application/service.js",
-			"js/application/application.js",
-			"js/application/userapps/userapps.js",
-			"js/application/userapps/group.js",
-			"js/application/userapps/miniapp.js",
-			"js/application/userapps/userinfo.js",
-			"js/application/userapps/usermodule.js",
-			"js/application/miniapp/miniappmodule.js",
-		], function(){
+		loadLibrary(loc_librarys, function(){
 			loc_framework7App.preloader.hide();
 			
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
@@ -84,7 +90,9 @@ var init = function(rootNode, baseServer, callBackFunction){
 				}
 			});
 
-			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(rootNode, loc_framework7App, undefined, out);
+			var minappConfigure = nosliw.getNodeData("miniapp.configure");
+			minappConfigure.getData().framework7App = loc_framework7App;
+			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(rootNode, minappConfigure, undefined, out);
 			out.addRequest(miniappInitRequest);
 			nosliw.getNodeData("request.requestServiceProcessor").processRequest(out);
 		});

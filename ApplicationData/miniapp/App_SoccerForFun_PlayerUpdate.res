@@ -40,9 +40,7 @@
 			}			
 		},
 		"process": {
-
 		}
-
 	}],
 
 	"pageInfo": [
@@ -50,5 +48,4 @@
 
 	"applicationData" : {
 	},
-
 }
