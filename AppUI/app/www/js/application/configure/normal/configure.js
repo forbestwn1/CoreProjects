@@ -32,4 +32,4 @@ var data = {
 };
 
 var createApplicationConfigure = nosliw.getNodeData("miniapp.createApplicationConfigure");
-nosliw.createNode("miniapp.configure", createApplicationConfigure(modulesInfo, "js/application/configure/normal/main.html", data));
+nosliw.createNode("miniapp.configure", createApplicationConfigure(modulesInfo, "js/application/configure/normal/main.html", undefined, data));

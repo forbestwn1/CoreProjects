@@ -37,6 +37,16 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>closeConnectionServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.core.HAPCloseDBConnection</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>closeConnectionServlet</servlet-name>
+    <url-pattern>/closeConnection</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
     <servlet-name>miniappServlet</servlet-name>
     <servlet-class>com.nosliw.servlet.miniapp.HAPMiniAppServlet</servlet-class>
   </servlet>

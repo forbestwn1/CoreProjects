@@ -6,6 +6,7 @@ var packageObj = library.getChildPackage();
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
 	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSet;
 	var node_makeObjectWithName;
 	var node_makeObjectWithLifecycle;
@@ -17,15 +18,17 @@ var packageObj = library.getChildPackage();
 
 var loc_mduleName = "minApp";
 
-var node_createApplicationConfigure = function(modulesConfigure, layout, data){
+var node_createApplicationConfigure = function(modulesConfigure, layout, initFun, data){
 	var loc_modulesConfigure = modulesConfigure;
 	var loc_layout = layout;
 	var loc_data = data==undefined?{}:data;
+	var loc_initFun = initFun;
 	
 	var loc_out = {
 		getModulesConfigure : function(){   return loc_modulesConfigure;   },
 		getLayout : function(){  return loc_layout;    },
 		getData : function(){   return loc_data;   },
+		getInitFun : function(){  return loc_initFun;   },
 		addData : function(name, value){   loc_data[name] = value;    },
 		addDataSet : function(dataSet){    loc_data = _.extend(loc_data, dataSet);     }
 	};
@@ -72,6 +75,10 @@ var node_createApplication = function(){
 		_.each(loc_modules, function(module, name){
 			if(module.refreshRequest!=undefined)  out.addRequest(module.refreshRequest(userInfo, configureData));
 		});
+		
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			loc_appConfigure.getInitFun()(loc_env);
+		}));
 		return out;
 	};
 	
@@ -109,6 +116,7 @@ var node_createApplication = function(){
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});

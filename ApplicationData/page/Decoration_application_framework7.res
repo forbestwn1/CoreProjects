@@ -9,7 +9,7 @@
 			        </div>
 			        <div class="title"><%=?(nosliw_uiInfo.title)?%></div>
 			        <div class="right">
-			            <a href="" class="link" nosliw-event="click:refresh:">Refresh</a>
+<!--			            <a href="" class="link" nosliw-event="click:refresh:">Refresh</a>  -->
 			        </div>
 			    </div>
 			</div>

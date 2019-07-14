@@ -8,7 +8,7 @@ var modulesInfo = [
 		init : function(module, env, request){
 			module.registerEventListener(undefined, function(eventName, eventData, request){
 				if(eventName=="selectMiniApp"){
-					eventData.groupId = env.getData("groupId");
+					eventData.setGroupId(env.getData("groupId"));
 					env.getModule("mini-app").executeRefreshRequest(eventData);
 				}
 			});
@@ -33,4 +33,12 @@ var data = {
 };
 
 var createApplicationConfigure = nosliw.getNodeData("miniapp.createApplicationConfigure");
-nosliw.createNode("miniapp.configure", createApplicationConfigure(modulesInfo, "js/application/configure/group/main.html", data));
+nosliw.createNode("miniapp.configure", createApplicationConfigure(
+	modulesInfo, 
+	"js/application/configure/group/main.html",
+	function(env){
+		var createMiniAppInfo = nosliw.getNodeData("miniapp.module.miniapp.createMiniAppInfo");
+		var miniAppInfo = createMiniAppInfo(env.getModule("group").getMiniApp(env.getData("app")), env.getData("groupId"));
+		env.getModule("mini-app").executeRefreshRequest(miniAppInfo);
+	},
+	data));

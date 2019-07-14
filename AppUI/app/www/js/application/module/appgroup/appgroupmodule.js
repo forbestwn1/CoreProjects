@@ -16,6 +16,7 @@ var packageObj = library.getChildPackage("module.appgroup");
 	var node_createComponentUserApps;
 	var node_createComponentUserInfo;
 	var node_createEventObject;
+	var node_createMiniAppInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "userApps";
@@ -51,14 +52,14 @@ var node_createModuleAppGroup = function(parm){
 			},
 			methods : {
 				onSelectMiniApp : function(miniApp) {
-					loc_triggerEvent("selectMiniApp", {app:miniApp});
+					loc_triggerEvent("selectMiniApp", node_createMiniAppInfo(miniApp));
 				},
 			},
 			template : 
 				`
 				<div>
-					<p>
-						<a v-for="miniapp in group.miniApp" v-on:click.prevent="onSelectMiniApp(miniapp)">{{miniapp.name}}</a>
+					<p class="row">
+						<button class="col button button-fill color-blue" v-for="miniapp in group.miniApp" v-on:click.prevent="onSelectMiniApp(miniapp)">{{miniapp.name}}</button>
 					</p>
 				</div>
 				`
@@ -79,6 +80,13 @@ var node_createModuleAppGroup = function(parm){
 			return out;
 		},
 
+		getMiniApp : function(appId){
+			var app = _.find(loc_vue.group.miniApp, function(app, i){
+				return app.id==appId;
+			});
+			return app;
+		},
+		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
@@ -104,6 +112,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createComponentUserApps", function(){node_createComponentUserApps = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createComponentUserInfo", function(){node_createComponentUserInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("miniapp.module.miniapp.createMiniAppInfo", function(){node_createMiniAppInfo = this.getData();});
 
 
 //Register Node by Name

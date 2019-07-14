@@ -59,7 +59,7 @@ CREATE TABLE nosliw.MINIAPP_SETTING(
 INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SoccerGroup', 'SoccerGroup', 'no description');
 INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SchoolGroup', 'SchoolGroup', 'no description');
 INSERT INTO nosliw.MINIAPP_GROUP (ID, NAME, DESCRIPTION) VALUES ('SoccerForFun', 'Soccer For Fun', 'Soccer for fun group in Toronto');
-INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME, DATAOWNERTYPE) VALUES ('App_SoccerForFun_PlayerInformation', '请提供你的名字', 'group');
+INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME, DATAOWNERTYPE) VALUES ('App_SoccerForFun_PlayerInformation', '你的信息', 'group');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('App_SoccerForFun_PlayerUpdate', '操作');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('App_SoccerForFun_PlayerLineup', '阵容');
 INSERT INTO nosliw.MINIAPP_MINIAPP (ID, NAME) VALUES ('MyRealtor', 'MyRealtor');

@@ -7,6 +7,7 @@ var packageObj = library.getChildPackage("module.userapps");
 (function(packageObj){
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
+	var node_createMiniAppInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createComponentMiniApp = function(){
@@ -18,7 +19,7 @@ var node_createComponentMiniApp = function(){
 		props : ['data'],
 		methods : {
 			onSelectMiniApp : function(event) {
-				this.$emit("selectMiniApp", {app:this.data});
+				this.$emit("selectMiniApp", node_createMiniAppInfo(this.data));
 			},
 			onDeleteMiniApp : function(event) {
 				this.$emit("deleteMiniApp", this.data.id);
@@ -42,6 +43,7 @@ var node_createComponentMiniApp = function(){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("miniapp.module.miniapp.createMiniAppInfo", function(){node_createMiniAppInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentMiniApp", node_createComponentMiniApp); 

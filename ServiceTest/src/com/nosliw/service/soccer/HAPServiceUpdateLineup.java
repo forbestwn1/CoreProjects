@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -26,8 +27,10 @@ import com.nosliw.data.core.service.provide.HAPUtilityService;
 
 public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProviderService{
 
+	private String adminEmail = "forbestwn@hotmail.com";
+	
 	@Override
-	public HAPResultService execute(Map<String, HAPData> parms){
+	synchronized public HAPResultService execute(Map<String, HAPData> parms){
 
 		String actionStr = null;
 		String statusStr = null;
@@ -60,7 +63,7 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 		}
 		else {
 			actionStr = "";
-			statusStr = "还没有提供你的名字，请首先提供你的名字！！";
+			statusStr = "还没有提供你的名字，请首先在‘你的信息’里面提供你的名字！！";
 		}
 		
 		Map<String, HAPData> output = new LinkedHashMap<String, HAPData>();
@@ -71,19 +74,24 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 	
 	private void sendEmailToPlayers(List<String> players) {
 		for(String player : players) {
+			HAPPlayerStatus playerStatus = HAPPlayerLineupManager.getInstance().getLineup().getPlayerStatus(player);
+
+			List<String> emailTo = new ArrayList<String>();
+			emailTo.add(this.adminEmail);
+
 			HAPPlayerInfo playerInfo = HAPPlayerLineupManager.getInstance().getPlayerInfo(player);
 			if(playerInfo!=null) {
 				String email = playerInfo.getEmail();
 				if(HAPBasicUtility.isStringNotEmpty(email)) {
-					HAPPlayerStatus playerStatus = HAPPlayerLineupManager.getInstance().getLineup().getPlayerStatus(player);
-					this.sendEmail(email, "你在soccer for fun的状态更新", player+", 你在soccer for fun group的状态为"+playerStatus.getStatusDescription());
+					emailTo.add(email);
 				}
 			}
+			this.sendEmail(emailTo, player+ "在soccer for fun的状态更新", player+", 你在soccer for fun group的状态为"+playerStatus.getStatusDescription());
 		}
 	}
 	
 	
-	 private void sendEmail(String to, String subject, String text) {  
+	 private void sendEmail(List<String> tos, String subject, String text) {  
 		  
 		  String host="smtp.live.com";  
 		  final String user="mylastkilometer@hotmail.com";//change accordingly  
@@ -114,8 +122,12 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 		    // set charset to UTF8
 		     messageBodyPart.setHeader("Content-Type", "text/plain; charset=\"utf-8\"");
 		     
-		     message.setFrom(new InternetAddress(user));  
-		     message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));  
+		     message.setFrom(new InternetAddress(user));
+		     
+		     List<Address> addresses = new ArrayList<Address>();
+		     for(String to : tos)    	 addresses.add(new InternetAddress(to));
+		     message.addRecipients(Message.RecipientType.TO, addresses.toArray(new Address[0]));
+		     
 		     message.setSubject(subject, "UTF-8");
 		     message.setText(text, "UTF-8");  
 		       

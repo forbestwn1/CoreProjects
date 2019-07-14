@@ -27,6 +27,20 @@ var packageObj = library.getChildPackage("module.miniapp");
 
 var loc_mduleName = "userApps";
 
+var node_createMiniAppInfo = function(appInfo, groupId){
+	
+	var loc_appInfo = appInfo;
+	var loc_groupId = groupId;
+	
+	var loc_out = {
+		getAppInfo : function(){   return loc_appInfo;  },
+		getGroupId : function(){  return  loc_groupId;  },
+		setGroupId : function(groupId){  loc_groupId = groupId;   },
+		setAppInfo : function(appInfo){  loc_appInfo = appInfo;   }
+	};
+	return loc_out;
+};
+
 var node_createModuleMiniApp = function(root){
 
 	var loc_appEntryId;
@@ -46,10 +60,10 @@ var node_createModuleMiniApp = function(root){
 
 	var loc_out = {
 		
-		getRefreshRequest : function(miniApp, handlers, requestInfo){
+		getRefreshRequest : function(miniAppInfo, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshMiniApp", {}), handlers, requestInfo);
 			
-			var miniAppEntryId = miniApp.app.id + ";main";
+			var miniAppEntryId = miniAppInfo.getAppInfo().id + ";main";
 
 			//destroy current app first
 			if(loc_appRuntime!=undefined)	out.addRequest(node_getComponentLifecycleInterface(loc_appRuntime).getTransitRequest("destroy"), {
@@ -61,7 +75,7 @@ var node_createModuleMiniApp = function(root){
 			//get group app data
 			var groupData;
 			var inputIODataSet = node_createIODataSet();
-			var groupId = miniApp.groupId;
+			var groupId = miniAppInfo.getGroupId();
 			if(groupId!=undefined){
 				out.addRequest(node_appDataService.getGetAppDataRequest(nosliw.runtime.getSecurityService().createOwnerInfo(node_COMMONCONSTANT.MINIAPP_DATAOWNER_GROUP, groupId), undefined, {
 					success : function(request, dataByName){
@@ -74,8 +88,8 @@ var node_createModuleMiniApp = function(root){
 						
 						return node_createServiceRequestInfoSimple(undefined, function(request){
 							//update owner info
-							nosliw.runtime.getSecurityService().setOwnerType(miniApp.app[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERTYPE]);
-							nosliw.runtime.getSecurityService().setOwnerId(miniApp.app[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERID]);
+							nosliw.runtime.getSecurityService().setOwnerType(miniAppInfo.getAppInfo()[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERTYPE]);
+							nosliw.runtime.getSecurityService().setOwnerId(miniAppInfo.getAppInfo()[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERID]);
 						}, {
 							success : function(request){
 								return nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, loc_appConfigure, inputIODataSet,
@@ -94,22 +108,6 @@ var node_createModuleMiniApp = function(root){
 					}
 				}));
 			}
-			
-//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-//				//update owner info
-//				nosliw.runtime.getSecurityService().setOwnerType(miniApp.app[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERTYPE]);
-//				nosliw.runtime.getSecurityService().setOwnerId(miniApp.app[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERID]);
-//			}));
-//
-//			out.addRequest(nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, loc_appConfigure, inputIODataSet,
-//				{
-//					success : function(requestInfo, appRuntime){
-//						loc_appRuntime = appRuntime;
-//						lifecycle = node_getComponentLifecycleInterface(loc_appRuntime);
-//						return lifecycle.getTransitRequest("activate");
-//					}
-//				}
-//			));
 			
 			return out;
 		},
@@ -152,5 +150,6 @@ nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node
 
 //Register Node by Name
 packageObj.createChildNode("createModuleMiniApp", node_createModuleMiniApp); 
+packageObj.createChildNode("createMiniAppInfo", node_createMiniAppInfo); 
 
 })(packageObj);
