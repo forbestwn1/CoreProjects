@@ -15,6 +15,7 @@ var init = function(rootNode, baseServer, configureName, dataInput, callBackFunc
 		"js/application/module/userapps/userinfo.js",
 		"js/application/module/userapps/usermodule.js",
 		"js/application/module/miniapp/miniappmodule.js",
+		"js/application/module/appgroup/appgroupmodule.js",
 	];
 	
 	//

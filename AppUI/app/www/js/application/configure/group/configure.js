@@ -8,6 +8,7 @@ var modulesInfo = [
 		init : function(module, env, request){
 			module.registerEventListener(undefined, function(eventName, eventData, request){
 				if(eventName=="selectMiniApp"){
+					eventData.groupId = env.getData("groupId");
 					env.getModule("mini-app").executeRefreshRequest(eventData);
 				}
 			});
@@ -32,4 +33,4 @@ var data = {
 };
 
 var createApplicationConfigure = nosliw.getNodeData("miniapp.createApplicationConfigure");
-nosliw.createNode("miniapp.configure", createApplicationConfigure(modulesInfo, "js/application/configure/normal/main.html", data));
+nosliw.createNode("miniapp.configure", createApplicationConfigure(modulesInfo, "js/application/configure/group/main.html", data));

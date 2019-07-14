@@ -51,14 +51,14 @@ var node_createModuleAppGroup = function(parm){
 			},
 			methods : {
 				onSelectMiniApp : function(miniApp) {
-					loc_triggerEvent("selectMiniApp", miniApp);
+					loc_triggerEvent("selectMiniApp", {app:miniApp});
 				},
 			},
 			template : 
 				`
 				<div>
 					<p>
-						<a v-for="miniapp in group.miniApp" v-on:click.prevent="onSelectMiniApp">{{miniapp.name}}</a>
+						<a v-for="miniapp in group.miniApp" v-on:click.prevent="onSelectMiniApp(miniapp)">{{miniapp.name}}</a>
 					</p>
 				</div>
 				`
