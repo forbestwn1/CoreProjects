@@ -33,8 +33,16 @@ $(document).on("miniappActive", function(){
 	
 });
 
+var searchParams = new URLSearchParams(window.location.search);
+var configureName = searchParams.get("configure");
+if(configureName==undefined)  configureName = "normal";
+var dataInput = {};
+for (let p of searchParams) {
+	  dataInput[p[0]] = p[1];
+}
+
 //init(document.getElementById("appDiv"), "http://3.16.138.152:8082/nosliw/"); 
-init(document.getElementById("appDiv"), "http://www.lastkilometer.ca:8082/nosliw/"); 
+init(document.getElementById("appDiv"), "http://www.lastkilometer.ca:8082/nosliw/", configureName, dataInput); 
 
 </script>
 
