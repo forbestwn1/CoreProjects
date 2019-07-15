@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div style="height:1500px">
 	
 	<br>  
 	<span style="color:green">当前阵容:</span>
@@ -53,7 +54,7 @@
 		<%=?(spot)?%>
 		<br>  
 	</nosliw-loop>
-	
+</div>
 </body>
 
 	<contexts>
