@@ -91,51 +91,55 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 	}
 	
 	
-	 private void sendEmail(List<String> tos, String subject, String text) {  
-		  
-		  String host="smtp.live.com";  
-		  final String user="mylastkilometer@hotmail.com";//change accordingly  
-		  final String password="tony0818";//change accordingly  
-		    
-		   //Get the session object  
-		   Properties props = new Properties();  
+	 private void sendEmail(final List<String> tos, final String subject, final String text) {  
+		 new Runnable() {
 
-		   props.setProperty("mail.transport.protocol", "smtp");
-		    props.setProperty("mail.host", "smtp.live.com");
-		    props.put("mail.smtp.starttls.enable", "true");
-		    props.put("mail.smtp.auth", "true");
-		     
-		   Session session = Session.getDefaultInstance(props,  
-		    new javax.mail.Authenticator() {  
-		      @Override
-			protected PasswordAuthentication getPasswordAuthentication() {  
-		    return new PasswordAuthentication(user,password);  
-		      }  
-		    });  
-		  
-		   //Compose the message  
-		    try {  
-		     MimeMessage message = new MimeMessage(session); 
-		     
-		     message.setHeader("Content-Type", "text/plain; charset=\"utf-8\"");
-		     MimeBodyPart messageBodyPart = new MimeBodyPart();
-		    // set charset to UTF8
-		     messageBodyPart.setHeader("Content-Type", "text/plain; charset=\"utf-8\"");
-		     
-		     message.setFrom(new InternetAddress(user));
-		     
-		     List<Address> addresses = new ArrayList<Address>();
-		     for(String to : tos)    	 addresses.add(new InternetAddress(to));
-		     message.addRecipients(Message.RecipientType.TO, addresses.toArray(new Address[0]));
-		     
-		     message.setSubject(subject, "UTF-8");
-		     message.setText(text, "UTF-8");  
-		       
-		    //send the message  
-		     Transport.send(message);  
-		  
-		     System.out.println("message sent successfully...");  
-		   
-		     } catch (MessagingException e) {e.printStackTrace();}  
-		 }  	
+			@Override
+			public void run() {
+				  String host="smtp.live.com";  
+				  final String user="mylastkilometer@hotmail.com";//change accordingly  
+				  final String password="tony0818";//change accordingly  
+				    
+				   //Get the session object  
+				   Properties props = new Properties();  
+
+				   props.setProperty("mail.transport.protocol", "smtp");
+				    props.setProperty("mail.host", "smtp.live.com");
+				    props.put("mail.smtp.starttls.enable", "true");
+				    props.put("mail.smtp.auth", "true");
+				     
+				   Session session = Session.getDefaultInstance(props,  
+				    new javax.mail.Authenticator() {  
+				      @Override
+					protected PasswordAuthentication getPasswordAuthentication() {  
+				    return new PasswordAuthentication(user,password);  
+				      }  
+				    });  
+				  
+				   //Compose the message  
+				    try {  
+				     MimeMessage message = new MimeMessage(session); 
+				     
+				     message.setHeader("Content-Type", "text/plain; charset=\"utf-8\"");
+				     MimeBodyPart messageBodyPart = new MimeBodyPart();
+				    // set charset to UTF8
+				     messageBodyPart.setHeader("Content-Type", "text/plain; charset=\"utf-8\"");
+				     
+				     message.setFrom(new InternetAddress(user));
+				     
+				     List<Address> addresses = new ArrayList<Address>();
+				     for(String to : tos)    	 addresses.add(new InternetAddress(to));
+				     message.addRecipients(Message.RecipientType.TO, addresses.toArray(new Address[0]));
+				     
+				     message.setSubject(subject, "UTF-8");
+				     message.setText(text, "UTF-8");  
+				       
+				    //send the message  
+				     Transport.send(message);  
+				  
+				     System.out.println("message sent successfully...");  
+			     } catch (MessagingException e) {e.printStackTrace();}  
+			}
+		 };
+	}  	
 }
