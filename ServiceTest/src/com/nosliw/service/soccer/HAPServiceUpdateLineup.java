@@ -92,7 +92,7 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 	
 	
 	 private void sendEmail(final List<String> tos, final String subject, final String text) {  
-		 new Runnable() {
+		 new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -140,6 +140,6 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 				     System.out.println("message sent successfully...");  
 			     } catch (MessagingException e) {e.printStackTrace();}  
 			}
-		 };
+		 }).start();
 	}  	
 }
