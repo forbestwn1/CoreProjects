@@ -154,7 +154,7 @@ var node_utility = function(){
 				var requestProcessor = requestProcessor1;
 				if(requestProcessor==undefined)  return handler;
 				return function(requestInfo, data){
-					var handlerOut = undefined;
+					var handlerOut = data;
 					if(handler!=undefined)  handlerOut = handler.call(requestInfo, requestInfo, data);
 					var processorOut = requestProcessor.call(requestInfo, requestInfo, handlerOut);
 					return processorOut;

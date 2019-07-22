@@ -11,6 +11,7 @@ var packageObj = library.getChildPackage("request");
 	var node_basicUtility;
 	var node_errorUtility;
 	var node_createEventObject;
+	var node_ServiceData;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -113,17 +114,22 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 				}
 			}
 			
+			//trigue event when error/exception happen
+//			if(type=='error')	this.trigueIndividualEvent(node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR, out);
+//			else if(type=='exception')	this.trigueIndividualEvent(node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION, out);
+			
+			if(type!="start"){
+				//do sth when request is done
+				loc_finishRequest(type, out);
+			}
+
 			//execute configured post process
 			var postProcessors = loc_out.getPostProcessors();
 			for(var i in postProcessors){
 				var postHandler = postProcessors[i][type];
-				if(postHandler!=undefined)			out = postHandler.call(loc_out, loc_out, out);
+				if(postHandler!=undefined)			postHandler.call(loc_out, loc_out, out);
 			}
 			
-			if(type!="start"){
-				//do sth when request is done
-				loc_finishRequest(out);
-			}
 			return out;
 		};
 	};
@@ -158,9 +164,12 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	 *     set result
 	 *     trigue event
 	 */
-	var loc_finishRequest = function(data){
+	var loc_finishRequest = function(type, data){
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_DONE);
-		loc_out.setResult(data);
+		loc_out.setResult({
+			type : type,
+			data : data
+		});
 	};
 	
 	var loc_destroy = function(){
@@ -217,11 +226,10 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			 */
 			getHandlers : function(){return this.pri_metaData.pri_handlers;},
 			setHandlers : function(handlers){this.pri_metaData.pri_handlers = handlers;},
+			//post processor won't change the return value
 			getPostProcessors : function(){ return this.pri_metaData.pri_postProcessors},
-			addPostProcessor : function(processor){ 
-				this.pri_metaData.pri_postProcessors.push(processor); 
-			},
-			
+			addPostProcessor : function(processor){ this.pri_metaData.pri_postProcessors.push(processor); },
+			insertPostProcessor : function(processor){ this.pri_metaData.pri_postProcessors.splice(0, 0, processor); },
 			exectueHandlerByServiceData : function(serviceData, thisContext){
 				var resultStatus = node_errorUtility.getServiceDataStatus(serviceData);
 				switch(resultStatus){
@@ -235,7 +243,6 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 					return this.executeExceptionHandler(serviceData, thisContext);
 					break;
 				}
-				
 			},
 			
 			executeHandler : function(type, thisContext, data){
@@ -258,11 +265,16 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 //				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Success handler");
 //				nosliw.logging.trace(loc_moduleName, this.getInnerId(), "Data ", data);
 
-				var out = undefined;
-				//internal handler
-				var handler = this.getHandlers().success;
-				if(handler!=undefined)			out = handler.call(thisContext, this, data);
-				return out;
+				try{
+					var out = undefined;
+					//internal handler
+					var handler = this.getHandlers().success;
+					if(handler!=undefined)			out = handler.call(thisContext, this, data);
+					return out;
+				}
+				catch(err){
+					loc_out.executeErrorHandler(new node_ServiceData(8888, "Internal error", err));
+				}
 			},
 			
 			executeErrorHandler : function(serviceData, thisContext){
@@ -307,18 +319,16 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			/*
 			 * set processor so that they can do sth after call the handlers 
 			 */
-/*			
-			setRequestPostProcessors : function(processors){
-				var handlers = this.getHandlers();
-				var newHandlers = {
-					start : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.start, processors.start),
-					success : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.success, processors.success),
-					error : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.error, processors.error),
-					exception : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.exception, processors.exception),
-				};
-				this.setHandlers(node_requestUtility.mergeHandlers(handlers, newHandlers));
-			},
-*/
+//			setRequestPostProcessors : function(processors){
+//				var handlers = this.getHandlers();
+//				var newHandlers = {
+//					start : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.start, processors.start),
+//					success : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.success, processors.success),
+//					error : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.error, processors.error),
+//					exception : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.exception, processors.exception),
+//				};
+//				this.setHandlers(node_requestUtility.mergeHandlers(handlers, newHandlers));
+//			},
 			
 			/*
 			 * whether this request do remote ajax call 
@@ -369,7 +379,10 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			
 			registerIndividualEventListener : function(listener, handler, thisContext){	return this.pri_metaData.pri_eventObjectIndividual.registerListener(undefined, listener, handler, thisContext);	},
 			unregisterIndividualEventListener : function(listener){	this.pri_metaData.pri_eventObjectIndividual.unregister(listener);	},
-			trigueIndividualEvent : function(event, eventData){	this.pri_metaData.pri_eventObjectIndividual.triggerEvent(event, eventData, this);	},
+			trigueIndividualEvent : function(event, eventData){	
+				this.pri_metaData.pri_eventObjectIndividual.triggerEvent(event, eventData, this);
+				this.pri_metaData.pri_eventObjectIndividual.clearup();
+			},
 			
 			
 			//it is for root request only
@@ -408,6 +421,7 @@ nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUti
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("error.entity.ServiceData", function(){node_ServiceData = this.getData();});
 
 
 //Register Node by Name

@@ -67,7 +67,8 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 	
 		$.ajax(_.extend({
 			data : remoteRequestData,
-			success : function(serviceDataResult, status){
+			timeout: 15000,
+		}, loc_setting.getConfiguresObject())).done(function(serviceDataResult, status){
 				var syncTasks = loc_syncTasks;
 				//clear tasks
 				loc_syncTasks = [];
@@ -103,27 +104,26 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 				
 				//process sync task again
 				loc_processTasks();
+			}		
+		).fail(function(obj, textStatus, errorThrown){
+			nosliw.logging.error(loc_moduleName, loc_name, "Exception when processing tasks in snycTask ", textStatus, errorThrown);
 
-			},
-			error: function(obj, textStatus, errorThrown){
-				nosliw.logging.error(loc_moduleName, loc_name, "Exception when processing tasks in snycTask ", textStatus, errorThrown);
-
-				//when ajax error happened, which may be caused by network error, server is down or server internal error
-				//remote service manager is put into suspend status
-				//the service request is not removed
-				var serviceData = node_remoteServiceErrorUtility.createRemoteServiceExceptionServiceData(obj, textStatus, errorThrown); 
-				
-				node_remoteServiceUtility.handleServiceTask(loc_syncTasks, function(serviceTask){
-					loc_handleServiceResult(serviceTask, serviceData);
-					serviceTask.status = node_CONSTANT.REMOTESERVICE_SERVICESTATUS_FAIL;
-				});
-				
-				//suspend the system
-				loc_remoteServiceMan.interfaceObjectLifecycle.suspend();
-				//finish processing, so that ready to process again
-				loc_syncReady = true;
-			},
-		}, loc_setting.getConfiguresObject()));
+			//when ajax error happened, which may be caused by network error, server is down or server internal error
+			//remote service manager is put into suspend status
+			//the service request is not removed
+			var serviceData = node_remoteServiceErrorUtility.createRemoteServiceExceptionServiceData(obj, textStatus, errorThrown); 
+			
+			node_remoteServiceUtility.handleServiceTask(loc_syncTasks, function(serviceTask){
+				loc_handleServiceResult(serviceTask, serviceData);
+				serviceTask.status = node_CONSTANT.REMOTESERVICE_SERVICESTATUS_FAIL;
+			});
+			
+			//suspend the system
+			loc_remoteServiceMan.interfaceObjectLifecycle.suspend();
+			//finish processing, so that ready to process again
+			loc_syncReady = true;
+		}).always(function( data1, data2, data3 ) {
+		});
 	};
 	
 	/*

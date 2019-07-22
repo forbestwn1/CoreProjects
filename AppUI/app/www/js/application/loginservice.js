@@ -26,6 +26,7 @@ var node_createLoginService = function(miniAppService){
 			}
 			out.addRequest(loc_miniAppService.getLoginRequest(userInfo, {
 				success : function(requestInfo, userInfo){
+//					userInfo = undefined;   //kkkkkk
 					localStorage.userId = userInfo.user.id;
 					nosliw.runtime.getSecurityService().setToken(userInfo.user.id);
 					return userInfo;

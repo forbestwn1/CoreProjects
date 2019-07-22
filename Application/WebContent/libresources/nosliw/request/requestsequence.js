@@ -107,7 +107,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 			requestInfo.setParentRequest(loc_out);
 			
 			//pass the result from previous request to input of current request
-			if(previousRequest!=undefined)		requestInfo.setInput(previousRequest.getResult());
+			if(previousRequest!=undefined)		requestInfo.setInput(previousRequest.getResult().data);
 			
 			var processMode = requestInfo.getParmData('processMode');
 			if(processMode=="eventBased"){

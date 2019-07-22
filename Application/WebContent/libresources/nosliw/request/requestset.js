@@ -57,8 +57,12 @@ var node_createServiceRequestInfoSet = function(service, handlers, requester_par
 	var loc_updateChildRequestHandlers = function(name, childRequest){
 		childRequest.addPostProcessor({
 			success : loc_createChildRequestSuccessProcessor(name),
-			error : loc_createChildRequestSuccessProcessor(name),
-			exception : loc_createChildRequestSuccessProcessor(name),
+			error : function(requestInfo, serviceData){
+				loc_out.executeErrorHandler(serviceData, loc_out);
+			},
+			exception : function(requestInfo, serviceData){
+				loc_out.executeExceptionHandler(serviceData, loc_out);
+			},
 		});
 	};
 

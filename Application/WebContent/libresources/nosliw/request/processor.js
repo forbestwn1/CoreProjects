@@ -5,6 +5,7 @@ var packageObj = library;
 	//get used node
 	var node_createEventObject;
 	var node_CONSTANT;
+	var node_ServiceData;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_RequestInfo = function(request, processRemote, attchedTo){
@@ -29,49 +30,82 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 		success : function(request, data){
 			nosliw.logging.info(loc_moduleName, request.getInnerId(), "Success handler : ", data);
 //				nosliw.logging.trace(loc_moduleName, request.getInnerId(), "Data ", data);
-			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_SUCCESS, data);
-			processedCallBack(request);
+//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_SUCCESS, data);
+//			processedCallBack(request);
 			return data;
 		}, 
 		error : function(request, data){
 			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Error handler : ", data);
 //				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
-			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR, data);
-			processedCallBack(request);
+//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR, data);
+//			processedCallBack(request);
 			return data;
 		}, 
 		exception : function(request, data){
 			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Exception handler : ", data);
 //				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
-			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION, data);
+//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION, data);
+//			processedCallBack(request);
+			return data;
+		}, 
+	});
+
+	request.insertPostProcessor({
+		start : function(request){
+		},
+		success : function(request, data){
+//			nosliw.logging.info(loc_moduleName, request.getInnerId(), "Success handler : ", data);
+//				nosliw.logging.trace(loc_moduleName, request.getInnerId(), "Data ", data);
+//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_SUCCESS, data);
+			processedCallBack(request);
+			return data;
+		}, 
+		error : function(request, data){
+//			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Error handler : ", data);
+//				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
+//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR, data);
+			processedCallBack(request);
+			return data;
+		}, 
+		exception : function(request, data){
+//			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Exception handler : ", data);
+//				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
+//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION, data);
 			processedCallBack(request);
 			return data;
 		}, 
 	});
 
+
+	
 	//execute start handler
 	var startOut = request.executeStartHandler(request);
 
 	var execute = request.getRequestExecuteInfo();
 	if(execute!=undefined){
 		//run execute function, return remote task info if have
-		var remoteTask = execute.execute(request);
-		//whether submit the remoteTask
-		if(remoteTask==undefined){
-//				nosliw.logging.info(loc_moduleName, request.getInnerId(), "Finish request locally : ", node_basicUtility.stringify(request.getService()));
-		}
-		else{
-			processRemote = true;   //kkkk
-			if(processRemote!=false){
-				//submit the remote task
-//					nosliw.logging.info(loc_moduleName, request.getInnerId(), "Finish request with remote request Id :", remoteTask.requestId);
-				nosliw.runtime.getRemoteService().addServiceTask(remoteTask);
+		try{
+			var remoteTask = execute.execute(request);
+			//whether submit the remoteTask
+			if(remoteTask==undefined){
+//					nosliw.logging.info(loc_moduleName, request.getInnerId(), "Finish request locally : ", node_basicUtility.stringify(request.getService()));
 			}
 			else{
-//					nosliw.logging.info(loc_moduleName, request.getInnerId(), "Finish request by creating remote request info object Id :", remoteTask.requestId);
-				//return the remote task, let the call to decide what to do with remoteTask
-				return remoteTask;
+				processRemote = true;   //kkkk
+				if(processRemote!=false){
+					//submit the remote task
+//						nosliw.logging.info(loc_moduleName, request.getInnerId(), "Finish request with remote request Id :", remoteTask.requestId);
+					nosliw.runtime.getRemoteService().addServiceTask(remoteTask);
+				}
+				else{
+//						nosliw.logging.info(loc_moduleName, request.getInnerId(), "Finish request by creating remote request info object Id :", remoteTask.requestId);
+					//return the remote task, let the call to decide what to do with remoteTask
+					return remoteTask;
+				}
 			}
+		}
+		catch(err){
+			request.executeErrorHandler(new node_ServiceData(8888, "Internal errors", err));
 		}
 	}
 	else{
@@ -115,7 +149,7 @@ var loc_createRequestGroup = function(firstRequest, attachTo){
 							if(eventName==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
 								loc_rootRequest.unregisterEventListener(loc_eventObject);
 								if(loc_requestSum==0){
-									loc_doneCallBack(loc_out);
+									loc_doneCallBack(loc_out, request.getResult());
 									loc_rootRequest.done();
 									loc_status = node_CONSTANT.REQUEST_STATUS_DONE;
 								}
@@ -230,8 +264,11 @@ var node_createRequestServiceProcessor = function(){
 		nosliw.logging.info("Request Group : ", group.getId(), " Start Processing !!!!!!");
 		loc_processingGroupSum++;
 		loc_groups[group.getId()] = group;
-		group.startProcess(function(group){
-			if(group.getAttachTo()==undefined) loc_eventSource.triggerEvent(node_CONSTANT.REQUESTPROCESS_EVENT_DONE, group.getId());
+		group.startProcess(function(group, requestResult){
+			if(group.getAttachTo()==undefined) loc_eventSource.triggerEvent(node_CONSTANT.REQUESTPROCESS_EVENT_DONE, {
+				requestId : group.getId(),
+				result : requestResult
+			});
 			nosliw.logging.info("Request Group : ", group.getId(), " Done !!!!!!");
 			group.destroy();
 			delete loc_groups[group.getId()];
@@ -319,6 +356,7 @@ var node_createRequestServiceProcessor = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("error.entity.ServiceData", function(){node_ServiceData = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRequestServiceProcessor", node_createRequestServiceProcessor); 
