@@ -47,7 +47,7 @@ public class HAPGatewayManager {
 			commandResult = gateway.command(command, parms, runtimeInfo);
 		} catch (Exception e1) {
 			e1.printStackTrace();
-			return HAPServiceData.createFailureData(null, "Exception during command " + gatewayId + " : " +command + "!!");
+			return HAPServiceData.createFailureData(null, "Error during command " + gatewayId + " : " +command + "!!");
 		}
 		
 		if(commandResult==null)  return HAPServiceData.createSuccessData();
@@ -63,7 +63,7 @@ public class HAPGatewayManager {
 			}
 			catch(Exception e){
 				e.printStackTrace();
-				return HAPServiceData.createFailureData(null, "Exception during process command result!!");
+				return HAPServiceData.createFailureData(null, "Error during process command result!!");
 			}
 		}
 		

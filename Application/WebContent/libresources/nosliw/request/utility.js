@@ -14,9 +14,11 @@ var node_utility = function(){
 			buildService : function(service){
 				if(service!=undefined)  return service;
 				else{
-					return {
-						name : loc_out.buildService.caller.caller.name,
-					};
+					if(loc_out.buildService.caller!=undefined){
+						return {
+							name : loc_out.buildService.caller.caller.name,
+						};
+					}
 				} 
 			},
 			

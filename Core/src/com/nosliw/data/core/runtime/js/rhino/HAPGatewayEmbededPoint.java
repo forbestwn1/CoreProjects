@@ -59,7 +59,7 @@ public class HAPGatewayEmbededPoint {
 			System.out.println("parmsObj : " + new GsonBuilder().create().toJson(parmsObj));
 			System.out.println("***********************************************************");
 			e.printStackTrace();
-			outServiceData = HAPServiceData.createFailureData(null, "Exception during process command result!!");
+			outServiceData = HAPServiceData.createFailureData(null, "Error during process command result!!");
 		}
 
 		Object out = null;

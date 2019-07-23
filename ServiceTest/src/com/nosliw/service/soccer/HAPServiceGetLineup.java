@@ -1,18 +1,22 @@
 package com.nosliw.service.soccer;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.service.provide.HAPExecutableService;
 import com.nosliw.data.core.service.provide.HAPProviderService;
 import com.nosliw.data.core.service.provide.HAPResultService;
+import com.nosliw.data.core.service.provide.HAPUtilityService;
 
 public class HAPServiceGetLineup implements HAPExecutableService, HAPProviderService{
 
 	@Override
 	public HAPResultService execute(Map<String, HAPData> parms){
-		throw new NullPointerException();
-/*		
 		Map<String, HAPData> output = new LinkedHashMap<String, HAPData>();
 		
 		HAPPlayerLineup lineUp = HAPPlayerLineupManager.getInstance().getLineup();
@@ -43,7 +47,6 @@ public class HAPServiceGetLineup implements HAPExecutableService, HAPProviderSer
 		
 		output.put("lineup", new HAPDataWrapper(new HAPDataTypeId("test.data;1.0.0"), response));
 		return HAPUtilityService.generateSuccessResult(output);
-*/		
 	}
 
 }
