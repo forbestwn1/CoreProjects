@@ -119,9 +119,13 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 			});
 			
 			//suspend the system
-			loc_remoteServiceMan.interfaceObjectLifecycle.suspend();
+//			loc_remoteServiceMan.interfaceObjectLifecycle.suspend();   kkkk
+			
+			loc_syncTasks = [];   //kkkk
+
 			//finish processing, so that ready to process again
 			loc_syncReady = true;
+			
 		}).always(function( data1, data2, data3 ) {
 		});
 	};

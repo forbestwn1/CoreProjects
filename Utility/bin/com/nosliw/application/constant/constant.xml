@@ -164,8 +164,14 @@
 				classname="HAPConstant" >
 		<definitions>
 			<definition name="SERVICECODE_SUCCESS" value="200" type="int"/>
-			<definition name="SERVICECODE_FAILURE" value="400" type="int"/>
+			<definition name="SERVICECODE_ERROR" value="400" type="int"/>
 			<definition name="SERVICECODE_EXCEPTION" value="5000" type="int"/>
+
+			<definition name="ERRORCODE_EXCEPTION_REMOTESERVICE_SUSPEND" value="5100" type="int"/>
+			<definition name="ERRORCODE_EXCEPTION_REMOTESERVICE_NETWORK" value="5101" type="int"/>
+
+			<definition name="ERRORCODE_ERROR_UI_REQUESTPROCESS" value="410" type="int"/>
+			<definition name="ERRORCODE_ERROR_UI_REQUESTHANDLE" value="411" type="int"/>
 			
 			<definition name="ERRORCODE_NEWDATAOPERATION_NOTDEFINED" value="1000" type="int"/>
 			<definition name="ERRORCODE_DATAOPERATION_NOTDEFINED" value="1005" type="int"/>
@@ -178,8 +184,6 @@
 			<definition name="ERRORCODE_ENTITYOPERATION_AUTOCOMMIT" value="2001" type="int"/>
 			<definition name="ERRORCODE_ENTITYOPERATION_INVALIDTRANSACTION" value="2002" type="int"/>
 			<definition name="ERRORCODE_ENTITYOPERATION_INVALIDSCOPE" value="2003" type="int"/>
-			<definition name="ERRORCODE_REMOTESERVICE_SUSPEND" value="9000" type="int"/>
-			<definition name="ERRORCODE_REMOTESERVICE_EXCEPTION" value="5000" type="int"/>
 			<definition type="space"/>
 			<definition name="OPERATIONDEF_SCRIPT_JAVASCRIPT" value="javascript"/>
 			<definition name="OPERATIONDEF_PATH_VERSION" value="version"/>

@@ -12,6 +12,7 @@ var packageObj = library.getChildPackage("request");
 	var node_errorUtility;
 	var node_createEventObject;
 	var node_ServiceData;
+	var node_requestProcessErrorUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -273,7 +274,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 					return out;
 				}
 				catch(err){
-					loc_out.executeErrorHandler(new node_ServiceData(8888, "Internal error", err));
+					loc_out.executeErrorHandler(node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err));
 				}
 			},
 			
@@ -422,6 +423,7 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("error.entity.ServiceData", function(){node_ServiceData = this.getData();});
+nosliw.registerSetNodeDataEvent("request.errorUtility", function(){node_requestProcessErrorUtility = this.getData();});
 
 
 //Register Node by Name

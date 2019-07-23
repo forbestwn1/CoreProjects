@@ -61,7 +61,7 @@ public class HAPServiceData extends HAPSerializableImp{
 	public String getMetaData(String name){return this.m_metaDatas.get(name);}
 	
 	public boolean isSuccess(){return this.m_code<=HAPConstant.SERVICECODE_SUCCESS;}
-	public boolean isFail(){return this.m_code>=HAPConstant.SERVICECODE_FAILURE;}
+	public boolean isFail(){return this.m_code>=HAPConstant.SERVICECODE_ERROR;}
 	
 	public static HAPServiceData createSuccessData(){return HAPServiceData.createSuccessData(null);}
 	
@@ -73,10 +73,10 @@ public class HAPServiceData extends HAPSerializableImp{
 	}
 
 	public static HAPServiceData createFailureData(){
-		return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_FAILURE, null, "");
+		return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_ERROR, null, "");
 	}
 	public static HAPServiceData createFailureData(Object data, String message){
-		return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_FAILURE, data, message);
+		return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_ERROR, data, message);
 	}
 	
 	public static HAPServiceData createServiceData(int code, Object data, String message){

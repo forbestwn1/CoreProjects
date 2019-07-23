@@ -76,7 +76,7 @@ var init = function(rootNode, baseServer, configureName, dataInput, callBackFunc
 				else if(eventName==node_CONSTANT.REQUESTPROCESS_EVENT_DONE){
 					loc_framework7App.preloader.hide();
 					
-					if(eventData.result.type=="error"){
+					if(eventData.result.type=="error" || eventData.result.type=="exception"){
 						var toastBottom = loc_framework7App.toast.create({
 						  text: eventData.result.data.message,
 						  closeTimeout: 2000,
@@ -111,12 +111,15 @@ var init = function(rootNode, baseServer, configureName, dataInput, callBackFunc
 	loc_framework7App.preloader.show();
 	
 	//nosliw init first
-	loadLibrary([
-//		baseServer+"libresources/external/log4javascript/1.0.0/log4javascript.js",
+	var libs = [
 		baseServer+"libresources/nosliw/runtimebrowserinit/init.js",
-	], function(){
+	];
+	if(dataInput.librarys!=undefined){
+		for(var i in dataInput.librarys){
+			libs.push(baseServer+dataInput.librarys[i]);
+		}
+	}
+	loadLibrary(libs, function(){
 		nosliw.init(baseServer);
 	});
-
 };
-

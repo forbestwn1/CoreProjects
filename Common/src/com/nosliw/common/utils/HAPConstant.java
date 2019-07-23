@@ -4,8 +4,12 @@ public class HAPConstant {
 
 
 		public static final int SERVICECODE_SUCCESS = 200;
-		public static final int SERVICECODE_FAILURE = 400;
+		public static final int SERVICECODE_ERROR = 400;
 		public static final int SERVICECODE_EXCEPTION = 5000;
+		public static final int ERRORCODE_EXCEPTION_REMOTESERVICE_SUSPEND = 5100;
+		public static final int ERRORCODE_EXCEPTION_REMOTESERVICE_NETWORK = 5101;
+		public static final int ERRORCODE_ERROR_UI_REQUESTPROCESS = 410;
+		public static final int ERRORCODE_ERROR_UI_REQUESTHANDLE = 411;
 		public static final int ERRORCODE_NEWDATAOPERATION_NOTDEFINED = 1000;
 		public static final int ERRORCODE_DATAOPERATION_NOTDEFINED = 1005;
 		public static final int ERRORCODE_DATAOPERATION_NOTEXIST = 1010;
@@ -17,8 +21,6 @@ public class HAPConstant {
 		public static final int ERRORCODE_ENTITYOPERATION_AUTOCOMMIT = 2001;
 		public static final int ERRORCODE_ENTITYOPERATION_INVALIDTRANSACTION = 2002;
 		public static final int ERRORCODE_ENTITYOPERATION_INVALIDSCOPE = 2003;
-		public static final int ERRORCODE_REMOTESERVICE_SUSPEND = 9000;
-		public static final int ERRORCODE_REMOTESERVICE_EXCEPTION = 5000;
 
 
 

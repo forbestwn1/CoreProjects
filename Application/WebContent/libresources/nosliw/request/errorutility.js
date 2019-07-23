@@ -13,29 +13,25 @@ var node_ServiceData;
 var node_errorUtility = function(){
 	return {
 		/*
-		 * exception service data for suspended reason
+		 * error service data for request process
 		 */
-		createRemoteServiceSuspendedServiceData : function(reason){
+		createRequestProcessErrorServiceData : function(errObj){
+			console.log(errObj);
 			return new node_ServiceData(
-					node_COMMONCONSTANT.ERRORCODE_EXCEPTION_REMOTESERVICE_SUSPEND, 
-					'No service call allowed this time, please try later!!',
-					reason); 
+					node_COMMONCONSTANT.ERRORCODE_ERROR_UI_REQUESTPROCESS, 
+					'fatal error!!',
+					errObj.stack); 
 		},
 		
 		/*
-		 * exception service data for ajax call error
+		 * error service data for request process
 		 */
-		createRemoteServiceExceptionServiceData : function(obj, textStatus, errorThrown){
-			var serviceData = new node_ServiceData(
-					node_COMMONCONSTANT.ERRORCODE_EXCEPTION_REMOTESERVICE_NETWORK,
-					'Network related error, try to refresh page shortly.',
-					{
-						obj : obj,
-						textStatus : textStatus,
-						errorThrown : errorThrown
-					}
-			);
-			return serviceData;
+		createRequestHandleErrorServiceData : function(errObj){
+			console.log(errObj);
+			return new node_ServiceData(
+					node_COMMONCONSTANT.ERRORCODE_ERROR_UI_REQUESTHANDLE, 
+					'fatal error',
+					errObj.stack); 
 		},
 	};
 }();

@@ -6,6 +6,7 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_CONSTANT;
 	var node_ServiceData;
+	var node_requestProcessErrorUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_RequestInfo = function(request, processRemote, attchedTo){
@@ -35,14 +36,14 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 			return data;
 		}, 
 		error : function(request, data){
-			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Error handler : ", data);
+			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Error handler : ", JSON.stringify(data));
 //				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
 //			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR, data);
 //			processedCallBack(request);
 			return data;
 		}, 
 		exception : function(request, data){
-			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Exception handler : ", data);
+			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Exception handler : ", JSON.stringify(data));
 //				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
 //			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION, data);
 //			processedCallBack(request);
@@ -105,7 +106,7 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 			}
 		}
 		catch(err){
-			request.executeErrorHandler(new node_ServiceData(8888, "Internal errors", err));
+			request.executeErrorHandler(node_requestProcessErrorUtility.createRequestProcessErrorServiceData(err));
 		}
 	}
 	else{
@@ -357,6 +358,7 @@ var node_createRequestServiceProcessor = function(){
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("error.entity.ServiceData", function(){node_ServiceData = this.getData();});
+nosliw.registerSetNodeDataEvent("request.errorUtility", function(){node_requestProcessErrorUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRequestServiceProcessor", node_createRequestServiceProcessor); 

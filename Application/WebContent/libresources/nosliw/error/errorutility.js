@@ -12,7 +12,7 @@ var node_utility = function(){
 		
 			isSuccess : function(serviceData){
 				if(serviceData==undefined)  return true;
-				if(node_COMMONCONSTANT.SERVICECODE_FAILURE > serviceData.code)  return true;
+				if(node_COMMONCONSTANT.SERVICECODE_ERROR > serviceData.code)  return true;
 				else return false;
 			},
 		
@@ -23,7 +23,7 @@ var node_utility = function(){
 
 			createSuccessServiceData : function(){
 				var serviceData = {
-					code : 	node_COMMONCONSTANT.SERVICECODE_FAILURE,
+					code : 	node_COMMONCONSTANT.SERVICECODE_ERROR,
 					message : "",
 					data : {
 					},
@@ -33,7 +33,7 @@ var node_utility = function(){
 
 			createErrorServiceData : function(){
 				var serviceData = {
-					code : 	node_COMMONCONSTANT.SERVICECODE_FAILURE,
+					code : 	node_COMMONCONSTANT.SERVICECODE_ERROR,
 					message : "",
 					data : {
 					},

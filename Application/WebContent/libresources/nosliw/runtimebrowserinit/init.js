@@ -68,7 +68,7 @@ nosliw.init = function(serverBase){
 				var fileNumber = result.length;
 				var count = 0;
 				
-				var loadScriptInOrder = function(){
+				var loadScriptInOrder1 = function(){
 					var url = result[count];
 					
 					jQuery.getScript(nosliw.serverBase+url, function(data, textStatus, jqxhr){
@@ -76,7 +76,7 @@ nosliw.init = function(serverBase){
 					});
 				};
 				
-				var loadScriptInOrder1 = function(){
+				var loadScriptInOrder = function(){
 					var url = result[count];
 					
 					var scriptEle = document.createElement('script');
@@ -84,7 +84,7 @@ nosliw.init = function(serverBase){
 					scriptEle.setAttribute('defer', "defer");
 					scriptEle.setAttribute('type', 'text/javascript');
 
-					script.onload = callBack;
+					scriptEle.onload = callBack;
 					document.getElementsByTagName("head")[0].appendChild(scriptEle);
 				};
 				

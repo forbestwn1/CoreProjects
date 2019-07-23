@@ -42,7 +42,7 @@ for (let p of searchParams) {
 	  dataInput[p[0]] = p[1];
 }
 
-//init(document.getElementById("appDiv"), "http://3.16.138.152:8082/nosliw/"); 
+dataInput.librarys = ['libresources/external/log4javascript/1.0.0/log4javascript.js'];
 init(document.getElementById("appDiv"), "http://localhost:8082/nosliw/", configureName, dataInput); 
 
 </script>
@@ -53,7 +53,5 @@ init(document.getElementById("appDiv"), "http://localhost:8082/nosliw/", configu
       var vm = new Vue({el: '#app'});
     </script>
 </body>
-
-
 
 </html>
