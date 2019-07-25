@@ -11,10 +11,9 @@
     <title>My App</title>
     <!-- Path to Framework7 Library Bundle CSS -->
    	<link rel="stylesheet" href="libs/framework7/4.4.0/css/framework7.bundle.css">
-
-        <script src="libs/jQuery/2.1.0/jquery.js"></script>
-        <script type="text/javascript" src="js/init.js"></script>
-
+	<script src="libs/framework7/4.4.0/js/framework7.bundle.js"></script>
+    <script src="libs/jQuery/3.4.1/jquery.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
 </head>
 
 <body>
@@ -23,15 +22,7 @@
 	<div id="appDiv">
 	</div>
 
-<script src="libs/framework7/4.4.0/js/framework7.bundle.js"></script>
-
 <script>
-
-$(document).on("miniappActive", function(){
-
-	nosliw.miniapp.executeLoginRequest(undefined,);
-	
-});
 
 var searchParams = new URLSearchParams(window.location.search);
 var configureName = searchParams.get("configure");
@@ -41,7 +32,6 @@ for (let p of searchParams) {
 	  dataInput[p[0]] = p[1];
 }
 
-//init(document.getElementById("appDiv"), "http://3.16.138.152:8082/nosliw/"); 
 init(document.getElementById("appDiv"), "http://www.lastkilometer.ca:8082/nosliw/", configureName, dataInput); 
 
 </script>
@@ -52,7 +42,5 @@ init(document.getElementById("appDiv"), "http://www.lastkilometer.ca:8082/nosliw
       var vm = new Vue({el: '#app'});
     </script>
 </body>
-
-
 
 </html>

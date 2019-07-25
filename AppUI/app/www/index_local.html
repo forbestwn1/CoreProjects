@@ -11,47 +11,19 @@
     <title>My App</title>
     <!-- Path to Framework7 Library Bundle CSS -->
    	<link rel="stylesheet" href="libs/framework7/4.4.0/css/framework7.bundle.css">
-
-        <script src="libs/jQuery/3.4.1/jquery.js"></script>
-        <script type="text/javascript" src="js/init.js"></script>
-
+	<script src="libs/framework7/4.4.0/js/framework7.bundle.js"></script>
+	<script src="libs/vue/vue.js"></script>
+    <script src="libs/jQuery/3.4.1/jquery.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+    <script type="text/javascript" src="js/common/applicationConfigure.js"></script>
 </head>
 
 <body>
-	<div id="app">
-	</div>
-	<div id="appDiv">
-	</div>
-
-<script src="libs/framework7/4.4.0/js/framework7.bundle.js"></script>
+<div id="appDiv"/>
 
 <script>
-
-$(document).on("miniappActive", function(){
-
-	nosliw.miniapp.executeLoginRequest(undefined,);
-	
-});
-
-
-var searchParams = new URLSearchParams(window.location.search);
-var configureName = searchParams.get("configure");
-if(configureName==undefined)  configureName = "normal";
-var dataInput = {};
-for (let p of searchParams) {
-	  dataInput[p[0]] = p[1];
-}
-
-dataInput.librarys = ['libresources/external/log4javascript/1.0.0/log4javascript.js'];
-init(document.getElementById("appDiv"), "http://localhost:8082/nosliw/", configureName, dataInput); 
-
+var appConfigure = buildApplicationConfigure();
+init(document.getElementById("appDiv"), appConfigure.getEnvironment(), appConfigure.getApplicationConfigureName(), appConfigure.getParms()); 
 </script>
-
-<script src="libs/vue/vue.js"></script>
-    <script type="text/javascript">
-      // creating a root Vue instance here
-      var vm = new Vue({el: '#app'});
-    </script>
-</body>
 
 </html>

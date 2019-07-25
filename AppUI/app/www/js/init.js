@@ -1,8 +1,10 @@
 /**
  * 
  */
-var init = function(rootNode, baseServer, configureName, dataInput, callBackFunction){
+var init = function(rootNode, env, configureName, dataInput, callBackFunction){
 
+	var baseServer = env.nosliw_address+':'+env.nosliw_port+'/'+env.nosliw_context+'/';
+	
 	var loc_librarys = [
 		"js/application/0_package_service.js",
 		"js/application/utility.js",
@@ -67,6 +69,10 @@ var init = function(rootNode, baseServer, configureName, dataInput, callBackFunc
 		loadLibrary(loc_librarys, function(){
 			loc_framework7App.preloader.hide();
 			
+			$(document).on("miniappActive", function(){
+				nosliw.miniapp.executeLoginRequest(undefined);
+			});
+			
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var requestProcessor = nosliw.runtime.getRequestProcessor();
 			requestProcessor.registerEventListener(undefined, function(eventName, eventData){
@@ -114,9 +120,9 @@ var init = function(rootNode, baseServer, configureName, dataInput, callBackFunc
 	var libs = [
 		baseServer+"libresources/nosliw/runtimebrowserinit/init.js",
 	];
-	if(dataInput.librarys!=undefined){
-		for(var i in dataInput.librarys){
-			libs.push(baseServer+dataInput.librarys[i]);
+	if(env.library!=undefined){
+		for(var i in env.library){
+			libs.push(baseServer+env.library[i]);
 		}
 	}
 	loadLibrary(libs, function(){
