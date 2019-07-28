@@ -213,11 +213,6 @@ var node_createExpressionService = function(){
 		_.each(parmsOperand, function(parmOperand, parmName, list){
 			var parmOperandRequest = loc_getExecuteOperandRequest(expression, parmOperand, variables, constants, references, {
 				success :function(request, parmValue){
-					var kkkk = 5555;
-					if(parmName=='base' && parmValue.operation!=undefined){
-						var kkkkk = 5555;
-						kkkkk++;
-					}
 					return parmValue;
 				}
 			});

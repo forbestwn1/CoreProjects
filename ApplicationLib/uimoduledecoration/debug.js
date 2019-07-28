@@ -21,7 +21,6 @@ function(gate){
 	var loc_updateDataSet = function(request){	
 		node_requestServiceProcessor.processRequest(loc_componentIOContext.getGetDataSetValueRequest({
 			success : function(request, dataSet){
-				var kkkk = loc_componentIOContext;
 				loc_dataView.val(JSON.stringify(dataSet, null, 4));	
 			}
 		}, request));

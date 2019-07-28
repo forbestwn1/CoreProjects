@@ -65,6 +65,8 @@ var init = function(rootNode, env, configureName, dataInput, callBackFunction){
 
 	//when nosliw active
 	$(document).on("nosliwActive", function(){
+		nosliw.runtime.getErrorManager().logErrorIfHasAny();
+		
 		//load mini libs
 		loadLibrary(loc_librarys, function(){
 			loc_framework7App.preloader.hide();
