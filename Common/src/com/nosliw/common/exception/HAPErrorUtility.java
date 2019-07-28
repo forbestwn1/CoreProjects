@@ -1,4 +1,4 @@
-package com.nosliw.common.erro;
+package com.nosliw.common.exception;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

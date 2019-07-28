@@ -34,27 +34,35 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 			throws ServletException, IOException {
 		
 		HAPRequestInfo requestInfo = new HAPRequestInfo(request);
-		HAPServiceData serviceData = this.getRuntimeEnvironment().getGatewayManager().executeGateway(
-				HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, 
-				HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, 
-				new JSONObject(requestInfo.getParms()), 
-				new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_BROWSER));
+		HAPServiceData serviceData = null;
+		try {
+			serviceData = this.getRuntimeEnvironment().getGatewayManager().executeGateway(
+					HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, 
+					HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, 
+					new JSONObject(requestInfo.getParms()), 
+					new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_BROWSER));
 
-		if(HAPSystemUtility.getConsolidateLib()) {
-			if(this.m_libraryTempFile==null) {
-				this.m_libraryTempFile = System.currentTimeMillis()+"/library.js";
-				HAPGatewayOutput gatewayOutput = (HAPGatewayOutput)serviceData.getData();
-				List<String> fileNames = (List<String>)gatewayOutput.getData();
-				StringBuffer libraryContent = new StringBuffer();
-				for(String fileName : fileNames) {
-					libraryContent.append(HAPFileUtility.readFile(HAPFileUtility.getJSFolder()+fileName));
+			if(HAPSystemUtility.getConsolidateLib()) {
+				if(this.m_libraryTempFile==null) {
+					this.m_libraryTempFile = System.currentTimeMillis()+"/library.js";
+					HAPGatewayOutput gatewayOutput = (HAPGatewayOutput)serviceData.getData();
+					List<String> fileNames = (List<String>)gatewayOutput.getData();
+					StringBuffer libraryContent = new StringBuffer();
+					for(String fileName : fileNames) {
+						libraryContent.append(HAPFileUtility.readFile(HAPFileUtility.getJSFolder()+fileName));
+					}
+					HAPFileUtility.writeFile(HAPSystemUtility.getJSTempFolder()+"libs/"+m_libraryTempFile, libraryContent.toString());
 				}
-				HAPFileUtility.writeFile(HAPSystemUtility.getJSTempFolder()+"libs/"+m_libraryTempFile, libraryContent.toString());
+				List<String> tempNames = new ArrayList<String>();
+				tempNames.add("temp/libs/"+this.m_libraryTempFile);
+				serviceData = HAPServiceData.createSuccessData(new HAPGatewayOutput(null, tempNames));
 			}
-			List<String> tempNames = new ArrayList<String>();
-			tempNames.add("temp/libs/"+this.m_libraryTempFile);
-			serviceData = HAPServiceData.createSuccessData(new HAPGatewayOutput(null, tempNames));
 		}
+		catch(Exception e) {
+			serviceData = HAPServiceData.createFailureData(e, "Exceptione during load library service request!!!!");
+//			LOGGER.throwing(this.getClass().getName(), "service", e);
+		}
+		
 		this.printContent(serviceData, response);
 	}
 }

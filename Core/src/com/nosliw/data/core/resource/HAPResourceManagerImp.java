@@ -3,7 +3,7 @@ package com.nosliw.data.core.resource;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.erro.HAPErrorUtility;
+import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPResourceManagerImp implements HAPResourceManager{
@@ -16,11 +16,11 @@ public abstract class HAPResourceManagerImp implements HAPResourceManager{
 			if(resource!=null) {
 				out.addLoadedResource(resource);
 
-				System.out.println();
-				System.out.println("*********************** Load Resource Start ************************");
-				System.out.println(resource.toString());
-				System.out.println("*********************** Load Resource End ************************");
-				System.out.println();
+//				System.out.println();
+//				System.out.println("*********************** Load Resource Start ************************");
+//				System.out.println(resource.toString());
+//				System.out.println("*********************** Load Resource End ************************");
+//				System.out.println();
 
 			}
 			else {

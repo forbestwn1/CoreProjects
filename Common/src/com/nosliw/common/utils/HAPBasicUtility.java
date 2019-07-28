@@ -1,5 +1,7 @@
 package com.nosliw.common.utils;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
@@ -10,6 +12,13 @@ import java.util.Set;
 
 public class HAPBasicUtility {
 
+	public static String toString(Exception e) {
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		e.printStackTrace(printWriter);
+		return stringWriter.toString();
+	}
+	
 	public static String getRawTypeName(Type type){
 		if(type instanceof ParameterizedType){
 			Class cs = (Class)((ParameterizedType)type).getRawType();

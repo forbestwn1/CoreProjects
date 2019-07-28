@@ -1,6 +1,6 @@
 package com.nosliw.data.core.criteria;
 
-import com.nosliw.common.erro.HAPErrorUtility;
+import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;

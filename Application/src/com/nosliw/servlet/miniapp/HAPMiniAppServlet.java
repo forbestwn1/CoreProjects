@@ -61,10 +61,6 @@ public class HAPMiniAppServlet extends HAPServiceServlet{
 		
 		HAPAppManager miniAppMan = (HAPAppManager)this.getServletContext().getAttribute("minAppMan");
 
-		System.out.println("/******************************   MiniApp Login  *****************************/");
-		System.out.println("Commnad : " + command);
-		System.out.println("Parms : " + parms==null?"null" : parms.toString());
-		
 		switch(command){
 		case COMMAND_LOGIN:
 		{
@@ -86,7 +82,6 @@ public class HAPMiniAppServlet extends HAPServiceServlet{
 				if(userInfo==null)  userInfo = miniAppMan.createUser();
 			}
 			out = HAPServiceData.createSuccessData(userInfo);
-			System.out.println("Out : " + out.toString());
 			break;
 		}
 		case COMMAND_LOADMINIAPP:

@@ -2,7 +2,7 @@ package com.nosliw.common.info;
 
 import java.util.Map;
 
-import com.nosliw.common.erro.HAPErrorUtility;
+import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 public class HAPEntityInfoImpWrapper extends HAPSerializableImp implements HAPEntityInfo{

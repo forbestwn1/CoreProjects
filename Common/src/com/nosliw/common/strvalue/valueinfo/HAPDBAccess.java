@@ -59,7 +59,6 @@ public class HAPDBAccess {
 					statement.setObject(i+1, parms[i]);
 				}
 			}
-//			System.out.println(statement);
 			out = this.queryFromDB(valueInfoName, statement);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -104,7 +103,6 @@ public class HAPDBAccess {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(createSql);
 	}
 	
 	protected void saveToDB(HAPStringableValueEntity obj, Connection connection){
@@ -120,7 +118,6 @@ public class HAPDBAccess {
 	protected void saveToDB(HAPStringableValueEntity obj, HAPDBTableInfo dbTableInfo, Connection connection){
 		try {
 			String insertSql = buildInstertSql(dbTableInfo);
-//			System.out.println(insertSql);
 			PreparedStatement statement = connection.prepareStatement(insertSql);
 			
 			saveToDB(obj, dbTableInfo, statement);

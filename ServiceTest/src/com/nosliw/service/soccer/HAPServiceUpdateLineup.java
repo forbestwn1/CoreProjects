@@ -31,7 +31,6 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 	
 	@Override
 	synchronized public HAPResultService execute(Map<String, HAPData> parms){
-
 		String actionStr = null;
 		String statusStr = null;
 		if(parms.get("player")!=null) {
@@ -59,7 +58,6 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 				if(actionResult.getAffectedPlayer()!=null)  affectedPlayers.addAll(actionResult.getAffectedPlayer());
 				this.sendEmailToPlayers(affectedPlayers);
 			}
-		
 		}
 		else {
 			actionStr = "";

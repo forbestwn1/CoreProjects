@@ -61,6 +61,7 @@ var node_createModuleMiniApp = function(root){
 	var loc_out = {
 		
 		getRefreshRequest : function(miniAppInfo, handlers, requestInfo){
+			
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshMiniApp", {}), handlers, requestInfo);
 			
 			var miniAppEntryId = miniAppInfo.getAppInfo().id + ";main";

@@ -274,6 +274,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 					return out;
 				}
 				catch(err){
+					nosliw.runtime.getErrorManager().logError(err);
 					loc_out.executeErrorHandler(node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err));
 				}
 			},

@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.erro.HAPErrorUtility;
+import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.test.HAPResult;
 import com.nosliw.common.test.HAPResultTestCase;

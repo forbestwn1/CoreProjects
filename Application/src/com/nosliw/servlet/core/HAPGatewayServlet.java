@@ -27,7 +27,7 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 
 
 	@Override
-	protected HAPServiceData processServiceRequest(String gatewayCommand, JSONObject parms) {
+	protected HAPServiceData processServiceRequest(String gatewayCommand, JSONObject parms) throws Exception {
 		HAPServiceData out = null;
 
 		String[] segs = HAPNamingConversionUtility.parseLevel1(gatewayCommand);

@@ -3,6 +3,7 @@ package com.nosliw.servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 @HAPEntityWithAttribute
@@ -30,27 +32,23 @@ public abstract class HAPServiceServlet extends HAPBaseServlet{
 	@HAPAttribute
 	public static final String REQUEST_CHILDREN = "children";
 
+	private final static Logger LOGGER = Logger.getLogger(HAPServiceServlet.class.getName());
+	
 	@Override
 	public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HAPServiceData out = null;
-		try{
-			HAPRequestInfo requestInfo = new HAPRequestInfo(request);
-			if(HAPConstant.SERVICECOMMAND_GROUPREQUEST.equals(requestInfo.getCommand())){
-				JSONArray jsonGroupReqs = new JSONArray(requestInfo.getParms());
+		HAPRequestInfo requestInfo = new HAPRequestInfo(request);
+		if(HAPConstant.SERVICECOMMAND_GROUPREQUEST.equals(requestInfo.getCommand())){
+			JSONArray jsonGroupReqs = new JSONArray(requestInfo.getParms());
 
-				List<String> requestsResult = new ArrayList<String>();
-				for(int i=0; i<jsonGroupReqs.length(); i++){
-					JSONObject req = jsonGroupReqs.getJSONObject(i);
-					HAPServiceData serviceData = processRequest(req);
-					String requestResult = serviceData.toStringValue(HAPSerializationFormat.JSON_FULL);
-					requestsResult.add(requestResult);
-				}
-				out = HAPServiceData.createSuccessData(requestsResult);
+			List<String> requestsResult = new ArrayList<String>();
+			for(int i=0; i<jsonGroupReqs.length(); i++){
+				JSONObject req = jsonGroupReqs.getJSONObject(i);
+				HAPServiceData serviceData = processRequest(req);
+				String requestResult = serviceData.toStringValue(HAPSerializationFormat.JSON_FULL);
+				requestsResult.add(requestResult);
 			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			out = HAPServiceData.createFailureData(null, "Exceptione during process gateway service request!!!!");
+			out = HAPServiceData.createSuccessData(requestsResult);
 		}
 
 		//build response
@@ -58,7 +56,7 @@ public abstract class HAPServiceServlet extends HAPBaseServlet{
 	}
 	
 	// process one request object
-	private HAPServiceData processRequest(JSONObject req) throws Exception{
+	private HAPServiceData processRequest(JSONObject req){
 		HAPServiceData out = null;
 		String reqType = req.getString(REQUEST_TYPE);
 		if(HAPConstant.REMOTESERVICE_TASKTYPE_NORMAL.equals(reqType)){
@@ -97,20 +95,37 @@ public abstract class HAPServiceServlet extends HAPBaseServlet{
 	}
 	
 	private HAPServiceData processRequest(HAPServiceInfo serviceInfo){
-		System.out.println("*********************** Start Service ************************");
-		System.out.println(HAPServiceInfo.SERVICE_COMMAND + "  " + serviceInfo.getCommand());
-		System.out.println(HAPServiceInfo.SERVICE_PARMS + "   " + serviceInfo.getParms().toString());
+		StringBuffer logContent = new StringBuffer();
 		
-		HAPServiceData serviceData = processServiceRequest(serviceInfo.getCommand(), serviceInfo.getParms());
+		logContent.append("\n");
+		logContent.append("*********************** Start Service ************************");
+		logContent.append("\n");
+		logContent.append(HAPServiceInfo.SERVICE_COMMAND + "  " + serviceInfo.getCommand());
+		logContent.append("\n");
+		logContent.append(HAPServiceInfo.SERVICE_PARMS + "   " + serviceInfo.getParms().toString());
+		logContent.append("\n");
+		
+		HAPServiceData serviceData = null;
+		try {
+			serviceData = processServiceRequest(serviceInfo.getCommand(), serviceInfo.getParms());
+		}
+		catch(Exception e) {
+			serviceData = HAPServiceData.createFailureData(e, "Exceptione during process gateway service request!!!!");
+			LOGGER.severe(HAPBasicUtility.toString(e));
+		}
 		
 		String content = serviceData.toStringValue(HAPSerializationFormat.JSON_FULL);
 		content = HAPJsonUtility.formatJson(content);
 		
-		System.out.println("return: \n" + content);
-		System.out.println("*********************** End Service ************************");
+		logContent.append("return: \n" + content);
+		logContent.append("\n");
+		logContent.append("*********************** End Service ************************");
+		logContent.append("\n");
+		
+//		LOGGER.info(logContent.toString());
 		return serviceData;
 	}
 	
-	abstract protected HAPServiceData processServiceRequest(String command, JSONObject parms);
+	abstract protected HAPServiceData processServiceRequest(String command, JSONObject parms)  throws Exception;
 	
 }

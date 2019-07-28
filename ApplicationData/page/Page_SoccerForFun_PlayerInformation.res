@@ -23,7 +23,9 @@
 	</nosliw-switch>
 	
 	<br>
-	Email:<nosliw-textinput data="player.email"/>  
+	电子邮件用来通知各种事件(比方说你接到坑，或者有人接你的坑):
+	<br>
+	<nosliw-textinput data="player.email"/>  
 	<br>
 	
 	<br>
