@@ -54,6 +54,13 @@ var node_createApplication = function(){
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(rootNode, appConfigure, handlers, request){
 		loc_appConfigure = appConfigure;
 		
+		//set web page title
+		var configureData = loc_appConfigure.getData();
+		var title = configureData.title;
+		if(title==undefined)  title = configureData.groupId;
+		if(title==undefined)  title = configureData.app;
+		document.title = title;
+
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(node_miniAppUtility.getLoadFilesRequest([loc_appConfigure.getLayout()], {
 			success : function(request, mainSource){

@@ -122,7 +122,7 @@ public abstract class HAPServiceServlet extends HAPBaseServlet{
 		logContent.append("*********************** End Service ************************");
 		logContent.append("\n");
 		
-//		LOGGER.info(logContent.toString());
+		LOGGER.info(logContent.toString());
 		return serviceData;
 	}
 	
