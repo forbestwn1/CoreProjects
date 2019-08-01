@@ -30,55 +30,25 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 		},
 		success : function(request, data){
 			nosliw.logging.info(loc_moduleName, request.getInnerId(), "Success handler : ", data);
-//				nosliw.logging.trace(loc_moduleName, request.getInnerId(), "Data ", data);
-//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_SUCCESS, data);
-//			processedCallBack(request);
 			return data;
 		}, 
 		error : function(request, data){
 			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Error handler : ", JSON.stringify(data));
-//				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
-//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR, data);
-//			processedCallBack(request);
 			return data;
 		}, 
 		exception : function(request, data){
 			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Exception handler : ", JSON.stringify(data));
-//				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
-//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION, data);
-//			processedCallBack(request);
 			return data;
 		}, 
 	});
 
 	request.insertPostProcessor({
-		start : function(request){
-		},
-		success : function(request, data){
-//			nosliw.logging.info(loc_moduleName, request.getInnerId(), "Success handler : ", data);
-//				nosliw.logging.trace(loc_moduleName, request.getInnerId(), "Data ", data);
-//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_SUCCESS, data);
-			processedCallBack(request);
-			return data;
-		}, 
-		error : function(request, data){
-//			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Error handler : ", data);
-//				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
-//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR, data);
-			processedCallBack(request);
-			return data;
-		}, 
-		exception : function(request, data){
-//			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Exception handler : ", data);
-//				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
-//			loc_trigueRequestEvent(request, node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION, data);
-			processedCallBack(request);
-			return data;
-		}, 
+		start : function(request){},
+		success : function(request, data){		processedCallBack(request);		}, 
+		error : function(request, data){		processedCallBack(request);		}, 
+		exception : function(request, data){	processedCallBack(request);		}, 
 	});
 
-
-	
 	//execute start handler
 	var startOut = request.executeStartHandler(request);
 
