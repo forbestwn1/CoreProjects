@@ -67,7 +67,7 @@ function(gate){
 					ui.getPage().appendTo(loc_view);
 				});
 				
-				out.executeSuccessHandler();
+				out.successFinish();
 			}));
 			return out;
 		},

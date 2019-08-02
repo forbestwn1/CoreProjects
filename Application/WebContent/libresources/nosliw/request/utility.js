@@ -11,6 +11,15 @@ var packageObj = library;
 var node_utility = function(){
 	var loc_out = {
 			
+			getAllHandlerNames : function(){
+				return [
+					node_CONSTANT.REQUEST_HANDLERNAME_START,
+					node_CONSTANT.REQUEST_HANDLERNAME_SUCCESS,
+					node_CONSTANT.REQUEST_HANDLERNAME_ERROR,
+					node_CONSTANT.REQUEST_HANDLERNAME_EXCEPTION,
+				];
+			},
+			
 			buildService : function(service){
 				if(service!=undefined)  return service;
 				else{
@@ -84,19 +93,10 @@ var node_utility = function(){
 			 */
 			mergeHandlers : function(handlers, overrideHandlers){
 				var out = {};
-				
-				out.start = handlers.start;
-				if(overrideHandlers!=undefined && overrideHandlers.start!=undefined)  out.start=overrideHandlers.start;
-
-				out.success = handlers.success;
-				if(overrideHandlers!=undefined && overrideHandlers.success!=undefined)  out.success=overrideHandlers.success;
-
-				out.error = handlers.error;
-				if(overrideHandlers!=undefined && overrideHandlers.error!=undefined)  out.error=overrideHandlers.error;
-
-				out.exception = handlers.exception;
-				if(overrideHandlers!=undefined && overrideHandlers.exception!=undefined)  out.exception=overrideHandlers.exception;
-
+				_.each(this.getAllHandlerNames(), function(handlerName, i){
+					out[handlerName] = handlers[handlerName];
+					if(overrideHandlers!=undefined && overrideHandlers[handlerName]!=undefined)  out[handlerName]=overrideHandlers[handlerName];
+				});
 				return out;
 			},
 

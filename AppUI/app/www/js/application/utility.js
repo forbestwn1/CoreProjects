@@ -27,7 +27,7 @@ var node_utility = function(){
 				templateRequest.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 					$.get(file)
 					  .done((source) => {
-						  requestInfo.executeSuccessHandler(source, templateRequest);
+						  requestInfo.successFinish(source, templateRequest);
 					});
 				}, this));
 				out.addRequest(file, templateRequest);

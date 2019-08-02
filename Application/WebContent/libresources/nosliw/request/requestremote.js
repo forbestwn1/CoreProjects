@@ -26,13 +26,13 @@ var node_createServiceRequestInfoRemote = function(syncName, service, setting, h
 		var remoteServiceTask = new node_RemoteServiceTask(loc_syncName, loc_service, 
 				{
 					success : function(request, data){
-						loc_out.executeSuccessHandler(data, this);
+						loc_out.successFinish(data, this);
 					},
 					error : function(request, serviceData){
-						loc_out.executeErrorHandler(serviceData, this);
+						loc_out.errorFinish(serviceData, this);
 					},
 					exception : function(request, serviceData){
-						loc_out.executeExceptionHandler(serviceData, this);
+						loc_out.exceptionFinish(serviceData, this);
 					}
 				}
 		, loc_out, loc_setting);

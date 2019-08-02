@@ -77,10 +77,10 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		
 		//construct handlers
 		loc_out.pri_metaData.pri_handlers = {
-			start : loc_constructHandler("start"),
-			success : loc_constructHandler("success"),
-			error : loc_constructHandler("error"),
-			exception : loc_constructHandler("exception"),
+			start : loc_constructHandler(node_CONSTANT.REQUEST_HANDLERNAME_START),
+			success : loc_constructHandler(node_CONSTANT.REQUEST_HANDLERNAME_SUCCESS),
+			error : loc_constructHandler(node_CONSTANT.REQUEST_HANDLERNAME_ERROR),
+			exception : loc_constructHandler(node_CONSTANT.REQUEST_HANDLERNAME_EXCEPTION),
 		};
 		
 		if(loc_out.pri_service!=undefined){
@@ -99,11 +99,6 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	 */
 	var loc_constructHandler = function(type){
 		return function(requestInfo, data){
-			if(type=="start") {
-				//start to process request
-				loc_startRequest();
-			}
-			
 			//execute configured handler
 			var handler = loc_out.pri_handlers[type];
 			var out = data;
@@ -115,15 +110,6 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 				}
 			}
 			
-			//trigue event when error/exception happen
-//			if(type=='error')	this.trigueIndividualEvent(node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR, out);
-//			else if(type=='exception')	this.trigueIndividualEvent(node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION, out);
-			
-			if(type!="start"){
-				//do sth when request is done
-				loc_finishRequest(type, out);
-			}
-
 			//execute configured post process
 			var postProcessors = loc_out.getPostProcessors();
 			for(var i in postProcessors){
@@ -148,18 +134,6 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	};
 	
 	/*
-	 * do sth when request start processing
-	 *     change status
-	 *     clear result
-	 *     trigue event
-	 */
-	var loc_startRequest = function(){
-		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_PROCESSING);
-		loc_out.setResult();
-		loc_out.pri_metaData.pri_eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_ACTIVE, {}, loc_out);
-	};
-	
-	/*
 	 * do sth when request finish processing
 	 *     change status
 	 *     set result
@@ -177,6 +151,13 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		loc_out.pri_metaData.pri_eventObject.clearup();
 	};
 
+	var loc_callHandler = function(handlerName, thisContext, data){
+		var out = undefined;
+		var handler = loc_out.getHandlers()[handlerName];
+		if(handler!=undefined)			out = handler.call(thisContext, loc_out, data);
+		return out;
+	};
+	
 	var loc_out = {
 			
 			getId : function(){return this.pri_id;},
@@ -235,26 +216,22 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 				var resultStatus = node_errorUtility.getServiceDataStatus(serviceData);
 				switch(resultStatus){
 				case node_CONSTANT.REMOTESERVICE_RESULT_SUCCESS:
-					return this.executeSuccessHandler(serviceData.data, thisContext);
+					return this.successFinish(serviceData.data, thisContext);
 					break;
 				case node_CONSTANT.REMOTESERVICE_RESULT_EXCEPTION:
-					return this.executeErrorHandler(serviceData, thisContext);
+					return this.errorFinish(serviceData, thisContext);
 					break;
 				case node_CONSTANT.REMOTESERVICE_RESULT_ERROR:
-					return this.executeExceptionHandler(serviceData, thisContext);
+					return this.exceptionFinish(serviceData, thisContext);
 					break;
 				}
 			},
 			
-			executeHandler : function(type, thisContext, data){
-				if(type=="start")		return this.executeStartHandler(thisContext);
-				if(type=="success")		return this.executeSuccessHandler(data, thisContext);
-				if(type=="error")		return this.executeErrorHandler(data, thisContext);
-				if(type=="exception")		return this.executeExceptionHandler(data, thisContext);
-			},
-			
-			executeStartHandler : function(thisContext){
-//				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Start handler");
+			start : function(thisContext){
+				loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_PROCESSING);
+				loc_out.setResult();
+				loc_out.pri_metaData.pri_eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_ACTIVE, {}, loc_out);
+				
 				var out = undefined;
 				//internal handler
 				var handler = this.getHandlers().start;
@@ -262,59 +239,45 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 				return out;
 			},
 			
-			executeSuccessHandler : function(data, thisContext){
-//				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Success handler");
-//				nosliw.logging.trace(loc_moduleName, this.getInnerId(), "Data ", data);
-
+			successFinish : function(data, thisContext){
 				try{
-					var out = undefined;
-					//internal handler
-					var handler = this.getHandlers().success;
-					if(handler!=undefined)			out = handler.call(thisContext, this, data);
-					return out;
+					loc_finishRequest(node_CONSTANT.REQUEST_FINISHTYPE_SUCCESS, data);
+					return loc_callHandler(node_CONSTANT.REQUEST_HANDLERNAME_SUCCESS, thisContext, data);
 				}
 				catch(err){
 					nosliw.runtime.getErrorManager().logError(err);
-					loc_out.executeErrorHandler(node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err));
+					loc_out.errorFinish(node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err));
 				}
 			},
 			
-			executeErrorHandler : function(serviceData, thisContext){
-//				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Error handler");
-//				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
-
-				var out = undefined;
-				//internal handler
-				var handler = this.getHandlers().error;
-				if(handler!=undefined)			out = handler.call(thisContext, this, serviceData);
-				return out;
+			errorFinish : function(serviceData, thisContext){
+				loc_finishRequest(node_CONSTANT.REQUEST_FINISHTYPE_ERROR, serviceData);
+				return loc_callHandler(node_CONSTANT.REQUEST_HANDLERNAME_ERROR, thisContext, serviceData);
 			},
 
-			executeExceptionHandler : function(serviceData, thisContext){
-//				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Exception handler");
-//				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
-
-				var out = undefined;
-				//internal handler
-				var handler = this.getHandlers().exception;
-				if(handler!=undefined)			out = handler.call(thisContext, this, serviceData);
-				return out;
+			exceptionFinish : function(serviceData, thisContext){
+				loc_finishRequest(node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION, serviceData);
+				return loc_callHandler(node_CONSTANT.REQUEST_HANDLERNAME_EXCEPTION, thisContext, serviceData);
 			},
 			
+			pause : function(){
+				loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_PAUSED);
+			},
+			
+			resume : function(){
+				
+			},
 			
 			/*
 			 * set processor so that they can do sth before call the handlers
 			 * we can keep call this method to insert mutiple processor 
 			 */
 			setRequestProcessors : function(processors){
-				
-				var handlers = this.getHandlers();
-				var newHandlers = {
-					start : node_requestUtility.createRequestProcessorHandlerFunction(handlers.start, processors.start),
-					success : node_requestUtility.createRequestProcessorHandlerFunction(handlers.success, processors.success),
-					error : node_requestUtility.createRequestProcessorHandlerFunction(handlers.error, processors.error),
-					exception : node_requestUtility.createRequestProcessorHandlerFunction(handlers.exception, processors.exception),
-				};
+				var handlers = this.getHandlers();				
+				var newHandlers = {};
+				_.each(node_requestUtility.getAllHandlerNames(), function(handlerName, i){
+					newHandlers[handlerName] = node_requestUtility.createRequestProcessorHandlerFunction(handlers[handlerName], processors[handlerName]);
+				});
 				this.setHandlers(node_requestUtility.mergeHandlers(handlers, newHandlers));
 			},
 

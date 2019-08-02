@@ -75,7 +75,7 @@ function(uiModule){
 					loc_uiModule.setStateData(CONSTANT_UISTACK_DATANAME, []);
 					
 					$(document).bind("mobileinit", function() {
-						out.executeSuccessHandler();
+						out.successFinish();
 					});
 					//load jquery mobile
 					nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY, undefined, requestInfo);

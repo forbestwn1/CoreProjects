@@ -22,7 +22,7 @@ var node_createServiceRequestInfoSimple = function(service, processor, handlers,
 	 */
 	var loc_process = function(requestInfo){
 		var out = loc_processorFun.call(this, requestInfo);
-		loc_out.executeSuccessHandler(out, loc_out);
+		loc_out.successFinish(out, loc_out);
 	};
 		
 	var loc_out = {

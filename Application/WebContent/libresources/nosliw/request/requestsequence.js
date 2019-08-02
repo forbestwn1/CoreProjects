@@ -99,7 +99,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		
 		if(loc_out.pri_requestInfos.length<=loc_out.pri_cursor){
 			//not more request in queue
-			loc_out.executeSuccessHandler(data, loc_out);
+			loc_out.successFinish(data, loc_out);
 		}
 		else{
 			var requestInfo = loc_out.pri_requestInfos[loc_out.pri_cursor];
@@ -117,10 +117,10 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 						loc_processNextRequestInSequence(requestInfo, eventData);
 					}
 					else if(eventName==node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR){
-						loc_out.executeErrorHandler(eventData, loc_out);
+						loc_out.errorFinish(eventData, loc_out);
 					}
 					if(eventName==node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION){
-						loc_out.executeExceptionHandler(eventData, loc_out);
+						loc_out.exceptionFinish(eventData, loc_out);
 					}
 					requestInfo.unregisterIndividualEventListener(listener);
 				}, requestInfo);
@@ -141,10 +141,10 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 						}, function(err) {});
 					},
 					error : function(requestInfo, serviceData){
-						loc_out.executeErrorHandler(serviceData, loc_out);
+						loc_out.errorFinish(serviceData, loc_out);
 					},
 					exception : function(requestInfo, serviceData){
-						loc_out.executeExceptionHandler(serviceData, loc_out);
+						loc_out.exceptionFinish(serviceData, loc_out);
 					},
 				});
 			}
@@ -155,10 +155,10 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 						loc_processNextRequestInSequence(requestInfo, out);
 					},
 					error : function(requestInfo, serviceData){
-						loc_out.executeErrorHandler(serviceData, loc_out);
+						loc_out.errorFinish(serviceData, loc_out);
 					},
 					exception : function(requestInfo, serviceData){
-						loc_out.executeExceptionHandler(serviceData, loc_out);
+						loc_out.exceptionFinish(serviceData, loc_out);
 					},
 				});
 			}

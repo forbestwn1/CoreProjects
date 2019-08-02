@@ -58,10 +58,10 @@ var node_createServiceRequestInfoSet = function(service, handlers, requester_par
 		childRequest.addPostProcessor({
 			success : loc_createChildRequestSuccessProcessor(name),
 			error : function(requestInfo, serviceData){
-				loc_out.executeErrorHandler(serviceData, loc_out);
+				loc_out.errorFinish(serviceData, loc_out);
 			},
 			exception : function(requestInfo, serviceData){
-				loc_out.executeExceptionHandler(serviceData, loc_out);
+				loc_out.exceptionFinish(serviceData, loc_out);
 			},
 		});
 	};
@@ -86,7 +86,7 @@ var node_createServiceRequestInfoSet = function(service, handlers, requester_par
 		loc_out.pri_requestNum++;
 		if(loc_out.pri_requestNum>=loc_out.pri_requestSum){
 			//if finish all requests
-			loc_out.executeSuccessHandler(loc_out.pri_requestResults, loc_out);
+			loc_out.successFinish(loc_out.pri_requestResults, loc_out);
 		}
 	};
 	

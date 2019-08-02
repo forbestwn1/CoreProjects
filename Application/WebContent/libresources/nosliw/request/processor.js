@@ -50,7 +50,7 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 	});
 
 	//execute start handler
-	var startOut = request.executeStartHandler(request);
+	var startOut = request.start(request);
 
 	var execute = request.getRequestExecuteInfo();
 	if(execute!=undefined){
@@ -77,7 +77,7 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 		}
 		catch(err){
 			nosliw.runtime.getErrorManager().logError(err);
-			request.executeErrorHandler(node_requestProcessErrorUtility.createRequestProcessErrorServiceData(err));
+			request.errorFinish(node_requestProcessErrorUtility.createRequestProcessErrorServiceData(err));
 		}
 	}
 	else{
@@ -104,7 +104,7 @@ var loc_createRequestGroup = function(firstRequest, attachTo){
 	var loc_attached = [];
 	var loc_attachTo = attachTo;
 	
-	var loc_status = node_CONSTANT.REQUEST_STATUS_INIT;
+	var loc_status = node_CONSTANT.REQUESTGROUP_STATUS_INIT;
 	
 	var loc_requestProcessed = function(request){
 		var requestId = loc_getRequestId(request);
@@ -114,8 +114,8 @@ var loc_createRequestGroup = function(firstRequest, attachTo){
 			loc_requestSum--;
 		}
 		if(loc_requestSum==0){
-			if(loc_status==node_CONSTANT.REQUEST_STATUS_ACTIVE){
-				loc_status = node_CONSTANT.REQUEST_STATUS_ALMOSTDONE;
+			if(loc_status==node_CONSTANT.REQUESTGROUP_STATUS_ACTIVE){
+				loc_status = node_CONSTANT.REQUESTGROUP_STATUS_ALMOSTDONE;
 				loc_rootRequest.registerEventListener(loc_eventObject, 
 						function(eventName, eventData){
 							if(eventName==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
@@ -123,10 +123,10 @@ var loc_createRequestGroup = function(firstRequest, attachTo){
 								if(loc_requestSum==0){
 									loc_doneCallBack(loc_out, request.getResult());
 									loc_rootRequest.done();
-									loc_status = node_CONSTANT.REQUEST_STATUS_DONE;
+									loc_status = node_CONSTANT.REQUESTGROUP_STATUS_DONE;
 								}
 								else{
-									loc_status = node_CONSTANT.REQUEST_STATUS_ACTIVE;
+									loc_status = node_CONSTANT.REQUESTGROUP_STATUS_ACTIVE;
 								}
 							}						
 						}
@@ -146,11 +146,11 @@ var loc_createRequestGroup = function(firstRequest, attachTo){
 		
 		addAttached : function(request){			loc_attached.push(request);		},
 		getAttached : function(){  return loc_attached;   },
-		
 		getAttachTo : function(){  return loc_attachTo;  },
 		
 		addRequestInfo : function(requestInfo){
 			if(loc_rootRequest==undefined){
+				//find root request
 				loc_rootRequest = requestInfo.request.getRootRequest();
 				loc_id = loc_rootRequest.getId();
 			}
@@ -159,14 +159,14 @@ var loc_createRequestGroup = function(firstRequest, attachTo){
 			loc_requestIdList.push(requestId);
 			loc_requestSum++;
 			
-			if(loc_status!=node_CONSTANT.REQUEST_STATUS_INIT){
+			if(loc_status!=node_CONSTANT.REQUESTGROUP_STATUS_INIT){
 				loc_processRequest(requestInfo.request, requestInfo.processRemote, loc_requestProcessed);
 			}
 		},
 		
 		startProcess : function(doneCallBack){
 			loc_doneCallBack = doneCallBack;
-			loc_status = node_CONSTANT.REQUEST_STATUS_ACTIVE;
+			loc_status = node_CONSTANT.REQUESTGROUP_STATUS_ACTIVE;
 			_.each(loc_requestInfosById, function(requestInfo, id){
 				loc_processRequest(requestInfo.request, requestInfo.processRemote, loc_requestProcessed);
 			});
@@ -232,12 +232,12 @@ var node_createRequestServiceProcessor = function(){
 	};
 	
 	var loc_processGroup = function(group){
-		if(group.getAttachTo()==undefined) loc_eventSource.triggerEvent(node_CONSTANT.REQUESTPROCESS_EVENT_START, group.getId());
+		if(group.getAttachTo()==undefined) loc_eventSource.triggerEvent(node_CONSTANT.EVENT_REQUESTPROCESS_START, group.getId());
 		nosliw.logging.info("Request Group : ", group.getId(), " Start Processing !!!!!!");
 		loc_processingGroupSum++;
 		loc_groups[group.getId()] = group;
 		group.startProcess(function(group, requestResult){
-			if(group.getAttachTo()==undefined) loc_eventSource.triggerEvent(node_CONSTANT.REQUESTPROCESS_EVENT_DONE, {
+			if(group.getAttachTo()==undefined) loc_eventSource.triggerEvent(node_CONSTANT.EVENT_REQUESTPROCESS_DONE, {
 				requestId : group.getId(),
 				result : requestResult
 			});

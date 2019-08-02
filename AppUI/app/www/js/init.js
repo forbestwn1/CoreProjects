@@ -78,13 +78,13 @@ var init = function(rootNode, env, configureName, dataInput, callBackFunction){
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var requestProcessor = nosliw.runtime.getRequestProcessor();
 			requestProcessor.registerEventListener(undefined, function(eventName, eventData){
-				if(eventName==node_CONSTANT.REQUESTPROCESS_EVENT_START){
+				if(eventName==node_CONSTANT.EVENT_REQUESTPROCESS_START){
 					loc_framework7App.preloader.show();
 				}
-				else if(eventName==node_CONSTANT.REQUESTPROCESS_EVENT_DONE){
+				else if(eventName==node_CONSTANT.EVENT_REQUESTPROCESS_DONE){
 					loc_framework7App.preloader.hide();
 					
-					if(eventData.result.type=="error" || eventData.result.type=="exception"){
+					if(eventData.result.type==node_CONSTANT.REQUEST_FINISHTYPE_ERROR || eventData.result.type==node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION){
 						var toastBottom = loc_framework7App.toast.create({
 						  text: eventData.result.data.message,
 						  closeTimeout: 2000,

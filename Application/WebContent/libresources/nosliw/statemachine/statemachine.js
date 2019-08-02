@@ -74,10 +74,10 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(request){
 				var listener = loc_out.registerEventListener(undefined, function(eventName, eventData, request){
 					if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
-						out.executeSuccessHandler();
+						out.successFinish();
 					}
 					else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
-						out.executeErrorHandler();
+						out.errorFinish();
 					}
 					loc_out.unregisterEventListener(listener);
 				});

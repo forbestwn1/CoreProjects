@@ -167,7 +167,7 @@ function(gate){
 
 				loc_view = loc_app.views.create(loc_moduleView.get(0), viewConfigure);
 
-				out.executeSuccessHandler();
+				out.successFinish();
 			}));
 			return out;
 		},
