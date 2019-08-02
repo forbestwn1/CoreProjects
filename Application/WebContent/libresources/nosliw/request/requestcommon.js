@@ -15,6 +15,12 @@ var packageObj = library.getChildPackage("request");
 	var node_requestProcessErrorUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_RequestFinishInfo = function(finishType, data, thisContext){
+	this.finishType = finishType;
+	this.data = data;
+	this.thisContext = thisContext;
+};
+	
 /**
  * requester_parent: requester or parent request
  */
@@ -73,6 +79,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			//event object
 			pri_eventObject : node_createEventObject(),
 			pri_eventObjectIndividual : node_createEventObject(),
+			//function for resume request process
+			pri_resumeProcessor : undefined,
 		};
 		
 		//construct handlers
@@ -158,6 +166,32 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		return out;
 	};
 	
+	var loc_requestFinish = function(requestFinishInfo){
+		try{
+			loc_finishRequest(requestFinishInfo.finishType, requestFinishInfo.data);
+			return loc_callHandler(requestFinishInfo.finishType, requestFinishInfo.thisContext, requestFinishInfo.data);
+		}
+		catch(err){
+			nosliw.runtime.getErrorManager().logError(err);
+			loc_requestFinish(new node_RequestFinishInfo(node_CONSTANT.REQUEST_FINISHTYPE_ERROR, node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err), requestFinishInfo.thisContext));
+//			loc_out.errorFinish(node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err));
+		}
+	}; 
+	
+	var loc_tryRequestFinish = function(finishType, data, thisContext){
+		var requestFinishInfo = new node_RequestFinishInfo(finishType, data, thisContext);
+		if(loc_out.getStatus()==node_CONSTANT.REQUEST_STATUS_PROCESSING)	loc_requestFinish(requestFinishInfo);
+		else if(loc_out.getStatus()==node_CONSTANT.REQUEST_STATUS_PAUSED){
+			loc_setResumeProcessor(function(){
+				loc_requestFinish(requestFinishInfo);
+			});
+		}
+	};
+	
+	var loc_setResumeProcessor = function(processor){	loc_out.pri_metaData.pri_resumeProcessor = processor;	};
+	
+	var loc_getResumeProcessor = function(){   return loc_out.pri_metaData.pri_resumeProcessor;  };
+	
 	var loc_out = {
 			
 			getId : function(){return this.pri_id;},
@@ -240,32 +274,26 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 			
 			successFinish : function(data, thisContext){
-				try{
-					loc_finishRequest(node_CONSTANT.REQUEST_FINISHTYPE_SUCCESS, data);
-					return loc_callHandler(node_CONSTANT.REQUEST_HANDLERNAME_SUCCESS, thisContext, data);
-				}
-				catch(err){
-					nosliw.runtime.getErrorManager().logError(err);
-					loc_out.errorFinish(node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err));
-				}
+				loc_tryRequestFinish(node_CONSTANT.REQUEST_FINISHTYPE_SUCCESS, data, thisContext);
 			},
 			
 			errorFinish : function(serviceData, thisContext){
-				loc_finishRequest(node_CONSTANT.REQUEST_FINISHTYPE_ERROR, serviceData);
-				return loc_callHandler(node_CONSTANT.REQUEST_HANDLERNAME_ERROR, thisContext, serviceData);
+				loc_tryRequestFinish(node_CONSTANT.REQUEST_FINISHTYPE_ERROR, serviceData, thisContext);
 			},
 
 			exceptionFinish : function(serviceData, thisContext){
-				loc_finishRequest(node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION, serviceData);
-				return loc_callHandler(node_CONSTANT.REQUEST_HANDLERNAME_EXCEPTION, thisContext, serviceData);
+				loc_tryRequestFinish(node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION, serviceData, thisContext);
 			},
 			
-			pause : function(){
+			pause : function(resumeProcessor){
 				loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_PAUSED);
+				if(resumeProcessor!=undefined)   loc_setResumeProcessor(resumeProcessor);
 			},
 			
 			resume : function(){
-				
+				loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_PROCESSING);
+				var processor = loc_getResumeProcessor();
+				if(processor!=undefined)  processor();
 			},
 			
 			/*
