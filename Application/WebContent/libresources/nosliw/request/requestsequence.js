@@ -125,7 +125,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 					requestInfo.unregisterIndividualEventListener(listener);
 				}, requestInfo);
 			}
-			else if(processMode=="promiseBased"){
+			else if(processMode!="promiseBased1"){
 				requestInfo.addPostProcessor({
 					success : function(requestInfo, out){
 						var promise = new Promise(function(resolve, reject) {
