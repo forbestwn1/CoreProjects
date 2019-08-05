@@ -13,18 +13,21 @@ var packageObj = library;
 	var node_createServiceRequestInfoCommon;
 	var node_ServiceRequestExecuteInfo;
 	var node_buildServiceProvider;
+	var node_RequestResult;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createStateMachineTask = function(nexts, stateMachine){
 
 	var loc_stateMachine = stateMachine;
-	var loc_from = loc_stateMachine.getCurrentState();
-	var loc_nexts = nexts;
+
+	var loc_nexts = [];
+	loc_nexts.push(loc_stateMachine.getCurrentState());
+	_.each(nexts, function(next, i){loc_nexts.push(next);});
 	
 	var loc_eventObj = node_createEventObject();
 	
-	var loc_currentNext = -1;
+	var loc_currentNext = 0;
 
 	var loc_processNext = function(request){
 		loc_currentNext++;
@@ -44,10 +47,10 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 					loc_rollBack(request);
 					loc_stateMachine.prv_finishTask();
 					//finish
-					loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, undefined, request);
+					loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, eventData, request);
 				}
 			});
-			loc_stateMachine.prv_startTransit(nexts[loc_currentNext], request);
+			loc_stateMachine.prv_startTransit(loc_nexts[loc_currentNext], request);
 		}
 	};
 	
@@ -73,12 +76,13 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 			var out = node_createServiceRequestInfoCommon(undefined, handlers, request);
 			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(request){
 				var listener = loc_out.registerEventListener(undefined, function(eventName, eventData, eventRequest){
-					console.log(out.getInnerId());
 					if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
 						out.successFinish();
 					}
 					else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
-						out.errorFinish();
+						if(eventData.type==node_CONSTANT.REQUEST_FINISHTYPE_ERROR) 	out.errorFinish(eventData.data);
+						else if(eventData.type==node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION) 	out.exceptionFinish(eventData.data);
+						else out.errorFinish();
 					}
 					loc_out.unregisterEventListener(listener);
 				});
@@ -173,8 +177,8 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		else if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
 			var transitRequest = node_createServiceRequestInfoSequence(undefined, {
 				success : function(request){			},
-				error : function(request){		loc_failTransit(request);		},
-				exception : function(request){	loc_failTransit(request);			}
+				error : function(request, serviceData){		loc_failTransit(new node_RequestResult(node_CONSTANT.REQUEST_FINISHTYPE_ERROR, serviceData), request);		},
+				exception : function(request, serviceData){	loc_failTransit(new node_RequestResult(node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION, serviceData), request);		}
 			});
 
 			//if return request, then build wrapper request
@@ -206,12 +210,12 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, inTransit, request);
 	};
 
-	var loc_failTransit = function(request){
+	var loc_failTransit = function(failResult, request){
 		var inTransit = loc_inTransit;
-		loc_rollBack(inTransit, request);
+		loc_rollBack(loc_inTransit, request);
 		loc_inTransit = undefined;
 		loc_finishTransit = true;
-		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, inTransit, request);
+		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, failResult, request);
 	};
 	
 	var loc_rollBack = function(transitInfo, request){
@@ -226,7 +230,7 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		prv_rollBack : function(next, request){  loc_rollBack(new node_TransitInfo(next, loc_currentState), request);    },
 
 		prv_transitSuccess : function(request){   loc_successTransit(request);	},
-		prv_transitFail : function(request){   loc_failTransit(request);	},
+		prv_transitFail : function(failResult, request){   loc_failTransit(failResult, request);	},
 
 		prv_registerEventListener : function(listener, handler, thisContext){	return loc_eventObj.registerListener(undefined, listener, handler, thisContext); },
 		prv_unregisterEventListener : function(listener){	return loc_eventObj.unregister(listener); },
@@ -276,6 +280,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){	node_createServiceRequestInfoCommon = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){	node_ServiceRequestExecuteInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
+nosliw.registerSetNodeDataEvent("request.entity.RequestResult", function(){node_RequestResult = this.getData();});
 
 nosliw.registerSetNodeDataEvent("statemachine.TransitInfo", function(){node_TransitInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("statemachine.CommandInfo", function(){node_CommandInfo = this.getData();});

@@ -13,6 +13,7 @@ var packageObj = library.getChildPackage("request");
 	var node_createEventObject;
 	var node_ServiceData;
 	var node_requestProcessErrorUtility;
+	var node_RequestResult;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_RequestFinishInfo = function(finishType, data, thisContext){
@@ -149,10 +150,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	 */
 	var loc_finishRequest = function(type, data){
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_DONE);
-		loc_out.setResult({
-			type : type,
-			data : data
-		});
+		loc_out.setResult(new node_RequestResult(type, data));
 	};
 	
 	var loc_destroy = function(){
@@ -416,6 +414,7 @@ nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = 
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("error.entity.ServiceData", function(){node_ServiceData = this.getData();});
 nosliw.registerSetNodeDataEvent("request.errorUtility", function(){node_requestProcessErrorUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.entity.RequestResult", function(){node_RequestResult = this.getData();});
 
 
 //Register Node by Name

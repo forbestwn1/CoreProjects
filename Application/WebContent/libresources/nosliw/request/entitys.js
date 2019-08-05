@@ -33,12 +33,17 @@ node_ServiceRequestExecuteInfo.prototype = {
 	},
 };
 
+var node_RequestResult = function(resultType, resultData){
+	this.type = resultType;
+	this.data = resultData;
+}
 
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
 
 //Register Node by Name
+packageObj.createChildNode("RequestResult", node_RequestResult); 
 packageObj.createChildNode("Requester", node_Requester); 
 packageObj.createChildNode("ServiceRequestExecuteInfo", node_ServiceRequestExecuteInfo); 
 
