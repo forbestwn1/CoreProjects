@@ -72,7 +72,8 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 			var request = loc_out.getRequestInfo(request);
 			var out = node_createServiceRequestInfoCommon(undefined, handlers, request);
 			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(request){
-				var listener = loc_out.registerEventListener(undefined, function(eventName, eventData, request){
+				var listener = loc_out.registerEventListener(undefined, function(eventName, eventData, eventRequest){
+					console.log(out.getInnerId());
 					if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
 						out.successFinish();
 					}
@@ -81,6 +82,7 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 					}
 					loc_out.unregisterEventListener(listener);
 				});
+
 				loc_processNext(request);
 			}));
 			return out;
@@ -100,6 +102,7 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 
 var node_createStateMachine = function(stateDef, initState, thisContext){
 
+	//all the state definition
 	var loc_stateDef = stateDef;
 	
 	var loc_thisContext = thisContext;
@@ -108,6 +111,7 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 
 	var loc_currentTask;
 	var loc_currentState = initState;
+	//if in stranist, it contains from status and to status
 	var loc_inTransit = undefined;
 	var loc_finishTransit = true;
 	
@@ -131,19 +135,23 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 			return;
 		}
 		
+		//find next state info
 		var nextStateInfo = loc_stateDef.getStateInfo(loc_out.getCurrentState()).nextStates[next];
 		if(nextStateInfo==undefined){
+			//invalid tranist
 			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION, next+"|Notvalidtransit", request);
 			loc_finishTransit = true;
 			return;
 		}
 		
+		//do tranist
 		loc_inTransit = new node_TransitInfo(loc_currentState, next); 
 		var callBack = nextStateInfo.callBack;
-		var initResult = true;      
-		if(callBack!=undefined)	initResult = callBack.call(loc_thisContext, request);
+		var transitResult = true;      
+		if(callBack!=undefined)	transitResult = callBack.call(loc_thisContext, request);
 		
-		loc_processStatuesResult(initResult, request);
+		//process trainsit result
+		loc_processStatuesResult(transitResult, request);
 	};
 	
 	
@@ -165,10 +173,7 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		else if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
 			var transitRequest = node_createServiceRequestInfoSequence(undefined, {
 				success : function(request){			},
-				error : function(request){
-					loc_thisContext;
-					loc_failTransit(request);			
-				},
+				error : function(request){		loc_failTransit(request);		},
 				exception : function(request){	loc_failTransit(request);			}
 			});
 
@@ -197,16 +202,16 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		var inTransit = loc_inTransit;
 		loc_inTransit = undefined;
 		loc_currentState = inTransit.to;
-		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, inTransit, request);
 		loc_finishTransit = true;
+		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, inTransit, request);
 	};
 
 	var loc_failTransit = function(request){
 		var inTransit = loc_inTransit;
 		loc_rollBack(inTransit, request);
 		loc_inTransit = undefined;
-		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, inTransit, request);
 		loc_finishTransit = true;
+		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, inTransit, request);
 	};
 	
 	var loc_rollBack = function(transitInfo, request){

@@ -276,11 +276,6 @@ var node_createRequestServiceProcessor = function(){
 			});
 		}
 		else{
-			if(group.getId()=="1034"){
-				var kkkkk = 5555;
-				kkkkk++;
-			}
-			
 			//dependent group
 			attachedToGroup.attachedSolved(group, requestResult);
 		}

@@ -189,10 +189,10 @@ var node_CONSTANT=
 	  "TYPEDOBJECT_TYPE_COMPONENTCONFIGURE":			 		22,
 	  
 	  //status of request
-	  "REQUEST_STATUS_INIT" :			0, 
-	  "REQUEST_STATUS_PROCESSING" :		1, 
-	  "REQUEST_STATUS_PAUSED" :			2, 
-	  "REQUEST_STATUS_DONE" :			3, 
+	  "REQUEST_STATUS_INIT" :			"init", 
+	  "REQUEST_STATUS_PROCESSING" :		"processing", 
+	  "REQUEST_STATUS_PAUSED" :			"paused", 
+	  "REQUEST_STATUS_DONE" :			"done", 
 	
 	  "REQUEST_FINISHTYPE_SUCCESS" : "success",
 	  "REQUEST_FINISHTYPE_ERROR" : "error",

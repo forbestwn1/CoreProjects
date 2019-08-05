@@ -125,7 +125,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 					requestInfo.unregisterIndividualEventListener(listener);
 				}, requestInfo);
 			}
-			else if(processMode!="promiseBased1"){
+			else if(processMode!=="1promiseBased"){
 				requestInfo.addPostProcessor({
 					success : function(requestInfo, out){
 						var promise = new Promise(function(resolve, reject) {
@@ -137,7 +137,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 
 						promise.then(function(result) {
 							loc_out.pri_cursor++;
-							loc_processNextRequestInSequence(requestInfo, out);
+							loc_processNextRequestInSequence(result.request, result.data);
 						}, function(err) {});
 					},
 					error : function(requestInfo, serviceData){

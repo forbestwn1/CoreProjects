@@ -362,7 +362,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			isRootRequest : function(){  return this.getParentRequest()==null;   },
 			
 			getStatus : function(){  return this.pri_metaData.pri_status;},
-			setStatus : function(status){  this.pri_metaData.pri_status = status;},
+			setStatus : function(status){  		this.pri_metaData.pri_status = status;	},
 			
 			getResult : function(){  return this.pri_metaData.pri_result; },
 			setResult : function(result){  this.pri_metaData.pri_result = result; },
