@@ -16,7 +16,7 @@ var node_errorUtility = function(){
 		 * error service data for request process
 		 */
 		createRequestProcessErrorServiceData : function(errObj){
-			console.log(errObj);
+			nosliw.logging.error(errObj.stack);
 			return new node_ServiceData(
 					node_COMMONCONSTANT.ERRORCODE_ERROR_UI_REQUESTPROCESS, 
 					'fatal error!!',
@@ -27,7 +27,7 @@ var node_errorUtility = function(){
 		 * error service data for request process
 		 */
 		createRequestHandleErrorServiceData : function(errObj){
-			console.log(errObj);
+			nosliw.logging.error(errObj.stack);
 			return new node_ServiceData(
 					node_COMMONCONSTANT.ERRORCODE_ERROR_UI_REQUESTHANDLE, 
 					'fatal error',

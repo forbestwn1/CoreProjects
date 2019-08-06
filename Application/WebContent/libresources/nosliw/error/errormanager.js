@@ -15,26 +15,30 @@ var node_createErrorManager = function(){
 	};
 	
 	var loc_addErrorToStorage = function(error){
-		var errorData = loc_getErrorFromStorage();
-		if(errorData==undefined) errorData = [];
-		
-		errorData.push({
-			time : new Date(),
-			error : error.stack,
-		});
-		localStorage.errorData = JSON.stringify(errorData);
-		return errorData;
+		if(typeof localStorage !== 'undefined'){
+			var errorData = loc_getErrorFromStorage();
+			if(errorData==undefined) errorData = [];
+			
+			errorData.push({
+				time : new Date(),
+				error : error.stack,
+			});
+			localStorage.errorData = JSON.stringify(errorData);
+			return errorData;
+		}
 	};
 	
 	var loc_clearErrorInStorage = function(){
-		localStorage.removeItem("errorData");
+		if(typeof localStorage !== 'undefined') localStorage.removeItem("errorData");
 	};
 	
 	var loc_getErrorFromStorage = function(){
-		var errorData;
-		var errorDataStr = localStorage.errorData;
-		if(errorDataStr!=undefined)  	errorData = JSON.parse(errorDataStr);
-		return errorData;
+		if(typeof localStorage !== 'undefined'){
+			var errorData;
+			var errorDataStr = localStorage.errorData;
+			if(errorDataStr!=undefined)  	errorData = JSON.parse(errorDataStr);
+			return errorData;
+		}
 	};
 	
 	var loc_logError = function(errorData){

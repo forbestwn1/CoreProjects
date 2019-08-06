@@ -25,7 +25,7 @@ var node_createLoggingService = function(){
 	}
 
 	var loc_rhinoErrorFun = function(){
-//		java.lang.System.err.println(loc_buildMessage(arguments));
+		java.lang.System.err.println(loc_buildMessage(arguments));
 	}
 	
 	var loc_getDefaultLogging = function(){

@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_createDataService;
 	var node_createRequestServiceProcessor;
 	var node_createSecurityService;
+	var node_createErrorManager;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -46,6 +47,8 @@ var node_createRuntime = function(name){
 	
 	var loc_securityService;
 	
+	var loc_errorManager;
+	
 	var loc_out = {
 		
 		start : function(){
@@ -68,7 +71,10 @@ var node_createRuntime = function(name){
 		
 		getRequestProcessor(){   return  loc_requestProcessor;  },
 		
-		getSecurityService(){  return  loc_securityService;  }
+		getSecurityService(){  return  loc_securityService;  },
+		
+		getErrorManager(){   return loc_errorManager;  },
+		
 	};
 	
 	var lifecycleCallback = {};
@@ -82,6 +88,8 @@ var node_createRuntime = function(name){
 		loc_dataService = node_createDataService();
 		loc_securityService = node_createSecurityService();
 		
+		loc_errorManager = node_createErrorManager();
+
 		loc_requestProcessor = node_createRequestServiceProcessor();
 		nosliw.createNode("request.requestServiceProcessor", loc_requestProcessor); 
 		
@@ -120,6 +128,7 @@ nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(
 nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node_createDataService = this.getData();});
 nosliw.registerSetNodeDataEvent("request.createRequestServiceProcessor", function(){ node_createRequestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("security.createSecurityService", function(){ node_createSecurityService = this.getData();});
+nosliw.registerSetNodeDataEvent("error.createErrorManager", function(){ node_createErrorManager = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

@@ -136,7 +136,9 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 				     Transport.send(message);  
 				  
 				     System.out.println("message sent successfully...");  
-			     } catch (MessagingException e) {e.printStackTrace();}  
+			     } catch (MessagingException e) {
+			    	 e.printStackTrace();
+			    }  
 			}
 		 }).start();
 	}  	
