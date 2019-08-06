@@ -9,7 +9,7 @@
 	<nosliw-loop data="lineup.lineUp" element="spot" index="index">  
 		<%=?(index)?+1%>.&nbsp;
 		<nosliw-loop data="spot.players" element="player" index="index">  
-			<span style="display:inline-block;width:100px;min-width:50px;"><%=?(player)?%>&nbsp;&nbsp;</span> 
+			<span style="display:inline-block;width:150px;min-width:50px;"><%=?(player)?%>&nbsp;&nbsp;</span> 
 		</nosliw-loop>
 		<br>  
 	</nosliw-loop>
