@@ -24,8 +24,11 @@ var node_getComponentInterface = function(baseObject){
 	return node_getInterface(baseObject, INTERFACENAME);
 };
 
+//component's generic interface
+// command, inputIO, lifecycle, 
 var loc_createComponentInterfaceObj = function(thisContext, baseObj, interfaceObj){
 
+	//for method's this
 	var loc_thisContext = thisContext;
 
 	var loc_interfaceObj = interfaceObj;
@@ -48,6 +51,7 @@ var loc_createComponentInterfaceObj = function(thisContext, baseObj, interfaceOb
 	
 	var loc_out = {
 
+		//execute command on component
 		getExecuteCommandRequest : function(command, parms, handlers, request){
 			var lifycyclePrefix = 'lifecycle.';
 			if(command.startsWith(lifycyclePrefix)){
@@ -72,19 +76,14 @@ var loc_createComponentInterfaceObj = function(thisContext, baseObj, interfaceOb
 		},
 		unregisterDataChangeEventListener : function(listener){  loc_idDataSet.unregisterEventListener(listener);  },
 		
-		getContextDataSetRequest : function(handlers, request){
-			return loc_idDataSet.getGetDataSetValueRequest(handlers, request);
-		},
-		
+		//component's input io
+		getContextDataSetRequest : function(handlers, request){		return loc_idDataSet.getGetDataSetValueRequest(handlers, request);		},
 		getIOContext : function(){  return loc_idDataSet;   },
 		
 		getComponent : function()  {  return loc_interfaceObj.prv_getComponent(); },
 		
 		registerEventListener : function(listener, handler){	return loc_interfaceObj.prv_registerEventListener(listener, handler, loc_thisContext);	},
 		unregisterEventListener : function(listener){  loc_interfaceObj.prv_unregisterEventListener(listener);  },
-
-		registerValueChangeEventListener : function(listener, handler){	return loc_interfaceObj.prv_registerValueChangeEventListener(listener, handler, loc_thisContext);	},
-		unregisterValueChangeEventListener : function(listener){  loc_interfaceObj.prv_unregisterValueChangeEventListener(listener);  },
 
 		registerValueChangeEventListener : function(listener, handler){	return loc_interfaceObj.prv_registerValueChangeEventListener(listener, handler, loc_thisContext);	},
 		unregisterValueChangeEventListener : function(listener){  loc_interfaceObj.prv_unregisterValueChangeEventListener(listener);  },

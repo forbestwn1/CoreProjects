@@ -6,28 +6,10 @@ var packageObj = library;
 	var node_CONSTANT;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-
-var node_StateTransitPath = function(from, to, path){
-	this.from = from;
-	this.to = to;
-	this.path = path;
-};
-	
-var node_CommandInfo = function(name, from, nexts){
-	this.name = name;
-	this.from = from;
-	this.nexts = nexts;
-};
-	
-var node_NextStateInfo = function(name, callBack, reverseCallBack){
-	this.name = name;
-	this.callBack = callBack;
-	this.reverseCallBack = reverseCallBack;
-};	
-	
+//state definition
 var node_StateInfo = function(name, nextStates){
-	this.name = name;
-	this.nextStates = nextStates;
+	this.name = name;   //name of state
+	this.nextStates = nextStates;  //all possible next states info
 	if(this.nextStates==undefined)  this.nextStates = {};
 };
 
@@ -37,21 +19,38 @@ node_StateInfo.prototype = {
 	}
 };
 
-var node_TransitInfo = function(from, to){
-	this.from = from;
-	this.to = to;
+//next state
+var node_NextStateInfo = function(name, callBack, reverseCallBack){
+	this.name = name;    						//name: name of next state
+	this.callBack = callBack;    				//callBack: callBack during transit
+	this.reverseCallBack = reverseCallBack;		//reverseCallBack : callBack during reverse trainsit
+};	
+		
+//
+var node_CommandInfo = function(name, from, nexts){
+	this.name = name;		//name of command
+	this.from = from;		//start state
+	this.nexts = nexts;		//state transit path
 };
 
+//transit from --- to
+var node_TransitInfo = function(from, to){
+	this.from = from;   //from state
+	this.to = to;  		//to state
+};
+
+//state machine state definition
 var node_createStateMachineDef = function(){
 
+	//all state by name
 	var loc_states = {};
 	
+	//all command info by command name -- from -- commandInfo
 	var loc_commands = {};
 
-	var loc_nextCommandsByState;
+	//from -- to -- nexts
+	var loc_nextsByTranistInfo;
 
-	var loc_transitPath = {};
-	
 	var loc_addState = function(stateInfo){   loc_states[stateInfo.name] = stateInfo;    };
 	
 	var loc_getStateInfo = function(state){
@@ -74,40 +73,44 @@ var node_createStateMachineDef = function(){
 		_.each(loc_getStateInfo(state).nextStates, function(state, name){   out.push(name);   });
 		return out;
 	};
-	
 
-	var loc_buildNextCommandsByState = function(){
-		loc_nextCommandsByState = {};
-		
-		_.each(loc_getAllStates(), function(state, i){
-			var commands = [];
-			_.each(loc_commands, function(byName, command){
-				_.each(byName, function(commandInfo, from){
-					if(from==state){
-						commands.push(command);
-					}
-				});
+	var loc_getNextCandidateCommands = function(state){
+		var out = [];
+		_.each(loc_commands, function(commandInfoByFrom, command){
+			_.each(commandInfoByFrom, function(commandInfo, from){
+				if(from==state){
+					out.push(command);
+				}
 			});
-			loc_nextCommandsByState[state] = commands;
+		});
+		return out;
+	};
+
+	var loc_buildNextsByTransitInfo = function(){
+		//by command first
+		loc_nextsByTranistInfo = {};
+		_.each(loc_commands, function(commandInfoByFrom, command){
+			_.each(commandInfoByFrom, function(commandInfo, from){
+				var to = commandInfo.nexts[commandInfo.nexts.length-1];
+				loc_addNextsByTransit(from, to, commandInfo.nexts);
+			});
 		});
 		
-		
-//		_.each(loc_getAllStates(), function(state, i){
-//			var commands = [];
-//			var candidates = loc_getNextCandidateStates(state);
-//			_.each(loc_commands, function(commandInfo, command){
-//				if(candidates.includes(commandInfo.nexts[0])){
-//					if(commandInfo.froms==undefined || commandInfo.froms.includes(state)){
-//						commands.push(command);
-//					}
-//				}
-//			});
-//			loc_nextCommandsByState[state] = commands;
-//		});
+		//by state
+		_.each(loc_states, function(stateInfo, state){
+			_.each(stateInfo.nextStates, function(nextInfo, next){
+				loc_addNextsByTransit(state, next, [next]);
+			});
+		});
 	};
-	
-	var loc_discoverTransitPath = function(from, to){
-		
+
+	var loc_addNextsByTransit = function(from, to, nexts){
+		var outByTo = loc_nextsByTranistInfo[from];
+		if(outByTo==undefined){
+			outByTo = {};
+			loc_nextsByTranistInfo[from] = outByTo;
+		}
+		outByTo[to] = nexts;
 	};
 	
 	var loc_out = {
@@ -120,6 +123,15 @@ var node_createStateMachineDef = function(){
 			stateInfoFrom.addNextState(transitInfo.to, callBack, reverseCallBack);
 		},
 
+		getCandidateTransits : function(state){	return loc_getNextCandidateStates(state);	}, 
+		
+		getAllStates : function(){     
+			var out = [];
+			_.each(loc_states, function(stateInfo, stateName){ out.push(stateName);  });
+			return out;
+		},
+		
+		
 		addCommand : function(commandInfo){
 			var byName = loc_commands[commandInfo.name];
 			if(byName==undefined){
@@ -129,55 +141,21 @@ var node_createStateMachineDef = function(){
 			byName[commandInfo.from] = commandInfo;
 		},
 		
-		getCandidateCommands : function(state){
-			if(loc_nextCommandsByState==undefined){
-				loc_buildNextCommandsByState();
-			}
-			return loc_nextCommandsByState[state];
-		},
+		getCandidateCommands : function(state){		return loc_getNextCandidateCommands(state);	},
 		
-		getCandidateTransits : function(state){	return loc_getNextCandidateStates(state);	}, 
-		
-		getAllStates : function(){     
-			var out = [];
-			_.each(loc_states, function(stateInfo, stateName){ out.push(stateName);  });
-			return out;
-		},
 		
 		getAllCommands : function(){   
 			var out = [];
 			_.each(loc_commands, function(commandInfo, commandName){ out.push(commandName);  });
 			return out;
 		},
-		getCommandInfo : function(command, from){		
-			return loc_commands[command][from];	
+		
+		getCommandInfo : function(command, from){	return loc_commands[command][from];	},
+		
+		getNextsByTransitInfo : function(transitInfo){
+			if(loc_nextsByTranistInfo==undefined)  loc_buildNextsByTransitInfo();
+			return loc_nextsByTranistInfo[transitInfo.from][transitInfo.to];
 		},
-		
-		addTransitPath : function(stateTransitPath){
-			var fromTransit = loc_transitPath[stateTransitPath.from];
-			if(fromTransit==undefined){
-				fromTransit = {};
-				loc_transitPath[stateTransitPath.from] = fromTransit;
-			}
-			fromTransit[stateTransitPath.to] = stateTransitPath;
-		},
-		
-		getTransitPath : function(from, to){
-			var fromTransit = loc_transitPath[from];
-			if(fromTransit==undefined){
-				fromTransit = {};
-				loc_transitPath[from] = fromTransit;
-			}
-			var out = fromTransit[to];
-			if(out==undefined){
-				var out = loc_discoverTransitPath(from, to);
-				if(out!=undefined){
-					fromTransit[to] = out;
-				}
-			}
-			return out;
-		}
-		
 	};
 	
 	return loc_out;
@@ -188,7 +166,6 @@ var node_createStateMachineDef = function(){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("StateTransitPath", node_StateTransitPath); 
 packageObj.createChildNode("TransitInfo", node_TransitInfo); 
 packageObj.createChildNode("CommandInfo", node_CommandInfo); 
 packageObj.createChildNode("NextStateInfo", node_NextStateInfo); 

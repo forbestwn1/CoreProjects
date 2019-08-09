@@ -35,7 +35,9 @@ var node_getComponentLifecycleInterface = function(baseObject){
 	return node_getInterface(baseObject, INTERFACENAME);
 };
 
+//lifecycle interface
 var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
+	//state machine state definition data
 	var loc_stateMachineDef;
 	
 	//this context for lifycycle callback method
@@ -73,10 +75,8 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 			new node_CommandInfo("restart", node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]),
 		];
 
-		var loc_statePaths = [
-			new node_StateTransitPath(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD, [node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT])
-		];
-		
+		//build transit info
+		//state transit callback method name follow naming conversion: from_to  or  _from_to for reverse 
 		_.each(loc_validTransits, function(transit, i){		
 			var from = transit.from;
 			var to = transit.to;
@@ -92,9 +92,10 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 					else  return true;
 				});
 		});
+		//build command
 		_.each(loc_commands, function(commandInfo, i){      loc_stateMachineDef.addCommand(commandInfo);      });
-		_.each(loc_statePaths, function(statePath, index){  loc_stateMachineDef.addTransitPath(statePath);  });
 		
+		//build statemachine 
 		loc_stateMachine = node_createStateMachine(loc_stateMachineDef, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_thisContext);
 	};
 
@@ -117,7 +118,7 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 		getComponentStatus : function(){		return loc_stateMachine.getCurrentState();		},
 		isActive : function(){  return this.getComponentStatus()==node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE;    },
 		
-		registerEventListener : function(listener, handler){	return loc_stateMachine.prv_registerEventListener(listener, handler, thisContext);	},
+		registerEventListener : function(listener, handler, thisContext){	return loc_stateMachine.prv_registerEventListener(listener, handler, thisContext);	},
 		unregisterEventListener : function(listener){  loc_stateMachine.prv_unregisterEventListener(listener);  },
 
 		bindBaseObject : function(baseObject){		loc_baseObject = baseObject;	}

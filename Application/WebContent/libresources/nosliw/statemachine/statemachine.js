@@ -239,25 +239,23 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 
 		getCurrentState : function(){	return loc_currentState;	},
 		getAllStates : function(){  return loc_stateDef.getAllStates();   },
+		getNextStateCandidates : function(){  return loc_stateDef.getCandidateTransits(loc_out.getCurrentState());   },
 		
 		getAllCommands : function(){  return loc_stateDef.getAllCommands();  },
-		getNextStateCandidates : function(){  return loc_stateDef.getCandidateTransits(loc_out.getCurrentState());   },
 		getCommandCandidates : function(){   return loc_stateDef.getCandidateCommands(loc_out.getCurrentState());   },
 		
 		newTask : function(nexts){
 			if(loc_currentTask!=undefined)  return undefined;
 			if(typeof nexts === 'string' || nexts instanceof String){
-				//command
+				//if nexts parm is command string
 				var commandInfo = loc_stateDef.getCommandInfo(nexts, loc_currentState);
-				if(commandInfo!=undefined){
-					//command
-					nexts = commandInfo.nexts;
+				if(commandInfo==undefined){
+					//nexts parm is target state
+					nexts = loc_stateDef.getNextsByTransitInfo(new node_TransitInfo(loc_currentState, nexts));
 				}
 				else{
-					//target state
-					var transitPath = loc_stateDef.getTransitPath(loc_currentState, nexts);
-					nexts = transitPath.path.slice();
-					nexts = nexts.push(transitPath.to);
+					//command
+					nexts = commandInfo.nexts;
 				}
 			}
 			loc_currentTask = node_createStateMachineTask(nexts, loc_out);

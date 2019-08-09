@@ -9,7 +9,11 @@ var packageObj = library;
 	var node_getObjectType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-
+//configure for component
+//every configure has two parts: global and parts
+//global is visible to every part
+//parts is visible to particular part
+//for particular part, the configure is merge between global and part, part overwrite global
 var node_createConfigure = function(value){
 	
 	if(value!=undefined){
@@ -50,14 +54,6 @@ var node_commandResult = function(requestResult, commandInfo){
 	this.commandInfo = commandInfo;
 };
 
-var node_commandRequestInfo = function(name, parms, handlers, request){
-	this.name = name;
-	this.parms = parms;
-	this.handlers = handlers;
-	this.request = request;
-};
-
-
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -69,6 +65,5 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 //Register Node by Name
 packageObj.createChildNode("createConfigure", node_createConfigure); 
 packageObj.createChildNode("commandResult", node_commandResult); 
-packageObj.createChildNode("commandRequestInfo", node_commandRequestInfo); 
 
 })(packageObj);

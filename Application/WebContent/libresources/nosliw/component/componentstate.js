@@ -8,11 +8,15 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+//state backup service is used by component to save data when component paused and retrieve data when component resume
+//it is majorly for better user experience, user can continue from where he left
+//so, data lost is not a big issue, the worst case is user start from beginning
+//the data is stored in UI side
 var node_createStateBackupService = function(componentType, id, version, storeService){
 	
-	var loc_componentType = componentType;
+	var loc_componentType = componentType;  
 	var loc_id = id;
-	var loc_version = version;
+	var loc_version = version;   //component version
 	var loc_storeService = storeService;
 	
 	var loc_out = {
@@ -21,7 +25,7 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 			var storeData = loc_storeService.retrieveData(loc_componentType, loc_id);
 			if(storeData==undefined)   return;
 			loc_out.clearBackupData();  //clear backup data after retrieve
-			if(storeData.version!=loc_version)		return;
+			if(storeData.version!=loc_version)		return;   //when component version change, the data stored by previous component would not work
 			return storeData.data;
 		},
 		
@@ -39,35 +43,30 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 	};
 	return loc_out;
 };	
-	
+
+//component's state data
+//state data --- part --- name
 var node_createState = function(){
 	var loc_state = {};
 	
 	var loc_out = {
-		
 		getAllState : function(){   return loc_state;   },
 		setAllState : function(state){  loc_state = state; },
 		
-		getState : function(component){
-			var out = loc_state[component];
+		getState : function(part){
+			var out = loc_state[part];
 			if(out==undefined){
 				out = {};
-				loc_state[component] = out;
+				loc_state[part] = out;
 			}
 			return out;
 		},
 		
-		getStateValue : function(component, name){
-			return loc_out.getState(component)[name];
-		},
+		getStateValue : function(part, name){		return loc_out.getState(part)[name];	},
 		
-		setStateValue : function(component, name, value){
-			loc_out.getState(component)[name] = value;
-		},
+		setStateValue : function(part, name, value){	loc_out.getState(part)[name] = value;	},
 		
-		clear : function(){
-			loc_state = {};
-		}
+		clear : function(){		loc_state = {};		}
 	};
 	return loc_out;
 };
