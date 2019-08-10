@@ -22,6 +22,7 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_getObjectType;
 	var node_ioTaskUtility;
+	var node_getExecuteMappingDataAssociationRequest;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //dataAssociation that has inputIO, dataAssociation and outputIO
@@ -59,63 +60,8 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		}));
 		return out;
 	};
-	
-	var loc_processMatchersRequest = function(value, matchersByPath, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		if(value!=undefined && matchersByPath!=undefined){
-			var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
-				success : function(request, resultSet){
-					_.each(resultSet.getResults(), function(result, path){
-						node_objectOperationUtility.operateObject(value, path, node_CONSTANT.WRAPPER_OPERATION_SET, result);
-					});
-					return value;
-				}
-			});
-			_.each(matchersByPath, function(matchers, path){
-				var valueByPath = node_objectOperationUtility.getObjectAttributeByPath(value, path);
-				matchersByPathRequest.addRequest(path, node_createExpressionService.getMatchDataRequest(valueByPath, matchers));
-			});
-			out.addRequest(matchersByPathRequest);
-		}
-		else{
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){ return value;  })); 
-		}
-		return out;
-	};
-	
-	var loc_getExecuteMappingAssociationRequest = function(inputDataSet, association, targetName, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
 
-		//use convert function to calculate output
-		var output = loc_executeDataAssociationConvertFun(association, inputDataSet); 
-
-		//matchers
-		out.addRequest(loc_processMatchersRequest(output, association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_OUTPUTMATCHERS], {
-			success :function(request, value){
-				//to target
-				return node_ioTaskUtility.outputToDataSetIORequest(loc_outputIODataSet, value, targetName, association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_FLATOUTPUT]);
-			}
-		}));
-
-		return out;
-	};
-
-	var loc_getExecuteMappingDataAssociationRequest = function(inputDataSet, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteMappingDataAssociation", {}), handlers, request);
-		var executeAssociationsRequest = node_createServiceRequestInfoSet(undefined, {
-			success : function(request, resultSet){
-				return loc_outputIODataSet;
-			}
-		});
-		
-		_.each(loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_ASSOCIATION], function(association, targetName){
-			executeAssociationsRequest.addRequest(targetName, loc_getExecuteMappingAssociationRequest(inputDataSet, association, targetName));
-		});
-		out.addRequest(executeAssociationsRequest);
-
-		return out;
-	};
-
+	//execute data association of mirror type
 	var loc_getExecuteMirrorDataAssociationRequest = function(inputDataSet, handlers, request){
 		var service = new node_ServiceInfo("ExecuteMirrorDataAssociation", {});
 		var out = node_createServiceRequestInfoSet(undefined, {
@@ -131,11 +77,15 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 			var outputData = inputData;
 			if(inputFlat!=outputFlat){
 				if(inputFlat==true){
+					//input is flat and output is not flat
+					//put input into public categary
 					outputData = {
 						public : inputData
 					}
 				}
 				else{
+					//input is not flat, output is flat
+					//make output flat
 					outputData = {};
 					_.each(node_ioTaskUtility.getContextTypes(), function(categary, index){
 						var context = inputData[categary];
@@ -167,7 +117,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 				if(loc_dataAssociationDef==undefined)  return loc_getExecuteNoneDataAssociationRequest(intputDataSet);   //if no data association, then nothing happen
 				else{
 					var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
-					if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return loc_getExecuteMappingDataAssociationRequest(intputDataSet);
+					if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(intputDataSet, loc_dataAssociationDef, loc_outputIODataSet);
 					else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return loc_getExecuteMirrorDataAssociationRequest(intputDataSet);
 					else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return loc_getExecuteNoneDataAssociationRequest(intputDataSet);
 				}
@@ -246,6 +196,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("iotask.getExecuteMappingDataAssociationRequest", function(){node_getExecuteMappingDataAssociationRequest = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociation", node_createDataAssociation); 
