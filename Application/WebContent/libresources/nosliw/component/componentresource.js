@@ -14,10 +14,14 @@ var packageObj = library;
 	var node_resourceUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
-
+//generic utility method for loading component resource (component itself + decoration)
+//parm componentInfo two options: component id or component object
+//parm decorationInfo contains a list of decoration id or decoration obj
 var node_loadComponentResourceRequest = function(componentInfo, decorationInfo, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteComponentResource"), handlers, request);
 	
+	//build resource id for component
+	//
 	var resourceIds = [];
 	var componentResourceId;
 	var component;
@@ -31,6 +35,7 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationInfo, 
 		component = componentInfo;
 	}
 
+	//build decorationFactoryInfos and resource id for decoration
 	var decorationFactoryInfos = [];
 	if(decorationInfo!=undefined){
 		_.each(decorationInfo.decoration, function(decFacDef, i){
@@ -48,6 +53,8 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationInfo, 
 			decorationFactoryInfos.push(decFacInfo);
 
 			if(decFacInfo.coreFun==undefined){
+				//if no coreFun in decFacInfo, it means it need to be loaded resource
+				//coreFun is the resource data
 				decFacInfo.resourceId = {};
 				decFacInfo.resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = decFacInfo.id; 
 				decFacInfo.resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = decorationInfo.type; 
@@ -59,6 +66,7 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationInfo, 
 	//load ui module resource and env factory resource
 	out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceIds, {
 		success : function(requestInfo, resourceTree){
+			//build loaded decoration
 			var componentDecorationInfos = requestInfo.getData("decorationFactoryInfos");
 			_.each(componentDecorationInfos, function(decFacInfo, i){
 				if(decFacInfo.resourceId!=undefined){
@@ -66,9 +74,11 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationInfo, 
 				}
 			});
 			
+			//build loaded component
 			var component = requestInfo.getData("component");
 			if(componentResourceId!=undefined)  component = node_resourceUtility.getResourceFromTree(resourceTree, componentResourceId).resourceData;
 			
+			//loaded component and decoration data
 			return {
 				component :component,
 				decoration : componentDecorationInfos

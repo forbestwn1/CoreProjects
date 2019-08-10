@@ -12,6 +12,7 @@ var packageObj = library;
 //it is majorly for better user experience, user can continue from where he left
 //so, data lost is not a big issue, the worst case is user start from beginning
 //the data is stored in UI side
+//state data has version information that store with state data
 var node_createStateBackupService = function(componentType, id, version, storeService){
 	
 	var loc_componentType = componentType;  

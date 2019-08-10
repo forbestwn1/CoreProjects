@@ -14,12 +14,14 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+//component complex is composed of a component at the bottom and a list of decoration on top of it
+//decoration may change the behavior of component by event, command, appearance, exposed interface
 var node_createComponentComplex = function(configure, envInterface){
 
 	var loc_configure = node_createConfigure(configure);
 	
 	var loc_state = node_createState();
-	var loc_parts = [];
+	var loc_layers = [];
 	var loc_interface = _.extend({}, envInterface);
 
 	var loc_eventSource = node_createEventObject();
@@ -28,35 +30,38 @@ var node_createComponentComplex = function(configure, envInterface){
 	var loc_valueChangeEventSource = node_createEventObject();
 	var loc_valueChangeEventListener = node_createEventObject();
 
-	var loc_getCurrentFacad = function(){   return loc_parts[loc_parts.length-1];  };
+	var loc_getCurrentFacad = function(){   return loc_layers[loc_layers.length-1];  };
 	
-	var loc_getComponent = function(){  return  loc_parts[0]; };
+	var loc_getComponent = function(){  return  loc_layers[0]; };
 
+	//for particular lifecycle request, every layer got invoked 
 	var loc_getLifeCycleRequest = function(requestFunName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ComponentComplexLifycycle", {}), handlers, request);
 		//start module
-		_.each(loc_parts, function(part, i){
-			if(part[requestFunName]!=undefined){
-				out.addRequest(part[requestFunName](handlers, request));
+		_.each(loc_layers, function(layer, i){
+			if(layer[requestFunName]!=undefined){
+				out.addRequest(layer[requestFunName]());
 			}
 		});
 		return out;
 	};
 
+	//process view from top layer to bottom layer
+	//any layer can modify view and return new view and pass the new view to next layer
 	var loc_updateView = function(view, request){
-		for(var i=loc_parts.length-1; i>0; i--){
-			var updated = loc_parts[i].updateView(view, request);
+		for(var i=loc_layers.length-1; i>0; i--){
+			var updated = loc_layers[i].updateView(view, request);
 			if(updated!=undefined)  view = updated;  
 			else break;
 		}
 	};
 	
-	var loc_unregisterPartListener = function(){	
+	var loc_unregisterFacadeListener = function(){	
 		loc_getCurrentFacad().unregisterEventListener(loc_eventListener);	
 		loc_getCurrentFacad().unregisterValueChangeEventListener(loc_valueChangeEventListener);	
 	};
 
-	var loc_registerPartListener = function(){
+	var loc_registerFacadeListener = function(){
 		loc_getCurrentFacad().registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
 			loc_eventSource.triggerEvent(event, eventData, requestInfo);
 		});
@@ -68,9 +73,9 @@ var node_createComponentComplex = function(configure, envInterface){
 
 	var loc_out = {
 		
-		addComponent : function(component){
-			loc_parts.push(component);
-			loc_registerPartListener();
+		setComponent : function(component){
+			loc_layers.push(component);
+			loc_registerFacadeListener();
 		},
 		
 		addDecorations : function(componentDecorationInfos){
@@ -79,12 +84,12 @@ var node_createComponentComplex = function(configure, envInterface){
 
 		addDecoration : function(componentDecorationInfo){
 			var current = loc_getCurrentFacad();
-			loc_unregisterPartListener();
+			loc_unregisterFacadeListener();
 			var decName = componentDecorationInfo.name;
 			var decoration = node_createComponentDecoration(decName, current, componentDecorationInfo.coreFun, loc_interface, loc_configure.getConfigureData(decName), loc_state);
-			loc_parts.push(decoration);
+			loc_layers.push(decoration);
 			if(decoration.getInterface!=undefined)	_.extend(loc_interface, decoration.getInterface());
-			loc_registerPartListener();
+			loc_registerFacadeListener();
 		},
 		
 		getInterface : function(){  return loc_interface;   },

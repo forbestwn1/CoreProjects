@@ -40,7 +40,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	var loc_stateBackupService = node_createStateBackupService("module", uiModule.getId(), uiModule.getVersion(), loc_localStore);
 
 	var loc_init = function(uiModule, configure, componentDecorationInfos, rootView, request){
-		loc_componentComplex.addComponent(uiModule);
+		loc_componentComplex.setComponent(uiModule);
 		loc_componentComplex.addDecorations(componentDecorationInfos);
 	};
 

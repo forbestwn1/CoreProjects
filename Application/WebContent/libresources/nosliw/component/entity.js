@@ -28,16 +28,16 @@ var node_createConfigure = function(value){
 	
 	var loc_out = {
 		
-		getConfigureData : function(component){
+		getConfigureData : function(part){
 			var out = {};
 
-			if(component!=undefined)	_.extend(out, loc_configure.global, loc_configure.components==undefined?undefined : loc_configure.components[component]);
+			if(part!=undefined)	_.extend(out, loc_configure.global, loc_configure.parts==undefined?undefined : loc_configure.parts[part]);
 			else  _.extend(out, loc_configure.global);
 
 			var temp = {};
 			_.extend(temp, loc_configure);
 			delete temp.global;
-			delete temp.components;
+			delete temp.parts;
 			_.extend(out, temp);
 			
 			return out;

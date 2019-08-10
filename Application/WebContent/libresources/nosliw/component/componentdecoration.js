@@ -14,7 +14,7 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createComponentDecoration = function(id, child, coreGenerator, processEnv, configureData, state){
+var node_createComponentDecoration = function(id, baseLayer, coreGenerator, processEnv, configureData, state){
 	
 	var loc_id = id;
 	var loc_configureData = configureData;
@@ -27,8 +27,9 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 	var loc_valueChangeEventSource = node_createEventObject();
 	var loc_valueChangeEventListener = node_createEventObject();
 
-	var loc_child = child;
-	loc_child.registerEventListener(loc_eventListener, function(eventName, eventData, request){
+	var loc_baseLayer = baseLayer;
+	//process event from baseLayer
+	loc_baseLayer.registerEventListener(loc_eventListener, function(eventName, eventData, request){
 		if(loc_core.processComponentEvent!=undefined){
 			var eventResult = loc_core.processComponentEvent(eventName, eventData, request);
 			if(eventResult==true || eventResult==undefined){
@@ -49,7 +50,8 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 		}
 	});
 
-	loc_child.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
+	//process valueChangeEvent from baseLayer
+	loc_baseLayer.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
 		if(loc_core.processComponentValueChangeEvent!=undefined){
 			loc_core.processComponentValueChangeEvent(eventName, eventData, request);
 		}
@@ -57,7 +59,7 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 		loc_trigueValueChangeEvent(eventName, eventData, request);
 	});
 
-	var loc_component = loc_child.prv_getComponent==undefined? loc_child : loc_child.prv_getComponent();
+	var loc_component = loc_baseLayer.prv_getComponent==undefined? loc_baseLayer : loc_baseLayer.prv_getComponent();
 	
 	var loc_core = coreGenerator({
 		
@@ -90,9 +92,9 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 	var loc_out = {
 		
 		prv_getComponent : function(){
-			var childType = node_getObjectType(loc_child);
-			if(childType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION)  return loc_child.prv_getComponent();
-			else return loc_child;
+			var childType = node_getObjectType(loc_baseLayer);
+			if(childType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION)  return loc_baseLayer.prv_getComponent();
+			else return loc_baseLayer;
 		},	
 			
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
@@ -105,19 +107,19 @@ var node_createComponentDecoration = function(id, child, coreGenerator, processE
 			if(loc_core.getExecuteCommandRequest!=undefined){
 				var commandResult = loc_core.getExecuteCommandRequest(command, parms, undefined, undefined);
 				if(commandResult==undefined){
-					return loc_child.getExecuteCommandRequest(command, parms, handlers, request);
+					return loc_baseLayer.getExecuteCommandRequest(command, parms, handlers, request);
 				}
 				else{
 					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 					out.addRequest(commandResult.requestResult);
 					if(commandResult.commandInfo!=undefined){
-						out.addRequest(loc_child.getExecuteCommandRequest(command, parms));
+						out.addRequest(loc_baseLayer.getExecuteCommandRequest(command, parms));
 					}
 					return out;
 				}
 			}
 			else{
-				return loc_child.getExecuteCommandRequest(command, parms, handlers, request);
+				return loc_baseLayer.getExecuteCommandRequest(command, parms, handlers, request);
 			}
 		},
 

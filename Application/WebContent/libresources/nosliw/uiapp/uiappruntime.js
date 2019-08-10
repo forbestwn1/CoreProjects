@@ -53,7 +53,7 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 	var loc_eventListener = node_createEventObject();
 
 	var loc_init = function(uiApp, configure, componentDecorationInfos){
-		loc_componentComplex.addComponent(uiApp);
+		loc_componentComplex.setComponent(uiApp);
 		loc_componentComplex.addDecorations(componentDecorationInfos);
 		
 		loc_componentComplex.registerEventListener(loc_eventListener, function(eventName, eventData, request){

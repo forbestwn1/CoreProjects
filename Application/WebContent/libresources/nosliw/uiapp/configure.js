@@ -22,9 +22,9 @@ var node_createTypicalConfigure = function(mainModuleRoot, settingModuleRoot, da
 			__storeService : storeService,
 			app : framework7App,
 		},
-		components : {
+		parts : {
 			application : {
-				"components" : {
+				"parts" : {
 					"application" : {
 						global : {
 							"root" : mainModuleRoot,
@@ -43,7 +43,7 @@ var node_createTypicalConfigure = function(mainModuleRoot, settingModuleRoot, da
 							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile"]
 //							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile", "debug"]
 						},
-						components : {
+						"parts" : {
 							"setting_framework7_mobile" : {
 								uiResource : "Decoration_setting_framework7"
 							}

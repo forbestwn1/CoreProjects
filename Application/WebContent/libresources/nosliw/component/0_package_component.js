@@ -2,9 +2,8 @@ var library = nosliw.getPackage("component");
 
 /*
  * component is abstract concept
- *     lifecycle
- *     can has child component
+ * 	   contains parts
+ *     predefined lifecycle status (init, active, paused, destoryed)
  *     configurable
- *     backup, resume
- * 	   state
+ *     have state to support backup, resume
  */
