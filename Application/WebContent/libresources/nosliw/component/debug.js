@@ -9,7 +9,7 @@ var packageObj = library;
 	var node_getComponentInterface;
 	var node_createServiceRequestInfoSimple;
 	var node_createIODataSet;
-	var node_createDynamicData;
+	var node_createDynamicIOData;
 	var node_requestServiceProcessor;
 	var node_createEventObject;
 	
@@ -27,7 +27,7 @@ var node_createComponentResetView = function(resetCallBack, restartCallBack){
 	});
 
 	var loc_inputIODataSet = node_createIODataSet();
-	var loc_viewIO = node_createDynamicData(
+	var loc_viewIO = node_createDynamicIOData(
 		function(handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				var content = loc_textView.val();
@@ -243,7 +243,7 @@ nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", func
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicData = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 

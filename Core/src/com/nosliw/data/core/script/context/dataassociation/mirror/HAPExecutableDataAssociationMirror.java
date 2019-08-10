@@ -5,8 +5,8 @@ import java.util.Map;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.script.context.dataassociation.HAPOutputStructure;
-import com.nosliw.data.core.script.context.dataassociation.mapping.HAPExecutableDataAssociationImp;
 
 public class HAPExecutableDataAssociationMirror extends HAPExecutableDataAssociationImp{
 

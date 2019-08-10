@@ -24,38 +24,42 @@ var packageObj = library;
 	var node_ioTaskUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
-
+//dataAssociation that has inputIO, dataAssociation and outputIO
+//when it is executed, the data from inputIO is mapped to outputIO
+//the type of inputIO can be IODataSet or another dataAssociation
 var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIODataSet){
 	
-//	if(node_getObjectType(inputIO)==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE)  inputIO = node_createIODataSet(inputIO);
 	var loc_inputIO = node_createIODataSet(inputIO);
-
 	var loc_outputIODataSet = node_createIODataSet(outputIODataSet);
 	var loc_dataAssociationDef = dataAssociationDef;
 
-	var loc_dyanimicValueBuild = function(output, outputPathSegs, input, intpuPathSegs){
-		var inputValue = node_objectOperationUtility.getObjectAttributeByPathSegs(input, intpuPathSegs);
-		node_objectOperationUtility.operateObjectByPathSegs(output, outputPathSegs, node_CONSTANT.WRAPPER_OPERATION_SET, inputValue);
-		return output;
-	};
-	
+	//execute association
 	var loc_executeDataAssociationConvertFun  = function(association, inputDataSet){
 		if(association==undefined || association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_CONVERTFUNCTION]==undefined) return undefined;
-		return association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_CONVERTFUNCTION](inputDataSet, loc_dyanimicValueBuild);
+		return association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_CONVERTFUNCTION](inputDataSet, node_objectOperationUtility.assignObjectAttributeByPath);
 	};
 
-	var loc_toTargetRequest = function(value, targetName, isTargetFlat, handlers, request){
+	//merge extraDataSet with inputIODataSet to create inputDataSet for data association
+	var loc_getInputDataSetRequest = function(inputIO, extraDataSet, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		if(value==undefined){
-			//if outputvalue is undefined, then no impact on outputTarget
-//			out.addRequest(loc_outputIODataSet.getGetDataValueRequest(targetName));
-		}
-		else{
-			out.addRequest(loc_outputIODataSet.getMergeDataValueRequest(targetName, value, isTargetFlat));
-		}
+		out.addRequest(inputIO.getGetDataSetValueRequest({
+			success : function(request, intputDataSet){
+				if(extraDataSet!=undefined){
+					_.each(extraDataSet.getDataSet(), function(extraData, setName){
+						var inputData = intputDataSet[setName];
+						if(inputData==undefined){
+							inputData = {};
+							intputDataSet[setName] = inputData;
+						}
+						node_ioTaskUtility.mergeContext(extraData, inputData, loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][setName]);
+					})
+				}
+				return intputDataSet;
+			}
+		}));
 		return out;
 	};
-
+	
 	var loc_processMatchersRequest = function(value, matchersByPath, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		if(value!=undefined && matchersByPath!=undefined){
@@ -89,7 +93,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		out.addRequest(loc_processMatchersRequest(output, association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_OUTPUTMATCHERS], {
 			success :function(request, value){
 				//to target
-				return loc_toTargetRequest(value, targetName, association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_FLATOUTPUT]);
+				return node_ioTaskUtility.outputToDataSetIORequest(loc_outputIODataSet, value, targetName, association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_FLATOUTPUT]);
 			}
 		}));
 
@@ -144,7 +148,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 				}
 			}
 			
-			out.addRequest(name, loc_toTargetRequest(outputData, name, true));
+			out.addRequest(name, node_ioTaskUtility.outputToDataSetIORequest(loc_outputIODataSet, outputData, name, true));
 		});
 		
 		return out;
@@ -160,7 +164,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
 		out.addRequest(loc_getInputDataSetRequest(inputIO, extraDataSet, {
 			success : function(request, intputDataSet){
-				if(loc_dataAssociationDef==undefined)  return loc_getExecuteNoneDataAssociationRequest(intputDataSet);
+				if(loc_dataAssociationDef==undefined)  return loc_getExecuteNoneDataAssociationRequest(intputDataSet);   //if no data association, then nothing happen
 				else{
 					var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
 					if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return loc_getExecuteMappingDataAssociationRequest(intputDataSet);
@@ -172,34 +176,13 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		return out;
 	};
 
-	var loc_getInputDataSetRequest = function(inputIO, extraDataSet, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(inputIO.getGetDataSetValueRequest({
-			success : function(request, intputDataSet){
-				if(extraDataSet!=undefined){
-					_.each(extraDataSet.getDataSet(), function(extraData, setName){
-						var inputData = intputDataSet[setName];
-						if(inputData==undefined){
-							inputData = {};
-							intputDataSet[setName] = inputData;
-						}
-						node_ioTaskUtility.mergeContext(extraData, inputData, loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][name]);
-					})
-				}
-				return intputDataSet;
-			}
-		}));
-		return out;
-	};
-	
-	
 	var loc_out = {
 		
 		getExecuteDataAssociationRequest : function(extraData, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
 			if(extraData!=undefined)  extraData = node_createIODataSet(extraData);
 			var inputIOType = node_getObjectType(loc_inputIO);
-			if(inputIOType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET){
+			if(inputIOType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_IODATASET){
 				out.addRequest(loc_getExecuteDataAssociationRequest(loc_inputIO, extraData, {
 					success :function(request){
 						return loc_outputIODataSet;
@@ -208,8 +191,8 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 			}
 			else if(inputIOType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION){
 				out.add(loc_inputIO.getExecuteRequest({
-					success : function(request, outputIO){
-						out.addRequest(loc_getExecuteDataAssociationRequest(outputIO, extraData, {
+					success : function(request, inputIO){
+						out.addRequest(loc_getExecuteDataAssociationRequest(inputIO, extraData, {
 							success :function(request){
 								return loc_outputIODataSet;
 							}

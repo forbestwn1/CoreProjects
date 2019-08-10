@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.context.dataassociation.mapping;
+package com.nosliw.data.core.script.context.dataassociation;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,8 +11,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 
 public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImp implements HAPExecutableDataAssociation{
 

@@ -30,8 +30,8 @@ var node_createComponentDecoration = function(id, baseLayer, coreGenerator, proc
 	var loc_baseLayer = baseLayer;
 	//process event from baseLayer
 	loc_baseLayer.registerEventListener(loc_eventListener, function(eventName, eventData, request){
-		if(loc_core.processComponentEvent!=undefined){
-			var eventResult = loc_core.processComponentEvent(eventName, eventData, request);
+		if(loc_plugin.processComponentEvent!=undefined){
+			var eventResult = loc_plugin.processComponentEvent(eventName, eventData, request);
 			if(eventResult==true || eventResult==undefined){
 				//propagate the same event
 				loc_trigueEvent(eventName, eventData, request);
@@ -52,8 +52,8 @@ var node_createComponentDecoration = function(id, baseLayer, coreGenerator, proc
 
 	//process valueChangeEvent from baseLayer
 	loc_baseLayer.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
-		if(loc_core.processComponentValueChangeEvent!=undefined){
-			loc_core.processComponentValueChangeEvent(eventName, eventData, request);
+		if(loc_plugin.processComponentValueChangeEvent!=undefined){
+			loc_plugin.processComponentValueChangeEvent(eventName, eventData, request);
 		}
 		//propagate the same event
 		loc_trigueValueChangeEvent(eventName, eventData, request);
@@ -61,7 +61,7 @@ var node_createComponentDecoration = function(id, baseLayer, coreGenerator, proc
 
 	var loc_component = loc_baseLayer.prv_getComponent==undefined? loc_baseLayer : loc_baseLayer.prv_getComponent();
 	
-	var loc_core = coreGenerator({
+	var loc_plugin = coreGenerator({
 		
 		getComponent : function(){   return loc_component;		},
 		
@@ -104,8 +104,8 @@ var node_createComponentDecoration = function(id, baseLayer, coreGenerator, proc
 		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener); },
 
 		getExecuteCommandRequest : function(command, parms, handlers, request){
-			if(loc_core.getExecuteCommandRequest!=undefined){
-				var commandResult = loc_core.getExecuteCommandRequest(command, parms, undefined, undefined);
+			if(loc_plugin.getExecuteCommandRequest!=undefined){
+				var commandResult = loc_plugin.getExecuteCommandRequest(command, parms, undefined, undefined);
 				if(commandResult==undefined){
 					return loc_baseLayer.getExecuteCommandRequest(command, parms, handlers, request);
 				}
@@ -123,20 +123,20 @@ var node_createComponentDecoration = function(id, baseLayer, coreGenerator, proc
 			}
 		},
 
-		getInterface : function(){   return loc_core.getInterface();	},
+		getInterface : function(){   return loc_plugin.getInterface();	},
 		
 		updateView : function(view){   
-			if(loc_core.updateView==undefined)  return view;
-			return loc_core.updateView(view);
+			if(loc_plugin.updateView==undefined)  return view;
+			return loc_plugin.updateView(view);
 		},
 		
-		getPreDisplayInitRequest : function(handlers, request){  return loc_core.getPreDisplayInitRequest==undefined?undefined:loc_core.getPreDisplayInitRequest(handlers, request);	},
-		getInitRequest : function(handlers, request){  return loc_core.getInitRequest==undefined?undefined:loc_core.getInitRequest(handlers, request);	},
-		getDeactiveRequest : function(handlers, request){  return loc_core.getDeactiveRequest==undefined?undefined:loc_core.getDeactiveRequest(handlers, request);	},
-		getSuspendRequest : function(handlers, request){  return loc_core.getSuspendRequest==undefined?undefined:loc_core.getSuspendRequest(handlers, request);	},
-		getResumeRequest : function(handlers, request){  return loc_core.getResumeRequest==undefined?undefined:loc_core.getResumeRequest(handlers, request);	},
-		getStartRequest : function(handlers, request){  return loc_core.getStartRequest==undefined?undefined:loc_core.getStartRequest(handlers, request);	},
-		getDestroyRequest : function(handlers, request){  return loc_core.getDestroyRequest==undefined?undefined:loc_core.getDestroyRequest(handlers, request);	},
+		getPreDisplayInitRequest : function(handlers, request){  return loc_plugin.getPreDisplayInitRequest==undefined?undefined:loc_plugin.getPreDisplayInitRequest(handlers, request);	},
+		getInitRequest : function(handlers, request){  return loc_plugin.getInitRequest==undefined?undefined:loc_plugin.getInitRequest(handlers, request);	},
+		getDeactiveRequest : function(handlers, request){  return loc_plugin.getDeactiveRequest==undefined?undefined:loc_plugin.getDeactiveRequest(handlers, request);	},
+		getSuspendRequest : function(handlers, request){  return loc_plugin.getSuspendRequest==undefined?undefined:loc_plugin.getSuspendRequest(handlers, request);	},
+		getResumeRequest : function(handlers, request){  return loc_plugin.getResumeRequest==undefined?undefined:loc_plugin.getResumeRequest(handlers, request);	},
+		getStartRequest : function(handlers, request){  return loc_plugin.getStartRequest==undefined?undefined:loc_plugin.getStartRequest(handlers, request);	},
+		getDestroyRequest : function(handlers, request){  return loc_plugin.getDestroyRequest==undefined?undefined:loc_plugin.getDestroyRequest(handlers, request);	},
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION);

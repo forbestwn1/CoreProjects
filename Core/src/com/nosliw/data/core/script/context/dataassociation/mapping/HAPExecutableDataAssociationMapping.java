@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPParentContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.script.context.dataassociation.HAPOutputStructure;
 
 public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssociationImp{

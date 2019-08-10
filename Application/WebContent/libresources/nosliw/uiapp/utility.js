@@ -7,7 +7,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_createDataAssociation;
 	var node_createIODataSet;
-	var node_createDynamicData;
+	var node_createDynamicIOData;
 	var node_createServiceRequestInfoSequence;
 	var node_getComponentInterface;
 	var node_ModuleInfo;
@@ -81,7 +81,7 @@ var node_utility = function(){
 			if(applicationDataInfo!=undefined) moduleInfo.applicationDataInfo = applicationDataInfo;
 			
 			moduleInfo.externalIO = node_createIODataSet();
-			moduleInfo.externalIO.setData(undefined, uiApp.getIOContext().generateDataEle());
+			moduleInfo.externalIO.setData(undefined, uiApp.getIOContext().generateIOData());
 			loc_out.buildModuleExternalAppDataIO(uiApp.getIOContext(), moduleInfo, appDataService, uiApp.prv_app.appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_APPLICATIONDATA]);
 			
 			loc_out.buildModuleInputMapping(moduleInfo);
@@ -111,7 +111,7 @@ var node_utility = function(){
 		
 		buildExternalDataIOForAppDataInfo : function(externalIO, appDataInfo, appDataService, appDef){
 			var dataIOName = loc_out.getApplicationDataIOName(appDataInfo.dataName);
-			externalIO.setData(dataIOName, node_createDynamicData(
+			externalIO.setData(dataIOName, node_createDynamicIOData(
 				function(handlers, request){
 					if(appDataInfo.persist==true){
 						var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -153,7 +153,7 @@ var node_utility = function(){
 
 		buildMoudleInputIO : function(moduleInfo){
 			var out = node_createIODataSet();
-			var dynamicData = node_createDynamicData(
+			var dynamicData = node_createDynamicIOData(
 				function(handlers, request){
 					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 					if(moduleInfo.currentInputMapping!=undefined){
@@ -202,7 +202,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicData = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});

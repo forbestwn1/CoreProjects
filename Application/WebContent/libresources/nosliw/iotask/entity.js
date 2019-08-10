@@ -31,31 +31,34 @@ var node_ExternalMapping = function(dataIO, dataAssociationDef){
 	node_makeObjectWithType(this, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_EXTERNALMAPPING);
 };
 
-var node_createDynamicData = function(getValueRequestFun, setValueRequestFun){
+//dynamic io data which read and write through function
+//dynamic io data inform the data change through listen to eventObj
+var node_createDynamicIOData = function(getValueRequestFun, setValueRequestFun, eventObj){
 	var loc_getValueRequestFun = getValueRequestFun;
 	var loc_setValueRequestFun = setValueRequestFun;
+	var loc_eventObj = eventObj;
 	
 	var loc_out = {
-		getGetValueRequest : function(handlers, request){
-			return loc_getValueRequestFun(handlers, request);
-		},
+		getGetValueRequest : function(handlers, request){		return loc_getValueRequestFun(handlers, request);		},
+		getSetValueRequest : function(value, handlers, request){		return loc_setValueRequestFun(value, handlers, request);	},
 		
-		getSetValueRequest : function(value, handlers, request){
-			return loc_setValueRequestFun(value, handlers, request);
-		}
+		registerEventListener : function(listener, handler, thisContext){   if(loc_eventObj!=undefined) loc_eventObj.registerListener(undefined, listener, handler, thisContext);   },
+		unregisterEventListener : function(listener){    if(loc_eventObj!=undefined) loc_eventObj.unregister(listener);   },
 	};
-	
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA);
-	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA);
 	return loc_out;
 };
 
+//a set of data by name, if no name provided, then use "default" as name
+//this set of data is used as io end point (input or output)
+//each data can be static which is an object or dynamic which has read and write function
+//any data change will trigue event 
 var node_createIODataSet = function(value){
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 	
-	if(value!=undefined&&node_getObjectType(value)==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET){
+	if(value!=undefined&&node_getObjectType(value)==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_IODATASET){
 		return value;
 	}
 
@@ -66,19 +69,32 @@ var node_createIODataSet = function(value){
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 
+	var loc_processName = function(name){  return name!=undefined?  name : node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  };
+	
 	var loc_out = {
 		
 		prv_dataSet : {},
 		prv_id : nosliw.generateId(),
-			
-		setData : function(name, data, request){  
-			if(name==undefined)  name = node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+		
+		getDataSet : function(){   return loc_out.prv_dataSet;   },
+		
+		//directly set data element
+		setData : function(name, data, request){ 
+			name = loc_processName(name);
 			loc_out.prv_dataSet[name] = data;   
+			var dataEleType = node_getObjectType(data);
+			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
+				//for dynamic iodata, listen to value change
+				data.registerEventListener(loc_eventListener, function(eventName, eventData, request){
+					if(eventName==node_CONSTANT.IODATASET_EVENT_CHANGE)  loc_trigueEvent(eventName, undefined, request);
+				});
+			}
 			loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
 		},
-		
+
+		//directly get data element
 		getData : function(name){
-			if(name==undefined)  name = node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+			name = loc_processName(name);
 			var out = loc_out.prv_dataSet[name];
 			if(out==undefined){
 				out = {};
@@ -87,23 +103,11 @@ var node_createIODataSet = function(value){
 			return out;
 		},
 
-		generateDataEle : function(name){
-			return node_createDynamicData(
-				function(handlers, request){
-					return loc_out.getGetDataValueRequest(name, handlers, request);
-				},
-				function(value, handlers, request){
-					return loc_out.getSetDataValueRequest(name, value, handlers, request);
-				}
-			);
-		},
-		
-		getDataSet : function(){   return loc_out.prv_dataSet;   },
-		
+		//get value of data request
 		getGetDataValueRequest : function(name, handlers, request){
 			var dataEle = this.getData(name);
 			var dataEleType = node_getObjectType(dataEle);
-			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
+			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
 				return dataEle.getGetValueRequest(handlers, request);
 			}
 			else{
@@ -113,6 +117,29 @@ var node_createIODataSet = function(value){
 			}
 		},
 
+		//set value of data request
+		getSetDataValueRequest : function(name, value, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var dataEle = this.getData(name);
+			var dataEleType = node_getObjectType(dataEle);
+			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
+				return loc_out.getData(name).getSetValueRequest(value, {
+					success : function(request, value){
+						loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
+						return value;
+					}
+				});
+			}
+			else{
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					loc_out.setData(name, value, request);
+					return value;
+				}));
+			}
+			return out;
+		},
+		
+		//get set of value request
 		getGetDataSetValueRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var getDataItemRequest = node_createServiceRequestInfoSet(undefined, {
@@ -132,39 +159,36 @@ var node_createIODataSet = function(value){
 			return out;
 		},
 
-		getSetDataValueRequest : function(name, value, handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var dataEle = this.getData(name);
-			var dataEleType = node_getObjectType(dataEle);
-			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
-				return loc_out.getData(name).getSetValueRequest(value, {
-					success : function(request, data){
-						loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
-						return data;
-					}
-				});
-			}
-			else{
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					loc_out.setData(name, value, request);
-					return value;
-				}));
-			}
-			return out;
+		//generate new io data from data element 
+		//this new io data can be used to build another io data set
+		generateIOData : function(name){
+			name = loc_processName(name);
+			return node_createDynamicIOData(
+				function(handlers, request){
+					return loc_out.getGetDataValueRequest(name, handlers, request);
+				},
+				function(value, handlers, request){
+					return loc_out.getSetDataValueRequest(name, value, handlers, request);
+				}
+			);
 		},
 		
+		//merge ioData with value
 		getMergeDataValueRequest : function(name, value, isDataFlat, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var dataEle = this.getData(name);
 			var dataEleType = node_getObjectType(dataEle);
-			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
+			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
+				//get value first
 				out.addRequest(loc_out.getGetDataValueRequest(name, {
 					success : function(request, value){
-						var output = node_ioTaskUtility.mergeContext(request.getData('value'), value, isDataFlat);
-						return loc_out.getData(request.getData('name')).getSetValueRequest(output, {
-							success : function(request, data){
+						//do merge
+						var mergedValue = node_ioTaskUtility.mergeContext(request.getData('value'), value, isDataFlat);
+						//then set value back
+						return loc_out.getData(request.getData('name')).getSetValueRequest(mergedValue, {
+							success : function(request, value){
 								loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
-								return data;
+								return value;
 							}
 						});
 					}
@@ -172,9 +196,9 @@ var node_createIODataSet = function(value){
 			}
 			else{
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					var data = node_ioTaskUtility.mergeContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
+					var mergedValue = node_ioTaskUtility.mergeContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
 					loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
-					return data;
+					return mergedValue;
 				}).withData(name, 'name').withData(value, 'value'));
 			}
 			return out;
@@ -184,18 +208,22 @@ var node_createIODataSet = function(value){
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 		
 		destroy : function(request){
-			loc_eventSource.clearup();
-			loc_eventListener.clearup();
 			_.each(loc_out.prv_dataSet, function(data, name){
+				var dataEleType = node_getObjectType(data);
+				if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
+					data.unregisterEventListener(loc_eventListener);
+				}
 				node_destroyUtil(data, request);
 			});
+			loc_eventSource.clearup();
+			loc_eventListener.clearup();
 			loc_out.prv_dataSet = undefined;
 		}
 	};
 	
 	loc_init(value);
 	
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_IODATASET);
 	
 	return loc_out;
 };
@@ -219,6 +247,6 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_
 //Register Node by Name
 packageObj.createChildNode("IOTaskResult", node_IOTaskResult); 
 packageObj.createChildNode("createIODataSet", node_createIODataSet); 
-packageObj.createChildNode("createDynamicData", node_createDynamicData); 
+packageObj.createChildNode("createDynamicData", node_createDynamicIOData); 
 
 })(packageObj);

@@ -29,7 +29,7 @@ var packageObj = library;
 	var node_contextUtility;
 	var node_IOTaskResult;
 	var node_ioTaskProcessor;
-	var node_createDynamicData;
+	var node_createDynamicIOData;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIViewFactory = function(){
@@ -82,6 +82,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
+	//for context value change event
 	var loc_valueChangeEventSource = node_createEventObject();
 	var loc_valueChangeEventListener = node_createEventObject();
 	
@@ -214,7 +215,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 
 	
 	//io between module context and page context
-	var loc_viewIO = node_createDynamicData(
+	var loc_viewIO = node_createDynamicIOData(
 		function(handlers, request){
 			return node_contextUtility.getContextValueAsParmsRequest(loc_context, handlers, request);
 		}, 
@@ -572,7 +573,7 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", functi
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.ioTaskProcessor", function(){node_ioTaskProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicData = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 
 
 //Register Node by Name

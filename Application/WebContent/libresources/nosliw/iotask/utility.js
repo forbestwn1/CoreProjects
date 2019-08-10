@@ -5,6 +5,7 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
+	var node_createServiceRequestInfoSequence;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
@@ -29,6 +30,9 @@ var node_utility = function(){
 			];
 		},
 		
+		//merge context 
+		//if isFlat is true, then treat it is as object
+		//if isFlat is false, then treat it as context with group
 		mergeContext : function(source, target, isFlat){
 			if(target==undefined)   target = {};
 			if(isFlat==true){
@@ -49,8 +53,20 @@ var node_utility = function(){
 				});
 			}
 			return target;
-		}
+		},
 		
+		//assigned value to outputIODataSet
+		outputToDataSetIORequest : function(outputIODataSet, value, dataSetName, isTargetFlat, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			if(value==undefined){
+				//if outputvalue is undefined, then no impact on outputTarget
+//				out.addRequest(loc_outputIODataSet.getGetDataValueRequest(dataSetName));
+			}
+			else{
+				out.addRequest(outputIODataSet.getMergeDataValueRequest(dataSetName, value, isTargetFlat));
+			}
+			return out;
+		},
 
 	};
 		
@@ -62,6 +78,7 @@ var node_utility = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("ioTaskUtility", node_utility); 

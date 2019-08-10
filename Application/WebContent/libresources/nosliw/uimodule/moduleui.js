@@ -16,7 +16,7 @@ var packageObj = library;
 	var node_makeObjectWithLifecycle;
 	var node_destroyUtil;
 	var node_createDataAssociation;
-	var node_createDynamicData;
+	var node_createDynamicIOData;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -44,7 +44,7 @@ var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 	var loc_moduleUIDef = moduleUIDef;
 	var loc_page = page;
 	//io between module context and page context
-	var loc_inputDataAssociation = node_createDataAssociation(moduleIOContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], node_createDynamicData(
+	var loc_inputDataAssociation = node_createDataAssociation(moduleIOContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], node_createDynamicIOData(
 		function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_page.getContextEleValueAsParmsRequest());
@@ -64,7 +64,7 @@ var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 		}
 	));
 	
-	var loc_outputDataAssociation = node_createDataAssociation(node_createDynamicData(
+	var loc_outputDataAssociation = node_createDataAssociation(node_createDynamicIOData(
 		function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_page.getBuildContextGroupRequest());
@@ -166,7 +166,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicData = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleUIRequest", node_createModuleUIRequest); 

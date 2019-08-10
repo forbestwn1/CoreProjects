@@ -219,7 +219,7 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 	};
 	
 	var loc_rollBack = function(transitInfo, request){
-		var reverseCallBack = loc_stateDef.getStateInfo(inTransit.from).nextStates[inTransit.to].reverseCallBack;
+		var reverseCallBack = loc_stateDef.getStateInfo(transitInfo.from).nextStates[transitInfo.to].reverseCallBack;
 		if(reverseCallBack!=undefined)	reverseCallBack.apply(loc_thisContext, request);
 		loc_currentState = transitInfo.from;
 	};

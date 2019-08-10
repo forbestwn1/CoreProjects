@@ -10,6 +10,12 @@ var packageObj = library.getChildPackage("utility");
 
 var node_objectOperationUtility = 
 {
+		assignObjectAttributeByPath : function(outputObj, outputPathSegs, inputObj, intpuPathSegs){
+			var inputEleValue = node_objectOperationUtility.getObjectAttributeByPathSegs(inputObj, intpuPathSegs);
+			node_objectOperationUtility.operateObjectByPathSegs(outputObj, outputPathSegs, node_CONSTANT.WRAPPER_OPERATION_SET, inputEleValue);
+			return outputObj;
+		},
+		
 		/*
 		 * get attribute value according to the path
 		 */
