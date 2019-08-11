@@ -5,28 +5,19 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
-	var node_buildServiceProvider;
-	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
-	var node_createServiceRequestInfoSet;
 	var node_ServiceInfo;
-	var node_objectOperationUtility;
-	var node_EndActivityOutput;
-	var node_ProcessResult;
-	var node_createServiceRequestInfoService;
-	var node_DependentServiceRequestInfo;
-	var node_requestServiceProcessor;
 	var node_IOTaskResult;
 	var node_createIODataSet;
 	var node_createDataAssociation;
 //*******************************************   Start Node Definition  ************************************** 	
-
-var node_ioTaskProcessor = function(){
+//do task process with input data association and output io 
+var node_taskUtility = function(){
 	
 	var loc_out = {
 			
-		getExecuteIOTaskRequest : function(externalIO, extraInputData, ioMapping, getTaskRequest, handlers, request){
-			return loc_out.getExecuteIORequest(
+		getExecuteEmbededTaskRequest : function(externalIO, extraInputData, ioMapping, getTaskRequest, handlers, request){
+			return loc_out.getExecuteTaskRequest(
 					externalIO, 
 					extraInputData,
 					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], 
@@ -37,13 +28,13 @@ var node_ioTaskProcessor = function(){
 					request);
 		},
 			
-		getExecuteIORequest : function(input, extraInputdata, inputDataAssociation, getTaskRequest, outputDataAssociationByResult, outputIO, handlers, request){
+		getExecuteTaskRequest : function(input, extraInputdata, inputDataAssociationDef, getTaskRequest, outputDataAssociationByResult, outputIO, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association
 			var inputIO = node_createIODataSet(input);
 			var taskInputIO = node_createIODataSet();
-			var inputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociation, taskInputIO);
-			out.addRequest(inputDataAssociation.getExecuteDataAssociationRequest(extraInputdata, {
+			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, taskInputIO);   //data association for input for task
+			out.addRequest(taskInputDataAssociation.getExecuteWithExtraDataRequest(extraInputdata, {
 				success : function(requestInfo, taskInputIO){
 					var taskInput = taskInputIO.getData();
 					//execute task
@@ -55,8 +46,8 @@ var node_ioTaskProcessor = function(){
 							if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(taskResult.resultName);
 							else   outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
 
-							var inputDataAssociation = node_createDataAssociation(taskResult.resultValue, outputDataAssociationDef, outputIO);
-							return inputDataAssociation.getExecuteRequest({
+							var taskOutputDataAssociation = node_createDataAssociation(taskResult.resultValue, outputDataAssociationDef, outputIO);
+							return taskOutputDataAssociation.getExecuteRequest({
 								success :function(request, taskOutputDataSetIO){
 									return new node_IOTaskResult(taskResult.resultName, taskOutputDataSetIO);
 								}
@@ -77,22 +68,13 @@ var node_ioTaskProcessor = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.EndActivityOutput", function(){node_EndActivityOutput = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("ioTaskProcessor", node_ioTaskProcessor); 
+packageObj.createChildNode("taskUtility", node_taskUtility); 
 
 })(packageObj);

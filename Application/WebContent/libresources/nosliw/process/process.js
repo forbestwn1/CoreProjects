@@ -15,7 +15,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoService;
 	var node_DependentServiceRequestInfo;
 	var node_requestServiceProcessor;
-	var node_ioTaskProcessor;
+	var node_taskUtility;
 	var node_IOTaskResult;
 	var node_createDataAssociation;
 	var node_createIODataSet;
@@ -96,7 +96,7 @@ var node_createProcess = function(processDef, envObj){
 	var loc_getExecuteNormalActivityRequest = function(normalActivity, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteNormalActivity", {"activity":normalActivity}), handlers, request);
 		
-		out.addRequest(node_ioTaskProcessor.getExecuteIORequest(
+		out.addRequest(node_taskUtility.getExecuteTaskRequest(
 				loc_processContextIO, 
 				undefined,
 				normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUT], 
@@ -247,7 +247,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.ioTaskProcessor", function(){node_ioTaskProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});

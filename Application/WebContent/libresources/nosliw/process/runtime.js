@@ -63,7 +63,7 @@ var node_createProcessRuntime = function(envObj){
 			}
 
 			var output = {};
-			out.addRequest(node_createDataAssociation(input, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], output).getExecuteDataAssociationRequest(extraInputDataSet, {
+			out.addRequest(node_createDataAssociation(input, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], output).getExecuteWithExtraDataRequest(extraInputDataSet, {
 				success : function(request, input){
 					return input.getGetDataValueRequest(undefined, {
 						success : function(request, inputData){

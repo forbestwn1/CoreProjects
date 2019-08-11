@@ -72,6 +72,11 @@ var node_createUIPage = function(uiView){
 	};
 	
 	var loc_out = {
+		//name is for debug purpose
+		prv_name : undefined,
+		getName : function(){   return loc_out.prv_name;   },
+		setName : function(name){  loc_out.prv_name = name;  },
+		
 		getUIView :function(){ return loc_decorations[0];  },  
 			
 		addDecoration : function(decoration){

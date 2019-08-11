@@ -19,7 +19,7 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = {
-
+		
 		/*
 		 * create place holder html with special ui id 
 		 */

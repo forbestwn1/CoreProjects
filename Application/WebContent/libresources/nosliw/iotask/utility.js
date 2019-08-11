@@ -13,6 +13,10 @@ var node_utility = function(){
 	
 	var loc_out = {
 
+		buildDataAssociationName : function(sourceType, sourceName, targetType, targetName){
+			return sourceType+"_"+sourceName+"---"+targetType+"_"+targetName;
+		},
+
 		getContextTypes : function(){
 			return [ 
 				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC, 
@@ -92,9 +96,6 @@ var node_utility = function(){
 			}
 			return out;
 		},
-		
-		
-		
 	};
 		
 	return loc_out;

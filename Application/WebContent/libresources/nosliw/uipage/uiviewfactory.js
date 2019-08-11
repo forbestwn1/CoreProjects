@@ -28,7 +28,6 @@ var packageObj = library;
 	var node_UIDataOperation;
 	var node_contextUtility;
 	var node_IOTaskResult;
-	var node_ioTaskProcessor;
 	var node_createDynamicIOData;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -572,7 +571,6 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUt
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.ioTaskProcessor", function(){node_ioTaskProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 
 

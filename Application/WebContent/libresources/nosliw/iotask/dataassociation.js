@@ -16,12 +16,14 @@ var packageObj = library;
 	var node_getExecuteMappingDataAssociationRequest;
 	var node_getExecuteMirrorDataAssociationRequest;
 	var node_getExecuteNoneDataAssociationRequest;
+	var node_basicUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //dataAssociation that has inputIO, dataAssociation and outputIO
 //when it is executed, the data from inputIO is mapped to outputIO
 //the type of inputIO can be IODataSet or another dataAssociation
-var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIODataSet){
+//name in parm is for debugging purpose
+var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIODataSet, name){
 	
 	var loc_inputIO = node_createIODataSet(inputIO);
 	var loc_outputIODataSet = node_createIODataSet(outputIODataSet);
@@ -52,6 +54,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
 		out.addRequest(loc_getInputDataSetRequest(inputIO, extraDataSet, {
 			success : function(request, intputDataSet){
+				nosliw.logging.info("Data association ", loc_out.prv_id, " input data : " + node_basicUtility.stringify(intputDataSet));
 				if(loc_dataAssociationDef==undefined)  return node_getExecuteNoneDataAssociationRequest(intputDataSet, loc_dataAssociationDef, loc_outputIODataSet);   //if no data association, then nothing happen
 				else{
 					var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
@@ -66,14 +69,17 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 
 	var loc_out = {
 		prv_id : nosliw.generateId(),
+		prv_name : name,
 		
-		getExecuteDataAssociationRequest : function(extraData, handlers, request){
+		getExecuteWithExtraDataRequest : function(extraData, handlers, request){
+			nosliw.logging.info("Start execute data association : ", loc_out.prv_name, "   ", loc_out.prv_id);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
 			if(extraData!=undefined)  extraData = node_createIODataSet(extraData);
 			var inputIOType = node_getObjectType(loc_inputIO);
 			if(inputIOType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_IODATASET){
 				out.addRequest(loc_getExecuteDataAssociationRequest(loc_inputIO, extraData, {
 					success :function(request){
+						nosliw.logging.info("Data association ", loc_out.prv_id, " result : " + node_basicUtility.stringify(loc_outputIODataSet));
 						return loc_outputIODataSet;
 					}
 				}));
@@ -83,6 +89,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 					success : function(request, inputIO){
 						out.addRequest(loc_getExecuteDataAssociationRequest(inputIO, extraData, {
 							success :function(request){
+								nosliw.logging.info("Data association ", loc_out.prv_id, " result : " + node_basicUtility.stringify(loc_outputIODataSet));
 								return loc_outputIODataSet;
 							}
 						}));
@@ -93,7 +100,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		},
 			
 		getExecuteRequest : function(handlers, request){
-			return this.getExecuteDataAssociationRequest(undefined, handlers, request);
+			return this.getExecuteWithExtraDataRequest(undefined, handlers, request);
 		},
 
 		executeRequest : function(handlers, request){
@@ -103,7 +110,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		
 		getExecuteCommandRequest : function(commandName, data, handlers, request){
 			if(commandName=="execute"){
-				return this.getExecuteDataAssociationRequest(data, handlers, request);
+				return this.getExecuteWithExtraDataRequest(data, handlers, request);
 			}
 		}
 	};
@@ -129,6 +136,7 @@ nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUt
 nosliw.registerSetNodeDataEvent("iotask.getExecuteMappingDataAssociationRequest", function(){node_getExecuteMappingDataAssociationRequest = this.getData();	});
 nosliw.registerSetNodeDataEvent("iotask.getExecuteMirrorDataAssociationRequest", function(){node_getExecuteMirrorDataAssociationRequest = this.getData();	});
 nosliw.registerSetNodeDataEvent("iotask.getExecuteNoneDataAssociationRequest", function(){node_getExecuteNoneDataAssociationRequest = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociation", node_createDataAssociation); 

@@ -10,7 +10,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
 	var node_IOTaskResult;
-	var node_ioTaskProcessor;
+	var node_taskUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 var node_createDataService = function(){
@@ -29,7 +29,7 @@ var node_createDataService = function(){
 		getExecuteEmbededDataServiceRequest : function(serviceId, serviceUse, ioEndpoint, handlers, requester_parent){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {}), handlers, requester_parent);
 			var serviceMapping = serviceUse[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_SERVICEMAPPING];
-			out.addRequest(node_ioTaskProcessor.getExecuteIOTaskRequest(
+			out.addRequest(node_taskUtility.getExecuteEmbededTaskRequest(
 				ioEndpoint, undefined, serviceMapping,
 				function(input, handlers, request){
 					var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
@@ -97,7 +97,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.ioTaskProcessor", function(){node_ioTaskProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.taskUtility", function(){node_taskUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataService", node_createDataService); 

@@ -36,6 +36,9 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 
 	@HAPAttribute
 	public static String EVENTHANDLER = "eventHandler";
+
+	@HAPAttribute
+	public static String PAGENAME = "pageName";
 	
 	private HAPDefinitionModuleUI m_moduleUIDefinition;
 	
@@ -75,6 +78,7 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
+		jsonMap.put(PAGENAME, this.m_moduleUIDefinition.getPage());
 	}
 	
 	@Override

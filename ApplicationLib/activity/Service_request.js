@@ -21,7 +21,6 @@
 			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 			var node_objectOperationUtility = nosliw.getNodeData("common.utility.objectOperationUtility");
 			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
-			var node_ioTaskProcessor = nosliw.getNodeData("iotask.ioTaskProcessor");
 
 			var loc_out = {
 				
