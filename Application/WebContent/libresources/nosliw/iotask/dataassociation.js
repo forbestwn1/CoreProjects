@@ -5,24 +5,17 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
-	var node_buildServiceProvider;
-	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
-	var node_createServiceRequestInfoSet;
 	var node_ServiceInfo;
 	var node_objectOperationUtility;
-	var node_EndActivityOutput;
-	var node_ProcessResult;
-	var node_createServiceRequestInfoService;
-	var node_DependentServiceRequestInfo;
-	var node_requestServiceProcessor;
-	var node_IOTaskResult;
 	var node_createIODataSet;
 	var node_requestServiceProcessor;
 	var node_makeObjectWithType;
 	var node_getObjectType;
 	var node_ioTaskUtility;
 	var node_getExecuteMappingDataAssociationRequest;
+	var node_getExecuteMirrorDataAssociationRequest;
+	var node_getExecuteNoneDataAssociationRequest;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //dataAssociation that has inputIO, dataAssociation and outputIO
@@ -33,12 +26,6 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 	var loc_inputIO = node_createIODataSet(inputIO);
 	var loc_outputIODataSet = node_createIODataSet(outputIODataSet);
 	var loc_dataAssociationDef = dataAssociationDef;
-
-	//execute association
-	var loc_executeDataAssociationConvertFun  = function(association, inputDataSet){
-		if(association==undefined || association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_CONVERTFUNCTION]==undefined) return undefined;
-		return association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_CONVERTFUNCTION](inputDataSet, node_objectOperationUtility.assignObjectAttributeByPath);
-	};
 
 	//merge extraDataSet with inputIODataSet to create inputDataSet for data association
 	var loc_getInputDataSetRequest = function(inputIO, extraDataSet, handlers, request){
@@ -61,65 +48,16 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		return out;
 	};
 
-	//execute data association of mirror type
-	var loc_getExecuteMirrorDataAssociationRequest = function(inputDataSet, handlers, request){
-		var service = new node_ServiceInfo("ExecuteMirrorDataAssociation", {});
-		var out = node_createServiceRequestInfoSet(undefined, {
-			success : function(request, resultSet){
-				return loc_outputIODataSet;
-			}
-		});
-
-		_.each(inputDataSet, function(inputData, name){
-			var inputFlat = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][name];
-			var outputFlat = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_OUTPUT][name];
-			
-			var outputData = inputData;
-			if(inputFlat!=outputFlat){
-				if(inputFlat==true){
-					//input is flat and output is not flat
-					//put input into public categary
-					outputData = {
-						public : inputData
-					}
-				}
-				else{
-					//input is not flat, output is flat
-					//make output flat
-					outputData = {};
-					_.each(node_ioTaskUtility.getContextTypes(), function(categary, index){
-						var context = inputData[categary];
-						if(context!=undefined){
-							_.each(context, function(value, name){
-								outputData[name] = value;
-							});
-						}
-					});
-				}
-			}
-			
-			out.addRequest(name, node_ioTaskUtility.outputToDataSetIORequest(loc_outputIODataSet, outputData, name, true));
-		});
-		
-		return out;
-	};
-
-	var loc_getExecuteNoneDataAssociationRequest = function(intputDataSet, handlers, request){
-		return node_createServiceRequestInfoSimple(undefined, function(request){
-			return loc_outputIODataSet;
-		}, handlers, request);
-	};
-
 	var loc_getExecuteDataAssociationRequest = function(inputIO, extraDataSet, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
 		out.addRequest(loc_getInputDataSetRequest(inputIO, extraDataSet, {
 			success : function(request, intputDataSet){
-				if(loc_dataAssociationDef==undefined)  return loc_getExecuteNoneDataAssociationRequest(intputDataSet);   //if no data association, then nothing happen
+				if(loc_dataAssociationDef==undefined)  return node_getExecuteNoneDataAssociationRequest(intputDataSet, loc_dataAssociationDef, loc_outputIODataSet);   //if no data association, then nothing happen
 				else{
 					var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
 					if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(intputDataSet, loc_dataAssociationDef, loc_outputIODataSet);
-					else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return loc_getExecuteMirrorDataAssociationRequest(intputDataSet);
-					else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return loc_getExecuteNoneDataAssociationRequest(intputDataSet);
+					else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return node_getExecuteMirrorDataAssociationRequest(intputDataSet, loc_dataAssociationDef, loc_outputIODataSet);
+					else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return node_getExecuteNoneDataAssociationRequest(intputDataSet, loc_dataAssociationDef, loc_outputIODataSet);
 				}
 			}
 		}));
@@ -127,6 +65,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 	};
 
 	var loc_out = {
+		prv_id : nosliw.generateId(),
 		
 		getExecuteDataAssociationRequest : function(extraData, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
@@ -179,24 +118,17 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.EndActivityOutput", function(){node_EndActivityOutput = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("iotask.getExecuteMappingDataAssociationRequest", function(){node_getExecuteMappingDataAssociationRequest = this.getData();	});
+nosliw.registerSetNodeDataEvent("iotask.getExecuteMirrorDataAssociationRequest", function(){node_getExecuteMirrorDataAssociationRequest = this.getData();	});
+nosliw.registerSetNodeDataEvent("iotask.getExecuteNoneDataAssociationRequest", function(){node_getExecuteNoneDataAssociationRequest = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociation", node_createDataAssociation); 
