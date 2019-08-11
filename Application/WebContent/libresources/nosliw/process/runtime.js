@@ -23,6 +23,7 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_getObjectType;
 	var node_createProcess;
+	var node_dataAssociationUtility;
 
 //*******************************************   Start Node Definition  **************************************
 var node_createProcessRuntime = function(envObj){
@@ -63,16 +64,23 @@ var node_createProcessRuntime = function(envObj){
 			}
 
 			var output = {};
-			out.addRequest(node_createDataAssociation(input, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], output).getExecuteWithExtraDataRequest(extraInputDataSet, {
-				success : function(request, input){
-					return input.getGetDataValueRequest(undefined, {
-						success : function(request, inputData){
-							return node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(inputData, outputMappingsByResult);
-						}
-					}, request);
-//					return node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(input.getData(), outputMappingsByResult);
-				}
-			}));
+			out.addRequest(
+				node_createDataAssociation(
+					input, 
+					processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], 
+					output,
+					node_dataAssociationUtility.buildDataAssociationName("PROCESS", "EXTERNAL", "PROCESS", processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID])
+				).getExecuteWithExtraDataRequest(extraInputDataSet, {
+					success : function(request, input){
+						return input.getGetDataValueRequest(undefined, {
+							success : function(request, inputData){
+								return node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(inputData, outputMappingsByResult);
+							}
+						}, request);
+	//					return node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(input.getData(), outputMappingsByResult);
+					}
+				})
+			);
 			return out;
 		},
 		
@@ -136,6 +144,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("process.createProcess", function(){node_createProcess = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createProcessRuntimeFactory", node_createProcessRuntimeFactory); 

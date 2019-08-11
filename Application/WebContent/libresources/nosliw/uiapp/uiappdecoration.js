@@ -8,7 +8,6 @@ var packageObj = library;
 	var node_createServiceRequestInfoSequence;
 	var node_createIODataSet;
 	var node_createDynamicIOData;
-	var node_createDataAssociation;
 	var node_ModuleInfo;
 	var node_ServiceInfo;
 	var node_createConfigure;
@@ -206,7 +205,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});

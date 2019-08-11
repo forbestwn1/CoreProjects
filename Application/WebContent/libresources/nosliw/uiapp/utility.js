@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_getComponentInterface;
 	var node_ModuleInfo;
 	var node_createServiceRequestInfoSimple;
+	var node_dataAssociationUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
@@ -174,7 +175,12 @@ var node_utility = function(){
 			var inputMappings = moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element;
 			var out = {};
 			_.each(inputMappings, function(mapping, name){
-				out[name] = node_createDataAssociation(moduleInfo.externalIO, mapping);
+				out[name] = node_createDataAssociation(
+								moduleInfo.externalIO,
+								mapping, 
+								undefined, 
+								node_dataAssociationUtility.buildDataAssociationName("APP", "CONTEXT", "MODULE", moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ID])
+							);
 			});
 			moduleInfo.inputMapping = out;
 		},
@@ -184,7 +190,12 @@ var node_utility = function(){
 			var out = {};
 			var comInterface = node_getComponentInterface(moduleInfo.module);
 			_.each(outputMappings, function(mapping, name){
-				out[name] = node_createDataAssociation(comInterface.getIOContext(), mapping, moduleInfo.externalIO);
+				out[name] = node_createDataAssociation(
+								comInterface.getIOContext(), 
+								mapping, 
+								moduleInfo.externalIO,
+								node_dataAssociationUtility.buildDataAssociationName("MODULE", moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ID], "APP", "CONTEXT")
+							);
 			});
 			moduleInfo.outputMapping = out;
 			return moduleInfo;
@@ -207,6 +218,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
+nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 
