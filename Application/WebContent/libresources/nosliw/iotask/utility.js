@@ -7,16 +7,40 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSequence;
 	var node_createServiceRequestInfoSimple;
+	var node_ServiceInfo;
+	var node_getObjectType;
+	var node_createIODataSet;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
 	
 	var loc_out = {
 
-		buildDataAssociationName : function(sourceType, sourceName, targetType, targetName){
-			return sourceType+"_"+sourceName+"---"+targetType+"_"+targetName;
+		//get ioData's data set value
+		//ioData maybe dataSet, value, or dataAssociation
+		getGetIODataValueRequest : function(ioData, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getGetDataSetValueRequest", {}), handlers, request);
+			var ioDataType = node_getObjectType(ioData);
+			if(ioDataType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_IODATASET){
+				//for io data set, get directly
+				out.addRequest(ioData.getGetDataSetValueRequest());
+			}
+			else if(ioDataType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION){
+				//for data association, execute data association first
+				out.add(ioData.getExecuteRequest({
+					success : function(request, ioDataSet){
+						return ioDataSet.getGetDataSetValueRequest();
+					}
+				}));
+			}
+			else{
+				//for value, build io data set first
+				out.addRequest(node_createIODataSet(ioData).getGetDataSetValueRequest());
+			}
+			
+			return out;
 		},
-
+		
 		getContextTypes : function(){
 			return [ 
 				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC, 
@@ -108,6 +132,9 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("ioTaskUtility", node_utility); 

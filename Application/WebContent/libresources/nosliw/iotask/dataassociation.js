@@ -25,77 +25,55 @@ var packageObj = library;
 //name in parm is for debugging purpose
 var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIODataSet, name){
 	
-	var loc_inputIO = node_createIODataSet(inputIO);
+	var loc_inputIO = inputIO;
 	var loc_outputIODataSet = node_createIODataSet(outputIODataSet);
 	var loc_dataAssociationDef = dataAssociationDef;
 
-	//merge extraDataSet with inputIODataSet to create inputDataSet for data association
-	var loc_getInputDataSetRequest = function(inputIO, extraDataSet, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(inputIO.getGetDataSetValueRequest({
-			success : function(request, intputDataSet){
-				if(extraDataSet!=undefined){
-					_.each(extraDataSet.getDataSet(), function(extraData, setName){
-						var inputData = intputDataSet[setName];
-						if(inputData==undefined){
-							inputData = {};
-							intputDataSet[setName] = inputData;
-						}
-						node_ioTaskUtility.mergeContext(extraData, inputData, loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][setName]);
-					})
-				}
-				return intputDataSet;
-			}
-		}));
-		return out;
-	};
-
-	var loc_getExecuteDataAssociationRequest = function(inputIO, extraDataSet, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
-		out.addRequest(loc_getInputDataSetRequest(inputIO, extraDataSet, {
-			success : function(request, intputDataSet){
-				nosliw.logging.info("Data association ", loc_out.prv_id, " input data : " + node_basicUtility.stringify(intputDataSet));
-				if(loc_dataAssociationDef==undefined)  return node_getExecuteNoneDataAssociationRequest(intputDataSet, loc_dataAssociationDef, loc_outputIODataSet);   //if no data association, then nothing happen
-				else{
-					var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
-					if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(intputDataSet, loc_dataAssociationDef, loc_outputIODataSet);
-					else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return node_getExecuteMirrorDataAssociationRequest(intputDataSet, loc_dataAssociationDef, loc_outputIODataSet);
-					else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return node_getExecuteNoneDataAssociationRequest(intputDataSet, loc_dataAssociationDef, loc_outputIODataSet);
-				}
-			}
-		}));
-		return out;
+	var loc_getExecuteDataAssociationRequest = function(inputDataSet, handlers, request){
+		nosliw.logging.info("Data association ", loc_out.prv_id, " input data : " + node_basicUtility.stringify(inputDataSet));
+		if(loc_dataAssociationDef==undefined)  return node_getExecuteNoneDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);   //if no data association, then nothing happen
+		else{
+			var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
+			if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);
+			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return node_getExecuteMirrorDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);
+			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return node_getExecuteNoneDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);
+		}
 	};
 
 	var loc_out = {
 		prv_id : nosliw.generateId(),
 		prv_name : name,
 		
-		getExecuteWithExtraDataRequest : function(extraData, handlers, request){
+		getExecuteWithExtraDataRequest : function(extraDataSet, handlers, request){
 			nosliw.logging.info("Start execute data association : ", loc_out.prv_name, "   ", loc_out.prv_id);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
-			if(extraData!=undefined)  extraData = node_createIODataSet(extraData);
-			var inputIOType = node_getObjectType(loc_inputIO);
-			if(inputIOType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_IODATASET){
-				out.addRequest(loc_getExecuteDataAssociationRequest(loc_inputIO, extraData, {
-					success :function(request){
-						nosliw.logging.info("Data association ", loc_out.prv_id, " result : " + node_basicUtility.stringify(loc_outputIODataSet));
-						return loc_outputIODataSet;
-					}
-				}));
-			}
-			else if(inputIOType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION){
-				out.add(loc_inputIO.getExecuteRequest({
-					success : function(request, inputIO){
-						out.addRequest(loc_getExecuteDataAssociationRequest(inputIO, extraData, {
-							success :function(request){
-								nosliw.logging.info("Data association ", loc_out.prv_id, " result : " + node_basicUtility.stringify(loc_outputIODataSet));
-								return loc_outputIODataSet;
+
+			//get input data set first
+			out.addRequest(node_ioTaskUtility.getGetIODataValueRequest(loc_inputIO, {
+				success: function(request, inputDataSet){
+					if(extraDataSet!=undefined){
+						//merge with extraDataSet
+						var extraDataSet = node_createIODataSet(extraDataSet);
+						_.each(extraDataSet.getDataSet(), function(extraData, setName){
+							var inputData = intputDataSet[setName];
+							if(inputData==undefined){
+								inputData = {};
+								intputDataSet[setName] = inputData;
 							}
-						}));
+							node_ioTaskUtility.mergeContext(extraData, inputData, loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][setName]);
+						})
 					}
-				}));
-			}
+					
+					//execute data associatoin
+					return loc_getExecuteDataAssociationRequest(inputDataSet, {
+						success :function(request){
+							nosliw.logging.info("Data association ", loc_out.prv_id, " result : " + node_basicUtility.stringify(loc_outputIODataSet));
+							return loc_outputIODataSet;
+						}
+					})
+				}
+			}));
+			
 			return out;
 		},
 			
