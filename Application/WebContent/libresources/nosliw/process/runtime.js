@@ -96,6 +96,10 @@ var node_createProcessRuntime = function(envObj){
 	return loc_out;
 };
 
+//process runtime factory
+//when create process runtime, the process environment is needed
+//process environment is object connect the process to external 
+//example include process in module, app, or others
 var node_createProcessRuntimeFactory = function(){
 	var loc_out = {
 		createProcessRuntime : function(envObj){

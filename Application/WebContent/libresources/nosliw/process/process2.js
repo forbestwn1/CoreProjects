@@ -197,7 +197,7 @@ var node_createProcess = function(processDef, envObj){
 
 	var loc_out = {
 			
-		getExecuteProcessRequest : function(input, handlers, request){
+		getExecuteProcessRequest : function(input, outputMappingsByResult, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_createContextIORequest(input));
 			out.addRequest(loc_getExecuteProcessRequest({
@@ -217,8 +217,8 @@ var node_createProcess = function(processDef, envObj){
 			return out;
 		},	
 
-		executeProcessRequest : function(input, handlers, request){
-			var requestInfo = this.getExecuteProcessRequest(input, handlers, request);
+		executeProcessRequest : function(input, outputMappingsByResult, handlers, request){
+			var requestInfo = this.getExecuteProcessRequest(input, outputMappingsByResult, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		}	
 	};
@@ -257,6 +257,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createProcess2", node_createProcess); 
+packageObj.createChildNode("createProcess", node_createProcess); 
 
 })(packageObj);
