@@ -196,22 +196,13 @@ var node_createProcess = function(processDef, envObj){
 	};
 
 	var loc_out = {
-			
+
 		getExecuteProcessRequest : function(input, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_createContextIORequest(input));
 			out.addRequest(loc_getExecuteProcessRequest({
 				success : function(request, processResult){
-					if(outputMappingsByResult==undefined)  return processResult;
-					else{
-						var outputMapping = outputMappingsByResult[processResult.resultName];
-						node_createDataAssociation(loc_processContextIO, outputMapping.dataAssociationDef, outputMapping.dataIO).getExecuteRequest({
-							success : function(request, mappedIO){
-								return new node_ProcessResult(request.getData(), mappedIO);
-							}
-						}).withData(processResult.resultName);
-						
-					}
+					return new node_IOTaskResult(processResult.resultName, loc_processContextIO);
 				}
 			}));
 			return out;
@@ -220,7 +211,7 @@ var node_createProcess = function(processDef, envObj){
 		executeProcessRequest : function(input, handlers, request){
 			var requestInfo = this.getExecuteProcessRequest(input, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
-		}	
+		},	
 	};
 	
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
@@ -255,8 +246,9 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createProcess2", node_createProcess); 
+packageObj.createChildNode("createProcess", node_createProcess); 
 
 })(packageObj);

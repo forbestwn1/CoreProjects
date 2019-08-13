@@ -68,7 +68,7 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 	var loc_getProcessEnv = function(){   return loc_componentComplex.getInterface();    };
 	
 	var loc_getExecuteAppProcessRequest = function(process, extraInput, handlers, request){
-		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteProcessRequest(process, loc_out.prv_getComponent().getIOContext(), extraInput, handlers, request);
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteEmbededProcessRequest(process, loc_out.prv_getComponent().getIOContext(), extraInput, handlers, request);
 	};
 	
 	var loc_getExecuteAppProcessByNameRequest = function(processName, extraInput, handlers, request){

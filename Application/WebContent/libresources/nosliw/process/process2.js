@@ -257,6 +257,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createProcess", node_createProcess); 
+packageObj.createChildNode("createProcess2", node_createProcess); 
 
 })(packageObj);

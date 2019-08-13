@@ -76,7 +76,7 @@ var node_createComponentDecoration = function(id, baseLayer, coreGenerator, proc
 		processRequest : function(request){   	node_requestServiceProcessor.processRequest(request);  },
 		
 		getExecuteProcessRequest : function(process, extraInput, handlers, request){
-			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessRequest(process, this.getComponent().getIOContext(), extraInput, handlers, request);
+			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteEmbededProcessRequest(process, this.getComponent().getIOContext(), extraInput, handlers, request);
 		},
 
 		getExecuteProcessResourceRequest : function(processId, input, handlers, request){
