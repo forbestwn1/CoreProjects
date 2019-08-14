@@ -6,24 +6,12 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_buildServiceProvider;
-	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
-	var node_createServiceRequestInfoSet;
 	var node_ServiceInfo;
-	var node_objectOperationUtility;
-	var node_ProcessResult;
-	var node_createServiceRequestInfoService;
-	var node_DependentServiceRequestInfo;
 	var node_requestServiceProcessor;
 	var node_IOTaskResult;
 	var node_createDataAssociation;
-	var node_createIODataSet;
-	var node_getLifecycleInterface;
-	var node_makeObjectWithLifecycle;
-	var node_makeObjectWithType;
-	var node_getObjectType;
 	var node_createProcess;
-	var node_dataAssociationUtility;
 	var node_taskUtility;
 	var node_IOTaskResult;
 
@@ -34,29 +22,32 @@ var node_createProcessRuntime = function(envObj){
 	
 	var loc_out = {
 
-		getExecuteProcessResourceRequest : function(id, input, outputMappingsByResult, handlers, requester_parent){
+		//execute process by resource id
+		//return IOTaskResult with resultName and mapped output value by result
+		getExecuteProcessResourceRequest : function(id, inputValue, outputMappingsByResult, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteProcessResource", {"id":id, "input":input}), handlers, requestInfo);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteProcessResource", {"id":id, "input":inputValue}), handlers, requestInfo);
+			//get process resource first
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([id], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_PROCESS, {
 				success : function(requestInfo, processes){
 					var process = processes[id];
-					return node_createProcess(process, loc_envObj).getExecuteProcessRequest(input, {
-						success : function(request, taskResult){
-							if(outputMappingsByResult==undefined){
-								return taskResult.resultValue.getGetDataValueRequest(undefined, {
-									success : function(request, value){
-										return new node_IOTaskResult(taskResult.resultName, value);
-									}
-								});
+					//execute process
+					return node_createProcess(process, loc_envObj).getExecuteProcessRequest(inputValue, {
+						success : function(request, processResult){
+							if(outputMappingsByResult==undefined || outputMappingsByResult[processResult.resultName]==undefined){
+								//no mapping needed, calculate value
+								return processResult;
 							}
 							else{
-								var dataAssociation = node_createDataAssociation(taskResult.resultValue, outputMappingsByResult[taskResult.resultName]);
+								//otherwise, do mapping according to result
+								var dataAssociation = node_createDataAssociation(processResult.resultValue, outputMappingsByResult[processResult.resultName]);
 								return dataAssociation.getExecuteRequest(						
 									{
 										success : function(requestInfo, processOutputIODataSet){
+											//calculate mapping output value
 											return processOutputIODataSet.getGetDataValueRequest(undefined, {
 												success : function(request, value){
-													return new node_IOTaskResult(taskResult.resultName, value);
+													return new node_ProcessResult(processResult.resultName, value);
 												}
 											});
 										}
@@ -70,24 +61,30 @@ var node_createProcessRuntime = function(envObj){
 			return out;
 		},
 			
-		executeProcessResourceRequest : function(id, input, outputMappingsByResult, handlers, requester_parent){
-			var requestInfo = this.getExecuteProcessResourceRequest(id, input, outputMappingsByResult, handlers, requester_parent);
+		executeProcessResourceRequest : function(id, inputValue, outputMappingsByResult, handlers, requester_parent){
+			var requestInfo = this.getExecuteProcessResourceRequest(id, inputValue, outputMappingsByResult, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
+		//process defined within other component
+		//extraInputDataSet is other component's contextIo
+		//return : IOTaskResult with resultName and outputIODataSet (which is externalIODataSet)
 		getExecuteEmbededProcessRequest : function(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, requester_parent);
-			out.addRequest(node_taskUtility.getExecuteEmbededTaskRequest(
-					externalIODataSet, 
-					extraInputDataSet, 
-					processDef, 
-					function(inputData, handlers, request){
-						return node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(inputData);
-					}, 
-					handlers, 
-					requester_parent)
-			);
-			return out;
+			return node_taskUtility.getExecuteEmbededTaskRequest(
+				externalIODataSet, 
+				extraInputDataSet, 
+				processDef, 
+				function(inputValue, handlers, request){
+					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("executeEmbededProcess", {}), handlers, request);
+					out.addRequest(node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(inputValue, {
+						success : function(request, processResult){
+							return new node_IOTaskResult(processResult.resultName, processResult.resultValue);
+						}
+					}));
+					return out;
+				}, 
+				handlers, 
+				requester_parent);
 		},
 
 		executeEmbededProcessRequest : function(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent){
@@ -136,24 +133,12 @@ var node_createEnv = function(envObj){
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("process.entity.NormalActivityResult", function(){node_IOTaskResult = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
-nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
-nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
-nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("process.createProcess", function(){node_createProcess = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 

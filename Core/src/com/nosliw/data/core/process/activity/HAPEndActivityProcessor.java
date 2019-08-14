@@ -33,8 +33,11 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 
 		HAPEndActivityDefinition endActivity = (HAPEndActivityDefinition)activityDefinition;
 		
-		HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), endActivity.getOutput(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement);
-		results.put(endActivity.getName(), result);
+		if(endActivity.getOutput()!=null) {
+			//build result data association only when end activity has output
+			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), endActivity.getOutput(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement);
+			results.put(endActivity.getName(), result);
+		}
 		
 		HAPEndActivityExecutable out = new HAPEndActivityExecutable(id, activityDefinition);
 		

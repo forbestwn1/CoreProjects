@@ -11,7 +11,7 @@ var packageObj = library.getChildPackage("entity");
 //process output
 var node_ProcessResult = function(resultName, value){
 	this.resultName = resultName;
-	this.value = value;
+	this.resultValue = value;
 }
 
 //*******************************************   End Node Definition  ************************************** 	

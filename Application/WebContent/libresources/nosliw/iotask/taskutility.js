@@ -42,8 +42,10 @@ var node_taskUtility = function(){
 						success : function(request, taskResult){
 							//process output association according to result name
 							var outputDataAssociationDef;
-							if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(taskResult.resultName);
-							else   outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
+							if(outputDataAssociationByResult!=undefined){
+								if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(taskResult.resultName);
+								else   outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
+							}
 
 							var taskOutputDataAssociation = node_createDataAssociation(taskResult.resultValue, outputDataAssociationDef, outputIO);
 							return taskOutputDataAssociation.getExecuteRequest({

@@ -134,7 +134,7 @@
 					"id": "successEndId",
 					"name": "successEnd",
 					"type": "end",
-					"output": {
+					"output111": {
 						"element": {
 							"output": {
 								definition: {
