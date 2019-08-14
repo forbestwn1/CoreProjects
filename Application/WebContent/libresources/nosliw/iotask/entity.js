@@ -25,12 +25,6 @@ var node_IOTaskResult = function(resultName, resultValue){
 	this.resultValue = resultValue; 
 };
 
-var node_ExternalMapping = function(dataIO, dataAssociationDef){
-	this.dataIO = dataIO;
-	this.dataAssociationDef = dataAssociationDef;
-	node_makeObjectWithType(this, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_EXTERNALMAPPING);
-};
-
 //dynamic io data which read and write through function
 //dynamic io data inform the data change through listen to eventObj
 var node_createDynamicIOData = function(getValueRequestFun, setValueRequestFun, eventObj){
