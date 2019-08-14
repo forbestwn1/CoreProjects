@@ -13,32 +13,36 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 //do task process with input data association and output io 
 var node_taskUtility = function(){
-	
+
+	loc_buildTaskInputDataAssociationName = function(taskName){		return "TASKINPUT_" + taskName;		};
+
+	loc_buildTaskOutputDataAssociationName = function(taskName){		return "TASKOUTPUT_" + taskName;	};
+
 	var loc_out = {
 			
-		getExecuteEmbededTaskRequest : function(externalIODataSet, extraInputData, ioMapping, getTaskRequest, handlers, request){
+		getExecuteEmbededTaskRequest : function(externalIODataSet, extraInputData, ioMapping, ioTaskInfo, handlers, request){
 			return loc_out.getExecuteTaskRequest(
 					externalIODataSet, 
 					extraInputData,
 					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], 
-					getTaskRequest, 
+					ioTaskInfo, 
 					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING], 
 					externalIODataSet, 
 					handlers, 
 					request);
 		},
 			
-		getExecuteTaskRequest : function(inputIO, extraInputdata, inputDataAssociationDef, getTaskRequest, outputDataAssociationByResult, outputIO, handlers, request){
+		getExecuteTaskRequest : function(inputIO, extraInputdata, inputDataAssociationDef, ioTaskInfo, outputDataAssociationByResult, outputIO, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association
 			var taskInputIO = node_createIODataSet();
-			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, taskInputIO);   //data association for input for task
+			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, taskInputIO, loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
 			out.addRequest(taskInputDataAssociation.getExecuteWithExtraDataRequest(extraInputdata, {
 				success : function(requestInfo, taskInputIO){
 					var taskInput = taskInputIO.getData();
 					//execute task
 					var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));
-					executeIOTaskRequest.addRequest(getTaskRequest(taskInput, {
+					executeIOTaskRequest.addRequest(ioTaskInfo.taskRequestFun(taskInput, {
 						success : function(request, taskResult){
 							//process output association according to result name
 							var outputDataAssociationDef;
@@ -47,7 +51,7 @@ var node_taskUtility = function(){
 								else   outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
 							}
 
-							var taskOutputDataAssociation = node_createDataAssociation(taskResult.resultValue, outputDataAssociationDef, outputIO);
+							var taskOutputDataAssociation = node_createDataAssociation(taskResult.resultValue, outputDataAssociationDef, outputIO, loc_buildTaskOutputDataAssociationName(ioTaskInfo.taskName));
 							return taskOutputDataAssociation.getExecuteRequest({
 								success :function(request, taskOutputDataSetIO){
 									return new node_IOTaskResult(taskResult.resultName, taskOutputDataSetIO);

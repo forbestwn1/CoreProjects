@@ -25,6 +25,11 @@ var node_IOTaskResult = function(resultName, resultValue){
 	this.resultValue = resultValue; 
 };
 
+var node_IOTaskInfo = function(taskRequestFun, taskName){
+	this.taskRequestFun = taskRequestFun;
+	this.taskName = taskName;
+};
+
 //dynamic io data which read and write through function
 //dynamic io data inform the data change through listen to eventObj
 var node_createDynamicIOData = function(getValueRequestFun, setValueRequestFun, eventObj){
@@ -242,5 +247,6 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_
 packageObj.createChildNode("IOTaskResult", node_IOTaskResult); 
 packageObj.createChildNode("createIODataSet", node_createIODataSet); 
 packageObj.createChildNode("createDynamicData", node_createDynamicIOData); 
+packageObj.createChildNode("IOTaskInfo", node_IOTaskInfo); 
 
 })(packageObj);

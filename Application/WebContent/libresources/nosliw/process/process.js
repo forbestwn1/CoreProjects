@@ -24,14 +24,15 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_getObjectType;
 	var node_requestServiceProcessor;
+	var node_IOTaskInfo;
 	
 //*******************************************   Start Node Definition  **************************************
-//normal activity output (next activity + context)
+//normal activity output (next activity)
 var loc_NormalActivityOutput = function(next){
 	this.next = next;
 };
 
-//end activity output (result name + context)
+//end activity output (result name)
 var loc_EndActivityOutput = function(resultName){
 	this.resultName = resultName;
 };
@@ -85,8 +86,8 @@ var node_createProcess = function(processDef, envObj){
 		out.addRequest(node_taskUtility.getExecuteTaskRequest(
 				loc_processContextIO, 
 				undefined,
-				normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUT], 
-				function(inputValue, handlers, request){
+				normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUT],    //input data association
+				new node_IOTaskInfo(function(inputValue, handlers, request){
 					var executeActivityPluginRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteActivityPlugin", {}), handlers, request);
 					//get activity plugin 
 					executeActivityPluginRequest.addRequest(loc_getActivityPluginRequest(normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_TYPE], {
@@ -100,8 +101,8 @@ var node_createProcess = function(processDef, envObj){
 						}
 					}));
 					return executeActivityPluginRequest;
-				}, 
-				function(resultName){   //function for result by name
+				}, "ACTIVITYTASK_"+normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_ID]), 
+				function(resultName){   //output data association function for result by name
 					return normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][resultName][node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_DATAASSOCIATION]; 
 				},
 				loc_processContextIO,
@@ -157,7 +158,13 @@ var node_createProcess = function(processDef, envObj){
 				var resultDataAssociationDef = loc_processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_RESULT][endActivityOutput.resultName];
 				if(resultDataAssociationDef!=undefined){
 					//has output data association for result
-					return node_createDataAssociation(loc_processContextIO, resultDataAssociationDef).getExecuteRequest(						
+					return node_createDataAssociation(
+							loc_processContextIO, 
+							resultDataAssociationDef, 
+							undefined, 
+							node_dataAssociationUtility.buildDataAssociationName("EMBEDEDPROCESSRESULT",loc_processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID], "RESULT", "MAPPEDRESULT")
+						)
+						.getExecuteRequest(						
 							{
 								success : function(requestInfo, processOutputIODataSet){
 									return processOutputIODataSet.getGetDataValueRequest(undefined, {
@@ -228,6 +235,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createProcess", node_createProcess); 

@@ -14,6 +14,7 @@ var packageObj = library;
 	var node_createProcess;
 	var node_taskUtility;
 	var node_IOTaskResult;
+	var node_IOTaskInfo;
 
 //*******************************************   Start Node Definition  **************************************
 var node_createProcessRuntime = function(envObj){
@@ -23,7 +24,7 @@ var node_createProcessRuntime = function(envObj){
 	var loc_out = {
 
 		//execute process by resource id
-		//return IOTaskResult with resultName and mapped output value by result
+		//return ProcessResult with resultName and mapped output value by result
 		getExecuteProcessResourceRequest : function(id, inputValue, outputMappingsByResult, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteProcessResource", {"id":id, "input":inputValue}), handlers, requestInfo);
@@ -40,7 +41,12 @@ var node_createProcessRuntime = function(envObj){
 							}
 							else{
 								//otherwise, do mapping according to result
-								var dataAssociation = node_createDataAssociation(processResult.resultValue, outputMappingsByResult[processResult.resultName]);
+								var dataAssociation = node_createDataAssociation(
+										processResult.resultValue,
+										outputMappingsByResult[processResult.resultName], 
+										undefined, 
+										node_dataAssociationUtility.buildDataAssociationName("PROCESSRESULT", id, "RESULT", "MAPPEDRESULT")
+								);
 								return dataAssociation.getExecuteRequest(						
 									{
 										success : function(requestInfo, processOutputIODataSet){
@@ -74,7 +80,7 @@ var node_createProcessRuntime = function(envObj){
 				externalIODataSet, 
 				extraInputDataSet, 
 				processDef, 
-				function(inputValue, handlers, request){
+				new node_IOTaskInfo(function(inputValue, handlers, request){
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("executeEmbededProcess", {}), handlers, request);
 					out.addRequest(node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(inputValue, {
 						success : function(request, processResult){
@@ -82,7 +88,7 @@ var node_createProcessRuntime = function(envObj){
 						}
 					}));
 					return out;
-				}, 
+				}, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID]), 
 				handlers, 
 				requester_parent);
 		},
@@ -141,6 +147,7 @@ nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_
 nosliw.registerSetNodeDataEvent("process.createProcess", function(){node_createProcess = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createProcessRuntimeFactory", node_createProcessRuntimeFactory); 
