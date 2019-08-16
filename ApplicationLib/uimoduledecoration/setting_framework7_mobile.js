@@ -8,7 +8,7 @@ function(gate){
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_createUIDecorationsRequest = nosliw.getNodeData("uipage.createUIDecorationsRequest");
-	var node_commandResult = nosliw.getNodeData("component.commandResult");
+	var node_CommandResult = nosliw.getNodeData("component.CommandResult");
 	var node_destroyUtil = nosliw.getNodeData("common.lifecycle.destroyUtil");
 
 	var loc_gate = gate;
@@ -31,7 +31,7 @@ function(gate){
 				if(parms.modified!=undefined)  contextUpdate.modified = parms.modified;
 				if(parms.name!=undefined)  contextUpdate.name = parms.name;
 				
-				return new node_commandResult(loc_decoration.getUpdateContextRequest(contextUpdate, handlers, request));
+				return new node_CommandResult(loc_decoration.getUpdateContextRequest(contextUpdate, handlers, request));
 			}
 		},
 		

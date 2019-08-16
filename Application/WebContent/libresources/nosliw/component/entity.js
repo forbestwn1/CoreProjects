@@ -49,9 +49,14 @@ var node_createConfigure = function(value){
 };
 
 	
-var node_commandResult = function(requestResult, commandInfo){
+var node_CommandResult = function(requestResult, commandInfo){
 	this.requestResult = requestResult;
 	this.commandInfo = commandInfo;
+};
+
+var node_CommandInfo = function(commandName, commandParm){
+	this.commandName = commandName;
+	this.commandParm = commandParm;
 };
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -64,6 +69,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 
 //Register Node by Name
 packageObj.createChildNode("createConfigure", node_createConfigure); 
-packageObj.createChildNode("commandResult", node_commandResult); 
+packageObj.createChildNode("CommandResult", node_CommandResult); 
 
 })(packageObj);

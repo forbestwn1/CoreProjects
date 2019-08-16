@@ -71,27 +71,63 @@ var node_createComponentComplex = function(configure, envInterface){
 		});
 	};
 
+	loc_registerLayerEvent = function(layerNum){
+		loc_layers[layerNum].registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
+			var processedEvent = event;
+			var processedEventData = eventData;
+			var processedRequest = requestInfo;
+			for(var i=layerNum; i<loc_layers.length; i++){
+				var eventResult = loc_layers[i].processComponentEvent(processedEvent, processedEventData, processedRequest);
+				if(eventResult==true || eventResult==undefined){
+					//propagate the same event
+				}
+				else if(eventResult==false){
+					//not propagate
+					processedEvent = undefined;
+					processedEventData = undefined;
+					break;
+				}
+				else{
+					//new event 
+					processedEvent = eventResult.eventName;
+					processedEventData = eventResult.eventData;
+					processedRequest = eventResult.request;
+				}
+			}
+			if(processedEvent!=undefined)	loc_eventSource.triggerEvent(processedEvent, processedEventData, processedRequest);
+
+			loc_layers[layerNum].registerValueChangeEventListener(loc_valueChangeEventListener, function(event, eventData, requestInfo){
+				for(var i=layerNum; i<loc_layers.length; i++){
+					loc_layers[i].processComponentValueChangeEvent(event, eventData, requestInfo);
+				}
+				loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);
+			});
+		});
+
+	},
+	
+	loc_addDecoration = function(componentDecorationInfo){
+		var decName = componentDecorationInfo.name;
+		var decoration = node_createComponentDecoration(decName, loc_getComponent(), componentDecorationInfo.coreFun, loc_interface, loc_configure.getConfigureData(decName), loc_state);
+		loc_layers.push(decoration);
+		if(decoration.getInterface!=undefined)	_.extend(loc_interface, decoration.getInterface());
+
+		loc_registerLayerEvent(loc_layers.length-1);
+	};
+	
 	var loc_out = {
 		
 		setComponent : function(component){
 			loc_layers.push(component);
-			loc_registerFacadeListener();
+			loc_registerLayerEvent(0);
 		},
 		
 		addDecorations : function(componentDecorationInfos){
 			for(var i in componentDecorationInfos){  loc_out.addDecoration(componentDecorationInfos[i]);	}
 		},
 
-		addDecoration : function(componentDecorationInfo){
-			var current = loc_getCurrentFacad();
-			loc_unregisterFacadeListener();
-			var decName = componentDecorationInfo.name;
-			var decoration = node_createComponentDecoration(decName, current, componentDecorationInfo.coreFun, loc_interface, loc_configure.getConfigureData(decName), loc_state);
-			loc_layers.push(decoration);
-			if(decoration.getInterface!=undefined)	_.extend(loc_interface, decoration.getInterface());
-			loc_registerFacadeListener();
-		},
-		
+		addDecoration : function(componentDecorationInfo){		loc_addDecoration(componentDecorationInfo);		},
+
 		getInterface : function(){  return loc_interface;   },
 		
 		getComponent : function(){   return loc_getComponent();    },
@@ -102,7 +138,23 @@ var node_createComponentComplex = function(configure, envInterface){
 		registerValueChangeEventListener : function(listener, handler, thisContext){  return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener); },
 
-		getExecuteCommandRequest : function(command, parms, handlers, request){	return loc_getCurrentFacad().getExecuteCommandRequest(command, parms, handlers, request);	},
+		getExecuteCommandRequest : function(command, parms, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("Execute component command", {}), handlers, request);
+			
+			var layerCommand = command;
+			var layerParms = parms;
+			for(var i in loc_layers){
+				var commandResult = loc_layers[i].getExecuteCommandRequest(layerCommand, layerParms);
+				if(commandResult!=undefined){
+					out.addRequest(commandResult.requestResult);
+					if(commandResult.commandInfo!=undefined){
+						layerCommand = commandResult.commandInfo.commandName;
+						layerParms = commandResult.commandInfo.commandParms;
+					}
+				}
+			}
+			return out;
+		},
 		
 		getAllStateData : function(){   return loc_state.getAllState();   },
 		clearState : function(){   loc_state.clear();   },	
