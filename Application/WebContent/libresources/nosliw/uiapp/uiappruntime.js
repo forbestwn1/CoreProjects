@@ -79,7 +79,7 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 	var loc_getGoActiveRequest = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
 		//start module
-		out.addRequest(loc_componentComplex.getStartRequest());
+		out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));
 		out.addRequest(loc_getExecuteAppProcessByNameRequest("active"));
 		return out;
 	};
@@ -94,14 +94,14 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]=
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DeactiveUIAppRuntime", {}), undefined, request);
-		out.addRequest(loc_componentComplex.getDeactiveRequest());
+		out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE));
 		loc_componentComplex.clearState();
 		return out;
 	};	
 
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DestroyUIAppRuntime", {}), undefined, request);
-		out.addRequest(loc_componentComplex.getDestroyRequest());
+		out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY));
 		return out;
 	};
 
@@ -109,7 +109,7 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 			
 		prv_getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
-			out.addRequest(loc_componentComplex.getInitRequest());
+			out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
 			out.addRequest(loc_out.prv_getComponent().getInitIOContextRequest());
 			return out;
 		},

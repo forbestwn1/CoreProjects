@@ -157,20 +157,38 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 		
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
 		getPart : function(partId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, partId); },
+
+		getLifeCycleRequest : function(transitName, handlers, request){
+			var out;
+			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
+				out = node_createServiceRequestInfoSimple(undefined, function(request){
+					node_destroyUtil(loc_out.prv_module.ioContext, request);
+					
+					_.each(loc_out.prv_module.uiArray, function(ui, i){
+						node_destroyUtil(ui, request);
+					});
+					loc_out.prv_module.uiArray = undefined;
+					loc_out.prv_module.ui = undefined;
+					loc_out.prv_module.uiModuleDef = undefined;
+					loc_out.prv_module.lifecycle = undefined;
+				}, handlers, request);
+			}
+			return out;
+		},
 		
-		getDestroyRequest : function(handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){
-				node_destroyUtil(loc_out.prv_module.ioContext, request);
-				
-				_.each(loc_out.prv_module.uiArray, function(ui, i){
-					node_destroyUtil(ui, request);
-				});
-				loc_out.prv_module.uiArray = undefined;
-				loc_out.prv_module.ui = undefined;
-				loc_out.prv_module.uiModuleDef = undefined;
-				loc_out.prv_module.lifecycle = undefined;
-			}, handlers, request);
-		}
+//		getDestroyRequest : function(handlers, request){
+//			return node_createServiceRequestInfoSimple(undefined, function(request){
+//				node_destroyUtil(loc_out.prv_module.ioContext, request);
+//				
+//				_.each(loc_out.prv_module.uiArray, function(ui, i){
+//					node_destroyUtil(ui, request);
+//				});
+//				loc_out.prv_module.uiArray = undefined;
+//				loc_out.prv_module.ui = undefined;
+//				loc_out.prv_module.uiModuleDef = undefined;
+//				loc_out.prv_module.lifecycle = undefined;
+//			}, handlers, request);
+//		}
 	};
 
 	loc_init();

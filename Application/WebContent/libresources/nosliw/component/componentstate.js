@@ -72,6 +72,24 @@ var node_createState = function(){
 	return loc_out;
 };
 	
+var node_getStoreService = function(){
+	var loc_out = {
+		saveData : function(categary, id, data){
+			localStorage.setItem(categary+"_"+id, JSON.stringify(data));
+		},
+		
+		retrieveData : function(categary, id){
+			return JSON.parse(localStorage.getItem(categary+"_"+id));
+		},
+		
+		clearData : function(categary, id){
+			return localStorage.removeItem(categary+"_"+id);
+		}
+	}
+	return loc_out;
+};
+
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -81,5 +99,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 //Register Node by Name
 packageObj.createChildNode("createState", node_createState); 
 packageObj.createChildNode("createStateBackupService", node_createStateBackupService); 
+packageObj.createChildNode("getStoreService", node_getStoreService); 
 
 })(packageObj);

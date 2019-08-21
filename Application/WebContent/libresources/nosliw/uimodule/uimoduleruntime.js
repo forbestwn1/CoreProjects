@@ -60,7 +60,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	var loc_getGoActiveRequest = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
 		//start module
-		out.addRequest(loc_componentComplex.getStartRequest());
+		out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));
 		out.addRequest(loc_getExecuteModuleProcessByNameRequest("active"));
 		return out;
 	};
@@ -75,7 +75,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 			out.addRequest(loc_getIOContext().getSetDataValueRequest(name, contextData));
 		});
 		
-		out.addRequest(loc_componentComplex.getResumeRequest());
+		out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME));
 		
 		out.addRequest(loc_getExecuteModuleProcessByNameRequest("resume"));
 		return out;
@@ -86,7 +86,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DestroyUIModuleRuntime", {}), undefined, request);
 		//start module
-		out.addRequest(loc_componentComplex.getDestroyRequest());
+		out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY));
 		return out;
 	};
 	
@@ -101,7 +101,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]=
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DeactiveUIModuleRuntime", {}), undefined, request);
-		out.addRequest(loc_componentComplex.getDeactiveRequest());
+		out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE));
 		loc_componentComplex.clearState();
 		return out;
 	};	
@@ -109,7 +109,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SuspendUIModuleRuntime", {}), undefined, request);
 		out.addRequest(loc_getExecuteModuleProcessByNameRequest("suspend"));
-		out.addRequest(loc_componentComplex.getSuspendRequest());
+		out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND));
 		
 		out.addRequest(loc_getIOContext().getGetDataSetValueRequest({
 			success : function(request, contextDataSet){
@@ -136,7 +136,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				loc_componentComplex.updateView(rootView, request);
 			}));
-			out.addRequest(loc_componentComplex.getInitRequest());
+			out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
 			return out;
 		},
 

@@ -59,6 +59,11 @@ var node_CommandInfo = function(commandName, commandParm){
 	this.commandParm = commandParm;
 };
 
+var node_DecorationInfo = function(decorationName, decorationConfigure){
+	this.name = decorationName;
+	this.configure = decorationConfigure;
+};
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -70,5 +75,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 //Register Node by Name
 packageObj.createChildNode("createConfigure", node_createConfigure); 
 packageObj.createChildNode("CommandResult", node_CommandResult); 
+packageObj.createChildNode("DecorationInfo", node_DecorationInfo); 
 
 })(packageObj);

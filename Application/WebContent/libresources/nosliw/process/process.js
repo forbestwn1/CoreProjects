@@ -182,7 +182,14 @@ var node_createProcess = function(processDef, envObj){
 						}
 					});
 				}
+			},
+			error : function(requestInfo, data){
+				
+			},
+			exception : function(requestInfo, data){
+				
 			}
+			
 		}));
 		return out;
 	};

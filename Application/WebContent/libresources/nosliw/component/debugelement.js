@@ -1,5 +1,6 @@
 //get/create package
-var packageObj = library;    
+var packageObj = library.getChildPackage("debug");    
+
 
 (function(packageObj){
 	//get used node
@@ -15,36 +16,54 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createComponentResetView = function(resetCallBack, restartCallBack){
+var node_createComponentResetView = function(resetCallBack, resourceType, resourceId, inputValue){
+	var loc_resourceType = resourceType;
+	var loc_resourceId = resourceId;
+	var loc_inputIODataSet = node_createIODataSet();
+	var loc_resetCallBack = resetCallBack;
+	
 	var loc_view = $('<div>Component Input: </div>');
-	var loc_textView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
-	var loc_submitView = $('<button>Reset</button>')
-	loc_view.append(loc_textView);
+	var loc_resourceTypeView = $('<textinput></textinput><br>');
+	var loc_resourceIdView = $('<textinput></textinput><br>');
+	var loc_inputValueView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
+	var loc_submitView = $('<button>Reset</button>');
+	loc_view.append(loc_resourceTypeView);
+	loc_view.append(loc_resourceIdView);
+	loc_view.append(loc_inputValueView);
 	loc_view.append(loc_submitView);
 	
-	loc_submitView.on('click', function(){
-		resetCallBack();
-	});
+	var loc_init = function(resourceType, resourceId, inputValue){
+		if(resourceType!=undefined)   	loc_resourceTypeView.val(resourceType);
+		if(resourceId!=undefined)  		loc_resourceIdView.val(resourceId);
+		if(inputValue!=undefined)		loc_inputValueView.val(JSON.stringify(inputValue));
+		
+		loc_inputIODataSet.setData(undefined, node_createDynamicIOData(
+			function(handlers, request){
+				return node_createServiceRequestInfoSimple(undefined, function(request){
+					var content = loc_textView.val();
+					if(content=='')  return;
+					return JSON.parse(content); 
+				}, handlers, request); 
+			} 
+		));
 
-	var loc_inputIODataSet = node_createIODataSet();
-	var loc_viewIO = node_createDynamicIOData(
-		function(handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){
-				var content = loc_textView.val();
-				if(content=='')  return;
-				return JSON.parse(content); 
-			}, handlers, request); 
-		} 
-	);
-	loc_inputIODataSet.setData(undefined, loc_viewIO);
+		loc_submitView.on('click', function(){
+			loc_resetCallBack();
+		});
+	};
 	
 	var loc_out = {
+
 		getView : function(){  return loc_view;   },
 		
-		getInputIODataSet : function(){
-			return loc_inputIODataSet;
-		}
-	}
+		getInputIODataSet : function(){	return loc_inputIODataSet;	},
+		
+		getResourceType : function(){  return loc_resourceTypeView.val();  },
+		
+		getResourceId : function(){  return loc_resourceIdView.val();  }
+	};
+	
+	loc_init(resourceType, resourceId, inputValue);
 	
 	return loc_out;
 };

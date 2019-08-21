@@ -1,16 +1,14 @@
 package com.nosliw.uiresource.resource;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependent;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
+import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
@@ -29,9 +27,7 @@ public class HAPResourceManagerUITag extends HAPResourceManagerImp{
 		if(uiTagDefinition==null)  return null;
 		HAPResourceDataUITag resourceData = new HAPResourceDataUITag(uiTagDefinition);
 		
-		Map<String, Object> info = new LinkedHashMap<String, Object>();
-		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
-		return new HAPResource(resourceId, resourceData, null);
+		return new HAPResource(resourceId, resourceData, HAPResourceUtility.buildResourceLoadPattern(resourceId, null));
 	}
 
 	@Override

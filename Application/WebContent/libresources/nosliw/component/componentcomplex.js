@@ -13,15 +13,18 @@ var packageObj = library;
 	var node_createEventObject;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-
 //component complex is composed of a component at the bottom and a list of decoration on top of it
-//decoration may change the behavior of component by event, command, appearance, exposed interface
+//decoration may change the behavior of component by event processing, command request, view appearance, exposed env interface
 var node_createComponentComplex = function(configure, envInterface){
 
+	//configuration for component
 	var loc_configure = node_createConfigure(configure);
 	
+	//component state
 	var loc_state = node_createState();
+	//component and decoration layers
 	var loc_layers = [];
+	//env interface
 	var loc_interface = _.extend({}, envInterface);
 
 	var loc_eventSource = node_createEventObject();
@@ -35,13 +38,22 @@ var node_createComponentComplex = function(configure, envInterface){
 	var loc_getComponent = function(){  return  loc_layers[0]; };
 
 	//for particular lifecycle request, every layer got invoked 
-	var loc_getLifeCycleRequest = function(requestFunName, handlers, request){
+	var loc_getLifeCycleRequest1 = function(requestFunName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ComponentComplexLifycycle", {}), handlers, request);
 		//start module
 		_.each(loc_layers, function(layer, i){
 			if(layer[requestFunName]!=undefined){
 				out.addRequest(layer[requestFunName]());
 			}
+		});
+		return out;
+	};
+
+	var loc_getLifeCycleRequest = function(transitName, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ComponentComplexLifycycle", {}), handlers, request);
+		//start module
+		_.each(loc_layers, function(layer, i){
+			if(layer.getLifeCycleRequest!=undefined) out.addRequest(layer.getLifeCycleRequest(transitName));
 		});
 		return out;
 	};
@@ -161,14 +173,17 @@ var node_createComponentComplex = function(configure, envInterface){
 		setAllStateData : function(stateData){  loc_state.setAllState(stateData)  },
 		
 		updateView : function(view, request){  loc_updateView(view, request);  },
+		getPreDisplayInitRequest : function(handlers, request){  return loc_getLifeCycleRequest1("getPreDisplayInitRequest", handlers, request);  },
+
+		getLifeCycleRequest : function(transitName, handlers, request){		loc_getLifeCycleRequest(transitName, handlers, request);	},
+
 		
-		getPreDisplayInitRequest : function(handlers, request){  return loc_getLifeCycleRequest("getPreDisplayInitRequest", handlers, request);  },
-		getInitRequest : function(handlers, request){  return loc_getLifeCycleRequest("getInitRequest", handlers, request);  },
-		getStartRequest : function(handlers, request){  return loc_getLifeCycleRequest("getStartRequest", handlers, request);  },
-		getResumeRequest : function(handlers, request){  return loc_getLifeCycleRequest("getResumeRequest", handlers, request);  },
-		getDeactiveRequest : function(handlers, request){  return loc_getLifeCycleRequest("getDeactiveRequest", handlers, request);  },
-		getSuspendRequest : function(handlers, request){  return loc_getLifeCycleRequest("getSuspendRequest", handlers, request);  },
-		getDestroyRequest : function(handlers, request){  return loc_getLifeCycleRequest("getDestroyRequest", handlers, request);  },
+//		getInitRequest : function(handlers, request){  return loc_getLifeCycleRequest("getInitRequest", handlers, request);  },
+//		getStartRequest : function(handlers, request){  return loc_getLifeCycleRequest("getStartRequest", handlers, request);  },
+//		getResumeRequest : function(handlers, request){  return loc_getLifeCycleRequest("getResumeRequest", handlers, request);  },
+//		getDeactiveRequest : function(handlers, request){  return loc_getLifeCycleRequest("getDeactiveRequest", handlers, request);  },
+//		getSuspendRequest : function(handlers, request){  return loc_getLifeCycleRequest("getSuspendRequest", handlers, request);  },
+//		getDestroyRequest : function(handlers, request){  return loc_getLifeCycleRequest("getDestroyRequest", handlers, request);  },
 
 	};
 	return loc_out;

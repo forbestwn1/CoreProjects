@@ -38,12 +38,16 @@ var node_buildPlugInObject = function(rawPluginObj){
 		},
 		
 		getPreDisplayInitRequest : function(handlers, request){  return loc_rawPluginObj.getPreDisplayInitRequest==undefined?undefined:loc_rawPluginObj.getPreDisplayInitRequest(handlers, request);	},
-		getInitRequest : function(handlers, request){  return loc_rawPluginObj.getInitRequest==undefined?undefined:loc_rawPluginObj.getInitRequest(handlers, request);	},
-		getDeactiveRequest : function(handlers, request){  return loc_rawPluginObj.getDeactiveRequest==undefined?undefined:loc_rawPluginObj.getDeactiveRequest(handlers, request);	},
-		getSuspendRequest : function(handlers, request){  return loc_rawPluginObj.getSuspendRequest==undefined?undefined:loc_rawPluginObj.getSuspendRequest(handlers, request);	},
-		getResumeRequest : function(handlers, request){  return loc_rawPluginObj.getResumeRequest==undefined?undefined:loc_rawPluginObj.getResumeRequest(handlers, request);	},
-		getStartRequest : function(handlers, request){  return loc_rawPluginObj.getStartRequest==undefined?undefined:loc_rawPluginObj.getStartRequest(handlers, request);	},
-		getDestroyRequest : function(handlers, request){  return loc_rawPluginObj.getDestroyRequest==undefined?undefined:loc_rawPluginObj.getDestroyRequest(handlers, request);	},
+
+		
+		getLifeCycleRequest : function(transitName, handlers, request){	return loc_rawPluginObj.getLifeCycleRequest==undefined?undefined:loc_rawPluginObj.getLifeCycleRequest(transitName, handlers, request);},
+
+//		getInitRequest : function(handlers, request){  return loc_rawPluginObj.getInitRequest==undefined?undefined:loc_rawPluginObj.getInitRequest(handlers, request);	},
+//		getDeactiveRequest : function(handlers, request){  return loc_rawPluginObj.getDeactiveRequest==undefined?undefined:loc_rawPluginObj.getDeactiveRequest(handlers, request);	},
+//		getSuspendRequest : function(handlers, request){  return loc_rawPluginObj.getSuspendRequest==undefined?undefined:loc_rawPluginObj.getSuspendRequest(handlers, request);	},
+//		getResumeRequest : function(handlers, request){  return loc_rawPluginObj.getResumeRequest==undefined?undefined:loc_rawPluginObj.getResumeRequest(handlers, request);	},
+//		getStartRequest : function(handlers, request){  return loc_rawPluginObj.getStartRequest==undefined?undefined:loc_rawPluginObj.getStartRequest(handlers, request);	},
+//		getDestroyRequest : function(handlers, request){  return loc_rawPluginObj.getDestroyRequest==undefined?undefined:loc_rawPluginObj.getDestroyRequest(handlers, request);	},
 		
 	};
 	
@@ -117,15 +121,17 @@ var node_createComponentDecoration = function(id, component, pluginGenerator, pr
 		getInterface : function(){   return loc_plugin.getInterface();	},
 		
 		updateView : function(view){   return loc_plugin.updateView(view);	},
+		getPreDisplayInitRequest : function(handlers, request){  return loc_plugin.getPreDisplayInitRequest==undefined?undefined:loc_plugin.getPreDisplayInitRequest(handlers, request);	},
 		
 		//component decoration lifecycle call back
-		getPreDisplayInitRequest : function(handlers, request){  return loc_plugin.getPreDisplayInitRequest==undefined?undefined:loc_plugin.getPreDisplayInitRequest(handlers, request);	},
-		getInitRequest : function(handlers, request){  return loc_plugin.getInitRequest==undefined?undefined:loc_plugin.getInitRequest(handlers, request);	},
-		getDeactiveRequest : function(handlers, request){  return loc_plugin.getDeactiveRequest==undefined?undefined:loc_plugin.getDeactiveRequest(handlers, request);	},
-		getSuspendRequest : function(handlers, request){  return loc_plugin.getSuspendRequest==undefined?undefined:loc_plugin.getSuspendRequest(handlers, request);	},
-		getResumeRequest : function(handlers, request){  return loc_plugin.getResumeRequest==undefined?undefined:loc_plugin.getResumeRequest(handlers, request);	},
-		getStartRequest : function(handlers, request){  return loc_plugin.getStartRequest==undefined?undefined:loc_plugin.getStartRequest(handlers, request);	},
-		getDestroyRequest : function(handlers, request){  return loc_plugin.getDestroyRequest==undefined?undefined:loc_plugin.getDestroyRequest(handlers, request);	},
+		getLifeCycleRequest : function(transitName, handlers, request){  return loc_plugin.getLifeCycleRequest(transitName, handlers, request);	},
+		
+//		getInitRequest : function(handlers, request){  return loc_plugin.getInitRequest==undefined?undefined:loc_plugin.getInitRequest(handlers, request);	},
+//		getDeactiveRequest : function(handlers, request){  return loc_plugin.getDeactiveRequest==undefined?undefined:loc_plugin.getDeactiveRequest(handlers, request);	},
+//		getSuspendRequest : function(handlers, request){  return loc_plugin.getSuspendRequest==undefined?undefined:loc_plugin.getSuspendRequest(handlers, request);	},
+//		getResumeRequest : function(handlers, request){  return loc_plugin.getResumeRequest==undefined?undefined:loc_plugin.getResumeRequest(handlers, request);	},
+//		getStartRequest : function(handlers, request){  return loc_plugin.getStartRequest==undefined?undefined:loc_plugin.getStartRequest(handlers, request);	},
+//		getDestroyRequest : function(handlers, request){  return loc_plugin.getDestroyRequest==undefined?undefined:loc_plugin.getDestroyRequest(handlers, request);	},
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION);

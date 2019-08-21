@@ -7,6 +7,7 @@ function(uiModule){
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 
 	var CONSTANT_UISTACK_DATANAME = "module_uiStack";
 	
@@ -63,27 +64,29 @@ function(uiModule){
 			
 			processRequest : function(request){     loc_processRequest(request);   },
 			
-			getInitRequest :function(handlers, requestInfo){
-				var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
-				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-					//put ui together
-					_.each(loc_uiModule.getUIs(), function(ui, index){
-						ui.getPage().appendTo(loc_uiModule.getStatelessData().root);
-					});
+			getLifeCycleRequest : function(transitName, handlers, request){
+				var out;
+				if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
+					out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
+					out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
+						//put ui together
+						_.each(loc_uiModule.getUIs(), function(ui, index){
+							ui.getPage().appendTo(loc_uiModule.getStatelessData().root);
+						});
 
-					//init ui stack
-					loc_uiModule.setStateData(CONSTANT_UISTACK_DATANAME, []);
-					
-					$(document).bind("mobileinit", function() {
-						out.successFinish();
-					});
-					//load jquery mobile
-					nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY, undefined, requestInfo);
+						//init ui stack
+						loc_uiModule.setStateData(CONSTANT_UISTACK_DATANAME, []);
+						
+						$(document).bind("mobileinit", function() {
+							out.successFinish();
+						});
+						//load jquery mobile
+						nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY, undefined, requestInfo);
 
-				}));
+					}));
+				}
 				return out;
 			},
-
 	};
 	return loc_out;
 }

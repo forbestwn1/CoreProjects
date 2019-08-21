@@ -142,6 +142,50 @@ var node_createAppDecoration = function(gate){
 			}
 		},
 			
+		
+		getLifeCycleRequest : function(transitName, handlers, request){
+			var out;
+			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE){
+				out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				var modulesRequest = node_createServiceRequestInfoSequence(undefined, {
+					success : function(request){
+						var modulesStartRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
+						var allModules = loc_uiApp.getAllModuleInfo();
+						_.each(allModules, function(moduleInfo){
+							modulesStartRequest.addRequest(node_getComponentLifecycleInterface(moduleInfo.module).getTransitRequest("activate"));
+						});
+						return modulesStartRequest;
+					}
+				});
+				var modules = loc_uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE];
+				_.each(modules, function(moduleDef, name){
+					var role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
+					if(role==ROLE_APPLICATION){
+						modulesRequest.addRequest(node_appUtility.buildApplicationModuleInfoRequest(moduleDef, loc_uiApp, loc_getModuleConfigureData(role), loc_appDataService));
+//						modulesRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, [], loc_getModuleConfigureData(role), loc_appDataService));
+					}
+					else if(role==ROLE_SETTING){
+						modulesRequest.addRequest(loc_createSettingRoleRequest(moduleDef));
+					}
+				});
+				
+				out.addRequest(modulesRequest);
+			}
+			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
+				out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				var moduleInfos = loc_uiApp.getAllModuleInfo();
+				_.each(moduleInfos, function(moduleInfo, index){
+					out.addRequest(node_getComponentLifecycleInterface(moduleInfo.module).getTransitRequest("destroy"));
+				});
+
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					loc_uiApp.clearModuleInfo();
+				}));
+			}
+			return out;
+		},
+
+/*		
 		getInitRequest : function(handlers, request){
 			
 		},
@@ -191,6 +235,7 @@ var node_createAppDecoration = function(gate){
 		},
 		
 		getInterface : function(){	},
+*/		
 	};
 	
 	return loc_out;

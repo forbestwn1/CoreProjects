@@ -51,8 +51,8 @@ var node_createUIModuleService = function(){
 			return out;
 		},			
 			
-		executeGetUIModuleRuntimeRequest : function(id, resourceId, configure, ioInput, handlers, requester_parent){
-			var requestInfo = this.getGetUIModuleRuntimeRequest(id, resourceId, configure, ioInput, handlers, requester_parent);
+		executeGetUIModuleRuntimeRequest : function(id, module, configure, ioInput, handlers, requester_parent){
+			var requestInfo = this.getGetUIModuleRuntimeRequest(id, module, configure, ioInput, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 	};
