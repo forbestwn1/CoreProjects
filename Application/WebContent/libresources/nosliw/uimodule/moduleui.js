@@ -21,7 +21,7 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleUIRequest = function(moduleUIDef, moduleIOContext, decorations, handlers, request){
+var node_createModuleUIRequest = function(moduleUIDef, moduleIOContext, uiDecorations, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUIDef":moduleUIDef, "moduleContext":moduleIOContext}), handlers, request);
 	
 	//generate page
@@ -30,9 +30,9 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleIOContext, decorati
 			var moduleUI = node_createModuleUI(moduleUIDef, page, moduleIOContext);
 			
 			//append decorations
-			if(decorations!=null){
-				_.each(decorations, function(decoration, index){
-					moduleUI.addDecoration(decoration);
+			if(uiDecorations!=null){
+				_.each(uiDecorations, function(uiDecoration, index){
+					moduleUI.addDecoration(uiDecoration);
 				});
 			}
 			return moduleUI;

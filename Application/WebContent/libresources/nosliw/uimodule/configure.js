@@ -19,13 +19,29 @@ var node_createModuleConfigure = function(rootView, storeService, settingName, p
 //each setting include ui decoration and module decoration 
 var loc_moduleSetting = {
 	setting : {
-		uiDecorations : ['Decoration_setting_framework7'],
-		moduleDecoration : ['setting_framework7_mobile'],
+		uiDecorations : [],
+		moduleDecoration : [
+			{
+				name: 'setting_framework7_mobile',
+				configure : {
+					uiResource : 'Decoration_setting_framework7',
+				}
+			}
+		],
 	},
 	
 	application : {
 		uiDecorations : ['Decoration_application_framework7'],
-		moduleDecoration : ['application_framework7_mobile'],
+		moduleDecoration : [
+			{
+				name: 'application_framework7_mobile',
+				configure : {
+					app : function(parms){
+						return parms.framework7App;
+					}
+				}
+			}
+		],
 	}
 
 };	
@@ -57,25 +73,19 @@ var loc_createTypicalModuleConfigure = function(rootView, storeService, uiDecora
 };
 
 //create module decoration info according to decoration name
-var loc_createTypicalModuleDecorationInfo = function(decorationName, parms){
-	var configure;
-	if(decorationName=="setting_framework7_mobile"){
-		configure = {
-				app : parms.framework7App
-		};
-	}
-	else if(decorationName=="application_framework7_mobile"){
-		configure = {
-			app : parms.framework7App
-		};
-	}
-	return new node_DecorationInfo(decorationName, configure);
-};
-
-var loc_createTypicalModuleDecorationInfoArray = function(decorationNameArray, parms){
+var loc_createTypicalModuleDecorationInfoArray = function(decorationSettingArray, parms){
 	var out = [];
-	_.each(decorationNameArray, function(decorationName, i){
-		out.push(loc_createTypicalModuleDecorationInfo(decorationName, parms));
+	_.each(decorationSettingArray, function(decorationSetting, i){
+		if(decorationSetting.configure!=undefined){
+			var configure = {};
+			_.each(decorationSetting.configure, function(configureItem, name){
+				if(typeof configureItem === "function"){
+					configure[name] = configureItem(parms);
+				}
+				else  configure[name] = configureItem;
+			});
+		}
+		out.push(new node_DecorationInfo(decorationSetting.name, configure));
 	});
 	return out;
 };
