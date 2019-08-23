@@ -132,10 +132,12 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		
 		prv_getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
-			out.addRequest(loc_componentComplex.getPreDisplayInitRequest());
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_componentComplex.updateView(rootView, request);
-			}));
+			out.addRequest(loc_componentComplex.getUpdateViewRequest(rootView));
+			
+//			out.addRequest(loc_componentComplex.getPreDisplayInitRequest());
+//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+//				loc_componentComplex.updateView(rootView, request);
+//			}));
 			out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
 			return out;
 		},

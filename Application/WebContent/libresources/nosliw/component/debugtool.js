@@ -7,6 +7,11 @@ var packageObj = library.getChildPackage("debug");
 	var node_COMMONCONSTANT;
 	var node_getComponentLifecycleInterface;
 	var node_getComponentInterface;
+	var node_createRequestStatusIndicatorUI;
+	var node_createComponentLifeCycleDebugView;
+	var node_createComponentDataView;
+	var node_createComponentEventView;
+	var node_createComponentResetView;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 node_createDebugTool = function(views, resourceType, resourceId, ioInput, configure){
@@ -67,6 +72,7 @@ node_createDebugTool = function(views, resourceType, resourceId, ioInput, config
 			}, resourceType, resourceId, ioInput);
 			$(resetView).append(loc_resetView.getView());
 		}
+		
 	};
 	
 	var loc_out = {
@@ -85,6 +91,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("request.ui.createRequestStatusIndicatorUI", function(){node_createRequestStatusIndicatorUI = this.getData();});
 
 nosliw.registerSetNodeDataEvent("component.debug.createComponentLifeCycleDebugView", function(){node_createComponentLifeCycleDebugView = this.getData();});
 nosliw.registerSetNodeDataEvent("component.debug.createComponentDataView", function(){node_createComponentDataView = this.getData();});

@@ -23,17 +23,18 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
-var node_createUIModuleRequest = function(id, uiModuleDef, decorations, ioInput, handlers, request){
+var node_createUIModuleRequest = function(id, uiModuleDef, pageDecorations, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
 	var module = loc_createUIModule(id, uiModuleDef, ioInput);
 
 	//prepare decoration first
 	var decorationInfo = {};
+	//use page decoration defined in module first
 	if(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_DECORATION]!=null)  decorationInfo = uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_DECORATION];
-	if(decorations!=null){
-		if(decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL]!=undefined)   decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL]=decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
-		if(decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)   decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]=decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI];
+	if(pageDecorations!=null){
+		if(pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL]!=undefined)   decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL]=pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
+		if(pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)   decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]=pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI];
 	}
 	
 	//build module ui
@@ -175,20 +176,6 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 			}
 			return out;
 		},
-		
-//		getDestroyRequest : function(handlers, request){
-//			return node_createServiceRequestInfoSimple(undefined, function(request){
-//				node_destroyUtil(loc_out.prv_module.ioContext, request);
-//				
-//				_.each(loc_out.prv_module.uiArray, function(ui, i){
-//					node_destroyUtil(ui, request);
-//				});
-//				loc_out.prv_module.uiArray = undefined;
-//				loc_out.prv_module.ui = undefined;
-//				loc_out.prv_module.uiModuleDef = undefined;
-//				loc_out.prv_module.lifecycle = undefined;
-//			}, handlers, request);
-//		}
 	};
 
 	loc_init();

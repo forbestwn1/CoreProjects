@@ -7,6 +7,15 @@ var packageObj = library.getChildPackage("utility");
 
 var node_basicUtility = 
 {
+		getParmsInUrl : function(){
+			var parms = {};
+			var searchParams = new URLSearchParams(window.location.search);
+			for (let p of searchParams) {
+				parms[p[0]] = p[1];
+			}
+			return parms;
+		},
+		
 		/*
 		 * create an value with meaning of empty
 		 */

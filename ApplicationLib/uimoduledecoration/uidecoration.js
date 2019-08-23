@@ -22,24 +22,45 @@ function(gate){
 			
 		},
 		
-		getInitRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			
-			var decorationInfo = loc_gate.getConfigureData().decoration;
-			if(decorationInfo!=undefined){
-				_.each(loc_gate.getComponent().getUIs(), function(ui, uiName){
-					var decs;
-					if(decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)  decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI][uiName]; 
-					if(decs==undefined) decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
-					out.addRequest(node_createUIDecorationsRequest(decs, {
-						success : function(request, uiDecoration){
-							ui.addDecoration(uiDecoration);
-						}
-					}));
-				});
+		getLifeCycleRequest : function(transitName, handlers, request){
+			var out;
+			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				var decorationInfo = loc_gate.getConfigureData().decoration;
+				if(decorationInfo!=undefined){
+					_.each(loc_gate.getComponent().getUIs(), function(ui, uiName){
+						var decs;
+						if(decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)  decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI][uiName]; 
+						if(decs==undefined) decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
+						out.addRequest(node_createUIDecorationsRequest(decs, {
+							success : function(request, uiDecoration){
+								ui.addDecoration(uiDecoration);
+							}
+						}));
+					});
+				}
 			}
 			return out;
-		}
+		},
+		
+		
+//		getInitRequest : function(handlers, request){
+//			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+//			var decorationInfo = loc_gate.getConfigureData().decoration;
+//			if(decorationInfo!=undefined){
+//				_.each(loc_gate.getComponent().getUIs(), function(ui, uiName){
+//					var decs;
+//					if(decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)  decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI][uiName]; 
+//					if(decs==undefined) decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
+//					out.addRequest(node_createUIDecorationsRequest(decs, {
+//						success : function(request, uiDecoration){
+//							ui.addDecoration(uiDecoration);
+//						}
+//					}));
+//				});
+//			}
+//			return out;
+//		}
 	};
 	return loc_out;
 }

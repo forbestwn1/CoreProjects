@@ -36,13 +36,7 @@ function(gate){
 			}
 		},
 		
-		updateView : function(view){
-			loc_view = view;
-			loc_decoration.appendTo(view);
-			return loc_decoration.getPlaceHolderView();
-		},
-
-		getPreDisplayInitRequest : function(handlers, request){
+		getUpdateViewRequest : function(view, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(node_createUIDecorationsRequest([loc_gate.getConfigureData().uiResource], {
 				success : function(request, decs){
@@ -50,11 +44,13 @@ function(gate){
 					loc_decoration.registerEventListener(undefined, function(eventName, eventData, request){
 						loc_gate.trigueEvent(eventName, eventData);
 					});
+					loc_view = view;
+					loc_decoration.appendTo(view);
+					return loc_decoration.getPlaceHolderView();
 				}
 			}));
 			return out;
 		},
-
 		
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out;
@@ -75,28 +71,6 @@ function(gate){
 			}
 			return out;
 		},
-		
-//		getDestroyRequest :function(handlers, requestInfo){
-//			node_destroyUtil(loc_decoration);
-//		},
-		
-//		getInitRequest :function(handlers, requestInfo){
-//			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
-//			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-//				//put ui to root
-//				_.each(loc_uiModule.getUIs(), function(ui, index){
-//					ui.getPage().appendTo(loc_view);
-//				});
-//				
-//				out.successFinish();
-//			}));
-//			return out;
-//		},
-		
-//		getInterface : function(){
-//			return {
-//			}
-//		},
 	};
 	return loc_out;
 }

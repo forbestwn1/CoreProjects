@@ -84,29 +84,31 @@ function(gate){
 			
 		},
 		
-		updateView : function(view){
-			loc_root = $(view);
-			
-			if(loc_app==undefined){
-				loc_appView = $('<div></div>');
-				loc_moduleView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; "></div>');
-				loc_appView.append(loc_moduleView);
-				loc_root.append(loc_appView);
-				loc_app = new Framework7({
-					  // App root element
-					  root: loc_appView.get(),
-					  name: 'My App',
-					  id: 'com.myapp.test',
-					  panel: {
-						  swipe: 'both',
-					  },		
-				});			
-			}
-			else{
-				loc_moduleView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; "></div>');
-				loc_root.append(loc_moduleView);
-			}
-			return loc_moduleView.get();
+		getUpdateViewRequest : function(view, handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_root = $(view);
+				
+				if(loc_app==undefined){
+					loc_appView = $('<div></div>');
+					loc_moduleView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; "></div>');
+					loc_appView.append(loc_moduleView);
+					loc_root.append(loc_appView);
+					loc_app = new Framework7({
+						  // App root element
+						  root: loc_appView.get(),
+						  name: 'My App',
+						  id: 'com.myapp.test',
+						  panel: {
+							  swipe: 'both',
+						  },		
+					});			
+				}
+				else{
+					loc_moduleView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; "></div>');
+					loc_root.append(loc_moduleView);
+				}
+				return loc_moduleView.get();
+			}, handlers, request);
 		},
 
 		getInterface : function(){

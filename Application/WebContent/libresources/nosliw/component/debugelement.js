@@ -15,7 +15,7 @@ var packageObj = library.getChildPackage("debug");
 	var node_createEventObject;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-
+//load component and init it with inputValue
 var node_createComponentResetView = function(resetCallBack, resourceType, resourceId, inputValue){
 	var loc_resourceType = resourceType;
 	var loc_resourceId = resourceId;
@@ -40,7 +40,7 @@ var node_createComponentResetView = function(resetCallBack, resourceType, resour
 		loc_inputIODataSet.setData(undefined, node_createDynamicIOData(
 			function(handlers, request){
 				return node_createServiceRequestInfoSimple(undefined, function(request){
-					var content = loc_textView.val();
+					var content = loc_inputValueView.val();
 					if(content=='')  return;
 					return JSON.parse(content); 
 				}, handlers, request); 
@@ -68,6 +68,7 @@ var node_createComponentResetView = function(resetCallBack, resourceType, resour
 	return loc_out;
 };
 
+//display component context value
 var node_createComponentDataView = function(){
 	var loc_component;
 	
@@ -112,6 +113,7 @@ var node_createComponentDataView = function(){
 	return loc_out;
 };
 
+//display component event
 var node_createComponentEventView = function(){
 	var loc_component;
 	var loc_view = $('<div>Component Event: </div>');
@@ -146,7 +148,7 @@ var node_createComponentEventView = function(){
 	return loc_out;
 };
 
-
+//component lifecycle 
 var node_createComponentLifeCycleDebugView = function(){
 
 	var loc_view = $('<div></div>');

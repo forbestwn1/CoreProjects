@@ -43,13 +43,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			}
 		},
 		
-		updateView : function(view){
-			loc_view = view;
-			loc_decoration.appendTo(view);
-			return loc_decoration.getPlaceHolderView();
-		},
-
-		getPreDisplayInitRequest : function(handlers, request){
+		getUpdateViewRequest : function(view, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(node_createUIDecorationsRequest([loc_gate.getConfigureData().uiResource], {
 				success : function(request, decs){
@@ -57,10 +51,31 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 					loc_decoration.registerEventListener(undefined, function(eventName, eventData, request){
 						loc_gate.trigueEvent(eventName, eventData);
 					});
+					loc_view = view;
+					loc_decoration.appendTo(view);
+					return loc_decoration.getPlaceHolderView();
 				}
 			}));
+//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+//				loc_view = view;
+//				loc_decoration.appendTo(view);
+//				return loc_decoration.getPlaceHolderView();
+//			}));
 			return out;
 		},
+		
+//		getPreDisplayInitRequest : function(handlers, request){
+//			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+//			out.addRequest(node_createUIDecorationsRequest([loc_gate.getConfigureData().uiResource], {
+//				success : function(request, decs){
+//					loc_decoration = decs[0];
+//					loc_decoration.registerEventListener(undefined, function(eventName, eventData, request){
+//						loc_gate.trigueEvent(eventName, eventData);
+//					});
+//				}
+//			}));
+//			return out;
+//		},
 
 		
 		getLifeCycleRequest : function(transitName, handlers, request){

@@ -45,16 +45,18 @@ function(gate){
 			
 		},
 		
-		updateView : function(view, request){
-			loc_view = $(view);
+		getUpdateViewRequest : function(view, handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_view = $(view);
 
-			loc_debugView = $('<div>Component Data: </div>'); 
-			loc_dataView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
-			loc_debugView.append(loc_dataView);
-			loc_view.append(loc_debugView);
-			loc_childRoot = $('<div></div>');
-			$(loc_view).append(loc_childRoot);
-			return loc_childRoot.get();
+				loc_debugView = $('<div>Component Data: </div>'); 
+				loc_dataView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
+				loc_debugView.append(loc_dataView);
+				loc_view.append(loc_debugView);
+				loc_childRoot = $('<div></div>');
+				$(loc_view).append(loc_childRoot);
+				return loc_childRoot.get();
+			}, handlers, request);
 		},
 		
 		getLifeCycleRequest : function(transitName, handlers, request){

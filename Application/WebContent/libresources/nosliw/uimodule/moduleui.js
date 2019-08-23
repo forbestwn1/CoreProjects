@@ -46,6 +46,10 @@ var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 	var loc_name = loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];   //moduleUI name
 	var loc_page = page;
 	loc_page.setName(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGENAME]);  //page name
+
+	//
+	var loc_extraContextData = {};
+
 	//data association from module context to page context
 	var loc_inputDataAssociation = node_createDataAssociation(moduleIOContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], node_createDynamicIOData(
 		function(handlers, request){
@@ -78,8 +82,6 @@ var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 		loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], 
 		moduleIOContext,
 		node_dataAssociationUtility.buildDataAssociationName("PAGE", loc_page.getName(), "MODULE", "CONTEXT"));
-
-	var loc_extraContextData = {};
 
 	var loc_getRefreshRequest = function(handlers, request){
 		return loc_getRefreshPageDataRequest(handlers, request);

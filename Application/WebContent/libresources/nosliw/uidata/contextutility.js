@@ -37,7 +37,8 @@ var node_utility = function(){
 		getContextValueAsParmsRequest : function(context, handlers, requestInfo){
 			return this.getContextEleValueAsParmsRequest(context.prv_elements, handlers, requestInfo);
 		},
-		
+
+		//context value with only simple name element
 		//only context element without categary info
 		getContextEleValueAsParmsRequest : function(contextItems, handlers, requestInfo){
 			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
@@ -59,7 +60,37 @@ var node_utility = function(){
 			outRequest.addRequest(setRequest);
 			return outRequest;
 		},
+
+		//context name with only base variable
+		getContextStateRequest : function(contextItems, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextState", {}), handlers, request);
+			var calContextValue = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, resultSet){
+					var state = {};
+					_.each(resultSet.getResults(), function(eleData, eleName){
+						if(eleData!=undefined)			state[eleName] = eleData.value;
+					});
+					return state;
+				}
+			});
 	
+			var validVariable = {};
+			_.each(contextItems, function(contextItem, eleName){
+				var variable = contextItem.variable.prv_variable;
+				if(variable.prv_isBase==true){
+					if(validVariable[variable.prv_id]==undefined){
+						validVariable[variable.prv_id] = variable;
+						//only base element
+						calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+					}
+				}
+			});
+			
+			out.addRequest(calContextValue);
+			return out;
+		},
+
+		//context value with context group structure
 		//from flat context to context group
 		buildContextGroupRequest : function(contextItems, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextValue", {}), handlers, request);
@@ -91,34 +122,6 @@ var node_utility = function(){
 			return out;
 		},
 		
-		getContextStateRequest : function(contextItems, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextState", {}), handlers, request);
-			var calContextValue = node_createServiceRequestInfoSet(undefined, {
-				success : function(request, resultSet){
-					var state = {};
-					_.each(resultSet.getResults(), function(eleData, eleName){
-						if(eleData!=undefined)			state[eleName] = eleData.value;
-					});
-					return state;
-				}
-			});
-	
-			var validVariable = {};
-			_.each(contextItems, function(contextItem, eleName){
-				var variable = contextItem.variable.prv_variable;
-				if(variable.prv_isBase==true){
-					if(validVariable[variable.prv_id]==undefined){
-						validVariable[variable.prv_id] = variable;
-						//only base element
-						calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
-					}
-				}
-			});
-			
-			out.addRequest(calContextValue);
-			return out;
-		},
-
 		//build context according to context definition and parent context
 		buildContext : function(contextDef, parentContext, requestInfo){
 			//build context element first

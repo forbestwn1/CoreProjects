@@ -36,46 +36,47 @@
 
 <script>
 
-
+//when nosliw active
 $(document).on("nosliwActive", function(){
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	var node_getStoreService = nosliw.getNodeData("component.getStoreService");
+	var node_createDebugTool = nosliw.getNodeData("component.debug.createDebugTool");
+	var node_createModuleConfigure = nosliw.getNodeData("uimodule.createModuleConfigure");
+	var node_createRequestStatusIndicatorUI = nosliw.getNodeData("request.ui.createRequestStatusIndicatorUI");
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
 
-var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-var node_getStoreService = nosliw.getNodeData("component.getStoreService");
-var node_createDebugTool = nosliw.getNodeData("component.debug.createDebugTool");
-var node_createModuleConfigure = nosliw.getNodeData("uimodule.createModuleConfigure");
+	var parms = node_basicUtility.getParmsInUrl();
 
+	var framework7App = new Framework7({
+		  // App root element
+		  root: $("#moduleDiv").get(),
+		  name: 'My App',
+		  id: 'com.myapp.test',
+		  panel: {
+			    swipe: 'both',
+		  },		
+	});
+		
+	var configure = node_createModuleConfigure(
+			$('#moduleDiv').get(), 
+			node_getStoreService(), 
+			parms.setting, 
+			{
+				framework7App : framework7App
+			}
+	);
 
-var parms = {};
-var searchParams = new URLSearchParams(window.location.search);
-for (let p of searchParams) {
-	parms[p[0]] = p[1];
-}
-
+	node_createDebugTool({
+			lifecycleView : $('#lifecycleDebug').get(),
+			dataView : $('#dataDebug').get(),
+			eventView : $('#eventDebug').get(),
+			resetView : $('#resetDebug').get(), 
+		}, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, parms.module, undefined, configure);
 	
-var configure = node_createModuleConfigure(
-		$('#moduleDiv').get(), 
-		node_getStoreService(), 
-		parms.setting, 
-		{
-			framework7App : new Framework7({
-				  // App root element
-				  root: $("#moduleDiv").get(),
-				  name: 'My App',
-				  id: 'com.myapp.test',
-				  panel: {
-					    swipe: 'both',
-				  },		
-			}), 
-		}
-);
 
-node_createDebugTool({
-		lifecycleView : $('#lifecycleDebug').get(),
-		dataView : $('#dataDebug').get(),
-		eventView : $('#eventDebug').get(),
-		resetView : $('#resetDebug').get(), 
-	}, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, parms.module, undefined, configure);
+	//ui indicator
+	node_createRequestStatusIndicatorUI(framework7App);
 });
 
 nosliw.init();

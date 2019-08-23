@@ -37,18 +37,6 @@ var node_createComponentComplex = function(configure, envInterface){
 	
 	var loc_getComponent = function(){  return  loc_layers[0]; };
 
-	//for particular lifecycle request, every layer got invoked 
-	var loc_getLifeCycleRequest1 = function(requestFunName, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ComponentComplexLifycycle", {}), handlers, request);
-		//start module
-		_.each(loc_layers, function(layer, i){
-			if(layer[requestFunName]!=undefined){
-				out.addRequest(layer[requestFunName]());
-			}
-		});
-		return out;
-	};
-
 	var loc_getLifeCycleRequest = function(transitName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ComponentComplexLifycycle", {}), handlers, request);
 		//start module
@@ -60,12 +48,23 @@ var node_createComponentComplex = function(configure, envInterface){
 
 	//process view from top layer to bottom layer
 	//any layer can modify view and return new view and pass the new view to next layer
-	var loc_updateView = function(view, request){
-		for(var i=loc_layers.length-1; i>0; i--){
-			var updated = loc_layers[i].updateView(view, request);
-			if(updated!=undefined)  view = updated;  
-			else break;
-		}
+	var loc_getUpdateViewRequest = function(view, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateView", {}), handlers, request);
+		out.addRequest(loc_getUpdateLayerViewRequest(loc_layers.length-1, view));
+		return out;
+	};
+	
+	var loc_getUpdateLayerViewRequest = function(index, view, handlers, request){
+		if(index<0 || view==undefined)  return;
+		if(loc_layers[index].getUpdateViewRequest==undefined)  return;
+		
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateComponentLayer", {}), handlers, request);
+		out.addRequest(loc_layers[index].getUpdateViewRequest(view, {
+			success : function(request, newView){
+				return loc_getUpdateLayerViewRequest(index-1, newView);
+			}
+		}));
+		return out;
 	};
 	
 	var loc_unregisterFacadeListener = function(){	
@@ -88,7 +87,7 @@ var node_createComponentComplex = function(configure, envInterface){
 			var processedEvent = event;
 			var processedEventData = eventData;
 			var processedRequest = requestInfo;
-			for(var i=layerNum; i<loc_layers.length; i++){
+			for(var i=layerNum+1; i<loc_layers.length; i++){
 				var eventResult = loc_layers[i].processComponentEvent(processedEvent, processedEventData, processedRequest);
 				if(eventResult==true || eventResult==undefined){
 					//propagate the same event
@@ -155,7 +154,8 @@ var node_createComponentComplex = function(configure, envInterface){
 			
 			var layerCommand = command;
 			var layerParms = parms;
-			for(var i in loc_layers){
+			//from top to bottom
+			for(var i=loc_layers.length-1; i>=0; i--){
 				var commandResult = loc_layers[i].getExecuteCommandRequest(layerCommand, layerParms);
 				if(commandResult!=undefined){
 					out.addRequest(commandResult.requestResult);
@@ -164,6 +164,7 @@ var node_createComponentComplex = function(configure, envInterface){
 						layerParms = commandResult.commandInfo.commandParms;
 					}
 				}
+				else  break;   //if layer return nothing, not go to next layer
 			}
 			return out;
 		},
@@ -172,19 +173,9 @@ var node_createComponentComplex = function(configure, envInterface){
 		clearState : function(){   loc_state.clear();   },	
 		setAllStateData : function(stateData){  loc_state.setAllState(stateData)  },
 		
-		updateView : function(view, request){  loc_updateView(view, request);  },
-		getPreDisplayInitRequest : function(handlers, request){  return loc_getLifeCycleRequest1("getPreDisplayInitRequest", handlers, request);  },
-
-		getLifeCycleRequest : function(transitName, handlers, request){		loc_getLifeCycleRequest(transitName, handlers, request);	},
-
+		getUpdateViewRequest : function(view, handlers, request){  return loc_getUpdateViewRequest(view, handlers, request); 	},
 		
-//		getInitRequest : function(handlers, request){  return loc_getLifeCycleRequest("getInitRequest", handlers, request);  },
-//		getStartRequest : function(handlers, request){  return loc_getLifeCycleRequest("getStartRequest", handlers, request);  },
-//		getResumeRequest : function(handlers, request){  return loc_getLifeCycleRequest("getResumeRequest", handlers, request);  },
-//		getDeactiveRequest : function(handlers, request){  return loc_getLifeCycleRequest("getDeactiveRequest", handlers, request);  },
-//		getSuspendRequest : function(handlers, request){  return loc_getLifeCycleRequest("getSuspendRequest", handlers, request);  },
-//		getDestroyRequest : function(handlers, request){  return loc_getLifeCycleRequest("getDestroyRequest", handlers, request);  },
-
+		getLifeCycleRequest : function(transitName, handlers, request){	 return loc_getLifeCycleRequest(transitName, handlers, request);	},
 	};
 	return loc_out;
 };
