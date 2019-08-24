@@ -10,9 +10,9 @@ var packageObj = library;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_createApp;
-	var node_createComponentComplex;
+	var node_createComponentCoreComplex;
 	var node_makeObjectWithComponentLifecycle;
-	var node_makeObjectWithComponentInterface;
+	var node_makeObjectWithComponentManagementInterface;
 	var node_createStateBackupService;
 	var node_createEventObject;
 
@@ -35,7 +35,7 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 	
 	var loc_interface = {
 		getPart : function(partId){  
-			return loc_componentComplex.getComponent().getPart(partId);
+			return loc_componentComplex.getCore().getPart(partId);
 //			return loc_out.getPart(partId);	
 		},
 
@@ -44,7 +44,7 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 		},
 	};
 	
-	var loc_componentComplex = node_createComponentComplex(configure, loc_interface);
+	var loc_componentComplex = node_createComponentCoreComplex(configure, loc_interface);
 	var loc_localStore = configure.getConfigureData().__storeService;
 	var loc_applicationDataService = configure.getConfigureData().__appDataService;
 	var loc_stateBackupService = node_createStateBackupService("app", uiApp.getId(), uiApp.getVersion(), loc_localStore);
@@ -53,7 +53,7 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 	var loc_eventListener = node_createEventObject();
 
 	var loc_init = function(uiApp, configure, componentDecorationInfos){
-		loc_componentComplex.setComponent(uiApp);
+		loc_componentComplex.setCore(uiApp);
 		loc_componentComplex.addDecorations(componentDecorationInfos);
 		
 		loc_componentComplex.registerEventListener(loc_eventListener, function(eventName, eventData, request){
@@ -124,13 +124,13 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 		prv_registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
 		prv_unregisterEventListener : function(listener){	return loc_componentComplex.unregisterEventListener(listener); },
 		
-		getInterface : function(){   return node_getComponentInterface(loc_out);  },
+		getInterface : function(){   return node_getComponentManagementInterface(loc_out);  },
 	};
 	
 	loc_init(uiApp, configure, componentDecorationInfos);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback);
-	loc_out = node_makeObjectWithComponentInterface(loc_out, loc_out);
+	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_out);
 
 	return loc_out;
 };
@@ -147,9 +147,9 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("uiapp.createApp", function(){node_createApp = this.getData();	});
-nosliw.registerSetNodeDataEvent("component.createComponentComplex", function(){node_createComponentComplex = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createComponentCoreComplex", function(){node_createComponentCoreComplex = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
-nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentInterface", function(){node_makeObjectWithComponentInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 

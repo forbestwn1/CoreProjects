@@ -7,7 +7,7 @@ var packageObj = library.getChildPackage("debug");
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_getComponentLifecycleInterface;
-	var node_getComponentInterface;
+	var node_getComponentManagementInterface;
 	var node_createServiceRequestInfoSimple;
 	var node_createIODataSet;
 	var node_createDynamicIOData;
@@ -70,7 +70,7 @@ var node_createComponentResetView = function(resetCallBack, resourceType, resour
 
 //display component context value
 var node_createComponentDataView = function(){
-	var loc_component;
+	var loc_comInterface;
 	
 	var loc_view = $('<div>Component Data: </div>');
 	var loc_textView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
@@ -79,21 +79,20 @@ var node_createComponentDataView = function(){
 	var loc_listener = node_createEventObject();
 
 	var loc_clearup = function(){
-		if(loc_component!=undefined){
-			var comInterface = node_getComponentInterface(loc_component);
-			comInterface.unregisterDataChangeEventListener(loc_listener);
-			loc_component = undefined;
+		if(loc_comInterface!=undefined){
+			loc_comInterface.unregisterContextDataChangeEventListener(loc_listener);
+			loc_comInterface = undefined;
 		}
 	};
 
 	var loc_showDataSet = function(dataSet){	loc_textView.val(JSON.stringify(dataSet, null, 4));	};
 	
-	var loc_setup = function(request){
-		var comInterface = node_getComponentInterface(loc_component);
-		comInterface.registerDataChangeEventListener(loc_listener, function(eventName, dataSet){
+	var loc_setup = function(component, request){
+		loc_comInterface = node_getComponentManagementInterface(component);
+		loc_comInterface.registerContextDataChangeEventListener(loc_listener, function(eventName, dataSet){
 			loc_showDataSet(dataSet);
 		});
-		node_requestServiceProcessor.processRequest(comInterface.getContextDataSetRequest({
+		node_requestServiceProcessor.processRequest(comInterface.getContextDataSetValueRequest({
 			success : function(request, dataSet){
 				loc_showDataSet(dataSet);
 			}
@@ -105,8 +104,7 @@ var node_createComponentDataView = function(){
 		
 		setComponent : function(component, request){
 			loc_clearup();
-			loc_component = component;
-			loc_setup(request);
+			loc_setup(component, request);
 		}
 	};
 	
@@ -115,16 +113,16 @@ var node_createComponentDataView = function(){
 
 //display component event
 var node_createComponentEventView = function(){
-	var loc_component;
+	var loc_comInterface;
 	var loc_view = $('<div>Component Event: </div>');
 	var loc_textView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
 	loc_view.append(loc_textView);
 
 	var loc_clearup = function(){};
 	
-	var loc_setup = function(){
-		var comInterface = node_getComponentInterface(loc_component);
-		comInterface.registerEventListener(undefined, function(eventName, eventData, request){
+	var loc_setup = function(component){
+		loc_comInterface = node_getComponentManagementInterface(component);
+		loc_comInterface.registerEventListener(undefined, function(eventName, eventData, request){
 			var content = loc_textView.val();
 			content = content + "\n\n*****************************************\n\n";
 			content = content + JSON.stringify({
@@ -141,8 +139,7 @@ var node_createComponentEventView = function(){
 		
 		setComponent : function(component){
 			loc_clearup();
-			loc_component = component;
-			loc_setup();
+			loc_setup(component);
 		}
 	};
 	return loc_out;
@@ -152,8 +149,6 @@ var node_createComponentEventView = function(){
 var node_createComponentLifeCycleDebugView = function(){
 
 	var loc_view = $('<div></div>');
-	
-	var loc_component;
 	
 	var loc_stateView = {};
 	var loc_commandView = {};
@@ -173,12 +168,12 @@ var node_createComponentLifeCycleDebugView = function(){
 		});		
 	};
 
-	var loc_setup = function(){
+	var loc_setup = function(component){
 		loc_view.empty();
 		loc_stateView = {};
 		loc_commandView = {};
 		
-		loc_lifecycle = node_getComponentLifecycleInterface(loc_component);
+		loc_lifecycle = node_getComponentLifecycleInterface(component);
 		loc_stateMachine = loc_lifecycle.getStateMachine();
 		
 		var allStatesView = $('<div>All States : </div>');
@@ -246,8 +241,7 @@ var node_createComponentLifeCycleDebugView = function(){
 		getView : function(){   return loc_view;   },
 		
 		setComponent : function(component){
-			loc_component = component;
-			loc_setup();
+			loc_setup(component);
 		}
 	};
 	
@@ -261,7 +255,7 @@ var node_createComponentLifeCycleDebugView = function(){
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});

@@ -18,7 +18,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 	var loc_out = {
 			
-		processComponentEvent : function(eventName, eventData, request){
+		processComponentCoreEvent : function(eventName, eventData, request){
 		},
 		
 		getExecuteCommandRequest : function(command, parms, handlers, request){

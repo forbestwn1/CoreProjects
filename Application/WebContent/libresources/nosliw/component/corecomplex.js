@@ -7,25 +7,27 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_createState;
 	var node_createConfigure;
-	var node_createComponentDecoration;
+	var node_createComponentCoreDecoration;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_createEventObject;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-//component complex is composed of a component at the bottom and a list of decoration on top of it
-//decoration may change the behavior of component by event processing, command request, view appearance, exposed env interface
-var node_createComponentComplex = function(configure, envInterface){
-
-	//configuration for component
+//ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
+//decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
+var node_createComponentCoreComplex = function(configure, componentEnv){
+	//external env
+	loc_componentEnv = componentEnv;
+	
+	//configuration for component core complex
 	var loc_configure = node_createConfigure(configure);
 	
-	//component state
+	//component core complex state
 	var loc_state = node_createState();
-	//component and decoration layers
+	//component core and decoration layers
 	var loc_layers = [];
-	//env interface
-	var loc_interface = _.extend({}, envInterface);
+	//exposed interface
+	var loc_interface = {};
 
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -35,10 +37,10 @@ var node_createComponentComplex = function(configure, envInterface){
 
 	var loc_getCurrentFacad = function(){   return loc_layers[loc_layers.length-1];  };
 	
-	var loc_getComponent = function(){  return  loc_layers[0]; };
+	var loc_getCore = function(){  return  loc_layers[0]; };
 
 	var loc_getLifeCycleRequest = function(transitName, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ComponentComplexLifycycle", {}), handlers, request);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ComponentCoreComplexLifycycle", {}), handlers, request);
 		//start module
 		_.each(loc_layers, function(layer, i){
 			if(layer.getLifeCycleRequest!=undefined) out.addRequest(layer.getLifeCycleRequest(transitName));
@@ -58,7 +60,7 @@ var node_createComponentComplex = function(configure, envInterface){
 		if(index<0 || view==undefined)  return;
 		if(loc_layers[index].getUpdateViewRequest==undefined)  return;
 		
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateComponentLayer", {}), handlers, request);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayer", {}), handlers, request);
 		out.addRequest(loc_layers[index].getUpdateViewRequest(view, {
 			success : function(request, newView){
 				return loc_getUpdateLayerViewRequest(index-1, newView);
@@ -67,28 +69,13 @@ var node_createComponentComplex = function(configure, envInterface){
 		return out;
 	};
 	
-	var loc_unregisterFacadeListener = function(){	
-		loc_getCurrentFacad().unregisterEventListener(loc_eventListener);	
-		loc_getCurrentFacad().unregisterValueChangeEventListener(loc_valueChangeEventListener);	
-	};
-
-	var loc_registerFacadeListener = function(){
-		loc_getCurrentFacad().registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
-			loc_eventSource.triggerEvent(event, eventData, requestInfo);
-		});
-
-		loc_getCurrentFacad().registerValueChangeEventListener(loc_valueChangeEventListener, function(event, eventData, requestInfo){
-			loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);
-		});
-	};
-
 	loc_registerLayerEvent = function(layerNum){
 		loc_layers[layerNum].registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
 			var processedEvent = event;
 			var processedEventData = eventData;
 			var processedRequest = requestInfo;
 			for(var i=layerNum+1; i<loc_layers.length; i++){
-				var eventResult = loc_layers[i].processComponentEvent(processedEvent, processedEventData, processedRequest);
+				var eventResult = loc_layers[i].processComponentCoreEvent(processedEvent, processedEventData, processedRequest);
 				if(eventResult==true || eventResult==undefined){
 					//propagate the same event
 				}
@@ -109,7 +96,7 @@ var node_createComponentComplex = function(configure, envInterface){
 
 			loc_layers[layerNum].registerValueChangeEventListener(loc_valueChangeEventListener, function(event, eventData, requestInfo){
 				for(var i=layerNum; i<loc_layers.length; i++){
-					loc_layers[i].processComponentValueChangeEvent(event, eventData, requestInfo);
+					loc_layers[i].processComponentCoreValueChangeEvent(event, eventData, requestInfo);
 				}
 				loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);
 			});
@@ -117,31 +104,33 @@ var node_createComponentComplex = function(configure, envInterface){
 
 	},
 	
-	loc_addDecoration = function(componentDecorationInfo){
-		var decName = componentDecorationInfo.name;
-		var decoration = node_createComponentDecoration(decName, loc_getComponent(), componentDecorationInfo.coreFun, loc_interface, loc_configure.getConfigureData(decName), loc_state);
-		loc_layers.push(decoration);
-		if(decoration.getInterface!=undefined)	_.extend(loc_interface, decoration.getInterface());
-
+	loc_addDecoration = function(decorationInfo){
+		var decName = decorationInfo.name;
+		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.coreFun, loc_componentEnv, loc_configure.getConfigureData(decName), loc_state);
+		loc_addLayer(decoration);
+	};
+	
+	loc_addLayer = function(layer){
+		loc_layers.push(layer);
+		_.extend(loc_interface, layer.getInterface());
 		loc_registerLayerEvent(loc_layers.length-1);
 	};
 	
 	var loc_out = {
 		
-		setComponent : function(component){
-			loc_layers.push(component);
-			loc_registerLayerEvent(0);
+		getCore : function(){   return loc_getCore();    },
+			
+		setCore : function(core){
+			loc_addLayer(core);
 		},
 		
-		addDecorations : function(componentDecorationInfos){
-			for(var i in componentDecorationInfos){  loc_out.addDecoration(componentDecorationInfos[i]);	}
+		addDecorations : function(decorationInfos){
+			for(var i in decorationInfos){  loc_out.addDecoration(decorationInfos[i]);	}
 		},
 
-		addDecoration : function(componentDecorationInfo){		loc_addDecoration(componentDecorationInfo);		},
+		addDecoration : function(decorationInfo){		loc_addDecoration(decorationInfo);		},
 
 		getInterface : function(){  return loc_interface;   },
-		
-		getComponent : function(){   return loc_getComponent();    },
 		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
@@ -156,7 +145,9 @@ var node_createComponentComplex = function(configure, envInterface){
 			var layerParms = parms;
 			//from top to bottom
 			for(var i=loc_layers.length-1; i>=0; i--){
-				var commandResult = loc_layers[i].getExecuteCommandRequest(layerCommand, layerParms);
+				var commandResult;
+				if(i>0)  commandResult = loc_layers[i].getProcessCommandRequest(layerCommand, layerParms);   //for decoration
+				else commandResult = loc_layers[i].getExecuteCommandRequest(layerCommand, layerParms);   //for component core
 				if(commandResult!=undefined){
 					out.addRequest(commandResult.requestResult);
 					if(commandResult.commandInfo!=undefined){
@@ -187,13 +178,13 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createState", function(){node_createState = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
-nosliw.registerSetNodeDataEvent("component.createComponentDecoration", function(){node_createComponentDecoration = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createComponentCoreDecoration", function(){node_createComponentCoreDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createComponentComplex", node_createComponentComplex); 
+packageObj.createChildNode("createComponentCoreComplex", node_createComponentCoreComplex); 
 
 
 })(packageObj);

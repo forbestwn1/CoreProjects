@@ -13,7 +13,7 @@ function(gate){
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 
 	var loc_gate = gate;
-	var loc_uiModule = loc_gate.getComponent();
+	var loc_uiModule = loc_gate.getComponentCore();
 	var loc_view;
 	var loc_decoration;
 	
@@ -22,10 +22,7 @@ function(gate){
 	
 	var loc_out = {
 			
-		processComponentEvent : function(eventName, eventData, request){
-		},
-		
-		getExecuteCommandRequest : function(command, parms, handlers, request){
+		getProcessCommandRequest : function(command, parms, handlers, request){
 			if(command=="updateModuleInfo"){
 				var contextUpdate = {};
 				if(parms.persist!=undefined)  contextUpdate.persist = parms.persist;

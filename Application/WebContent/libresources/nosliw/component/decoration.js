@@ -12,59 +12,23 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_getObjectType;
 	var node_requestServiceProcessor;
+	var node_buildDecorationPlugInObject;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_buildPlugInObject = function(rawPluginObj){
-	var loc_rawPluginObj = rawPluginObj;
-	
-	var loc_out = {
-
-		getInterface : function(){   return loc_rawPluginObj.getInterface==undefined?undefined:loc_rawPluginObj.getInterface();  },
-		
-		processComponentEvent : function(eventName, eventData, request){
-			return loc_rawPluginObj.processComponentEvent==undefined? undefined:loc_rawPluginObj.processComponentEvent(eventName, eventData, request);
-		},
-		
-		processComponentValueChangeEvent : function(eventName, eventData, request){
-			return loc_rawPluginObj.processComponentValueChangeEvent==undefined? undefined:loc_rawPluginObj.processComponentValueChangeEvent(eventName, eventData, request);
-		},
-			
-		getExecuteCommandRequest : function(command, parms, handlers, request){
-			return loc_rawPluginObj.getExecuteCommandRequest==undefined? undefined:loc_rawPluginObj.getExecuteCommandRequest(command, parms, handlers, request);
-		},
-		
-		getUpdateViewRequest : function(view, handlers, request){
-			if(loc_rawPluginObj.getUpdateViewRequest!=undefined){
-				return loc_rawPluginObj.getUpdateViewRequest(view, handlers, request);
-			}
-			else{
-				//callback not defined, then return view 
-				return node_createServiceRequestInfoSimple(undefined, function(request){
-					return view;
-				}, handlers, request);
-			}
-		},
-		
-		getLifeCycleRequest : function(transitName, handlers, request){	return loc_rawPluginObj.getLifeCycleRequest==undefined?undefined:loc_rawPluginObj.getLifeCycleRequest(transitName, handlers, request);},
-	};
-	
-	return loc_out;
-};
-	
 //component decoration
 // id : decoration id
 // baseLayer : layer underneath this decoration, it maybe component or another decoration
 // pluginGenerator: function to generate plugin object, plugin object defined the logic
-// porcessEnv : process environment object, decoration may contribute to it
+// componentEnv : component environment that decoration communicate with component env
 // configureData : configuration data for this decoration
 // state : state data
-var node_createComponentDecoration = function(id, component, pluginGenerator, processEnv, configureData, state){
+var node_createComponentCoreDecoration = function(id, componentCore, pluginGenerator, componentEnv, configureData, state){
 	
 	var loc_id = id;
 	var loc_configureData = configureData;
 	var loc_state = state;
-	var loc_processEnv = processEnv;
+	var loc_componentEnv = componentEnv;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -72,33 +36,40 @@ var node_createComponentDecoration = function(id, component, pluginGenerator, pr
 	var loc_valueChangeEventSource = node_createEventObject();
 	var loc_valueChangeEventListener = node_createEventObject();
 
-	var loc_component = component;
+	var loc_componentCore = componentCore;
+	
+	//gate interface for decoration to communicate with external world
+	var loc_gateForDecoration = {
+		
+		getComponentCore : function(){   return loc_componentCore;		},
+		
+		//get configure data for this decoration
+		getConfigureData : function(){  return loc_configureData;	},
+
+		//state operation
+		getStateValue : function(name){  return loc_state.getStateValue(loc_id, name);	},
+		getState : function(){  return loc_state.getState(loc_id);   },
+		setStateValue : function(name, value){  loc_state.setStateValue(loc_id, name, value);	},
+
+		trigueEvent : function(eventName, eventData, requestInfo){  loc_trigueEvent(eventName, eventData, requestInfo);	},
+		
+		processRequest : function(request){   	loc_componentEnv.processRequest(request);  },
+//		processRequest : function(request){   	node_requestServiceProcessor.processRequest(request);  },
+		
+		getExecuteProcessRequest : function(process, extraInput, handlers, request){    return loc_componentEnv.getExecuteProcessRequest(process, extraInput, handlers, request);   },
+//		getExecuteProcessRequest : function(process, extraInput, handlers, request){
+//			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteEmbededProcessRequest(process, this.getComponentCore().getIOContext(), extraInput, handlers, request);
+//		},
+
+		getExecuteProcessResourceRequest : function(processId, input, handlers, request){   return loc_componentEnv.getExecuteProcessResourceRequest(processId, input, handlers, request);    },
+//		getExecuteProcessResourceRequest : function(processId, input, handlers, request){
+//			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessResourceRequest(processId, input, handlers, request);
+//		},
+		
+	};
 	
 	//generate plug in object 
-	var loc_plugin = node_buildPlugInObject(pluginGenerator({
-		
-		getComponent : function(){   return loc_component;		},
-		
-		getConfigureData : function(){  return loc_configureData;	},
-		
-		getStateValue : function(name){  return loc_state.getStateValue(loc_id, name);	},
-		
-		getState : function(){  return loc_state.getState(loc_id);   },
-		
-		setStateValue : function(name, value){  loc_state.setStateValue(loc_id, name, value);	},
-		
-		processRequest : function(request){   	node_requestServiceProcessor.processRequest(request);  },
-		
-		getExecuteProcessRequest : function(process, extraInput, handlers, request){
-			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteEmbededProcessRequest(process, this.getComponent().getIOContext(), extraInput, handlers, request);
-		},
-
-		getExecuteProcessResourceRequest : function(processId, input, handlers, request){
-			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessResourceRequest(processId, input, handlers, request);
-		},
-		
-		trigueEvent : function(eventName, eventData, requestInfo){  loc_trigueEvent(eventName, eventData, requestInfo);	}
-	}));
+	var loc_plugin = node_buildDecorationPlugInObject(pluginGenerator(loc_gateForDecoration));
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo); };
@@ -111,10 +82,10 @@ var node_createComponentDecoration = function(id, component, pluginGenerator, pr
 		registerValueChangeEventListener : function(listener, handler, thisContext){	return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener); },
 
-		processComponentEvent : function(eventName, eventData, request){		return loc_plugin.processComponentEvent(eventName, eventData, request);		},
-		processComponentValueChangeEvent : function(eventName, eventData, request){		return loc_plugin.processComponentValueChangeEvent(eventName, eventData, request);	},
+		processComponentCoreEvent : function(eventName, eventData, request){		return loc_plugin.processComponentCoreEvent(eventName, eventData, request);		},
+		processComponentCoreValueChangeEvent : function(eventName, eventData, request){		return loc_plugin.processComponentCoreValueChangeEvent(eventName, eventData, request);	},
 		
-		getExecuteCommandRequest : function(command, parms, handlers, request){  return loc_plugin.getExecuteCommandRequest(command, parms, handlers, request);  },
+		getProcessCommandRequest : function(command, parms, handlers, request){  return loc_plugin.getProcessCommandRequest(command, parms, handlers, request);  },
 		
 		getInterface : function(){   return loc_plugin.getInterface();	},
 
@@ -142,8 +113,9 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("component.buildDecorationPlugInObject", function(){node_buildDecorationPlugInObject = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createComponentDecoration", node_createComponentDecoration); 
+packageObj.createChildNode("createComponentCoreDecoration", node_createComponentCoreDecoration); 
 
 })(packageObj);

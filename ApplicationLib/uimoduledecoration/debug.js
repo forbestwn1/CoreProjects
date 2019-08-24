@@ -11,7 +11,7 @@ function(gate){
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 
 	var loc_gate = gate;
-	var loc_component = loc_gate.getComponent();
+	var loc_component = loc_gate.getComponentCore();
 	var loc_componentIOContext = loc_component.getIOContext();
 
 	var loc_view;
@@ -38,13 +38,6 @@ function(gate){
 	
 	var loc_out = {
 			
-		processComponentEvent : function(eventName, eventData, request){
-		},
-		
-		getExecuteCommandRequest : function(command, parms, handlers, request){
-			
-		},
-		
 		getUpdateViewRequest : function(view, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				loc_view = $(view);

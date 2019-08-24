@@ -9,9 +9,9 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createUIModuleRequest;
 	var node_makeObjectWithComponentLifecycle;
-	var node_makeObjectWithComponentInterface;
-	var node_getComponentInterface;
-	var node_createComponentComplex;
+	var node_makeObjectWithComponentManagementInterface;
+	var node_getComponentManagementInterface;
+	var node_createComponentCoreComplex;
 	var node_createStateBackupService;
 	var node_getComponentLifecycleInterface;
 	var node_createServiceRequestInfoSimple;
@@ -35,12 +35,12 @@ var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, compo
 
 var loc_createModuleRuntime = function(uiModule, configure, componentDecorationInfos, rootView, request){
 	
-	var loc_componentComplex = node_createComponentComplex(configure);
+	var loc_componentComplex = node_createComponentCoreComplex(configure);
 	var loc_localStore = configure.getConfigureData().__storeService;
 	var loc_stateBackupService = node_createStateBackupService("module", uiModule.getId(), uiModule.getVersion(), loc_localStore);
 
 	var loc_init = function(uiModule, configure, componentDecorationInfos, rootView, request){
-		loc_componentComplex.setComponent(uiModule);
+		loc_componentComplex.setCore(uiModule);
 		loc_componentComplex.addDecorations(componentDecorationInfos);
 	};
 
@@ -146,7 +146,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 			return loc_componentComplex.getExecuteCommandRequest(command, parms, handlers, request);	
 		},
 
-		prv_getComponent : function(){  return loc_componentComplex.getComponent();   },
+		prv_getComponent : function(){  return loc_componentComplex.getCore();   },
 		prv_getIODataSet : function(){  return loc_getIOContext();	},
 
 		prv_registerEventListener : function(listener, handler, thisContext){	return loc_componentComplex.registerEventListener(listener, handler, thisContext);	},
@@ -156,10 +156,10 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		prv_unregisterValueChangeEventListener : function(listener){	return loc_componentComplex.unregisterValueChangeEventListener(listener); },
 
 		getExecuteCommandRequest : function(command, parms, handlers, request){	
-			return node_getComponentInterface(loc_out).getExecuteCommandRequest(command, parms, handlers, request);
+			return node_getComponentManagementInterface(loc_out).getExecuteCommandRequest(command, parms, handlers, request);
 		},
 		
-		getInterface : function(){   return node_getComponentInterface(loc_out);  },
+		getInterface : function(){   return node_getComponentManagementInterface(loc_out);  },
 		
 	};
 	
@@ -167,9 +167,9 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback);
 	
-	loc_out = node_makeObjectWithComponentInterface(loc_out, loc_out);
+	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_out);
 
-	loc_componentComplex.getComponent().setLifecycle(node_getComponentLifecycleInterface(loc_out));
+	loc_componentComplex.getCore().setLifecycle(node_getComponentLifecycleInterface(loc_out));
 	
 	return loc_out;
 };
@@ -184,10 +184,10 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
-nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentInterface", function(){node_makeObjectWithComponentInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("component.createComponentComplex", function(){node_createComponentComplex = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentManagementInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createComponentCoreComplex", function(){node_createComponentCoreComplex = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 

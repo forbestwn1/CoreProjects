@@ -12,7 +12,7 @@ function(gate){
 	var CONSTANT_UISTACK_DATANAME = "module_uiStack";
 	
 	var loc_gate = gate;
-	var loc_uiModule = loc_gate.getComponent();
+	var loc_uiModule = loc_gate.getComponentCore();
 	
 	var loc_app = loc_gate.getConfigureData().app;
 	
@@ -76,12 +76,8 @@ function(gate){
 	
 	var loc_out = {
 			
-		processComponentEvent : function(eventName, eventData, request){
+		processComponentCoreEvent : function(eventName, eventData, request){
 			loc_processUIEvent(eventData.eventName, eventData.uiName, eventData.eventData, request);
-		},
-		
-		getExecuteCommandRequest : function(command, parms, handlers, request){
-			
 		},
 		
 		getUpdateViewRequest : function(view, handlers, request){

@@ -18,7 +18,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 	var loc_out = {
 			
-		processComponentEvent : function(eventName, eventData, request){
+		processComponentCoreEvent : function(eventName, eventData, request){
 			var eventHandler = loc_gate.getComponent().getEventHandler(eventData.uiName, eventData.eventName);
 			//if within module, defined the process for this event
 			if(eventHandler!=undefined){

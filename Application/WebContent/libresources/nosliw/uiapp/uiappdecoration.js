@@ -26,7 +26,7 @@ var node_createAppDecoration = function(gate){
 	var ROLE_SETTING = "setting";
 	
 	var loc_gate = gate;
-	var loc_uiApp = loc_gate.getComponent();
+	var loc_uiApp = loc_gate.getComponentCore();
 	var loc_uiAppDef = loc_uiApp.prv_app.appDef;
 	var loc_configureData = loc_gate.getConfigureData();
 	var loc_appDataService = loc_configureData.__appDataService;
@@ -82,14 +82,14 @@ var node_createAppDecoration = function(gate){
 	
 	var loc_out = {
 		
-		processComponentValueChangeEvent : function(eventName, eventData, request){
+		processComponentCoreValueChangeEvent : function(eventName, eventData, request){
 			var out = eventData.moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
 				modified : true
 			}, request);
 			if(out!=undefined)		node_requestServiceProcessor.processRequest(out);
 		},	
 			
-		processComponentEvent : function(eventName, eventData, request){
+		processComponentCoreEvent : function(eventName, eventData, request){
 			if(eventName==node_CONSTANT.APP_EVENT_MODULEEVENT){
 				if(eventData.eventName=="submitSetting"){
 					loc_uiApp.setCurrentModuleInfo(ROLE_SETTING, eventData.moduleInfo.id);
@@ -125,7 +125,7 @@ var node_createAppDecoration = function(gate){
 					node_requestServiceProcessor.processRequest(outRequest);
 				}
 				else{
-					var eventHandler = loc_gate.getComponent().getEventHandler(eventData.moduleInfo.name, eventData.eventData.eventName);
+					var eventHandler = loc_gate.getComponentCore().getEventHandler(eventData.moduleInfo.name, eventData.eventData.eventName);
 					//if within module, defined the process for this event
 					if(eventHandler!=undefined){
 						var extraInput = {

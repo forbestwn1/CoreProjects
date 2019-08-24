@@ -9,7 +9,6 @@ var packageObj = library;
 	var node_createIODataSet;
 	var node_createDynamicIOData;
 	var node_createServiceRequestInfoSequence;
-	var node_getComponentInterface;
 	var node_ModuleInfo;
 	var node_createServiceRequestInfoSimple;
 	var node_dataAssociationUtility;
@@ -188,10 +187,9 @@ var node_utility = function(){
 		buildModuleOutputMapping : function(moduleInfo){
 			var outputMappings = moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_OUTPUTMAPPING].element;
 			var out = {};
-			var comInterface = node_getComponentInterface(moduleInfo.module);
 			_.each(outputMappings, function(mapping, name){
 				out[name] = node_createDataAssociation(
-								comInterface.getIOContext(), 
+								moduleInfo.module.prv_getIODataSet(), 
 								mapping, 
 								moduleInfo.externalIO,
 								node_dataAssociationUtility.buildDataAssociationName("MODULE", moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ID], "APP", "CONTEXT")
@@ -215,7 +213,6 @@ nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
-nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
