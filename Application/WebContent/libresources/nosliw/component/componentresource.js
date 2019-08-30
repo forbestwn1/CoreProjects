@@ -15,50 +15,51 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //generic utility method for loading component resource (component itself + decoration)
-//parm componentInfo two options: component id or component object
-//parm decorationInfo contains a list of decoration id or decoration obj
-var node_loadComponentResourceRequest = function(componentInfo, decorationInfo, handlers, request){
+//parm componentInfo two options: component id or component object (resourceId + type)
+//parm decorationDef contains a list of decoration id or decoration obj
+//     { type +  decoration  }
+//output {  componentResource,  decoration  }
+var node_loadComponentResourceRequest = function(componentInfo, decorationDef, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteComponentResource"), handlers, request);
 	
 	//build resource id for component
 	//
 	var resourceIds = [];
 	var componentResourceId;
-	var component;
-	if(componentInfo.componentResourceId != undefined){
+	var componentResource;
+	if(componentInfo.resourceId != undefined){
+		//resource id
 		componentResourceId = {};
-		componentResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = componentInfo.componentResourceId; 
+		componentResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = componentInfo.resourceId; 
 		componentResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = componentInfo.type; 
 		resourceIds.push(componentResourceId);
 	}
 	else{
-		component = componentInfo;
+		//otherwise, component resource obj
+		componentResource = componentInfo;
 	}
 
-	//build decorationFactoryInfos and resource id for decoration
-	var decorationFactoryInfos = [];
-	if(decorationInfo!=undefined){
-		_.each(decorationInfo.decoration, function(decFacDef, i){
-			var decFacInfo = {};
-			if(typeof decFacDef == "string"){
-				decFacInfo.id = decFacDef;
-				decFacInfo.name = decFacDef;
+	//build decorationInfos and resource id for decoration
+	var decorationInfos = [];
+	if(decorationDef!=undefined){
+		_.each(decorationDef.decoration, function(decDef, i){
+			//build decoration info
+			var decorationInfo = {};
+			if(typeof decDef == "string"){
+				decorationInfo = new node_DecorationInfo(decorationDef.type, decDef);
 			}
 			else{
-				decFacInfo.id = decFacDef.id;
-				decFacInfo.name = decFacDef.name;
-				decFacInfo.coreFun = decFacDef.coreFun;
-				if(decFacInfo.name==undefined)  decFacInfo.name = decFacInfo.id;
+				decorationInfo = decDef;
+				decorationInfo.type = decorationDef.type;
 			}
-			decorationFactoryInfos.push(decFacInfo);
+			decorationInfos.push(decorationInfo);
 
-			if(decFacInfo.coreFun==undefined){
-				//if no coreFun in decFacInfo, it means it need to be loaded resource
-				//coreFun is the resource data
-				decFacInfo.resourceId = {};
-				decFacInfo.resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = decFacInfo.id; 
-				decFacInfo.resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = decorationInfo.type; 
-				resourceIds.push(decFacInfo.resourceId);
+			if(decorationInfo.resource==undefined){
+				//if no resource in decorationInfo, it means it need to be loaded resource
+				var resourceId = {};
+				resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = decorationInfo.id; 
+				resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = decorationDef.type; 
+				resourceIds.push(resourceId);
 			}
 		});
 	}
@@ -67,24 +68,23 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationInfo, 
 	out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceIds, {
 		success : function(requestInfo, resourceTree){
 			//build loaded decoration
-			var componentDecorationInfos = requestInfo.getData("decorationFactoryInfos");
-			_.each(componentDecorationInfos, function(decFacInfo, i){
-				if(decFacInfo.resourceId!=undefined){
-					decFacInfo.coreFun = node_resourceUtility.getResourceFromTree(resourceTree, decFacInfo.resourceId).resourceData;
+			_.each(decorationInfos, function(decorationInfo, i){
+				//build resource in decoration info
+				if(decorationInfo.resource==undefined){
+					decorationInfo.resource = node_resourceUtility.getResourceFromTree(resourceTree, decorationInfo.resourceId).resourceData;
 				}
 			});
 			
-			//build loaded component
-			var component = requestInfo.getData("component");
-			if(componentResourceId!=undefined)  component = node_resourceUtility.getResourceFromTree(resourceTree, componentResourceId).resourceData;
+			//build loaded component resource
+			if(componentResourceId!=undefined)  componentResource = node_resourceUtility.getResourceFromTree(resourceTree, componentResourceId).resourceData;
 			
 			//loaded component and decoration data
 			return {
-				component :component,
-				decoration : componentDecorationInfos
+				componentResource :componentResource,
+				decoration : decorationInfos
 			};
 		}
-	}).withData(component, "component").withData(decorationFactoryInfos, "decorationFactoryInfos"));
+	}).withData(componentResource, "component").withData(decorationInfos, "decorationInfos"));
 	return out;
 };	
 	

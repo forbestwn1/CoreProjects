@@ -14,35 +14,58 @@ var packageObj = library;
 //global is visible to every part
 //parts is visible to particular part
 //for particular part, the configure is merge between global and part, part overwrite global
-var node_createConfigure = function(value){
-	
-	if(value!=undefined){
-		var valueType = node_getObjectType(value);
-		if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE){
-			return value;
-		}
-		else{
-			var loc_configure = value;
+var node_createConfigure = function(value, global){
+	//global configure, it will apply to child configure
+	var loc_global = global;
+	//current configure data, including global value
+	var loc_configure = {};
+
+	//apply global configure to value
+	var loc_applyGlobalConfigure = function(value){
+		var out = {};
+		out = _.extend(out, loc_global, value);
+		return out;
+	};
+
+	var loc_init = function(value){
+		//build configure data
+		if(value!=undefined){
+			var valueType = node_getObjectType(value);
+			if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE){
+				value = value.getConfigureData();
+			}
+			loc_configure = loc_applyGlobalConfigure(value); 
 		}
 	}
 	
 	var loc_out = {
+		getConfigureValue : function(){
+			return loc_configure;
+		},
 		
-		getConfigureData : function(part){
-			var out = {};
-
-			if(part!=undefined)	_.extend(out, loc_configure.global, loc_configure.parts==undefined?undefined : loc_configure.parts[part]);
-			else  _.extend(out, loc_configure.global);
-
-			var temp = {};
-			_.extend(temp, loc_configure);
-			delete temp.global;
-			delete temp.parts;
-			_.extend(out, temp);
-			
+		getChildConfigureValue : function(path, childId){
+		    var childBase = node_objectOperationUtility.getObjectAttributeByPath(loc_configure, path);
+			var childValue = {};
+			if(childBase!=undefined){
+				_.extend(childValue, childBase.share, childBase.parts==undefined?undefined : childBase.parts[childId]);
+			}
+			loc_applyGlobalConfigure(childValue);
+		},
+		
+		getChildrenIdSet : function(path){
+		    var segs = path.split('.');
+		    var childBase = node_objectOperationUtility.getObjectAttributeByPathSegs(loc_configure, segs);
+			if(childBase!=undefined){
+				var out = [];
+				_.each(childBase.parts, function(part, id){
+					out.push(id);
+				});
+			}
 			return out;
-		}
+		},
 	};
+	
+	loc_init(value);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE);
 
 	return loc_out;
@@ -59,9 +82,13 @@ var node_CommandInfo = function(commandName, commandParm){
 	this.commandParm = commandParm;
 };
 
-var node_DecorationInfo = function(decorationName, decorationConfigure){
-	this.name = decorationName;
-	this.configure = decorationConfigure;
+var node_DecorationInfo = function(type, id, name, configure){
+	this.id = id;
+	this.name = name;
+	this.configure = configure;
+	this.resource = undefined;
+	this.decoration = undefined;
+	if(this.name==undefined)   this.name = this.id;   
 };
 
 //*******************************************   End Node Definition  ************************************** 	

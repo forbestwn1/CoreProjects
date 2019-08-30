@@ -106,7 +106,7 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 	
 	loc_addDecoration = function(decorationInfo){
 		var decName = decorationInfo.name;
-		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.coreFun, loc_componentEnv, loc_configure.getConfigureData(decName), loc_state);
+		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.resource, loc_componentEnv, loc_configure.getConfigureData(decName), loc_state);
 		loc_addLayer(decoration);
 	};
 	

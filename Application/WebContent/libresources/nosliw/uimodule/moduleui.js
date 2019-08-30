@@ -21,13 +21,13 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleUIRequest = function(moduleUIDef, moduleIOContext, uiDecorations, handlers, request){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUIDef":moduleUIDef, "moduleContext":moduleIOContext}), handlers, request);
+var node_createModuleUIRequest = function(moduleUIDef, moduleContextIODataSet, uiDecorationInfos, handlers, request){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUIDef":moduleUIDef, "moduleContext":moduleContextIODataSet}), handlers, request);
 	
-	//generate page
+	//generate page for module ui
 	out.addRequest(nosliw.runtime.getUIPageService().getGenerateUIPageRequest(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGE], undefined, {
 		success :function(requestInfo, page){
-			var moduleUI = node_createModuleUI(moduleUIDef, page, moduleIOContext);
+			var moduleUI = node_createModuleUI(moduleUIDef, page, moduleContextIODataSet);
 			
 			//append decorations
 			if(uiDecorations!=null){
@@ -41,7 +41,7 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleIOContext, uiDecora
 	return out;
 };
 
-var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
+var node_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	var loc_moduleUIDef = moduleUIDef;
 	var loc_name = loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];   //moduleUI name
 	var loc_page = page;
@@ -51,7 +51,7 @@ var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 	var loc_extraContextData = {};
 
 	//data association from module context to page context
-	var loc_inputDataAssociation = node_createDataAssociation(moduleIOContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], node_createDynamicIOData(
+	var loc_inputDataAssociation = node_createDataAssociation(moduleContextIODataSet, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], node_createDynamicIOData(
 		function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_page.getContextEleValueAsParmsRequest());
@@ -80,7 +80,7 @@ var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 			}
 		), 
 		loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], 
-		moduleIOContext,
+		moduleContextIODataSet,
 		node_dataAssociationUtility.buildDataAssociationName("PAGE", loc_page.getName(), "MODULE", "CONTEXT"));
 
 	var loc_getRefreshRequest = function(handlers, request){

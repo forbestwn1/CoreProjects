@@ -33,7 +33,7 @@ var node_createUIPageService = function(){
 				out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([name], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE, {
 					success : function(requestInfo, uiResources){
 						var uiResource = uiResources[name];
-						return loc_uiResourceViewFactory.getCreateUIViewRequest(uiResource, loc_getResourceViewId(), undefined, undefined, {
+						return loc_uiResourceViewFactory.getCreateUIViewRequest(uiResource, loc_getResourceViewId(), undefined, context, {
 							success : function(requestInfo, uiView){
 								return node_createUIPage(uiView);
 							}

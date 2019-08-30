@@ -29,7 +29,7 @@ var node_createUIModuleService = function(){
 			out.addRequest(node_loadComponentResourceRequest(
 				typeof module === 'string'? 
 					{
-						componentResourceId : module,
+						resourceId : module,
 						type : node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE
 					} : module, 
 				componentDecorationInfo==undefined?undefined:
@@ -40,7 +40,7 @@ var node_createUIModuleService = function(){
 				{
 					success : function(request, componentInfo){
 						//create ui module runtime
-						return node_createModuleRuntimeRequest(id, componentInfo.component, configure, componentInfo.decoration, configure.getConfigureData().root, ioInput, {
+						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, configure.getConfigureData().root, ioInput, {
 							success : function(request, uiModuleRuntime){
 								return uiModuleRuntime;
 							}

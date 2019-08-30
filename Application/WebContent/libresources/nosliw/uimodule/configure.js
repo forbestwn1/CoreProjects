@@ -19,29 +19,37 @@ var node_createModuleConfigure = function(rootView, storeService, settingName, p
 //each setting include ui decoration and module decoration 
 var loc_moduleSetting = {
 	setting : {
-		uiDecorations : [],
-		moduleDecoration : [
-			{
-				name: 'setting_framework7_mobile',
-				configure : {
+		uiDecoration : {},
+		moduleDecoration : 
+		{
+			parts : [
+				{
+					id: 'setting_framework7_mobile',
 					uiResource : 'Decoration_setting_framework7',
 				}
-			}
-		],
+			]
+		},
 	},
 	
 	application : {
-		uiDecorations : ['Decoration_application_framework7'],
-		moduleDecoration : [
-			{
-				name: 'application_framework7_mobile',
-				configure : {
+		uiDecoration : {
+			parts : [
+				{
+					id: 'Decoration_application_framework7'
+				}
+			]
+		},
+		moduleDecoration : 
+		{
+			parts : [
+				{
+					id: 'application_framework7_mobile',
 					app : function(parms){
 						return parms.framework7App;
 					}
 				}
-			}
-		],
+			]
+		},
 	}
 
 };	
@@ -49,19 +57,23 @@ var loc_moduleSetting = {
 //generate module configure
 var loc_createTypicalModuleConfigure = function(rootView, storeService, uiDecorations, modulesDecorationInfo){
 
+	//build module decoration 
 	var moduleDecorations = [];
 	moduleDecorations.push("base");
 	moduleDecorations.push("uidecoration");
+	_.each(modulesDecorationInfo, function(moduleDecorationInfo, i){
+		moduleDecorations.push(moduleDecorationInfo.name);
+		partsConfigure[moduleDecorationInfo.name] = moduleDecorationInfo.configure;
+	});
 	
 	var partsConfigure = {};
-	
 	_.each(modulesDecorationInfo, function(moduleDecorationInfo, i){
 		moduleDecorations.push(moduleDecorationInfo.name);
 		partsConfigure[moduleDecorationInfo.name] = moduleDecorationInfo.configure;
 	});
 	
 	var configure = {
-		global : {
+		share : {
 			root : rootView,
 			decoration : uiDecorations,
 			moduleDecoration : moduleDecorations,
@@ -72,11 +84,12 @@ var loc_createTypicalModuleConfigure = function(rootView, storeService, uiDecora
 	return configure;
 };
 
-//create module decoration info according to decoration name
+//create module decoration info
 var loc_createTypicalModuleDecorationInfoArray = function(decorationSettingArray, parms){
 	var out = [];
 	_.each(decorationSettingArray, function(decorationSetting, i){
 		if(decorationSetting.configure!=undefined){
+			//build configure for decoration
 			var configure = {};
 			_.each(decorationSetting.configure, function(configureItem, name){
 				if(typeof configureItem === "function"){
@@ -85,7 +98,7 @@ var loc_createTypicalModuleDecorationInfoArray = function(decorationSettingArray
 				else  configure[name] = configureItem;
 			});
 		}
-		out.push(new node_DecorationInfo(decorationSetting.name, configure));
+		out.push(new node_DecorationInfo(decorationSetting.id, decorationSetting.name, configure));
 	});
 	return out;
 };

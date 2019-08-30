@@ -19,11 +19,11 @@ var packageObj = library;
 //component decoration
 // id : decoration id
 // baseLayer : layer underneath this decoration, it maybe component or another decoration
-// pluginGenerator: function to generate plugin object, plugin object defined the logic
+// decorationResource: function to generate plugin object, plugin object defined the logic
 // componentEnv : component environment that decoration communicate with component env
 // configureData : configuration data for this decoration
 // state : state data
-var node_createComponentCoreDecoration = function(id, componentCore, pluginGenerator, componentEnv, configureData, state){
+var node_createComponentCoreDecoration = function(id, componentCore, decorationResource, componentEnv, configureData, state){
 	
 	var loc_id = id;
 	var loc_configureData = configureData;
@@ -69,7 +69,7 @@ var node_createComponentCoreDecoration = function(id, componentCore, pluginGener
 	};
 	
 	//generate plug in object 
-	var loc_plugin = node_buildDecorationPlugInObject(pluginGenerator(loc_gateForDecoration));
+	var loc_plugin = typeof decorationResource=='function' ?  node_buildDecorationPlugInObject(decorationResource(loc_gateForDecoration)) : decorationResource;
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo); };

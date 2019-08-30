@@ -28,7 +28,7 @@ var node_createUIAppService = function(){
 			out.addRequest(node_loadComponentResourceRequest(
 				typeof app === 'string'? 
 					{
-						componentResourceId : app,
+						resourceId : app,
 						type : node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY
 					} : app, 
 				componentDecorationInfo==undefined?undefined:
@@ -39,7 +39,7 @@ var node_createUIAppService = function(){
 				{
 					success : function(request, componentInfo){
 						//create ui module runtime
-						return node_createAppRuntimeRequest(id, componentInfo.component, configure, componentInfo.decoration, ioInput, {
+						return node_createAppRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, ioInput, {
 							success : function(request, uiAppRuntime){
 								return uiAppRuntime;
 							}
