@@ -7,6 +7,16 @@ var packageObj = library.getChildPackage("utility");
 
 var node_basicUtility = 
 {
+		buildNosliwFullName : function(name){
+			return "nosliw_"+name;
+		},
+		
+		getNosliwCoreName : function(name){
+			var index = name.indexof("nosliw_");
+			if(index==-1)  return;
+			return name.subString(index);
+		},
+		
 		getParmsInUrl : function(){
 			var parms = {};
 			var searchParams = new URLSearchParams(window.location.search);

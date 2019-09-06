@@ -15,6 +15,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
+import com.nosliw.uiresource.common.HAPInfoPage;
 import com.nosliw.uiresource.common.HAPUtilityParser;
 
 public class HAPParserModule {
@@ -51,7 +52,7 @@ public class HAPParserModule {
 		if(pageInfoArray!=null) {
 			for(int i=0; i<pageInfoArray.length(); i++) {
 				HAPInfoPage pageInfo = new HAPInfoPage();
-				pageInfo.buildObjectByJson(pageInfoArray.get(i));
+				pageInfo.buildObject(pageInfoArray.get(i), HAPSerializationFormat.JSON);
 				out.addPageInfo(pageInfo);
 			}
 		}

@@ -10,47 +10,78 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createModuleConfigure = function(rootView, storeService, settingName, parms){
-	var moduleSetting = loc_moduleSetting[settingName];
-	var modulesDecorationInfoArray = loc_createTypicalModuleDecorationInfoArray(moduleSetting.moduleDecoration, parms);
-	return loc_createTypicalModuleConfigure(rootView, storeService, moduleSetting.uiDecorations, modulesDecorationInfoArray);
+	
+	var globalConfig = {
+		__storeService : storeService
+	};
+	
+	var moduleConfigure = node_createConfigure(loc_moduleSetting, globalConfig, parms).getChildConfigure(undefined, settingName);
+	return moduleConfigure;
+	
+	
+//	var moduleSetting = loc_moduleSetting[settingName];
+//	var modulesDecorationInfoArray = loc_createTypicalModuleDecorationInfoArray(moduleSetting.moduleDecoration, parms);
+//	return loc_createTypicalModuleConfigure(rootView, storeService, moduleSetting.uiDecorations, modulesDecorationInfoArray);
 };
 	
 //predefined module setting by name
 //each setting include ui decoration and module decoration 
 var loc_moduleSetting = {
-	setting : {
-		uiDecoration : {},
-		moduleDecoration : 
-		{
-			parts : [
-				{
-					id: 'setting_framework7_mobile',
-					uiResource : 'Decoration_setting_framework7',
-				}
-			]
-		},
+	
+	share : {
+		root : function(parms){
+			return parms.rootView;
+		}
 	},
 	
-	application : {
-		uiDecoration : {
-			parts : [
-				{
-					id: 'Decoration_application_framework7'
-				}
-			]
+	parts : {
+		setting : {
+			uiDecoration : {},
+			moduleDecoration : 
+			{
+				parts : [
+					{
+						id: 'base',
+					},
+					{
+						id: 'uidecoration',
+					},
+					{
+						id: 'setting_framework7_mobile',
+						uiResource : 'Decoration_setting_framework7',
+					},
+				]
+			},
 		},
-		moduleDecoration : 
-		{
-			parts : [
-				{
-					id: 'application_framework7_mobile',
-					app : function(parms){
-						return parms.framework7App;
+		
+		application : {
+			uiDecoration : {
+				parts : [
+					{
+						id: 'Decoration_application_framework7'
 					}
-				}
-			]
-		},
+				]
+			},
+			moduleDecoration : 
+			{
+				parts : [
+					{
+						id: 'base',
+					},
+					{
+						id: 'uidecoration',
+					},
+					{
+						id: 'application_framework7_mobile',
+						app : function(parms){
+							return parms.framework7App;
+						}
+					}
+				]
+			},
+		}
 	}
+	
 
 };	
 
@@ -81,6 +112,12 @@ var loc_createTypicalModuleConfigure = function(rootView, storeService, uiDecora
 		},
 		parts : partsConfigure 
 	};
+	
+	var globalConfig = {
+		root : rootView,
+		__storeService : storeService
+	};
+	
 	return configure;
 };
 

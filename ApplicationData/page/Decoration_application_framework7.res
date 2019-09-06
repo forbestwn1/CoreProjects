@@ -37,7 +37,7 @@
 		"group" : {
 			"public" : {
 				"element" : {
-					"nosliw_uiInfo" : {
+					"nosliw_ui_info" : {
 						"definition": {
 							"child" : {
 								"id" : {},

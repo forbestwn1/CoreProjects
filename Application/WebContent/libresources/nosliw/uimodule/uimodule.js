@@ -56,7 +56,7 @@ var node_createUIModuleRequest = function(id, uiModuleDef, pageDecorations, ioIn
 		var decs;
 		if(decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)  decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI][uiName]; 
 		if(decs==undefined) decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
-		buildModuleUIRequest.addRequest(node_createUIDecorationsRequest(decs, {
+		buildModuleUIRequest.addRequest(node_createUIDecorationsRequest111(decs, {
 			success : function(request, decorations){
 				return node_createModuleUIRequest(ui, module.getIOContext(), decorations);
 			}
@@ -70,7 +70,8 @@ var node_createUIModuleRequest = function(id, uiModuleDef, pageDecorations, ioIn
 };	
 	
 var loc_createUIModule = function(id, uiModuleDef, ioInput){
-	var loc_ioInput = ioInput;
+	//input io used to get input value to initiate module
+	var loc_inputIO = ioInput;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -83,11 +84,11 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 
 	var loc_updateIOContext = function(input){
 		var data = loc_out.prv_module.uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input);
-		loc_out.prv_module.ioContext.setData(undefined, data);
+		loc_out.prv_module.contextDataSet.setData(undefined, data);
 	};
 	
 	var loc_init = function(){
-		loc_out.prv_module.ioContext.registerEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
+		loc_out.prv_module.contextDataSet.registerEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
 			if(loc_out.prv_module.lifecycle.isActive()==true){
 				loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, undefined, request);
 			}
@@ -96,12 +97,12 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 	
 	var loc_out = {
 		prv_module : {
-			id : id,
-			uiModuleDef : uiModuleDef,
+			id : id,              //
+			uiModuleDef : uiModuleDef,   //
 			
-			ioContext : node_createIODataSet(),
+			contextDataSet : node_createIODataSet(),   //module 
 			
-			uiArray : [],
+			uiArray : [],    //
 			ui : {},
 
 			lifecycle : undefined    //module's lifecycle obj
@@ -125,7 +126,7 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 		getId : function(){  return loc_out.prv_module.id;  },
 		getVersion : function(){   return "1.0.0";   },
 		
-		getIOContext : function(){  return loc_out.prv_module.ioContext;  },
+		getIOContext : function(){  return loc_out.prv_module.contextDataSet;  },
 		
 		getUIs : function(){  return loc_out.prv_module.uiArray;  },
 		getUI : function(name) {  return loc_out.prv_module.ui[name];   },
@@ -143,8 +144,8 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 
 		getInitIOContextRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			if(loc_ioInput!=undefined){
-				out.addRequest(loc_ioInput.getGetDataValueRequest(undefined, {
+			if(loc_inputIO!=undefined){
+				out.addRequest(loc_inputIO.getGetDataValueRequest(undefined, {
 					success : function(request, data){
 						loc_updateIOContext(data);
 					}
@@ -163,7 +164,7 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 			var out;
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
 				out = node_createServiceRequestInfoSimple(undefined, function(request){
-					node_destroyUtil(loc_out.prv_module.ioContext, request);
+					node_destroyUtil(loc_out.prv_module.contextDataSet, request);
 					
 					_.each(loc_out.prv_module.uiArray, function(ui, i){
 						node_destroyUtil(ui, request);

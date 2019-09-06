@@ -10,15 +10,18 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //configure for component
-//every configure has two parts: global and parts
-//global is visible to every part
+//global is configure that apply to this configure and child configure
+//parms is used as parameter for configure item which is function
+//child configure has two parts: share and parts
+//share is visible to every part
 //parts is visible to particular part
-//for particular part, the configure is merge between global and part, part overwrite global
-var node_createConfigure = function(value, global){
+//for particular part, the configure is merge between global and share and part, part overwrite share overwrite global
+var node_createConfigure = function(definition, global, parms){
 	//global configure, it will apply to child configure
-	var loc_global = global;
+	var loc_global;
 	//current configure data, including global value
 	var loc_configure = {};
+	
 
 	//apply global configure to value
 	var loc_applyGlobalConfigure = function(value){
@@ -27,31 +30,65 @@ var node_createConfigure = function(value, global){
 		return out;
 	};
 
-	var loc_init = function(value){
-		//build configure data
-		if(value!=undefined){
-			var valueType = node_getObjectType(value);
-			if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE){
-				value = value.getConfigureData();
-			}
-			loc_configure = loc_applyGlobalConfigure(value); 
+	//find configure item of function and calculate the value 
+	var loc_processConfigure = function(configure, parms){
+		if(configure==undefined)  return;
+		var out;
+		if(Array.isArray(configure)){
+			out = [];
+			_.each(configure, function(ele, i){
+				out.push(loc_processConfigure(ele, parms));
+			});
 		}
+		else if(typeof configure === "function"){
+			out = configure(parms);
+		}
+		else if(typeof configure === 'object'){
+			out = {};
+			_.each(configure, function(ele, name){
+				out[name] = loc_processConfigure(ele, parms);
+			});
+		}
+		else{
+			out = configure;
+		}
+		return out;
+	};
+	
+	var loc_init = function(definition, global, parms){
+		//global value
+		loc_global = loc_processConfigure(global, parms);
+
+		var valueType = node_getObjectType(definition);
+		if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE)	configure = definition.getConfigureValue();
+		else if(parms==undefined)   configure = definition;
+		else	configure = loc_processConfigure(definition, parms);
+		
+		//build configure data
+		if(configure!=undefined)	loc_configure = loc_applyGlobalConfigure(configure); 
 	}
 	
+	var loc_getChildConfigureValue = function(path, childId){
+	    var childBase = node_objectOperationUtility.getObjectAttributeByPath(loc_configure, path);
+		var childValue = {};
+		if(childBase!=undefined){
+			//merge share with part
+			_.extend(childValue, childBase.share, childBase.parts==undefined?undefined : childBase.parts[childId]);
+		}
+		return childValue;
+	}; 
+	
 	var loc_out = {
-		getConfigureValue : function(){
-			return loc_configure;
-		},
+		getConfigureValue : function(){		return loc_configure;	},
 		
+		//get children configure value
+		//path : path to child definition
+		//childId : child Id
 		getChildConfigureValue : function(path, childId){
-		    var childBase = node_objectOperationUtility.getObjectAttributeByPath(loc_configure, path);
-			var childValue = {};
-			if(childBase!=undefined){
-				_.extend(childValue, childBase.share, childBase.parts==undefined?undefined : childBase.parts[childId]);
-			}
-			loc_applyGlobalConfigure(childValue);
+			return loc_applyGlobalConfigure(loc_getChildConfigureValue(path, childId));
 		},
 		
+		//get children configure options
 		getChildrenIdSet : function(path){
 		    var segs = path.split('.');
 		    var childBase = node_objectOperationUtility.getObjectAttributeByPathSegs(loc_configure, segs);
@@ -63,9 +100,13 @@ var node_createConfigure = function(value, global){
 			}
 			return out;
 		},
+		
+		getChildConfigure : function(path, childId){
+			return node_createConfigure(loc_getChildConfigureValue(path, childId), loc_global);
+		}
 	};
 	
-	loc_init(value);
+	loc_init(definition, global, parms);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE);
 
 	return loc_out;
@@ -82,12 +123,12 @@ var node_CommandInfo = function(commandName, commandParm){
 	this.commandParm = commandParm;
 };
 
-var node_DecorationInfo = function(type, id, name, configure){
+var node_DecorationInfo = function(type, id, name, configureValue){
 	this.id = id;
 	this.name = name;
-	this.configure = configure;
-	this.resource = undefined;
-	this.decoration = undefined;
+	this.configureValue = configureValue;
+	this.resource = undefined;        //resource
+	this.decoration = undefined;		//object build from resource
 	if(this.name==undefined)   this.name = this.id;   
 };
 

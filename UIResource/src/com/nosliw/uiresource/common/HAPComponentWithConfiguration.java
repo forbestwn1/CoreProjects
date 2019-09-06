@@ -15,7 +15,6 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceProvider;
-import com.nosliw.uiresource.module.HAPInfoPage;
 
 @HAPEntityWithAttribute
 public class HAPComponentWithConfiguration extends HAPEntityInfoWritableImp  implements HAPWithServiceProvider{

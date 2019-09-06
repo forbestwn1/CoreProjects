@@ -17,6 +17,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.uiresource.common.HAPExecutableEventHandler;
+import com.nosliw.uiresource.common.HAPInfoDecoration;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 
 @HAPEntityWithAttribute
@@ -27,6 +28,9 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 
 	@HAPAttribute
 	public static String PAGE = "page";
+
+	@HAPAttribute
+	public static String DECORATION = "decoration";
 
 	@HAPAttribute
 	public static String INPUTMAPPING = "inputMapping";
@@ -46,6 +50,8 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 
 	private HAPExecutableUIUnitPage m_page;
 	
+	private List<HAPInfoDecoration> m_decoration;
+	
 	// hook up with real data during runtime
 	private HAPExecutableDataAssociation m_inputMapping;
 	private HAPExecutableDataAssociation m_outputMapping;
@@ -54,6 +60,7 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	
 	public HAPExecutableModuleUI(HAPDefinitionModuleUI moduleUIDefinition, String id) {
 		super(moduleUIDefinition);
+		this.m_decoration = new ArrayList<HAPInfoDecoration>();
 		this.m_eventHandlers = new LinkedHashMap<String, HAPExecutableEventHandler>();
 		this.m_moduleUIDefinition = moduleUIDefinition;
 		this.m_id = id;
@@ -70,11 +77,14 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	public void setPage(HAPExecutableUIUnitPage page) {  this.m_page = page;   }
 	public HAPExecutableUIUnitPage getPage() {  return this.m_page;   }
 	
+	public void setDecoration(List<HAPInfoDecoration> dec) {   this.m_decoration = dec;   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(PAGE, HAPJsonUtility.buildJson(this.m_page, HAPSerializationFormat.JSON));
+		jsonMap.put(DECORATION, HAPJsonUtility.buildJson(this.m_decoration, HAPSerializationFormat.JSON));
 		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));

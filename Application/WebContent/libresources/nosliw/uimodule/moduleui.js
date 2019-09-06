@@ -21,35 +21,94 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleUIRequest = function(moduleUIDef, moduleContextIODataSet, uiDecorationInfos, handlers, request){
+var node_createModuleUIRequest = function(moduleUIDef, moduleContextIODataSet, externalUIDecorationInfos, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUIDef":moduleUIDef, "moduleContext":moduleContextIODataSet}), handlers, request);
 	
-	//generate page for module ui
+	//generate page for module ui first
 	out.addRequest(nosliw.runtime.getUIPageService().getGenerateUIPageRequest(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGE], undefined, {
 		success :function(requestInfo, page){
-			var moduleUI = node_createModuleUI(moduleUIDef, page, moduleContextIODataSet);
+			var moduleUI = loc_createModuleUI(moduleUIDef, page, moduleContextIODataSet);
 			
-			//append decorations
-			if(uiDecorations!=null){
-				_.each(uiDecorations, function(uiDecoration, index){
-					moduleUI.addDecoration(uiDecoration);
-				});
-			}
-			return moduleUI;
+			var uiDecorationInfos = [];
+			//ui decoration from internal module ui
+			_.each(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_DECORATION], function(decInfo, i){
+				uiDecorationInfos.push(new node_DecorationInfo(undefined, decInfo[node_COMMONATRIBUTECONSTANT.INFODECORATION_ID], undefined, decInfo[node_COMMONATRIBUTECONSTANT.INFODECORATION_CONFIGURE]));
+			});
+
+			//ui decoration from external module ui
+			_.each(externalUIDecorationInfos, function(decInfo, i){
+				uiDecorationInfos.push(decInfo);
+			});
+			
+			//build ui decoration obj
+			return loc_buildUIDecorationInfosRequest(uiDecorationInfos, {
+				success : function(request, uiDecorationInfos){
+					//add decoration to module ui
+					_.each(uiDecorationInfos, function(uiDecorationInfo, index){
+						moduleUI.prv_addDecoration(uiDecorationInfo.decoration);
+					});
+					return moduleUI;
+				}
+			});
 		}
 	}));
 	return out;
 };
 
-var node_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
+	
+//build decoration object in decorationInfo.decoration
+var loc_buildUIDecorationInfosRequest = function(decorationInfos, handlers, request){
+	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+	_.each(decorationInfos, function(decorationInfo, i){
+		out.addRequest(loc_buildUIDecorationRequest(decorationInfo));
+	});
+	
+	out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+		return decorationInfos;
+	}));
+	
+	return out;
+};	
+	
+var loc_buildUIDecorationRequest = function(decorationInfo, handlers, request){
+	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+	out.addRequest(node_createUIDecorationRequest(decorationInfo.id, decorationInfo.configureValue, {
+		success : function(request, decoration){
+			decorationInfo.decoration = decoration;
+			return decorationInfo;
+		}
+	}));
+	return out;
+};
+	
+var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	var loc_moduleUIDef = moduleUIDef;
-	var loc_name = loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];   //moduleUI name
 	var loc_page = page;
 	loc_page.setName(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGENAME]);  //page name
 
-	//
+	//extra information by domain that provided by system and consumed by ui 
 	var loc_extraContextData = {};
 
+	var loc_getName = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];   };
+	var loc_getTitle = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];   };
+	
+	var loc_setExtraContextData = function(domain, obj){
+		var domainObj = loc_extraContextData[domain];
+		if(domainObj==undefined){
+			domainObj = {};
+			loc_extraContextData[domain] = domainObj;
+		}
+		domainObj = _.extend(domainObj, obj);
+	};
+	
+	var loc_buildExtraContext = function(domain, context){
+		if(context==undefined)  context = {};
+		_.each(loc_extraContextData[domain], function(value, prop){
+			context[node_basicUtility.buildNosliwFullName(domain+"_"+prop)] = value;
+		});
+		return context;
+	};
+	
 	//data association from module context to page context
 	var loc_inputDataAssociation = node_createDataAssociation(moduleContextIODataSet, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], node_createDynamicIOData(
 		function(handlers, request){
@@ -62,8 +121,8 @@ var node_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 			var pageInput = {};
 			pageInput = _.extend(pageInput, value);
 			//combine data from module with extra data in ui
-			_.each(loc_extraContextData, function(data, name){
-				pageInput = _.extend(pageInput, data);
+			_.each(loc_extraContextData, function(data, domain){
+				pageInput = loc_buildExtraContext(domain, pageInput);
 			});
 			//update page with data
 			out.addRequest(loc_page.getUpdateContextRequest(pageInput));
@@ -83,20 +142,33 @@ var node_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		moduleContextIODataSet,
 		node_dataAssociationUtility.buildDataAssociationName("PAGE", loc_page.getName(), "MODULE", "CONTEXT"));
 
-	var loc_getRefreshRequest = function(handlers, request){
-		return loc_getRefreshPageDataRequest(handlers, request);
+	var loc_getExecuteCommandRequest = function(commandName, parms, handlers, request){
+		var coreCommandName = node_basicUtility.getNosliwCoreName(commandName);
+		if(coreCommandName==undefined){
+			//normal command
+			return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	
+		}
+		else{
+			//system command
+			if(coreCommandName=="syncInData"){
+				return loc_out.getSynInDataRequest(handlers, request);
+			}
+			else{
+				//process by page
+				return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	
+			}
+		}
 	};
-
-	var loc_getRefreshPageDataRequest = function(handlers, request){
-		return loc_inputDataAssociation.getExecuteRequest(handlers, request);
-	};
+	
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(moduleUIDef, page){
-		loc_out.setExtraContextData("nosliw_ui_uiInfo", {
-			nosliw_uiInfo :{
-				id : loc_out.getName(),
-				title : loc_out.getName()
+		//build ui info extra data 
+		loc_out.setExtraContextData("ui", {
+			info :{
+				id : loc_getName(),
+				name : loc_getName(),
+				title : loc_getTitle()
 			}
 		});
 	};
@@ -106,46 +178,38 @@ var node_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	};
 
 	var loc_out = {
-		
+
+		prv_addDecoration : function(decoration){		loc_page.addDecoration(decoration);	},	
+
 		getPage : function(){		return loc_page;		},
 		
-		getName : function(){	return loc_name;	},
+		getName : function(){	return loc_getName();	},
 		
 		getEventHandler : function(eventName){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_EVENTHANDLER][eventName];   },
 			
-		addDecoration : function(decoration){		loc_page.addDecoration(decoration);	},	
-
 		getGetStateRequest : function(handlers, requestInfo){  return loc_page.getGetPageStateRequest(handlers, requestInfo);  },
 		getSetStateRequest : function(stateData, handlers, requestInfo){  return loc_page.getUpdateContextRequest(stateData, handlers, requestInfo);  },
 		
-		setExtraContextData : function(name, extraContextData){  loc_extraContextData[name] = extraContextData;  },
-		getExtraContextData : function(name){  return loc_extraContextData[name];  },
-		getUpdateExtraContextDataRequest : function(name, extraContextData){
-			this.setExtraContextData(name, extraContextData);
-			return loc_page.getUpdateContextRequest(extraContextData);
+		getUpdateExtraContextDataRequest : function(domain, extraContextData){
+			loc_setExtraContextData(domain, extraContextData);
+			return loc_page.getUpdateContextRequest(loc_buildExtraContext(domain));
 		},
 		
 		getUpdateContextRequest : function(parms, handlers, requestInfo){	return loc_page.getUpdateContextRequest(parms, handlers, requestInfo);	},
 		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},
 
 		//take command
-		getExecuteCommandRequest : function(commandName, parms, handlers, request){		
-			if(commandName=="syncInData"){
-				return loc_out.getSynInDataRequest(handlers, request);
-			}
-			else{
-				return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	
-			}
-		},
+		getExecuteCommandRequest : function(commandName, parms, handlers, request){	return loc_getExecuteCommandRequest(commandName, parms, handlers, request);	},
 		executeCommandRequest : function(commandName, parms, handlers, request){	node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(commandName, parms, handlers, request));	},
 
 		registerEventListener : function(listener, handler, thisContext){		return loc_page.registerEventListener(listener, handler, thisContext);	},
 		registerValueChangeEventListener : function(listener, handler, thisContext){	return	loc_page.registerValueChangeEventListener(listener, handler, thisContext);	},
 		
 		getSynInDataRequest : function(handlers, request){  return loc_inputDataAssociation.getExecuteRequest(handlers, request);  },
+		executeSynInDataRequest : function(handlers, request){	node_requestServiceProcessor.processRequest(this.getSynInDataRequest(handlers, request));	},
 		
 		getSynOutDataRequest : function(name, handlers, request){	return loc_outputDataAssociation.getExecuteRequest(handlers, request);	},
-		executeSynOutDataRequest : function(name, handlers, request){	node_requestServiceProcessor.processRequest(this.getSynOutDataRequest(name, handlers, request));	}
+		executeSynOutDataRequest : function(name, handlers, request){	node_requestServiceProcessor.processRequest(this.getSynOutDataRequest(name, handlers, request));	},
 		
 	};
 	

@@ -17,13 +17,29 @@ var packageObj = library;
 	var node_getObjectType;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUIDecorationsRequest = function(resourceIds, handlers, request){
+var node_createUIDecorationRequest = function(decorationId, configureValue, handlers, request){
+	return nosliw.runtime.getUIPageService().getCreateUIPageRequest(decorationId, undefined, {
+		success :function(requestInfo, page){
+			var decoration = loc_createDecoration(page.getUIView());
+			if(configureValue==undefined)  return decoration; 
+			//update decoration with configure
+			return decoration.getUpdateContextRequest(configureValue, {
+				success : function(request){
+					return decoration;
+				}
+			});
+		}
+	}, handlers, request);
+};
+
+
+var node_createUIDecorationsRequest = function(decorationIds, handlers, request){
 	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 	var decs = [];
-	if(resourceIds!=undefined){
+	if(decorationIds!=undefined){
 		var decsRequest = node_createServiceRequestInfoSequence();
-		_.each(resourceIds, function(resourceId, index){
-			decsRequest.addRequest(nosliw.runtime.getUIPageService().getCreateUIPageRequest(resourceId, undefined, {
+		_.each(decorationIds, function(decorationId, index){
+			decsRequest.addRequest(nosliw.runtime.getUIPageService().getCreateUIPageRequest(decorationId, undefined, {
 				success :function(requestInfo, page){
 					var decoration = loc_createDecoration(page.getUIView());
 					decs.push(decoration);
@@ -172,5 +188,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 
 //Register Node by Name
 packageObj.createChildNode("createUIDecorationsRequest", node_createUIDecorationsRequest); 
+packageObj.createChildNode("createUIDecorationRequest", node_createUIDecorationRequest); 
 
 })(packageObj);

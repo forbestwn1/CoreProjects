@@ -18,6 +18,7 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+//runtime is the one that expose lifecycle and interface inteface
 var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, componentDecorationInfos, rootView, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
 	out.addRequest(node_createUIModuleRequest(id, uiModuleDef, undefined, ioInput, {
