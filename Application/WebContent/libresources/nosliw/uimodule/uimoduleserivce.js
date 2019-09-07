@@ -11,7 +11,6 @@ var packageObj = library.getChildPackage("service");
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
 	var node_contextUtility;
-	var node_createUIModuleRequest;
 	var node_createConfigure;
 	var node_loadComponentResourceRequest;
 	

@@ -7,7 +7,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
-	var node_createUIModuleRequest;
+	var node_createUIModuleComponentCoreRequest;
 	var node_makeObjectWithComponentLifecycle;
 	var node_makeObjectWithComponentManagementInterface;
 	var node_getComponentManagementInterface;
@@ -21,7 +21,7 @@ var packageObj = library;
 //runtime is the one that expose lifecycle and interface inteface
 var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, componentDecorationInfos, rootView, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
-	out.addRequest(node_createUIModuleRequest(id, uiModuleDef, undefined, ioInput, {
+	out.addRequest(node_createUIModuleComponentCoreRequest(id, uiModuleDef, undefined, ioInput, {
 		success : function(request, uiModule){
 			var runtime = loc_createModuleRuntime(uiModule, configure, componentDecorationInfos, rootView, request);
 			return runtime.prv_getInitRequest({
@@ -45,12 +45,12 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		loc_componentCoreComplex.addDecorations(componentDecorationInfos);
 	};
 
-	var loc_getContextIODataSet = function(){  return loc_out.prv_getComponent().getIOContext();   };
+	var loc_getContextIODataSet = function(){  return loc_out.prv_getComponent().getContextIODataSet();   };
 	
 	var loc_getProcessEnv = function(){   return loc_componentCoreComplex.getInterface();    };
 	
 	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
-		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteEmbededProcessRequest(process, loc_out.prv_getComponent().getIOContext(), extraInput, handlers, request);
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteEmbededProcessRequest(process, loc_out.prv_getComponent().getContextIODataSet(), extraInput, handlers, request);
 	};
 	
 	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){
@@ -181,7 +181,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uimodule.createUIModuleComponentCoreRequest", function(){node_createUIModuleComponentCoreRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});

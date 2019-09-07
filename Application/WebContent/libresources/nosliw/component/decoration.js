@@ -30,6 +30,8 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 	var loc_state = state;
 	var loc_componentEnv = componentEnv;
 	
+	var loc_lifecycleStatus;
+	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
@@ -51,6 +53,8 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		getState : function(){  return loc_state.getState(loc_id);   },
 		setStateValue : function(name, value){  loc_state.setStateValue(loc_id, name, value);	},
 
+		getLifecycleStatus : function(){   return loc_lifecycleStatus;    },
+		
 		trigueEvent : function(eventName, eventData, requestInfo){  loc_trigueEvent(eventName, eventData, requestInfo);	},
 		
 		processRequest : function(request){   	loc_componentEnv.processRequest(request);  },
@@ -93,7 +97,7 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 
 		//component decoration lifecycle call back
 		getLifeCycleRequest : function(transitName, handlers, request){  return loc_plugin.getLifeCycleRequest(transitName, handlers, request);	},
-		
+		setLifyCycleStatus : function(status){   loc_lifecycleStatus = status;   },
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION);

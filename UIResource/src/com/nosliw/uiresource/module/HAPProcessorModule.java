@@ -96,8 +96,15 @@ public class HAPProcessorModule {
 		//process page, use context in module override context in page
 		HAPInfoPage pageInfo = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage());
 		String pageId = pageInfo.getPageId();
-		out.setDecoration(pageInfo.getDecoration());
-
+		
+		//ui decoration
+		//ui decoration from page first
+		out.addUIDecoration(pageInfo.getDecoration());
+		//ui decoration from module ui
+		out.addUIDecoration(moduleUIDefinition.getUIDecoration());
+		//ui decoration from module
+		out.addUIDecoration(moduleExe.getDefinition().getUIDecoration());
+		
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
 		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement);
 		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPContext)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk

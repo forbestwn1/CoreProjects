@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
@@ -15,6 +16,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
+import com.nosliw.uiresource.common.HAPInfoDecoration;
 import com.nosliw.uiresource.common.HAPInfoPage;
 import com.nosliw.uiresource.common.HAPUtilityParser;
 
@@ -79,6 +81,12 @@ public class HAPParserModule {
 			}
 		}
 
+		//ui decoration
+		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UIDECORATION);
+		if(uiDecJsonArray!=null) {
+			out.setUIDecoration(HAPSerializeUtility.buildListFromJsonArray(HAPInfoDecoration.class.getName(), uiDecJsonArray));
+		}
+		
 		//ui
 		JSONArray uiJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UI);
 		if(uiJsonArray!=null) {
@@ -99,21 +107,31 @@ public class HAPParserModule {
 		out.setPage(jsonObj.optString(HAPDefinitionModuleUI.PAGE));
 		out.setType(jsonObj.optString(HAPDefinitionModuleUI.TYPE));
 		out.setStatus(jsonObj.optString(HAPDefinitionModuleUI.STATUS));
-		
+
+		//input mapping
 		JSONObject inputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.INPUTMAPPING);
 		if(inputMappingJson!=null) {
 			HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildObjectByJson(inputMappingJson); 
 			out.setInputMapping(dataAssociation);
 		}
 
+		//output mapping
 		JSONObject outputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.OUTPUTMAPPING);
 		if(outputMappingJson!=null) {
 			HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildObjectByJson(outputMappingJson);
 			out.setOutputMapping(dataAssociation);
 		}
 
+		//event handlers
 		JSONObject eventHandlersJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.EVENTHANDLER);
 		out.addEventHandler(HAPUtilityParser.parseEventHandlers(eventHandlersJson, activityPluginMan));
+
+		//ui decoration
+		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModuleUI.UIDECORATION);
+		if(uiDecJsonArray!=null) {
+			out.setUIDecoration(HAPSerializeUtility.buildListFromJsonArray(HAPInfoDecoration.class.getName(), uiDecJsonArray));
+		}
+
 		return out;
 	}
 	

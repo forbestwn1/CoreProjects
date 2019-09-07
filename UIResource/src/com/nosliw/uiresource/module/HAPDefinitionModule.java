@@ -13,6 +13,7 @@ import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.uiresource.common.HAPComponentWithConfiguration;
+import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 /**
 Module is a independent entity that is runnable within a container
@@ -37,8 +38,7 @@ public class HAPDefinitionModule extends HAPComponentWithConfiguration{
 	public static String PROCESS = "process";
 
 	@HAPAttribute
-	public static String DECORATION = "decoration";
-	
+	public static String UIDECORATION = "uiDecoration";
 	
 	private String m_id;
 	
@@ -52,10 +52,13 @@ public class HAPDefinitionModule extends HAPComponentWithConfiguration{
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> m_processes;
 
+	private List<HAPInfoDecoration> m_uiDecoration;
+	
 	public HAPDefinitionModule(String id) {
 		this.m_id = id;
 		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>>();
+		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
 	}
 	
 	public String getId() {   return this.m_id;   }
@@ -69,13 +72,16 @@ public class HAPDefinitionModule extends HAPComponentWithConfiguration{
 	public List<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }
 	public void addUI(HAPDefinitionModuleUI ui) {   this.m_uis.add(ui);   }
 	
-
+	public void setUIDecoration(List<HAPInfoDecoration> decs) {  this.m_uiDecoration = decs;    }
+	public List<HAPInfoDecoration> getUIDecoration(){   return this.m_uiDecoration;    }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_contextGroup, HAPSerializationFormat.JSON));
 		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
 		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
+		jsonMap.put(UIDECORATION, HAPJsonUtility.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
 	}
 
 }

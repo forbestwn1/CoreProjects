@@ -31,7 +31,7 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleContextIODataSet, e
 			
 			var uiDecorationInfos = [];
 			//ui decoration from internal module ui
-			_.each(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_DECORATION], function(decInfo, i){
+			_.each(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_UIDECORATION], function(decInfo, i){
 				uiDecorationInfos.push(new node_DecorationInfo(undefined, decInfo[node_COMMONATRIBUTECONSTANT.INFODECORATION_ID], undefined, decInfo[node_COMMONATRIBUTECONSTANT.INFODECORATION_CONFIGURE]));
 			});
 
@@ -89,6 +89,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	//extra information by domain that provided by system and consumed by ui 
 	var loc_extraContextData = {};
 
+	var loc_getId = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];   };
 	var loc_getName = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];   };
 	var loc_getTitle = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];   };
 	
@@ -183,8 +184,10 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 
 		getPage : function(){		return loc_page;		},
 		
+		getId : function(){	return loc_getId();	},
 		getName : function(){	return loc_getName();	},
 		
+		//process that handle event
 		getEventHandler : function(eventName){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_EVENTHANDLER][eventName];   },
 			
 		getGetStateRequest : function(handlers, requestInfo){  return loc_page.getGetPageStateRequest(handlers, requestInfo);  },

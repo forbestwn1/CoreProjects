@@ -1,6 +1,8 @@
 package com.nosliw.uiresource.module;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -10,6 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
+import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 //each module ui is page unit in module that is alive in a module
 //as it defined:
@@ -34,6 +37,9 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	public static String EVENTHANDLER = "eventHandler";
 	
 	@HAPAttribute
+	public static String UIDECORATION = "uiDecoration";
+	
+	@HAPAttribute
 	public static String TYPE = "type";
 
 	@HAPAttribute
@@ -44,6 +50,8 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 
 	//event handlers
 	private Map<String, HAPDefinitionEventHandler> m_eventHandlers;
+
+	private List<HAPInfoDecoration> m_uiDecoration;
 	
 	//data mapping (from data definition in module to public data definition in page)
 	private HAPDefinitionDataAssociation m_inputMapping;
@@ -56,6 +64,7 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	
 	public HAPDefinitionModuleUI() {
 		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionEventHandler>();
+		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
 	}
 	
 	public String getPage() {   return this.m_page;    }
@@ -77,6 +86,9 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	public void addEventHandler(String name, HAPDefinitionEventHandler eventHandler) {  this.m_eventHandlers.put(name, eventHandler);   }
 	public void addEventHandler(Map<String, HAPDefinitionEventHandler> eventHandler) {  this.m_eventHandlers.putAll(eventHandler);   }
 	
+	public void setUIDecoration(List<HAPInfoDecoration> decs) {  this.m_uiDecoration = decs;    }
+	public List<HAPInfoDecoration> getUIDecoration(){  return this.m_uiDecoration;   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -84,5 +96,6 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
+		jsonMap.put(UIDECORATION, HAPJsonUtility.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
 	}
 }

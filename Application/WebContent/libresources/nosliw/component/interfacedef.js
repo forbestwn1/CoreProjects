@@ -59,6 +59,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		
 		//lifecycle handler
 		getLifeCycleRequest : function(transitName, handlers, request){},
+		setLifeCycleStatus : function(status){},
 		
 		registerEventListener : function(listener, handler, thisContext){  },
 		unregisterEventListener : function(listener){ },

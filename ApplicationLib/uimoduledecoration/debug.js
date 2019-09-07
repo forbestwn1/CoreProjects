@@ -12,7 +12,7 @@ function(gate){
 
 	var loc_gate = gate;
 	var loc_component = loc_gate.getComponentCore();
-	var loc_componentIOContext = loc_component.getIOContext();
+	var loc_componentIOContext = loc_component.getContextIODataSet();
 
 	var loc_view;
 	var loc_debugView; 

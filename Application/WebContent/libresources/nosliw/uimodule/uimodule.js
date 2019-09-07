@@ -23,19 +23,19 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
-var node_createUIModuleRequest = function(id, uiModuleDef, pageDecorations, ioInput, handlers, request){
+var node_createUIModuleComponentCoreRequest = function(id, uiModuleDef, uiDecorations, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
-	var module = loc_createUIModule(id, uiModuleDef, ioInput);
+	var module = loc_createUIModuleComponentCore(id, uiModuleDef, ioInput);
 
-	//prepare decoration first
-	var decorationInfo = {};
-	//use page decoration defined in module first
-	if(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_DECORATION]!=null)  decorationInfo = uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_DECORATION];
-	if(pageDecorations!=null){
-		if(pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL]!=undefined)   decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL]=pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
-		if(pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)   decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]=pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI];
-	}
+//	//prepare decoration first
+//	var decorationInfo = {};
+//	//use page decoration defined in module first
+//	if(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_DECORATION]!=null)  decorationInfo = uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_DECORATION];
+//	if(pageDecorations!=null){
+//		if(pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL]!=undefined)   decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL]=pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
+//		if(pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)   decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]=pageDecorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI];
+//	}
 	
 	//build module ui
 	var buildModuleUIsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
@@ -48,19 +48,18 @@ var node_createUIModuleRequest = function(id, uiModuleDef, pageDecorations, ioIn
 	});
 
 	// build uis
-	_.each(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(ui, index){
+	_.each(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(moduleUIDef, index){
+		var moduleUIId = moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];
+		buildModuleUIRequest = node_createModuleUIRequest(moduleUIDef, module.getContextIODataSet(), node_componentUtility.buildDecorationInfoArrayByPart(uiDecoration, moduleUIId));
 		
-		var buildModuleUIRequest = node_createServiceRequestInfoSequence();
-
-		var uiName = uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];
-		var decs;
-		if(decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)  decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI][uiName]; 
-		if(decs==undefined) decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
-		buildModuleUIRequest.addRequest(node_createUIDecorationsRequest111(decs, {
-			success : function(request, decorations){
-				return node_createModuleUIRequest(ui, module.getIOContext(), decorations);
-			}
-		}));
+//		var decs;
+//		if(decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)  decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI][moduleUIId]; 
+//		if(decs==undefined) decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
+//		buildModuleUIRequest.addRequest(node_createUIDecorationsRequest111(decs, {
+//			success : function(request, decorations){
+//				return node_createModuleUIRequest(ui, module.getContextIODataSet(), decorations);
+//			}
+//		}));
 
 		buildModuleUIsRequest.addRequest(index, buildModuleUIRequest);
 	});
@@ -69,7 +68,7 @@ var node_createUIModuleRequest = function(id, uiModuleDef, pageDecorations, ioIn
 	return out;
 };	
 	
-var loc_createUIModule = function(id, uiModuleDef, ioInput){
+var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 	//input io used to get input value to initiate module
 	var loc_inputIO = ioInput;
 	
@@ -79,19 +78,56 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 	var loc_valueChangeEventListener = node_createEventObject();
 	var loc_valueChangeEventSource = node_createEventObject();
 	
-	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
-	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo); };
+	var loc_trigueEvent = function(eventName, eventData, requestInfo){
+		if(node_componentUtility.isActive(loc_out.prv_module.lifecycleStatus)){
+			//trigue event only in active status
+			loc_eventSource.triggerEvent(eventName, eventData, requestInfo);
+		}
+	};
+	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){
+		if(node_componentUtility.isActive(loc_out.prv_module.lifecycleStatus)){
+			//trigue event only in active status
+			loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo);
+		}
+	};
 
-	var loc_updateIOContext = function(input){
+	//initiate context data set with input value
+	var loc_initContextIODataSet = function(input){
 		var data = loc_out.prv_module.uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input);
 		loc_out.prv_module.contextDataSet.setData(undefined, data);
+	};
+
+	//initiate context data set with inputIO
+	var loc_getInitIOContextRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		if(loc_inputIO!=undefined){
+			out.addRequest(loc_inputIO.getGetDataValueRequest(undefined, {
+				success : function(request, data){
+					loc_initContextIODataSet(data);
+				}
+			}));
+		}
+		else{
+			loc_initContextIODataSet();
+		}
+		return out;
+	};
+	
+	var loc_destroy = function(request){
+		node_destroyUtil(loc_out.prv_module.contextDataSet, request);
+		
+		_.each(loc_out.prv_module.uiArray, function(ui, i){
+			node_destroyUtil(ui, request);
+		});
+		loc_out.prv_module.uiArray = undefined;
+		loc_out.prv_module.ui = undefined;
+		loc_out.prv_module.uiModuleDef = undefined;
+		loc_out.prv_module.lifecycle = undefined;
 	};
 	
 	var loc_init = function(){
 		loc_out.prv_module.contextDataSet.registerEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
-			if(loc_out.prv_module.lifecycle.isActive()==true){
-				loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, undefined, request);
-			}
+			loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, undefined, request);
 		});
 	};
 	
@@ -99,21 +135,19 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 		prv_module : {
 			id : id,              //
 			uiModuleDef : uiModuleDef,   //
-			
-			contextDataSet : node_createIODataSet(),   //module 
+			contextDataSet : node_createIODataSet(),   //module context data set
+			lifecycleStatus : undefined,  //current lifecycle status
 			
 			uiArray : [],    //
 			ui : {},
-
-			lifecycle : undefined    //module's lifecycle obj
 		},
 		
 		prv_addUI : function(ui){
 			loc_out.prv_module.uiArray.push(ui);
-			loc_out.prv_module.ui[ui.getName()] = ui;
+			loc_out.prv_module.ui[ui.getId()] = ui;
 			//register listener for module ui
-			ui.registerEventListener(loc_out.prv_module.eventListener, function(eventName, eventData, requestInfo){
-				loc_trigueEvent(node_CONSTANT.MODULE_EVENT_UIEVENT, new node_uiEventData(this.getName(), eventName, eventData), requestInfo);
+			ui.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
+				loc_trigueEvent(node_CONSTANT.MODULE_EVENT_UIEVENT, new node_uiEventData(this.getId(), eventName, eventData), requestInfo);
 			}, ui);
 			ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
 				//handle ui value change, update value in module
@@ -121,62 +155,45 @@ var loc_createUIModule = function(id, uiModuleDef, ioInput){
 			}, ui);
 		},
 	
-		setLifecycle : function(lifecycle){  this.prv_module.lifecycle = lifecycle;   },
-		
 		getId : function(){  return loc_out.prv_module.id;  },
 		getVersion : function(){   return "1.0.0";   },
 		
-		getIOContext : function(){  return loc_out.prv_module.contextDataSet;  },
+		getContextIODataSet : function(){  return loc_out.prv_module.contextDataSet;  },
 		
 		getUIs : function(){  return loc_out.prv_module.uiArray;  },
-		getUI : function(name) {  return loc_out.prv_module.ui[name];   },
-		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getSynInDataRequest(handlers, request);	},
+		getUI : function(id) {  return loc_out.prv_module.ui[id];   },
 		
-		getEventHandler : function(uiName, eventName){   return this.getUI(uiName).getEventHandler(eventName);   },
+		getEventHandler : function(uiId, eventName){   return this.getUI(uiId).getEventHandler(eventName);   },
 		
 		getProcess : function(name){  return loc_out.prv_module.uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
+
+//		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getSynInDataRequest(handlers, request);	},
+
 		
+//component core interface method		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
 		registerValueChangeEventListener : function(listener, handler, thisContext){  return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener); },
 
-		getInitIOContextRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			if(loc_inputIO!=undefined){
-				out.addRequest(loc_inputIO.getGetDataValueRequest(undefined, {
-					success : function(request, data){
-						loc_updateIOContext(data);
-					}
-				}));
-			}
-			else{
-				loc_updateIOContext();
-			}
-			return out;
-		},
-		
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
 		getPart : function(partId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, partId); },
 
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out;
-			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
-				out = node_createServiceRequestInfoSimple(undefined, function(request){
-					node_destroyUtil(loc_out.prv_module.contextDataSet, request);
-					
-					_.each(loc_out.prv_module.uiArray, function(ui, i){
-						node_destroyUtil(ui, request);
-					});
-					loc_out.prv_module.uiArray = undefined;
-					loc_out.prv_module.ui = undefined;
-					loc_out.prv_module.uiModuleDef = undefined;
-					loc_out.prv_module.lifecycle = undefined;
-				}, handlers, request);
+			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
+				out = loc_getInitIOContextRequest(handlers, request);
+			}
+			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
+				out = loc_getInitIOContextRequest(handlers, request);
+			}
+			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
+				out = node_createServiceRequestInfoSimple(undefined, function(request){loc_destroy(request);}, handlers, request);
 			}
 			return out;
 		},
+		setLifeCycleStatus : function(status){   loc_out.prv_module.lifecycleStatus = status;    },
 	};
 
 	loc_init();
@@ -212,6 +229,6 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_
 
 
 //Register Node by Name
-packageObj.createChildNode("createUIModuleRequest", node_createUIModuleRequest); 
+packageObj.createChildNode("createUIModuleComponentCoreRequest", node_createUIModuleComponentCoreRequest); 
 
 })(packageObj);

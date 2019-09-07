@@ -29,6 +29,9 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 	//exposed interface
 	var loc_interface = {};
 
+	//current lifecycle status
+	var loc_lifecycleStatus;
+
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
@@ -167,6 +170,11 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 		getUpdateViewRequest : function(view, handlers, request){  return loc_getUpdateViewRequest(view, handlers, request); 	},
 		
 		getLifeCycleRequest : function(transitName, handlers, request){	 return loc_getLifeCycleRequest(transitName, handlers, request);	},
+		setLifyCycleStatus : function(status){   
+			loc_lifecycleStatus = status;   
+			_.each(loc_layers, function(layer, i){  layer.setLifyCycleStatus(status);	});
+		},
+
 	};
 	return loc_out;
 };
