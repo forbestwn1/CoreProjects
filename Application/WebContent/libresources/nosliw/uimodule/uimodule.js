@@ -23,7 +23,7 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
-var node_createUIModuleComponentCoreRequest = function(id, uiModuleDef, uiDecorations, ioInput, handlers, request){
+var node_createUIModuleComponentCoreRequest = function(id, uiModuleDef, uiDecorationConfigure, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
 	var module = loc_createUIModuleComponentCore(id, uiModuleDef, ioInput);
@@ -50,7 +50,7 @@ var node_createUIModuleComponentCoreRequest = function(id, uiModuleDef, uiDecora
 	// build uis
 	_.each(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(moduleUIDef, index){
 		var moduleUIId = moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];
-		buildModuleUIRequest = node_createModuleUIRequest(moduleUIDef, module.getContextIODataSet(), node_componentUtility.buildDecorationInfoArrayByPart(uiDecoration, moduleUIId));
+		buildModuleUIRequest = node_createModuleUIRequest(moduleUIDef, module.getContextIODataSet(), node_componentUtility.buildDecorationInfoArrayByPart(uiDecorationConfigure, moduleUIId));
 		
 //		var decs;
 //		if(decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)  decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI][moduleUIId]; 

@@ -19,11 +19,11 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //runtime is the one that expose lifecycle and interface inteface
-var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, componentDecorationInfos, rootView, ioInput, handlers, request){
+var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, moduleDecorationInfos, uiDecorationConfigure, rootView, ioInput, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
-	out.addRequest(node_createUIModuleComponentCoreRequest(id, uiModuleDef, undefined, ioInput, {
-		success : function(request, uiModule){
-			var runtime = loc_createModuleRuntime(uiModule, configure, componentDecorationInfos, rootView, request);
+	out.addRequest(node_createUIModuleComponentCoreRequest(id, uiModuleDef, uiDecorationConfigure, ioInput, {
+		success : function(request, uiModuleCore){
+			var runtime = loc_createModuleRuntime(uiModuleCore, configure, moduleDecorationInfos, rootView, request);
 			return runtime.prv_getInitRequest({
 				success : function(request){
 					return request.getData();
@@ -34,30 +34,33 @@ var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, compo
 	return out;
 };
 
-var loc_createModuleRuntime = function(uiModule, configure, componentDecorationInfos, rootView, request){
+var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorationInfos, rootView, request){
 	
 	var loc_componentCoreComplex = node_createComponentCoreComplex(configure, loc_componentEnv);
 	var loc_localStore = configure.getConfigureData().__storeService;
-	var loc_stateBackupService = node_createStateBackupService("module", uiModule.getId(), uiModule.getVersion(), loc_localStore);
+	var loc_stateBackupService = node_createStateBackupService("module", uiModuleCore.getId(), uiModuleCore.getVersion(), loc_localStore);
 
-	var loc_init = function(uiModule, configure, componentDecorationInfos, rootView, request){
-		loc_componentCoreComplex.setCore(uiModule);
+	var loc_eventListener = node_createEventObject();
+
+	var loc_init = function(uiModuleCore, configure, componentDecorationInfos, rootView, request){
+		loc_componentCoreComplex.setCore(uiModuleCore);
 		loc_componentCoreComplex.addDecorations(componentDecorationInfos);
 	};
 
+	var loc_getModuleCore = function(){   return loc_componentCoreComplex.getCore();   };
 	var loc_getContextIODataSet = function(){  return loc_out.prv_getComponent().getContextIODataSet();   };
-	
 	var loc_getProcessEnv = function(){   return loc_componentCoreComplex.getInterface();    };
-	
+
 	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
-		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteEmbededProcessRequest(process, loc_out.prv_getComponent().getContextIODataSet(), extraInput, handlers, request);
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteEmbededProcessRequest(process, loc_getContextIODataSet(), extraInput, handlers, request);
 	};
 	
 	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){
-		var process = loc_out.prv_getComponent().getProcess(processName);
+		var process = loc_getModuleCore().getProcess(processName);
 		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
 	};
 	
+	//from init to active
 	var loc_getGoActiveRequest = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
 		//start module
@@ -66,6 +69,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		return out;
 	};
 	
+	//from paused to active
 	var loc_getResumeActiveRequest = function(stateData, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ResumeUIModuleRuntime", {}), undefined, request);
 
@@ -82,7 +86,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		return out;
 	};
 	
-	
+	//component lifecycle call back methods
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DestroyUIModuleRuntime", {}), undefined, request);
@@ -129,6 +133,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		loc_stateBackupService.clearBackupData();
 	};
 
+	//component management interface object 
 	var loc_interfaceDelegate = {
 		getContextIODataSet :  function(){  return loc_getContextIODataSet();  },
 		getExecuteCommandRequest : function(command, parms, handlers, request){  return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);    },
@@ -140,11 +145,11 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	
 	var loc_componentEnv = {
 		//process request
-		processRequest : function(request){   },
+		processRequest : function(request){  node_requestServiceProcessor.processRequest(request); },
 		//execute process
-		getExecuteProcessRequest : function(process, extraInput, handlers, request){    },
+		getExecuteProcessRequest : function(process, extraInput, handlers, request){  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);  },
 		//execute process
-		getExecuteProcessResourceRequest : function(processId, input, handlers, request){    },
+		getExecuteProcessResourceRequest : function(processId, input, handlers, request){  return loc_getExecuteModuleProcessByNameRequest(processId, extraInput, handlers, request);  },
 	};
 
 	var loc_out = {
@@ -158,13 +163,18 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 
 		getExecuteCommandRequest : function(command, parms, handlers, request){	return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);	},
 		
-		getInterface : function(){   return node_getComponentManagementInterface(loc_out);  },
-		
 	};
 	
-	loc_init(uiModule, configure, componentDecorationInfos, rootView, request);
+	loc_init(uiModuleCore, configure, componentDecorationInfos, rootView, request);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_out);
+	//listen to lifecycle event and update lifecycle status
+	node_getComponentLifecycleInterface(loc_out).registerEventListener(loc_eventListener, function(eventName, eventData, request){
+		if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
+			loc_componentCoreComplex.setLifyCycleStatus(eventData.to);
+		}
+	});
+	
 	
 	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_interfaceDelegate, loc_out);
 

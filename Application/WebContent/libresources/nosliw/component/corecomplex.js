@@ -104,7 +104,6 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 				loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);
 			});
 		});
-
 	},
 	
 	loc_addDecoration = function(decorationInfo){
@@ -123,13 +122,9 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 		
 		getCore : function(){   return loc_getCore();    },
 			
-		setCore : function(core){
-			loc_addLayer(core);
-		},
+		setCore : function(core){	loc_addLayer(core);	},
 		
-		addDecorations : function(decorationInfos){
-			for(var i in decorationInfos){  loc_out.addDecoration(decorationInfos[i]);	}
-		},
+		addDecorations : function(decorationInfos){	for(var i in decorationInfos){  loc_out.addDecoration(decorationInfos[i]);	}	},
 
 		addDecoration : function(decorationInfo){		loc_addDecoration(decorationInfo);		},
 

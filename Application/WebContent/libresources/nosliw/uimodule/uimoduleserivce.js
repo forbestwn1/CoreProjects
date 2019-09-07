@@ -23,6 +23,7 @@ var node_createUIModuleService = function(){
 		getGetUIModuleRuntimeRequest : function(id, module, configure, ioInput, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource"), handlers, request);
 
+			//build module decoration info array from module configure
 			var moduleDecInfos = [];
 			var decConfigurePath = 'moduleDecoration';
 			var moduleDecIdSet = configure.getChildrenIdSet(decConfigurePath);
@@ -30,6 +31,9 @@ var node_createUIModuleService = function(){
 				var moduleDecConfigureValue = configure.getChildConfigureValue(decConfigurePath, moduleDecId);
 				moduleDecInfos.push(new node_DecorationInfo(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, moduleDecConfigure.id, moduleDecConfigure.name, moduleDecConfigureValue));
 			});
+			
+			//build ui decoration configure 
+			var uiDecorationConfigure = configure.getConfigureValue().uiDecoration;
 			
 			out.addRequest(node_loadComponentResourceRequest(
 				typeof module === 'string'? 
@@ -44,7 +48,7 @@ var node_createUIModuleService = function(){
 				{
 					success : function(request, componentInfo){
 						//create ui module runtime
-						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, configure.getConfigureData().root, ioInput, {
+						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationConfigure, configure.getConfigureData().root, ioInput, {
 							success : function(request, uiModuleRuntime){
 								return uiModuleRuntime;
 							}
