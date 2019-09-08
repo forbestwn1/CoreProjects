@@ -29,7 +29,7 @@ var node_createUIModuleService = function(){
 			var moduleDecIdSet = configure.getChildrenIdSet(decConfigurePath);
 			_.each(moduleDecIdSet, function(moduleDecId, i){
 				var moduleDecConfigureValue = configure.getChildConfigureValue(decConfigurePath, moduleDecId);
-				moduleDecInfos.push(new node_DecorationInfo(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, moduleDecConfigure.id, moduleDecConfigure.name, moduleDecConfigureValue));
+				moduleDecInfos.push(new node_DecorationInfo(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, moduleDecConfigureValue.id, moduleDecConfigureValue.name, moduleDecConfigureValue));
 			});
 			
 			//build ui decoration configure 

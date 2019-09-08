@@ -75,10 +75,7 @@ var node_utility = {
 		},
 		
 		createTagResourceId : function(name){
-			var out = {};
-			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = name; 
-			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG; 
-			return out;
+			return node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, name);
 		},
 };
 

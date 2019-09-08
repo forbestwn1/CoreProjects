@@ -97,7 +97,7 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 
 		//component decoration lifecycle call back
 		getLifeCycleRequest : function(transitName, handlers, request){  return loc_plugin.getLifeCycleRequest(transitName, handlers, request);	},
-		setLifyCycleStatus : function(status){   loc_lifecycleStatus = status;   },
+		setLifeCycleStatus : function(status){   loc_lifecycleStatus = status;   },
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION);

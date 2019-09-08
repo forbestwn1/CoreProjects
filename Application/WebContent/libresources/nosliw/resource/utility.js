@@ -6,6 +6,7 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_namingConvensionUtility;
+	var node_ResourceId;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = 
@@ -36,17 +37,11 @@ var node_utility =
 		},
 		
 		createOperationResourceId : function(dataTypeId, operation){
-			var out = {};
-			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = node_namingConvensionUtility.cascadeLevel1(dataTypeId, operation); 
-			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_OPERATION; 
-			return out;
+			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_OPERATION, node_namingConvensionUtility.cascadeLevel1(dataTypeId, operation));
 		},
 
 		createConverterResourceId : function(dataTypeId){
-			var out = {};
-			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = node_namingConvensionUtility.cascadeLevel1(dataTypeId); 
-			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONVERTER; 
-			return out;
+			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONVERTER, node_namingConvensionUtility.cascadeLevel1(dataTypeId));
 		},
 };
 
@@ -56,6 +51,7 @@ var node_utility =
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){node_ResourceId = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

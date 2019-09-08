@@ -12,7 +12,7 @@ var node_basicUtility =
 		},
 		
 		getNosliwCoreName : function(name){
-			var index = name.indexof("nosliw_");
+			var index = name.indexOf("nosliw_");
 			if(index==-1)  return;
 			return name.subString(index);
 		},

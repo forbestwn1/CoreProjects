@@ -172,7 +172,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	//listen to lifecycle event and update lifecycle status
 	node_getComponentLifecycleInterface(loc_out).registerEventListener(loc_eventListener, function(eventName, eventData, request){
 		if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
-			loc_componentCoreComplex.setLifyCycleStatus(eventData.to);
+			loc_componentCoreComplex.setLifeCycleStatus(eventData.to);
 		}
 	});
 	

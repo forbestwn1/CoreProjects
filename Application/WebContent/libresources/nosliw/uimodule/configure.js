@@ -44,6 +44,9 @@ var loc_moduleSetting = {
 			moduleDecoration : 
 			{
 				parts : [
+					{
+						id: 'base',
+					},
 				]
 			},
 		},

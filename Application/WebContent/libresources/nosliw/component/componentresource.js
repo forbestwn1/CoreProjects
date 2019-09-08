@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_getObjectType;
 	var node_requestServiceProcessor;
 	var node_resourceUtility;
+	var node_ResourceId;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //generic utility method for loading component resource (component itself + decoration)
@@ -29,9 +30,7 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationDef, h
 	var componentResource;
 	if(componentInfo.resourceId != undefined){
 		//resource id
-		componentResourceId = {};
-		componentResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = componentInfo.resourceId; 
-		componentResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = componentInfo.type; 
+		componentResourceId = new node_ResourceId(componentInfo.type, componentInfo.resourceId);
 		resourceIds.push(componentResourceId);
 	}
 	else{
@@ -56,9 +55,7 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationDef, h
 
 			if(decorationInfo.resource==undefined){
 				//if no resource in decorationInfo, it means it need to be loaded resource
-				var resourceId = {};
-				resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = decorationInfo.id; 
-				resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = decorationDef.type; 
+				var resourceId = new node_ResourceId(decorationDef.type, decorationInfo.id);
 				resourceIds.push(resourceId);
 			}
 		});
@@ -71,7 +68,7 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationDef, h
 			_.each(decorationInfos, function(decorationInfo, i){
 				//build resource in decoration info
 				if(decorationInfo.resource==undefined){
-					decorationInfo.resource = node_resourceUtility.getResourceFromTree(resourceTree, decorationInfo.resourceId).resourceData;
+					decorationInfo.resource = node_resourceUtility.getResourceFromTree(resourceTree, new node_ResourceId(decorationInfo.type, decorationInfo.id)).resourceData;
 				}
 			});
 			
@@ -101,6 +98,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){node_ResourceId = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("loadComponentResourceRequest", node_loadComponentResourceRequest); 

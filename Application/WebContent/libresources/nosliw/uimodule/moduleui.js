@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_createDataAssociation;
 	var node_createDynamicIOData;
 	var node_dataAssociationUtility;
+	var node_basicUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -89,7 +90,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	//extra information by domain that provided by system and consumed by ui 
 	var loc_extraContextData = {};
 
-	var loc_getId = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];   };
+	var loc_getId = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];   };
 	var loc_getName = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];   };
 	var loc_getTitle = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];   };
 	
@@ -244,6 +245,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleUIRequest", node_createModuleUIRequest); 

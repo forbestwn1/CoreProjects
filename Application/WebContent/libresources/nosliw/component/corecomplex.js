@@ -109,7 +109,7 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 	
 	loc_addDecoration = function(decorationInfo){
 		var decName = decorationInfo.name;
-		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.resource, loc_componentEnv, loc_configure.getConfigureData(decName), loc_state);
+		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.resource, loc_componentEnv, decorationInfo.configureValue, loc_state);
 		loc_addLayer(decoration);
 	};
 	
@@ -166,9 +166,11 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 		getUpdateViewRequest : function(view, handlers, request){  return loc_getUpdateViewRequest(view, handlers, request); 	},
 		
 		getLifeCycleRequest : function(transitName, handlers, request){	 return loc_getLifeCycleRequest(transitName, handlers, request);	},
-		setLifyCycleStatus : function(status){   
+		setLifeCycleStatus : function(status){   
 			loc_lifecycleStatus = status;   
-			_.each(loc_layers, function(layer, i){  layer.setLifyCycleStatus(status);	});
+			_.each(loc_layers, function(layer, i){  
+				layer.setLifeCycleStatus(status);	
+			});
 		},
 
 	};

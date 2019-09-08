@@ -41,10 +41,10 @@ function(gate){
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out;
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
-				out = loc_uiModule.getInitIOContextRequest(handlers, request);
+//				out = loc_uiModule.getInitIOContextRequest(handlers, request);
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
-				out = loc_uiModule.getInitIOContextRequest(handlers, request);
+//				out = loc_uiModule.getInitIOContextRequest(handlers, request);
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND){
 				out = node_createServiceRequestInfoSet(undefined, {
