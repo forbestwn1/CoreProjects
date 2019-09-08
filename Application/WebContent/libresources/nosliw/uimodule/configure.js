@@ -6,22 +6,26 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createAppDecoration;
+	var node_createConfigure;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleConfigure = function(rootView, storeService, settingName, parms){
+var node_createModuleConfigure = function(settingName, parms){
 	
-	var globalConfig = {
-		__storeService : storeService
-	};
-	
-	var moduleConfigure = node_createConfigure(loc_moduleSetting, globalConfig, parms).getChildConfigure(undefined, settingName);
+	var moduleConfigure = node_createConfigure(loc_moduleSetting, loc_globalConfig, parms).getChildConfigure(undefined, settingName);
 	return moduleConfigure;
 	
 	
 //	var moduleSetting = loc_moduleSetting[settingName];
 //	var modulesDecorationInfoArray = loc_createTypicalModuleDecorationInfoArray(moduleSetting.moduleDecoration, parms);
 //	return loc_createTypicalModuleConfigure(rootView, storeService, moduleSetting.uiDecorations, modulesDecorationInfoArray);
+};
+
+
+var loc_globalConfig = {
+	__storeService : function(parms){
+		return parms.storeService;
+	}
 };
 	
 //predefined module setting by name
@@ -35,6 +39,14 @@ var loc_moduleSetting = {
 	},
 	
 	parts : {
+		test : {
+			uiDecoration : {},
+			moduleDecoration : 
+			{
+				parts : [
+				]
+			},
+		},
 		setting : {
 			uiDecoration : {},
 			moduleDecoration : 
@@ -147,6 +159,8 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.createAppDecoration", function(){node_createAppDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("component.DecorationInfo", function(){node_DecorationInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createModuleConfigure", node_createModuleConfigure); 

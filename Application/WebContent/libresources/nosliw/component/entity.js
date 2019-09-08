@@ -7,6 +7,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_makeObjectWithType;
 	var node_getObjectType;
+	var node_objectOperationUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //configure for component
@@ -57,8 +58,9 @@ var node_createConfigure = function(definition, global, parms){
 	
 	var loc_init = function(definition, global, parms){
 		//global value
-		loc_global = loc_processConfigure(global, parms);
+		loc_global = parms==undefined? global : loc_processConfigure(global, parms);
 
+		var configure;
 		var valueType = node_getObjectType(definition);
 		if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE)	configure = definition.getConfigureValue();
 		else if(parms==undefined)   configure = definition;
@@ -139,6 +141,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createConfigure", node_createConfigure); 

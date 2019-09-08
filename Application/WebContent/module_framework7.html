@@ -59,10 +59,10 @@ $(document).on("nosliwActive", function(){
 	});
 		
 	var configure = node_createModuleConfigure(
-			$('#moduleDiv').get(), 
-			node_getStoreService(), 
 			parms.setting, 
 			{
+				rootView : $('#moduleDiv').get(),
+				storeService : node_getStoreService(),
 				framework7App : framework7App
 			}
 	);
