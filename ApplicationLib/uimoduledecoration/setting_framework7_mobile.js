@@ -35,7 +35,7 @@ function(gate){
 		
 		getUpdateViewRequest : function(view, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(node_createUIDecorationsRequest([loc_gate.getConfigureData().uiResource], {
+			out.addRequest(node_createUIDecorationsRequest([loc_gate.getConfigureValue().uiResource], {
 				success : function(request, decs){
 					loc_decoration = decs[0];
 					loc_decoration.registerEventListener(undefined, function(eventName, eventData, request){
@@ -56,7 +56,7 @@ function(gate){
 				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 					//put ui to root
 					_.each(loc_uiModule.getUIs(), function(ui, index){
-//						ui.getPage().appendTo(loc_gate.getConfigureData().root);
+//						ui.getPage().appendTo(loc_gate.getConfigureValue().root);
 						ui.getPage().appendTo(loc_view);
 					});
 					

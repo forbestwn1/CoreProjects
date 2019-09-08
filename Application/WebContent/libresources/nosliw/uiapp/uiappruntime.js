@@ -45,8 +45,8 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 	};
 	
 	var loc_componentComplex = node_createComponentCoreComplex(configure, loc_interface);
-	var loc_localStore = configure.getConfigureData().__storeService;
-	var loc_applicationDataService = configure.getConfigureData().__appDataService;
+	var loc_localStore = configure.getConfigureValue().__storeService;
+	var loc_applicationDataService = configure.getConfigureValue().__appDataService;
 	var loc_stateBackupService = node_createStateBackupService("app", uiApp.getId(), uiApp.getVersion(), loc_localStore);
 	
 	var loc_eventSource = node_createEventObject();

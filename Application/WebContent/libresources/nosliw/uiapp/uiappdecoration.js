@@ -28,7 +28,7 @@ var node_createAppDecoration = function(gate){
 	var loc_gate = gate;
 	var loc_uiApp = loc_gate.getComponentCore();
 	var loc_uiAppDef = loc_uiApp.prv_app.appDef;
-	var loc_configureData = loc_gate.getConfigureData();
+	var loc_configureData = loc_gate.getConfigureValue();
 	var loc_appDataService = loc_configureData.__appDataService;
 	
 	var loc_getModuleConfigureData = function(role){

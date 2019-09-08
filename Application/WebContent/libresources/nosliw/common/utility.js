@@ -19,11 +19,13 @@ var node_basicUtility =
 		
 		getParmsInUrl : function(){
 			var parms = {};
-			var searchParams = new URLSearchParams(window.location.search);
-			for (var i in searchParams) {
-				var p = searchParams[i];
+			var searchParams = new URLSearchParams(window.location.search).entries();
+			var next = searchParams.next();
+			while(!next.done){
+				var p = next.value;
 				parms[p[0]] = p[1];
-			};
+				next = searchParams.next();
+			}
 			return parms;
 		},
 		

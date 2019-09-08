@@ -20,6 +20,7 @@ var packageObj = library;
 	var node_objectOperationUtility;
 	var node_uiEventData;
 	var node_destroyUtil;
+	var node_componentUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
@@ -226,6 +227,7 @@ nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.uiEventData", function(){node_uiEventData = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_destroyUtil = this.getData();});
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 
 //Register Node by Name

@@ -71,8 +71,6 @@ var loc_createComponentManagementInterfaceObj = function(thisContext, agentObj){
 		unregisterValueChangeEventListener : function(listener){  loc_agentObj.unregisterValueChangeEventListener(listener);  },
 	};
 
-	loc_init();
-	
 	return loc_out;
 };
 

@@ -48,7 +48,7 @@ var node_createUIModuleService = function(){
 				{
 					success : function(request, componentInfo){
 						//create ui module runtime
-						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationConfigure, configure.getConfigureData().root, ioInput, {
+						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationConfigure, configure.getConfigureValue().root, ioInput, {
 							success : function(request, uiModuleRuntime){
 								return uiModuleRuntime;
 							}

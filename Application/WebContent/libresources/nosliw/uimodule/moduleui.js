@@ -165,7 +165,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(moduleUIDef, page){
 		//build ui info extra data 
-		loc_out.setExtraContextData("ui", {
+		loc_setExtraContextData("ui", {
 			info :{
 				id : loc_getName(),
 				name : loc_getName(),

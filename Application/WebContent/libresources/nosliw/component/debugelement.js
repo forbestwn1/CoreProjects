@@ -13,6 +13,7 @@ var packageObj = library.getChildPackage("debug");
 	var node_createDynamicIOData;
 	var node_requestServiceProcessor;
 	var node_createEventObject;
+	var node_getComponentManagementInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //load component and init it with inputValue
@@ -92,7 +93,7 @@ var node_createComponentDataView = function(){
 		loc_comInterface.registerContextDataChangeEventListener(loc_listener, function(eventName, dataSet){
 			loc_showDataSet(dataSet);
 		});
-		node_requestServiceProcessor.processRequest(comInterface.getContextDataSetValueRequest({
+		node_requestServiceProcessor.processRequest(loc_comInterface.getContextDataSetValueRequest({
 			success : function(request, dataSet){
 				loc_showDataSet(dataSet);
 			}
@@ -261,6 +262,7 @@ nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentManagementInterface", function(){node_getComponentManagementInterface = this.getData();});
 
 
 //Register Node by Name

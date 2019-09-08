@@ -14,7 +14,7 @@ function(gate){
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponentCore();
 	
-	var loc_app = loc_gate.getConfigureData().app;
+	var loc_app = loc_gate.getConfigureValue().app;
 	
 	var loc_root;
 	var loc_appView;

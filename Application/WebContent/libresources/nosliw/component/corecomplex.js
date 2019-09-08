@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_createEventObject;
+	var node_buildComponentCore;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
@@ -122,7 +123,7 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 		
 		getCore : function(){   return loc_getCore();    },
 			
-		setCore : function(core){	loc_addLayer(core);	},
+		setCore : function(core){	loc_addLayer(node_buildComponentCore(core));	},
 		
 		addDecorations : function(decorationInfos){	for(var i in decorationInfos){  loc_out.addDecoration(decorationInfos[i]);	}	},
 
@@ -185,6 +186,7 @@ nosliw.registerSetNodeDataEvent("component.createComponentCoreDecoration", funct
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreComplex", node_createComponentCoreComplex); 

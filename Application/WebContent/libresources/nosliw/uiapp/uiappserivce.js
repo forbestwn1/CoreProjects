@@ -24,7 +24,7 @@ var node_createUIAppService = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIAppResource"), handlers, request);
 
 			configure = node_createConfigure(configure);
-			var componentDecorationInfo = configure.getConfigureData().appDecoration;
+			var componentDecorationInfo = configure.getConfigureValue().appDecoration;
 			out.addRequest(node_loadComponentResourceRequest(
 				typeof app === 'string'? 
 					{

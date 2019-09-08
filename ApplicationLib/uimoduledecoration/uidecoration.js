@@ -15,7 +15,7 @@ function(gate){
 			var out;
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				var decorationInfo = loc_gate.getConfigureData().decoration;
+				var decorationInfo = loc_gate.getConfigureValue().decoration;
 				if(decorationInfo!=undefined){
 					_.each(loc_gate.getComponentCore().getUIs(), function(ui, uiName){
 						var decs;
