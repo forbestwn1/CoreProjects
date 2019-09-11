@@ -253,7 +253,7 @@
 									"element": {
 										"schoolData": {
 											"definition": { 
-												"path": "EVENT.data"
+												"path": "nosliw_EVENT.data"
 											}
 										}
 									}

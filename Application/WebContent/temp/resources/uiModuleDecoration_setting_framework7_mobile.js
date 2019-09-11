@@ -20,7 +20,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 
 	var loc_gate = gate;
-	var loc_uiModule = loc_gate.getComponent();
+	var loc_uiModule = loc_gate.getComponentCore();
 	var loc_view;
 	var loc_decoration;
 	
@@ -29,10 +29,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	
 	var loc_out = {
 			
-		processComponentCoreEvent : function(eventName, eventData, request){
-		},
-		
-		getExecuteCommandRequest : function(command, parms, handlers, request){
+		getProcessCommandRequest : function(command, parms, handlers, request){
 			if(command=="updateModuleInfo"){
 				var contextUpdate = {};
 				if(parms.persist!=undefined)  contextUpdate.persist = parms.persist;
@@ -45,7 +42,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		
 		getUpdateViewRequest : function(view, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(node_createUIDecorationsRequest([loc_gate.getConfigureData().uiResource], {
+			out.addRequest(node_createUIDecorationsRequest([loc_gate.getConfigureValue().uiResource], {
 				success : function(request, decs){
 					loc_decoration = decs[0];
 					loc_decoration.registerEventListener(undefined, function(eventName, eventData, request){
@@ -56,27 +53,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 					return loc_decoration.getPlaceHolderView();
 				}
 			}));
-//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-//				loc_view = view;
-//				loc_decoration.appendTo(view);
-//				return loc_decoration.getPlaceHolderView();
-//			}));
 			return out;
 		},
-		
-//		getPreDisplayInitRequest : function(handlers, request){
-//			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-//			out.addRequest(node_createUIDecorationsRequest([loc_gate.getConfigureData().uiResource], {
-//				success : function(request, decs){
-//					loc_decoration = decs[0];
-//					loc_decoration.registerEventListener(undefined, function(eventName, eventData, request){
-//						loc_gate.trigueEvent(eventName, eventData);
-//					});
-//				}
-//			}));
-//			return out;
-//		},
-
 		
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out;
@@ -85,7 +63,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 					//put ui to root
 					_.each(loc_uiModule.getUIs(), function(ui, index){
-//						ui.getPage().appendTo(loc_gate.getConfigureData().root);
+//						ui.getPage().appendTo(loc_gate.getConfigureValue().root);
 						ui.getPage().appendTo(loc_view);
 					});
 					
@@ -97,28 +75,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			}
 			return out;
 		},
-		
-//		getDestroyRequest :function(handlers, requestInfo){
-//			node_destroyUtil(loc_decoration);
-//		},
-		
-//		getInitRequest :function(handlers, requestInfo){
-//			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
-//			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-//				//put ui to root
-//				_.each(loc_uiModule.getUIs(), function(ui, index){
-//					ui.getPage().appendTo(loc_view);
-//				});
-//				
-//				out.successFinish();
-//			}));
-//			return out;
-//		},
-		
-//		getInterface : function(){
-//			return {
-//			}
-//		},
 	};
 	return loc_out;
 }

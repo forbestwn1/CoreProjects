@@ -343,8 +343,6 @@ var COMMONCONSTANT=
   "SERVICE_RESULT_FAIL": "fail",
   "SERVICE_RESULT_EXCEPTION": "exception",
   "SERVICE_OUTPUTNAME_OUTPUT": "output",
-  "NOSLIW_RESERVE_ATTRIBUTE": "nosliwattribute_",
-  "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
   "DECORATION_COMMAND_COMMANDPROCESS": "commandProcess",
   "DECORATION_COMMAND_EVENTPROCESS": "eventProcess",
   "DATAASSOCIATION_RELATEDENTITY_DEFAULT": "default",
@@ -358,7 +356,10 @@ var COMMONCONSTANT=
   "DATAASSOCIATION_TYPE_NONE": "none",
   "MINIAPP_DATAOWNER_APP": "app",
   "MINIAPP_DATAOWNER_GROUP": "group",
-  "GATEWAY_OPTIONS": "options"
+  "GATEWAY_OPTIONS": "options",
+  "NOSLIW_RESERVE_ATTRIBUTE": "nosliwattribute_",
+  "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
+  "NOSLIW_NAME_PREFIX": "nosliw_"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

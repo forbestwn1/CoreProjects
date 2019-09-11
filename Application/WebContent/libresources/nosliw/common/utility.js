@@ -3,16 +3,18 @@ var packageObj = library.getChildPackage("utility");
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
+	var node_COMMONCONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_basicUtility = 
 {
 		buildNosliwFullName : function(name){
-			return "nosliw_"+name;
+			return node_CONSTANT.NOSLIW_NAME_PREFIX+name;
 		},
 		
 		getNosliwCoreName : function(name){
-			var index = name.indexOf("nosliw_");
+			var index = name.indexOf(node_CONSTANT.NOSLIW_NAME_PREFIX);
 			if(index==-1)  return;
 			return name.subString(index);
 		},
@@ -108,6 +110,8 @@ var node_basicUtility =
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 
 
 //Register Node by Name

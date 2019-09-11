@@ -20,7 +20,7 @@ var node_createUIModuleService = function(){
 	
 	var loc_out = {
 
-		getGetUIModuleRuntimeRequest : function(id, module, configure, ioInput, handlers, request){
+		getGetUIModuleRuntimeRequest : function(id, module, configure, ioInput, state, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource"), handlers, request);
 
 			//build module decoration info array from module configure
@@ -48,7 +48,7 @@ var node_createUIModuleService = function(){
 				{
 					success : function(request, componentInfo){
 						//create ui module runtime
-						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationConfigure, configure.getConfigureValue().root, ioInput, {
+						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationConfigure, configure.getConfigureValue().root, ioInput, state, {
 							success : function(request, uiModuleRuntime){
 								return uiModuleRuntime;
 							}
@@ -59,8 +59,8 @@ var node_createUIModuleService = function(){
 			return out;
 		},			
 			
-		executeGetUIModuleRuntimeRequest : function(id, module, configure, ioInput, handlers, request){
-			var requestInfo = this.getGetUIModuleRuntimeRequest(id, module, configure, ioInput, handlers, request);
+		executeGetUIModuleRuntimeRequest : function(id, module, configure, ioInput, state, handlers, request){
+			var requestInfo = this.getGetUIModuleRuntimeRequest(id, module, configure, ioInput, state, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 	};

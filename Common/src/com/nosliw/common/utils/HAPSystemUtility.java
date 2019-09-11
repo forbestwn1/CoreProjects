@@ -23,6 +23,16 @@ public class HAPSystemUtility {
 		}
 	}
 	
+	public static String buildNosliwFullName(String name){
+		return HAPConstant.NOSLIW_NAME_PREFIX+name;
+	}
+	
+	public static String getNosliwCoreName(String name){
+		int index = name.indexOf(HAPConstant.NOSLIW_NAME_PREFIX);
+		if(index==-1)  return null;
+		return name.substring(index);
+	}
+	
 	public static String getHAPBaseClassName(Class cs){
 		String out = null;
 		String name = cs.getSimpleName();

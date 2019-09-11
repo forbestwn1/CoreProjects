@@ -20,11 +20,11 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //runtime is the one that expose lifecycle and interface inteface
-var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, moduleDecorationInfos, uiDecorationConfigure, rootView, ioInput, handlers, request){
+var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, moduleDecorationInfos, uiDecorationConfigure, rootView, ioInput, state, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
 	out.addRequest(node_createUIModuleComponentCoreRequest(id, uiModuleDef, uiDecorationConfigure, ioInput, {
 		success : function(request, uiModuleCore){
-			var runtime = loc_createModuleRuntime(uiModuleCore, configure, moduleDecorationInfos, rootView, request);
+			var runtime = loc_createModuleRuntime(uiModuleCore, configure, moduleDecorationInfos, rootView, state, request);
 			return runtime.prv_getInitRequest({
 				success : function(request){
 					return request.getData();
@@ -35,11 +35,10 @@ var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, modul
 	return out;
 };
 
-var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorationInfos, rootView, request){
+var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorationInfos, rootView, state, request){
 	
-	var loc_componentCoreComplex = node_createComponentCoreComplex(configure, loc_componentEnv);
-	var loc_localStore = configure.getConfigureValue().__storeService;
-	var loc_stateBackupService = node_createStateBackupService("module", uiModuleCore.getId(), uiModuleCore.getVersion(), loc_localStore);
+	var loc_componentCoreComplex = node_createComponentCoreComplex(configure, loc_componentEnv, state);
+	var loc_state = state;
 
 	var loc_eventListener = node_createEventObject();
 
@@ -98,7 +97,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
 		var out;
-		var stateData = loc_stateBackupService.getBackupData();
+		var stateData = loc_state.getStateValue(request);
 		if(stateData==undefined)	out = loc_getGoActiveRequest(request);
 		else	out = loc_getResumeActiveRequest(stateData, request);
 		return out;
@@ -123,7 +122,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 						state : loc_componentCoreComplex.getAllStateData(),
 						context : contextDataSet,
 					};
-				loc_stateBackupService.saveBackupData(backupData);
+				loc_state.setStateValue(backupData, request);
 			}
 		}));
 		
@@ -131,7 +130,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	};
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME] = function(request){
-		loc_stateBackupService.clearBackupData();
+		loc_state.clear();
 	};
 
 	//component management interface object 

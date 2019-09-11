@@ -20,6 +20,7 @@ var node_objectOperationUtility =
 		 * get attribute value according to the path
 		 */
 		getObjectAttributeByPath : function(obj, prop) {
+			if(obj==undefined)  return;
 			if(prop==undefined || prop=='')  return obj;
 		    var parts = prop.split('.');
 		    return this.getObjectAttributeByPathSegs(obj, parts);

@@ -190,7 +190,8 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		
 		//process that handle event
 		getEventHandler : function(eventName){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_EVENTHANDLER][eventName];   },
-			
+		
+		//handle state of ui
 		getGetStateRequest : function(handlers, requestInfo){  return loc_page.getGetPageStateRequest(handlers, requestInfo);  },
 		getSetStateRequest : function(stateData, handlers, requestInfo){  return loc_page.getUpdateContextRequest(stateData, handlers, requestInfo);  },
 		

@@ -56,6 +56,9 @@ var node_buildComponentCore = function(rawComponentCore){
 		getPart : function(partId){ },
 		//get interface exposed
 		getInterface : function(){ return {}; },
+
+		//set state for the component core
+		setState : function(state){   },
 		
 		//lifecycle handler
 		getLifeCycleRequest : function(transitName, handlers, request){},

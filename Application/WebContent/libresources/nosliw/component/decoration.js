@@ -49,27 +49,19 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		getConfigureValue : function(){  return loc_configureValue;	},
 
 		//state operation
-		getStateValue : function(name){  return loc_state.getStateValue(loc_id, name);	},
-		getState : function(){  return loc_state.getState(loc_id);   },
-		setStateValue : function(name, value){  loc_state.setStateValue(loc_id, name, value);	},
+		getStateValue : function(path, request){  return loc_state.getValue(path, request);	},
+		getState : function(request){  return loc_state.getStateValue(request);   },
+		setStateValue : function(path, value, request){  loc_state.setValue(path, value, request);	},
 
 		getLifecycleStatus : function(){   return loc_lifecycleStatus;    },
 		
 		trigueEvent : function(eventName, eventData, requestInfo){  loc_trigueEvent(eventName, eventData, requestInfo);	},
 		
 		processRequest : function(request){   	loc_componentEnv.processRequest(request);  },
-//		processRequest : function(request){   	node_requestServiceProcessor.processRequest(request);  },
 		
 		getExecuteProcessRequest : function(process, extraInput, handlers, request){    return loc_componentEnv.getExecuteProcessRequest(process, extraInput, handlers, request);   },
-//		getExecuteProcessRequest : function(process, extraInput, handlers, request){
-//			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteEmbededProcessRequest(process, this.getComponentCore().getIOContext(), extraInput, handlers, request);
-//		},
 
 		getExecuteProcessResourceRequest : function(processId, input, handlers, request){   return loc_componentEnv.getExecuteProcessResourceRequest(processId, input, handlers, request);    },
-//		getExecuteProcessResourceRequest : function(processId, input, handlers, request){
-//			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessResourceRequest(processId, input, handlers, request);
-//		},
-		
 	};
 	
 	//generate plug in object 

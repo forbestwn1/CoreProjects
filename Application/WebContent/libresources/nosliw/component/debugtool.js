@@ -63,8 +63,9 @@ node_createDebugTool = function(views, resourceType, resourceId, ioInput, config
 		if(resetView!=undefined){
 			loc_resetView = node_createComponentResetView(function(){
 				var resourceType = loc_resetView.getResourceType();
+				var loc_stateBackupService = node_createStateBackupService(resourceType, loc_resetView.getResourceId(), "1.0.0", loc_configure.getConfigureValue().__storeService);
 				if(resourceType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE){
-					nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(100, loc_resetView.getResourceId(), loc_configure, loc_resetView.getInputIODataSet(), {
+					nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(100, loc_resetView.getResourceId(), loc_configure, loc_resetView.getInputIODataSet(), loc_stateBackupService, {
 						success : loc_resetComponent
 					});
 				}
@@ -90,6 +91,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.ui.createRequestStatusIndicatorUI", function(){node_createRequestStatusIndicatorUI = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 
 nosliw.registerSetNodeDataEvent("component.debug.createComponentLifeCycleDebugView", function(){node_createComponentLifeCycleDebugView = this.getData();});
 nosliw.registerSetNodeDataEvent("component.debug.createComponentDataView", function(){node_createComponentDataView = this.getData();});

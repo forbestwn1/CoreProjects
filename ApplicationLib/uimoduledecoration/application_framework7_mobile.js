@@ -77,7 +77,7 @@ function(gate){
 	var loc_out = {
 			
 		processComponentCoreEvent : function(eventName, eventData, request){
-			loc_processUIEvent(eventData.eventName, eventData.uiName, eventData.eventData, request);
+			loc_processUIEvent(eventData.eventName, eventData.uiId, eventData.eventData, request);
 		},
 		
 		getUpdateViewRequest : function(view, handlers, request){

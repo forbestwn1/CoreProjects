@@ -16,7 +16,7 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
 //decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
-var node_createComponentCoreComplex = function(configure, componentEnv){
+var node_createComponentCoreComplex = function(configure, componentEnv, state){
 	//external env
 	loc_componentEnv = componentEnv;
 	
@@ -24,7 +24,7 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 	var loc_configure = node_createConfigure(configure);
 	
 	//component core complex state
-	var loc_state = node_createState();
+	var loc_state = state;
 	//component core and decoration layers
 	var loc_layers = [];
 	//exposed interface
@@ -109,7 +109,7 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 	
 	loc_addDecoration = function(decorationInfo){
 		var decName = decorationInfo.name;
-		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.resource, loc_componentEnv, decorationInfo.configureValue, loc_state);
+		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.resource, loc_componentEnv, decorationInfo.configureValue, loc_state.createChildState("dec_"+decorationInfo.id));
 		loc_addLayer(decoration);
 	};
 	
@@ -123,7 +123,10 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 		
 		getCore : function(){   return loc_getCore();    },
 			
-		setCore : function(core){	loc_addLayer(node_buildComponentCore(core));	},
+		setCore : function(core){
+			core.setState(loc_state.createChildState("core"));
+			loc_addLayer(node_buildComponentCore(core));	
+		},
 		
 		addDecorations : function(decorationInfos){	for(var i in decorationInfos){  loc_out.addDecoration(decorationInfos[i]);	}	},
 
@@ -158,10 +161,6 @@ var node_createComponentCoreComplex = function(configure, componentEnv){
 			}
 			return out;
 		},
-		
-		getAllStateData : function(){   return loc_state.getAllState();   },
-		clearState : function(){   loc_state.clear();   },	
-		setAllStateData : function(stateData){  loc_state.setAllState(stateData)  },
 		
 		getUpdateViewRequest : function(view, handlers, request){  return loc_getUpdateViewRequest(view, handlers, request); 	},
 		

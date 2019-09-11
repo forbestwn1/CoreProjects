@@ -535,11 +535,6 @@ public class HAPConstant {
 
 
 
-		public static final String NOSLIW_RESERVE_ATTRIBUTE = "nosliwattribute_";
-		public static final String NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER = "nosliwattribute_placeholder";
-
-
-
 		public static final String DECORATION_COMMAND_COMMANDPROCESS = "commandProcess";
 		public static final String DECORATION_COMMAND_EVENTPROCESS = "eventProcess";
 
@@ -572,6 +567,12 @@ public class HAPConstant {
 
 
 		public static final String GATEWAY_OPTIONS = "options";
+
+
+
+		public static final String NOSLIW_RESERVE_ATTRIBUTE = "nosliwattribute_";
+		public static final String NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER = "nosliwattribute_placeholder";
+		public static final String NOSLIW_NAME_PREFIX = "nosliw_";
 
 
 }
