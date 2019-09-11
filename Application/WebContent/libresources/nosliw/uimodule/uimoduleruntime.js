@@ -37,12 +37,13 @@ var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, modul
 
 var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorationInfos, rootView, state, request){
 	
-	var loc_componentCoreComplex = node_createComponentCoreComplex(configure, loc_componentEnv, state);
+	var loc_componentCoreComplex;
 	var loc_state = state;
 
 	var loc_eventListener = node_createEventObject();
 
-	var loc_init = function(uiModuleCore, configure, componentDecorationInfos, rootView, request){
+	var loc_init = function(uiModuleCore, configure, componentDecorationInfos, rootView, state, request){
+		loc_componentCoreComplex = node_createComponentCoreComplex(configure, loc_componentEnv, state);
 		loc_componentCoreComplex.setCore(uiModuleCore);
 		loc_componentCoreComplex.addDecorations(componentDecorationInfos);
 	};
@@ -60,77 +61,46 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
 	};
 	
-	//from init to active
-	var loc_getGoActiveRequest = function(request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
-		//start module
-		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));
-		out.addRequest(loc_getExecuteModuleProcessByNameRequest("active"));
-		return out;
-	};
-	
-	//from paused to active
-	var loc_getResumeActiveRequest = function(stateData, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ResumeUIModuleRuntime", {}), undefined, request);
-
-		loc_componentCoreComplex.setAllStateData(stateData.state);
-		
-		var backupContextData = stateData.context;
-		_.each(backupContextData, function(contextData, name){
-			out.addRequest(loc_getContextIODataSet().getSetDataValueRequest(name, contextData));
-		});
-		
-		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME));
-		
-		out.addRequest(loc_getExecuteModuleProcessByNameRequest("resume"));
+	var loc_getNormalLiefCycleCallBackRequestRequest = function(lifecycleName, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getNormalLiefCycleCallBackRequestRequest", {}), undefined, request);
+		//start module 
+		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
+		//execute process defined in module by handler name 
+		out.addRequest(loc_getExecuteModuleProcessByNameRequest(lifecycleName));
 		return out;
 	};
 	
 	//component lifecycle call back methods
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DestroyUIModuleRuntime", {}), undefined, request);
-		//start module
-		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY));
-		return out;
-	};
-	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
-		var out;
 		var stateData = loc_state.getStateValue(request);
-		if(stateData==undefined)	out = loc_getGoActiveRequest(request);
-		else	out = loc_getResumeActiveRequest(stateData, request);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ActiveUIModuleRuntime", {}), undefined, request);
+		if(stateData==undefined)	out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));  //if no state, then from init to active
+		else	out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME));   //if has state, then from state to active
+		out.addRequest(loc_getExecuteModuleProcessByNameRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));
 		return out;
 	};
 
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]=
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY, request);
+	};
+	
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]= function(request){
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE, request);
+	};
+	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DeactiveUIModuleRuntime", {}), undefined, request);
-		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE));
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE, request);
 		loc_componentCoreComplex.clearState();
-		return out;
 	};	
 
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND] = function(request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SuspendUIModuleRuntime", {}), undefined, request);
-		out.addRequest(loc_getExecuteModuleProcessByNameRequest("suspend"));
-		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND));
-		
-		out.addRequest(loc_getContextIODataSet().getGetDataSetValueRequest({
-			success : function(request, contextDataSet){
-				var backupData = {
-						state : loc_componentCoreComplex.getAllStateData(),
-						context : contextDataSet,
-					};
-				loc_state.setStateValue(backupData, request);
-			}
-		}));
-		
-		return out;
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND, request);
 	};
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME] = function(request){
-		loc_state.clear();
+		//from active to suspended
+		loc_state.clear();   //remove backup state saved when into suspended
 	};
 
 	//component management interface object 
@@ -143,6 +113,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		unregisterValueChangeEventListener : function(listener){   return loc_componentCoreComplex.unregisterValueChangeEventListener(listener);    }
 	};
 	
+	//environment for component complex
 	var loc_componentEnv = {
 		//process request
 		processRequest : function(request){  node_requestServiceProcessor.processRequest(request); },
@@ -165,7 +136,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		
 	};
 	
-	loc_init(uiModuleCore, configure, componentDecorationInfos, rootView, request);
+	loc_init(uiModuleCore, configure, componentDecorationInfos, rootView, state, request);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_out);
 	//listen to lifecycle event and update lifecycle status

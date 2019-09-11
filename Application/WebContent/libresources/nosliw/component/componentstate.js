@@ -5,6 +5,7 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
+	var node_makeObjectWithType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -45,7 +46,7 @@ var node_createStateBackupService1 = function(componentType, id, version, storeS
 	return loc_out;
 };	
 
-
+//version: version of the component
 var node_createStateBackupService = function(componentType, id, version, storeService){
 	var loc_componentType = componentType;  
 	var loc_id = id;
@@ -149,8 +150,11 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 		
 		//create child state by path
 		createChildState : function(path){	return loc_state.createChildState(path); },
+		
+		setVersion(version){  loc_version = version;  }
 	};
 	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_BACKUPSERVICE);
 	return loc_out;
 };
 
@@ -176,6 +180,7 @@ var node_createState = function(){
 		createChildState : function(path){	return loc_createChildState(loc_out, path); },
 	};
 	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_STATE);
 	return loc_out;
 };
 
@@ -201,6 +206,7 @@ var loc_createChildState = function(parent, path){
 		createChildState : function(path){		return node_createChildState(loc_out, path);	},
 	};
 	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_STATE);
 	return loc_out;
 };
 
@@ -210,6 +216,7 @@ var loc_createChildState = function(parent, path){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createStateBackupService", node_createStateBackupService); 

@@ -23,7 +23,18 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var INTERFACENAME = "componentLifecycle";
-	
+
+/**
+ * INIT : 
+ * 		this is the init state of statemachine, so component should be initilized before enter this state.
+ * 		there is no callback for entering this state 
+ * 		during initialization, all the one time task should be done here 
+ * ACTIVE : component is working
+ * SUSPENDED: component working paused
+ * DEAD: component dead
+ */
+
+
 /*
  * utility functions to build lifecycle object
  */

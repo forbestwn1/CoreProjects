@@ -187,6 +187,18 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 					}
 				}, handlers, request);
 				_.each(loc_uiModule.getUIs(), function(ui, index){	out.addRequest(ui.getId(), ui.getGetStateRequest());	});
+				
+				
+				out.addRequest(loc_getContextIODataSet().getGetDataSetValueRequest({
+					success : function(request, contextDataSet){
+						var backupData = {
+								state : loc_componentCoreComplex.getAllStateData(),
+								context : contextDataSet,
+							};
+						loc_state.setStateValue(backupData, request);
+					}
+				}));
+
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME){
 				out = node_createServiceRequestInfoSet(undefined, handlers, request);
@@ -194,6 +206,12 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 				_.each(loc_uiModule.getUIs(), function(ui, index){
 					out.addRequest(ui.getId(), ui.getSetStateRequest(uiData[ui.getId()]));	
 				});
+				
+				var backupContextData = loc_state.getStateValue("context", request);
+				_.each(backupContextData, function(contextData, name){
+					out.addRequest(loc_getContextIODataSet().getSetDataValueRequest(name, contextData));
+				});
+
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
 				out = node_createServiceRequestInfoSimple(undefined, function(request){loc_destroy(request);}, handlers, request);

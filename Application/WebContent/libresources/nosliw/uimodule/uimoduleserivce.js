@@ -19,7 +19,7 @@ var packageObj = library.getChildPackage("service");
 var node_createUIModuleService = function(){
 	
 	var loc_out = {
-
+		
 		getGetUIModuleRuntimeRequest : function(id, module, configure, ioInput, state, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource"), handlers, request);
 
@@ -48,6 +48,11 @@ var node_createUIModuleService = function(){
 				{
 					success : function(request, componentInfo){
 						//create ui module runtime
+						var dataEleType = node_getObjectType(data);
+						if(typeof module==='string' && node_getObjectType(state)==node_CONSTANT.TYPEDOBJECT_TYPE_BACKUPSERVICE){
+							//create by resource id, then version should be set according to resource version
+							state.setVersion("5.0.0");   //kkkkk
+						}    
 						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationConfigure, configure.getConfigureValue().root, ioInput, state, {
 							success : function(request, uiModuleRuntime){
 								return uiModuleRuntime;
