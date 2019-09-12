@@ -6,6 +6,7 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_makeObjectWithType;
+	var node_createEventObject;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -57,7 +58,7 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 	
 	var loc_requesters = {};
 	
-	var loc_eventObject;
+	var loc_eventObject = node_createEventObject();
 
 	//read backup data from store to state
 	//return whether store data exists
@@ -67,7 +68,7 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 		loc_clearStateData();  //clear backup data after retrieve
 		if(storeData!=undefined){
 			if(storeData.version!=loc_version)		storeData = undefined;   //when component version change, the data stored by previous component would not work
-			if(storeData!=undefined)	loc_state.setStateValue(storeData.data, request);  //update state data
+			if(storeData!=undefined)	loc_state.setStateValue(storeData.data);  //update state data
 		}
 		return storeData!=undefined;
 	};
@@ -149,7 +150,7 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 		clear : function(request){		loc_state.clear();		},
 		
 		//create child state by path
-		createChildState : function(path){	return loc_state.createChildState(path); },
+		createChildState : function(path){	return loc_createChildState(loc_out, path); },
 		
 		setVersion(version){  loc_version = version;  }
 	};
@@ -171,7 +172,10 @@ var node_createState = function(){
 		//get state value by name
 		getValue : function(path, request){		return node_objectOperationUtility.getObjectAttributeByPath(loc_stateValue, path);	},
 		//set state value by name
-		setValue : function(path, value, request){	node_objectOperationUtility.operateObject(loc_stateValue, path, command==node_CONSTANT.WRAPPER_OPERATION_SET, value);	},
+		setValue : function(path, value, request){
+			if(loc_stateValue==undefined)  loc_stateValue = {};
+			node_objectOperationUtility.operateObject(loc_stateValue, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);	
+		},
 		
 		//clear state
 		clear : function(request){		loc_out.setStateValue(undefined, request);		},
@@ -192,10 +196,10 @@ var loc_createChildState = function(parent, path){
 		//state as value
 		getStateValue : function(request){	return node_objectOperationUtility.getObjectAttributeByPath(loc_parent.getStateValue(request), loc_path);	},
 		//set state
-		setStateValue : function(stateValue, request){ loc_parent.setValue(loc_path, value, request);	},
+		setStateValue : function(stateValue, request){ loc_parent.setValue(loc_path, stateValue, request);	},
 		
 		//get state value by name
-		getValue : function(path, request){	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.getStateValue(request), loc_path);	},
+		getValue : function(path, request){	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.getStateValue(request), path);	},
 		//set state value by name
 		setValue : function(path, value, request){	loc_parent.setValue(loc_path+"."+path, value, request);	},
 
@@ -217,6 +221,8 @@ var loc_createChildState = function(parent, path){
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createStateBackupService", node_createStateBackupService); 

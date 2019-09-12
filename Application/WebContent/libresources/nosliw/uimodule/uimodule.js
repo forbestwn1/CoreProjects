@@ -177,41 +177,50 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 				out = loc_getInitIOContextRequest(handlers, request);
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND){
-				out = node_createServiceRequestInfoSet(undefined, {
+				out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module suspend"), handlers, request);
+
+				//back up ui data
+				var uiDataRequest = node_createServiceRequestInfoSet(undefined, {
 					success : function(request, resultSet){
 						var uiData = {};
-						_.each(resultSet.getResults(), function(uiDataEle, uiName){
-							uiData[uiName] = uiDataEle;
+						_.each(resultSet.getResults(), function(uiDataEle, uiId){
+							uiData[uiId] = uiDataEle;
 						});
-						loc_state.setStateValue("uiData", uiData, request);
+						loc_state.setValue("uiData", uiData, request);
 					}
 				}, handlers, request);
-				_.each(loc_uiModule.getUIs(), function(ui, index){	out.addRequest(ui.getId(), ui.getGetStateRequest());	});
+				_.each(loc_out.getUIs(), function(ui, index){	uiDataRequest.addRequest(ui.getId(), ui.getGetStateRequest());	});
+				out.addRequest(uiDataRequest);
 				
-				
-				out.addRequest(loc_getContextIODataSet().getGetDataSetValueRequest({
+				//backup context data
+				out.addRequest(loc_out.prv_module.contextDataSet.getGetDataSetValueRequest({
 					success : function(request, contextDataSet){
-						var backupData = {
-								state : loc_componentCoreComplex.getAllStateData(),
-								context : contextDataSet,
-							};
-						loc_state.setStateValue(backupData, request);
+						loc_state.setValue("context", contextDataSet, request);
 					}
 				}));
-
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME){
-				out = node_createServiceRequestInfoSet(undefined, handlers, request);
-				var uiData = loc_state.getStateValue("uiData", request);
-				_.each(loc_uiModule.getUIs(), function(ui, index){
-					out.addRequest(ui.getId(), ui.getSetStateRequest(uiData[ui.getId()]));	
-				});
-				
-				var backupContextData = loc_state.getStateValue("context", request);
-				_.each(backupContextData, function(contextData, name){
-					out.addRequest(loc_getContextIODataSet().getSetDataValueRequest(name, contextData));
-				});
+				out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module resume"), handlers, request);
 
+				//ui data
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					var uiData = loc_state.getValue("uiData", request);
+					var updateUIStateRequest = node_createServiceRequestInfoSequence(undefined);
+					_.each(loc_out.getUIs(), function(ui, index){
+						updateUIStateRequest.addRequest(ui.getSetStateRequest(uiData[ui.getId()]));	
+					});
+					return updateUIStateRequest;
+				}));
+
+				//context data
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					var backupContextData = loc_state.getValue("context", request);
+					var updateContextStateRequest = node_createServiceRequestInfoSequence(undefined);
+					_.each(backupContextData, function(contextData, name){
+						updateContextStateRequest.addRequest(loc_out.prv_module.contextDataSet.getSetDataValueRequest(name, contextData));
+					});
+					return updateContextStateRequest;
+				}));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
 				out = node_createServiceRequestInfoSimple(undefined, function(request){loc_destroy(request);}, handlers, request);

@@ -13,6 +13,7 @@ var packageObj = library.getChildPackage("service");
 	var node_contextUtility;
 	var node_createConfigure;
 	var node_loadComponentResourceRequest;
+	var node_getObjectType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -48,7 +49,6 @@ var node_createUIModuleService = function(){
 				{
 					success : function(request, componentInfo){
 						//create ui module runtime
-						var dataEleType = node_getObjectType(data);
 						if(typeof module==='string' && node_getObjectType(state)==node_CONSTANT.TYPEDOBJECT_TYPE_BACKUPSERVICE){
 							//create by resource id, then version should be set according to resource version
 							state.setVersion("5.0.0");   //kkkkk
@@ -89,6 +89,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("uimodule.createModuleRuntimeRequest", function(){node_createModuleRuntimeRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("component.loadComponentResourceRequest", function(){node_loadComponentResourceRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 
 //Register Node by Name

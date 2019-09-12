@@ -73,11 +73,15 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	//component lifecycle call back methods
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
-		var stateData = loc_state.getStateValue(request);
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ActiveUIModuleRuntime", {}), undefined, request);
-		if(stateData==undefined)	out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));  //if no state, then from init to active
-		else	out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME));   //if has state, then from state to active
-		out.addRequest(loc_getExecuteModuleProcessByNameRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var stateData = loc_state.getStateValue(request);
+			var r = node_createServiceRequestInfoSequence();
+			if(stateData==undefined)	r.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));  //if no state, then from init to active
+			else	r.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME));   //if has state, then from state to active
+			r.addRequest(loc_getExecuteModuleProcessByNameRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));
+			return r;
+		}));
 		return out;
 	};
 
