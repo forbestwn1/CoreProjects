@@ -155,8 +155,6 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 		
 		getProcess : function(name){  return loc_out.prv_module.uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
 
-//		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getSynInDataRequest(handlers, request);	},
-
 		setRootView : function(rootView){   loc_out.prv_module.rootView = rootView;     },
 		getRootView : function(){   return loc_out.prv_module.rootView;     },
 		

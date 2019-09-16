@@ -226,7 +226,8 @@ var node_CONSTANT=
 	  "UIRESOURCE_FUNCTION_INIT" : 		"init",
 	  "UIRESOURCE_FUNCTION_DESTROY" : 	"destroy",
 	  
-	  "PAGE_COMMAND_REFRESH" : "refresh",
+	  "COMMAND_PAGE_REFRESH" : "page_refresh",
+	  "COMMAND_MODULEUI_SYNCINDATA" : "moduleui_syncindata",
 
 	  "IODATASET_EVENT_CHANGE" : "IODATASET_EVENT_CHANGE",
 	  

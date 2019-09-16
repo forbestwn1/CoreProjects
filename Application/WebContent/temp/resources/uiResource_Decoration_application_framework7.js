@@ -7,11 +7,11 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "info":{}
 }, {"id":"Decoration_application_framework7",
 "type":"resource",
-"context":{"local2Global":{"nosliw_runtime_status":"nosliw_runtime_status___public",
+"context":{"local2Global":{"nosliw_application_status":"nosliw_application_status___public",
 "nosliw_ui_info":"nosliw_ui_info___public",
 "backIconDisplay":"backIconDisplay___public"
 },
-"context":{"element":{"nosliw_runtime_status___public":{"name":"",
+"context":{"element":{"nosliw_application_status___public":{"name":"",
 "description":"",
 "info":{},
 "definition":{"type":"node",
@@ -22,10 +22,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"nosliw_runtime_status":{"info":{},
+"nosliw_application_status":{"info":{},
 "definition":{"type":"relative",
 "processed":"true",
-"path":{"rootEleName":"nosliw_runtime_status___public"
+"path":{"rootEleName":"nosliw_application_status___public"
 },
 "parent":"self",
 "definition":{"type":"node",
@@ -92,14 +92,14 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"elementEvents":[{"uiId":"553",
+"elementEvents":[{"uiId":"1537",
 "event":"click",
 "function":"transferBack"
 }],
 "tagEvents":[],
 "attributes":{"nosliwattribute_placeholder":"id:pleaseEmbed"
 },
-"html":"&lt;div class=&quot;page-content&quot; nosliwid=&quot;549&quot;&gt;  &lt;div class=&quot;navbar&quot; nosliwid=&quot;550&quot;&gt;   &lt;div class=&quot;navbar-inner&quot; nosliwid=&quot;551&quot;&gt;    &lt;div class=&quot;left&quot; nosliwid=&quot;552&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; style=&quot;&quot; nosliwid=&quot;553&quot;&gt;&lt;span&gt;Back&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;    &lt;div class=&quot;title&quot; nosliwid=&quot;554&quot;&gt;    &lt;span nosliwid=&quot;555&quot;&gt;&lt;/span&gt;   &lt;/div&gt;    &lt;div class=&quot;right&quot; nosliwid=&quot;556&quot;&gt;     &lt;!--			            &lt;a href=&quot;&quot; class=&quot;link&quot; nosliw-event=&quot;click:refresh:&quot;&gt;Refresh&lt;/a&gt;  --&gt;    &lt;/div&gt;   &lt;/div&gt;  &lt;/div&gt;  &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;557&quot;&gt;&lt;/div&gt; &lt;/div&gt;",
+"html":"&lt;div class=&quot;page-content&quot; nosliwid=&quot;1533&quot;&gt;  &lt;div class=&quot;navbar&quot; nosliwid=&quot;1534&quot;&gt;   &lt;div class=&quot;navbar-inner&quot; nosliwid=&quot;1535&quot;&gt;    &lt;div class=&quot;left&quot; nosliwid=&quot;1536&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; style=&quot;&quot; nosliwid=&quot;1537&quot;&gt;&lt;span&gt;Back&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;    &lt;div class=&quot;title&quot; nosliwid=&quot;1538&quot;&gt;    &lt;span nosliwid=&quot;1539&quot;&gt;&lt;/span&gt;   &lt;/div&gt;    &lt;div class=&quot;right&quot; nosliwid=&quot;1540&quot;&gt;     &lt;!--			            &lt;a href=&quot;&quot; class=&quot;link&quot; nosliw-event=&quot;click:refresh:&quot;&gt;Refresh&lt;/a&gt;  --&gt;    &lt;/div&gt;   &lt;/div&gt;  &lt;/div&gt;  &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;1541&quot;&gt;&lt;/div&gt; &lt;/div&gt;",
 "constants":{},
 "events":{"transferBack":{"name":"transferBack",
 "description":"",
@@ -122,7 +122,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"555",
+"uiId":"1539",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -133,19 +133,19 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 }
 }],
-"scriptExpressionInAttributes":[{"scriptExpressions":{"1":{"definition":"?(nosliw_runtime_status.index)?==0?'none':'inline'",
-"variableNames":["nosliw_runtime_status.index"],
+"scriptExpressionInAttributes":[{"scriptExpressions":{"1":{"definition":"?(nosliw_application_status.index)?==0?'none':'inline'",
+"variableNames":["nosliw_application_status.index"],
 "expressions":{}
 }
 },
-"uiId":"553",
+"uiId":"1537",
 "attribute":"style",
 "scriptFunction":function(scriptExpressionData){
 	return "display:"+scriptExpressionData["1"];
 } 
 ,
 "scriptExpressionScriptFunction":{"1":function(expressionsData, constantsData, variablesData){
-	return variablesData["nosliw_runtime_status.index"]==0?'none':'inline';
+	return variablesData["nosliw_application_status.index"]==0?'none':'inline';
 } 
 
 }

@@ -16,6 +16,8 @@ var packageObj = library;
 	var node_getComponentLifecycleInterface;
 	var node_createServiceRequestInfoSimple;
 	var node_createEventObject;
+	var node_basicUtility;
+	var node_requestServiceProcessor;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -62,12 +64,14 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
 	};
 	
+	var loc_getProcessNameByLifecycle = function(lifecycleName){ return node_basicUtility.buildNosliwFullName(lifecycleName);	};
+	
 	var loc_getNormalLiefCycleCallBackRequestRequest = function(lifecycleName, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getNormalLiefCycleCallBackRequestRequest", {}), undefined, request);
 		//start module 
 		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
 		//execute process defined in module by handler name 
-		out.addRequest(loc_getExecuteModuleProcessByNameRequest(lifecycleName));
+		out.addRequest(loc_getExecuteModuleProcessByNameRequest(loc_getProcessNameByLifecycle(lifecycleName)));
 		return out;
 	};
 	
@@ -181,6 +185,8 @@ nosliw.registerSetNodeDataEvent("component.createComponentCoreComplex", function
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleRuntimeRequest", node_createModuleRuntimeRequest); 

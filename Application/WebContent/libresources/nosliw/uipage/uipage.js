@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_createServiceRequestInfoSimple;
 	var node_contextUtility;
+	var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIPage = function(uiView){
@@ -123,7 +124,8 @@ var node_createUIPage = function(uiView){
 
 //------------------  command		
 		getExecuteCommandRequest : function(command, parms, handlers, requestInfo){
-			if(command==node_CONSTANT.PAGE_COMMAND_REFRESH){
+			var sysCommand = node_basicUtility.getNosliwCoreName(command);
+			if(sysCommand==node_CONSTANT.COMMAND_PAGE_REFRESH){
 				return loc_getCurrent().getUpdateContextRequest(parms, handlers, requestInfo);
 			}
 			else{
@@ -158,6 +160,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIPage", node_createUIPage); 

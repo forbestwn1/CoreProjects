@@ -5,7 +5,7 @@
 			<div class="navbar">
 			    <div class="navbar-inner">
 			        <div class="left">
-			            <a href="" class="link" style="display:<%=?(nosliw_runtime_status.index)?==0?'none':'inline'%>" nosliw-event="click:transferBack:">Back</a>
+			            <a href="" class="link" style="display:<%=?(nosliw_application_status.index)?==0?'none':'inline'%>" nosliw-event="click:transferBack:">Back</a>
 			        </div>
 			        <div class="title"><%=?(nosliw_ui_info.title)?%></div>
 			        <div class="right">
@@ -45,7 +45,7 @@
 							}
 						}
 					},
-					"nosliw_runtime_status" : {
+					"nosliw_application_status" : {
 						"definition": {
 							"child" : {
 								"index" : {},

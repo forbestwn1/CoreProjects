@@ -103,7 +103,7 @@
 		}
 	},
 	"process": {
-		"active": {
+		"nosliw_INIT_ACTIVE": {
 			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",
@@ -152,7 +152,7 @@
 					"name": "refreshSchoolList",
 					"type": "UI_executeCommand",
 					"partId": "ui.schoolListUI",
-					"command": "refresh",
+					"command": "nosliw_page_refresh",
 					"input": {
 						"element": {
 							"schoolList": {
@@ -248,7 +248,7 @@
 								"type": "UI_executeCommand",
 								"partId": "ui.schoolInfoUI",
 								"ui11": "schoolInfoUI",
-								"command": "refresh",
+								"command": "nosliw_page_refresh",
 								"input": {
 									"element": {
 										"schoolData": {

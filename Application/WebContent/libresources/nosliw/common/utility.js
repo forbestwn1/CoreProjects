@@ -10,13 +10,12 @@ var packageObj = library.getChildPackage("utility");
 var node_basicUtility = 
 {
 		buildNosliwFullName : function(name){
-			return node_CONSTANT.NOSLIW_NAME_PREFIX+name;
+			return node_COMMONCONSTANT.NOSLIW_NAME_PREFIX+name;
 		},
 		
 		getNosliwCoreName : function(name){
-			var index = name.indexOf(node_CONSTANT.NOSLIW_NAME_PREFIX);
-			if(index==-1)  return;
-			return name.subString(index);
+			var index = name.indexOf(node_COMMONCONSTANT.NOSLIW_NAME_PREFIX);
+			if(index==0)  return name.substring(node_COMMONCONSTANT.NOSLIW_NAME_PREFIX.length);
 		},
 		
 		getParmsInUrl : function(){

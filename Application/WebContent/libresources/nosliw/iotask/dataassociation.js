@@ -53,12 +53,12 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 				success: function(request, inputDataSet){
 					if(extraDataSet!=undefined){
 						//merge with extraDataSet
-						var extraDataSet = node_createIODataSet(extraDataSet);
+						extraDataSet = node_createIODataSet(extraDataSet);
 						_.each(extraDataSet.getDataSet(), function(extraData, setName){
-							var inputData = intputDataSet[setName];
+							var inputData = inputDataSet[setName];
 							if(inputData==undefined){
 								inputData = {};
-								intputDataSet[setName] = inputData;
+								inputDataSet[setName] = inputData;
 							}
 							node_ioTaskUtility.mergeContext(extraData, inputData, loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][setName]);
 						})

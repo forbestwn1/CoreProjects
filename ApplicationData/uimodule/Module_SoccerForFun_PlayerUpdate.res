@@ -39,7 +39,7 @@
 					"name": "syncInData",
 					"type": "UI_executeCommand",
 					"partId": "ui.main",
-					"command": "syncInData",
+					"command": "nosliw_moduleui_syncindata",
 					"input": {
 					},
 					"result": [{

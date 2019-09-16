@@ -147,19 +147,13 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 
 	var loc_getExecuteCommandRequest = function(commandName, parms, handlers, request){
 		var coreCommandName = node_basicUtility.getNosliwCoreName(commandName);
-		if(coreCommandName==undefined){
-			//normal command
-			return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	
+		//system command
+		if(coreCommandName==node_CONSTANT.COMMAND_MODULEUI_SYNCINDATA){
+			return loc_out.getSynInDataRequest(handlers, request);
 		}
 		else{
-			//system command
-			if(coreCommandName=="syncInData"){
-				return loc_out.getSynInDataRequest(handlers, request);
-			}
-			else{
-				//process by page
-				return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	
-			}
+			//normal command or unrecoganized command
+			return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	
 		}
 	};
 	

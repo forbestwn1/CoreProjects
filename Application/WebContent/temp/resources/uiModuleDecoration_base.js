@@ -12,7 +12,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
-
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_createIODataSet = nosliw.getNodeData("iotask.entity.createIODataSet");
+	
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponentCore();
 
@@ -36,7 +38,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 						data : eventData.eventData
 					};
 					//execute event handler process
-					loc_gate.processRequest(loc_gate.getExecuteProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEEVENTHANDLER_PROCESS], extraInput, undefined, request));
+					loc_gate.processRequest(loc_gate.getExecuteProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEEVENTHANDLER_PROCESS], node_createIODataSet(extraInput), undefined, request));
 				}
 			}
 		},
