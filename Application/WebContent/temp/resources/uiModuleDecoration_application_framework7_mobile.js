@@ -19,9 +19,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var CONSTANT_UISTACK_DATANAME = "module_uiStack";
 	
 	var loc_gate = gate;
-	var loc_uiModule = loc_gate.getComponent();
+	var loc_uiModule = loc_gate.getComponentCore();
 	
-	var loc_app = loc_gate.getConfigureData().app;
+	var loc_app = loc_gate.getConfigureValue().app;
 	
 	var loc_root;
 	var loc_appView;
@@ -43,10 +43,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	
 	var loc_getUpdatePageStatusRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSet(undefined, handlers, request);
-		_.each(loc_getUIStack(), function(uiName, index){
+		_.each(loc_getUIStack(), function(uiId, index){
 			//update ui status data
-			out.addRequest(uiName, loc_uiModule.getUI(uiName).getUpdateExtraContextDataRequest("nosliw_module_state", {
-				nosliw_uiStatus : {
+			out.addRequest(uiId, loc_uiModule.getUI(uiId).getUpdateExtraContextDataRequest("application", {
+				uiStatus : {
 					index : index,
 				}
 			}));
@@ -54,13 +54,13 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		return out;
 	};
 
-	var loc_getRoutePathByUiName = function(uiName){
-		return "/"+uiName+"/";
+	var loc_getRoutePathByUiId = function(uiId){
+		return "/"+uiId+"/";
 	}
 	
-	var loc_getTransferToRequest = function(uiName, mode, handlers, requestInfo){
-		loc_view.router.navigate(loc_getRoutePathByUiName(uiName));
-		loc_getUIStack().push(uiName);
+	var loc_getTransferToRequest = function(uiId, mode, handlers, requestInfo){
+		loc_view.router.navigate(loc_getRoutePathByUiId(uiId));
+		loc_getUIStack().push(uiId);
 		return loc_getUpdatePageStatusRequest(handlers, requestInfo);
 	};
 	
@@ -69,26 +69,19 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		loc_view.router.back();
 	};
 
-	var loc_processUIEvent = function(eventName, uiName, eventData, request){
+	var loc_processUIEvent = function(eventName, uiId, eventData, request){
 		if(eventName=="nosliw_transferBack"){
 			loc_transferBack();
 		}
 		else if(eventName=="nosliw_refresh"){
-			loc_processRequest(loc_uiModule.getRefreshUIRequest(uiName, undefined, request));
+			loc_gate.processRequest(loc_uiModule.getRefreshUIRequest(uiId, undefined, request));
 		}
 	};
 
-	//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
-	loc_processRequest = function(request){     node_requestServiceProcessor.processRequest(request);   };
-	
 	var loc_out = {
 			
 		processComponentCoreEvent : function(eventName, eventData, request){
-			loc_processUIEvent(eventData.eventName, eventData.uiName, eventData.eventData, request);
-		},
-		
-		getExecuteCommandRequest : function(command, parms, handlers, request){
-			
+			loc_processUIEvent(eventData.eventName, eventData.uiId, eventData.eventData, request);
 		},
 		
 		getUpdateViewRequest : function(view, handlers, request){
@@ -149,7 +142,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 					_.each(loc_uiModule.getUIs(), function(ui, index){
 						var route = {};
 						route.name = ui.getName();
-						route.path = loc_getRoutePathByUiName(ui.getName());
+						route.path = loc_getRoutePathByUiId(ui.getName());
 						route.pageName = ui.getName();
 						viewConfigure.routes.push(route);
 					});
@@ -168,7 +161,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				var uiStack = loc_getUIStack();
 				loc_clearUIStack();
 				_.each(uiStack, function(stackEle, index){
-					loc_view.router.navigate(loc_getRoutePathByUiName(stackEle));
+					loc_view.router.navigate(loc_getRoutePathByUiId(stackEle));
 					loc_getUIStack().push(stackEle);
 				});
 			}
@@ -178,63 +171,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			return out;
 		},
 		
-/*		
-		getDestroyRequest :function(handlers, request){
-			loc_view.destroy();
-			loc_moduleView.remove();
-		},
-		
-		getDeactiveRequest :function(handlers, request){
-			loc_view.router.clearPreviousHistory();
-		},
-		
-		getSuspendRequest :function(handlers, request){
-		},
-		
-		getResumeRequest :function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var uiStack = loc_getUIStack();
-			loc_clearUIStack();
-			_.each(uiStack, function(stackEle, index){
-				loc_view.router.navigate(loc_getRoutePathByUiName(stackEle));
-				loc_getUIStack().push(stackEle);
-			});
-			return out;	
-		},
-
-		getInitRequest :function(handlers, requestInfo){
-			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
-			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-				//put ui to root
-				_.each(loc_uiModule.getUIs(), function(ui, index){
-					var uiPageContainer = $("<div class='page stacked' data-name="+ui.getName()+"/>"); 
-					ui.getPage().appendTo(uiPageContainer);
-					uiPageContainer.appendTo(loc_moduleView);
-				});
-				
-				//view configure
-				var viewConfigure = {
-					stackPages : true,
-					routes : [],
-					routesBeforeEnter : function(to, from, resolve, reject){
-						resolve();
-					}
-				};
-				_.each(loc_uiModule.getUIs(), function(ui, index){
-					var route = {};
-					route.name = ui.getName();
-					route.path = loc_getRoutePathByUiName(ui.getName());
-					route.pageName = ui.getName();
-					viewConfigure.routes.push(route);
-				});
-
-				loc_view = loc_app.views.create(loc_moduleView.get(0), viewConfigure);
-
-				out.successFinish();
-			}));
-			return out;
-		},
-*/		
 	};
 	return loc_out;
 }
