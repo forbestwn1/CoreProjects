@@ -36,7 +36,11 @@ var loc_moduleSetting = {
 	
 	parts : {
 		test : {
-			uiDecoration : {},
+			uiDecoration : [
+				{
+					id: 'Decoration_setting_framework7'
+				}
+			],
 			moduleDecoration : 
 			{
 				parts : [
@@ -45,7 +49,6 @@ var loc_moduleSetting = {
 					},
 					{
 						id: 'setting_framework7_mobile',
-						uiResource : 'Decoration_setting_framework7',
 					},
 				]
 			},
@@ -57,9 +60,6 @@ var loc_moduleSetting = {
 				parts : [
 					{
 						id: 'base',
-					},
-					{
-						id: 'uidecoration',
 					},
 					{
 						id: 'setting_framework7_mobile',
@@ -82,9 +82,6 @@ var loc_moduleSetting = {
 				parts : [
 					{
 						id: 'base',
-					},
-					{
-						id: 'uidecoration',
 					},
 					{
 						id: 'application_framework7_mobile',

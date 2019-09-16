@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_createDynamicIOData;
 	var node_dataAssociationUtility;
 	var node_basicUtility;
+	var node_createUIDecorationRequest;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -168,7 +169,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		//build ui info extra data 
 		loc_setExtraContextData("ui", {
 			info :{
-				id : loc_getName(),
+				id : loc_getId(),
 				name : loc_getName(),
 				title : loc_getTitle()
 			}
@@ -247,6 +248,8 @@ nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uipage.createUIDecorationRequest", function(){node_createUIDecorationRequest = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createModuleUIRequest", node_createModuleUIRequest); 

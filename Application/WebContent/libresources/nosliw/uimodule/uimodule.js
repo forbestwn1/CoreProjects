@@ -42,7 +42,7 @@ var node_createUIModuleComponentCoreRequest = function(id, uiModuleDef, uiDecora
 	// build uis
 	_.each(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(moduleUIDef, index){
 		var moduleUIId = moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];
-		buildModuleUIRequest = node_createModuleUIRequest(moduleUIDef, module.getContextIODataSet(), node_componentUtility.buildDecorationInfoArrayByPart(uiDecorationConfigure, moduleUIId));
+		buildModuleUIRequest = node_createModuleUIRequest(moduleUIDef, module.getContextIODataSet(), uiDecorationConfigure);
 		buildModuleUIsRequest.addRequest(index, buildModuleUIRequest);
 	});
 	out.addRequest(buildModuleUIsRequest);
@@ -122,8 +122,12 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 			contextDataSet : node_createIODataSet(),   //module context data set
 			lifecycleStatus : undefined,  //current lifecycle status
 			
+			rootView : undefined,
+			
 			uiArray : [],    //
 			ui : {},
+			
+			valueByName : {},
 		},
 		
 		prv_addUI : function(ui){
@@ -153,8 +157,23 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 
 //		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getSynInDataRequest(handlers, request);	},
 
+		setRootView : function(rootView){   loc_out.prv_module.rootView = rootView;     },
+		getRootView : function(){   return loc_out.prv_module.rootView;     },
 		
 //component core interface method		
+		getInterface : function(){
+			return {
+				getPart : function(partId){  return loc_out.getPart(partId);	},
+
+				getExecutePartCommandRequest : function(partId, commandName, commandData, handlers, requestInfo){
+					return loc_out.getPart(partId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+				},
+			};
+		},
+		
+		getValue : function(name){  return loc_out.prv_module.valueByName[name];    },
+		setValue : function(name, value){   loc_out.prv_module.valueByName[name] = value;   },
+		
 		setState : function(state){  loc_state = state;  },
 		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
@@ -171,6 +190,35 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
 				//reset context io
 				out = loc_getInitIOContextRequest(handlers, request);
+			}
+			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE){
+				if(loc_out.getValue(node_CONSTANT.COMPONENT_VALUE_BACKUP)==true){
+					//active through back up
+					out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module resume"), handlers, request);
+
+					//ui data
+					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+						var uiData = loc_state.getValue("uiData", request);
+						var updateUIStateRequest = node_createServiceRequestInfoSequence(undefined);
+						_.each(loc_out.getUIs(), function(ui, index){
+							updateUIStateRequest.addRequest(ui.getSetStateRequest(uiData[ui.getId()]));	
+						});
+						return updateUIStateRequest;
+					}));
+
+					//context data
+					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+						var backupContextData = loc_state.getValue("context", request);
+						var updateContextStateRequest = node_createServiceRequestInfoSequence(undefined);
+						_.each(backupContextData, function(contextData, name){
+							updateContextStateRequest.addRequest(loc_out.prv_module.contextDataSet.getSetDataValueRequest(name, contextData));
+						});
+						return updateContextStateRequest;
+					}));
+				}
+				else{
+					//active through normal way
+				}
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
 				//reset context io
@@ -200,27 +248,6 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 				}));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME){
-				out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module resume"), handlers, request);
-
-				//ui data
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					var uiData = loc_state.getValue("uiData", request);
-					var updateUIStateRequest = node_createServiceRequestInfoSequence(undefined);
-					_.each(loc_out.getUIs(), function(ui, index){
-						updateUIStateRequest.addRequest(ui.getSetStateRequest(uiData[ui.getId()]));	
-					});
-					return updateUIStateRequest;
-				}));
-
-				//context data
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					var backupContextData = loc_state.getValue("context", request);
-					var updateContextStateRequest = node_createServiceRequestInfoSequence(undefined);
-					_.each(backupContextData, function(contextData, name){
-						updateContextStateRequest.addRequest(loc_out.prv_module.contextDataSet.getSetDataValueRequest(name, contextData));
-					});
-					return updateContextStateRequest;
-				}));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
 				out = node_createServiceRequestInfoSimple(undefined, function(request){loc_destroy(request);}, handlers, request);

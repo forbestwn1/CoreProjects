@@ -36,10 +36,10 @@ function(gate){
 	
 	var loc_getUpdatePageStatusRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSet(undefined, handlers, request);
-		_.each(loc_getUIStack(), function(uiName, index){
+		_.each(loc_getUIStack(), function(uiId, index){
 			//update ui status data
-			out.addRequest(uiName, loc_uiModule.getUI(uiName).getUpdateExtraContextDataRequest("nosliw_module_state", {
-				nosliw_uiStatus : {
+			out.addRequest(uiId, loc_uiModule.getUI(uiId).getUpdateExtraContextDataRequest("application", {
+				uiStatus : {
 					index : index,
 				}
 			}));
@@ -47,13 +47,13 @@ function(gate){
 		return out;
 	};
 
-	var loc_getRoutePathByUiName = function(uiName){
-		return "/"+uiName+"/";
+	var loc_getRoutePathByUiId = function(uiId){
+		return "/"+uiId+"/";
 	}
 	
-	var loc_getTransferToRequest = function(uiName, mode, handlers, requestInfo){
-		loc_view.router.navigate(loc_getRoutePathByUiName(uiName));
-		loc_getUIStack().push(uiName);
+	var loc_getTransferToRequest = function(uiId, mode, handlers, requestInfo){
+		loc_view.router.navigate(loc_getRoutePathByUiId(uiId));
+		loc_getUIStack().push(uiId);
 		return loc_getUpdatePageStatusRequest(handlers, requestInfo);
 	};
 	
@@ -62,18 +62,15 @@ function(gate){
 		loc_view.router.back();
 	};
 
-	var loc_processUIEvent = function(eventName, uiName, eventData, request){
+	var loc_processUIEvent = function(eventName, uiId, eventData, request){
 		if(eventName=="nosliw_transferBack"){
 			loc_transferBack();
 		}
 		else if(eventName=="nosliw_refresh"){
-			loc_processRequest(loc_uiModule.getRefreshUIRequest(uiName, undefined, request));
+			loc_gate.processRequest(loc_uiModule.getRefreshUIRequest(uiId, undefined, request));
 		}
 	};
 
-	//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
-	loc_processRequest = function(request){     node_requestServiceProcessor.processRequest(request);   };
-	
 	var loc_out = {
 			
 		processComponentCoreEvent : function(eventName, eventData, request){
@@ -138,7 +135,7 @@ function(gate){
 					_.each(loc_uiModule.getUIs(), function(ui, index){
 						var route = {};
 						route.name = ui.getName();
-						route.path = loc_getRoutePathByUiName(ui.getName());
+						route.path = loc_getRoutePathByUiId(ui.getName());
 						route.pageName = ui.getName();
 						viewConfigure.routes.push(route);
 					});
@@ -157,7 +154,7 @@ function(gate){
 				var uiStack = loc_getUIStack();
 				loc_clearUIStack();
 				_.each(uiStack, function(stackEle, index){
-					loc_view.router.navigate(loc_getRoutePathByUiName(stackEle));
+					loc_view.router.navigate(loc_getRoutePathByUiId(stackEle));
 					loc_getUIStack().push(stackEle);
 				});
 			}
@@ -167,63 +164,6 @@ function(gate){
 			return out;
 		},
 		
-/*		
-		getDestroyRequest :function(handlers, request){
-			loc_view.destroy();
-			loc_moduleView.remove();
-		},
-		
-		getDeactiveRequest :function(handlers, request){
-			loc_view.router.clearPreviousHistory();
-		},
-		
-		getSuspendRequest :function(handlers, request){
-		},
-		
-		getResumeRequest :function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var uiStack = loc_getUIStack();
-			loc_clearUIStack();
-			_.each(uiStack, function(stackEle, index){
-				loc_view.router.navigate(loc_getRoutePathByUiName(stackEle));
-				loc_getUIStack().push(stackEle);
-			});
-			return out;	
-		},
-
-		getInitRequest :function(handlers, requestInfo){
-			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
-			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-				//put ui to root
-				_.each(loc_uiModule.getUIs(), function(ui, index){
-					var uiPageContainer = $("<div class='page stacked' data-name="+ui.getName()+"/>"); 
-					ui.getPage().appendTo(uiPageContainer);
-					uiPageContainer.appendTo(loc_moduleView);
-				});
-				
-				//view configure
-				var viewConfigure = {
-					stackPages : true,
-					routes : [],
-					routesBeforeEnter : function(to, from, resolve, reject){
-						resolve();
-					}
-				};
-				_.each(loc_uiModule.getUIs(), function(ui, index){
-					var route = {};
-					route.name = ui.getName();
-					route.path = loc_getRoutePathByUiName(ui.getName());
-					route.pageName = ui.getName();
-					viewConfigure.routes.push(route);
-				});
-
-				loc_view = loc_app.views.create(loc_moduleView.get(0), viewConfigure);
-
-				out.successFinish();
-			}));
-			return out;
-		},
-*/		
 	};
 	return loc_out;
 }

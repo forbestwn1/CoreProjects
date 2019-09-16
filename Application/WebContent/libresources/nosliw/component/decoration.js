@@ -32,6 +32,11 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 	
 	var loc_lifecycleStatus;
 	
+	//temp value, not use as state
+	var loc_tempValueByName = {};
+	//store value that would be used as state
+	var loc_stateValueByName = {};
+	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
@@ -48,11 +53,24 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		//get configure data for this decoration
 		getConfigureValue : function(){  return loc_configureValue;	},
 
-		//state operation
-		getStateValue : function(path, request){  return loc_state.getValue(path, request);	},
-		getState : function(request){  return loc_state.getStateValue(request);   },
-		setStateValue : function(path, value, request){  loc_state.setValue(path, value, request);	},
+		//value by name
+		getTempValue(name){  return  loc_tempValueByName[name];  },
+		setTempValue(name, value){   loc_tempValueByName[name] = value;   },
+		
+		//state value by name
+		getStateValue : function(name){  return loc_stateValueByName[name];	},
+		getState : function(){  return loc_stateValueByName;   },
+		setStateValue : function(name, value){  loc_stateValueByName[name] = value;	},
 
+		retrieveState : function(request){   
+			loc_stateValueByName = loc_state.getStateValue(request);
+			if(loc_stateValueByName == undefined)   loc_stateValueByName = {};   
+		},
+		
+		saveState : function(request){
+			loc_state.setStateValue(loc_stateValueByName, request);
+		},
+		
 		getLifecycleStatus : function(){   return loc_lifecycleStatus;    },
 		
 		trigueEvent : function(eventName, eventData, requestInfo){  loc_trigueEvent(eventName, eventData, requestInfo);	},

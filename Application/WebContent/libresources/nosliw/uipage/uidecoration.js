@@ -18,7 +18,8 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIDecorationRequest = function(decorationId, configureValue, handlers, request){
-	return nosliw.runtime.getUIPageService().getCreateUIPageRequest(decorationId, undefined, {
+	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+	out.addRequest(nosliw.runtime.getUIPageService().getCreateUIPageRequest(decorationId, undefined, {
 		success :function(requestInfo, page){
 			var decoration = loc_createDecoration(page.getUIView());
 			if(configureValue==undefined)  return decoration; 
@@ -29,7 +30,8 @@ var node_createUIDecorationRequest = function(decorationId, configureValue, hand
 				}
 			});
 		}
-	}, handlers, request);
+	}));
+	return out;
 };
 
 

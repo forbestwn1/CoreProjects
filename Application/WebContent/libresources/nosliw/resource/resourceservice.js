@@ -87,6 +87,15 @@ var node_createResourceService = function(resourceManager){
 		return out;
 	};
 	
+	var loc_validateResourceId = function(resourceIds){
+		_.each(resourceIds, function(resourceId, i){
+			if(resourceId==undefined || resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]==undefined){
+				var kkkk = 5555;
+				kkkk++;
+			}
+		});
+	};
+	
 	var loc_out = {
 		//resource get
 		getRequireResourcesRequest : function(resourcesInfo, handlers, requester_parent){
@@ -132,8 +141,9 @@ var node_createResourceService = function(resourceManager){
 			
 		//resource discovery + get
 		getGetResourcesRequest : function(resourceIds, handlers, requester_parent){
+			loc_validateResourceId(resourceIds);
+			
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResources", {"resourcesId":resourceIds}), handlers, loc_out.getRequestInfo(requester_parent));
-
 			//find missing resources
 			out.addRequest(loc_getFindDsicoveredResourcesRequest(resourceIds, {
 				success : function(requestInfo, data){
@@ -175,6 +185,7 @@ var node_createResourceService = function(resourceManager){
 			
 		//resource discovery
 		getDiscoverResourcesRequest : function(resourceIds, handlers, requester_parent){
+			loc_validateResourceId(resourceIds);
 			
 			//gateway request
 			var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;

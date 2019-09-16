@@ -59,11 +59,19 @@ var node_buildComponentCore = function(rawComponentCore){
 
 		//set state for the component core
 		setState : function(state){   },
+
+		//value by name
+		getValue : function(name){},
+		setValue : function(name, value){},
 		
 		//lifecycle handler
 		getLifeCycleRequest : function(transitName, handlers, request){},
 		setLifeCycleStatus : function(status){},
 		
+		getUpdateViewRequest : function(view, handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){return view}, handlers, request);
+		},
+
 		registerEventListener : function(listener, handler, thisContext){  },
 		unregisterEventListener : function(listener){ },
 

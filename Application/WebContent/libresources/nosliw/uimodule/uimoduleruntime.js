@@ -39,7 +39,8 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	
 	var loc_componentCoreComplex;
 	var loc_state = state;
-
+	var loc_rootView = rootView;
+	
 	var loc_eventListener = node_createEventObject();
 
 	var loc_init = function(uiModuleCore, configure, componentDecorationInfos, rootView, state, request){
@@ -76,27 +77,21 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ActiveUIModuleRuntime", {}), undefined, request);
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			var stateData = loc_state.getStateValue(request);
-			var r = node_createServiceRequestInfoSequence();
-			if(stateData==undefined)	r.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));  //if no state, then from init to active
-			else	r.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME));   //if has state, then from state to active
-			r.addRequest(loc_getExecuteModuleProcessByNameRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE));
-			return r;
+			if(stateData!=undefined)  loc_getModuleCore().setValue(node_CONSTANT.COMPONENT_VALUE_BACKUP, true);    //use backup mode
+			return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE, request);
+		}));
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			//clear backup flag
+			loc_getModuleCore().setValue(node_CONSTANT.COMPONENT_VALUE_BACKUP, undefined);
+			//clear backup data
+			loc_state.clear(); 
 		}));
 		return out;
 	};
 
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){
-		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY, request);
-	};
-	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]= function(request){
 		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE, request);
 	};
-	
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){
-		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE, request);
-		loc_componentCoreComplex.clearState();
-	};	
 
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND] = function(request){
 		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND, request);
@@ -105,7 +100,17 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME] = function(request){
 		//from active to suspended
 		loc_state.clear();   //remove backup state saved when into suspended
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME, request);
 	};
+
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY, request);
+	};
+	
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE, request);
+		loc_componentCoreComplex.clearState();
+	};	
 
 	//component management interface object 
 	var loc_interfaceDelegate = {
@@ -131,7 +136,11 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		
 		prv_getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
-			out.addRequest(loc_componentCoreComplex.getUpdateViewRequest(rootView));
+			out.addRequest(loc_componentCoreComplex.getUpdateViewRequest(loc_rootView, {
+				success : function(request, view){
+					loc_getModuleCore().setRootView(view);
+				}
+			}));
 			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
 			return out;
 		},

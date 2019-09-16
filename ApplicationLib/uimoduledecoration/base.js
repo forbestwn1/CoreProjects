@@ -33,17 +33,6 @@ function(gate){
 				}
 			}
 		},
-		
-		//inferface exposed
-		getInterface : function(){
-			return {
-				getPart : function(partId){  return loc_uiModule.getPart(partId);	},
-
-				getExecutePartCommandRequest : function(partId, commandName, commandData, handlers, requestInfo){
-					return loc_out.getInterface().getPart(partId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
-				},
-			};
-		},
 	};
 	return loc_out;
 }

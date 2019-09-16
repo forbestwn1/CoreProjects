@@ -2,13 +2,13 @@
 <html>
 <body nosliwattribute_placeholder="id:pleaseEmbed">
 	<br>
-	SettingName : <%=?(name)?%>
+	SettingName : <%=?(nosliw_setting_name)?%>
 	
 	<div>
 		<a href="" nosliw-event="click:submit:">Submit</a>
 		<a href="" nosliw-event="click:new:">New</a>
-		<a href="" nosliw-event="click:delete:" style="display:<%=?(persist)?==true?'inline':'none'%>">Delete</a>
-		<a href="" nosliw-event="click:save:" style="display:<%=(!?(persist)?)||?(modified)?==true?'inline':'none'%>">Save</a>
+		<a href="" nosliw-event="click:delete:" style="display:<%=?(nosliw_setting_persist)?==true?'inline':'none'%>">Delete</a>
+		<a href="" nosliw-event="click:save:" style="display:<%=(!?(nosliw_setting_persist)?)||?(nosliw_setting_modified)?==true?'inline':'none'%>">Save</a>
 	</div>
 
 <!--	<nosliw-contextvalue/>  -->
@@ -48,17 +48,17 @@
 		"group" : {
 			"public" : {
 				"element" : {
-					"persist" : {
+					"nosliw_setting_persist" : {
 						"definition" : {
 						},
 						defaultValue: true
 					},
-					"modified" : {
+					"nosliw_setting_modified" : {
 						"definition" : {
 						},
 						defaultValue: true
 					},
-					"name" : {
+					"nosliw_setting_name" : {
 						"definition" : {
 						},
 						defaultValue: ""

@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createEventObject;
 	var node_buildComponentCore;
+	var node_createServiceRequestInfoSimple;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
@@ -61,18 +62,17 @@ var node_createComponentCoreComplex = function(configure, componentEnv, state){
 	};
 	
 	var loc_getUpdateLayerViewRequest = function(index, view, handlers, request){
-		if(index<0 || view==undefined)  return;
-		if(loc_layers[index].getUpdateViewRequest==undefined)  return;
-		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayer", {}), handlers, request);
 		out.addRequest(loc_layers[index].getUpdateViewRequest(view, {
 			success : function(request, newView){
-				return loc_getUpdateLayerViewRequest(index-1, newView);
+				if(newView==undefined)   return node_createServiceRequestInfoSimple(undefined, function(request){return view;});
+				else if(index==0)  return node_createServiceRequestInfoSimple(undefined, function(request){return newView;});
+				else return loc_getUpdateLayerViewRequest(index-1, newView);
 			}
 		}));
 		return out;
 	};
-	
+
 	loc_registerLayerEvent = function(layerNum){
 		loc_layers[layerNum].registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
 			var processedEvent = event;
@@ -188,6 +188,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreComplex", node_createComponentCoreComplex); 
