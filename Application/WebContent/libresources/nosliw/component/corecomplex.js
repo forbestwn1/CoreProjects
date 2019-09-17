@@ -97,13 +97,13 @@ var node_createComponentCoreComplex = function(configure, componentEnv, state){
 				}
 			}
 			if(processedEvent!=undefined)	loc_eventSource.triggerEvent(processedEvent, processedEventData, processedRequest);
+		});
 
-			loc_layers[layerNum].registerValueChangeEventListener(loc_valueChangeEventListener, function(event, eventData, requestInfo){
-				for(var i=layerNum; i<loc_layers.length; i++){
-					loc_layers[i].processComponentCoreValueChangeEvent(event, eventData, requestInfo);
-				}
-				loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);
-			});
+		loc_layers[layerNum].registerValueChangeEventListener(loc_valueChangeEventListener, function(event, eventData, requestInfo){
+			for(var i=layerNum+1; i<loc_layers.length; i++){
+				loc_layers[i].processComponentCoreValueChangeEvent(event, eventData, requestInfo);
+			}
+			loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);
 		});
 	},
 	

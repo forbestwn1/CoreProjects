@@ -79,7 +79,7 @@ var loc_moduleSetting = {
 			],
 			moduleDecoration : 
 			{
-				parts : [
+				parts1 : [
 					{
 						id: 'base',
 					},
@@ -89,6 +89,11 @@ var loc_moduleSetting = {
 							return parms.framework7App;
 						}
 					}
+				],
+				parts : [
+					{
+						id: 'base',
+					},
 				]
 			},
 		}

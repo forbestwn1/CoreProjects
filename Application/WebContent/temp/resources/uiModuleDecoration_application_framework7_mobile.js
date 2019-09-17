@@ -28,6 +28,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_moduleView;
 	var loc_view;
 	
+	var loc_getCurrentUIId = function(){ return  loc_getUIStack()[loc_getUIStack().length-1];  };
+	
 	var loc_getUIStack = function(){ 
 		var out = loc_gate.getStateValue(CONSTANT_UISTACK_DATANAME);  
 		if(out==undefined){
@@ -41,37 +43,41 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		loc_gate.setStateValue(CONSTANT_UISTACK_DATANAME, []);
 	};
 	
-	var loc_getUpdatePageStatusRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSet(undefined, handlers, request);
+	var loc_updatePageStatus = function(){
 		_.each(loc_getUIStack(), function(uiId, index){
 			//update ui status data
-			out.addRequest(uiId, loc_uiModule.getUI(uiId).getUpdateExtraContextDataRequest("application", {
+			loc_uiModule.getUI(uiId).setExtraContextData("application", {
 				uiStatus : {
 					index : index,
 				}
-			}));
+			});
 		});
-		return out;
 	};
 
-	var loc_getRoutePathByUiId = function(uiId){
-		return "/"+uiId+"/";
-	}
+	var loc_getRoutePathByUiId = function(uiId){	return "/"+uiId+"/";  };
+	
+	var loc_currentUIChangeRequest = function(handlers, request){
+		loc_updatePageStatus();
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_uiModule.getUI(loc_getCurrentUIId()).getSynInDataRequest());
+		return out;
+	};
 	
 	var loc_getTransferToRequest = function(uiId, mode, handlers, requestInfo){
 		loc_view.router.navigate(loc_getRoutePathByUiId(uiId));
 		loc_getUIStack().push(uiId);
-		return loc_getUpdatePageStatusRequest(handlers, requestInfo);
+		return loc_currentUIChangeRequest(handlers, requestInfo);
 	};
 	
-	var loc_transferBack = function(){
+	var loc_getTransferBackRequest = function(handlers, requestInfo){
 		loc_getUIStack().pop();
 		loc_view.router.back();
+		return loc_currentUIChangeRequest(handlers, requestInfo);
 	};
 
 	var loc_processUIEvent = function(eventName, uiId, eventData, request){
 		if(eventName=="nosliw_transferBack"){
-			loc_transferBack();
+			loc_gate.processRequest(loc_getTransferBackRequest(undefined, request));
 		}
 		else if(eventName=="nosliw_refresh"){
 			loc_gate.processRequest(loc_uiModule.getRefreshUIRequest(uiId, undefined, request));
