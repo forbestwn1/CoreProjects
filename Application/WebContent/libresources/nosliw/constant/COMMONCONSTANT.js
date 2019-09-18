@@ -359,7 +359,8 @@ var COMMONCONSTANT=
   "GATEWAY_OPTIONS": "options",
   "NOSLIW_RESERVE_ATTRIBUTE": "nosliwattribute_",
   "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
-  "NOSLIW_NAME_PREFIX": "nosliw_"
+  "NOSLIW_NAME_PREFIX": "nosliw_",
+  "NAME_DEFAULT": "default"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

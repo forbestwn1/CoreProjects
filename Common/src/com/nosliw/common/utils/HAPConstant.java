@@ -575,4 +575,8 @@ public class HAPConstant {
 		public static final String NOSLIW_NAME_PREFIX = "nosliw_";
 
 
+
+		public static final String NAME_DEFAULT = "default";
+
+
 }

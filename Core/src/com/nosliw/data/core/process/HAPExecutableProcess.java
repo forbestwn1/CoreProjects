@@ -78,6 +78,10 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 		for(String resultName : this.m_results.keySet()) {
 			out.put(resultName, HAPParentContext.createDefault(this.m_context));
 		}
+		String defaultResultName = HAPConstant.NAME_DEFAULT;
+		if(out.get(defaultResultName)==null) {
+			out.put(defaultResultName, HAPParentContext.createDefault(this.m_context));
+		}
 		return out;
 	}
 

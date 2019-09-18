@@ -644,6 +644,9 @@
 
 			<definition name="NOSLIW_NAME_PREFIX" value="nosliw_"/>
 
+			<definition type="space"/>
+			<definition name="NAME_DEFAULT" value="default"/>
+
 		</definitions>
 	</constants>
 </root>

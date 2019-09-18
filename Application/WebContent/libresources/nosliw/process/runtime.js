@@ -76,13 +76,21 @@ var node_createProcessRuntime = function(envObj){
 		//extraInputDataSet is other component's contextIo
 		//return : IOTaskResult with resultName and outputIODataSet (which is externalIODataSet)
 		getExecuteEmbededProcessRequest : function(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent){
+			var envObj = {
+				//add method for sync data from internal process context to external process context
+				getSyncOutRequest : function(internalValue, handlers, request){
+					var taskOutputDataAssociation = node_createDataAssociation(internalValue, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING][node_COMMONCONSTANT.NAME_DEFAULT], externalIODataSet, loc_buildTaskOutputDataAssociationName(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID]));
+					return taskOutputDataAssociation.getExecuteRequest(handlers, request);
+				}
+			};
+			envObj = _.extend(envObj, loc_envObj);
 			return node_taskUtility.getExecuteEmbededTaskRequest(
 				externalIODataSet, 
 				extraInputDataSet, 
 				processDef, 
 				new node_IOTaskInfo(function(inputValue, handlers, request){
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("executeEmbededProcess", {}), handlers, request);
-					out.addRequest(node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(inputValue, {
+					out.addRequest(node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], envObj).getExecuteProcessRequest(inputValue, {
 						success : function(request, processResult){
 							return new node_IOTaskResult(processResult.resultName, processResult.resultValue);
 						}

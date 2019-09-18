@@ -49,6 +49,15 @@ var node_createProcess = function(processDef, envObj){
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(processDef, envObj){
+		if(loc_envObj.getSyncOutRequest==undefined){
+			var envObj = {
+					//add method for sync data from internal process context to external process context
+					getSyncOutRequest : function(internalValue, handlers, request){
+						return node_createServiceRequestInfoSimple(undefined, function(request){}, handlers, request);
+					}
+				};
+			loc_envObj = _.extend(envObj, loc_envObj);
+		}
 	};
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
@@ -113,6 +122,7 @@ var node_createProcess = function(processDef, envObj){
 						return new loc_NormalActivityOutput(activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_FLOW][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET]);
 					}
 				}));
+		
 		return out;
 	};
 
@@ -139,7 +149,16 @@ var node_createProcess = function(processDef, envObj){
 		else{
 			activitExecuteRequest = loc_getExecuteNormalActivityRequest(activity, {
 				success : function(requestInfo, normalActivityOutput){
-					return loc_getExecuteActivitySequenceRequest(normalActivityOutput.next, activities);
+					return loc_processContextIO.getGetDataValueRequest(undefined, {
+						success : function(request, resultValue){
+							//after activity finish, sync with process external context
+							return loc_envObj.getSyncOutRequest(resultValue, {
+								success : function(request, data){
+									return loc_getExecuteActivitySequenceRequest(normalActivityOutput.next, activities);
+								}
+							});
+						}
+					});
 				}
 			}, request);
 		}

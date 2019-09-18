@@ -48,7 +48,10 @@ var node_taskUtility = function(){
 							var outputDataAssociationDef;
 							if(outputDataAssociationByResult!=undefined){
 								if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(taskResult.resultName);
-								else   outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
+								else{
+									outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
+									if(outputDataAssociationDef==undefined)   outputDataAssociationDef = outputDataAssociationByResult[node_COMMONCONSTANT.NAME_DEFAULT];
+								}
 							}
 
 							var taskOutputDataAssociation = node_createDataAssociation(taskResult.resultValue, outputDataAssociationDef, outputIO, loc_buildTaskOutputDataAssociationName(ioTaskInfo.taskName));

@@ -79,7 +79,7 @@ var loc_moduleSetting = {
 			],
 			moduleDecoration : 
 			{
-				parts1 : [
+				parts : [
 					{
 						id: 'base',
 					},
@@ -90,11 +90,6 @@ var loc_moduleSetting = {
 						}
 					}
 				],
-				parts : [
-					{
-						id: 'base',
-					},
-				]
 			},
 		}
 	}
