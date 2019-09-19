@@ -60,6 +60,22 @@ var node_createGatewayService = function(){
 	};
 	
 	var loc_getLoadScriptRequest = function(dataStr, handlers, requester_parent){
+		var out = node_createServiceRequestInfoCommon(new node_ServiceInfo("LoadScript", {"dataStr":dataStr}), handlers, requester_parent);		
+		out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
+			var dataStr = requestInfo.getService().parms.dataStr;
+			try{
+				eval(dataStr);
+				requestInfo.successFinish();
+			}
+			catch(err){
+				requestInfo.errorFinish(new node_ServiceData(nocd_constant.ERROR_PARSE_JAVASCRIPT, nocd_constant.ERROR_PARSE_JAVASCRIPT, dataStr));
+			}
+			
+		}, out));
+
+		return out;
+		
+		
 		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("LoadScript", {"dataStr":dataStr}), 
 				function(requestInfo){  
 					eval(requestInfo.getService().parms.dataStr);  

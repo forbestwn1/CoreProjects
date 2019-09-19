@@ -242,6 +242,9 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		getExecuteCommandRequest : function(commandName, parms, handlers, request){	return loc_getExecuteCommandRequest(commandName, parms, handlers, request);	},
 		executeCommandRequest : function(commandName, parms, handlers, request){	node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(commandName, parms, handlers, request));	},
 
+		getExecuteNosliwCommandRequest : function(commandName, parms, handlers, request){	return getExecuteCommandRequest(node_basicUtility.buildNosliwFullName(commandName), parms, handlers, request);	},
+		executeNosliwCommandRequest : function(commandName, parms, handlers, request){	node_requestServiceProcessor.processRequest(this.getExecuteNosliwCommandRequest(commandName, parms, handlers, request));	},
+
 		//event
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext);	},
 		registerValueChangeEventListener : function(listener, handler, thisContext){	return	loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext);	},

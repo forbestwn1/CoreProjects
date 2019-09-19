@@ -5,11 +5,11 @@
 			<div class="navbar">
 			    <div class="navbar-inner">
 			        <div class="left">
-			            <a href="" class="link" style="display:<%=?(nosliw_application_uiStatus.index)?==0?'none':'inline'%>" nosliw-event="click:transferBack:">Back</a>
+			            <a href="" class="link" style="display:<%=?(nosliw_module_application_uiStatus.index)?==0?'none':'inline'%>" nosliw-event="click:transferBack:">Back</a>
 			        </div>
 			        <div class="title"><%=?(nosliw_ui_info.title)?%></div>
 			        <div class="right">
-<!--			            <a href="" class="link" nosliw-event="click:refresh:">Refresh</a>  -->
+			            <a href="" class="link" nosliw-event="click:refresh:">Refresh</a> 
 			        </div>
 			    </div>
 			</div>
@@ -22,11 +22,11 @@
 	{
 		transferBack : function(info, env){
 			event.preventDefault();
-			env.trigueEvent("nosliw_transferBack", info.eventData);
+			env.trigueNosliwEvent("module_application_transferBack", info.eventData);
 		},
 		refresh : function(info, env){
 			event.preventDefault();
-			env.trigueEvent("nosliw_refresh", info.eventData);
+			env.trigueNosliwEvent("module_application_refresh", info.eventData);
 		},
 	}
 	</scripts>
@@ -45,7 +45,7 @@
 							}
 						}
 					},
-					"nosliw_application_uiStatus" : {
+					"nosliw_module_application_uiStatus" : {
 						"definition": {
 							"child" : {
 								"index" : {},

@@ -74,7 +74,7 @@ var loc_moduleSetting = {
 		application : {
 			uiDecoration : [
 				{
-					id: 'Decoration_application_framework7'
+					id: 'Decoration_application_header_framework7'
 				}
 			],
 			moduleDecoration : 
@@ -87,6 +87,11 @@ var loc_moduleSetting = {
 						id: 'application_framework7_mobile',
 						app : function(parms){
 							return parms.framework7App;
+						},
+						uiResource : {
+							container : {
+								id : "Decoration_application_container_framework7"
+							}
 						}
 					}
 				],

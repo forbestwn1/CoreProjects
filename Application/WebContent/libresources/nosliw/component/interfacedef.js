@@ -27,6 +27,7 @@ var node_buildDecorationPlugInObject = function(rawPluginObj){
 		processComponentCoreValueChangeEvent : function(eventName, eventData, request){	return loc_rawPluginObj.processComponentCoreValueChangeEvent==undefined? undefined:loc_rawPluginObj.processComponentCoreValueChangeEvent(eventName, eventData, request);},
 			
 		getProcessCommandRequest : function(command, parms, handlers, request){	return loc_rawPluginObj.getProcessCommandRequest==undefined? undefined:loc_rawPluginObj.getProcessCommandRequest(command, parms, handlers, request);},
+		getProcessNosliwCommandRequest : function(command, parms, handlers, request){	return this.getProcessCommandRequest(node_basicUtility.buildNosliwFullName(command), parms, handlers, request);},
 		
 		getUpdateViewRequest : function(view, handlers, request){
 			if(loc_rawPluginObj.getUpdateViewRequest!=undefined){
@@ -52,6 +53,7 @@ var node_buildComponentCore = function(rawComponentCore){
 	var interfaceDef = {
 		//execute command
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
+		getExecuteNosliwCommandRequest : function(commandName, parm, handlers, requestInfo){   this.getExecuteCommandRequest(node_basicUtility.buildNosliwFullName(commandName), parm, handlers, requestInfo);    },
 		//get part by id
 		getPart : function(partId){ },
 		//get interface exposed
@@ -100,6 +102,7 @@ var node_createComponentManagementInterfaceDelegateObject = function(delegateObj
 	var loc_interface = {
 		getContextIODataSet :  function(){    },
 		getExecuteCommandRequest : function(command, parms, handlers, request){      },
+		getExecuteNosliwCommandRequest : function(commandName, parm, handlers, requestInfo){   this.getExecuteCommandRequest(node_basicUtility.buildNosliwFullName(commandName), parm, handlers, requestInfo);    },
 		registerEventListener : function(listener, handler, thisContext){     },
 		unregisterEventListener : function(listener){     },
 		registerValueChangeEventListener : function(listener, handler, thisContext){    },

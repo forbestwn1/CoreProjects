@@ -386,6 +386,9 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 					trigueEvent : function(eventName, eventData, requestInfo){
 						loc_out.prv_trigueEvent(eventName, eventData, requestInfo);
 					},
+					trigueNosliwEvent : function(eventName, eventData, requestInfo){
+						loc_out.prv_trigueEvent(node_basicUtility.buildNosliwFullName(eventName), eventData, requestInfo);
+					},
 					getServiceRequest : function(serviceName, handlers, request){
 						return loc_getServiceRequest(serviceName, handlers, request);
 					}
