@@ -174,6 +174,8 @@ function(gate){
 							loc_framework7View.router.navigate(loc_getRoutePathByUiId(stackEle));
 							loc_getUIStack().push(stackEle);
 						});
+						
+						loc_updatePageStatus();
 					}));
 				}
 			}

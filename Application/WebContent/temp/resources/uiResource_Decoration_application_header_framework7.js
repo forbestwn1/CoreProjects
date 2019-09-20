@@ -92,17 +92,17 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"elementEvents":[{"uiId":"5202",
-"event":"click",
-"function":"refresh"
-},{"uiId":"5198",
+"elementEvents":[{"uiId":"5502",
 "event":"click",
 "function":"transferBack"
+},{"uiId":"5506",
+"event":"click",
+"function":"refresh"
 }],
 "tagEvents":[],
 "attributes":{"nosliwattribute_placeholder":"id:pleaseEmbed"
 },
-"html":"&lt;div class=&quot;page-content&quot; nosliwid=&quot;5194&quot;&gt;  &lt;div class=&quot;navbar&quot; nosliwid=&quot;5195&quot;&gt;   &lt;div class=&quot;navbar-inner&quot; nosliwid=&quot;5196&quot;&gt;    &lt;div class=&quot;left&quot; nosliwid=&quot;5197&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; style=&quot;&quot; nosliwid=&quot;5198&quot;&gt;&lt;span&gt;Back&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;    &lt;div class=&quot;title&quot; nosliwid=&quot;5199&quot;&gt;    &lt;span nosliwid=&quot;5200&quot;&gt;&lt;/span&gt;   &lt;/div&gt;    &lt;div class=&quot;right&quot; nosliwid=&quot;5201&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; nosliwid=&quot;5202&quot;&gt;&lt;span&gt;Refresh&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;   &lt;/div&gt;  &lt;/div&gt;  &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;5203&quot;&gt;&lt;/div&gt; &lt;/div&gt;",
+"html":"&lt;div class=&quot;page-content&quot; nosliwid=&quot;5498&quot;&gt;  &lt;div class=&quot;navbar&quot; nosliwid=&quot;5499&quot;&gt;   &lt;div class=&quot;navbar-inner&quot; nosliwid=&quot;5500&quot;&gt;    &lt;div class=&quot;left&quot; nosliwid=&quot;5501&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; style=&quot;&quot; nosliwid=&quot;5502&quot;&gt;&lt;span&gt;Back&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;    &lt;div class=&quot;title&quot; nosliwid=&quot;5503&quot;&gt;    &lt;span nosliwid=&quot;5504&quot;&gt;&lt;/span&gt;   &lt;/div&gt;    &lt;div class=&quot;right&quot; nosliwid=&quot;5505&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; nosliwid=&quot;5506&quot;&gt;&lt;span&gt;Refresh&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;   &lt;/div&gt;  &lt;/div&gt;  &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;5507&quot;&gt;&lt;/div&gt; &lt;/div&gt;",
 "constants":{},
 "events":{"transferBack":{"name":"transferBack",
 "description":"",
@@ -125,7 +125,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"5200",
+"uiId":"5504",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -141,7 +141,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"5198",
+"uiId":"5502",
 "attribute":"style",
 "scriptFunction":function(scriptExpressionData){
 	return "display:"+scriptExpressionData["1"];
