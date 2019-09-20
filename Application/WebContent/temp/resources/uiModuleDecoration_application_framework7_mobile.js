@@ -141,7 +141,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
 				out = node_createServiceRequestInfoCommon(undefined, handlers, request);
 				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-					//put ui to root
+					//append ui view to container
 					_.each(loc_uiModule.getUIs(), function(ui, index){
 						var uiPageContainer = $("<div class='page stacked' data-name="+ui.getName()+"/>"); 
 						ui.getPage().appendTo(uiPageContainer);
@@ -169,18 +169,31 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 					out.successFinish();
 				}));
 			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
+			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE){
+				if(loc_gate.getValueFromCore(node_CONSTANT.COMPONENT_VALUE_BACKUP)==true){
+					//get state data from store
+					out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+						loc_gate.retrieveState(request);
+						var uiStack = loc_getUIStack();
+						loc_clearUIStack();
+						_.each(uiStack, function(stackEle, index){
+							loc_framework7View.router.navigate(loc_getRoutePathByUiId(stackEle));
+							loc_getUIStack().push(stackEle);
+						});
+					}));
+				}
+			}
+			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){ 
 				loc_framework7View.destroy();
 				loc_applicationContainerView.remove();
 			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME){
+			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND){  
+				//save state data to store
 				out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				var uiStack = loc_getUIStack();
-				loc_clearUIStack();
-				_.each(uiStack, function(stackEle, index){
-					loc_framework7View.router.navigate(loc_getRoutePathByUiId(stackEle));
-					loc_getUIStack().push(stackEle);
-				});
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					loc_gate.saveState(request);
+				}));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
 				loc_framework7View.router.clearPreviousHistory();

@@ -74,23 +74,23 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"elementEvents":[{"uiId":"190",
-"event":"click",
-"function":"delete"
-},{"uiId":"188",
-"event":"click",
-"function":"submit"
-},{"uiId":"189",
+"elementEvents":[{"uiId":"1401",
 "event":"click",
 "function":"new"
-},{"uiId":"191",
+},{"uiId":"1400",
+"event":"click",
+"function":"submit"
+},{"uiId":"1402",
+"event":"click",
+"function":"delete"
+},{"uiId":"1403",
 "event":"click",
 "function":"save"
 }],
 "tagEvents":[],
 "attributes":{"nosliwattribute_placeholder":"id:pleaseEmbed"
 },
-"html":"&lt;br nosliwid=&quot;186&quot;&gt;&lt;span&gt; SettingName : &lt;/span&gt;&lt;span nosliwid=&quot;185&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;div nosliwid=&quot;187&quot;&gt;  &lt;a href=&quot;&quot; nosliwid=&quot;188&quot;&gt;&lt;span&gt;Submit&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; nosliwid=&quot;189&quot;&gt;&lt;span&gt;New&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; style=&quot;&quot; nosliwid=&quot;190&quot;&gt;&lt;span&gt;Delete&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; style=&quot;&quot; nosliwid=&quot;191&quot;&gt;&lt;span&gt;Save&lt;/span&gt;&lt;/a&gt; &lt;/div&gt; &lt;!--	&lt;nosliw-contextvalue/&gt;  --&gt; &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;192&quot;&gt;&lt;/div&gt; &lt;br nosliwid=&quot;193&quot;&gt;",
+"html":"&lt;br nosliwid=&quot;1398&quot;&gt;&lt;span&gt; SettingName : &lt;/span&gt;&lt;span nosliwid=&quot;1397&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;div nosliwid=&quot;1399&quot;&gt;  &lt;a href=&quot;&quot; nosliwid=&quot;1400&quot;&gt;&lt;span&gt;Submit&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; nosliwid=&quot;1401&quot;&gt;&lt;span&gt;New&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; style=&quot;&quot; nosliwid=&quot;1402&quot;&gt;&lt;span&gt;Delete&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; style=&quot;&quot; nosliwid=&quot;1403&quot;&gt;&lt;span&gt;Save&lt;/span&gt;&lt;/a&gt; &lt;/div&gt; &lt;!--	&lt;nosliw-contextvalue/&gt;  --&gt; &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;1404&quot;&gt;&lt;/div&gt; &lt;br nosliwid=&quot;1405&quot;&gt;",
 "constants":{},
 "events":{"submit":{"name":"submit",
 "description":"",
@@ -107,7 +107,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"185",
+"uiId":"1397",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -118,28 +118,12 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 }
 }],
-"scriptExpressionInAttributes":[{"scriptExpressions":{"1":{"definition":"(!?(nosliw_setting_persist)?)||?(nosliw_setting_modified)?==true?'inline':'none'",
-"variableNames":["nosliw_setting_modified","nosliw_setting_persist"],
-"expressions":{}
-}
-},
-"uiId":"191",
-"attribute":"style",
-"scriptFunction":function(scriptExpressionData){
-	return "display:"+scriptExpressionData["1"];
-} 
-,
-"scriptExpressionScriptFunction":{"1":function(expressionsData, constantsData, variablesData){
-	return (!variablesData["nosliw_setting_persist"])||variablesData["nosliw_setting_modified"]==true?'inline':'none';
-} 
-
-}
-},{"scriptExpressions":{"1":{"definition":"?(nosliw_setting_persist)?==true?'inline':'none'",
+"scriptExpressionInAttributes":[{"scriptExpressions":{"1":{"definition":"?(nosliw_setting_persist)?==true?'inline':'none'",
 "variableNames":["nosliw_setting_persist"],
 "expressions":{}
 }
 },
-"uiId":"190",
+"uiId":"1402",
 "attribute":"style",
 "scriptFunction":function(scriptExpressionData){
 	return "display:"+scriptExpressionData["1"];
@@ -147,6 +131,22 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 ,
 "scriptExpressionScriptFunction":{"1":function(expressionsData, constantsData, variablesData){
 	return variablesData["nosliw_setting_persist"]==true?'inline':'none';
+} 
+
+}
+},{"scriptExpressions":{"1":{"definition":"(!?(nosliw_setting_persist)?)||?(nosliw_setting_modified)?==true?'inline':'none'",
+"variableNames":["nosliw_setting_modified","nosliw_setting_persist"],
+"expressions":{}
+}
+},
+"uiId":"1403",
+"attribute":"style",
+"scriptFunction":function(scriptExpressionData){
+	return "display:"+scriptExpressionData["1"];
+} 
+,
+"scriptExpressionScriptFunction":{"1":function(expressionsData, constantsData, variablesData){
+	return (!variablesData["nosliw_setting_persist"])||variablesData["nosliw_setting_modified"]==true?'inline':'none';
 } 
 
 }

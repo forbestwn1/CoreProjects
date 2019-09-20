@@ -66,8 +66,10 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	
 	var loc_getProcessNameByLifecycle = function(lifecycleName){ return node_basicUtility.buildNosliwFullName(lifecycleName);	};
 	
-	var loc_getNormalLiefCycleCallBackRequestRequest = function(lifecycleName, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getNormalLiefCycleCallBackRequestRequest", {}), undefined, request);
+	var loc_getNormalLiefCycleCallBackRequestRequest = function(lifecycleName, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getNormalLiefCycleCallBackRequestRequest", {}), handlers, request);
+		//clear backup state
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request)  }));
 		//start module 
 		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
 		//execute process defined in module by handler name 
@@ -75,45 +77,55 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		return out;
 	};
 	
+	var loc_clearBackupState = function(request){
+		//clear backup flag
+		loc_getModuleCore().setValue(node_CONSTANT.COMPONENT_VALUE_BACKUP, undefined);
+		//clear backup data
+		loc_state.clear(request); 
+	}
+	
 	//component lifecycle call back methods
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ActiveUIModuleRuntime", {}), undefined, request);
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			var stateData = loc_state.getStateValue(request);
-			if(stateData!=undefined)  loc_getModuleCore().setValue(node_CONSTANT.COMPONENT_VALUE_BACKUP, true);    //use backup mode
-			return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE, request);
-		}));
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			//clear backup flag
-			loc_getModuleCore().setValue(node_CONSTANT.COMPONENT_VALUE_BACKUP, undefined);
-			//clear backup data
-			loc_state.clear(); 
+			if(stateData!=undefined){
+				loc_getModuleCore().setValue(node_CONSTANT.COMPONENT_VALUE_BACKUP, true);    //use backup mode
+				//only call lifecycle, not process
+				return loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE, {
+					success : function(request){
+						loc_clearBackupState(request);
+					}
+				});
+			}
+			else{
+				//normal, call both lifecycle and process
+				return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE);
+			}
 		}));
 		return out;
 	};
 
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]= function(request){
-		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE, request);
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE, undefined, request);
 	};
 
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND] = function(request){
-		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND, request);
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND, undefined, request);
 	};
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME] = function(request){
 		//from active to suspended
-		loc_state.clear();   //remove backup state saved when into suspended
-		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME, request);
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME, undefined, request);
 	};
 
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){
-		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY, request);
+		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY, undefined, request);
 	};
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){
 		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE, request);
-		loc_componentCoreComplex.clearState();
 	};	
 
 	//component management interface object 

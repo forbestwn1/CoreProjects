@@ -7,6 +7,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_makeObjectWithType;
 	var node_createEventObject;
+	var node_basicUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -15,38 +16,6 @@ var packageObj = library;
 //so, data lost is not a big issue, the worst case is user start from beginning
 //the data is stored in UI side
 //state data has version information that store with state data
-var node_createStateBackupService1 = function(componentType, id, version, storeService){
-	
-	var loc_componentType = componentType;  
-	var loc_id = id;
-	var loc_version = version;   //component version
-	var loc_storeService = storeService;
-	
-	var loc_out = {
-			
-		getBackupData : function(){  
-			var storeData = loc_storeService.retrieveData(loc_componentType, loc_id);
-			if(storeData==undefined)   return;
-			loc_out.clearBackupData();  //clear backup data after retrieve
-			if(storeData.version!=loc_version)		return;   //when component version change, the data stored by previous component would not work
-			return storeData.data;
-		},
-		
-		saveBackupData : function(stateData){
-			var storeData = {
-				version : loc_version,
-				data : stateData
-			};
-			loc_storeService.saveData(loc_componentType, loc_id, storeData);  
-		},
-		
-		clearBackupData : function(){  
-			loc_storeService.clearData(loc_componentType, loc_id);  
-		}
-	};
-	return loc_out;
-};	
-
 //version: version of the component
 var node_createStateBackupService = function(componentType, id, version, storeService){
 	var loc_componentType = componentType;  
@@ -75,11 +44,17 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 	
 	//save state vlue to store
 	var loc_saveStateData = function(){
-		var storeData = {
-			version : loc_version,
-			data : loc_state.getStateValue(),
-		};
-		loc_storeService.saveData(loc_componentType, loc_id, storeData);  
+		var stateData = loc_state.getStateValue();
+		if(stateData==undefined){
+			loc_clearStateData();
+		}
+		else{
+			var storeData = {
+				version : loc_version,
+				data : stateData,
+			};
+			loc_storeService.saveData(loc_componentType, loc_id, storeData);  
+		}
 	};
 	
 	var loc_clearStateData = function(){  
@@ -129,11 +104,11 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 
 		//set state value by path
 		setValue : function(path, value, request){
+			if(node_basicUtility.isStringEmpty(path))  loc_state.setStateValue(value, request);
+			else	loc_state.setValue(path, value, request);
 			var rootRequest = request.getRootRequest();
 			var requestId = rootRequest.getId();
 			if(loc_requesters[requestId]==undefined){
-				loc_state.setValue(path, value, request);
-				
 				loc_requesters[requestId] = rootRequest;
 				rootRequest.registerEventListener(loc_eventObject, function(e, data, req){
 					if(e==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
@@ -147,7 +122,7 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 		},
 		
 		//clear state
-		clear : function(request){		loc_state.clear();		},
+		clear : function(request){		loc_out.setStateValue(undefined, request);		},
 		
 		//create child state by path
 		createChildState : function(path){	return loc_createChildState(loc_out, path); },
@@ -223,6 +198,8 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createStateBackupService", node_createStateBackupService); 

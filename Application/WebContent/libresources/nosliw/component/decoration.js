@@ -62,7 +62,7 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		getState : function(){  return loc_stateValueByName;   },
 		setStateValue : function(name, value){  loc_stateValueByName[name] = value;	},
 
-		getValueFromCore : function(name){  return getComponentCore().getValue(name); },
+		getValueFromCore : function(name){  return loc_componentCore.getValue(name); },
 		
 		retrieveState : function(request){   
 			loc_stateValueByName = loc_state.getStateValue(request);
