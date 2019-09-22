@@ -148,6 +148,15 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		getExecuteProcessResourceRequest : function(processId, input, handlers, request){  return loc_getExecuteModuleProcessByNameRequest(processId, extraInput, handlers, request);  },
 	};
 
+	var loc_lifecycleTaskCallback = {
+		startTask : function(){
+			
+		},
+		endTask : function(){
+			
+		}
+	};
+	
 	var loc_out = {
 		
 		prv_getInitRequest : function(handlers, request){
@@ -167,7 +176,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	
 	loc_init(uiModuleCore, configure, componentDecorationInfos, rootView, state, request);
 	
-	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_out);
+	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
 	//listen to lifecycle event and update lifecycle status
 	node_getComponentLifecycleInterface(loc_out).registerEventListener(loc_eventListener, function(eventName, eventData, request){
 		if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){

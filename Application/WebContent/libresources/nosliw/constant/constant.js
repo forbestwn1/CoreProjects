@@ -105,7 +105,6 @@ var node_CONSTANT=
 	  "LIFECYCLE_COMPONENT_TRANSIT_RESUME" : "SUSPENDED_ACTIVE",
 	  "LIFECYCLE_COMPONENT_TRANSIT_RESUME_REVERSE" : "_SUSPENDED_ACTIVE",
 
-	  
 	  //the requester type
 	  "REQUESTER_TYPE_UITAG" : "uiTag",						//requester is a ui tag
 	  "REQUESTER_TYPE_SERVICE" : "service",					//requester is from service

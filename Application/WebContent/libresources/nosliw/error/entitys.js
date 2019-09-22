@@ -12,6 +12,19 @@ var node_ServiceData = function(code, message, data){
 	this.data = data;
 };
 
+var node_createErrorData = function(code, message, data){
+	this.code = code;
+	this.message = message;
+	this.data = data;
+	
+	var loc_out = {
+			
+	}
+	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_ERROR);
+};
+
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data

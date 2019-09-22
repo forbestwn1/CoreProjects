@@ -38,8 +38,8 @@ var INTERFACENAME = "componentLifecycle";
 /*
  * utility functions to build lifecycle object
  */
-var node_makeObjectWithComponentLifecycle = function(baseObject, lifecycleCallback, thisContext){
-	return node_buildInterface(baseObject, INTERFACENAME, loc_createComponentLifecycle(thisContext==undefined?baseObject:thisContext, lifecycleCallback));
+var node_makeObjectWithComponentLifecycle = function(baseObject, lifecycleCallback, taskCallback, thisContext){
+	return node_buildInterface(baseObject, INTERFACENAME, loc_createComponentLifecycle(thisContext==undefined?baseObject:thisContext, lifecycleCallback, taskCallback));
 };
 	
 var node_getComponentLifecycleInterface = function(baseObject){
@@ -47,7 +47,7 @@ var node_getComponentLifecycleInterface = function(baseObject){
 };
 
 //lifecycle interface
-var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
+var loc_createComponentLifecycle = function(thisContext, lifecycleCallback, taskCallback){
 	//state machine state definition data
 	var loc_stateMachineDef;
 	
@@ -58,6 +58,7 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 	
 	//life cycle call back including all call back method
 	var loc_lifecycleCallback = lifecycleCallback==undefined? {}:lifecycleCallback;
+	var loc_taskCallback = taskCallback;
 	
 	var loc_stateMachine;
 
@@ -107,7 +108,7 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 		_.each(loc_commands, function(commandInfo, i){      loc_stateMachineDef.addCommand(commandInfo);      });
 		
 		//build statemachine 
-		loc_stateMachine = node_createStateMachine(loc_stateMachineDef, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_thisContext);
+		loc_stateMachine = node_createStateMachine(loc_stateMachineDef, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_taskCallback, loc_thisContext);
 	};
 
 	var loc_out = {

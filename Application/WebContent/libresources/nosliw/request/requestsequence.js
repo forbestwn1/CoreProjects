@@ -119,7 +119,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 					else if(eventName==node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_ERROR){
 						loc_out.errorFinish(eventData, loc_out);
 					}
-					if(eventName==node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION){
+					else if(eventName==node_CONSTANT.REQUEST_EVENT_INDIVIDUAL_EXCEPTION){
 						loc_out.exceptionFinish(eventData, loc_out);
 					}
 					requestInfo.unregisterIndividualEventListener(listener);

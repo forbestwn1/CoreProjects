@@ -171,7 +171,16 @@ var node_createComponentCoreComplex = function(configure, componentEnv, state){
 				layer.setLifeCycleStatus(status);	
 			});
 		},
-
+		startLifecycleTask : function(){
+			_.each(loc_layers, function(layer, i){
+				if(layer.startLifecycleTask!=undefined) layer.startLifecycleTask();
+			});
+		},
+		endLifecycleTask : function(){
+			_.each(loc_layers, function(layer, i){
+				if(layer.endLifecycleTask!=undefined) layer.endLifecycleTask();
+			});
+		},
 	};
 	return loc_out;
 };

@@ -42,6 +42,10 @@ var node_buildDecorationPlugInObject = function(rawPluginObj){
 		},
 		
 		getLifeCycleRequest : function(transitName, handlers, request){	return loc_rawPluginObj.getLifeCycleRequest==undefined?undefined:loc_rawPluginObj.getLifeCycleRequest(transitName, handlers, request);},
+		setLifeCycleStatus : function(status){},
+		
+		startLifecycleTask : function(){},
+		endLifecycleTask : function(){},
 	};
 	
 	return loc_out;
@@ -79,6 +83,9 @@ var node_buildComponentCore = function(rawComponentCore){
 
 		registerValueChangeEventListener : function(listener, handler, thisContext){   },
 		unregisterValueChangeEventListener : function(listener){ },
+		
+		startLifecycleTask : function(){},
+		endLifecycleTask : function(){},
 	};
 	
 	return _.extend({}, interfaceDef, rawComponentCore);

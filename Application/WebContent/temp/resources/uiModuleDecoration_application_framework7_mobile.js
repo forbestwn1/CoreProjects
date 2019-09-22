@@ -30,6 +30,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_applicationContainerView;
 	var loc_framework7View;
 	
+	var loc_stateDataFroRollBack = [];
+	
 	var loc_getCurrentUIId = function(){ return  loc_getUIStack()[loc_getUIStack().length-1];  };
 	
 	var loc_getUIStack = function(){ 
@@ -87,6 +89,44 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		}
 	};
 
+	var loc_getGetStateDataRequest = function(handlers, request){	return node_createServiceRequestInfoSimple(undefined, function(request){  return loc_gate.getState();	}, handlers, request);	};
+	
+	var loc_getRestoreStateDataRequest = function(stateData, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			loc_gate.setState(stateData);
+			var uiStack = loc_getUIStack();
+			loc_clearUIStack();
+			_.each(uiStack, function(stackEle, index){
+				loc_framework7View.router.navigate(loc_getRoutePathByUiId(stackEle));
+				loc_getUIStack().push(stackEle);
+			});
+			
+			loc_updatePageStatus();
+		}));
+		return out;
+	};
+
+	var loc_getSaveStateDataForRollBackRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_getGetStateDataRequest({
+			success : function(request, stateData){
+				//save state data first
+				loc_stateDataFroRollBack.push(stateData);
+			}
+		}));
+		return out;
+	};
+
+	var loc_getRestoreStateDataForRollBackRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var stateData = loc_stateDataFroRollBack.pop();
+			return loc_getRestoreStateDataRequest(stateData);
+		}));
+		return out;
+	};
+
 	var loc_out = {
 			
 		processComponentCoreEvent : function(eventName, eventData, request){
@@ -137,10 +177,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		},
 		
 		getLifeCycleRequest : function(transitName, handlers, request){
-			var out;
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
-				out = node_createServiceRequestInfoCommon(undefined, handlers, request);
-				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
+				var initRequest = node_createServiceRequestInfoCommon(undefined, handlers, request);
+				initRequest.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 					//append ui view to container
 					_.each(loc_uiModule.getUIs(), function(ui, index){
 						var uiPageContainer = $("<div class='page stacked' data-name="+ui.getName()+"/>"); 
@@ -166,43 +206,45 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 					loc_framework7View = loc_framework7App.views.create(loc_applicationContainerView, viewConfigure);
 
-					out.successFinish();
+					initRequest.successFinish();
 				}));
+				out.addRequest(initRequest);
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE){
+				out.addRequest(loc_getSaveStateDataForRollBackRequest());
 				if(loc_gate.getValueFromCore(node_CONSTANT.COMPONENT_VALUE_BACKUP)==true){
 					//get state data from store
-					out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-						loc_gate.retrieveState(request);
-						var uiStack = loc_getUIStack();
-						loc_clearUIStack();
-						_.each(uiStack, function(stackEle, index){
-							loc_framework7View.router.navigate(loc_getRoutePathByUiId(stackEle));
-							loc_getUIStack().push(stackEle);
-						});
-						
-						loc_updatePageStatus();
+						return loc_getRestoreStateDataRequest(loc_gate.retrieveState(request));
 					}));
 				}
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){ 
+				out.addRequest(loc_getSaveStateDataForRollBackRequest());
 				loc_framework7View.destroy();
 				loc_applicationContainerView.remove();
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND){  
+				out.addRequest(loc_getSaveStateDataForRollBackRequest());
 				//save state data to store
-				out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					loc_gate.saveState(request);
+				out.addRequest(loc_getGetStateDataRequest({
+					success : function(request, stateData){
+						loc_gate.saveState(stateData, request);
+					}
 				}));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
+				out.addRequest(loc_getSaveStateDataForRollBackRequest());
 				loc_framework7View.router.clearPreviousHistory();
+			}
+			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE){
+				out.addRequest(loc_getRestoreStateDataForRollBackRequest());
 			}
 			return out;
 		},
 		
+		startLifecycleTask : function(){  loc_stateDataFroRollBack = [];  },
+		endLifecycleTask : function(){    loc_stateDataFroRollBack = [];  },
 	};
 	return loc_out;
 }

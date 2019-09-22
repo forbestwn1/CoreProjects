@@ -114,7 +114,100 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 			loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, undefined, request);
 		});
 	};
+
+	var loc_getGetStateDataRequest = function(handlers, request){
+		out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module get state data"), handlers, request);
+
+		var stateData = {};
+		//get state data for ui data
+		var uiDataRequest = node_createServiceRequestInfoSet(undefined, {
+			success : function(request, resultSet){
+				var uiData = {};
+				_.each(resultSet.getResults(), function(uiDataEle, uiId){
+					uiData[uiId] = uiDataEle;
+				});
+				stateData.uiData = uiData;
+			}
+		}, handlers, request);
+		_.each(loc_out.getUIs(), function(ui, index){	uiDataRequest.addRequest(ui.getId(), ui.getGetStateRequest());	});
+		out.addRequest(uiDataRequest);
+		
+		//get state data for context data
+		out.addRequest(loc_out.prv_module.contextDataSet.getGetDataSetValueRequest({
+			success : function(request, contextDataSet){
+				stateData.context = contextDataSet;
+			}
+		}));
+		
+		//return state data
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){return stateData;}));
+		return out;
+	};
+
+	var loc_getBackupStateRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module backup state"), handlers, request);
+		out.addRequest(loc_getGetStateDataRequest({
+			success : function(request, stateData){
+				loc_state.setValue("data", stateData, request);
+			}
+		}));
+		return out;
+	};
 	
+	var loc_getRestoreStateDataRequest = function(stateData, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module restore state data"), handlers, request);
+
+		//ui data
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var uiData = stateData.uiData;
+			var updateUIStateRequest = node_createServiceRequestInfoSequence(undefined);
+			_.each(loc_out.getUIs(), function(ui, index){
+				updateUIStateRequest.addRequest(ui.getSetStateRequest(uiData[ui.getId()]));	
+			});
+			return updateUIStateRequest;
+		}));
+
+		//context data
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var backupContextData = stateData.context;
+			var updateContextStateRequest = node_createServiceRequestInfoSequence(undefined);
+			_.each(backupContextData, function(contextData, name){
+				updateContextStateRequest.addRequest(loc_out.prv_module.contextDataSet.getSetDataValueRequest(name, contextData));
+			});
+			return updateContextStateRequest;
+		}));
+		return out;
+	};
+
+	var loc_getRestoreStateRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module store state"), handlers, request);
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var stateData = loc_state.getValue("data", request);
+			return loc_getRestoreStateDataRequest(stateData);
+		}));
+		return out;
+	};
+	
+	var loc_getSaveStateDataForRollBackRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_getGetStateDataRequest({
+			success : function(request, stateData){
+				//save state data first
+				loc_out.prv_module.stateDataForRollBack.push(stateData);
+			}
+		}));
+		return out;
+	};
+	
+	var loc_getRestoreStateDataForRollBackRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var stateData = loc_out.prv_module.stateDataForRollBack.pop();
+			return loc_getRestoreStateDataRequest(stateData);
+		}));
+		return out;
+	};
+
 	var loc_out = {
 		prv_module : {
 			id : id,              //
@@ -128,6 +221,7 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 			ui : {},
 			
 			valueByName : {},
+			stateDataForRollBack : []
 		},
 		
 		prv_addUI : function(ui){
@@ -184,75 +278,55 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 		getPart : function(partId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, partId); },
 
 		getLifeCycleRequest : function(transitName, handlers, request){
-			var out;
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getGetStateDataRequest({
+				success : function(request, stateData){
+					//save state data first
+					loc_out.prv_module.stateDataForRollBack.push(stateData);
+				}
+			}));
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
 				//reset context io
-				out = loc_getInitIOContextRequest(handlers, request);
+				out.addRequest(loc_getInitIOContextRequest());
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE){
+				out.addRequest(loc_getSaveStateDataForRollBackRequest());
 				if(loc_out.getValue(node_CONSTANT.COMPONENT_VALUE_BACKUP)==true){
 					//active through back up
-					out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module resume"), handlers, request);
-
-					//ui data
-					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-						var uiData = loc_state.getValue("uiData", request);
-						var updateUIStateRequest = node_createServiceRequestInfoSequence(undefined);
-						_.each(loc_out.getUIs(), function(ui, index){
-							updateUIStateRequest.addRequest(ui.getSetStateRequest(uiData[ui.getId()]));	
-						});
-						return updateUIStateRequest;
-					}));
-
-					//context data
-					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-						var backupContextData = loc_state.getValue("context", request);
-						var updateContextStateRequest = node_createServiceRequestInfoSequence(undefined);
-						_.each(backupContextData, function(contextData, name){
-							updateContextStateRequest.addRequest(loc_out.prv_module.contextDataSet.getSetDataValueRequest(name, contextData));
-						});
-						return updateContextStateRequest;
-					}));
+					out.addRequest(loc_getRestoreStateRequest());
 				}
 				else{
 					//active through normal way
 				}
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
+				out.addRequest(loc_getSaveStateDataForRollBackRequest());
 				//reset context io
-				out = loc_getInitIOContextRequest(handlers, request);
+				out.addRequest(loc_getInitIOContextRequest(handlers, request));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND){
-				out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module suspend"), handlers, request);
-
-				//back up ui data
-				var uiDataRequest = node_createServiceRequestInfoSet(undefined, {
-					success : function(request, resultSet){
-						var uiData = {};
-						_.each(resultSet.getResults(), function(uiDataEle, uiId){
-							uiData[uiId] = uiDataEle;
-						});
-						loc_state.setValue("uiData", uiData, request);
-					}
-				}, handlers, request);
-				_.each(loc_out.getUIs(), function(ui, index){	uiDataRequest.addRequest(ui.getId(), ui.getGetStateRequest());	});
-				out.addRequest(uiDataRequest);
-				
-				//backup context data
-				out.addRequest(loc_out.prv_module.contextDataSet.getGetDataSetValueRequest({
-					success : function(request, contextDataSet){
-						loc_state.setValue("context", contextDataSet, request);
-					}
-				}));
+				out.addRequest(loc_getSaveStateDataForRollBackRequest());
+				out.addRequest(loc_getBackupStateRequest(handlers, request));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME){
+				out.addRequest(loc_getSaveStateDataForRollBackRequest());
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
-				out = node_createServiceRequestInfoSimple(undefined, function(request){loc_destroy(request);}, handlers, request);
+				out.addRequest(loc_getSaveStateDataForRollBackRequest());
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){loc_destroy(request);}, handlers, request));
+			}
+			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE){
+				out.addRequest(loc_getRestoreStateDataForRollBackRequest());
 			}
 			return out;
 		},
-		setLifeCycleStatus : function(status){   loc_out.prv_module.lifecycleStatus = status;    },
+		setLifeCycleStatus : function(status){
+			//lifecycle transit finish
+			loc_out.prv_module.lifecycleStatus = status;
+		},
+		
+		startLifecycleTask : function(){  loc_out.prv_module.stateDataForRollBack = [];  },
+		endLifecycleTask : function(){    loc_out.prv_module.stateDataForRollBack = [];  },
 	};
 
 	loc_init();

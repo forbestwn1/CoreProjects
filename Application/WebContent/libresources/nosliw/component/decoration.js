@@ -61,17 +61,13 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		getStateValue : function(name){  return loc_stateValueByName[name];	},
 		getState : function(){  return loc_stateValueByName;   },
 		setStateValue : function(name, value){  loc_stateValueByName[name] = value;	},
+		setState : function(state){   loc_stateValueByName = state==undefined? {} : state;	},
 
 		getValueFromCore : function(name){  return loc_componentCore.getValue(name); },
-		
-		retrieveState : function(request){   
-			loc_stateValueByName = loc_state.getStateValue(request);
-			if(loc_stateValueByName == undefined)   loc_stateValueByName = {};   
-		},
-		
-		saveState : function(request){
-			loc_state.setStateValue(loc_stateValueByName, request);
-		},
+
+		//state operation
+		retrieveState : function(request){   return loc_state.getStateValue(request); },
+		saveState : function(value, request){	loc_state.setStateValue(value, request);	},
 		
 		getLifecycleStatus : function(){   return loc_lifecycleStatus;    },
 		

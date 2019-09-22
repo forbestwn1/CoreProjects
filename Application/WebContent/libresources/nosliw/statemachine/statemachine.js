@@ -44,21 +44,26 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 				}
 				else if (eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION || eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
 					loc_currentNext = loc_currentNext - 2;
-					loc_rollBack(request);
-					loc_stateMachine.prv_finishTask();
-					//finish
-					loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, eventData, request);
+					node_requestServiceProcessor.processRequest(loc_getRollBackRequest({
+						success : function(request){
+							loc_stateMachine.prv_finishTask();
+							//finish
+							loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, eventData, request);
+						}
+					}, request));
 				}
 			});
 			loc_stateMachine.prv_startTransit(loc_nexts[loc_currentNext], request);
 		}
 	};
 	
-	var loc_rollBack = function(request){
+	var loc_getRollBackRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request); 
 		while(loc_currentNext>=0){
-			loc_stateMachine.prv_rollBack(loc_nexts[loc_currentNext], request);
+			out.addRequest(loc_stateMachine.prv_getRollBackRequest(loc_nexts[loc_currentNext], request));
 			loc_currentNext--;
 		};
+		return out;
 	};
 	
 	var loc_trigueEvent = function(eventName, eventData, request){	loc_eventObj.triggerEvent(eventName, eventData, request);	};
@@ -104,10 +109,11 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 	return loc_out;
 };
 
-var node_createStateMachine = function(stateDef, initState, thisContext){
+var node_createStateMachine = function(stateDef, initState, taskCallback, thisContext){
 
 	//all the state definition
 	var loc_stateDef = stateDef;
+	var loc_taskCallback = taskCallback;
 	
 	var loc_thisContext = thisContext;
 
@@ -171,14 +177,32 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		var entityType = node_getObjectType(result);
 		if(node_CONSTANT.TYPEDOBJECT_TYPE_ERROR==entityType){
 			//failed
-			loc_failTransit(request);
+			node_requestServiceProcessor.processRequest(loc_getRollBackRequest(loc_inTransit, {
+				success : function(request){
+					loc_failTransit(request);
+				}
+			}), {
+				attchedTo : request
+			});
 			return;
 		}
 		else if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
 			var transitRequest = node_createServiceRequestInfoSequence(undefined, {
 				success : function(request){			},
-				error : function(request, serviceData){		loc_failTransit(new node_RequestResult(node_CONSTANT.REQUEST_FINISHTYPE_ERROR, serviceData), request);		},
-				exception : function(request, serviceData){	loc_failTransit(new node_RequestResult(node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION, serviceData), request);		}
+				error : function(request, serviceData){	
+					node_requestServiceProcessor.processRequest(loc_getRollBackRequest(loc_inTransit), {
+						attchedTo : request
+					});
+//					loc_rollBack(loc_inTransit, request);
+//					loc_failTransit(new node_RequestResult(node_CONSTANT.REQUEST_FINISHTYPE_ERROR, serviceData), request);		
+				},
+				exception : function(request, serviceData){	
+					node_requestServiceProcessor.processRequest(loc_getRollBackRequest(loc_inTransit), {
+						attchedTo : request
+					});
+//					loc_rollBack(loc_inTransit, request);
+//					loc_failTransit(new node_RequestResult(node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION, serviceData), request);		
+				}
 			});
 
 			//if return request, then build wrapper request
@@ -187,7 +211,13 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 			transitRequest.registerEventListener(undefined, function(eventName, eventData){
 				if(loc_finishTransit==false){
 					if(eventName==node_CONSTANT.REQUEST_EVENT_DONE){
-						loc_successTransit(request);
+						var trainsitResult = transitRequest.getResult();
+						if(trainsitResult.type==node_CONSTANT.REQUEST_FINISHTYPE_SUCCESS){
+							loc_successTransit(request);
+						}
+						else{
+							loc_failTransit(request);
+						}
 					}
 				}
 			});
@@ -210,32 +240,56 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, inTransit, request);
 	};
 
-	var loc_failTransit = function(failResult, request){
+	var loc_failTransit = function(request){
 		var inTransit = loc_inTransit;
-		loc_rollBack(loc_inTransit, request);
+//		loc_rollBack(loc_inTransit, request);
 		loc_inTransit = undefined;
-		loc_finishTransit = true;
-		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, failResult, request);
-	};
-	
-	var loc_rollBack = function(transitInfo, request){
-		var reverseCallBack = loc_stateDef.getStateInfo(transitInfo.from).nextStates[transitInfo.to].reverseCallBack;
-		if(reverseCallBack!=undefined)	reverseCallBack.apply(loc_thisContext, request);
 		loc_currentState = transitInfo.from;
+		loc_finishTransit = true;
+		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, inTransit, request);
 	};
+
+	var loc_getRollBackRequest = function(transitInfo, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		var reverseCallBack = loc_stateDef.getStateInfo(transitInfo.from).nextStates[transitInfo.to].reverseCallBack;
+		if(reverseCallBack!=undefined){
+			var rollbackResult = reverseCallBack.apply(loc_thisContext, request);
+			var entityType = node_getObjectType(rollbackResult);
+			if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
+				out.addRequest(rollbackResult);
+			}
+		}
+		return out;
+	};
+
+//	var loc_rollBack = function(transitInfo, request){
+//		var reverseCallBack = loc_stateDef.getStateInfo(transitInfo.from).nextStates[transitInfo.to].reverseCallBack;
+//		if(reverseCallBack!=undefined){
+//			var rollbackResult = reverseCallBack.apply(loc_thisContext, request);
+//			var entityType = node_getObjectType(rollbackResult);
+//			if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
+//				node_requestServiceProcessor.processRequest(rollbackResult, {
+//					attchedTo : request
+//				});
+//			}
+//		}
+//	};
 	
 	var loc_out = {
 			
 		prv_startTransit : function(next, request){  loc_startTransit(next, request);    },	
-		prv_rollBack : function(next, request){  loc_rollBack(new node_TransitInfo(next, loc_currentState), request);    },
+		prv_getRollBackRequest : function(next, request){  return loc_getRollBackRequest(new node_TransitInfo(next, loc_currentState), request);    },
 
 		prv_transitSuccess : function(request){   loc_successTransit(request);	},
-		prv_transitFail : function(failResult, request){   loc_failTransit(failResult, request);	},
+		prv_transitFail : function(request){	loc_processStatuesResult(node_createErrorData(), request);	},
 
 		prv_registerEventListener : function(listener, handler, thisContext){	return loc_eventObj.registerListener(undefined, listener, handler, thisContext); },
 		prv_unregisterEventListener : function(listener){	return loc_eventObj.unregister(listener); },
 
-		prv_finishTask : function(){  loc_currentTask = undefined;  },
+		prv_finishTask : function(){  
+			loc_currentTask = undefined;
+			if(loc_taskCallback.endTask!=undefined)    loc_taskCallback.endTask();
+		},
 
 		getCurrentState : function(){	return loc_currentState;	},
 		getAllStates : function(){  return loc_stateDef.getAllStates();   },
@@ -259,6 +313,8 @@ var node_createStateMachine = function(stateDef, initState, thisContext){
 				}
 			}
 			loc_currentTask = node_createStateMachineTask(nexts, loc_out);
+			if(loc_taskCallback.startTask!=undefined)    loc_taskCallback.startTask();
+			
 			return loc_currentTask;
 		},
 		
