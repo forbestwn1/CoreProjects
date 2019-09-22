@@ -9,6 +9,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
 	var node_createServiceRequestInfoSet;
+	var node_createServiceRequestInfoError;
 	var node_ServiceInfo;
 	var node_createEventObject;
 	var node_makeObjectWithLifecycle;
@@ -294,6 +295,7 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 				if(loc_out.getValue(node_CONSTANT.COMPONENT_VALUE_BACKUP)==true){
 					//active through back up
 					out.addRequest(loc_getRestoreStateRequest());
+					out.addRequest(node_createServiceRequestInfoError());
 				}
 				else{
 					//active through normal way
@@ -348,6 +350,7 @@ nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoError", function(){node_createServiceRequestInfoError = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});

@@ -149,12 +149,8 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	};
 
 	var loc_lifecycleTaskCallback = {
-		startTask : function(){
-			
-		},
-		endTask : function(){
-			
-		}
+		startTask : function(){		loc_componentCoreComplex.startLifecycleTask();	},
+		endTask : function(){		loc_componentCoreComplex.endLifecycleTask();	}
 	};
 	
 	var loc_out = {

@@ -13,7 +13,8 @@ var packageObj = library;
 	var node_getObjectType;
 	var node_requestServiceProcessor;
 	var node_buildDecorationPlugInObject;
-
+	var node_basicUtility;
+	
 //*******************************************   Start Node Definition  ************************************** 	
 
 //component decoration
@@ -34,7 +35,7 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 	
 	//temp value, not use as state
 	var loc_tempValueByName = {};
-	//store value that would be used as state
+	//store value that would be used as state, simple object
 	var loc_stateValueByName = {};
 	
 	var loc_eventSource = node_createEventObject();
@@ -44,6 +45,9 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 	var loc_valueChangeEventListener = node_createEventObject();
 
 	var loc_componentCore = componentCore;
+
+	//state data stack for purpose of roll back
+	var loc_stateDataFroRollBack = [];
 	
 	//gate interface for decoration to communicate with external world
 	var loc_gateForDecoration = {
@@ -63,11 +67,26 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		setStateValue : function(name, value){  loc_stateValueByName[name] = value;	},
 		setState : function(state){   loc_stateValueByName = state==undefined? {} : state;	},
 
+		getSaveStateDataForRollBackRequest : function(handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_stateDataFroRollBack.push(node_basicUtility.clone(loc_stateValueByName));
+				return loc_stateValueByName;
+			}, handlers, request);
+		},
+		
+		getRestoreStateDataForRollBackRequest : function(handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				var stateData =  loc_stateDataFroRollBack.pop();
+				loc_stateValueByName = stateData;
+				return loc_stateValueByName;
+			}, handlers, request);
+		},
+
 		getValueFromCore : function(name){  return loc_componentCore.getValue(name); },
 
 		//state operation
 		retrieveState : function(request){   return loc_state.getStateValue(request); },
-		saveState : function(value, request){	loc_state.setStateValue(value, request);	},
+		saveState : function(request){	loc_state.setStateValue(loc_stateValueByName, request);	},
 		
 		getLifecycleStatus : function(){   return loc_lifecycleStatus;    },
 		
@@ -106,6 +125,9 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		//component decoration lifecycle call back
 		getLifeCycleRequest : function(transitName, handlers, request){  return loc_plugin.getLifeCycleRequest(transitName, handlers, request);	},
 		setLifeCycleStatus : function(status){   loc_lifecycleStatus = status;   },
+
+		startLifecycleTask : function(){  loc_stateDataFroRollBack = [];  },
+		endLifecycleTask : function(){    loc_stateDataFroRollBack = [];  },
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION);
@@ -126,6 +148,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("component.buildDecorationPlugInObject", function(){node_buildDecorationPlugInObject = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreDecoration", node_createComponentCoreDecoration); 

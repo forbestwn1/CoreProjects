@@ -30,8 +30,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_applicationContainerView;
 	var loc_framework7View;
 	
-	var loc_stateDataFroRollBack = [];
-	
 	var loc_getCurrentUIId = function(){ return  loc_getUIStack()[loc_getUIStack().length-1];  };
 	
 	var loc_getUIStack = function(){ 
@@ -89,8 +87,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		}
 	};
 
-	var loc_getGetStateDataRequest = function(handlers, request){	return node_createServiceRequestInfoSimple(undefined, function(request){  return loc_gate.getState();	}, handlers, request);	};
-	
 	var loc_getRestoreStateDataRequest = function(stateData, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
@@ -107,22 +103,13 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		return out;
 	};
 
-	var loc_getSaveStateDataForRollBackRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(loc_getGetStateDataRequest({
-			success : function(request, stateData){
-				//save state data first
-				loc_stateDataFroRollBack.push(stateData);
-			}
-		}));
-		return out;
-	};
 
 	var loc_getRestoreStateDataForRollBackRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			var stateData = loc_stateDataFroRollBack.pop();
-			return loc_getRestoreStateDataRequest(stateData);
+		out.addRequest(loc_gate.getRestoreStateDataForRollBackRequest({
+			success : function(request, stateData){
+				return loc_getRestoreStateDataRequest(stateData);
+			} 
 		}));
 		return out;
 	};
@@ -211,7 +198,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				out.addRequest(initRequest);
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE){
-				out.addRequest(loc_getSaveStateDataForRollBackRequest());
+				out.addRequest(loc_gate.getSaveStateDataForRollBackRequest());
 				if(loc_gate.getValueFromCore(node_CONSTANT.COMPONENT_VALUE_BACKUP)==true){
 					//get state data from store
 					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
@@ -220,21 +207,19 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				}
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){ 
-				out.addRequest(loc_getSaveStateDataForRollBackRequest());
+				out.addRequest(loc_gate.getSaveStateDataForRollBackRequest());
 				loc_framework7View.destroy();
 				loc_applicationContainerView.remove();
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND){  
-				out.addRequest(loc_getSaveStateDataForRollBackRequest());
+				out.addRequest(loc_gate.getSaveStateDataForRollBackRequest());
 				//save state data to store
-				out.addRequest(loc_getGetStateDataRequest({
-					success : function(request, stateData){
-						loc_gate.saveState(stateData, request);
-					}
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					loc_gate.saveState(request);
 				}));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
-				out.addRequest(loc_getSaveStateDataForRollBackRequest());
+				out.addRequest(loc_gate.getSaveStateDataForRollBackRequest());
 				loc_framework7View.router.clearPreviousHistory();
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE){
@@ -243,8 +228,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			return out;
 		},
 		
-		startLifecycleTask : function(){  loc_stateDataFroRollBack = [];  },
-		endLifecycleTask : function(){    loc_stateDataFroRollBack = [];  },
 	};
 	return loc_out;
 }

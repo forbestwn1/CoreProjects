@@ -242,9 +242,8 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 
 	var loc_failTransit = function(request){
 		var inTransit = loc_inTransit;
-//		loc_rollBack(loc_inTransit, request);
 		loc_inTransit = undefined;
-		loc_currentState = transitInfo.from;
+		loc_currentState = inTransit.from;
 		loc_finishTransit = true;
 		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, inTransit, request);
 	};
@@ -262,19 +261,6 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		return out;
 	};
 
-//	var loc_rollBack = function(transitInfo, request){
-//		var reverseCallBack = loc_stateDef.getStateInfo(transitInfo.from).nextStates[transitInfo.to].reverseCallBack;
-//		if(reverseCallBack!=undefined){
-//			var rollbackResult = reverseCallBack.apply(loc_thisContext, request);
-//			var entityType = node_getObjectType(rollbackResult);
-//			if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
-//				node_requestServiceProcessor.processRequest(rollbackResult, {
-//					attchedTo : request
-//				});
-//			}
-//		}
-//	};
-	
 	var loc_out = {
 			
 		prv_startTransit : function(next, request){  loc_startTransit(next, request);    },	

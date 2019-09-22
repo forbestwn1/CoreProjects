@@ -101,9 +101,11 @@ var node_basicUtility =
 			catch(e){
 				return value.toString();
 			}
-		}
+		},
 		
-		
+		clone : function(src) {
+			return JSON.parse(JSON.stringify(src));
+		}		
 };
 
 //*******************************************   End Node Definition  ************************************** 	
