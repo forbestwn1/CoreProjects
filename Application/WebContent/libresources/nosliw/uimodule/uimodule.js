@@ -295,6 +295,7 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 				if(loc_out.getValue(node_CONSTANT.COMPONENT_VALUE_BACKUP)==true){
 					//active through back up
 					out.addRequest(loc_getRestoreStateRequest());
+					var kkkk = bbbb++;
 					out.addRequest(node_createServiceRequestInfoError());
 				}
 				else{

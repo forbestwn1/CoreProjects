@@ -35,77 +35,55 @@
 
 <script>
 
+//when nosliw active
 $(document).on("nosliwActive", function(){
-	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
-	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	var node_getStoreService = nosliw.getNodeData("component.getStoreService");
+	var node_createDebugTool = nosliw.getNodeData("component.debug.createDebugTool");
+	var node_createModuleConfigure = nosliw.getNodeData("uimodule.createModuleConfigure");
+	var node_createRequestStatusIndicatorUI = nosliw.getNodeData("request.ui.createRequestStatusIndicatorUI");
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
 	var node_appDataService = nosliw.getNodeData("uiapp.appDataService");
-	var node_storeService = nosliw.getNodeData("uiapp.storeService");
-	var node_createTypicalConfigure = nosliw.getNodeData("uiapp.createTypicalConfigure");
-	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
-	var node_createAppDecoration = nosliw.getNodeData("uiapp.createAppDecoration");
-	var node_createComponentLifeCycleDebugView = nosliw.getNodeData("component.createComponentLifeCycleDebugView");
-	var node_createComponentDataView = nosliw.getNodeData("component.createComponentDataView");
-	var node_createComponentEventView = nosliw.getNodeData("component.createComponentEventView");
-	var node_createComponentResetView = nosliw.getNodeData("component.createComponentResetView");
-	
-	var loc_appId;
-	var loc_appRuntime;
 
-	var requestProcessor = nosliw.runtime.getRequestProcessor();
-	requestProcessor.registerEventListener(undefined, function(eventName, requestId){
-		if(eventName==node_CONSTANT.EVENT_REQUESTPROCESS_START){
-			framework7App.preloader.show();
-		}
-		else if(eventName==node_CONSTANT.EVENT_REQUESTPROCESS_DONE){
-			framework7App.preloader.hide();
-		}
-	});
-	
-	
-    // Our initialization code here
-	var currentSearchString = window.location.search;
-	var appEntryId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+	var parms = node_basicUtility.getParmsInUrl();
 
 	var framework7App = new Framework7({
 		  // App root element
-		  root: $("#appModuleDiv").get(),
+		  root: $("#moduleDiv").get(),
 		  name: 'My App',
 		  id: 'com.myapp.test',
 		  panel: {
 			    swipe: 'both',
 		  },		
 	});
-	var configure = node_createTypicalConfigure($('#appModuleDiv').get(), $('#settingModuleDiv').get(), node_appDataService, node_storeService, framework7App);
-	
-	var loc_debugLifecycleView = node_createComponentLifeCycleDebugView();
-	$('#lifecycleDebug').append(loc_debugLifecycleView.getView());
-	
-	var loc_debugDataView = node_createComponentDataView();
-	$('#dataDebug').append(loc_debugDataView.getView());
-
-	var loc_debugEventView = node_createComponentEventView();
-	$('#eventDebug').append(loc_debugEventView.getView());
-
-	
-	var loc_debugResetView = node_createComponentResetView(function(){
-		nosliw.runtime.getUIAppService().executeGetUIAppEntryRuntimeRequest(appEntryId, appEntryId, configure, undefined,
+		
+	var configure = node_createModuleConfigure(
+			"application", 
 			{
-				success : function(requestInfo, appRuntime){
-					loc_appRuntime = appRuntime;
-					loc_debugLifecycleView.setComponent(appRuntime);
-					loc_debugDataView.setComponent(appRuntime, requestInfo);
-					loc_debugEventView.setComponent(appRuntime);
-				}
+				mainModuleRoot : $('#appModuleDiv'),
+				settingModuleRoot : $('#settingModuleDiv'),
+				storeService : nosliw.runtime.getStoreService(),
+				dataService : node_appDataService,
+				framework7App : framework7App
 			}
-		);
-	});
-	$('#inputDebug').append(loc_debugResetView.getView());
+	);
+
+	node_createDebugTool({
+			lifecycleView : $('#lifecycleDebug').get(),
+			dataView : $('#dataDebug').get(),
+			eventView : $('#eventDebug').get(),
+			resetView : $('#resetDebug').get(), 
+		}, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, parms.app, undefined, configure);
 	
+
+	//ui indicator
+	node_createRequestStatusIndicatorUI(framework7App);
 });
 
 nosliw.init();
+
+
 </script>
 
 </html>

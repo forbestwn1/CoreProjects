@@ -1,0 +1,1224 @@
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"Page_MySchool_SchoolList",
+"type":"uiResource"
+},
+"children":[],
+"dependency":{},
+"info":{}
+}, {"id":"Page_MySchool_SchoolList",
+"type":"resource",
+"context":{"local2Global":{"schoolList":"schoolList___public",
+"schoolRating1":"schoolRating1___public",
+"schoolType":"schoolType___public",
+"schoolType1":"schoolType1___public",
+"schoolAttribute":"schoolAttribute___public",
+"schoolRating":"schoolRating___public"
+},
+"context":{"element":{"schoolList___public":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"data",
+"processed":"true",
+"criteria":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+}
+},
+"defaultValue":{"dataTypeId":"test.array;1.0.0","value":[{"dataTypeId":"test.map;1.0.0","value":{"geo":{"dataTypeId":"test.geo;1.0.0","value":{"latitude":43.651299,"longitude":-79.579473}},"schoolName":{"dataTypeId":"test.string;1.0.0","value":"School1"},"schoolRating":{"dataTypeId":"test.float;1.0.0","value":6}}},{"dataTypeId":"test.map;1.0.0","value":{"geo":{"dataTypeId":"test.geo;1.0.0","value":{"latitude":43.649016,"longitude":-79.485059}},"schoolName":{"dataTypeId":"test.string;1.0.0","value":"School2"},"schoolRating":{"dataTypeId":"test.float;1.0.0","value":8.5}}}]}
+},
+"schoolList":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolList___public"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"true",
+"criteria":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+}
+}
+},
+"defaultValue":{"dataTypeId":"test.array;1.0.0","value":[{"dataTypeId":"test.map;1.0.0","value":{"geo":{"dataTypeId":"test.geo;1.0.0","value":{"latitude":43.651299,"longitude":-79.579473}},"schoolName":{"dataTypeId":"test.string;1.0.0","value":"School1"},"schoolRating":{"dataTypeId":"test.float;1.0.0","value":6}}},{"dataTypeId":"test.map;1.0.0","value":{"geo":{"dataTypeId":"test.geo;1.0.0","value":{"latitude":43.649016,"longitude":-79.485059}},"schoolName":{"dataTypeId":"test.string;1.0.0","value":"School2"},"schoolRating":{"dataTypeId":"test.float;1.0.0","value":8.5}}}]}
+},
+"schoolType___public":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"data",
+"processed":"true",
+"criteria":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+}
+},
+"defaultValue":{"dataTypeId":"test.options;1.0.0","value":{"optionsId":"schoolType","value":"Public"}}
+},
+"schoolType":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolType___public"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"true",
+"criteria":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+}
+}
+},
+"defaultValue":{"dataTypeId":"test.options;1.0.0","value":{"optionsId":"schoolType","value":"Public"}}
+},
+"schoolRating___public":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"data",
+"processed":"true",
+"criteria":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+},
+"defaultValue":{"dataTypeId":"test.float;1.0.0","value":9}
+},
+"schoolRating":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolRating___public"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"true",
+"criteria":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+}
+},
+"defaultValue":{"dataTypeId":"test.float;1.0.0","value":9}
+}
+}
+}
+},
+"elementEvents":[{"uiId":"878",
+"event":"click",
+"function":"refreshSchoolData"
+}],
+"tagEvents":[],
+"attributes":{},
+"html":"&lt;br nosliwid=&quot;876&quot;&gt; &lt;br nosliwid=&quot;877&quot;&gt;&lt;a href=&quot;&quot; nosliwid=&quot;878&quot;&gt;&lt;span&gt;Refresh&lt;/span&gt;&lt;/a&gt;&lt;br nosliwid=&quot;879&quot;&gt;&lt;span&gt; SchoolRating:&lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;880-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;880-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;881&quot;&gt; &lt;br nosliwid=&quot;882&quot;&gt;&lt;span&gt; SchoolType:&lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;883-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;883-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;884&quot;&gt; &lt;br nosliwid=&quot;885&quot;&gt; &lt;br nosliwid=&quot;886&quot;&gt;&lt;span&gt; Sum:&lt;/span&gt;&lt;span nosliwid=&quot;875&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;br nosliwid=&quot;887&quot;&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;888-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;888-tag-end&quot;&gt;&lt;/nosliw&gt;   &lt;!-- This part can be used to define context (variable)				it describle data type criteria for each context element and its default value		--&gt;",
+"constants":{"schoolRating1___public":{"dataTypeId":"test.float;1.0.0",
+"valueFormat":"JSON",
+"value":9
+},
+"schoolRating1":{"dataTypeId":"test.float;1.0.0",
+"valueFormat":"JSON",
+"value":9
+},
+"schoolType1___public":{"dataTypeId":"test.options;1.0.0",
+"valueFormat":"JSON",
+"value":{"optionsId":"schoolType","value":"Public"}
+},
+"schoolType1":{"dataTypeId":"test.options;1.0.0",
+"valueFormat":"JSON",
+"value":{"optionsId":"schoolType","value":"Public"}
+},
+"schoolAttribute___public":{"dataTypeId":"test.string;1.0.0",
+"valueFormat":"JSON",
+"value":"schoolName"
+},
+"schoolAttribute":{"dataTypeId":"test.string;1.0.0",
+"valueFormat":"JSON",
+"value":"schoolName"
+}
+},
+"events":{"selectSchool":{"name":"selectSchool",
+"description":"",
+"info":{},
+"data":{"element":{"data":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"false",
+"path":{"rootEleName":"schoolList___public",
+"path":"element"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
+"info":{}
+}
+}
+}
+}
+}
+}
+}
+},
+"commands":{},
+"services":{"getSchoolData":{"provider":"getSchoolDataService",
+"name":"getSchoolData",
+"info":{},
+"serviceMapping":{"outputMapping":{"success":{"type":"mapping",
+"name":"",
+"description":"",
+"info":{},
+"definition":{"name":"",
+"description":"",
+"info":{},
+"association":{"default":{"element":{"schoolList":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"false",
+"path":{"rootEleName":"outputInService"
+},
+"parent":"default"
+}
+}
+}
+}
+}
+},
+"output":{"default":true
+},
+"input":{"default":true
+},
+"association":{"default":{"context":{"element":{"schoolList":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"outputInService"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+}
+}
+}
+}
+}
+},
+"pathMapping":{"schoolList":"default.outputInService"
+},
+"flatOutput":true,
+"flatInput":{"default":"true"
+},
+"convertFunction":function(input, utilFunction){
+
+	var output = {};
+
+/*	
+	//build element from inherited first
+	if(false){
+		if({default=true} && true){
+			_.each(input, function(ele, name){
+				output[name] = ele;
+			});
+		}
+		else if(!{default=true} && !true){
+			_.each(input, function(context, categary){
+				_.each(context, function(ele, name){
+					output[name] = ele;
+				});
+			});
+		}		
+		else if(!{default=true} && true){
+			_.each(input, function(context, categary){
+				_.each(context, function(ele, name){
+					output[name] = ele;
+					output[name+"___"+categary] = ele;
+				});
+			});
+		}		
+		else if({default=true} && !true){
+			_.each(input, function(ele, name){
+				var segs = name.split("___");
+				if(segs.length==2){
+					var context = output[segs[1]];
+					if(context==undefined){
+						context = {};
+						output[segs[1]] = context;
+					}
+					context[segs[0]] = ele;
+				}
+			});
+		}		
+	}
+*/
+	
+	//build skeleton first
+	if(true){
+		_.each({
+  "schoolList": {}
+}, function(value, name){
+			output[name] = value;
+		});
+	}
+	else{
+		_.each({
+  "schoolList": {}
+}, function(context, categary){
+			var context1 = output[categary];
+			if(context1==undefined){
+				context1 = {};
+				output[categary] = context1;
+			} 
+			_.each(context, function(ele, name){
+				context1[name] = ele;
+			});
+		});
+	}
+	
+	//asign mapped element, leaf data
+	output = utilFunction(output, ["schoolList"], input, ["default","outputInService"]);
+
+	
+	return output;
+}
+
+}
+}
+}
+},
+"inputMapping":{"type":"mapping",
+"name":"",
+"description":"",
+"info":{},
+"definition":{"name":"",
+"description":"",
+"info":{},
+"association":{"default":{"element":{"schoolTypeInService":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"false",
+"path":{"rootEleName":"schoolType"
+},
+"parent":"default"
+}
+},
+"schoolRatingInService":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"false",
+"path":{"rootEleName":"schoolRating"
+},
+"parent":"default"
+}
+}
+}
+}
+}
+},
+"output":{"default":true
+},
+"input":{"default":true
+},
+"association":{"default":{"context":{"element":{"schoolTypeInService":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolType"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"true",
+"criteria":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+}
+}
+}
+},
+"schoolRatingInService":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolRating"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"true",
+"criteria":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+}
+}
+}
+}
+},
+"pathMapping":{"schoolTypeInService":"default.schoolType",
+"schoolRatingInService":"default.schoolRating"
+},
+"flatOutput":true,
+"flatInput":{"default":"true"
+},
+"convertFunction":function(input, utilFunction){
+
+	var output = {};
+
+/*	
+	//build element from inherited first
+	if(false){
+		if({default=true} && true){
+			_.each(input, function(ele, name){
+				output[name] = ele;
+			});
+		}
+		else if(!{default=true} && !true){
+			_.each(input, function(context, categary){
+				_.each(context, function(ele, name){
+					output[name] = ele;
+				});
+			});
+		}		
+		else if(!{default=true} && true){
+			_.each(input, function(context, categary){
+				_.each(context, function(ele, name){
+					output[name] = ele;
+					output[name+"___"+categary] = ele;
+				});
+			});
+		}		
+		else if({default=true} && !true){
+			_.each(input, function(ele, name){
+				var segs = name.split("___");
+				if(segs.length==2){
+					var context = output[segs[1]];
+					if(context==undefined){
+						context = {};
+						output[segs[1]] = context;
+					}
+					context[segs[0]] = ele;
+				}
+			});
+		}		
+	}
+*/
+	
+	//build skeleton first
+	if(true){
+		_.each({
+  "schoolTypeInService": {},
+  "schoolRatingInService": {}
+}, function(value, name){
+			output[name] = value;
+		});
+	}
+	else{
+		_.each({
+  "schoolTypeInService": {},
+  "schoolRatingInService": {}
+}, function(context, categary){
+			var context1 = output[categary];
+			if(context1==undefined){
+				context1 = {};
+				output[categary] = context1;
+			} 
+			_.each(context, function(ele, name){
+				context1[name] = ele;
+			});
+		});
+	}
+	
+	//asign mapped element, leaf data
+	output = utilFunction(output, ["schoolTypeInService"], input, ["default","schoolType"]);
+output = utilFunction(output, ["schoolRatingInService"], input, ["default","schoolRating"]);
+
+	
+	return output;
+}
+
+}
+}
+},
+"task":""
+}
+}
+},
+"serviceProviders":{"getSchoolDataService":{"name":"getSchoolDataService",
+"description":"",
+"info":{},
+"serviceId":"schoolService",
+"serviceInterface":{"parm":{"schoolTypeInService":{"name":"schoolTypeInService",
+"description":"",
+"info":{},
+"criteria":"test.options;1.0.0",
+"default":{
+  "dataTypeId": "test.options;1.0.0",
+  "valueFormat": "JSON",
+  "value": {
+    "optionsId": "schoolType",
+    "value": "public"
+  }
+}
+},
+"schoolRatingInService":{"name":"schoolRatingInService",
+"description":"",
+"info":{},
+"criteria":"test.float;1.0.0",
+"default":{
+  "dataTypeId": "test.float;1.0.0",
+  "valueFormat": "JSON",
+  "value": "8"
+}
+}
+},
+"result":{"success":{"name":"success",
+"description":"",
+"info":{},
+"output":{"outputInService":{"name":"",
+"description":"",
+"info":{},
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
+}
+}
+}
+}
+}
+}
+},
+"scriptExpressionsInContent":[{"scriptExpressions":{"0":{"definition":"#|?(schoolList)?.length()|#.value",
+"variableNames":["schoolList"],
+"expressions":{"0_0":{"operand":{"type":"operation",
+"outputCriteria":"test.integer;1.0.0",
+"operation":"length",
+"dataTypeId":"test.array;1.0.0",
+"parms":{"base":{"type":"variable",
+"outputCriteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"variableName":"schoolList"
+}
+},
+"matchersParms":{"base":{"test.array;1.0.0":{"dataTypeId":"test.array;1.0.0",
+"relationship":{"source":"test.array;1.0.0",
+"target":"test.array;1.0.0",
+"path":[],
+"targetType":"self"
+},
+"subMatchers":{},
+"reverse":false
+}
+}
+}
+},
+"variablesMatchers":{},
+"variableInfos":{"schoolList___public":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+},
+"schoolList":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+},
+"schoolType___public":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+},
+"schoolType":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+},
+"schoolRating___public":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+},
+"schoolRating":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+}
+}
+}
+}
+},
+"uiId":"875",
+"scriptFunction":function(scriptExpressionData){
+	return scriptExpressionData["0"];
+} 
+,
+"scriptExpressionScriptFunction":{"0":function(expressionsData, constantsData, variablesData){
+	return expressionsData["0_0"].value;
+} 
+
+}
+}],
+"scriptExpressionInAttributes":[],
+"scriptExpressionTagAttributes":[],
+"uiTags":{"880":{"tagName":"floatinput",
+"contextMapping":{},
+"tagContext":{"local2Global":{"internal_data":"internal_data___private",
+"nosliwattribute_data":"nosliwattribute_data___private",
+"nosliwattribute_nosliwid":"nosliwattribute_nosliwid___private"
+},
+"context":{"element":{"internal_data___private":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolRating___public"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+}
+}
+},
+"internal_data":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"internal_data___private"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+}
+}
+}
+}
+}
+},
+"id":"Page_MySchool_SchoolList",
+"type":"tag",
+"context":{"local2Global":{},
+"context":{"element":{}
+}
+},
+"elementEvents":[],
+"tagEvents":[],
+"attributes":{"data":"schoolRating",
+"nosliwid":"880"
+},
+"html":"",
+"constants":{},
+"events":{},
+"commands":{},
+"services":{},
+"serviceProviders":{},
+"scriptExpressionsInContent":[],
+"scriptExpressionInAttributes":[],
+"scriptExpressionTagAttributes":[],
+"uiTags":{},
+"eventMapping":{},
+"commandMapping":{},
+"serviceMapping":{}
+},
+"883":{"tagName":"options",
+"contextMapping":{},
+"tagContext":{"local2Global":{"internal_data":"internal_data___private",
+"nosliwattribute_id":"nosliwattribute_id___private",
+"nosliwattribute_data":"nosliwattribute_data___private",
+"nosliwattribute_nosliwid":"nosliwattribute_nosliwid___private"
+},
+"context":{"element":{"internal_data___private":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolType___public"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+}
+}
+}
+},
+"internal_data":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"internal_data___private"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+}
+}
+}
+}
+}
+}
+},
+"id":"Page_MySchool_SchoolList",
+"type":"tag",
+"context":{"local2Global":{},
+"context":{"element":{}
+}
+},
+"elementEvents":[],
+"tagEvents":[],
+"attributes":{"id":"schoolType",
+"data":"schoolType",
+"nosliwid":"883"
+},
+"html":"",
+"constants":{},
+"events":{},
+"commands":{},
+"services":{},
+"serviceProviders":{},
+"scriptExpressionsInContent":[],
+"scriptExpressionInAttributes":[],
+"scriptExpressionTagAttributes":[],
+"uiTags":{},
+"eventMapping":{},
+"commandMapping":{},
+"serviceMapping":{}
+},
+"888":{"tagName":"loop",
+"contextMapping":{},
+"tagContext":{"local2Global":{"schoolRating1":"schoolRating1___public",
+"schoolType1":"schoolType1___public",
+"schoolAttribute":"schoolAttribute___public",
+"schoolList":"schoolList___public",
+"schoolType":"schoolType___public",
+"schoolRating":"schoolRating___public",
+"index":"index___protected",
+"ele":"ele___protected",
+"internal_data":"internal_data___private",
+"nosliwattribute_data":"nosliwattribute_data___private",
+"nosliwattribute_element":"nosliwattribute_element___private",
+"nosliwattribute_index":"nosliwattribute_index___private",
+"nosliwattribute_nosliwid":"nosliwattribute_nosliwid___private"
+},
+"context":{"element":{"schoolList___public":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolList___public"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+}
+}
+}
+},
+"schoolList":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolList___public"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+}
+}
+}
+},
+"schoolType___public":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolType___public"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+}
+}
+}
+},
+"schoolType":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolType___public"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+}
+}
+}
+},
+"schoolRating___public":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolRating___public"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+}
+}
+},
+"schoolRating":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolRating___public"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+}
+}
+},
+"index___protected":{"name":"",
+"description":"",
+"info":{"instantiate":"manual"
+},
+"definition":{"type":"data",
+"processed":"true",
+"criteria":{"status":"close",
+"criteria":"test.integer;1.0.0",
+"info":{}
+}
+}
+},
+"index":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"index___protected"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"true",
+"criteria":{"status":"close",
+"criteria":"test.integer;1.0.0",
+"info":{}
+}
+}
+}
+},
+"ele___protected":{"name":"",
+"description":"",
+"info":{"instantiate":"manual"
+},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolList___public",
+"path":"element"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
+"info":{}
+}
+}
+}
+},
+"ele":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"ele___protected"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
+"info":{}
+}
+}
+}
+},
+"internal_data___private":{"name":"",
+"description":"",
+"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolList___public"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+}
+}
+}
+},
+"internal_data":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"internal_data___private"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+}
+}
+}
+}
+}
+}
+},
+"id":"Page_MySchool_SchoolList",
+"type":"tag",
+"context":{"local2Global":{"schoolRating1":"schoolRating1___public",
+"schoolType1":"schoolType1___public",
+"schoolAttribute":"schoolAttribute___public",
+"schoolList":"schoolList___public",
+"schoolType":"schoolType___public",
+"schoolRating":"schoolRating___public",
+"index":"index___protected",
+"ele":"ele___protected"
+},
+"context":{"element":{"schoolList___public":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolList___public"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+}
+}
+}
+},
+"schoolList":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolList___public"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+}
+}
+}
+},
+"schoolType___public":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolType___public"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+}
+}
+}
+},
+"schoolType":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolType___public"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+}
+}
+}
+},
+"schoolRating___public":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolRating___public"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+}
+}
+},
+"schoolRating":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"schoolRating___public"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+}
+}
+}
+},
+"index___protected":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"index___protected"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.integer;1.0.0",
+"info":{}
+}
+}
+}
+},
+"index":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"index___protected"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.integer;1.0.0",
+"info":{}
+}
+}
+}
+},
+"ele___protected":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"ele___protected"
+},
+"parent":"default",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
+"info":{}
+}
+}
+}
+},
+"ele":{"info":{},
+"definition":{"type":"relative",
+"processed":"true",
+"path":{"rootEleName":"ele___protected"
+},
+"parent":"self",
+"definition":{"type":"data",
+"processed":"false",
+"criteria":{"status":"close",
+"criteria":"test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
+"info":{}
+}
+}
+}
+}
+}
+}
+},
+"elementEvents":[{"uiId":"892",
+"event":"click",
+"function":"getSchoolInfo"
+}],
+"tagEvents":[],
+"attributes":{"data":"schoolList",
+"element":"ele",
+"index":"index",
+"nosliwid":"888"
+},
+"html":"&lt;span&gt; Index: &lt;/span&gt;&lt;span nosliwid=&quot;889&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;br nosliwid=&quot;891&quot;&gt;&lt;span&gt; SchoolName: &lt;/span&gt;&lt;span nosliwid=&quot;890&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;a href=&quot;&quot; nosliwid=&quot;892&quot;&gt;&lt;span&gt;Info&lt;/span&gt;&lt;/a&gt; &lt;br nosliwid=&quot;893&quot;&gt;",
+"constants":{"schoolRating1___public":{"dataTypeId":"test.float;1.0.0",
+"valueFormat":"JSON",
+"value":9
+},
+"schoolRating1":{"dataTypeId":"test.float;1.0.0",
+"valueFormat":"JSON",
+"value":9
+},
+"schoolType1___public":{"dataTypeId":"test.options;1.0.0",
+"valueFormat":"JSON",
+"value":{"optionsId":"schoolType","value":"Public"}
+},
+"schoolType1":{"dataTypeId":"test.options;1.0.0",
+"valueFormat":"JSON",
+"value":{"optionsId":"schoolType","value":"Public"}
+},
+"schoolAttribute___public":{"dataTypeId":"test.string;1.0.0",
+"valueFormat":"JSON",
+"value":"schoolName"
+},
+"schoolAttribute":{"dataTypeId":"test.string;1.0.0",
+"valueFormat":"JSON",
+"value":"schoolName"
+}
+},
+"events":{},
+"commands":{},
+"services":{},
+"serviceProviders":{},
+"scriptExpressionsInContent":[{"scriptExpressions":{"0":{"definition":"?(index)?",
+"variableNames":["index"],
+"expressions":{}
+}
+},
+"uiId":"889",
+"scriptFunction":function(scriptExpressionData){
+	return scriptExpressionData["0"];
+} 
+,
+"scriptExpressionScriptFunction":{"0":function(expressionsData, constantsData, variablesData){
+	return variablesData["index"];
+} 
+
+}
+},{"scriptExpressions":{"0":{"definition":"#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value",
+"variableNames":["ele"],
+"expressions":{"0_0":{"operand":{"type":"operation",
+"outputCriteria":"@||!(test.dataTypeCriteria)!.getChild(base;;;!(test.parm)!.getCriteria(base;;;?(base)?);;childName;;;!(test.parm)!.getValue(base;;;?(name)?))||@",
+"operation":"getChildData",
+"dataTypeId":"test.map;1.0.0",
+"parms":{"name":{"type":"constant",
+"outputCriteria":"test.string;1.0.0",
+"name":"schoolAttribute",
+"data":{"dataTypeId":"test.string;1.0.0",
+"valueFormat":"JSON",
+"value":"schoolName"
+}
+},
+"base":{"type":"variable",
+"outputCriteria":"test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
+"variableName":"ele"
+}
+},
+"matchersParms":{"base":{"test.map;1.0.0":{"dataTypeId":"test.map;1.0.0",
+"relationship":{"source":"test.map;1.0.0",
+"target":"test.map;1.0.0",
+"path":[],
+"targetType":"self"
+},
+"subMatchers":{},
+"reverse":false
+}
+},
+"name":{"test.string;1.0.0":{"dataTypeId":"test.string;1.0.0",
+"relationship":{"source":"test.string;1.0.0",
+"target":"test.string;1.0.0",
+"path":[],
+"targetType":"self"
+},
+"subMatchers":{},
+"reverse":false
+}
+}
+}
+},
+"variablesMatchers":{},
+"variableInfos":{"schoolList___public":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+},
+"schoolList":{"status":"close",
+"criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+"info":{}
+},
+"schoolType___public":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+},
+"schoolType":{"status":"close",
+"criteria":"test.options;1.0.0",
+"info":{}
+},
+"schoolRating___public":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+},
+"schoolRating":{"status":"close",
+"criteria":"test.float;1.0.0",
+"info":{}
+},
+"index___protected":{"status":"close",
+"criteria":"test.integer;1.0.0",
+"info":{}
+},
+"index":{"status":"close",
+"criteria":"test.integer;1.0.0",
+"info":{}
+},
+"ele___protected":{"status":"close",
+"criteria":"test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
+"info":{}
+},
+"ele":{"status":"close",
+"criteria":"test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
+"info":{}
+}
+}
+}
+}
+}
+},
+"uiId":"890",
+"scriptFunction":function(scriptExpressionData){
+	return scriptExpressionData["0"];
+} 
+,
+"scriptExpressionScriptFunction":{"0":function(expressionsData, constantsData, variablesData){
+	return expressionsData["0_0"].value;
+} 
+
+}
+}],
+"scriptExpressionInAttributes":[],
+"scriptExpressionTagAttributes":[],
+"uiTags":{},
+"eventMapping":{},
+"commandMapping":{},
+"serviceMapping":{},
+"script":{ getSchoolInfo : function(info, env){ event.preventDefault(); var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT"); var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor"); var node_createUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createUIDataOperationRequest"); var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation"); var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility"); var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createGetOperationService("")); var opRequest = node_createUIDataOperationRequest(env.context, uiDataOperation, { success : function(request, data){ env.trigueEvent("selectSchool", data); } }); node_requestServiceProcessor.processRequest(opRequest, false); } }
+}
+},
+"script":{ refreshSchoolData : function(info, env){ event.preventDefault(); var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT"); var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor"); var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest"); var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation"); var requestInfo = env.getServiceRequest("getSchoolData", { success : function(request){ } }); node_requestServiceProcessor.processRequest(requestInfo, false); }, }
+}, {"loadPattern":"file"
+});
+

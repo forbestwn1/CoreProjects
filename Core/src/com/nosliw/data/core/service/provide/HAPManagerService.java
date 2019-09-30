@@ -7,6 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 
+//service manager, it is used for runtime purpose
 @HAPEntityWithAttribute
 public class HAPManagerService {
 
@@ -24,14 +25,15 @@ public class HAPManagerService {
 	
 	public HAPManagerServiceDefinition getServiceDefinitionManager() {   return this.m_serviceDefinitionManager;   }
 	
-	public void registerServiceInstance(String name, HAPInstanceService serviceInstance){
-		this.m_serviceInstances.put(name, serviceInstance);
+	public void registerServiceInstance(String id, HAPInstanceService serviceInstance){
+		this.m_serviceInstances.put(id, serviceInstance);
 	}
 
 	public void registerServiceFactory(String name, HAPFactoryService serviceFactory){
 		this.m_serviceFactorys.put(name, serviceFactory);
 	}
 	
+	//service query is used to find service provider
 	public HAPResultService execute(HAPQueryService serviceQuery, Map<String, HAPData> parms){
 		//get service instance according to serviceId
 		HAPInstanceService serviceInstance = this.m_serviceInstances.get(serviceQuery.getServiceId());

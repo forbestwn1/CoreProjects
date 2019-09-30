@@ -10,6 +10,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
+//contains all information related with service definition
 @HAPEntityWithAttribute
 public class HAPDefinitionService extends HAPEntityInfoImp{
 
@@ -19,10 +20,10 @@ public class HAPDefinitionService extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static String RUNTIME = "runtime";
 
-	//static information
+	//information used for configuration, management purpose
 	private HAPInfoServiceStatic m_staticInfo;
 	
-	//runtime service instance information
+	//information for how two create runtime executor 
 	private HAPInfoServiceRuntime m_runtimeInfo;
 
 	public HAPDefinitionService(){

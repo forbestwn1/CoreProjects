@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
-//information related with service during runtime
+//information related with service needed during runtime
 public class HAPInfoServiceRuntime extends HAPSerializableImp{
 
 	@HAPAttribute

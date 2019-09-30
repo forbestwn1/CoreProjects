@@ -70,13 +70,13 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"elementEvents":[{"uiId":"672",
+"elementEvents":[{"uiId":"292",
 "event":"click",
 "function":"newElementInLoop"
 }],
 "tagEvents":[],
 "attributes":{},
-"html":"&lt;!--		&lt;nosliw-varviewer/&gt;  --&gt; &lt;br nosliwid=&quot;670&quot;&gt; &lt;br nosliwid=&quot;671&quot;&gt;&lt;a href=&quot;&quot; nosliwid=&quot;672&quot;&gt;&lt;span&gt;New&lt;/span&gt;&lt;/a&gt;&lt;br nosliwid=&quot;673&quot;&gt; &lt;br nosliwid=&quot;674&quot;&gt; &lt;br nosliwid=&quot;675&quot;&gt; &lt;!--	Content:&lt;%=?(business.a.aa)?.value + '   6666 ' %&gt; --&gt; &lt;br nosliwid=&quot;676&quot;&gt;&lt;span&gt; TextInput:&lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;677-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;677-tag-end&quot;&gt;&lt;/nosliw&gt;   &lt;!-- This part can be used to define context (variable)				it describle data type criteria for each context element and its default value		--&gt;  &lt;!-- This part can be used to define expressions		--&gt;",
+"html":"&lt;!--		&lt;nosliw-varviewer/&gt;  --&gt; &lt;br nosliwid=&quot;290&quot;&gt; &lt;br nosliwid=&quot;291&quot;&gt;&lt;a href=&quot;&quot; nosliwid=&quot;292&quot;&gt;&lt;span&gt;New&lt;/span&gt;&lt;/a&gt;&lt;br nosliwid=&quot;293&quot;&gt; &lt;br nosliwid=&quot;294&quot;&gt; &lt;br nosliwid=&quot;295&quot;&gt; &lt;!--	Content:&lt;%=?(business.a.aa)?.value + '   6666 ' %&gt; --&gt; &lt;br nosliwid=&quot;296&quot;&gt;&lt;span&gt; TextInput:&lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;297-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;297-tag-end&quot;&gt;&lt;/nosliw&gt;   &lt;!-- This part can be used to define context (variable)				it describle data type criteria for each context element and its default value		--&gt;  &lt;!-- This part can be used to define expressions		--&gt;",
 "constants":{},
 "events":{},
 "commands":{},
@@ -85,7 +85,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "scriptExpressionsInContent":[],
 "scriptExpressionInAttributes":[],
 "scriptExpressionTagAttributes":[],
-"uiTags":{"677":{"tagName":"textinput",
+"uiTags":{"297":{"tagName":"textinput",
 "contextMapping":{},
 "tagContext":{"local2Global":{"internal_data":"internal_data___private",
 "nosliwattribute_data":"nosliwattribute_data___private",
@@ -136,7 +136,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "elementEvents":[],
 "tagEvents":[],
 "attributes":{"data":"business.a.aa",
-"nosliwid":"677"
+"nosliwid":"297"
 },
 "html":"",
 "constants":{},

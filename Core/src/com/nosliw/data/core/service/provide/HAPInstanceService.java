@@ -3,8 +3,10 @@ package com.nosliw.data.core.service.provide;
 //service instance
 public class HAPInstanceService {
 
+	//object that contain all information related with this service
 	private HAPDefinitionService m_definition;
 	
+	//object that answer the service call  
 	private HAPExecutableService m_executable;
 	
 	public HAPInstanceService(HAPDefinitionService definition, HAPExecutableService executable) {

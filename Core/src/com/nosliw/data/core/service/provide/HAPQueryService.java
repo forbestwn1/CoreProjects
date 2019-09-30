@@ -9,6 +9,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
+/*
+ * Container information to locate service provider instance
+ */
 @HAPEntityWithAttribute
 public class HAPQueryService extends HAPSerializableImp{
 

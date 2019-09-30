@@ -23,6 +23,15 @@ var node_createUIAppService = function(){
 		getGetUIAppEntryRuntimeRequest : function(id, app, configure, ioInput, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIAppResource"), handlers, request);
 
+			//build module decoration info array from module configure
+			var appDecInfos = [];
+			var decConfigurePath = 'appDecoration';
+			var appDecIdSet = configure.getChildrenIdSet(decConfigurePath);
+			_.each(appDecIdSet, function(appDecId, i){
+				var appDecConfigureValue = configure.getChildConfigureValue(decConfigurePath, appDecId);
+				appDecInfos.push(new node_DecorationInfo(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, appDecConfigureValue.id, appDecConfigureValue.name, appDecConfigureValue));
+			});
+
 			configure = node_createConfigure(configure);
 			var componentDecorationInfo = configure.getConfigureValue().appDecoration;
 			out.addRequest(node_loadComponentResourceRequest(
@@ -31,14 +40,17 @@ var node_createUIAppService = function(){
 						resourceId : app,
 						type : node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY
 					} : app, 
-				componentDecorationInfo==undefined?undefined:
 					{
-						decoration : componentDecorationInfo,
+						decoration : appDecInfos,
 						type : node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPDECORATION
 					},
 				{
 					success : function(request, componentInfo){
 						//create ui module runtime
+						if(typeof app==='string' && node_getObjectType(state)==node_CONSTANT.TYPEDOBJECT_TYPE_BACKUPSERVICE){
+							//create by resource id, then version should be set according to resource version
+							state.setVersion("5.0.0");   //kkkkk
+						}    
 						return node_createAppRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, ioInput, {
 							success : function(request, uiAppRuntime){
 								return uiAppRuntime;

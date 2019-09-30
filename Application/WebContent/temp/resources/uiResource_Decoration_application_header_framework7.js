@@ -92,17 +92,17 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"elementEvents":[{"uiId":"670",
+"elementEvents":[{"uiId":"972",
 "event":"click",
 "function":"transferBack"
-},{"uiId":"674",
+},{"uiId":"976",
 "event":"click",
 "function":"refresh"
 }],
 "tagEvents":[],
 "attributes":{"nosliwattribute_placeholder":"id:pleaseEmbed"
 },
-"html":"&lt;div class=&quot;page-content&quot; nosliwid=&quot;666&quot;&gt;  &lt;div class=&quot;navbar&quot; nosliwid=&quot;667&quot;&gt;   &lt;div class=&quot;navbar-inner&quot; nosliwid=&quot;668&quot;&gt;    &lt;div class=&quot;left&quot; nosliwid=&quot;669&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; style=&quot;&quot; nosliwid=&quot;670&quot;&gt;&lt;span&gt;Back&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;    &lt;div class=&quot;title&quot; nosliwid=&quot;671&quot;&gt;    &lt;span nosliwid=&quot;672&quot;&gt;&lt;/span&gt;   &lt;/div&gt;    &lt;div class=&quot;right&quot; nosliwid=&quot;673&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; nosliwid=&quot;674&quot;&gt;&lt;span&gt;Refresh&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;   &lt;/div&gt;  &lt;/div&gt;  &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;675&quot;&gt;&lt;/div&gt; &lt;/div&gt;",
+"html":"&lt;div class=&quot;page-content&quot; nosliwid=&quot;968&quot;&gt;  &lt;div class=&quot;navbar&quot; nosliwid=&quot;969&quot;&gt;   &lt;div class=&quot;navbar-inner&quot; nosliwid=&quot;970&quot;&gt;    &lt;div class=&quot;left&quot; nosliwid=&quot;971&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; style=&quot;&quot; nosliwid=&quot;972&quot;&gt;&lt;span&gt;Back&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;    &lt;div class=&quot;title&quot; nosliwid=&quot;973&quot;&gt;    &lt;span nosliwid=&quot;974&quot;&gt;&lt;/span&gt;   &lt;/div&gt;    &lt;div class=&quot;right&quot; nosliwid=&quot;975&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; nosliwid=&quot;976&quot;&gt;&lt;span&gt;Refresh&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;   &lt;/div&gt;  &lt;/div&gt;  &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;977&quot;&gt;&lt;/div&gt; &lt;/div&gt;",
 "constants":{},
 "events":{"transferBack":{"name":"transferBack",
 "description":"",
@@ -125,7 +125,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"672",
+"uiId":"974",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -141,7 +141,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"670",
+"uiId":"972",
 "attribute":"style",
 "scriptFunction":function(scriptExpressionData){
 	return "display:"+scriptExpressionData["1"];

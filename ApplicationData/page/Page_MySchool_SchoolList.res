@@ -3,6 +3,11 @@
 <body>
 	<br>
 	<br><a href='' nosliw-event="click:refreshSchoolData:">Refresh</a><br>
+	SchoolRating:<nosliw-floatinput data="schoolRating"/>  
+	<br>
+	<br>
+	SchoolType:<nosliw-options id="schoolType" data="schoolType"/>
+	<br>
 	<br>
 		<br>
 		Sum:<%=#|?(schoolList)?.length()|#.value%> 

@@ -9,51 +9,98 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createTypicalConfigure = function(mainModuleRoot, settingModuleRoot, dataService, storeService, framework7App){
-	var configure = {
-		global : {
-			appDecoration : [
-				{
-					coreFun: node_createAppDecoration,
-					id : "application"
-				}
-				],
-			__appDataService : dataService,
-			__storeService : storeService,
-			app : framework7App,
+	
+var node_createModuleConfigure = function(settingName, parms){
+	
+	var appConfigure = node_createConfigure(loc_appSetting, loc_globalConfig, parms).getChildConfigure(undefined, settingName);
+	return appConfigure;
+	
+};
+
+var loc_globalConfig = {
+	__appDataService : function(parms){
+		return parms.dataService;
+	},
+	__storeService : function(parms){
+		return parms.storeService;
+	}
+};
+
+
+var loc_appSetting = {
+	global : {
+		appDecoration : [
+			{
+				coreFun: node_createAppDecoration,
+				id : "application"
+			}
+			],
+		__appDataService : function(parms){
+			return parms.dataService;
 		},
-		parts : {
-			application : {
-				"parts" : {
-					"application" : {
-						global : {
-							"root" : mainModuleRoot,
-							"decoration" : {
-								global : ["Decoration_application_framework7"]
-							},
-							"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile"]
-//							"moduleDecoration" : ["base", "uidecoration", "application_framework7_mobile", "debug"]
-						}
+		__storeService : function(parms){
+			return parms.storeService;
+		},
+		app : function(parms){
+			return parms.framework7App;
+		},
+	},
+	parts : {
+		application : {
+			"parts" : {
+				application : {
+					"root" : function(parms){
+						return parms.mainModuleRoot;
 					},
-					"setting" : {
-						global : {
-							"root" : settingModuleRoot,
-							"decoration" : {
-							},
-							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile"]
-//							"moduleDecoration" : ["base", "uidecoration", "setting_framework7_mobile", "debug"]
-						},
-						"parts" : {
-							"setting_framework7_mobile" : {
-								uiResource : "Decoration_setting_framework7"
-							}
+					uiDecoration : [
+						{
+							id: 'Decoration_application_header_framework7'
 						}
-					}
-				}
+					],
+					moduleDecoration : 
+					{
+						parts : [
+							{
+								id: 'base',
+							},
+							{
+								id: 'application_framework7_mobile',
+								app : function(parms){
+									return parms.framework7App;
+								},
+								uiResource : {
+									container : {
+										id : "Decoration_application_container_framework7"
+									}
+								}
+							}
+						],
+					},
+				},
+				"setting" : {
+					"root" : function(parms){
+						return parms.settingModuleRoot;
+					},
+					"uiDecoration" : [
+						{
+							id: 'Decoration_setting_framework7'
+						}
+					],
+					"moduleDecoration" : 
+					{
+						parts : [
+							{
+								id: 'base',
+							},
+							{
+								id: 'setting_framework7_mobile',
+							},
+						]
+					},
+				},
 			}
 		}
-	};
-	return configure;
+	}
 };
 	
 
@@ -65,6 +112,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("uiapp.createAppDecoration", function(){node_createAppDecoration = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createTypicalConfigure", node_createTypicalConfigure); 
+packageObj.createChildNode("createModuleConfigure", node_createModuleConfigure); 
 
 })(packageObj);

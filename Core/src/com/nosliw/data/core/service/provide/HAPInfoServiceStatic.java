@@ -16,6 +16,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 //static information for a service. readable, query for service
+//information needed during configuration time
 @HAPEntityWithAttribute
 public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 
