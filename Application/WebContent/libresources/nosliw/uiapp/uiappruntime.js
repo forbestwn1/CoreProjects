@@ -18,7 +18,7 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createAppRuntimeRequest = function(id, appDef, configure, componentDecorationInfos, ioInput, handlers, request){
+var node_createAppRuntimeRequest = function(id, appDef, configure, componentDecorationInfos, ioInput, state, handlers, request){
 	var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("createUIModule"), function(request){
 		var app = node_createApp(id, appDef, ioInput);
 		var runtime = node_createAppRuntime(app, configure, componentDecorationInfos);
@@ -109,8 +109,7 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos)
 			
 		prv_getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
-			out.addRequest(loc_componentComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
-			out.addRequest(loc_out.prv_getComponent().getInitIOContextRequest());
+			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
 			return out;
 		},
 	

@@ -14,6 +14,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_buildDecorationPlugInObject;
 	var node_basicUtility;
+	var node_createComponentState;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -28,7 +29,6 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 	
 	var loc_id = id;
 	var loc_configureValue = configureValue;
-	var loc_state = state;
 	var loc_componentEnv = componentEnv;
 	
 	var loc_lifecycleStatus;
@@ -46,9 +46,6 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 
 	var loc_componentCore = componentCore;
 
-	//state data stack for purpose of roll back
-	var loc_stateDataFroRollBack = [];
-	
 	//gate interface for decoration to communicate with external world
 	var loc_gateForDecoration = {
 		
@@ -67,26 +64,14 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		setStateValue : function(name, value){  loc_stateValueByName[name] = value;	},
 		setState : function(state){   loc_stateValueByName = state==undefined? {} : state;	},
 
-		getSaveStateDataForRollBackRequest : function(handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_stateDataFroRollBack.push(node_basicUtility.clone(loc_stateValueByName));
-				return loc_stateValueByName;
-			}, handlers, request);
-		},
+		getSaveStateDataForRollBackRequest : function(handlers, request){	return loc_componentState.getSaveStateDataForRollBackRequest(handlers, request);	},
 		
-		getRestoreStateDataForRollBackRequest : function(handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){
-				var stateData =  loc_stateDataFroRollBack.pop();
-				loc_stateValueByName = stateData;
-				return loc_stateValueByName;
-			}, handlers, request);
-		},
+		getRestoreStateDataForRollBackRequest : function(handlers, request){return loc_componentState.getRestoreStateDataForRollBackRequest(handlers, request);	},
 
 		getValueFromCore : function(name){  return loc_componentCore.getValue(name); },
 
 		//state operation
-		retrieveState : function(request){   return loc_state.getStateValue(request); },
-		saveState : function(request){	loc_state.setStateValue(loc_stateValueByName, request);	},
+		getComponentState : function(){  return loc_componentState;  },
 		
 		getLifecycleStatus : function(){   return loc_lifecycleStatus;    },
 		
@@ -101,6 +86,14 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 	
 	//generate plug in object 
 	var loc_plugin = typeof decorationResource=='function' ?  node_buildDecorationPlugInObject(decorationResource(loc_gateForDecoration)) : decorationResource;
+	
+	var loc_componentState = node_createComponentState(state, 
+		function(handlers, request){  return node_createServiceRequestInfoSimple(undefined, function(){return loc_stateValueByName;}, handlers, request);}, 
+		function(stateData, handlers, request){
+			loc_stateValueByName = stateData;
+			return loc_plugin.getRestoreStateDataRequest(handlers, request);
+		});
+	
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo); };
@@ -126,8 +119,8 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		getLifeCycleRequest : function(transitName, handlers, request){  return loc_plugin.getLifeCycleRequest(transitName, handlers, request);	},
 		setLifeCycleStatus : function(status){   loc_lifecycleStatus = status;   },
 
-		startLifecycleTask : function(){  loc_stateDataFroRollBack = [];  },
-		endLifecycleTask : function(){    loc_stateDataFroRollBack = [];  },
+		startLifecycleTask : function(){  loc_componentState.initDataForRollBack();	},
+		endLifecycleTask : function(){    loc_componentState.clearDataFroRollBack();  },
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION);
@@ -149,6 +142,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("component.buildDecorationPlugInObject", function(){node_buildDecorationPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("component.createComponentState", function(){node_createComponentState = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreDecoration", node_createComponentCoreDecoration); 

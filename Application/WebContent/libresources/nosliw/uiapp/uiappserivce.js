@@ -20,7 +20,7 @@ var node_createUIAppService = function(){
 	
 	var loc_out = {
 
-		getGetUIAppEntryRuntimeRequest : function(id, app, configure, ioInput, handlers, request){
+		getGetUIAppEntryRuntimeRequest : function(id, app, configure, ioInput, state, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIAppResource"), handlers, request);
 
 			//build module decoration info array from module configure
@@ -51,7 +51,7 @@ var node_createUIAppService = function(){
 							//create by resource id, then version should be set according to resource version
 							state.setVersion("5.0.0");   //kkkkk
 						}    
-						return node_createAppRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, ioInput, {
+						return node_createAppRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, ioInput, state, {
 							success : function(request, uiAppRuntime){
 								return uiAppRuntime;
 							}

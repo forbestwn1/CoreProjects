@@ -82,7 +82,7 @@ var node_utility = function(){
 			
 			moduleInfo.externalIO = node_createIODataSet();
 			moduleInfo.externalIO.setData(undefined, uiApp.getIOContext().generateIOData());
-			loc_out.buildModuleExternalAppDataIO(uiApp.getIOContext(), moduleInfo, appDataService, uiApp.prv_app.appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_APPLICATIONDATA]);
+			loc_out.buildModuleExternalAppDataIO(uiApp.getIOContext(), moduleInfo, appDataService, uiApp.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_APPLICATIONDATA]);
 			
 			loc_out.buildModuleInputMapping(moduleInfo);
 			moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];

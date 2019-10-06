@@ -8,9 +8,79 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_createEventObject;
 	var node_basicUtility;
-	
+	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoSequence;
+	var node_ServiceInfo;
+
 //*******************************************   Start Node Definition  ************************************** 	
 
+//object to manage component state
+var node_createComponentState = function(state, getGetStateDataRequest, getRestoreStateDataRequest){
+	//callback request for collecting component state data
+	var loc_getGetStateDataRequest = getGetStateDataRequest;
+	//callback request for restoring component state data
+	var loc_getRestoreStateDataRequest = getRestoreStateDataRequest;
+	
+	//state object
+	var loc_state = state;
+	//store state data for lifecycle rollback 
+	var loc_stateDataForRollBack = [];
+
+	var loc_STATEDATA_NAME = "STATEDATA_NAME";
+	
+	var loc_out = {
+		setState : function(state){		loc_state = state;	},
+		
+		//backup component to state
+		getBackupStateRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("component backup state"), handlers, request);
+			out.addRequest(loc_getGetStateDataRequest({
+				success : function(request, stateData){
+					loc_state.setValue(loc_STATEDATA_NAME, stateData, request);
+				}
+			}));
+			return out;
+		},
+		
+		//restore state to component
+		getRestoreStateRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("component store state"), handlers, request);
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				var stateData = loc_state.getValue(loc_STATEDATA_NAME, request);
+				return loc_getRestoreStateDataRequest(stateData);
+			}));
+			return out;
+		},
+		
+		//save state data for roll back in the future purpose
+		getSaveStateDataForRollBackRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getGetStateDataRequest({
+				success : function(request, stateData){
+					//save state data first
+					loc_stateDataForRollBack.push(node_basicUtility.clone(stateData));
+				}
+			}));
+			return out;
+		},
+		
+		//restore state data to component for rollback
+		getRestoreStateDataForRollBackRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				var stateData = loc_stateDataForRollBack.pop();
+				return loc_getRestoreStateDataRequest(stateData);
+			}));
+			return out;
+		},
+		
+		initDataForRollBack : function(){  loc_stateDataForRollBack = [];  },
+		clearDataFroRollBack : function(){    loc_stateDataForRollBack = [];  },
+	};
+	return loc_out;
+};	
+	
+	
 //state backup service is used by component to save data when component paused and retrieve data when component resume
 //it is majorly for better user experience, user can continue from where he left
 //so, data lost is not a big issue, the worst case is user start from beginning
@@ -199,9 +269,13 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 
 
 //Register Node by Name
 packageObj.createChildNode("createStateBackupService", node_createStateBackupService); 
+packageObj.createChildNode("createComponentState", node_createComponentState); 
 
 })(packageObj);

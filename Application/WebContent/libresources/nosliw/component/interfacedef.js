@@ -44,8 +44,8 @@ var node_buildDecorationPlugInObject = function(rawPluginObj){
 		getLifeCycleRequest : function(transitName, handlers, request){	return loc_rawPluginObj.getLifeCycleRequest==undefined?undefined:loc_rawPluginObj.getLifeCycleRequest(transitName, handlers, request);},
 		setLifeCycleStatus : function(status){},
 		
-		startLifecycleTask : function(){},
-		endLifecycleTask : function(){},
+		//restore data in state to decoration 
+		getRestoreStateDataRequest : function(handlers, request){return loc_rawPluginObj.getRestoreStateDataRequest==undefined? undefined:loc_rawPluginObj.getRestoreStateDataRequest(handlers, request);},
 	};
 	
 	return loc_out;
