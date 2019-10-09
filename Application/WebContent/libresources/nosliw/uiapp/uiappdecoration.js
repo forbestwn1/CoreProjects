@@ -66,10 +66,11 @@ var node_createAppDecoration = function(gate){
 	var loc_createSettingRoleRequest = function(moduleDef, handlers, request){
 		var settingRoots = [];
 		var settingsRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var appDataName = node_appUtility.getApplicationDataNames(moduleDef)[0];
+		var appDataName = node_appUtility.discoverApplicationDataNames(moduleDef)[0];
 		settingsRequest.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest(node_appUtility.getCurrentOwnerInfo(), appDataName, {
 			success : function(request, settingDataInfos){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
+				//first one is not persistent
 				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "New Setting", false)));   
 				_.each(settingDataInfos[appDataName], function(dataInfo, index){
 					settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, dataInfo));
@@ -162,7 +163,6 @@ var node_createAppDecoration = function(gate){
 					var role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
 					if(role==ROLE_APPLICATION){
 						modulesRequest.addRequest(node_appUtility.buildApplicationModuleInfoRequest(moduleDef, loc_uiApp, loc_getModuleConfigureData(role), loc_appDataService));
-//						modulesRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, [], loc_getModuleConfigureData(role), loc_appDataService));
 					}
 					else if(role==ROLE_SETTING){
 						modulesRequest.addRequest(loc_createSettingRoleRequest(moduleDef));
@@ -184,58 +184,6 @@ var node_createAppDecoration = function(gate){
 			}
 			return out;
 		},
-
-/*		
-		getInitRequest : function(handlers, request){
-			
-		},
-
-		getStartRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			
-			var modulesRequest = node_createServiceRequestInfoSequence(undefined, {
-				success : function(request){
-					var modulesStartRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
-					var allModules = loc_uiApp.getAllModuleInfo();
-					_.each(allModules, function(moduleInfo){
-						modulesStartRequest.addRequest(node_getComponentLifecycleInterface(moduleInfo.module).getTransitRequest("activate"));
-					});
-					return modulesStartRequest;
-				}
-			});
-			var modules = loc_uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE];
-			_.each(modules, function(moduleDef, name){
-				var role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
-				if(role==ROLE_APPLICATION){
-					modulesRequest.addRequest(node_appUtility.buildApplicationModuleInfoRequest(moduleDef, loc_uiApp, loc_getModuleConfigureData(role), loc_appDataService));
-//					modulesRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, [], loc_getModuleConfigureData(role), loc_appDataService));
-				}
-				else if(role==ROLE_SETTING){
-					modulesRequest.addRequest(loc_createSettingRoleRequest(moduleDef));
-				}
-			});
-			
-			out.addRequest(modulesRequest);
-			return out;
-		},
-			
-		getDeactiveRequest :function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
-			var moduleInfos = loc_uiApp.getAllModuleInfo();
-			_.each(moduleInfos, function(moduleInfo, index){
-				out.addRequest(node_getComponentLifecycleInterface(moduleInfo.module).getTransitRequest("destroy"));
-			});
-
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_uiApp.clearModuleInfo();
-			}));
-			
-			return out;
-		},
-		
-		getInterface : function(){	},
-*/		
 	};
 	
 	return loc_out;

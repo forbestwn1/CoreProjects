@@ -11,10 +11,8 @@ var packageObj = library;
 
 	
 var node_createModuleConfigure = function(settingName, parms){
-	
 	var appConfigure = node_createConfigure(loc_appSetting, loc_globalConfig, parms).getChildConfigure(undefined, settingName);
 	return appConfigure;
-	
 };
 
 var loc_globalConfig = {
@@ -26,27 +24,17 @@ var loc_globalConfig = {
 	}
 };
 
-
 var loc_appSetting = {
-	global : {
-		appDecoration : [
-			{
-				coreFun: node_createAppDecoration,
-				id : "application"
-			}
-			],
-		__appDataService : function(parms){
-			return parms.dataService;
-		},
-		__storeService : function(parms){
-			return parms.storeService;
-		},
-		app : function(parms){
-			return parms.framework7App;
-		},
+	share : {
 	},
 	parts : {
 		application : {
+			appDecoration : [
+				{
+					coreFun: node_createAppDecoration,
+					id : "application"
+				}
+			],
 			"parts" : {
 				application : {
 					"root" : function(parms){

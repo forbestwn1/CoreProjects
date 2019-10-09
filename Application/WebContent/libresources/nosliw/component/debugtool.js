@@ -69,6 +69,11 @@ node_createDebugTool = function(views, resourceType, resourceId, ioInput, config
 						success : loc_resetComponent
 					});
 				}
+				else if(resourceType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY){
+					nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(100, loc_resetView.getResourceId(), loc_configure, loc_resetView.getInputIODataSet(), loc_stateBackupService, {
+						success : loc_resetComponent
+					});
+				}
 			}, resourceType, resourceId, ioInput);
 			$(resetView).append(loc_resetView.getView());
 		}

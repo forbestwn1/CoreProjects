@@ -20,41 +20,43 @@ var node_utility = function(){
 
 	var loc_out = {
 		
-		createAppDataSegmentId : function(){
-			return new Date().getMilliseconds() + "";
-		},
+		createAppDataSegmentId : function(){	return new Date().getMilliseconds() + "";	},
 			
-		getCurrentOwnerInfo : function(){
-			return nosliw.runtime.getSecurityService().getOwnerInfo();
-		},
+		getCurrentOwnerInfo : function(){	return nosliw.runtime.getSecurityService().getOwnerInfo();	},
 			
 		//find which application data this module depend on
-		getApplicationDataNames : function(moduleDef){
+		discoverApplicationDataDependency : function(moduleDef){
 			var out = [];
 			var dataDependency = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_DATADEPENDENCY];
 			for(var i in dataDependency){
 				var dataName = dataDependency[i];
-				if(dataName.startsWith(loc_appDataPrefex)){
-					out.push(dataName.substring(loc_appDataPrefex.length));
-				}
+				var coreName = loc_out.getApplicationDataCoreName(dataName);
+				if(coreName!=undefined)    out.push(coreName);
 			}
 			return out;
 		},
-			
-		getApplicationDataIOName : function(appDataName){
-			return loc_appDataPrefex+appDataName;
+		
+		getApplicationDataCoreName : function(appDataName){
+			if(appDataName.startsWith(loc_appDataPrefex)){
+				return dataName.substring(loc_appDataPrefex.length);
+			}
 		},
+		
+		//build application data name
+		buildApplicationDataName : function(appDataName){	return loc_appDataPrefex+appDataName;	},
 
 		buildApplicationModuleInfoRequest : function(moduleDef, uiApp, configureData, appDataService, handlers, request){
-			var appDataNames = loc_out.getApplicationDataNames(moduleDef);
+			var appDataNames = loc_out.discoverApplicationDataDependency(moduleDef);
 			
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			if(appDataNames.length==0){
+				//no application data dependency
 				out.addRequest(loc_out.buildModuleInfoRequest(moduleDef, uiApp, [], configureData, appDataService));
 			}
 			else{
 				out.addRequest(appDataService.getGetAppDataSegmentInfoRequest(loc_out.getCurrentOwnerInfo(), appDataNames, {
 					success : function(request, appDataInfosByName){
+						//app data infos
 						var appDatas = [];
 						_.each(appDataNames, function(appDataName, index){
 							var appDataInfos = appDataInfosByName[appDataName];
@@ -81,8 +83,10 @@ var node_utility = function(){
 			if(applicationDataInfo!=undefined) moduleInfo.applicationDataInfo = applicationDataInfo;
 			
 			moduleInfo.externalIO = node_createIODataSet();
-			moduleInfo.externalIO.setData(undefined, uiApp.getIOContext().generateIOData());
-			loc_out.buildModuleExternalAppDataIO(uiApp.getIOContext(), moduleInfo, appDataService, uiApp.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_APPLICATIONDATA]);
+			//build app context part as external io for module
+			moduleInfo.externalIO.setData(undefined, uiApp.getContextIODataSet().generateIOData());
+			//build application data part as external io for module
+			loc_out.buildModuleExternalAppDataIO(moduleInfo, appDataService, uiApp.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_APPLICATIONDATA]);
 			
 			loc_out.buildModuleInputMapping(moduleInfo);
 			moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];
@@ -103,17 +107,19 @@ var node_utility = function(){
 			return out;
 		},
 
-		buildModuleExternalAppDataIO : function(appIOContext, moduleInfo, appDataService, appDataDefs){
+		buildModuleExternalAppDataIO : function(moduleInfo, appDataService, appDataDefs){
 			_.each(moduleInfo.applicationDataInfo, function(appDataInfo, index){
 				loc_out.buildExternalDataIOForAppDataInfo(moduleInfo.externalIO, appDataInfo, appDataService, appDataDefs[appDataInfo.dataName]);
 			});
 		},
 		
-		buildExternalDataIOForAppDataInfo : function(externalIO, appDataInfo, appDataService, appDef){
-			var dataIOName = loc_out.getApplicationDataIOName(appDataInfo.dataName);
+		//build externalIO data set for external application data
+		buildExternalDataIOForAppDataInfo : function(externalIO, appDataInfo, appDataService, appDataDef){
+			var dataIOName = loc_out.buildApplicationDataName(appDataInfo.dataName);
 			externalIO.setData(dataIOName, node_createDynamicIOData(
-				function(handlers, request){
+				function(handlers, request){    //get value method
 					if(appDataInfo.persist==true){
+						//if persist, then got from database
 						var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 						out.addRequest(appDataService.getGetAppDataSegmentByIdRequest(loc_out.getCurrentOwnerInfo(), appDataInfo.dataName, appDataInfo.id, {
 							success : function(request, dataInfo){
@@ -123,16 +129,17 @@ var node_utility = function(){
 						return out;
 					}
 					else{
+						//otherwise, use default value
 						return node_createServiceRequestInfoSimple(undefined, function(request){
 							var out = {};
-							_.each(appDef[node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], function(ele, name){
+							_.each(appDataDef[node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], function(ele, name){
 								out[name] = ele[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFAULT];
 							});
 							return out;
 						}, handlers, request);
 					}
 				},
-				function(value, handlers, request){
+				function(value, handlers, request){    //set value method
 					if(appDataInfo.persist==true){
 						//modify
 						return appDataService.getUpdateAppDataSegmentRequest(appDataInfo.ownerInfo, appDataInfo.dataName, appDataInfo.id, value, handlers, request);
@@ -151,6 +158,8 @@ var node_utility = function(){
 			));
 		},
 
+		//build input io for module
+		//it is based on current input mapping
 		buildMoudleInputIO : function(moduleInfo){
 			var out = node_createIODataSet();
 			var dynamicData = node_createDynamicIOData(
@@ -170,6 +179,7 @@ var node_utility = function(){
 			moduleInfo.inputIO = out;
 		},
 		
+		//build all inputmapping, only one input mapping is current active
 		buildModuleInputMapping : function(moduleInfo){
 			var inputMappings = moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element;
 			var out = {};

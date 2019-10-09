@@ -8,6 +8,7 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+//information for app data segment. an element in app data array
 var node_ApplicationDataSegmentInfo = function(ownerInfo, dataName, dataId, dataVersion, persist){
 	this.ownerInfo = ownerInfo;
 	this.dataName = dataName;
@@ -17,6 +18,8 @@ var node_ApplicationDataSegmentInfo = function(ownerInfo, dataName, dataId, data
 	if(this.persist==undefined)   this.persist = true;
 };
 
+//app data segment
+//element in app data array
 var node_ApplicationDataSegment = function(data, dataId, dataVersion){
 	this.data = data;
 	this.id = dataId;

@@ -35,7 +35,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "elementEvents":[],
 "tagEvents":[],
 "attributes":{},
-"html":"&lt;div style=&quot;height:1500px&quot; nosliwid=&quot;801&quot;&gt;  &lt;br nosliwid=&quot;802&quot;&gt; &lt;span&gt; &lt;/span&gt; &lt;span style=&quot;color:green&quot; nosliwid=&quot;803&quot;&gt;&lt;span&gt;&#24403;&#21069;&#38453;&#23481;:&lt;/span&gt;&lt;/span&gt; &lt;span&gt; &lt;/span&gt; &lt;br nosliwid=&quot;804&quot;&gt;  &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;805-tag-start&quot;&gt;&lt;/nosliw&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;805-tag-end&quot;&gt;&lt;/nosliw&gt;  &lt;br nosliwid=&quot;811&quot;&gt; &lt;span&gt; &lt;/span&gt; &lt;span style=&quot;color:red&quot; nosliwid=&quot;812&quot;&gt;&lt;span&gt;Waiting List:&lt;/span&gt;&lt;/span&gt; &lt;span&gt; &lt;/span&gt; &lt;br nosliwid=&quot;813&quot;&gt;  &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;814-tag-start&quot;&gt;&lt;/nosliw&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;814-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;/div&gt;",
+"html":"&lt;div style=&quot;height:1500px&quot; nosliwid=&quot;970&quot;&gt;  &lt;br nosliwid=&quot;971&quot;&gt; &lt;span&gt; &lt;/span&gt; &lt;span style=&quot;color:green&quot; nosliwid=&quot;972&quot;&gt;&lt;span&gt;&#24403;&#21069;&#38453;&#23481;:&lt;/span&gt;&lt;/span&gt; &lt;span&gt; &lt;/span&gt; &lt;br nosliwid=&quot;973&quot;&gt;  &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;974-tag-start&quot;&gt;&lt;/nosliw&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;974-tag-end&quot;&gt;&lt;/nosliw&gt;  &lt;br nosliwid=&quot;980&quot;&gt; &lt;span&gt; &lt;/span&gt; &lt;span style=&quot;color:red&quot; nosliwid=&quot;981&quot;&gt;&lt;span&gt;Waiting List:&lt;/span&gt;&lt;/span&gt; &lt;span&gt; &lt;/span&gt; &lt;br nosliwid=&quot;982&quot;&gt;  &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;983-tag-start&quot;&gt;&lt;/nosliw&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;983-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;/div&gt;",
 "constants":{},
 "events":{},
 "commands":{},
@@ -205,7 +205,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "scriptExpressionsInContent":[],
 "scriptExpressionInAttributes":[],
 "scriptExpressionTagAttributes":[],
-"uiTags":{"805":{"tagName":"loop",
+"uiTags":{"974":{"tagName":"loop",
 "contextMapping":{},
 "tagContext":{"local2Global":{"lineup":"lineup___public",
 "index":"index___protected",
@@ -407,9 +407,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "attributes":{"data":"lineup.lineUp",
 "element":"spot",
 "index":"index",
-"nosliwid":"805"
+"nosliwid":"974"
 },
-"html":"&lt;span&gt; &lt;/span&gt;&lt;span nosliwid=&quot;806&quot;&gt;&lt;/span&gt;&lt;span&gt;.&amp;nbsp; &lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;807-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;807-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;810&quot;&gt;",
+"html":"&lt;span&gt; &lt;/span&gt;&lt;span nosliwid=&quot;975&quot;&gt;&lt;/span&gt;&lt;span&gt;.&amp;nbsp; &lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;976-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;976-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;979&quot;&gt;",
 "constants":{},
 "events":{},
 "commands":{},
@@ -420,7 +420,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"806",
+"uiId":"975",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -433,7 +433,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }],
 "scriptExpressionInAttributes":[],
 "scriptExpressionTagAttributes":[],
-"uiTags":{"807":{"tagName":"loop",
+"uiTags":{"976":{"tagName":"loop",
 "contextMapping":{},
 "tagContext":{"local2Global":{"lineup":"lineup___public",
 "index":"index___protected",
@@ -570,7 +570,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"id":"805",
+"id":"974",
 "type":"tag",
 "context":{"local2Global":{"lineup":"lineup___public",
 "index":"index___protected",
@@ -681,9 +681,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "attributes":{"data":"spot.players",
 "element":"player",
 "index":"index",
-"nosliwid":"807"
+"nosliwid":"976"
 },
-"html":"&lt;span&gt; &lt;/span&gt;&lt;span style=&quot;display:inline-block;width:140px;min-width:140px;max-width:140px;&quot; nosliwid=&quot;808&quot;&gt;&lt;span nosliwid=&quot;809&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;",
+"html":"&lt;span&gt; &lt;/span&gt;&lt;span style=&quot;display:inline-block;width:140px;min-width:140px;max-width:140px;&quot; nosliwid=&quot;977&quot;&gt;&lt;span nosliwid=&quot;978&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;",
 "constants":{},
 "events":{},
 "commands":{},
@@ -694,7 +694,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"809",
+"uiId":"978",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -717,7 +717,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "commandMapping":{},
 "serviceMapping":{}
 },
-"814":{"tagName":"loop",
+"983":{"tagName":"loop",
 "contextMapping":{},
 "tagContext":{"local2Global":{"lineup":"lineup___public",
 "index":"index___protected",
@@ -919,9 +919,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "attributes":{"data":"lineup.waitingList",
 "element":"spot",
 "index":"index",
-"nosliwid":"814"
+"nosliwid":"983"
 },
-"html":"&lt;span&gt; &lt;/span&gt;&lt;span nosliwid=&quot;815&quot;&gt;&lt;/span&gt;&lt;span&gt;.&amp;nbsp; &lt;/span&gt;&lt;span nosliwid=&quot;816&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;br nosliwid=&quot;817&quot;&gt;",
+"html":"&lt;span&gt; &lt;/span&gt;&lt;span nosliwid=&quot;984&quot;&gt;&lt;/span&gt;&lt;span&gt;.&amp;nbsp; &lt;/span&gt;&lt;span nosliwid=&quot;985&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;br nosliwid=&quot;986&quot;&gt;",
 "constants":{},
 "events":{},
 "commands":{},
@@ -932,7 +932,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"815",
+"uiId":"984",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -947,7 +947,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"816",
+"uiId":"985",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
