@@ -42,7 +42,7 @@ $(document).on("nosliwActive", function(){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_getStoreService = nosliw.getNodeData("component.getStoreService");
 	var node_createDebugTool = nosliw.getNodeData("component.debug.createDebugTool");
-	var node_createModuleConfigure = nosliw.getNodeData("uimodule.createModuleConfigure");
+	var node_createAppConfigure = nosliw.getNodeData("uiapp.createAppConfigure");
 	var node_createRequestStatusIndicatorUI = nosliw.getNodeData("request.ui.createRequestStatusIndicatorUI");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
 	var node_appDataService = nosliw.getNodeData("uiapp.appDataService");
@@ -59,7 +59,7 @@ $(document).on("nosliwActive", function(){
 		  },		
 	});
 		
-	var configure = node_createModuleConfigure(
+	var configure = node_createAppConfigure(
 			"application", 
 			{
 				mainModuleRoot : $('#appModuleDiv'),
@@ -83,7 +83,6 @@ $(document).on("nosliwActive", function(){
 });
 
 nosliw.init();
-
 
 </script>
 

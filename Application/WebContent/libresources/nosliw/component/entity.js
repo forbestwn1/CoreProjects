@@ -125,11 +125,11 @@ var node_CommandInfo = function(commandName, commandParm){
 	this.commandParm = commandParm;
 };
 
-var node_DecorationInfo = function(type, id, name, configureValue){
+var node_DecorationInfo = function(type, id, name, resource, configureValue){
 	this.id = id;
 	this.name = name;
 	this.configureValue = configureValue;
-	this.resource = undefined;        //resource
+	this.resource = resource;        //resource
 	this.decoration = undefined;		//object build from resource
 	if(this.name==undefined)   this.name = this.id;   
 };

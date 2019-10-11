@@ -7,7 +7,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
-	var node_createUIModuleComponentCoreRequest;
+	var node_createUIModuleComponentCore;
 	var node_makeObjectWithComponentLifecycle;
 	var node_makeObjectWithComponentManagementInterface;
 	var node_getComponentManagementInterface;
@@ -24,16 +24,14 @@ var packageObj = library;
 //runtime is the one that expose lifecycle and interface inteface
 var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, moduleDecorationInfos, uiDecorationConfigure, rootView, ioInput, state, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
-	out.addRequest(node_createUIModuleComponentCoreRequest(id, uiModuleDef, uiDecorationConfigure, ioInput, {
-		success : function(request, uiModuleCore){
-			var runtime = loc_createModuleRuntime(uiModuleCore, configure, moduleDecorationInfos, rootView, state, request);
-			return runtime.prv_getInitRequest({
-				success : function(request){
-					return request.getData();
-				}
-			}).withData(runtime);
+	
+	var uiModuleCore = node_createUIModuleComponentCore(id, uiModuleDef, uiDecorationConfigure, ioInput);
+	var runtime = loc_createModuleRuntime(uiModuleCore, configure, moduleDecorationInfos, rootView, state, request);
+	out.addRequest(runtime.prv_getInitRequest({
+		success : function(request){
+			return request.getData();
 		}
-	}));
+	}).withData(runtime));
 	return out;
 };
 
@@ -66,11 +64,12 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	
 	var loc_getProcessNameByLifecycle = function(lifecycleName){ return node_basicUtility.buildNosliwFullName(lifecycleName);	};
 	
+	//call back method for normal lifecycle change
 	var loc_getNormalLiefCycleCallBackRequestRequest = function(lifecycleName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getNormalLiefCycleCallBackRequestRequest", {}), handlers, request);
 		//clear backup state
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request)  }));
-		//start module 
+		//execute complex lifecycle call back
 		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
 		//execute process defined in module by handler name 
 		out.addRequest(loc_getExecuteModuleProcessByNameRequest(loc_getProcessNameByLifecycle(lifecycleName)));
@@ -193,7 +192,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("uimodule.createUIModuleComponentCoreRequest", function(){node_createUIModuleComponentCoreRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uimodule.createUIModuleComponentCore", function(){node_createUIModuleComponentCore = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});

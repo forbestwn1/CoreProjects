@@ -202,10 +202,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				if(loc_gate.getValueFromCore(node_CONSTANT.COMPONENT_VALUE_BACKUP)==true){
 					//get state data from store
 					out.addRequest(loc_gate.getComponentState().getRestoreStateRequest());
-					
-//					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-//						return loc_getRestoreStateDataRequest(loc_gate.retrieveState(request));
-//					}));
 				}
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){ 
@@ -217,10 +213,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				out.addRequest(loc_gate.getSaveStateDataForRollBackRequest());
 				//save state data to store
 				out.addRequest(loc_gate.getComponentState().getBackupStateRequest());
-
-//				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-//					loc_gate.saveState(request);
-//				}));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
 				out.addRequest(loc_gate.getSaveStateDataForRollBackRequest());

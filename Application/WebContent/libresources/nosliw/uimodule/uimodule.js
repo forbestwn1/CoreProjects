@@ -26,35 +26,11 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
-var node_createUIModuleComponentCoreRequest = function(id, uiModuleDef, uiDecorationConfigure, ioInput, handlers, request){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
-
-	var module = loc_createUIModuleComponentCore(id, uiModuleDef, ioInput);
-
-	//build module ui
-	var buildModuleUIsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
-		success : function(request, resultSet){
-			_.each(resultSet.getResults(), function(moduleUI, index){
-				module.prv_addUI(moduleUI);
-			});
-			return module;
-		}
-	});
-
-	// build uis
-	_.each(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(moduleUIDef, index){
-		var moduleUIId = moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];
-		buildModuleUIRequest = node_createModuleUIRequest(moduleUIDef, module.getContextIODataSet(), uiDecorationConfigure);
-		buildModuleUIsRequest.addRequest(index, buildModuleUIRequest);
-	});
-	out.addRequest(buildModuleUIsRequest);
-	
-	return out;
-};	
-	
-var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
+var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationConfigure, ioInput){
 	//input io used to get input value to initiate module
 	var loc_inputIO = ioInput;
+	
+	var loc_uiDecorationConfigure = uiDecorationConfigure;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -169,6 +145,41 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 		});
 	};
 
+	var loc_getBuildModuleUIRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", undefined), handlers, request);
+
+		//build module ui
+		var buildModuleUIsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
+			success : function(request, resultSet){
+				_.each(resultSet.getResults(), function(moduleUI, index){
+					loc_addUI(moduleUI);
+				});
+			}
+		});
+
+		// build uis
+		_.each(loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(moduleUIDef, index){
+			var moduleUIId = moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];
+			buildModuleUIRequest = node_createModuleUIRequest(moduleUIDef, loc_out.getContextIODataSet(), loc_uiDecorationConfigure);
+			buildModuleUIsRequest.addRequest(index, buildModuleUIRequest);
+		});
+		out.addRequest(buildModuleUIsRequest);
+		return out;
+	};
+	
+	var loc_addUI = function(ui){
+		loc_out.prv_componentData.uiArray.push(ui);
+		loc_out.prv_componentData.ui[ui.getId()] = ui;
+		//register listener for module ui
+		ui.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
+			loc_trigueEvent(node_CONSTANT.MODULE_EVENT_UIEVENT, new node_uiEventData(this.getId(), eventName, eventData), requestInfo);
+		}, ui);
+		ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
+			//handle ui value change, update value in module
+			this.executeSynOutDataRequest(undefined, undefined, requestInfo);
+		}, ui);
+	};
+
 	var loc_out = {
 		prv_componentData : {
 			id : id,              //
@@ -184,19 +195,6 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 			ui : {},
 		},
 		
-		prv_addUI : function(ui){
-			loc_out.prv_componentData.uiArray.push(ui);
-			loc_out.prv_componentData.ui[ui.getId()] = ui;
-			//register listener for module ui
-			ui.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
-				loc_trigueEvent(node_CONSTANT.MODULE_EVENT_UIEVENT, new node_uiEventData(this.getId(), eventName, eventData), requestInfo);
-			}, ui);
-			ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
-				//handle ui value change, update value in module
-				this.executeSynOutDataRequest(undefined, undefined, requestInfo);
-			}, ui);
-		},
-	
 		getId : function(){  return loc_out.prv_componentData.id;  },
 		
 		getContextIODataSet : function(){  return loc_out.prv_componentData.contextDataSet;  },
@@ -240,6 +238,7 @@ var loc_createUIModuleComponentCore = function(id, uiModuleDef, ioInput){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
 				//reset context io
+				out.addRequest(loc_getBuildModuleUIRequest());
 				out.addRequest(loc_getInitIOContextRequest());
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE){
@@ -320,6 +319,6 @@ nosliw.registerSetNodeDataEvent("component.createComponentState", function(){nod
 
 
 //Register Node by Name
-packageObj.createChildNode("createUIModuleComponentCoreRequest", node_createUIModuleComponentCoreRequest); 
+packageObj.createChildNode("createUIModuleComponentCore", node_createUIModuleComponentCore); 
 
 })(packageObj);

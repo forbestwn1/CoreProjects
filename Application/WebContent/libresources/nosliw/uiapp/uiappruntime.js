@@ -9,7 +9,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
-	var node_createApp;
+	var node_createUIAppComponentCore;
 	var node_createComponentCoreComplex;
 	var node_makeObjectWithComponentLifecycle;
 	var node_makeObjectWithComponentManagementInterface;
@@ -20,7 +20,7 @@ var packageObj = library;
 
 var node_createAppRuntimeRequest = function(id, appDef, configure, componentDecorationInfos, ioInput, state, handlers, request){
 	var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("createUIModule"), function(request){
-		var app = node_createApp(id, appDef, ioInput);
+		var app = node_createUIAppComponentCore(id, appDef, ioInput);
 		var runtime = node_createAppRuntime(app, configure, componentDecorationInfos, state, request);
 		return runtime.prv_getInitRequest({
 			success : function(request){
@@ -31,33 +31,30 @@ var node_createAppRuntimeRequest = function(id, appDef, configure, componentDeco
 	return out;
 };
 	
-var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos, state, request){
+var node_createAppRuntime = function(uiAppCore, configure, componentDecorationInfos, state, request){
 	
 	var loc_state = state;
-	var loc_componentComplex;
-	
-	var loc_localStore = configure.getConfigureValue().__storeService;
-	var loc_applicationDataService = configure.getConfigureValue().__appDataService;
+	var loc_componentCoreComplex;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
-	var loc_init = function(uiApp, configure, componentDecorationInfos, satte){
-		loc_componentComplex = node_createComponentCoreComplex(configure, loc_componentEnv, state);
-		loc_componentComplex.setCore(uiApp);
-		loc_componentComplex.addDecorations(componentDecorationInfos);
+	var loc_init = function(uiAppCore, configure, componentDecorationInfos, state){
+		loc_componentCoreComplex = node_createComponentCoreComplex(configure, loc_componentEnv, state);
+		loc_componentCoreComplex.setCore(uiAppCore);
+		loc_componentCoreComplex.addDecorations(componentDecorationInfos);
 	};
 	
-	var loc_getContextIODataSet = function(){  return loc_out.prv_getComponent().getIOContext();   };
-	
-	var loc_getProcessEnv = function(){   return loc_componentComplex.getInterface();    };
+	var loc_getAppCore = function(){   return loc_componentCoreComplex.getCore();   };
+	var loc_getContextIODataSet = function(){  return loc_getAppCore().getContextIODataSet();   };
+	var loc_getProcessEnv = function(){   return loc_componentCoreComplex.getInterface();    };
 	
 	var loc_getExecuteAppProcessRequest = function(process, extraInput, handlers, request){
-		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteEmbededProcessRequest(process, loc_out.prv_getComponent().getIOContext(), extraInput, handlers, request);
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteEmbededProcessRequest(process, loc_getContextIODataSet(), extraInput, handlers, request);
 	};
 	
 	var loc_getExecuteAppProcessByNameRequest = function(processName, extraInput, handlers, request){
-		var process = loc_out.prv_getComponent().getProcess(processName);
+		var process = loc_getAppCore().getProcess(processName);
 		if(process!=undefined)  return loc_getExecuteAppProcessRequest(process, extraInput, handlers, request);
 	};
 
@@ -70,9 +67,16 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos,
 		//start module 
 		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
 		//execute process defined in module by handler name 
-		out.addRequest(loc_getExecuteModuleProcessByNameRequest(loc_getProcessNameByLifecycle(lifecycleName)));
+		out.addRequest(loc_getExecuteAppProcessByNameRequest(loc_getProcessNameByLifecycle(lifecycleName)));
 		return out;
 	};
+	
+	var loc_clearBackupState = function(request){
+		//clear backup flag
+		loc_getAppCore().setValue(node_CONSTANT.COMPONENT_VALUE_BACKUP, undefined);
+		//clear backup data
+		loc_state.clear(request); 
+	}
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
@@ -80,7 +84,7 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos,
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			var stateData = loc_state.getStateValue(request);
 			if(stateData!=undefined){
-				loc_getModuleCore().setValue(node_CONSTANT.COMPONENT_VALUE_BACKUP, true);    //use backup mode
+				loc_getAppCore().setValue(node_CONSTANT.COMPONENT_VALUE_BACKUP, true);    //use backup mode
 				//only call lifecycle, not process
 				return loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE, {
 					success : function(request){
@@ -131,9 +135,9 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos,
 		//process request
 		processRequest : function(request){  node_requestServiceProcessor.processRequest(request); },
 		//execute process
-		getExecuteProcessRequest : function(process, extraInput, handlers, request){  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);  },
+		getExecuteProcessRequest : function(process, extraInput, handlers, request){  return loc_getExecuteAppProcessRequest(process, extraInput, handlers, request);  },
 		//execute process
-		getExecuteProcessResourceRequest : function(processId, input, handlers, request){  return loc_getExecuteModuleProcessByNameRequest(processId, extraInput, handlers, request);  },
+		getExecuteProcessResourceRequest : function(processId, input, handlers, request){  return loc_getExecuteAppProcessByNameRequest(processId, extraInput, handlers, request);  },
 	};
 
 	var loc_out = {
@@ -143,13 +147,9 @@ var node_createAppRuntime = function(uiApp, configure, componentDecorationInfos,
 			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
 			return out;
 		},
-	
-		prv_getComponent : function(){  return loc_componentComplex.getComponent();   },
-
-		getInterface : function(){   return node_getComponentManagementInterface(loc_out);  },
 	};
 	
-	loc_init(uiApp, configure, componentDecorationInfos, state);
+	loc_init(uiAppCore, configure, componentDecorationInfos, state);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_interfaceDelegate, loc_out);
@@ -168,7 +168,7 @@ nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("uiapp.createApp", function(){node_createApp = this.getData();	});
+nosliw.registerSetNodeDataEvent("uiapp.createUIAppComponentCore", function(){node_createUIAppComponentCore = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.createComponentCoreComplex", function(){node_createComponentCoreComplex = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});

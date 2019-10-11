@@ -35,7 +35,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "elementEvents":[],
 "tagEvents":[],
 "attributes":{},
-"html":"&lt;div style=&quot;height:1500px&quot; nosliwid=&quot;970&quot;&gt;  &lt;br nosliwid=&quot;971&quot;&gt; &lt;span&gt; &lt;/span&gt; &lt;span style=&quot;color:green&quot; nosliwid=&quot;972&quot;&gt;&lt;span&gt;&#24403;&#21069;&#38453;&#23481;:&lt;/span&gt;&lt;/span&gt; &lt;span&gt; &lt;/span&gt; &lt;br nosliwid=&quot;973&quot;&gt;  &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;974-tag-start&quot;&gt;&lt;/nosliw&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;974-tag-end&quot;&gt;&lt;/nosliw&gt;  &lt;br nosliwid=&quot;980&quot;&gt; &lt;span&gt; &lt;/span&gt; &lt;span style=&quot;color:red&quot; nosliwid=&quot;981&quot;&gt;&lt;span&gt;Waiting List:&lt;/span&gt;&lt;/span&gt; &lt;span&gt; &lt;/span&gt; &lt;br nosliwid=&quot;982&quot;&gt;  &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;983-tag-start&quot;&gt;&lt;/nosliw&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;983-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;/div&gt;",
+"html":"&lt;div style=&quot;height:1500px&quot; nosliwid=&quot;19&quot;&gt;  &lt;br nosliwid=&quot;20&quot;&gt; &lt;span&gt; &lt;/span&gt; &lt;span style=&quot;color:green&quot; nosliwid=&quot;21&quot;&gt;&lt;span&gt;&#24403;&#21069;&#38453;&#23481;:&lt;/span&gt;&lt;/span&gt; &lt;span&gt; &lt;/span&gt; &lt;br nosliwid=&quot;22&quot;&gt;  &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;23-tag-start&quot;&gt;&lt;/nosliw&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;23-tag-end&quot;&gt;&lt;/nosliw&gt;  &lt;br nosliwid=&quot;29&quot;&gt; &lt;span&gt; &lt;/span&gt; &lt;span style=&quot;color:red&quot; nosliwid=&quot;30&quot;&gt;&lt;span&gt;Waiting List:&lt;/span&gt;&lt;/span&gt; &lt;span&gt; &lt;/span&gt; &lt;br nosliwid=&quot;31&quot;&gt;  &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;32-tag-start&quot;&gt;&lt;/nosliw&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;32-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;/div&gt;",
 "constants":{},
 "events":{},
 "commands":{},
@@ -205,7 +205,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "scriptExpressionsInContent":[],
 "scriptExpressionInAttributes":[],
 "scriptExpressionTagAttributes":[],
-"uiTags":{"974":{"tagName":"loop",
+"uiTags":{"23":{"tagName":"loop",
 "contextMapping":{},
 "tagContext":{"local2Global":{"lineup":"lineup___public",
 "index":"index___protected",
@@ -407,9 +407,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "attributes":{"data":"lineup.lineUp",
 "element":"spot",
 "index":"index",
-"nosliwid":"974"
+"nosliwid":"23"
 },
-"html":"&lt;span&gt; &lt;/span&gt;&lt;span nosliwid=&quot;975&quot;&gt;&lt;/span&gt;&lt;span&gt;.&amp;nbsp; &lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;976-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;976-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;979&quot;&gt;",
+"html":"&lt;span&gt; &lt;/span&gt;&lt;span nosliwid=&quot;24&quot;&gt;&lt;/span&gt;&lt;span&gt;.&amp;nbsp; &lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;25-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;25-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;28&quot;&gt;",
 "constants":{},
 "events":{},
 "commands":{},
@@ -420,7 +420,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"975",
+"uiId":"24",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -433,7 +433,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }],
 "scriptExpressionInAttributes":[],
 "scriptExpressionTagAttributes":[],
-"uiTags":{"976":{"tagName":"loop",
+"uiTags":{"25":{"tagName":"loop",
 "contextMapping":{},
 "tagContext":{"local2Global":{"lineup":"lineup___public",
 "index":"index___protected",
@@ -570,7 +570,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"id":"974",
+"id":"23",
 "type":"tag",
 "context":{"local2Global":{"lineup":"lineup___public",
 "index":"index___protected",
@@ -681,9 +681,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "attributes":{"data":"spot.players",
 "element":"player",
 "index":"index",
-"nosliwid":"976"
+"nosliwid":"25"
 },
-"html":"&lt;span&gt; &lt;/span&gt;&lt;span style=&quot;display:inline-block;width:140px;min-width:140px;max-width:140px;&quot; nosliwid=&quot;977&quot;&gt;&lt;span nosliwid=&quot;978&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;",
+"html":"&lt;span&gt; &lt;/span&gt;&lt;span style=&quot;display:inline-block;width:140px;min-width:140px;max-width:140px;&quot; nosliwid=&quot;26&quot;&gt;&lt;span nosliwid=&quot;27&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;",
 "constants":{},
 "events":{},
 "commands":{},
@@ -694,7 +694,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"978",
+"uiId":"27",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -717,7 +717,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "commandMapping":{},
 "serviceMapping":{}
 },
-"983":{"tagName":"loop",
+"32":{"tagName":"loop",
 "contextMapping":{},
 "tagContext":{"local2Global":{"lineup":"lineup___public",
 "index":"index___protected",
@@ -919,9 +919,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "attributes":{"data":"lineup.waitingList",
 "element":"spot",
 "index":"index",
-"nosliwid":"983"
+"nosliwid":"32"
 },
-"html":"&lt;span&gt; &lt;/span&gt;&lt;span nosliwid=&quot;984&quot;&gt;&lt;/span&gt;&lt;span&gt;.&amp;nbsp; &lt;/span&gt;&lt;span nosliwid=&quot;985&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;br nosliwid=&quot;986&quot;&gt;",
+"html":"&lt;span&gt; &lt;/span&gt;&lt;span nosliwid=&quot;33&quot;&gt;&lt;/span&gt;&lt;span&gt;.&amp;nbsp; &lt;/span&gt;&lt;span nosliwid=&quot;34&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;br nosliwid=&quot;35&quot;&gt;",
 "constants":{},
 "events":{},
 "commands":{},
@@ -932,7 +932,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"984",
+"uiId":"33",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -947,7 +947,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"985",
+"uiId":"34",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 

@@ -14,10 +14,11 @@ var packageObj = library;
 	var node_ModuleEventData;
 	var node_ModuleInfo;
 	var node_ApplicationDataInfo;
+	var node_createComponentState;
 	
 //*******************************************   Start Node Definition  **************************************
 
-var node_createApp = function(id, appDef, ioInput){
+var node_createUIAppComponentCore = function(id, appDef, ioInput){
 	var loc_ioInput = ioInput;
 	
 	var loc_partMatchers = node_createPatternMatcher([
@@ -43,8 +44,8 @@ var node_createApp = function(id, appDef, ioInput){
 	};
 	
 	var loc_initContextIODataSet = function(input){
-		var data = loc_out.prv_app.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_INITSCRIPT](input);
-		loc_out.prv_app.contextDataSet.setData(undefined, data);
+		var data = loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_INITSCRIPT](input);
+		loc_out.prv_componentData.contextDataSet.setData(undefined, data);
 	};
 
 	var loc_getInitIOContextRequest = function(handlers, request){
@@ -78,7 +79,7 @@ var node_createApp = function(id, appDef, ioInput){
 
 	var loc_out = {
 
-		prv_app : {
+		prv_componentData : {
 			id : id,
 			componentDef : appDef,
 			contextDataSet : node_createIODataSet(),
@@ -89,14 +90,14 @@ var node_createApp = function(id, appDef, ioInput){
 			currentModuleByRole : {},
 		},
 			
-		getId : function(){  return loc_out.prv_app.id;  },
+		getId : function(){  return loc_out.prv_componentData.id;  },
 		
-		getContextIODataSet : function(){  return loc_out.prv_app.contextDataSet;  },
+		getContextIODataSet : function(){  return loc_out.prv_componentData.contextDataSet;  },
 		
-		getProcess : function(name){  return loc_out.prv_app.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][name];  },
+		getProcess : function(name){  return loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][name];  },
 
 		getEventHandler : function(moduleName, eventName){
-			var moduleDef = loc_out.prv_app.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE][moduleName];
+			var moduleDef = loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE][moduleName];
 			return moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_EVENTHANDLER][eventName];
 		},
 
@@ -104,10 +105,10 @@ var node_createApp = function(id, appDef, ioInput){
 			var role = moduleInfo.role;
 			var module = moduleInfo.module;
 			
-			var modules = loc_out.prv_app.modulesByRole[role];
+			var modules = loc_out.prv_componentData.modulesByRole[role];
 			if(modules==undefined){
 				modules = [];
-				loc_out.prv_app.modulesByRole[role] = modules;
+				loc_out.prv_componentData.modulesByRole[role] = modules;
 			}
 			modules.push(moduleInfo);
 			loc_out.setCurrentModuleInfo(role, moduleInfo.id);
@@ -118,8 +119,8 @@ var node_createApp = function(id, appDef, ioInput){
 		},
 		
 		removeModuleInfo : function(role, moduleId){
-			var modules = loc_out.prv_app.modulesByRole[role];
-			var currentId = loc_out.prv_app.currentModuleByRole[role];
+			var modules = loc_out.prv_componentData.modulesByRole[role];
+			var currentId = loc_out.prv_componentData.currentModuleByRole[role];
 			for(var index in modules){
 				if(moduleId==modules[index].id){
 					break;
@@ -127,8 +128,8 @@ var node_createApp = function(id, appDef, ioInput){
 			}
 			
 			if(currentId==moduleId){
-				if(index-1>=0)		loc_out.prv_app.currentModuleByRole[role] = modules[index-1].id;
-				else loc_out.prv_app.currentModuleByRole[role] = undefined;
+				if(index-1>=0)		loc_out.prv_componentData.currentModuleByRole[role] = modules[index-1].id;
+				else loc_out.prv_componentData.currentModuleByRole[role] = undefined;
 			}
 			
 			modules.splice(index, 1);
@@ -136,11 +137,11 @@ var node_createApp = function(id, appDef, ioInput){
 		
 		getCurrentModuleInfo : function(role){	return loc_out.getModuleInfo(role);	},
 		
-		setCurrentModuleInfo : function(role, moduleId){	loc_out.prv_app.currentModuleByRole[role] = moduleId;	},
+		setCurrentModuleInfo : function(role, moduleId){	loc_out.prv_componentData.currentModuleByRole[role] = moduleId;	},
 		
 		getAllModuleInfo : function(){
 			var out = [];
-			_.each(loc_out.prv_app.modulesByRole, function(modulesByRole, role){
+			_.each(loc_out.prv_componentData.modulesByRole, function(modulesByRole, role){
 				_.each(modulesByRole, function(moduleInfo){
 					out.push(moduleInfo);
 				});
@@ -150,26 +151,28 @@ var node_createApp = function(id, appDef, ioInput){
 		
 		getModuleInfo : function(role, id){
 			if(id==undefined){
-				id = loc_out.prv_app.currentModuleByRole[role];
+				id = loc_out.prv_componentData.currentModuleByRole[role];
 			}
-			var modules = loc_out.prv_app.modulesByRole[role];
+			var modules = loc_out.prv_componentData.modulesByRole[role];
 			for(var i in modules){
 				if(modules[i].id==id)  return modules[i];
 			}
 		},
 		
 		clearModuleInfo : function(){
-			loc_out.prv_app.modulesByRole = {};
-			loc_out.prv_app.currentModuleByRole = {};
+			loc_out.prv_componentData.modulesByRole = {};
+			loc_out.prv_componentData.currentModuleByRole = {};
 		},
 		
 //component core interface method		
-		getInterface : {
-			getPart : function(partId){  return loc_out.getPart(partId);	},
-
-			getExecutePartCommandRequest : function(partId, commandName, commandData, handlers, requestInfo){
-				return this.getPart(partId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
-			},
+		getInterface : function(){
+			return {
+				getPart : function(partId){  return loc_out.getPart(partId);	},
+	
+				getExecutePartCommandRequest : function(partId, commandName, commandData, handlers, requestInfo){
+					return this.getPart(partId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+				},
+			}
 		},
 
 		getValue : function(name){  return loc_out.prv_componentData.valueByName[name];    },
@@ -248,8 +251,9 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("uiapp.ModuleEventData", function(){node_ModuleEventData = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataInfo", function(){node_ApplicationDataInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createComponentState", function(){node_createComponentState = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createApp", node_createApp); 
+packageObj.createChildNode("createUIAppComponentCore", node_createUIAppComponentCore); 
 
 })(packageObj);

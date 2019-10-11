@@ -32,10 +32,10 @@ var node_createAppDecoration = function(gate){
 	var loc_appDataService = loc_configureData.__appDataService;
 	
 	var loc_getModuleConfigureData = function(role){
-		return node_createConfigure(loc_configureData).getConfigureData(role);
+		return node_createConfigure(loc_configureData).getChildConfigure("modules", role);
 	};
 	
-	var loc_settingParentView = loc_getModuleConfigureData(ROLE_SETTING).global.root;
+	var loc_settingParentView = loc_getModuleConfigureData(ROLE_SETTING).root;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
