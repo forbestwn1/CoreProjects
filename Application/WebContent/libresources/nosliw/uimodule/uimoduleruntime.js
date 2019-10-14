@@ -22,10 +22,10 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //runtime is the one that expose lifecycle and interface inteface
-var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, moduleDecorationInfos, uiDecorationConfigure, rootView, ioInput, state, handlers, request){
+var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, moduleDecorationInfos, uiDecorationInfos, rootView, ioInput, state, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
 	
-	var uiModuleCore = node_createUIModuleComponentCore(id, uiModuleDef, uiDecorationConfigure, ioInput);
+	var uiModuleCore = node_createUIModuleComponentCore(id, uiModuleDef, uiDecorationInfos, ioInput);
 	var runtime = loc_createModuleRuntime(uiModuleCore, configure, moduleDecorationInfos, rootView, state, request);
 	out.addRequest(runtime.prv_getInitRequest({
 		success : function(request){
@@ -127,16 +127,6 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE, request);
 	};	
 
-	//component management interface object 
-	var loc_interfaceDelegate = {
-		getContextIODataSet :  function(){  return loc_getContextIODataSet();  },
-		getExecuteCommandRequest : function(command, parms, handlers, request){  return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);    },
-		registerEventListener : function(listener, handler, thisContext){  return loc_componentCoreComplex.registerEventListener(listener, handler, thisContext);   },
-		unregisterEventListener : function(listener){   return loc_componentCoreComplex.unregisterEventListener(listener);  },
-		registerValueChangeEventListener : function(listener, handler, thisContext){   return loc_componentCoreComplex.registerValueChangeEventListener(listener, handler, thisContext);   },
-		unregisterValueChangeEventListener : function(listener){   return loc_componentCoreComplex.unregisterValueChangeEventListener(listener);    }
-	};
-	
 	//environment for component complex
 	var loc_componentEnv = {
 		//process request
@@ -147,6 +137,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		getExecuteProcessResourceRequest : function(processId, input, handlers, request){  return loc_getExecuteModuleProcessByNameRequest(processId, extraInput, handlers, request);  },
 	};
 
+	//call back when start a statemachine task
 	var loc_lifecycleTaskCallback = {
 		startTask : function(){		loc_componentCoreComplex.startLifecycleTask();	},
 		endTask : function(){		loc_componentCoreComplex.endLifecycleTask();	}
@@ -165,8 +156,13 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 			return out;
 		},
 
-		getExecuteCommandRequest : function(command, parms, handlers, request){	return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);	},
-		
+		//component management interface 
+		getContextIODataSet :  function(){  return loc_getContextIODataSet();  },
+		getExecuteCommandRequest : function(command, parms, handlers, request){  return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);    },
+		registerEventListener : function(listener, handler, thisContext){  return loc_componentCoreComplex.registerEventListener(listener, handler, thisContext);   },
+		unregisterEventListener : function(listener){   return loc_componentCoreComplex.unregisterEventListener(listener);  },
+		registerValueChangeEventListener : function(listener, handler, thisContext){   return loc_componentCoreComplex.registerValueChangeEventListener(listener, handler, thisContext);   },
+		unregisterValueChangeEventListener : function(listener){   return loc_componentCoreComplex.unregisterValueChangeEventListener(listener);    }
 	};
 	
 	loc_init(uiModuleCore, configure, componentDecorationInfos, rootView, state, request);
@@ -179,7 +175,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		}
 	});
 	
-	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_interfaceDelegate, loc_out);
+	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_out, loc_out);
 
 	return loc_out;
 };

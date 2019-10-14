@@ -14,6 +14,7 @@ var packageObj = library.getChildPackage("service");
 	var node_requestServiceProcessor;
 	var node_createAppRuntimeRequest;
 	var node_getObjectType;
+	var node_componentUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -25,13 +26,15 @@ var node_createUIAppService = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIAppResource"), handlers, request);
 
 			//build app decoration info array from module configure
-			var appDecInfos = [];
-			var decConfigurePath = 'appDecoration';
-			var appDecIdSet = configure.getChildrenIdSet(decConfigurePath);
-			_.each(appDecIdSet, function(appDecId, i){
-				var appDecConfigureValue = configure.getChildConfigureValue(decConfigurePath, appDecId);
-				appDecInfos.push(new node_DecorationInfo(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPDECORATION, appDecConfigureValue.id, appDecConfigureValue.name, appDecConfigureValue.resource, appDecConfigureValue));
-			});
+			var appDecInfos = node_componentUtility.buildDecorationInfoArrayFromConfigure(configure, 'appDecoration', node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPDECORATION);
+
+//			var appDecInfos = [];
+//			var decConfigurePath = 'appDecoration';
+//			var appDecIdSet = configure.getChildrenIdSet(decConfigurePath);
+//			_.each(appDecIdSet, function(appDecId, i){
+//				var appDecConfigureValue = configure.getChildConfigureValue(decConfigurePath, appDecId);
+//				appDecInfos.push(new node_DecorationInfo(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPDECORATION, appDecConfigureValue.id, appDecConfigureValue.name, appDecConfigureValue.resource, appDecConfigureValue));
+//			});
 
 			out.addRequest(node_loadComponentResourceRequest(
 				typeof app === 'string'? 
@@ -87,6 +90,7 @@ nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_cre
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.createAppRuntimeRequest", function(){node_createAppRuntimeRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIAppService", node_createUIAppService); 

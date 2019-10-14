@@ -38,45 +38,17 @@ var node_utility = function(){
 		
 		getApplicationDataCoreName : function(appDataName){
 			if(appDataName.startsWith(loc_appDataPrefex)){
-				return dataName.substring(loc_appDataPrefex.length);
+				return appDataName.substring(loc_appDataPrefex.length);
 			}
 		},
 		
 		//build application data name
 		buildApplicationDataName : function(appDataName){	return loc_appDataPrefex+appDataName;	},
 
-		buildApplicationModuleInfoRequest : function(moduleDef, uiApp, configureData, appDataService, handlers, request){
-			var appDataNames = loc_out.discoverApplicationDataDependency(moduleDef);
-			
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			if(appDataNames.length==0){
-				//no application data dependency
-				out.addRequest(loc_out.buildModuleInfoRequest(moduleDef, uiApp, [], configureData, appDataService));
-			}
-			else{
-				out.addRequest(appDataService.getGetAppDataSegmentInfoRequest(loc_out.getCurrentOwnerInfo(), appDataNames, {
-					success : function(request, appDataInfosByName){
-						//app data infos
-						var appDatas = [];
-						_.each(appDataNames, function(appDataName, index){
-							var appDataInfos = appDataInfosByName[appDataName];
-							if(appDataInfos==undefined || appDataInfos.length==0){
-								appDatas.push(new node_ApplicationDataSegmentInfo(loc_out.getCurrentOwnerInfo(), appDataName, loc_out.createAppDataSegmentId(), "", false));
-							}
-							else{
-								appDatas.push(appDataInfos[0]);
-							}
-						});
-						return loc_out.buildModuleInfoRequest(moduleDef, uiApp, appDatas, configureData, appDataService);
-					}
-				}));
-			}
-			return out;
-		},
-		
-		buildModuleInfoRequest : function(moduleDef, uiApp, applicationDataInfo, configureData, appDataService, handlers, request){
+		buildModuleInfoRequest : function(moduleDef, uiApp, applicationDataInfo, configure, appDataService, state, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
+			var configureData = configure.getConfigureValue();
 			var moduleInfo = new node_ModuleInfo(moduleDef);
 			moduleInfo.root = configureData.root;
 			moduleInfo.id = uiApp.getId()+"."+nosliw.generateId();
@@ -96,7 +68,7 @@ var node_utility = function(){
 //				moduleInfo.name = applicationDataInfo[0].version;
 //			}
 			
-			out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleInfo.id, moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], configureData, moduleInfo.inputIO, {
+			out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleInfo.id, moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], configure, moduleInfo.inputIO, state.createChildState(moduleInfo.id), {
 				success : function(requestInfo, uiModuleRuntime){
 					moduleInfo.module = uiModuleRuntime;
 					loc_out.buildModuleOutputMapping(moduleInfo);

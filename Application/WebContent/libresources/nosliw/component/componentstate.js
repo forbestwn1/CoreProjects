@@ -30,6 +30,7 @@ var node_createComponentState = function(state, getGetStateDataRequest, getResto
 	
 	var loc_out = {
 		setState : function(state){		loc_state = state;	},
+		getState : function(){  return loc_state;   },
 		
 		//backup component to state
 		getBackupStateRequest : function(handlers, request){
@@ -252,7 +253,7 @@ var loc_createChildState = function(parent, path){
 		clear : function(request){		loc_out.setStateValue(undefined, request);		},
 
 		//create child state by path
-		createChildState : function(path){		return node_createChildState(loc_out, path);	},
+		createChildState : function(path){		return loc_createChildState(loc_out, path);	},
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_STATE);

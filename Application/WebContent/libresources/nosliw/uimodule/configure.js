@@ -36,11 +36,14 @@ var loc_moduleSetting = {
 	
 	parts : {
 		test : {
-			uiDecoration : [
-				{
-					id: 'Decoration_setting_framework7'
-				}
-			],
+			uiDecoration :
+			{
+				parts : [
+					{
+						id: 'Decoration_setting_framework7'
+					}
+				] 
+			},
 			moduleDecoration : 
 			{
 				parts : [
@@ -54,11 +57,14 @@ var loc_moduleSetting = {
 			},
 		},
 		setting : {
-			uiDecoration : [
-				{
-					id: 'Decoration_setting_framework7'
-				}
-			],
+			uiDecoration : 
+			{
+				parts : [
+					{
+						id: 'Decoration_setting_framework7'
+					}
+				] 
+			},
 			moduleDecoration : 
 			{
 				parts : [
@@ -72,11 +78,14 @@ var loc_moduleSetting = {
 			},
 		},
 		application : {
-			uiDecoration : [
-				{
-					id: 'Decoration_application_header_framework7'
-				}
-			],
+			uiDecoration : 
+			{
+				parts : [
+					{
+						id: 'Decoration_application_header_framework7'
+					}
+				] 
+			},
 			moduleDecoration : 
 			{
 				parts : [

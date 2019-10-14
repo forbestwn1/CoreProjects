@@ -35,7 +35,7 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleContextIODataSet, e
 			var uiDecorationInfos = [];
 			//ui decoration from internal module ui
 			_.each(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_UIDECORATION], function(decInfo, i){
-				uiDecorationInfos.push(new node_DecorationInfo(undefined, decInfo[node_COMMONATRIBUTECONSTANT.INFODECORATION_ID], undefined, decInfo[node_COMMONATRIBUTECONSTANT.INFODECORATION_CONFIGURE]));
+				uiDecorationInfos.push(new node_DecorationInfo(undefined, decInfo[node_COMMONATRIBUTECONSTANT.INFODECORATION_ID], undefined, undefined, node_createConfigure(decInfo[node_COMMONATRIBUTECONSTANT.INFODECORATION_CONFIGURE])));
 			});
 
 			//ui decoration from external module ui
@@ -75,7 +75,7 @@ var loc_buildUIDecorationInfosRequest = function(decorationInfos, handlers, requ
 	
 var loc_buildUIDecorationRequest = function(decorationInfo, handlers, request){
 	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-	out.addRequest(node_createUIDecorationRequest(decorationInfo.id, decorationInfo.configureValue, {
+	out.addRequest(node_createUIDecorationRequest(decorationInfo.id, decorationInfo.configure.getConfigureValue(), {
 		success : function(request, decoration){
 			decorationInfo.decoration = decoration;
 			return decorationInfo;

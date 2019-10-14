@@ -28,26 +28,53 @@ var node_createAppDecoration = function(gate){
 	var loc_gate = gate;
 	var loc_uiApp = loc_gate.getComponentCore();
 	var loc_uiAppDef = loc_uiApp.prv_componentData.componentDef;
-	var loc_configureData = loc_gate.getConfigureValue();
+	var loc_configure = loc_gate.getConfigure();
+	var loc_configureData = loc_configure.getConfigureValue();
 	var loc_appDataService = loc_configureData.__appDataService;
 	
-	var loc_getModuleConfigureData = function(role){
-		return node_createConfigure(loc_configureData).getChildConfigure("modules", role);
-	};
+	var loc_getModuleConfigure = function(role){	return loc_configure.getChildConfigure("modules", role);	};
 	
-	var loc_settingParentView = loc_getModuleConfigureData(ROLE_SETTING).root;
+//	var loc_settingParentView = loc_getModuleConfigureData(ROLE_SETTING).root;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 
-	var loc_createSettingModuleRequest = function(moduleDef, dataInfo, handlers, request){
+	var loc_buildApplicationModuleInfoRequest = function(moduleName, moduleDef, configure, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		var appDataNames = node_appUtility.discoverApplicationDataDependency(moduleDef);   //app names that this module depend on
+		if(appDataNames.length==0){
+			//no application data dependency
+			out.addRequest(loc_uiApp.buildModuleInfoRequest(moduleName, [], configure));
+		}
+		else{
+			out.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest(node_appUtility.getCurrentOwnerInfo(), appDataNames, {
+				success : function(request, appDataInfosByName){
+					//app data infos
+					var appDatas = [];
+					_.each(appDataNames, function(appDataName, index){
+						var appDataInfos = appDataInfosByName[appDataName];
+						if(appDataInfos==undefined || appDataInfos.length==0){
+							appDatas.push(new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "", false));
+						}
+						else{
+							appDatas.push(appDataInfos[0]);
+						}
+					});
+					return loc_uiApp.buildModuleInfoRequest(moduleDef, appDatas, configure);
+				}
+			}));
+		}
+		return out;
+	};
+
+	var loc_createSettingModuleRequest = function(moduleDef, dataInfo, state, handlers, request){
 		var configureData = loc_getModuleConfigureData(ROLE_SETTING); 
 		configureData.root = $('<div></div>').get(0);
 		$(configureData.root).appendTo(loc_settingParentView);
 		var moduleInfoRequest = node_createServiceRequestInfoSequence();
-		moduleInfoRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, dataInfo==undefined?undefined:[dataInfo], configureData, loc_appDataService, {
+		moduleInfoRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, dataInfo==undefined?undefined:[dataInfo], configureData, loc_appDataService, state, {
 			success : function(request, moduleInfo){
 				return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
 					persist : dataInfo==undefined?false:dataInfo.persist,
@@ -63,15 +90,15 @@ var node_createAppDecoration = function(gate){
 		return moduleInfoRequest;
 	};
 	
-	var loc_createSettingRoleRequest = function(moduleDef, handlers, request){
+	var loc_createSettingRoleRequest = function(moduleDef, state, handlers, request){
 		var settingRoots = [];
 		var settingsRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var appDataName = node_appUtility.discoverApplicationDataNames(moduleDef)[0];
+		var appDataName = node_appUtility.discoverApplicationDataDependency(moduleDef)[0];
 		settingsRequest.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest(node_appUtility.getCurrentOwnerInfo(), appDataName, {
 			success : function(request, settingDataInfos){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 				//first one is not persistent
-				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "New Setting", false)));   
+				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "New Setting", false), state));   
 				_.each(settingDataInfos[appDataName], function(dataInfo, index){
 					settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, dataInfo));
 				});
@@ -153,7 +180,7 @@ var node_createAppDecoration = function(gate){
 						var modulesStartRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 						var allModules = loc_uiApp.getAllModuleInfo();
 						_.each(allModules, function(moduleInfo){
-							modulesStartRequest.addRequest(node_getComponentLifecycleInterface(moduleInfo.module).getTransitRequest("activate"));
+							modulesStartRequest.addRequest(node_getComponentLifecycleInterface(moduleInfo.module).getTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE));
 						});
 						return modulesStartRequest;
 					}
@@ -162,10 +189,10 @@ var node_createAppDecoration = function(gate){
 				_.each(modules, function(moduleDef, name){
 					var role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
 					if(role==ROLE_APPLICATION){
-						modulesRequest.addRequest(node_appUtility.buildApplicationModuleInfoRequest(moduleDef, loc_uiApp, loc_getModuleConfigureData(role), loc_appDataService));
+						modulesRequest.addRequest(loc_buildApplicationModuleInfoRequest(name, moduleDef, loc_getModuleConfigure(role)));
 					}
 					else if(role==ROLE_SETTING){
-						modulesRequest.addRequest(loc_createSettingRoleRequest(moduleDef));
+//						modulesRequest.addRequest(loc_createSettingRoleRequest(moduleDef, state));
 					}
 				});
 				
@@ -175,7 +202,7 @@ var node_createAppDecoration = function(gate){
 				out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 				var moduleInfos = loc_uiApp.getAllModuleInfo();
 				_.each(moduleInfos, function(moduleInfo, index){
-					out.addRequest(node_getComponentLifecycleInterface(moduleInfo.module).getTransitRequest("destroy"));
+					out.addRequest(node_getComponentLifecycleInterface(moduleInfo.module).getTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_DESTROY));
 				});
 
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){

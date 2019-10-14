@@ -11,18 +11,25 @@ var node_componentUtility = {
 		
 	isActive : function(status){  return status==node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE;    },
 	
-	buildDecorationInfoArrayByPart : function(decInfoDef, partName){
+	buildDecorationInfoArrayFromConfigure : function(configure, path, type){
 		var out = [];
-		if(decInfoDef.parts!=undefined){
-			var partDecs = decInfoDef.parts[partName];
-			if(partDecs!=undefined){
-				_.each(partDecs, function(dec, i){   out.push(dec);  });
-			}
-		}
-		if(decInfoDef.share!=undefined){
-			_.each(decInfoDef.share, function(dec, i){  out.push(dec);   });
-		}
+		var idSet = configure.getChildrenIdSet(path);
+		_.each(idSet, function(id, index){
+			var decConfigure = configure.getChildConfigure(path, id);
+			var decConfigureValue = decConfigure.getConfigureValue();
+			out.push(new node_DecorationInfo(type, decConfigureValue.id, decConfigureValue.name, decConfigureValue.resource, decConfigure));
+		});
+		return out;
 	},
+	
+	cloneDecorationInfoArray : function(decInfoArray){
+		var out = [];
+		_.each(decInfoArray, function(decInfo, index){
+			out.push(new node_DecorationInfo(decInfo.type, decInfo.id, decInfo.name, decInfo.resource, decInfo.configure));
+		});
+		return out;
+	},
+	
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -104,6 +104,8 @@ var node_basicUtility =
 		},
 		
 		clone : function(src) {
+			if(src==undefined)  return undefined;
+			if(src==null)  return null;
 			return JSON.parse(JSON.stringify(src));
 		}		
 };

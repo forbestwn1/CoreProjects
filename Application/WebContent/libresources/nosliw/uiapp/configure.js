@@ -43,11 +43,14 @@ var loc_appSetting = {
 									"root" : function(parms){
 										return parms.mainModuleRoot;
 									},
-									uiDecoration : [
-										{
-											id: 'Decoration_application_header_framework7'
-										}
-									],
+									uiDecoration : 
+									{
+										parts : [
+											{
+												id: 'Decoration_application_header_framework7'
+											}
+										] 
+									},
 									moduleDecoration : 
 									{
 										parts : [
@@ -72,11 +75,14 @@ var loc_appSetting = {
 									"root" : function(parms){
 										return parms.settingModuleRoot;
 									},
-									"uiDecoration" : [
-										{
-											id: 'Decoration_setting_framework7'
-										}
-									],
+									uiDecoration : 
+									{
+										parts : [
+											{
+												id: 'Decoration_setting_framework7'
+											}
+										] 
+									},
 									"moduleDecoration" : 
 									{
 										parts : [

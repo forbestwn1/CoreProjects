@@ -15,11 +15,14 @@ var packageObj = library;
 	var node_ModuleInfo;
 	var node_ApplicationDataInfo;
 	var node_createComponentState;
+	var node_appUtility;
 	
 //*******************************************   Start Node Definition  **************************************
 
-var node_createUIAppComponentCore = function(id, appDef, ioInput){
+var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 	var loc_ioInput = ioInput;
+	var loc_configure = configure;
+	var loc_appDataService = loc_configure.getConfigureValue().__appDataService;
 	
 	var loc_partMatchers = node_createPatternMatcher([
 		new node_Pattern(new RegExp("module\.(\\w+)$"), function(result){return loc_out.getCurrentModuleInfo(result[1]).module;}),
@@ -33,7 +36,16 @@ var node_createUIAppComponentCore = function(id, appDef, ioInput){
 	var loc_valueChangeEventSource = node_createEventObject();
 	var loc_valueChangeEventListener = node_createEventObject();
 
-	var loc_componentState = node_createComponentState(undefined); 
+	var loc_componentState = node_createComponentState(undefined,
+		function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			return out;
+		}, 
+		function(stateData, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			return out;
+		}
+	);
 
 	var loc_moduleEventProcessor = function(eventName, eventData, request){
 		loc_trigueEvent(node_CONSTANT.APP_EVENT_MODULEEVENT, new node_ModuleEventData(this, eventName, eventData), request);
@@ -63,7 +75,6 @@ var node_createUIAppComponentCore = function(id, appDef, ioInput){
 		return out;
 	};
 	
-
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){
 		if(node_componentUtility.isActive(loc_out.prv_componentData.lifecycleStatus)){
 			//trigue event only in active status
@@ -101,6 +112,12 @@ var node_createUIAppComponentCore = function(id, appDef, ioInput){
 			return moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_EVENTHANDLER][eventName];
 		},
 
+		//build module instance info 
+		buildModuleInfoRequest : function(moduleName, applicationDataInfo, configureData, handlers, request){
+			var moduleDef = loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE][moduleName];
+			return node_appUtility.buildModuleInfoRequest(moduleDef, loc_out, applicationDataInfo, configureData, loc_appDataService, loc_componentState.getState(), handlers, request);
+		},
+		
 		addModuleInfo : function(moduleInfo){
 			var role = moduleInfo.role;
 			var module = moduleInfo.module;
@@ -113,8 +130,8 @@ var node_createUIAppComponentCore = function(id, appDef, ioInput){
 			modules.push(moduleInfo);
 			loc_out.setCurrentModuleInfo(role, moduleInfo.id);
 			
-			module.prv_registerEventListener(loc_eventListener, loc_moduleEventProcessor, moduleInfo);
-			module.prv_registerValueChangeEventListener(loc_valueChangeEventListener, loc_moduleValueChangeEventProcessor, moduleInfo);
+			module.registerEventListener(loc_eventListener, loc_moduleEventProcessor, moduleInfo);
+			module.registerValueChangeEventListener(loc_valueChangeEventListener, loc_moduleValueChangeEventProcessor, moduleInfo);
 			return moduleInfo;
 		},
 		
@@ -252,6 +269,7 @@ nosliw.registerSetNodeDataEvent("uiapp.ModuleEventData", function(){node_ModuleE
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataInfo", function(){node_ApplicationDataInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentState", function(){node_createComponentState = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.utility", function(){node_appUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIAppComponentCore", node_createUIAppComponentCore); 

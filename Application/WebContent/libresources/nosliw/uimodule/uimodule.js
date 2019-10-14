@@ -26,11 +26,11 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
-var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationConfigure, ioInput){
+var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInfos, ioInput){
 	//input io used to get input value to initiate module
 	var loc_inputIO = ioInput;
 	
-	var loc_uiDecorationConfigure = uiDecorationConfigure;
+	var loc_uiDecorationInfos = uiDecorationInfos;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -160,7 +160,7 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationCon
 		// build uis
 		_.each(loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(moduleUIDef, index){
 			var moduleUIId = moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];
-			buildModuleUIRequest = node_createModuleUIRequest(moduleUIDef, loc_out.getContextIODataSet(), loc_uiDecorationConfigure);
+			buildModuleUIRequest = node_createModuleUIRequest(moduleUIDef, loc_out.getContextIODataSet(), node_componentUtility.cloneDecorationInfoArray(loc_uiDecorationInfos));
 			buildModuleUIsRequest.addRequest(index, buildModuleUIRequest);
 		});
 		out.addRequest(buildModuleUIsRequest);

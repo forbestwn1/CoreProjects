@@ -15,12 +15,13 @@ var packageObj = library;
 	var node_makeObjectWithComponentManagementInterface;
 	var node_createStateBackupService;
 	var node_createEventObject;
-
+	var node_basicUtility;
+		
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createAppRuntimeRequest = function(id, appDef, configure, componentDecorationInfos, ioInput, state, handlers, request){
 	var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("createUIModule"), function(request){
-		var app = node_createUIAppComponentCore(id, appDef, ioInput);
+		var app = node_createUIAppComponentCore(id, appDef, configure, ioInput);
 		var runtime = node_createAppRuntime(app, configure, componentDecorationInfos, state, request);
 		return runtime.prv_getInitRequest({
 			success : function(request){
@@ -140,6 +141,12 @@ var node_createAppRuntime = function(uiAppCore, configure, componentDecorationIn
 		getExecuteProcessResourceRequest : function(processId, input, handlers, request){  return loc_getExecuteAppProcessByNameRequest(processId, extraInput, handlers, request);  },
 	};
 
+	//call back when start a statemachine task
+	var loc_lifecycleTaskCallback = {
+		startTask : function(){		loc_componentCoreComplex.startLifecycleTask();	},
+		endTask : function(){		loc_componentCoreComplex.endLifecycleTask();	}
+	};
+
 	var loc_out = {
 			
 		prv_getInitRequest : function(handlers, request){
@@ -151,7 +158,7 @@ var node_createAppRuntime = function(uiAppCore, configure, componentDecorationIn
 	
 	loc_init(uiAppCore, configure, componentDecorationInfos, state);
 	
-	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback);
+	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
 	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_interfaceDelegate, loc_out);
 
 	return loc_out;
@@ -174,6 +181,7 @@ nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", fu
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createAppRuntimeRequest", node_createAppRuntimeRequest); 

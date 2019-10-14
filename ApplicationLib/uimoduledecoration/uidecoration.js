@@ -8,6 +8,8 @@ function(gate){
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 
 	var loc_gate = gate;
+	var loc_configure = loc_gate.getConfigure();
+	var loc_configureValue = loc_configure.getConfigureValue();
 
 	var loc_out = {
 			
@@ -15,7 +17,7 @@ function(gate){
 			var out;
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				var decorationInfo = loc_gate.getConfigureValue().decoration;
+				var decorationInfo = loc_configureValue.decoration;
 				if(decorationInfo!=undefined){
 					_.each(loc_gate.getComponentCore().getUIs(), function(ui, uiName){
 						var decs;

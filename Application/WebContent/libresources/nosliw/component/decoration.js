@@ -25,10 +25,10 @@ var packageObj = library;
 // componentEnv : component environment that decoration communicate with component env
 // configureData : configuration data for this decoration
 // state : state data
-var node_createComponentCoreDecoration = function(id, componentCore, decorationResource, componentEnv, configureValue, state){
+var node_createComponentCoreDecoration = function(id, componentCore, decorationResource, componentEnv, configure, state){
 	
 	var loc_id = id;
-	var loc_configureValue = configureValue;
+	var loc_configure = configure;
 	var loc_componentEnv = componentEnv;
 	
 	var loc_lifecycleStatus;
@@ -52,7 +52,7 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		getComponentCore : function(){   return loc_componentCore;		},
 		
 		//get configure data for this decoration
-		getConfigureValue : function(){  return loc_configureValue;	},
+		getConfigure : function(){  return loc_configure;	},
 
 		//value by name
 		getTempValue(name){  return  loc_tempValueByName[name];  },

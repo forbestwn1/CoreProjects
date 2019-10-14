@@ -51,7 +51,7 @@ $(document).on("nosliwActive", function(){
 
 	var framework7App = new Framework7({
 		  // App root element
-		  root: $("#moduleDiv").get(),
+		  root: $("#appModuleDiv").get(),
 		  name: 'My App',
 		  id: 'com.myapp.test',
 		  panel: {
@@ -62,8 +62,8 @@ $(document).on("nosliwActive", function(){
 	var configure = node_createAppConfigure(
 			"application", 
 			{
-				mainModuleRoot : $('#appModuleDiv'),
-				settingModuleRoot : $('#settingModuleDiv'),
+				mainModuleRoot : $('#appModuleDiv').get(),
+				settingModuleRoot : $('#settingModuleDiv').get(),
 				storeService : nosliw.runtime.getStoreService(),
 				dataService : node_appDataService,
 				framework7App : framework7App

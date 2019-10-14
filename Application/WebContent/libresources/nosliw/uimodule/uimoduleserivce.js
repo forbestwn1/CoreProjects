@@ -14,6 +14,7 @@ var packageObj = library.getChildPackage("service");
 	var node_createConfigure;
 	var node_loadComponentResourceRequest;
 	var node_getObjectType;
+	var node_componentUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -25,16 +26,10 @@ var node_createUIModuleService = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource"), handlers, request);
 
 			//build module decoration info array from module configure
-			var moduleDecInfos = [];
-			var decConfigurePath = 'moduleDecoration';
-			var moduleDecIdSet = configure.getChildrenIdSet(decConfigurePath);
-			_.each(moduleDecIdSet, function(moduleDecId, i){
-				var moduleDecConfigureValue = configure.getChildConfigureValue(decConfigurePath, moduleDecId);
-				moduleDecInfos.push(new node_DecorationInfo(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, moduleDecConfigureValue.id, moduleDecConfigureValue.name, moduleDecConfigureValue.resource, moduleDecConfigureValue));
-			});
-			
+			var moduleDecInfos = node_componentUtility.buildDecorationInfoArrayFromConfigure(configure, 'moduleDecoration', node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION);
+
 			//build ui decoration configure 
-			var uiDecorationConfigure = configure.getConfigureValue().uiDecoration;
+			var uiDecorationInfos = node_componentUtility.buildDecorationInfoArrayFromConfigure(configure, "uiDecoration"); 
 			
 			out.addRequest(node_loadComponentResourceRequest(
 				typeof module === 'string'? 
@@ -53,7 +48,7 @@ var node_createUIModuleService = function(){
 							//create by resource id, then version should be set according to resource version
 							state.setVersion("5.0.0");   //kkkkk
 						}    
-						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationConfigure, configure.getConfigureValue().root, ioInput, state, {
+						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationInfos, configure.getConfigureValue().root, ioInput, state, {
 							success : function(request, uiModuleRuntime){
 								return uiModuleRuntime;
 							}
@@ -90,7 +85,7 @@ nosliw.registerSetNodeDataEvent("uimodule.createModuleRuntimeRequest", function(
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("component.loadComponentResourceRequest", function(){node_loadComponentResourceRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
-
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIModuleService", node_createUIModuleService); 
