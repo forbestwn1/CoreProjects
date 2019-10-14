@@ -34,7 +34,7 @@ var node_createAppDecoration = function(gate){
 	
 	var loc_getModuleConfigure = function(role){	return loc_configure.getChildConfigure("modules", role);	};
 	
-//	var loc_settingParentView = loc_getModuleConfigureData(ROLE_SETTING).root;
+	var loc_settingParentView = loc_getModuleConfigure(ROLE_SETTING).getConfigureValue().root;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -62,19 +62,19 @@ var node_createAppDecoration = function(gate){
 							appDatas.push(appDataInfos[0]);
 						}
 					});
-					return loc_uiApp.buildModuleInfoRequest(moduleDef, appDatas, configure);
+					return loc_uiApp.buildModuleInfoRequest(moduleName, appDatas, configure);
 				}
 			}));
 		}
 		return out;
 	};
 
-	var loc_createSettingModuleRequest = function(moduleDef, dataInfo, state, handlers, request){
-		var configureData = loc_getModuleConfigureData(ROLE_SETTING); 
+	var loc_createSettingModuleRequest = function(moduleName, moduleDef, dataInfo, configure, handlers, request){
+		var configureData = configure.getConfigureValue(); 
 		configureData.root = $('<div></div>').get(0);
 		$(configureData.root).appendTo(loc_settingParentView);
 		var moduleInfoRequest = node_createServiceRequestInfoSequence();
-		moduleInfoRequest.addRequest(node_appUtility.buildModuleInfoRequest(moduleDef, loc_uiApp, dataInfo==undefined?undefined:[dataInfo], configureData, loc_appDataService, state, {
+		moduleInfoRequest.addRequest(loc_uiApp.buildModuleInfoRequest(moduleName, dataInfo==undefined?undefined:[dataInfo], node_createConfigure(configureData), {
 			success : function(request, moduleInfo){
 				return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
 					persist : dataInfo==undefined?false:dataInfo.persist,
@@ -90,17 +90,16 @@ var node_createAppDecoration = function(gate){
 		return moduleInfoRequest;
 	};
 	
-	var loc_createSettingRoleRequest = function(moduleDef, state, handlers, request){
-		var settingRoots = [];
+	var loc_createSettingRoleRequest = function(moduleName, moduleDef, configure, handlers, request){
 		var settingsRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var appDataName = node_appUtility.discoverApplicationDataDependency(moduleDef)[0];
 		settingsRequest.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest(node_appUtility.getCurrentOwnerInfo(), appDataName, {
 			success : function(request, settingDataInfos){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 				//first one is not persistent
-				settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "New Setting", false), state));   
+				settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "New Setting", false), configure));   
 				_.each(settingDataInfos[appDataName], function(dataInfo, index){
-					settingRequest.addRequest(loc_createSettingModuleRequest(moduleDef, dataInfo));
+					settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, dataInfo, configure));
 				});
 				return settingRequest;
 			}
@@ -189,10 +188,10 @@ var node_createAppDecoration = function(gate){
 				_.each(modules, function(moduleDef, name){
 					var role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
 					if(role==ROLE_APPLICATION){
-						modulesRequest.addRequest(loc_buildApplicationModuleInfoRequest(name, moduleDef, loc_getModuleConfigure(role)));
+//						modulesRequest.addRequest(loc_buildApplicationModuleInfoRequest(name, moduleDef, loc_getModuleConfigure(role)));
 					}
 					else if(role==ROLE_SETTING){
-//						modulesRequest.addRequest(loc_createSettingRoleRequest(moduleDef, state));
+						modulesRequest.addRequest(loc_createSettingRoleRequest(name, moduleDef, loc_getModuleConfigure(role)));
 					}
 				});
 				

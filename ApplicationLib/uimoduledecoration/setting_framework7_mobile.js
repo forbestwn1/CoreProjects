@@ -14,19 +14,19 @@ function(gate){
 	var loc_out = {
 			
 		getProcessCommandRequest : function(command, parms, handlers, request){
-			var coreCommand = getNosliwCoreName(command);
-			if(coreCommand=="application_updateModuleInfo"){
-				var contextUpdate = {};
-				if(parms.persist!=undefined)  contextUpdate.persist = parms.persist;
-				if(parms.modified!=undefined)  contextUpdate.modified = parms.modified;
-				if(parms.name!=undefined)  contextUpdate.name = parms.name;
-
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				_.each(loc_uiModule.getUIs(), function(ui, index){
-					ui.getUpdateExtraContextDataRequest("setting", contextUpdate);
-				});
-				return out;
-			}
+//			var coreCommand = node_basicUtility.getNosliwCoreName(command);
+//			if(coreCommand=="application_updateModuleInfo"){
+//				var contextUpdate = {};
+//				if(parms.persist!=undefined)  contextUpdate.persist = parms.persist;
+//				if(parms.modified!=undefined)  contextUpdate.modified = parms.modified;
+//				if(parms.name!=undefined)  contextUpdate.name = parms.name;
+//
+//				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+//				_.each(loc_uiModule.getUIs(), function(ui, index){
+//					ui.getUpdateExtraContextDataRequest("setting", contextUpdate);
+//				});
+//				return out;
+//			}
 		},
 		
 		getLifeCycleRequest : function(transitName, handlers, request){
