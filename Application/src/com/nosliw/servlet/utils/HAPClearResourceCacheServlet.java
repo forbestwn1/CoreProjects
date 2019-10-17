@@ -1,4 +1,4 @@
-package com.nosliw.servlet.core;
+package com.nosliw.servlet.utils;
 
 import java.io.IOException;
 

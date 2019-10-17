@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
@@ -25,8 +27,11 @@ import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 
 public class HAPUtilityProcess {
@@ -116,4 +121,20 @@ public class HAPUtilityProcess {
 		return resultExe;
 	}
 
+	public static HAPDefinitionWrapperTask parseTaskDefinition(HAPDefinitionActivityNormal activity, JSONObject jsonObj) {
+		HAPDefinitionWrapperTask out = new HAPDefinitionWrapperTask();
+		activity.setInput(new HAPDefinitionDataAssociationMirror());
+		
+		out.buildMapping(jsonObj);
+		
+		Map<String, HAPDefinitionResultActivityNormal> results = activity.getResults();
+		for(String resultName : results.keySet()) {
+			HAPDefinitionResultActivityNormal result = results.get(resultName);
+			HAPDefinitionDataAssociation dataAssociation = result.getOutputDataAssociation();
+			out.addOutputMapping(resultName, dataAssociation.cloneDataAssocation());
+			result.setOutputDataAssociation(new HAPDefinitionDataAssociationMirror());
+		}
+		return out;
+	}
+	
 }

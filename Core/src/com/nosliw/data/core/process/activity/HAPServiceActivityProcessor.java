@@ -79,20 +79,9 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			HAPContextGroup out = new HAPContextGroup();
 			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;
-				
 				return serviceActivity.getService().getServiceMapping().getOutputMapping(resultName).getOutput().getOutputStructure();
-				
-				
-//				HAPServiceActivityDefinition serviceActDef = (HAPServiceActivityDefinition)serviceActivity.getActivityDefinition();
-//				HAPDefinitionDataAssociation da = serviceActDef.getServiceMapping().getResultMapping().get(resultName);
-//				for(String eleName : da.getAssociation().getElementNames()) {
-//					HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(eleName), this.m_processContext, null, null);
-//					String categary = resolveInfo.path.getRootElementId().getCategary();
-//					out.addElement(eleName, this.m_processContext.getElement(categary, eleName), categary);
-//				}
 			}
 			return out;
 		}
 	}
-	
 }

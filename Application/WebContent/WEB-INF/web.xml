@@ -28,8 +28,17 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>loadFilesServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.utils.HAPLoadFilesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loadFilesServlet</servlet-name>
+    <url-pattern>/loadfile</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>clearCacheServlet</servlet-name>
-    <servlet-class>com.nosliw.servlet.core.HAPClearResourceCacheServlet</servlet-class>
+    <servlet-class>com.nosliw.servlet.utils.HAPClearResourceCacheServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>clearCacheServlet</servlet-name>

@@ -29,7 +29,7 @@ public class HAPPlayerLineup extends HAPExecutableImp{
 	public final static String ACTION_LOOKINGFOR = "求一坑位";
 
 	private static Map<String, List<String>> m_validActions = new LinkedHashMap<String, List<String>>();
-	static { 
+	static {  
 		m_validActions.put(STATUS_LINEUP, Arrays.asList(new String[] {ACTION_OFFER}));
 		m_validActions.put(STATUS_WAITINGLIST, Arrays.asList(new String[] {ACTION_WITHDRAW_WAITINGLIST}));
 		m_validActions.put(STATUS_PROVIDER, Arrays.asList(new String[] {ACTION_WITHDRAW_PROVIDE}));

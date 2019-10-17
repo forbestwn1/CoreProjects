@@ -78,7 +78,8 @@
 					"flow": {
 						"target": "expressionActivityId"
 					}
-				}, {
+				}, 
+				{
 					"id": "expressionActivityId",
 					"name": "expressionActivity",
 					"type": "expression",
@@ -134,7 +135,7 @@
 					"id": "successEndId",
 					"name": "successEnd",
 					"type": "end",
-					"output111": {
+					"output": {
 						"element": {
 							"output": {
 								definition: {
@@ -145,6 +146,6 @@
 					}
 				}
 			]
-		}	
+		},
 	]
 }

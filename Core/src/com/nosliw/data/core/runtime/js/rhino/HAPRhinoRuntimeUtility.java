@@ -23,13 +23,11 @@ import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPExecutableExpressionImp;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteExpressionRhino;
 
 public class HAPRhinoRuntimeUtility {
@@ -128,7 +126,7 @@ public class HAPRhinoRuntimeUtility {
 			if(!HAPRuntime.isDemo) {
 				//ppppp			
 				String folder = getScriptTempFolder();
-				String scriptTempFile = folder + "/" + String.format("%03d", index++) + "_" + name+".js";
+				String scriptTempFile = folder + "/" + String.format("%03d", index++) + "_" + name;  //+".js";
 				HAPFileUtility.writeFile(scriptTempFile, script);
 			}
 			context.evaluateString(scope, script, name, 1, null);

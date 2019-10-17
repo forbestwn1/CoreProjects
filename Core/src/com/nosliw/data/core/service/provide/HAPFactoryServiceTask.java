@@ -1,6 +1,5 @@
 package com.nosliw.data.core.service.provide;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -8,46 +7,46 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
+import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
+import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
+import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 
 public class HAPFactoryServiceTask implements HAPFactoryService{
 
-	public final static String FACTORY_TYPE = "task";
-
+	public final static String FACTORY_TYPE = "process";
+	
 	@Override
-	public HAPExecutableService newService(HAPDefinitionService serviceDefinition) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-//	private HAPManagerTask m_taskManager;
-	
-//	public HAPFactoryServiceTask(HAPManagerTask taskManager) {
-//		this.m_taskManager = taskManager;
-//	}
-//	
-//	@Override
-//	public HAPExecutableService newService(HAPDefinitionService dataSourceDefinition) {
-//		
-//		JSONObject configJson = (JSONObject)dataSourceDefinition.getConfigure();
-//		HAPDefinitionTaskSuite taskSuite = new HAPDefinitionTaskSuite(this.m_taskManager);
-//		taskSuite.buildObject(configJson, HAPSerializationFormat.JSON);
-//		taskSuite.setName(dataSourceDefinition.getServiceInfo().getName());
-//		
-//		for(String parmName : dataSourceDefinition.getServiceInfo().getParms().keySet()){
-//			HAPDefinitionServiceParm parmDef = dataSourceDefinition.getServiceInfo().getParms().get(parmName);
-//			taskSuite.addVariable(parmName, new HAPVariableInfo(parmDef.getCriteria()));
-//		}
-//		
-//		HAPExecutableService out = new HAPExecutableService(){
-//			@Override
-//			public Map<String, HAPData> execute(Map<String, HAPData> parms) {
+	public HAPExecutableService newService(HAPDefinitionService dataSourceDefinition) {
+
+		HAPInfoServiceRuntime runtimeInfo = dataSourceDefinition.getRuntimeInfo();
+		HAPInfoServiceStatic staticInfo = dataSourceDefinition.getStaticInfo();
+
+		JSONObject configJson = (JSONObject)runtimeInfo.getConfigure();
+		HAPDefinitionProcessSuite taskSuite = new HAPDefinitionProcessSuite();
+		taskSuite.buildObject(configJson, HAPSerializationFormat.JSON);
+		taskSuite.setName(staticInfo.getName());
+		
+		HAPContext processExternalContext = new HAPContext();
+		HAPServiceInterface serviceInterface = staticInfo.getInterface();
+		for(String parmName : serviceInterface.getParms().keySet()){
+			HAPServiceParm parmDef = serviceInterface.getParms().get(parmName);
+			processExternalContext.addElement(parmName, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo((parmDef.getCriteria()))));
+		}
+		
+		HAPExecutableService out = new HAPExecutableService(){
+			@Override
+			public HAPResultService execute(Map<String, HAPData> parms) {
 //				HAPLogTask taskLog = new HAPLogTask();
 //				Map<String, HAPData> out = new LinkedHashMap<String, HAPData>();
+//				
 //				out.put("output", m_taskManager.executeTask("main", taskSuite, parms, taskLog));
 //				return out;
-//			}
-//		};
-//		return out;
-//	}
+				return null;
+			}
+		};
+		return out;
+	}
 
 }
