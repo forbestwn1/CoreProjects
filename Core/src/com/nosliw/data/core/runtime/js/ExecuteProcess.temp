@@ -1,4 +1,4 @@
-nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeEmbededProcessRequest(||processDef||, undefined, undefined, 
+nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessRequest(||processDef||, undefined, 
 	{
 		success : function(requestInfo, data){
 			var parms = {};

@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("entity");
 
 (function(packageObj){
 //get used node
+var node_CONSTANT;
 var node_makeObjectWithType;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -28,6 +29,7 @@ var node_createErrorData = function(code, message, data){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 

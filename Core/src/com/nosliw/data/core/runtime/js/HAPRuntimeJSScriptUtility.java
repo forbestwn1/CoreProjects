@@ -330,7 +330,7 @@ public class HAPRuntimeJSScriptUtility {
 		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
 		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
 		
-		templateParms.put("processDef", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(task.getProcess(), HAPSerializationFormat.JSON)));
+		templateParms.put("processDef", task.getProcess().toResourceData(runtime.getRuntimeInfo()).toString());
 		templateParms.put("taskId", task.getTaskId());
 
 		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());

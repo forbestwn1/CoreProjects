@@ -12,10 +12,10 @@ import org.json.JSONObject;
 import org.mozilla.javascript.ConsString;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
-import org.mozilla.javascript.IdScriptableObject; 
+import org.mozilla.javascript.IdScriptableObject;
 import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeJSON;
-import org.mozilla.javascript.NativeJavaObject; 
+import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
@@ -64,7 +64,7 @@ public class HAPRhinoDataUtility
             Iterator<String> keys = jsonObject.keys(); 
             while (keys.hasNext()) 
             { 
-                String key = (String)keys.next(); 
+                String key = keys.next(); 
                 Object value = jsonObject.get(key); 
                 if (value instanceof JSONObject || value instanceof JSONArray)                object.put(key, object, toSciptableObjectFromJson(value)); 
                 else            object.put(key, object, value); 
@@ -121,7 +121,13 @@ public class HAPRhinoDataUtility
         } 
         else if (nativeObject instanceof NativeObject) 
         {  
-            out = new JSONObject(nativeObjectToJSONString((NativeObject)nativeObject)); 
+        	String kkkk = nativeObjectToJSONString((NativeObject)nativeObject);
+        	try {
+                out = new JSONObject(kkkk); 
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
         }
         else if(nativeObject instanceof Function){
         	out = new HAPFunctionType(Context.toString(nativeObject));
@@ -288,5 +294,6 @@ public class HAPRhinoDataUtility
 class HAPFunctionType implements HAPJsonTypeUnchange{
 	private String m_content;
 	public HAPFunctionType(String str){    		this.m_content = str;    	}
+	@Override
 	public String toString(){  return this.m_content;  }
 }

@@ -3,6 +3,7 @@ var packageObj = library;
 
 (function(packageObj){
 //get used node
+var node_CONSTANT;
 var node_COMMONCONSTANT;
 var node_COMMONATRIBUTECONSTANT;
 var node_createConfigures;

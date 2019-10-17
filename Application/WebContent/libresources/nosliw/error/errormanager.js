@@ -61,7 +61,7 @@ var node_createErrorManager = function(){
 	
 	var loc_out = {
 		logError : function(error){
-			console.log(error);
+			if (typeof console != "undefined") console.log(error);
 			var errorData = loc_addErrorToStorage(error);
 			loc_logError(errorData);
 		},

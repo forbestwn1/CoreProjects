@@ -72,6 +72,21 @@ var node_createProcessRuntime = function(envObj){
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
+		getExecuteProcessRequest : function(processDef, inputValue, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("executeProcess", {}), handlers, request);
+			out.addRequest(node_createProcess(processDef, loc_envObj).getExecuteProcessRequest(inputValue, {
+				success : function(request, processResult){
+					return new node_IOTaskResult(processResult.resultName, processResult.resultValue);
+				}
+			}));
+			return out;
+		},
+		
+		executeProcessRequest : function(processDef, inputValue, handlers, request){
+			var requestInfo = this.getExecuteProcessRequest(processDef, inputValue, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},		
+		
 		//process defined within other component
 		//extraInputDataSet is other component's contextIo
 		//return : IOTaskResult with resultName and outputIODataSet (which is externalIODataSet)
@@ -90,7 +105,7 @@ var node_createProcessRuntime = function(envObj){
 				processDef, 
 				new node_IOTaskInfo(function(inputValue, handlers, request){
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("executeEmbededProcess", {}), handlers, request);
-					out.addRequest(node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], envObj).getExecuteProcessRequest(inputValue, {
+					out.addRequest(node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(inputValue, {
 						success : function(request, processResult){
 							return new node_IOTaskResult(processResult.resultName, processResult.resultValue);
 						}

@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("variable");
 
 (function(packageObj){
 //get used node
+var node_CONSTANT;
 var node_getObjectType;
 var node_ChildVariableInfo;
 var node_newVariable;
@@ -98,6 +99,7 @@ var node_createVariableManager = function(){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.ChildVariableInfo", function(){node_ChildVariableInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.newVariable", function(){node_newVariable = this.getData();});

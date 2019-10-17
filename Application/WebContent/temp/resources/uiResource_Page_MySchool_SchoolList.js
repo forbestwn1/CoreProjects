@@ -101,13 +101,13 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"elementEvents":[{"uiId":"80",
+"elementEvents":[{"uiId":"24",
 "event":"click",
 "function":"refreshSchoolData"
 }],
 "tagEvents":[],
 "attributes":{},
-"html":"&lt;br nosliwid=&quot;78&quot;&gt; &lt;br nosliwid=&quot;79&quot;&gt;&lt;a href=&quot;&quot; nosliwid=&quot;80&quot;&gt;&lt;span&gt;Refresh&lt;/span&gt;&lt;/a&gt;&lt;br nosliwid=&quot;81&quot;&gt;&lt;span&gt; SchoolRating:&lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;82-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;82-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;83&quot;&gt; &lt;br nosliwid=&quot;84&quot;&gt;&lt;span&gt; SchoolType:&lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;85-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;85-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;86&quot;&gt; &lt;br nosliwid=&quot;87&quot;&gt; &lt;br nosliwid=&quot;88&quot;&gt;&lt;span&gt; Sum:&lt;/span&gt;&lt;span nosliwid=&quot;77&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;br nosliwid=&quot;89&quot;&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;90-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;90-tag-end&quot;&gt;&lt;/nosliw&gt;   &lt;!-- This part can be used to define context (variable)				it describle data type criteria for each context element and its default value		--&gt;",
+"html":"&lt;br nosliwid=&quot;22&quot;&gt; &lt;br nosliwid=&quot;23&quot;&gt;&lt;a href=&quot;&quot; nosliwid=&quot;24&quot;&gt;&lt;span&gt;Refresh&lt;/span&gt;&lt;/a&gt;&lt;br nosliwid=&quot;25&quot;&gt;&lt;span&gt; SchoolRating:&lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;26-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;26-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;27&quot;&gt; &lt;br nosliwid=&quot;28&quot;&gt;&lt;span&gt; SchoolType:&lt;/span&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;29-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;29-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;30&quot;&gt; &lt;br nosliwid=&quot;31&quot;&gt; &lt;br nosliwid=&quot;32&quot;&gt;&lt;span&gt; Sum:&lt;/span&gt;&lt;span nosliwid=&quot;21&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;br nosliwid=&quot;33&quot;&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;34-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;34-tag-end&quot;&gt;&lt;/nosliw&gt;   &lt;!-- This part can be used to define context (variable)				it describle data type criteria for each context element and its default value		--&gt;",
 "constants":{"schoolRating1___public":{"dataTypeId":"test.float;1.0.0",
 "valueFormat":"JSON",
 "value":9
@@ -543,7 +543,7 @@ output = utilFunction(output, ["schoolRatingInService"], input, ["default","scho
 }
 }
 },
-"uiId":"77",
+"uiId":"21",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -556,7 +556,7 @@ output = utilFunction(output, ["schoolRatingInService"], input, ["default","scho
 }],
 "scriptExpressionInAttributes":[],
 "scriptExpressionTagAttributes":[],
-"uiTags":{"82":{"tagName":"floatinput",
+"uiTags":{"26":{"tagName":"floatinput",
 "contextMapping":{},
 "tagContext":{"local2Global":{"internal_data":"internal_data___private",
 "nosliwattribute_data":"nosliwattribute_data___private",
@@ -606,7 +606,7 @@ output = utilFunction(output, ["schoolRatingInService"], input, ["default","scho
 "elementEvents":[],
 "tagEvents":[],
 "attributes":{"data":"schoolRating",
-"nosliwid":"82"
+"nosliwid":"26"
 },
 "html":"",
 "constants":{},
@@ -622,7 +622,7 @@ output = utilFunction(output, ["schoolRatingInService"], input, ["default","scho
 "commandMapping":{},
 "serviceMapping":{}
 },
-"85":{"tagName":"options",
+"29":{"tagName":"options",
 "contextMapping":{},
 "tagContext":{"local2Global":{"internal_data":"internal_data___private",
 "nosliwattribute_id":"nosliwattribute_id___private",
@@ -674,7 +674,7 @@ output = utilFunction(output, ["schoolRatingInService"], input, ["default","scho
 "tagEvents":[],
 "attributes":{"id":"schoolType",
 "data":"schoolType",
-"nosliwid":"85"
+"nosliwid":"29"
 },
 "html":"",
 "constants":{},
@@ -690,7 +690,7 @@ output = utilFunction(output, ["schoolRatingInService"], input, ["default","scho
 "commandMapping":{},
 "serviceMapping":{}
 },
-"90":{"tagName":"loop",
+"34":{"tagName":"loop",
 "contextMapping":{},
 "tagContext":{"local2Global":{"schoolRating1":"schoolRating1___public",
 "schoolType1":"schoolType1___public",
@@ -1056,7 +1056,7 @@ output = utilFunction(output, ["schoolRatingInService"], input, ["default","scho
 }
 }
 },
-"elementEvents":[{"uiId":"94",
+"elementEvents":[{"uiId":"38",
 "event":"click",
 "function":"getSchoolInfo"
 }],
@@ -1064,9 +1064,9 @@ output = utilFunction(output, ["schoolRatingInService"], input, ["default","scho
 "attributes":{"data":"schoolList",
 "element":"ele",
 "index":"index",
-"nosliwid":"90"
+"nosliwid":"34"
 },
-"html":"&lt;span&gt; Index: &lt;/span&gt;&lt;span nosliwid=&quot;91&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;br nosliwid=&quot;93&quot;&gt;&lt;span&gt; SchoolName: &lt;/span&gt;&lt;span nosliwid=&quot;92&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;a href=&quot;&quot; nosliwid=&quot;94&quot;&gt;&lt;span&gt;Info&lt;/span&gt;&lt;/a&gt; &lt;br nosliwid=&quot;95&quot;&gt;",
+"html":"&lt;span&gt; Index: &lt;/span&gt;&lt;span nosliwid=&quot;35&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;br nosliwid=&quot;37&quot;&gt;&lt;span&gt; SchoolName: &lt;/span&gt;&lt;span nosliwid=&quot;36&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;a href=&quot;&quot; nosliwid=&quot;38&quot;&gt;&lt;span&gt;Info&lt;/span&gt;&lt;/a&gt; &lt;br nosliwid=&quot;39&quot;&gt;",
 "constants":{"schoolRating1___public":{"dataTypeId":"test.float;1.0.0",
 "valueFormat":"JSON",
 "value":9
@@ -1096,22 +1096,7 @@ output = utilFunction(output, ["schoolRatingInService"], input, ["default","scho
 "commands":{},
 "services":{},
 "serviceProviders":{},
-"scriptExpressionsInContent":[{"scriptExpressions":{"0":{"definition":"?(index)?",
-"variableNames":["index"],
-"expressions":{}
-}
-},
-"uiId":"91",
-"scriptFunction":function(scriptExpressionData){
-	return scriptExpressionData["0"];
-} 
-,
-"scriptExpressionScriptFunction":{"0":function(expressionsData, constantsData, variablesData){
-	return variablesData["index"];
-} 
-
-}
-},{"scriptExpressions":{"0":{"definition":"#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value",
+"scriptExpressionsInContent":[{"scriptExpressions":{"0":{"definition":"#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value",
 "variableNames":["ele"],
 "expressions":{"0_0":{"operand":{"type":"operation",
 "outputCriteria":"@||!(test.dataTypeCriteria)!.getChild(base;;;!(test.parm)!.getCriteria(base;;;?(base)?);;childName;;;!(test.parm)!.getValue(base;;;?(name)?))||@",
@@ -1198,13 +1183,28 @@ output = utilFunction(output, ["schoolRatingInService"], input, ["default","scho
 }
 }
 },
-"uiId":"92",
+"uiId":"36",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
 ,
 "scriptExpressionScriptFunction":{"0":function(expressionsData, constantsData, variablesData){
 	return expressionsData["0_0"].value;
+} 
+
+}
+},{"scriptExpressions":{"0":{"definition":"?(index)?",
+"variableNames":["index"],
+"expressions":{}
+}
+},
+"uiId":"35",
+"scriptFunction":function(scriptExpressionData){
+	return scriptExpressionData["0"];
+} 
+,
+"scriptExpressionScriptFunction":{"0":function(expressionsData, constantsData, variablesData){
+	return variablesData["index"];
 } 
 
 }
