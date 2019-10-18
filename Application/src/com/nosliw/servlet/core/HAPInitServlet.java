@@ -23,6 +23,8 @@ public class HAPInitServlet  extends HttpServlet{
 
 	private static final long serialVersionUID = -703775909733982650L;
 
+	public static final String NAME_RUNTIME_ENVIRONMENT = "RUNTIME_ENVIRONMENT";
+	
 	@Override
 	public void init() throws ServletException
 	   {
@@ -32,13 +34,13 @@ public class HAPInitServlet  extends HttpServlet{
 //			HAPExpressionTaskImporter.importTaskDefinitionSuiteFromClassFolder(HAPExpressionTest.class, runtimeEnvironment.getExpressionManager());
 
 			//set runtime object to context
-			this.getServletContext().setAttribute("runtime", runtimeEnvironment);
+			this.getServletContext().setAttribute(NAME_RUNTIME_ENVIRONMENT, runtimeEnvironment);
 			
 			HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(
 					new HAPUITagManager(),
 					runtimeEnvironment.getExpressionSuiteManager(),
 					runtimeEnvironment.getResourceManager(),
-					runtimeEnvironment.getProcessManager(),
+					runtimeEnvironment.getProcessDefinitionManager(),
 					runtimeEnvironment.getRuntime(),
 					HAPExpressionManager.dataTypeHelper,
 					runtimeEnvironment.getServiceManager().getServiceDefinitionManager());

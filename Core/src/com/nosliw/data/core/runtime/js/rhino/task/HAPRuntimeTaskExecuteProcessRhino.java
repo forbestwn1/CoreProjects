@@ -28,7 +28,8 @@ public class HAPRuntimeTaskExecuteProcessRhino extends HAPRuntimeTaskExecuteProc
 		try{
 			HAPRuntimeImpRhino rhinoRuntime = (HAPRuntimeImpRhino)runtime;
 			
-			if(!HAPRuntime.isDemo) {
+			if(false) {
+//			if(!HAPRuntime.isDemo) {
 				//prepare resources for process in the runtime (resource and dependency)
 				//execute process after load required resources
 				List<HAPResourceDependent> dependencys = this.getProcess().getResourceDependency(runtime.getRuntimeInfo());

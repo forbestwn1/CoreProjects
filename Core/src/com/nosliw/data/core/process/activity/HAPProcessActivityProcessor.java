@@ -13,7 +13,7 @@ import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableActivityNormal;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
-import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.process.HAPUtilityProcess;
@@ -45,7 +45,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcess processManager,
+			HAPManagerProcessDefinition processManager,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {

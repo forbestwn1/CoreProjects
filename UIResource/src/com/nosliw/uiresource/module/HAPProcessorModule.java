@@ -11,7 +11,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
@@ -45,7 +45,7 @@ public class HAPProcessorModule {
 			String id, 
 			HAPContextGroup parentContext, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcess processMan,
+			HAPManagerProcessDefinition processMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
@@ -88,7 +88,7 @@ public class HAPProcessorModule {
 			String id,
 			HAPExecutableModule moduleExe,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcess processMan,
+			HAPManagerProcessDefinition processMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {

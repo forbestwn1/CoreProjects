@@ -8,12 +8,14 @@ import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
 import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayBrowserLoadLibrary;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayLoadTestExpression;
+import com.nosliw.data.core.runtime.js.rhino.HAPManagerProcessImp;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.service.provide.HAPGatewayService;
 import com.nosliw.data.core.service.provide.HAPManagerService;
@@ -45,10 +47,12 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
 		HAPManagerService serviceManager = new HAPManagerService();
 		HAPExpressionSuiteManager expSuiteMan = new HAPExpressionSuiteManager();
-		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
+		HAPManagerProcessDefinition processDefMan = new HAPManagerProcessDefinition(new HAPManagerActivityPlugin(), HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
+		HAPManagerProcess processMan = new HAPManagerProcessImp(processDefMan, runtime);
 		
 		init(new HAPResourceManagerJSImp(
 				runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess()),
+				processDefMan,
 				processMan,
 				expSuiteMan,
 			new HAPGatewayManager(),

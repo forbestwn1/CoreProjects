@@ -23,7 +23,7 @@ public class HAPProcessorProcess{
 			HAPContextGroup parentContext, 
 			Map<String, HAPDefinitionProcess> localProcesses,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcess processMan,
+			HAPManagerProcessDefinition processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		HAPExecutableProcess out = null;
@@ -42,7 +42,7 @@ public class HAPProcessorProcess{
 			HAPContextGroup originContext, 
 			Map<String, HAPDefinitionProcess> localProcesses,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcess processMan,
+			HAPManagerProcessDefinition processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		HAPContextGroup context = originContext.cloneContextGroup();
@@ -75,7 +75,7 @@ public class HAPProcessorProcess{
 			String processId, 
 			HAPDefinitionProcessSuite suite, 			
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcess processMan,
+			HAPManagerProcessDefinition processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		String id = new HAPIdProcess(suite.getId(), processId).getId();

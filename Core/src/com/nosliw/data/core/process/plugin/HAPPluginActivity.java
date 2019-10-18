@@ -10,7 +10,7 @@ import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -41,7 +41,7 @@ public interface HAPPluginActivity {
 			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcess processManager,
+			HAPManagerProcessDefinition processManager,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker

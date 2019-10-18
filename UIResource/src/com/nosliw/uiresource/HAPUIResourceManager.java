@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -43,7 +43,7 @@ public class HAPUIResourceManager {
 
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
-	private HAPManagerProcess m_processMan;
+	private HAPManagerProcessDefinition m_processMan;
 	
 	private HAPManagerServiceDefinition m_serviceDefinitionManager;
 	
@@ -59,7 +59,7 @@ public class HAPUIResourceManager {
 			HAPUITagManager uiTagMan,
 			HAPExpressionSuiteManager expressionMan, 
 			HAPResourceManagerRoot resourceMan,
-			HAPManagerProcess processMan,
+			HAPManagerProcessDefinition processMan,
 			HAPRuntime runtime, 
 			HAPDataTypeHelper dataTypeHelper,
 			HAPManagerServiceDefinition serviceDefinitionManager){

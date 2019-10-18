@@ -1,0 +1,42 @@
+package com.nosliw.data.core.runtime.js.rhino;
+
+import java.util.Map;
+
+import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
+import com.nosliw.data.core.process.HAPExecutableProcess;
+import com.nosliw.data.core.process.HAPIdProcess;
+import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.process.HAPManagerProcessDefinition;
+import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessRhino;
+
+public class HAPManagerProcessImp implements HAPManagerProcess{
+
+	private HAPRuntime m_runtime;
+	private HAPManagerProcessDefinition m_processDefMan;
+	
+	public HAPManagerProcessImp(HAPManagerProcessDefinition processDefMan, HAPRuntime runtime) {
+		this.m_processDefMan = processDefMan;
+		this.m_runtime = runtime;
+	}
+	
+	@Override
+	public HAPServiceData executeProcess(String processId, String suitId, Map<String, HAPData> input) {
+		HAPExecutableProcess processExe = m_processDefMan.getProcess(new HAPIdProcess(suitId, processId));
+		return this.executeProcess(processExe, input);
+	}
+
+	@Override
+	public HAPServiceData executeProcess(HAPExecutableProcess process, Map<String, HAPData> input) {
+		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(process, input);
+		return this.m_runtime.executeTaskSync(task);
+	}
+
+	@Override
+	public HAPServiceData executeProcess(String process, HAPDefinitionProcessSuite suite, Map<String, HAPData> input) {
+		HAPExecutableProcess processExe = m_processDefMan.getProcess(process, suite);
+		return this.executeProcess(processExe, input);
+	}
+}
