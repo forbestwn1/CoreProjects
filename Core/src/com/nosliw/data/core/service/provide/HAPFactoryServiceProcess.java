@@ -9,16 +9,24 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.process.HAPManagerProcessDefinition;
+import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 
-public class HAPFactoryServiceTask implements HAPFactoryService{
+public class HAPFactoryServiceProcess implements HAPFactoryService{
 
 	public final static String FACTORY_TYPE = "process";
 	
 	private HAPManagerProcess m_processManager;
+	private HAPManagerProcessDefinition m_processDefMan;
+	
+	public HAPFactoryServiceProcess(HAPManagerProcess processManager, HAPManagerProcessDefinition processDefMan) {
+		this.m_processManager = processManager;
+		this.m_processDefMan = processDefMan;
+	}
 	
 	@Override
 	public HAPExecutableService newService(HAPDefinitionService dataSourceDefinition) {
@@ -27,8 +35,7 @@ public class HAPFactoryServiceTask implements HAPFactoryService{
 		HAPInfoServiceStatic staticInfo = dataSourceDefinition.getStaticInfo();
 
 		JSONObject configJson = (JSONObject)runtimeInfo.getConfigure();
-		HAPDefinitionProcessSuite taskSuite = new HAPDefinitionProcessSuite();
-		taskSuite.buildObject(configJson, HAPSerializationFormat.JSON);
+		HAPDefinitionProcessSuite taskSuite = HAPParserProcessDefinition.parsePocessSuite(configJson, this.m_processDefMan.getPluginManager());
 		taskSuite.setName(staticInfo.getName());
 		
 		HAPContext processExternalContext = new HAPContext();
@@ -41,7 +48,10 @@ public class HAPFactoryServiceTask implements HAPFactoryService{
 		HAPExecutableService out = new HAPExecutableService(){
 			@Override
 			public HAPResultService execute(Map<String, HAPData> parms) {
-				return (HAPResultService)m_processManager.executeProcess("main", taskSuite, parms).getData();
+				JSONObject dataObj = (JSONObject)m_processManager.executeProcess("main", taskSuite, parms).getData();
+				HAPResultService out = new HAPResultService();
+				out.buildObject(dataObj, HAPSerializationFormat.JSON);
+				return out;
 			}
 		};
 		return out;

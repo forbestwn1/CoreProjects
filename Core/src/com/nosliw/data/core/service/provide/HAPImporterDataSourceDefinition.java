@@ -15,7 +15,8 @@ public class HAPImporterDataSourceDefinition {
 			"com.nosliw.service.school.HAPServiceImp",
 			"com.nosliw.service.realtor.HAPServiceImp",
 			"com.nosliw.service.soccer.HAPServiceGetLineup",
-			"com.nosliw.service.soccer.HAPServiceUpdateLineup"
+			"com.nosliw.service.soccer.HAPServiceUpdateLineup",
+			"com.nosliw.service.test.process.HAPServiceProviderImp",
 	};
 	
 	public static List<HAPDefinitionService> loadDataSourceDefinition() {
