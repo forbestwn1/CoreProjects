@@ -120,10 +120,10 @@ public class HAPRhinoRuntimeUtility {
 		return resourceIds;
 	}
 	
-	public static void loadScript(String script, Scriptable scope, String name){
+	public static void loadScript(String script, Scriptable scope, String name, boolean exportScript){
 		Context context = Context.enter();
 		try{
-			if(!HAPRuntime.isDemo) {
+			if(!HAPRuntime.isDemo && exportScript) {
 				//ppppp			
 				String folder = getScriptTempFolder();
 				String scriptTempFile = folder + "/" + String.format("%03d", index++) + "_" + name;  //+".js";

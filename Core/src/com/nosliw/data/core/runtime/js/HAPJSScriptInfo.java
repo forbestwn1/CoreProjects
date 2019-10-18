@@ -30,18 +30,17 @@ public class HAPJSScriptInfo extends HAPSerializableImp{
 	
 	//script
 	private StringBuffer m_script;
+
+	//type of resource for this script(lib, data type, ...)
+	private String m_type;
 	
-	public String isFile(){
-		return this.m_file;
-	}
+	public String isFile(){	return this.m_file;	}
+	public void setFile(String file){	this.m_file = file;	}
 	
-	public void setFile(String file){
-		this.m_file = file;
-	}
+	public String getType() {   return this.m_type;   }
+	public void setType(String type) {   this.m_type = type;    }
 	
-	public String getName(){
-		return this.m_name;
-	}
+	public String getName(){	return this.m_name;	}
 	
 	public String getScript(){
 		if(this.m_file!=null){

@@ -1,4 +1,3 @@
-var nosliw = {}; 
 nosliw.utility = function(){
 	
 	var loc_requestLoadFileResources = function(api, command, parms, processResult, callBackFunction){

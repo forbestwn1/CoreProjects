@@ -1,10 +1,13 @@
+nosliw.createNode("runtime.name", "browser");
+
 nosliw.init = function(serverBase){
+
 	nosliw.serverBase = serverBase==undefined?"":serverBase;
 
 	var libNames = [
-		"external.Underscore;1.9.1",
-		"external.Backbone;1.3.3",
-		"nosliw.core",
+//		"external.Underscore;1.9.1",
+//		"external.Backbone;1.3.3",
+//		"nosliw.core",
 		"nosliw.constant",
 		"nosliw.logging",
 		"nosliw.common",

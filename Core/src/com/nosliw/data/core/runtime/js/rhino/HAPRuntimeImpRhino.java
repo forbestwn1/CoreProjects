@@ -287,7 +287,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			//for file
 			this.m_sciprtTracker.addFile(file);
 		}
-		HAPRhinoRuntimeUtility.loadScript(scriptInfo.getScript(), scope, scriptInfo.getName());
+		HAPRhinoRuntimeUtility.loadScript(scriptInfo.getScript(), scope, scriptInfo.getName(), !HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY.equals(scriptInfo.getType()));
 	}
 	
 	public void loadScriptFromFile(String fileName, Class cs, Scriptable scope){
