@@ -20,33 +20,33 @@ public class HAPResultService extends HAPSerializableImp{
 	public static final String RESULTNAME = "resultName";
 
 	@HAPAttribute
-	public static final String OUTPUT = "output";
+	public static final String RESULTVALUE = "resultValue";
 
 	private String m_resultName;
 	
-	private Map<String, HAPData> m_output;
+	private Map<String, HAPData> m_resultValue;
 
 	public HAPResultService() {
-		this.m_output = new LinkedHashMap<String, HAPData>();
+		this.m_resultValue = new LinkedHashMap<String, HAPData>();
 	}
 	
 	public HAPResultService(String resultName, Map<String, HAPData> output) {
 		this.m_resultName = resultName;
-		this.m_output = output;
+		this.m_resultValue = output;
 	}
 	
 	public String getResultName() {  return this.m_resultName;   }
-	public Map<String, HAPData> getOutput(){   return this.m_output;   }
+	public Map<String, HAPData> getResultValue(){   return this.m_resultValue;   }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){ 
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_resultName = jsonObj.optString(RESULTNAME);
-		JSONObject outputObj = jsonObj.optJSONObject(OUTPUT);
+		JSONObject outputObj = jsonObj.optJSONObject(RESULTVALUE);
 		if(outputObj!=null) {
 			for(Object key : outputObj.keySet()) {
 				String name = (String)key;
-				this.m_output.put(name, HAPDataUtility.buildDataWrapperFromJson(outputObj.getJSONObject(name)));
+				this.m_resultValue.put(name, HAPDataUtility.buildDataWrapperFromJson(outputObj.getJSONObject(name)));
 			}
 		}
 		return false;  
@@ -56,6 +56,6 @@ public class HAPResultService extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(RESULTNAME, this.m_resultName);
-		jsonMap.put(OUTPUT, HAPJsonUtility.buildJson(m_output, HAPSerializationFormat.JSON));
+		jsonMap.put(RESULTVALUE, HAPJsonUtility.buildJson(m_resultValue, HAPSerializationFormat.JSON));
 	}
 }

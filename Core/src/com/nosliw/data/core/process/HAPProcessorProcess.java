@@ -16,6 +16,18 @@ import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 
 public class HAPProcessorProcess{
 
+	//process process in suite
+	public static HAPExecutableProcess process(
+			String processId, 
+			HAPDefinitionProcessSuite suite, 			
+			Map<String, HAPDefinitionServiceProvider> serviceProviders,
+			HAPManagerProcessDefinition processMan,
+			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPProcessTracker processTracker) {
+		String id = new HAPIdProcess(suite.getId(), processId).getId();
+		return process(suite.getProcess(processId), id, suite.getContext(), suite.getProcesses(), serviceProviders, processMan, contextProcessRequirement, processTracker);
+	}
+
 	//
 	public static HAPExecutableProcess process(
 			HAPDefinitionProcess processDefinition, 
@@ -70,15 +82,4 @@ public class HAPProcessorProcess{
 		out.setResults(results);
 	}
 
-	//process process in suite
-	public static HAPExecutableProcess process(
-			String processId, 
-			HAPDefinitionProcessSuite suite, 			
-			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcessDefinition processMan,
-			HAPRequirementContextProcessor contextProcessRequirement,
-			HAPProcessTracker processTracker) {
-		String id = new HAPIdProcess(suite.getId(), processId).getId();
-		return process(suite.getProcess(processId), id, suite.getContext(), suite.getProcesses(), serviceProviders, processMan, contextProcessRequirement, processTracker);
-	}
 }

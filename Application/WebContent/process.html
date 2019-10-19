@@ -28,6 +28,10 @@
 $(document).on("nosliwActive", function(){
 	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessResourceRequest("expression;expressionProcessId", 
 	{
+		"fromVar": {
+			"dataTypeId": "test.integer;1.0.0",
+			"value": 1
+		},
 		"toVar": {
 			"dataTypeId": "test.integer;1.0.0",
 			"value": 7

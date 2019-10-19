@@ -37,6 +37,7 @@ public class HAPProcessorDataAssociation {
 	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionWrapperTask taskWrapperDef, HAPExecutableTask taskExe, HAPParentContext externalContext, HAPInfo configure, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableWrapperTask out = new HAPExecutableWrapperTask();
 		out.setTask(taskExe);
+		//process input mapping
 		HAPDefinitionDataAssociation inputMapping = taskWrapperDef.getInputMapping();
 		if(inputMapping==null)  inputMapping = new HAPDefinitionDataAssociationMirror();   //if no input mapping defined, then use mirror
 		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(externalContext, inputMapping, taskExe.getInContext(), configure, contextProcessRequirement));

@@ -36,7 +36,7 @@ var node_createDataService = function(){
 					var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
 					serviceRequest.addRequest(loc_out.getExecuteDataServiceRequest(serviceId, input, {
 						success : function(request, serviceResult){
-							return new node_IOTaskResult(serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTNAME], serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_OUTPUT]);
+							return new node_IOTaskResult(serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTNAME], serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTVALUE]);
 						}
 					}));
 					return serviceRequest;
