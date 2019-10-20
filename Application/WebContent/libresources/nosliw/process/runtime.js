@@ -86,21 +86,19 @@ var node_createProcessRuntime = function(envObj){
 			var requestInfo = this.getExecuteProcessRequest(processDef, inputValue, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},		
-		
-		//process defined within other component
-		//extraInputDataSet is other component's contextIo
-		//return : IOTaskResult with resultName and outputIODataSet (which is externalIODataSet)
-		getExecuteEmbededProcessRequest : function(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent){
+
+		getExecuteEmbededProcessRequest : function(processDef, inputIODataSet, outputIODataSet, extraInputDataSet, handlers, requester_parent){
 			var envObj = {
 				//add method for sync data from internal process context to external process context
 				getSyncOutRequest : function(internalValue, handlers, request){
-					var taskOutputDataAssociation = node_createDataAssociation(internalValue, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING][node_COMMONCONSTANT.NAME_DEFAULT], externalIODataSet, loc_buildTaskOutputDataAssociationName(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID]));
+					var taskOutputDataAssociation = node_createDataAssociation(internalValue, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING][node_COMMONCONSTANT.NAME_DEFAULT], outputIODataSet, loc_buildTaskOutputDataAssociationName(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID]));
 					return taskOutputDataAssociation.getExecuteRequest(handlers, request);
 				}
 			};
 			envObj = _.extend(envObj, loc_envObj);
 			return node_taskUtility.getExecuteEmbededTaskRequest(
-				externalIODataSet, 
+				inputIODataSet, 
+				outputIODataSet,
 				extraInputDataSet, 
 				processDef, 
 				new node_IOTaskInfo(function(inputValue, handlers, request){
@@ -116,8 +114,20 @@ var node_createProcessRuntime = function(envObj){
 				requester_parent);
 		},
 
-		executeEmbededProcessRequest : function(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent){
-			var requestInfo = this.getExecuteEmbededProcessRequest(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent);
+		executeEmbededProcessRequest : function(processDef, inputIODataSet, outputIODataSet, extraInputDataSet, handlers, requester_parent){
+			var requestInfo = this.getExecuteEmbededProcessRequest(processDef, inputIODataSet, outputIODataSet, extraInputDataSet, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+		
+		//process defined within other component
+		//extraInputDataSet is other component's contextIo
+		//return : IOTaskResult with resultName and outputIODataSet (which is externalIODataSet)
+		getExecuteWrappedProcessRequest : function(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent){
+			return loc_out.getExecuteEmbededProcessRequest(processDef, externalIODataSet, externalIODataSet, extraInputDataSet, handlers, requester_parent);
+		},
+
+		executeWrappedProcessRequest : function(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent){
+			var requestInfo = this.getExecuteWrappedProcessRequest(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 	};

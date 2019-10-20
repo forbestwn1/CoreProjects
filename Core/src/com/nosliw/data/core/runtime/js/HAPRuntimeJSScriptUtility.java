@@ -24,6 +24,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteConverter;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteDataOperation;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcess;
+import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcessEmbeded;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
@@ -348,4 +349,29 @@ public class HAPRuntimeJSScriptUtility {
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
 		return out;
 	}
+
+	public static HAPJSScriptInfo buildRequestScriptForExecuteProcessEmbededTask(HAPRuntimeTaskExecuteProcessEmbeded task, HAPRuntimeImpRhino runtime){
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+
+		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
+		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
+		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
+		
+		templateParms.put("processDef", task.getProcess().toResourceData(runtime.getRuntimeInfo()).toString());
+		
+		String inputJson = HAPJsonUtility.buildJson(task.getInput(), HAPSerializationFormat.JSON);
+		templateParms.put("inputData", inputJson);
+		
+		templateParms.put("taskId", task.getTaskId());
+
+		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
+		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
+		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
+
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteProcessEmbededScript.temp");
+		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
+		return out;
+	}
+
 }

@@ -10,7 +10,9 @@ import com.nosliw.data.core.process.HAPIdProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessEmbededRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessRhino;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
 public class HAPManagerProcessImp implements HAPManagerProcess{
 
@@ -34,6 +36,12 @@ public class HAPManagerProcessImp implements HAPManagerProcess{
 		return this.m_runtime.executeTaskSync(task);
 	}
 
+	@Override
+	public HAPServiceData executeProcess(HAPExecutableWrapperTask<HAPExecutableProcess> process, Map<String, HAPData> input) {
+		HAPRuntimeTaskExecuteProcessEmbededRhino task = new HAPRuntimeTaskExecuteProcessEmbededRhino(process, input);
+		return this.m_runtime.executeTaskSync(task);
+	}
+	
 	@Override
 	public HAPServiceData executeProcess(String process, HAPDefinitionProcessSuite suite, Map<String, HAPData> input) {
 		HAPExecutableProcess processExe = m_processDefMan.getProcess(process, suite);

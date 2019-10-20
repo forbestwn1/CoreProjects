@@ -20,18 +20,24 @@ var node_taskUtility = function(){
 
 	var loc_out = {
 			
-		getExecuteEmbededTaskRequest : function(externalIODataSet, extraInputData, ioMapping, ioTaskInfo, handlers, request){
+		//input and output is same
+		getExecuteWrappedTaskRequest : function(externalIODataSet, extraInputData, ioMapping, ioTaskInfo, handlers, request){
+			return loc_out.getExecuteEmbededTaskRequest(externalIODataSet, externalIODataSet, extraInputData, ioMapping, ioTaskInfo, handlers, request);
+		},
+
+		//input and output may not same
+		getExecuteEmbededTaskRequest : function(inputIODataSet, outputIODataSet, extraInputData, ioMapping, ioTaskInfo, handlers, request){
 			return loc_out.getExecuteTaskRequest(
-					externalIODataSet, 
+					inputIODataSet, 
 					extraInputData,
 					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], 
 					ioTaskInfo, 
 					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING], 
-					externalIODataSet, 
+					outputIODataSet, 
 					handlers, 
 					request);
 		},
-			
+
 		getExecuteTaskRequest : function(inputIO, extraInputdata, inputDataAssociationDef, ioTaskInfo, outputDataAssociationByResult, outputIO, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association

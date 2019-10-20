@@ -76,7 +76,8 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	public Map<String, HAPParentContext> getOutResultContext() {
 		Map<String, HAPParentContext> out = new LinkedHashMap<String, HAPParentContext>();
 		for(String resultName : this.m_results.keySet()) {
-			out.put(resultName, HAPParentContext.createDefault(this.m_context));
+//			out.put(resultName, HAPParentContext.createDefault(this.m_context));     //kkkkkk
+			out.put(resultName, HAPParentContext.createDefault(this.m_results.get(resultName).getOutput().getOutputStructure()));
 		}
 		String defaultResultName = HAPConstant.NAME_DEFAULT;
 		if(out.get(defaultResultName)==null) {

@@ -30,7 +30,7 @@ var node_createDataService = function(){
 		getExecuteEmbededDataServiceRequest : function(serviceId, serviceUse, ioEndpoint, handlers, requester_parent){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {}), handlers, requester_parent);
 			var serviceMapping = serviceUse[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_SERVICEMAPPING];
-			out.addRequest(node_taskUtility.getExecuteEmbededTaskRequest(
+			out.addRequest(node_taskUtility.getExecuteWrappedTaskRequest(
 				ioEndpoint, undefined, serviceMapping,
 				new node_IOTaskInfo(function(input, handlers, request){
 					var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);

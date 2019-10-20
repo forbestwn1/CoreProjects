@@ -55,7 +55,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	var loc_getProcessEnv = function(){   return loc_componentCoreComplex.getInterface();    };
 
 	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
-		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteEmbededProcessRequest(process, loc_getContextIODataSet(), extraInput, handlers, request);
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteWrappedProcessRequest(process, loc_getContextIODataSet(), extraInput, handlers, request);
 	};
 	
 	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){

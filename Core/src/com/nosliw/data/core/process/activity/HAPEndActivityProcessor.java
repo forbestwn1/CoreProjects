@@ -16,6 +16,7 @@ import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
 public class HAPEndActivityProcessor implements HAPProcessorActivity{
@@ -36,6 +37,10 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 		if(endActivity.getOutput()!=null) {
 			//build result data association only when end activity has output
 			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), endActivity.getOutput(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement);
+			results.put(endActivity.getName(), result);
+		}
+		else {  //kkkk
+			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), new HAPDefinitionDataAssociationMirror(), HAPParentContext.createDefault(processContext), null, contextProcessRequirement);
 			results.put(endActivity.getName(), result);
 		}
 		
