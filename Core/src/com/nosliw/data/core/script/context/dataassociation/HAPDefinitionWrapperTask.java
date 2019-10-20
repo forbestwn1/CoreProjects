@@ -33,12 +33,18 @@ public class HAPDefinitionWrapperTask<T> extends HAPSerializableImp{
 		this.m_outputMapping = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
 	}
 
+	public HAPDefinitionWrapperTask(T taskDef) {
+		this();
+		this.m_taskDefinition = taskDef;
+	}
+
 	public T getTaskDefinition() {  return this.m_taskDefinition;   }
 	public void setTaskDefinition(T taskDef) {    this.m_taskDefinition = taskDef;     }
 	
 	public HAPDefinitionDataAssociation getInputMapping() {   return this.m_inputMapping;   }
 	public void setInputMapping(HAPDefinitionDataAssociation inputMapping) {    this.m_inputMapping = inputMapping;    }
 	public Map<String, HAPDefinitionDataAssociation> getOutputMapping(){    return this.m_outputMapping;     }
+	public void setOutputMapping(Map<String, HAPDefinitionDataAssociation> outputMapping) {  if(outputMapping!=null) this.m_outputMapping.putAll(outputMapping);   }
 	public void addOutputMapping(String name, HAPDefinitionDataAssociation mapping) {  this.m_outputMapping.put(name, mapping);   }
 	
 	public void buildMapping(JSONObject jsonObj) {
