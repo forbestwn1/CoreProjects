@@ -7,11 +7,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "info":{}
 }, {"id":"Decoration_application_header_framework7",
 "type":"resource",
-"context":{"local2Global":{"nosliw_module_application_uiStatus":"nosliw_module_application_uiStatus___public",
-"nosliw_ui_info":"nosliw_ui_info___public",
-"backIconDisplay":"backIconDisplay___public"
+"context":{"local2Global":{"nosliw_module_application_ui_status":"nosliw_module_application_ui_status___public",
+"nosliw_ui_info":"nosliw_ui_info___public"
 },
-"context":{"element":{"nosliw_module_application_uiStatus___public":{"name":"",
+"context":{"element":{"nosliw_module_application_ui_status___public":{"name":"",
 "description":"",
 "info":{},
 "definition":{"type":"node",
@@ -22,10 +21,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"nosliw_module_application_uiStatus":{"info":{},
+"nosliw_module_application_ui_status":{"info":{},
 "definition":{"type":"relative",
 "processed":"true",
-"path":{"rootEleName":"nosliw_module_application_uiStatus___public"
+"path":{"rootEleName":"nosliw_module_application_ui_status___public"
 },
 "parent":"self",
 "definition":{"type":"node",
@@ -68,41 +67,21 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 }
-},
-"backIconDisplay___public":{"name":"",
-"description":"",
-"info":{},
-"definition":{"type":"value",
-"processed":"true"
-},
-"defaultValue":"none"
-},
-"backIconDisplay":{"info":{},
-"definition":{"type":"relative",
-"processed":"true",
-"path":{"rootEleName":"backIconDisplay___public"
-},
-"parent":"self",
-"definition":{"type":"value",
-"processed":"true"
-}
-},
-"defaultValue":"none"
 }
 }
 }
 },
-"elementEvents":[{"uiId":"340",
-"event":"click",
-"function":"transferBack"
-},{"uiId":"344",
+"elementEvents":[{"uiId":"1170",
 "event":"click",
 "function":"refresh"
+},{"uiId":"1166",
+"event":"click",
+"function":"transferBack"
 }],
 "tagEvents":[],
 "attributes":{"nosliwattribute_placeholder":"id:pleaseEmbed"
 },
-"html":"&lt;div class=&quot;page-content&quot; nosliwid=&quot;336&quot;&gt;  &lt;div class=&quot;navbar&quot; nosliwid=&quot;337&quot;&gt;   &lt;div class=&quot;navbar-inner&quot; nosliwid=&quot;338&quot;&gt;    &lt;div class=&quot;left&quot; nosliwid=&quot;339&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; style=&quot;&quot; nosliwid=&quot;340&quot;&gt;&lt;span&gt;Back&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;    &lt;div class=&quot;title&quot; nosliwid=&quot;341&quot;&gt;    &lt;span nosliwid=&quot;342&quot;&gt;&lt;/span&gt;   &lt;/div&gt;    &lt;div class=&quot;right&quot; nosliwid=&quot;343&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; nosliwid=&quot;344&quot;&gt;&lt;span&gt;Refresh&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;   &lt;/div&gt;  &lt;/div&gt;  &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;345&quot;&gt;&lt;/div&gt; &lt;/div&gt;",
+"html":"&lt;div class=&quot;page-content&quot; nosliwid=&quot;1162&quot;&gt;  &lt;div class=&quot;navbar&quot; nosliwid=&quot;1163&quot;&gt;   &lt;div class=&quot;navbar-inner&quot; nosliwid=&quot;1164&quot;&gt;    &lt;div class=&quot;left&quot; nosliwid=&quot;1165&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; style=&quot;&quot; nosliwid=&quot;1166&quot;&gt;&lt;span&gt;Back&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;    &lt;div class=&quot;title&quot; nosliwid=&quot;1167&quot;&gt;    &lt;span nosliwid=&quot;1168&quot;&gt;&lt;/span&gt;   &lt;/div&gt;    &lt;div class=&quot;right&quot; nosliwid=&quot;1169&quot;&gt;     &lt;a href=&quot;&quot; class=&quot;link&quot; nosliwid=&quot;1170&quot;&gt;&lt;span&gt;Refresh&lt;/span&gt;&lt;/a&gt;    &lt;/div&gt;   &lt;/div&gt;  &lt;/div&gt;  &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;1171&quot;&gt;&lt;/div&gt; &lt;/div&gt;",
 "constants":{},
 "events":{"transferBack":{"name":"transferBack",
 "description":"",
@@ -125,7 +104,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"342",
+"uiId":"1168",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -136,19 +115,19 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 }
 }],
-"scriptExpressionInAttributes":[{"scriptExpressions":{"1":{"definition":"?(nosliw_module_application_uiStatus.index)?==0?'none':'inline'",
-"variableNames":["nosliw_module_application_uiStatus.index"],
+"scriptExpressionInAttributes":[{"scriptExpressions":{"1":{"definition":"?(nosliw_module_application_ui_status.index)?==0?'none':'inline'",
+"variableNames":["nosliw_module_application_ui_status.index"],
 "expressions":{}
 }
 },
-"uiId":"340",
+"uiId":"1166",
 "attribute":"style",
 "scriptFunction":function(scriptExpressionData){
 	return "display:"+scriptExpressionData["1"];
 } 
 ,
 "scriptExpressionScriptFunction":{"1":function(expressionsData, constantsData, variablesData){
-	return variablesData["nosliw_module_application_uiStatus.index"]==0?'none':'inline';
+	return variablesData["nosliw_module_application_ui_status.index"]==0?'none':'inline';
 } 
 
 }

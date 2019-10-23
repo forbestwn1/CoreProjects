@@ -15,6 +15,8 @@ var packageObj = library;
 	var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
+//a page consist of layers of view, at the bottom is core view, on top of core view are decoration layer
+//now, data and event in core view and decoration layer contribute are treated equally
 var node_createUIPage = function(uiView){
 	
 	var loc_layers = [];

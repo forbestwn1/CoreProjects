@@ -19,7 +19,7 @@ function(uiModule){
 		var out = node_createServiceRequestInfoSet(undefined, handlers, request);
 		_.each(loc_getUIStack(), function(uiName, index){
 			//update ui status data
-			out.addRequest(uiName, loc_uiModule.getUI(uiName).getUpdateExtraContextDataRequest("nosliw_module_state", {
+			out.addRequest(uiName, loc_uiModule.getUI(uiName).getUpdateSystemDataRequest("nosliw_module_state", {
 				nosliw_uiStatus : {
 					index : index,
 				}

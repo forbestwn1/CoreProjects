@@ -66,7 +66,7 @@ var loc_createDecoration = function(uiView){
 	var loc_valueChangeEventListenerForDec = node_createEventObject();
 	var loc_valueChangeEventListenerForParent = node_createEventObject();
 	
-	var loc_childUIView;
+	var loc_childUI;
 	var loc_childView;
 	
 	var loc_uiView = uiView;
@@ -93,13 +93,13 @@ var loc_createDecoration = function(uiView){
 			
 			var childDataType = node_getObjectType(child);
 			if(childDataType==node_CONSTANT.TYPEDOBJECT_TYPE_UIVIEW){
-				loc_childUIView = child;
+				loc_childUI = child;
 				
 				//insert parent view into decoration view
-				loc_childUIView.appendTo(loc_getPlaceHolderView());
+				loc_childUI.appendTo(loc_getPlaceHolderView());
 
 				//listener to event from parent
-				loc_childUIView.registerEventListener(loc_eventListenerForParent, function(event, eventData, requestInfo){
+				loc_childUI.registerEventListener(loc_eventListenerForParent, function(event, eventData, requestInfo){
 					//process by decoration first
 					var result = loc_uiView.command(node_COMMONCONSTANT.DECORATION_COMMAND_EVENTPROCESS, {}, requestInfo);
 					if(result===false)  return false;   //if return false, then no pop up the event
@@ -107,7 +107,7 @@ var loc_createDecoration = function(uiView){
 				});
 
 				//value change event, just pop up
-				loc_childUIView.registerValueChangeEventListener(loc_valueChangeEventListenerForParent, function(event, eventData, requestInfo){
+				loc_childUI.registerValueChangeEventListener(loc_valueChangeEventListenerForParent, function(event, eventData, requestInfo){
 					loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);  
 				});
 			}
@@ -124,14 +124,14 @@ var loc_createDecoration = function(uiView){
 		
 		getContextElements : function(){
 			var out = {};
-			out = _.extend(out, loc_uiView.getContext().prv_elements, loc_childUIView==undefined?undefined:loc_childUIView.getContextElements());
+			out = _.extend(out, loc_uiView.getContext().prv_elements, loc_childUI==undefined?undefined:loc_childUI.getContextElements());
 			return out;
 		},
 		
 		getUpdateContextRequest : function(parms, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 			out.addRequest(loc_uiView.getUpdateContextRequest(parms));
-			if(loc_childUIView!=undefined) out.addRequest(loc_childUIView.getUpdateContextRequest(parms));
+			if(loc_childUI!=undefined) out.addRequest(loc_childUI.getUpdateContextRequest(parms));
 			return out;
 		},
 		
@@ -144,8 +144,8 @@ var loc_createDecoration = function(uiView){
 				}, requestInfo);
 			if(result===false)  return false;   //if command return false, then no pass to parent 
 			else{
-				if(loc_childUIView!=undefined){
-					return loc_childUIView.command(command, parms, requestInfo);   //otherwise, let parent process this command
+				if(loc_childUI!=undefined){
+					return loc_childUI.command(command, parms, requestInfo);   //otherwise, let parent process this command
 				}
 			}
 		},

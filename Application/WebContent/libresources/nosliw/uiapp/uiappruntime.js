@@ -21,7 +21,7 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createAppRuntimeRequest = function(id, appDef, configure, componentDecorationInfos, ioInput, state, handlers, request){
-	var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("createUIModule"), function(request){
+	var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("createAppRuntime"), function(request){
 		var app = node_createUIAppComponentCore(id, appDef, configure, ioInput);
 		var runtime = node_createAppRuntime(app, configure, componentDecorationInfos, state, request);
 		return runtime.prv_getInitRequest({
@@ -123,15 +123,6 @@ var node_createAppRuntime = function(uiAppCore, configure, componentDecorationIn
 		return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE, request);
 	};	
 
-	var loc_interfaceDelegate = {
-		getContextIODataSet :  function(){  return loc_getContextIODataSet();  },
-		getExecuteCommandRequest : function(command, parms, handlers, request){  return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);    },
-		registerEventListener : function(listener, handler, thisContext){  return loc_componentCoreComplex.registerEventListener(listener, handler, thisContext);   },
-		unregisterEventListener : function(listener){   return loc_componentCoreComplex.unregisterEventListener(listener);  },
-		registerValueChangeEventListener : function(listener, handler, thisContext){   return loc_componentCoreComplex.registerValueChangeEventListener(listener, handler, thisContext);   },
-		unregisterValueChangeEventListener : function(listener){   return loc_componentCoreComplex.unregisterValueChangeEventListener(listener);    }
-	};
-
 	//environment for component complex
 	var loc_componentEnv = {
 		//process request
@@ -155,17 +146,24 @@ var node_createAppRuntime = function(uiAppCore, configure, componentDecorationIn
 			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
 			return out;
 		},
+
+		//component management interface 
+		getContextIODataSet :  function(){  return loc_getContextIODataSet();  },
+		getExecuteCommandRequest : function(command, parms, handlers, request){  return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);    },
+		registerEventListener : function(listener, handler, thisContext){  return loc_componentCoreComplex.registerEventListener(listener, handler, thisContext);   },
+		unregisterEventListener : function(listener){   return loc_componentCoreComplex.unregisterEventListener(listener);  },
+		registerValueChangeEventListener : function(listener, handler, thisContext){   return loc_componentCoreComplex.registerValueChangeEventListener(listener, handler, thisContext);   },
+		unregisterValueChangeEventListener : function(listener){   return loc_componentCoreComplex.unregisterValueChangeEventListener(listener);    }
 	};
 	
 	loc_init(uiAppCore, configure, componentDecorationInfos, state);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
-	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_interfaceDelegate, loc_out);
+	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_out, loc_out);
 
 	return loc_out;
 };
-	
-	
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data

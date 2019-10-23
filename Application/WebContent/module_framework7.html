@@ -48,39 +48,31 @@ $(document).on("nosliwActive", function(){
 	var node_getStoreService = nosliw.getNodeData("component.getStoreService");
 	var node_createDebugTool = nosliw.getNodeData("component.debug.createDebugTool");
 	var node_createModuleConfigure = nosliw.getNodeData("uimodule.createModuleConfigure");
-	var node_createRequestStatusIndicatorUI = nosliw.getNodeData("request.ui.createRequestStatusIndicatorUI");
+	var node_framework7Utility = nosliw.getNodeData("framework7.utility");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
 
 	var parms = node_basicUtility.getParmsInUrl();
 
-	var framework7App = new Framework7({
-		  // App root element
-		  root: $("#moduleDiv").get(),
-		  name: 'My App',
-		  id: 'com.myapp.test',
-		  panel: {
-			    swipe: 'both',
-		  },		
-	});
+	var framework7App = node_framework7Utility.createTypicalFramework7App($("#moduleDiv").get()); 
 		
 	var configure = node_createModuleConfigure(
-			parms.setting, 
-			{
-				rootView : $('#moduleDiv').get(),
-				storeService : nosliw.runtime.getStoreService(),
-				framework7App : framework7App
-			}
+		parms.setting, 
+		{
+			rootView : $('#moduleDiv').get(),
+			storeService : nosliw.runtime.getStoreService(),
+			framework7App : framework7App
+		}
 	);
 
 	node_createDebugTool({
-			lifecycleView : $('#lifecycleDebug').get(),
-			dataView : $('#dataDebug').get(),
-			eventView : $('#eventDebug').get(),
-			resetView : $('#resetDebug').get(), 
-		}, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, parms.module, undefined, configure);
+		lifecycleView : $('#lifecycleDebug').get(),
+		dataView : $('#dataDebug').get(),
+		eventView : $('#eventDebug').get(),
+		resetView : $('#resetDebug').get(), 
+	}, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, parms.module, undefined, configure);
 	
 	//ui indicator
-	node_createRequestStatusIndicatorUI(framework7App);
+	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);
 });
 
 nosliw.init();

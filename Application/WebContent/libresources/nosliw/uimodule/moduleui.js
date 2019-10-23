@@ -22,6 +22,7 @@ var packageObj = library;
 	var node_basicUtility;
 	var node_createUIDecorationRequest;
 	var node_createEventObject;
+	var node_createSystemData;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -51,7 +52,12 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleContextIODataSet, e
 					_.each(uiDecorationInfos, function(uiDecorationInfo, index){
 						moduleUI.prv_addDecoration(uiDecorationInfo.decoration);
 					});
-					return moduleUI;
+					
+					return moduleUI.prv_postInitRequest({
+						success : function(request){
+							return moduleUI;
+						}
+					});
 				}
 			});
 		}
@@ -91,8 +97,8 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	loc_page.setName(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGENAME]);  //page name
 
 	//extra information by domain that provided by system and consumed by ui 
-	var loc_extraContextData = {};
-
+	var loc_systemData = node_createSystemData();
+	
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -120,21 +126,11 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		return out;
 	};
 	
-	var loc_setExtraContextData = function(domain, obj){
-		var domainObj = loc_extraContextData[domain];
-		if(domainObj==undefined){
-			domainObj = {};
-			loc_extraContextData[domain] = domainObj;
-		}
-		domainObj = _.extend(domainObj, obj);
-	};
-	
-	var loc_buildExtraContext = function(domain, context){
-		if(context==undefined)  context = {};
-		_.each(loc_extraContextData[domain], function(value, prop){
-			context[node_basicUtility.buildNosliwFullName(domain+"_"+prop)] = value;
-		});
-		return context;
+	var loc_getUpdateSystemDataRequest = function(domain, systemData, handlers, request){
+		//update system data
+		loc_systemData.setSystemData(domain, systemData);
+		//update page context
+		return loc_updatePageContextRequest(loc_systemData.buildSystemDataContextByDomain(domain), handlers, request);
 	};
 	
 	//data association from module context to page context
@@ -146,14 +142,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		}, 
 		function(value, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var pageInput = {};
-			pageInput = _.extend(pageInput, value);
-			//combine data from module with extra data in ui
-			_.each(loc_extraContextData, function(data, domain){
-				pageInput = loc_buildExtraContext(domain, pageInput);
-			});
-			//update page with data
-			out.addRequest(loc_updatePageContextRequest(pageInput));
+			out.addRequest(loc_updatePageContextRequest(value));
 			return out;
 		}
 	), node_dataAssociationUtility.buildDataAssociationName("MODULE", "CONTEXT", "PAGE", loc_page.getName()));
@@ -182,7 +171,6 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		}
 	};
 	
-	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(moduleUIDef, page, moduleContextIODataSet){
 		
@@ -193,15 +181,6 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		loc_page.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
 			loc_trigueValueChangeEvent(eventName, eventData, request);
 		}, loc_out);	
-		
-		//build ui info extra data 
-		loc_setExtraContextData("ui", {
-			info :{
-				id : loc_getId(),
-				name : loc_getName(),
-				title : loc_getTitle()
-			}
-		});
 	};
 
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY]  = function(request){
@@ -212,6 +191,19 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 
 		prv_addDecoration : function(decoration){		loc_page.addDecoration(decoration);	},	
 
+		prv_postInitRequest : function(handlers, request){
+			//build ui info extra data 
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getUpdateSystemDataRequest("ui", {
+				info :{
+					id : loc_getId(),
+					name : loc_getName(),
+					title : loc_getTitle()
+				}
+			}));
+			return out;
+		},
+		
 		getPage : function(){		return loc_page;		},
 		
 		getId : function(){	return loc_getId();	},
@@ -224,10 +216,8 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		getGetStateRequest : function(handlers, requestInfo){  return loc_page.getGetPageStateRequest(handlers, requestInfo);  },
 		getSetStateRequest : function(stateData, handlers, requestInfo){  return loc_updatePageContextRequest(stateData, handlers, requestInfo);  },
 		
-		setExtraContextData : function(domain, obj){  loc_setExtraContextData(domain, obj);   },
-		getUpdateExtraContextDataRequest : function(domain, extraContextData){
-			loc_setExtraContextData(domain, extraContextData);
-			return loc_updatePageContextRequest(loc_buildExtraContext(domain));
+		getUpdateSystemDataRequest : function(domain, systemData, handlers, request){
+			return loc_getUpdateSystemDataRequest(domain, systemData, handlers, request);
 		},
 		
 		getUpdateContextRequest : function(parms, handlers, requestInfo){	return loc_updatePageContextRequest(parms, handlers, requestInfo);	},
@@ -284,6 +274,7 @@ nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createUIDecorationRequest", function(){node_createUIDecorationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("uimodule.createSystemData", function(){node_createSystemData = this.getData();});
 
 
 //Register Node by Name

@@ -42,6 +42,7 @@ var node_createAppDecoration = function(gate){
 
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 
+	//for module with application role, only one data segment for each data name
 	var loc_buildApplicationModuleInfoRequest = function(moduleName, moduleDef, configure, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var appDataNames = node_appUtility.discoverApplicationDataDependency(moduleDef);   //app names that this module depend on
@@ -50,6 +51,7 @@ var node_createAppDecoration = function(gate){
 			out.addRequest(loc_uiApp.buildModuleInfoRequest(moduleName, [], configure));
 		}
 		else{
+			//get from database first by data name
 			out.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest(node_appUtility.getCurrentOwnerInfo(), appDataNames, {
 				success : function(request, appDataInfosByName){
 					//app data infos
@@ -57,7 +59,8 @@ var node_createAppDecoration = function(gate){
 					_.each(appDataNames, function(appDataName, index){
 						var appDataInfos = appDataInfosByName[appDataName];
 						if(appDataInfos==undefined || appDataInfos.length==0){
-							appDatas.push(new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "", false));
+							//no data in database, then generate one 
+							appDatas.push(node_appUtility.buildAppDataInfoTemp(appDataName, ""));
 						}
 						else{
 							appDatas.push(appDataInfos[0]);
@@ -98,7 +101,8 @@ var node_createAppDecoration = function(gate){
 			success : function(request, settingDataInfos){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 				//first one is not persistent
-				settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, new node_ApplicationDataSegmentInfo(node_appUtility.getCurrentOwnerInfo(), appDataName, node_appUtility.createAppDataSegmentId(), "New Setting", false), configure));   
+				settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, node_appUtility.buildAppDataInfoTemp(appDataName, "New Setting"), configure));
+
 				_.each(settingDataInfos[appDataName], function(dataInfo, index){
 					settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, dataInfo, configure));
 				});
@@ -189,7 +193,7 @@ var node_createAppDecoration = function(gate){
 				_.each(modules, function(moduleDef, name){
 					var role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
 					if(role==ROLE_APPLICATION){
-//						modulesRequest.addRequest(loc_buildApplicationModuleInfoRequest(name, moduleDef, loc_getModuleConfigure(role)));
+						modulesRequest.addRequest(loc_buildApplicationModuleInfoRequest(name, moduleDef, loc_getModuleConfigure(role)));
 					}
 					else if(role==ROLE_SETTING){
 						modulesRequest.addRequest(loc_createSettingRoleRequest(name, moduleDef, loc_getModuleConfigure(role)));

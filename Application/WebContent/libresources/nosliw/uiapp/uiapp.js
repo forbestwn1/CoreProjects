@@ -37,25 +37,21 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 	var loc_valueChangeEventSource = node_createEventObject();
 	var loc_valueChangeEventListener = node_createEventObject();
 
-	var loc_componentState = node_createComponentState(undefined,
-		function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			return out;
-		}, 
-		function(stateData, handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			return out;
-		}
-	);
-
-	var loc_moduleEventProcessor = function(eventName, eventData, request){
-		loc_trigueEvent(node_CONSTANT.APP_EVENT_MODULEEVENT, new node_ModuleEventData(this, eventName, eventData), request);
-	};
-
-	var loc_moduleValueChangeEventProcessor = function(eventName, eventData, request){
-		loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, new node_ModuleEventData(this, eventName, eventData), request);
-	};
+	var loc_componentState;
 	
+	var loc_initState = function(state){
+		loc_componentState = node_createComponentState(state,
+			function(handlers, request){
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				return out;
+			}, 
+			function(stateData, handlers, request){
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				return out;
+			}
+		);
+	};
+
 	var loc_initContextIODataSet = function(input){
 		var data = loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_INITSCRIPT](input);
 		loc_out.prv_componentData.contextDataSet.setData(undefined, data);
@@ -131,8 +127,12 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 			modules.push(moduleInfo);
 			loc_out.setCurrentModuleInfo(role, moduleInfo.id);
 			
-			module.registerEventListener(loc_eventListener, loc_moduleEventProcessor, moduleInfo);
-			module.registerValueChangeEventListener(loc_valueChangeEventListener, loc_moduleValueChangeEventProcessor, moduleInfo);
+			module.registerEventListener(loc_eventListener, function(eventName, eventData, request){
+				loc_trigueEvent(node_CONSTANT.APP_EVENT_MODULEEVENT, new node_ModuleEventData(this, eventName, eventData), request);
+			}, moduleInfo);
+			module.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
+				loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, new node_ModuleEventData(this, eventName, eventData), request);
+			}, moduleInfo);
 			return moduleInfo;
 		},
 		
@@ -152,9 +152,9 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 			
 			modules.splice(index, 1);
 		},
-		
+
+		//every role has only one current module
 		getCurrentModuleInfo : function(role){	return loc_out.getModuleInfo(role);	},
-		
 		setCurrentModuleInfo : function(role, moduleId){	loc_out.prv_componentData.currentModuleByRole[role] = moduleId;	},
 		
 		getAllModuleInfo : function(){
@@ -168,9 +168,7 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 		},
 		
 		getModuleInfo : function(role, id){
-			if(id==undefined){
-				id = loc_out.prv_componentData.currentModuleByRole[role];
-			}
+			if(id==undefined)	id = loc_out.prv_componentData.currentModuleByRole[role];  //if id not provided, then use id for current component
 			var modules = loc_out.prv_componentData.modulesByRole[role];
 			for(var i in modules){
 				if(modules[i].id==id)  return modules[i];
@@ -196,7 +194,7 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 		getValue : function(name){  return loc_out.prv_componentData.valueByName[name];    },
 		setValue : function(name, value){   loc_out.prv_componentData.valueByName[name] = value;   },
 	
-		setState : function(state){  loc_componentState.setState(state);	},
+		setState : function(state){  loc_initState(state);	},
 
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
@@ -243,10 +241,7 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 			}
 			return out;
 		},
-		setLifeCycleStatus : function(status){
-			//lifecycle transit finish
-			loc_out.prv_componentData.lifecycleStatus = status;
-		},
+		setLifeCycleStatus : function(status){		loc_out.prv_componentData.lifecycleStatus = status; },   //lifecycle transit finish
 		
 		startLifecycleTask : function(){	loc_componentState.initDataForRollBack();	},
 		endLifecycleTask : function(){ 	loc_componentState.clearDataFroRollBack();	},

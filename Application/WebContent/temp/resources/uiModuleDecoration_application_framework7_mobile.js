@@ -45,23 +45,36 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_clearUIStack = function(){
 		loc_gate.setStateValue(CONSTANT_UISTACK_DATANAME, []);
 	};
-	
-	var loc_updatePageStatus = function(){
+
+	var loc_updatePageStatusRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		_.each(loc_getUIStack(), function(uiId, index){
 			//update ui status data
-			loc_uiModule.getUI(uiId).setExtraContextData("module_application", {
-				uiStatus : {
+			out.addRequest(loc_uiModule.getUI(uiId).getUpdateSystemDataRequest("module_application_ui", {
+				status : {
 					index : index,
 				}
-			});
+			}));
 		});
+		return out;
 	};
+
+//	var loc_updatePageStatus = function(){
+//		_.each(loc_getUIStack(), function(uiId, index){
+//			//update ui status data
+//			loc_uiModule.getUI(uiId).setSystemData("module_application_ui", {
+//				status : {
+//					index : index,
+//				}
+//			});
+//		});
+//	};
 
 	var loc_getRoutePathByUiId = function(uiId){	return "/"+uiId+"/";  };
 	
 	var loc_currentUIChangeRequest = function(handlers, request){
-		loc_updatePageStatus();
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_updatePageStatusRequest());
 		out.addRequest(loc_uiModule.getUI(loc_getCurrentUIId()).getSynInDataRequest());
 		return out;
 	};
@@ -98,9 +111,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				loc_framework7View.router.navigate(loc_getRoutePathByUiId(stackEle));
 				loc_getUIStack().push(stackEle);
 			});
-			
-			loc_updatePageStatus();
 		}));
+		out.addRequest(loc_updatePageStatusRequest());
 		return out;
 	};
 

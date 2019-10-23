@@ -31,6 +31,7 @@ nosliw.init = function(serverBase){
 		"nosliw.statemachine",
 		"nosliw.runtimebrowsertest",
 		"nosliw.security",
+		"nosliw.framework7",
 	];
 
 	nosliw.utility.requestLoadLibraryResources(libNames, function(){

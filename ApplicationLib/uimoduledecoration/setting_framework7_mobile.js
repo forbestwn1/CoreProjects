@@ -23,7 +23,7 @@ function(gate){
 //
 //				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 //				_.each(loc_uiModule.getUIs(), function(ui, index){
-//					ui.getUpdateExtraContextDataRequest("setting", contextUpdate);
+//					ui.getUpdateSystemDataRequest("setting", contextUpdate);
 //				});
 //				return out;
 //			}

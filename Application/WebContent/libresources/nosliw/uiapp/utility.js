@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_ModuleInfo;
 	var node_createServiceRequestInfoSimple;
 	var node_dataAssociationUtility;
+	var node_ApplicationDataSegmentInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
@@ -34,6 +35,10 @@ var node_utility = function(){
 				if(coreName!=undefined)    out.push(coreName);
 			}
 			return out;
+		},
+		
+		buildAppDataInfoTemp : function(appDataName, dataVersion){
+			return new node_ApplicationDataSegmentInfo(loc_out.getCurrentOwnerInfo(), appDataName, loc_out.createAppDataSegmentId(), dataVersion, false);
 		},
 		
 		getApplicationDataCoreName : function(appDataName){
@@ -198,6 +203,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegmentInfo", function(){node_ApplicationDataSegmentInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

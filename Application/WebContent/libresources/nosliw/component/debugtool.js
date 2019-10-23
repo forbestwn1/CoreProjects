@@ -7,7 +7,6 @@ var packageObj = library.getChildPackage("debug");
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_getComponentLifecycleInterface;
-	var node_createRequestStatusIndicatorUI;
 	var node_createComponentLifeCycleDebugView;
 	var node_createComponentDataView;
 	var node_createComponentEventView;
@@ -97,7 +96,6 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("request.ui.createRequestStatusIndicatorUI", function(){node_createRequestStatusIndicatorUI = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 
 nosliw.registerSetNodeDataEvent("component.debug.createComponentLifeCycleDebugView", function(){node_createComponentLifeCycleDebugView = this.getData();});

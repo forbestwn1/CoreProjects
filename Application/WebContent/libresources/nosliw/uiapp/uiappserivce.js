@@ -29,14 +29,6 @@ var node_createUIAppService = function(){
 			//build app decoration info array from module configure
 			var appDecInfos = node_componentUtility.buildDecorationInfoArrayFromConfigure(configure, 'appDecoration', node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPDECORATION);
 
-//			var appDecInfos = [];
-//			var decConfigurePath = 'appDecoration';
-//			var appDecIdSet = configure.getChildrenIdSet(decConfigurePath);
-//			_.each(appDecIdSet, function(appDecId, i){
-//				var appDecConfigureValue = configure.getChildConfigureValue(decConfigurePath, appDecId);
-//				appDecInfos.push(new node_DecorationInfo(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPDECORATION, appDecConfigureValue.id, appDecConfigureValue.name, appDecConfigureValue.resource, appDecConfigureValue));
-//			});
-
 			out.addRequest(node_loadComponentResourceRequest(
 				typeof app === 'string'? 
 					{
