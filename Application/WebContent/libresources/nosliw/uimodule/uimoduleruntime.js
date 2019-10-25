@@ -157,6 +157,10 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 			return out;
 		},
 
+		getUpdateSystemDataRequest : function(domain, systemData, handlers, request){
+			return loc_getModuleCore().getUpdateSystemDataRequest(domain, systemData, handlers, request);
+		},
+		
 		//component management interface 
 		getContextIODataSet :  function(){  return loc_getContextIODataSet();  },
 		getExecuteCommandRequest : function(command, parms, handlers, request){  return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);    },

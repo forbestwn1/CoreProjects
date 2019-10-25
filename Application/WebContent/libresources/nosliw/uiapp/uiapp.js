@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_ApplicationDataInfo;
 	var node_createComponentState;
 	var node_appUtility;
+	var node_componentUtility;
 	
 //*******************************************   Start Node Definition  **************************************
 
@@ -267,6 +268,7 @@ nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo =
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataInfo", function(){node_ApplicationDataInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentState", function(){node_createComponentState = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.utility", function(){node_appUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIAppComponentCore", node_createUIAppComponentCore); 

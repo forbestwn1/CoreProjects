@@ -24,6 +24,7 @@ var packageObj = library;
 	var node_destroyUtil;
 	var node_componentUtility;
 	var node_createComponentState;
+	var node_createSystemData;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
@@ -33,6 +34,9 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	
 	var loc_uiDecorationInfos = uiDecorationInfos;
 	
+	//extra information by domain that provided by system 
+	var loc_systemData = node_createSystemData();
+
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 	
@@ -213,6 +217,16 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 
 		setRootView : function(rootView){   loc_out.prv_componentData.rootView = rootView;     },
 		getRootView : function(){   return loc_out.prv_componentData.rootView;     },
+
+		getSystemData : function(domain){  return loc_systemData.getSystemData(domain);   },
+		getUpdateSystemDataRequest : function(domain, systemData, handlers, request){
+			loc_systemData.setSystemData(domain, systemData);
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			_.each(loc_out.prv_componentData.uiArray, function(ui, i){
+				out.addRequest(ui.getUpdateSystemDataRequest(domain, systemData));
+			});
+			return out;
+		},
 		
 //component core interface method		
 		getInterface : function(){
@@ -322,6 +336,7 @@ nosliw.registerSetNodeDataEvent("uimodule.uiEventData", function(){node_uiEventD
 nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_destroyUtil = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentState", function(){node_createComponentState = this.getData();});
+nosliw.registerSetNodeDataEvent("uimodule.createSystemData", function(){node_createSystemData = this.getData();});
 
 
 //Register Node by Name

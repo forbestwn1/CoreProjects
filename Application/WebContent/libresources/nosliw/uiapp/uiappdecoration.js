@@ -42,6 +42,10 @@ var node_createAppDecoration = function(gate){
 
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 
+	var loc_updateSettingModuleStatusRequest = function(settingModule, status, handlers, request){
+		return settingModule.getUpdateSystemDataRequest("module_setting", status, handlers, request);
+	};
+	
 	//for module with application role, only one data segment for each data name
 	var loc_buildApplicationModuleInfoRequest = function(moduleName, moduleDef, configure, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -80,15 +84,26 @@ var node_createAppDecoration = function(gate){
 		var moduleInfoRequest = node_createServiceRequestInfoSequence();
 		moduleInfoRequest.addRequest(loc_uiApp.buildModuleInfoRequest(moduleName, dataInfo==undefined?undefined:[dataInfo], node_createConfigure(configureData), {
 			success : function(request, moduleInfo){
-				return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
-					persist : dataInfo==undefined?false:dataInfo.persist,
-					modified : false,
-					name : moduleInfo.name
-				}, {
-					success : function(request){
-						return moduleInfo;
-					}
-				}, request);
+				return loc_updateSettingModuleStatusRequest(moduleInfo.module,
+						{
+							persist : dataInfo==undefined?false:dataInfo.persist,
+							modified : false,
+							name : moduleInfo.name
+						}, {
+							success : function(request){
+								return moduleInfo;
+							}
+						});
+				
+//				return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
+//					persist : dataInfo==undefined?false:dataInfo.persist,
+//					modified : false,
+//					name : moduleInfo.name
+//				}, {
+//					success : function(request){
+//						return moduleInfo;
+//					}
+//				}, request);
 			}
 		}));
 		return moduleInfoRequest;
@@ -115,9 +130,13 @@ var node_createAppDecoration = function(gate){
 	var loc_out = {
 		
 		processComponentCoreValueChangeEvent : function(eventName, eventData, request){
-			var out = eventData.moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
+			var out = loc_updateSettingModuleStatusRequest(eventData.moduleInfo.module, {
 				modified : true
 			}, request);
+			
+//			var out = eventData.moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
+//				modified : true
+//			}, request);
 			if(out!=undefined)		node_requestServiceProcessor.processRequest(out);
 		},	
 			
@@ -146,11 +165,16 @@ var node_createAppDecoration = function(gate){
 					var outRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 					var saveRequest = moduleInfo.outputMapping["persistance"].getExecuteCommandRequest("execute", undefined, {
 						success : function(request){
-//							dataInfo.persist = true;
-							return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
-								persist : dataInfo.persist,
-								modified : false,
-							}, undefined, request);
+							return loc_updateSettingModuleStatusRequest(moduleInfo.module, 
+								{
+									persist : dataInfo.persist,
+									modified : false,
+								});
+							
+//							return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
+//								persist : dataInfo.persist,
+//								modified : false,
+//							}, undefined, request);
 						}
 					});
 					outRequest.addRequest(saveRequest);
