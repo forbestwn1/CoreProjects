@@ -94,16 +94,6 @@ var node_createAppDecoration = function(gate){
 								return moduleInfo;
 							}
 						});
-				
-//				return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
-//					persist : dataInfo==undefined?false:dataInfo.persist,
-//					modified : false,
-//					name : moduleInfo.name
-//				}, {
-//					success : function(request){
-//						return moduleInfo;
-//					}
-//				}, request);
 			}
 		}));
 		return moduleInfoRequest;
@@ -134,20 +124,17 @@ var node_createAppDecoration = function(gate){
 				modified : true
 			}, request);
 			
-//			var out = eventData.moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
-//				modified : true
-//			}, request);
 			if(out!=undefined)		node_requestServiceProcessor.processRequest(out);
 		},	
 			
 		processComponentCoreEvent : function(eventName, eventData, request){
 			if(eventName==node_CONSTANT.APP_EVENT_MODULEEVENT){
-				if(eventData.eventName=="submitSetting"){
+				if(eventData.eventName=="nosliw_module_setting_submitSetting"){
 					loc_uiApp.setCurrentModuleInfo(ROLE_SETTING, eventData.moduleInfo.id);
 					var processRequest = loc_gate.getExecuteProcessResourceRequest("applicationsetting;submitsetting", undefined, undefined, request);
 					node_requestServiceProcessor.processRequest(processRequest);
 				}
-				else if(eventData.eventName=="deleteSetting"){
+				else if(eventData.eventName=="nosliw_module_setting_deleteSetting"){
 					var moduleInfo = eventData.moduleInfo;
 					var applicationDataInfo = moduleInfo.applicationDataInfo[0];
 					
@@ -159,7 +146,7 @@ var node_createAppDecoration = function(gate){
 					}, request));
 					
 				}
-				else if(eventData.eventName=="saveSetting"){
+				else if(eventData.eventName=="nosliw_module_setting_saveSetting"){
 					var moduleInfo = eventData.moduleInfo;
 					var dataInfo = moduleInfo.applicationDataInfo[0];
 					var outRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
@@ -170,11 +157,6 @@ var node_createAppDecoration = function(gate){
 									persist : dataInfo.persist,
 									modified : false,
 								});
-							
-//							return moduleInfo.module.getExecuteCommandRequest("updateModuleInfo", {
-//								persist : dataInfo.persist,
-//								modified : false,
-//							}, undefined, request);
 						}
 					});
 					outRequest.addRequest(saveRequest);

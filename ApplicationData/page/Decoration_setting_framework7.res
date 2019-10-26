@@ -11,7 +11,7 @@
 		<a href="" nosliw-event="click:save:" style="display:<%=(!?(nosliw_module_setting_persist)?)||?(nosliw_module_setting_modified)?==true?'inline':'none'%>">Save</a>
 	</div>
 
-<!--	<nosliw-contextvalue/>  -->
+	<nosliw-contextvalue/>  
 
 
 
@@ -25,19 +25,19 @@
 	{
 		submit : function(info, env){
 			event.preventDefault();
-			env.trigueEvent("submitSetting", info.eventData);
+			env.trigueEvent("nosliw_module_setting_submitSetting", info.eventData);
 		},
 		new : function(info, env){
 			event.preventDefault();
-			env.trigueEvent("newSetting", info.eventData);
+			env.trigueEvent("nosliw_module_setting_newSetting", info.eventData);
 		},
 		delete : function(info, env){
 			event.preventDefault();
-			env.trigueEvent("deleteSetting", info.eventData);
+			env.trigueEvent("nosliw_module_setting_deleteSetting", info.eventData);
 		},
 		save : function(info, env){
 			event.preventDefault();
-			env.trigueEvent("saveSetting", info.eventData);
+			env.trigueEvent("nosliw_module_setting_saveSetting", info.eventData);
 		},
 	}
 	</scripts>

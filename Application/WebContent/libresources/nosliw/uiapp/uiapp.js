@@ -130,6 +130,7 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 			
 			module.registerEventListener(loc_eventListener, function(eventName, eventData, request){
 				loc_trigueEvent(node_CONSTANT.APP_EVENT_MODULEEVENT, new node_ModuleEventData(this, eventName, eventData), request);
+				loc_trigueEvent(node_CONSTANT.APP_EVENT_MODULEEVENT, new node_ModuleEventData(this, eventName, eventData), request);
 			}, moduleInfo);
 			module.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
 				loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, new node_ModuleEventData(this, eventName, eventData), request);

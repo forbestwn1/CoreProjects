@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_createStateBackupService;
 	var node_createEventObject;
 	var node_basicUtility;
+	var node_getComponentLifecycleInterface;
 		
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -159,6 +160,13 @@ var node_createAppRuntime = function(uiAppCore, configure, componentDecorationIn
 	loc_init(uiAppCore, configure, componentDecorationInfos, state);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
+	//listen to lifecycle event and update lifecycle status
+	node_getComponentLifecycleInterface(loc_out).registerEventListener(loc_eventListener, function(eventName, eventData, request){
+		if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
+			loc_componentCoreComplex.setLifeCycleStatus(eventData.to);
+		}
+	});
+	
 	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_out, loc_out);
 
 	return loc_out;
@@ -182,6 +190,7 @@ nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInte
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createAppRuntimeRequest", node_createAppRuntimeRequest); 

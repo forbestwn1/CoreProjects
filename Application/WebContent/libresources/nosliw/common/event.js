@@ -12,10 +12,32 @@ var packageObj = library.getChildPackage("event");
 
 	var INTERFACENAME = "EVENT";
 
-	var node_EventInfo = function(eventName, eventData, request){
+	var node_EventInfo = function(eventName, eventData, source, request){
 		this.eventName = eventName;
 		this.eventData = eventData;
+		this.source = source;
 		this.request = request;
+		
+		this.wrapInSource = function(wrapperSource){
+			wrapperSource.setChild(this.source);
+			this.source = wrapperSource;
+		};
+	};
+	
+	//where the event come from
+	var node_createEventSource = function(source){
+		var loc_source = source;
+		var loc_child;
+		var loc_out = {
+			getSource : function(){   return loc_source;   },
+			getChild : function(){    return loc_child;    }, 
+			setChild : function(child){   loc_child = child;   },
+			getRootSource : function(){   
+				if(loc_child!=undefined)   return loc_child.getRootSource();
+				return loc_out;
+			},
+		};
+		return loc_out;
 	};
 	
 	var node_createEventObject = function(){
