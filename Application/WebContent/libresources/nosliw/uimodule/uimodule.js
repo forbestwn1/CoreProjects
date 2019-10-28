@@ -25,6 +25,9 @@ var packageObj = library;
 	var node_componentUtility;
 	var node_createComponentState;
 	var node_createSystemData;
+	var node_createEventSource;
+	var node_createEventInfo;
+	var node_eventUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
@@ -44,6 +47,10 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	var loc_valueChangeEventSource = node_createEventObject();
 
 	var loc_componentState;
+	
+	var loc_getEventSourceInfo = function(){
+		return node_createEventSource("module", loc_out.getId());
+	};
 	
 	var loc_initState = function(state){
 		loc_componentState = node_createComponentState(state, 
@@ -104,7 +111,9 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){
 		if(node_componentUtility.isActive(loc_out.prv_componentData.lifecycleStatus)){
 			//trigue event only in active status
-			loc_eventSource.triggerEvent(eventName, eventData, requestInfo);
+			node_eventUtility.triggerEventInfo(loc_eventSource, eventName, eventData, loc_getEventSourceInfo(), requestInfo);
+			
+//			loc_eventSource.triggerEvent(eventName, eventData, requestInfo);
 		}
 	};
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){
@@ -181,7 +190,8 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		loc_out.prv_componentData.ui[ui.getId()] = ui;
 		//register listener for module ui
 		ui.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
-			loc_trigueEvent(node_CONSTANT.MODULE_EVENT_UIEVENT, new node_uiEventData(this.getId(), eventName, eventData), requestInfo);
+			loc_trigueEvent(eventName, eventData, requestInfo);
+//			loc_trigueEvent(node_CONSTANT.MODULE_EVENT_UIEVENT, new node_uiEventData(this.getId(), eventName, eventData), requestInfo);
 		}, ui);
 		ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
 			//handle ui value change, update value in module
@@ -337,6 +347,9 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentState", function(){node_createComponentState = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createSystemData", function(){node_createSystemData = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventSource", function(){node_createEventSource = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventInfo", function(){node_createEventInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 
 
 //Register Node by Name

@@ -23,6 +23,9 @@ var packageObj = library;
 	var node_createUIDecorationRequest;
 	var node_createEventObject;
 	var node_createSystemData;
+	var node_createEventSource;
+	var node_createEventInfo;
+	var node_eventUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -108,7 +111,15 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 
 	var loc_valueChangeEventEnabled = true;
 	
-	var loc_trigueEvent = function(eventName, eventData, requestInfo){		loc_eventSource.triggerEvent(eventName, eventData, requestInfo);	};
+	var loc_getEventSourceInfo = function(){
+		return node_createEventSource("moduleUI", loc_getId()); 
+	};
+	
+	var loc_trigueEvent = function(eventName, eventData, request){
+		node_eventUtility.triggerEventInfo(loc_eventSource, eventName, eventData, loc_getEventSourceInfo(), request);
+		
+//		loc_eventSource.triggerEvent(eventName, eventData, requestInfo);	
+	};
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){  if(loc_valueChangeEventEnabled==true)  loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo);	};
 
 	
@@ -275,6 +286,9 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("uipage.createUIDecorationRequest", function(){node_createUIDecorationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createSystemData", function(){node_createSystemData = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventSource", function(){node_createEventSource = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventInfo", function(){node_createEventInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 
 
 //Register Node by Name

@@ -12,30 +12,50 @@ var packageObj = library.getChildPackage("event");
 
 	var INTERFACENAME = "EVENT";
 
-	var node_EventInfo = function(eventName, eventData, source, request){
+	var node_EventInfo = function(eventName, eventData, request){
 		this.eventName = eventName;
 		this.eventData = eventData;
-		this.source = source;
-		this.request = request;
-		
-		this.wrapInSource = function(wrapperSource){
-			wrapperSource.setChild(this.source);
-			this.source = wrapperSource;
-		};
 	};
+
+	var node_createEventInfo = function(eventName, eventData, sourceInfo){
+		var loc_eventName = eventName;
+		var loc_eventData = eventData;
+		var loc_sourceInfo = sourceInfo;
+		
+		var loc_out = {
+			createWrapperEventInfo : function(wrapperSource){
+				wrapperSource.setChild(loc_sourceInfo);
+				return new node_createEventInfo(loc_eventName, loc_eventData, wrapperSource);
+			},
+			
+			getSourceByType : function(type){		return loc_sourceInfo.getSourceByType(type);		}
+		};
+		
+		loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_EVENTINFO);
+		return loc_out;
+	};
+
 	
 	//where the event come from
-	var node_createEventSource = function(source){
-		var loc_source = source;
+	var node_createEventSource = function(type, id, data){
+		var loc_type = type;
+		var loc_id = id;
+		var loc_data = data;
 		var loc_child;
 		var loc_out = {
-			getSource : function(){   return loc_source;   },
+			getType : function(){   return loc_type;   },
+			getId : function(){   return loc_id;   },
+			getData : function(){   return loc_data;   },
 			getChild : function(){    return loc_child;    }, 
 			setChild : function(child){   loc_child = child;   },
 			getRootSource : function(){   
 				if(loc_child!=undefined)   return loc_child.getRootSource();
 				return loc_out;
 			},
+			getSourceByType : function(type){
+				if(loc_type==type)   return loc_out;
+				else if(loc_child!=undefined)   return loc_child.getSourceByType(type);
+			}
 		};
 		return loc_out;
 	};
@@ -195,6 +215,17 @@ var node_utility =
 				that.unregister(source, listener);
 			});
 		},
+		
+		triggerEventInfo : function(source, eventName, eventData, sourceInfo, request){
+			var eventInfo;
+			if(node_getObjectType(eventData)==node_CONSTANT.TYPEDOBJECT_TYPE_EVENTINFO){
+				eventInfo = eventData.createWrapperEventInfo(sourceInfo);
+			}
+			else{
+				eventInfo = node_createEventInfo(eventName, eventData, sourceInfo);
+			}
+			source.triggerEvent(eventName, eventInfo, request);
+		},
 	};
 
 
@@ -210,5 +241,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 packageObj.createChildNode("createEventObject", node_createEventObject); 
 packageObj.createChildNode("utility", node_utility); 
 packageObj.createChildNode("EventInfo", node_EventInfo); 
+packageObj.createChildNode("createEventInfo", node_createEventInfo); 
+packageObj.createChildNode("createEventSource", node_createEventSource); 
 
 })(packageObj);

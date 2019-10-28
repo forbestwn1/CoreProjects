@@ -55,21 +55,18 @@ $(document).on("nosliwActive", function(){
 
 	var framework7App = node_framework7Utility.createTypicalFramework7App($("#moduleDiv").get()); 
 		
-	var configure = node_createModuleConfigure(
-		parms.setting, 
-		{
-			rootView : $('#moduleDiv').get(),
-			storeService : nosliw.runtime.getStoreService(),
-			framework7App : framework7App
-		}
-	);
+	var configureParms = {
+		rootView : $('#moduleDiv').get(),
+		storeService : nosliw.runtime.getStoreService(),
+		framework7App : framework7App
+	}; 
 
 	node_createDebugTool({
 		lifecycleView : $('#lifecycleDebug').get(),
 		dataView : $('#dataDebug').get(),
 		eventView : $('#eventDebug').get(),
 		resetView : $('#resetDebug').get(), 
-	}, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, parms.module, undefined, configure);
+	}, configureParms, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, parms.module, undefined, parms.setting);
 	
 	//ui indicator
 	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);

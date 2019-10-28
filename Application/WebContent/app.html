@@ -56,24 +56,21 @@ $(document).on("nosliwActive", function(){
 
 	var framework7App = node_framework7Utility.createTypicalFramework7App($("#appModuleDiv").get()); 
 		
-	var configure = node_createAppConfigure(
-		"application", 
-		{
-			mainModuleRoot : $('#appModuleDiv').get(),
-			settingModuleRoot : $('#settingModuleDiv').get(),
-			storeService : nosliw.runtime.getStoreService(),
-			dataService : node_appDataService,
-			framework7App : framework7App
-		}
-	);
+	var configureParms = {
+		mainModuleRoot : $('#appModuleDiv').get(),
+		settingModuleRoot : $('#settingModuleDiv').get(),
+		storeService : nosliw.runtime.getStoreService(),
+		dataService : node_appDataService,
+		framework7App : framework7App
+	}; 
 
 	node_createDebugTool({
 		lifecycleView : $('#lifecycleDebug').get(),
 		dataView : $('#dataDebug').get(),
 		eventView : $('#eventDebug').get(),
 		resetView : $('#resetDebug').get(), 
-	}, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, parms.app, undefined, configure);
-	
+	}, configureParms, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, parms.app, undefined, parms.setting);
+
 	//ui indicator
 	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);
 });

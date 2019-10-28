@@ -18,39 +18,38 @@ var packageObj = library.getChildPackage("debug");
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //load component and init it with inputValue
-var node_createComponentResetView = function(resetCallBack, resourceType, resourceId, inputValue){
-	var loc_resourceType = resourceType;
-	var loc_resourceId = resourceId;
-	var loc_inputIODataSet = node_createIODataSet();
+var node_createComponentResetView = function(resetCallBack, resourceType, resourceId, inputValue, settingName){
 	var loc_resetCallBack = resetCallBack;
 	
 	var loc_view = $('<div>Component Input: </div>');
 	var loc_resourceTypeView = $('<textinput></textinput><br>');
 	var loc_resourceIdView = $('<textinput></textinput><br>');
+	var loc_settingNameView = $('<textinput></textinput><br>');
 	var loc_inputValueView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
 	var loc_submitView = $('<button>Reset</button>');
 	loc_view.append(loc_resourceTypeView);
 	loc_view.append(loc_resourceIdView);
+	loc_view.append(loc_settingNameView);
 	loc_view.append(loc_inputValueView);
 	loc_view.append(loc_submitView);
+
+	var loc_getResourceType = function(){  return loc_resourceTypeView.val();  };
+	var loc_getResourceId = function(){  return loc_resourceIdView.val();  };
+	var loc_getSettingName = function(){  return loc_settingNameView.val();  };
+	var loc_getInputValue = function(){
+		var content = loc_inputValueView.val();
+		if(content=='')  return;
+		return JSON.parse(content); 
+	};
 	
-	var loc_init = function(resourceType, resourceId, inputValue){
-		if(resourceType!=undefined)   	loc_resourceTypeView.val(resourceType);
-		if(resourceId!=undefined)  		loc_resourceIdView.val(resourceId);
-		if(inputValue!=undefined)		loc_inputValueView.val(JSON.stringify(inputValue));
-		
-		loc_inputIODataSet.setData(undefined, node_createDynamicIOData(
-			function(handlers, request){
-				return node_createServiceRequestInfoSimple(undefined, function(request){
-					var content = loc_inputValueView.val();
-					if(content=='')  return;
-					return JSON.parse(content); 
-				}, handlers, request); 
-			} 
-		));
+	var loc_init = function(resourceType, resourceId, inputValue, settingName){
+		if(resourceType!=undefined)   	loc_out.setResourceType(resourceType);
+		if(resourceId!=undefined)  		loc_out.setResourceId(resourceId);
+		if(inputValue!=undefined)		loc_out.setInputValue(inputValue);
+		if(settingName!=undefined)		loc_out.setSettingName(settingName);
 
 		loc_submitView.on('click', function(){
-			loc_resetCallBack();
+			loc_resetCallBack(loc_getResourceType(), loc_getResourceId(), loc_getInputValue(), loc_getSettingName());
 		});
 	};
 	
@@ -58,14 +57,13 @@ var node_createComponentResetView = function(resetCallBack, resourceType, resour
 
 		getView : function(){  return loc_view;   },
 		
-		getInputIODataSet : function(){	return loc_inputIODataSet;	},
-		
-		getResourceType : function(){  return loc_resourceTypeView.val();  },
-		
-		getResourceId : function(){  return loc_resourceIdView.val();  }
+		setResourceType : function(type){   loc_resourceTypeView.val(type);   },
+		setResourceId : function(id){  loc_resourceIdView.val(id);   },
+		setSettingName : function(name){  loc_settingNameView.val(name);   },
+		setInputValue : function(inputValue){  loc_inputValueView.val(JSON.stringify(inputValue));  },
 	};
 	
-	loc_init(resourceType, resourceId, inputValue);
+	loc_init(resourceType, resourceId, inputValue, settingName);
 	
 	return loc_out;
 };

@@ -7,6 +7,8 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSequence;
 	var node_createServiceRequestInfoSimple;
+	var node_ApplicationDataSegmentInfo;
+	var node_ApplicationDataSegment;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -274,7 +276,7 @@ var node_appDataService = function(){
 
 	return loc_out;
 }();
-
+ 
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -283,6 +285,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegmentInfo", function(){node_ApplicationDataSegmentInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegment", function(){node_ApplicationDataSegment = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("appDataService", node_appDataService); 
