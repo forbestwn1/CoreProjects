@@ -15,7 +15,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "tagEvents":[],
 "attributes":{"nosliwattribute_placeholder":"id:pleaseEmbed"
 },
-"html":"&lt;div id=&quot;pleaseEmbed&quot; class=&quot;view view-main&quot; style=&quot;height1:1200px;overflow-y1: scroll;&quot; nosliwid=&quot;527&quot;&gt;&lt;/div&gt;",
+"html":"&lt;div id=&quot;pleaseEmbed&quot; class=&quot;view view-main&quot; style=&quot;height1:1200px;overflow-y1: scroll;&quot; nosliwid=&quot;969&quot;&gt;&lt;/div&gt;",
 "constants":{},
 "events":{},
 "commands":{},

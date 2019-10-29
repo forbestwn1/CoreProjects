@@ -43,6 +43,7 @@
 
 //when nosliw active
 $(document).on("nosliwActive", function(){
+	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_getStoreService = nosliw.getNodeData("component.getStoreService");
@@ -51,6 +52,7 @@ $(document).on("nosliwActive", function(){
 	var node_framework7Utility = nosliw.getNodeData("framework7.utility");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
 	var node_appDataService = nosliw.getNodeData("uiapp.appDataService");
+	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
 
 	var parms = node_basicUtility.getParmsInUrl();
 
@@ -64,13 +66,18 @@ $(document).on("nosliwActive", function(){
 		framework7App : framework7App
 	}; 
 
-	node_createDebugTool({
+	var debugTool = node_createDebugTool({
 		lifecycleView : $('#lifecycleDebug').get(),
 		dataView : $('#dataDebug').get(),
 		eventView : $('#eventDebug').get(),
 		resetView : $('#resetDebug').get(), 
-	}, configureParms, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, parms.app, undefined, parms.setting);
-
+	}, configureParms, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, parms.app, undefined, parms.setting, {
+		success : function(request, componentObj){
+			var lifecycleObj = node_getComponentLifecycleInterface(componentObj);
+			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE);
+		}
+	});
+	
 	//ui indicator
 	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);
 });

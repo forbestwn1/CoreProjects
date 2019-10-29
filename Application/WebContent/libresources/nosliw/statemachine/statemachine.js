@@ -120,6 +120,7 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 	var loc_eventObj = node_createEventObject();
 
 	var loc_currentTask;
+	
 	var loc_currentState = initState;
 	//if in stranist, it contains from status and to status
 	var loc_inTransit = undefined;
@@ -261,6 +262,25 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		return out;
 	};
 
+	var loc_updateNextSequence = function(transferSequence, next){
+		if(typeof next === 'string' || next instanceof String){
+			//if nexts parm is command string
+			var commandInfo = loc_stateDef.getCommandInfo(next, loc_currentState);
+			var nexts = [];
+			if(commandInfo==undefined){
+				//nexts parm is target state
+				nexts = loc_stateDef.getNextsByTransitInfo(new node_TransitInfo(loc_currentState, next));
+			}
+			else{
+				//command
+				nexts = commandInfo.nexts;
+			}
+			_.each(nexts, function(next, i){
+				transferSequence.push(next);
+			});
+		}
+	};
+	
 	var loc_out = {
 			
 		prv_startTransit : function(next, request){  loc_startTransit(next, request);    },	
@@ -283,8 +303,26 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		
 		getAllCommands : function(){  return loc_stateDef.getAllCommands();  },
 		getCommandCandidates : function(){   return loc_stateDef.getCandidateCommands(loc_out.getCurrentState());   },
-		
-		newTask : function(nexts){
+
+		newTask : function(next){
+			if(loc_currentTask!=undefined)  return undefined;
+			
+			var nexts = [];
+			if(Array.isArray(next))  nexts = next;
+			else nexts.push(next);
+
+			var transferSequence = [];
+			_.each(nexts, function(next, i){
+				loc_updateNextSequence(transferSequence, next);
+			});
+
+			loc_currentTask = node_createStateMachineTask(transferSequence, loc_out);
+			if(loc_taskCallback.startTask!=undefined)    loc_taskCallback.startTask();
+			
+			return loc_currentTask;
+		},
+
+		newTask1 : function(nexts){
 			if(loc_currentTask!=undefined)  return undefined;
 			if(typeof nexts === 'string' || nexts instanceof String){
 				//if nexts parm is command string

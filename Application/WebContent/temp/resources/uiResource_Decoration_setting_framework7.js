@@ -74,23 +74,23 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }
 },
-"elementEvents":[{"uiId":"520",
+"elementEvents":[{"uiId":"962",
 "event":"click",
 "function":"new"
-},{"uiId":"521",
-"event":"click",
-"function":"delete"
-},{"uiId":"522",
+},{"uiId":"964",
 "event":"click",
 "function":"save"
-},{"uiId":"519",
+},{"uiId":"961",
 "event":"click",
 "function":"submit"
+},{"uiId":"963",
+"event":"click",
+"function":"delete"
 }],
 "tagEvents":[],
 "attributes":{"nosliwattribute_placeholder":"id:pleaseEmbed"
 },
-"html":"&lt;br nosliwid=&quot;517&quot;&gt;&lt;span&gt; SettingName : &lt;/span&gt;&lt;span nosliwid=&quot;516&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;div nosliwid=&quot;518&quot;&gt;  &lt;a href=&quot;&quot; nosliwid=&quot;519&quot;&gt;&lt;span&gt;Submit&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; nosliwid=&quot;520&quot;&gt;&lt;span&gt;New&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; style=&quot;&quot; nosliwid=&quot;521&quot;&gt;&lt;span&gt;Delete&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; style=&quot;&quot; nosliwid=&quot;522&quot;&gt;&lt;span&gt;Save&lt;/span&gt;&lt;/a&gt; &lt;/div&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;523-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;523-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;524&quot;&gt;&lt;/div&gt; &lt;br nosliwid=&quot;525&quot;&gt;",
+"html":"&lt;br nosliwid=&quot;959&quot;&gt;&lt;span&gt; SettingName : &lt;/span&gt;&lt;span nosliwid=&quot;958&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;div nosliwid=&quot;960&quot;&gt;  &lt;a href=&quot;&quot; nosliwid=&quot;961&quot;&gt;&lt;span&gt;Submit&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; nosliwid=&quot;962&quot;&gt;&lt;span&gt;New&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; style=&quot;&quot; nosliwid=&quot;963&quot;&gt;&lt;span&gt;Delete&lt;/span&gt;&lt;/a&gt;  &lt;a href=&quot;&quot; style=&quot;&quot; nosliwid=&quot;964&quot;&gt;&lt;span&gt;Save&lt;/span&gt;&lt;/a&gt; &lt;/div&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;965-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;965-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;div id=&quot;pleaseEmbed&quot; nosliwid=&quot;966&quot;&gt;&lt;/div&gt; &lt;br nosliwid=&quot;967&quot;&gt;",
 "constants":{},
 "events":{"submit":{"name":"submit",
 "description":"",
@@ -107,7 +107,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"516",
+"uiId":"958",
 "scriptFunction":function(scriptExpressionData){
 	return scriptExpressionData["0"];
 } 
@@ -123,7 +123,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"522",
+"uiId":"964",
 "attribute":"style",
 "scriptFunction":function(scriptExpressionData){
 	return "display:"+scriptExpressionData["1"];
@@ -139,7 +139,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "expressions":{}
 }
 },
-"uiId":"521",
+"uiId":"963",
 "attribute":"style",
 "scriptFunction":function(scriptExpressionData){
 	return "display:"+scriptExpressionData["1"];
@@ -152,7 +152,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 }
 }],
 "scriptExpressionTagAttributes":[],
-"uiTags":{"523":{"tagName":"contextvalue",
+"uiTags":{"965":{"tagName":"contextvalue",
 "contextMapping":{},
 "tagContext":{"local2Global":{"nosliw_module_setting_name":"nosliw_module_setting_name___public",
 "nosliw_module_setting_persist":"nosliw_module_setting_persist___public",
@@ -305,7 +305,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 },
 "elementEvents":[],
 "tagEvents":[],
-"attributes":{"nosliwid":"523"
+"attributes":{"nosliwid":"965"
 },
 "html":"",
 "constants":{},

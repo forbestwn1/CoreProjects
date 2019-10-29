@@ -8,13 +8,18 @@ var packageObj = library.getChildPackage("debug");
 	var node_COMMONCONSTANT;
 	var node_getComponentLifecycleInterface;
 	var node_createIODataSet;
+	var node_requestServiceProcessor;
+	var node_createServiceRequestInfoSequence;
+	var node_createAppConfigure;
+	var node_createModuleConfigure;
+
 	var node_createComponentLifeCycleDebugView;
 	var node_createComponentDataView;
 	var node_createComponentEventView;
 	var node_createComponentResetView;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-node_createDebugTool = function(views, configureParms, resourceType, resourceId, inputValue, settingName){
+node_createDebugTool = function(views, configureParms, resourceType, resourceId, inputValue, settingName, handlers, request){
 	
 	//changable
 	var loc_resourceType;
@@ -33,7 +38,7 @@ node_createDebugTool = function(views, configureParms, resourceType, resourceId,
 	var loc_resetView;
 	
 	//
-	var loc_resetComponent = function(requestInfo, componentObj){
+	var loc_setComponent = function(requestInfo, componentObj){
 		if(loc_componentObj!=undefined){
 			//if old component exists, destroy old component first
 			var lifecycle = node_getComponentLifecycleInterface(loc_componentObj);
@@ -50,28 +55,36 @@ node_createDebugTool = function(views, configureParms, resourceType, resourceId,
 		loc_eventView.setComponent(loc_componentObj, requestInfo);
 	};
 	
-	var loc_loadComponent = function(resourceType, resourctId, inputValue, settingName){
+	var loc_getResetComponentRequest = function(resourceType, resourctId, inputValue, settingName, handlers, request){
 		loc_resourceType = resourceType;
 		loc_resourceId = resourceId;
 		loc_inputValue = inputValue;
 		loc_settingName = settingName;
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		if(resourceType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE){
 			var configure = node_createModuleConfigure(settingName, loc_configureParms);
 			var stateBackupService = node_createStateBackupService(resourceType, resourctId, "1.0.0", configure.getConfigureValue().__storeService);
-			nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(100, resourctId, configure, node_createIODataSet(inputValue), stateBackupService, {
-				success : loc_resetComponent
-			});
+			out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(100, resourctId, configure, node_createIODataSet(inputValue), stateBackupService, {
+				success : function(request, componentObj){
+					loc_setComponent(request, componentObj);
+					return componentObj;
+				}
+			}));
 		}
 		else if(resourceType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY){
 			var configure = node_createAppConfigure(settingName, loc_configureParms);
 			var stateBackupService = node_createStateBackupService(resourceType, resourctId, "1.0.0", configure.getConfigureValue().__storeService);
-			nosliw.runtime.getUIAppService().executeGetUIAppEntryRuntimeRequest(100, resourctId, configure, node_createIODataSet(inputValue), stateBackupService, {
-				success : loc_resetComponent
-			});
+			out.addRequest(nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(100, resourctId, configure, node_createIODataSet(inputValue), stateBackupService, {
+				success : function(request, componentObj){
+					loc_setComponent(request, componentObj);
+					return componentObj;
+				}
+			}));
 		}
+		return out;
 	};
 	
-	var loc_init = function(views, configureParms, resourceType, resourceId, inputValue, settingName){
+	var loc_init = function(views, configureParms, resourceType, resourceId, inputValue, settingName, handlers, request){
 		var lifecycleView = views.lifecycleView;
 		if(lifecycleView!=undefined){
 			loc_lifecycleView = node_createComponentLifeCycleDebugView();
@@ -92,20 +105,20 @@ node_createDebugTool = function(views, configureParms, resourceType, resourceId,
 
 		var resetView = views.resetView;
 		if(resetView!=undefined){
-			loc_resetView = node_createComponentResetView(function(resourceId, resourceType, inputValue, settingName){
-				loc_loadComponent(resourceType, resourctId, inputValue, settingName);
+			loc_resetView = node_createComponentResetView(function(resourceId, resourceType, inputValue, settingName, handlers, request){
+				return loc_getResetComponentRequest(resourceType, resourctId, inputValue, settingName, handlers, request);
 			}, resourceType, resourceId, inputValue, settingName);
 			$(resetView).append(loc_resetView.getView());
 		}
 
-		loc_loadComponent(resourceType, resourceId, inputValue, settingName);
+		node_requestServiceProcessor.processRequest(loc_getResetComponentRequest(resourceType, resourceId, inputValue, settingName, handlers, request));
 	};
 	
 	var loc_out = {
 		getComponentObj : function(){	return loc_componentObj;	},
 	};
 
-	loc_init(views, configureParms, resourceType, resourceId, inputValue, settingName);
+	loc_init(views, configureParms, resourceType, resourceId, inputValue, settingName, handlers, request);
 	return loc_out;
 };
 	
@@ -120,6 +133,8 @@ nosliw.registerSetNodeDataEvent("component.createStateBackupService", function()
 nosliw.registerSetNodeDataEvent("uimodule.createModuleConfigure", function(){node_createModuleConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.createAppConfigure", function(){node_createAppConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 
 
 nosliw.registerSetNodeDataEvent("component.debug.createComponentLifeCycleDebugView", function(){node_createComponentLifeCycleDebugView = this.getData();});

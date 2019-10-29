@@ -49,7 +49,8 @@ var node_createComponentResetView = function(resetCallBack, resourceType, resour
 		if(settingName!=undefined)		loc_out.setSettingName(settingName);
 
 		loc_submitView.on('click', function(){
-			loc_resetCallBack(loc_getResourceType(), loc_getResourceId(), loc_getInputValue(), loc_getSettingName());
+			var request = loc_resetCallBack(loc_getResourceType(), loc_getResourceId(), loc_getInputValue(), loc_getSettingName());
+			node_requestServiceProcessor.processRequest(request);
 		});
 	};
 	

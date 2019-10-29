@@ -5,7 +5,14 @@ var packageObj = library;
 	//get used node
 	var node_CONSTANT;
 	
-//*******************************************   Start Node Definition  ************************************** 	
+//*******************************************   Start Node Definition  **************************************
+var node_StateMachineTaskInfo = function(task, handlers, request){
+	this.task = task;
+	this.handlers = handlers;
+	this.request = request;
+};	
+	
+	
 //state definition
 var node_StateInfo = function(name, nextStates){
 	this.name = name;   //name of state
@@ -170,6 +177,8 @@ packageObj.createChildNode("TransitInfo", node_TransitInfo);
 packageObj.createChildNode("CommandInfo", node_CommandInfo); 
 packageObj.createChildNode("NextStateInfo", node_NextStateInfo); 
 packageObj.createChildNode("StateInfo", node_StateInfo);
-packageObj.createChildNode("createStateMachineDef", node_createStateMachineDef); 
+packageObj.createChildNode("createStateMachineDef", node_createStateMachineDef);
+packageObj.createChildNode("StateMachineTaskInfo", node_StateMachineTaskInfo);
+
 
 })(packageObj);
