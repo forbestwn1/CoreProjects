@@ -112,13 +112,12 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	var loc_valueChangeEventEnabled = true;
 	
 	var loc_getEventSourceInfo = function(){
-		return node_createEventSource("moduleUI", loc_getId()); 
+		return node_createEventSource(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULEUI, loc_getId()); 
 	};
 	
 	var loc_trigueEvent = function(eventName, eventData, request){
 		node_eventUtility.triggerEventInfo(loc_eventSource, eventName, eventData, loc_getEventSourceInfo(), request);
-		
-//		loc_eventSource.triggerEvent(eventName, eventData, requestInfo);	
+
 	};
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){  if(loc_valueChangeEventEnabled==true)  loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo);	};
 

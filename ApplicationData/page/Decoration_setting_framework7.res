@@ -11,7 +11,7 @@
 		<a href="" nosliw-event="click:save:" style="display:<%=(!?(nosliw_module_setting_persist)?)||?(nosliw_module_setting_modified)?==true?'inline':'none'%>">Save</a>
 	</div>
 
-	<nosliw-contextvalue/>  
+	<!--nosliw-contextvalue/-->  
 
 
 

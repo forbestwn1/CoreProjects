@@ -23,6 +23,11 @@ var packageObj = library.getChildPackage("event");
 		var loc_sourceInfo = sourceInfo;
 		
 		var loc_out = {
+				
+			getEventName : function(){  return  loc_eventName;  },
+			getEventData : function(){  return  loc_eventData;  },
+			getSourceInfo : function(){ return  loc_sourceInfo; },
+				
 			createWrapperEventInfo : function(wrapperSource){
 				wrapperSource.setChild(loc_sourceInfo);
 				return new node_createEventInfo(loc_eventName, loc_eventData, wrapperSource);

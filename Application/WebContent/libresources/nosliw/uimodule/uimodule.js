@@ -49,7 +49,7 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	var loc_componentState;
 	
 	var loc_getEventSourceInfo = function(){
-		return node_createEventSource("module", loc_out.getId());
+		return node_createEventSource(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULE, loc_out.getId());
 	};
 	
 	var loc_initState = function(state){
@@ -112,8 +112,6 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		if(node_componentUtility.isActive(loc_out.prv_componentData.lifecycleStatus)){
 			//trigue event only in active status
 			node_eventUtility.triggerEventInfo(loc_eventSource, eventName, eventData, loc_getEventSourceInfo(), requestInfo);
-			
-//			loc_eventSource.triggerEvent(eventName, eventData, requestInfo);
 		}
 	};
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){

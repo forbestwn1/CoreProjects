@@ -121,7 +121,7 @@ var node_createAppDecoration = function(gate){
 	};
 	
 	var loc_getModuleInfoByEventInfo = function(eventInfo){
-		var moduleSource = eventInfo.getSourceByType("module");
+		var moduleSource = eventInfo.getSourceByType(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULE);
 		return loc_uiApp.getModuleInfoById(moduleSource.getId());
 	};
 	

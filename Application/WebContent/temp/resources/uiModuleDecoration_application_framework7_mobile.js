@@ -91,13 +91,14 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		return loc_currentUIChangeRequest(handlers, requestInfo);
 	};
 
-	var loc_processUIEvent = function(eventName, uiId, eventData, request){
+	var loc_processUIEvent = function(eventName, eventDataInfo, request){
 		var coreEventName = node_basicUtility.getNosliwCoreName(eventName);
 		if(coreEventName=="module_application_transferBack"){
 			loc_gate.processRequest(loc_getTransferBackRequest(undefined, request));
 		}
 		else if(coreEventName=="module_application_refresh"){
-			loc_gate.processRequest(loc_uiModule.getUI(uiId).getExecuteNosliwCommandRequest(node_CONSTANT.COMMAND_PAGE_REFRESH, undefined, undefined, request));
+			var moduleUISource = eventDataInfo.getSourceByType(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULEUI);
+			loc_gate.processRequest(loc_uiModule.getUI(moduleUISource.getId()).getExecuteNosliwCommandRequest(node_CONSTANT.COMMAND_PAGE_REFRESH, undefined, undefined, request));
 		}
 	};
 
@@ -130,7 +131,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_out = {
 			
 		processComponentCoreEvent : function(eventName, eventData, request){
-			loc_processUIEvent(eventData.eventName, eventData.uiId, eventData.eventData, request);
+			return loc_processUIEvent(eventName, eventData, request);
 		},
 		
 		getUpdateViewRequest : function(view, handlers, request){

@@ -21,6 +21,7 @@ var packageObj = library;
 	var node_createEventSource;
 	var node_createEventInfo;
 	var node_eventUtility;
+	var node_makeObjectWithType;
 
 //*******************************************   Start Node Definition  **************************************
 
@@ -77,15 +78,13 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 	};
 	
 	var loc_getEventSourceInfo = function(){
-		return node_createEventSource("uiapp", loc_out.getId()); 
+		return node_createEventSource(node_CONSTANT.TYPEDOBJECT_TYPE_APP, loc_out.getId()); 
 	};
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){
 		if(node_componentUtility.isActive(loc_out.prv_componentData.lifecycleStatus)){
 			//trigue event only in active status
 			node_eventUtility.triggerEventInfo(loc_eventSource, eventName, eventData, loc_getEventSourceInfo(), requestInfo);
-
-//			loc_eventSource.triggerEvent(eventName, eventData, requestInfo); 
 		}
 	};
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){
@@ -139,8 +138,6 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 			
 			module.registerEventListener(loc_eventListener, function(eventName, eventData, request){
 				loc_trigueEvent(eventName, eventData, request);
-
-//				loc_trigueEvent(node_CONSTANT.APP_EVENT_MODULEEVENT, new node_ModuleEventData(this, eventName, eventData), request);
 			}, moduleInfo);
 			module.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
 				loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, new node_ModuleEventData(this, eventName, eventData), request);
@@ -268,6 +265,8 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 		startLifecycleTask : function(){	loc_componentState.initDataForRollBack();	},
 		endLifecycleTask : function(){ 	loc_componentState.clearDataFroRollBack();	},
 	};
+	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIMODULE);
 	return loc_out;
 };
 
@@ -293,6 +292,7 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("common.event.createEventSource", function(){node_createEventSource = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventInfo", function(){node_createEventInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIAppComponentCore", node_createUIAppComponentCore); 
