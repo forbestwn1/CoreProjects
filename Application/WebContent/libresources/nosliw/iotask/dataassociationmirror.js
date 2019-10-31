@@ -8,13 +8,16 @@ var packageObj = library;
 	var node_createServiceRequestInfoSet;
 	var node_ioTaskUtility;
 	var node_ServiceInfo;
+	var node_createServiceRequestInfoSequence;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
 //execute data association of mirror type
-var node_getExecuteMirrorDataAssociationRequest = function(inputDataSet, association, outputIODataSet, handlers, request){
+var node_getExecuteMirrorDataAssociationRequest = function(inputDataSet, association, outputIODataSet, daName, handlers, request){
+	
 	var service = new node_ServiceInfo("ExecuteMirrorDataAssociation", {});
-	var out = node_createServiceRequestInfoSet(undefined, {
+	var out = node_createServiceRequestInfoSequence(service, handlers, request);
+	var setRequest = node_createServiceRequestInfoSet(undefined, {
 		success : function(request, resultSet){
 			return outputIODataSet;
 		}
@@ -48,9 +51,10 @@ var node_getExecuteMirrorDataAssociationRequest = function(inputDataSet, associa
 			}
 		}
 		
-		out.addRequest(name, node_ioTaskUtility.outputToDataSetIORequest(outputIODataSet, outputData, name, true));
+		setRequest.addRequest(name, node_ioTaskUtility.outputToDataSetIORequest(outputIODataSet, outputData, name, true));
 	});
 	
+	out.addRequest(setRequest);
 	return out;
 };
 
@@ -62,6 +66,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("getExecuteMirrorDataAssociationRequest", node_getExecuteMirrorDataAssociationRequest); 

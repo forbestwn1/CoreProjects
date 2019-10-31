@@ -117,7 +117,7 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){
 		if(node_componentUtility.isActive(loc_out.prv_componentData.lifecycleStatus)){
 			//trigue event only in active status
-			loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo);
+			node_eventUtility.triggerEventInfo(loc_valueChangeEventSource, eventName, eventData, loc_getEventSourceInfo(), requestInfo);
 		}
 	};
 
@@ -159,6 +159,8 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		loc_out.prv_componentData.contextDataSet.registerEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
 			loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, undefined, request);
 		});
+		
+		loc_out.prv_componentData.contextDataSet.kkkkkppppp = "kkkkppppp";
 	};
 
 	var loc_getBuildModuleUIRequest = function(handlers, request){
@@ -189,12 +191,12 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		//register listener for module ui
 		ui.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
 			loc_trigueEvent(eventName, eventData, requestInfo);
-//			loc_trigueEvent(node_CONSTANT.MODULE_EVENT_UIEVENT, new node_uiEventData(this.getId(), eventName, eventData), requestInfo);
 		}, ui);
-		ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
-			//handle ui value change, update value in module
-			this.executeSynOutDataRequest(undefined, undefined, requestInfo);
-		}, ui);
+		
+//		ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
+//			//handle ui value change, update value in module
+//			this.executeSynOutDataRequest(undefined, undefined, requestInfo);
+//		}, ui);
 	};
 
 	var loc_out = {

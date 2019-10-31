@@ -14,7 +14,7 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_getExecuteMappingAssociationRequest = function(inputDataSet, association, outputIODataSet, targetName, handlers, request){
+var loc_getExecuteMappingAssociationRequest = function(inputDataSet, association, outputIODataSet, targetName, name, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
 
 	//use convert function to calculate output

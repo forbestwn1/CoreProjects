@@ -88,11 +88,7 @@ var node_createComponentDataView = function(){
 
 	var loc_showDataSet = function(dataSet){	loc_textView.val(JSON.stringify(dataSet, null, 4));	};
 	
-	var loc_setup = function(component, request){
-		loc_comInterface = node_getComponentManagementInterface(component);
-		loc_comInterface.registerContextDataChangeEventListener(loc_listener, function(eventName, dataSet){
-			loc_showDataSet(dataSet);
-		});
+	var loc_refresh = function(request){
 		node_requestServiceProcessor.processRequest(loc_comInterface.getContextDataSetValueRequest({
 			success : function(request, dataSet){
 				loc_showDataSet(dataSet);
@@ -100,13 +96,32 @@ var node_createComponentDataView = function(){
 		}, request));
 	};
 	
+	var loc_setup = function(component, request){
+		loc_comInterface = node_getComponentManagementInterface(component);
+		loc_comInterface.getContextIODataSet().registerEventListener(undefined, function(eventName, eventData, request){
+			loc_refresh(request);
+		});
+
+//		loc_comInterface = node_getComponentManagementInterface(component);
+//		loc_comInterface.registerContextDataChangeEventListener(loc_listener, function(eventName, dataSet){
+//			loc_showDataSet(dataSet);
+//		});
+
+		loc_refresh(request);
+	};
+	
 	var loc_out = {
+			
 		getView : function(){  return loc_view;   },
 		
 		setComponent : function(component, request){
 			loc_clearup();
 			loc_setup(component, request);
-		}
+		},
+		
+		refresh : function(){
+			loc_refresh();
+		},
 	};
 	
 	return loc_out;

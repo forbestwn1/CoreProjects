@@ -119,7 +119,11 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		node_eventUtility.triggerEventInfo(loc_eventSource, eventName, eventData, loc_getEventSourceInfo(), request);
 
 	};
-	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){  if(loc_valueChangeEventEnabled==true)  loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo);	};
+	var loc_trigueValueChangeEvent = function(eventName, eventData, request){  
+		if(loc_valueChangeEventEnabled==true)  node_eventUtility.triggerEventInfo(loc_valueChangeEventSource, eventName, eventData, loc_getEventSourceInfo(), request);  
+			
+//			loc_valueChangeEventSource.triggerEvent(eventName, eventData, request);	
+	};
 
 	
 	var loc_getId = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];   };
@@ -243,7 +247,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		getExecuteCommandRequest : function(commandName, parms, handlers, request){	return loc_getExecuteCommandRequest(commandName, parms, handlers, request);	},
 		executeCommandRequest : function(commandName, parms, handlers, request){	node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(commandName, parms, handlers, request));	},
 
-		getExecuteNosliwCommandRequest : function(commandName, parms, handlers, request){	return getExecuteCommandRequest(node_basicUtility.buildNosliwFullName(commandName), parms, handlers, request);	},
+		getExecuteNosliwCommandRequest : function(commandName, parms, handlers, request){	return this.getExecuteCommandRequest(node_basicUtility.buildNosliwFullName(commandName), parms, handlers, request);	},
 		executeNosliwCommandRequest : function(commandName, parms, handlers, request){	node_requestServiceProcessor.processRequest(this.getExecuteNosliwCommandRequest(commandName, parms, handlers, request));	},
 
 		//event

@@ -38,7 +38,7 @@ var loc_createComponentManagementInterfaceObj = function(thisContext, agentObj){
 	var loc_agentObj = agentObj;
 	
 	//IODataSet for component context
-	var loc_componentContextIODataSet = loc_agentObj.getContextIODataSet();
+//	var loc_componentContextIODataSet = loc_agentObj.getContextIODataSet();
 	
 	var loc_out = {
 
@@ -47,14 +47,16 @@ var loc_createComponentManagementInterfaceObj = function(thisContext, agentObj){
 			return loc_agentObj.getExecuteCommandRequest(command, parms, handlers, request);
 		},
 
+		getContextIODataSet :  function(){  return loc_agentObj.getContextIODataSet();  },
+
 		//component's context data set value
-		getContextDataSetValueRequest : function(handlers, request){		return loc_componentContextIODataSet.getGetDataSetValueRequest(handlers, request);		},
+		getContextDataSetValueRequest : function(handlers, request){		return loc_out.getContextIODataSet().getGetDataSetValueRequest(handlers, request);		},
 		
 		//listener to context data change event
 		registerContextDataChangeEventListener : function(listener, handler){	
-			return loc_componentContextIODataSet.registerEventListener(listener, 
+			return loc_out.getContextIODataSet().registerEventListener(listener, 
 				function(eventName, eventData, request){
-					var dataRequest = loc_componentContextIODataSet.getGetDataSetValueRequest({
+					var dataRequest = loc_out.getContextIODataSet().getGetDataSetValueRequest({
 						success : function(request, dataSet){
 							handler(eventName, dataSet);
 						}
@@ -62,7 +64,7 @@ var loc_createComponentManagementInterfaceObj = function(thisContext, agentObj){
 					node_requestServiceProcessor.processRequest(dataRequest);
 				}, loc_thisContext);	
 		},
-		unregisterContextDataChangeEventListener : function(listener){  loc_componentContextIODataSet.unregisterEventListener(listener);  },
+		unregisterContextDataChangeEventListener : function(listener){  loc_out.getContextIODataSet().unregisterEventListener(listener);  },
 		
 		registerEventListener : function(listener, handler){	return loc_agentObj.registerEventListener(listener, handler, loc_thisContext);	},
 		unregisterEventListener : function(listener){  loc_agentObj.unregisterEventListener(listener);  },

@@ -35,9 +35,9 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		if(loc_dataAssociationDef==undefined)  return node_getExecuteNoneDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);   //if no data association, then nothing happen
 		else{
 			var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
-			if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);
-			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return node_getExecuteMirrorDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);
-			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return node_getExecuteNoneDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);
+			if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
+			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return node_getExecuteMirrorDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
+			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return node_getExecuteNoneDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
 		}
 	};
 
