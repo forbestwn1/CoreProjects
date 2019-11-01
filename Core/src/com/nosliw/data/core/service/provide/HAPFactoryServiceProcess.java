@@ -1,5 +1,6 @@
 package com.nosliw.data.core.service.provide;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -20,7 +21,9 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperT
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
+import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
+import com.nosliw.data.core.service.interfacee.HAPServiceResult;
 
 public class HAPFactoryServiceProcess implements HAPFactoryService{
 
@@ -65,20 +68,31 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		}
 
 		//external context from parameter of service
-		HAPContext processExternalContext = new HAPContext();
+		HAPContext inputExternalContext = new HAPContext();
 		HAPServiceInterface serviceInterface = staticInfo.getInterface();
 		for(String parmName : serviceInterface.getParms().keySet()){
 			HAPServiceParm parmDef = serviceInterface.getParms().get(parmName);
-			processExternalContext.addElement(parmName, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo((parmDef.getCriteria()))));
+			inputExternalContext.addElement(parmName, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo((parmDef.getCriteria()))));
 		}
 
+		Map<String, HAPParentContext> outputExternalContexts = new LinkedHashMap<String, HAPParentContext>();
+		Map<String, HAPServiceResult> serviceResult = serviceInterface.getResults();
+		for(String resultName : serviceResult.keySet()) {
+			Map<String, HAPServiceOutput> output = serviceResult.get(resultName).getOutput();
+			HAPContext outputContext = new HAPContext();
+			for(String name : output.keySet()) {
+				outputContext.addElement(name, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo((output.get(name).getCriteria()))));
+			}
+			outputExternalContexts.put(resultName, HAPParentContext.createDefault(outputContext));
+		}
+		
 		HAPExecutableWrapperTask processExe = this.m_processDefMan.getEmbededProcess(
 				"main", 
 				suite, 
 				inputMapping, 
 				null,
-				HAPParentContext.createDefault(processExternalContext), 
-				null 
+				HAPParentContext.createDefault(inputExternalContext), 
+				outputExternalContexts 
 		);
 		
 		HAPExecutableService out = new HAPExecutableServiceImp(processExe);

@@ -62,6 +62,41 @@ public class HAPProcessorDataAssociation {
 		return out;
 	}
 
+	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionWrapperTask taskWrapperDef, HAPExecutableTask taskExe, HAPParentContext inputContext, Map<String, HAPParentContext> outputContexts, HAPInfo configure, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPExecutableWrapperTask out = new HAPExecutableWrapperTask();
+		out.setTask(taskExe);
+		//process input mapping
+		HAPDefinitionDataAssociation inputMapping = taskWrapperDef.getInputMapping();
+		if(inputMapping==null)  inputMapping = new HAPDefinitionDataAssociationMirror();   //if no input mapping defined, then use mirror
+		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(inputContext, inputMapping, taskExe.getInContext(), configure, contextProcessRequirement));
+		
+		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
+		Map<String, HAPParentContext> taskResults = taskExe.getOutResultContext();
+		for(String resultName : taskResults.keySet()) {
+			HAPDefinitionDataAssociation outputMapping = resultOutputMapping.get(resultName);
+			if(outputMapping==null)  outputMapping = new HAPDefinitionDataAssociationMirror();
+			HAPParentContext outputContext = outputContexts.get(resultName);
+//			if(outputContext==null)  outputContext = inputContext;
+			if(outputContext!=null) out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(taskResults.get(resultName), outputMapping, outputContext, configure, contextProcessRequirement));
+		}
+		
+//		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
+//		for(String resultName : resultOutputMapping.keySet()) {
+//			HAPParentContext inContext = taskExe.getOutResultContext().get(resultName);
+//			out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(inContext, resultOutputMapping.get(resultName), outputContext, configure, contextProcessRequirement));
+//		}
+//		String defaultResultName = HAPConstant.NAME_DEFAULT;
+//		if(out.getOutputMapping(defaultResultName)==null) {
+//			//if no default output mapping defined, then create default output with mirror data association
+//			HAPParentContext inContext = taskExe.getOutResultContext().get(defaultResultName);
+//			if(inContext!=null) {
+//				out.addOutputMapping(defaultResultName, HAPProcessorDataAssociation.processDataAssociation(inContext, new HAPDefinitionDataAssociationMirror(), outputContext, configure, contextProcessRequirement));
+//			}
+//		}
+		return out;
+	}
+
+	
 	public static HAPExecutableDataAssociation processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociation dataAssociation, HAPParentContext output, HAPInfo configure, HAPRequirementContextProcessor contextProcessRequirement) {
 		if(dataAssociation==null)  dataAssociation = new HAPDefinitionDataAssociationNone();
 		String type = dataAssociation.getType();

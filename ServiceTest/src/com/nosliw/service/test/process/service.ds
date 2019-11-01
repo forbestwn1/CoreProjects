@@ -168,7 +168,7 @@
 								{
 									"name" : "success",
 									"flow": {
-										"target": "successEndId"
+										"target": "success"
 									},
 									"output": {
 										"element": {
@@ -182,12 +182,12 @@
 								}
 							]
 						}, {
-							"id": "successEndId",
-							"name": "successEnd",
+							"id": "success",
+							"name": "success",
 							"type": "end",
 							"output": {
 								"element": {
-									"output": {
+									"outputInService": {
 										definition: {
 											"path": "expressionResultVar"
 										}

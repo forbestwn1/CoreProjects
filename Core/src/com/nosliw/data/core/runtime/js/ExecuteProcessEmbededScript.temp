@@ -1,3 +1,4 @@
+var node_createIODataSet = nosliw.getNodeData("iotask.entity.createIODataSet");
 var inputDataSet = node_createIODataSet(||inputData||);
 
 
