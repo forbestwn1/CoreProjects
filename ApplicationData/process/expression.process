@@ -9,7 +9,7 @@
 		}
 	},
 	"process": [{
-			"id": "expressionProcessId",
+			"id": "main",
 			"name": "expression",
 			"description": "process including expression activity",
 			"context": {

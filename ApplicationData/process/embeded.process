@@ -9,8 +9,8 @@
 		}
 	},
 	"process": [{
-			"id": "mainProcessId",
-			"name": "expression",
+			"id": "main",
+			"name": "mainProcess",
 			"description": "process including expression activity",
 			"context": {
 				"group": {
@@ -22,6 +22,7 @@
 										a : {
 											child : {
 												aa : {criteria:"test.string;1.0.0"},
+												bb : {criteria:"test.string;1.0.0"},
 											}
 										}
 									}
@@ -31,6 +32,10 @@
 										aa : {
 											dataTypeId: "test.string;1.0.0",
 											value: "This is my world!"
+										},
+										bb : {
+											dataTypeId: "test.string;1.0.0",
+											value: ""
 										}
 									}
 								}
@@ -71,12 +76,13 @@
 					}
 				}
 			},
-			"activity": [{
+			"activity": [
+				{
 					"id": "startActivityId",
 					"name": "startActivity",
 					"type": "start",
 					"flow": {
-						"target": "expressionActivityId"
+						"target": "embededActivityId"
 					}
 				}, 
 				{
@@ -105,11 +111,11 @@
 						{
 							"name" : "success",
 							"flow": {
-								"target": "expressionActivityId"
+								"target": "successEndId"
 							},
 							"output": {
 								"element": {
-									"business.a.aa": {
+									"business.a.bb": {
 										definition:{
 											"path": "emexpressionResultVar"
 										}
@@ -120,62 +126,10 @@
 					]
 				},				
 				{
-					"id": "expressionActivityId",
-					"name": "expressionActivity",
-					"type": "expression",
-					"expression": "#|!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)|#",
-					"input": {
-						"element": {
-							"inputA.b.c" : {
-								"definition" : {
-									"path" : "business.a.aa"
-								}
-							}, 
-							"inputA.d.c" : {
-								"definition" : {
-									"path" : "business.a.aa"
-								}
-							}, 
-							"inputB" : {
-								"definition" : {
-									"path" : "business.a.aa"
-								}
-							}, 
-							"fromVar" : {
-								"definition" : {
-									"path" : "fromVar"
-								}
-							}, 
-							"toVar" : {
-								"definition" : {
-									"path" : "toVar"
-								}
-							}
-						},
-						"info": {}
-					},
-					"result": [
-						{
-							"name" : "success",
-							"flow": {
-								"target": "successEndId"
-							},
-							"output": {
-								"element": {
-									"expressionResultVar": {
-										definition:{
-											"path": "nosliw_output"
-										}
-									}
-								}
-							}
-						}
-					]
-				}, {
 					"id": "successEndId",
 					"name": "successEnd",
 					"type": "end",
-					"output": {
+					"output11": {
 						"element": {
 							"output": {
 								definition: {
@@ -241,7 +195,8 @@
 					}
 				}
 			},
-			"activity": [{
+			"activity": [
+				{
 					"id": "startActivityId",
 					"name": "startActivity",
 					"type": "start",
@@ -257,17 +212,17 @@
 						"element": {
 							"inputA.b.c" : {
 								"definition" : {
-									"path" : "business.a.aa"
+									"path" : "embusiness.a.aa"
 								}
 							}, 
 							"fromVar" : {
 								"definition" : {
-									"path" : "fromVar"
+									"path" : "emfromVar"
 								}
 							}, 
 							"toVar" : {
 								"definition" : {
-									"path" : "toVar"
+									"path" : "emtoVar"
 								}
 							}
 						},

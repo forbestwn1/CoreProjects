@@ -33,9 +33,10 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 		this.m_results = new LinkedHashMap<String, HAPDefinitionResultActivityNormal>();
 	}
 	
-	public HAPDefinitionDataAssociation getInput() {  return this.m_input;   }
-	public void setInput(HAPDefinitionDataAssociation input) {   this.m_input = input;   }
+	public HAPDefinitionDataAssociation getInputMapping() {  return this.m_input;   }
+	public void setInputMapping(HAPDefinitionDataAssociation input) {   this.m_input = input;   }
 	
+	//
 	public HAPContextStructure getInputContextStructure(HAPContextStructure inContextStructure) {  return HAPContextStructureEmpty.flatStructure();   }
 	
 	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }

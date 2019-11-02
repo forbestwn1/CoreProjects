@@ -58,7 +58,13 @@ public class HAPUtilityProcess {
 	}
 	
 	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
-		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), activity.getNormalActivityDefinition().getInput(), HAPParentContext.createDefault(activity.getNormalActivityDefinition().getInputContextStructure(processContext)), null, contextProcessRequirement));
+		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
+				HAPParentContext.createDefault(processContext), 
+				activity.getNormalActivityDefinition().getInputMapping(), 
+				HAPParentContext.createDefault(activity.getNormalActivityDefinition().getInputContextStructure(processContext)), 
+				null, 
+				contextProcessRequirement);
+		activity.setInputDataAssociation(da);
 	}
 	
 	//data variables infor in activity merge back to process context
@@ -121,9 +127,11 @@ public class HAPUtilityProcess {
 		return resultExe;
 	}
 
+	//build task wrapper for activity has task in it
+	//all the input and result output for activity is mirror 
 	public static HAPDefinitionWrapperTask parseTaskDefinition(HAPDefinitionActivityNormal activity, JSONObject jsonObj) {
 		HAPDefinitionWrapperTask out = new HAPDefinitionWrapperTask();
-		activity.setInput(new HAPDefinitionDataAssociationMirror());
+		activity.setInputMapping(new HAPDefinitionDataAssociationMirror());
 		
 		out.buildMapping(jsonObj);
 		

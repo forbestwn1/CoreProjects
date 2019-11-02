@@ -80,19 +80,6 @@ public class HAPProcessorDataAssociation {
 			if(outputContext!=null) out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(taskResults.get(resultName), outputMapping, outputContext, configure, contextProcessRequirement));
 		}
 		
-//		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
-//		for(String resultName : resultOutputMapping.keySet()) {
-//			HAPParentContext inContext = taskExe.getOutResultContext().get(resultName);
-//			out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(inContext, resultOutputMapping.get(resultName), outputContext, configure, contextProcessRequirement));
-//		}
-//		String defaultResultName = HAPConstant.NAME_DEFAULT;
-//		if(out.getOutputMapping(defaultResultName)==null) {
-//			//if no default output mapping defined, then create default output with mirror data association
-//			HAPParentContext inContext = taskExe.getOutResultContext().get(defaultResultName);
-//			if(inContext!=null) {
-//				out.addOutputMapping(defaultResultName, HAPProcessorDataAssociation.processDataAssociation(inContext, new HAPDefinitionDataAssociationMirror(), outputContext, configure, contextProcessRequirement));
-//			}
-//		}
 		return out;
 	}
 

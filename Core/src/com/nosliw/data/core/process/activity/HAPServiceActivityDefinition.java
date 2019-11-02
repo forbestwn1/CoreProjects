@@ -39,18 +39,6 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_provider = jsonObj.optString(PROVIDER);
 		this.m_mapping = HAPUtilityProcess.parseTaskDefinition(this, jsonObj);
-		
-//		this.m_serviceMapping.buildMapping(jsonObj);
-//		
-//		Map<String, HAPDefinitionResultActivityNormal> results = this.getResults();
-//		for(String resultName : results.keySet()) {
-//			HAPDefinitionResultActivityNormal result = results.get(resultName);
-//			HAPDefinitionDataAssociation dataAssociation = result.getOutputDataAssociation();
-//			this.m_serviceMapping.addOutputMapping(resultName, dataAssociation.cloneDataAssocation());
-//			
-//			result.setOutputDataAssociation(new HAPDefinitionDataAssociationMirror());
-//		}
-
 		return true;  
 	}
 
