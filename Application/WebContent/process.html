@@ -16,8 +16,6 @@
 </head>
 
 <body>
-	 <div id="map"></div>
-
 	<div id="testDiv">
 	</div>
 
@@ -26,7 +24,8 @@
 <script>
 
 $(document).on("nosliwActive", function(){
-	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessResourceRequest("embeded;main", 
+//	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessResourceRequest("embeded;main", 
+	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessResourceRequest("expression;main", 
 	{
 		"fromVar": {
 			"dataTypeId": "test.integer;1.0.0",

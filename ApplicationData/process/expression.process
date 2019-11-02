@@ -84,7 +84,7 @@
 					"name": "expressionActivity",
 					"type": "expression",
 					"expression": "#|!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)|#",
-					"input": {
+					"inputMapping": {
 						"element": {
 							"inputA.b.c" : {
 								"definition" : {

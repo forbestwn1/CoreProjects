@@ -12,12 +12,12 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAsso
 public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 
 	@HAPAttribute
-	public static String INPUT = "input";
+	public static String INPUTMAPPING = "inputMapping";
 	
 	@HAPAttribute
 	public static String RESULT = "result";
 
-	private HAPExecutableDataAssociation m_input;
+	private HAPExecutableDataAssociation m_inputMapping;
 
 	private Map<String, HAPExecutableResultActivityNormal> m_results;
 	
@@ -26,8 +26,8 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 		this.m_results = new LinkedHashMap<String, HAPExecutableResultActivityNormal>();
 	}
 
-	public void setInputDataAssociation(HAPExecutableDataAssociation input) {  this.m_input = input;  }
-	public HAPExecutableDataAssociation getInputDataAssociation() {   return this.m_input;   }
+	public void setInputDataAssociation(HAPExecutableDataAssociation input) {  this.m_inputMapping = input;  }
+	public HAPExecutableDataAssociation getInputDataAssociation() {   return this.m_inputMapping;   }
 	
 	public HAPDefinitionActivityNormal getNormalActivityDefinition() {   return (HAPDefinitionActivityNormal)this.getActivityDefinition();  }
 	
@@ -39,14 +39,14 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_input!=null)		jsonMap.put(INPUT, this.m_input.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_inputMapping!=null)		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		if(this.m_input!=null)  jsonMap.put(INPUT, this.m_input.toResourceData(runtimeInfo).toString());
+		if(this.m_inputMapping!=null)  jsonMap.put(INPUTMAPPING, this.m_inputMapping.toResourceData(runtimeInfo).toString());
 		
 		Map<String, String> resultJsonMap = new LinkedHashMap<String, String>();
 		for(String resultName : this.m_results.keySet()) {

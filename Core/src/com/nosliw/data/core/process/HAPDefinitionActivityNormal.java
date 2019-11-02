@@ -17,13 +17,13 @@ import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociat
 public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 
 	@HAPAttribute
-	public static String INPUT = "input";
+	public static String INPUTMAPPING = "inputMapping";
 
 	@HAPAttribute
 	public static String RESULT = "result";
 
 	//associate variable in process to input required by activity 
-	private HAPDefinitionDataAssociation m_input;
+	private HAPDefinitionDataAssociation m_inputMapping;
 	
 	//possible result for activity
 	private Map<String, HAPDefinitionResultActivityNormal> m_results;
@@ -33,8 +33,8 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 		this.m_results = new LinkedHashMap<String, HAPDefinitionResultActivityNormal>();
 	}
 	
-	public HAPDefinitionDataAssociation getInputMapping() {  return this.m_input;   }
-	public void setInputMapping(HAPDefinitionDataAssociation input) {   this.m_input = input;   }
+	public HAPDefinitionDataAssociation getInputMapping() {  return this.m_inputMapping;   }
+	public void setInputMapping(HAPDefinitionDataAssociation input) {   this.m_inputMapping = input;   }
 	
 	//
 	public HAPContextStructure getInputContextStructure(HAPContextStructure inContextStructure) {  return HAPContextStructureEmpty.flatStructure();   }
@@ -48,9 +48,9 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 			super.buildObjectByJson(json);
 			JSONObject jsonObj = (JSONObject)json;
 			
-			JSONObject inputJson = jsonObj.optJSONObject(INPUT);
+			JSONObject inputJson = jsonObj.optJSONObject(INPUTMAPPING);
 			if(inputJson!=null) {
-				this.m_input = HAPParserDataAssociation.buildObjectByJson(inputJson); 
+				this.m_inputMapping = HAPParserDataAssociation.buildObjectByJson(inputJson); 
 			}
 			
 			JSONArray resultsJson = jsonObj.optJSONArray(RESULT);
@@ -72,7 +72,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_input!=null)		jsonMap.put(INPUT, this.m_input.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_inputMapping!=null)		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
 	}
 }

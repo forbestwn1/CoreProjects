@@ -97,7 +97,7 @@ var node_createProcess = function(processDef, envObj){
 		out.addRequest(node_taskUtility.getExecuteTaskRequest(
 				loc_processContextIO, 
 				undefined,
-				normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUT],    //input data association
+				normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUTMAPPING],    //input data association
 				new node_IOTaskInfo(function(inputValue, handlers, request){
 					var executeActivityPluginRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteActivityPlugin", {}), handlers, request);
 					//get activity plugin 

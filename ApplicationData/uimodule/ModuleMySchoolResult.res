@@ -153,7 +153,7 @@
 					"type": "UI_executeCommand",
 					"partId": "ui.schoolListUI",
 					"command": "nosliw_page_refresh",
-					"input": {
+					"inputMapping": {
 						"element": {
 							"schoolList": {
 								"definition": { 

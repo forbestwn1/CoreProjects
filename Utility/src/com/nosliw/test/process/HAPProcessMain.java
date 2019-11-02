@@ -24,7 +24,7 @@ public class HAPProcessMain {
 		
 		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite("expression", runtimeEnvironment.getProcessDefinitionManager().getPluginManager()); 
 		
-		String id = "expressionProcessId";
+		String id = "main";
 		HAPExecutableProcess processExe = HAPProcessorProcess.process(id, suite, null, runtimeEnvironment.getProcessDefinitionManager(), new HAPRequirementContextProcessor(HAPExpressionManager.dataTypeHelper, runtimeEnvironment.getRuntime(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getServiceManager().getServiceDefinitionManager(), null), new HAPProcessTracker());
 
 		Map<String, HAPData> input = new LinkedHashMap<String, HAPData>();
