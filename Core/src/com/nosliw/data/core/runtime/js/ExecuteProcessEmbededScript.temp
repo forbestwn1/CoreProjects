@@ -2,7 +2,7 @@ var node_createIODataSet = nosliw.getNodeData("iotask.entity.createIODataSet");
 var inputDataSet = node_createIODataSet(||inputData||);
 
 
-nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().getExecuteEmbededProcessRequest(||processDef||, inputDataSet, undefined, undefined, 
+nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeEmbededProcessRequest(||processDef||, inputDataSet, undefined, undefined, 
 	{
 		success : function(requestInfo, data){
 			var parms = {};

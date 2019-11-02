@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_taskUtility;
 	var node_IOTaskResult;
 	var node_IOTaskInfo;
+	var node_ProcessResult;
 
 //*******************************************   Start Node Definition  **************************************
 var node_createProcessRuntime = function(envObj){
@@ -96,7 +97,9 @@ var node_createProcessRuntime = function(envObj){
 				}
 			};
 			envObj = _.extend(envObj, loc_envObj);
-			return node_taskUtility.getExecuteEmbededTaskRequest(
+			
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteEmbededProcessRequest", {}), handlers, requester_parent);
+			out.addRequest(node_taskUtility.getExecuteEmbededTaskRequest(
 				inputIODataSet, 
 				outputIODataSet,
 				extraInputDataSet, 
@@ -110,8 +113,18 @@ var node_createProcessRuntime = function(envObj){
 					}));
 					return out;
 				}, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID]), 
-				handlers, 
-				requester_parent);
+				{
+					success : function(requestInfo, processResult){
+						//calculate mapping output value
+						return processResult.resultValue.getGetDataValueRequest(undefined, {
+							success : function(request, value){
+								return new node_ProcessResult(processResult.resultName, value);
+							}
+						});
+					}
+				}
+			));
+			return out;
 		},
 
 		executeEmbededProcessRequest : function(processDef, inputIODataSet, outputIODataSet, extraInputDataSet, handlers, requester_parent){
@@ -181,6 +194,8 @@ nosliw.registerSetNodeDataEvent("process.createProcess", function(){node_createP
 nosliw.registerSetNodeDataEvent("iotask.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
+
 
 //Register Node by Name
 packageObj.createChildNode("createProcessRuntimeFactory", node_createProcessRuntimeFactory); 
