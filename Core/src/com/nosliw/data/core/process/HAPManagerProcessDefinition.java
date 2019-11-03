@@ -54,6 +54,11 @@ public class HAPManagerProcessDefinition {
 		return out;
 	}
 
+	public HAPExecutableProcess getProcess(String processId, HAPContextProcessor context) {
+		HAPExecutableProcess out = HAPProcessorProcess.process(processId, context.getProcessDefinition(processId), null, null, this, this.m_contextProcessRequirement, new HAPProcessTracker());
+		return out;
+	}
+	
 	public HAPExecutableWrapperTask getEmbededProcess(
 			String processId, 
 			HAPDefinitionProcessSuite suite, 
@@ -82,6 +87,22 @@ public class HAPManagerProcessDefinition {
 		suiteWrapper.setInputMapping(inputMapping);
 		suiteWrapper.setOutputMapping(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, suite);
+		HAPExecutableWrapperTask out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
+		return out;
+	}
+
+	public HAPExecutableWrapperTask getEmbededProcess(
+			String processId, 
+			HAPContextProcessor context, 
+			HAPDefinitionDataAssociation inputMapping, 
+			Map<String, HAPDefinitionDataAssociation> outputMapping,
+			HAPParentContext inputContext, 
+			Map<String, HAPParentContext> outputContext 
+		) {
+		HAPDefinitionWrapperTask<HAPDefinitionProcess> suiteWrapper = new HAPDefinitionWrapperTask(context.getProcessDefinition(processId).getProcess());
+		suiteWrapper.setInputMapping(inputMapping);
+		suiteWrapper.setOutputMapping(outputMapping);
+		HAPExecutableProcess processExe = this.getProcess(processId, context);
 		HAPExecutableWrapperTask out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
 		return out;
 	}

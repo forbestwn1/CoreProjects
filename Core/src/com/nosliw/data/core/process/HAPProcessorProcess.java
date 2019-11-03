@@ -26,14 +26,12 @@ public class HAPProcessorProcess{
 			HAPProcessTracker processTracker) {
 		String id = new HAPIdProcess(suite.getId(), processId).getId();
 		HAPContextProcessor processContext = HAPContextProcessor.createContext(suite, processMan);
-		return process(suite.getProcess(processId), id, processContext, suite.getContext(), serviceProviders, processMan, contextProcessRequirement, processTracker);
+		return process(id, new HAPDefinitionProcessWithContext(suite.getProcess(processId), processContext), suite.getContext(), serviceProviders, processMan, contextProcessRequirement, processTracker);
 	}
 
-	//
 	public static HAPExecutableProcess process(
-			HAPDefinitionProcess processDefinition, 
 			String id, 
-			HAPContextProcessor processContext,
+			HAPDefinitionProcessWithContext process,
 			HAPContextGroup parentContext, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcessDefinition processMan,
@@ -42,14 +40,15 @@ public class HAPProcessorProcess{
 		HAPExecutableProcess out = null;
 		HAPContextGroup oldContext = null;
 		do {
-			if(oldContext==null)   oldContext = HAPProcessorContext.process(processDefinition.getContext(), HAPParentContext.createDefault(parentContext), HAPUtilityConfigure.getContextProcessConfigurationForProcess(), contextProcessRequirement);
+			if(oldContext==null)   oldContext = HAPProcessorContext.process(process.getProcess().getContext(), HAPParentContext.createDefault(parentContext), HAPUtilityConfigure.getContextProcessConfigurationForProcess(), contextProcessRequirement);
 			else oldContext = out.getContext();
-			out = new HAPExecutableProcess(processDefinition, id);
-			HAPProcessorProcess.process(out, oldContext, processContext, serviceProviders, processMan, contextProcessRequirement, processTracker);
+			out = new HAPExecutableProcess(process.getProcess(), id);
+			HAPProcessorProcess.process(out, oldContext, process.getContext(), serviceProviders, processMan, contextProcessRequirement, processTracker);
 		}while(!oldContext.equals(out.getContext()));
 		return out;
 	}
 
+	
 	private static void process(
 			HAPExecutableProcess out,
 			HAPContextGroup originContext, 

@@ -14,9 +14,12 @@ public class HAPDefinitionProcessWithContext {
 		this.m_context = context;
 	}
 	
+	public HAPDefinitionProcessWithContext(HAPDefinitionProcess process) {
+		this.m_process = process;
+	}
+	
 	public HAPDefinitionProcess getProcess() {  return this.m_process;	}
 	
 	public HAPContextProcessor getContext() {  return this.m_context;   }
-	
 	
 }

@@ -27,7 +27,7 @@ public class HAPProcessActivityExecutable extends HAPExecutableActivityNormal{
 
 	public HAPExpressionActivityDefinition getExpressionActivityDefinition() {   return (HAPExpressionActivityDefinition)this.getActivityDefinition();   }
 	public void setProcess(HAPExecutableWrapperTask process) {  this.m_process = process;   }
-	
+	public HAPExecutableWrapperTask getProcess() {  return this.m_process;   }
 	
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {

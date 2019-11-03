@@ -39,6 +39,7 @@ public class HAPExecutableWrapperTask<T extends HAPExecutableTask> extends HAPEx
 	}
 
 	public void setTask(T task) {  this.m_task = task;  }
+	public T getTask() {  return this.m_task;  }
 	public HAPExecutableDataAssociation getInputMapping() {   return this.m_inputMapping;   }
 	public void setInputMapping(HAPExecutableDataAssociation inputMapping) {  this.m_inputMapping = inputMapping;  }
 	public Map<String, HAPExecutableDataAssociation> getOutputMapping(){    return this.m_outputMapping;     }
