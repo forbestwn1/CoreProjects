@@ -89,7 +89,7 @@
 					"id": "embededActivityId",
 					"name": "embededActivity",
 					"type": "process",
-					"process", "embededProcessId",
+					"process": "embededProcessId",
 					"inputMapping":{
 						"embusiness" : {
 							"definition" : {
@@ -109,13 +109,13 @@
 					},
 					"result": [
 						{
-							"name" : "success",
+							"name" : "successEnd",
 							"flow": {
 								"target": "successEndId"
 							},
 							"output": {
 								"element": {
-									"business.a.bb": {
+									"expressionResultVar": {
 										definition:{
 											"path": "emexpressionResultVar"
 										}
@@ -190,7 +190,11 @@
 					},
 					"protected": {
 						"element": {
-							"emexpressionResultVar": {},
+							"emexpressionResultVar": {
+								"definition": {
+									criteria : "test.string",
+								},
+							},
 						}
 					}
 				}

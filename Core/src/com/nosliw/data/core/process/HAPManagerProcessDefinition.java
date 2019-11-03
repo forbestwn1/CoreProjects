@@ -59,7 +59,7 @@ public class HAPManagerProcessDefinition {
 		return out;
 	}
 	
-	public HAPExecutableWrapperTask getEmbededProcess(
+	public HAPExecutableWrapperTask<HAPExecutableProcess> getEmbededProcess(
 			String processId, 
 			HAPDefinitionProcessSuite suite, 
 			HAPDefinitionDataAssociation inputMapping, 
@@ -71,11 +71,11 @@ public class HAPManagerProcessDefinition {
 		suiteWrapper.setInputMapping(inputMapping);
 		suiteWrapper.setOutputMapping(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, suite);
-		HAPExecutableWrapperTask out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
+		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
 		return out;
 	}
 
-	public HAPExecutableWrapperTask getEmbededProcess(
+	public HAPExecutableWrapperTask<HAPExecutableProcess> getEmbededProcess(
 			String processId, 
 			HAPDefinitionProcessSuite suite, 
 			HAPDefinitionDataAssociation inputMapping, 
@@ -87,11 +87,12 @@ public class HAPManagerProcessDefinition {
 		suiteWrapper.setInputMapping(inputMapping);
 		suiteWrapper.setOutputMapping(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, suite);
-		HAPExecutableWrapperTask out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
+		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
 		return out;
 	}
 
-	public HAPExecutableWrapperTask getEmbededProcess(
+	//process process by name from processor context
+	public HAPExecutableWrapperTask<HAPExecutableProcess> getEmbededProcess(
 			String processId, 
 			HAPContextProcessor context, 
 			HAPDefinitionDataAssociation inputMapping, 
@@ -103,7 +104,23 @@ public class HAPManagerProcessDefinition {
 		suiteWrapper.setInputMapping(inputMapping);
 		suiteWrapper.setOutputMapping(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, context);
-		HAPExecutableWrapperTask out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
+		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
+		return out;
+	}
+
+	public HAPExecutableWrapperTask<HAPExecutableProcess> getEmbededProcess(
+			String processId, 
+			HAPContextProcessor context, 
+			HAPDefinitionDataAssociation inputMapping, 
+			Map<String, HAPDefinitionDataAssociation> outputMapping,
+			HAPParentContext inputContext, 
+			HAPParentContext outputContext 
+		) {
+		HAPDefinitionWrapperTask<HAPDefinitionProcess> suiteWrapper = new HAPDefinitionWrapperTask(context.getProcessDefinition(processId).getProcess());
+		suiteWrapper.setInputMapping(inputMapping);
+		suiteWrapper.setOutputMapping(outputMapping);
+		HAPExecutableProcess processExe = this.getProcess(processId, context);
+		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
 		return out;
 	}
 

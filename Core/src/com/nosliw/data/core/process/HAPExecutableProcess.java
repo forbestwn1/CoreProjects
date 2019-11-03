@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -96,6 +97,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 
 	public void setResults(Map<String, HAPExecutableDataAssociation> results) {   this.m_results.putAll(results);   }
 	public HAPExecutableDataAssociation getResult(String result) {  return this.m_results.get(result);   }
+	public Set<String> getResultNames(){   return this.m_results.keySet();  }
 	
 	public HAPContextGroup getContext() {   return this.m_context;  }
 	public void setContext(HAPContextGroup context) {   this.m_context = context;  }

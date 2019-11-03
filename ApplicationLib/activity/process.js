@@ -2,7 +2,7 @@
  * 
  */
 {
-	type : "expression",
+	type : "process",
 	
 	processor : "com.nosliw.data.core.process.activity.HAPProcessActivityProcessor",
 	
