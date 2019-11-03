@@ -36,8 +36,10 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	public HAPDefinitionDataAssociation getInputMapping() {  return this.m_inputMapping;   }
 	public void setInputMapping(HAPDefinitionDataAssociation input) {   this.m_inputMapping = input;   }
 	
-	//
-	public HAPContextStructure getInputContextStructure(HAPContextStructure inContextStructure) {  return HAPContextStructureEmpty.flatStructure();   }
+	//get input context structure for activity
+	//it is for process input mapping
+	//param: parent context structure
+	public HAPContextStructure getInputContextStructure(HAPContextStructure parentContextStructure) {  return HAPContextStructureEmpty.flatStructure();   }
 	
 	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
 	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }

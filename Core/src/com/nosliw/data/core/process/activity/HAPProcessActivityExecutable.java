@@ -19,7 +19,7 @@ public class HAPProcessActivityExecutable extends HAPExecutableActivityNormal{
 	@HAPAttribute
 	public static String PROCESS = "process";
 
-	HAPExecutableWrapperTask m_process;
+	private HAPExecutableWrapperTask m_process;
 	
 	public HAPProcessActivityExecutable(String id, HAPProcessActivityDefinition activityDef) {
 		super(id, activityDef);

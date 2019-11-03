@@ -3,8 +3,8 @@ package com.nosliw.data.core.process.activity;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.process.HAPContextProcessor;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
@@ -23,9 +23,9 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 
 	@Override
 	public HAPExecutableActivity process(HAPDefinitionActivity activityDefinition, String id,
-			HAPExecutableProcess processExe, HAPContextGroup processContext,
+			HAPContextProcessor processContext,
+			HAPExecutableProcess processExe, HAPContextGroup processDataContext,
 			Map<String, HAPExecutableDataAssociation> results,
-			Map<String, HAPDefinitionProcess> contextProcessDefinitions, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcessDefinition processManager,
 			HAPRequirementContextProcessor contextProcessRequirement, 
@@ -36,11 +36,11 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 		
 		if(endActivity.getOutput()!=null) {
 			//build result data association only when end activity has output
-			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), endActivity.getOutput(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement);
+			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processDataContext), endActivity.getOutput(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement);
 			results.put(endActivity.getName(), result);
 		}
 		else {  //kkkk
-			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), new HAPDefinitionDataAssociationMirror(), HAPParentContext.createDefault(processContext), null, contextProcessRequirement);
+			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processDataContext), new HAPDefinitionDataAssociationMirror(), HAPParentContext.createDefault(processDataContext), null, contextProcessRequirement);
 			results.put(endActivity.getName(), result);
 		}
 		

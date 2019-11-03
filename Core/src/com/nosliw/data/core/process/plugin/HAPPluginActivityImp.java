@@ -7,8 +7,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.process.HAPContextProcessor;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
@@ -67,16 +67,16 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 	public HAPExecutableActivity process(
 			HAPDefinitionActivity activityDefinition,
 			String id,
+			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe, 
-			HAPContextGroup context,
+			HAPContextGroup processDataContext,
 			Map<String, HAPExecutableDataAssociation> results,
-			Map<String, HAPDefinitionProcess> contextProcessDefinitions, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcessDefinition processManager,
 			HAPRequirementContextProcessor contextProcessRequirement, 
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {
-		return this.m_processor.process(activityDefinition, id, processExe, context, results, contextProcessDefinitions, serviceProviders, processManager, contextProcessRequirement, configure, processTracker);
+		return this.m_processor.process(activityDefinition, id, processContext, processExe, processDataContext, results, serviceProviders, processManager, contextProcessRequirement, configure, processTracker);
 	}
 
 	@Override

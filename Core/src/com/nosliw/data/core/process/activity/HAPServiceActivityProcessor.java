@@ -5,8 +5,8 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.process.HAPBuilderResultContext;
+import com.nosliw.data.core.process.HAPContextProcessor;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableActivityNormal;
 import com.nosliw.data.core.process.HAPExecutableProcess;
@@ -30,10 +30,10 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 	public HAPExecutableActivity process(
 			HAPDefinitionActivity activityDefinition, 
 			String id,
+			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPContextGroup processContext,
+			HAPContextGroup processDataContext,
 			Map<String, HAPExecutableDataAssociation> results,
-			Map<String, HAPDefinitionProcess> contextProcessDefinitions, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcessDefinition processManager,
 			HAPRequirementContextProcessor contextProcessRequirement, 
@@ -43,7 +43,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		HAPServiceActivityExecutable out = new HAPServiceActivityExecutable(id, serviceActDef);
 
 		//input
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processContext, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processDataContext, contextProcessRequirement);
 
 		//provider
 		HAPDefinitionServiceProvider provider = serviceProviders.get(serviceActDef.getProvider());
@@ -52,15 +52,15 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		//prepare service use def
 		HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
 		serviceUseDef.setProvider(serviceActDef.getProvider());
-		serviceUseDef.setServiceMapping(serviceActDef.getServiceMapping());
+		serviceUseDef.setServiceMapping(serviceActDef.getTaskMapping());
 		
 		//process service use def
-		HAPExecutableServiceUse serviceUseExe = HAPProcessorServiceUse.process(serviceUseDef, provider.getServiceInterface(), processContext, configure, contextProcessRequirement);
+		HAPExecutableServiceUse serviceUseExe = HAPProcessorServiceUse.process(serviceUseDef, provider.getServiceInterface(), processDataContext, configure, contextProcessRequirement);
 		out.setService(serviceUseExe);
 
 		//process success result
-		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(processContext); 
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, processContext, m_resultContextBuilder, contextProcessRequirement);
+		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(processDataContext); 
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, contextProcessRequirement);
 		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

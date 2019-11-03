@@ -67,7 +67,7 @@ public class HAPProcessorModule {
 		//process global processes in module
 		Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> internalProcesses = moduleDefinition.getProcesses();
 		for(String name : internalProcesses.keySet()) {
-			HAPExecutableProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name).getTaskDefinition(), name, out.getContext(), null, allServiceProviders, processMan, contextProcessRequirement, processTracker);
+			HAPExecutableProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name).getTaskDefinition(), name, null, out.getContext(), allServiceProviders, processMan, contextProcessRequirement, processTracker);
 			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(internalProcesses.get(name), processExe, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
 			out.addProcess(name, processExeWrapper);
 		}
@@ -130,7 +130,7 @@ public class HAPProcessorModule {
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getEventDefinition(eventName));
 			HAPContextGroup eventContext = moduleExe.getContext().cloneContextGroup();
 			eventContext.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC).addElement(HAPSystemUtility.buildNosliwFullName("EVENT"), eventRootNode);
-			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(eventHandlerDef.getProcess().getTaskDefinition(), eventName, eventContext, null, serviceProviders, processMan, contextProcessRequirement, processTracker);
+			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(eventHandlerDef.getProcess().getTaskDefinition(), eventName, null, eventContext, serviceProviders, processMan, contextProcessRequirement, processTracker);
 			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getProcess(), eventProcessor, HAPParentContext.createDefault(moduleExe.getContext()), null, contextProcessRequirement);			
 			eventHandlerExe.setProcess(processExeWrapper);
 			out.addEventHandler(eventName, eventHandlerExe);

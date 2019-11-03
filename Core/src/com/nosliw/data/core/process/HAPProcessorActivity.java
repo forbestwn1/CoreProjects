@@ -16,10 +16,10 @@ public interface HAPProcessorActivity {
 	HAPExecutableActivity process(
 			HAPDefinitionActivity activityDefinition,
 			String id,
+			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
 			HAPContextGroup context,
 			Map<String, HAPExecutableDataAssociation> results,
-			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcessDefinition processManager,
 			HAPRequirementContextProcessor contextProcessRequirement,

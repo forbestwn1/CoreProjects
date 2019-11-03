@@ -5,40 +5,26 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
-import com.nosliw.data.core.process.HAPUtilityProcess;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.process.HAPDefinitionActivityTask;
 
-public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
+public class HAPServiceActivityDefinition extends HAPDefinitionActivityTask{
 
 	@HAPAttribute
 	public static String PROVIDER = "provider";
 
-	@HAPAttribute
-	public static String PARMMAPPING = "parmMapping";
-
 	private String m_provider;
 	
-	private HAPDefinitionWrapperTask m_mapping;
-
 	public HAPServiceActivityDefinition(String type) {
 		super(type);
 	}
 
 	public String getProvider() {   return this.m_provider;  }
 
-	public HAPDefinitionWrapperTask getServiceMapping() {   return this.m_mapping;  }
-	
-	@Override
-	public HAPContextStructure getInputContextStructure(HAPContextStructure inContextStructure) {  return inContextStructure;   }
-
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_provider = jsonObj.optString(PROVIDER);
-		this.m_mapping = HAPUtilityProcess.parseTaskDefinition(this, jsonObj);
 		return true;  
 	}
 

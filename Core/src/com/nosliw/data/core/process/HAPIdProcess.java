@@ -17,15 +17,15 @@ public class HAPIdProcess extends HAPSerializableImp{
 		this.parseId(id);
 	}
 
-	public String getId(){  return HAPNamingConversionUtility.cascadeLevel1(m_suiteId, m_processId);  }
+	public String getId(){  return HAPNamingConversionUtility.cascadeLevel1(m_processId, m_suiteId);  }
 
 	public String getSuiteId() {   return this.m_suiteId;   }
 	public String getProcessId() {    return this.m_processId;    }
 	
 	private void parseId(String id) {
 		String[] segs = HAPNamingConversionUtility.parseLevel1(id);
-		this.m_suiteId = segs[0];
-		this.m_processId = segs[1];
+		this.m_processId = segs[0];
+		if(segs.length>1)	this.m_suiteId = segs[1];
 	}
 	
 	@Override
