@@ -24,8 +24,15 @@
 <script>
 
 $(document).on("nosliwActive", function(){
-	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessResourceRequest("main;embeded", 
-//	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessResourceRequest("main;expression", 
+	
+	var env = {
+		getExecuteProcessRequest : function(process, input, handlers, request){
+			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().getExecuteWrappedProcessRequest(process, input, undefined, handlers, request);
+		}
+	};
+	
+//	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeProcessResourceRequest("main;embeded", 
+	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeProcessResourceRequest("main;expression", 
 	{
 		"fromVar": {
 			"dataTypeId": "test.integer;1.0.0",

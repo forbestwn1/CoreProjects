@@ -28,7 +28,8 @@
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteEmbededProcessActivity"), handlers, request);
 					out.addRequest(env.getExecuteProcessRequest(activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_PROCESS], input, {
 						success : function(request, processResult){
-							return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
+							return processResult;
+//							return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
 						}
 					}));
 					return out;
