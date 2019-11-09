@@ -26,6 +26,7 @@ public class HAPDefinitionDataAssociationNone extends HAPEntityInfoWritableImp i
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.getType());
 	}
 	
 	@Override

@@ -1,0 +1,308 @@
+{
+	"name": "all",
+	"description": "process with different activity",
+	"context": {
+		"group": {
+			"public": {
+				"element": {}
+			}
+		}
+	},
+	"process": [{
+			"id": "main",
+			"name": "loop",
+			"description": "process including expression activity",
+			"context": {
+				"group": {
+					"public": {
+						"element": {
+							"loopArrayData" : {
+								"definition" : {
+									"criteria" : "test.array;1.0.0%%||element:test.integer;1.0.0||%%"
+								},
+								"defaultValue" : {
+									"dataTypeId": "test.array;1.0.0",
+									"value": [
+										{
+											"dataTypeId": "test.integer;1.0.0",
+											"value": 1
+										},
+										{
+											"dataTypeId": "test.integer;1.0.0",
+											"value": 2
+										},
+										{
+											"dataTypeId": "test.integer;1.0.0",
+											"value": 3
+										},
+										{
+											"dataTypeId": "test.integer;1.0.0",
+											"value": 4
+										},
+									]
+								}
+							},
+							"loopResultData" : {
+								"definition" : {
+									"criteria" : "test.integer;1.0.0"
+								},
+								"defaultValue" : {
+									"dataTypeId": "test.integer;1.0.0",
+									"value": 10
+								}
+							},
+						}
+					},
+				}
+			},
+			"activity": [{
+					"id": "startActivityId",
+					"name": "startActivity",
+					"type": "start",
+					"flow": {
+						"target": "loopActivityId"
+					}
+				}, 
+				{
+					"id": "loopActivityId",
+					"name": "loopActivity",
+					"type": "loop",
+					"containerName" : "loopArrayData",
+					"indexName" : "index",
+					"elementName" : "element",
+					"step" : {
+						"process" : "stepProcessId",
+						"inputMapping":{
+							"stepSum" : {
+								"definition" : {
+									"path" : "loopResultData"
+								}
+							}, 
+							"stepEleData" : {
+								"definition" : {
+									"path" : "element"
+								}
+							}, 
+						},
+						"outputMapping" : {
+							"successEndId" : {
+								"element" : {
+									"loopResultData": {
+										definition:{
+											"path": "stepSum"
+										}
+									}
+								}
+							}
+						}
+					},
+					"result": [
+						{
+							"name" : "successEnd",
+							"flow": {
+								"target": "successEndId"
+							},
+						}
+					]
+				}, {
+					"id": "successEndId",
+					"name": "successEnd",
+					"type": "end",
+					"output": {
+						"element": {
+							"output": {
+								definition: {
+									"path": "loopResultData"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		{
+			"id": "stepProcessId",
+			"name": "stepProcess",
+			"description": "embeded process by another process",
+			"context": {
+				"group": {
+					"public": {
+						"element": {
+							"stepSum" : {
+								"definition" : {
+									"criteria" : "test.integer;1.0.0"
+								},
+								"defaultValue" : {
+									"dataTypeId": "test.integer;1.0.0",
+									"value": 100
+								}
+							},
+							"stepEleData" : {
+								"definition" : {
+									"criteria" : "test.integer;1.0.0"
+								},
+								"defaultValue" : {
+									"dataTypeId": "test.integer;1.0.0",
+									"value": 50
+								}
+							},
+						}
+					},
+				}
+			},
+			"activity": [
+				{
+					"id": "startActivityId",
+					"name": "startActivity",
+					"type": "start",
+					"flow": {
+						"target": "debugActivityId"
+					}
+				}, {
+					"id": "debugActivityId",
+					"name": "debugActivity",
+					"type": "debug",
+					"result": [
+						{
+							"name" : "success",
+							"flow": {
+								"target": "expressionActivityId"
+							},
+						}
+					]
+				}, {
+					"id": "expressionActivityId",
+					"name": "expressionActivity",
+					"type": "expression",
+					"expression": "#|!(test.integer)!.add(parm1:?(activityParm1)?,parm2:?(activityParm2)?)|#",
+					"inputMapping": {
+						"element": {
+							"activityParm1" : {
+								"definition" : {
+									"path" : "stepSum"
+								}
+							}, 
+							"activityParm2" : {
+								"definition" : {
+									"path" : "stepEleData"
+								}
+							}, 
+						},
+						"info": {}
+					},
+					"result": [
+						{
+							"name" : "success",
+							"flow": {
+								"target": "successEndId"
+							},
+							"output": {
+								"element": {
+									"stepSum": {
+										definition:{
+											"path": "nosliw_output"
+										}
+									}
+								}
+							}
+						}
+					]
+				}, {
+					"id": "successEndId",
+					"name": "successEnd",
+					"type": "end",
+				}
+			]
+		},
+		{
+			"id": "stepTestId",
+			"name": "stepTest",
+			"description": "test step process",
+			"context": {
+				"group": {
+					"public": {
+						"element": {
+							"sum" : {
+								"definition" : {
+									"criteria" : "test.integer;1.0.0"
+								},
+								"defaultValue" : {
+									"dataTypeId": "test.integer;1.0.0",
+									"value": 600
+								}
+							},
+							"data" : {
+								"definition" : {
+									"criteria" : "test.integer;1.0.0"
+								},
+								"defaultValue" : {
+									"dataTypeId": "test.integer;1.0.0",
+									"value": 60
+								}
+							},
+						}
+					},
+				}
+			},
+			"activity": [{
+					"id": "startActivityId",
+					"name": "startActivity",
+					"type": "start",
+					"flow": {
+						"target": "stepActivityId"
+					}
+				}, 
+				{
+					"id": "stepActivityId",
+					"name": "stepActivity",
+					"type": "process",
+					"process": "stepProcessId",
+					"inputMapping":{
+						"element": {
+							"stepSum" : {
+								"definition" : {
+									"path" : "sum"
+								}
+							}, 
+							"stepEleData" : {
+								"definition" : {
+									"path" : "data"
+								}
+							}, 
+						}
+					},
+					"result": [
+						{
+							"name" : "successEnd",
+							"flow": {
+								"target": "successEndId"
+							},
+							"output": {
+								"element": {
+									"sum": {
+										definition:{
+											"path": "stepSum"
+										}
+									}
+								}
+							}
+						}
+					]
+				}, {
+					"id": "successEndId",
+					"name": "successEnd",
+					"type": "end",
+					"output": {
+						"element": {
+							"output": {
+								definition: {
+									"path": "sum"
+								}
+							}
+						}
+					}
+				}
+			]
+		},					
+	]
+}

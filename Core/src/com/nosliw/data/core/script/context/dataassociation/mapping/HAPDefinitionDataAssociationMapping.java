@@ -48,6 +48,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(ASSOCIATION, HAPJsonUtility.buildJson(this.m_assocations, HAPSerializationFormat.JSON));
 	}
 	

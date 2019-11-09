@@ -22,9 +22,9 @@ public class HAPProcessMain {
 	static public void main(String[] args) throws FileNotFoundException {
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		
-		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite("expression", runtimeEnvironment.getProcessDefinitionManager().getPluginManager()); 
+		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite("loop", runtimeEnvironment.getProcessDefinitionManager().getPluginManager()); 
 		
-		String id = "main";
+		String id = "stepProcessId";
 		HAPExecutableProcess processExe = HAPProcessorProcess.process(id, suite, null, runtimeEnvironment.getProcessDefinitionManager(), new HAPRequirementContextProcessor(HAPExpressionManager.dataTypeHelper, runtimeEnvironment.getRuntime(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getServiceManager().getServiceDefinitionManager(), null), new HAPProcessTracker());
 
 		Map<String, HAPData> input = new LinkedHashMap<String, HAPData>();

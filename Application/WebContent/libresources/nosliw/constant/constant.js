@@ -199,6 +199,7 @@ var node_CONSTANT=
 	  "TYPEDOBJECT_TYPE_COMPONENTCONFIGURE":			 		22,
 	  "TYPEDOBJECT_TYPE_STATE":							 		23,
 	  "TYPEDOBJECT_TYPE_BACKUPSERVICE":							24,
+	  "TYPEDOBJECT_TYPE_PATHSEGMENT":							25,
 	  
 	  //status of request
 	  "REQUEST_STATUS_INIT" :			"init", 

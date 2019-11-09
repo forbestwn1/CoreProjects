@@ -13,6 +13,7 @@ import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPContextStructureEmpty;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 
 public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 
@@ -43,6 +44,21 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	
 	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
 	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }
+	
+	//if no inputmapping, build default one which is mirror
+	protected void buildDefaultInputMapping() {
+		if(this.getInputMapping()==null)	this.setInputMapping(new HAPDefinitionDataAssociationMirror());
+	}
+
+	protected void buildDefaultResultOutputMapping() {
+		Map<String, HAPDefinitionResultActivityNormal> results = this.getResults();
+		for(String resultName : results.keySet()) {
+			if(results.get(resultName).getOutputDataAssociation()==null) {
+				results.get(resultName).setOutputDataAssociation(new HAPDefinitionDataAssociationMirror());
+			}
+		}
+	}
+	
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

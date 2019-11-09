@@ -26,13 +26,14 @@
 $(document).on("nosliwActive", function(){
 	
 	var env = {
-		getExecuteProcessRequest : function(process, input, handlers, request){
-			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().getExecuteWrappedProcessRequest(process, input, undefined, handlers, request);
+		getExecuteProcessRequest : function(process, input, extraInputDataSet, handlers, request){
+			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().getExecuteWrappedProcessRequest(process, input, extraInputDataSet, handlers, request);
 		}
 	};
 	
 //	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeProcessResourceRequest("main;embeded", 
-	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeProcessResourceRequest("main;expression", 
+//	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeProcessResourceRequest("main;expression", 
+	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeProcessResourceRequest("main;loop", 
 	{
 		"fromVar": {
 			"dataTypeId": "test.integer;1.0.0",

@@ -16,6 +16,9 @@ public class HAPContextPath extends HAPSerializableImp{
 	public static final String ROOTNAME  = "rootEleName";
 
 	@HAPAttribute
+	public static final String ROOTPATH  = "rootPath";
+
+	@HAPAttribute
 	public static final String PATH  = "path";
 	
 	private HAPContextDefinitionRootId m_rootNodeId;
@@ -74,6 +77,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	
 	public String getContextFullPath() {  return HAPNamingConversionUtility.cascadePath(this.m_rootNodeId.getPath(), this.m_path);   }
 	
+	@Override
 	public HAPContextPath clone() {
 		HAPContextPath out = new HAPContextPath();
 		out.m_path = this.m_path;
@@ -89,6 +93,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ROOTNAME, this.m_rootNodeId.getFullName());
+		jsonMap.put(ROOTPATH, this.m_rootNodeId.getPath());
 		jsonMap.put(PATH, this.m_path);
 	}
 }

@@ -25,71 +25,36 @@ var node_parseSegment;
 var node_parsePathSegment;
 var node_createServiceRequestInfoSimple;
 var node_createServiceRequestInfoSet;
+var node_dataOperationUtility;
+
 //*******************************************   Start Node Definition  ************************************** 	
 var node_createDataTypeHelperData = function(){
 	
-	var loc_getDirectChildValueRequest = function(parentValue, path, handlers, request){
-		var operationParms = [];
-		operationParms.push(new node_OperationParm(parentValue, "base"));
-		operationParms.push(new node_OperationParm({
-			dataTypeId: "test.string;1.0.0",
-			value : path
-		}, "name"));
-
-		return nosliw.runtime.getExpressionService().getExecuteOperationRequest(
-				parentValue.dataTypeId, 
-				node_COMMONCONSTANT.DATAOPERATION_COMPLEX_GETCHILDDATA, 
-				operationParms, handlers, request);
-	}; 
-
-	var loc_getCurrentSegmentChildValueRequest = function(parentValue, segs, handlers, request){
-		return loc_getDirectChildValueRequest(parentValue, segs.next(), handlers, request);			
-	};
-	
-	var loc_getSegmentsChildValueRequest = function(parentValue, segs, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetSegsChildValue", {"parent":parentValue, "segs":segs}), handlers, request);
-		if(segs.hasNext()){
-			out.addRequest(loc_getCurrentSegmentChildValueRequest(parentValue, segs, {
-				success : function(request, segChildValue){
-					return loc_getSegmentsChildValueRequest(segChildValue, segs);
-				}
-			}));
-		}
-		else{
-			//end of segments
-			out.addRequest(node_createServiceRequestInfoSimple({}, function(request){
-				return parentValue;
-			})); 
-		}
-		return out;
-	};
-	
 	var loc_getOperationBaseRequest = function(value, path, first, lastReverse, handlers, request){
 		var segs = node_parsePathSegment(path, first, lastReverse);
-		var out = loc_getSegmentsChildValueRequest(value, segs, handlers, request);
-		out.setRequestProcessors({
+
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(node_dataOperationUtility.getChildValueRequest(value, segs, {
 			success : function(request, value){
 				return {
 					base : value,
 					attribute : segs.getRestPath()
 				}
 			}
-		});
+		}));
 		return out;
 	};
-	
 	
 	var loc_out = {		
 		
 			//get child value by path
 			getChildValueRequest : function(parentValue, path, handlers, request){
-				var pathSegs = node_parsePathSegment(path);
-				var out = loc_getSegmentsChildValueRequest(parentValue, pathSegs, handlers, request);
-				out.setRequestProcessors({
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				out.addRequest(node_dataOperationUtility.getChildValueRequest(parentValue, path, {
 					success : function(request, childValue){
 						return node_dataUtility.cloneValue(childValue);
 					}
-				});
+				}));
 				return out;
 			},
 			
@@ -168,62 +133,7 @@ var node_createDataTypeHelperData = function(){
 			},
 
 			getGetElementsRequest : function(value, handlers, request){
-				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetElements", {"value":value}), handlers, request); 
-				
-				var operationParms = [];
-				operationParms.push(new node_OperationParm(value, "base"));
-				out.addRequest(nosliw.runtime.getExpressionService().getExecuteOperationRequest(
-					value.dataTypeId, 
-					node_COMMONCONSTANT.DATAOPERATION_COMPLEX_ISACCESSCHILDBYID, 
-					operationParms, {
-						success : function(request, isAccessChildById){
-							if(isAccessChildById.value){
-								//througth id
-								
-							}
-							else{
-								//throught index,
-								//get length first
-								var operationParms = [];
-								operationParms.push(new node_OperationParm(value, "base"));
-								return nosliw.runtime.getExpressionService().getExecuteOperationRequest(
-									value.dataTypeId, 
-									node_COMMONCONSTANT.DATAOPERATION_COMPLEX_LENGTH, 
-									operationParms, {
-										success : function(request, arrayValueLength){
-											var allElesRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("", {}), {
-												success : function(request, setResult){
-													var elements = [];
-													for(var i=0; i<arrayValueLength.value; i++){
-														var eleValue = setResult.getResult(i+"");
-														elements.push({
-															value : eleValue
-														});
-													}
-													return elements;
-												}
-											}); 
-
-											for(var i=0; i<arrayValueLength.value; i++){
-												var operationParms = [];
-												operationParms.push(new node_OperationParm(value, "base"));
-												operationParms.push(new node_OperationParm({
-													dataTypeId: "test.integer;1.0.0",
-													value : i,
-												}, "index"));
-												allElesRequest.addRequest(i+"", nosliw.runtime.getExpressionService().getExecuteOperationRequest(
-													value.dataTypeId, 
-													node_COMMONCONSTANT.DATAOPERATION_COMPLEX_GETCHILDDATABYINDEX, 
-													operationParms));
-											}
-											return allElesRequest;
-										}
-								});
-							}
-						}
-					})
-				);
-				return out;
+				return node_dataOperationUtility.getGetElementsRequest(value, handlers, request);
 			}, 
 			
 			//clean up resource in value
@@ -260,6 +170,8 @@ nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){
 nosliw.registerSetNodeDataEvent("common.segmentparser.parsePathSegment", function(){node_parsePathSegment = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.dataOperationUtility", function(){node_dataOperationUtility = this.getData();});
+
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction

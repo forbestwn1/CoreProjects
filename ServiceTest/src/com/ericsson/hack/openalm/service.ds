@@ -1,0 +1,24 @@
+[{
+	"id": "queryCardsService",
+	"name": "queryCardService",
+    "implementation" : "com.ericsson.hack.openalm.HAPServiceProviderImp",
+	"description" : "query Card",
+	"interface" : {
+		"result" : [
+			{
+				"name" : "success",
+				"output" : {
+					"outputInService": {
+						"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||id:test.string;1.0.0,mingleId:test.string;1.0.0,name:test.string;1.0.0||%%||%%"
+					}
+				},			
+			}
+		],
+		"parm" : [ 
+			{
+				name : "query",
+				criteria : "test.string;1.0.0",
+			},
+		]
+	},
+}]
