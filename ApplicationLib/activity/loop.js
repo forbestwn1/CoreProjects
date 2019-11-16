@@ -42,7 +42,7 @@
 										var element = elements[i];
 										
 										var extraData = {};
-										extraData[activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_ELEMENTNAME]] = element;
+										extraData[activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_ELEMENTNAME]] = element.value;
 										extraData[activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INDEXNAME]] = i;
 										var extraDataContext = {
 											public : extraData

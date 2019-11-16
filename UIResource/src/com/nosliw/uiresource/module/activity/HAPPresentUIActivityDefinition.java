@@ -12,20 +12,28 @@ public class HAPPresentUIActivityDefinition extends HAPDefinitionActivityNormal{
 	@HAPAttribute
 	public static String UI = "ui";
 	
+	@HAPAttribute
+	public static String SETTING = "setting";
+	
 	private String m_ui;
 
+	private JSONObject m_setting;
+	
 	public HAPPresentUIActivityDefinition(String type) {
 		super(type);
 	}
 	
 	public String getUI() {  return this.m_ui;   }
 	public void setUI(String ui) {   this.m_ui = ui;    }
+	
+	public JSONObject getSetting() {   return this.m_setting;   }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.setUI(jsonObj.optString(UI));
+		this.m_setting = jsonObj.optJSONObject(SETTING);
 		return true;  
 	}
 

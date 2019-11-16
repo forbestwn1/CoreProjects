@@ -1,4 +1,10 @@
-nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessRequest(||processDef||, ||inputData||, 
+var env = {
+	getExecuteProcessRequest : function(process, input, extraInputDataSet, handlers, request){
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().getExecuteWrappedProcessRequest(process, input, extraInputDataSet, handlers, request);
+	}
+};
+
+nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeProcessRequest(||processDef||, ||inputData||, 
 	{
 		success : function(requestInfo, data){
 			var parms = {};

@@ -1,8 +1,13 @@
 var node_createIODataSet = nosliw.getNodeData("iotask.entity.createIODataSet");
 var inputDataSet = node_createIODataSet(||inputData||);
 
+var env = {
+	getExecuteProcessRequest : function(process, input, extraInputDataSet, handlers, request){
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().getExecuteWrappedProcessRequest(process, input, extraInputDataSet, handlers, request);
+	}
+};
 
-nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeEmbededProcessRequest(||processDef||, inputDataSet, undefined, undefined, 
+nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeEmbededProcessRequest(||processDef||, inputDataSet, undefined, undefined, 
 	{
 		success : function(requestInfo, data){
 			var parms = {};

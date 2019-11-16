@@ -148,11 +148,37 @@
 					}]
 				},
 				{
+					"id": "presentSchoolListUI",
+					"name": "presentSchoolListUI",
+					"type": "UI_presentUI",
+					"setting" : {
+						"updateData" : false
+					},
+					"ui": "schoolListUI",
+					"result": [{
+						"name": "success",
+						"flow": {
+							"target": "debug"
+						}
+					}]
+				},
+				{
+					"id": "debug",
+					"name": "debug",
+					"type": "debug",
+					"result": [{
+						"name": "success",
+						"flow": {
+							"target": "refreshSchoolList"
+						}
+					}]
+				},
+				{
 					"id": "refreshSchoolList",
 					"name": "refreshSchoolList",
 					"type": "UI_executeCommand",
 					"partId": "ui.schoolListUI",
-					"command": "nosliw_page_refresh",
+					"command": "nosliw_update_data",
 					"inputMapping": {
 						"element": {
 							"schoolList": {
@@ -162,18 +188,6 @@
 							}
 						}
 					},
-					"result": [{
-						"name": "success",
-						"flow": {
-							"target": "presentSchoolListUI"
-						}
-					}]
-				},
-				{
-					"id": "presentSchoolListUI",
-					"name": "presentSchoolListUI",
-					"type": "UI_presentUI",
-					"ui": "schoolListUI",
 					"result": [{
 						"name": "success",
 						"flow": {
@@ -227,8 +241,19 @@
 								"name": "startActivity",
 								"type": "start",
 								"flow": {
-									"target": "presentSchoolDataUI"
+									"target": "debugId"
 								}
+							},
+							{
+								"id": "debugId",
+								"name": "debug",
+								"type": "debug",
+								"result": [{
+									"name": "success",
+									"flow": {
+										"target": "presentSchoolDataUI"
+									}
+								}]
 							},
 							{
 								"id": "presentSchoolDataUI",
@@ -248,8 +273,8 @@
 								"type": "UI_executeCommand",
 								"partId": "ui.schoolInfoUI",
 								"ui11": "schoolInfoUI",
-								"command": "nosliw_page_refresh",
-								"input": {
+								"command": "nosliw_update_data",
+								"inputMapping": {
 									"element": {
 										"schoolData": {
 											"definition": { 

@@ -127,8 +127,10 @@ var node_createUIPage = function(uiView){
 //------------------  command		
 		getExecuteCommandRequest : function(command, parms, handlers, requestInfo){
 			var sysCommand = node_basicUtility.getNosliwCoreName(command);
-			if(sysCommand==node_CONSTANT.COMMAND_PAGE_REFRESH){
-				return loc_getCurrent().getUpdateContextRequest(parms, handlers, requestInfo);
+			if(sysCommand!=undefined){
+				if(sysCommand==node_CONSTANT.COMMAND_PAGE_REFRESH){
+					return loc_getCurrent().getUpdateContextRequest(parms, handlers, requestInfo);
+				}
 			}
 			else{
 				return node_createServiceRequestInfoSimple(undefined, function(requestInfo){

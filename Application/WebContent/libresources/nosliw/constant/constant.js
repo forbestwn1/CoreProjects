@@ -237,9 +237,11 @@ var node_CONSTANT=
 	  "UIRESOURCE_FUNCTION_INIT" : 		"init",
 	  "UIRESOURCE_FUNCTION_DESTROY" : 	"destroy",
 	  
-	  "COMMAND_PAGE_REFRESH" : "page_refresh",
-	  "COMMAND_MODULEUI_SYNCINDATA" : "moduleui_syncindata",
-
+	  "COMMAND_MODULEUI_REFRESH" : "refresh",
+	  "COMMAND_MODULEUI_UPDATE_DATA" : "update_data",
+	  "COMMAND_MODULEUI_SYNCIN_DATA" : "syncin_data",
+	  "COMMAND_PAGE_REFRESH" : "refresh",
+	  
 	  "IODATASET_EVENT_CHANGE" : "IODATASET_EVENT_CHANGE",
 	  
 	  "MODULE_EVENT_UIEVENT" : "MODULE_EVENT_UIEVENT",

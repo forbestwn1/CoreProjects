@@ -9,6 +9,39 @@ var packageObj = library.getChildPackage("setting");
 	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_createSettingConfigure = function(configure){
+	var loc_configure = configure;
+	
+	var loc_out = {
+		getSettingValue : function(setting, name){
+			if(setting==null || setting[name]==null){
+				var cfg = loc_configure[name]
+				if(cfg!=undefined)  return cfg.defaultValue;
+			}
+			else  return setting[name];
+		},
+		
+		createSetting : function(setting){
+			return node_createSetting(setting, loc_out);
+		}
+	
+	};
+	return loc_out;
+};	
+	
+var node_createSetting = function(setting, settingConfigure){
+	var loc_settingConfigure = settingConfigure;
+	var loc_setting = setting;
+	
+	var loc_out = {
+		getSettingValue : function(name){
+			return loc_settingConfigure.getSettingValue(loc_setting, name);
+		}
+	};
+	return loc_out;
+};
+
+
 /*
  * store setting for sync task, (service, command)
  */
@@ -91,5 +124,6 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 //Register Node by Name
 packageObj.createChildNode("createConfiguresBase", node_createConfiguresBase);  
 packageObj.createChildNode("createConfigures", node_createConfigures); 
+packageObj.createChildNode("createSettingConfigure", node_createSettingConfigure); 
 	
 })(packageObj);

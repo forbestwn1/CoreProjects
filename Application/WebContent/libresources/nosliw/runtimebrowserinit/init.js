@@ -1,9 +1,9 @@
 nosliw.createNode("runtime.name", "browser");
 
-nosliw.init = function(serverBase){
+nosliw.init = function(configure){
 
-	nosliw.serverBase = serverBase==undefined?"":serverBase;
-
+	nosliw.setConfigure(configure);
+	
 	var libNames = [
 //		"external.Underscore;1.9.1",
 //		"external.Backbone;1.3.3",

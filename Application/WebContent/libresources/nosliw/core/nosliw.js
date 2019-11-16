@@ -10,6 +10,8 @@ if(typeof nosliw=="undefined")
 		
 		var loc_modules = [];
 		
+		var loc_configure = {};
+		
 		var loc_out = {
 			getPackage : function(packageName){
 				return createPackage(packageName);
@@ -72,6 +74,16 @@ if(typeof nosliw=="undefined")
 
 			warning : function(errorData){
 				console.warn(this.getNodeData("common.utility.basicUtility").stringify(errorData));
+			}, 
+			
+			setConfigure : function(configure){
+				if(configure!=undefined)		loc_configure = configure;
+			},
+			
+			getConfigureValue : function(name, defaultValue){
+				var out = loc_configure[name];
+				if(out==undefined)  out = defaultValue;
+				return out;
 			}
 		};
 		

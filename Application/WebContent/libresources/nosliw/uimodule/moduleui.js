@@ -117,12 +117,10 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	
 	var loc_trigueEvent = function(eventName, eventData, request){
 		node_eventUtility.triggerEventInfo(loc_eventSource, eventName, eventData, loc_getEventSourceInfo(), request);
-
 	};
+	
 	var loc_trigueValueChangeEvent = function(eventName, eventData, request){  
 		if(loc_valueChangeEventEnabled==true)  node_eventUtility.triggerEventInfo(loc_valueChangeEventSource, eventName, eventData, loc_getEventSourceInfo(), request);  
-			
-//			loc_valueChangeEventSource.triggerEvent(eventName, eventData, request);	
 	};
 
 	
@@ -175,9 +173,17 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 
 	var loc_getExecuteCommandRequest = function(commandName, parms, handlers, request){
 		var coreCommandName = node_basicUtility.getNosliwCoreName(commandName);
-		//system command
-		if(coreCommandName==node_CONSTANT.COMMAND_MODULEUI_SYNCINDATA){
-			return loc_out.getSynInDataRequest(handlers, request);
+		if(coreCommandName!=undefined){
+			//system command
+			if(coreCommandName==node_CONSTANT.COMMAND_MODULEUI_SYNCIN_DATA){
+				return loc_out.getSynInDataRequest(handlers, request);
+			}
+			else if(coreCommandName==node_CONSTANT.COMMAND_MODULEUI_REFRESH){
+				return loc_out.getSynInDataRequest(handlers, request);
+			}
+			else if(coreCommandName==node_CONSTANT.COMMAND_MODULEUI_UPDATE_DATA){
+				return loc_page.getExecuteCommandRequest(node_basicUtility.buildNosliwFullName(node_CONSTANT.COMMAND_PAGE_REFRESH), parms, handlers, request);
+			}
 		}
 		else{
 			//normal command or unrecoganized command

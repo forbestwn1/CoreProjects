@@ -9,7 +9,7 @@
 				"name" : "success",
 				"output" : {
 					"outputInService": {
-						"criteria" : "element:test.map;1.0.0%%||id:test.string;1.0.0,name:test.string;1.0.0||%%"
+						"criteria" : "element:test.map;1.0.0%%||id:test.string;1.0.0,name:test.string;1.0.0,url:test.url;1.0.0||%%"
 					}
 				},			
 			}

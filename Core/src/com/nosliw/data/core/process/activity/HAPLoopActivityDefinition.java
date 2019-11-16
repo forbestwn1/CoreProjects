@@ -5,7 +5,6 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
@@ -64,7 +63,7 @@ public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 		JSONObject stepObj = jsonObj.optJSONObject(STEP);
 		String processName = stepObj.optString(PROCESS);
 		this.m_step = new HAPDefinitionWrapperTask(processName);
-		this.m_step.buildObject(stepObj, HAPSerializationFormat.JSON);
+		this.m_step.buildMapping(stepObj);
 		
 		return true;  
 	}

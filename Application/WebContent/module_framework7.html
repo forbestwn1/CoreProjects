@@ -79,7 +79,11 @@ $(document).on("nosliwActive", function(){
 	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);
 });
 
-nosliw.init();
+nosliw.init({
+	logging : {
+		module : ["process"]
+	}
+});
 </script>
 
 </html>

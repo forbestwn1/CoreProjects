@@ -144,7 +144,7 @@ var node_createRemoteService = function(){
 		 */
 		registerSyncTaskConfigure : function(name, configure){
 			var newConfigure = loc_syncTaskBaseConfigure.createConfigures(configure);
-			newConfigure.setConfigure("url", nosliw.serverBase+newConfigure.getConfigure("url"));
+			newConfigure.setConfigure("url", nosliw.utility.getServerBase()+newConfigure.getConfigure("url"));
 			loc_syncTaskConfigures[name] = newConfigure;
 		},
 		

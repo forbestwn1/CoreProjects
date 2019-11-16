@@ -2,7 +2,7 @@ nosliw.utility = function(){
 	
 	var loc_requestLoadFileResources = function(api, command, parms, processResult, callBackFunction){
 		$.ajax({
-			url : nosliw.serverBase+api,
+			url : loc_out.getServerBase()+api,
 			type : "POST",
 			dataType: "json",
 			data : {
@@ -21,7 +21,7 @@ nosliw.utility = function(){
 				var loadScriptInOrder1 = function(){
 					var url = result[count];
 					
-					jQuery.getScript(nosliw.serverBase+url, function(data, textStatus, jqxhr){
+					jQuery.getScript(loc_out.getServerBase()+url, function(data, textStatus, jqxhr){
 						callBack();
 					});
 				};
@@ -30,7 +30,7 @@ nosliw.utility = function(){
 					var url = result[count];
 					
 					var scriptEle = document.createElement('script');
-					scriptEle.setAttribute('src', nosliw.serverBase+url);
+					scriptEle.setAttribute('src', loc_out.getServerBase()+url);
 					scriptEle.setAttribute('defer', "defer");
 					scriptEle.setAttribute('type', 'text/javascript');
 
@@ -56,6 +56,10 @@ nosliw.utility = function(){
 	};
 	
 	var loc_out = {
+		getServerBase : function(){
+			return nosliw.getConfigureValue("serverBase", "");
+		},	
+			
 		//load librarys by name
 		requestLoadLibraryResources : function(libNames, callBackFunction){
 			var resourceIds = [];

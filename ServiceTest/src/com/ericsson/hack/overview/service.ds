@@ -9,7 +9,7 @@
 				"name" : "success",
 				"output" : {
 					"outputInService": {
-						"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
+						"criteria" : "test.map;1.0.0%%||name:test.string;1.0.0,id:test.string;1.0.0,tasks:test.array;1.0.0%%||element:test.map;1.0.0%%||id:test.string;1.0.0,name:test.string;1.0.0,url:test.url;1.0.0,gcrs:test.array;1.0.0%%||element:test.map;1.0.0%%||id:test.string;1.0.0,name:test.string;1.0.0,url:test.url;1.0.0,status:test.integer;1.0.0||%%||%%||%%||%%||%%"
 					}
 				},			
 			}

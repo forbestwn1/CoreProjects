@@ -29,6 +29,8 @@ var packageObj = library;
 	var node_dataAssociationUtility;
 	
 //*******************************************   Start Node Definition  **************************************
+var loc_moduleName = "process";	
+
 //normal activity output (next activity)
 var loc_NormalActivityOutput = function(next){
 	this.next = next;
@@ -130,6 +132,8 @@ var node_createProcess = function(processDef, envObj){
 
 	//execute activity in process
 	var loc_getExecuteActivitySequenceRequest = function(activityId, activities, handlers, request){
+		nosliw.logging.info(loc_moduleName, "Start activity : ", activityId);
+		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteActivity", {"activityId":activityId}), handlers, request);
 		var activitExecuteRequest;
 		var activity = activities[activityId];

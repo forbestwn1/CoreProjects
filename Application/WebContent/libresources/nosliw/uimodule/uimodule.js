@@ -192,7 +192,8 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		ui.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
 			loc_trigueEvent(eventName, eventData, requestInfo);
 		}, ui);
-		
+
+// kkkk
 //		ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
 //			//handle ui value change, update value in module
 //			this.executeSynOutDataRequest(undefined, undefined, requestInfo);

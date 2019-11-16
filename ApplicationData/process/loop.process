@@ -31,14 +31,6 @@
 											"dataTypeId": "test.integer;1.0.0",
 											"value": 2
 										},
-										{
-											"dataTypeId": "test.integer;1.0.0",
-											"value": 3
-										},
-										{
-											"dataTypeId": "test.integer;1.0.0",
-											"value": 4
-										},
 									]
 								}
 							},
@@ -73,19 +65,21 @@
 					"step" : {
 						"process" : "stepProcessId",
 						"inputMapping":{
-							"stepSum" : {
-								"definition" : {
-									"path" : "loopResultData"
-								}
-							}, 
-							"stepEleData" : {
-								"definition" : {
-									"path" : "element"
-								}
-							}, 
+							"element": {
+								"stepSum" : {
+									"definition" : {
+										"path" : "loopResultData"
+									}
+								}, 
+								"stepEleData" : {
+									"definition" : {
+										"path" : "element"
+									}
+								}, 
+							}
 						},
 						"outputMapping" : {
-							"successEndId" : {
+							"successEnd" : {
 								"element" : {
 									"loopResultData": {
 										definition:{
@@ -156,7 +150,7 @@
 					"name": "startActivity",
 					"type": "start",
 					"flow": {
-						"target": "debugActivityId"
+						"target": "expressionActivityId"
 					}
 				}, {
 					"id": "debugActivityId",

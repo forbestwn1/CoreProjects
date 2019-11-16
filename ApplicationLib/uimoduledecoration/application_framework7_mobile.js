@@ -52,46 +52,43 @@ function(gate){
 		return out;
 	};
 
-//	var loc_updatePageStatus = function(){
-//		_.each(loc_getUIStack(), function(uiId, index){
-//			//update ui status data
-//			loc_uiModule.getUI(uiId).setSystemData("module_application_ui", {
-//				status : {
-//					index : index,
-//				}
-//			});
-//		});
-//	};
-
 	var loc_getRoutePathByUiId = function(uiId){	return "/"+uiId+"/";  };
+
+//	var loc_settingConfigure = node_createSettingConfigure({
+//		updateData : {
+//			defaultValue : true
+//		}
+//	});
 	
-	var loc_currentUIChangeRequest = function(handlers, request){
+	var loc_currentUIChangeRequest = function(uiChangeSetting, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(loc_updatePageStatusRequest());
-		out.addRequest(loc_uiModule.getUI(loc_getCurrentUIId()).getSynInDataRequest());
+		if(uiChangeSetting.getSettingValue("updateData")!=false)  out.addRequest(loc_uiModule.getUI(loc_getCurrentUIId()).getSynInDataRequest());  //update ui data
 		return out;
 	};
 	
-	var loc_getTransferToRequest = function(uiId, mode, handlers, requestInfo){
+	var loc_getTransferToRequest = function(uiId, uiChangeSetting, handlers, requestInfo){
 		loc_framework7View.router.navigate(loc_getRoutePathByUiId(uiId));
 		loc_getUIStack().push(uiId);
-		return loc_currentUIChangeRequest(handlers, requestInfo);
+		return loc_currentUIChangeRequest(uiChangeSetting, handlers, requestInfo);
 	};
 	
-	var loc_getTransferBackRequest = function(handlers, requestInfo){
+	var loc_getTransferBackRequest = function(uiChangeSetting, handlers, requestInfo){
 		loc_getUIStack().pop();
 		loc_framework7View.router.back();
-		return loc_currentUIChangeRequest(handlers, requestInfo);
+		return loc_currentUIChangeRequest(uiChangeSetting, handlers, requestInfo);
 	};
 
 	var loc_processUIEvent = function(eventName, eventDataInfo, request){
 		var coreEventName = node_basicUtility.getNosliwCoreName(eventName);
-		if(coreEventName=="module_application_transferBack"){
-			loc_gate.processRequest(loc_getTransferBackRequest(undefined, request));
-		}
-		else if(coreEventName=="module_application_refresh"){
-			var moduleUISource = eventDataInfo.getSourceByType(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULEUI);
-			loc_gate.processRequest(loc_uiModule.getUI(moduleUISource.getId()).getExecuteNosliwCommandRequest(node_CONSTANT.COMMAND_PAGE_REFRESH, undefined, undefined, request));
+		if(coreEventName!=undefined){
+			if(coreEventName=="module_application_transferBack"){
+				loc_gate.processRequest(loc_getTransferBackRequest(undefined, undefined, request));
+			}
+			else if(coreEventName=="module_application_refresh"){
+				var moduleUISource = eventDataInfo.getSourceByType(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULEUI);
+				loc_gate.processRequest(loc_uiModule.getUI(moduleUISource.getId()).getExecuteNosliwCommandRequest(node_CONSTANT.COMMAND_MODULEUI_REFRESH, undefined, undefined, request));
+			}
 		}
 	};
 
@@ -164,8 +161,8 @@ function(gate){
 
 		getInterface : function(){
 			return {
-				getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
-					return loc_getTransferToRequest(uiName, mode, handlers, requestInfo);
+				getPresentUIRequest : function(uiName, uiChangeSetting, handlers, requestInfo){
+					return loc_getTransferToRequest(uiName, uiChangeSetting, handlers, requestInfo);
 				},
 			}
 		},
