@@ -6,6 +6,7 @@ var packageObj = library.getChildPackage("module.miniapp");
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_ServiceInfo;
@@ -55,6 +56,9 @@ var node_createModuleMiniApp = function(root){
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
+		loc_appConfigure = node_createAppConfigure(settingName, loc_configureParms);
+
+		
 		loc_appConfigure = node_createTypicalConfigure(loc_mainModuleRoot, loc_settingModuleRoot, node_appDataService, node_storeService, loc_framework7App);
 	};
 
@@ -93,7 +97,8 @@ var node_createModuleMiniApp = function(root){
 							nosliw.runtime.getSecurityService().setOwnerId(miniAppInfo.getAppInfo()[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERID]);
 						}, {
 							success : function(request){
-								return nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, loc_appConfigure, inputIODataSet,
+								var stateBackupService = node_createStateBackupService(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, miniAppEntryId, "1.0.0", nosliw.runtime.getStoreService());
+								return nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, loc_appConfigure, inputIODataSet, stateBackupService,
 										{
 											success : function(requestInfo, appRuntime){
 												loc_appRuntime = appRuntime;
@@ -130,6 +135,7 @@ var node_createModuleMiniApp = function(root){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});

@@ -41,10 +41,12 @@ var buildApplicationConfigure = function(){
 	
 	var loc_out = {
 		
+		//application configure (decoration)
 		getApplicationConfigureName : function(){
 			return loc_getParm("configure", "normal");
 		},
 		
+		//environment information (address, port, context, library)
 		getEnvironment : function(){
 			var envName =  loc_getParm("env", "product");
 			return loc_environments[envName];

@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage();
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
 	var node_createServiceRequestInfoSequence;
@@ -120,6 +121,7 @@ var node_createApplication = function(){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
@@ -131,7 +133,6 @@ nosliw.registerSetNodeDataEvent("miniapp.createMiniAppService", function(){node_
 nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createModuleUserApps", function(){node_createModuleUserApps = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.utility", function(){node_miniAppUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.createLoginService", function(){node_createLoginService = this.getData();});
-
 
 //Register Node by Name
 packageObj.createChildNode("createApplication", node_createApplication); 

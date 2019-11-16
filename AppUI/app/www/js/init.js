@@ -120,6 +120,10 @@ var init = function(rootNode, env, configureName, dataInput, callBackFunction){
 	
 	//nosliw init first
 	var libs = [
+		baseServer+"libresources/external/Underscore/1.9.1/underscore.js",
+		baseServer+"libresources/external/Backbone/1.3.3/backbone.js",
+		baseServer+"libresources/nosliw/core/nosliw.js",
+		baseServer+"libresources/nosliw/runtimebrowserinit/utility.js",
 		baseServer+"libresources/nosliw/runtimebrowserinit/init.js",
 	];
 	if(env.library!=undefined){
@@ -128,6 +132,8 @@ var init = function(rootNode, env, configureName, dataInput, callBackFunction){
 		}
 	}
 	loadLibrary(libs, function(){
-		nosliw.init(baseServer);
+		nosliw.init({
+			serverBase:baseServer
+		});
 	});
 };
