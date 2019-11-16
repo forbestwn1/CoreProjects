@@ -45,10 +45,13 @@ var node_createGatewayService = function(){
 	
 	//load file to html page to execute it
 	var loc_getLoadFileRequest = function(fileName, handlers, requester_parent){
-		var out = node_createServiceRequestInfoCommon(new node_ServiceInfo("LoadResourceFile", {"fileName":fileName}), handlers, requester_parent);		
+		var url = nosliw.utility.buildNosliwUrl(fileName);
+		
+		
+		var out = node_createServiceRequestInfoCommon(new node_ServiceInfo("LoadResourceFile", {"url":url}), handlers, requester_parent);		
 		out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 			var script = document.createElement('script');
-			script.setAttribute('src', requestInfo.getService().parms.fileName);
+			script.setAttribute('src', requestInfo.getService().parms.url);
 			script.setAttribute('type', 'text/javascript');
 			script.onload = function(){
 				requestInfo.successFinish(undefined, requestInfo);

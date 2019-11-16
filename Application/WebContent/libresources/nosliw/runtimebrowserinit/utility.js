@@ -60,6 +60,10 @@ nosliw.utility = function(){
 			return nosliw.getConfigureValue("serverBase", "");
 		},	
 			
+		buildNosliwUrl : function(url){
+			return loc_out.getServerBase()+url;
+		},
+		
 		//load librarys by name
 		requestLoadLibraryResources : function(libNames, callBackFunction){
 			var resourceIds = [];

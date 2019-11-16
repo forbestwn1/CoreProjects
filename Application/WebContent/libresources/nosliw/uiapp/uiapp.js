@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_createIODataSet;
 	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSimple;
 	var node_ModuleEventData;
 	var node_ModuleInfo;
 	var node_ApplicationDataInfo;
@@ -94,6 +95,10 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 		}
 	};
 
+	var loc_destroy = function(request){
+		
+	};
+	
 	var loc_out = {
 
 		prv_componentData : {
@@ -283,6 +288,7 @@ nosliw.registerSetNodeDataEvent("common.patternmatcher.Pattern", function(){node
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("uiapp.ModuleEventData", function(){node_ModuleEventData = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataInfo", function(){node_ApplicationDataInfo = this.getData();});

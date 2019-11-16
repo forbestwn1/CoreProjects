@@ -21,7 +21,7 @@ var packageObj = library.getChildPackage("module.miniapp");
 	var node_appDataService;
 	var node_requestServiceProcessor;
 	var node_getComponentLifecycleInterface;
-	var node_createTypicalConfigure;
+	var node_createAppConfigure;
 	var node_storeService;
 	var node_createIODataSet;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -48,18 +48,17 @@ var node_createModuleMiniApp = function(root){
 
 	var loc_appConfigure;
 
-	var loc_mainModuleRoot = root.main;
-	var loc_settingModuleRoot = root.setting;
-	var loc_framework7App = root.framework7App;
+//	var loc_mainModuleRoot = root.main;
+//	var loc_settingModuleRoot = root.setting;
+//	var loc_framework7App = root.framework7App;
 	
 	var loc_appRuntime;
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
-		loc_appConfigure = node_createAppConfigure(settingName, loc_configureParms);
-
+		loc_appConfigure = node_createAppConfigure(root.settingName, root.configureParms);
 		
-		loc_appConfigure = node_createTypicalConfigure(loc_mainModuleRoot, loc_settingModuleRoot, node_appDataService, node_storeService, loc_framework7App);
+//		loc_appConfigure = node_createTypicalConfigure(loc_mainModuleRoot, loc_settingModuleRoot, node_appDataService, node_storeService, loc_framework7App);
 	};
 
 	var loc_out = {
@@ -150,7 +149,7 @@ nosliw.registerSetNodeDataEvent("uiapp.createAppDecoration", function(){node_cre
 nosliw.registerSetNodeDataEvent("uiapp.appDataService", function(){node_appDataService = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("uiapp.createTypicalConfigure", function(){node_createTypicalConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.createAppConfigure", function(){node_createAppConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.storeService", function(){node_storeService = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 
