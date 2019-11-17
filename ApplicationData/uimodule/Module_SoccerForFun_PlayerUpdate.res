@@ -25,7 +25,7 @@
 		}
 	},
 	"process": {
-		"active": {
+		"nosliw_INIT_ACTIVE": {
 			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",

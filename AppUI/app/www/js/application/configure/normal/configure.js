@@ -15,12 +15,17 @@ var modulesInfo = [
 	},
 	{
 		name : "mini-app",
-		initParm : function(env){ 
+		initParm : function(env){
 			return {
-				main : $("#miniAppMainDiv").get(0),
-				setting : $("#miniAppSettingDiv").get(0),
-				framework7App : env.getData("framework7App")
-			}; 
+				settingName : "application",
+				configureParms : {
+					mainModuleRoot : $('#miniAppMainDiv').get(),
+					settingModuleRoot : $('#miniAppSettingDiv').get(),
+					storeService : nosliw.runtime.getStoreService(),
+					dataService : nosliw.getNodeData("uiapp.appDataService"),
+					framework7App : env.getData("framework7App")
+				}
+			}
 		},
 		factory : "miniapp.module.miniapp.createModuleMiniApp",
 		init : function(module, env, request){

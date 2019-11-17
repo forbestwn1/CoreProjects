@@ -15,9 +15,6 @@ var packageObj = library.getChildPackage("module.miniapp");
 	var node_makeObjectWithName;
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
-	var node_createComponentUserApps;
-	var node_createEventObject;
-	var node_createAppDecoration;
 	var node_appDataService;
 	var node_requestServiceProcessor;
 	var node_getComponentLifecycleInterface;
@@ -48,17 +45,11 @@ var node_createModuleMiniApp = function(root){
 
 	var loc_appConfigure;
 
-//	var loc_mainModuleRoot = root.main;
-//	var loc_settingModuleRoot = root.setting;
-//	var loc_framework7App = root.framework7App;
-	
 	var loc_appRuntime;
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
 		loc_appConfigure = node_createAppConfigure(root.settingName, root.configureParms);
-		
-//		loc_appConfigure = node_createTypicalConfigure(loc_mainModuleRoot, loc_settingModuleRoot, node_appDataService, node_storeService, loc_framework7App);
 	};
 
 	var loc_out = {
@@ -143,9 +134,6 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createComponentUserApps", function(){node_createComponentUserApps = this.getData();});
-nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
-nosliw.registerSetNodeDataEvent("uiapp.createAppDecoration", function(){node_createAppDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.appDataService", function(){node_appDataService = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
