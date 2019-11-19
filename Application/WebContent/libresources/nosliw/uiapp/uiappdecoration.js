@@ -171,14 +171,14 @@ var node_createAppDecoration = function(gate){
 				node_requestServiceProcessor.processRequest(outRequest);
 			}
 			else{
-				var eventHandler = loc_gate.getComponentCore().getEventHandler(eventData.moduleInfo.name, eventData.eventData.eventName);
+				var eventHandler = loc_gate.getComponentCore().getEventHandler(loc_getModuleInfoByEventInfo(eventData).name, eventName);
 				//if within module, defined the process for this event
 				if(eventHandler!=undefined){
 					var extraInput = {
 						public : {
 							EVENT : {
-								event : eventData.eventName,
-								data : eventData.eventData
+								event : eventName,
+								data : eventData.getEventData()
 							} 
 						}
 					};

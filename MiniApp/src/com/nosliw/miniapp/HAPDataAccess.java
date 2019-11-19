@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.imp.io.HAPDBSource;
+import com.nosliw.miniapp.data.HAPMiniAppSettingData;
+import com.nosliw.miniapp.data.HAPSettingData;
 import com.nosliw.miniapp.entity.HAPGroup;
 import com.nosliw.miniapp.entity.HAPMiniApp;
-import com.nosliw.miniapp.entity.HAPMiniAppSettingData;
 import com.nosliw.miniapp.entity.HAPOwnerInfo;
-import com.nosliw.miniapp.entity.HAPSettingData;
 import com.nosliw.miniapp.entity.HAPUser;
 import com.nosliw.miniapp.entity.HAPUserInfo;
 

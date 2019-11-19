@@ -1,4 +1,4 @@
-package com.nosliw.miniapp.entity;
+package com.nosliw.miniapp.data;
 
 import java.util.Map;
 
@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.miniapp.entity.HAPOwnerInfo;
 
 @HAPEntityWithAttribute
 public class HAPSettingData extends HAPSerializableImp{

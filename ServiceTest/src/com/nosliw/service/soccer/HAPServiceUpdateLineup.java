@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.mail.Address;
 import javax.mail.Message;
@@ -77,8 +78,8 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 			List<String> emailTo = new ArrayList<String>();
 			emailTo.add(this.adminEmail);
 
-			HAPPlayerInfo playerInfo = HAPPlayerLineupManager.getInstance().getPlayerInfo(player);
-			if(playerInfo!=null) {
+			Set<HAPPlayerInfo> playerInfos = HAPPlayerManager.getInstance().getPlayerInfo(player);
+			for(HAPPlayerInfo playerInfo : playerInfos) {
 				String email = playerInfo.getEmail();
 				if(HAPBasicUtility.isStringNotEmpty(email)) {
 					emailTo.add(email);
@@ -87,7 +88,6 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 			this.sendEmail(emailTo, player+ "在soccer for fun的状态更新", player+", 你在soccer for fun group的状态为"+playerStatus.getStatusDescription());
 		}
 	}
-	
 	
 	 private void sendEmail(final List<String> tos, final String subject, final String text) {  
 		 new Thread(new Runnable() {

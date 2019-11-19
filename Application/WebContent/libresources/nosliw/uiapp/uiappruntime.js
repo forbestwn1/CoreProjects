@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_basicUtility;
 	var node_getComponentLifecycleInterface;
+	var node_requestServiceProcessor;
 		
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -191,6 +192,7 @@ nosliw.registerSetNodeDataEvent("component.createStateBackupService", function()
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createAppRuntimeRequest", node_createAppRuntimeRequest); 

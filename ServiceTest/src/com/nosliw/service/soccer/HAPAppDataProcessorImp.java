@@ -1,21 +1,21 @@
 package com.nosliw.service.soccer;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.nosliw.miniapp.data.HAPAppDataHandler;
+import com.nosliw.miniapp.data.HAPAppDataManager;
+import com.nosliw.miniapp.data.HAPMiniAppSettingData;
 
-import com.nosliw.miniapp.HAPAppDataProcessor;
-import com.nosliw.miniapp.entity.HAPMiniAppSettingData;
+public class HAPAppDataProcessorImp implements HAPAppDataHandler {
 
-public class HAPAppDataProcessorImp implements HAPAppDataProcessor {
-
+	public static HAPAppDataManager m_appDataMan;
+	
+	public HAPAppDataProcessorImp(HAPAppDataManager appDataMan) {
+		this.m_appDataMan = appDataMan;
+	}
+	
 	@Override
 	public HAPMiniAppSettingData updateSettingData(HAPMiniAppSettingData miniAppSettingData) {
-		JSONArray data = (JSONArray)miniAppSettingData.getDatas().get("playerInfo").getData();
-		JSONObject ele = data.getJSONObject(0);
-		JSONObject player = ele.getJSONObject("data").getJSONObject("player");
-		String playerName = player.getJSONObject("name").getString("value");
-		String email = player.getJSONObject("email").getString("value");
-		HAPPlayerLineupManager.getInstance().addPlayerInfo(new HAPPlayerInfo(playerName, email));
+		HAPPlayerInfo playerInfo = HAPUtility.buildPlayerInfo(miniAppSettingData);
+		HAPPlayerManager.getInstance().updatePlayerInfo(playerInfo);
 		return miniAppSettingData;
 	}
 

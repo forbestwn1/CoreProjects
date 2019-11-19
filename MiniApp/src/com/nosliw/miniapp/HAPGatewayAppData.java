@@ -12,9 +12,10 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
-import com.nosliw.miniapp.entity.HAPMiniAppSettingData;
+import com.nosliw.miniapp.data.HAPAppDataManagerImp;
+import com.nosliw.miniapp.data.HAPMiniAppSettingData;
+import com.nosliw.miniapp.data.HAPSettingData;
 import com.nosliw.miniapp.entity.HAPOwnerInfo;
-import com.nosliw.miniapp.entity.HAPSettingData;
 
 @HAPEntityWithAttribute
 public class HAPGatewayAppData extends HAPGatewayImp{
@@ -36,10 +37,10 @@ public class HAPGatewayAppData extends HAPGatewayImp{
 	@HAPAttribute
 	final public static String COMMAND_UPDATEAPPDATA_DATABYNAME = "dataByName";
 	
-	private HAPAppManager m_appManager;
+	private HAPAppDataManagerImp m_appDataManager;
 
-	public HAPGatewayAppData(HAPAppManager appManager) {
-		this.m_appManager = appManager;
+	public HAPGatewayAppData(HAPAppDataManagerImp appDataManager) {
+		this.m_appDataManager = appDataManager;
 	}
 	
 	@Override
@@ -71,14 +72,14 @@ public class HAPGatewayAppData extends HAPGatewayImp{
 		
 		JSONArray dataNameArray = parms.optJSONArray(COMMAND_GETAPPDATA_DATANAME);
 		if(dataNameArray==null || dataNameArray.length()==0) {
-			out = this.m_appManager.getAppData(ownerInfo);
+			out = this.m_appDataManager.getAppData(ownerInfo);
 		}
 		else {
 			List<String> dataNames = new ArrayList<String>();
 			for(int i=0; i<dataNameArray.length(); i++) {
 				dataNames.add(dataNameArray.getString(i));
 			}
-			out = this.m_appManager.getAppData(ownerInfo, dataNames.toArray(new String[0]));
+			out = this.m_appDataManager.getAppData(ownerInfo, dataNames.toArray(new String[0]));
 		}
 		return this.createSuccessWithObject(out);
 	}
@@ -100,7 +101,7 @@ public class HAPGatewayAppData extends HAPGatewayImp{
 			out.addData(settingData);
 		}
 		
-		out = this.m_appManager.updateAppData(out);
+		out = this.m_appDataManager.updateAppData(out);
 		return this.createSuccessWithObject(out);
 	}
 }

@@ -1,10 +1,6 @@
 package com.nosliw.miniapp;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -12,27 +8,23 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
-import com.nosliw.miniapp.entity.HAPMiniAppSettingData;
-import com.nosliw.miniapp.entity.HAPOwnerInfo;
+import com.nosliw.miniapp.data.HAPAppDataManagerImp;
 import com.nosliw.miniapp.entity.HAPUser;
 import com.nosliw.miniapp.entity.HAPUserInfo;
-import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 
 public class HAPAppManager {
 
 	private HAPDataAccess m_dataAccess;
 	
-	private HAPUIResourceManager m_uiResourceMan;
+	private HAPAppDataManagerImp m_appDataMan;
 	
-	private Map<String, Map<String, List<HAPAppDataProcessor>>> m_appDataProcessors;
-	
-	public HAPAppManager(HAPUIResourceManager resourceMan) {
+	public HAPAppManager() {
 		this.m_dataAccess = new HAPDataAccess(HAPDBSource.getDefaultDBSource());
-		this.m_uiResourceMan = resourceMan;
-		this.m_appDataProcessors = new LinkedHashMap<String, Map<String, List<HAPAppDataProcessor>>>();
-		addSoccerProcessor();
+		this.m_appDataMan = new HAPAppDataManagerImp(this.m_dataAccess);
 	}
+	
+	public HAPAppDataManagerImp getAppDataManager() {	return this.m_appDataMan;	}
 	
 	public HAPDefinitionApp getMinAppDefinition(String minAppDefId) {
 		String file = HAPFileUtility.getMiniAppFolder()+minAppDefId+".res";
@@ -59,55 +51,6 @@ public class HAPAppManager {
 		return out;
 	}
 
-	public HAPMiniAppSettingData getAppData(HAPOwnerInfo ownerInfo) {
-		return this.m_dataAccess.getSettingData(ownerInfo);
-	}
-
-	public HAPMiniAppSettingData getAppData(HAPOwnerInfo ownerInfo, String[] dataNames) {
-		return this.m_dataAccess.getSettingData(ownerInfo, dataNames);
-	}
-
-	public HAPMiniAppSettingData updateAppData(HAPMiniAppSettingData miniAppSettingData) {
-		List<HAPAppDataProcessor> processores = this.findProcessors(miniAppSettingData.getOwnerInfo());
-		if(processores!=null) {
-			for(HAPAppDataProcessor processor : processores) {
-				processor.updateSettingData(miniAppSettingData);
-			}
-		}
-		return this.m_dataAccess.updateSettingData(miniAppSettingData);
-	}
-
-	private List<HAPAppDataProcessor> findProcessors(HAPOwnerInfo ownerInfo) {
-		Map<String, List<HAPAppDataProcessor>> processByName = this.m_appDataProcessors.get(ownerInfo.getComponentType());
-		if(processByName==null)  return null;
-		return processByName.get(ownerInfo.getComponentId());
-	}
-	
-	private void addSoccerProcessor() {
-		try {
-			HAPOwnerInfo ownerInfo = new HAPOwnerInfo(null, "SoccerForFun", "group");
-			HAPAppDataProcessor appDataProcessor = (HAPAppDataProcessor)Class.forName("com.nosliw.service.soccer.HAPAppDataProcessorImp").newInstance();
-			this.addProcessor(ownerInfo, appDataProcessor);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void addProcessor(HAPOwnerInfo ownerInfo, HAPAppDataProcessor appDataProcessor) {
-		Map<String, List<HAPAppDataProcessor>> processByName = this.m_appDataProcessors.get(ownerInfo.getComponentType());
-		if(processByName==null) {
-			processByName = new LinkedHashMap<String, List<HAPAppDataProcessor>>();
-			this.m_appDataProcessors.put(ownerInfo.getComponentType(), processByName);
-		}
-		
-		List<HAPAppDataProcessor> processes = processByName.get(ownerInfo.getComponentId());
-		if(processes==null) {
-			processes = new ArrayList<HAPAppDataProcessor>();
-			processByName.put(ownerInfo.getComponentId(), processes);
-		}
-		processes.add(appDataProcessor);
-	}
 	
 	/*
 	public HAPSettingData createMiniAppData(String userId, String appId, String dataName, HAPSettingData dataInfo) {
