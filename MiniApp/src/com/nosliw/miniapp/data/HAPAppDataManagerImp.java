@@ -50,7 +50,7 @@ public class HAPAppDataManagerImp implements HAPAppDataManager{
 	private void addSoccerHandler() {
 		try {
 			HAPOwnerInfo ownerInfo = new HAPOwnerInfo(null, "SoccerForFun", "group");
-			HAPAppDataHandler appDataProcessor = (HAPAppDataHandler)Class.forName("com.nosliw.service.soccer.HAPAppDataProcessorImp").newInstance();
+			HAPAppDataHandler appDataProcessor = (HAPAppDataHandler)Class.forName("com.nosliw.service.soccer.HAPAppDataProcessorImp").getConstructor(HAPAppDataManager.class).newInstance(this);
 			this.addHandler(ownerInfo, appDataProcessor);
 		}
 		catch(Exception e) {

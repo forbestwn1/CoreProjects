@@ -2,6 +2,7 @@ package com.nosliw.miniapp.data;
 
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -32,7 +33,7 @@ public class HAPSettingData extends HAPSerializableImp{
 	
 	private String m_name;
 	
-	private Object m_data;
+	private JSONArray m_data;
 	
 	public String getId() {  return this.m_id;  }
 	public void setId(String id) {  this.m_id = id;  }
@@ -43,9 +44,12 @@ public class HAPSettingData extends HAPSerializableImp{
 	public HAPOwnerInfo getOwnerInfo() {  return this.m_ownerInfo;  }
 	public void setOwnerInfo(HAPOwnerInfo ownerInfo) {  this.m_ownerInfo = ownerInfo;  }
 
-	public Object getData() {   return this.m_data;   }
+	public JSONArray getData() {   return this.m_data;   }
 	public String getDataStr() { return HAPJsonUtility.buildJson(this.m_data, HAPSerializationFormat.JSON);  }
-	public void setData(Object data) {   this.m_data = data;   }
+	public void setData(Object data) {
+		if(data instanceof String)	this.m_data = new JSONArray((String)data);
+		else if(data instanceof JSONArray)  this.m_data = (JSONArray)data;
+	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -69,7 +73,7 @@ public class HAPSettingData extends HAPSerializableImp{
 			this.m_ownerInfo.buildObject(ownerInfoJson, HAPSerializationFormat.JSON);
 		}
 		
-		this.m_data = jsonObj.opt(DATA);
+		this.m_data = jsonObj.optJSONArray(DATA);
 		return true;
 	}
 
