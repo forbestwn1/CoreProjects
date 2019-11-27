@@ -30,7 +30,8 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 	var loc_ioInput = ioInput;
 	var loc_configure = configure;
 	var loc_appDataService = loc_configure.getConfigureValue().__appDataService;
-	
+	var loc_ownerConfigure = loc_configure.getConfigureValue().__ownerConfigure;
+
 	var loc_partMatchers = node_createPatternMatcher([
 		new node_Pattern(new RegExp("module\.(\\w+)$"), function(result){return loc_out.getCurrentModuleInfo(result[1]).module;}),
 		new node_Pattern(new RegExp("module\.(\\w+)\.outputMapping\.(\\w+)$"), function(result){return loc_out.getCurrentModuleInfo(result[1]).outputMapping[result[2]];}),
@@ -77,7 +78,7 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 		}
 		return out;
 	};
-	
+
 	var loc_getEventSourceInfo = function(){
 		return node_createEventSource(node_CONSTANT.TYPEDOBJECT_TYPE_APP, loc_out.getId()); 
 	};
@@ -98,7 +99,23 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 	var loc_destroy = function(request){
 		
 	};
+
+	var loc_init = function(){
+		loc_initAppDataOwnerInfo();
+	};
 	
+	var loc_initAppDataOwnerInfo = function(){
+		var appDataDefs = loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_APPLICATIONDATA];
+		_.each(appDataDefs, function(appDataDef, appDataName){
+			var info = appDataDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
+			var categary = info.categary;
+			if(categary==undefined)		categary = loc_ownerConfigure.defaultOwnerType;
+			var ownerId = loc_ownerConfigure.ownerIdByType[categary];
+			loc_out.prv_componentData.appDataOwnerInfo[appDataName] = nosliw.runtime.getSecurityService().createOwnerInfo(categary, ownerId);
+		});
+	};
+	
+
 	var loc_out = {
 
 		prv_componentData : {
@@ -107,6 +124,7 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 			contextDataSet : node_createIODataSet(),
 			lifecycleStatus : undefined,  //current lifecycle status
 			valueByName : {},
+			appDataOwnerInfo : {},   //app data owner info
 			
 			modulesByRole : {},
 			currentModuleByRole : {},
@@ -270,6 +288,8 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 		startLifecycleTask : function(){	loc_componentState.initDataForRollBack();	},
 		endLifecycleTask : function(){ 	loc_componentState.clearDataFroRollBack();	},
 	};
+	
+	loc_init();
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIMODULE);
 	return loc_out;

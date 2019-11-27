@@ -6,11 +6,11 @@ import com.nosliw.miniapp.entity.HAPOwnerInfo;
 public interface HAPAppDataManager {
 
 	//get all app data belong to owner
-	public HAPMiniAppSettingData getAppData(HAPOwnerInfo ownerInfo);
+	public HAPAppDataInfoContainer getAppData(HAPOwnerInfo ownerInfo);
 
 	//get app data by name
-	public HAPMiniAppSettingData getAppData(HAPOwnerInfo ownerInfo, String[] dataNames);
+	public void getAppData(HAPAppDataInfoContainer appDataInfos);
 
 	//update app data
-	public HAPMiniAppSettingData updateAppData(HAPMiniAppSettingData miniAppSettingData);
+	public void updateAppData(HAPAppDataInfoContainer appDataInfos);
 }

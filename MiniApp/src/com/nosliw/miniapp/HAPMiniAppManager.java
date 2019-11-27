@@ -2,7 +2,7 @@ package com.nosliw.miniapp;
 
 import java.util.List;
 
-import com.nosliw.miniapp.data.HAPSettingData;
+import com.nosliw.miniapp.data.HAPAppDataInfo;
 import com.nosliw.miniapp.entity.HAPGroup;
 import com.nosliw.miniapp.entity.HAPUser;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
@@ -19,10 +19,10 @@ public interface HAPMiniAppManager {
 	void deleteMiniApp(String miniAppId);
 
 	//setting related with mini app  
-	List<HAPSettingData> getMiniAppSetting(String miniAppid, String userId);
-	HAPSettingData addMiniAppSetting(String miniAppid, String userId, HAPSettingData setting);
+	List<HAPAppDataInfo> getMiniAppSetting(String miniAppid, String userId);
+	HAPAppDataInfo addMiniAppSetting(String miniAppid, String userId, HAPAppDataInfo setting);
 	void removeMiniAppSetting(String miniAppid, String userId, String version);
-	void updateMiniAppSetting(String miniAppid, String userId, HAPSettingData setting);
+	void updateMiniAppSetting(String miniAppid, String userId, HAPAppDataInfo setting);
 	
 	//user
 	HAPUser createUser(HAPUser user);

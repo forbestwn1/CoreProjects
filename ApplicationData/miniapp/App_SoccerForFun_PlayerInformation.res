@@ -99,6 +99,9 @@
 						},
 					}
 				}
+			},
+			"info" : {
+				"categary" : "group",
 			}
 		}
 	},

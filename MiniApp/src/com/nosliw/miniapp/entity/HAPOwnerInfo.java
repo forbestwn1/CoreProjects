@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPBasicUtility;
 
 @HAPEntityWithAttribute
 public class HAPOwnerInfo extends HAPSerializableImp{
@@ -58,6 +59,22 @@ public class HAPOwnerInfo extends HAPSerializableImp{
 		this.m_componentId = (String)jsonObj.opt(COMPONENTID);
 		this.m_componentType = (String)jsonObj.opt(COMPONENTTYPE);
 		return true;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		boolean out = false;
+		if(o instanceof HAPOwnerInfo) {
+			HAPOwnerInfo ownerInfo = (HAPOwnerInfo)o;
+			if(HAPBasicUtility.isEquals(ownerInfo.getUserId(), this.getUserId())) {
+				if(HAPBasicUtility.isEquals(ownerInfo.getComponentType(), this.getComponentType())) {
+					if(HAPBasicUtility.isEquals(ownerInfo.getComponentId(), this.getComponentId())) {
+						out = true;
+					}
+				}
+			}
+		}
+		return out;
 	}
 	
 }

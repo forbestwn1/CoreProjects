@@ -193,6 +193,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	}
 	
 	public void toContext(HAPContext out) {
+		out.empty();
 		for(String name : this.m_elements.keySet()) {
 			out.addElement(name, this.m_elements.get(name).cloneContextDefinitionRoot());
 		}

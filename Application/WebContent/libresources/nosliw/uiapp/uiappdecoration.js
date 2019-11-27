@@ -16,7 +16,7 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_requestServiceProcessor;
 	var node_appUtility;
-	var node_ApplicationDataSegmentInfo;
+	var node_createAppDataInfo;
 	var node_createServiceRequestInfoSimple;
 	var node_createEventSource;
 	var node_createEventInfo;
@@ -35,6 +35,8 @@ var node_createAppDecoration = function(gate){
 	var loc_configure = loc_gate.getConfigure();
 	var loc_configureData = loc_configure.getConfigureValue();
 	var loc_appDataService = loc_configureData.__appDataService;
+	
+	var loc_getOwnerInfo = function(appDataName){	return loc_uiApp.prv_componentData.appDataOwnerInfo[appDataName]; }; 
 	
 	var loc_getModuleConfigure = function(role){	return loc_configure.getChildConfigure("modules", role);	};
 	
@@ -59,37 +61,42 @@ var node_createAppDecoration = function(gate){
 		}
 		else{
 			//get from database first by data name
-			out.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest(node_appUtility.getCurrentOwnerInfo(), appDataNames, {
-				success : function(request, appDataInfosByName){
+			var appDataInfos = [];
+			_.each(appDataNames, function(dataName, i){
+				appDataInfos.push(node_appUtility.getAppDataInfoByDataName(dataName, loc_uiApp));
+			});
+
+			out.addRequest(loc_appDataService.getGetAppDataRequest(appDataInfos, {
+				success : function(request, appDataInfoContainer){
 					//app data infos
-					var appDatas = [];
-					_.each(appDataNames, function(appDataName, index){
-						var appDataInfos = appDataInfosByName[appDataName];
-						if(appDataInfos==undefined || appDataInfos.length==0){
+					var appDataSegs = [];
+					_.each(appDataNames, function(dataName, i){
+						var segs = appDataInfoContainer.getAppDataSegmentInfoArray(node_appUtility.getOwnerInfoByDataName(dataName, loc_uiApp), dataName);
+						if(segs==undefined || segs.length==0){
 							//no data in database, then generate one 
-							appDatas.push(node_appUtility.buildAppDataInfoTemp(appDataName, ""));
+							appDataSegs.push(node_appUtility.buildAppDataSegmentInfoTemp(dataName, "", loc_uiApp));
 						}
 						else{
-							appDatas.push(appDataInfos[0]);
+							appDataSegs.push(segs[0]);
 						}
 					});
-					return loc_uiApp.buildModuleInfoRequest(moduleName, appDatas, configure);
+					return loc_uiApp.buildModuleInfoRequest(moduleName, appDataSegs, configure);
 				}
 			}));
 		}
 		return out;
 	};
 
-	var loc_createSettingModuleRequest = function(moduleName, moduleDef, dataInfo, configure, handlers, request){
+	var loc_createSettingModuleRequest = function(moduleName, moduleDef, dataSegmentInfo, configure, handlers, request){
 		var configureData = configure.getConfigureValue(); 
 		configureData.root = $('<div></div>').get(0);
 		$(configureData.root).appendTo(loc_settingParentView);
 		var moduleInfoRequest = node_createServiceRequestInfoSequence();
-		moduleInfoRequest.addRequest(loc_uiApp.buildModuleInfoRequest(moduleName, dataInfo==undefined?undefined:[dataInfo], node_createConfigure(configureData), {
+		moduleInfoRequest.addRequest(loc_uiApp.buildModuleInfoRequest(moduleName, dataSegmentInfo==undefined?undefined:[dataSegmentInfo], node_createConfigure(configureData), {
 			success : function(request, moduleInfo){
 				return loc_updateSettingModuleStatusRequest(moduleInfo.module,
 						{
-							persist : dataInfo==undefined?false:dataInfo.persist,
+							persist : dataSegmentInfo==undefined?false:dataSegmentInfo.persist,
 							modified : false,
 							name : moduleInfo.name
 						}, {
@@ -105,14 +112,17 @@ var node_createAppDecoration = function(gate){
 	var loc_createSettingRoleRequest = function(moduleName, moduleDef, configure, handlers, request){
 		var settingsRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var appDataName = node_appUtility.discoverApplicationDataDependency(moduleDef)[0];
-		settingsRequest.addRequest(loc_appDataService.getGetAppDataSegmentInfoRequest(node_appUtility.getCurrentOwnerInfo(), appDataName, {
-			success : function(request, settingDataInfos){
+		
+		settingsRequest.addRequest(loc_appDataService.getGetAppDataRequest(node_appUtility.getAppDataInfoByDataName(appDataName), {
+			success : function(request, appDataContainer){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
-				//first one is not persistent
-				settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, node_appUtility.buildAppDataInfoTemp(appDataName, "New Setting"), configure));
 
-				_.each(settingDataInfos[appDataName], function(dataInfo, index){
-					settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, dataInfo, configure));
+				//first one is not persistent
+				settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, node_appUtility.buildAppDataSegmentInfoTemp(appDataName, "New Setting", loc_uiApp), configure));
+
+				var appDataSegmentInfos = appDataContainer.getAppDataSegmentInfoArray(node_appUtility.getOwnerInfoByDataName(appDataName), appDataName);
+				_.each(appDataSegmentInfos, function(dataSegmentInfo, index){
+					settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, dataSegmentInfo, configure));
 				});
 				return settingRequest;
 			}
@@ -146,7 +156,7 @@ var node_createAppDecoration = function(gate){
 				var moduleInfo = loc_getModuleInfoByEventInfo(eventData);
 				var applicationDataInfo = moduleInfo.applicationDataInfo[0];
 				
-				node_requestServiceProcessor.processRequest(loc_appDataService.getDeleteAppDataSegmentRequest(node_appUtility.getCurrentOwnerInfo(), applicationDataInfo.dataName, applicationDataInfo.id, {
+				node_requestServiceProcessor.processRequest(loc_appDataService.getDeleteAppDataSegmentRequest(loc_getOwnerInfo(applicationDataInfo.dataName), applicationDataInfo.dataName, applicationDataInfo.id, {
 					success : function(request){
 						loc_uiApp.removeModuleInfo(ROLE_SETTING, moduleInfo.id);
 						moduleInfo.root.remove();
@@ -302,7 +312,7 @@ nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", func
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.utility", function(){node_appUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegmentInfo", function(){node_ApplicationDataSegmentInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.createAppDataInfo", function(){node_createAppDataInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventSource", function(){node_createEventSource = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventInfo", function(){node_createEventInfo = this.getData();});

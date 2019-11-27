@@ -22,6 +22,18 @@ var loc_globalConfig = {
 	},
 	__storeService : function(parms){
 		return parms.storeService;
+	},
+	__ownerConfigure : function(parms){
+		var ownerConfigure = parms.ownerConfigure;
+		if(ownerConfigure==undefined){
+			ownerConfigure = {
+				defaultOwnerType : "app",
+				ownerIdByType : {
+					"app" : "1234567890"
+				}
+			};
+		}
+		return ownerConfigure;
 	}
 };
 

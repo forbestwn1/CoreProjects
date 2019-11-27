@@ -17,40 +17,30 @@ public class HAPMiniApp extends HAPEntityInfoWritableImp{
 	public static String ID = "id";
 	
 	@HAPAttribute
-	public static String DATAOWNERTYPE = "dataOwnerType";
+	public static String CATEGARY = "dataOwnerType";
 
-	@HAPAttribute
-	public static String DATAOWNERID = "dataOwnerId";
-	
 	private String m_id;
 	
-	private String m_dataOwnerType;
-
-	private String m_dataOwnerId;
+	private String m_categary;
 
 	public HAPMiniApp(String id, String name) {
 		this(id, name, null);
 	}
 	
-	public HAPMiniApp(String id, String name, String dataOwnerType) {
+	public HAPMiniApp(String id, String name, String categary) {
 		this.m_id = id;
-		this.m_dataOwnerId = id;
-		if(HAPBasicUtility.isStringEmpty(dataOwnerType))  this.m_dataOwnerType = HAPConstant.MINIAPP_DATAOWNER_APP;
-		else this.m_dataOwnerType = dataOwnerType;
+		if(HAPBasicUtility.isStringEmpty(categary))  this.m_categary = HAPConstant.MINIAPP_DATAOWNER_APP;
+		else this.m_categary = categary;
 		this.setName(name);
 	}
 	
-	public String getDataOwnerType() {    return this.m_dataOwnerType;  }
-	public String getDataOwnerId() {   return this.m_dataOwnerId;   }
-	public void setDataOwnerId(String id) {    this.m_dataOwnerId = id;    }
-	
+	public String getCategary() {    return this.m_categary;  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
-		jsonMap.put(DATAOWNERTYPE, this.m_dataOwnerType);
-		jsonMap.put(DATAOWNERID, this.m_dataOwnerId);
+		jsonMap.put(CATEGARY, this.m_categary);
 	}
 	
 	@Override
@@ -58,7 +48,7 @@ public class HAPMiniApp extends HAPEntityInfoWritableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
 		this.m_id = (String)jsonObj.opt(ID);
-		this.m_dataOwnerType = (String)jsonObj.opt(DATAOWNERTYPE);
+		this.m_categary = (String)jsonObj.opt(CATEGARY);
 		return true;
 	}
 }

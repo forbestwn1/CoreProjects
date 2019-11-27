@@ -29,16 +29,16 @@ var node_ApplicationDataSegment = function(data, dataId, dataVersion){
 var node_ModuleInfo = function(moduleDef){
 	this.id = undefined;
 	this.name = moduleDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
-	this.root = undefined;
-	this.module = undefined;
-	this.moduleDef = moduleDef;
-	this.role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
+	this.root = undefined;   		//view root
+	this.module = undefined;  		//module object
+	this.moduleDef = moduleDef;  	//module definition
+	this.role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];  //role of module (application, setting)
 	this.applicationDataInfo = [];  //application data info for this module
-	this.externalIO = undefined; //
-	this.inputMapping = {};
-	this.inputIO = undefined;
-	this.currentInputMapping = undefined;
-	this.outputMapping = {};
+	this.externalIO = undefined; 	//external io dataset(data set from app, data set from DB) 
+	this.inputMapping = {};			//a set of mapping from externalIO to context in module, only one works with currentInputMapping
+	this.inputIO = undefined;		//input io for module 
+	this.currentInputMapping = undefined;	//current input mapping used 
+	this.outputMapping = {}; 		//a set of mapping from context in module to externalIO
 };
 		
 var node_ModuleEventData = function(moduleInfo, eventName, eventData){

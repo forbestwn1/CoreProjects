@@ -4,11 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPSystemUtility;
-import com.nosliw.miniapp.data.HAPMiniAppSettingData;
+import com.nosliw.miniapp.data.HAPAppDataInfoContainer;
 
 public class HAPUtility {
 
-	public static HAPPlayerInfo buildPlayerInfo(HAPMiniAppSettingData miniAppSettingData) {
+	public static HAPPlayerInfo buildPlayerInfo(HAPAppDataInfoContainer miniAppSettingData) {
 		JSONArray data = (JSONArray)miniAppSettingData.getDatas().get("playerInfo").getData();
 		JSONObject ele = data.getJSONObject(0);
 		JSONObject player = ele.getJSONObject("data").getJSONObject("player");

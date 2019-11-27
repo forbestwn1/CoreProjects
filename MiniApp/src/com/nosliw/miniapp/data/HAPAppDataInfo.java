@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.miniapp.entity.HAPOwnerInfo;
 
 @HAPEntityWithAttribute
-public class HAPSettingData extends HAPSerializableImp{
+public class HAPAppDataInfo extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ID = "id";
@@ -77,8 +77,8 @@ public class HAPSettingData extends HAPSerializableImp{
 		return true;
 	}
 
-	public static HAPSettingData buildObject(Object json) {
-		HAPSettingData out = new HAPSettingData();
+	public static HAPAppDataInfo buildObject(Object json) {
+		HAPAppDataInfo out = new HAPAppDataInfo();
 		out.buildObject(json, HAPSerializationFormat.JSON);
 		return out;
 	}

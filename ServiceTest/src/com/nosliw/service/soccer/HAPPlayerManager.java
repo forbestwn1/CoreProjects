@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.miniapp.data.HAPMiniAppSettingData;
+import com.nosliw.miniapp.data.HAPAppDataInfoContainer;
 import com.nosliw.miniapp.entity.HAPOwnerInfo;
 
 public class HAPPlayerManager {
@@ -49,7 +49,7 @@ public class HAPPlayerManager {
 	}
 
 	public HAPPlayerInfo getPlayerInfoByUserId(String userId) {
-		HAPMiniAppSettingData allData = HAPAppDataProcessorImp.m_appDataMan.getAppData(this.getOwnerInfo(userId));
+		HAPAppDataInfoContainer allData = HAPAppDataProcessorImp.m_appDataMan.getAppData(this.getOwnerInfo(userId));
 		return HAPUtility.buildPlayerInfo(allData);
 	}
 

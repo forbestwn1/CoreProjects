@@ -10,6 +10,7 @@ var packageObj = library;
 	var node_createDynamicIOData;
 	var node_createServiceRequestInfoSequence;
 	var node_ModuleInfo;
+	var node_createAppDataInfo;
 	var node_createServiceRequestInfoSimple;
 	var node_dataAssociationUtility;
 	var node_ApplicationDataSegmentInfo;
@@ -23,8 +24,9 @@ var node_utility = function(){
 		
 		createAppDataSegmentId : function(){	return new Date().getMilliseconds() + "";	},
 			
-		getCurrentOwnerInfo : function(){	return nosliw.runtime.getSecurityService().getOwnerInfo();	},
-			
+		getOwnerInfoByDataName : function(dataName, uiApp){    return uiApp.prv_componentData.appDataOwnerInfo[dataName];    },
+		getAppDataInfoByDataName : function(dataName, uiApp){    return  node_createAppDataInfo(uiApp.prv_componentData.appDataOwnerInfo[dataName], dataName);     },
+		
 		//find which application data this module depend on
 		discoverApplicationDataDependency : function(moduleDef){
 			var out = [];
@@ -37,8 +39,8 @@ var node_utility = function(){
 			return out;
 		},
 		
-		buildAppDataInfoTemp : function(appDataName, dataVersion){
-			return new node_ApplicationDataSegmentInfo(loc_out.getCurrentOwnerInfo(), appDataName, loc_out.createAppDataSegmentId(), dataVersion, false);
+		buildAppDataSegmentInfoTemp : function(appDataName, dataVersion, uiApp){
+			return new node_ApplicationDataSegmentInfo(loc_out.getOwnerInfoByDataName(appDataName, uiApp), appDataName, loc_out.createAppDataSegmentId(), dataVersion, false);
 		},
 		
 		getApplicationDataCoreName : function(appDataName){
@@ -63,7 +65,7 @@ var node_utility = function(){
 			//build app context part as external io for module
 			moduleInfo.externalIO.setData(undefined, uiApp.getContextIODataSet().generateIOData());
 			//build application data part as external io for module
-			loc_out.buildModuleExternalAppDataIO(moduleInfo, appDataService, uiApp.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_APPLICATIONDATA]);
+			loc_out.buildModuleExternalAppDataIO(moduleInfo, uiApp, uiApp.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_APPLICATIONDATA], appDataService);
 			
 			loc_out.buildModuleInputMapping(moduleInfo);
 			moduleInfo.currentInputMapping = moduleInfo.inputMapping[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT];
@@ -84,23 +86,23 @@ var node_utility = function(){
 			return out;
 		},
 
-		buildModuleExternalAppDataIO : function(moduleInfo, appDataService, appDataDefs){
+		buildModuleExternalAppDataIO : function(moduleInfo, uiApp, appDataDefs, appDataService){
 			_.each(moduleInfo.applicationDataInfo, function(appDataInfo, index){
-				loc_out.buildExternalDataIOForAppDataInfo(moduleInfo.externalIO, appDataInfo, appDataService, appDataDefs[appDataInfo.dataName]);
+				loc_out.buildExternalDataIOForAppDataInfo(moduleInfo.externalIO, appDataInfo, uiApp, appDataDefs[appDataInfo.dataName], appDataService);
 			});
 		},
 		
 		//build externalIO data set for external application data
-		buildExternalDataIOForAppDataInfo : function(externalIO, appDataInfo, appDataService, appDataDef){
-			var dataIOName = loc_out.buildApplicationDataName(appDataInfo.dataName);
+		buildExternalDataIOForAppDataInfo : function(externalIO, appDataSegInfo, uiApp, appDataDef, appDataService){
+			var dataIOName = loc_out.buildApplicationDataName(appDataSegInfo.dataName);
 			externalIO.setData(dataIOName, node_createDynamicIOData(
 				function(handlers, request){    //get value method
-					if(appDataInfo.persist==true){
+					if(appDataSegInfo.persist==true){
 						//if persist, then got from database
 						var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-						out.addRequest(appDataService.getGetAppDataSegmentByIdRequest(loc_out.getCurrentOwnerInfo(), appDataInfo.dataName, appDataInfo.id, {
-							success : function(request, dataInfo){
-								return dataInfo.data;
+						out.addRequest(appDataService.getGetAppDataSegmentRequest(loc_out.getOwnerInfoByDataName(appDataSegInfo.dataName, uiApp), appDataSegInfo.dataName, appDataSegInfo.id, {
+							success : function(request, data){
+								return data;
 							}
 						}));
 						return out;
@@ -117,16 +119,16 @@ var node_utility = function(){
 					}
 				},
 				function(value, handlers, request){    //set value method
-					if(appDataInfo.persist==true){
+					if(appDataSegInfo.persist==true){
 						//modify
-						return appDataService.getUpdateAppDataSegmentRequest(appDataInfo.ownerInfo, appDataInfo.dataName, appDataInfo.id, value, handlers, request);
+						return appDataService.updateAppDataSegment(loc_out.getOwnerInfoByDataName(appDataSegInfo.dataName), appDataSegInfo.dataName, appDataSegInfo.id, value, handlers, request);
 					}
 					else{
 						//new
 						var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-						out.addRequest(appDataService.getAddAppDataSegmentRequest(appDataInfo.ownerInfo, appDataInfo.dataName, 0, appDataInfo.id, value, appDataInfo.version, {
+						out.addRequest(appDataService.getAddAppDataSegmentRequest(loc_out.getOwnerInfoByDataName(appDataSegInfo.dataName), appDataSegInfo.dataName, appDataSegInfo.index, appDataSegInfo.id, value, appDataSegInfo.version, {
 							success : function(request){
-								appDataInfo.persist=true;
+								appDataSegInfo.persist=true;
 							}
 						}));
 						return out;
@@ -201,6 +203,7 @@ nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.createAppDataInfo", function(){node_createAppDataInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegmentInfo", function(){node_ApplicationDataSegmentInfo = this.getData();});

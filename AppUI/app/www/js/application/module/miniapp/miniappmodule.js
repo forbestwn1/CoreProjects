@@ -43,6 +43,9 @@ var node_createModuleMiniApp = function(root){
 
 	var loc_appEntryId;
 
+	var loc_configureParms;
+	var loc_settingName;
+	
 	var loc_appConfigure;
 
 	var loc_appRuntime;
@@ -50,12 +53,13 @@ var node_createModuleMiniApp = function(root){
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
 		loc_appConfigure = node_createAppConfigure(root.settingName, root.configureParms);
+		loc_configureParms = root.configureParms;
+		loc_settingName = root.settingName;
 	};
 
 	var loc_out = {
 		
 		getRefreshRequest : function(miniAppInfo, handlers, requestInfo){
-			
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshMiniApp", {}), handlers, requestInfo);
 			
 			var miniAppEntryId = miniAppInfo.getAppInfo().id + ";main";
@@ -66,45 +70,30 @@ var node_createModuleMiniApp = function(root){
 					loc_appRuntime = undefined;
 				}
 			});
-			
-			//get group app data
-			var groupData;
-			var inputIODataSet = node_createIODataSet();
-			var groupId = miniAppInfo.getGroupId();
-			if(groupId!=undefined){
-				out.addRequest(node_appDataService.getGetAppDataRequest(nosliw.runtime.getSecurityService().createOwnerInfo(node_COMMONCONSTANT.MINIAPP_DATAOWNER_GROUP, groupId), undefined, {
-					success : function(request, dataByName){
-						groupData = _.find(dataByName, function(data, name){
-							return true;
-						});
-						if(groupData!=undefined && groupData.length==1){
-							inputIODataSet.setData(undefined, groupData[0].data);
-						}
-						
-						return node_createServiceRequestInfoSimple(undefined, function(request){
-							//update owner info
-							nosliw.runtime.getSecurityService().setOwnerType(miniAppInfo.getAppInfo()[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERTYPE]);
-							nosliw.runtime.getSecurityService().setOwnerId(miniAppInfo.getAppInfo()[node_COMMONATRIBUTECONSTANT.MINIAPP_DATAOWNERID]);
-						}, {
-							success : function(request){
-								var stateBackupService = node_createStateBackupService(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, miniAppEntryId, "1.0.0", nosliw.runtime.getStoreService());
-								return nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, loc_appConfigure, inputIODataSet, stateBackupService,
-										{
-											success : function(requestInfo, appRuntime){
-												loc_appRuntime = appRuntime;
-												lifecycle = node_getComponentLifecycleInterface(loc_appRuntime);
-												return lifecycle.getTransitRequest("activate");
-											}
-										}
-								);
-							}
-						});
 
-						
+			var stateBackupService = node_createStateBackupService(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, miniAppEntryId, "1.0.0", nosliw.runtime.getStoreService());
+			var ownerConfigureParms = {
+				ownerConfigure : {
+					defaultOwnerType : miniAppInfo.getAppInfo()[node_COMMONATRIBUTECONSTANT.MINIAPP_CATEGARY],
+					ownerIdByType : {
+//						"app" : miniAppInfo.getAppInfo()[node_COMMONATRIBUTECONSTANT.MINIAPP_ID],
+//						"group" : miniAppInfo.getGroupId()
 					}
-				}));
-			}
+				}
+			};
+			ownerConfigureParms.ownerConfigure.ownerIdByType[node_COMMONCONSTANT.MINIAPP_DATAOWNER_APP] = miniAppInfo.getAppInfo()[node_COMMONATRIBUTECONSTANT.MINIAPP_ID];
+			ownerConfigureParms.ownerConfigure.ownerIdByType[node_COMMONCONSTANT.MINIAPP_DATAOWNER_GROUP] = miniAppInfo.getGroupId();
 			
+			var appConfigure = node_createAppConfigure(loc_settingName, _.extend(ownerConfigureParms, loc_configureParms));
+			out.addRequest(nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(miniAppEntryId, miniAppEntryId, appConfigure, undefined, stateBackupService,
+				{
+					success : function(requestInfo, appRuntime){
+						loc_appRuntime = appRuntime;
+						lifecycle = node_getComponentLifecycleInterface(loc_appRuntime);
+						return lifecycle.getTransitRequest("activate");
+					}
+				}
+			));
 			return out;
 		},
 

@@ -16,7 +16,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
 
 @HAPEntityWithAttribute
 public class HAPUserInfo extends HAPSerializableImp{
@@ -70,10 +69,10 @@ public class HAPUserInfo extends HAPSerializableImp{
 			this.m_miniApps.add(miniApp);	
 		}
 		else {
-			if(HAPConstant.MINIAPP_DATAOWNER_GROUP.equals(miniApp.getDataOwnerType())){
-				//app data belong to group
-				miniApp.setDataOwnerId(group);
-			}
+//			if(HAPConstant.MINIAPP_DATAOWNER_GROUP.equals(miniApp.getCategary())){
+//				//app data belong to group
+//				miniApp.setDataOwnerId(group);
+//			}
 			this.m_groupMiniApp.get(group).addMiniApp(miniApp);
 		}
 	}

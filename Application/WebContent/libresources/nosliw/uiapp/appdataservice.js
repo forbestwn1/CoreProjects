@@ -11,12 +11,114 @@ var packageObj = library;
 	var node_ApplicationDataSegment;
 	
 //*******************************************   Start Node Definition  ************************************** 	
+//helper method to build app data info 
+var node_createAppDataInfo = function(ownerInfo, dataName, data, id){
+	var loc_out = {};
+	
+	loc_out[node_COMMONATRIBUTECONSTANT.APPDATAINFO_OWNERINFO] = ownerInfo;
+	loc_out[node_COMMONATRIBUTECONSTANT.APPDATAINFO_NAME] = dataName;
+	loc_out[node_COMMONATRIBUTECONSTANT.APPDATAINFO_DATA] = data;
+	loc_out[node_COMMONATRIBUTECONSTANT.APPDATAINFO_ID] = id;
+	
+	return loc_out;
+};	
+
+//helper to handle app data info container info
+var node_createAppDataInfoContainer = function(appDataInfoContainerResponse){
+	var loc_appDataInfoContainerResponse = appDataInfoContainerResponse;
+	var loc_appDataInfos = appDataInfoContainerResponse[node_COMMONATRIBUTECONSTANT.APPDATAINFOCONTAINER_APPDATAINFOS];
+	
+	var loc_getAppDataInfo = function(ownerInfo, dataName){
+		var out = _.find(loc_appDataInfos, function(appDataInfo){
+			var result = false;
+			var ownerInfo1 = appDataInfo[node_COMMONATRIBUTECONSTANT.APPDATAINFO_OWNERINFO];
+			if(ownerInfo1[node_COMMONATRIBUTECONSTANT.OWNERINFO_USERID]==ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_USERID]){
+				if(ownerInfo1[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE]==ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE]){
+					if(ownerInfo1[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTID]==ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTID]){
+						if(dataName==appDataInfo[node_COMMONATRIBUTECONSTANT.APPDATAINFO_NAME]){
+							result = true;
+						}
+					}
+				}
+			}
+			return result;
+		});
+		return out;
+	};
+	
+	var loc_getAppData = function(ownerInfo, dataName){
+		return loc_getAppDataInfo(ownerInfo, dataName)[node_COMMONATRIBUTECONSTANT.APPDATAINFO_DATA];
+	};
+	
+	var loc_buildAppDataSegmentInfoArray = function(appData, ownerInfo, dataName){
+		var out = [];
+		_.each(appData, function(dataEle, i){
+			out.push(new node_ApplicationDataSegmentInfo(ownerInfo, dataName, dataEle.id, dataEle.version));
+		});
+		return out;
+	};
+	
+	var loc_out = {
+		
+		getAppDataInfoContainerResponse : function(){    return loc_appDataInfoContainerResponse;  },
+			
+		getAppDataInfos : function(){   return loc_appDataInfos;   },
+		
+		getAppDataSegmentInfoArray : function(ownerInfo, dataName){
+			var appData = loc_getAppData(ownerInfo, dataName);
+			return loc_buildAppDataSegmentInfoArray(appData, ownerInfo, dataName);
+		},
+		
+		getAppDataSegmentInfo(ownerInfo, dataName, segId){
+			var segs = loc_out.getAppDataSegmentInfoArray(ownerInfo, dataName);
+			var seg = _.find(segs, function(seg){
+				return seg.id == segId;
+			});
+			return seg;
+		},
+		
+		addAppDataSegment(ownerInfo, dataName, index, segId, data, version){
+			var appData = loc_getAppData(ownerInfo, dataName);
+			var appDataSegment = new node_ApplicationDataSegment(data, segId, version);
+			appData.splice(index, 0, appDataSegment);
+			return index;
+		},
+		
+		updateAppDataSegment(ownerInfo, dataName, segId, data){
+			var appData = loc_getAppData(ownerInfo, dataName);
+			var findIndex = -1;
+			var find = _.find(appData, function(dataSeg, index){
+				findIndex = index;
+				return dataSeg.id==segId;
+			});
+			find.data = data;
+			return findIndex;
+		},
+		
+		deleteAppDataSegment(ownerInfo, dataName, segId){
+			var appData = loc_getAppData(ownerInfo, dataName);
+			var findIndex = -1;
+			var find = _.find(appData, function(dataSeg, index){
+				findIndex = index;
+				return dataSeg.id==segId;
+			});
+			appData.splice(findIndex, 1);
+			return findIndex;
+		},
+	};
+	
+	return loc_out;
+};
 
 var node_appDataService = function(){
 
 	//cached app data, including array of data and data name
 	var loc_catchedAppData = {};
-	
+
+	var loc_getCachedAppDataInfo = function(appDataInfo){
+		return loc_getCachedAppData(appDataInfo[node_COMMONATRIBUTECONSTANT.APPDATAINFO_OWNERINFO], appDataInfo[node_COMMONATRIBUTECONSTANT.APPDATAINFO_NAME]);
+	};
+
 	var loc_getCachedAppData = function(ownerInfo, dataName){
 		var ownerType = ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE];
 		if(ownerType==undefined)  ownerType = node_COMMONCONSTANT.MINIAPP_DATAOWNER_APP;
@@ -29,8 +131,11 @@ var node_appDataService = function(){
 		
 		return appDataByName[dataName];
 	};
-	
-	var loc_updateCachedAppData = function(ownerInfo, dataName, appData){
+
+	var loc_updateCachedAppDataInfo = function(appDataInfo){
+		var ownerInfo = appDataInfo[node_COMMONATRIBUTECONSTANT.APPDATAINFO_OWNERINFO];
+		var dataName = appDataInfo[node_COMMONATRIBUTECONSTANT.APPDATAINFO_NAME];
+		
 		var ownerType = ownerInfo[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE];
 		if(ownerType==undefined)  ownerType = node_COMMONCONSTANT.MINIAPP_DATAOWNER_APP;
 		var appDataByOwnerId = loc_catchedAppData[ownerType];
@@ -46,49 +151,65 @@ var node_appDataService = function(){
 			appDataByOwnerId[ownerId] = appDataByName;
 		}
 		
-		appDataByName[dataName] = appData;
+		appDataByName[dataName] = appDataInfo;
+		return appDataInfo;
 	};
+
+	//build cached app data and update cache according to appDataContainer gateway response  
+	var loc_buildCachedAppDataInfoAccordingToResponse = function(appDataInfoContainerResponse){
+		var appDataInfos = appDataInfoContainerResponse[node_COMMONATRIBUTECONSTANT.APPDATAINFOCONTAINER_APPDATAINFOS];
+		_.each(appDataInfos, function(appDataInfo, i){
+			if(appDataInfo[node_COMMONATRIBUTECONSTANT.APPDATAINFO_DATA]==undefined)  appDataInfo[node_COMMONATRIBUTECONSTANT.APPDATAINFO_DATA] = [];
+			loc_updateCachedAppDataInfo(appDataInfo);
+		});
+	};
+
+	var loc_updateCachedAppData
 	
-	//build cached app data and update cache 
-	var loc_buildCachedAppData = function(appData, dataName, ownerInfo){
-		if(appData==undefined){
-			appData = {};
-			appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA] = [];
-			appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_NAME] = dataName;
-		}
-		loc_updateCachedAppData(ownerInfo, dataName, appData);
-		return appData;
+	var loc_getGetOwnerAppDataRequest = function(ownerInfo, handlers, request){
+		//gateway request
+		var gatewayId = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_GATEWAY_APPDATA;
+		var command = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_GETOWNERAPPDATA;
+		var parms = {};
+		var containerParm = {};
+		parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_GETOWNERAPPDATA_OWNER] = ownerInfo;
+
+		var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, {
+			success : function(request, appDataInfoContainerResponse){
+				loc_buildCachedAppDataInfoAccordingToResponse(appDataInfoContainerResponse);
+				return node_createAppDataInfoContainer(appDataInfoContainerResponse);
+			}
+		});
+		out.addRequest(gatewayRequest);
 	};
 	
 	//get app data according to owner and data name
 	//if data name is undefined, then return all app data belong to that owner
-	var loc_getGetAppDataRequest = function(ownerInfo, dataName, handlers, request){
+	var loc_getGetAppDataRequest = function(appDataInfo, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
-		var appDataByName = {};
-
-		var notCached;
-		if(dataName!=undefined){
-			notCached = [];
-			var dataNames;
-			if(Array.isArray(dataName))   dataNames = dataName;
-			else dataNames = [dataName];
-
-			_.each(dataNames, function(name, index){
-				var appData = loc_getCachedAppData(ownerInfo, name);
-				if(appData!=undefined){
-					appDataByName[name] = appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA];
-				}
-				else{
-					notCached.push(name);
-				}
-			});
-		}
+		var cached = [];
+		var notCached = [];
+		
+		var appDataInfos = [];
+		if(Array.isArray(appDataInfo))   appDataInfos = appDataInfo;
+		else appDataInfos = [appDataInfo];
+		_.each(appDataInfos, function(appDataInfo, index){
+			var cachedAppDataInfo = loc_getCachedAppDataInfo(appDataInfo);
+			if(cachedAppDataInfo!=undefined){
+				cached.push(cachedAppDataInfo);
+			}
+			else{
+				notCached.push(appDataInfo);
+			}
+		});
 		
 		if(notCached!=undefined && notCached.length==0){
 			//all from cache
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				return appDataByName;
+				var appDataInfoContainerResponse = {};
+				appDataInfoContainerResponse[node_COMMONATRIBUTECONSTANT.APPDATAINFOCONTAINER_APPDATAINFOS] = cached;
+				return node_createAppDataInfoContainer(appDataInfoContainerResponse);
 			}));
 		}
 		else{
@@ -96,24 +217,17 @@ var node_appDataService = function(){
 			var gatewayId = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_GATEWAY_APPDATA;
 			var command = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_GETAPPDATA;
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_GETAPPDATA_OWNER] = ownerInfo;
-			parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_GETAPPDATA_DATANAME] = notCached;
+			var containerParm = {};
+			containerParm[node_COMMONATRIBUTECONSTANT.APPDATAINFOCONTAINER_APPDATAINFOS] = notCached;
+			parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_GETAPPDATA_INFOS] = containerParm;
 
 			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, {
-				success : function(request, appDataInfo){
-					var dataByName = appDataInfo[node_COMMONATRIBUTECONSTANT.MINIAPPSETTINGDATA_DATABYNAME];
-					if(notCached==undefined){
-						//all data belong to owner
-						_.each(dataByName, function(appData, dataName){
-							appDataByName[dataName] = loc_buildCachedAppData(appData, dataName, ownerInfo)[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA];
-						});
-					}
-					else{
-						_.each(notCached, function(dataName, index){
-							appDataByName[dataName] = loc_buildCachedAppData(dataByName[dataName], dataName, ownerInfo)[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA];
-						});
-					}
-					return appDataByName;
+				success : function(request, appDataInfoContainerResponse){
+					loc_buildCachedAppDataInfoAccordingToResponse(appDataInfoContainerResponse);
+					_.each(cached, function(appDataInfo, i){
+						appDataInfoContainerResponse[node_COMMONATRIBUTECONSTANT.APPDATAINFOCONTAINER_APPDATAINFOS].push(appDataInfo);
+					});
+					return node_createAppDataInfoContainer(appDataInfoContainerResponse);
 				}
 			});
 			out.addRequest(gatewayRequest);
@@ -122,39 +236,43 @@ var node_appDataService = function(){
 	};
 
 	//update app data according to owner and data by name
-	var loc_getUpdateAppDataRequest = function(ownerInfo, dataByName, handlers, request){
+	var loc_getUpdateAppDataRequest = function(appDataInfo, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		//gateway request
 		var gatewayId = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_GATEWAY_APPDATA;
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_UPDATEAPPDATA;
 		var parms = {};
-		parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_UPDATEAPPDATA_OWNER] = ownerInfo;
 		
-		var appDataByName = {};
-		_.each(dataByName, function(data, name){
-			var appData = loc_getCachedAppData(ownerInfo, name);
-			if(appData!=undefined){
-				appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA] = data;
-			}
-			else{
-				appData = {};
-				appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA] = data;
-				appData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_NAME] = name;
-			}
-			appDataByName[name] = appData;
-		});
-		parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_UPDATEAPPDATA_DATABYNAME] = appDataByName;
+		var appDataInfos = [];
+		if(Array.isArray(appDataInfo))   appDataInfos = appDataInfo;
+		else appDataInfos = [appDataInfo];
+		var containerParm = {};
+		containerParm[node_COMMONATRIBUTECONSTANT.APPDATAINFOCONTAINER_APPDATAINFOS] = appDataInfos;
+		parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_UPDATEAPPDATA_INFOS] = containerParm;
 
 		var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, {
-			success : function(request, updatedUserData){
-				var out = {};
-				var updatedDataByName = updatedUserData[node_COMMONATRIBUTECONSTANT.MINIAPPSETTINGDATA_DATABYNAME];
-				_.each(updatedDataByName, function(updatedData, name){
-					loc_updateCachedAppData(ownerInfo, name, updatedData);
-					out[name] = updatedData[node_COMMONATRIBUTECONSTANT.SETTINGDATA_DATA];
-				});
-				return out;
+			success : function(request, appDataInfoContainerResponse){
+				loc_buildCachedAppDataInfoAccordingToResponse(appDataInfoContainerResponse);
+				return node_createAppDataInfoContainer(appDataInfoContainerResponse);
+			}
+		}, request);
+		out.addRequest(gatewayRequest);
+		return out;
+	};
+	
+	var loc_getUpdateAppDataContainerRequest = function(appDataInfoContainer, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		
+		//gateway request
+		var gatewayId = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_GATEWAY_APPDATA;
+		var command = node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_UPDATEAPPDATA;
+		var parms = {};
+		parms[node_COMMONATRIBUTECONSTANT.GATEWAYAPPDATA_COMMAND_UPDATEAPPDATA_INFOS] = appDataInfoContainer.getAppDataInfoContainerResponse();
+		var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, {
+			success : function(request, appDataInfoContainerResponse){
+				loc_buildCachedAppDataInfoAccordingToResponse(appDataInfoContainerResponse);
+				return node_createAppDataInfoContainer(appDataInfoContainerResponse);
 			}
 		}, request);
 		out.addRequest(gatewayRequest);
@@ -162,116 +280,72 @@ var node_appDataService = function(){
 	};
 	
 	var loc_out = {
-			
-			getGetAppDataRequest : function(ownerInfo, dataName, handlers, request){
-				return loc_getGetAppDataRequest(ownerInfo, dataName, handlers, request);
-			},
-			
-			//build data segment infor list
-			getGetAppDataSegmentInfoRequest : function(ownerInfo, dataName, handlers, request){
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
-					success : function(request, appData){
-						var dataNames;
-						if(Array.isArray(dataName))   dataNames = dataName;
-						else dataNames = [dataName];
 
-						var dataInfos = {};
-						_.each(dataNames, function(name, i){
-							var dataInfo = [];
-							_.each(appData[name], function(dataEle, i){
-								dataInfo.push(new node_ApplicationDataSegmentInfo(ownerInfo, name, dataEle.id, dataEle.version));
-							});
-							dataInfos[name] = dataInfo;
-						});
-						return dataInfos;
-					}
-				}));
-				return out;
-			},	
+		getGetOwnerAppDataRequest : function(ownerInfo, handlers, request){
+			return loc_getGetOwnerAppDataRequest(ownerInfo, handlers, request);
+		},
+		
+		getGetAppDataRequest : function(appDataInfo, handlers, request){
+			return loc_getGetAppDataRequest(appDataInfo, handlers, request);
+		},
 
-			//find app data segment by id
-			getGetAppDataSegmentByIdRequest : function(ownerInfo, dataName, id, handlers, request){
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
-					success : function(request, appDataByName){
-						var appData = appDataByName[dataName];
-						var find = _.find(appData, function(dataSeg, index){
-							return dataSeg.id==id;
-						});
-						return find;
-					}
-				}));
-				return out;
-			},	
-			
-			//add app data element to app data array
-			getAddAppDataSegmentRequest : function(ownerInfo, dataName, index, id, data, version, handlers, request){
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				
-				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
-					success : function(request, appDataByName){
-						var appDataSegment = new node_ApplicationDataSegment(data, id, version);
-						appDataByName[dataName].splice(index, 0, appDataSegment);
-						return loc_getUpdateAppDataRequest(ownerInfo, appDataByName, {
-							success : function(request, appData){
-								return appDataSegment;
-							}
-						});
-					}
-				}));
-				return out;
-			},	
-			
-			//update app data element in app data array
-			getUpdateAppDataSegmentRequest : function(ownerInfo, dataName, segmentId, value, handlers, request){
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
-					success : function(request, appDataByName){
-						var appData = appDataByName[dataName];
-						var find = _.find(appData, function(dataSeg, index){
-							return dataSeg.id==segmentId;
-						});
-						find.data = value;
-						var appDataByName = {};
-						appDataByName[dataName] = appData;
-						return loc_getUpdateAppDataRequest(ownerInfo, appDataByName, {
-							success : function(request){
-								return value;
-							}
-						});
-					}
-				}));
-				return out;
-			},	
+		getGetAppDataSegmentRequest : function(ownerInfo, dataName, segId, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getGetAppDataRequest(node_createAppDataInfo(ownerInfo, dataName), {
+				success : function(request, appDataInfoContainer){
+					return appDataInfoContainer.getAppDataSegmentInfo(ownerInfo, dataName, segId).data;
+				}
+			}));
+			return out;
+		},	
+		
+		//add app data element to app data array
+		getAddAppDataSegmentRequest : function(ownerInfo, dataName, index, segId, data, version, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getGetAppDataRequest(node_createAppDataInfo(ownerInfo, dataName), {
+				success : function(request, appDataInfoContainer){
+					appDataInfoContainer.addAppDataSegment(ownerInfo, dataName, index, segId, data, version);
+					return loc_getUpdateAppDataContainerRequest(appDataInfoContainer, {
+						success:function(request, appDataInfoContainer){
+							return appDataInfoContainer;
+						}
+					});
+				}
+			}));
+			return out;
+		},	
 
-			//delete app data element in app data array
-			getDeleteAppDataSegmentRequest : function(ownerInfo, dataName, segmentId, handlers, request){
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				out.addRequest(loc_getGetAppDataRequest(ownerInfo, dataName, {
-					success : function(request, appDataByName){
-						var appData = appDataByName[dataName];
-						var findIndex = -1;
-						var find = _.find(appData, function(dataSeg, index){
-							if(dataSeg.id==segmentId){
-								findIndex = index;
-								return true;
-							}
-							else return false;
-						});
-						appData.splice(findIndex, 1);
-						var appDataByName = {};
-						appDataByName[dataName] = appData;
-						return loc_getUpdateAppDataRequest(ownerInfo, appDataByName, {
-							success : function(request){
-								return;
-							}
-						});
-					}
-				}));
-				return out;
-			},	
+		//update app data element in app data array
+		getUpdateAppDataSegmentRequest : function(ownerInfo, dataName, segmentId, data, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getGetAppDataRequest(node_createAppDataInfo(ownerInfo, dataName), {
+				success : function(request, appDataInfoContainer){
+					appDataInfoContainer.updateAppDataSegment(ownerInfo, dataName, segmentId, data);
+					return loc_getUpdateAppDataContainerRequest(appDataInfoContainer, {
+						success:function(request, appDataInfoContainer){
+							return appDataInfoContainer;
+						}
+					});
+				}
+			}));
+			return out;
+		},	
 
+		//delete app data element in app data array
+		getDeleteAppDataSegmentRequest : function(ownerInfo, dataName, segmentId, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getGetAppDataRequest(node_createAppDataInfo(ownerInfo, dataName), {
+				success : function(request, appDataInfoContainer){
+					appDataInfoContainer.deleteAppDataSegment(ownerInfo, dataName, segmentId);
+					return loc_getUpdateAppDataContainerRequest(appDataInfoContainer, {
+						success:function(request, appDataInfoContainer){
+							return appDataInfoContainer;
+						}
+					});
+				}
+			}));
+			return out;
+		},	
 	};
 
 	return loc_out;
@@ -289,5 +363,6 @@ nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegment", function(){node_
 
 //Register Node by Name
 packageObj.createChildNode("appDataService", node_appDataService); 
+packageObj.createChildNode("createAppDataInfo", node_createAppDataInfo); 
 
 })(packageObj);

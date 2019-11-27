@@ -12,6 +12,12 @@ public class HAPDefinitionAppData extends HAPContextEntity{
 
 	public HAPDefinitionAppData() {
 	}
+
+	public HAPDefinitionAppData cloneAppDataDefinition() {
+		HAPDefinitionAppData out = new HAPDefinitionAppData();
+		this.toContextEntity(out);
+		return out;
+	}
 	
 	@Override
 	public boolean buildObjectByJson(Object obj) {

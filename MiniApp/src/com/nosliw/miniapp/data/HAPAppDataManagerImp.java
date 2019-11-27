@@ -21,24 +21,27 @@ public class HAPAppDataManagerImp implements HAPAppDataManager{
 	}
 	
 	@Override
-	public HAPMiniAppSettingData getAppData(HAPOwnerInfo ownerInfo) {
-		return this.m_dataAccess.getSettingData(ownerInfo);
+	public HAPAppDataInfoContainer getAppData(HAPOwnerInfo ownerInfo) {
+		return this.m_dataAccess.getAppDataInfos(ownerInfo);
 	}
 
 	@Override
-	public HAPMiniAppSettingData getAppData(HAPOwnerInfo ownerInfo, String[] dataNames) {
-		return this.m_dataAccess.getSettingData(ownerInfo, dataNames);
+	public void getAppData(HAPAppDataInfoContainer appDataInfos) {
+		this.m_dataAccess.getAppDataInfos(appDataInfos);
 	}
 
 	@Override
-	public HAPMiniAppSettingData updateAppData(HAPMiniAppSettingData miniAppSettingData) {
-		List<HAPAppDataHandler> processores = this.findProcessors(miniAppSettingData.getOwnerInfo());
-		if(processores!=null) {
-			for(HAPAppDataHandler processor : processores) {
-				processor.updateSettingData(miniAppSettingData);
+	public void updateAppData(HAPAppDataInfoContainer miniAppSettingData) {
+		Map<HAPOwnerInfo, HAPAppDataInfoContainer> infoByOwner = miniAppSettingData.sortByOwnerInfo();
+		for(HAPOwnerInfo ownerInfo : infoByOwner.keySet()) {
+			List<HAPAppDataHandler> processores = this.findProcessors(ownerInfo);
+			if(processores!=null) {
+				for(HAPAppDataHandler processor : processores) {
+					processor.updateSettingData(infoByOwner.get(ownerInfo));
+				}
 			}
 		}
-		return this.m_dataAccess.updateSettingData(miniAppSettingData);
+		this.m_dataAccess.updateAppDataInfos(miniAppSettingData);
 	}
 
 	private List<HAPAppDataHandler> findProcessors(HAPOwnerInfo ownerInfo) {
