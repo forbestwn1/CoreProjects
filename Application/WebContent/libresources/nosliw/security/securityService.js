@@ -21,18 +21,10 @@ var node_createSecurityService = function(){
 		
 		setToken : function(token){		loc_token = token;		},
 		
-		getOwnerInfo : function(){
-			var out = {};
-			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_USERID] = loc_token || "testUser";
-			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE] = loc_ownerType || "app";
-			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTID] = loc_ownerId || "testApp";
-			return out;
-		},
-		
 		createOwnerInfo : function(ownerType, ownerId){
 			var out = {};
-			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_USERID] = loc_token;
-			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE] = ownerType;
+			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_USERID] = loc_token || "testUser";
+			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTTYPE] = ownerType || "app";
 			out[node_COMMONATRIBUTECONSTANT.OWNERINFO_COMPONENTID] = ownerId;
 			return out;
 		},

@@ -13,8 +13,6 @@
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
 
 		<script src="libresources/nosliw/core/nosliw.js"></script>
-		<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
-		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
 
  		<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
@@ -79,11 +77,10 @@ $(document).on("nosliwActive", function(){
 	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);
 });
 
-nosliw.init({
-	logging : {
-		module : ["process"]
-	}
-});
 </script>
+
+<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+<script src="init_runtime.js"></script>
 
 </html>

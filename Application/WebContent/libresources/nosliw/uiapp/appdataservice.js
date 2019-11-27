@@ -77,6 +77,13 @@ var node_createAppDataInfoContainer = function(appDataInfoContainerResponse){
 			return seg;
 		},
 		
+		getAppDataSegment(ownerInfo, dataName, segId){
+			var appData = loc_getAppData(ownerInfo, dataName);
+			return _.find(appData, function(dataEle, i){
+				return dataEle.id == segId;
+			});
+		},
+		
 		addAppDataSegment(ownerInfo, dataName, index, segId, data, version){
 			var appData = loc_getAppData(ownerInfo, dataName);
 			var appDataSegment = new node_ApplicationDataSegment(data, segId, version);
@@ -293,7 +300,7 @@ var node_appDataService = function(){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_getGetAppDataRequest(node_createAppDataInfo(ownerInfo, dataName), {
 				success : function(request, appDataInfoContainer){
-					return appDataInfoContainer.getAppDataSegmentInfo(ownerInfo, dataName, segId).data;
+					return appDataInfoContainer.getAppDataSegment(ownerInfo, dataName, segId).data;
 				}
 			}));
 			return out;

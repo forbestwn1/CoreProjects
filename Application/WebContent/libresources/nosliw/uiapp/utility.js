@@ -14,6 +14,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_dataAssociationUtility;
 	var node_ApplicationDataSegmentInfo;
+	var node_requestServiceProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
@@ -207,6 +208,7 @@ nosliw.registerSetNodeDataEvent("uiapp.createAppDataInfo", function(){node_creat
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegmentInfo", function(){node_ApplicationDataSegmentInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

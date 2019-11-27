@@ -14,8 +14,6 @@
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
 
 		<script src="libresources/nosliw/core/nosliw.js"></script>
-		<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
-		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -63,7 +61,14 @@ $(document).on("nosliwActive", function(){
 		settingModuleRoot : $('#settingModuleDiv').get(),
 		storeService : nosliw.runtime.getStoreService(),
 		dataService : node_appDataService,
-		framework7App : framework7App
+		framework7App : framework7App,
+		ownerConfigure : {
+			defaultOwnerType : "app",
+			ownerIdByType : {
+				"app" : parms.app,
+				"group" : parms.app,
+			}
+		}
 	}; 
 
 	var debugTool = node_createDebugTool({
@@ -82,8 +87,10 @@ $(document).on("nosliwActive", function(){
 	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);
 });
 
-nosliw.init();
-
 </script>
+
+<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+<script src="init_runtime.js"></script>
 
 </html>
