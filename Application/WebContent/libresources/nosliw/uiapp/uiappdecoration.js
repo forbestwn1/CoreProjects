@@ -113,14 +113,14 @@ var node_createAppDecoration = function(gate){
 		var settingsRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var appDataName = node_appUtility.discoverApplicationDataDependency(moduleDef)[0];
 		
-		settingsRequest.addRequest(loc_appDataService.getGetAppDataRequest(node_appUtility.getAppDataInfoByDataName(appDataName), {
+		settingsRequest.addRequest(loc_appDataService.getGetAppDataRequest(node_appUtility.getAppDataInfoByDataName(appDataName, loc_uiApp), {
 			success : function(request, appDataContainer){
 				var settingRequest = node_createServiceRequestInfoSequence(undefined, undefined, request);
 
 				//first one is not persistent
 				settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, node_appUtility.buildAppDataSegmentInfoTemp(appDataName, "New Setting", loc_uiApp), configure));
 
-				var appDataSegmentInfos = appDataContainer.getAppDataSegmentInfoArray(node_appUtility.getOwnerInfoByDataName(appDataName), appDataName);
+				var appDataSegmentInfos = appDataContainer.getAppDataSegmentInfoArray(node_appUtility.getOwnerInfoByDataName(appDataName, loc_uiApp), appDataName);
 				_.each(appDataSegmentInfos, function(dataSegmentInfo, index){
 					settingRequest.addRequest(loc_createSettingModuleRequest(moduleName, moduleDef, dataSegmentInfo, configure));
 				});

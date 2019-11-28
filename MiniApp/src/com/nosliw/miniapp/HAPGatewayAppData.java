@@ -84,7 +84,7 @@ public class HAPGatewayAppData extends HAPGatewayImp{
 		JSONObject infosJson = parms.getJSONObject(COMMAND_UPDATEAPPDATA_INFOS);
 		HAPAppDataInfoContainer infos = new HAPAppDataInfoContainer();
 		infos.buildObject(infosJson, HAPSerializationFormat.JSON);
-		this.m_appDataManager.getAppData(infos);
+		this.m_appDataManager.updateAppData(infos);
 		return this.createSuccessWithObject(infos);
 	}
 

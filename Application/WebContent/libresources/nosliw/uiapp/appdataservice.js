@@ -9,6 +9,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_ApplicationDataSegmentInfo;
 	var node_ApplicationDataSegment;
+	var node_basicUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //helper method to build app data info 
@@ -136,7 +137,7 @@ var node_appDataService = function(){
 		var appDataByName = appDataByOwnerId[ownerId];
 		if(appDataByName==undefined)  return;
 		
-		return appDataByName[dataName];
+		return node_basicUtility.clone(appDataByName[dataName]);
 	};
 
 	var loc_updateCachedAppDataInfo = function(appDataInfo){
@@ -158,7 +159,7 @@ var node_appDataService = function(){
 			appDataByOwnerId[ownerId] = appDataByName;
 		}
 		
-		appDataByName[dataName] = appDataInfo;
+		appDataByName[dataName] = node_basicUtility.clone(appDataInfo);
 		return appDataInfo;
 	};
 
@@ -367,6 +368,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegmentInfo", function(){node_ApplicationDataSegmentInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegment", function(){node_ApplicationDataSegment = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("appDataService", node_appDataService); 

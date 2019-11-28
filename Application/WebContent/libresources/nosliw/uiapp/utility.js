@@ -122,12 +122,12 @@ var node_utility = function(){
 				function(value, handlers, request){    //set value method
 					if(appDataSegInfo.persist==true){
 						//modify
-						return appDataService.updateAppDataSegment(loc_out.getOwnerInfoByDataName(appDataSegInfo.dataName), appDataSegInfo.dataName, appDataSegInfo.id, value, handlers, request);
+						return appDataService.getUpdateAppDataSegmentRequest(loc_out.getOwnerInfoByDataName(appDataSegInfo.dataName, uiApp), appDataSegInfo.dataName, appDataSegInfo.id, value, handlers, request);
 					}
 					else{
 						//new
 						var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-						out.addRequest(appDataService.getAddAppDataSegmentRequest(loc_out.getOwnerInfoByDataName(appDataSegInfo.dataName), appDataSegInfo.dataName, appDataSegInfo.index, appDataSegInfo.id, value, appDataSegInfo.version, {
+						out.addRequest(appDataService.getAddAppDataSegmentRequest(loc_out.getOwnerInfoByDataName(appDataSegInfo.dataName, uiApp), appDataSegInfo.dataName, appDataSegInfo.index, appDataSegInfo.id, value, appDataSegInfo.version, {
 							success : function(request){
 								appDataSegInfo.persist=true;
 							}
