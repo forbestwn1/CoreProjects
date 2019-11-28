@@ -110,7 +110,10 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 			var info = appDataDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
 			var categary = info.categary;
 			if(categary==undefined)		categary = loc_ownerConfigure.defaultOwnerType;
-			var ownerId = loc_ownerConfigure.ownerIdByType[categary];
+			
+			var ownerId;
+			if(loc_ownerConfigure.ownerIdByType!=undefined)  ownerId = loc_ownerConfigure.ownerIdByType[categary];
+			if(ownerId==undefined)  ownerId = loc_ownerConfigure.defaultOwnerId;
 			loc_out.prv_componentData.appDataOwnerInfo[appDataName] = nosliw.runtime.getSecurityService().createOwnerInfo(categary, ownerId);
 		});
 	};
