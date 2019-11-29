@@ -7,11 +7,23 @@ function(gate){
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_ServiceRequestExecuteInfo = nosliw.getNodeData("request.entity.ServiceRequestExecuteInfo");
-
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponentCore();
 	
 	var loc_out = {
+			
+		processComponentCoreEvent : function(eventName, eventData, request){	
+			var nosliwCoreEventName = node_basicUtility.getNosliwCoreName(eventName);
+			if(nosliwCoreEventName!=undefined){
+				if(nosliwCoreEventName==node_CONSTANT.EVENT_UIMODULE_UI_VALUE_CHANGE){
+					//ui value change
+					var moduleUI = eventData.getSourceByType(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULEUI).getData();
+					moduleUI.executeSynOutDataRequest(undefined, undefined, request);
+				}
+			}
+		},
 			
 		getProcessCommandRequest : function(command, parms, handlers, request){
 //			var coreCommand = node_basicUtility.getNosliwCoreName(command);

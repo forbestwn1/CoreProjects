@@ -28,6 +28,7 @@ var packageObj = library;
 	var node_createEventSource;
 	var node_createEventInfo;
 	var node_eventUtility;
+	var node_basicUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
@@ -159,8 +160,6 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		loc_out.prv_componentData.contextDataSet.registerEventListener(loc_valueChangeEventListener, function(eventName, eventData, request){
 			loc_trigueValueChangeEvent(node_CONSTANT.EVENT_COMPONENT_VALUECHANGE, undefined, request);
 		});
-		
-		loc_out.prv_componentData.contextDataSet.kkkkkppppp = "kkkkppppp";
 	};
 
 	var loc_getBuildModuleUIRequest = function(handlers, request){
@@ -194,10 +193,15 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		}, ui);
 
 // kkkk
-//		ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
-//			//handle ui value change, update value in module
-//			this.executeSynOutDataRequest(undefined, undefined, requestInfo);
-//		}, ui);
+		ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
+			//handle ui value change, update value in module
+			if(this.getSynOutMode()==node_CONSTANT.CONFIGURE_VALUE_SYNCOUT_AUTO){
+				this.executeSynOutDataRequest(undefined, undefined, requestInfo);
+			}
+			
+			//trigue new event
+			loc_trigueEvent(node_basicUtility.buildNosliwFullName(node_CONSTANT.EVENT_UIMODULE_UI_VALUE_CHANGE), eventData, requestInfo);
+		}, ui);
 	};
 
 	var loc_out = {
@@ -351,7 +355,7 @@ nosliw.registerSetNodeDataEvent("uimodule.createSystemData", function(){node_cre
 nosliw.registerSetNodeDataEvent("common.event.createEventSource", function(){node_createEventSource = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventInfo", function(){node_createEventInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
-
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIModuleComponentCore", node_createUIModuleComponentCore); 

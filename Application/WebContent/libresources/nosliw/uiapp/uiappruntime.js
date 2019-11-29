@@ -132,7 +132,7 @@ var node_createAppRuntime = function(uiAppCore, configure, componentDecorationIn
 		//execute process
 		getExecuteProcessRequest : function(process, extraInput, handlers, request){  return loc_getExecuteAppProcessRequest(process, extraInput, handlers, request);  },
 		//execute process
-		getExecuteProcessResourceRequest : function(processId, input, handlers, request){  return loc_getExecuteAppProcessByNameRequest(processId, extraInput, handlers, request);  },
+		getExecuteProcessResourceRequest : function(processId, extraInput, handlers, request){  return loc_getExecuteAppProcessByNameRequest(processId, extraInput, handlers, request);  },
 	};
 
 	//call back when start a statemachine task

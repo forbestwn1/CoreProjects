@@ -96,6 +96,7 @@ var loc_buildUIDecorationRequest = function(decorationInfo, handlers, request){
 	
 var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	var loc_moduleUIDef = moduleUIDef;
+	var loc_info = moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
 	var loc_page = page;
 	loc_page.setName(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGENAME]);  //page name
 
@@ -112,7 +113,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	var loc_valueChangeEventEnabled = true;
 	
 	var loc_getEventSourceInfo = function(){
-		return node_createEventSource(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULEUI, loc_getId()); 
+		return node_createEventSource(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULEUI, loc_getId(), loc_out); 
 	};
 	
 	var loc_trigueEvent = function(eventName, eventData, request){
@@ -243,9 +244,11 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		getUpdateContextRequest : function(parms, handlers, requestInfo){	return loc_updatePageContextRequest(parms, handlers, requestInfo);	},
 		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},
 
+		getSynInMode : function(){  return loc_info[node_CONSTANT.CONFIGURE_KEY_SYNCIN] || node_CONSTANT.CONFIGURE_VALUE_SYNCIN_MANUAL;	},
 		getSynInDataRequest : function(handlers, request){  return loc_inputDataAssociation.getExecuteRequest(handlers, request);  },
 		executeSynInDataRequest : function(handlers, request){	node_requestServiceProcessor.processRequest(this.getSynInDataRequest(handlers, request));	},
 		
+		getSynOutMode : function(){  return loc_info[node_CONSTANT.CONFIGURE_KEY_SYNCOUT] || node_CONSTANT.CONFIGURE_VALUE_SYNCOUT_MANUAL;	},
 		getSynOutDataRequest : function(name, handlers, request){	return loc_outputDataAssociation.getExecuteRequest(handlers, request);	},
 		executeSynOutDataRequest : function(name, handlers, request){	node_requestServiceProcessor.processRequest(this.getSynOutDataRequest(name, handlers, request));	},
 		
@@ -259,7 +262,6 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		//event
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext);	},
 		registerValueChangeEventListener : function(listener, handler, thisContext){	return	loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext);	},
-		
 	};
 	
 	//append resource and object life cycle method to out obj

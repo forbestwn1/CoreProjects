@@ -37,7 +37,7 @@
 		}
 	},
 	"process": {
-		"active": {
+		"nosliw_INIT_ACTIVE": {
 			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",
@@ -86,6 +86,9 @@
 			"name": "settingUI",
 			"type": "setting",
 			"page": "schoolSettingPage",
+			"info" : {
+				"syncout" : "auto1"
+			},
 			"inputMapping": {
 				"element": {
 					"schoolType": {
