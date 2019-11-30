@@ -36,6 +36,8 @@ var node_createVariableGroup;
  */
 var node_createContext = function(elementInfosArray, request){
 	
+	var loc_updateRequest = {};
+	
 	//according to contextVariableInfo, find the base variable from Context
 	//base variable contains two info: 1. variable,  2. path from variable
 	var loc_findBaseVariable = function(contextVariableInfo){
@@ -146,7 +148,15 @@ var node_createContext = function(elementInfosArray, request){
 		loc_out.prv_valueChangeEventSource = node_createEventObject();
 		loc_out.prv_eleVariableGroup = node_createVariableGroup([], function(request){
 			if(loc_out.prv_valueChangeEventEnable == true){
-				loc_out.prv_valueChangeEventSource.triggerEvent(node_CONSTANT.CONTEXT_EVENT_UPDATE, undefined, request);
+				if(loc_updateRequest[request.getId()]!=null){
+					//change from update context
+					loc_out.prv_valueChangeEventSource.triggerEvent(node_CONSTANT.CONTEXT_EVENT_UPDATE, undefined, request);
+//					delete loc_updateRequest[request.getId()];
+				}
+				else{
+					//change from data operation
+					loc_out.prv_valueChangeEventSource.triggerEvent(node_CONSTANT.CONTEXT_EVENT_VALUECHANGE, undefined, request);
+				}
 			}
 		});
 		
@@ -232,12 +242,19 @@ var node_createContext = function(elementInfosArray, request){
 		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		
 		getUpdateContextRequest : function(values, handlers, requestInfo){
-			loc_out.prv_valueChangeEventEnable = false;
+//			loc_out.prv_valueChangeEventEnable = false;
 			var that = this;
 			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
+			outRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_updateRequest[request.getId()] = request;
+			}, {
+				success : function(request){
+					loc_updateRequest[request.getId()] = request;
+				}
+			}));
 			var setRequest = node_createServiceRequestInfoSet({}, {
 				success : function(requestInfo, result){
-					loc_out.prv_valueChangeEventEnable = true;
+//					loc_out.prv_valueChangeEventEnable = true;
 				}
 			});
 			

@@ -194,13 +194,16 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 
 // kkkk
 		ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
-			//handle ui value change, update value in module
-			if(this.getSynOutMode()==node_CONSTANT.CONFIGURE_VALUE_SYNCOUT_AUTO){
-				this.executeSynOutDataRequest(undefined, undefined, requestInfo);
+			if(eventName==node_CONSTANT.CONTEXT_EVENT_VALUECHANGE){
+				//only handle ui value change, not context update
+				if(this.getSynOutMode()==node_CONSTANT.CONFIGURE_VALUE_SYNCOUT_AUTO){
+					//update value in module
+					this.executeSynOutDataRequest(undefined, undefined, requestInfo);
+				}
+				
+				//trigue new event
+				loc_trigueEvent(node_basicUtility.buildNosliwFullName(node_CONSTANT.EVENT_UIMODULE_UI_VALUE_CHANGE), eventData, requestInfo);
 			}
-			
-			//trigue new event
-			loc_trigueEvent(node_basicUtility.buildNosliwFullName(node_CONSTANT.EVENT_UIMODULE_UI_VALUE_CHANGE), eventData, requestInfo);
 		}, ui);
 	};
 

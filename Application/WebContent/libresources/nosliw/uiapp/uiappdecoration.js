@@ -140,7 +140,7 @@ var node_createAppDecoration = function(gate){
 		processComponentCoreValueChangeEvent : function(eventName, eventData, request){
 			var out = loc_updateSettingModuleStatusRequest(eventData.moduleInfo.module, {
 				modified : true
-			}, request);
+			}, undefined, request);
 			
 			if(out!=undefined)		node_requestServiceProcessor.processRequest(out);
 		},	

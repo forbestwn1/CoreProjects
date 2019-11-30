@@ -240,14 +240,14 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView){
 
 		createHandleEachElementProcessor : function(name, path){  return this.getContext().createHandleEachElementProcessor(name, path);  },
 		
-		getBatchDataOperationRequest : function(operations){
-			var requestInfo = node_createBatchUIDataOperationRequest(loc_context);
+		getBatchDataOperationRequest : function(operations, handlers, request){
+			var requestInfo = node_createBatchUIDataOperationRequest(loc_context, handlers, request);
 			_.each(operations, function(operation, i){
 				requestInfo.addUIDataOperation(operation);						
 			});
 			return requestInfo;
 		},
-		executeBatchDataOperationRequest : function(operations){		this.processRequest(this.getBatchDataOperationRequest(operations));		},
+		executeBatchDataOperationRequest : function(operations, handlers, request){		this.processRequest(this.getBatchDataOperationRequest(operations, handlers, request));		},
 		
 		//---------------------------------
 		getExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){  return nosliw.runtime.getExpressionService().getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent)  },
