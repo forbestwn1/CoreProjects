@@ -123,7 +123,7 @@ var node_utility = function(){
 		},
 		
 		//build context according to context definition and parent context
-		buildContext : function(contextDef, parentContext, requestInfo){
+		buildContext : function(id, contextDef, parentContext, requestInfo){
 			//build context element first
 			var contextElementInfosArray = [];
 			
@@ -171,7 +171,7 @@ var node_utility = function(){
 				}
 			});	
 				
-			var context = node_createContext(contextElementInfosArray, requestInfo);
+			var context = node_createContext(id, contextElementInfosArray, requestInfo);
 	
 			//for relative which refer to context ele in same context
 			_.each(contextDef, function(contextDefRootObj, eleName){

@@ -34,7 +34,7 @@ var node_createVariableGroup;
  * elementInfosArray : an array of element info describing context element
  * 
  */
-var node_createContext = function(elementInfosArray, request){
+var node_createContext = function(id, elementInfosArray, request){
 	
 	var loc_updateRequest = {};
 	
@@ -136,7 +136,9 @@ var node_createContext = function(elementInfosArray, request){
 		loc_out.prv_eventObject.clearup();
 	};
 	
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(elementInfosArray, request){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(id, elementInfosArray, request){
+		//id, for debug purpose
+		loc_out.prv_id = id;
 		//context elements (wrapper variables)
 		loc_out.prv_elements = {};
 		//object used as event object
@@ -280,7 +282,7 @@ var node_createContext = function(elementInfosArray, request){
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXT);
 	
-	node_getLifecycleInterface(loc_out).init(elementInfosArray, request);
+	node_getLifecycleInterface(loc_out).init(id, elementInfosArray, request);
 	
 	return loc_out;
 };

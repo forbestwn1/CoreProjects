@@ -19,7 +19,7 @@ var node_uiEventData = function(uiId, eventName, eventData){
 var node_createSystemData = function(){
 	var loc_systemData = {};
 
-	var loc_setSystemData = function(domain, obj){
+	var loc_updateSystemData = function(domain, obj){
 		var domainObj = loc_systemData[domain];
 		if(domainObj==undefined){
 			domainObj = {};
@@ -39,7 +39,7 @@ var node_createSystemData = function(){
 	var loc_out = {
 		getSystemData : function(domain){		return loc_systemData[domain];		},
 		
-		setSystemData : function(domain, obj){		loc_setSystemData(domain, obj);		},
+		updateSystemData : function(domain, obj){		loc_updateSystemData(domain, obj);		},
 		
 		buildSystemDataContextByDomain : function(domain, context){		return loc_buildSystemDataContext(domain, context);	},	
 	

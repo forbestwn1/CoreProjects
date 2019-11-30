@@ -243,7 +243,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		if(loc_context==undefined){
 			//if context not provide, then build context by parent context and current context definition
 			var parentContext = parent==undefined?undefined:parent.getContext();
-			loc_context = node_contextUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
+			loc_context = node_contextUtility.buildContext("View_"+id, uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
 		}
 
 		//wrap html by start and end element

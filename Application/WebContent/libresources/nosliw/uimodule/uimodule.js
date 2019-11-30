@@ -238,7 +238,7 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 
 		getSystemData : function(domain){  return loc_systemData.getSystemData(domain);   },
 		getUpdateSystemDataRequest : function(domain, systemData, handlers, request){
-			loc_systemData.setSystemData(domain, systemData);
+			loc_systemData.updateSystemData(domain, systemData);
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			_.each(loc_out.prv_componentData.uiArray, function(ui, i){
 				out.addRequest(ui.getUpdateSystemDataRequest(domain, systemData));

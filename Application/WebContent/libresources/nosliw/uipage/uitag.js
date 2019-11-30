@@ -138,7 +138,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView){
 	//create context
 	var parentContext;
 	if(parentUIResourceView!=undefined)   parentContext = parentUIResourceView.getContext();
-	loc_context = node_contextUtility.buildContext(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
+	loc_context = node_contextUtility.buildContext("Tag_"+loc_tagName,uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
 	
 	
 	//related name: name, name with categary
@@ -153,7 +153,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView){
 	//exContext extra context element used when create context for tag resource
 	var loc_createContextForTagResource = function(exContext){
 		if(exContext==undefined)   exContext = loc_context;
-		var context = node_contextUtility.buildContext(loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], exContext);
+		var context = node_contextUtility.buildContext("TagContent_"+loc_tagName, loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], exContext);
 		return context;
 	};
 	

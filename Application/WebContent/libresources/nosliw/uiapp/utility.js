@@ -10,6 +10,7 @@ var packageObj = library;
 	var node_createDynamicIOData;
 	var node_createServiceRequestInfoSequence;
 	var node_ModuleInfo;
+	var node_ModuleDefInfo;
 	var node_createAppDataInfo;
 	var node_createServiceRequestInfoSimple;
 	var node_dataAssociationUtility;
@@ -27,6 +28,19 @@ var node_utility = function(){
 			
 		getOwnerInfoByDataName : function(dataName, uiApp){    return uiApp.prv_componentData.appDataOwnerInfo[dataName];    },
 		getAppDataInfoByDataName : function(dataName, uiApp){    return  node_createAppDataInfo(uiApp.prv_componentData.appDataOwnerInfo[dataName], dataName);     },
+		
+		getModuleConfigure : function(role, appConfigure){	return appConfigure.getChildConfigure("modules", role);	},
+
+		buildModuleDefInfoByRole : function(uiAppDef, appConfigure){
+			var out = {};
+			var moduleDefs = uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE];
+			_.each(moduleDefs, function(moduleDef, name){
+				var role = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
+				var moduleConfigure = loc_out.getModuleConfigure(role, appConfigure);
+				out[role] = new node_ModuleDefInfo(role, name, moduleDef, moduleConfigure);
+			});
+			return out;
+		},
 		
 		//find which application data this module depend on
 		discoverApplicationDataDependency : function(moduleDef){
@@ -205,6 +219,7 @@ nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){no
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.createAppDataInfo", function(){node_createAppDataInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.ModuleDefInfo", function(){node_ModuleDefInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ApplicationDataSegmentInfo", function(){node_ApplicationDataSegmentInfo = this.getData();});

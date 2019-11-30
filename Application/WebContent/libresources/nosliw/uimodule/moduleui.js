@@ -141,7 +141,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	
 	var loc_getUpdateSystemDataRequest = function(domain, systemData, handlers, request){
 		//update system data
-		loc_systemData.setSystemData(domain, systemData);
+		loc_systemData.updateSystemData(domain, systemData);
 		//update page context
 		return loc_updatePageContextRequest(loc_systemData.buildSystemDataContextByDomain(domain), handlers, request);
 	};

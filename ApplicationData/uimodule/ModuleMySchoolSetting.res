@@ -51,7 +51,7 @@
 					"name": "refreshSchoolSetting",
 					"type": "UI_executeCommand",
 					"partId": "ui.settingUI",
-					"command": "refresh",
+					"command": "nosliw_refresh",
 					"input": {
 						"element": {
 							"schoolType": {

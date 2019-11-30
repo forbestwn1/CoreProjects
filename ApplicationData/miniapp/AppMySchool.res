@@ -63,7 +63,7 @@
 				}
 			},
 			{
-				"status": "disabled1111",
+				"status": "disabled111",
 				"role": "application",
 				"name": "MySchool",
 				"module": "ModuleMySchoolResult",
@@ -111,13 +111,24 @@
 				"schoolTypeInData": {
 					"definition": {
 						"path": "schoolTypeInApp"
+					},
+					"defaultValue": {
+						"dataTypeId": "test.options;1.0.0",
+						"value": {
+							"value": "Public",
+							"optionsId": "schoolType"
+						}
 					}
 				},
 				"schoolRatingInData": {
 					"definition": {
 						"path": "schoolRatingInApp"
+					},
+					"defaultValue": {
+						"dataTypeId": "test.float;1.0.0",
+						"value": 9.5
 					}
-				}
+				},
 			}
 		}
 	},
