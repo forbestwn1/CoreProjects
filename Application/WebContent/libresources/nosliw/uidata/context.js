@@ -249,10 +249,6 @@ var node_createContext = function(id, elementInfosArray, request){
 			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
 			outRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				loc_updateRequest[request.getId()] = request;
-			}, {
-				success : function(request){
-					loc_updateRequest[request.getId()] = request;
-				}
 			}));
 			var setRequest = node_createServiceRequestInfoSet({}, {
 				success : function(requestInfo, result){

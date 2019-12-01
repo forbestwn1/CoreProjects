@@ -13,6 +13,7 @@ var packageObj = library;
 	var node_makeObjectWithComponentManagementInterface;
 	var node_getComponentManagementInterface;
 	var node_createComponentCoreComplex;
+	var node_componentUtility;
 	var node_createStateBackupService;
 	var node_getComponentLifecycleInterface;
 	var node_createServiceRequestInfoSimple;
@@ -163,15 +164,12 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		
 		//component management interface 
 		getContextIODataSet :  function(){  return loc_getContextIODataSet();  },
-		getExecuteCommandRequest : function(command, parms, handlers, request){  
-			var coreCommandName = node_basicUtility.getNosliwCoreName(command);
-			if(coreCommandName!=undefined && coreCommandName.startsWith("lifecycle_")){
-				var lifecycleTransit = coreCommandName.substring("lifecycle_".length);
-				return node_getComponentLifecycleInterface(loc_out).getTransitRequest(lifecycleTransit, handlers, request);
+		getExecuteCommandRequest : function(command, parms, handlers, request){
+			var out = node_componentUtility.getProcessNosliwCommand(loc_out, command, parms, handlers, request);
+			if(out==undefined){
+				out = loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);    
 			}
-			else{
-				return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);    
-			}
+			return out;
 		},
 		registerEventListener : function(listener, handler, thisContext){  return loc_componentCoreComplex.registerEventListener(listener, handler, thisContext);   },
 		unregisterEventListener : function(listener){   return loc_componentCoreComplex.unregisterEventListener(listener);  },
@@ -210,6 +208,7 @@ nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", func
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentCoreComplex", function(){node_createComponentCoreComplex = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});

@@ -64,7 +64,11 @@ var node_createAppDecoration = function(gate){
 			var appDataNames = node_appUtility.discoverApplicationDataDependency(moduleDef);   //app names that this module depend on
 			if(appDataNames.length==0){
 				//no application data dependency
-				out.addRequest(loc_uiApp.buildModuleInfoRequest(moduleName, [], configure));
+				out.addRequest(loc_uiApp.buildModuleInfoRequest(moduleName, [], configure, {
+					success : function(request, moduleInfo){
+						loc_uiApp.addModuleInfo(moduleInfo);
+					}
+				}));
 			}
 			else{
 				//get from database first by data name
@@ -87,7 +91,11 @@ var node_createAppDecoration = function(gate){
 								appDataSegs.push(segs[0]);
 							}
 						});
-						return loc_uiApp.buildModuleInfoRequest(moduleName, appDataSegs, configure);
+						return loc_uiApp.buildModuleInfoRequest(moduleName, appDataSegs, configure, {
+							success : function(request, moduleInfo){
+								loc_uiApp.addModuleInfo(moduleInfo);
+							}
+						});
 					}
 				}));
 			}
@@ -106,6 +114,7 @@ var node_createAppDecoration = function(gate){
 		var moduleInfoRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		moduleInfoRequest.addRequest(loc_uiApp.buildModuleInfoRequest(moduleName, dataSegmentInfo==undefined?undefined:[dataSegmentInfo], node_createConfigure(configureData), {
 			success : function(request, moduleInfo){
+				loc_uiApp.addModuleInfo(moduleInfo);
 				return loc_updateSettingModuleStatusRequest(moduleInfo.module,
 						{
 							persist : dataSegmentInfo==undefined?false:dataSegmentInfo.persist,
@@ -131,6 +140,23 @@ var node_createAppDecoration = function(gate){
 	
 	var loc_createTempSettingModuleRequest = function(handlers, request){
 		return loc_createSettingModuleRequest(node_appUtility.buildAppDataSegmentInfoTemp(loc_getSettingModuleAppName(), "New Setting", loc_uiApp), handlers, request);
+	};
+
+	var loc_addNewSettingModule = function(handlers, request){
+		if(loc_uiApp.getModuleInfoByRole(ROLE_SETTING).length==0){
+			return loc_getNewSettingModuleRequest(handlers, request);
+		}
+	};
+	
+	var loc_getNewSettingModuleRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_createTempSettingModuleRequest({
+			success : function(request, moduleInfo){
+				$(moduleInfo.root).prependTo(loc_settingParentView);
+				return moduleInfo;
+			}
+		}));
+		return out;
 	};
 	
 	var loc_createSettingRoleRequest = function(handlers, request){

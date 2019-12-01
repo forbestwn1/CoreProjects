@@ -94,7 +94,6 @@ var node_utility = function(){
 				success : function(requestInfo, uiModuleRuntime){
 					moduleInfo.module = uiModuleRuntime;
 					loc_out.buildModuleOutputMapping(moduleInfo);
-					moduleInfo = uiApp.addModuleInfo(moduleInfo);
 					return moduleInfo;
 				}
 			}));

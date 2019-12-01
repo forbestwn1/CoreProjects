@@ -4,6 +4,8 @@ var packageObj = library;
 (function(packageObj){
 	//get used node
 	var node_CONSTANT;
+	var node_getComponentLifecycleInterface;
+	var node_basicUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -30,11 +32,23 @@ var node_componentUtility = {
 		return out;
 	},
 	
+	//process predefined command for component
+	getProcessNosliwCommand : function(componentRuntime, command, parms, handlers, request){
+		var coreCommandName = node_basicUtility.getNosliwCoreName(command);
+		if(coreCommandName!=undefined && coreCommandName.startsWith("lifecycle_")){
+			var lifecycleTransit = coreCommandName.substring("lifecycle_".length);
+			return node_getComponentLifecycleInterface(componentRuntime).getTransitRequest(lifecycleTransit, handlers, request);
+		}
+		return null;
+	},
+	
 };
 
 //*******************************************   End Node Definition  ************************************** 	
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 
 //Register Node by Name

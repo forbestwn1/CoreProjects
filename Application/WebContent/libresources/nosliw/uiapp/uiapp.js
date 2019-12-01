@@ -202,6 +202,10 @@ var node_createUIAppComponentCore = function(id, appDef, configure, ioInput){
 			return out;
 		},
 		
+		getModuleInfoByRole : function(role){
+			return loc_out.prv_componentData.modulesByRole[role];
+		},
+		
 		getModuleInfo : function(role, id){
 			if(id==undefined)	id = loc_out.prv_componentData.currentModuleByRole[role];  //if id not provided, then use id for current component
 			var modules = loc_out.prv_componentData.modulesByRole[role];
