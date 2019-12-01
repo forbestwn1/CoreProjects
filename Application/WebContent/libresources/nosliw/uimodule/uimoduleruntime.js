@@ -163,7 +163,16 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		
 		//component management interface 
 		getContextIODataSet :  function(){  return loc_getContextIODataSet();  },
-		getExecuteCommandRequest : function(command, parms, handlers, request){  return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);    },
+		getExecuteCommandRequest : function(command, parms, handlers, request){  
+			var coreCommandName = node_basicUtility.getNosliwCoreName(command);
+			if(coreCommandName!=undefined && coreCommandName.startsWith("lifecycle_")){
+				var lifecycleTransit = coreCommandName.substring("lifecycle_".length);
+				return node_getComponentLifecycleInterface(loc_out).getTransitRequest(lifecycleTransit, handlers, request);
+			}
+			else{
+				return loc_componentCoreComplex.getExecuteCommandRequest(command, parms, handlers, request);    
+			}
+		},
 		registerEventListener : function(listener, handler, thisContext){  return loc_componentCoreComplex.registerEventListener(listener, handler, thisContext);   },
 		unregisterEventListener : function(listener){   return loc_componentCoreComplex.unregisterEventListener(listener);  },
 		registerValueChangeEventListener : function(listener, handler, thisContext){   return loc_componentCoreComplex.registerValueChangeEventListener(listener, handler, thisContext);   },

@@ -193,11 +193,11 @@ var node_utility = function(){
 			var out = {};
 			_.each(outputMappings, function(mapping, name){
 				out[name] = node_createDataAssociation(
-								moduleInfo.module.getContextIODataSet(), 
-								mapping, 
-								moduleInfo.externalIO,
-								node_dataAssociationUtility.buildDataAssociationName("MODULE", moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ID], "APP", "CONTEXT")
-							);
+					moduleInfo.module.getContextIODataSet(), 
+					mapping, 
+					moduleInfo.externalIO,
+					node_dataAssociationUtility.buildDataAssociationName("MODULE", moduleInfo.moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ID], "APP", "CONTEXT")
+				);
 			});
 			moduleInfo.outputMapping = out;
 			return moduleInfo;

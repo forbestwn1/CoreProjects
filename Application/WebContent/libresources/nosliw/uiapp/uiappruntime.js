@@ -59,7 +59,11 @@ var node_createAppRuntime = function(uiAppCore, configure, componentDecorationIn
 	
 	var loc_getExecuteAppProcessByNameRequest = function(processName, extraInput, handlers, request){
 		var process = loc_getAppCore().getProcess(processName);
-		if(process!=undefined)  return loc_getExecuteAppProcessRequest(process, extraInput, handlers, request);
+		if(process!=undefined)  return loc_getExecuteAppProcessRequest(process, extraInput, handlers, request);  //process in app
+		else if(processName.startsWith("@")){
+			var coreProcessName = processName.substring(1);
+			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteProcessResourceRequest(coreProcessName, loc_getContextIODataSet(), undefined, handlers, request);
+		}
 	};
 
 	var loc_getProcessNameByLifecycle = function(lifecycleName){ return node_basicUtility.buildNosliwFullName(lifecycleName);	};

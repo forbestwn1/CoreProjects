@@ -188,7 +188,7 @@ var node_createAppDecoration = function(gate){
 			if(eventName=="nosliw_module_setting_submitSetting"){
 				var moduleInfo = loc_getModuleInfoByEventInfo(eventData);
 				loc_uiApp.setCurrentModuleInfo(ROLE_SETTING, moduleInfo.id);
-				var processRequest = loc_gate.getExecuteProcessResourceRequest("applicationsetting;submitsetting", undefined, undefined, request);
+				var processRequest = loc_gate.getExecuteProcessResourceRequest("@submitsetting;applicationsetting", undefined, undefined, request);
 				node_requestServiceProcessor.processRequest(processRequest);
 			}
 			else if(eventName=="nosliw_module_setting_deleteSetting"){

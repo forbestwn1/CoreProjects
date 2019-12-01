@@ -55,7 +55,7 @@
 					"name": "updateApplication",
 					"type": "UI_executeCommand",
 					"partId": "module.application",
-					"command": "lifecycle.restart",
+					"command": "nosliw_lifecycle_restart",
 					"result": [{
 						"name": "success",
 						"flow": {
