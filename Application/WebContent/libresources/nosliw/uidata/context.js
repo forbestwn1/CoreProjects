@@ -244,7 +244,7 @@ var node_createContext = function(id, elementInfosArray, request){
 		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		
 		getUpdateContextRequest : function(values, handlers, requestInfo){
-//			loc_out.prv_valueChangeEventEnable = false;
+			loc_out.prv_valueChangeEventEnable = false;
 			var that = this;
 			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
 			outRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
@@ -252,7 +252,7 @@ var node_createContext = function(id, elementInfosArray, request){
 			}));
 			var setRequest = node_createServiceRequestInfoSet({}, {
 				success : function(requestInfo, result){
-//					loc_out.prv_valueChangeEventEnable = true;
+					loc_out.prv_valueChangeEventEnable = true;
 				}
 			});
 			

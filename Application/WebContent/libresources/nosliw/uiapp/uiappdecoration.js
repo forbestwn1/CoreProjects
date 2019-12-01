@@ -40,7 +40,7 @@ var node_createAppDecoration = function(gate){
 	
 	var loc_getOwnerInfo = function(appDataName){	return loc_uiApp.prv_componentData.appDataOwnerInfo[appDataName]; }; 
 	
-	var loc_settingParentView = loc_moduleDefInfoByRole[ROLE_SETTING].configure.getConfigureValue().root;
+	var loc_settingParentView;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -164,6 +164,9 @@ var node_createAppDecoration = function(gate){
 		
 		var moduleDefInfo = loc_moduleDefInfoByRole[ROLE_SETTING];
 		if(moduleDefInfo!=undefined){
+			
+			loc_settingParentView = loc_moduleDefInfoByRole[ROLE_SETTING].configure.getConfigureValue().root;
+			
 			var moduleDef = moduleDefInfo.moduleDef;
 			var appDataName = loc_getSettingModuleAppName(); 
 			

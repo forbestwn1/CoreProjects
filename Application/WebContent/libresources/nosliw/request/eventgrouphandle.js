@@ -56,8 +56,8 @@ var node_createRequestEventGroupHandler = function(eventHandler, thisContext){
 		if(request==undefined){
 			loc_requesters[requestId] = rootRequest;
 			rootRequest.registerEventListener(loc_eventObject, function(e, data, req){
-//				if(e==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
-				if(e==node_CONSTANT.REQUEST_EVENT_DONE){
+				if(e==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
+//				if(e==node_CONSTANT.REQUEST_EVENT_DONE){
 					if(loc_requesters[requestId]!=undefined){
 						delete loc_requesters[requestId];
 						rootRequest.unregisterEventListener(loc_eventObject);

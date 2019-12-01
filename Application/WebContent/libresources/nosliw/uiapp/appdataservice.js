@@ -48,7 +48,8 @@ var node_createAppDataInfoContainer = function(appDataInfoContainerResponse){
 	};
 	
 	var loc_getAppData = function(ownerInfo, dataName){
-		return loc_getAppDataInfo(ownerInfo, dataName)[node_COMMONATRIBUTECONSTANT.APPDATAINFO_DATA];
+		var appDataInfo = loc_getAppDataInfo(ownerInfo, dataName);
+		return appDataInfo[node_COMMONATRIBUTECONSTANT.APPDATAINFO_DATA];
 	};
 	
 	var loc_buildAppDataSegmentInfoArray = function(appData, ownerInfo, dataName){
