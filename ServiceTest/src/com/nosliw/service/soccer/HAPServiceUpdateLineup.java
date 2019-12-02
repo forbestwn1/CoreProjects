@@ -34,6 +34,8 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 	synchronized public HAPResultService execute(Map<String, HAPData> parms){
 		String actionStr = null;
 		String statusStr = null;
+		String oweToStr = "";
+		String oweFromStr = "";
 		if(parms.get("player")!=null) {
 			String player = (String)parms.get("player").getValue();
 			
@@ -59,6 +61,16 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 				if(actionResult.getAffectedPlayer()!=null)  affectedPlayers.addAll(actionResult.getAffectedPlayer());
 				this.sendEmailToPlayers(affectedPlayers);
 			}
+			
+			
+			HAPPlayerResult oweFrom = playerStatus.getOweFrom();
+			if(oweFrom!=null) {
+				oweFromStr = "应从 " + oweFrom.getPlayerName() + " 收取" + "$20";
+			}
+			HAPPlayerResult oweTo = playerStatus.getOweTo();
+			if(oweTo!=null) {
+				oweToStr = "应付给 " + oweTo.getPlayerName() + "$20 email 地址为 " + oweTo.emailStr();
+			}
 		}
 		else {
 			actionStr = "";
@@ -68,6 +80,9 @@ public class HAPServiceUpdateLineup implements HAPExecutableService, HAPProvider
 		Map<String, HAPData> output = new LinkedHashMap<String, HAPData>();
 		output.put("action", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), actionStr));
 		output.put("status", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), statusStr));
+		output.put("oweTo", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), oweToStr));
+		output.put("oweFrom", new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), oweFromStr));
+		
 		return HAPUtilityService.generateSuccessResult(output);
 	}
 	

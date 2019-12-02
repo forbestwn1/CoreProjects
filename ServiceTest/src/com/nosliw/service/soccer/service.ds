@@ -35,6 +35,12 @@
 						},
 						"status": {
 							"criteria" : "test.string;1.0.0"
+						},
+						"oweTo": {
+							"criteria" : "test.string;1.0.0"
+						},
+						"oweFrom": {
+							"criteria" : "test.string;1.0.0"
 						}
 					},			
 				}

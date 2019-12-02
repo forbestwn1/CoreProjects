@@ -51,15 +51,18 @@ public class HAPPlayerLineup extends HAPExecutableImp{
 	private List<HAPSpot> m_lineUp;
 	
 	private List<Integer> m_vacant;
+	
+	private HAPPlayerManager m_playerMan;
 
-	public HAPPlayerLineup() {
+	public HAPPlayerLineup(HAPPlayerManager playerMan) {
+		this.m_playerMan = playerMan;
 		this.m_waitingList = new ArrayList<String>();
 		this.m_vacant = new ArrayList<Integer>();
 		this.m_lineUp = new ArrayList<HAPSpot>();
 	}
 
-	public HAPPlayerLineup(List<String> players) {
-		this();
+	public HAPPlayerLineup(List<String> players, HAPPlayerManager playerMan) {
+		this(playerMan);
 		for(String player : players) {
 			this.m_lineUp.add(new HAPSpot(player));
 		}
@@ -163,10 +166,51 @@ public class HAPPlayerLineup extends HAPExecutableImp{
 				status = STATUS_NOTHING;
 			}
 		}
-		return new HAPPlayerStatus(status, statusData, m_validActions.get(status));
+		
+		return new HAPPlayerStatus(status, statusData, m_validActions.get(status), this.findOweTo(player), this.findOweFrom(player));
 	}
 
+	private HAPPlayerResult findOweTo(String player) {
+		HAPPlayerResult out = null;
+		HAPSpot currentSpot = this.getSpotByCurrent(player);
+		if(currentSpot!=null) {
+			if(!currentSpot.getOriginalPlayer().equals(player)) {
+				out = new HAPPlayerResult(currentSpot.getOriginalPlayer(), this.m_playerMan.getPlayerInfo(currentSpot.getOriginalPlayer()));
+			}
+		}
+		return out;
+	}
+	
+	private HAPPlayerResult findOweFrom(String player) {
+		HAPPlayerResult out = null;
+		HAPSpot orgSpot = this.getSpotByOriginal(player);
+		if(orgSpot!=null) {
+			String replacePlayer = orgSpot.replacedBy();
+			if(!player.equals(replacePlayer)) {
+				out = new HAPPlayerResult(replacePlayer, this.m_playerMan.getPlayerInfo(replacePlayer));
+			}
+		}
+		return out;
+	}
 
+	private HAPSpot getSpotByCurrent(String player) {
+		for(HAPSpot spot : this.m_lineUp) {
+			if(player.equals(spot.getPlayer())) {
+				return spot;
+			}
+		}
+		return null;
+	}
+	
+	private HAPSpot getSpotByOriginal(String player) {
+		for(HAPSpot spot : this.m_lineUp) {
+			if(player.equals(spot.getOriginalPlayer())) {
+				return spot;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(WAITINGLIST, HAPJsonUtility.buildJson(this.m_waitingList, HAPSerializationFormat.JSON));

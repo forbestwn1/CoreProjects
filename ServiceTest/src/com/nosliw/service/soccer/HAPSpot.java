@@ -29,10 +29,16 @@ public class HAPSpot extends HAPExecutableImp{
 		this.m_players = new ArrayList<String>();
 	}
 
+	public String getOriginalPlayer() {return this.m_players.get(0); }
 	public List<String> getPlayers(){   return this.m_players;   }
 	public String getPlayer() {   return this.m_players.get(this.m_players.size()-1);    }
 	
 	public void addPlayer(String player) {   this.m_players.add(player);   }
+	
+	public String replacedBy() {   
+		if(this.m_players.size()<=1)  return null;
+		else return this.getPlayer();
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

@@ -31,6 +31,14 @@
 			 
 			你可以选择:<a href='' nosliw-event="click:update:"><%=?(action)?.value%></a>
 
+			<br>
+			<br>
+			<br>
+			<%=?(oweTo)?.value%>
+			<br>
+			<br>
+			<%=?(oweFrom)?.value%>
+			<br>
 
 </body>
 
@@ -54,6 +62,16 @@
 						},
 					},
 					"action" : {
+						"definition" : {
+							"criteria":"test.string;1.0.0"
+						},
+					},
+					"oweTo" : {
+						"definition" : {
+							"criteria":"test.string;1.0.0"
+						},
+					},
+					"oweFrom" : {
 						"definition" : {
 							"criteria":"test.string;1.0.0"
 						},
@@ -135,6 +153,16 @@
 								"action" : {
 									"definition" : {
 										"path" : "action"
+									}
+								},
+								"oweTo" : {
+									"definition" : {
+										"path" : "oweTo"
+									}
+								},
+								"oweFrom" : {
+									"definition" : {
+										"path" : "oweFrom"
 									}
 								},
 							}
