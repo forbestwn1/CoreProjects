@@ -65,7 +65,7 @@ nosliw.utility = function(){
 		},
 		
 		//load librarys by name
-		requestLoadLibraryResources : function(libNames, callBackFunction){
+		requestLoadLibraryResources : function(libNames, version, callBackFunction){
 			var resourceIds = [];
 			for(var i in libNames){
 				resourceIds.push({
@@ -77,7 +77,8 @@ nosliw.utility = function(){
 				"loadlib", 
 				"requestLoadLibraryResources", 
 				{
-					"resourceIds" : resourceIds
+					"resourceIds" : resourceIds,
+					"version" : version
 				}, 
 				function(serviceData){return serviceData.data.data;}, 
 				callBackFunction);

@@ -34,7 +34,7 @@ nosliw.init = function(configure){
 		"nosliw.framework7",
 	];
 
-	nosliw.utility.requestLoadLibraryResources(libNames, function(){
+	nosliw.utility.requestLoadLibraryResources(libNames, configure.version, function(){
 		  nosliw.registerNodeEvent("runtime", "active",
 					function(eventName, nodeName) {
 				  		$(document).trigger("nosliwActive");

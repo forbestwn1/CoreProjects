@@ -22,8 +22,13 @@
 <div id="appDiv"/>
 
 <script>
-var appConfigure = buildApplicationConfigure();
-init(document.getElementById("appDiv"), appConfigure.getEnvironment(), appConfigure.getApplicationConfigureName(), appConfigure.getParms()); 
+
+var searchParams = new URLSearchParams(window.location.search);
+var parms = {};
+for (let p of searchParams) parms[p[0]] = p[1];
+
+var appConfigure = buildApplicationConfigure(parms);
+init(document.getElementById("appDiv"), appConfigure.getEnvironment(), appConfigure.getApplicationConfigureName(), appConfigure.getVersion(), appConfigure.getParms(), undefined); 
 </script>
 
 </html>

@@ -12,6 +12,10 @@ import java.util.Set;
 
 public class HAPBasicUtility {
 
+	public static String addVersionToUrl(String url, String version) {
+		return url+"?version="+version;
+	}
+	
 	public static String toString(Exception e) {
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter printWriter = new PrintWriter(stringWriter);

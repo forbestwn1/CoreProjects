@@ -1,7 +1,7 @@
 /**
  * 
  */
-var init = function(rootNode, env, configureName, dataInput, callBackFunction){
+var init = function(rootNode, env, configureName, version, dataInput, callBackFunction){
 
 	var baseServer = env.nosliw_address+':'+env.nosliw_port+'/'+env.nosliw_context+'/';
 	
@@ -39,7 +39,7 @@ var init = function(rootNode, env, configureName, dataInput, callBackFunction){
 		var fileNumber = libs.length;
 
 		var loadScriptInOrder = function(){
-			var url = libs[count];
+			var url = libs[count] + "?version="+version;    //attach version information to disable cache in browser 
 			
 			var script = document.createElement('script');
 			script.setAttribute('src', url);
@@ -133,7 +133,8 @@ var init = function(rootNode, env, configureName, dataInput, callBackFunction){
 	}
 	loadLibrary(libs, function(){
 		nosliw.init({
-			serverBase:baseServer
+			serverBase:baseServer,
+			version : version
 		});
 	});
 };

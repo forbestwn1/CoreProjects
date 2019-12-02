@@ -186,7 +186,7 @@ public class HAPPlayerLineup extends HAPExecutableImp{
 		HAPSpot orgSpot = this.getSpotByOriginal(player);
 		if(orgSpot!=null) {
 			String replacePlayer = orgSpot.replacedBy();
-			if(!player.equals(replacePlayer)) {
+			if(replacePlayer!=null && !player.equals(replacePlayer)) {
 				out = new HAPPlayerResult(replacePlayer, this.m_playerMan.getPlayerInfo(replacePlayer));
 			}
 		}

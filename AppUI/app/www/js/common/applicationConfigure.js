@@ -23,15 +23,9 @@ var loc_environments = {
 	},
 };
 
-var buildApplicationConfigure = function(){
+var buildApplicationConfigure = function(parms){
 
-	var loc_dataInput = {};
-	
-	//get all parms from url
-	var searchParams = new URLSearchParams(window.location.search);
-	for (let p of searchParams) {
-		loc_dataInput[p[0]] = p[1];
-	}
+	var loc_dataInput = parms;
 	
 	var loc_getParm = function(name, defaultValue){
 		var value = loc_dataInput[name];
@@ -51,6 +45,8 @@ var buildApplicationConfigure = function(){
 			var envName =  loc_getParm("env", "product");
 			return loc_environments[envName];
 		},
+		
+		getVersion : function(){ return loc_getParm("version", "0.0.0");     },
 		
 		getParms : function(){   return loc_dataInput;  },
 	};

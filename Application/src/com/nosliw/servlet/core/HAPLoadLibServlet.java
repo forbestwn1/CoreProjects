@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSystemUtility;
@@ -36,10 +37,11 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 		HAPRequestInfo requestInfo = new HAPRequestInfo(request);
 		HAPServiceData serviceData = null;
 		try {
+			JSONObject parmsJson = new JSONObject(requestInfo.getParms());
 			serviceData = this.getRuntimeEnvironment().getGatewayManager().executeGateway(
 					HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, 
 					HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, 
-					new JSONObject(requestInfo.getParms()), 
+					parmsJson, 
 					new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_BROWSER));
 
 			if(HAPSystemUtility.getConsolidateLib()) {
@@ -54,7 +56,9 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 					HAPFileUtility.writeFile(HAPSystemUtility.getJSTempFolder()+"libs/"+m_libraryTempFile, libraryContent.toString());
 				}
 				List<String> tempNames = new ArrayList<String>();
-				tempNames.add("temp/libs/"+this.m_libraryTempFile);
+				String libUrl = "temp/libs/"+this.m_libraryTempFile;
+				String libUrlWithVersion = HAPBasicUtility.addVersionToUrl(libUrl, parmsJson.optString(HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY_VERSION));
+				tempNames.add(libUrlWithVersion);
 				serviceData = HAPServiceData.createSuccessData(new HAPGatewayOutput(null, tempNames));
 			}
 		}
