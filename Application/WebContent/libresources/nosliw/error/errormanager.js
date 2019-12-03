@@ -31,10 +31,10 @@ var node_createErrorManager = function(){
 	
 	var loc_buildErrorEle = function(error){
 		try{
-//			var stackStr = JSON.stringify(error.stack);
+			var stackStr = JSON.stringify(error.stack);
 		}
 		catch(e){
-			
+			alert("kkkkkkkkkk");
 		}
 		
 		var out = {

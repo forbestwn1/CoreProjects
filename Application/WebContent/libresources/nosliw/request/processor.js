@@ -77,10 +77,10 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 			}
 		}
 		catch(err){
-			alert("kkkkkk");
+//			alert("kkkk");
 			
-//			nosliw.runtime.getErrorManager().logError(err);
-//			request.errorFinish(node_requestProcessErrorUtility.createRequestProcessErrorServiceData(err));
+			nosliw.runtime.getErrorManager().logError(err);
+			request.errorFinish(node_requestProcessErrorUtility.createRequestProcessErrorServiceData(err));
 		}
 	}
 	else{

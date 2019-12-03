@@ -170,12 +170,12 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			return loc_callHandler(requestFinishInfo.finishType, requestFinishInfo.thisContext, requestFinishInfo.data);
 		}
 		catch(err){
-			alert("kkkkkk");
-//			nosliw.runtime.getErrorManager().logError(err);
-//			if(requestFinishInfo.finishType==node_CONSTANT.REQUEST_FINISHTYPE_SUCCESS){
-//				loc_requestFinish(new node_RequestFinishInfo(node_CONSTANT.REQUEST_FINISHTYPE_ERROR, node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err), requestFinishInfo.thisContext));
-//			}
-////			loc_out.errorFinish(node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err));
+//			alert("kkkkkk");
+			nosliw.runtime.getErrorManager().logError(err);
+			if(requestFinishInfo.finishType==node_CONSTANT.REQUEST_FINISHTYPE_SUCCESS){
+				loc_requestFinish(new node_RequestFinishInfo(node_CONSTANT.REQUEST_FINISHTYPE_ERROR, node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err), requestFinishInfo.thisContext));
+			}
+//			loc_out.errorFinish(node_requestProcessErrorUtility.createRequestHandleErrorServiceData(err));
 		}
 	}; 
 	
