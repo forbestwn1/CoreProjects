@@ -30,18 +30,22 @@ var node_createErrorManager = function(){
 	};
 	
 	var loc_buildErrorEle = function(error){
-		alert("kkk");
+		alert("kkk start process error");
 		try{
 			var stackStr = JSON.stringify(error.stack);
 		}
 		catch(e){
-			alert("kkkkkkkkkk");
+			alert("kkkkkkkkkk catch");
 		}
-		
+
+		alert("kkk after catch error");
+
 		var out = {
 //			error : stackStr,
 			line : error.lineNumber
 		};
+		alert("kkk before exit process error");
+
 		return out;
 	};
 	
