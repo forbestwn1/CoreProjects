@@ -16,6 +16,8 @@ var node_createErrorManager = function(){
 	};
 	
 	var loc_addErrorToStorage = function(error){
+		return error;  //kkkk
+		
 		if(typeof localStorage !== 'undefined'){
 			var errorData = loc_getErrorFromStorage();
 			if(errorData==undefined) errorData = [];
@@ -30,23 +32,23 @@ var node_createErrorManager = function(){
 	};
 	
 	var loc_buildErrorEle = function(error){
-		alert("kkk start process error");
+//		alert("kkk start process error");
 		try{
 			var stackStr = JSON.stringify(error.stack);
 		}
 		catch(e){
-			alert("kkkkkkkkkk catch"+stackStr);
+//			alert("kkkkkkkkkk catch"+stackStr);
 		}
 
-		alert("kkk after catch error"+stackStr);
+//		alert("kkk after catch error"+stackStr);
 
 		var out = {
 			error : stackStr,
 //			line : error.lineNumber
 		};
-		alert("kkk before exit process error");
+//		alert("kkk before exit process error");
 
-		return out;
+		return stackStr;
 	};
 	
 	var loc_clearErrorInStorage = function(){
@@ -64,6 +66,7 @@ var node_createErrorManager = function(){
 	
 	var loc_logError = function(errorData){
 		//gateway request
+		alert("kkk log error "+errorData);
 		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_ERRORLOG;
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYERRORLOGGER_COMMAND_LOGERRRO;
 		var parms = {};
