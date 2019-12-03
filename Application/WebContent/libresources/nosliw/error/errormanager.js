@@ -19,9 +19,17 @@ var node_createErrorManager = function(){
 			var errorData = loc_getErrorFromStorage();
 			if(errorData==undefined) errorData = [];
 			
+			try{
+				var stackStr = JSON.stringify(error.stack);
+			}
+			catch(e){
+				
+			}
+			
 			errorData.push({
 				time : new Date(),
-				error : error.stack,
+				error : stackStr,
+				line : e.lineNumber
 			});
 			localStorage.errorData = JSON.stringify(errorData);
 			return errorData;

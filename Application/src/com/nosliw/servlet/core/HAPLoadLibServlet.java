@@ -51,7 +51,13 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 					List<String> fileNames = (List<String>)gatewayOutput.getData();
 					StringBuffer libraryContent = new StringBuffer();
 					for(String fileName : fileNames) {
-						libraryContent.append(HAPFileUtility.readFile(HAPFileUtility.getJSFolder()+fileName));
+						//remove version part in file url first
+						String file1 = fileName; 
+						int i = fileName.indexOf("?");
+						if(i!=-1) {
+							file1 = fileName.substring(0, i);
+						}
+						libraryContent.append(HAPFileUtility.readFile(HAPFileUtility.getJSFolder()+file1));
 					}
 					HAPFileUtility.writeFile(HAPSystemUtility.getJSTempFolder()+"libs/"+m_libraryTempFile, libraryContent.toString());
 				}
