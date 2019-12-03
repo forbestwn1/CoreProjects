@@ -38,7 +38,7 @@ var node_createErrorManager = function(){
 			alert("kkkkkkkkkk catch"+stackStr);
 		}
 
-		alert("kkk after catch error");
+		alert("kkk after catch error"+stackStr);
 
 		var out = {
 //			error : stackStr,
