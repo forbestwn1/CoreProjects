@@ -64,9 +64,25 @@ var node_createErrorManager = function(){
 		}
 	};
 	
+	
+	var kkkkk = 0;
+	
 	var loc_logError = function(errorData){
 		//gateway request
 		alert("kkk log error "+errorData);
+		
+		if(kkkkk==0){
+			var el = document.createElement('textarea');
+			  el.value = errorData;
+			  document.body.appendChild(el);
+			  el.select();
+			  document.execCommand('copy');
+			  document.body.removeChild(el);
+			  kkkkk++;
+		}
+		
+		
+		
 		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_ERRORLOG;
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYERRORLOGGER_COMMAND_LOGERRRO;
 		var parms = {};
