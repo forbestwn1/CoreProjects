@@ -72,6 +72,7 @@ var node_createErrorManager = function(){
 		alert("kkk log error "+errorData);
 		
 		if(kkkkk==0){
+			alert("kkk paste error "+errorData);
 			var el = document.createElement('textarea');
 			  el.value = errorData;
 			  document.body.appendChild(el);
@@ -79,6 +80,7 @@ var node_createErrorManager = function(){
 			  document.execCommand('copy');
 			  document.body.removeChild(el);
 			  kkkkk++;
+				alert("kkk end paste error "+errorData);
 		}
 		
 		
