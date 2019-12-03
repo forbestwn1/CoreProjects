@@ -71,4 +71,7 @@ public class HAPSystemUtility {
 		}
 		return out;
 	}
+	public static String getLoadResourceByFileMode() {
+		return prop.getProperty("LoadResourceByFileMode");
+	}
 }

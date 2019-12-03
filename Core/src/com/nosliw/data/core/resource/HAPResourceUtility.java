@@ -11,8 +11,16 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 
 public class HAPResourceUtility {
 
+	public final static String LOADRESOURCEBYFILE_MODE_NEVER = "never";
+	public final static String LOADRESOURCEBYFILE_MODE_ALWAYS = "always";
+	public final static String LOADRESOURCEBYFILE_MODE_DEPENDS = "depends";
+	
 	private final static Set<String> loadResourceByFile = HAPSystemUtility.getLoadResoureByFile();
 	public static boolean isLoadResoureByFile(String resourceType) {
+		String mode = HAPSystemUtility.getLoadResourceByFileMode();
+		if(mode==null)  mode = LOADRESOURCEBYFILE_MODE_DEPENDS;
+		if(LOADRESOURCEBYFILE_MODE_NEVER.equals(resourceType))  return false;
+		if(LOADRESOURCEBYFILE_MODE_ALWAYS.equals(resourceType))  return true;
 		return loadResourceByFile.contains(resourceType);
 	}
 	
