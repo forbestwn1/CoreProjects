@@ -30,6 +30,7 @@ var node_createErrorManager = function(){
 	};
 	
 	var loc_buildErrorEle = function(error){
+		alert("kkk");
 		try{
 			var stackStr = JSON.stringify(error.stack);
 		}
