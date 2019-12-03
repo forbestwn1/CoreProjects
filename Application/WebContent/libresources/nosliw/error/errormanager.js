@@ -11,6 +11,7 @@ var packageObj = library;
 
 var node_createErrorManager = function(){
 	
+	
 	var loc_init = function(){
 	};
 	
@@ -18,22 +19,29 @@ var node_createErrorManager = function(){
 		if(typeof localStorage !== 'undefined'){
 			var errorData = loc_getErrorFromStorage();
 			if(errorData==undefined) errorData = [];
-			
-			try{
-				var stackStr = JSON.stringify(error.stack);
-			}
-			catch(e){
-				
-			}
-			
+
 			errorData.push({
 				time : new Date(),
-				error : stackStr,
-				line : e.lineNumber
+				error : error,
 			});
 			localStorage.errorData = JSON.stringify(errorData);
 			return errorData;
 		}
+	};
+	
+	var loc_buildErrorEle = function(error){
+		try{
+//			var stackStr = JSON.stringify(error.stack);
+		}
+		catch(e){
+			
+		}
+		
+		var out = {
+//			error : stackStr,
+			line : error.lineNumber
+		};
+		return out;
 	};
 	
 	var loc_clearErrorInStorage = function(){
@@ -66,11 +74,33 @@ var node_createErrorManager = function(){
 		});
 		node_requestServiceProcessor.processRequest(gatewayRequest);
 	};
-	
+
+	window.onerror = function(msg, url, line, col, error) {
+		   // Note that col & error are new to the HTML 5 spec and may not be 
+		   // supported in every browser.  It worked for me in Chrome.
+		   var extra = !col ? '' : '\ncolumn: ' + col;
+		   extra += !error ? '' : '\nerror: ' + error;
+
+		   // You can view the information in an alert to see things working like this:
+		   var error = "Error: " + msg + "\nurl: " + url + "\nline: " + line + extra;
+//		   alert(error);
+
+		   // TODO: Report this error via ajax so you can keep track
+		   //       of what pages have JS issues
+
+		   var suppressErrorAlert = true;
+		   // If you return true, then error alerts (like in older versions of 
+		   // Internet Explorer) will be suppressed.
+			var errorData = loc_addErrorToStorage(loc_buildErrorEle(error));
+			loc_logError(errorData);
+
+		   return suppressErrorAlert;
+		};
+
 	var loc_out = {
 		logError : function(error){
 			if (typeof console != "undefined") console.log(error);
-			var errorData = loc_addErrorToStorage(error);
+			var errorData = loc_addErrorToStorage(loc_buildErrorEle(error));
 			loc_logError(errorData);
 		},
 		logErrorIfHasAny : function(){

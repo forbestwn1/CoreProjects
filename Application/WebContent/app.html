@@ -40,6 +40,11 @@
 <script>
 
 //when nosliw active
+	window.onerror = function(msg, url, line, col, error) {
+		var bbbb = 5555;
+	
+	};
+
 $(document).on("nosliwActive", function(){
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
