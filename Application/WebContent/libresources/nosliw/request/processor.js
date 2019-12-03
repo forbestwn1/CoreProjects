@@ -55,7 +55,8 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 	var execute = request.getRequestExecuteInfo();
 	if(execute!=undefined){
 		//run execute function, return remote task info if have
-		try{
+//		try
+		{
 			var remoteTask = execute.execute(request);
 			//whether submit the remoteTask
 			if(remoteTask==undefined){
@@ -75,10 +76,10 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 				}
 			}
 		}
-		catch(err){
-			nosliw.runtime.getErrorManager().logError(err);
-			request.errorFinish(node_requestProcessErrorUtility.createRequestProcessErrorServiceData(err));
-		}
+//		catch(err){
+//			nosliw.runtime.getErrorManager().logError(err);
+//			request.errorFinish(node_requestProcessErrorUtility.createRequestProcessErrorServiceData(err));
+//		}
 	}
 	else{
 		var service = request.service;
