@@ -35,7 +35,7 @@ var node_createErrorManager = function(){
 			var stackStr = JSON.stringify(error.stack);
 		}
 		catch(e){
-			alert("kkkkkkkkkk catch");
+			alert("kkkkkkkkkk catch"+stackStr);
 		}
 
 		alert("kkk after catch error");
