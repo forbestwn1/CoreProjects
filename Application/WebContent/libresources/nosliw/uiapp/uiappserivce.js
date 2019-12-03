@@ -21,8 +21,8 @@ var packageObj = library.getChildPackage("service");
 
 var node_createUIAppService = function(){
 	
-    var kkkk = 5555;
-    kkkk.aaa.bbb = 5555;	
+//    var kkkk = 5555;
+//    kkkk.aaa.bbb = 5555;	
 
 	var loc_out = {
 
