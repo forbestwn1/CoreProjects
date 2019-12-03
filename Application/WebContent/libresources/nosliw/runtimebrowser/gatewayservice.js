@@ -71,6 +71,7 @@ var node_createGatewayService = function(){
 				requestInfo.successFinish();
 			}
 			catch(err){
+				alert(dataStr);
 				requestInfo.errorFinish(new node_ServiceData(nocd_constant.ERROR_PARSE_JAVASCRIPT, nocd_constant.ERROR_PARSE_JAVASCRIPT, dataStr));
 			}
 			
@@ -79,12 +80,12 @@ var node_createGatewayService = function(){
 		return out;
 		
 		
-		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("LoadScript", {"dataStr":dataStr}), 
-				function(requestInfo){  
-					eval(requestInfo.getService().parms.dataStr);  
-				}, 
-				handlers, requester_parent);
-		return out;
+//		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("LoadScript", {"dataStr":dataStr}), 
+//				function(requestInfo){  
+//					eval(requestInfo.getService().parms.dataStr);  
+//				}, 
+//				handlers, requester_parent);
+//		return out;
 	};
 	
 	var loc_out = {
