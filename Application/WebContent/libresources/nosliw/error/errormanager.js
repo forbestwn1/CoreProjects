@@ -74,7 +74,7 @@ var node_createErrorManager = function(){
 		});
 		node_requestServiceProcessor.processRequest(gatewayRequest);
 	};
-
+/*
 	window.onerror = function(msg, url, line, col, error) {
 		   // Note that col & error are new to the HTML 5 spec and may not be 
 		   // supported in every browser.  It worked for me in Chrome.
@@ -96,7 +96,8 @@ var node_createErrorManager = function(){
 
 		   return suppressErrorAlert;
 		};
-
+*/
+	
 	var loc_out = {
 		logError : function(error){
 			if (typeof console != "undefined") console.log(error);
