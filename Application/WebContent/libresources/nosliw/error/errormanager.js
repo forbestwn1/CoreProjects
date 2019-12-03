@@ -41,8 +41,8 @@ var node_createErrorManager = function(){
 		alert("kkk after catch error"+stackStr);
 
 		var out = {
-//			error : stackStr,
-			line : error.lineNumber
+			error : stackStr,
+//			line : error.lineNumber
 		};
 		alert("kkk before exit process error");
 
