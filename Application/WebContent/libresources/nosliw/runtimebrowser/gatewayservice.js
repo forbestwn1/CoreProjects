@@ -78,14 +78,6 @@ var node_createGatewayService = function(){
 		}, out));
 
 		return out;
-		
-		
-//		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("LoadScript", {"dataStr":dataStr}), 
-//				function(requestInfo){  
-//					eval(requestInfo.getService().parms.dataStr);  
-//				}, 
-//				handlers, requester_parent);
-//		return out;
 	};
 	
 	var loc_out = {
