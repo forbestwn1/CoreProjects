@@ -4,6 +4,7 @@ var packageObj = library.getChildPackage("loggingservice");
 (function(packageObj){
 	//get used node
 	var node_runtimeName;
+	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -69,12 +70,20 @@ var node_createLoggingService = function(){
 	};
 	
 	var loc_isLoggingEnable = function(level, module){
+		
 		var loggingConfigure = nosliw.getConfigureValue("logging", {
+			mode : node_CONSTANT.LOGGING_MODE_NONE, 
 			level : 1,
 			module : [],
 		});
-		for(var i in loggingConfigure.module){
-			if(loggingConfigure.module[i]==module)  return true;
+		var mode = loggingConfigure.mode;
+		if(mode==undefined)  mode = node_CONSTANT.LOGGING_MODE_DEPEND;
+		if(mode==node_CONSTANT.LOGGING_MODE_NONE)  return false;
+		if(mode==node_CONSTANT.LOGGING_MODE_ALL)  return true;
+		if(mode==node_CONSTANT.LOGGING_MODE_DEPEND){
+			for(var i in loggingConfigure.module){
+				if(loggingConfigure.module[i]==module)  return true;
+			}
 		}
 	};
 	
@@ -106,6 +115,7 @@ var node_createLoggingService = function(){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("runtime.name", function(){node_runtimeName = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createLoggingService", node_createLoggingService); 

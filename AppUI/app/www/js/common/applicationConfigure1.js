@@ -12,6 +12,9 @@ var loc_environments = {
 		library : [
 			'libresources/external/log4javascript/1.0.0/log4javascript.js'
 		],
+		logging : {
+			module : ["process", "requestInfo", "requestManager"],
+		}
 	},
 	test : {
 		nosliw_address : 'http://www.lastkilometer.ca',

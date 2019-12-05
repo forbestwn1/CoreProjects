@@ -43,12 +43,13 @@ var node_createErrorManager = function(){
 //		alert("kkk after catch error"+stackStr);
 
 		var out = {
-			error : stackStr,
-//			line : error.lineNumber
+				line : error.line,
+				message : error.message,
+			errorStack : JSON.stringify(error.stack),
 		};
 //		alert("kkk before exit process error");
 
-		return stackStr;
+		return out;
 	};
 	
 	var loc_clearErrorInStorage = function(){
@@ -68,6 +69,8 @@ var node_createErrorManager = function(){
 	var kkkkk = 0;
 	
 	var loc_logError = function(errorData){
+		errorData = JSON.stringify(errorData);
+		
 		//gateway request
 		alert("kkk log error "+errorData);
 		

@@ -123,9 +123,9 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	};
 
 	//initiate context data set with input value
-	var loc_initContextIODataSet = function(input){
+	var loc_initContextIODataSet = function(input, request){
 		var data = loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input);
-		loc_out.prv_componentData.contextDataSet.setData(undefined, data);
+		loc_out.prv_componentData.contextDataSet.setData(undefined, data, request);
 	};
 
 	//initiate context data set with inputIO
@@ -134,12 +134,12 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		if(loc_inputIO!=undefined){
 			out.addRequest(loc_inputIO.getGetDataValueRequest(undefined, {
 				success : function(request, data){
-					loc_initContextIODataSet(data);
+					loc_initContextIODataSet(data, request);
 				}
 			}));
 		}
 		else{
-			loc_initContextIODataSet();
+			loc_initContextIODataSet(undefined, request);
 		}
 		return out;
 	};

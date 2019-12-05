@@ -262,6 +262,9 @@ var node_CONSTANT=
 
 	  "EVENT_UIMODULE_UI_VALUE_CHANGE" : "uimodule_ui_value_change",
 	  
+	  "LOGGING_MODE_ALL" : "all",
+	  "LOGGING_MODE_NONE" : "none",
+	  "LOGGING_MODE_DEPEND" : "depend",
 };
 
 //*******************************************   End Node Definition  ************************************** 	

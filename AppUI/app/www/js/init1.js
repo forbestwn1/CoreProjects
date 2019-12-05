@@ -134,7 +134,8 @@ var init = function(rootNode, env, configureName, version, dataInput, callBackFu
 	loadLibrary(libs, function(){
 		nosliw.init({
 			serverBase:baseServer,
-			version : version
+			version : version,
+			logging : env.logging,
 		});
 	});
 };
