@@ -114,7 +114,7 @@
 			var requestInfo = env.getServiceRequest("updateLineupService", {
 				success : function(request){
 				}
-			});
+			}, request);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 		
