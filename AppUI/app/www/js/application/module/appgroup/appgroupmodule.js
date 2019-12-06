@@ -11,6 +11,7 @@ var packageObj = library.getChildPackage("module.appgroup");
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSequence;
 	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoCommon;
 	var node_makeObjectWithName;
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
@@ -36,6 +37,7 @@ var node_createModuleAppGroup = function(parm){
 	var loc_vue;
 
 	var loc_triggerEvent = function(eventName, eventData, request){
+		if(request==undefined)  request = node_createServiceRequestInfoCommon();
 		loc_eventSource.triggerEvent(eventName, eventData, request);
 	};
 	
@@ -108,6 +110,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){	node_createServiceRequestInfoCommon = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
