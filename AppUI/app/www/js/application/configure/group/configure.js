@@ -9,7 +9,7 @@ var modulesInfo = [
 			module.registerEventListener(undefined, function(eventName, eventData, request){
 				if(eventName=="selectMiniApp"){
 					eventData.setGroupId(env.getData("groupId"));
-					env.getModule("mini-app").executeRefreshRequest(eventData, request);
+					env.getModule("mini-app").executeRefreshRequest(eventData, undefined, request);
 				}
 			});
 		}
