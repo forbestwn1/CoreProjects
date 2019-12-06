@@ -69,22 +69,22 @@ var node_createErrorManager = function(){
 	var kkkkk = 0;
 	
 	var loc_logError = function(errorData){
-		errorData = JSON.stringify(errorData);
+		errorData = JSON.stringify([errorData]);
 		
 		//gateway request
 		alert("kkk log error "+errorData);
 		
-		if(kkkkk==0){
-			alert("kkk paste error "+errorData);
-			var el = document.createElement('textarea');
-			  el.value = errorData;
-			  document.body.appendChild(el);
-			  el.select();
-			  document.execCommand('copy');
-			  document.body.removeChild(el);
-			  kkkkk++;
-				alert("kkk end paste error "+errorData);
-		}
+//		if(kkkkk==0){
+//			alert("kkk paste error "+errorData);
+//			var el = document.createElement('textarea');
+//			  el.value = errorData;
+//			  document.body.appendChild(el);
+//			  el.select();
+//			  document.execCommand('copy');
+//			  document.body.removeChild(el);
+//			  kkkkk++;
+//				alert("kkk end paste error "+errorData);
+//		}
 		
 		
 		
