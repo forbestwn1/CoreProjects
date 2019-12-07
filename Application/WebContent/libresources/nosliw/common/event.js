@@ -83,7 +83,7 @@ var packageObj = library.getChildPackage("event");
 				 * register listener to source
 				 * 		listener : event object
 				 */
-				registerListener : function(eventName, listener, handler, thisContext){
+				registerListener : function(eventName, listener, handler, thisContext, asyn){
 					var that = thisContext;
 					if(that==undefined){
 						if(this.getBaseObject!=null)   that = this.getBaseObject();
@@ -102,11 +102,27 @@ var packageObj = library.getChildPackage("event");
 					}
 					
 					listener.pri_getBackboneEventObj().listenTo(loc_backboneEventObj, eventName, function(parm1, parm2){
-						//within this method, "this" refer to listenerEventObj
-						//we need to set "this" as source
-						var parms;
-						if(isAllEvent===true)		handler.apply(that, parm2);
-						else		handler.apply(that, parm1);
+						if(asyn==true){
+							var promise = new Promise(function(resolve, reject) {
+								  resolve({
+									  parm1 : parm1,
+									  parm2 : parm2
+								  });
+							});
+
+							promise.then(function(result) {
+								var parms;
+								if(isAllEvent===true)		handler.apply(that, result.parm2);
+								else		handler.apply(that, result.parm1);
+							}, function(err) {});
+						}
+						else{
+							//within this method, "this" refer to listenerEventObj
+							//we need to set "this" as source
+							var parms;
+							if(isAllEvent===true)		handler.apply(that, parm2);
+							else		handler.apply(that, parm1);
+						}
 					});
 					loc_listeners.push(listener);
 

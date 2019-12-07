@@ -289,7 +289,7 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		prv_transitSuccess : function(request){   loc_successTransit(request);	},
 		prv_transitFail : function(request){	loc_processStatuesResult(node_createErrorData(), request);	},
 
-		prv_registerEventListener : function(listener, handler, thisContext){	return loc_eventObj.registerListener(undefined, listener, handler, thisContext); },
+		prv_registerEventListener : function(listener, handler, thisContext){	return loc_eventObj.registerListener(undefined, listener, handler, thisContext, true); },
 		prv_unregisterEventListener : function(listener){	return loc_eventObj.unregister(listener); },
 
 		prv_finishTask : function(){  
