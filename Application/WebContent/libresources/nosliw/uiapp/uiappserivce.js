@@ -21,9 +21,6 @@ var packageObj = library.getChildPackage("service");
 
 var node_createUIAppService = function(){
 	
-//    var kkkk = 5555;
-//    kkkk.aaa.bbb = 5555;	
-
 	var loc_out = {
 
 		getGetUIAppEntryRuntimeRequest : function(id, app, configure, ioInput, state, handlers, request){

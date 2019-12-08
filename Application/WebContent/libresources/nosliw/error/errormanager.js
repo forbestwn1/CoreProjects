@@ -10,45 +10,49 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createErrorManager = function(){
-	
+	var loc_MAX_ERROR = 5;
 	
 	var loc_init = function(){
+		
+		//global error process
+		window.onerror = function(msg, url, line, col, error) {
+			var errorEle = {
+				type : "uncaughtError",
+				message : msg,
+				url : url,
+				line : line,
+				col :col,
+				error : loc_buildErrorEle(error),
+			};
+			var errorData = loc_addErrorToStorage(errorEle);
+			loc_logError(errorData);
+		   return true;
+		};
 	};
 	
-	var loc_addErrorToStorage = function(error){
-		return error;  //kkkk
-		
+	var loc_addErrorToStorage = function(errorEle){
 		if(typeof localStorage !== 'undefined'){
 			var errorData = loc_getErrorFromStorage();
 			if(errorData==undefined) errorData = [];
-
-			errorData.push({
-				time : new Date(),
-				error : error,
-			});
+			
+			errorData.push(errorEle);
+			if(errorData.length>loc_MAX_ERROR){
+				//keep less than max errors 
+				errorData = errorData.slice(0, errorData.length);
+			}
 			localStorage.errorData = JSON.stringify(errorData);
 			return errorData;
 		}
 	};
 	
 	var loc_buildErrorEle = function(error){
-//		alert("kkk start process error");
-		try{
-			var stackStr = JSON.stringify(error.stack);
-		}
-		catch(e){
-//			alert("kkkkkkkkkk catch"+stackStr);
-		}
-
-//		alert("kkk after catch error"+stackStr);
-
 		var out = {
-				line : error.line,
-				message : error.message,
+			name : error.name,
+			line : error.line,
+			message : error.message,
 			errorStack : JSON.stringify(error.stack),
+			time : new Date(),
 		};
-//		alert("kkk before exit process error");
-
 		return out;
 	};
 	
@@ -66,28 +70,8 @@ var node_createErrorManager = function(){
 	};
 	
 	
-	var kkkkk = 0;
-	
 	var loc_logError = function(errorData){
-		errorData = JSON.stringify([errorData]);
-		
 		//gateway request
-		alert("kkk log error "+errorData);
-		
-//		if(kkkkk==0){
-//			alert("kkk paste error "+errorData);
-//			var el = document.createElement('textarea');
-//			  el.value = errorData;
-//			  document.body.appendChild(el);
-//			  el.select();
-//			  document.execCommand('copy');
-//			  document.body.removeChild(el);
-//			  kkkkk++;
-//				alert("kkk end paste error "+errorData);
-//		}
-		
-		
-		
 		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_ERRORLOG;
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYERRORLOGGER_COMMAND_LOGERRRO;
 		var parms = {};
@@ -103,29 +87,6 @@ var node_createErrorManager = function(){
 		});
 		node_requestServiceProcessor.processRequest(gatewayRequest);
 	};
-/*
-	window.onerror = function(msg, url, line, col, error) {
-		   // Note that col & error are new to the HTML 5 spec and may not be 
-		   // supported in every browser.  It worked for me in Chrome.
-		   var extra = !col ? '' : '\ncolumn: ' + col;
-		   extra += !error ? '' : '\nerror: ' + error;
-
-		   // You can view the information in an alert to see things working like this:
-		   var error = "Error: " + msg + "\nurl: " + url + "\nline: " + line + extra;
-//		   alert(error);
-
-		   // TODO: Report this error via ajax so you can keep track
-		   //       of what pages have JS issues
-
-		   var suppressErrorAlert = true;
-		   // If you return true, then error alerts (like in older versions of 
-		   // Internet Explorer) will be suppressed.
-			var errorData = loc_addErrorToStorage(loc_buildErrorEle(error));
-			loc_logError(errorData);
-
-		   return suppressErrorAlert;
-		};
-*/
 	
 	var loc_out = {
 		logError : function(error){
@@ -133,6 +94,7 @@ var node_createErrorManager = function(){
 			var errorData = loc_addErrorToStorage(loc_buildErrorEle(error));
 			loc_logError(errorData);
 		},
+		
 		logErrorIfHasAny : function(){
 			var errorData = loc_getErrorFromStorage();
 			if(errorData!=undefined){

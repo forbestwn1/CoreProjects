@@ -77,8 +77,6 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 			}
 		}
 		catch(err){
-//			alert("kkkk");
-			
 			nosliw.runtime.getErrorManager().logError(err);
 			request.errorFinish(node_requestProcessErrorUtility.createRequestProcessErrorServiceData(err));
 		}
