@@ -14,20 +14,22 @@ var node_createErrorManager = function(){
 	
 	var loc_init = function(){
 		
-		//global error process
-		window.onerror = function(msg, url, line, col, error) {
-			var errorEle = {
-				type : "uncaughtError",
-				message : msg,
-				url : url,
-				line : line,
-				col :col,
-				error : loc_buildErrorEle(error),
+		if (typeof window != "undefined"){
+			//global error process
+			window.onerror = function(msg, url, line, col, error) {
+				var errorEle = {
+					type : "uncaughtError",
+					message : msg,
+					url : url,
+					line : line,
+					col :col,
+					error : loc_buildErrorEle(error),
+				};
+				var errorData = loc_addErrorToStorage(errorEle);
+				loc_logError(errorData);
+			   return true;
 			};
-			var errorData = loc_addErrorToStorage(errorEle);
-			loc_logError(errorData);
-		   return true;
-		};
+		}
 	};
 	
 	var loc_addErrorToStorage = function(errorEle){
