@@ -66,7 +66,7 @@ $(document).on("nosliwActive", function(){
 		dataView : $('#dataDebug').get(),
 		eventView : $('#eventDebug').get(),
 		resetView : $('#resetDebug').get(), 
-	}, configureParms, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, parms.module, undefined, parms.setting, {
+	}, configureParms, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, parms.name, undefined, parms.setting, {
 		success : function(request, componentObj){
 			var lifecycleObj = node_getComponentLifecycleInterface(componentObj);
 			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE);
