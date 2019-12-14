@@ -12,7 +12,7 @@ public class HAPResourceIdUIAppConfigure  extends HAPResourceId{
 	}
 	
 	public HAPResourceIdUIAppConfigure(String id){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE, id);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE, id, null);
 	}
 
 	@Override

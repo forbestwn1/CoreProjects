@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 @HAPEntityWithAttribute
@@ -45,7 +45,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	private HAPUITagDefinitionContext m_context;
 
 	//dependency resources
-	private List<HAPResourceDependent> m_resourceDependency;
+	private List<HAPResourceDependency> m_resourceDependency;
 
 	private List<HAPDefinitionUIEvent> m_eventsDefinition;
 	
@@ -57,7 +57,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 		this.m_script = new HAPScript(script);
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
 		this.m_context = new HAPUITagDefinitionContext();
-		this.m_resourceDependency = new ArrayList<HAPResourceDependent>();
+		this.m_resourceDependency = new ArrayList<HAPResourceDependency>();
 		this.m_eventsDefinition = new ArrayList<HAPDefinitionUIEvent>();
 	}
 	
@@ -67,8 +67,8 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	
 	public HAPUITagDefinitionContext getContext(){  return this.m_context;   }
 
-	public List<HAPResourceDependent> getResourceDependency(){   return this.m_resourceDependency;    }
-	public void addResourceDependency(HAPResourceDependent dep){  this.m_resourceDependency.add(dep);  }
+	public List<HAPResourceDependency> getResourceDependency(){   return this.m_resourceDependency;    }
+	public void addResourceDependency(HAPResourceDependency dep){  this.m_resourceDependency.add(dep);  }
 	
 	public File getSourceFile(){  return this.m_sourceFile;   }
 	public void setSourceFile(File file){   this.m_sourceFile = file;   }

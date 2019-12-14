@@ -17,11 +17,11 @@ public class HAPResourceIdProcess  extends HAPResourceId{
 	}
 	
 	public HAPResourceIdProcess(String idLiterate) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, idLiterate);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, idLiterate, null);
 	}
 
 	public HAPResourceIdProcess(HAPIdProcess processId){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, null);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, null, null);
 		this.m_processId = processId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(processId, HAPSerializationFormat.LITERATE); 
 	}
@@ -34,6 +34,7 @@ public class HAPResourceIdProcess  extends HAPResourceId{
 
 	public HAPIdProcess getProcessId(){  return this.m_processId;	}
 	
+	@Override
 	public HAPResourceIdProcess clone(){
 		HAPResourceIdProcess out = new HAPResourceIdProcess();
 		out.cloneFrom(this);

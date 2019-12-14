@@ -47,8 +47,8 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	
 	private HAPResourceId m_resourceId;
 	private HAPInfo m_info = new HAPInfoImpSimple();;
-	private List<HAPResourceDependent> m_dependency = new ArrayList<HAPResourceDependent>();
-	private List<HAPResourceDependent> m_children = new ArrayList<HAPResourceDependent>();
+	private List<HAPResourceDependency> m_dependency = new ArrayList<HAPResourceDependency>();
+	private List<HAPResourceDependency> m_children = new ArrayList<HAPResourceDependency>();
 	
 	public HAPResourceInfo(){	}
 	
@@ -69,11 +69,11 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	
 	public Object getInfoValue(String name){		return this.m_info.getValue(name);	}
 	
-	public List<HAPResourceDependent> getDependency(){  return this.m_dependency;  }
-	public void addDependency(HAPResourceDependent child){		this.m_dependency.add(child);	}
+	public List<HAPResourceDependency> getDependency(){  return this.m_dependency;  }
+	public void addDependency(HAPResourceDependency child){		this.m_dependency.add(child);	}
 	
-	public List<HAPResourceDependent> getChildren(){  return this.m_children;  }
-	public void addChild(HAPResourceDependent child){  this.m_children.add(child);  }
+	public List<HAPResourceDependency> getChildren(){  return this.m_children;  }
+	public void addChild(HAPResourceDependency child){  this.m_children.add(child);  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -81,7 +81,7 @@ public class HAPResourceInfo extends HAPSerializableImp{
 		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.getChildren(), HAPSerializationFormat.JSON));
 
 		Map<String, String> dependencyJsonMap = new LinkedHashMap<String, String>();
-		for(HAPResourceDependent dep : this.m_dependency){
+		for(HAPResourceDependency dep : this.m_dependency){
 			for(String alias : dep.getAlias()){
 				dependencyJsonMap.put(alias, dep.getId().toStringValue(HAPSerializationFormat.JSON));
 			}
@@ -97,18 +97,17 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	@Override
 	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_resourceId = new HAPResourceId();
-		this.m_resourceId.buildObject(jsonObj.optJSONObject(ID), HAPSerializationFormat.JSON);
+		this.m_resourceId = HAPResourceId.newInstance(jsonObj.optJSONObject(ID));
 		
 		JSONArray childrenArray = jsonObj.optJSONArray(CHILDREN);
 		for(int i=0; i<childrenArray.length(); i++){
 			JSONObject jsonChild = childrenArray.optJSONObject(i);
-			HAPResourceDependent childResourceId = new HAPResourceDependent();
+			HAPResourceDependency childResourceId = new HAPResourceDependency();
 			childResourceId.buildObject(jsonChild, HAPSerializationFormat.JSON_FULL);
 			this.addChild(childResourceId);
 		}
 
-		Map<String, HAPResourceDependent> dependencyByResourceId = new LinkedHashMap<String, HAPResourceDependent>();
+		Map<String, HAPResourceDependency> dependencyByResourceId = new LinkedHashMap<String, HAPResourceDependency>();
 		JSONObject dependencysObj = jsonObj.optJSONObject(DEPENDENCY);
 		if(dependencysObj!=null){
 			Iterator it = dependencysObj.keys();
@@ -116,13 +115,12 @@ public class HAPResourceInfo extends HAPSerializableImp{
 				try {
 					String alias = (String)it.next();
 
-					HAPResourceId resourceId = new HAPResourceId();
-					resourceId.buildObject(dependencysObj.getJSONObject(alias), HAPSerializationFormat.JSON);
+					HAPResourceId resourceId = HAPResourceId.newInstance(dependencysObj.getJSONObject(alias));
 					String resourceIdStr = resourceId.toStringValue(HAPSerializationFormat.JSON);
 					
-					HAPResourceDependent dependency = dependencyByResourceId.get(resourceIdStr);
+					HAPResourceDependency dependency = dependencyByResourceId.get(resourceIdStr);
 					if(dependency==null){
-						dependency = new HAPResourceDependent(resourceId);
+						dependency = new HAPResourceDependency(resourceId);
 						dependencyByResourceId.put(resourceIdStr, dependency);
 						this.addDependency(dependency);
 					}
@@ -145,6 +143,7 @@ public class HAPResourceInfo extends HAPSerializableImp{
 		return true; 
 	}
 	
+	@Override
 	public HAPResourceInfo clone(){
 		HAPResourceInfo out = new HAPResourceInfo();
 		out.cloneFrom(this);
@@ -153,10 +152,11 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	
 	protected void cloneFrom(HAPResourceInfo resourceInfo){
 		this.m_resourceId = resourceInfo.getId().clone();
-		for(HAPResourceDependent dependency : resourceInfo.getDependency())			this.addDependency(dependency.clone());
-		for(HAPResourceDependent child : resourceInfo.getChildren())			this.m_children.add(child.clone());
+		for(HAPResourceDependency dependency : resourceInfo.getDependency())			this.addDependency(dependency.clone());
+		for(HAPResourceDependency child : resourceInfo.getChildren())			this.m_children.add(child.clone());
 	}
 	
+	@Override
 	public boolean equals(Object obj){
 		boolean out = false;
 		if(obj instanceof HAPResourceInfo){

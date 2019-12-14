@@ -34,7 +34,7 @@ import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataHelperImp;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSConverterImp;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSOperationImp;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceHelper;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
@@ -116,7 +116,7 @@ public class HAPJSImporter {
 
 			//get all resources required by data type
 			NativeObject dataTypeRequiresObjJS = (NativeObject)dataTypeObjJS.get("requires");
-			Set<HAPResourceDependent> dataTypeResources = new HashSet<HAPResourceDependent>(); 
+			Set<HAPResourceDependency> dataTypeResources = new HashSet<HAPResourceDependency>(); 
         	for(Object requiredTypeObjJS : dataTypeRequiresObjJS.keySet()){
         		String requiredResourceType = (String)requiredTypeObjJS;
         		NativeObject requiresTypeObjectJS = (NativeObject)dataTypeRequiresObjJS.get(requiredResourceType);
@@ -124,7 +124,7 @@ public class HAPJSImporter {
         		for(Object requiredResourceKey : requiresTypeObjectJS.keySet()){
         			String requiredResourceName = (String) requiredResourceKey;
         			Object requiredResourceObjJS = requiresTypeObjectJS.get(requiredResourceName);
-        			HAPResourceDependent resourceId = this.processDependentResource(requiredResourceType, requiredResourceObjJS, requiredResourceName);
+        			HAPResourceDependency resourceId = this.processDependentResource(requiredResourceType, requiredResourceObjJS, requiredResourceName);
         			this.addDependentResourceIdToSet(resourceId, dataTypeResources);
         		}
         	}
@@ -148,7 +148,7 @@ public class HAPJSImporter {
         }
     }
 	
-	private HAPJSResourceDependency processOperationObject(NativeObject operationObjJS, HAPDataTypeId dataTypeId, String operationName, Set<HAPResourceDependent> dataTypeResources, String resourceType){
+	private HAPJSResourceDependency processOperationObject(NativeObject operationObjJS, HAPDataTypeId dataTypeId, String operationName, Set<HAPResourceDependency> dataTypeResources, String resourceType){
 		
 		//operation
 		Function operationFunJS = (Function)operationObjJS.get("operation");
@@ -165,13 +165,13 @@ public class HAPJSImporter {
     	}
     	
 		NativeObject operationRequiresObjJS = (NativeObject)operationObjJS.get("requires");
-		Set<HAPResourceDependent> operationResources = new HashSet<HAPResourceDependent>();
+		Set<HAPResourceDependency> operationResources = new HashSet<HAPResourceDependency>();
 		//add data type requires first
-		for(HAPResourceDependent dataTypeResourceId : dataTypeResources)	this.addDependentResourceIdToSet(dataTypeResourceId.clone(), operationResources);
+		for(HAPResourceDependency dataTypeResourceId : dataTypeResources)	this.addDependentResourceIdToSet(dataTypeResourceId.clone(), operationResources);
 
     	//get resource from script
-    	List<HAPResourceDependent> discoverResources = discoverResources(script);
-    	for(HAPResourceDependent discoverResource : discoverResources)  this.addDependentResourceIdToSet(discoverResource, dataTypeResources);
+    	List<HAPResourceDependency> discoverResources = discoverResources(script);
+    	for(HAPResourceDependency discoverResource : discoverResources)  this.addDependentResourceIdToSet(discoverResource, dataTypeResources);
 		
     	for(Object requiredTypeObjJS : operationRequiresObjJS.keySet()){
     		String requiredResourceType = (String)requiredTypeObjJS;
@@ -180,7 +180,7 @@ public class HAPJSImporter {
     		for(Object requiredResourceKey : requiresTypeObjectJS.keySet()){
     			String requiredResourceName = (String) requiredResourceKey;
     			Object requiredResourceObjJS = requiresTypeObjectJS.get(requiredResourceName);
-    			HAPResourceDependent resourceId = this.processDependentResource(requiredResourceType, requiredResourceObjJS, requiredResourceName);
+    			HAPResourceDependency resourceId = this.processDependentResource(requiredResourceType, requiredResourceObjJS, requiredResourceName);
     			this.addDependentResourceIdToSet(resourceId, operationResources);
     		}
     	}
@@ -198,11 +198,11 @@ public class HAPJSImporter {
 		return dep;
 	}
 
-	private void addDependentResourceIdToSet(HAPResourceDependent resourceId, Set<HAPResourceDependent> resourceIdSet){
+	private void addDependentResourceIdToSet(HAPResourceDependency resourceId, Set<HAPResourceDependency> resourceIdSet){
 		Set<String> alias = resourceId.getAlias();
 		
 		boolean added = false;
-		for(HAPResourceDependent resourceIdEle : resourceIdSet){
+		for(HAPResourceDependency resourceIdEle : resourceIdSet){
 			if(resourceIdEle.equals(resourceId)){
 				resourceIdEle.addAlias(resourceId.getAlias());
 				added = true;
@@ -220,7 +220,7 @@ public class HAPJSImporter {
 		if(!added)  resourceIdSet.add(resourceId);
 	}
 	
-	private HAPResourceDependent processDependentResource(String type, Object resourceObjJS, String alais){
+	private HAPResourceDependency processDependentResource(String type, Object resourceObjJS, String alais){
 		String resourceType = getResourceTypeByResourceTitle(type);
 		HAPResourceId resourceId = null;
 		switch(resourceType){
@@ -253,7 +253,7 @@ public class HAPJSImporter {
 			resourceId = new HAPResourceIdJSGateway(gatewayIdLiterate);
 			break;
 		}
-		return new HAPResourceDependent(resourceId, alais);
+		return new HAPResourceDependency(resourceId, alais);
 	}
 	
 	private String getOperationId(HAPDataTypeId dataTypeId, String operationName){
@@ -261,8 +261,8 @@ public class HAPJSImporter {
 		return operation.getId();
 	}
 	
-	private List<HAPResourceDependent> discoverResources(String script){
-		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+	private List<HAPResourceDependency> discoverResources(String script){
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		
 		String lines[] = script.split("\\r?\\n");
 		for(String line : lines){
@@ -271,7 +271,7 @@ public class HAPJSImporter {
 				String dataType = segs[1];
 				String operation = segs[3];
 				HAPResourceId resourceId = new HAPResourceIdOperation(new HAPOperationId(dataType, operation));
-				out.add(new HAPResourceDependent(resourceId));
+				out.add(new HAPResourceDependency(resourceId));
 			}
 		}
 		return out;

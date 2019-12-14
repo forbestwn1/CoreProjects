@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -40,7 +40,7 @@ public class HAPDefinitionProcess extends HAPEntityInfoWritableImp implements HA
 	private Map<String, HAPDefinitionActivity> m_activities;
 
 	//dependent resources
-	private Set<HAPResourceDependent> m_requiredResources;
+	private Set<HAPResourceDependency> m_requiredResources;
 
 	//service provider definition
 	//service definition
@@ -49,7 +49,7 @@ public class HAPDefinitionProcess extends HAPEntityInfoWritableImp implements HA
 	public HAPDefinitionProcess(){
 		this.m_context = new HAPContextGroup();
 		this.m_activities = new LinkedHashMap<String, HAPDefinitionActivity>();
-		this.m_requiredResources = new HashSet<HAPResourceDependent>();
+		this.m_requiredResources = new HashSet<HAPResourceDependency>();
 		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
 	}
  
@@ -64,7 +64,7 @@ public class HAPDefinitionProcess extends HAPEntityInfoWritableImp implements HA
 	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
 	public void addServiceProviderDefinition(HAPDefinitionServiceProvider def) {  this.m_serviceDefinition.addServiceProviderDefinition(def);   }
 	
-	public Set<HAPResourceDependent> getRequiredResources(){ return this.m_requiredResources;  }
+	public Set<HAPResourceDependency> getRequiredResources(){ return this.m_requiredResources;  }
 	
 	public HAPContextGroup getContext() {   return this.m_context;   }
 	public void setContext(HAPContextGroup context) { 

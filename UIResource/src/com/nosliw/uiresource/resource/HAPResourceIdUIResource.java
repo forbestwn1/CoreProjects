@@ -16,11 +16,11 @@ public class HAPResourceIdUIResource  extends HAPResourceId{
 	}
 	
 	public HAPResourceIdUIResource(String idLiterate) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, idLiterate);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, idLiterate, null);
 	}
 
 	public HAPResourceIdUIResource(HAPUIResourceId uiResourceId){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, null);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, null, null);
 		this.m_uiResourceId = uiResourceId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(uiResourceId, HAPSerializationFormat.LITERATE); 
 	}
@@ -33,6 +33,7 @@ public class HAPResourceIdUIResource  extends HAPResourceId{
 
 	public HAPUIResourceId getUIResourceId(){  return this.m_uiResourceId;	}
 	
+	@Override
 	public HAPResourceIdUIResource clone(){
 		HAPResourceIdUIResource out = new HAPResourceIdUIResource();
 		out.cloneFrom(this);

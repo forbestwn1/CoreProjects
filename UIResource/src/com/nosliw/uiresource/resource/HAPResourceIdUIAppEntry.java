@@ -16,11 +16,11 @@ public class HAPResourceIdUIAppEntry  extends HAPResourceId{
 	}
 	
 	public HAPResourceIdUIAppEntry(String idLiterate) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, idLiterate);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, idLiterate, null);
 	}
 
 	public HAPResourceIdUIAppEntry(HAPUIAppEntryId uiAppEntryId){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, null);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, null, null);
 		this.m_uiAppEntryId = uiAppEntryId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(uiAppEntryId, HAPSerializationFormat.LITERATE); 
 	}

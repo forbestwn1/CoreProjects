@@ -17,7 +17,7 @@ import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceData;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPExecutableExpressionImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;

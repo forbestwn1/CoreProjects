@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPExecutableActivityNormal;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivityNormal{
@@ -33,9 +33,9 @@ public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivity
 	}
 
 	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
-		out.add(new HAPResourceDependent(new HAPResourceIdActivityPlugin(new HAPActivityPluginId("UI_executeCommand"))));
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
+		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId("UI_executeCommand"))));
 		return out;
 	}
 

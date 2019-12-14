@@ -31,10 +31,7 @@ public class HAPResourceHelper {
 	}
 
 	public HAPResourceId buildResourceIdObject(JSONObject jsonObj){
-		String type = jsonObj.optString(HAPResourceId.TYPE);
-		String id = jsonObj.optString(HAPResourceId.ID);
-		
-		HAPResourceId out = new HAPResourceId(type, id);
+		HAPResourceId out = HAPResourceId.newInstance(jsonObj);
 		try {
 			Class resourceIdClass = this.m_typeToResourceId.get(out.getType());
 			out = (HAPResourceId)resourceIdClass.getConstructor(HAPResourceId.class).newInstance(out);
@@ -45,7 +42,7 @@ public class HAPResourceHelper {
 	}
 
 	public HAPResourceId buildResourceIdObject(String literate){
-		HAPResourceId out = new HAPResourceId(literate);
+		HAPResourceId out = HAPResourceId.newInstance(literate);
 		try {
 			Class resourceIdClass = this.m_typeToResourceId.get(out.getType());
 			out = (HAPResourceId)resourceIdClass.getConstructor(HAPResourceId.class).newInstance(out);
@@ -54,7 +51,7 @@ public class HAPResourceHelper {
 		}
 		return out;
 	}
-	
+
 	public String buildResourceIdLiterate(HAPResourceId resourceId){
 		return resourceId.toStringValue(HAPSerializationFormat.LITERATE);
 	}
@@ -69,5 +66,4 @@ public class HAPResourceHelper {
 		}
 		return out;
 	}
-	
 }

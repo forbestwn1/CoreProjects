@@ -3,7 +3,7 @@ package com.nosliw.uiresource.resource;
 import java.util.List;
 
 import com.nosliw.data.core.resource.HAPResource;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceUtility;
@@ -28,7 +28,7 @@ public class HAPResourceManagerUIAppEntry  extends HAPResourceManagerImp{
 	}
 
 	@Override
-	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
+	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		HAPResourceIdUIAppEntry uiAppId = new HAPResourceIdUIAppEntry(resourceId); 
 		HAPExecutableAppEntry uiApp = this.m_uiResourceMan.getMiniApp(uiAppId.getUIAppEntryId().getAppId(), uiAppId.getUIAppEntryId().getEntry());
 		return uiApp.getResourceDependency(runtimeInfo);

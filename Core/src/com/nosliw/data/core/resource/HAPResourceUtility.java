@@ -24,9 +24,9 @@ public class HAPResourceUtility {
 		return loadResourceByFile.contains(resourceType);
 	}
 	
-	public static List<HAPResourceDependent> buildResourceDependentFromResourceId(List<HAPResourceId> ids){
-		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
-		for(HAPResourceId id : ids) 	out.add(new HAPResourceDependent(id));
+	public static List<HAPResourceDependency> buildResourceDependentFromResourceId(List<HAPResourceId> ids){
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
+		for(HAPResourceId id : ids) 	out.add(new HAPResourceDependency(id));
 		return out;
 	}
 

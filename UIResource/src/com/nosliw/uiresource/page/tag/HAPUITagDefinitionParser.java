@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 import org.json.JSONObject;
 import org.mozilla.javascript.Context;
-import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
@@ -13,7 +12,7 @@ import org.mozilla.javascript.Scriptable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
@@ -30,7 +29,7 @@ public class HAPUITagDefinitionParser {
 			NativeObject defObjJS = (NativeObject)cx.evaluateString(scope, content, file.getName(), 1, null);
 
 			String name = (String)defObjJS.get(HAPUITagDefinition.NAME);
-	    	String script = Context.toString((Function)defObjJS.get(HAPUITagDefinition.SCRIPT));
+	    	String script = Context.toString(defObjJS.get(HAPUITagDefinition.SCRIPT));
 			out = new HAPUITagDefinition(new HAPUITagId(name), script);
 
 			//parse context
@@ -51,7 +50,7 @@ public class HAPUITagDefinitionParser {
 					while(aliasIt.hasNext()){
 						String alias = aliasIt.next();
 						String resourceIdLiterate = requiresForTypeJson.optString(alias);
-						out.addResourceDependency(new HAPResourceDependent(new HAPResourceId(resourceType, resourceIdLiterate), alias));
+						out.addResourceDependency(new HAPResourceDependency(HAPResourceId.newInstance(resourceType, resourceIdLiterate), alias));
 					}
 				}
 			}

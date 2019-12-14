@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
@@ -118,8 +118,8 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	}
 
 	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		for(String name : this.m_processes.keySet()) {
 			out.addAll(this.m_processes.get(name).getResourceDependency(runtimeInfo));
 		}

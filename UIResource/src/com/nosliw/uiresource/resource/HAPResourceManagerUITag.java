@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.data.core.resource.HAPResource;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceUtility;
@@ -31,8 +31,8 @@ public class HAPResourceManagerUITag extends HAPResourceManagerImp{
 	}
 
 	@Override
-	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
-		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		HAPResourceIdUITag uiTagResourceId = new HAPResourceIdUITag(resourceId); 
 		HAPUITagDefinition uiTagDefinition = this.m_uiTagMan.getUITagDefinition(uiTagResourceId.getUITagId());
 		out.addAll(uiTagDefinition.getResourceDependency());

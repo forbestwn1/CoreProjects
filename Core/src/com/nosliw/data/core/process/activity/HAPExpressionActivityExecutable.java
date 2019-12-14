@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPExecutableActivityNormal;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
@@ -45,9 +45,9 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 
 	
 	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
-		out.add(new HAPResourceDependent(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_EXPRESSION))));
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
+		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_EXPRESSION))));
 		out.addAll(this.m_scriptExpression.getResourceDependency(runtimeInfo));
 		return out;
 	}

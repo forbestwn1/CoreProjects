@@ -5,7 +5,7 @@ import java.util.List;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.plugin.HAPPluginActivity;
 import com.nosliw.data.core.resource.HAPResource;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceUtility;
@@ -30,7 +30,7 @@ public class HAPResourceManagerActivityPlugin  extends HAPResourceManagerImp{
 	}
 
 	@Override
-	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
+	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		return null;
 	}
 }

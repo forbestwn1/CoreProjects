@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.resource.HAPResourceData;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
@@ -33,7 +33,7 @@ public class HAPProcessorServiceUse {
 			public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {		return HAPResourceDataFactory.createJSValueResourceData("");	}
 
 			@Override
-			public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		return null;	}
+			public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		return null;	}
 
 			@Override
 			public HAPParentContext getInContext() {

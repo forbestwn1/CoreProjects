@@ -1,0 +1,24 @@
+[{
+	"id": "pearsonFlightArrivalService",
+	"name": "pearsonFlightArrivalService",
+    "implementation" : "com.nosliw.service.pearsonflight.HAPServiceImp",
+	"description" : "flight arrival service in pearson airport",
+	"interface" : {
+		"result" : [
+			{
+				"name" : "success",
+				"output" : {
+					"outputInService": {
+						"criteria" : "element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%"
+					}
+				},			
+			}
+		],
+		"parm" : [ 
+			{
+				name : "flight",
+				criteria : "test.string;1.0.0",
+			}
+		]
+	},
+}]

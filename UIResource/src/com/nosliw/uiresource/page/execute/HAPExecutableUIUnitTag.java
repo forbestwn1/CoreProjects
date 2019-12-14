@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -95,10 +95,10 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	}
 	
 	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		List<HAPResourceDependent> out = super.getResourceDependency(runtimeInfo);
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		List<HAPResourceDependency> out = super.getResourceDependency(runtimeInfo);
 		//ui tag
-		out.add(new HAPResourceDependent(new HAPResourceIdUITag(new HAPUITagId(this.getUIUnitTagDefinition().getTagName()))));
+		out.add(new HAPResourceDependency(new HAPResourceIdUITag(new HAPUITagId(this.getUIUnitTagDefinition().getTagName()))));
 		return out;
 	}
 

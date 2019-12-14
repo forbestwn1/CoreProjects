@@ -17,6 +17,7 @@ var node_createErrorManager = function(){
 		if (typeof window != "undefined"){
 			//global error process
 			window.onerror = function(msg, url, line, col, error) {
+				loc_consoleError(error);
 				var errorEle = {
 					type : "uncaughtError",
 					message : msg,
@@ -26,7 +27,7 @@ var node_createErrorManager = function(){
 					error : loc_buildErrorEle(error),
 				};
 				var errorData = loc_addErrorToStorage(errorEle);
-				loc_logError(errorData);
+				loc_logErrorToServer(errorData);
 			   return true;
 			};
 		}
@@ -71,8 +72,11 @@ var node_createErrorManager = function(){
 		}
 	};
 	
+	var loc_consoleError = function(error){
+		if (typeof console != "undefined") console.log(error);
+	}
 	
-	var loc_logError = function(errorData){
+	var loc_logErrorToServer = function(errorData){
 		//gateway request
 		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_ERRORLOG;
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYERRORLOGGER_COMMAND_LOGERRRO;
@@ -92,16 +96,16 @@ var node_createErrorManager = function(){
 	
 	var loc_out = {
 		logError : function(error){
-			if (typeof console != "undefined") console.log(error);
+			loc_consoleError(error);
 			var errorData = loc_addErrorToStorage(loc_buildErrorEle(error));
-			loc_logError(errorData);
+			loc_logErrorToServer(errorData);
 		},
 		
 		logErrorIfHasAny : function(){
 			var errorData = loc_getErrorFromStorage();
 			if(errorData!=undefined){
 				//if have previous error, then log it
-				loc_logError(errorData);
+				loc_logErrorToServer(errorData);
 			}
 		}
 	};

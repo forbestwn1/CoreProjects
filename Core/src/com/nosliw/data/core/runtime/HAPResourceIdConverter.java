@@ -17,11 +17,11 @@ public class HAPResourceIdConverter extends HAPResourceId{
 	}
 	
 	public HAPResourceIdConverter(String idLiterate) {
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, idLiterate);
+		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, idLiterate, null);
 	}
 
 	public HAPResourceIdConverter(HAPDataTypeConverter dataTypeConverter){
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, null);
+		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, null, null);
 		this.setConverter(dataTypeConverter);
 	}
 	
@@ -37,6 +37,7 @@ public class HAPResourceIdConverter extends HAPResourceId{
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeConverter, HAPSerializationFormat.LITERATE); 
 	}
 
+	@Override
 	public HAPResourceIdConverter clone(){
 		HAPResourceIdConverter out = new HAPResourceIdConverter();
 		out.cloneFrom(this);

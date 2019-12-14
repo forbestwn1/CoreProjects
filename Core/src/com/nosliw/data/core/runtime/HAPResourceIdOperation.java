@@ -17,11 +17,11 @@ public class HAPResourceIdOperation extends HAPResourceId{
 	}
 	
 	public HAPResourceIdOperation(String idLiterate) {
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, idLiterate);
+		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, idLiterate, null);
 	}
 
 	public HAPResourceIdOperation(HAPOperationId operationId){
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, null);
+		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, null, null);
 		this.setOperationId(operationId);
 	}
 	
@@ -37,6 +37,7 @@ public class HAPResourceIdOperation extends HAPResourceId{
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(operationId, HAPSerializationFormat.LITERATE); 
 	}
 
+	@Override
 	public HAPResourceIdOperation clone(){
 		HAPResourceIdOperation out = new HAPResourceIdOperation();
 		out.cloneFrom(this);

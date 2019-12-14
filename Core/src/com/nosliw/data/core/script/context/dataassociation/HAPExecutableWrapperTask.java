@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceData;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
@@ -77,8 +77,8 @@ public class HAPExecutableWrapperTask<T extends HAPExecutableTask> extends HAPEx
 	}
 
 	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		if(this.m_inputMapping!=null)  out.addAll(this.m_inputMapping.getResourceDependency(runtimeInfo));
 		for(String resultName : this.m_outputMapping.keySet()) {
 			out.addAll(this.m_outputMapping.get(resultName).getResourceDependency(runtimeInfo));

@@ -15,7 +15,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.resource.HAPResourceData;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -144,8 +144,8 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	}
 
 	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		for(HAPExecutableExpression exp : this.getExpressions().values()) {
 			out.addAll(exp.getResourceDependency(runtimeInfo));
 		}

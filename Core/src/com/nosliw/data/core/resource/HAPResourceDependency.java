@@ -25,7 +25,7 @@ import com.nosliw.common.utils.HAPConstant;
  * It has alias so that it can be refered by resource through alias 
  */
 @HAPEntityWithAttribute
-public class HAPResourceDependent extends HAPSerializableImp{
+public class HAPResourceDependency extends HAPSerializableImp{
 
 	//alias is used when one resource A depend on another resource B
 	//we can give alias to resource B so that resource A can access resource B using alias
@@ -41,13 +41,13 @@ public class HAPResourceDependent extends HAPSerializableImp{
 
 	private HAPResourceId m_id;
 	
-	public HAPResourceDependent(){	}
+	public HAPResourceDependency(){	}
 
-	public HAPResourceDependent(HAPResourceId resourceId){
+	public HAPResourceDependency(HAPResourceId resourceId){
 		this.m_id = resourceId;
 	}
 
-	public HAPResourceDependent(HAPResourceId resourceId, String alias){
+	public HAPResourceDependency(HAPResourceId resourceId, String alias){
 		this(resourceId);
 		if(HAPBasicUtility.isStringNotEmpty(alias))		this.m_alias.add(alias);
 	}
@@ -96,13 +96,14 @@ public class HAPResourceDependent extends HAPSerializableImp{
 		return true;  
 	}
 	
-	public HAPResourceDependent clone(){
-		HAPResourceDependent out = new HAPResourceDependent();
+	@Override
+	public HAPResourceDependency clone(){
+		HAPResourceDependency out = new HAPResourceDependency();
 		out.cloneFrom(this);
 		return out;
 	}
 	
-	protected void cloneFrom(HAPResourceDependent resourceId){
+	protected void cloneFrom(HAPResourceDependency resourceId){
 		this.m_id = resourceId.getId().clone();
 		this.m_alias.addAll(resourceId.m_alias);
 	}

@@ -17,11 +17,11 @@ public class HAPResourceIdUITag  extends HAPResourceId{
 	}
 	
 	public HAPResourceIdUITag(String idLiterate) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, idLiterate);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, idLiterate, null);
 	}
 
 	public HAPResourceIdUITag(HAPUITagId uiTagId){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, null);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, null, null);
 		this.m_uiTagId = uiTagId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(uiTagId, HAPSerializationFormat.LITERATE); 
 	}
@@ -34,6 +34,7 @@ public class HAPResourceIdUITag  extends HAPResourceId{
 
 	public HAPUITagId getUITagId(){  return this.m_uiTagId;	}
 	
+	@Override
 	public HAPResourceIdUITag clone(){
 		HAPResourceIdUITag out = new HAPResourceIdUITag();
 		out.cloneFrom(this);

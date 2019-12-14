@@ -16,11 +16,11 @@ public class HAPResourceIdJSLibrary extends HAPResourceId{
 	}
 	
 	public HAPResourceIdJSLibrary(String idLiterate) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, idLiterate);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, idLiterate, null);
 	}
 
 	public HAPResourceIdJSLibrary(HAPJSLibraryId libraryId){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, null);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, null, null);
 		this.setLibraryId(libraryId);
 	}
 	
@@ -36,6 +36,7 @@ public class HAPResourceIdJSLibrary extends HAPResourceId{
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(libraryId, HAPSerializationFormat.LITERATE); 
 	}
 
+	@Override
 	public HAPResourceIdJSLibrary clone(){
 		HAPResourceIdJSLibrary out = new HAPResourceIdJSLibrary();
 		out.cloneFrom(this);

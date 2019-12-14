@@ -77,7 +77,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 	 */
 	private HAPServiceData requestDiscoverResources(JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception{
 		JSONArray resourceJsonArray = parms.getJSONArray(COMMAND_DISCOVERRESOURCES_RESOURCEIDS);
-		List<HAPResourceId> resourceIds = HAPSerializeUtility.buildListFromJsonArray(HAPResourceId.class.getName(), resourceJsonArray);
+		List<HAPResourceId> resourceIds = HAPResourceId.newInstanceList(resourceJsonArray); 
 		return this.discoverResources(resourceIds, runtimeInfo);
 	}
 	
@@ -101,7 +101,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 		HAPServiceData serviceData = null;
 
 		JSONArray resourceJsonArray = parms.getJSONArray(COMMAND_DISCOVERANDLOADRESOURCES_RESOURCEIDS);
-		List<HAPResourceId> resourceIds = HAPSerializeUtility.buildListFromJsonArray(HAPResourceId.class.getName(), resourceJsonArray); 
+		List<HAPResourceId> resourceIds = HAPResourceId.newInstanceList(resourceJsonArray); 
 
 		serviceData = this.discoverResources(resourceIds, runtimeInfo);
 		if(serviceData.isFail())   return serviceData;

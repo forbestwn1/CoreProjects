@@ -109,8 +109,7 @@ public class HAPRhinoRuntimeUtility {
 				NativeObject resourceIdObject = (NativeObject)rhinoResourceIdArray.get(i);
 				String jsonString = HAPRhinoDataUtility.toJson(resourceIdObject).toString();
 
-				HAPResourceId resourceId = new HAPResourceId();
-				resourceId.buildObject(new JSONObject(jsonString), HAPSerializationFormat.JSON);
+				HAPResourceId resourceId = HAPResourceId.newInstance(new JSONObject(jsonString));
 				resourceIds.add(resourceId);
 			}
 			catch(Exception e){

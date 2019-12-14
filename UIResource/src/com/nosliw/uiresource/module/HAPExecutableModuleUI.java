@@ -11,7 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceData;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
@@ -110,8 +110,8 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	}
 
 	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.addAll(this.m_page.getResourceDependency(runtimeInfo));
 		for(HAPExecutableEventHandler eventHandler : this.m_eventHandlers.values()) 	out.addAll(eventHandler.getResourceDependency(runtimeInfo));
 		out.addAll(this.m_inputMapping.getResourceDependency(runtimeInfo));

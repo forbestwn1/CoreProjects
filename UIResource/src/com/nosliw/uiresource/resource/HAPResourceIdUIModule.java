@@ -16,11 +16,11 @@ public class HAPResourceIdUIModule  extends HAPResourceId{
 	}
 	
 	public HAPResourceIdUIModule(String idLiterate) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, idLiterate);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, idLiterate, null);
 	}
 
 	public HAPResourceIdUIModule(HAPUIModuleId uiModuleId){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, null);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, null, null);
 		this.m_uiModuleId = uiModuleId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(uiModuleId, HAPSerializationFormat.LITERATE); 
 	}

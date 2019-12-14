@@ -16,11 +16,11 @@ public class HAPResourceIdJSHelper extends HAPResourceId{
 	}
 	
 	public HAPResourceIdJSHelper(String idLiterate) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, idLiterate);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, idLiterate, null);
 	}
 
 	public HAPResourceIdJSHelper(HAPJSHelperId helperId){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, null);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, null, null);
 		this.setHelperId(helperId);
 	}
 
@@ -36,6 +36,7 @@ public class HAPResourceIdJSHelper extends HAPResourceId{
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(helperId, HAPSerializationFormat.LITERATE); 
 	}
 	
+	@Override
 	public HAPResourceIdJSHelper clone(){
 		HAPResourceIdJSHelper out = new HAPResourceIdJSHelper();
 		out.cloneFrom(this);

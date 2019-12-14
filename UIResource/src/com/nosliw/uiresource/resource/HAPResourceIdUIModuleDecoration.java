@@ -12,7 +12,7 @@ public class HAPResourceIdUIModuleDecoration  extends HAPResourceId{
 	}
 	
 	public HAPResourceIdUIModuleDecoration(String id){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, id);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, id, null);
 	}
 
 	

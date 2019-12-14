@@ -3,7 +3,7 @@ package com.nosliw.uiresource.resource;
 import java.util.List;
 
 import com.nosliw.data.core.resource.HAPResource;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceUtility;
@@ -28,7 +28,7 @@ public class HAPResourceManagerUIModule  extends HAPResourceManagerImp{
 	}
 
 	@Override
-	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
+	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		HAPResourceIdUIModule uiModuleId = new HAPResourceIdUIModule(resourceId); 
 		HAPExecutableModule uiModule = this.m_uiResourceMan.getUIModule(uiModuleId.getId());
 		return uiModule.getResourceDependency(runtimeInfo);

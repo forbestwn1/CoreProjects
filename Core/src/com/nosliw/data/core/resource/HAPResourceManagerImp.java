@@ -35,17 +35,17 @@ public abstract class HAPResourceManagerImp implements HAPResourceManager{
 	public HAPResourceInfo discoverResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceInfo resourceInfo = new HAPResourceInfo(resourceId);
 		//add dependency first
-		List<HAPResourceDependent> dependencys = this.getResourceDependency(resourceId, runtimeInfo);
+		List<HAPResourceDependency> dependencys = this.getResourceDependency(resourceId, runtimeInfo);
 		if(dependencys!=null) {
-			for(HAPResourceDependent dependency : dependencys){
+			for(HAPResourceDependency dependency : dependencys){
 				resourceInfo.addDependency(dependency);
 			}
 		}
 		return resourceInfo;
 	}
 
-	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
-		return new ArrayList<HAPResourceDependent>();
+	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
+		return new ArrayList<HAPResourceDependency>();
 	}
 	
 }

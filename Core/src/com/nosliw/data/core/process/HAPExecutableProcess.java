@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -103,9 +103,9 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	public void setContext(HAPContextGroup context) {   this.m_context = context;  }
 	
 	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		
 		//process resources
-		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		 for(HAPExecutableActivity activity : this.getActivities().values()) {
 			 out.addAll(activity.getResourceDependency(runtimeInfo));
 		 }

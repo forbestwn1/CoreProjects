@@ -16,11 +16,11 @@ public class HAPResourceIdJSGateway extends HAPResourceId{
 	}
 	
 	public HAPResourceIdJSGateway(String idLiterate) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSGATEWAY, idLiterate);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_JSGATEWAY, idLiterate, null);
 	}
 
 	public HAPResourceIdJSGateway(HAPJSGatewayId gatewayId){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSGATEWAY, null);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_JSGATEWAY, null, null);
 		this.setGatewayId(gatewayId);
 	}
 
@@ -36,6 +36,7 @@ public class HAPResourceIdJSGateway extends HAPResourceId{
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(gatewayId, HAPSerializationFormat.LITERATE); 
 	}
 	
+	@Override
 	public HAPResourceIdJSGateway clone(){
 		HAPResourceIdJSGateway out = new HAPResourceIdJSGateway();
 		out.cloneFrom(this);

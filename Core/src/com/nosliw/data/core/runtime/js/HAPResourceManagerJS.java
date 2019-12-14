@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.resource.HAPLoadResourceResponse;
 import com.nosliw.data.core.resource.HAPResource;
-import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.resource.HAPResourceManager;
@@ -112,8 +112,8 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 			processedResourceIds.add(resourceId);
 			HAPResourceInfo resourceInfo = this.getResourceManager(resourceId.getType()).discoverResource(resourceId, runtimeInfo);
 			//add dependency first
-			List<HAPResourceDependent> dependencys = resourceInfo.getDependency();
-			for(HAPResourceDependent dependency : dependencys){
+			List<HAPResourceDependency> dependencys = resourceInfo.getDependency();
+			for(HAPResourceDependency dependency : dependencys){
 				this.discoverResource(dependency.getId(), resourceInfos, processedResourceIds, runtimeInfo);
 			}
 			//then add itself

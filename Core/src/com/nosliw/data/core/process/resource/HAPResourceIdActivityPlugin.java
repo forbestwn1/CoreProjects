@@ -17,11 +17,11 @@ public class HAPResourceIdActivityPlugin  extends HAPResourceId{
 	}
 	
 	public HAPResourceIdActivityPlugin(String idLiterate) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, idLiterate);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, idLiterate, null);
 	}
 
 	public HAPResourceIdActivityPlugin(HAPActivityPluginId activityPluginId){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, null);
+		init(HAPConstant.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, null, null);
 		this.m_activityPluginId = activityPluginId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(activityPluginId, HAPSerializationFormat.LITERATE); 
 	}
@@ -34,6 +34,7 @@ public class HAPResourceIdActivityPlugin  extends HAPResourceId{
 
 	public HAPActivityPluginId getActivityPlugId(){  return this.m_activityPluginId;	}
 	
+	@Override
 	public HAPResourceIdActivityPlugin clone(){
 		HAPResourceIdActivityPlugin out = new HAPResourceIdActivityPlugin();
 		out.cloneFrom(this);
