@@ -6,14 +6,14 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 //
 @HAPEntityWithAttribute
-public class HAPDefinitionExternalEle extends HAPEntityInfoImp{
+public class HAPDefinitionExternalMappingEle extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -25,11 +25,12 @@ public class HAPDefinitionExternalEle extends HAPEntityInfoImp{
 	
 	private HAPResourceId m_id;
 	
-	public HAPDefinitionExternalEle(String type) {
+	public HAPDefinitionExternalMappingEle(String type) {
 		this.m_type = type;
 	}
 
 	public HAPResourceId getId() {	return this.m_id;  }
+	public void setId(HAPResourceId id) {    this.m_id = id;    }
 	
 	private String getType() {
 		if(this.m_type==null && this.m_id!=null) {
@@ -60,8 +61,8 @@ public class HAPDefinitionExternalEle extends HAPEntityInfoImp{
 	@Override
 	public boolean equals(Object obj) {
 		boolean out = false;
-		if(obj instanceof HAPDefinitionExternalEle) {
-			HAPDefinitionExternalEle ele = (HAPDefinitionExternalEle)obj;
+		if(obj instanceof HAPDefinitionExternalMappingEle) {
+			HAPDefinitionExternalMappingEle ele = (HAPDefinitionExternalMappingEle)obj;
 			if(super.equals(ele)) {
 				if(HAPBasicUtility.isEquals(ele.getType(), this.getType())) {
 					if(HAPBasicUtility.isEquals(ele.m_id, this.m_id)) {
@@ -70,6 +71,14 @@ public class HAPDefinitionExternalEle extends HAPEntityInfoImp{
 				}
 			}
 		}
+		return out;
+	}
+	
+	@Override
+	public HAPDefinitionExternalMappingEle clone() {
+		HAPDefinitionExternalMappingEle out = new HAPDefinitionExternalMappingEle(this.getType());
+		this.cloneToEntityInfo(out);
+		out.m_id = this.m_id.clone();
 		return out;
 	}
 }

@@ -25,8 +25,8 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.resource.external.HAPDefinitionExternal;
-import com.nosliw.data.core.resource.external.HAPParserExternalDefinition;
+import com.nosliw.data.core.resource.external.HAPDefinitionExternalMapping;
+import com.nosliw.data.core.resource.external.HAPExternalMappingUtility;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
@@ -41,7 +41,7 @@ import com.nosliw.uiresource.common.HAPIdGenerator;
 public class HAPParserPage {
 
 	public static final String EVENT = "events";
-	public static final String EXTERNAL = "external";
+	public static final String EXTERNALMAPPING = "externalMapping";
 	public static final String SERVICE = "services";
 	public static final String SERVICE_USE = "use";
 	public static final String SERVICE_PROVIDER = "provider";
@@ -117,7 +117,7 @@ public class HAPParserPage {
 		this.parseChildCommandBlocks(unitEle, uiUnit);
 		
 		//parse external
-		parseExternalBlocks(unitEle, uiUnit);
+		parseExternalMappingBlocks(unitEle, uiUnit);
 		
 		//process key attribute
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType()))   parseKeyAttributeOnTag(unitEle, parentUIUnit, true);
@@ -217,12 +217,12 @@ public class HAPParserPage {
 		for(Element childEle : childEles)  childEle.remove();
 	}
 
-	private void parseExternalBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EXTERNAL);
+	private void parseExternalMappingBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EXTERNALMAPPING);
 		for(Element childEle : childEles){
 			try {
 				JSONObject externalDefJson = new JSONObject(childEle.html());
-				HAPDefinitionExternal external = HAPParserExternalDefinition.parse(externalDefJson);
+				HAPDefinitionExternalMapping external = HAPExternalMappingUtility.parseDefinition(externalDefJson);
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();
