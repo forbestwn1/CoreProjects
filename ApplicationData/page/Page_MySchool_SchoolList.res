@@ -225,6 +225,17 @@
 	}	
 	</services>
 
+	<external>
+	{
+		"service" : [
+			{
+				"name": "getSchoolDataService",
+				"id" : "schoolService"
+			}	
+		]
+	}
+	</external>
+
 	<events>
 	[
 		{

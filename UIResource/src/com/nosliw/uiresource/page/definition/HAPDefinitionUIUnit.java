@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.data.core.resource.external.HAPDefinitionExternal;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -69,6 +70,9 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp implements 
 	//service definition
 	private HAPDefinitionServiceInEntity m_serviceDefinition;
 	
+	//external resource that depend on
+	private HAPDefinitionExternal m_external;
+	
 	public HAPDefinitionUIUnit(String id){
 		this.m_id = id;
 		this.m_contextDefinition = new HAPContextGroup();
@@ -83,6 +87,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp implements 
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
+		this.m_external = new HAPDefinitionExternal();
 	}
 	
 	abstract public String getType(); 
@@ -96,9 +101,11 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp implements 
 	public String getContent() {  return this.m_content;  }
 	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_eventsDefinition;    }
 	public Map<String, HAPDefinitionServiceUse> getServiceUseDefinitions(){  return this.m_serviceDefinition.getServiceUseDefinitions();   }
+	@Override
 	public Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions(){  return this.m_serviceDefinition.getServiceProviderDefinitions();   }
 	public Map<String, HAPDefinitionUICommand> getCommandDefinition() {   return this.m_commandsDefinition;  }
 	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
+	public HAPDefinitionExternal getExternal() {    return this.m_external;  }
 	
 	public void setParent(HAPDefinitionUIUnit parent) {	this.m_parent = parent;	}
 	public void setJSBlock(HAPScript jsBlock){this.m_script = jsBlock;}
@@ -125,6 +132,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp implements 
 	public void addTagEvent(HAPElementEvent event){this.m_customTagEvents.add(event);}
 	public void addElementEvent(HAPElementEvent event){this.m_normalTagEvents.add(event);}
 	public void addAttribute(String name, String value){		this.m_attributes.put(name, value);	}
-
+	public void setExternal(HAPDefinitionExternal external) {    this.m_external = external;   }
+	
 	public void postRead(){}
 }

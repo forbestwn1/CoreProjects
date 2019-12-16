@@ -59,9 +59,13 @@ public class HAPResourceId extends HAPSerializableImp{
 		return resourceIds;
 	}
 
-	public static HAPResourceId newInstance(String type, String id) {    
+	public static HAPResourceId newInstance(String type, Object id) {    
 		HAPResourceId out = new HAPResourceId();
-		out.init(type, id, null);
+		if(id instanceof String)	out.init(type, (String)id, null);
+		else if(id instanceof JSONObject) {
+			out.m_type = type;
+			out.buildObjectByJson(id);
+		}
 		return out;
 	}
 
@@ -76,22 +80,6 @@ public class HAPResourceId extends HAPSerializableImp{
 		out.init(type, id, supplement);
 		return out;
 	}
-
-//	public HAPResourceId(String literate){
-//		this.buildObjectByLiterate(literate);
-//	}
-	
-//	public HAPResourceId(String type, String id){
-//		this.init(type, id, null);
-//	}
-
-//	public HAPResourceId(String type, String id, List<HAPResourceDependency> supplement){
-//		this.init(type, id, new HAPResourceIdSupplement(supplement));
-//	}
-
-//	public HAPResourceId(String type, String id, HAPResourceIdSupplement supplement){
-//		this.init(type, id, supplement);
-//	}
 
 	protected void init(String type, String id, HAPResourceIdSupplement supplement){
 		this.m_type = type;
@@ -123,7 +111,8 @@ public class HAPResourceId extends HAPSerializableImp{
 	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.setId(jsonObj.optString(ID));
-		this.m_type = jsonObj.optString(TYPE);
+		Object type = jsonObj.opt(TYPE);
+		if(type!=null)		this.m_type = (String)type; 
 		
 		JSONObject supJson = jsonObj.optJSONObject(SUP);
 		this.m_supplement = HAPResourceIdSupplement.newInstance(supJson);
