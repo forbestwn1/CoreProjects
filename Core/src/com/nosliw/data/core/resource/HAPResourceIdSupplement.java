@@ -47,6 +47,8 @@ public class HAPResourceIdSupplement  extends HAPSerializableImp{
 	public static HAPResourceIdSupplement newInstance(List<HAPResourceDependency> supplementResources) {   return new HAPResourceIdSupplement(supplementResources);    }
 	
 
+	public Map<String, Map<String, HAPResourceId>> getAllSupplymentResourceId(){   return this.m_resources;     }
+	
 	public HAPResourceId getSupplymentResourceId(String type, String name) {
 		Map<String, HAPResourceId> resourceIdByName = this.m_resources.get(type);
 		if(resourceIdByName==null)   return null;

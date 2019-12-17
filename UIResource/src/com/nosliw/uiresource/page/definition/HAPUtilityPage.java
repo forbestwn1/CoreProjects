@@ -5,10 +5,18 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.resource.external.HAPDefinitionExternalMapping;
 import com.nosliw.uiresource.HAPUIResourceManager;
 
 public class HAPUtilityPage {
 
+	public static void solveExternalMapping(HAPDefinitionUIUnit uiUnitDef, HAPDefinitionExternalMapping parentExternalMapping) {
+		uiUnitDef.getExternalMapping().merge(parentExternalMapping);
+		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
+			solveExternalMapping(uiTag, uiUnitDef.getExternalMapping());
+		}
+	}
+	
 	public static void getUITagByName(HAPDefinitionUIUnit resourceUnit, String tagName, Set<HAPDefinitionUITag> out){
 		
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(resourceUnit.getType())){

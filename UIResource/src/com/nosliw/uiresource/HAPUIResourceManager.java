@@ -1,13 +1,12 @@
 package com.nosliw.uiresource;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
+import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.external.HAPDefinitionExternalMapping;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
@@ -31,7 +30,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPUIResourceManager {
 
-	private Map<String, HAPExecutableUIUnitPage> m_uiResource;
+	private HAPResourceCache m_resourceCache;
 	
 	private HAPExpressionSuiteManager m_expressionMan; 
 	
@@ -68,7 +67,7 @@ public class HAPUIResourceManager {
 		this.m_resourceMan = resourceMan;
 		this.m_processMan = processMan;
 		this.m_runtime = runtime;
-		this.m_uiResource = new LinkedHashMap<String, HAPExecutableUIUnitPage>();
+		this.m_resourceCache = new HAPResourceCache();
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_uiResourceParser = new HAPParserPage(null, m_idGengerator);
 		this.m_moduleParser = new HAPParserModule(this.m_processMan.getPluginManager());
@@ -88,19 +87,18 @@ public class HAPUIResourceManager {
 		return processModule(moduleDef, moduleId, null);
 	}
 	
-	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId){
+	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId, HAPDefinitionExternalMapping parentExternalMapping){
 		String id = uiResourceDefId;
-		HAPExecutableUIUnitPage out = this.m_uiResource.get(id);
+		HAPExecutableUIUnitPage out = (HAPExecutableUIUnitPage)this.m_resourceCache.getResource(id, parentExternalMapping==null?null:parentExternalMapping.toResourceIdSupplement());
 		if(out==null) {
-			out = this.getUIPage(uiResourceDefId, id, null, null);
-//			HAPDefinitionUIUnitPage def = HAPUtilityUIResource.getUIResourceDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
-//			out = this.processUIResource(def, id, null, null);
+			out = this.getUIPage(uiResourceDefId, id, null, null, parentExternalMapping);
 		}
 		return out;
 	}
 
-	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId, String id, HAPContextGroup context, HAPContextGroup parentContext){
+	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId, String id, HAPContextGroup context, HAPContextGroup parentContext, HAPDefinitionExternalMapping parentExternalMapping){
 		HAPDefinitionUIPage def = HAPUtilityPage.getPageDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
+		HAPUtilityPage.solveExternalMapping(def, parentExternalMapping);
 		HAPExecutableUIUnitPage out = this.processUIResource(def, id, context, parentContext);
 		return out;
 	}

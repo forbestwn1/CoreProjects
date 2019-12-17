@@ -12,18 +12,16 @@ public class HAPExternalMappingUtility {
 	public static final String OVERRIDE_MODE_CONFIGURABLE = "configurable"; 
 	public static final String OVERRIDE_MODE_NONE = "none"; 
 	
-	public static HAPDefinitionExternalMapping parseDefinition(JSONObject externalDefJson) {
-		HAPDefinitionExternalMapping out = new HAPDefinitionExternalMapping();
+	public static void parseDefinition(JSONObject externalDefJson, HAPDefinitionExternalMapping externalMapping) {
 		for(Object key : externalDefJson.keySet()) {
 			String type = (String)key;
 			JSONArray byNameArray = externalDefJson.getJSONArray(type);
 			for(int i=0; i<byNameArray.length(); i++) {
 				HAPDefinitionExternalMappingEle ele = new HAPDefinitionExternalMappingEle(type);
 				ele.buildObject(byNameArray.getJSONObject(i), HAPSerializationFormat.JSON);
-				out.addElement(type, ele);
+				externalMapping.addElement(type, ele);
 			}
 		}
-		return out;
 	}
 
 	
@@ -32,4 +30,5 @@ public class HAPExternalMappingUtility {
 		if(mode==null)   mode =  OVERRIDE_MODE_NONE;
 		return OVERRIDE_MODE_CONFIGURABLE.equals(mode);
 	}
+	
 }

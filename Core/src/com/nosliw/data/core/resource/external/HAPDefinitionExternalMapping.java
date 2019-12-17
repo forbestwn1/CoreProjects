@@ -6,6 +6,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSupplement;
 
 //define what external resource depend on
 @HAPEntityWithAttribute
@@ -18,6 +20,24 @@ public class HAPDefinitionExternalMapping extends HAPSerializableImp{
 	
 	public HAPDefinitionExternalMapping() {
 		this.m_element = new LinkedHashMap<>();
+	}
+
+	public HAPDefinitionExternalMapping(HAPResourceIdSupplement resourceIdSupplement) {
+		this();
+		Map<String, Map<String, HAPResourceId>> resourceIds = resourceIdSupplement.getAllSupplymentResourceId();
+		for(String type : resourceIds.keySet()) {
+			Map<String, HAPResourceId> byName = resourceIds.get(type);
+			for(String name : byName.keySet()) {
+				HAPDefinitionExternalMappingEle ele = new HAPDefinitionExternalMappingEle(type);
+				ele.setName(name);
+				ele.setId(byName.get(name));
+				this.addElement(type, ele);
+			}
+		}
+	}
+	
+	public Map<String, HAPDefinitionExternalMappingEle> getMappingByType(String type){
+		return this.m_element.get(type);
 	}
 	
 	public void addElement(String type, HAPDefinitionExternalMappingEle ele) {
@@ -46,6 +66,19 @@ public class HAPDefinitionExternalMapping extends HAPSerializableImp{
 			}
 		}
 	}
+
+	public HAPResourceIdSupplement toResourceIdSupplement(){
+		Map<String, Map<String, HAPResourceId>> resourceIds = new LinkedHashMap<String, Map<String, HAPResourceId>>();
+		for(String type : this.m_element.keySet()) {
+			Map<String, HAPDefinitionExternalMappingEle> byName = this.m_element.get(type);
+			Map<String, HAPResourceId> byNameOut = new LinkedHashMap<>();
+			for(String name : byName.keySet()) {
+				byNameOut.put(name, byName.get(name).getId());
+			}
+			resourceIds.put(type, byNameOut);
+		}
+		return HAPResourceIdSupplement.newInstance(resourceIds);
+	}
 	
 	private HAPDefinitionExternalMappingEle getElement(String type, String name) {
 		HAPDefinitionExternalMappingEle out = null;
@@ -55,5 +88,4 @@ public class HAPDefinitionExternalMapping extends HAPSerializableImp{
 		}
 		return out;
 	}
-	
 }
