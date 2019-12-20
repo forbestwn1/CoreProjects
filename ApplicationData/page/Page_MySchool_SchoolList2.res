@@ -182,39 +182,47 @@
 	</contexts>
 	
 	<services>
-	[
-		{
-			"name" : "getSchoolData",
-			"provider" : "getSchoolDataService",
-			"serviceMapping" :{
-				"inputMapping" : {
-					"element" : {
-						"schoolTypeInService" : {
-							"definition" : {
-								"path" : "schoolType"
-							}
-						},
-						"schoolRatingInService" : {
-							"definition" : {
-								"path" : "schoolRating"
+	{
+		"use" : [
+			{
+				"name" : "getSchoolData",
+				"provider" : "getSchoolDataService",
+				"serviceMapping" :{
+					"inputMapping" : {
+						"element" : {
+							"schoolTypeInService" : {
+								"definition" : {
+									"path" : "schoolType"
+								}
+							},
+							"schoolRatingInService" : {
+								"definition" : {
+									"path" : "schoolRating"
+								}
 							}
 						}
-					}
-				},
-				"outputMapping" : {
-					"success" : {
-						"element" : {
-							"schoolList" : {
-								"definition" : {
-									"path" : "outputInService"
+					},
+					"outputMapping" : {
+						"success" : {
+							"element" : {
+								"schoolList" : {
+									"definition" : {
+										"path" : "outputInService"
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-		}
-	]
+		],
+		"provider" : [
+			{	
+				"name" : "getSchoolDataService",
+				"serviceId" : "schoolService"
+			}		
+		]
+	}	
 	</services>
 
 	<external>

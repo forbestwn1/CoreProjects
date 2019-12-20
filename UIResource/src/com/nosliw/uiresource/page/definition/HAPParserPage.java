@@ -29,7 +29,6 @@ import com.nosliw.data.core.resource.external.HAPExternalMappingUtility;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 
@@ -234,9 +233,8 @@ public class HAPParserPage {
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SERVICE);
 		for(Element childEle : childEles){
 			try {
-				JSONObject serviceDefJson = new JSONObject(childEle.html());
-				
-				JSONArray serviceUseListJson = serviceDefJson.optJSONArray(SERVICE_USE);
+
+				JSONArray serviceUseListJson = new JSONArray(childEle.html());
 				if(serviceUseListJson!=null) {
 					for(int i=0; i<serviceUseListJson.length(); i++) {
 						JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
@@ -245,16 +243,28 @@ public class HAPParserPage {
 						resourceUnit.addServiceUseDefinition(serviceUseDef);
 					}
 				}
-
-				JSONArray serviceProviderListJson = serviceDefJson.optJSONArray(SERVICE_PROVIDER);
-				if(serviceProviderListJson!=null) {
-					for(int i=0; i<serviceProviderListJson.length(); i++) {
-						JSONObject serviceProviderJson = serviceProviderListJson.getJSONObject(i);
-						HAPDefinitionServiceProvider serviceProviderDef = new HAPDefinitionServiceProvider();
-						serviceProviderDef.buildObject(serviceProviderJson, HAPSerializationFormat.JSON);
-						resourceUnit.addServiceProviderDefinition(serviceProviderDef);
-					}
-				}
+				
+//				JSONObject serviceDefJson = new JSONObject(childEle.html());
+//				
+//				JSONArray serviceUseListJson = serviceDefJson.optJSONArray(SERVICE_USE);
+//				if(serviceUseListJson!=null) {
+//					for(int i=0; i<serviceUseListJson.length(); i++) {
+//						JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
+//						HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
+//						serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
+//						resourceUnit.addServiceUseDefinition(serviceUseDef);
+//					}
+//				}
+//
+//				JSONArray serviceProviderListJson = serviceDefJson.optJSONArray(SERVICE_PROVIDER);
+//				if(serviceProviderListJson!=null) {
+//					for(int i=0; i<serviceProviderListJson.length(); i++) {
+//						JSONObject serviceProviderJson = serviceProviderListJson.getJSONObject(i);
+//						HAPDefinitionServiceProvider serviceProviderDef = new HAPDefinitionServiceProvider();
+//						serviceProviderDef.buildObject(serviceProviderJson, HAPSerializationFormat.JSON);
+//						resourceUnit.addServiceProviderDefinition(serviceProviderDef);
+//					}
+//				}
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();

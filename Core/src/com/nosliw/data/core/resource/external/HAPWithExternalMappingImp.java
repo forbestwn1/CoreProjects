@@ -22,8 +22,8 @@ public class HAPWithExternalMappingImp extends HAPSerializableImp implements HAP
 	}
 
 	@Override
-	public void mergeBy(HAPWithExternalMapping parent) {
-		this.m_exteranlMapping.merge(parent.getExternalMapping());
+	public void mergeBy(HAPWithExternalMapping parent, String mode) {
+		this.m_exteranlMapping.merge(parent.getExternalMapping(), mode);
 	}
 	
 }

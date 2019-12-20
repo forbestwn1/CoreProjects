@@ -54,4 +54,13 @@ public class HAPDefinitionServiceProvider extends HAPEntityInfoWritableImp{
 		return true;  
 	}
 
+	@Override
+	public HAPDefinitionServiceProvider clone() {
+		HAPDefinitionServiceProvider out = new HAPDefinitionServiceProvider();
+		this.cloneToEntityInfo(out);
+		out.m_serviceId = this.m_serviceId;
+		out.m_serviceInterface = this.m_serviceInterface;
+		return out;
+	}
+	
 }

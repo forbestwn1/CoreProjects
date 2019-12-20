@@ -432,6 +432,7 @@ public class HAPConstant {
 		public static final String UITAG_PARM_EVENT = "event";
 		public static final String UITAG_PARM_COMMAND = "command";
 		public static final String UITAG_PARM_SERVICE = "service";
+		public static final String UITAG_PARM_MAPPING = "mapping";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE = "instantiate";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL = "manual";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO = "auto";
@@ -461,6 +462,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE = "uiAppConfigure";
 		public static final String RUNTIME_RESOURCE_TYPE_PROCESS = "process";
 		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN = "activityPlugin";
+		public static final String RUNTIME_RESOURCE_TYPE_SERVICE = "service";
 		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";
 
 

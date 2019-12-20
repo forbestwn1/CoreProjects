@@ -97,8 +97,13 @@ public class HAPUIResourceManager {
 	}
 
 	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId, String id, HAPContextGroup context, HAPContextGroup parentContext, HAPDefinitionExternalMapping parentExternalMapping){
+		//get definition itself
 		HAPDefinitionUIPage def = HAPUtilityPage.getPageDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
-		HAPUtilityPage.solveExternalMapping(def, parentExternalMapping);
+		//resolve external mapping
+		HAPUtilityPage.solveExternalMapping(def, parentExternalMapping, this.m_uiTagMan);
+		//resolve service provider
+		HAPUtilityPage.solveServiceProvider(def, null, m_serviceDefinitionManager);
+		//compile it
 		HAPExecutableUIUnitPage out = this.processUIResource(def, id, context, parentContext);
 		return out;
 	}

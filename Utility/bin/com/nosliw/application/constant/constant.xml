@@ -521,6 +521,7 @@
 			<definition name="UITAG_PARM_EVENT" value="event"/>
 			<definition name="UITAG_PARM_COMMAND" value="command"/>
 			<definition name="UITAG_PARM_SERVICE" value="service"/>
+			<definition name="UITAG_PARM_MAPPING" value="mapping"/>
 
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE" value="instantiate"/>
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL" value="manual"/>
@@ -550,6 +551,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE" value="uiAppConfigure"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESS" value="process"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_SERVICE" value="service"/>
 
 			<definition name="RUNTIME_RESOURCE_TYPE_MATCHER" value="matcher"/>
 

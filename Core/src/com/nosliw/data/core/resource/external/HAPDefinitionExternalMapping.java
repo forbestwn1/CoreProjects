@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSupplement;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
 //define what external resource depend on
 @HAPEntityWithAttribute
@@ -50,17 +51,31 @@ public class HAPDefinitionExternalMapping extends HAPSerializableImp{
 	}
 
 	//merge with parent
-	public void merge(HAPDefinitionExternalMapping parent) {
+	public void merge(HAPDefinitionExternalMapping parent, String mode) {
+		if(mode==null)   mode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;
+		if(mode.equals(HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE))  return;
+		
 		for(String type : parent.m_element.keySet()) {
 			Map<String, HAPDefinitionExternalMappingEle> byName = parent.m_element.get(type);
 			for(String name : byName.keySet()) {
 				HAPDefinitionExternalMappingEle parentEle = byName.get(name);
 				HAPDefinitionExternalMappingEle thisEle = this.getElement(type, name);
-				if(thisEle==null)   this.addElement(type, parentEle.clone());      //element not exist, create one 
-				else if(thisEle.getId()==null)  thisEle.setId(parentEle.getId());  //element not have resource id info, then use from parent
+				if(thisEle==null) {
+					//element not exist, create one
+					HAPDefinitionExternalMappingEle newEle = parentEle.clone();
+					HAPExternalMappingUtility.setOverridenByParent(newEle);
+					this.addElement(type, newEle);
+				}
+				else if(thisEle.getId()==null) {
+					//element not have resource id info, then use from parent
+					HAPExternalMappingUtility.setOverridenByParent(thisEle);
+					thisEle.setId(parentEle.getId());  
+				}
 				else {
-					if(HAPExternalMappingUtility.isOverridenByParent(thisEle)) {   //if configurable, then parent override child
-						this.addElement(type, parentEle.clone());
+					if(mode.equals(HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT)&&HAPExternalMappingUtility.isOverridenByParentMode(thisEle)) {
+						//if configurable, then parent override child
+						HAPDefinitionExternalMappingEle newEle = parentEle.clone();
+						this.addElement(type, newEle);
 					}
 				}
 			}
@@ -80,7 +95,7 @@ public class HAPDefinitionExternalMapping extends HAPSerializableImp{
 		return HAPResourceIdSupplement.newInstance(resourceIds);
 	}
 	
-	private HAPDefinitionExternalMappingEle getElement(String type, String name) {
+	public HAPDefinitionExternalMappingEle getElement(String type, String name) {
 		HAPDefinitionExternalMappingEle out = null;
 		Map<String, HAPDefinitionExternalMappingEle> byName = this.m_element.get(type);
 		if(byName!=null) {

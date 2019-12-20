@@ -1,9 +1,15 @@
 package com.nosliw.data.core.service.use;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.resource.external.HAPDefinitionExternalMapping;
+import com.nosliw.data.core.resource.external.HAPDefinitionExternalMappingEle;
+import com.nosliw.data.core.resource.external.HAPExternalMappingUtility;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
@@ -43,6 +49,44 @@ public class HAPUtilityServiceUse {
 			out.addElement(outParm, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(serviceOutput.get(outParm).getCriteria())));
 		}
 		return out;
+	}
+	
+	//build service provider from external mapping
+	public static Set<HAPDefinitionServiceProvider> buildServiceProvider(
+			HAPDefinitionExternalMapping resourceExternalMapping,
+			Map<String, HAPDefinitionServiceProvider> parent, 
+			HAPManagerServiceDefinition serviceDefinitionMan) {
+		Set<HAPDefinitionServiceProvider> out = new HashSet<>();
+		
+		Map<String, HAPDefinitionExternalMappingEle> eleByName = resourceExternalMapping.getMappingByType(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);
+		for(String name : eleByName.keySet()) {
+			HAPDefinitionServiceProvider provider = null;
+			HAPDefinitionExternalMappingEle ele = eleByName.get(name);
+			if(HAPExternalMappingUtility.isOverridenByParent(ele)) {
+				//inherited from parent
+				if(parent!=null) {
+					provider = parent.get(name);
+				}
+				if(provider==null) {
+					//build from ele
+					provider = buildServiceProviderFromMappingEle(ele, serviceDefinitionMan);
+				}
+			}
+			else {
+				//build from ele
+				provider = buildServiceProviderFromMappingEle(ele, serviceDefinitionMan);
+			}
+			out.add(provider);
+		}
+		return out;
+	}
+	
+	private static HAPDefinitionServiceProvider buildServiceProviderFromMappingEle(HAPDefinitionExternalMappingEle ele, HAPManagerServiceDefinition serviceDefinitionMan) {
+		HAPDefinitionServiceProvider provider = new HAPDefinitionServiceProvider();
+		ele.cloneToEntityInfo(provider);
+		provider.setServiceId(ele.getId().getId());
+		provider.setServiceInterface(serviceDefinitionMan.getDefinition(ele.getId().getId()).getStaticInfo().getInterface());
+		return provider;
 	}
 	
 	public static Map<String, HAPDefinitionServiceProvider> buildServiceProvider(

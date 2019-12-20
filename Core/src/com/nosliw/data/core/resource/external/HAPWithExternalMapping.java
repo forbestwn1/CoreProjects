@@ -8,6 +8,6 @@ public interface HAPWithExternalMapping {
 	
 	Map<String, HAPDefinitionExternalMappingEle> getElementsByType(String type);
 	
-	void mergeBy(HAPWithExternalMapping parent);
+	void mergeBy(HAPWithExternalMapping parent, String mode);
 	
 }

@@ -68,6 +68,9 @@ public abstract class HAPDefinitionUIUnit extends HAPWithExternalMappingImp impl
 	private Map<String, HAPDefinitionUICommand> m_commandsDefinition;
 	//service definition
 	private HAPDefinitionServiceInEntity m_serviceDefinition;
+
+	//mapping from external name to internal name(service, resource, ...)
+	private Map<String, Map<String, String>> m_nameMapping;
 	
 	public HAPDefinitionUIUnit(String id){
 		this.m_id = id;
@@ -83,6 +86,7 @@ public abstract class HAPDefinitionUIUnit extends HAPWithExternalMappingImp impl
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
+		this.m_nameMapping = new LinkedHashMap<String, Map<String, String>>();
 	}
 	
 	abstract public String getType(); 
@@ -95,6 +99,7 @@ public abstract class HAPDefinitionUIUnit extends HAPWithExternalMappingImp impl
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public String getContent() {  return this.m_content;  }
 	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_eventsDefinition;    }
+	public HAPDefinitionServiceInEntity getServiceDefinition() {    return this.m_serviceDefinition;    }
 	public Map<String, HAPDefinitionServiceUse> getServiceUseDefinitions(){  return this.m_serviceDefinition.getServiceUseDefinitions();   }
 	@Override
 	public Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions(){  return this.m_serviceDefinition.getServiceProviderDefinitions();   }
@@ -126,6 +131,16 @@ public abstract class HAPDefinitionUIUnit extends HAPWithExternalMappingImp impl
 	public void addTagEvent(HAPElementEvent event){this.m_customTagEvents.add(event);}
 	public void addElementEvent(HAPElementEvent event){this.m_normalTagEvents.add(event);}
 	public void addAttribute(String name, String value){		this.m_attributes.put(name, value);	}
+	
+	public void addNameMapping(String type, String parent, String child) {
+		Map<String, String> byName = this.m_nameMapping.get(type);
+		if(byName==null) {
+			byName = new LinkedHashMap<String, String>();
+			this.m_nameMapping.put(type, byName);
+		}
+		byName.put(parent, child);
+	}
+	public Map<String, Map<String, String>> getNameMapping(){   return this.m_nameMapping;    }
 	
 	public void postRead(){}
 }

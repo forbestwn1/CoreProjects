@@ -66,7 +66,7 @@ public class HAPProcessorUIPage {
 		
 		HAPProcessorUICommandEscalate.process(out, uiTagMan);
 
-		HAPProcessorUIServiceEscalate.process(out, uiTagMan);
+//		HAPProcessorUIServiceEscalate.process(out, uiTagMan);
 		
 		return out;
 	}
