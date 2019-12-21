@@ -59,24 +59,26 @@ public class HAPUtilityServiceUse {
 		Set<HAPDefinitionServiceProvider> out = new HashSet<>();
 		
 		Map<String, HAPDefinitionExternalMappingEle> eleByName = resourceExternalMapping.getMappingByType(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);
-		for(String name : eleByName.keySet()) {
-			HAPDefinitionServiceProvider provider = null;
-			HAPDefinitionExternalMappingEle ele = eleByName.get(name);
-			if(HAPExternalMappingUtility.isOverridenByParent(ele)) {
-				//inherited from parent
-				if(parent!=null) {
-					provider = parent.get(name);
+		if(eleByName!=null) {
+			for(String name : eleByName.keySet()) {
+				HAPDefinitionServiceProvider provider = null;
+				HAPDefinitionExternalMappingEle ele = eleByName.get(name);
+				if(HAPExternalMappingUtility.isOverridenByParent(ele)) {
+					//inherited from parent
+					if(parent!=null) {
+						provider = parent.get(name);
+					}
+					if(provider==null) {
+						//build from ele
+						provider = buildServiceProviderFromMappingEle(ele, serviceDefinitionMan);
+					}
 				}
-				if(provider==null) {
+				else {
 					//build from ele
 					provider = buildServiceProviderFromMappingEle(ele, serviceDefinitionMan);
 				}
+				out.add(provider);
 			}
-			else {
-				//build from ele
-				provider = buildServiceProviderFromMappingEle(ele, serviceDefinitionMan);
-			}
-			out.add(provider);
 		}
 		return out;
 	}

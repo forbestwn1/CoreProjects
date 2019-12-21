@@ -1,6 +1,7 @@
 package com.nosliw.uiresource.page.definition;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 public class HAPUtilityPage {
 
 	public static void solveServiceProvider(HAPDefinitionUIUnit uiUnitDef, HAPWithServiceProvider parent, HAPManagerServiceDefinition serviceDefinitionMan) {
-		Map<String, HAPDefinitionServiceProvider> parentProviders = parent.getServiceProviderDefinitions();
+		Map<String, HAPDefinitionServiceProvider> parentProviders = parent!=null?parent.getServiceProviderDefinitions() : new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 		Map<String, HAPDefinitionServiceProvider> mappedParentProviders = parentProviders;
 		Map<String, Map<String, String>> nameMapping = uiUnitDef.getNameMapping();
 		if(nameMapping!=null && !nameMapping.isEmpty()) {

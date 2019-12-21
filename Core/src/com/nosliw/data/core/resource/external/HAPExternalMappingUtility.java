@@ -31,7 +31,7 @@ public class HAPExternalMappingUtility {
 	}
 	
 	public static boolean isOverridenByParent(HAPDefinitionExternalMappingEle ele) {
-		return ele.getInfoValue(ATTRIBUTE_FLAG_OVERRIDE).equals(Boolean.TRUE);
+		return Boolean.TRUE.equals(ele.getInfoValue(ATTRIBUTE_FLAG_OVERRIDE));
 	}
 	
 	public static boolean isOverridenByParentMode(HAPDefinitionExternalMappingEle ele) {
