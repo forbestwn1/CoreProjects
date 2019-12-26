@@ -1,26 +1,27 @@
 {
 	"name": "ModuleMySchoolResult",
 	"description": "",
-	"pageInfo": [{
-			"name": "schoolListPage",
-			"id": "Page_MySchool_SchoolList"
-		},
-		{
-			"name": "schoolInfoPage",
-			"id": "Page_MySchool_SchoolData"
-		}
-	],
-	"service": 
-	{
-		"use" : [
+	"external": {
+		"uiResource" : [
+			{
+				"name": "schoolListPage",
+				"id": "Page_MySchool_SchoolList"
+			},
+			{
+				"name": "schoolInfoPage",
+				"id": "Page_MySchool_SchoolData"
+			}
 		],
-		"provider" : [
+		"service" : [
 			{	
 				"name" : "getSchoolDataService",
-				"serviceId" : "schoolService"
+				"id" : "schoolService"
 			}		
 		]
 	},
+	"service": 
+	[
+	],
 	"context": {
 		"group": {
 			"public": {

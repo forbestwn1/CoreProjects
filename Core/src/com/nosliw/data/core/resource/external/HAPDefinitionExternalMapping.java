@@ -25,14 +25,16 @@ public class HAPDefinitionExternalMapping extends HAPSerializableImp{
 
 	public HAPDefinitionExternalMapping(HAPResourceIdSupplement resourceIdSupplement) {
 		this();
-		Map<String, Map<String, HAPResourceId>> resourceIds = resourceIdSupplement.getAllSupplymentResourceId();
-		for(String type : resourceIds.keySet()) {
-			Map<String, HAPResourceId> byName = resourceIds.get(type);
-			for(String name : byName.keySet()) {
-				HAPDefinitionExternalMappingEle ele = new HAPDefinitionExternalMappingEle(type);
-				ele.setName(name);
-				ele.setId(byName.get(name));
-				this.addElement(type, ele);
+		if(resourceIdSupplement!=null) {
+			Map<String, Map<String, HAPResourceId>> resourceIds = resourceIdSupplement.getAllSupplymentResourceId();
+			for(String type : resourceIds.keySet()) {
+				Map<String, HAPResourceId> byName = resourceIds.get(type);
+				for(String name : byName.keySet()) {
+					HAPDefinitionExternalMappingEle ele = new HAPDefinitionExternalMappingEle(type);
+					ele.setName(name);
+					ele.setId(byName.get(name));
+					this.addElement(type, ele);
+				}
 			}
 		}
 	}

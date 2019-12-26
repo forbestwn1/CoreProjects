@@ -122,62 +122,65 @@
 	</scripts>
 
 	<services>
-	{
-		"use" : [
-			{
-				"name" : "updateLineupService",
-				"provider" : "updateLineupService",
-				"serviceMapping" :{
-					"inputMapping" : {
+	[
+		{
+			"name" : "updateLineupService",
+			"provider" : "updateLineupService",
+			"serviceMapping" :{
+				"inputMapping" : {
+					"element" : {
+						"player" : {
+							"definition" : {
+								"path" : "player"
+							}
+						},
+						"action" : {
+							"definition" : {
+								"path" : "action"
+							}
+						}
+					}
+				},
+				"outputMapping" : {
+					"success" : {
 						"element" : {
-							"player" : {
+							"status" : {
 								"definition" : {
-									"path" : "player"
+									"path" : "status"
 								}
 							},
 							"action" : {
 								"definition" : {
 									"path" : "action"
 								}
-							}
-						}
-					},
-					"outputMapping" : {
-						"success" : {
-							"element" : {
-								"status" : {
-									"definition" : {
-										"path" : "status"
-									}
-								},
-								"action" : {
-									"definition" : {
-										"path" : "action"
-									}
-								},
-								"oweTo" : {
-									"definition" : {
-										"path" : "oweTo"
-									}
-								},
-								"oweFrom" : {
-									"definition" : {
-										"path" : "oweFrom"
-									}
-								},
-							}
+							},
+							"oweTo" : {
+								"definition" : {
+									"path" : "oweTo"
+								}
+							},
+							"oweFrom" : {
+								"definition" : {
+									"path" : "oweFrom"
+								}
+							},
 						}
 					}
 				}
 			}
-		],
-		"provider" : [
+		}
+	]	
+	</services>
+
+	<external>
+	{
+		"service" : [
 			{	
 				"name" : "updateLineupService",
 				"serviceId" : "updateLineupService"
 			}		
 		]
-	}	
-	</services>
+	}
+	</external>
 
 </html>

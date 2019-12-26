@@ -42,6 +42,12 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImp 
 	public HAPDefinitionDataAssociation getDefinition() {   return this.m_definition;   }
 
 	@Override
+	public HAPExecutableDataAssociationImp clone() {
+		throw new RuntimeException();
+	}
+
+	
+	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
 		HAPEntityInfoUtility.cloneTo(this, entityInfo);
 	}

@@ -1,12 +1,14 @@
 {
 	"name": "ModuleMySchoolSetting",
 	"description": "",
-	"pageInfo": [
-		{
-			"name": "schoolSettingPage",
-			"id": "Page_MySchool_Query"
-		}
-	],
+	"external": {
+		"uiResource" : [
+			{
+				"name": "schoolSettingPage",
+				"id": "Page_MySchool_Query"
+			}
+		]
+	},
 	"context": {
 		"group": {
 			"public": {

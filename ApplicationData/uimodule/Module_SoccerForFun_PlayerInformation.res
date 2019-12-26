@@ -1,12 +1,14 @@
 {
 	"name": "Module_SoccerForFun_PlayerInformation",
 	"description": "",
-	"pageInfo": [
-		{
-			"name": "playerInfoPage",
-			"id": "Page_SoccerForFun_PlayerInformation"
-		}
-	],
+	"external": {
+		"uiResource" : [
+			{
+				"name": "playerInfoPage",
+				"id": "Page_SoccerForFun_PlayerInformation"
+			}
+		]
+	},
 	"context": {
 		"group": {
 			"public": {

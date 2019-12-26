@@ -14,6 +14,9 @@ import com.nosliw.data.core.process.HAPDefinitionProcessWithContext;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.process.HAPProcessorProcess;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.external.HAPDefinitionExternalMapping;
+import com.nosliw.data.core.resource.external.HAPDefinitionExternalMappingEle;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -34,7 +37,6 @@ import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
 import com.nosliw.uiresource.common.HAPExecutableEventHandler;
-import com.nosliw.uiresource.common.HAPInfoPage;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
@@ -96,21 +98,28 @@ public class HAPProcessorModule {
 		HAPExecutableModuleUI out = new HAPExecutableModuleUI(moduleUIDefinition, id);
 		
 		//process page, use context in module override context in page
-		HAPInfoPage pageInfo = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage());
-		String pageId = pageInfo.getPageId();
+		//find pape resource id from external mapping
+		HAPDefinitionExternalMappingEle externalMappingEle = moduleExe.getDefinition().getExternalMapping().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, moduleUIDefinition.getPage());
+		HAPResourceId pageResourceId = externalMappingEle.getId();
 		
 		//ui decoration
 		//ui decoration from page first
-		out.addUIDecoration(pageInfo.getDecoration());
+//		out.addUIDecoration(pageInfo.getDecoration());
 		//ui decoration from module ui
 		out.addUIDecoration(moduleUIDefinition.getUIDecoration());
 		//ui decoration from module
 		out.addUIDecoration(moduleExe.getDefinition().getUIDecoration());
 		
+		//context
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
 		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement);
 		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPContext)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk
-		HAPExecutableUIUnitPage page = uiResourceMan.getUIPage(pageId, id, mappingContextGroup, null, null);    //kkkk  external mapping
+
+		//external mapping
+		HAPDefinitionExternalMapping pageExternalMapping = moduleUIDefinition.getNameMapping().mapExternal(moduleExe.getDefinition().getExternalMapping());
+		pageExternalMapping.merge(new HAPDefinitionExternalMapping(pageResourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+		
+		HAPExecutableUIUnitPage page = uiResourceMan.getUIPage(pageResourceId.getId(), id, mappingContextGroup, null, pageExternalMapping);    //kkkk  external mapping
 		out.setPage(page);
 
 		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyStructureFalse(new HAPInfoImpSimple());

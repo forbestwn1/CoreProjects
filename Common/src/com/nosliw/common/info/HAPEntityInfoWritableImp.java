@@ -17,4 +17,11 @@ public class HAPEntityInfoWritableImp extends HAPEntityInfoImp implements HAPEnt
 	@Override
 	public void setDescription(String description) {   this.m_description = description;   }
 
+	@Override
+	public HAPEntityInfoImp clone() {
+		HAPEntityInfoWritableImp out = new HAPEntityInfoWritableImp();
+		this.cloneToEntityInfo(out);
+		return out;
+	}
+
 }

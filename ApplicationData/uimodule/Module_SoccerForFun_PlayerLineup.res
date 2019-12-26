@@ -1,12 +1,14 @@
 {
 	"name": "Module_SoccerForFun_PlayerLineup",
 	"description": "",
-	"pageInfo": [
-		{
-			"name": "playerLineupPage",
-			"id": "Page_SoccerForFun_PlayerLineup"
-		}
-	],
+	"external": {
+		"uiResource" : [
+			{
+				"name": "playerLineupPage",
+				"id": "Page_SoccerForFun_PlayerLineup"
+			}
+		]
+	},
 	"context": {
 		"group" : {
 		}
@@ -65,6 +67,4 @@
 			"page": "playerLineupPage",
 		}
 	],
-	
-	
 }

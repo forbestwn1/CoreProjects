@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.data.core.resource.external.HAPNameMapping;
 import com.nosliw.data.core.resource.external.HAPWithExternalMappingImp;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
@@ -21,7 +22,7 @@ import com.nosliw.data.core.service.use.HAPWithServiceProvider;
  * 		that means, for ui resource instance, it does not contains infor within customer tag
  */
 public abstract class HAPDefinitionUIUnit extends HAPWithExternalMappingImp implements HAPWithServiceProvider{
-
+ 
 	//for tag, it is tag id within resource
 	//for resource, it is resource name
 	private String m_id;
@@ -70,7 +71,7 @@ public abstract class HAPDefinitionUIUnit extends HAPWithExternalMappingImp impl
 	private HAPDefinitionServiceInEntity m_serviceDefinition;
 
 	//mapping from external name to internal name(service, resource, ...)
-	private Map<String, Map<String, String>> m_nameMapping;
+	private HAPNameMapping m_nameMapping;
 	
 	public HAPDefinitionUIUnit(String id){
 		this.m_id = id;
@@ -86,7 +87,7 @@ public abstract class HAPDefinitionUIUnit extends HAPWithExternalMappingImp impl
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
-		this.m_nameMapping = new LinkedHashMap<String, Map<String, String>>();
+		this.m_nameMapping = new HAPNameMapping();
 	}
 	
 	abstract public String getType(); 
@@ -119,6 +120,7 @@ public abstract class HAPDefinitionUIUnit extends HAPWithExternalMappingImp impl
 	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
 	public void addEventDefinition(HAPDefinitionUIEvent def) {  this.m_eventsDefinition.put(def.getName(), def);   }
 	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
+	@Override
 	public void addServiceProviderDefinition(HAPDefinitionServiceProvider def) {  this.m_serviceDefinition.addServiceProviderDefinition(def);   }
 	public void addExpressionDefinition(String name, String expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
 	public void addScriptExpressionInAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
@@ -132,15 +134,8 @@ public abstract class HAPDefinitionUIUnit extends HAPWithExternalMappingImp impl
 	public void addElementEvent(HAPElementEvent event){this.m_normalTagEvents.add(event);}
 	public void addAttribute(String name, String value){		this.m_attributes.put(name, value);	}
 	
-	public void addNameMapping(String type, String parent, String child) {
-		Map<String, String> byName = this.m_nameMapping.get(type);
-		if(byName==null) {
-			byName = new LinkedHashMap<String, String>();
-			this.m_nameMapping.put(type, byName);
-		}
-		byName.put(parent, child);
-	}
-	public Map<String, Map<String, String>> getNameMapping(){   return this.m_nameMapping;    }
+	public void setNameMapping(HAPNameMapping nameMapping) {   this.m_nameMapping = nameMapping;   }
+	public HAPNameMapping getNameMapping(){   return this.m_nameMapping;    }
 	
 	public void postRead(){}
 }

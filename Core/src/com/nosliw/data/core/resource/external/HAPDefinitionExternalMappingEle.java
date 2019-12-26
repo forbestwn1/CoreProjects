@@ -51,7 +51,7 @@ public class HAPDefinitionExternalMappingEle extends HAPEntityInfoWritableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
 		if(this.m_type==null)   this.m_type = jsonObj.getString(TYPE);
-		Object id = jsonObj.get(ID);
+		Object id = jsonObj.opt(ID);
 		if(id!=null) {
 			this.m_id = HAPResourceId.newInstance(this.m_type, id);
 		}

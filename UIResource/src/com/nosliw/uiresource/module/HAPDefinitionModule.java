@@ -10,9 +10,13 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.resource.external.HAPWithExternalMappingEntityInfoImp;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
-import com.nosliw.uiresource.common.HAPComponentWithConfiguration;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.service.use.HAPWithServiceProvider;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 /**
@@ -26,7 +30,7 @@ for instance, for a module that shows a school information, it contains two page
 Don't need to define service information here, as service information will be gathered from all the mdoule ui definition
  */
 @HAPEntityWithAttribute
-public class HAPDefinitionModule extends HAPComponentWithConfiguration{
+public class HAPDefinitionModule extends HAPWithExternalMappingEntityInfoImp implements HAPWithServiceProvider{
 
 	@HAPAttribute
 	public static String CONTEXT = "context";
@@ -39,6 +43,9 @@ public class HAPDefinitionModule extends HAPComponentWithConfiguration{
 
 	@HAPAttribute
 	public static String UIDECORATION = "uiDecoration";
+	
+	@HAPAttribute
+	public static String SERVICE = "services";
 	
 	private String m_id;
 	
@@ -54,12 +61,19 @@ public class HAPDefinitionModule extends HAPComponentWithConfiguration{
 
 	private List<HAPInfoDecoration> m_uiDecoration;
 	
+	//service definition
+	private HAPDefinitionServiceInEntity m_serviceDefinition;
+
 	public HAPDefinitionModule(String id) {
 		this.m_id = id;
 		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>>();
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
+		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
 	}
+	
+	@Override
+	public Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions(){  return this.m_serviceDefinition.getServiceProviderDefinitions();   }
 	
 	public String getId() {   return this.m_id;   }
 	
@@ -74,6 +88,9 @@ public class HAPDefinitionModule extends HAPComponentWithConfiguration{
 	
 	public void setUIDecoration(List<HAPInfoDecoration> decs) {  this.m_uiDecoration = decs;    }
 	public List<HAPInfoDecoration> getUIDecoration(){   return this.m_uiDecoration;    }
+	
+	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
+	public void addServiceProviderDefinition(HAPDefinitionServiceProvider def) {  this.m_serviceDefinition.addServiceProviderDefinition(def);   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

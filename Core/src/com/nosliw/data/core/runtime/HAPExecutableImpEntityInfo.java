@@ -26,6 +26,11 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	public String getDescription() {   return this.m_entityInfo.getDescription();  }
 
 	@Override
+	public HAPExecutableImpEntityInfo clone() {
+		throw new RuntimeException();
+	}
+	
+	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
 		HAPEntityInfoUtility.cloneTo(this, entityInfo);
 	}

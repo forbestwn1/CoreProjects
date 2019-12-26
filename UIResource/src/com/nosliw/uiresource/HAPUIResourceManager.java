@@ -10,6 +10,7 @@ import com.nosliw.data.core.resource.external.HAPDefinitionExternalMapping;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.data.core.service.provide.HAPUtilityService;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
 import com.nosliw.uiresource.application.HAPParseMiniApp;
@@ -82,8 +83,12 @@ public class HAPUIResourceManager {
 		return out;
 	}
 	
-	public HAPExecutableModule getUIModule(String moduleId) {
+	public HAPExecutableModule getUIModule(String moduleId, HAPDefinitionExternalMapping parentExternalMapping) {
 		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleId, this.m_moduleParser);
+		//resolve external mapping
+		HAPUtilityModule.solveExternalMapping(moduleDef, parentExternalMapping);
+		//resolve service provider
+		HAPUtilityService.solveServiceProvider(moduleDef, null, moduleDef.getExternalMapping(), null, m_serviceDefinitionManager);
 		return processModule(moduleDef, moduleId, null);
 	}
 	

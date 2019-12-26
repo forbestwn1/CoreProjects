@@ -67,37 +67,40 @@
 	</scripts>
 
 	<services>
-	{
-		"use" : [
-			{
-				"name" : "lineupService",
-				"provider" : "lineupService",
-				"serviceMapping" :{
-					"inputMapping" : {
+	[
+		{
+			"name" : "lineupService",
+			"provider" : "lineupService",
+			"serviceMapping" :{
+				"inputMapping" : {
+					"element" : {
+					}
+				},
+				"outputMapping" : {
+					"success" : {
 						"element" : {
-						}
-					},
-					"outputMapping" : {
-						"success" : {
-							"element" : {
-								"lineup" : {
-									"definition" : {
-										"path" : "lineup.value"
-									}
+							"lineup" : {
+								"definition" : {
+									"path" : "lineup.value"
 								}
 							}
 						}
 					}
 				}
 			}
-		],
-		"provider" : [
+		}
+	]	
+	</services>
+
+	<external>
+	{
+		"service" : [
 			{	
 				"name" : "lineupService",
 				"serviceId" : "lineupService"
 			}		
 		]
-	}	
-	</services>
+	}
+	</external>
 
 </html>

@@ -46,7 +46,12 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableImp implemen
 	
 	public HAPExecutableDataAssociation getDataAssociation() {   return this.m_dataAssociation;  }
 	public void setDataAssociation(HAPExecutableDataAssociation dataAssociation) {   this.m_dataAssociation = dataAssociation;   }
-	
+
+	@Override
+	public HAPExecutableResultActivityNormal clone() {
+		throw new RuntimeException();
+	}
+
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
 		HAPEntityInfoUtility.cloneTo(this, entityInfo);

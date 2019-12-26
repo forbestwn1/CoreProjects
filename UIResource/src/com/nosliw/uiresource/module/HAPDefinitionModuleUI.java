@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.resource.external.HAPNameMapping;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
@@ -40,6 +41,9 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	public static String UIDECORATION = "uiDecoration";
 	
 	@HAPAttribute
+	public static String NAMEMAPPING = "nameMapping";
+	
+	@HAPAttribute
 	public static String TYPE = "type";
 
 	@HAPAttribute
@@ -56,6 +60,9 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	//data mapping (from data definition in module to public data definition in page)
 	private HAPDefinitionDataAssociation m_inputMapping;
 	private HAPDefinitionDataAssociation m_outputMapping;
+
+	//mapping reference name from external to internal name
+	private HAPNameMapping m_nameMapping;
 	
 	//provide extra information about this module ui so that container can render it properly
 	private String m_type;
@@ -65,6 +72,7 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	public HAPDefinitionModuleUI() {
 		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionEventHandler>();
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
+		this.m_nameMapping = new HAPNameMapping();
 	}
 	
 	public String getPage() {   return this.m_page;    }
@@ -88,6 +96,9 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	
 	public void setUIDecoration(List<HAPInfoDecoration> decs) {  this.m_uiDecoration = decs;    }
 	public List<HAPInfoDecoration> getUIDecoration(){  return this.m_uiDecoration;   }
+	
+	public void setNameMapping(HAPNameMapping nameMapping) {   if(nameMapping!=null)  this.m_nameMapping = nameMapping;  }
+	public HAPNameMapping getNameMapping() {    return this.m_nameMapping;   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

@@ -1,12 +1,14 @@
 {
 	"name": "Module_SoccerForFun_PlayerUpdate",
 	"description": "",
-	"pageInfo": [
-		{
-			"name": "playerUpdatePage",
-			"id": "Page_SoccerForFun_PlayerUpdate"
-		}
-	],
+	"external": {
+		"uiResource" : [
+			{
+				"name": "playerUpdatePage",
+				"id": "Page_SoccerForFun_PlayerUpdate"
+			}
+		]
+	},
 	"context": {
 		"group" : {
 			"public" : {
