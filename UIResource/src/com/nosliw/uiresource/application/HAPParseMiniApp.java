@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
@@ -45,12 +46,11 @@ public class HAPParseMiniApp {
 	}
 	
 	private HAPDefinitionApp parseAppJson(JSONObject jsonObj) {
-		HAPDefinitionApp out = new HAPDefinitionApp();
+		HAPDefinitionApp out = new HAPDefinitionApp(jsonObj.optString(HAPDefinitionApp.ID));
 
-		out.buildEntityInfoByJson(jsonObj);
-		out.setId(jsonObj.optString(HAPDefinitionApp.ID));
+		HAPComponentUtility.parseComponent(out, jsonObj);
+		
 		out.setApplicationData(HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(HAPDefinitionApp.APPLICATIONDATA)));
-		out.setContext(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionApp.CONTEXT))); 
 
 		JSONArray entryArray = jsonObj.optJSONArray(HAPDefinitionApp.ENTRY);
 		if(entryArray!=null) {
@@ -62,9 +62,10 @@ public class HAPParseMiniApp {
 	}
 
 	private HAPDefinitionAppEntryUI parseAppEntry(JSONObject jsonObj) {
-		HAPDefinitionAppEntryUI out = new HAPDefinitionAppEntryUI();
-		out.buildEntityInfoByJson(jsonObj);
-		
+		HAPDefinitionAppEntryUI out = new HAPDefinitionAppEntryUI(null);
+
+		HAPComponentUtility.parseComponent(out, jsonObj);
+
 		JSONArray moduleArrayJson = jsonObj.optJSONArray(HAPDefinitionAppEntryUI.MODULE);
 		for(int i=0; i<moduleArrayJson.length(); i++) {
 			out.addModule(parseModule(moduleArrayJson.getJSONObject(i), m_activityPluginMan));
@@ -90,7 +91,7 @@ public class HAPParseMiniApp {
 		HAPDefinitionAppModule out = new HAPDefinitionAppModule();
 		out.buildEntityInfoByJson(moduleJson);
 		out.setRole((String)moduleJson.opt(HAPDefinitionAppModule.ROLE));
-		out.setModule((String)moduleJson.opt(HAPDefinitionAppModule.MODULE));
+//		out.setModule((String)moduleJson.opt(HAPDefinitionAppModule.MODULE));
 		out.setStatus((String)moduleJson.opt(HAPDefinitionModuleUI.STATUS));
 		out.getInputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.INPUTMAPPING), HAPSerializationFormat.JSON);
 		out.getOutputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.OUTPUTMAPPING), HAPSerializationFormat.JSON);

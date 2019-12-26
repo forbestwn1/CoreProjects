@@ -43,7 +43,7 @@ public class HAPProcessorUIPage {
 		HAPProcessorCompile.process(out, null);
 		
 		//build page context by parent context override context defined in page
-		HAPContextGroup pageContext = uiPageDef.getContextDefinition().cloneContextGroup();
+		HAPContextGroup pageContext = uiPageDef.getContext().cloneContextGroup();
 		if(context!=null) {
 			for(String categary : context.getContextTypes()) {
 				HAPContext ctx = context.getContext(categary);

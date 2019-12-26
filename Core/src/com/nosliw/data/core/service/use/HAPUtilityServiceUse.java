@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
+import com.nosliw.data.core.component.HAPDefinitionExternalMappingEle;
+import com.nosliw.data.core.component.HAPExternalMappingUtility;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.resource.external.HAPDefinitionExternalMapping;
-import com.nosliw.data.core.resource.external.HAPDefinitionExternalMappingEle;
-import com.nosliw.data.core.resource.external.HAPExternalMappingUtility;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;

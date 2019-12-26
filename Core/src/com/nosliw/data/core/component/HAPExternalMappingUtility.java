@@ -1,4 +1,4 @@
-package com.nosliw.data.core.resource.external;
+package com.nosliw.data.core.component;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

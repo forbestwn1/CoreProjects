@@ -2,12 +2,12 @@ package com.nosliw.uiresource.resource;
 
 import java.util.List;
 
+import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceUtility;
-import com.nosliw.data.core.resource.external.HAPDefinitionExternalMapping;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.module.HAPExecutableModule;

@@ -5,8 +5,8 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.resource.external.HAPDefinitionExternalMapping;
-import com.nosliw.data.core.resource.external.HAPNameMapping;
+import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
+import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;

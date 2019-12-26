@@ -1,6 +1,38 @@
 {
 	"name" : "AppMySchool",
 	"id" : "AppMySchool",
+	"external": {
+		"uiResource" : [
+			{
+				"name": "schoolListPage",
+				"id": "Page_MySchool_SchoolList"
+			},
+			{
+				"name": "schoolInfoPage",
+				"id": "Page_MySchool_SchoolData"
+			},
+			{
+				"name": "schoolSettingPage",
+				"id": "Page_MySchool_Query"
+			}
+		],
+		"uiModule" : [
+			{	
+				"name" : "setting",
+				"id" : "ModuleMySchoolSetting"
+			},		
+			{	
+				"name" : "MySchool",
+				"id" : "ModuleMySchoolResult"
+			}		
+		],
+		"service" : [
+			{	
+				"name" : "getSchoolDataService",
+				"id" : "schoolService"
+			}		
+		]
+	},
 	"entry": [{
 		"name": "main",
 		"module": [{
@@ -90,20 +122,6 @@
 		}
 
 	}],
-
-	"pageInfo": [{
-			"name": "schoolListPage",
-			"id": "Page_MySchool_SchoolList"
-		},
-		{
-			"name": "schoolInfoPage",
-			"id": "Page_MySchool_SchoolData"
-		},
-		{
-			"name": "schoolSettingPage",
-			"id": "Page_MySchool_Query"
-		}
-	],
 
 	"applicationData" : {
 		"setting" : {

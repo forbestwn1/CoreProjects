@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.resource.external.HAPNameMapping;
+import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
 import com.nosliw.uiresource.common.HAPInfoDecoration;

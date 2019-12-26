@@ -32,7 +32,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	
 	@HAPAttribute
 	public static String UI = "ui";
-	
+	 
 	@HAPAttribute
 	public static String PROCESS = "process";
 

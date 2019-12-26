@@ -5,19 +5,16 @@ import java.io.File;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
-import com.nosliw.data.core.resource.external.HAPExternalMappingUtility;
-import com.nosliw.data.core.resource.external.HAPNameMapping;
-import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 import com.nosliw.uiresource.common.HAPUtilityParser;
 
@@ -48,30 +45,8 @@ public class HAPParserModule {
 		JSONObject jsonObj = new JSONObject(content);
 		HAPDefinitionModule out = new HAPDefinitionModule(id);
 
-		out.buildEntityInfoByJson(jsonObj);
-		
-		//parse external
-		JSONObject pageInfoObj = jsonObj.optJSONObject(HAPDefinitionModule.EXTERNALMAPPING);
-		if(pageInfoObj!=null) {
-			HAPExternalMappingUtility.parseDefinition(pageInfoObj, out.getExternalMapping());
-		}
-		
-		//service
-		JSONArray serviceUseListJson = jsonObj.optJSONArray(HAPDefinitionModule.SERVICE);
-		if(serviceUseListJson!=null) {
-			for(int i=0; i<serviceUseListJson.length(); i++) {
-				JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
-				HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
-				serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
-				out.addServiceUseDefinition(serviceUseDef);
-			}
-		}
-
-		//context
-		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPDefinitionModule.CONTEXT);
-		if(contextJsonObj!=null) {
-			out.setContext(HAPParserContext.parseContextGroup(contextJsonObj));
-		}
+		//build component part from json object
+		HAPComponentUtility.parseComponent(out, jsonObj);
 		
 		//process
 		JSONObject processJsonObject = jsonObj.optJSONObject(HAPDefinitionModule.PROCESS);
