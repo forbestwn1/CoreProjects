@@ -39,7 +39,10 @@ public class HAPComponent extends HAPWithExternalMappingEntityInfoImp implements
 	public String getId() {   return this.m_id;   }
 	 
 	public HAPContextGroup getContext() {  return this.m_context;   }
-	public void setContext(HAPContextGroup context) {  this.m_context = context;   }
+	public void setContext(HAPContextGroup context) {  
+		this.m_context = context;
+		if(this.m_context ==null)  this.m_context = new HAPContextGroup();
+	}
 	
 	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
 	@Override

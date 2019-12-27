@@ -95,11 +95,7 @@ public class HAPUIResourceManager {
 	
 	public HAPExecutableModule getUIModule(String moduleId, HAPDefinitionExternalMapping parentExternalMapping) {
 		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleId, this.m_moduleParser);
-		//resolve external mapping
-		HAPComponentUtility.solveExternalMapping(moduleDef, parentExternalMapping);
-		//resolve service provider
-		HAPUtilityService.solveServiceProvider(moduleDef, null, moduleDef.getExternalMapping(), null, m_serviceDefinitionManager);
-		return processModule(moduleDef, moduleId, null);
+		return HAPProcessorModule.process(moduleDef, moduleId, parentExternalMapping, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager);
 	}
 	
 	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId, HAPDefinitionExternalMapping parentExternalMapping){
@@ -130,8 +126,4 @@ public class HAPUIResourceManager {
 		return HAPProcessorUIPage.processUIResource(uiResource, id, context, parentContext, null, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
 	}
 	
-	private HAPExecutableModule processModule(HAPDefinitionModule uiModule, String id, HAPContextGroup parentContext) {
-		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-		return HAPProcessorModule.process(uiModule, id, parentContext, null, this.m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, this.m_serviceDefinitionManager, processTracker);
-	}
 }

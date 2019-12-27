@@ -8,6 +8,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
 import com.nosliw.data.core.component.HAPDefinitionExternalMappingEle;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
@@ -32,6 +33,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.data.core.service.provide.HAPUtilityService;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
@@ -44,6 +46,27 @@ import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 public class HAPProcessorModule {
 
 	public static HAPExecutableModule process(
+			HAPDefinitionModule moduleDefinition, 
+			String id, 
+			HAPDefinitionExternalMapping parentExternalMapping,
+			HAPContextGroup parentContext, 
+			HAPManagerProcessDefinition processMan,
+			HAPUIResourceManager uiResourceMan,
+			HAPDataTypeHelper dataTypeHelper, 
+			HAPRuntime runtime, 
+			HAPExpressionSuiteManager expressionManager,
+			HAPManagerServiceDefinition serviceDefinitionManager) {
+		
+		//resolve external mapping
+		HAPComponentUtility.solveExternalMapping(moduleDefinition, parentExternalMapping);
+		//resolve service provider
+		HAPUtilityService.solveServiceProvider(moduleDefinition, null, moduleDefinition.getExternalMapping(), null, serviceDefinitionManager);
+
+		HAPProcessTracker processTracker = new HAPProcessTracker(); 
+		return HAPProcessorModule.process(moduleDefinition, id, parentContext, null, processMan, uiResourceMan, dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, processTracker);
+	}
+	
+	private static HAPExecutableModule process(
 			HAPDefinitionModule moduleDefinition,
 			String id, 
 			HAPContextGroup parentContext, 
@@ -116,10 +139,8 @@ public class HAPProcessorModule {
 		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPContext)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk
 
 		//external mapping
-		HAPDefinitionExternalMapping pageExternalMapping = moduleUIDefinition.getNameMapping().mapExternal(moduleExe.getDefinition().getExternalMapping());
-		pageExternalMapping.merge(new HAPDefinitionExternalMapping(pageResourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
-		
-		HAPExecutableUIUnitPage page = uiResourceMan.getUIPage(pageResourceId.getId(), id, mappingContextGroup, null, pageExternalMapping);    //kkkk  external mapping
+		HAPDefinitionExternalMapping pageExternalMapping = HAPComponentUtility.buildInternalComponentExternalMapping(pageResourceId, moduleExe.getDefinition().getExternalMapping(), moduleUIDefinition);
+		HAPExecutableUIUnitPage page = uiResourceMan.getUIPage(pageResourceId.getId(), id, mappingContextGroup, null, pageExternalMapping);
 		out.setPage(page);
 
 		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyStructureFalse(new HAPInfoImpSimple());

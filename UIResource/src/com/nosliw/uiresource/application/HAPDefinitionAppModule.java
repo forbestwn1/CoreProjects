@@ -10,19 +10,18 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.HAPNameMapping;
+import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionGroupDataAssociation;
 import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
+public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements HAPWithNameMapping{
 
 	@HAPAttribute
 	public static final String ROLE = "role";
 
-	@HAPAttribute
-	public static final String MODULE = "module";
-	
 	@HAPAttribute
 	public static String STATUS = "status";
 	
@@ -35,12 +34,16 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static final String OUTPUTMAPPING = "outputMapping";
 	
-	private String m_role;
+	@HAPAttribute
+	public static String NAMEMAPPING = "nameMapping";
 	
-	private String m_module;
+	private String m_role;
 	
 	private String m_status;
 	
+	//mapping reference name from external to internal name
+	private HAPNameMapping m_nameMapping;
+
 	//event handlers
 	private Map<String, HAPDefinitionEventHandler> m_eventHandlers;
 	
@@ -57,9 +60,6 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 	public String getRole() {   return this.m_role;   }
 	public void setRole(String role) {   this.m_role = role;     }
 	
-	public String getModule() {   return this.m_module;   }
-	public void setModule(String module) {  this.m_module = module;   }
-	
 	public String getStatus() {   return this.m_status;    }
 	public void setStatus(String status) {   this.m_status = status;   }
 	
@@ -70,11 +70,14 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 	public void addEventHandler(String name, HAPDefinitionEventHandler eventHandler) {  this.m_eventHandlers.put(name, eventHandler);   }
 	public void addEventHandler(Map<String, HAPDefinitionEventHandler> eventHandler) {  this.m_eventHandlers.putAll(eventHandler);   }
 
+	public void setNameMapping(HAPNameMapping nameMapping) {   if(nameMapping!=null)  this.m_nameMapping = nameMapping;  }
+	@Override
+	public HAPNameMapping getNameMapping() {    return this.m_nameMapping;   }
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ROLE, this.m_role);
-		jsonMap.put(MODULE, this.m_module);
 		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, this.m_outputMapping.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
@@ -85,7 +88,6 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_role = (String)jsonObj.opt(ROLE);
-		this.m_module = (String)jsonObj.opt(MODULE);
 		this.m_status = (String)jsonObj.opt(HAPDefinitionModuleUI.STATUS);
 		this.m_inputMapping.buildObject(jsonObj.optJSONArray(INPUTMAPPING), HAPSerializationFormat.JSON);
 		this.m_outputMapping.buildObject(jsonObj.optJSONArray(OUTPUTMAPPING), HAPSerializationFormat.JSON);

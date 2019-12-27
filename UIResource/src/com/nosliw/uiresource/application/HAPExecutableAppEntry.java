@@ -54,13 +54,18 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	
 	private Map<String, HAPDefinitionAppData> m_applicationData;
 
+	private HAPDefinitionAppEntryUI m_definition;
+	
 	public HAPExecutableAppEntry(String entryName, HAPDefinitionApp appDef) {
 		super(appDef.getEntry(entryName));
 		this.m_processes = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
 		this.m_modules = new LinkedHashMap<String, HAPExecutableAppModule>();
 		this.m_applicationData = new LinkedHashMap<String, HAPDefinitionAppData>();
+		this.m_definition = appDef.getEntry(entryName);
 	}
 
+	public HAPDefinitionAppEntryUI getDefinition() {   return this.m_definition;   }
+	
 	public String getId() {  return this.m_id;   }
 	public void setId(String id) {  this.m_id = id;  }
 	

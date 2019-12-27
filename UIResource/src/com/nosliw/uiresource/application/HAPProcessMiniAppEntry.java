@@ -7,12 +7,15 @@ import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessWithContext;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.process.HAPProcessorProcess;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -89,7 +92,7 @@ public class HAPProcessMiniAppEntry {
 		//module
 		for(HAPDefinitionAppModule moduleDef : entryDefinition.getModules()) {
 			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(moduleDef.getStatus())) {
-				HAPExecutableAppModule module = processModule(moduleDef, out, extraContext, entryServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
+				HAPExecutableAppModule module = processModule(moduleDef, out, entryDefinition.getExternalMapping(), extraContext, entryServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
 				out.addUIModule(moduleDef.getName(), module);
 			}
 		}
@@ -100,6 +103,7 @@ public class HAPProcessMiniAppEntry {
 	private static HAPExecutableAppModule processModule(
 			HAPDefinitionAppModule module,
 			HAPExecutableAppEntry entryExe,
+			HAPDefinitionExternalMapping parentExternalMapping,
 			Map<String, HAPContextStructure> extraContexts,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcessDefinition processMan,
@@ -108,7 +112,8 @@ public class HAPProcessMiniAppEntry {
 			HAPProcessTracker processTracker) {
 		HAPExecutableAppModule out = new HAPExecutableAppModule(module);
 		
-		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(module.getModule(), uiResourceMan.getModuleParser());
+		HAPResourceId moduleResourceId = parentExternalMapping.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getName()).getId();
+		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleResourceId.getId(), uiResourceMan.getModuleParser());
 		 
 		HAPParentContext parentContext = HAPParentContext.createDefault(entryExe.getContext());
 		for(String extraName : extraContexts.keySet()) {
@@ -125,7 +130,8 @@ public class HAPProcessMiniAppEntry {
 		}
 		
 		//module
-		HAPExecutableModule moduleExe = HAPProcessorModule.process(moduleDef, moduleDef.getName(), null, serviceProviders, processMan, uiResourceMan, contextProcessRequirement.dataTypeHelper, contextProcessRequirement.runtime, contextProcessRequirement.expressionManager, contextProcessRequirement.serviceDefinitionManager, processTracker);
+		HAPDefinitionExternalMapping pageExternalMapping = HAPComponentUtility.buildInternalComponentExternalMapping(moduleResourceId, entryExe.getDefinition().getExternalMapping(), module);
+		HAPExecutableModule moduleExe = HAPProcessorModule.process(moduleDef, moduleDef.getName(), parentExternalMapping, null, processMan, uiResourceMan, contextProcessRequirement.dataTypeHelper, contextProcessRequirement.runtime, contextProcessRequirement.expressionManager, contextProcessRequirement.serviceDefinitionManager);
 		out.setModule(moduleExe);
 		
 		//output data association

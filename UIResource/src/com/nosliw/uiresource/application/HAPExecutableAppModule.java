@@ -84,7 +84,6 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(MODULEDEFID, this.m_definition.getModule());
 		jsonMap.put(ROLE, this.m_definition.getRole());
 		jsonMap.put(MODULE, HAPJsonUtility.buildJson(this.m_module, HAPSerializationFormat.JSON));
 		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));

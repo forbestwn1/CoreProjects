@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -40,6 +41,12 @@ public class HAPComponentUtility {
 			component.setContext(HAPParserContext.parseContextGroup(contextJsonObj));
 		}
 	}
-	
+
+	//build external mapping for internal component
+	public static HAPDefinitionExternalMapping buildInternalComponentExternalMapping(HAPResourceId resourceId, HAPDefinitionExternalMapping externalMapping, HAPWithNameMapping withNameMapping) {
+		HAPDefinitionExternalMapping out = withNameMapping.getNameMapping().mapExternal(externalMapping);
+		out.merge(new HAPDefinitionExternalMapping(resourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+		return out;
+	}
 	
 }

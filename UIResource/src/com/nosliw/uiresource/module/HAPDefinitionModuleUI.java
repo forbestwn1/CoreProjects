@@ -11,6 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPNameMapping;
+import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
@@ -21,7 +22,7 @@ import com.nosliw.uiresource.common.HAPInfoDecoration;
 //		where data come from: service provider
 //		how to interact with page : page event handler
 @HAPEntityWithAttribute
-public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
+public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp implements HAPWithNameMapping{
 
 	public static String STATUS_DISABLED = "disabled";
 	
@@ -98,8 +99,9 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	public List<HAPInfoDecoration> getUIDecoration(){  return this.m_uiDecoration;   }
 	
 	public void setNameMapping(HAPNameMapping nameMapping) {   if(nameMapping!=null)  this.m_nameMapping = nameMapping;  }
+	@Override
 	public HAPNameMapping getNameMapping() {    return this.m_nameMapping;   }
-	
+	 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
