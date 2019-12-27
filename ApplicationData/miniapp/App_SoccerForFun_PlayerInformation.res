@@ -74,9 +74,6 @@
 
 	}],
 
-	"pageInfo": [
-	],
-
 	"applicationData" : {
 		"playerInfo" : {
 			"element": {
