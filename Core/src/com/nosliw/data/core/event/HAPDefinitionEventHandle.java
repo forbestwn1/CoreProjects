@@ -5,7 +5,7 @@ import com.nosliw.data.core.process.HAPIdProcess;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
 //event process definition
-public class HAPDefinitionEventProcess {
+public class HAPDefinitionEventHandle {
 
 	//how to process event(inputmapping, process, outputmapping)
 	private HAPDefinitionWrapperTask<HAPIdProcess> m_process; 
