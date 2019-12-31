@@ -9,10 +9,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPComponentImp;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionApp extends HAPComponent{
+public class HAPDefinitionApp extends HAPComponentImp{
 
 	@HAPAttribute
 	public static final String ENTRY = "entry";

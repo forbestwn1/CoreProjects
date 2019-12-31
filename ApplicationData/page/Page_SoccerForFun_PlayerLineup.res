@@ -92,7 +92,7 @@
 	]	
 	</services>
 
-	<external>
+	<attachment>
 	{
 		"service" : [
 			{	
@@ -101,6 +101,6 @@
 			}		
 		]
 	}
-	</external>
+	</attachment>
 
 </html>

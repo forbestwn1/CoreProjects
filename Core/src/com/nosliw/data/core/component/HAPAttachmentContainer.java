@@ -6,78 +6,74 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSupplement;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
-//define what external resource depend on
+//define attachment, the entity that component need
 @HAPEntityWithAttribute
-public class HAPDefinitionExternalMapping extends HAPSerializableImp{
+public class HAPAttachmentContainer extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
-	private Map<String, Map<String, HAPDefinitionExternalMappingEle>> m_element;
+	private Map<String, Map<String, HAPAttachment>> m_element;
 	
-	public HAPDefinitionExternalMapping() {
+	public HAPAttachmentContainer() {
 		this.m_element = new LinkedHashMap<>();
 	}
 
-	public HAPDefinitionExternalMapping(HAPResourceIdSupplement resourceIdSupplement) {
+	public HAPAttachmentContainer(HAPResourceIdSupplement resourceIdSupplement) {
 		this();
 		if(resourceIdSupplement!=null) {
 			Map<String, Map<String, HAPResourceId>> resourceIds = resourceIdSupplement.getAllSupplymentResourceId();
 			for(String type : resourceIds.keySet()) {
 				Map<String, HAPResourceId> byName = resourceIds.get(type);
 				for(String name : byName.keySet()) {
-					HAPDefinitionExternalMappingEle ele = new HAPDefinitionExternalMappingEle(type);
+					HAPAttachmentReference ele = new HAPAttachmentReference(type);
 					ele.setName(name);
 					ele.setId(byName.get(name));
-					this.addElement(type, ele);
+					this.addAttachment(type, ele);
 				}
 			}
 		}
 	}
 	
-	public Map<String, HAPDefinitionExternalMappingEle> getMappingByType(String type){
+	public Map<String, HAPAttachment> getAttachmentByType(String type){
 		return this.m_element.get(type);
 	}
 	
-	public void addElement(String type, HAPDefinitionExternalMappingEle ele) {
-		Map<String, HAPDefinitionExternalMappingEle> byName = this.m_element.get(type);
+	public void addAttachment(String type, HAPAttachment attachment) {
+		Map<String, HAPAttachment> byName = this.m_element.get(type);
 		if(byName==null) {
-			byName = new LinkedHashMap<String, HAPDefinitionExternalMappingEle>();
+			byName = new LinkedHashMap<String, HAPAttachment>();
 			this.m_element.put(type, byName);
 		}
-		byName.put(ele.getName(), ele);
+		byName.put(attachment.getName(), attachment);
 	}
 
 	//merge with parent
-	public void merge(HAPDefinitionExternalMapping parent, String mode) {
+	public void merge(HAPAttachmentContainer parent, String mode) {
 		if(mode==null)   mode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;
 		if(mode.equals(HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE))  return;
 		
 		for(String type : parent.m_element.keySet()) {
-			Map<String, HAPDefinitionExternalMappingEle> byName = parent.m_element.get(type);
+			Map<String, HAPAttachment> byName = parent.m_element.get(type);
 			for(String name : byName.keySet()) {
-				HAPDefinitionExternalMappingEle parentEle = byName.get(name);
-				HAPDefinitionExternalMappingEle thisEle = this.getElement(type, name);
-				if(thisEle==null) {
-					//element not exist, create one
-					HAPDefinitionExternalMappingEle newEle = parentEle.clone();
+				HAPAttachment parentEle = byName.get(name);
+				HAPAttachment thisEle = this.getElement(type, name);
+				if(thisEle==null || thisEle.getType().equals(HAPConstant.ATTACHMENT_TYPE_PLACEHOLDER)) {
+					//element not exist, or empty, borrow from parent
+					HAPAttachment newEle = parentEle.clone();
 					HAPExternalMappingUtility.setOverridenByParent(newEle);
-					this.addElement(type, newEle);
-				}
-				else if(thisEle.getId()==null) {
-					//element not have resource id info, then use from parent
-					HAPExternalMappingUtility.setOverridenByParent(thisEle);
-					thisEle.setId(parentEle.getId());  
+					this.addAttachment(type, newEle);
 				}
 				else {
 					if(mode.equals(HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT)&&HAPExternalMappingUtility.isOverridenByParentMode(thisEle)) {
 						//if configurable, then parent override child
-						HAPDefinitionExternalMappingEle newEle = parentEle.clone();
-						this.addElement(type, newEle);
+						HAPAttachment newEle = parentEle.clone();
+						this.addAttachment(type, newEle);
 					}
 				}
 			}
@@ -87,19 +83,22 @@ public class HAPDefinitionExternalMapping extends HAPSerializableImp{
 	public HAPResourceIdSupplement toResourceIdSupplement(){
 		Map<String, Map<String, HAPResourceId>> resourceIds = new LinkedHashMap<String, Map<String, HAPResourceId>>();
 		for(String type : this.m_element.keySet()) {
-			Map<String, HAPDefinitionExternalMappingEle> byName = this.m_element.get(type);
+			Map<String, HAPAttachment> byName = this.m_element.get(type);
 			Map<String, HAPResourceId> byNameOut = new LinkedHashMap<>();
 			for(String name : byName.keySet()) {
-				byNameOut.put(name, byName.get(name).getId());
+				HAPAttachment attachment = byName.get(name);
+				if(attachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
+					byNameOut.put(name, ((HAPAttachmentReference)attachment).getId());
+				}
 			}
 			resourceIds.put(type, byNameOut);
 		}
 		return HAPResourceIdSupplement.newInstance(resourceIds);
 	}
 	
-	public HAPDefinitionExternalMappingEle getElement(String type, String name) {
-		HAPDefinitionExternalMappingEle out = null;
-		Map<String, HAPDefinitionExternalMappingEle> byName = this.m_element.get(type);
+	public HAPAttachment getElement(String type, String name) {
+		HAPAttachment out = null;
+		Map<String, HAPAttachment> byName = this.m_element.get(type);
 		if(byName!=null) {
 			out = byName.get(name);
 		}

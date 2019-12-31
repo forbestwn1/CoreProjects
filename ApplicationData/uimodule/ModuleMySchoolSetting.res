@@ -1,7 +1,7 @@
 {
 	"name": "ModuleMySchoolSetting",
 	"description": "",
-	"external": {
+	"attachment": {
 		"uiResource" : [
 			{
 				"name": "schoolSettingPage",

@@ -39,7 +39,7 @@ import com.nosliw.uiresource.common.HAPIdGenerator;
 public class HAPParserPage {
 
 	public static final String EVENT = "events";
-	public static final String EXTERNALMAPPING = "external";
+	public static final String ATTATCHMENT = "attachment";
 	public static final String SERVICE = "services";
 	public static final String SERVICE_USE = "use";
 	public static final String SERVICE_PROVIDER = "provider";
@@ -216,11 +216,11 @@ public class HAPParserPage {
 	}
 
 	private void parseExternalMappingBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EXTERNALMAPPING);
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, ATTATCHMENT);
 		for(Element childEle : childEles){
 			try {
 				JSONObject externalDefJson = new JSONObject(childEle.html());
-				HAPExternalMappingUtility.parseDefinition(externalDefJson, resourceUnit.getExternalMapping());
+				HAPExternalMappingUtility.parseDefinition(externalDefJson, resourceUnit.getAttachmentContainer());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();

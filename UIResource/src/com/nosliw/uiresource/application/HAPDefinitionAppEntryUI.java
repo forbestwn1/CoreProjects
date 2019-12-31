@@ -9,12 +9,12 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionAppEntryUI  extends HAPComponent implements HAPDefinitionAppEntry{
+public class HAPDefinitionAppEntryUI  extends HAPComponentImp implements HAPDefinitionAppEntry{
 
 	@HAPAttribute
 	public static final String MODULE = "module";

@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
@@ -28,7 +28,7 @@ for instance, for a module that shows a school information, it contains two page
 Don't need to define service information here, as service information will be gathered from all the mdoule ui definition
  */
 @HAPEntityWithAttribute
-public class HAPDefinitionModule extends HAPComponent{
+public class HAPDefinitionModule extends HAPComponentImp{
 	
 	@HAPAttribute
 	public static String UI = "ui";

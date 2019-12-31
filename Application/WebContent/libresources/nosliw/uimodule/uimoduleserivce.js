@@ -48,7 +48,7 @@ var node_createUIModuleService = function(){
 						if(typeof module==='string' && node_getObjectType(state)==node_CONSTANT.TYPEDOBJECT_TYPE_BACKUPSERVICE){
 							//create by resource id, then version should be set according to resource version
 							state.setVersion("5.0.0");   //kkkkk
-						}    
+						}
 						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationInfos, configure.getConfigureValue().root, ioInput, state, {
 							success : function(request, uiModuleRuntime){
 								return uiModuleRuntime;

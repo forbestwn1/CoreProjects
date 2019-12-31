@@ -2,7 +2,7 @@ package com.nosliw.uiresource.resource;
 
 import java.util.List;
 
-import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
+import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -23,7 +23,7 @@ public class HAPResourceManagerUIModule  extends HAPResourceManagerImp{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdUIModule uiModuleId = new HAPResourceIdUIModule(resourceId); 
-		HAPExecutableModule uiModule = this.m_uiResourceMan.getUIModule(uiModuleId.getId(), new HAPDefinitionExternalMapping(resourceId.getSupplement()));
+		HAPExecutableModule uiModule = this.m_uiResourceMan.getUIModule(uiModuleId.getId(), new HAPAttachmentContainer(resourceId.getSupplement()));
 		if(uiModule==null)  return null;
 		return new HAPResource(resourceId, uiModule.toResourceData(runtimeInfo), HAPResourceUtility.buildResourceLoadPattern(resourceId, null));
 	}
@@ -31,7 +31,7 @@ public class HAPResourceManagerUIModule  extends HAPResourceManagerImp{
 	@Override
 	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		HAPResourceIdUIModule uiModuleId = new HAPResourceIdUIModule(resourceId); 
-		HAPExecutableModule uiModule = this.m_uiResourceMan.getUIModule(uiModuleId.getId(), new HAPDefinitionExternalMapping(resourceId.getSupplement()));
+		HAPExecutableModule uiModule = this.m_uiResourceMan.getUIModule(uiModuleId.getId(), new HAPAttachmentContainer(resourceId.getSupplement()));
 		return uiModule.getResourceDependency(runtimeInfo);
 	}
 }

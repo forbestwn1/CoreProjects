@@ -1,7 +1,7 @@
 {
 	"name": "Module_SoccerForFun_PlayerUpdate",
 	"description": "",
-	"external": {
+	"attachment": {
 		"uiResource" : [
 			{
 				"name": "playerUpdatePage",

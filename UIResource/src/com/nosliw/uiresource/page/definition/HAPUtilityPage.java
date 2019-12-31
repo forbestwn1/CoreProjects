@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
+import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
@@ -19,7 +19,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 public class HAPUtilityPage {
 
 	public static void solveServiceProvider(HAPDefinitionUIUnit uiUnitDef, HAPWithServiceProvider parent, HAPManagerServiceDefinition serviceDefinitionMan) {
-		HAPUtilityService.solveServiceProvider(uiUnitDef, parent, uiUnitDef.getExternalMapping(), uiUnitDef.getNameMapping(), serviceDefinitionMan);
+		HAPUtilityService.solveServiceProvider(uiUnitDef, parent, uiUnitDef.getAttachmentContainer(), uiUnitDef.getNameMapping(), serviceDefinitionMan);
 		
 //		Map<String, HAPDefinitionServiceProvider> parentProviders = parent!=null?parent.getServiceProviderDefinitions() : new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 //		HAPNameMapping nameMapping = uiUnitDef.getNameMapping();
@@ -36,11 +36,11 @@ public class HAPUtilityPage {
 		uiUnitDef.setNameMapping(HAPNameMapping.newNamingMapping(uiUnitDef.getAttributes().get(HAPConstant.UITAG_PARM_MAPPING)));
 	}
 	
-	public static void solveExternalMapping(HAPDefinitionUIUnit uiUnitDef, HAPDefinitionExternalMapping parentExternalMapping, HAPUITagManager uiTagMan) {
+	public static void solveExternalMapping(HAPDefinitionUIUnit uiUnitDef, HAPAttachmentContainer parentExternalMapping, HAPUITagManager uiTagMan) {
 		buildUIUnitNameMapping(uiUnitDef);
 		
 		//if attribute has mapping, then do mapping first
-		HAPDefinitionExternalMapping mapped = uiUnitDef.getNameMapping().mapExternal(parentExternalMapping);
+		HAPAttachmentContainer mapped = uiUnitDef.getNameMapping().mapAttachment(parentExternalMapping);
 		
 		//get inherit mode
 		String inheritableMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT;
@@ -48,10 +48,10 @@ public class HAPUtilityPage {
 			inheritableMode = getTagInheritableMode(((HAPDefinitionUITag)uiUnitDef).getTagName(), uiTagMan);
 		}		
 		//merge
-		uiUnitDef.getExternalMapping().merge(parentExternalMapping, inheritableMode);
+		uiUnitDef.getAttachmentContainer().merge(parentExternalMapping, inheritableMode);
 		
 		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
-			solveExternalMapping(uiTag, uiUnitDef.getExternalMapping(), uiTagMan);
+			solveExternalMapping(uiTag, uiUnitDef.getAttachmentContainer(), uiTagMan);
 		}
 	}
 	

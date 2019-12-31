@@ -6,8 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
-import com.nosliw.data.core.component.HAPDefinitionExternalMappingEle;
+import com.nosliw.data.core.component.HAPAttachment;
+import com.nosliw.data.core.component.HAPAttachmentContainer;
+import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPExternalMappingUtility;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -53,16 +54,16 @@ public class HAPUtilityServiceUse {
 	
 	//build service provider from external mapping
 	public static Set<HAPDefinitionServiceProvider> buildServiceProvider(
-			HAPDefinitionExternalMapping resourceExternalMapping,
+			HAPAttachmentContainer resourceExternalMapping,
 			Map<String, HAPDefinitionServiceProvider> parent, 
 			HAPManagerServiceDefinition serviceDefinitionMan) {
 		Set<HAPDefinitionServiceProvider> out = new HashSet<>();
 		
-		Map<String, HAPDefinitionExternalMappingEle> eleByName = resourceExternalMapping.getMappingByType(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);
+		Map<String, HAPAttachment> eleByName = resourceExternalMapping.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);
 		if(eleByName!=null) {
 			for(String name : eleByName.keySet()) {
 				HAPDefinitionServiceProvider provider = null;
-				HAPDefinitionExternalMappingEle ele = eleByName.get(name);
+				HAPAttachmentReference ele = (HAPAttachmentReference)eleByName.get(name);
 				if(HAPExternalMappingUtility.isOverridenByParent(ele)) {
 					//inherited from parent
 					if(parent!=null) {
@@ -83,7 +84,7 @@ public class HAPUtilityServiceUse {
 		return out;
 	}
 	
-	private static HAPDefinitionServiceProvider buildServiceProviderFromMappingEle(HAPDefinitionExternalMappingEle ele, HAPManagerServiceDefinition serviceDefinitionMan) {
+	private static HAPDefinitionServiceProvider buildServiceProviderFromMappingEle(HAPAttachmentReference ele, HAPManagerServiceDefinition serviceDefinitionMan) {
 		HAPDefinitionServiceProvider provider = new HAPDefinitionServiceProvider();
 		ele.cloneToEntityInfo(provider);
 		provider.setServiceId(ele.getId().getId());

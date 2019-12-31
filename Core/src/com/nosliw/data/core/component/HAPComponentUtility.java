@@ -11,21 +11,21 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 
 public class HAPComponentUtility {
 
-	public static void solveExternalMapping(HAPComponent component, HAPDefinitionExternalMapping parentExternalMapping) {
-		component.getExternalMapping().merge(parentExternalMapping, HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+	public static void solveAttachment(HAPComponentImp component, HAPAttachmentContainer parentAttachment) {
+		component.getAttachmentContainer().merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
 	}
 
-	public static void parseComponent(HAPComponent component, JSONObject jsonObj) {
+	public static void parseComponent(HAPComponentImp component, JSONObject jsonObj) {
 		component.buildEntityInfoByJson(jsonObj);
 		
 		//parse external
-		JSONObject pageInfoObj = jsonObj.optJSONObject(HAPWithExternalMapping.EXTERNALMAPPING);
+		JSONObject pageInfoObj = jsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
 		if(pageInfoObj!=null) {
-			HAPExternalMappingUtility.parseDefinition(pageInfoObj, component.getExternalMapping());
+			HAPExternalMappingUtility.parseDefinition(pageInfoObj, component.getAttachmentContainer());
 		}
 		
 		//service
-		JSONArray serviceUseListJson = jsonObj.optJSONArray(HAPComponent.SERVICE);
+		JSONArray serviceUseListJson = jsonObj.optJSONArray(HAPComponentImp.SERVICE);
 		if(serviceUseListJson!=null) {
 			for(int i=0; i<serviceUseListJson.length(); i++) {
 				JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
@@ -36,16 +36,18 @@ public class HAPComponentUtility {
 		}
 
 		//context
-		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPComponent.CONTEXT);
+		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPComponentImp.CONTEXT);
 		if(contextJsonObj!=null) {
 			component.setContext(HAPParserContext.parseContextGroup(contextJsonObj));
 		}
 	}
 
 	//build external mapping for internal component
-	public static HAPDefinitionExternalMapping buildInternalComponentExternalMapping(HAPResourceId resourceId, HAPDefinitionExternalMapping externalMapping, HAPWithNameMapping withNameMapping) {
-		HAPDefinitionExternalMapping out = withNameMapping.getNameMapping().mapExternal(externalMapping);
-		out.merge(new HAPDefinitionExternalMapping(resourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+	public static HAPAttachmentContainer buildInternalAttachment(HAPResourceId resourceId, HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
+		HAPAttachmentContainer out = withNameMapping.getNameMapping().mapAttachment(attachment);
+		if(resourceId!=null) {
+			out.merge(new HAPAttachmentContainer(resourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+		}
 		return out;
 	}
 	

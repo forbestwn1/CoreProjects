@@ -48,19 +48,19 @@ public class HAPNameMapping {
 		return out;
 	}	
 
-	public HAPDefinitionExternalMapping mapExternal(HAPDefinitionExternalMapping original) {
-		HAPDefinitionExternalMapping mapped;
+	public HAPAttachmentContainer mapAttachment(HAPAttachmentContainer original) {
+		HAPAttachmentContainer mapped;
 		if(m_nameMapping==null || m_nameMapping.isEmpty())  mapped = original;
 		else {
-			mapped = new HAPDefinitionExternalMapping();
+			mapped = new HAPAttachmentContainer();
 			for(String type : m_nameMapping.keySet()) {
 				Map<String, String> byParentName = m_nameMapping.get(type);
 				for(String parentName : byParentName.keySet()) {
 					String childName = byParentName.get(parentName);
-					HAPDefinitionExternalMappingEle ele = original.getElement(type, parentName);
+					HAPAttachment ele = original.getElement(type, parentName);
 					ele = ele.clone();
 					ele.setName(childName);
-					mapped.addElement(type, ele);
+					mapped.addAttachment(type, ele);
 				}
 			}
 		}

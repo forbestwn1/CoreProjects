@@ -1,7 +1,7 @@
 {
 	"name": "ModuleMySchoolResult",
 	"description": "",
-	"external": {
+	"attachment": {
 		"uiResource" : [
 			{
 				"name": "schoolListPage",

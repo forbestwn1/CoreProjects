@@ -1,7 +1,7 @@
 {
 	"name": "Module_SoccerForFun_PlayerLineup",
 	"description": "",
-	"external": {
+	"attachment": {
 		"uiResource" : [
 			{
 				"name": "playerLineupPage",

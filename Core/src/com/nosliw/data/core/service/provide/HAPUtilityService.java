@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
+import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
@@ -42,7 +42,7 @@ public class HAPUtilityService {
 		
 	}
 	
-	public static void solveServiceProvider(HAPWithServiceProvider child, HAPWithServiceProvider parent, HAPDefinitionExternalMapping externalMapping, HAPNameMapping nameMapping, HAPManagerServiceDefinition serviceDefinitionMan) {
+	public static void solveServiceProvider(HAPWithServiceProvider child, HAPWithServiceProvider parent, HAPAttachmentContainer externalMapping, HAPNameMapping nameMapping, HAPManagerServiceDefinition serviceDefinitionMan) {
 		Map<String, HAPDefinitionServiceProvider> parentProviders = parent!=null?parent.getServiceProviderDefinitions() : new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 		Map<String, HAPDefinitionServiceProvider> mappedParentProviders = null;
 		if(nameMapping!=null)   mappedParentProviders = (Map<String, HAPDefinitionServiceProvider>)nameMapping.mapEntity(parentProviders, HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);

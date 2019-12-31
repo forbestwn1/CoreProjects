@@ -308,6 +308,7 @@ var COMMONCONSTANT=
   "RUNTIME_RESOURCE_TYPE_UIMODULE": "uiModule",
   "RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION": "uiModuleDecoration",
   "RUNTIME_RESOURCE_TYPE_UIAPPENTRY": "uiAppEntry",
+  "RUNTIME_RESOURCE_TYPE_UIAPP": "uiApp",
   "RUNTIME_RESOURCE_TYPE_UIAPPDECORATION": "uiAppDecoration",
   "RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE": "uiAppConfigure",
   "RUNTIME_RESOURCE_TYPE_PROCESS": "process",
@@ -363,7 +364,10 @@ var COMMONCONSTANT=
   "NOSLIW_RESERVE_ATTRIBUTE": "nosliwattribute_",
   "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
   "NOSLIW_NAME_PREFIX": "nosliw_",
-  "NAME_DEFAULT": "default"
+  "NAME_DEFAULT": "default",
+  "ATTACHMENT_TYPE_REFERENCE": "reference",
+  "ATTACHMENT_TYPE_ENTITY": "entity",
+  "ATTACHMENT_TYPE_PLACEHOLDER": "placeHolder"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

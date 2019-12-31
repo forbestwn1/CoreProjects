@@ -7,8 +7,10 @@ import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.component.HAPAttachment;
+import com.nosliw.data.core.component.HAPAttachmentContainer;
+import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPComponentUtility;
-import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessWithContext;
@@ -92,7 +94,7 @@ public class HAPProcessMiniAppEntry {
 		//module
 		for(HAPDefinitionAppModule moduleDef : entryDefinition.getModules()) {
 			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(moduleDef.getStatus())) {
-				HAPExecutableAppModule module = processModule(moduleDef, out, entryDefinition.getExternalMapping(), extraContext, entryServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
+				HAPExecutableAppModule module = processModule(moduleDef, out, entryDefinition.getAttachmentContainer(), extraContext, entryServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
 				out.addUIModule(moduleDef.getName(), module);
 			}
 		}
@@ -103,7 +105,7 @@ public class HAPProcessMiniAppEntry {
 	private static HAPExecutableAppModule processModule(
 			HAPDefinitionAppModule module,
 			HAPExecutableAppEntry entryExe,
-			HAPDefinitionExternalMapping parentExternalMapping,
+			HAPAttachmentContainer parentAttachment,
 			Map<String, HAPContextStructure> extraContexts,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcessDefinition processMan,
@@ -112,8 +114,17 @@ public class HAPProcessMiniAppEntry {
 			HAPProcessTracker processTracker) {
 		HAPExecutableAppModule out = new HAPExecutableAppModule(module);
 		
-		HAPResourceId moduleResourceId = parentExternalMapping.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getName()).getId();
-		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleResourceId.getId(), uiResourceMan.getModuleParser());
+		HAPAttachment moduleAttachment = parentAttachment.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getName());
+		HAPDefinitionModule moduleDef = null;
+		HAPAttachmentContainer mappedParentAttachment = null;
+		if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
+			HAPResourceId moduleResourceId = ((HAPAttachmentReference)moduleAttachment).getId();
+			moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleResourceId.getId(), uiResourceMan.getModuleParser());
+			mappedParentAttachment = HAPComponentUtility.buildInternalAttachment(moduleResourceId, entryExe.getDefinition().getAttachmentContainer(), module);
+		}
+		else if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_ENTITY)){
+			
+		}
 		 
 		HAPParentContext parentContext = HAPParentContext.createDefault(entryExe.getContext());
 		for(String extraName : extraContexts.keySet()) {
@@ -130,8 +141,7 @@ public class HAPProcessMiniAppEntry {
 		}
 		
 		//module
-		HAPDefinitionExternalMapping pageExternalMapping = HAPComponentUtility.buildInternalComponentExternalMapping(moduleResourceId, entryExe.getDefinition().getExternalMapping(), module);
-		HAPExecutableModule moduleExe = HAPProcessorModule.process(moduleDef, moduleDef.getName(), parentExternalMapping, null, processMan, uiResourceMan, contextProcessRequirement.dataTypeHelper, contextProcessRequirement.runtime, contextProcessRequirement.expressionManager, contextProcessRequirement.serviceDefinitionManager);
+		HAPExecutableModule moduleExe = HAPProcessorModule.process(moduleDef, moduleDef.getName(), mappedParentAttachment, null, processMan, uiResourceMan, contextProcessRequirement.dataTypeHelper, contextProcessRequirement.runtime, contextProcessRequirement.expressionManager, contextProcessRequirement.serviceDefinitionManager);
 		out.setModule(moduleExe);
 		
 		//output data association

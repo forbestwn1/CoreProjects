@@ -458,6 +458,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULE = "uiModule";
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION = "uiModuleDecoration";
 		public static final String RUNTIME_RESOURCE_TYPE_UIAPPENTRY = "uiAppEntry";
+		public static final String RUNTIME_RESOURCE_TYPE_UIAPP = "uiApp";
 		public static final String RUNTIME_RESOURCE_TYPE_UIAPPDECORATION = "uiAppDecoration";
 		public static final String RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE = "uiAppConfigure";
 		public static final String RUNTIME_RESOURCE_TYPE_PROCESS = "process";
@@ -580,6 +581,12 @@ public class HAPConstant {
 
 
 		public static final String NAME_DEFAULT = "default";
+
+
+
+		public static final String ATTACHMENT_TYPE_REFERENCE = "reference";
+		public static final String ATTACHMENT_TYPE_ENTITY = "entity";
+		public static final String ATTACHMENT_TYPE_PLACEHOLDER = "placeHolder";
 
 
 }

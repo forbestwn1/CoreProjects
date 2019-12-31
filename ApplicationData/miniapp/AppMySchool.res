@@ -1,7 +1,7 @@
 {
 	"name" : "AppMySchool",
 	"id" : "AppMySchool",
-	"external": {
+	"attachment": {
 		"uiResource" : [
 			{
 				"name": "schoolListPage",

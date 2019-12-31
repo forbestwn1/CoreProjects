@@ -8,9 +8,9 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.component.HAPAttachmentContainer;
+import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPComponentUtility;
-import com.nosliw.data.core.component.HAPDefinitionExternalMapping;
-import com.nosliw.data.core.component.HAPDefinitionExternalMappingEle;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessWithContext;
@@ -48,7 +48,7 @@ public class HAPProcessorModule {
 	public static HAPExecutableModule process(
 			HAPDefinitionModule moduleDefinition, 
 			String id, 
-			HAPDefinitionExternalMapping parentExternalMapping,
+			HAPAttachmentContainer parentExternalMapping,
 			HAPContextGroup parentContext, 
 			HAPManagerProcessDefinition processMan,
 			HAPUIResourceManager uiResourceMan,
@@ -58,9 +58,9 @@ public class HAPProcessorModule {
 			HAPManagerServiceDefinition serviceDefinitionManager) {
 		
 		//resolve external mapping
-		HAPComponentUtility.solveExternalMapping(moduleDefinition, parentExternalMapping);
+		HAPComponentUtility.solveAttachment(moduleDefinition, parentExternalMapping);
 		//resolve service provider
-		HAPUtilityService.solveServiceProvider(moduleDefinition, null, moduleDefinition.getExternalMapping(), null, serviceDefinitionManager);
+		HAPUtilityService.solveServiceProvider(moduleDefinition, null, moduleDefinition.getAttachmentContainer(), null, serviceDefinitionManager);
 
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
 		return HAPProcessorModule.process(moduleDefinition, id, parentContext, null, processMan, uiResourceMan, dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, processTracker);
@@ -122,9 +122,12 @@ public class HAPProcessorModule {
 		
 		//process page, use context in module override context in page
 		//find pape resource id from external mapping
-		HAPDefinitionExternalMappingEle externalMappingEle = moduleExe.getDefinition().getExternalMapping().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, moduleUIDefinition.getPage());
-		HAPResourceId pageResourceId = externalMappingEle.getId();
-		
+		HAPAttachmentReference pageAttachment = (HAPAttachmentReference)moduleExe.getDefinition().getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, moduleUIDefinition.getPage());
+		HAPResourceId pageResourceId = pageAttachment.getId();
+
+		//external mapping
+		HAPAttachmentContainer mappedParentAttachment = HAPComponentUtility.buildInternalAttachment(pageResourceId, moduleExe.getDefinition().getAttachmentContainer(), moduleUIDefinition);
+
 		//ui decoration
 		//ui decoration from page first
 //		out.addUIDecoration(pageInfo.getDecoration());
@@ -138,9 +141,7 @@ public class HAPProcessorModule {
 		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement);
 		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPContext)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk
 
-		//external mapping
-		HAPDefinitionExternalMapping pageExternalMapping = HAPComponentUtility.buildInternalComponentExternalMapping(pageResourceId, moduleExe.getDefinition().getExternalMapping(), moduleUIDefinition);
-		HAPExecutableUIUnitPage page = uiResourceMan.getUIPage(pageResourceId.getId(), id, mappingContextGroup, null, pageExternalMapping);
+		HAPExecutableUIUnitPage page = uiResourceMan.getUIPage(pageResourceId.getId(), id, mappingContextGroup, null, mappedParentAttachment);
 		out.setPage(page);
 
 		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyStructureFalse(new HAPInfoImpSimple());
