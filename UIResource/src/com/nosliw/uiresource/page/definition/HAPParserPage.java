@@ -25,7 +25,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.component.HAPExternalMappingUtility;
+import com.nosliw.data.core.component.HAPAttachmentUtility;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
@@ -114,8 +114,8 @@ public class HAPParserPage {
 		//parse command definition block
 		this.parseChildCommandBlocks(unitEle, uiUnit);
 		
-		//parse external
-		parseExternalMappingBlocks(unitEle, uiUnit);
+		//parse attachment
+		parseAttachmentBlocks(unitEle, uiUnit);
 		
 		//process key attribute
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType()))   parseKeyAttributeOnTag(unitEle, parentUIUnit, true);
@@ -215,12 +215,12 @@ public class HAPParserPage {
 		for(Element childEle : childEles)  childEle.remove();
 	}
 
-	private void parseExternalMappingBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
+	private void parseAttachmentBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, ATTATCHMENT);
 		for(Element childEle : childEles){
 			try {
-				JSONObject externalDefJson = new JSONObject(childEle.html());
-				HAPExternalMappingUtility.parseDefinition(externalDefJson, resourceUnit.getAttachmentContainer());
+				JSONObject attachmentDefJson = new JSONObject(childEle.html());
+				HAPAttachmentUtility.parseDefinition(attachmentDefJson, resourceUnit.getAttachmentContainer());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();

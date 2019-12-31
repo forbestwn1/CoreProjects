@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPAttachment;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPAttachmentReference;
-import com.nosliw.data.core.component.HAPExternalMappingUtility;
+import com.nosliw.data.core.component.HAPAttachmentUtility;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
@@ -52,7 +52,7 @@ public class HAPUtilityServiceUse {
 		return out;
 	}
 	
-	//build service provider from external mapping
+	//build service provider from attachment
 	public static Set<HAPDefinitionServiceProvider> buildServiceProvider(
 			HAPAttachmentContainer resourceExternalMapping,
 			Map<String, HAPDefinitionServiceProvider> parent, 
@@ -64,7 +64,7 @@ public class HAPUtilityServiceUse {
 			for(String name : eleByName.keySet()) {
 				HAPDefinitionServiceProvider provider = null;
 				HAPAttachmentReference ele = (HAPAttachmentReference)eleByName.get(name);
-				if(HAPExternalMappingUtility.isOverridenByParent(ele)) {
+				if(HAPAttachmentUtility.isOverridenByParent(ele)) {
 					//inherited from parent
 					if(parent!=null) {
 						provider = parent.get(name);

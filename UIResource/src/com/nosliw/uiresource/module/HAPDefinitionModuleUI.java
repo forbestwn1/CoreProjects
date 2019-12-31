@@ -62,7 +62,7 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp implements H
 	private HAPDefinitionDataAssociation m_inputMapping;
 	private HAPDefinitionDataAssociation m_outputMapping;
 
-	//mapping reference name from external to internal name
+	//mapping reference name from attachment to internal name
 	private HAPNameMapping m_nameMapping;
 	
 	//provide extra information about this module ui so that container can render it properly

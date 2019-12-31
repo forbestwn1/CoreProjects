@@ -6,7 +6,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 //entity info : name, description, info
 //id
 //context
-//external mapping
+//attachment mapping
 //
 public interface HAPComponent extends HAPEntityInfo, HAPWithAttachment{
 

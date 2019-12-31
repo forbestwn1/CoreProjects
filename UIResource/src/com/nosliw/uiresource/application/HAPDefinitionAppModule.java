@@ -41,7 +41,7 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements
 	
 	private String m_status;
 	
-	//mapping reference name from external to internal name
+	//mapping reference name from attachment to internal name
 	private HAPNameMapping m_nameMapping;
 
 	//event handlers

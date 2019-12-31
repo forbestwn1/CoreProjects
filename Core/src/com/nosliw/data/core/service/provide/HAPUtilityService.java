@@ -42,13 +42,13 @@ public class HAPUtilityService {
 		
 	}
 	
-	public static void solveServiceProvider(HAPWithServiceProvider child, HAPWithServiceProvider parent, HAPAttachmentContainer externalMapping, HAPNameMapping nameMapping, HAPManagerServiceDefinition serviceDefinitionMan) {
+	public static void solveServiceProvider(HAPWithServiceProvider child, HAPWithServiceProvider parent, HAPAttachmentContainer attachment, HAPNameMapping nameMapping, HAPManagerServiceDefinition serviceDefinitionMan) {
 		Map<String, HAPDefinitionServiceProvider> parentProviders = parent!=null?parent.getServiceProviderDefinitions() : new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 		Map<String, HAPDefinitionServiceProvider> mappedParentProviders = null;
 		if(nameMapping!=null)   mappedParentProviders = (Map<String, HAPDefinitionServiceProvider>)nameMapping.mapEntity(parentProviders, HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);
 		else mappedParentProviders = parentProviders;
 		
-		Set<HAPDefinitionServiceProvider> providers = HAPUtilityServiceUse.buildServiceProvider(externalMapping, mappedParentProviders, serviceDefinitionMan);
+		Set<HAPDefinitionServiceProvider> providers = HAPUtilityServiceUse.buildServiceProvider(attachment, mappedParentProviders, serviceDefinitionMan);
 		for(HAPDefinitionServiceProvider provider : providers)	child.addServiceProviderDefinition(provider);
 	}
 

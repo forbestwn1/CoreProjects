@@ -2,8 +2,8 @@ package com.nosliw.uiresource;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
+import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceCache;
@@ -79,9 +79,9 @@ public class HAPUIResourceManager {
 
 	public HAPExecutableAppEntry getMiniApp(String appId, String entry, HAPAttachmentContainer parentExternalMapping) {
 		HAPDefinitionApp miniAppDef = HAPUtilityApp.getAppDefinitionById(appId, this.m_miniAppParser);
-		//resolve external mapping for app
+		//resolve attachment for app
 		HAPComponentUtility.solveAttachment(miniAppDef, parentExternalMapping);
-		//resolve external mapping for entry
+		//resolve attachment for entry
 		HAPComponentUtility.solveAttachment(miniAppDef.getEntry(entry), miniAppDef.getAttachmentContainer());
 		//resolve service provider for app
 		HAPUtilityService.solveServiceProvider(miniAppDef, null, parentExternalMapping, null, m_serviceDefinitionManager);
@@ -110,7 +110,7 @@ public class HAPUIResourceManager {
 	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId, String id, HAPContextGroup context, HAPContextGroup parentContext, HAPAttachmentContainer parentExternalMapping){
 		//get definition itself
 		HAPDefinitionUIPage def = HAPUtilityPage.getPageDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
-		//resolve external mapping
+		//resolve attachment
 		HAPUtilityPage.solveExternalMapping(def, parentExternalMapping, this.m_uiTagMan);
 		//resolve service provider
 		HAPUtilityPage.solveServiceProvider(def, null, m_serviceDefinitionManager);

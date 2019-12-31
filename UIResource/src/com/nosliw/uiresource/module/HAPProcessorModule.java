@@ -57,7 +57,7 @@ public class HAPProcessorModule {
 			HAPExpressionSuiteManager expressionManager,
 			HAPManagerServiceDefinition serviceDefinitionManager) {
 		
-		//resolve external mapping
+		//resolve attachment mapping
 		HAPComponentUtility.solveAttachment(moduleDefinition, parentExternalMapping);
 		//resolve service provider
 		HAPUtilityService.solveServiceProvider(moduleDefinition, null, moduleDefinition.getAttachmentContainer(), null, serviceDefinitionManager);
@@ -121,11 +121,11 @@ public class HAPProcessorModule {
 		HAPExecutableModuleUI out = new HAPExecutableModuleUI(moduleUIDefinition, id);
 		
 		//process page, use context in module override context in page
-		//find pape resource id from external mapping
+		//find pape resource id from attachment mapping
 		HAPAttachmentReference pageAttachment = (HAPAttachmentReference)moduleExe.getDefinition().getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, moduleUIDefinition.getPage());
 		HAPResourceId pageResourceId = pageAttachment.getId();
 
-		//external mapping
+		//attachment
 		HAPAttachmentContainer mappedParentAttachment = HAPComponentUtility.buildInternalAttachment(pageResourceId, moduleExe.getDefinition().getAttachmentContainer(), moduleUIDefinition);
 
 		//ui decoration

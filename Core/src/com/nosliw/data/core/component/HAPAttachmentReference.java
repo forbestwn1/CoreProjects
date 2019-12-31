@@ -85,5 +85,4 @@ public class HAPAttachmentReference extends HAPEntityInfoWritableImp implements 
 		out.m_id = this.m_id.clone();
 		return out;
 	}
-
 }

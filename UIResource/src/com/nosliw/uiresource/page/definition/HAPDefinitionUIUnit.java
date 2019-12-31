@@ -56,7 +56,7 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 	//command definition
 	private Map<String, HAPDefinitionUICommand> m_commandsDefinition;
 
-	//mapping from external name to internal name(service, resource, ...)
+	//mapping from attachment name to internal name(service, resource, ...)
 	private HAPNameMapping m_nameMapping;
 	
 	public HAPDefinitionUIUnit(String id){

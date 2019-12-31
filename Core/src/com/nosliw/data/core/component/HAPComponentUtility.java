@@ -18,10 +18,10 @@ public class HAPComponentUtility {
 	public static void parseComponent(HAPComponentImp component, JSONObject jsonObj) {
 		component.buildEntityInfoByJson(jsonObj);
 		
-		//parse external
+		//parse attachment
 		JSONObject pageInfoObj = jsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
 		if(pageInfoObj!=null) {
-			HAPExternalMappingUtility.parseDefinition(pageInfoObj, component.getAttachmentContainer());
+			HAPAttachmentUtility.parseDefinition(pageInfoObj, component.getAttachmentContainer());
 		}
 		
 		//service
@@ -42,7 +42,7 @@ public class HAPComponentUtility {
 		}
 	}
 
-	//build external mapping for internal component
+	//build attachment mapping for internal component
 	public static HAPAttachmentContainer buildInternalAttachment(HAPResourceId resourceId, HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
 		HAPAttachmentContainer out = withNameMapping.getNameMapping().mapAttachment(attachment);
 		if(resourceId!=null) {
