@@ -9,9 +9,15 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPAttachmentContainer;
+import com.nosliw.data.core.component.HAPAttachmentReference;
+import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionAppEntryUI  extends HAPComponentImp implements HAPDefinitionAppEntry{
@@ -40,6 +46,21 @@ public class HAPDefinitionAppEntryUI  extends HAPComponentImp implements HAPDefi
 	public HAPDefinitionWrapperTask<HAPDefinitionProcess> getProcess(String name) {  return this.m_processes.get(name);   }
 	public Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> getProcesses(){   return this.m_processes;  }
 	public void addProcess(String name, HAPDefinitionWrapperTask<HAPDefinitionProcess> process) {  this.m_processes.put(name, process);    }
+
+	@Override
+	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
+
+		//module part
+		for(HAPDefinitionAppModule module : this.getModules()) {
+			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(module.getStatus())) {
+				HAPAttachmentContainer mappedParentAttachment = HAPComponentUtility.buildNameMappedAttachment(this.getAttachmentContainer(), module);
+				HAPAttachmentReference moduleAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getModule());
+				out.addChildCompoentId(module.getName(), moduleAttachment.getId(), mappedParentAttachment);
+			}
+		}
+		return out;
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

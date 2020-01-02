@@ -9,7 +9,12 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPAttachmentContainer;
+import com.nosliw.data.core.component.HAPAttachmentReference;
+import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
@@ -81,11 +86,27 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	public void addServiceProviderDefinition(HAPDefinitionServiceProvider def) {  this.m_serviceDefinition.addServiceProviderDefinition(def);   }
 	
 	@Override
+	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
+		//service part
+		HAPComponentUtility.buildServiceChildrenComponent(out, this, this.getAttachmentContainer());
+
+		//ui part
+		for(HAPDefinitionModuleUI ui : this.getUIs()) {
+			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(ui.getStatus())) {
+				HAPAttachmentContainer mappedParentAttachment = HAPComponentUtility.buildNameMappedAttachment(this.getAttachmentContainer(), ui);
+				HAPAttachmentReference pageAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, ui.getPage());
+				out.addChildCompoentId(ui.getName(), pageAttachment.getId(), mappedParentAttachment);
+			}
+		}
+		return out;
+	}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
 		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
 		jsonMap.put(UIDECORATION, HAPJsonUtility.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
 	}
-
 }

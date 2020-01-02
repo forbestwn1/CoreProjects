@@ -18,11 +18,11 @@
 		],
 		"uiModule" : [
 			{	
-				"name" : "setting",
+				"name" : "MySchoolSetting",
 				"id" : "ModuleMySchoolSetting"
 			},		
 			{	
-				"name" : "MySchool",
+				"name" : "MySchoolResult",
 				"id" : "ModuleMySchoolResult"
 			}		
 		],
@@ -39,7 +39,7 @@
 				"status": "disabled111",
 				"role": "setting",
 				"name": "setting",
-				"module": "ModuleMySchoolSetting",
+				"module": "MySchoolSetting",
 				"info": {},
 				"inputMapping": [
 					{
@@ -98,7 +98,7 @@
 				"status": "disabled111",
 				"role": "application",
 				"name": "MySchool",
-				"module": "ModuleMySchoolResult",
+				"module": "MySchoolResult",
 				"inputMapping": [
 					{
 						"element": {

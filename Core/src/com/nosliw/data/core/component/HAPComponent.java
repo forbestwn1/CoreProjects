@@ -10,10 +10,14 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 //
 public interface HAPComponent extends HAPEntityInfo, HAPWithAttachment{
 
+//	String getComponentType();
+	
 	String getId();
 	void setId(String id);
 
 	HAPContextGroup getContext();
-	void setContext(HAPContextGroup context);  
+	void setContext(HAPContextGroup context);
+	
+	HAPChildrenComponentIdContainer getChildrenComponentId();
 
 }

@@ -9,7 +9,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
+import com.nosliw.uiresource.resource.HAPUIAppEntryId;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionApp extends HAPComponentImp{
@@ -45,6 +48,16 @@ public class HAPDefinitionApp extends HAPComponentImp{
 			entry.setName(name);
 		}
 		this.m_entries.put(name, entry);
+	}
+	
+	@Override
+	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
+		//entry part
+		for(HAPDefinitionAppEntryUI entry : this.getEntrys()) {
+			out.addChildCompoentId(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), this.getAttachmentContainer());
+		}
+		return out;
 	}
 	
 	@Override

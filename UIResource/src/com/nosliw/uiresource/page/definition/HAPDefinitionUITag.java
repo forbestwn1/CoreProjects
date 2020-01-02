@@ -18,4 +18,5 @@ public class HAPDefinitionUITag extends HAPDefinitionUIUnit{
 	public String getType() {
 		return HAPConstant.UIRESOURCE_TYPE_TAG;
 	}
+
 }

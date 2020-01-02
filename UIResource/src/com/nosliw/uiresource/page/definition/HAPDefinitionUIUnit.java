@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.component.HAPNameMapping;
 
 /*
@@ -113,4 +115,11 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 	public HAPNameMapping getNameMapping(){   return this.m_nameMapping;    }
 	
 	public void postRead(){}
+	
+	@Override
+	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
+		HAPComponentUtility.buildServiceChildrenComponent(out, this, this.getAttachmentContainer());
+		return out;
+	}
 }

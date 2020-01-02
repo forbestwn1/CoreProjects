@@ -1,13 +1,18 @@
 package com.nosliw.data.core.component;
 
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPParserContext;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.service.use.HAPWithServiceProvider;
 
 public class HAPComponentUtility {
 
@@ -42,13 +47,29 @@ public class HAPComponentUtility {
 		}
 	}
 
+	public static HAPAttachmentContainer buildNameMappedAttachment(HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
+		HAPAttachmentContainer out = withNameMapping.getNameMapping().mapAttachment(attachment);
+		return out;
+	}
+
+	
 	//build attachment mapping for internal component
 	public static HAPAttachmentContainer buildInternalAttachment(HAPResourceId resourceId, HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
-		HAPAttachmentContainer out = withNameMapping.getNameMapping().mapAttachment(attachment);
+		HAPAttachmentContainer out = buildNameMappedAttachment(attachment, withNameMapping); 
 		if(resourceId!=null) {
 			out.merge(new HAPAttachmentContainer(resourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
 		}
 		return out;
+	}
+	
+	public static void buildServiceChildrenComponent(HAPChildrenComponentIdContainer out, HAPWithServiceProvider withServiceProvider, HAPAttachmentContainer attachment) {
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = withServiceProvider.getServiceProviderDefinitions(); 
+		Map<String, HAPDefinitionServiceUse> serviceUseDefs = withServiceProvider.getServiceUseDefinitions();
+		for(String serviceName : serviceUseDefs.keySet()) {
+			HAPDefinitionServiceUse serviceUseDef = serviceUseDefs.get(serviceName);
+			HAPDefinitionServiceProvider serviceProvider = allServiceProviders.get(serviceUseDef.getProvider());
+			out.addChildCompoentId(serviceName, HAPResourceId.newInstance(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE, serviceProvider.getServiceId()), attachment);
+		}
 	}
 	
 }

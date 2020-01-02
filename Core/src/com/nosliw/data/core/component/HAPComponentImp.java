@@ -12,7 +12,7 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceProvider;
 
-public class HAPComponentImp extends HAPEntityInfoWritableImp implements HAPComponent, HAPWithServiceProvider{
+abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implements HAPComponent, HAPWithServiceProvider{
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -65,11 +65,13 @@ public class HAPComponentImp extends HAPEntityInfoWritableImp implements HAPComp
 	public void mergeBy(HAPWithAttachment parent, String mode) {
 		this.m_exteranlMapping.merge(parent.getAttachmentContainer(), mode);
 	}
-
+ 
+	@Override
 	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
 	@Override
 	public void addServiceProviderDefinition(HAPDefinitionServiceProvider def) {  this.m_serviceDefinition.addServiceProviderDefinition(def);   }
 
+	@Override
 	public Map<String, HAPDefinitionServiceUse> getServiceUseDefinitions(){   return this.m_serviceDefinition.getServiceUseDefinitions();    }
 	@Override
 	public Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions(){  return this.m_serviceDefinition.getServiceProviderDefinitions();   }

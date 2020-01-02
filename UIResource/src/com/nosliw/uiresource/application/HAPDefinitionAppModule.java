@@ -20,6 +20,9 @@ import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements HAPWithNameMapping{
 
 	@HAPAttribute
+	public static final String MODULE = "module";
+
+	@HAPAttribute
 	public static final String ROLE = "role";
 
 	@HAPAttribute
@@ -36,7 +39,9 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements
 	
 	@HAPAttribute
 	public static String NAMEMAPPING = "nameMapping";
-	
+
+	private String m_module;
+
 	private String m_role;
 	
 	private String m_status;
@@ -56,6 +61,9 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements
 		this.m_inputMapping = new HAPDefinitionGroupDataAssociation();
 		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionEventHandler>();
 	}
+	
+	public String getModule() {  return this.m_module;   }
+	public void setModule(String module) {   this.m_module = module;    }
 	
 	public String getRole() {   return this.m_role;   }
 	public void setRole(String role) {   this.m_role = role;     }
@@ -77,6 +85,7 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(MODULE, this.m_module);
 		jsonMap.put(ROLE, this.m_role);
 		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, this.m_outputMapping.toStringValue(HAPSerializationFormat.JSON));
@@ -87,6 +96,7 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
+		this.m_module = (String)jsonObj.get(MODULE);
 		this.m_role = (String)jsonObj.opt(ROLE);
 		this.m_status = (String)jsonObj.opt(HAPDefinitionModuleUI.STATUS);
 		this.m_inputMapping.buildObject(jsonObj.optJSONArray(INPUTMAPPING), HAPSerializationFormat.JSON);

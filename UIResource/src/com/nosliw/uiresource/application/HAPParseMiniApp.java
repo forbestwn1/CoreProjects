@@ -91,6 +91,7 @@ public class HAPParseMiniApp {
 	private HAPDefinitionAppModule parseModule(JSONObject moduleJson, HAPManagerActivityPlugin activityPluginMan) {
 		HAPDefinitionAppModule out = new HAPDefinitionAppModule();
 		out.buildEntityInfoByJson(moduleJson);
+		out.setModule((String)moduleJson.opt(HAPDefinitionAppModule.MODULE));
 		out.setRole((String)moduleJson.opt(HAPDefinitionAppModule.ROLE));
 		out.setStatus((String)moduleJson.opt(HAPDefinitionModuleUI.STATUS));
 		out.getInputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.INPUTMAPPING), HAPSerializationFormat.JSON);

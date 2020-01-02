@@ -7,4 +7,9 @@ public interface HAPWithServiceProvider {
 	Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions();
 
 	void addServiceProviderDefinition(HAPDefinitionServiceProvider serviceProvider);
+
+	Map<String, HAPDefinitionServiceUse> getServiceUseDefinitions();
+	
+	void addServiceUseDefinition(HAPDefinitionServiceUse def);
+
 }

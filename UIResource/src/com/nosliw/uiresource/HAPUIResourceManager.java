@@ -115,15 +115,11 @@ public class HAPUIResourceManager {
 		//resolve service provider
 		HAPUtilityPage.solveServiceProvider(def, null, m_serviceDefinitionManager);
 		//compile it
-		HAPExecutableUIUnitPage out = this.processUIResource(def, id, context, parentContext);
+		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(def, id, context, parentContext, null, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
 		return out;
 	}
 
 	public HAPParserModule getModuleParser() {    return this.m_moduleParser;   }
 	public HAPParserPage getUIResourceParser() {    return this.m_uiResourceParser;  }
-	
-	private HAPExecutableUIUnitPage processUIResource(HAPDefinitionUIPage uiResource, String id, HAPContextGroup context, HAPContextGroup parentContext) {
-		return HAPProcessorUIPage.processUIResource(uiResource, id, context, parentContext, null, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
-	}
 	
 }

@@ -114,7 +114,7 @@ public class HAPProcessMiniAppEntry {
 			HAPProcessTracker processTracker) {
 		HAPExecutableAppModule out = new HAPExecutableAppModule(module);
 		
-		HAPAttachment moduleAttachment = parentAttachment.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getName());
+		HAPAttachment moduleAttachment = parentAttachment.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getModule());
 		HAPDefinitionModule moduleDef = null;
 		HAPAttachmentContainer mappedParentAttachment = null;
 		if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
