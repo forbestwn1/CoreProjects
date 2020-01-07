@@ -12,8 +12,6 @@
 	<nosliw-include source="Example_App_Result_Realtor"/> 
 	</div>
 
-	<nosliw-debug/>
-	
 	<br>
 	</body>
 

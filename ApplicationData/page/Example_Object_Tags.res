@@ -2,9 +2,6 @@
 <html>
 <body>
 
-		<nosliw-debug/>
-
-
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
@@ -68,8 +65,6 @@
 	<br>
 	
 <!--	
-		<nosliw-debug/>
-
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>

@@ -7,12 +7,14 @@ import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceCache;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.provide.HAPUtilityService;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
+import com.nosliw.uiresource.application.HAPDefinitionAppEntryUI;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
 import com.nosliw.uiresource.application.HAPParseMiniApp;
 import com.nosliw.uiresource.application.HAPProcessMiniAppEntry;
@@ -29,6 +31,8 @@ import com.nosliw.uiresource.page.definition.HAPUtilityPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.processor.HAPProcessorUIPage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
+import com.nosliw.uiresource.resource.HAPUIAppEntryId;
 
 public class HAPUIResourceManager {
 
@@ -77,14 +81,39 @@ public class HAPUIResourceManager {
 		this.m_serviceDefinitionManager = serviceDefinitionManager;
 	}
 
-	public HAPExecutableAppEntry getMiniApp(String appId, String entry, HAPAttachmentContainer parentExternalMapping) {
+	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId) {
+		return getMiniAppDefinition(appId.getId(), new HAPAttachmentContainer(appId.getSupplement()));
+	}
+	
+	public HAPDefinitionApp getMiniAppDefinition(String appId, HAPAttachmentContainer parentExternalMapping) {
 		HAPDefinitionApp miniAppDef = HAPUtilityApp.getAppDefinitionById(appId, this.m_miniAppParser);
 		//resolve attachment for app
 		HAPComponentUtility.solveAttachment(miniAppDef, parentExternalMapping);
-		//resolve attachment for entry
-		HAPComponentUtility.solveAttachment(miniAppDef.getEntry(entry), miniAppDef.getAttachmentContainer());
 		//resolve service provider for app
 		HAPUtilityService.solveServiceProvider(miniAppDef, null, parentExternalMapping, null, m_serviceDefinitionManager);
+		return miniAppDef;
+	}
+
+	public HAPDefinitionAppEntryUI getMiniAppEntryDefinition(HAPResourceId resourceId) {
+		HAPUIAppEntryId appEntryId = new HAPResourceIdUIAppEntry(resourceId).getUIAppEntryId();
+		return getMiniAppEntryDefinition(appEntryId.getAppId(), appEntryId.getEntry(), new HAPAttachmentContainer(resourceId.getSupplement()));
+	}
+	
+	public HAPDefinitionAppEntryUI getMiniAppEntryDefinition(String appId, String entry, HAPAttachmentContainer parentExternalMapping) {
+		HAPDefinitionApp appDef = this.getMiniAppDefinition(appId, parentExternalMapping);
+		
+		//resolve attachment for entry
+		HAPComponentUtility.solveAttachment(appDef.getEntry(entry), appDef.getAttachmentContainer());
+		//resolve service provider for entry
+		HAPUtilityService.solveServiceProvider(appDef.getEntry(entry), appDef, appDef.getAttachmentContainer(), null, m_serviceDefinitionManager);
+		return appDef.getEntry(entry);
+	}
+
+	
+	public HAPExecutableAppEntry getMiniAppEntry(String appId, String entry, HAPAttachmentContainer parentExternalMapping) {
+		HAPDefinitionApp miniAppDef = getMiniAppDefinition(appId, parentExternalMapping);
+		//resolve attachment for entry
+		HAPComponentUtility.solveAttachment(miniAppDef.getEntry(entry), miniAppDef.getAttachmentContainer());
 		//resolve service provider for entry
 		HAPUtilityService.solveServiceProvider(miniAppDef.getEntry(entry), miniAppDef, miniAppDef.getAttachmentContainer(), null, m_serviceDefinitionManager);
 		
@@ -92,10 +121,38 @@ public class HAPUIResourceManager {
 		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(miniAppDef, entry, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
 		return out;
 	}
+
+
+	public HAPDefinitionModule getModuleDefinition(HAPResourceId moduleResourceId) {
+		return getModuleDefinition(moduleResourceId.getId(), new HAPAttachmentContainer(moduleResourceId.getSupplement()));
+	}
+
+	public HAPDefinitionModule getModuleDefinition(String moduleId, HAPAttachmentContainer parentExternalMapping) {
+		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleId, this.m_moduleParser);
+		//resolve attachment mapping
+		HAPComponentUtility.solveAttachment(moduleDef, parentExternalMapping);
+		//resolve service provider
+		HAPUtilityService.solveServiceProvider(moduleDef, null, moduleDef.getAttachmentContainer(), null, this.m_serviceDefinitionManager);
+		return moduleDef;
+	}
 	
 	public HAPExecutableModule getUIModule(String moduleId, HAPAttachmentContainer parentExternalMapping) {
-		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleId, this.m_moduleParser);
+		HAPDefinitionModule moduleDef = getModuleDefinition(moduleId, parentExternalMapping); 
 		return HAPProcessorModule.process(moduleDef, moduleId, parentExternalMapping, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager);
+	}
+	
+	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId) {
+		return getUIPageDefinition(pageResourceId.getId(), new HAPAttachmentContainer(pageResourceId.getSupplement()));
+	}
+
+	public HAPDefinitionUIPage getUIPageDefinition(String uiResourceDefId, HAPAttachmentContainer parentExternalMapping) {
+		//get definition itself
+		HAPDefinitionUIPage def = HAPUtilityPage.getPageDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
+		//resolve attachment
+		HAPUtilityPage.solveExternalMapping(def, parentExternalMapping, this.m_uiTagMan);
+		//resolve service provider
+		HAPUtilityPage.solveServiceProvider(def, null, m_serviceDefinitionManager);
+		return def;
 	}
 	
 	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId, HAPAttachmentContainer parentExternalMapping){
@@ -109,11 +166,7 @@ public class HAPUIResourceManager {
 
 	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId, String id, HAPContextGroup context, HAPContextGroup parentContext, HAPAttachmentContainer parentExternalMapping){
 		//get definition itself
-		HAPDefinitionUIPage def = HAPUtilityPage.getPageDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
-		//resolve attachment
-		HAPUtilityPage.solveExternalMapping(def, parentExternalMapping, this.m_uiTagMan);
-		//resolve service provider
-		HAPUtilityPage.solveServiceProvider(def, null, m_serviceDefinitionManager);
+		HAPDefinitionUIPage def = getUIPageDefinition(uiResourceDefId, parentExternalMapping); 
 		//compile it
 		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(def, id, context, parentContext, null, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
 		return out;

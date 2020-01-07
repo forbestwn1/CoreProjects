@@ -4,20 +4,23 @@ import java.util.Date;
 
 public class HAPPollSchedule {
 
-	//definition for poll schedule
-	private HAPDefinitionPollSchedule m_definition;
+	private String id;
 	
-	//task for event resource
+	//task id this schedule belong to
 	private String m_taskId;
 	
-	//the time after which the task should be poll
-	//it could be updated after poll task to determine when is the next time to poll
-	private Date nextTime;
+	//schedule definition id 
+	private String m_definitionId;
 	
+	//next poll time
+	private Date m_pollTime;
 	
-	//update next time according to schedule definition
-	public void updateNextTime() {
-		
-	}
+	//current status of poll schedult
+	private String m_status;
+	
+	public Date getPollTime() {   return this.m_pollTime;   }
+	
+	public void setPollTime(Date date) {   this.m_pollTime = date;    }
+	
 	
 }

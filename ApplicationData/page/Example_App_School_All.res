@@ -15,8 +15,6 @@
 		</nosliw-loop>
 
 		<br>
-<nosliw-debug/>
-
 		
 </body>
 

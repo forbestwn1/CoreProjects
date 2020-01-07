@@ -18,8 +18,6 @@
 	<nosliw-include source="Example_App_Query_MyRealtor"/> 
 	</div>
 
-	<nosliw-debug/>
-	
 	<br>
 	</body>
 

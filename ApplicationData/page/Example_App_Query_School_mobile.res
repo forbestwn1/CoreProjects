@@ -9,8 +9,6 @@
 	SchoolType:<nosliw-options id="schoolType" data="schoolType"/>
 	<br>
 
-	<nosliw-debug/>
-	
 </body>
 
 	<context>

@@ -4,11 +4,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.miniapp.HAPGatewayAppData;
+import com.nosliw.servlet.HAPRuntimeUtility;
 //import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
@@ -33,17 +33,7 @@ public class HAPInitServlet  extends HttpServlet{
 
 //			HAPExpressionTaskImporter.importTaskDefinitionSuiteFromClassFolder(HAPExpressionTest.class, runtimeEnvironment.getExpressionManager());
 
-			//set runtime object to context
-			this.getServletContext().setAttribute(NAME_RUNTIME_ENVIRONMENT, runtimeEnvironment);
-			
-			HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(
-					new HAPUITagManager(),
-					runtimeEnvironment.getExpressionSuiteManager(),
-					runtimeEnvironment.getResourceManager(),
-					runtimeEnvironment.getProcessDefinitionManager(),
-					runtimeEnvironment.getRuntime(),
-					HAPExpressionManager.dataTypeHelper,
-					runtimeEnvironment.getServiceManager().getServiceDefinitionManager());
+			HAPUIResourceManager uiResourceMan = HAPRuntimeUtility.geHUIResourceManager(runtimeEnvironment);
 			this.getServletContext().setAttribute("uiResourceManager", uiResourceMan);
 			
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan));
@@ -54,6 +44,9 @@ public class HAPInitServlet  extends HttpServlet{
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE, new HAPResourceManagerUIAppConfigure());
 
 			runtimeEnvironment.getGatewayManager().registerGateway(HAPConstant.GATEWAY_OPTIONS, new HAPGatewayOptions());
+			
+			//set runtime object to context
+			this.getServletContext().setAttribute(NAME_RUNTIME_ENVIRONMENT, runtimeEnvironment);
 			
 			HAPAppManager appManager = new HAPAppManager();
 			this.getServletContext().setAttribute("minAppMan", appManager);

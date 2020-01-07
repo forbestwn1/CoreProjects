@@ -18,8 +18,6 @@
 	<nosliw-include source="Example_App_Query_MyRealtor_mobile"/> 
 	</div>
 
-	<nosliw-debug/>
-	
 	<br>
 	</body>
 

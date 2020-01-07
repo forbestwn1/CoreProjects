@@ -72,29 +72,18 @@ public class HAPParserPage {
 	
 	public HAPDefinitionUIPage parseFile(String fileName){
 		HAPDefinitionUIPage resource = null;
-		try{
-			File input = new File(fileName);
-			//use file name as ui resource id
-			String resourceId = HAPFileUtility.getFileName(input);
-			String source = HAPFileUtility.readFile(input);
-			resource = this.parseContent(resourceId, source);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
+		File input = new File(fileName);
+		//use file name as ui resource id
+		String resourceId = HAPFileUtility.getFileName(input);
+		String source = HAPFileUtility.readFile(input);
+		resource = this.parseContent(resourceId, source);
 		return resource;
 	}
 
 	public HAPDefinitionUIPage parseContent(String resourceId, String content){
 		HAPDefinitionUIPage resource = new HAPDefinitionUIPage(resourceId, content);
-		try{
-			Document doc = Jsoup.parse(content, "UTF-8");
-			this.parseUIDefinitionUnit(resource, doc.body(), null);
-
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
+		Document doc = Jsoup.parse(content, "UTF-8");
+		this.parseUIDefinitionUnit(resource, doc.body(), null);
 		return resource;
 	}
 
@@ -232,21 +221,16 @@ public class HAPParserPage {
 	private void parseUnitServiceBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SERVICE);
 		for(Element childEle : childEles){
-			try {
-
-				JSONArray serviceUseListJson = new JSONArray(childEle.html());
-				if(serviceUseListJson!=null) {
-					for(int i=0; i<serviceUseListJson.length(); i++) {
-						JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
-						HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
-						serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
-						resourceUnit.addServiceUseDefinition(serviceUseDef);
-					}
+			JSONArray serviceUseListJson = new JSONArray(childEle.html());
+			if(serviceUseListJson!=null) {
+				for(int i=0; i<serviceUseListJson.length(); i++) {
+					JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
+					HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
+					serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
+					resourceUnit.addServiceUseDefinition(serviceUseDef);
 				}
-				break;
-			} catch (JSONException e) {
-				e.printStackTrace();
 			}
+			break;
 		}
 		for(Element childEle : childEles)  childEle.remove();
 	}

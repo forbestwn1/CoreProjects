@@ -4,10 +4,8 @@ import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
 
-public class HAPRuntimeProcess {
+public interface HAPRuntimeProcess {
 
-	public Object executeProcess(HAPExecutableProcess process, Map<String, HAPData> input) {
-		return null;
-	}
+	public void executeProcess(HAPExecutableProcess processExe, Map<String, HAPData> input, HAPProcessResultHandler resultHandler);
 	
 }

@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPAttachmentReference;
+import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPComponentUtility;
@@ -56,7 +57,7 @@ public class HAPDefinitionAppEntryUI  extends HAPComponentImp implements HAPDefi
 			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(module.getStatus())) {
 				HAPAttachmentContainer mappedParentAttachment = HAPComponentUtility.buildNameMappedAttachment(this.getAttachmentContainer(), module);
 				HAPAttachmentReference moduleAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getModule());
-				out.addChildCompoentId(module.getName(), moduleAttachment.getId(), mappedParentAttachment);
+				out.addChildCompoentId(new HAPChildrenComponentId(module.getName(), moduleAttachment.getId(), module.getInfo()), mappedParentAttachment);
 			}
 		}
 		return out;

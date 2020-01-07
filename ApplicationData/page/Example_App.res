@@ -21,8 +21,6 @@
 	</div>
 
 	
-	<nosliw-debug/>
-	
 	<br>
 	</body>
 

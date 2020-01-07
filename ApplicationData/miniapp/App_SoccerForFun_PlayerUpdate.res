@@ -1,6 +1,14 @@
 {
 	"name" : "App_SoccerForFun_PlayerUpdate",
 	"id" : "App_SoccerForFun_PlayerUpdate",
+	"attachment": {
+		"uiModule" : [
+			{	
+				"name" : "application",
+				"id" : "Module_SoccerForFun_PlayerUpdate"
+			}		
+		],
+	},
 	"entry": [{
 		"name": "main",
 		"module": [
@@ -8,7 +16,7 @@
 				"status": "disabled1111",
 				"role": "application",
 				"name": "application",
-				"module": "Module_SoccerForFun_PlayerUpdate",
+				"module": "application",
 				"inputMapping": [
 					{
 						"element": {

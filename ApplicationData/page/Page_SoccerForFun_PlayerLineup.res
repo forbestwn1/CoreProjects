@@ -97,7 +97,7 @@
 		"service" : [
 			{	
 				"name" : "lineupService",
-				"serviceId" : "lineupService"
+				"id" : "lineupService"
 			}		
 		]
 	}

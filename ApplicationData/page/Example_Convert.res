@@ -2,8 +2,6 @@
 <html>
 <body>
 
-	<nosliw-debug/>
-
 	<br>
 	Content:<%=?(bus.a.aa)?.value + '   6666 ' %>
 	<br>

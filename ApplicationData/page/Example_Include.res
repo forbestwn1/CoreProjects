@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<body>
-	<nosliw-debug/>
-	
 	<div>
 	Include Object
 	<nosliw-include source="Example_Object_Basic"/> 

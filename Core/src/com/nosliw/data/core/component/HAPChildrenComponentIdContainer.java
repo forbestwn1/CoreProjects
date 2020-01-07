@@ -1,6 +1,8 @@
 package com.nosliw.data.core.component;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -8,21 +10,28 @@ import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
 public class HAPChildrenComponentIdContainer {
 
-	private Map<String, Map<String, HAPResourceId>> m_children;
+	private Map<String, List<HAPChildrenComponentId>> m_children;
 	
-	public void addChildCompoentId(String name, HAPResourceId resourceId, HAPAttachmentContainer parentAttachment) {
-		
+	public HAPChildrenComponentIdContainer() {
+		this.m_children = new LinkedHashMap<String, List<HAPChildrenComponentId>>();
+	}
+	
+	public void addChildCompoentId(HAPChildrenComponentId childComponentId, HAPAttachmentContainer parentAttachment) {
+		HAPResourceId resourceId = childComponentId.getResourceId();
 		HAPAttachmentContainer merged = new HAPAttachmentContainer(resourceId.getSupplement());
 		merged.merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
 		HAPResourceId mergedResourceId = HAPResourceId.newInstance(resourceId.getType(), resourceId.getId(), merged.toResourceIdSupplement());
+		childComponentId.setResourceId(mergedResourceId);
 		
-		Map<String, HAPResourceId> byName = this.m_children.get(mergedResourceId.getType());
+		List<HAPChildrenComponentId> byName = this.m_children.get(mergedResourceId.getType());
 		if(byName==null) {
-			byName = new LinkedHashMap<String, HAPResourceId>();
+			byName = new ArrayList<HAPChildrenComponentId>();
 			this.m_children.put(mergedResourceId.getType(), byName);
 		}
-		byName.put(name, mergedResourceId);
+		byName.add(childComponentId);
 	}
 
-	
+	public Map<String, List<HAPChildrenComponentId>> getChildren(){
+		return this.m_children;
+	}
 }

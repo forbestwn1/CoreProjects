@@ -33,7 +33,6 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
-import com.nosliw.data.core.service.provide.HAPUtilityService;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
@@ -57,11 +56,6 @@ public class HAPProcessorModule {
 			HAPExpressionSuiteManager expressionManager,
 			HAPManagerServiceDefinition serviceDefinitionManager) {
 		
-		//resolve attachment mapping
-		HAPComponentUtility.solveAttachment(moduleDefinition, parentExternalMapping);
-		//resolve service provider
-		HAPUtilityService.solveServiceProvider(moduleDefinition, null, moduleDefinition.getAttachmentContainer(), null, serviceDefinitionManager);
-
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
 		return HAPProcessorModule.process(moduleDefinition, id, parentContext, null, processMan, uiResourceMan, dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, processTracker);
 	}

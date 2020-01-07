@@ -177,7 +177,7 @@
 		"service" : [
 			{	
 				"name" : "updateLineupService",
-				"serviceId" : "updateLineupService"
+				"id" : "updateLineupService"
 			}		
 		]
 	}

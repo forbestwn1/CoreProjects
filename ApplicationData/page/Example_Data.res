@@ -3,8 +3,6 @@
 	<body>
 
 		<br>
-		<nosliw-debug/>
-	
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>

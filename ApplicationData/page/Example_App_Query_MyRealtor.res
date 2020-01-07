@@ -25,8 +25,6 @@
 	BuildingType:<nosliw-multioptions id="buildingType" data="criteria.buildingType"/>
 	<br>
 	
-	<nosliw-debug/>
-	
 </body>
 
 	<context>

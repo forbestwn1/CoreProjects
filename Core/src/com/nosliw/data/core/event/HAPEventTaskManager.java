@@ -20,7 +20,9 @@ public class HAPEventTaskManager {
 	}
 	
 	//execute poll task
-	public HAPPollTaskResult executePollTask(HAPPollTask pollTask) {
+	public HAPPollTaskResult executePollTask(String eventTaskId) {
+		
+		
 		return null;
 	}
 	
