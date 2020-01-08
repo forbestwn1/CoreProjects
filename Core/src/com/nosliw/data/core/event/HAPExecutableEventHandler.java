@@ -6,12 +6,11 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
 
-//task to run poll event resource and generate event
-public class HAPPollTask {
+public class HAPExecutableEventHandler {
 
 	private HAPRuntimeProcess m_processRuntime;
 	
-	private HAPDefinitionPollTask m_pollTaskDefinition;
+	private HAPDefinitionEventHandle m_eventHandlerDefinition;
 	
 	private HAPExecutableProcess m_process;
 	
@@ -19,6 +18,4 @@ public class HAPPollTask {
 //		HAPServiceData serviceData = this.m_processRuntime.executeProcess(m_process, input);
 		return null;
 	}
-	
-	
 }

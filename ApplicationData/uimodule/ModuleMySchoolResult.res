@@ -19,9 +19,6 @@
 			}		
 		]
 	},
-	"service": 
-	[
-	],
 	"context": {
 		"group": {
 			"public": {

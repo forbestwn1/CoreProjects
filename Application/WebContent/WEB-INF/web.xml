@@ -56,6 +56,17 @@
 
 
   <servlet>
+    <servlet-name>browseResourceServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.utils.browseresource.HAPBrowseResourceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>browseResourceServlet</servlet-name>
+    <url-pattern>/browseResource</url-pattern>
+  </servlet-mapping>
+
+
+
+  <servlet>
     <servlet-name>miniappServlet</servlet-name>
     <servlet-class>com.nosliw.servlet.miniapp.HAPMiniAppServlet</servlet-class>
   </servlet>

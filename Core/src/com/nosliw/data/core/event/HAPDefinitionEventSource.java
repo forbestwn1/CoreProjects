@@ -8,4 +8,8 @@ public class HAPDefinitionEventSource {
 	//poll task that check if event happened
 	private HAPDefinitionPollTask m_pollTask;
 	
+	public HAPDefinitionPollTask getPollTask() {
+		return this.m_pollTask;
+	}
+	
 }

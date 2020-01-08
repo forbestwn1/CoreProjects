@@ -12,11 +12,11 @@ public class HAPDataAccess {
 		return null;
 	}
 	
-	public HAPPollTask getPollTask(String eventTaskId) {
+	public HAPExecutablePollTask getPollTask(String eventTaskId) {
 		return null;
 	}
 	
-	public HAPEventHandler getEventHandler(String eventTaskId) {
+	public HAPExecutableEventHandler getEventHandler(String eventTaskId) {
 		return null;
 	}
 }

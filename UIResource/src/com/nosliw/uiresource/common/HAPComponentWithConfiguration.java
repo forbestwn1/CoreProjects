@@ -14,10 +14,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.data.core.service.use.HAPWithServiceProvider;
+import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 @HAPEntityWithAttribute
-public class HAPComponentWithConfiguration extends HAPEntityInfoWritableImp  implements HAPWithServiceProvider{
+public class HAPComponentWithConfiguration extends HAPEntityInfoWritableImp  implements HAPWithServiceUse{
 
 	@HAPAttribute
 	public static final String PAGEINFO = "pageInfo";

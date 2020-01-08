@@ -1,15 +1,12 @@
 package com.nosliw.data.core.service.use;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPAttachment;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPAttachmentReference;
-import com.nosliw.data.core.component.HAPAttachmentUtility;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
@@ -53,38 +50,40 @@ public class HAPUtilityServiceUse {
 	}
 	
 	//build service provider from attachment
-	public static Set<HAPDefinitionServiceProvider> buildServiceProvider(
-			HAPAttachmentContainer resourceExternalMapping,
+	public static Map<String, HAPDefinitionServiceProvider> buildServiceProvider(
+			HAPAttachmentContainer attachment,
 			Map<String, HAPDefinitionServiceProvider> parent, 
 			HAPManagerServiceDefinition serviceDefinitionMan) {
-		Set<HAPDefinitionServiceProvider> out = new HashSet<>();
+		Map<String, HAPDefinitionServiceProvider> out = new LinkedHashMap<>();
 		
-		Map<String, HAPAttachment> eleByName = resourceExternalMapping.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);
+		Map<String, HAPAttachment> eleByName = attachment.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);
 		if(eleByName!=null) {
 			for(String name : eleByName.keySet()) {
 				HAPDefinitionServiceProvider provider = null;
 				HAPAttachmentReference ele = (HAPAttachmentReference)eleByName.get(name);
-				if(HAPAttachmentUtility.isOverridenByParent(ele)) {
-					//inherited from parent
-					if(parent!=null) {
-						provider = parent.get(name);
-					}
-					if(provider==null) {
-						//build from ele
-						provider = buildServiceProviderFromMappingEle(ele, serviceDefinitionMan);
-					}
-				}
-				else {
-					//build from ele
-					provider = buildServiceProviderFromMappingEle(ele, serviceDefinitionMan);
-				}
-				out.add(provider);
+				//build from ele
+				provider = buildServiceProviderFromAttachment(ele, serviceDefinitionMan);
+//				if(HAPAttachmentUtility.isOverridenByParent(ele)) {
+//					//inherited from parent
+//					if(parent!=null) {
+//						provider = parent.get(name);
+//					}
+//					if(provider==null) {
+//						//build from ele
+//						provider = buildServiceProviderFromAttachment(ele, serviceDefinitionMan);
+//					}
+//				}
+//				else {
+//					//build from ele
+//					provider = buildServiceProviderFromAttachment(ele, serviceDefinitionMan);
+//				}
+				out.put(provider.getName(), provider);
 			}
 		}
 		return out;
 	}
 	
-	private static HAPDefinitionServiceProvider buildServiceProviderFromMappingEle(HAPAttachmentReference ele, HAPManagerServiceDefinition serviceDefinitionMan) {
+	private static HAPDefinitionServiceProvider buildServiceProviderFromAttachment(HAPAttachmentReference ele, HAPManagerServiceDefinition serviceDefinitionMan) {
 		HAPDefinitionServiceProvider provider = new HAPDefinitionServiceProvider();
 		ele.cloneToEntityInfo(provider);
 		provider.setServiceId(ele.getId().getId());
@@ -94,13 +93,13 @@ public class HAPUtilityServiceUse {
 	
 	public static Map<String, HAPDefinitionServiceProvider> buildServiceProvider(
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPWithServiceProvider withServiceProvider,
+			HAPWithServiceUse withServiceUse,
 			HAPManagerServiceDefinition serviceDefinitionMan) {
 		//process service
 		//all provider available
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 		if(serviceProviders!=null)	allServiceProviders.putAll(serviceProviders);
-		allServiceProviders.putAll(withServiceProvider.getServiceProviderDefinitions());
+		allServiceProviders.putAll(withServiceUse.getServiceProviderDefinitions());
 		//make sure all provider has interface info
 		for(String name : allServiceProviders.keySet()) {
 			HAPDefinitionServiceProvider provider = allServiceProviders.get(name);

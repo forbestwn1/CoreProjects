@@ -18,9 +18,6 @@ import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 /**
@@ -55,19 +52,12 @@ public class HAPDefinitionModule extends HAPComponentImp{
 
 	private List<HAPInfoDecoration> m_uiDecoration;
 	
-	//service definition
-	private HAPDefinitionServiceInEntity m_serviceDefinition;
-
 	public HAPDefinitionModule(String id) {
 		super(id);
 		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>>();
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
-		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
 	}
-	
-	@Override
-	public Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions(){  return this.m_serviceDefinition.getServiceProviderDefinitions();   }
 	
 	@Override
 	public String getId() {   return this.m_id;   }
@@ -82,16 +72,8 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	public List<HAPInfoDecoration> getUIDecoration(){   return this.m_uiDecoration;    }
 	
 	@Override
-	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
-	@Override
-	public void addServiceProviderDefinition(HAPDefinitionServiceProvider def) {  this.m_serviceDefinition.addServiceProviderDefinition(def);   }
-	
-	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
-		//service part
-		HAPComponentUtility.buildServiceChildrenComponent(out, this, this.getAttachmentContainer());
-
 		//ui part
 		for(HAPDefinitionModuleUI ui : this.getUIs()) {
 			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(ui.getStatus())) {

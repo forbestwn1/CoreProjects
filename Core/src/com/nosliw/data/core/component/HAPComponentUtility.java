@@ -12,7 +12,7 @@ import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.data.core.service.use.HAPWithServiceProvider;
+import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 public class HAPComponentUtility {
 
@@ -29,21 +29,23 @@ public class HAPComponentUtility {
 			HAPAttachmentUtility.parseDefinition(pageInfoObj, component.getAttachmentContainer());
 		}
 		
+		//context
+		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPComponentImp.CONTEXT);
+		if(contextJsonObj!=null) {
+			component.setContext(HAPParserContext.parseContextGroup(contextJsonObj));
+		}
+	}
+	
+	public static void parseServiceUseDefinition(HAPWithServiceUse serviceUse, JSONObject jsonObj) {
 		//service
-		JSONArray serviceUseListJson = jsonObj.optJSONArray(HAPComponentImp.SERVICE);
+		JSONArray serviceUseListJson = jsonObj.optJSONArray(HAPWithServiceUse.SERVICE);
 		if(serviceUseListJson!=null) {
 			for(int i=0; i<serviceUseListJson.length(); i++) {
 				JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
 				HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
 				serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
-				component.addServiceUseDefinition(serviceUseDef);
+				serviceUse.addServiceUseDefinition(serviceUseDef);
 			}
-		}
-
-		//context
-		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPComponentImp.CONTEXT);
-		if(contextJsonObj!=null) {
-			component.setContext(HAPParserContext.parseContextGroup(contextJsonObj));
 		}
 	}
 
@@ -62,7 +64,7 @@ public class HAPComponentUtility {
 		return out;
 	}
 	
-	public static void buildServiceChildrenComponent(HAPChildrenComponentIdContainer out, HAPWithServiceProvider withServiceProvider, HAPAttachmentContainer attachment) {
+	public static void buildServiceChildrenComponent(HAPChildrenComponentIdContainer out, HAPWithServiceUse withServiceProvider, HAPAttachmentContainer attachment) {
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = withServiceProvider.getServiceProviderDefinitions(); 
 		Map<String, HAPDefinitionServiceUse> serviceUseDefs = withServiceProvider.getServiceUseDefinitions();
 		for(String serviceName : serviceUseDefs.keySet()) {

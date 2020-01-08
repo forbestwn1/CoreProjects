@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -33,17 +34,12 @@ public class HAPBrowseResourceServlet extends HAPBaseServlet{
 
 	private HAPUIResourceManager m_uiResourceMan;
 	
-	private String[] resourceTypes = {
-			HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE,
-			HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE,
-			HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPP
-	};
-	
 	@Override
 	protected void doGet (HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
-		
-		
-	
+		m_uiResourceMan = (HAPUIResourceManager)request.getServletContext().getAttribute("uiResourceManager");
+		Map<String, HAPResourceNodeContainerByType> resourceTree = this.buildResourceTree();
+		HAPServiceData serviceData = HAPServiceData.createSuccessData(resourceTree);
+		this.printContent(serviceData, response);
 	}
 
 	public static void main(String[] args) {

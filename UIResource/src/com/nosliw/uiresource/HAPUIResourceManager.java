@@ -12,7 +12,6 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
-import com.nosliw.data.core.service.provide.HAPUtilityService;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntryUI;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
@@ -89,8 +88,6 @@ public class HAPUIResourceManager {
 		HAPDefinitionApp miniAppDef = HAPUtilityApp.getAppDefinitionById(appId, this.m_miniAppParser);
 		//resolve attachment for app
 		HAPComponentUtility.solveAttachment(miniAppDef, parentExternalMapping);
-		//resolve service provider for app
-		HAPUtilityService.solveServiceProvider(miniAppDef, null, parentExternalMapping, null, m_serviceDefinitionManager);
 		return miniAppDef;
 	}
 
@@ -104,8 +101,6 @@ public class HAPUIResourceManager {
 		
 		//resolve attachment for entry
 		HAPComponentUtility.solveAttachment(appDef.getEntry(entry), appDef.getAttachmentContainer());
-		//resolve service provider for entry
-		HAPUtilityService.solveServiceProvider(appDef.getEntry(entry), appDef, appDef.getAttachmentContainer(), null, m_serviceDefinitionManager);
 		return appDef.getEntry(entry);
 	}
 
@@ -114,8 +109,6 @@ public class HAPUIResourceManager {
 		HAPDefinitionApp miniAppDef = getMiniAppDefinition(appId, parentExternalMapping);
 		//resolve attachment for entry
 		HAPComponentUtility.solveAttachment(miniAppDef.getEntry(entry), miniAppDef.getAttachmentContainer());
-		//resolve service provider for entry
-		HAPUtilityService.solveServiceProvider(miniAppDef.getEntry(entry), miniAppDef, miniAppDef.getAttachmentContainer(), null, m_serviceDefinitionManager);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
 		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(miniAppDef, entry, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
@@ -131,8 +124,6 @@ public class HAPUIResourceManager {
 		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleId, this.m_moduleParser);
 		//resolve attachment mapping
 		HAPComponentUtility.solveAttachment(moduleDef, parentExternalMapping);
-		//resolve service provider
-		HAPUtilityService.solveServiceProvider(moduleDef, null, moduleDef.getAttachmentContainer(), null, this.m_serviceDefinitionManager);
 		return moduleDef;
 	}
 	

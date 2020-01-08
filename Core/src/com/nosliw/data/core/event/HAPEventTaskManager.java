@@ -6,29 +6,11 @@ public class HAPEventTaskManager {
 
 	private Map<String, HAPDefinitionEventTask> m_tasks;
 
-	public HAPEventTask createEventTask(HAPDefinitionEventTask eventTaskDefinition) {
-		return null;
-	}
-	
-	public void removeEventTask(String taskId) {
-		
-	}
-	
-	//create source poll task
-	public HAPPollTask generatePollTask(String taskId, HAPPollSchedule pollScedule) {
-		return null;
-	}
-	
-	//execute poll task
-	public HAPPollTaskResult executePollTask(String eventTaskId) {
+	public HAPExecutableEventTask getEventTask(String eventTaskDefId) {
+		HAPDefinitionEventTask eventTaskDefinition = HAPUtilityEventTask.getEventTaskDefinitionById(eventTaskDefId, HAPParserEventTask.getInstance());
 		
 		
 		return null;
 	}
-	
-	//use handler to process event
-	public void processEvent(HAPEvent event) {
-		
-	}
-	
+
 }

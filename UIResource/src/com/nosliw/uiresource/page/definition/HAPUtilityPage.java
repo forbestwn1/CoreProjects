@@ -11,14 +11,14 @@ import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.provide.HAPUtilityService;
-import com.nosliw.data.core.service.use.HAPWithServiceProvider;
+import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPUtilityPage {
 
-	public static void solveServiceProvider(HAPDefinitionUIUnit uiUnitDef, HAPWithServiceProvider parent, HAPManagerServiceDefinition serviceDefinitionMan) {
+	public static void solveServiceProvider(HAPDefinitionUIUnit uiUnitDef, HAPWithServiceUse parent, HAPManagerServiceDefinition serviceDefinitionMan) {
 		HAPUtilityService.solveServiceProvider(uiUnitDef, parent, uiUnitDef.getAttachmentContainer(), uiUnitDef.getNameMapping(), serviceDefinitionMan);
 		
 //		Map<String, HAPDefinitionServiceProvider> parentProviders = parent!=null?parent.getServiceProviderDefinitions() : new LinkedHashMap<String, HAPDefinitionServiceProvider>();

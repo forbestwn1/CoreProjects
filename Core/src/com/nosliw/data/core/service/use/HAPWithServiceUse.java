@@ -2,8 +2,13 @@ package com.nosliw.data.core.service.use;
 
 import java.util.Map;
 
-public interface HAPWithServiceProvider {
+import com.nosliw.common.constant.HAPAttribute;
 
+public interface HAPWithServiceUse {
+
+	@HAPAttribute
+	public static String SERVICE = "services";
+	
 	Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions();
 
 	void addServiceProviderDefinition(HAPDefinitionServiceProvider serviceProvider);

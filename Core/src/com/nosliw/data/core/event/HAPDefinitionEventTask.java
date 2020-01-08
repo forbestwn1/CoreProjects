@@ -1,8 +1,15 @@
 package com.nosliw.data.core.event;
 
+import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPComponentImp;
+
 //task definition 
 //task definition describe how event trigure process 
-public class HAPDefinitionEventTask {
+public class HAPDefinitionEventTask extends HAPComponentImp{
+
+	public HAPDefinitionEventTask(String id) {
+		super(id);
+	}
 
 	//task id
 	private String m_id;
@@ -16,6 +23,7 @@ public class HAPDefinitionEventTask {
 	//describle how to handle event
 	private HAPDefinitionEventHandle m_eventProcess;
 
+	@Override
 	public String getId() {    return this.m_id;    }
 	
 	public HAPDefinitionEvent getEventInfo() {   return this.m_eventInfo;  }
@@ -23,5 +31,10 @@ public class HAPDefinitionEventTask {
 	public HAPDefinitionEventSource getEventSourceInfo() {   return this.m_eventSourceInfo;   }
 	
 	public HAPDefinitionEventHandle getProcess() {   return this.m_eventProcess;  }
+
+	@Override
+	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+		return null;
+	}
 	
 }

@@ -15,7 +15,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.data.core.service.use.HAPWithServiceProvider;
+import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 /**
  * Task is unit that can execute 
@@ -23,7 +23,7 @@ import com.nosliw.data.core.service.use.HAPWithServiceProvider;
  * Task is a sequence of steps
  */
 @HAPEntityWithAttribute
-public class HAPDefinitionProcess extends HAPEntityInfoWritableImp implements HAPWithServiceProvider{
+public class HAPDefinitionProcess extends HAPEntityInfoWritableImp implements HAPWithServiceUse{
 
 	@HAPAttribute
 	public static String CONTEXT = "context";

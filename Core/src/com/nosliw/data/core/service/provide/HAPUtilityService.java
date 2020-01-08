@@ -3,7 +3,6 @@ package com.nosliw.data.core.service.provide;
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.json.JSONArray;
 
@@ -15,7 +14,7 @@ import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
-import com.nosliw.data.core.service.use.HAPWithServiceProvider;
+import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 public class HAPUtilityService {
 
@@ -42,14 +41,14 @@ public class HAPUtilityService {
 		
 	}
 	
-	public static void solveServiceProvider(HAPWithServiceProvider child, HAPWithServiceProvider parent, HAPAttachmentContainer attachment, HAPNameMapping nameMapping, HAPManagerServiceDefinition serviceDefinitionMan) {
+	public static void solveServiceProvider(HAPWithServiceUse child, HAPWithServiceUse parent, HAPAttachmentContainer attachment, HAPNameMapping nameMapping, HAPManagerServiceDefinition serviceDefinitionMan) {
 		Map<String, HAPDefinitionServiceProvider> parentProviders = parent!=null?parent.getServiceProviderDefinitions() : new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 		Map<String, HAPDefinitionServiceProvider> mappedParentProviders = null;
 		if(nameMapping!=null)   mappedParentProviders = (Map<String, HAPDefinitionServiceProvider>)nameMapping.mapEntity(parentProviders, HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);
 		else mappedParentProviders = parentProviders;
 		
-		Set<HAPDefinitionServiceProvider> providers = HAPUtilityServiceUse.buildServiceProvider(attachment, mappedParentProviders, serviceDefinitionMan);
-		for(HAPDefinitionServiceProvider provider : providers)	child.addServiceProviderDefinition(provider);
+		Map<String, HAPDefinitionServiceProvider> providers = HAPUtilityServiceUse.buildServiceProvider(attachment, mappedParentProviders, serviceDefinitionMan);
+		for(HAPDefinitionServiceProvider provider : providers.values())	child.addServiceProviderDefinition(provider);
 	}
 
 }
