@@ -30,7 +30,7 @@
 
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":service}), handlers, request);
 
-					out.addRequest(nosliw.runtime.getDataService().getExecuteEmbededDataServiceByProviderRequest(provider, service, input, {
+					out.addRequest(nosliw.runtime.getDataService().getExecuteEmbededDataServiceRequest(provider, service, input, {
 						success : function(request, taskResult){
 							var activityOutput = taskResult.resultValue.getData();
 							return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);

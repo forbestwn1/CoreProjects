@@ -42,7 +42,7 @@ public class HAPUtilityProcess {
 	}
 	
 	public static HAPDefinitionProcessSuite buildProcessSuiteFromAttachment(HAPAttachmentContainer attachmentContainer) {
-		
+		return null;
 	}
 	
 	public static HAPDefinitionProcessSuite getProcessSuite(String id, HAPManagerActivityPlugin activityPluginMan) {

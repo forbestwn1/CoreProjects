@@ -9,7 +9,7 @@
 				"name" : "success",
 				"output" : {
 					"outputInService": {
-						"criteria" : "element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%"
+						"criteria" : "test.map;1.0.0%%||status:test.string;1.0.0,company:test.string;1.0.0,flight:test.string;1.0.0||%%"
 					}
 				},			
 			}
@@ -18,6 +18,10 @@
 			{
 				name : "flight",
 				criteria : "test.string;1.0.0",
+			},
+			{
+				name : "date",
+				criteria : "test.date;1.0.0",
 			}
 		]
 	},

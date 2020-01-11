@@ -1,14 +1,32 @@
 package com.nosliw.data.core.event;
 
+import java.util.Map;
+
+import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.process.HAPProcessResultHandler;
+import com.nosliw.data.core.process.HAPRuntimeProcess;
 
 //
 public class HAPRuntimeEventProcess {
 
+	private HAPRuntimeProcess m_prossRuntime; 
+
 	//execute poll task
-	public HAPPollTaskResult executePollTask(HAPExecutableEventTask eventTask) {
+	public void executePollTask(HAPExecutableEventTask eventTask, HAPPollTaskResultHandler handler) {
 		
-		
-		return null;
+		HAPExecutablePollTask pollTask = eventTask.getPollTask();
+		this.m_prossRuntime.executeProcess(pollTask.getProcess(), pollTask.getPollInput(), new HAPProcessResultHandler() {
+			@Override
+			public void onSuccess(String resultName, Map<String, HAPData> resultData) {
+//				handler.onSuccess(result);
+			}
+
+			@Override
+			public void onError(HAPServiceData serviceData) {
+				handler.onError(serviceData);
+			}
+		});
 	}
 	
 	//use handler to process event

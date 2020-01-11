@@ -21,5 +21,6 @@ public class HAPExecutableEventTask {
 	public String getStatus() {   return this.m_status;     }
 
 	public void setPollTask(HAPExecutablePollTask pollTask) {  this.m_pollTask = pollTask;   }
+	public HAPExecutablePollTask getPollTask() {    return this.m_pollTask;    }
 	
 }

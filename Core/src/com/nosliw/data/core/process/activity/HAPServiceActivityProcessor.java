@@ -47,7 +47,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 
 		//provider
 		HAPDefinitionServiceProvider provider = serviceProviders.get(serviceActDef.getProvider());
-		out.setServiceProvider(provider);
+		out.setServiceProvider(provider.getServiceId());
 		
 		//prepare service use def
 		HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();

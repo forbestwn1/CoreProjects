@@ -13,7 +13,6 @@ public class HAPAttachmentUtility {
 
 	public static final String ATTRIBUTE_FLAG_OVERRIDE = "flagOveride"; 
 
-	
 	public static void parseDefinition(JSONObject attachmentDefJson, HAPAttachmentContainer attachmentContainer) {
 		for(Object key : attachmentDefJson.keySet()) {
 			String type = (String)key;
@@ -23,6 +22,14 @@ public class HAPAttachmentUtility {
 				HAPAttachment attachment = null;
 				if(attachmentJson.opt(HAPAttachmentReference.ID)!=null) {
 					attachment = new HAPAttachmentReference(type);
+					attachment.buildObject(attachmentJson, HAPSerializationFormat.JSON);
+				}
+				else if(attachmentJson.opt(HAPAttachmentEntity.ENTITY)!=null){
+					attachment = new HAPAttachmentEntity(type);
+					attachment.buildObject(attachmentJson, HAPSerializationFormat.JSON);
+				}
+				else {
+					attachment = new HAPAttachmentPlaceHolder(type);
 					attachment.buildObject(attachmentJson, HAPSerializationFormat.JSON);
 				}
 				attachmentContainer.addAttachment(type, attachment);
