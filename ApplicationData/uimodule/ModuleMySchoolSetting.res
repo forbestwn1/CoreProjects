@@ -1,14 +1,6 @@
 {
 	"name": "ModuleMySchoolSetting",
 	"description": "",
-	"attachment": {
-		"uiResource" : [
-			{
-				"name": "schoolSettingPage",
-				"id": "Page_MySchool_Query"
-			}
-		]
-	},
 	"context": {
 		"group": {
 			"public": {
@@ -38,51 +30,12 @@
 			}
 		}
 	},
-	"process": {
-		"nosliw_INIT_ACTIVE": {
-			"activity": [{
-					"id": "startActivityId",
-					"name": "startActivity",
-					"type": "start",
-					"flow": {
-						"target": "refreshSchoolSetting"
-					}
-				},
-				{
-					"id": "refreshSchoolSetting",
-					"name": "refreshSchoolSetting",
-					"type": "UI_executeCommand",
-					"partId": "ui.settingUI",
-					"command": "nosliw_refresh",
-					"input": {
-						"element": {
-							"schoolType": {
-								"definition": { 
-									"path": "schoolTypeInModule"
-								}
-							},
-							"schoolRating": {
-								"definition": { 
-									"path": "schoolRatingInModule"
-								}
-							}
-						}
-					},
-					"result": [{
-						"name": "success",
-						"flow": {
-							"target": "successEndId"
-						}
-					}]
-				},
-				{
-					"id": "successEndId",
-					"name": "successEnd",
-					"type": "end"
-				}
-			]
+	"lifecycle" : [
+		{
+			"name" : "nosliw_INIT_ACTIVE",
+			"process" : "nosliw_INIT_ACTIVE"
 		}
-	},
+	], 
 	ui :[
 		{
 			"name": "settingUI",
@@ -133,5 +86,61 @@
 			},
 			"serviceMapping": {},
 		}
-	]
+	],
+	"attachment": {
+		"uiResource" : [
+			{
+				"name": "schoolSettingPage",
+				"id": "Page_MySchool_Query"
+			}
+		],
+		"process": [
+			{
+				"name" : "nosliw_INIT_ACTIVE",
+				"entity" : {
+					"activity": [{
+							"id": "startActivityId",
+							"name": "startActivity",
+							"type": "start",
+							"flow": {
+								"target": "refreshSchoolSetting"
+							}
+						},
+						{
+							"id": "refreshSchoolSetting",
+							"name": "refreshSchoolSetting",
+							"type": "UI_executeCommand",
+							"partId": "ui.settingUI",
+							"command": "nosliw_refresh",
+							"input": {
+								"element": {
+									"schoolType": {
+										"definition": { 
+											"path": "schoolTypeInModule"
+										}
+									},
+									"schoolRating": {
+										"definition": { 
+											"path": "schoolRatingInModule"
+										}
+									}
+								}
+							},
+							"result": [{
+								"name": "success",
+								"flow": {
+									"target": "successEndId"
+								}
+							}]
+						},
+						{
+							"id": "successEndId",
+							"name": "successEnd",
+							"type": "end"
+						}
+					]
+				},
+			}
+		],
+	},
 }

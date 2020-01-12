@@ -73,5 +73,4 @@ public class HAPComponentUtility {
 			out.addChildCompoentId(new HAPChildrenComponentId(serviceName, HAPResourceId.newInstance(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE, serviceProvider.getServiceId()), null), attachment);
 		}
 	}
-	
 }

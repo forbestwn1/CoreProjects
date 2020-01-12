@@ -232,6 +232,7 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		getEventHandler : function(uiId, eventName){   return this.getUI(uiId).getEventHandler(eventName);   },
 		
 		getProcess : function(name){  return loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
+		getLifecycleProcess : function(name){  return loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_LIFECYCLE][name];  },
 
 		setRootView : function(rootView){   loc_out.prv_componentData.rootView = rootView;     },
 		getRootView : function(){   return loc_out.prv_componentData.rootView;     },

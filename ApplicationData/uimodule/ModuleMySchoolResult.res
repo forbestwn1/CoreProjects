@@ -82,107 +82,12 @@
 			}
 		}
 	},
-	"process": {
-		"nosliw_INIT_ACTIVE": {
-			"activity": [{
-					"id": "startActivityId",
-					"name": "startActivity",
-					"type": "start",
-					"flow": {
-						"target": "retrieveSchoolData"
-					}
-				},
-				{
-					"id": "retrieveSchoolData",
-					"name": "retrieveSchoolData",
-					"type": "Service_request",
-					"provider": "getSchoolDataService",
-					"inputMapping" : {
-						"element" : {
-							"schoolTypeInService" : {
-								"definition" : {
-									"path" : "schoolTypeInModule"
-								}
-							},
-							"schoolRatingInService" : {
-								"definition" : {
-									"path" : "schoolRatingInModule"
-								}
-							}
-						}
-					},
-					"result": [{
-						"name": "success",
-						"flow": {
-							"target": "presentSchoolListUI"
-						},
-						"output": {
-							"element": {
-								"schoolListInModule": {
-									"definition": {
-										"path": "outputInService"
-									}
-								}
-							}
-						}
-					}]
-				},
-				{
-					"id": "presentSchoolListUI",
-					"name": "presentSchoolListUI",
-					"type": "UI_presentUI",
-					"setting" : {
-						"updateData" : false
-					},
-					"ui": "schoolListUI",
-					"result": [{
-						"name": "success",
-						"flow": {
-							"target": "debug"
-						}
-					}]
-				},
-				{
-					"id": "debug",
-					"name": "debug",
-					"type": "debug",
-					"result": [{
-						"name": "success",
-						"flow": {
-							"target": "refreshSchoolList"
-						}
-					}]
-				},
-				{
-					"id": "refreshSchoolList",
-					"name": "refreshSchoolList",
-					"type": "UI_executeCommand",
-					"partId": "ui.schoolListUI",
-					"command": "nosliw_update_data",
-					"inputMapping": {
-						"element": {
-							"schoolList": {
-								"definition": { 
-									"path": "schoolListInModule"
-								}
-							}
-						}
-					},
-					"result": [{
-						"name": "success",
-						"flow": {
-							"target": "successEndId"
-						}
-					}]
-				},
-				{
-					"id": "successEndId",
-					"name": "successEnd",
-					"type": "end"
-				}
-			]
+	"lifecycle" : [
+		{
+			"name" : "nosliw_INIT_ACTIVE",
+			"process" : "nosliw_INIT_ACTIVE"
 		}
-	},
+	], 
 	"ui": [
 		{
 			"name": "schoolListUI",
@@ -335,6 +240,110 @@
 				"name" : "getSchoolDataService",
 				"id" : "schoolService"
 			}		
-		]
+		],
+		"process": [
+			{
+				"name" : "nosliw_INIT_ACTIVE",
+				"entity" : {
+					"activity": [{
+							"id": "startActivityId",
+							"name": "startActivity",
+							"type": "start",
+							"flow": {
+								"target": "retrieveSchoolData"
+							}
+						},
+						{
+							"id": "retrieveSchoolData",
+							"name": "retrieveSchoolData",
+							"type": "Service_request",
+							"provider": "getSchoolDataService",
+							"inputMapping" : {
+								"element" : {
+									"schoolTypeInService" : {
+										"definition" : {
+											"path" : "schoolTypeInModule"
+										}
+									},
+									"schoolRatingInService" : {
+										"definition" : {
+											"path" : "schoolRatingInModule"
+										}
+									}
+								}
+							},
+							"result": [{
+								"name": "success",
+								"flow": {
+									"target": "presentSchoolListUI"
+								},
+								"output": {
+									"element": {
+										"schoolListInModule": {
+											"definition": {
+												"path": "outputInService"
+											}
+										}
+									}
+								}
+							}]
+						},
+						{
+							"id": "presentSchoolListUI",
+							"name": "presentSchoolListUI",
+							"type": "UI_presentUI",
+							"setting" : {
+								"updateData" : false
+							},
+							"ui": "schoolListUI",
+							"result": [{
+								"name": "success",
+								"flow": {
+									"target": "debug"
+								}
+							}]
+						},
+						{
+							"id": "debug",
+							"name": "debug",
+							"type": "debug",
+							"result": [{
+								"name": "success",
+								"flow": {
+									"target": "refreshSchoolList"
+								}
+							}]
+						},
+						{
+							"id": "refreshSchoolList",
+							"name": "refreshSchoolList",
+							"type": "UI_executeCommand",
+							"partId": "ui.schoolListUI",
+							"command": "nosliw_update_data",
+							"inputMapping": {
+								"element": {
+									"schoolList": {
+										"definition": { 
+											"path": "schoolListInModule"
+										}
+									}
+								}
+							},
+							"result": [{
+								"name": "success",
+								"flow": {
+									"target": "successEndId"
+								}
+							}]
+						},
+						{
+							"id": "successEndId",
+							"name": "successEnd",
+							"type": "end"
+						}
+					]
+				},
+			}
+		],
 	},
 }

@@ -37,6 +37,9 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	public static String PROCESS = "process";
 
 	@HAPAttribute
+	public static String LIFECYCLE = "lifecycle";
+
+	@HAPAttribute
 	public static String INITSCRIPT = "initScript";
 
 	private HAPDefinitionModule m_moduleDefinition;
@@ -49,11 +52,15 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_processes;
 	
+	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_lifecycle;
+
+	
 	private List<HAPExecutableModuleUI> m_uis;
 
 	public HAPExecutableModule(HAPDefinitionModule moduleDefinition, String id) {
 		super(moduleDefinition);
 		this.m_processes = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
+		this.m_lifecycle = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
 		this.m_uis = new ArrayList<HAPExecutableModuleUI>();
 		this.m_moduleDefinition = moduleDefinition;
 		this.m_id = id;
@@ -66,7 +73,9 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	public void setContextGroup(HAPContextGroup contextGroup) { 	this.m_context = contextGroup;	}
 	
 	public void addProcess(String name, HAPExecutableWrapperTask<HAPExecutableProcess> process) {		this.m_processes.put(name, process);	}
-	
+
+	public void addLifecycle(String name, HAPExecutableWrapperTask<HAPExecutableProcess> lifecycle) {		this.m_lifecycle.put(name, lifecycle);	}
+
 	public void addModuleUI(HAPExecutableModuleUI ui) {  this.m_uis.add(ui);   }
 	
 	@Override
@@ -76,6 +85,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
 		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
 		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
+		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildJson(this.m_lifecycle, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -96,6 +106,12 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		}
 		jsonMap.put(PROCESS, HAPJsonUtility.buildMapJson(processJsonMap));
 		
+		Map<String, String> lifecycleJsonMap = new LinkedHashMap<String, String>();
+		for(String lifecycleName :this.m_lifecycle.keySet()) {
+			lifecycleJsonMap.put(lifecycleName, this.m_lifecycle.get(lifecycleName).toResourceData(runtimeInfo).toString());
+		}
+		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildMapJson(lifecycleJsonMap));
+
 		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
 		typeJsonMap.put(INITSCRIPT, HAPScript.class);
 		
@@ -114,6 +130,9 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 			out.addAll(process.getResourceDependency(runtimeInfo));
 		}
 		
+		for(HAPExecutableWrapperTask lifecycle : this.m_lifecycle.values()) {
+			out.addAll(lifecycle.getResourceDependency(runtimeInfo));
+		}
 		return out;
 	}
 }

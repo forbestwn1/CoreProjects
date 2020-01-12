@@ -13,10 +13,13 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.component.HAPAttachment;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
+import com.nosliw.data.core.component.HAPAttachmentEntity;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
+import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
@@ -43,6 +46,16 @@ public class HAPUtilityProcess {
 	
 	public static HAPDefinitionProcessSuite buildProcessSuiteFromAttachment(HAPAttachmentContainer attachmentContainer) {
 		return null;
+	}
+	
+	public static HAPDefinitionProcess getProcessDefinitionFromAttachment(String name, HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
+		HAPDefinitionProcess out = null;
+		HAPAttachment attachment = attachmentContainer.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, name);
+		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
+			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
+			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
+		}
+		return out;
 	}
 	
 	public static HAPDefinitionProcessSuite getProcessSuite(String id, HAPManagerActivityPlugin activityPluginMan) {
@@ -147,6 +160,5 @@ public class HAPUtilityProcess {
 			result.setOutputDataAssociation(new HAPDefinitionDataAssociationMirror());
 		}
 		return out;
-	}
-	
+	}	
 }

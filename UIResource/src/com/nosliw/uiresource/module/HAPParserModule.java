@@ -8,12 +8,10 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPLifecycleAction;
 import com.nosliw.data.core.component.HAPNameMapping;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
-import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 import com.nosliw.uiresource.common.HAPUtilityParser;
@@ -48,15 +46,21 @@ public class HAPParserModule {
 		//build component part from json object
 		HAPComponentUtility.parseComponent(out, jsonObj);
 		
-		//process
-		JSONObject processJsonObject = jsonObj.optJSONObject(HAPDefinitionModule.PROCESS);
-		if(processJsonObject!=null) {
-			for(Object key : processJsonObject.keySet()) {
-				HAPDefinitionWrapperTask<HAPDefinitionProcess> process = HAPParserProcessDefinition.parseEmbededProcess(processJsonObject.getJSONObject((String)key), m_activityPluginMan);
-				process.getTaskDefinition().setName((String)key);
-				out.addProcess(process);
-			}
+		//lifecycle
+		JSONArray lifecycleActionArray = jsonObj.optJSONArray(HAPDefinitionModule.LIFECYCLE);
+		for(int i=0; i<lifecycleActionArray.length(); i++) {
+			out.addLifecycleAction(HAPLifecycleAction.newInstance(lifecycleActionArray.getJSONObject(i)));
 		}
+		
+//		//process
+//		JSONObject processJsonObject = jsonObj.optJSONObject(HAPDefinitionModule.PROCESS);
+//		if(processJsonObject!=null) {
+//			for(Object key : processJsonObject.keySet()) {
+//				HAPDefinitionWrapperTask<HAPDefinitionProcess> process = HAPParserProcessDefinition.parseEmbededProcess(processJsonObject.getJSONObject((String)key), m_activityPluginMan);
+//				process.getTaskDefinition().setName((String)key);
+//				out.addProcess(process);
+//			}
+//		}
 
 		//ui decoration
 		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UIDECORATION);

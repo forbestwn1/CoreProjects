@@ -64,6 +64,11 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
 	};
 	
+	var loc_getExecuteModuleLifycycleProcessByNameRequest = function(processName, extraInput, handlers, request){
+		var process = loc_getModuleCore().getLifecycleProcess(processName);
+		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
+	};
+	
 	var loc_getProcessNameByLifecycle = function(lifecycleName){ return node_basicUtility.buildNosliwFullName(lifecycleName);	};
 	
 	//call back method for normal lifecycle change
@@ -74,7 +79,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		//execute complex lifecycle call back
 		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
 		//execute process defined in module by handler name 
-		out.addRequest(loc_getExecuteModuleProcessByNameRequest(loc_getProcessNameByLifecycle(lifecycleName)));
+		out.addRequest(loc_getExecuteModuleLifycycleProcessByNameRequest(loc_getProcessNameByLifecycle(lifecycleName)));
 		return out;
 	};
 	
