@@ -43,18 +43,7 @@
 							}
 						},
 						{
-							"id": "debugId",
-							"name": "debug",
-							"type": "debug",
-							"result": [{
-								"name": "success",
-								"flow": {
-									"target": "presentSchoolDataUI"
-								}
-							}]
-						},
-						{
-							"id": "presentSchoolDataUI",
+							"id": "pollFlightState",
 							"name": "presentSchoolDataUI",
 							"type": "UI_presentUI",
 							"ui": "schoolInfoUI",

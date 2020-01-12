@@ -1,24 +1,6 @@
 {
 	"name": "ModuleMySchoolResult",
 	"description": "",
-	"attachment": {
-		"uiResource" : [
-			{
-				"name": "schoolListPage",
-				"id": "Page_MySchool_SchoolList"
-			},
-			{
-				"name": "schoolInfoPage",
-				"id": "Page_MySchool_SchoolData"
-			}
-		],
-		"service" : [
-			{	
-				"name" : "getSchoolDataService",
-				"id" : "schoolService"
-			}		
-		]
-	},
 	"context": {
 		"group": {
 			"public": {
@@ -336,5 +318,23 @@
 				}
 			}
 		}
-	]
+	],
+	"attachment": {
+		"uiResource" : [
+			{
+				"name": "schoolListPage",
+				"id": "Page_MySchool_SchoolList"
+			},
+			{
+				"name": "schoolInfoPage",
+				"id": "Page_MySchool_SchoolData"
+			}
+		],
+		"service" : [
+			{	
+				"name" : "getSchoolDataService",
+				"id" : "schoolService"
+			}		
+		]
+	},
 }

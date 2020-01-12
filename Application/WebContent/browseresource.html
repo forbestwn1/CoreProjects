@@ -10,10 +10,17 @@
     <!-- Your app title -->
     <title>My App</title>
     <!-- Path to Framework7 Library CSS Bundle -->
-    <link rel="stylesheet" href="libresources/external/framework/css/framework7.bundle.min.css">
+    <link rel="stylesheet" href="libresources/external/framework7/css/framework7.bundle.min.css">
+    
+    <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+    <script src="libresources/external/Underscore/1.9.1/underscore.js"></script>
+    <script src="libresources/external/Backbone/1.3.3/backbone.js"></script>
+    <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+
+	<script src="libresources/nosliw/core/nosliw.js"></script>
   </head>
+
   <body>
-  
   
     <!-- App Root Element -->
     <div id="app">
@@ -37,15 +44,28 @@
         </f7-view>
       </f7-app>
     </div>
-    
-    
-    <!-- Path to Vue js -->
-    <script type="text/javascript" src="libresources/external/vue/to/vue.min.js"></script>
-    <!-- Path to Framework7 Library Bundle JS-->
-    <script type="text/javascript" src="libresources/external/framework7/5.3.0/framework7.bundle.min.js"></script>
-    <!-- Path to Framework7 Vue Plugin Bundle -->
-    <script type="text/javascript" src="libresources/external/framework/framework7-vue/framework7-vue.bundle.min.js"></script>
-    <!-- Path to your app js where you init your app-->
-    <script type="text/javascript" src="path/to/my-app.js"></script>
   </body>
+
+   <!-- Path to Vue js -->
+   <script type="text/javascript" src="libresources/external/vue/vue.min.js"></script>
+   <!-- Path to Framework7 Library Bundle JS-->
+   <script type="text/javascript" src="libresources/external/framework7/5.3.0/framework7.bundle.min.js"></script>
+   <!-- Path to Framework7 Vue Plugin Bundle -->
+   <script type="text/javascript" src="libresources/external/framework7-vue/framework7-vue.bundle.min.js"></script>
+   <!-- Path to your app js where you init your app-->
+   <script type="text/javascript" src="libresources/tools/browseresource/app.js"></script>
+  
+<script>
+$(document).on("nosliwActive", function(){
+	var currentSearchString = window.location.search;
+	
+	
+	
+});
+</script>
+
+<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+<script src="init_runtime.js"></script>
+  
 </html>
