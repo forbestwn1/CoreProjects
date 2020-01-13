@@ -259,7 +259,7 @@ var node_createAppDecoration = function(gate){
 							} 
 						}
 					};
-					loc_gate.processRequest(loc_gate.getExecuteProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEEVENTHANDLER_PROCESS], extraInput, undefined, request));
+					loc_gate.processRequest(loc_gate.getExecuteProcessRequest(eventHandler, extraInput, undefined, request));
 				}
 			}
 		},

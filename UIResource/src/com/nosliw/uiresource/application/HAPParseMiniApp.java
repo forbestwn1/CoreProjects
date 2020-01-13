@@ -39,7 +39,6 @@ public class HAPParseMiniApp {
 		return out;
 	}
 
-	
 	public HAPDefinitionApp parseContent(String content) {
 		return parseAppJson(new JSONObject(content));
 	}
@@ -96,12 +95,6 @@ public class HAPParseMiniApp {
 		out.getOutputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.OUTPUTMAPPING), HAPSerializationFormat.JSON);
 		
 		HAPComponentUtility.parseComponentChild(out, moduleJson);
-		
-//		out.setNameMapping(HAPNameMapping.newNamingMapping(moduleJson.optJSONObject(HAPWithNameMapping.NAMEMAPPING)));
-//		
-//		JSONObject eventHandlersJson = moduleJson.optJSONObject(HAPDefinitionAppModule.EVENTHANDLER);
-//		out.addEventHandler(HAPUtilityParser.parseEventHandlers(eventHandlersJson, activityPluginMan));
-
 		return out;
 	}
 }
