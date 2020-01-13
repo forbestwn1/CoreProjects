@@ -8,13 +8,13 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPComponentUtility;
-import com.nosliw.data.core.component.HAPLifecycleAction;
+import com.nosliw.data.core.component.HAPHandlerEvent;
+import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
-import com.nosliw.uiresource.common.HAPUtilityParser;
 
 public class HAPParserModule {
 
@@ -49,19 +49,9 @@ public class HAPParserModule {
 		//lifecycle
 		JSONArray lifecycleActionArray = jsonObj.optJSONArray(HAPDefinitionModule.LIFECYCLE);
 		for(int i=0; i<lifecycleActionArray.length(); i++) {
-			out.addLifecycleAction(HAPLifecycleAction.newInstance(lifecycleActionArray.getJSONObject(i)));
+			out.addLifecycleAction(HAPHandlerLifecycle.newInstance(lifecycleActionArray.getJSONObject(i)));
 		}
 		
-//		//process
-//		JSONObject processJsonObject = jsonObj.optJSONObject(HAPDefinitionModule.PROCESS);
-//		if(processJsonObject!=null) {
-//			for(Object key : processJsonObject.keySet()) {
-//				HAPDefinitionWrapperTask<HAPDefinitionProcess> process = HAPParserProcessDefinition.parseEmbededProcess(processJsonObject.getJSONObject((String)key), m_activityPluginMan);
-//				process.getTaskDefinition().setName((String)key);
-//				out.addProcess(process);
-//			}
-//		}
-
 		//ui decoration
 		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UIDECORATION);
 		if(uiDecJsonArray!=null) {
@@ -105,8 +95,12 @@ public class HAPParserModule {
 		}
 
 		//event handlers
-		JSONObject eventHandlersJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.EVENTHANDLER);
-		out.addEventHandler(HAPUtilityParser.parseEventHandlers(eventHandlersJson, activityPluginMan));
+		JSONArray eventHandlersArray = jsonObj.optJSONArray(HAPDefinitionModuleUI.EVENTHANDLER);
+		if(eventHandlersArray!=null) {
+			for(int i=0; i<eventHandlersArray.length(); i++) {
+				out.addEventHandler(HAPHandlerEvent.newInstance(eventHandlersArray.getJSONObject(i)));
+			}
+		}
 
 		//ui decoration
 		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModuleUI.UIDECORATION);
@@ -116,5 +110,4 @@ public class HAPParserModule {
 
 		return out;
 	}
-	
 }

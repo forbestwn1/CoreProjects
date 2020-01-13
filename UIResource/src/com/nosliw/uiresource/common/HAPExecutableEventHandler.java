@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -29,6 +30,10 @@ public class HAPExecutableEventHandler  extends HAPEntityInfoImpWrapper implemen
 	public HAPExecutableWrapperTask<HAPExecutableProcess> getProcess() {   return this.m_process;   }
 	
 	
+	public HAPExecutableEventHandler(HAPHandlerEvent eventHandlerDefinition) {
+		super(eventHandlerDefinition);
+	}
+
 	public HAPExecutableEventHandler(HAPDefinitionEventHandler eventHandlerDefinition) {
 		super(eventHandlerDefinition);
 	}

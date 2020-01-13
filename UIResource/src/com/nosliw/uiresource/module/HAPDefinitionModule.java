@@ -17,7 +17,7 @@ import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPComponentUtility;
-import com.nosliw.data.core.component.HAPLifecycleAction;
+import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 /**
@@ -37,11 +37,7 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	public static String UI = "ui";
 	
 	@HAPAttribute
-	public static String PROCESS = "process";
-
-	@HAPAttribute
 	public static String LIFECYCLE = "lifecycle";
-
 	
 	@HAPAttribute
 	public static String UIDECORATION = "uiDecoration";
@@ -51,27 +47,20 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	// all the module uis (name -- definition)
 	private List<HAPDefinitionModuleUI> m_uis;
 
-	//processes (used for lifecycle, module command)
-//	private Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> m_processes;
-
 	//lifecycle definition
-	private Set<HAPLifecycleAction> m_lifecycleAction;
+	private Set<HAPHandlerLifecycle> m_lifecycleAction;
 	
 	private List<HAPInfoDecoration> m_uiDecoration;
 	
 	public HAPDefinitionModule(String id) {
 		super(id);
 		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
-//		this.m_processes = new LinkedHashMap<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>>();
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
-		this.m_lifecycleAction = new HashSet<HAPLifecycleAction>();
+		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
 	}
 	
 	@Override
 	public String getId() {   return this.m_id;   }
-	 
-//	public Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> getProcesses(){  return this.m_processes;  }
-//	public void addProcess(HAPDefinitionWrapperTask<HAPDefinitionProcess> processDef) {  this.m_processes.put(processDef.getTaskDefinition().getName(), processDef);  }
 	 
 	public List<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }
 	public void addUI(HAPDefinitionModuleUI ui) {   this.m_uis.add(ui);   }
@@ -79,8 +68,8 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	public void setUIDecoration(List<HAPInfoDecoration> decs) {  this.m_uiDecoration = decs;    }
 	public List<HAPInfoDecoration> getUIDecoration(){   return this.m_uiDecoration;    }
 	
-	public void addLifecycleAction(HAPLifecycleAction lifecycleAction) {    this.m_lifecycleAction.add(lifecycleAction);    }
-	public Set<HAPLifecycleAction> getLifecycleAction(){    return this.m_lifecycleAction;    }
+	public void addLifecycleAction(HAPHandlerLifecycle lifecycleAction) {    this.m_lifecycleAction.add(lifecycleAction);    }
+	public Set<HAPHandlerLifecycle> getLifecycleAction(){    return this.m_lifecycleAction;    }
 	
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
@@ -100,7 +89,6 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
-//		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
 		jsonMap.put(UIDECORATION, HAPJsonUtility.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
 	}
 }

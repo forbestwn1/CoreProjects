@@ -1,19 +1,20 @@
 package com.nosliw.uiresource.module;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 //each module ui is page unit in module that is alive in a module
@@ -54,7 +55,7 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp implements H
 	private String m_page;
 
 	//event handlers
-	private Map<String, HAPDefinitionEventHandler> m_eventHandlers;
+	private Set<HAPHandlerEvent> m_eventHandlers;
 
 	private List<HAPInfoDecoration> m_uiDecoration;
 	
@@ -71,7 +72,7 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp implements H
 	private String m_status;
 	
 	public HAPDefinitionModuleUI() {
-		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionEventHandler>();
+		this.m_eventHandlers = new HashSet<HAPHandlerEvent>();
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
 		this.m_nameMapping = new HAPNameMapping();
 	}
@@ -91,9 +92,9 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp implements H
 	public HAPDefinitionDataAssociation getOutputMapping() {   return this.m_outputMapping;   }
 	public void setOutputMapping(HAPDefinitionDataAssociation contextMapping) {   this.m_outputMapping = contextMapping;   }
 
-	public Map<String, HAPDefinitionEventHandler> getEventHandlers(){   return this.m_eventHandlers;   }
-	public void addEventHandler(String name, HAPDefinitionEventHandler eventHandler) {  this.m_eventHandlers.put(name, eventHandler);   }
-	public void addEventHandler(Map<String, HAPDefinitionEventHandler> eventHandler) {  this.m_eventHandlers.putAll(eventHandler);   }
+	public Set<HAPHandlerEvent> getEventHandlers(){   return this.m_eventHandlers;   }
+	public void addEventHandler(HAPHandlerEvent eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
+	public void addEventHandler(Set<HAPHandlerEvent> eventHandler) {  this.m_eventHandlers.addAll(eventHandler);   }
 	
 	public void setUIDecoration(List<HAPInfoDecoration> decs) {  this.m_uiDecoration = decs;    }
 	public List<HAPInfoDecoration> getUIDecoration(){  return this.m_uiDecoration;   }

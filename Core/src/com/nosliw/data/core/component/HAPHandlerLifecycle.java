@@ -9,15 +9,15 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
-public class HAPLifecycleAction extends HAPEntityInfoWritableImp{
+public class HAPHandlerLifecycle extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String PROCESS = "process";
 	
 	private HAPDefinitionWrapperTask<String> m_process;
 
-	public static HAPLifecycleAction newInstance(JSONObject jsonObj) {
-		HAPLifecycleAction out = new HAPLifecycleAction();
+	public static HAPHandlerLifecycle newInstance(JSONObject jsonObj) {
+		HAPHandlerLifecycle out = new HAPHandlerLifecycle();
 		out.buildObjectByJson(jsonObj);
 		return out;
 	}
