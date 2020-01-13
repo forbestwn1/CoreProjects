@@ -8,10 +8,10 @@
 		
 		"pollTask" : {
 			"input" : {
-				"flightNumber : ": "",
+				"flightNumber": "",
 				
 			}
-			"process" : "",	
+			"process" : "checkFlightInfo",	
 		
 		}
 	},
@@ -25,28 +25,63 @@
 	
 	"handler" : {
 			
-		"process" : "",	
+		"process" : "eventHandler",	
 	
 	},
 	
 	"attachment" : {
 		"process" : [
 			{
-				"name": "pollTask",
+				"name": "checkFlightInfo",
 				"entity" : {
 					"activity": [{
 							"id": "startActivityId",
 							"name": "startActivity",
 							"type": "start",
 							"flow": {
-								"target": "debugId"
+								"target": "pollFlightState"
 							}
 						},
 						{
 							"id": "pollFlightState",
-							"name": "presentSchoolDataUI",
-							"type": "UI_presentUI",
-							"ui": "schoolInfoUI",
+							"name": "pollFlightState",
+							"type": "Service_request",
+							"provider": "getPearsonFlightArrivalService",
+							"inputMapping" : {
+								"element" : {
+									"flight" : {
+										"definition" : {
+											"path" : "flight"
+										}
+									},
+									"date" : {
+										"definition" : {
+											"path" : "date"
+										}
+									}
+								}
+							},
+							"result": [{
+								"name": "success",
+								"flow": {
+									"target": "checkFlightState"
+								},
+								"output": {
+									"element": {
+										"flightInfo": {
+											"definition": {
+												"path": "outputInService"
+											}
+										}
+									}
+								}
+							}]
+						},
+						{
+							"id": "checkFlightState",
+							"name": "checkFlightState",
+							"type": "expression",
+							"expression": "#|!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)|#",
 							"result": [{
 								"name": "success",
 								"flow": {
@@ -55,12 +90,10 @@
 							}]
 						},
 						{
-							"id": "refreshSchoolInfo",
-							"name": "refreshSchoolInfo",
-							"type": "UI_executeCommand",
-							"partId": "ui.schoolInfoUI",
-							"ui11": "schoolInfoUI",
-							"command": "nosliw_update_data",
+							"id": "isValidState",
+							"name": "isValidState",
+							"type": "switch",
+							"expression": "#|!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)|#",
 							"inputMapping": {
 								"element": {
 									"schoolData": {
@@ -71,19 +104,100 @@
 								}
 							},
 							"result": [{
-								"name": "success",
+								"value": {
+									"dataTypeId": "test.boolean;1.0.0",
+									"value": true
+								},
 								"flow": {
-									"target": "successEndId"
+									"target": "withEventEndId"
+								}
+							},
+							{
+								"value": {
+									"dataTypeId": "test.boolean;1.0.0",
+									"value": false
+								},
+								"flow": {
+									"target": "withoutEventEndId"
 								}
 							}]
 						},
 						{
-							"id": "successEndId",
-							"name": "successEnd",
+							"id": "withEventEndId",
+							"name": "withEventEndId",
+							"type": "end",
+							"output": {
+								"element": {
+									"event": {
+										definition: {
+											"path": "flightInfo"
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "withoutEventEndId",
+							"name": "withoutEventEndId",
 							"type": "end"
 						}
 					]
 				}
+			},
+			
+			{
+				"name": "eventHandler",
+				"entity" : {
+					"activity": [{
+							"id": "startActivityId",
+							"name": "startActivity",
+							"type": "start",
+							"flow": {
+								"target": "pollFlightState"
+							}
+						},
+						{
+							"id": "sendEmail",
+							"name": "sendEmail",
+							"type": "Service_request",
+							"provider": "sendEmailService",
+							"inputMapping" : {
+								"element" : {
+									"address" : {
+										"definition" : {
+											"path" : "flight"
+										}
+									},
+									"title" : {
+										"definition" : {
+											"path" : "date"
+										}
+									}
+								}
+							},
+							"result": [{
+								"name": "success",
+								"flow": {
+									"target": "success"
+								},
+								"output": {
+									"element": {
+										"flightInfo": {
+											"definition": {
+												"path": "outputInService"
+											}
+										}
+									}
+								}
+							}]
+						},
+						{
+							"id": "success",
+							"name": "success",
+							"type": "end"
+						}
+					]
+				}			
 			}
 		
 		], 
