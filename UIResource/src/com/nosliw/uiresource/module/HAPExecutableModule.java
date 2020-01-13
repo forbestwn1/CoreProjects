@@ -121,18 +121,9 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		
-		for(HAPExecutableModuleUI ui : this.m_uis) {
-			out.addAll(ui.getResourceDependency(runtimeInfo));
-		}
-		
-		for(HAPExecutableWrapperTask process : this.m_processes.values()) {
-			out.addAll(process.getResourceDependency(runtimeInfo));
-		}
-		
-		for(HAPExecutableWrapperTask lifecycle : this.m_lifecycle.values()) {
-			out.addAll(lifecycle.getResourceDependency(runtimeInfo));
-		}
+		for(HAPExecutableModuleUI ui : this.m_uis) {		out.addAll(ui.getResourceDependency(runtimeInfo));		}
+		for(HAPExecutableWrapperTask process : this.m_processes.values()) {		out.addAll(process.getResourceDependency(runtimeInfo));		}
+		for(HAPExecutableWrapperTask lifecycle : this.m_lifecycle.values()) {	out.addAll(lifecycle.getResourceDependency(runtimeInfo));	}
 		return out;
 	}
 }

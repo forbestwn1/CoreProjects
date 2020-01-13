@@ -1,6 +1,8 @@
 package com.nosliw.data.core.component;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
@@ -21,11 +23,19 @@ abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implement
 	//context definition within this component
 	private HAPContextGroup m_context;
 	
+	//lifecycle definition
+	private Set<HAPHandlerLifecycle> m_lifecycleAction;
+	
+	//event handlers
+	private Set<HAPHandlerEvent> m_eventHandlers;
+
 	private HAPAttachmentContainer m_attachmentContainer;
 	
 	public HAPComponentImp(String id) {
 		this.m_id = id;
 		this.m_context = new HAPContextGroup();
+		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
+		this.m_eventHandlers = new HashSet<HAPHandlerEvent>();
 		this.m_attachmentContainer = new HAPAttachmentContainer();
 	}
 	
@@ -42,6 +52,17 @@ abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implement
 		if(this.m_context ==null)  this.m_context = new HAPContextGroup();
 	}
 	
+	@Override
+	public Set<HAPHandlerLifecycle> getLifecycleAction(){    return this.m_lifecycleAction;    }
+	@Override
+	public void addLifecycleAction(HAPHandlerLifecycle lifecycleAction) {    this.m_lifecycleAction.add(lifecycleAction);    }
+ 	
+	@Override
+	public Set<HAPHandlerEvent> getEventHandlers(){   return this.m_eventHandlers;   }
+	@Override
+	public void addEventHandler(HAPHandlerEvent eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
+//	public void addEventHandler(Set<HAPHandlerEvent> eventHandler) {  this.m_eventHandlers.addAll(eventHandler);   }
+
 	@Override
 	public HAPAttachmentContainer getAttachmentContainer() {		return this.m_attachmentContainer;	}
 
@@ -60,5 +81,7 @@ abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implement
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
+		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildJson(this.m_lifecycleAction, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
 	}
 }

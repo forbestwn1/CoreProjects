@@ -1,10 +1,8 @@
 package com.nosliw.uiresource.module;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -17,7 +15,6 @@ import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPComponentUtility;
-import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 /**
@@ -37,9 +34,6 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	public static String UI = "ui";
 	
 	@HAPAttribute
-	public static String LIFECYCLE = "lifecycle";
-	
-	@HAPAttribute
 	public static String UIDECORATION = "uiDecoration";
 	
 	private String m_id;
@@ -47,16 +41,12 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	// all the module uis (name -- definition)
 	private List<HAPDefinitionModuleUI> m_uis;
 
-	//lifecycle definition
-	private Set<HAPHandlerLifecycle> m_lifecycleAction;
-	
 	private List<HAPInfoDecoration> m_uiDecoration;
 	
 	public HAPDefinitionModule(String id) {
 		super(id);
 		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
-		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
 	}
 	
 	@Override
@@ -67,9 +57,6 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	
 	public void setUIDecoration(List<HAPInfoDecoration> decs) {  this.m_uiDecoration = decs;    }
 	public List<HAPInfoDecoration> getUIDecoration(){   return this.m_uiDecoration;    }
-	
-	public void addLifecycleAction(HAPHandlerLifecycle lifecycleAction) {    this.m_lifecycleAction.add(lifecycleAction);    }
-	public Set<HAPHandlerLifecycle> getLifecycleAction(){    return this.m_lifecycleAction;    }
 	
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {

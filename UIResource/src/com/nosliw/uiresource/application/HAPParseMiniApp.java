@@ -9,13 +9,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPComponentUtility;
-import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
-import com.nosliw.uiresource.common.HAPUtilityParser;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 public class HAPParseMiniApp {
@@ -97,10 +95,12 @@ public class HAPParseMiniApp {
 		out.getInputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.INPUTMAPPING), HAPSerializationFormat.JSON);
 		out.getOutputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.OUTPUTMAPPING), HAPSerializationFormat.JSON);
 		
-		out.setNameMapping(HAPNameMapping.newNamingMapping(moduleJson.optJSONObject(HAPDefinitionModuleUI.NAMEMAPPING)));
+		HAPComponentUtility.parseComponentChild(out, moduleJson);
 		
-		JSONObject eventHandlersJson = moduleJson.optJSONObject(HAPDefinitionAppModule.EVENTHANDLER);
-		out.addEventHandler(HAPUtilityParser.parseEventHandlers(eventHandlersJson, activityPluginMan));
+//		out.setNameMapping(HAPNameMapping.newNamingMapping(moduleJson.optJSONObject(HAPWithNameMapping.NAMEMAPPING)));
+//		
+//		JSONObject eventHandlersJson = moduleJson.optJSONObject(HAPDefinitionAppModule.EVENTHANDLER);
+//		out.addEventHandler(HAPUtilityParser.parseEventHandlers(eventHandlersJson, activityPluginMan));
 
 		return out;
 	}

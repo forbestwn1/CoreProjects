@@ -19,6 +19,15 @@ public class HAPComponentUtility {
 	public static void solveAttachment(HAPComponentImp component, HAPAttachmentContainer parentAttachment) {
 		component.getAttachmentContainer().merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
 	}
+	
+	public static void parseComponentChild(HAPComponentChildImp child, JSONObject jsonObj) {
+		child.buildEntityInfoByJson(jsonObj);
+		
+		child.setNameMapping(HAPNameMapping.newNamingMapping(jsonObj.optJSONObject(HAPWithNameMapping.NAMEMAPPING)));
+		
+		//event handler
+		parseEventHandler(child, jsonObj);
+	}
 
 	public static void parseComponent(HAPComponentImp component, JSONObject jsonObj) {
 		component.buildEntityInfoByJson(jsonObj);
@@ -34,6 +43,32 @@ public class HAPComponentUtility {
 		if(contextJsonObj!=null) {
 			component.setContext(HAPParserContext.parseContextGroup(contextJsonObj));
 		}
+		
+		//lifecycle
+		parseLifecycleAction(component, jsonObj);
+
+		//event handler
+		parseEventHandler(component, jsonObj);
+	}
+
+	public static HAPWithEventHanlder parseEventHandler(HAPWithEventHanlder withEventHandler, JSONObject jsonObj) {
+		JSONArray eventHandlersArray = jsonObj.optJSONArray(HAPWithEventHanlder.EVENTHANDLER);
+		if(eventHandlersArray!=null) {
+			for(int i=0; i<eventHandlersArray.length(); i++) {
+				withEventHandler.addEventHandler(HAPHandlerEvent.newInstance(eventHandlersArray.getJSONObject(i)));
+			}
+		}
+		return withEventHandler;
+	}
+	
+	public static HAPWithLifecycleAction parseLifecycleAction(HAPWithLifecycleAction withLifecycelAction, JSONObject jsonObj) {
+		JSONArray lifecycleActionArray = jsonObj.optJSONArray(HAPWithLifecycleAction.LIFECYCLE);
+		if(lifecycleActionArray!=null) {
+			for(int i=0; i<lifecycleActionArray.length(); i++) {
+				withLifecycelAction.addLifecycleAction(HAPHandlerLifecycle.newInstance(lifecycleActionArray.getJSONObject(i)));
+			}
+		}
+		return withLifecycelAction;
 	}
 	
 	public static void parseServiceUseDefinition(HAPWithServiceUse serviceUse, JSONObject jsonObj) {

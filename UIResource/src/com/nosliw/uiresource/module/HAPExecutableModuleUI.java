@@ -10,13 +10,14 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.uiresource.common.HAPExecutableEventHandler;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 
@@ -56,17 +57,17 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	private HAPExecutableDataAssociation m_inputMapping;
 	private HAPExecutableDataAssociation m_outputMapping;
 	
-	private Map<String, HAPExecutableEventHandler> m_eventHandlers;
+	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_eventHandlers;
 	
 	public HAPExecutableModuleUI(HAPDefinitionModuleUI moduleUIDefinition, String id) {
 		super(moduleUIDefinition);
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
-		this.m_eventHandlers = new LinkedHashMap<String, HAPExecutableEventHandler>();
+		this.m_eventHandlers = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
 		this.m_moduleUIDefinition = moduleUIDefinition;
 		this.m_id = id;
 	}
 
-	public void addEventHandler(String eventName, HAPExecutableEventHandler eventHander) {   this.m_eventHandlers.put(eventName, eventHander);   }
+	public void addEventHandler(String eventName, HAPExecutableWrapperTask<HAPExecutableProcess> eventHander) {   this.m_eventHandlers.put(eventName, eventHander);   }
 	
 	public void setInputMapping(HAPExecutableDataAssociation contextMapping) {   this.m_inputMapping = contextMapping;	}
 	public HAPExecutableDataAssociation getInputMapping() {   return this.m_inputMapping;   }
@@ -100,7 +101,7 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 		jsonMap.put(PAGE, this.m_page.toResourceData(runtimeInfo).toString());
 		
 		Map<String, String> eventJsonMap = new LinkedHashMap<String, String>();
-		for(String eventName :this.m_eventHandlers.keySet()) eventJsonMap.put(eventName, this.m_eventHandlers.get(eventName).toResourceData(runtimeInfo).toString());
+		for(String eventName :this.m_eventHandlers.keySet()) {	eventJsonMap.put(eventName, this.m_eventHandlers.get(eventName).toResourceData(runtimeInfo).toString());	}
 		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildMapJson(eventJsonMap));
 
 		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toResourceData(runtimeInfo).toString());
@@ -113,9 +114,9 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.addAll(this.m_page.getResourceDependency(runtimeInfo));
-		for(HAPExecutableEventHandler eventHandler : this.m_eventHandlers.values()) 	out.addAll(eventHandler.getResourceDependency(runtimeInfo));
 		out.addAll(this.m_inputMapping.getResourceDependency(runtimeInfo));
 		out.addAll(this.m_outputMapping.getResourceDependency(runtimeInfo));
+		for(HAPExecutableWrapperTask eventHandler : this.m_eventHandlers.values()) {	out.addAll(eventHandler.getResourceDependency(runtimeInfo));	}
 		return out;
 	}
 }

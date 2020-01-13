@@ -31,7 +31,7 @@ function(gate){
 					data : eventData
 				};
 				//execute event handler process
-				loc_gate.processRequest(loc_gate.getExecuteProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEEVENTHANDLER_PROCESS], node_createIODataSet(extraInput), undefined, request));
+				loc_gate.processRequest(loc_gate.getExecuteProcessRequest(eventHandler, node_createIODataSet(extraInput), undefined, request));
 			}
 		},
 	};

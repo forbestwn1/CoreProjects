@@ -39,7 +39,6 @@ import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.common.HAPExecutableEventHandler;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
@@ -154,16 +153,13 @@ public class HAPProcessorModule {
 		Set<HAPHandlerEvent> eventHandlerDefs = moduleUIDefinition.getEventHandlers();
 		for(HAPHandlerEvent eventHandlerDef : eventHandlerDefs) {
 			String eventName = eventHandlerDef.getName();
-			HAPExecutableEventHandler eventHandlerExe = new HAPExecutableEventHandler(eventHandlerDef);
-
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getEventDefinition(eventName));
 			HAPContextGroup eventContext = moduleExe.getContext().cloneContextGroup();
 			eventContext.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC).addElement(HAPSystemUtility.buildNosliwFullName("EVENT"), eventRootNode);
 			HAPDefinitionProcess processDef = HAPUtilityProcess.getProcessDefinitionFromAttachment(eventHandlerDef.getProcess().getTaskDefinition(), moduleExe.getDefinition().getAttachmentContainer(), processMan.getPluginManager());
 			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(eventName, new HAPDefinitionProcessWithContext(processDef), eventContext, serviceProviders, processMan, contextProcessRequirement, processTracker);
 			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getProcess(), eventProcessor, HAPParentContext.createDefault(moduleExe.getContext()), null, contextProcessRequirement);			
-			eventHandlerExe.setProcess(processExeWrapper);
-			out.addEventHandler(eventName, eventHandlerExe);
+			out.addEventHandler(eventName, processExeWrapper);
 		}	
 		return out;
 	}

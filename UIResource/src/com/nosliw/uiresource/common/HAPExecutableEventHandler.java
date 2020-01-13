@@ -34,10 +34,6 @@ public class HAPExecutableEventHandler  extends HAPEntityInfoImpWrapper implemen
 		super(eventHandlerDefinition);
 	}
 
-	public HAPExecutableEventHandler(HAPDefinitionEventHandler eventHandlerDefinition) {
-		super(eventHandlerDefinition);
-	}
-
 	public void setProcess(HAPExecutableWrapperTask<HAPExecutableProcess> process) {   this.m_process = process;   }
 	
 	@Override

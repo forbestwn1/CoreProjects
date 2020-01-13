@@ -1,6 +1,7 @@
 package com.nosliw.uiresource.application;
 
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
@@ -11,12 +12,14 @@ import com.nosliw.data.core.component.HAPAttachment;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessWithContext;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.process.HAPProcessorProcess;
+import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
@@ -35,7 +38,6 @@ import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
 import com.nosliw.uiresource.common.HAPExecutableEventHandler;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
@@ -152,13 +154,14 @@ public class HAPProcessMiniAppEntry {
 		}
 		
 		//event handler
-		Map<String, HAPDefinitionEventHandler> eventHandlerDefs = module.getEventHandlers();
-		for(String eventName :eventHandlerDefs.keySet()) {
-			HAPDefinitionEventHandler eventHandlerDef = eventHandlerDefs.get(eventName);
+		Set<HAPHandlerEvent> eventHandlerDefs = module.getEventHandlers();
+		for(HAPHandlerEvent eventHandlerDef :eventHandlerDefs) {
+			String eventName = eventHandlerDef.getName();
 			HAPExecutableEventHandler eventHandlerExe = new HAPExecutableEventHandler(eventHandlerDef);
 
 			HAPContextGroup eventContext = entryExe.getContext().cloneContextGroup();
-			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(eventName, new HAPDefinitionProcessWithContext(eventHandlerDef.getProcess().getTaskDefinition()), eventContext, serviceProviders, processMan, contextProcessRequirement, processTracker);
+			HAPDefinitionProcess processDef = HAPUtilityProcess.getProcessDefinitionFromAttachment(eventHandlerDef.getProcess().getTaskDefinition(), moduleExe.getDefinition().getAttachmentContainer(), processMan.getPluginManager());
+			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(eventName, new HAPDefinitionProcessWithContext(processDef), eventContext, serviceProviders, processMan, contextProcessRequirement, processTracker);
 			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getProcess(), eventProcessor, HAPParentContext.createDefault(moduleExe.getContext()), null, contextProcessRequirement);			
 			eventHandlerExe.setProcess(processExeWrapper);
 			out.addEventHandler(eventName, eventHandlerExe);

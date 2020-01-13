@@ -8,7 +8,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 //context
 //attachment mapping
 //
-public interface HAPComponent extends HAPEntityInfo, HAPWithAttachment{
+public interface HAPComponent extends HAPEntityInfo, HAPWithAttachment, HAPWithLifecycleAction, HAPWithEventHanlder{
 
 //	String getComponentType();
 	
@@ -17,7 +17,7 @@ public interface HAPComponent extends HAPEntityInfo, HAPWithAttachment{
 
 	HAPContextGroup getContext();
 	void setContext(HAPContextGroup context);
-	
+
 	HAPChildrenComponentIdContainer getChildrenComponentId();
 
 }

@@ -8,9 +8,6 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPComponentUtility;
-import com.nosliw.data.core.component.HAPHandlerEvent;
-import com.nosliw.data.core.component.HAPHandlerLifecycle;
-import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
@@ -46,12 +43,6 @@ public class HAPParserModule {
 		//build component part from json object
 		HAPComponentUtility.parseComponent(out, jsonObj);
 		
-		//lifecycle
-		JSONArray lifecycleActionArray = jsonObj.optJSONArray(HAPDefinitionModule.LIFECYCLE);
-		for(int i=0; i<lifecycleActionArray.length(); i++) {
-			out.addLifecycleAction(HAPHandlerLifecycle.newInstance(lifecycleActionArray.getJSONObject(i)));
-		}
-		
 		//ui decoration
 		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UIDECORATION);
 		if(uiDecJsonArray!=null) {
@@ -75,10 +66,11 @@ public class HAPParserModule {
 
 		out.buildEntityInfoByJson(jsonObj);
 		
+		HAPComponentUtility.parseComponentChild(out, jsonObj);
+		
 		out.setPage(jsonObj.optString(HAPDefinitionModuleUI.PAGE));
 		out.setType(jsonObj.optString(HAPDefinitionModuleUI.TYPE));
 		out.setStatus(jsonObj.optString(HAPDefinitionModuleUI.STATUS));
-		out.setNameMapping(HAPNameMapping.newNamingMapping(jsonObj.optJSONObject(HAPDefinitionModuleUI.NAMEMAPPING)));
 
 		//input mapping
 		JSONObject inputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.INPUTMAPPING);
@@ -92,14 +84,6 @@ public class HAPParserModule {
 		if(outputMappingJson!=null) {
 			HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildObjectByJson(outputMappingJson);
 			out.setOutputMapping(dataAssociation);
-		}
-
-		//event handlers
-		JSONArray eventHandlersArray = jsonObj.optJSONArray(HAPDefinitionModuleUI.EVENTHANDLER);
-		if(eventHandlersArray!=null) {
-			for(int i=0; i<eventHandlersArray.length(); i++) {
-				out.addEventHandler(HAPHandlerEvent.newInstance(eventHandlersArray.getJSONObject(i)));
-			}
 		}
 
 		//ui decoration

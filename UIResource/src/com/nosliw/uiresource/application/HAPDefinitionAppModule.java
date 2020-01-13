@@ -1,23 +1,18 @@
 package com.nosliw.uiresource.application;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.HAPNameMapping;
-import com.nosliw.data.core.component.HAPWithNameMapping;
+import com.nosliw.data.core.component.HAPComponentChildImp;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionGroupDataAssociation;
-import com.nosliw.uiresource.common.HAPDefinitionEventHandler;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements HAPWithNameMapping{
+public class HAPDefinitionAppModule extends HAPComponentChildImp{
 
 	@HAPAttribute
 	public static final String MODULE = "module";
@@ -46,12 +41,6 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements
 	
 	private String m_status;
 	
-	//mapping reference name from attachment to internal name
-	private HAPNameMapping m_nameMapping;
-
-	//event handlers
-	private Map<String, HAPDefinitionEventHandler> m_eventHandlers;
-	
 	private HAPDefinitionGroupDataAssociation m_outputMapping;
 	
 	private HAPDefinitionGroupDataAssociation m_inputMapping;
@@ -59,7 +48,6 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements
 	public HAPDefinitionAppModule() {
 		this.m_outputMapping = new HAPDefinitionGroupDataAssociation();
 		this.m_inputMapping = new HAPDefinitionGroupDataAssociation();
-		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionEventHandler>();
 	}
 	
 	public String getModule() {  return this.m_module;   }
@@ -74,14 +62,6 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements
 	public HAPDefinitionGroupDataAssociation getInputMapping() {   return this.m_inputMapping;   }
 	public HAPDefinitionGroupDataAssociation getOutputMapping() {   return this.m_outputMapping;    }
 	
-	public Map<String, HAPDefinitionEventHandler> getEventHandlers(){   return this.m_eventHandlers;   }
-	public void addEventHandler(String name, HAPDefinitionEventHandler eventHandler) {  this.m_eventHandlers.put(name, eventHandler);   }
-	public void addEventHandler(Map<String, HAPDefinitionEventHandler> eventHandler) {  this.m_eventHandlers.putAll(eventHandler);   }
-
-	public void setNameMapping(HAPNameMapping nameMapping) {   if(nameMapping!=null)  this.m_nameMapping = nameMapping;  }
-	@Override
-	public HAPNameMapping getNameMapping() {    return this.m_nameMapping;   }
-
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -89,7 +69,6 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp implements
 		jsonMap.put(ROLE, this.m_role);
 		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, this.m_outputMapping.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
