@@ -30,6 +30,7 @@ public class HAPComponentUtility {
 	}
 
 	public static void parseComponent(HAPComponentImp component, JSONObject jsonObj) {
+		//entity info
 		component.buildEntityInfoByJson(jsonObj);
 		
 		//parse attachment

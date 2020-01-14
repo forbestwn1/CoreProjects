@@ -74,7 +74,7 @@ public class HAPJsonUtility {
 			}
 
 			boolean lastOne = i >= map.size() - 1;
-			String json = buildAttributeJson(key, (String) value, lastOne, jsonType);
+			String json = buildAttributeJson(key, value, lastOne, jsonType);
 			if (json != null)
 				out.append(json);
 			i++;
@@ -123,6 +123,7 @@ public class HAPJsonUtility {
 
 			return out;
 		} catch (Exception e) {
+			System.out.println(jsonString);
 			e.printStackTrace();
 			return jsonString;
 		}

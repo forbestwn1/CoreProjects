@@ -11,8 +11,6 @@
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
 
 		<script src="libresources/nosliw/core/nosliw.js"></script>
-		<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
-		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
 </head>
 
 <body>
@@ -21,11 +19,14 @@
 
 <script>
 $(document).on("nosliwActive", function(){
-	nosliw.utility.requestLoadFileResources(["C:/temp/nosliw/temp/scriptexport/scripts/1573363890702"], 
+	nosliw.utility.requestLoadFileResources(["C:/temp/nosliw/temp/scriptexport/scripts/1579029105914"], 
 			function(){
 		});
 });
-nosliw.init();
 </script>
+
+<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+<script src="init_runtime.js"></script>
 
 </html>

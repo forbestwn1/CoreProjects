@@ -127,7 +127,7 @@ public class HAPResourceId extends HAPSerializableImp{
 	
 	@Override
 	protected String buildLiterate(){
-		if(this.m_supplement==null)		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), this.getId()});
+		if(this.m_supplement==null||this.m_supplement.isEmpty())		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), this.getId()});
 		else  return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), this.getId(), this.m_supplement.toStringValue(HAPSerializationFormat.LITERATE)});
 	}
 	

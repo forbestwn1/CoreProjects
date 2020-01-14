@@ -55,6 +55,7 @@ public class HAPUtilityServiceUse {
 			Map<String, HAPDefinitionServiceProvider> parent, 
 			HAPManagerServiceDefinition serviceDefinitionMan) {
 		Map<String, HAPDefinitionServiceProvider> out = new LinkedHashMap<>();
+		if(parent!=null)   out.putAll(parent);
 		
 		Map<String, HAPAttachment> eleByName = attachment.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);
 		if(eleByName!=null) {

@@ -7,10 +7,6 @@ import com.nosliw.data.core.component.HAPComponentImp;
 //task definition describe how event trigure process 
 public class HAPDefinitionEventTask extends HAPComponentImp{
 
-	public HAPDefinitionEventTask(String id) {
-		super(id);
-	}
-
 	//task id
 	private String m_id;
 	
@@ -22,6 +18,10 @@ public class HAPDefinitionEventTask extends HAPComponentImp{
 	
 	//describle how to handle event
 	private HAPDefinitionEventHandle m_eventProcess;
+
+	public HAPDefinitionEventTask(String id) {
+		super(id);
+	}
 
 	@Override
 	public String getId() {    return this.m_id;    }

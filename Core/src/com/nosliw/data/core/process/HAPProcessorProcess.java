@@ -61,7 +61,7 @@ public class HAPProcessorProcess{
 		HAPContextGroup context = originContext.cloneContextGroup();
 		Map<String, HAPExecutableDataAssociation> results = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 
-		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(serviceProviders, out.getDefinition(), contextProcessRequirement.serviceDefinitionManager); 
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(out.getDefinition().getAttachmentContainer(), serviceProviders, contextProcessRequirement.serviceDefinitionManager); 
 		
 		for(String activityId : out.getDefinition().getActivities().keySet()) {
 			HAPDefinitionActivity activity = out.getDefinition().getActivityById(activityId);

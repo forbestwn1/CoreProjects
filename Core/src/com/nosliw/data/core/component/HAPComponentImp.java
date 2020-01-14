@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -12,12 +11,6 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 
 abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implements HAPComponent{
 
-	@HAPAttribute
-	public static String ID = "id";
-	
-	@HAPAttribute
-	public static String CONTEXT = "context";
-	
 	private String m_id;
 
 	//context definition within this component
@@ -30,13 +23,17 @@ abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implement
 	private Set<HAPHandlerEvent> m_eventHandlers;
 
 	private HAPAttachmentContainer m_attachmentContainer;
-	
-	public HAPComponentImp(String id) {
-		this.m_id = id;
+
+	public HAPComponentImp() {
 		this.m_context = new HAPContextGroup();
 		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
 		this.m_eventHandlers = new HashSet<HAPHandlerEvent>();
 		this.m_attachmentContainer = new HAPAttachmentContainer();
+	}
+
+	public HAPComponentImp(String id) {
+		this();
+		this.m_id = id;
 	}
 	
 	@Override
@@ -61,7 +58,6 @@ abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implement
 	public Set<HAPHandlerEvent> getEventHandlers(){   return this.m_eventHandlers;   }
 	@Override
 	public void addEventHandler(HAPHandlerEvent eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
-//	public void addEventHandler(Set<HAPHandlerEvent> eventHandler) {  this.m_eventHandlers.addAll(eventHandler);   }
 
 	@Override
 	public HAPAttachmentContainer getAttachmentContainer() {		return this.m_attachmentContainer;	}

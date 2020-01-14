@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
@@ -47,9 +48,10 @@ public class HAPParserProcessDefinition {
 	}
 
 	public static void parseProcess(HAPDefinitionProcess out, JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
-		out.buildObject(processJson, HAPSerializationFormat.JSON);
+		HAPComponentUtility.parseComponent(out, processJson);
 		
-		out.setContext(HAPParserContext.parseContextGroup(processJson.optJSONObject(HAPDefinitionProcess.CONTEXT)));
+//		out.buildObject(processJson, HAPSerializationFormat.JSON);
+//		out.setContext(HAPParserContext.parseContextGroup(processJson.optJSONObject(HAPDefinitionProcess.CONTEXT)));
 		
 		JSONArray activityArrayJson = processJson.optJSONArray(HAPDefinitionProcess.ACTIVITY);
 		for(int i=0; i<activityArrayJson.length(); i++) {

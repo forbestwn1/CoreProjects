@@ -1,4 +1,9 @@
 {
+	"context" : {
+	
+	
+	},
+
 	"source" : {
 		"pollSchedule" : {
 			"interval" : 60,
@@ -20,11 +25,9 @@
 		"context" : {
 		
 		}
-	
 	},
 	
 	"handler" : {
-			
 		"process" : "eventHandler",	
 	
 	},
