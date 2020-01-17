@@ -130,6 +130,51 @@ var node_createProcess = function(processDef, envObj){
 		return out;
 	};
 
+	//execute normal activity
+	var loc_getExecuteBranchActivityRequest = function(branchActivity, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteBranchActivity", {"activity":branchActivity}), handlers, request);
+		
+		out.addRequest(node_taskUtility.getExecuteTaskRequest(
+				loc_processContextIO, 
+				undefined,
+				branchActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUTMAPPING],    //input data association
+				new node_IOTaskInfo(function(inputValue, handlers, request){
+					var executeActivityPluginRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteActivityPlugin", {}), handlers, request);
+					//get activity plugin 
+					executeActivityPluginRequest.addRequest(loc_getActivityPluginRequest(branchActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_TYPE], {
+						success : function(requestInfo, activityPlugin){
+							//execute activity plugin
+							return activityPlugin.getExecuteActivityRequest(branchActivity, inputValue, loc_envObj, {
+								success : function(requestInfo, activityResult){  //get activity results (result name + result value map)
+									return activityResult;
+								}
+							});
+						}
+					}));
+					return executeActivityPluginRequest;
+				}, "ACTIVITYTASK_"+branchActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_ID]),
+				node_ioTaskUtility.createTransparentDataAssocationDefinition(),
+				undefined,
+				{
+					success : function(request, taskResult){
+						return taskResult.resultValue.getGetDataSetValueRequest({
+							success : function(request, value){
+								var branches = branchActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_BRANCH];
+								for(var i in branches){
+									var flow = branches[i][node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYBRANCH_FLOW];
+									var branchValue = branches[i][node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYBRANCH_DATA];
+									if(node_basicUtility.isDataEqual(branchValue, value))  break;
+								}
+								return new loc_NormalActivityOutput(activityResultConfig[flow][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET]);
+							}
+						});
+					}
+				}));
+		
+		return out;
+	};
+
+
 	//execute activity in process
 	var loc_getExecuteActivitySequenceRequest = function(activityId, activities, handlers, request){
 		nosliw.logging.info(loc_moduleName, "Start activity : ", activityId);
@@ -137,22 +182,22 @@ var node_createProcess = function(processDef, envObj){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteActivity", {"activityId":activityId}), handlers, request);
 		var activitExecuteRequest;
 		var activity = activities[activityId];
-		var activityType = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_TYPE];
-		if(activityType==node_COMMONCONSTANT.ACTIVITY_TYPE_START){
+		var activityCategary = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_CATEGARY];
+		if(activityCategary==node_COMMONCONSTANT.ACTIVITY_CATEGARY_START){
 			activitExecuteRequest = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteStartActivity", {"activity":activity}), 
 					function(requestInfo){
 						var nextActivityId = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_FLOW][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET];
 						return loc_getExecuteActivitySequenceRequest(nextActivityId, activities); 
 					});
 		}
-		else if(activityType==node_COMMONCONSTANT.ACTIVITY_TYPE_END){
+		else if(activityCategary==node_COMMONCONSTANT.ACTIVITY_CATEGARY_END){
 			activitExecuteRequest = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteEndActivity", {"activity":activity}), 
 					function(requestInfo){
 						return new loc_EndActivityOutput(activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULTNAME]);
 					}, 
 					handlers, request);
 		}
-		else{
+		else if(activityCategary==node_COMMONCONSTANT.ACTIVITY_CATEGARY_NORMAL){
 			activitExecuteRequest = loc_getExecuteNormalActivityRequest(activity, {
 				success : function(requestInfo, normalActivityOutput){
 					return loc_processContextIO.getGetDataValueRequest(undefined, {
@@ -167,6 +212,9 @@ var node_createProcess = function(processDef, envObj){
 					});
 				}
 			}, request);
+		}
+		else if(activityCategary==node_COMMONCONSTANT.ACTIVITY_CATEGARY_BRANCH){
+			
 		}
 		out.addRequest(activitExecuteRequest);
 		return out;

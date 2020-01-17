@@ -1,0 +1,32 @@
+[{
+	"id": "sendEmailService",
+	"name": "sendEmailService",
+    "implementation" : "com.nosliw.service.email.HAPServiceImp",
+	"description" : "send out email",
+	"interface" : {
+		"result" : [
+			{
+				"name" : "success",
+				"output" : {
+					"outputInService": {
+						"criteria" : "test.boolean;1.0.0"
+					}
+				},			
+			}
+		],
+		"parm" : [ 
+			{
+				name : "receiver",
+				criteria : "test.string;1.0.0",
+			},
+			{
+				name : "title",
+				criteria : "test.string;1.0.0",
+			},
+			{
+				name : "content",
+				criteria : "test.string;1.0.0",
+			}
+		]
+	},
+}]

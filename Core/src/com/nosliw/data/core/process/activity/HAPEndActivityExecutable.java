@@ -21,7 +21,7 @@ public class HAPEndActivityExecutable extends HAPExecutableActivity{
 	private String m_resultName;
 	
 	public HAPEndActivityExecutable(String id, HAPDefinitionActivity activityDef) {
-		super(id, activityDef);
+		super(HAPConstant.ACTIVITY_CATEGARY_END, id, activityDef);
 		this.m_resultName = ((HAPEndActivityDefinition)activityDef).getName();
 	}
 

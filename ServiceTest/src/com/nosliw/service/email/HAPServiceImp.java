@@ -1,4 +1,4 @@
-package com.nosliw.service.pearsonflight;
+package com.nosliw.service.email;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -11,6 +11,8 @@ import com.nosliw.data.core.service.provide.HAPResultService;
 import com.nosliw.data.core.service.provide.HAPUtilityService;
 
 public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
+
+//	https://gtaa-fl-prod.azureedge.net/api/flights/list?type=ARR&day=today&useScheduleTimeOnly=false
 
 	@Override
 	public HAPResultService execute(Map<String, HAPData> parms) {

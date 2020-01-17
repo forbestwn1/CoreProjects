@@ -4,16 +4,14 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.process.HAPUtilityProcess;
+import com.nosliw.data.core.process.HAPWithProcessTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
-public class HAPHandlerLifecycle extends HAPEntityInfoWritableImp{
+public class HAPHandlerLifecycle extends HAPEntityInfoWritableImp implements HAPWithProcessTask{
 
-	@HAPAttribute
-	public static String PROCESS = "process";
-	
 	private HAPDefinitionWrapperTask<String> m_process;
 
 	public static HAPHandlerLifecycle newInstance(JSONObject jsonObj) {
@@ -22,8 +20,12 @@ public class HAPHandlerLifecycle extends HAPEntityInfoWritableImp{
 		return out;
 	}
 	
+	@Override
 	public HAPDefinitionWrapperTask<String> getProcess(){   return this.m_process;    }
-	
+
+	@Override
+	public void setProcess(HAPDefinitionWrapperTask<String> processTask) {  this.m_process = processTask;  }
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -34,10 +36,7 @@ public class HAPHandlerLifecycle extends HAPEntityInfoWritableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
-		
-		this.m_process = new HAPDefinitionWrapperTask<String>();
-		this.m_process.setTaskDefinition(jsonObj.optString(PROCESS));
-		this.m_process.buildMapping(jsonObj);
+		HAPUtilityProcess.parseWithProcessTask(this, jsonObj);
 		return true;  
 	}
 }

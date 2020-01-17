@@ -1,5 +1,6 @@
 package com.nosliw.data.core.event;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
 
@@ -7,9 +8,15 @@ import com.nosliw.data.core.component.HAPComponentImp;
 //task definition describe how event trigure process 
 public class HAPDefinitionEventTask extends HAPComponentImp{
 
-	//task id
-	private String m_id;
-	
+	@HAPAttribute
+	public static String SOURCE = "source";
+
+	@HAPAttribute
+	public static String EVENTINFO = "eventInfo";
+
+	@HAPAttribute
+	public static String HANDLER = "handler";
+
 	//event info that trigue the process
 	private HAPDefinitionEvent m_eventInfo;
 
@@ -17,20 +24,20 @@ public class HAPDefinitionEventTask extends HAPComponentImp{
 	private HAPDefinitionEventSource m_eventSourceInfo;
 	
 	//describle how to handle event
-	private HAPDefinitionEventHandle m_eventProcess;
+	private HAPDefinitionEventHandle m_eventHandle;
 
 	public HAPDefinitionEventTask(String id) {
 		super(id);
 	}
 
-	@Override
-	public String getId() {    return this.m_id;    }
-	
 	public HAPDefinitionEvent getEventInfo() {   return this.m_eventInfo;  }
+	public void setEventInfo(HAPDefinitionEvent eventInfo) {   this.m_eventInfo = eventInfo;    }
 	
 	public HAPDefinitionEventSource getEventSourceInfo() {   return this.m_eventSourceInfo;   }
+	public void setEventSourceInfo(HAPDefinitionEventSource source) {    this.m_eventSourceInfo = source;     }
 	
-	public HAPDefinitionEventHandle getProcess() {   return this.m_eventProcess;  }
+	public HAPDefinitionEventHandle getEventHandle() {   return this.m_eventHandle;  }
+	public void setEventHandle(HAPDefinitionEventHandle eventHandler) {  this.m_eventHandle = eventHandler;    }
 
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {

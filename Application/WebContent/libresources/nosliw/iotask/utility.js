@@ -17,6 +17,12 @@ var node_utility = function(){
 	
 	var loc_out = {
 
+		createTransparentDataAssocationDefinition : function(){
+			var out = {};
+			out[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE] = node_COMMONCONSTANT.DATAASSOCIATION_TYPE_TRANSPARENT;
+			return out;
+		},
+			
 		//get ioData's data set value
 		//ioData maybe dataSet, value, or dataAssociation
 		getGetIODataValueRequest : function(ioData, handlers, request){

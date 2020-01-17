@@ -8,37 +8,33 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoUtility;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 
 @HAPEntityWithAttribute
-public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInfo{
+public class HAPExecutableResultActivityBranch extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
 	public static String FLOW = "flow";
 
 	@HAPAttribute
-	public static String DATAASSOCIATION = "dataAssociation";
+	public static String DATA = "data";
 
-	private HAPExecutableDataAssociation m_dataAssociation;
-	
-	private HAPDefinitionResultActivityNormal m_definition;
+	private HAPDefinitionResultActivityBranch m_definition;
 	
 	//next activity
-	public HAPExecutableResultActivityNormal(HAPDefinitionResultActivityNormal definition) {
+	public HAPExecutableResultActivityBranch(HAPDefinitionResultActivityBranch definition) {
 		super(definition);
 		this.m_definition = definition;
 	}
 	
 	public HAPDefinitionSequenceFlow getFlow() {  return this.m_definition.getFlow();  }
+	public HAPData getData() {   return this.m_definition.getData();    }
 	
-	public HAPExecutableDataAssociation getDataAssociation() {   return this.m_dataAssociation;  }
-	public void setDataAssociation(HAPExecutableDataAssociation dataAssociation) {   this.m_dataAssociation = dataAssociation;   }
-
 	@Override
-	public HAPExecutableResultActivityNormal clone() {
+	public HAPExecutableResultActivityBranch clone() {
 		throw new RuntimeException();
 	}
 
@@ -53,14 +49,14 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInf
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
-		if(this.m_dataAssociation!=null)  jsonMap.put(DATAASSOCIATION, this.m_dataAssociation.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(DATA, this.getData().toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		if(this.m_dataAssociation!=null)	jsonMap.put(DATAASSOCIATION, this.m_dataAssociation.toResourceData(runtimeInfo).toString());
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(DATA, this.getData().toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.nosliw.data.core.process;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -13,51 +14,34 @@ import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPContextStructureEmpty;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 
-public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
+public class HAPDefinitionActivityBranch extends HAPDefinitionActivity{
 
 	@HAPAttribute
 	public static String INPUTMAPPING = "inputMapping";
 
 	@HAPAttribute
-	public static String RESULT = "result";
+	public static String BRANCH = "branch";
 
 	//associate variable in process to input required by activity 
 	private HAPDefinitionDataAssociation m_inputMapping;
+
+	private List<HAPDefinitionResultActivityBranch> m_branchs;
 	
-	//possible result for activity
-	private Map<String, HAPDefinitionResultActivityNormal> m_results;
-	
-	public HAPDefinitionActivityNormal(String type) {
+	public HAPDefinitionActivityBranch(String type) {
 		super(type);
-		this.m_results = new LinkedHashMap<String, HAPDefinitionResultActivityNormal>();
+		this.m_branchs = new ArrayList<HAPDefinitionResultActivityBranch>();
 	}
-	
+
 	public HAPDefinitionDataAssociation getInputMapping() {  return this.m_inputMapping;   }
 	public void setInputMapping(HAPDefinitionDataAssociation input) {   this.m_inputMapping = input;   }
-	
+
 	//get input context structure for activity
 	//it is for process input mapping
 	//param: parent context structure
 	public HAPContextStructure getInputContextStructure(HAPContextStructure parentContextStructure) {  return HAPContextStructureEmpty.flatStructure();   }
 	
-	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
-	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }
-	
-	//if no inputmapping, build default one which is mirror
-	protected void buildDefaultInputMapping() {
-		if(this.getInputMapping()==null)	this.setInputMapping(new HAPDefinitionDataAssociationMirror());
-	}
-
-	protected void buildDefaultResultOutputMapping() {
-		Map<String, HAPDefinitionResultActivityNormal> results = this.getResults();
-		for(String resultName : results.keySet()) {
-			if(results.get(resultName).getOutputDataAssociation()==null) {
-				results.get(resultName).setOutputDataAssociation(new HAPDefinitionDataAssociationMirror());
-			}
-		}
-	}
+	public List<HAPDefinitionResultActivityBranch> getBranch(){    return this.m_branchs;    }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -70,12 +54,12 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 				this.m_inputMapping = HAPParserDataAssociation.buildObjectByJson(inputJson); 
 			}
 			
-			JSONArray resultsJson = jsonObj.optJSONArray(RESULT);
-			if(resultsJson!=null) {
-				for(int i=0; i<resultsJson.length(); i++) {
-					HAPDefinitionResultActivityNormal result = new HAPDefinitionResultActivityNormal();
-					result.buildObject(resultsJson.get(i), HAPSerializationFormat.JSON);
-					this.m_results.put(result.getName(), result);
+			JSONArray branchJson = jsonObj.optJSONArray(BRANCH);
+			if(branchJson!=null) {
+				for(int i=0; i<branchJson.length(); i++) {
+					HAPDefinitionResultActivityBranch branch = new HAPDefinitionResultActivityBranch();
+					branch.buildObject(branchJson.get(i), HAPSerializationFormat.JSON);
+					this.m_branchs.add(branch);
 				}
 			}
 			return true;  
@@ -90,6 +74,6 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_inputMapping!=null)		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
+		jsonMap.put(BRANCH, HAPJsonUtility.buildJson(this.m_branchs, HAPSerializationFormat.JSON));
 	}
 }

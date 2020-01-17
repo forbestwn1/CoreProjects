@@ -38,6 +38,13 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 			if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
 			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return node_getExecuteMirrorDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
 			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return node_getExecuteNoneDataAssociationRequest(inputDataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
+			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_TRANSPARENT){
+				var out = node_createServiceRequestInfoSimple(undefined, function(request){
+					_.each(inputDataSet, function(dataName, data){
+						loc_outputIODataSet.setData(dataName, data);
+					});
+				}, handlers, request);
+			}
 		}
 	};
 

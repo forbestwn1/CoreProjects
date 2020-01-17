@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPActivityPluginId;
-import com.nosliw.data.core.process.HAPExecutableActivityNormal;
+import com.nosliw.data.core.process.HAPExecutableActivityBranch;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -17,7 +17,7 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
-public class HAPSwitchActivityExecutable extends HAPExecutableActivityNormal{
+public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 
 	@HAPAttribute
 	public static String SCRIPTEXPRESSION = "scriptExpression";
@@ -29,7 +29,7 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityNormal{
 
 	private HAPScriptExpression m_scriptExpression;
 
-	public HAPSwitchActivityExecutable(String id, HAPExpressionActivityDefinition activityDef) {
+	public HAPSwitchActivityExecutable(String id, HAPSwitchActivityDefinition activityDef) {
 		super(id, activityDef);
 		this.m_expressionProcessContext = new HAPProcessContextScriptExpression();
 	}
@@ -43,11 +43,10 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityNormal{
 	
 	public HAPExpressionActivityDefinition getExpressionActivityDefinition() {   return (HAPExpressionActivityDefinition)this.getActivityDefinition();   }
 
-	
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_EXPRESSION))));
+		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_SWITCH))));
 		out.addAll(this.m_scriptExpression.getResourceDependency(runtimeInfo));
 		return out;
 	}
@@ -64,5 +63,4 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityNormal{
 		jsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPRuntimeJSScriptUtility.buildScriptExpressionJSFunction(this.m_scriptExpression));
 		typeJsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPScript.class);
 	}	
-	
 }

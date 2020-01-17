@@ -11,6 +11,9 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 public abstract class HAPExecutableActivity extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
+	public static String CATEGARY = "categary";
+
+	@HAPAttribute
 	public static String TYPE = "type";
 
 	@HAPAttribute
@@ -18,13 +21,16 @@ public abstract class HAPExecutableActivity extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
 	public static String DEFINITION = "definition";
+
+	private String m_categary;
 	
 	private String m_id;
 	
 	private HAPDefinitionActivity m_activityDefinition;
 	
-	public HAPExecutableActivity(String id, HAPDefinitionActivity activityDef) {
+	public HAPExecutableActivity(String categary, String id, HAPDefinitionActivity activityDef) {
 		super(activityDef);
+		this.m_categary = categary;
 		this.m_id = id;
 		this.m_activityDefinition = activityDef;
 	}

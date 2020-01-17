@@ -4,9 +4,15 @@ import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.component.HAPAttachmentContainer;
+import com.nosliw.data.core.component.HAPAttachmentEntity;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
@@ -19,17 +25,23 @@ import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 public class HAPProcessMain {
 
 	static public void main(String[] args) throws FileNotFoundException {
-		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
-		
-		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite("expression", runtimeEnvironment.getProcessDefinitionManager().getPluginManager()); 
-		
+		String suite = "expression";
 		String id = "main";
-		HAPExecutableProcess processExe = HAPProcessorProcess.process(id, suite, null, runtimeEnvironment.getProcessDefinitionManager(), new HAPRequirementContextProcessor(HAPExpressionManager.dataTypeHelper, runtimeEnvironment.getRuntime(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getServiceManager().getServiceDefinitionManager(), null), new HAPProcessTracker());
+		String testData = "testData2";
+		
+		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
+
+		HAPDefinitionProcessSuite suiteObj = HAPUtilityProcess.getProcessSuite(suite, runtimeEnvironment.getProcessDefinitionManager().getPluginManager()); 
+		
+		HAPExecutableProcess processExe = HAPProcessorProcess.process(id, suiteObj, null, runtimeEnvironment.getProcessDefinitionManager(), new HAPRequirementContextProcessor(HAPExpressionManager.dataTypeHelper, runtimeEnvironment.getRuntime(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getServiceManager().getServiceDefinitionManager(), null), new HAPProcessTracker());
 
 		Map<String, HAPData> input = new LinkedHashMap<String, HAPData>();
-//		input.put("fromVar", HAPDataUtility.buildDataWrapper("#test.integer;1.0.0___7"));
-//		input.put("toVar", HAPDataUtility.buildDataWrapper("#test.integer;1.0.0___8"));
-//		input.put("baseVar", HAPDataUtility.buildDataWrapper("#test.string;1.0.0___helloworld"));
+		if(testData!=null) {
+			HAPAttachmentContainer attachmentContainer = processExe.getDefinition().getAttachmentContainer();
+			HAPAttachmentEntity attachment = (HAPAttachmentEntity)attachmentContainer.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_DATA, testData);
+			JSONObject testDataObj = attachment.getEntity();
+			input = HAPDataUtility.buildDataWrapperMapFromJson(testDataObj);
+		}
 		
 		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(processExe, input);
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);

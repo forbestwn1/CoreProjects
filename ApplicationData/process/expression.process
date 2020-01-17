@@ -8,6 +8,36 @@
 			}
 		}
 	},
+	"attachment": {
+		"data" : [
+			{
+				"name": "testData1",
+				"entity": {
+					"fromVar": {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 1
+					},
+					"toVar": {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 7
+					}
+				}
+			},
+			{
+				"name": "testData2",
+				"entity": {
+					"fromVar": {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 3
+					},
+					"toVar": {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 5
+					}
+				}
+			},
+		],
+	},	
 	"process": [{
 			"id": "main",
 			"name": "expression",

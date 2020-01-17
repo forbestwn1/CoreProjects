@@ -74,12 +74,22 @@ public class HAPUtilityProcess {
 		//prepare variables 
 		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(context));
 	}
-	
+
 	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
 				HAPParentContext.createDefault(processContext), 
 				activity.getNormalActivityDefinition().getInputMapping(), 
 				HAPParentContext.createDefault(activity.getNormalActivityDefinition().getInputContextStructure(processContext)), 
+				null, 
+				contextProcessRequirement);
+		activity.setInputDataAssociation(da);
+	}
+	
+	public static void processBranchActivityInputDataAssocation(HAPExecutableActivityBranch activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
+				HAPParentContext.createDefault(processContext), 
+				activity.getBranchActivityDefinition().getInputMapping(), 
+				HAPParentContext.createDefault(activity.getBranchActivityDefinition().getInputContextStructure(processContext)), 
 				null, 
 				contextProcessRequirement);
 		activity.setInputDataAssociation(da);
@@ -145,6 +155,13 @@ public class HAPUtilityProcess {
 		return resultExe;
 	}
 
+	//process result
+	public static void processBranchActivityBranch(HAPExecutableActivityBranch activity) {
+		for(HAPDefinitionResultActivityBranch branch :activity.getBranchActivityDefinition().getBranch()) {
+			activity.addBranch(new HAPExecutableResultActivityBranch(branch));
+		}
+	}
+	
 	//build task wrapper for activity has task in it
 	//all the input and result output for activity is mirror 
 	public static HAPDefinitionWrapperTask parseTaskDefinition(HAPDefinitionActivityNormal activity, JSONObject jsonObj) {
@@ -161,4 +178,12 @@ public class HAPUtilityProcess {
 		}
 		return out;
 	}	
+	
+	public static void parseWithProcessTask(HAPWithProcessTask task, JSONObject jsonObj) {
+		HAPDefinitionWrapperTask<String> process = new HAPDefinitionWrapperTask<String>();
+		process.setTaskDefinition(jsonObj.optString(HAPWithProcessTask.PROCESS));
+		process.buildMapping(jsonObj);
+		task.setProcess(process);
+	}
+	
 }

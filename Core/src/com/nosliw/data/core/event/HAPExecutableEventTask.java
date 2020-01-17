@@ -23,4 +23,6 @@ public class HAPExecutableEventTask {
 	public void setPollTask(HAPExecutablePollTask pollTask) {  this.m_pollTask = pollTask;   }
 	public HAPExecutablePollTask getPollTask() {    return this.m_pollTask;    }
 	
+	public void setEventHandler(HAPExecutableEventHandler eventHandler) {   this.m_eventHandler = eventHandler;      }
+	
 }

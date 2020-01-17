@@ -3,8 +3,22 @@ package com.nosliw.data.core.event;
 import java.util.Calendar;
 import java.util.Date;
 
-public class HAPDefinitionPollScheduleImp implements HAPDefinitionPollSchedule {
+import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
+
+public class HAPDefinitionPollScheduleImp extends HAPSerializableImp implements HAPDefinitionPollSchedule {
+
+	@HAPAttribute
+	public static String START = "start";
+	
+	@HAPAttribute
+	public static String END = "end";
+	
+	@HAPAttribute
+	public static String INTERVAL = "interval";
+	
 	//start time of schedule
 	private Date m_start;
 	
@@ -32,5 +46,14 @@ public class HAPDefinitionPollScheduleImp implements HAPDefinitionPollSchedule {
 		schedule.setPollTime(cal.getTime());
 		
 		return schedule;
+	}
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_start = new Date(jsonObj.optString(START));
+		this.m_end = new Date(jsonObj.optString(END));
+		this.m_intervalSec = jsonObj.optInt(INTERVAL);
+		return true;  
 	}
 }

@@ -1,38 +1,65 @@
 {
+	"name" : "flightarrive",
 	"context" : {
-	
-	
+		"group": {
+			"public": {
+				"element": {
+					"flightNumber": {
+						"definition": {
+							"criteria": "test.string;1.0.0"
+						},
+					},
+					"flightInfo": {
+						"definition": {
+							"criteria": "test.map;1.0.0%%||status:test.string;1.0.0,company:test.string;1.0.0,flight:test.string;1.0.0||%%"
+						},
+					}
+				}
+			}
+		}
 	},
 
 	"source" : {
 		"pollSchedule" : {
 			"interval" : 60,
-			"start" : ??,
-			"end" : ??		
+			"start" : "",
+			"end" : ""		
 		},
 		
 		"pollTask" : {
 			"input" : {
-				"flightNumber": "",
-				
-			}
+				"flightNumber": {
+					"dataTypeId": "test.string;1.0.0",
+					"value": "abc"
+				}
+			},
 			"process" : "checkFlightInfo",	
-		
 		}
 	},
 	
 	"eventInfo" : {
 		"context" : {
-		
+			"element" : {
+				"flightInfo": {
+					"definition": {
+						"path": "flightInfo"
+					},
+				}
+			}
 		}
 	},
 	
 	"handler" : {
 		"process" : "eventHandler",	
-	
 	},
 	
 	"attachment" : {
+		"service" : [
+			{
+				"name": "getPearsonFlightArrivalService",
+				"id" : "pearsonFlightArrivalService"
+			}	
+		],
 		"process" : [
 			{
 				"name": "checkFlightInfo",
@@ -83,43 +110,18 @@
 						{
 							"id": "checkFlightState",
 							"name": "checkFlightState",
-							"type": "expression",
-							"expression": "#|!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)|#",
-							"result": [{
-								"name": "success",
-								"flow": {
-									"target": "refreshSchoolInfo"
-								}
-							}]
-						},
-						{
-							"id": "isValidState",
-							"name": "isValidState",
 							"type": "switch",
-							"expression": "#|!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)|#",
-							"inputMapping": {
-								"element": {
-									"schoolData": {
-										"definition": { 
-											"path": "nosliw_EVENT.data"
-										}
-									}
-								}
-							},
-							"result": [{
-								"value": {
-									"dataTypeId": "test.boolean;1.0.0",
-									"value": true
+							"expression": "#|?(flightInfo)?.getChildData(name:&(#test##string___status)&)|#",
+							"branch": [{
+								"data": {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "arrive"
 								},
 								"flow": {
 									"target": "withEventEndId"
 								}
 							},
 							{
-								"value": {
-									"dataTypeId": "test.boolean;1.0.0",
-									"value": false
-								},
 								"flow": {
 									"target": "withoutEventEndId"
 								}
@@ -147,7 +149,6 @@
 					]
 				}
 			},
-			
 			{
 				"name": "eventHandler",
 				"entity" : {
@@ -156,7 +157,7 @@
 							"name": "startActivity",
 							"type": "start",
 							"flow": {
-								"target": "pollFlightState"
+								"target": "sendEmail"
 							}
 						},
 						{
@@ -166,16 +167,6 @@
 							"provider": "sendEmailService",
 							"inputMapping" : {
 								"element" : {
-									"address" : {
-										"definition" : {
-											"path" : "flight"
-										}
-									},
-									"title" : {
-										"definition" : {
-											"path" : "date"
-										}
-									}
 								}
 							},
 							"result": [{
@@ -183,15 +174,6 @@
 								"flow": {
 									"target": "success"
 								},
-								"output": {
-									"element": {
-										"flightInfo": {
-											"definition": {
-												"path": "outputInService"
-											}
-										}
-									}
-								}
 							}]
 						},
 						{
@@ -202,14 +184,6 @@
 					]
 				}			
 			}
-		
 		], 
-
-		"service" : [
-			{
-				"name": "getPearsonFlightArrivalService",
-				"id" : "pearsonFlightArrivalService"
-			}	
-		]
 	}
 }

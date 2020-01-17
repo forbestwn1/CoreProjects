@@ -465,6 +465,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_PROCESS = "process";
 		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN = "activityPlugin";
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICE = "service";
+		public static final String RUNTIME_RESOURCE_TYPE_DATA = "data";
 		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";
 
 
@@ -517,6 +518,14 @@ public class HAPConstant {
 		public static final String ACTIVITY_TYPE_LOOP = "loop";
 		public static final String ACTIVITY_TYPE_BRANCH = "branch";
 		public static final String ACTIVITY_TYPE_CALLPROCESS = "callProcess";
+		public static final String ACTIVITY_TYPE_SWITCH = "switch";
+
+
+
+		public static final String ACTIVITY_CATEGARY_START = "start";
+		public static final String ACTIVITY_CATEGARY_END = "end";
+		public static final String ACTIVITY_CATEGARY_NORMAL = "normal";
+		public static final String ACTIVITY_CATEGARY_BRANCH = "branch";
 
 
 
@@ -562,6 +571,7 @@ public class HAPConstant {
 
 		public static final String DATAASSOCIATION_TYPE_MAPPING = "mapping";
 		public static final String DATAASSOCIATION_TYPE_MIRROR = "mirror";
+		public static final String DATAASSOCIATION_TYPE_TRANSPARENT = "transparent";
 		public static final String DATAASSOCIATION_TYPE_NONE = "none";
 
 

@@ -554,6 +554,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESS" value="process"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICE" value="service"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_DATA" value="data"/>
 
 			<definition name="RUNTIME_RESOURCE_TYPE_MATCHER" value="matcher"/>
 
@@ -598,6 +599,14 @@
 			<definition name="ACTIVITY_TYPE_LOOP" value="loop"/>
 			<definition name="ACTIVITY_TYPE_BRANCH" value="branch"/>
 			<definition name="ACTIVITY_TYPE_CALLPROCESS" value="callProcess"/>
+			<definition name="ACTIVITY_TYPE_SWITCH" value="switch"/>
+
+			<definition type="space"/>
+			<definition name="ACTIVITY_CATEGARY_START" value="start"/>
+			<definition name="ACTIVITY_CATEGARY_END" value="end"/>
+			<definition name="ACTIVITY_CATEGARY_NORMAL" value="normal"/>
+			<definition name="ACTIVITY_CATEGARY_BRANCH" value="branch"/>
+
 
 			<definition type="space"/>
 			<definition name="ACTIVITY_RESULT_SUCCESS" value="success"/>
@@ -634,6 +643,7 @@
 			<definition type="space"/>
 			<definition name="DATAASSOCIATION_TYPE_MAPPING" value="mapping"/>
 			<definition name="DATAASSOCIATION_TYPE_MIRROR" value="mirror"/>
+			<definition name="DATAASSOCIATION_TYPE_TRANSPARENT" value="transparent"/>
 			<definition name="DATAASSOCIATION_TYPE_NONE" value="none"/>
 
 			<definition type="space"/>

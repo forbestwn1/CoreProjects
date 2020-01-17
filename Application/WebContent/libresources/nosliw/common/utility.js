@@ -9,6 +9,12 @@ var packageObj = library.getChildPackage("utility");
 
 var node_basicUtility = 
 {
+		isDataEqual : function(data1, data2){
+			if(data1==undefined && data2==undefined)   return true;
+			if(data1==undefined || data2==undefined)   return false;
+			return JSON.stringify(data1)==JSON.stringify(data2);
+		},
+		
 		buildNosliwFullName : function(name){
 			return node_COMMONCONSTANT.NOSLIW_NAME_PREFIX+name;
 		},
