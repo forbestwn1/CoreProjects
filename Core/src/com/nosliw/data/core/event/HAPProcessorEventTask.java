@@ -22,9 +22,7 @@ import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 
 public class HAPProcessorEventTask {
 
-	private HAPManagerProcessDefinition m_processDefMan;
-	
-	public HAPExecutableEventTask process(
+	public static HAPExecutableEventTask process(
 			HAPDefinitionEventTask definition, 
 			HAPManagerProcessDefinition processMan,
 			HAPDataTypeHelper dataTypeHelper, 
@@ -38,25 +36,27 @@ public class HAPProcessorEventTask {
 		HAPExecutableEventTask out = new HAPExecutableEventTask(definition);
 
 		HAPDefinitionEventSource source = definition.getEventSourceInfo();
-		HAPDefinitionPollTask pollTaskDef = source.getPollTask();
 		
+		//poll task
+		HAPDefinitionPollTask pollTaskDef = source.getPollTask();
 		HAPDefinitionProcess pollProcessDef = HAPUtilityProcess.getProcessDefinitionFromAttachment(pollTaskDef.getProcess().getTaskDefinition(), definition.getAttachmentContainer(), processMan.getPluginManager());
 		HAPExecutableProcess pollProcessExe = HAPProcessorProcess.process(null, new HAPDefinitionProcessWithContext(pollProcessDef), definition.getContext(), allServiceProviders, processMan, contextProcessRequirement, new HAPProcessTracker());
 		HAPExecutableWrapperTask pollProcessExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(pollTaskDef.getProcess(), pollProcessExe, HAPParentContext.createDefault(definition.getContext()), null, contextProcessRequirement);			
-		
 		HAPExecutablePollTask pollTask = new HAPExecutablePollTask(source.getPollTask());
 		pollTask.setProcess(pollProcessExeWrapper);
 		out.setPollTask(pollTask);
 
-		
+		//event handler
 		HAPDefinitionEventHandle eventHandleDef = definition.getEventHandle();
 		HAPDefinitionProcess eventHandleProcessDef = HAPUtilityProcess.getProcessDefinitionFromAttachment(eventHandleDef.getProcess().getTaskDefinition(), definition.getAttachmentContainer(), processMan.getPluginManager());
 		HAPExecutableProcess eventHandleProcessExe = HAPProcessorProcess.process(null, new HAPDefinitionProcessWithContext(eventHandleProcessDef), definition.getContext(), allServiceProviders, processMan, contextProcessRequirement, new HAPProcessTracker());
 		HAPExecutableWrapperTask eventHandleProcessExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(pollTaskDef.getProcess(), eventHandleProcessExe, HAPParentContext.createDefault(definition.getContext()), null, contextProcessRequirement);			
 		HAPExecutableEventHandler eventHandler = new HAPExecutableEventHandler(eventHandleDef);
 		eventHandler.setProcess(eventHandleProcessExeWrapper);
-		
 		out.setEventHandler(eventHandler);
+
+		//poll schedule
+		
 		
 		return out;
 	}
