@@ -50,13 +50,13 @@ public class HAPExecutableResultActivityBranch extends HAPExecutableImpEntityInf
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(DATA, this.getData().toStringValue(HAPSerializationFormat.JSON));
+		if(this.getData()!=null) jsonMap.put(DATA, this.getData().toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(DATA, this.getData().toStringValue(HAPSerializationFormat.JSON));
+		if(this.getData()!=null) jsonMap.put(DATA, this.getData().toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override

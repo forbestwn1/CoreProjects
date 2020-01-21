@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
@@ -27,14 +28,16 @@ public class HAPUtilityService {
 		String content = HAPFileUtility.readFile(inputStream);
 		JSONArray resultArray = new JSONArray(content);
 		for(int i=0; i<resultArray.length(); i++) {
+			JSONObject resultJsonObj = resultArray.getJSONObject(i);
 			HAPResultService result = new HAPResultService();
-			result.buildObject(resultArray.getJSONObject(i), HAPSerializationFormat.JSON);
+			result.buildObject(resultJsonObj, HAPSerializationFormat.JSON);
+			out.put(resultJsonObj.getString("name"), result);
 		}
 		return out;
 	}
 	
-	public static HAPResultService readServiceResult(InputStream inputStream, String resultName) {
-		return readServiceResult(inputStream).get(resultName);
+	public static HAPResultService readServiceResult(InputStream inputStream, String name) {
+		return readServiceResult(inputStream).get(name);
 	}
 
 	public static void process() {

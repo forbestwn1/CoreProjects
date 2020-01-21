@@ -7,13 +7,18 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPProcessResultHandler;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessEmbededRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessRhino;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
 public class HAPRuntimeProcessRhinoImp implements HAPRuntimeProcess{
 
-	private HAPRuntimeEnvironmentImpRhino m_runtimeEnvironment;
+	private HAPRuntimeEnvironment m_runtimeEnvironment;
+	
+	public HAPRuntimeProcessRhinoImp(HAPRuntimeEnvironment runtime) {
+		this.m_runtimeEnvironment = runtime;
+	}
 	
 	@Override
 	public void executeProcess(HAPExecutableProcess processExe, Map<String, HAPData> input, HAPProcessResultHandler resultHandler) {

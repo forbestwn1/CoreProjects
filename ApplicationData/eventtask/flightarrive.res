@@ -35,7 +35,7 @@
 			"input" : {
 				"flightNumber": {
 					"dataTypeId": "test.string;1.0.0",
-					"value": "abc"
+					"value": "5678"
 				}
 			},
 			"process" : "checkFlightInfo",	
