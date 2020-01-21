@@ -21,7 +21,7 @@
 			},
 			{
 				name : "date",
-				criteria : "test.date;1.0.0",
+				criteria : "test.string;1.0.0",
 			}
 		]
 	},

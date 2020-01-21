@@ -41,7 +41,7 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 	public void setScriptExpression(HAPScriptExpression scriptExpression) {    this.m_scriptExpression = scriptExpression;    }
 	public HAPScriptExpression getScriptExpression() {   return this.m_scriptExpression;  }
 	
-	public HAPExpressionActivityDefinition getExpressionActivityDefinition() {   return (HAPExpressionActivityDefinition)this.getActivityDefinition();   }
+	public HAPSwitchActivityDefinition getSwitchActivityDefinition() {   return (HAPSwitchActivityDefinition)this.getActivityDefinition();   }
 
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {

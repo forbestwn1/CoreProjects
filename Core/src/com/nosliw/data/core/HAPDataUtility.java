@@ -29,6 +29,7 @@ public class HAPDataUtility {
 	}
 
 	public static HAPDataWrapper buildDataWrapperFromJson(JSONObject jsonObj){
+		if(jsonObj==null)   return null;
 		HAPDataWrapper wrapper = new HAPDataWrapper();
 		boolean result = wrapper.buildObjectByJson(jsonObj);
 		if(result)   return wrapper;

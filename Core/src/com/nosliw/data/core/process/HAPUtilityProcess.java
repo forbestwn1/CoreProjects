@@ -36,6 +36,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperT
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
+import com.nosliw.data.core.script.context.dataassociation.none.HAPDefinitionDataAssociationNone;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 
 public class HAPUtilityProcess {
@@ -173,7 +174,8 @@ public class HAPUtilityProcess {
 		for(String resultName : results.keySet()) {
 			HAPDefinitionResultActivityNormal result = results.get(resultName);
 			HAPDefinitionDataAssociation dataAssociation = result.getOutputDataAssociation();
-			out.addOutputMapping(resultName, dataAssociation.cloneDataAssocation());
+			if(dataAssociation!=null)		out.addOutputMapping(resultName, dataAssociation.cloneDataAssocation());
+			else out.addOutputMapping(resultName, new HAPDefinitionDataAssociationNone());
 			result.setOutputDataAssociation(new HAPDefinitionDataAssociationMirror());
 		}
 		return out;

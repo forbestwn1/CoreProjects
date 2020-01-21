@@ -1,6 +1,7 @@
 package com.nosliw.test.event;
 
 import com.nosliw.data.core.event.HAPDefinitionEventTask;
+import com.nosliw.data.core.event.HAPExecutableEventTask;
 import com.nosliw.data.core.event.HAPParserEventTask;
 import com.nosliw.data.core.event.HAPProcessorEventTask;
 import com.nosliw.data.core.event.HAPUtilityEventTask;
@@ -15,7 +16,9 @@ public class HAPEventMain {
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 
-		HAPProcessorEventTask.process(eventTaskDef, runtimeEnvironment.getProcessDefinitionManager(), HAPExpressionManager.dataTypeHelper, runtimeEnvironment.getRuntime(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getServiceManager().getServiceDefinitionManager());
+		HAPExecutableEventTask eventTaskExe = HAPProcessorEventTask.process(eventTaskDef, runtimeEnvironment.getProcessDefinitionManager(), HAPExpressionManager.dataTypeHelper, runtimeEnvironment.getRuntime(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getServiceManager().getServiceDefinitionManager());
+		
+		
 		
 	}
 	

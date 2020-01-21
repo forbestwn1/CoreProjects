@@ -9,6 +9,11 @@
 							"criteria": "test.string;1.0.0"
 						},
 					},
+					"date" : {
+						"definition": {
+							"criteria": "test.string;1.0.0"
+						},
+					},
 					"flightInfo": {
 						"definition": {
 							"criteria": "test.map;1.0.0%%||status:test.string;1.0.0,company:test.string;1.0.0,flight:test.string;1.0.0||%%"
@@ -58,6 +63,10 @@
 			{
 				"name": "getPearsonFlightArrivalService",
 				"id" : "pearsonFlightArrivalService"
+			},	
+			{
+				"name": "sendEmailService",
+				"id" : "sendEmailService"
 			}	
 		],
 		"process" : [
@@ -81,7 +90,7 @@
 								"element" : {
 									"flight" : {
 										"definition" : {
-											"path" : "flight"
+											"path" : "flightNumber"
 										}
 									},
 									"date" : {

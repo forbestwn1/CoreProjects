@@ -51,8 +51,8 @@ public class HAPDefinitionPollScheduleImp extends HAPSerializableImp implements 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_start = new Date(jsonObj.optString(START));
-		this.m_end = new Date(jsonObj.optString(END));
+//		this.m_start = new Date(jsonObj.optString(START));
+//		this.m_end = new Date(jsonObj.optString(END));
 		this.m_intervalSec = jsonObj.optInt(INTERVAL);
 		return true;  
 	}

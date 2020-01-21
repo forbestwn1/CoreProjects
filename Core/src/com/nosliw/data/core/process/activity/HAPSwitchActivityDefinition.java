@@ -28,6 +28,7 @@ public class HAPSwitchActivityDefinition extends HAPDefinitionActivityBranch{
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
+		this.buildDefaultInputMapping();
 		String expressionStr = jsonObj.optString(EXPRESSION);
 		this.setExpression(expressionStr);
 		return true;  

@@ -14,6 +14,7 @@ import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPContextStructureEmpty;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 
 public class HAPDefinitionActivityBranch extends HAPDefinitionActivity{
 
@@ -43,6 +44,12 @@ public class HAPDefinitionActivityBranch extends HAPDefinitionActivity{
 	
 	public List<HAPDefinitionResultActivityBranch> getBranch(){    return this.m_branchs;    }
 	
+	//if no inputmapping, build default one which is mirror
+	protected void buildDefaultInputMapping() {
+		if(this.getInputMapping()==null)	this.setInputMapping(new HAPDefinitionDataAssociationMirror());
+	}
+
+
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{

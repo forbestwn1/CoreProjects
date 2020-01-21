@@ -38,7 +38,8 @@ public class HAPDefinitionResultActivityBranch extends HAPEntityInfoWritableImp{
 			this.m_flow = new HAPDefinitionSequenceFlow();
 			this.m_flow.buildObject(jsonObj.optJSONObject(FLOW), HAPSerializationFormat.JSON);
 			
-			HAPDataUtility.buildDataWrapperFromJson(jsonObj.optJSONObject(DATA));
+			JSONObject dataJsonObj = jsonObj.optJSONObject(DATA);
+			if(dataJsonObj!=null)	this.m_data = HAPDataUtility.buildDataWrapperFromJson(dataJsonObj);
 			
 			return true;  
 		}

@@ -19,6 +19,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPOutputStructure;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
@@ -79,7 +80,9 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			HAPContextGroup out = new HAPContextGroup();
 			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;
-				return serviceActivity.getService().getServiceMapping().getOutputMapping(resultName).getOutput().getOutputStructure();
+				HAPExecutableDataAssociation outputMapping = serviceActivity.getService().getServiceMapping().getOutputMapping(resultName);
+				HAPOutputStructure outputStructure = outputMapping.getOutput();
+				return outputStructure.getOutputStructure();
 			}
 			return out;
 		}
