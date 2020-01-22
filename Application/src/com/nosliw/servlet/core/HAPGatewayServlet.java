@@ -8,6 +8,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPSystemUtility;
+import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
@@ -25,7 +28,8 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 	@HAPAttribute
 	final public static String COMMAND_PARM_RUNTIMEINFO = "runtimeInfo";
 
-
+	private static int index = 0;
+	
 	@Override
 	protected HAPServiceData processServiceRequest(String gatewayCommand, JSONObject parms) throws Exception {
 		HAPServiceData out = null;
@@ -40,8 +44,17 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 			for(HAPJSScriptInfo scriptInfo : output.getScripts()){
 				String file = scriptInfo.isFile();
 				if(file==null){
-					String escaptedScript = StringEscapeUtils.escapeJavaScript(scriptInfo.getScript());
-					scriptInfo.setScript(escaptedScript);
+					if(HAPResourceUtility.LOADRESOURCEBYFILE_MODE_ALWAYS.equals(HAPSystemUtility.getLoadResourceByFileMode())){
+						String name = "gatewayCommand_"+gatewayId+"_"+command+""+index++;
+						String resourceFile = HAPFileUtility.getResourceTempFileFolder() + name + ".js";
+						resourceFile = HAPFileUtility.writeFile(resourceFile, scriptInfo.getScript());
+						scriptInfo.setFile(HAPRuntimeBrowserUtility.getBrowserScriptPath(resourceFile));
+						scriptInfo.setScript(null);
+					}
+					else {
+						String escaptedScript = StringEscapeUtils.escapeJavaScript(scriptInfo.getScript());
+						scriptInfo.setScript(escaptedScript);
+					}
 				}
 				else{
 					scriptInfo.setFile(HAPRuntimeBrowserUtility.getBrowserScriptPath(file));
