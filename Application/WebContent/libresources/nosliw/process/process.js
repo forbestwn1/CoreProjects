@@ -27,6 +27,8 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_IOTaskInfo;
 	var node_dataAssociationUtility;
+	var node_ioTaskUtility;
+	var node_basicUtility;
 	
 //*******************************************   Start Node Definition  **************************************
 var loc_moduleName = "process";	
@@ -165,7 +167,7 @@ var node_createProcess = function(processDef, envObj){
 									var branchValue = branches[i][node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYBRANCH_DATA];
 									if(node_basicUtility.isDataEqual(branchValue, value))  break;
 								}
-								return new loc_NormalActivityOutput(activityResultConfig[flow][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET]);
+								return new loc_NormalActivityOutput(flow[node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET]);
 							}
 						});
 					}
@@ -331,7 +333,8 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.dataAssociationUtility", function(){node_dataAssociationUtility = this.getData();});
-
+nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createProcess", node_createProcess); 
