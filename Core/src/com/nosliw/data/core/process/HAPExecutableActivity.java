@@ -36,6 +36,7 @@ public abstract class HAPExecutableActivity extends HAPExecutableImpEntityInfo{
 	}
 	
 	public String getType() {   return this.getActivityDefinition().getType();  }
+	public String getCategary() {   return this.m_categary;   } 
 	
 	public String getId() {  return this.m_id;  }
 	
@@ -45,6 +46,7 @@ public abstract class HAPExecutableActivity extends HAPExecutableImpEntityInfo{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
+		jsonMap.put(CATEGARY, this.getCategary());
 		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(DEFINITION, this.m_activityDefinition.toStringValue(HAPSerializationFormat.JSON));
 	}

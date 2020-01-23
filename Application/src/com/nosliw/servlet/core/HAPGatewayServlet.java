@@ -28,7 +28,7 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 	@HAPAttribute
 	final public static String COMMAND_PARM_RUNTIMEINFO = "runtimeInfo";
 
-	private static int index = 0;
+	public static int index = 0;
 	
 	@Override
 	protected HAPServiceData processServiceRequest(String gatewayCommand, JSONObject parms) throws Exception {

@@ -214,7 +214,20 @@ var node_createProcess = function(processDef, envObj){
 			}, request);
 		}
 		else if(activityCategary==node_COMMONCONSTANT.ACTIVITY_CATEGARY_BRANCH){
-			
+			activitExecuteRequest = loc_getExecuteBranchActivityRequest(activity, {
+				success : function(requestInfo, branchActivityOutput){
+					return loc_processContextIO.getGetDataValueRequest(undefined, {
+						success : function(request, resultValue){
+							//after activity finish, sync with process external context
+							return loc_envObj.getSyncOutRequest(resultValue, {
+								success : function(request, data){
+									return loc_getExecuteActivitySequenceRequest(branchActivityOutput.next, activities);
+								}
+							});
+						}
+					});
+				}
+			}, request);
 		}
 		out.addRequest(activitExecuteRequest);
 		return out;

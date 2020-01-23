@@ -14,7 +14,10 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 
 	@Override
 	public HAPResultService execute(Map<String, HAPData> parms) {
-		String flight = (String)parms.get("flight").getValue();
+		
+		String flight = "1234";
+		HAPData flightData = parms.get("flight");
+		if(flightData!=null)	flight = (String)flightData.getValue();
 		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(this.getClass(), "mockdata.js");
 		return HAPUtilityService.readServiceResult(inputStream, flight);
 	}

@@ -28,6 +28,16 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>resetGatewayServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.utils.HAPResetGatewayServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>resetGatewayServlet</servlet-name>
+    <url-pattern>/resetGateway</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
     <servlet-name>loadFilesServlet</servlet-name>
     <servlet-class>com.nosliw.servlet.utils.HAPLoadFilesServlet</servlet-class>
   </servlet>
