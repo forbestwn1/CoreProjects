@@ -163,10 +163,11 @@ public class HAPRhinoDataUtility
         { 
             String key = id.toString();
             Object value = nativeObject.get(key, nativeObject);
-            Object json = toJson(value);
-            mapJson.put(key, json+"");
-          
-            if(!(json instanceof String) && json!=null)      mapTypeJson.put(key, json.getClass()); 
+            if(!(value instanceof Undefined)) {
+                Object json = toJson(value);
+                mapJson.put(key, json+"");
+                if(!(json instanceof String) && json!=null)      mapTypeJson.put(key, json.getClass()); 
+            }
         } 
      
         return HAPJsonUtility.buildMapJson(mapJson, mapTypeJson);  
