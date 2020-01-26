@@ -14,7 +14,7 @@ import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipImp;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 
 public class HAPMatcherUtility {
@@ -41,8 +41,8 @@ public class HAPMatcherUtility {
 		return out;
 	}
 	
-	public static List<HAPResourceId> getMatchersResourceId(HAPMatchers matchers) {
-		List<HAPResourceId> out = new ArrayList<HAPResourceId>();
+	public static List<HAPResourceIdSimple> getMatchersResourceId(HAPMatchers matchers) {
+		List<HAPResourceIdSimple> out = new ArrayList<HAPResourceIdSimple>();
 		Set<HAPDataTypeConverter> converters = getConverterResourceIdFromRelationship(matchers.discoverRelationships());
 		for(HAPDataTypeConverter converter : converters){
 			out.add(new HAPResourceIdConverter(converter));

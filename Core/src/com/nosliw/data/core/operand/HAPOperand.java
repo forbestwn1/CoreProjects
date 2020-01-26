@@ -13,7 +13,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 @HAPEntityWithAttribute(baseName="OPERAND")
 public interface HAPOperand extends HAPSerializable{
@@ -62,7 +62,7 @@ public interface HAPOperand extends HAPSerializable{
 	//status of operand: new, processed, failed
 	String getStatus();
 	
-	List<HAPResourceId> getResources();
+	List<HAPResourceIdSimple> getResources();
 	
 	//get all the convertor required by this operand
 	Set<HAPDataTypeConverter> getConverters();  

@@ -120,7 +120,7 @@ public class HAPProcessMiniAppEntry {
 		HAPAttachmentContainer mappedParentAttachment = null;
 		if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
 			HAPResourceId moduleResourceId = ((HAPAttachmentReference)moduleAttachment).getId();
-			moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleResourceId.getId(), uiResourceMan.getModuleParser());
+			moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleResourceId.getIdLiterate(), uiResourceMan.getModuleParser());
 			mappedParentAttachment = HAPComponentUtility.buildInternalAttachment(moduleResourceId, entryExe.getDefinition().getAttachmentContainer(), module);
 		}
 		else if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_ENTITY)){

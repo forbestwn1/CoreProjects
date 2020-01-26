@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceNode extends HAPSerializableImp{
 
@@ -29,7 +29,7 @@ public class HAPResourceNode extends HAPSerializableImp{
 
 	private String m_name;
 
-	private HAPResourceId m_resourceId;
+	private HAPResourceIdSimple m_resourceId;
 	
 	private String m_url;
 	
@@ -43,7 +43,7 @@ public class HAPResourceNode extends HAPSerializableImp{
 		this.m_isValid = true;
 	}
 
-	public void setResourceId(HAPResourceId resourceId) {	this.m_resourceId = resourceId;	}
+	public void setResourceId(HAPResourceIdSimple resourceId) {	this.m_resourceId = resourceId;	}
 	
 	public void setUrl(String url) {	this.m_url = url;	}
 	

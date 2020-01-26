@@ -15,7 +15,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -48,8 +48,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 
 	@Override
-	public List<HAPResourceId> getResources() {
-		List<HAPResourceId> out = super.getResources();
+	public List<HAPResourceIdSimple> getResources() {
+		List<HAPResourceIdSimple> out = super.getResources();
 //		List<HAPResourceId> referenceResources = this.m_referencedTask.getResourceDependency(); 
 //		out.addAll(referenceResources);
 		return out;

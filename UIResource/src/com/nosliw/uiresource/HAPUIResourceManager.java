@@ -8,6 +8,7 @@ import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -81,7 +82,7 @@ public class HAPUIResourceManager {
 	}
 
 	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId) {
-		return getMiniAppDefinition(appId.getId(), new HAPAttachmentContainer(appId.getSupplement()));
+		return getMiniAppDefinition(appId.getIdLiterate(), new HAPAttachmentContainer(appId.getSupplement()));
 	}
 	
 	public HAPDefinitionApp getMiniAppDefinition(String appId, HAPAttachmentContainer parentExternalMapping) {
@@ -91,7 +92,7 @@ public class HAPUIResourceManager {
 		return miniAppDef;
 	}
 
-	public HAPDefinitionAppEntryUI getMiniAppEntryDefinition(HAPResourceId resourceId) {
+	public HAPDefinitionAppEntryUI getMiniAppEntryDefinition(HAPResourceIdSimple resourceId) {
 		HAPUIAppEntryId appEntryId = new HAPResourceIdUIAppEntry(resourceId).getUIAppEntryId();
 		return getMiniAppEntryDefinition(appEntryId.getAppId(), appEntryId.getEntry(), new HAPAttachmentContainer(resourceId.getSupplement()));
 	}
@@ -117,7 +118,7 @@ public class HAPUIResourceManager {
 
 
 	public HAPDefinitionModule getModuleDefinition(HAPResourceId moduleResourceId) {
-		return getModuleDefinition(moduleResourceId.getId(), new HAPAttachmentContainer(moduleResourceId.getSupplement()));
+		return getModuleDefinition(moduleResourceId.getIdLiterate(), new HAPAttachmentContainer(moduleResourceId.getSupplement()));
 	}
 
 	public HAPDefinitionModule getModuleDefinition(String moduleId, HAPAttachmentContainer parentExternalMapping) {
@@ -133,7 +134,7 @@ public class HAPUIResourceManager {
 	}
 	
 	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId) {
-		return getUIPageDefinition(pageResourceId.getId(), new HAPAttachmentContainer(pageResourceId.getSupplement()));
+		return getUIPageDefinition(pageResourceId.getIdLiterate(), new HAPAttachmentContainer(pageResourceId.getSupplement()));
 	}
 
 	public HAPDefinitionUIPage getUIPageDefinition(String uiResourceDefId, HAPAttachmentContainer parentExternalMapping) {

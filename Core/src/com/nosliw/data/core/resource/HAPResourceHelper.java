@@ -30,37 +30,37 @@ public class HAPResourceHelper {
 		this.m_idToResourceId.put(dataIdClass, resourceIdClass);
 	}
 
-	public HAPResourceId buildResourceIdObject(JSONObject jsonObj){
-		HAPResourceId out = HAPResourceId.newInstance(jsonObj);
+	public HAPResourceIdSimple buildResourceIdObject(JSONObject jsonObj){
+		HAPResourceIdSimple out = (HAPResourceIdSimple)HAPResourceIdFactory.newInstance(jsonObj);
 		try {
 			Class resourceIdClass = this.m_typeToResourceId.get(out.getType());
-			out = (HAPResourceId)resourceIdClass.getConstructor(HAPResourceId.class).newInstance(out);
+			out = (HAPResourceIdSimple)resourceIdClass.getConstructor(HAPResourceIdSimple.class).newInstance(out);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return out;
 	}
 
-	public HAPResourceId buildResourceIdObject(String literate){
-		HAPResourceId out = HAPResourceId.newInstance(literate);
+	public HAPResourceIdSimple buildResourceIdObject(String literate){
+		HAPResourceIdSimple out = (HAPResourceIdSimple)HAPResourceIdFactory.newInstance(literate);
 		try {
 			Class resourceIdClass = this.m_typeToResourceId.get(out.getType());
-			out = (HAPResourceId)resourceIdClass.getConstructor(HAPResourceId.class).newInstance(out);
+			out = (HAPResourceIdSimple)resourceIdClass.getConstructor(HAPResourceIdSimple.class).newInstance(out);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return out;
 	}
 
-	public String buildResourceIdLiterate(HAPResourceId resourceId){
+	public String buildResourceIdLiterate(HAPResourceIdSimple resourceId){
 		return resourceId.toStringValue(HAPSerializationFormat.LITERATE);
 	}
 	
-	public HAPResourceId buildResourceIdFromIdData(Object resourceIdData){
-		HAPResourceId out = null;
+	public HAPResourceIdSimple buildResourceIdFromIdData(Object resourceIdData){
+		HAPResourceIdSimple out = null;
 		Class resourceIdClass = this.m_idToResourceId.get(resourceIdData.getClass());
 		try {
-			out = (HAPResourceId)resourceIdClass.getConstructor(resourceIdData.getClass()).newInstance(resourceIdData);
+			out = (HAPResourceIdSimple)resourceIdClass.getConstructor(resourceIdData.getClass()).newInstance(resourceIdData);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

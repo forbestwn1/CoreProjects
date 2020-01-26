@@ -24,6 +24,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPExecutableExpressionImp;
@@ -109,7 +110,7 @@ public class HAPRhinoRuntimeUtility {
 				NativeObject resourceIdObject = (NativeObject)rhinoResourceIdArray.get(i);
 				String jsonString = HAPRhinoDataUtility.toJson(resourceIdObject).toString();
 
-				HAPResourceId resourceId = HAPResourceId.newInstance(new JSONObject(jsonString));
+				HAPResourceId resourceId = HAPResourceIdFactory.newInstance(new JSONObject(jsonString));
 				resourceIds.add(resourceId);
 			}
 			catch(Exception e){

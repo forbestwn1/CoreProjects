@@ -600,4 +600,10 @@ public class HAPConstant {
 		public static final String ATTACHMENT_TYPE_PLACEHOLDER = "placeHolder";
 
 
+
+		public static final String RESOURCEID_TYPE_SIMPLE = "simple";
+		public static final String RESOURCEID_TYPE_EMBEDED = "embeded";
+		public static final String RESOURCEID_TYPE_TEMPLATE = "template";
+
+
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPJSResourceDependency  extends HAPStringableValueEntityWithID{
 
@@ -19,16 +19,16 @@ public class HAPJSResourceDependency  extends HAPStringableValueEntityWithID{
 	
 	public HAPJSResourceDependency(){}
 	
-	public HAPJSResourceDependency(HAPResourceId resourceId,List<HAPResourceDependency> dependency){
+	public HAPJSResourceDependency(HAPResourceIdSimple resourceId,List<HAPResourceDependency> dependency){
 		this.setResourceId(resourceId);
 		this.setDependency(dependency);
 	}
 	
-	public HAPResourceId getResourceId(){  
-		return (HAPResourceId)this.getAtomicAncestorValueObject(RESOURCEID, HAPResourceId.class);  
+	public HAPResourceIdSimple getResourceId(){  
+		return (HAPResourceIdSimple)this.getAtomicAncestorValueObject(RESOURCEID, HAPResourceIdSimple.class);  
 	}
 	
-	public void setResourceId(HAPResourceId resourceId){  this.updateAtomicChildObjectValue(RESOURCEID, resourceId);  }
+	public void setResourceId(HAPResourceIdSimple resourceId){  this.updateAtomicChildObjectValue(RESOURCEID, resourceId);  }
 	
 	public List<HAPResourceDependency> getDependency(){  		return this.getAtomicAncestorValueArray(DEPENDENCY, HAPResourceDependency.class.getName());	}
 	public void setDependency(List<HAPResourceDependency> resourcesId){		this.updateAtomicChildObjectValue(DEPENDENCY, resourcesId);	}

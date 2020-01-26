@@ -4,24 +4,27 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPActivityPluginId;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceIdActivityPlugin  extends HAPResourceId{
+public class HAPResourceIdActivityPlugin  extends HAPResourceIdSimple{
 
 	private HAPActivityPluginId m_activityPluginId; 
 	
-	public HAPResourceIdActivityPlugin(){}
+	public HAPResourceIdActivityPlugin(){    super(HAPConstant.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN);    }
 
-	public HAPResourceIdActivityPlugin(HAPResourceId resourceId){
+	public HAPResourceIdActivityPlugin(HAPResourceIdSimple resourceId){
+		this();
 		this.cloneFrom(resourceId);
 	}
 	
 	public HAPResourceIdActivityPlugin(String idLiterate) {
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, idLiterate, null);
+		this();
+		init(idLiterate, null);
 	}
 
 	public HAPResourceIdActivityPlugin(HAPActivityPluginId activityPluginId){
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, null, null);
+		this();
+		init(null, null);
 		this.m_activityPluginId = activityPluginId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(activityPluginId, HAPSerializationFormat.LITERATE); 
 	}

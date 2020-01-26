@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -154,7 +154,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
-		List<HAPResourceId> ids = new ArrayList<HAPResourceId>();
+		List<HAPResourceIdSimple> ids = new ArrayList<HAPResourceIdSimple>();
 		for(String name : this.m_outputMatchers.keySet()) {
 			ids.addAll(HAPMatcherUtility.getMatchersResourceId(this.m_outputMatchers.get(name)));
 		}

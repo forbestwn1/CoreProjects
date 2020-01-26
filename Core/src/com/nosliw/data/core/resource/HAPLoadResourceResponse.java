@@ -20,11 +20,11 @@ public class HAPLoadResourceResponse {
 	
 	public void addLoadedResource(HAPResource resource){
 		this.m_loaded.add(resource);
-		this.m_loadedMap.put(resource.getId().getId(), resource);
+		this.m_loadedMap.put(resource.getId().getIdLiterate(), resource);
 	}
 	
 	public HAPResource getLoadedResource(HAPResourceId resourceId){
-		return this.m_loadedMap.get(resourceId.getId());
+		return this.m_loadedMap.get(resourceId.getIdLiterate());
 	}
 	
 	public void addFaildResourceId(HAPResourceId resourceId){  

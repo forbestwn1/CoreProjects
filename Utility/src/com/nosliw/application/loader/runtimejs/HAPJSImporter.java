@@ -36,7 +36,7 @@ import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSConverterIm
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSOperationImp;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceHelper;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceIdDataType;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSGateway;
@@ -185,7 +185,7 @@ public class HAPJSImporter {
     		}
     	}
 
-    	HAPResourceId baseResourceId = null;
+    	HAPResourceIdSimple baseResourceId = null;
     	switch(resourceType){
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION:
     		baseResourceId = HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPOperationId(dataTypeId, operationName));
@@ -222,7 +222,7 @@ public class HAPJSImporter {
 	
 	private HAPResourceDependency processDependentResource(String type, Object resourceObjJS, String alais){
 		String resourceType = getResourceTypeByResourceTitle(type);
-		HAPResourceId resourceId = null;
+		HAPResourceIdSimple resourceId = null;
 		switch(resourceType){
 		case HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION:
 			String operationIdLiterate = (String)resourceObjJS;
@@ -270,7 +270,7 @@ public class HAPJSImporter {
 				String[] segs = line.split("\"");
 				String dataType = segs[1];
 				String operation = segs[3];
-				HAPResourceId resourceId = new HAPResourceIdOperation(new HAPOperationId(dataType, operation));
+				HAPResourceIdSimple resourceId = new HAPResourceIdOperation(new HAPOperationId(dataType, operation));
 				out.add(new HAPResourceDependency(resourceId));
 			}
 		}

@@ -14,7 +14,7 @@ public class HAPResourceManagerJSHelper extends HAPResourceManagerDataAccess{
 	
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPResourceDataHelperImp helperResource = this.getDataAccess().getResourceHelper(resourceId.getId());
+		HAPResourceDataHelperImp helperResource = this.getDataAccess().getResourceHelper(resourceId.getIdLiterate());
 		if(helperResource!=null)		return new HAPResource(resourceId, helperResource, null);
 		else return null;
 	}

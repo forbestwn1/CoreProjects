@@ -12,7 +12,7 @@ public class HAPResourceManagerUIAppConfigure extends HAPResourceManagerImp{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdUIAppConfigure id = new HAPResourceIdUIAppConfigure(resourceId);
-		String file = HAPFileUtility.getUIAppConfigureFolder()+id.getId()+".js";
+		String file = HAPFileUtility.getUIAppConfigureFolder()+id.getIdLiterate()+".js";
 		return new HAPResource(resourceId, HAPResourceDataFactory.createJSValueResourceData(HAPFileUtility.readFile(file)), null);
 	}
 

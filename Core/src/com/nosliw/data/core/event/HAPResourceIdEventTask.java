@@ -3,24 +3,27 @@ package com.nosliw.data.core.event;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceIdEventTask   extends HAPResourceId{
+public class HAPResourceIdEventTask   extends HAPResourceIdSimple{
 
 	private HAPEventTaskId m_eventTaskId; 
 	
-	public HAPResourceIdEventTask(){}
+	public HAPResourceIdEventTask(){   super(HAPConstant.RUNTIME_RESOURCE_TYPE_EVENTTASK);     }
 
-	public HAPResourceIdEventTask(HAPResourceId resourceId){
+	public HAPResourceIdEventTask(HAPResourceIdSimple resourceId){
+		this();
 		this.cloneFrom(resourceId);
 	}
 	
 	public HAPResourceIdEventTask(String idLiterate) {
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_EVENTTASK, idLiterate, null);
+		this();
+		init(idLiterate, null);
 	}
 
 	public HAPResourceIdEventTask(HAPEventTaskId uiResourceId){
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_EVENTTASK, null, null);
+		this();
+		init(null, null);
 		this.m_eventTaskId = uiResourceId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(uiResourceId, HAPSerializationFormat.LITERATE); 
 	}

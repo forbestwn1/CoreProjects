@@ -7,6 +7,7 @@ import com.nosliw.data.core.process.plugin.HAPPluginActivity;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -21,7 +22,7 @@ public class HAPResourceManagerActivityPlugin  extends HAPResourceManagerImp{
 	
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPResourceIdActivityPlugin activityPluginId = new HAPResourceIdActivityPlugin(resourceId);
+		HAPResourceIdActivityPlugin activityPluginId = new HAPResourceIdActivityPlugin((HAPResourceIdSimple)resourceId);
 		HAPPluginActivity activityPlugin = this.m_pluginMan.getPlugin(activityPluginId.getActivityPlugId().getId());
 		if(activityPlugin==null)  return null;
 		

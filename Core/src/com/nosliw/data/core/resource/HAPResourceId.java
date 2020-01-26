@@ -1,105 +1,75 @@
 package com.nosliw.data.core.resource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 
-/**
- * Resource Id to identify resource 
- * unchangeable object
- */
 @HAPEntityWithAttribute
-public class HAPResourceId extends HAPSerializableImp{
+public abstract class HAPResourceId extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static String TYPE = "type";
 
 	@HAPAttribute
 	public static String ID = "id";
 
 	@HAPAttribute
-	public static String TYPE = "type";
-	
+	public static String STRUCUTRE = "strucutre";
+
 	@HAPAttribute
-	public static String SUP = "sup";
-	
-	protected String m_type;
-	protected String m_id;
-	
+	public static String SUP = "supliment";
+
+
+	private String m_type;
+
 	//all the supplement resource in order for this resource to be valid resource
-	protected HAPResourceIdSupplement m_supplement;
-	
-	protected HAPResourceId(){
-	}
-	
-	public static HAPResourceId newInstance(String literate) {    
-		HAPResourceId out = new HAPResourceId();
-		out.buildObjectByLiterate(literate);
-		return out;
-	}
+	private HAPResourceIdSupplement m_supplement;
 
-	public static HAPResourceId newInstance(JSONObject jsonObj) {    
-		HAPResourceId out = new HAPResourceId();
-		out.buildObjectByJson(jsonObj);
-		return out;
-	}
-	
-	public static List<HAPResourceId> newInstanceList(JSONArray resourceJsonArray){
-		List<HAPResourceId> resourceIds = new ArrayList<>();
-		for(int i=0; i<resourceJsonArray.length(); i++) {
-			resourceIds.add(HAPResourceId.newInstance(resourceJsonArray.getJSONObject(i)));
-		}
-		return resourceIds;
-	}
-
-	public static HAPResourceId newInstance(String type, Object id) {    
-		HAPResourceId out = new HAPResourceId();
-		if(id instanceof String)	out.init(type, (String)id, null);
-		else if(id instanceof JSONObject) {
-			out.m_type = type;
-			out.buildObjectByJson(id);
-		}
-		return out;
-	}
-
-	public static HAPResourceId newInstance(String type, String id, List<HAPResourceDependency> supplement){
-		HAPResourceId out = new HAPResourceId();
-		out.init(type, id, HAPResourceIdSupplement.newInstance(supplement));
-		return out;
-	}
-
-	public static HAPResourceId newInstance(String type, String id, HAPResourceIdSupplement supplement){
-		HAPResourceId out = new HAPResourceId();
-		out.init(type, id, supplement);
-		return out;
-	}
-
-	protected void init(String type, String id, HAPResourceIdSupplement supplement){
+	public HAPResourceId(String type) {
 		this.m_type = type;
-		if(id!=null)		this.setId(id);
-		if(supplement!=null)   this.m_supplement = supplement;
 	}
-	
-	public String getId() {		return this.m_id;	}
 	
 	public String getType() {  return this.m_type;  }
-
-	protected void setId(String id){  this.m_id = id; }
+	protected void setType(String type) {    this.m_type = type;    }
+	
+	public abstract String getStructure();
 	
 	public HAPResourceIdSupplement getSupplement() {  return this.m_supplement;  }
+	public void setSupplement(HAPResourceIdSupplement sup) {   this.m_supplement = sup;   }
 	
+	//literate for id part only
+	public abstract String getIdLiterate();
+	protected abstract void buildCoreJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap);
+	
+	//parse id part literate
+	protected abstract void buildCoreIdByLiterate(String idLiterate);	
+
+	protected abstract void buildCoreIdByJSON(JSONObject jsonObj);	
+
+	@Override
+	protected String buildLiterate(){
+		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), HAPResourceUtility.buildResourceCoreIdLiterate(this)});
+	}
+
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ID, this.getId());
 		jsonMap.put(TYPE, this.getType());
-		if(this.m_supplement!=null && !this.m_supplement.isEmpty())  jsonMap.put(SUP, this.m_supplement.toStringValue(HAPSerializationFormat.JSON));
+		
+		Map<String, String> jsonMapId = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> typeJsonMapId = new LinkedHashMap<String, Class<?>>();
+		jsonMapId.put(STRUCUTRE, this.getStructure());
+		if(this.m_supplement!=null && !this.m_supplement.isEmpty())   jsonMapId.put(SUP, this.m_supplement.toStringValue(HAPSerializationFormat.JSON));
+		this.buildCoreJsonMap(jsonMapId, typeJsonMapId);
+		jsonMap.put(ID, HAPJsonUtility.buildMapJson(jsonMapId, typeJsonMapId));
 	}
 
 	@Override
@@ -108,14 +78,42 @@ public class HAPResourceId extends HAPSerializableImp{
 	}
 
 	@Override
+	public boolean equals(Object o){
+		boolean out = false;
+		if(o instanceof HAPResourceId){
+			HAPResourceId resourceId = (HAPResourceId)o;
+			if(HAPBasicUtility.isEquals(this.getType(), resourceId.getType())) {
+				return HAPBasicUtility.isEquals(this.m_supplement, resourceId.m_supplement);
+			}
+		}
+		return out;
+	}
+	
+	@Override
+	public abstract HAPResourceId clone();
+
+	protected void cloneFrom(HAPResourceId resourceId){
+		this.m_type = resourceId.m_type;
+		this.m_supplement = resourceId.m_supplement;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
 	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.setId(jsonObj.optString(ID));
+		
 		Object type = jsonObj.opt(TYPE);
 		if(type!=null)		this.m_type = (String)type; 
 		
-		JSONObject supJson = jsonObj.optJSONObject(SUP);
-		this.m_supplement = HAPResourceIdSupplement.newInstance(supJson);
+		String idLiterate = jsonObj.getString(ID);
+		this.buildCoreIdByLiterate(idLiterate);
 		return true; 
 	}
 
@@ -124,13 +122,7 @@ public class HAPResourceId extends HAPSerializableImp{
 		this.buildObjectByFullJson(json);
 		return true; 
 	}
-	
-	@Override
-	protected String buildLiterate(){
-		if(this.m_supplement==null||this.m_supplement.isEmpty())		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), this.getId()});
-		else  return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), this.getId(), this.m_supplement.toStringValue(HAPSerializationFormat.LITERATE)});
-	}
-	
+
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
 		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
@@ -141,42 +133,9 @@ public class HAPResourceId extends HAPSerializableImp{
 		}
 		else {
 			this.m_type = segs[0];
-			this.m_id = segs[1];
-			if(segs.length==3) {
-				this.m_supplement = HAPResourceIdSupplement.newInstance(segs[2]);
-			}
+			buildCoreIdByLiterate(segs[1]);
 		}
 		return true;  
 	}
-	
-	@Override
-	public boolean equals(Object o){
-		boolean out = false;
-		if(o instanceof HAPResourceId){
-			HAPResourceId resourceId = (HAPResourceId)o;
-			if(HAPBasicUtility.isEquals(this.getType(), resourceId.getType()) &&
-					HAPBasicUtility.isEquals(this.getId(), resourceId.getId())) {
-				return HAPBasicUtility.isEquals(this.m_supplement, resourceId.m_supplement);
-			}
-		}
-		return out;
-	}
-	
-	@Override
-	public int hashCode() {
-		return this.toStringValue(HAPSerializationFormat.LITERATE).hashCode();
-	}
-	
-	@Override
-	public HAPResourceId clone(){
-		HAPResourceId out = new HAPResourceId();
-		out.cloneFrom(this);
-		return out;
-	}
-	
-	protected void cloneFrom(HAPResourceId resourceId){
-		this.setId(resourceId.m_id);
-		this.m_type = resourceId.m_type;
-		this.m_supplement = resourceId.m_supplement;
-	}
+
 }

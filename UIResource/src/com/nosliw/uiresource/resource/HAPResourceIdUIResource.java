@@ -4,23 +4,27 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceIdUIResource  extends HAPResourceId{
+public class HAPResourceIdUIResource  extends HAPResourceIdSimple{
 
 	private HAPUIResourceId m_uiResourceId; 
 	
-	public HAPResourceIdUIResource(){}
+	public HAPResourceIdUIResource(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE);  }
 
 	public HAPResourceIdUIResource(HAPResourceId resourceId){
+		this();
 		this.cloneFrom(resourceId);
 	}
 	
 	public HAPResourceIdUIResource(String idLiterate) {
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, idLiterate, null);
+		this();
+		init(idLiterate, null);
 	}
 
 	public HAPResourceIdUIResource(HAPUIResourceId uiResourceId){
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, null, null);
+		this();
+		init(null, null);
 		this.m_uiResourceId = uiResourceId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(uiResourceId, HAPSerializationFormat.LITERATE); 
 	}
@@ -39,5 +43,4 @@ public class HAPResourceIdUIResource  extends HAPResourceId{
 		out.cloneFrom(this);
 		return out;
 	}
-
 }

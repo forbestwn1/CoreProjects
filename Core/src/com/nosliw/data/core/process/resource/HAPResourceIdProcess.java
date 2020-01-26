@@ -5,23 +5,27 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPIdProcess;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceIdProcess  extends HAPResourceId{
+public class HAPResourceIdProcess  extends HAPResourceIdSimple{
 
 	private HAPIdProcess m_processId; 
 	
-	public HAPResourceIdProcess(){}
+	public HAPResourceIdProcess(){    super(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);     }
 
 	public HAPResourceIdProcess(HAPResourceId resourceId){
+		this();
 		this.cloneFrom(resourceId);
 	}
 	
 	public HAPResourceIdProcess(String idLiterate) {
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, idLiterate, null);
+		this();
+		init(idLiterate, null);
 	}
 
 	public HAPResourceIdProcess(HAPIdProcess processId){
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, null, null);
+		this();
+		init(null, null);
 		this.m_processId = processId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(processId, HAPSerializationFormat.LITERATE); 
 	}

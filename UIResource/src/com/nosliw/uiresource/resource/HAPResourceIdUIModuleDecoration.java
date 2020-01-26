@@ -2,19 +2,21 @@ package com.nosliw.uiresource.resource;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceIdUIModuleDecoration  extends HAPResourceId{
+public class HAPResourceIdUIModuleDecoration  extends HAPResourceIdSimple{
 
-	public HAPResourceIdUIModuleDecoration(){}
+	public HAPResourceIdUIModuleDecoration(){   super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION);     }
 
 	public HAPResourceIdUIModuleDecoration(HAPResourceId resourceId){
+		this();
 		this.cloneFrom(resourceId);
 	}
 	
 	public HAPResourceIdUIModuleDecoration(String id){
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, id, null);
+		this();
+		init(id, null);
 	}
-
 	
 	@Override
 	public HAPResourceIdUIModuleDecoration clone(){

@@ -112,7 +112,7 @@ public class HAPRuntimeJSScriptUtility {
 		for(URI uri : uris){
 			File file = new File(uri);
 			String fileFullName = file.getAbsolutePath().replaceAll("\\\\", "/");
-			HAPJSScriptInfo scriptInfo = HAPJSScriptInfo.buildByFile(fileFullName, "Library__" + resource.getId().getId() + "__" + file.getName());
+			HAPJSScriptInfo scriptInfo = HAPJSScriptInfo.buildByFile(fileFullName, "Library__" + resource.getId().getIdLiterate() + "__" + file.getName());
 			scriptInfo.setType(resource.getId().getType());
 			out.add(scriptInfo);
 		}

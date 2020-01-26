@@ -87,8 +87,9 @@ public class HAPUtilityServiceUse {
 	private static HAPDefinitionServiceProvider buildServiceProviderFromAttachment(HAPAttachmentReference ele, HAPManagerServiceDefinition serviceDefinitionMan) {
 		HAPDefinitionServiceProvider provider = new HAPDefinitionServiceProvider();
 		ele.cloneToEntityInfo(provider);
-		provider.setServiceId(ele.getId().getId());
-		provider.setServiceInterface(serviceDefinitionMan.getDefinition(ele.getId().getId()).getStaticInfo().getInterface());
+		String serviceId = ele.getId().getIdLiterate();
+		provider.setServiceId(serviceId);
+		provider.setServiceInterface(serviceDefinitionMan.getDefinition(serviceId).getStaticInfo().getInterface());
 		return provider;
 	}
 	

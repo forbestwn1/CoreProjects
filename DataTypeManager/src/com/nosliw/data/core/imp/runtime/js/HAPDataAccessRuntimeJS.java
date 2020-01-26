@@ -9,7 +9,7 @@ import com.nosliw.data.core.imp.io.HAPDataAccess;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataHelperImp;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSConverterImp;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSOperationImp;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPDataAccessRuntimeJS extends HAPDataAccess{
 
@@ -25,7 +25,7 @@ public class HAPDataAccessRuntimeJS extends HAPDataAccess{
 		return (HAPResourceDataHelperImp)this.queryEntityFromDB(HAPResourceDataHelperImp._VALUEINFO_NAME, "id=?", new Object[]{id}, this.getConnection());
 	}
 	
-	public HAPJSResourceDependency getJSResourceDependency(HAPResourceId resourceId){
+	public HAPJSResourceDependency getJSResourceDependency(HAPResourceIdSimple resourceId){
 		String resourceIdStr = resourceId.toStringValue(HAPSerializationFormat.LITERATE);
 		return (HAPJSResourceDependency)this.queryEntityFromDB(
 				HAPJSResourceDependency._VALUEINFO_NAME, 

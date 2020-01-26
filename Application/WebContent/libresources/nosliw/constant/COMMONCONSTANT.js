@@ -375,7 +375,10 @@ var COMMONCONSTANT=
   "NAME_DEFAULT": "default",
   "ATTACHMENT_TYPE_REFERENCE": "reference",
   "ATTACHMENT_TYPE_ENTITY": "entity",
-  "ATTACHMENT_TYPE_PLACEHOLDER": "placeHolder"
+  "ATTACHMENT_TYPE_PLACEHOLDER": "placeHolder",
+  "RESOURCEID_TYPE_SIMPLE": "simple",
+  "RESOURCEID_TYPE_EMBEDED": "embeded",
+  "RESOURCEID_TYPE_TEMPLATE": "template"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

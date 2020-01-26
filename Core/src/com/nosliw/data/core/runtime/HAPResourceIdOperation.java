@@ -4,24 +4,27 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPOperationId;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceIdOperation extends HAPResourceId{
+public class HAPResourceIdOperation extends HAPResourceIdSimple{
 
 	private HAPOperationId m_operationId;
 	
-	public HAPResourceIdOperation(){}
+	public HAPResourceIdOperation(){    super(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION);      }
 
-	public HAPResourceIdOperation(HAPResourceId resourceId){
+	public HAPResourceIdOperation(HAPResourceIdSimple resourceId){
+		this();
 		this.cloneFrom(resourceId);
 	}
 	
 	public HAPResourceIdOperation(String idLiterate) {
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, idLiterate, null);
+		this();
+		this.init(idLiterate, null);
 	}
 
 	public HAPResourceIdOperation(HAPOperationId operationId){
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, null, null);
+		this();
+		this.init(null, null);
 		this.setOperationId(operationId);
 	}
 	

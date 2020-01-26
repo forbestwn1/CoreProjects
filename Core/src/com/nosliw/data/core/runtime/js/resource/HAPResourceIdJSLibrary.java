@@ -3,24 +3,27 @@ package com.nosliw.data.core.runtime.js.resource;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceIdJSLibrary extends HAPResourceId{
+public class HAPResourceIdJSLibrary extends HAPResourceIdSimple{
 
 	private HAPJSLibraryId m_jsLibraryId; 
 	
-	public HAPResourceIdJSLibrary(){}
+	public HAPResourceIdJSLibrary(){   super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY);      }
 	
-	public HAPResourceIdJSLibrary(HAPResourceId resourceId){
+	public HAPResourceIdJSLibrary(HAPResourceIdSimple resourceId){
+		this();
 		this.cloneFrom(resourceId);
 	}
 	
 	public HAPResourceIdJSLibrary(String idLiterate) {
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, idLiterate, null);
+		this();
+		init(idLiterate, null);
 	}
 
 	public HAPResourceIdJSLibrary(HAPJSLibraryId libraryId){
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, null, null);
+		this();
+		init(null, null);
 		this.setLibraryId(libraryId);
 	}
 	

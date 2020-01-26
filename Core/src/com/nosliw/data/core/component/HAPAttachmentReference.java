@@ -10,6 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdFactory;
 
 //
 @HAPEntityWithAttribute
@@ -51,7 +52,7 @@ public class HAPAttachmentReference extends HAPAttachmentImp{
 		super.buildObjectByJson(json);
 		Object id = jsonObj.opt(ID);
 		if(id!=null) {
-			this.m_id = HAPResourceId.newInstance(this.getResourceType(), id);
+			this.m_id = HAPResourceIdFactory.newInstance(this.getResourceType(), id);
 		}
 		return true;  
 	}

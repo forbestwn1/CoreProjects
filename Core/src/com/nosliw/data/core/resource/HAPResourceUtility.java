@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 
@@ -24,13 +26,12 @@ public class HAPResourceUtility {
 		return loadResourceByFile.contains(resourceType);
 	}
 	
-	public static List<HAPResourceDependency> buildResourceDependentFromResourceId(List<HAPResourceId> ids){
+	public static List<HAPResourceDependency> buildResourceDependentFromResourceId(List<HAPResourceIdSimple> ids){
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		for(HAPResourceId id : ids) 	out.add(new HAPResourceDependency(id));
+		for(HAPResourceIdSimple id : ids) 	out.add(new HAPResourceDependency(id));
 		return out;
 	}
 
-	
 	public static Map<String, Object> buildResourceLoadPattern(HAPResourceId resourceId, Map<String, Object> info) {
 		if(info==null)   info = new LinkedHashMap<String, Object>();
 		if(isLoadResoureByFile(resourceId.getType())) {
@@ -39,4 +40,31 @@ public class HAPResourceUtility {
 		return info;
 	}
 
+	//build literate for id part
+	public static String buildResourceCoreIdLiterate(HAPResourceId resourceId) {
+		StringBuffer out = new StringBuffer();
+		out.append("#").append(resourceId.getStructure()).append("#").append(resourceId.getIdLiterate());
+		return out.toString();
+	}
+	
+	public static String[] parseResourceCoreIdLiterate(String coreIdLiterate) {
+		String[] out = new String[2];
+		if(coreIdLiterate.startsWith("#")) {
+			int index = coreIdLiterate.indexOf("#", 1);
+			out[0] = coreIdLiterate.substring(1, index);
+			out[1] = coreIdLiterate.substring(index+1);
+		}
+		else {
+			//simple structure
+			out[0] = HAPResourceUtility.getDefaultResourceStructure();
+			out[1] = coreIdLiterate;
+		}
+		return out;
+	}
+	
+	public static String[] parseResourceIdLiterate(String idLiterate) {
+		return HAPNamingConversionUtility.parseLevel2(idLiterate);
+	}
+	
+	public static String getDefaultResourceStructure() {    return HAPConstant.RESOURCEID_TYPE_SIMPLE;     }
 }

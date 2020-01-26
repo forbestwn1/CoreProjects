@@ -29,7 +29,7 @@ import com.nosliw.data.core.HAPOperationParm;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.resource.HAPResourceHelper;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
@@ -209,14 +209,14 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		this.m_scope = context.initStandardObjects(null);
 
 		//core library
-		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+		List<HAPResourceIdSimple> resourceIds = new ArrayList<HAPResourceIdSimple>();
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Underscore", "1.6.0")));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Backbone", "1.1.2")));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.core", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtimerhinoinit", null)));
 
 		List<HAPResourceInfo> resourceIdInfos = new ArrayList<HAPResourceInfo>();
-		for(HAPResourceId resourceId : resourceIds){
+		for(HAPResourceIdSimple resourceId : resourceIds){
 			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
 		}
 		this.loadResources(resourceIdInfos);
@@ -228,7 +228,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		this.registerGateway();
 		
 		//other library
-		resourceIds = new ArrayList<HAPResourceId>();
+		resourceIds = new ArrayList<HAPResourceIdSimple>();
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.constant", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.logging", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.common", null)));
@@ -247,7 +247,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtimerhino", null)));
 		
 		resourceIdInfos = new ArrayList<HAPResourceInfo>();
-		for(HAPResourceId resourceId : resourceIds){
+		for(HAPResourceIdSimple resourceId : resourceIds){
 			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
 		}
 		this.loadResources(resourceIdInfos);

@@ -96,7 +96,7 @@ public class HAPResourceIdSupplement  extends HAPSerializableImp{
 			for(Object nameKey : byNameJsonObj.keySet()) {
 				String name = (String)nameKey;
 				JSONObject resourceIdJsonObj = byNameJsonObj.getJSONObject(name);
-				HAPResourceId resourceId = HAPResourceHelper.getInstance().buildResourceIdObject(resourceIdJsonObj);
+				HAPResourceIdSimple resourceId = HAPResourceHelper.getInstance().buildResourceIdObject(resourceIdJsonObj);
 				this.addSupplymentResource(name, resourceId);
 			}
 		}

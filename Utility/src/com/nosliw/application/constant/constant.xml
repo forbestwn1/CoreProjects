@@ -667,6 +667,11 @@
 			<definition name="ATTACHMENT_TYPE_ENTITY" value="entity"/>
 			<definition name="ATTACHMENT_TYPE_PLACEHOLDER" value="placeHolder"/>
 
+			<definition type="space"/>
+			<definition name="RESOURCEID_TYPE_SIMPLE" value="simple"/>
+			<definition name="RESOURCEID_TYPE_EMBEDED" value="embeded"/>
+			<definition name="RESOURCEID_TYPE_TEMPLATE" value="template"/>
+
 		</definitions>
 	</constants>
 </root>

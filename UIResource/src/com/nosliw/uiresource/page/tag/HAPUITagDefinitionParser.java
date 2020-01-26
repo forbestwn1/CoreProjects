@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
@@ -50,7 +50,7 @@ public class HAPUITagDefinitionParser {
 					while(aliasIt.hasNext()){
 						String alias = aliasIt.next();
 						String resourceIdLiterate = requiresForTypeJson.optString(alias);
-						out.addResourceDependency(new HAPResourceDependency(HAPResourceId.newInstance(resourceType, resourceIdLiterate), alias));
+						out.addResourceDependency(new HAPResourceDependency(HAPResourceIdFactory.newInstance(resourceType, resourceIdLiterate), alias));
 					}
 				}
 			}

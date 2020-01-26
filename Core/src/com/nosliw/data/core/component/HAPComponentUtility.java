@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -106,7 +107,7 @@ public class HAPComponentUtility {
 		for(String serviceName : serviceUseDefs.keySet()) {
 			HAPDefinitionServiceUse serviceUseDef = serviceUseDefs.get(serviceName);
 			HAPDefinitionServiceProvider serviceProvider = allServiceProviders.get(serviceUseDef.getProvider());
-			out.addChildCompoentId(new HAPChildrenComponentId(serviceName, HAPResourceId.newInstance(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE, serviceProvider.getServiceId()), null), attachment);
+			out.addChildCompoentId(new HAPChildrenComponentId(serviceName, HAPResourceIdFactory.newInstance(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE, serviceProvider.getServiceId()), null), attachment);
 		}
 	}
 }

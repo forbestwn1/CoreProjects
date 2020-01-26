@@ -4,23 +4,27 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceIdUIModule  extends HAPResourceId{
+public class HAPResourceIdUIModule  extends HAPResourceIdSimple{
 
 	private HAPUIModuleId m_uiModuleId; 
 	
-	public HAPResourceIdUIModule(){}
+	public HAPResourceIdUIModule(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE);    }
 
 	public HAPResourceIdUIModule(HAPResourceId resourceId){
+		this();
 		this.cloneFrom(resourceId);
 	}
 	
 	public HAPResourceIdUIModule(String idLiterate) {
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, idLiterate, null);
+		this();
+		init(idLiterate, null);
 	}
 
 	public HAPResourceIdUIModule(HAPUIModuleId uiModuleId){
-		init(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, null, null);
+		this();
+		init(null, null);
 		this.m_uiModuleId = uiModuleId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(uiModuleId, HAPSerializationFormat.LITERATE); 
 	}

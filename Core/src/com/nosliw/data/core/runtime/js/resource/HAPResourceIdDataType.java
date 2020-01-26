@@ -4,24 +4,27 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceIdDataType extends HAPResourceId{
+public class HAPResourceIdDataType extends HAPResourceIdSimple{
 
 	private HAPDataTypeId m_dataTypeId;
 	
-	public HAPResourceIdDataType(){}
+	public HAPResourceIdDataType(){    super(HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPE);    }
 	
-	public HAPResourceIdDataType(HAPResourceId resourceId){
+	public HAPResourceIdDataType(HAPResourceIdSimple resourceId){
+		this();
 		this.cloneFrom(resourceId);
 	}
 	
 	public HAPResourceIdDataType(String idLiterate) {
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPE, idLiterate, null);
+		this();
+		this.init(idLiterate, null);
 	}
 
 	public HAPResourceIdDataType(HAPDataTypeId dataTypeId, String alias){
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPE, null, null);
+		this();
+		this.init(null, null);
 		this.setDataTypeId(dataTypeId);
 	}
 

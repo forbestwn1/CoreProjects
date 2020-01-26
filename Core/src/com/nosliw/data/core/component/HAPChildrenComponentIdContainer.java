@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
 public class HAPChildrenComponentIdContainer {
@@ -20,7 +21,7 @@ public class HAPChildrenComponentIdContainer {
 		HAPResourceId resourceId = childComponentId.getResourceId();
 		HAPAttachmentContainer merged = new HAPAttachmentContainer(resourceId.getSupplement());
 		merged.merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
-		HAPResourceId mergedResourceId = HAPResourceId.newInstance(resourceId.getType(), resourceId.getId(), merged.toResourceIdSupplement());
+		HAPResourceId mergedResourceId = HAPResourceIdFactory.newInstance(resourceId, merged.toResourceIdSupplement());
 		childComponentId.setResourceId(mergedResourceId);
 		
 		List<HAPChildrenComponentId> byName = this.m_children.get(mergedResourceId.getType());
