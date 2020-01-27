@@ -2,6 +2,8 @@ package com.nosliw.servlet.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -49,7 +51,7 @@ public class HAPLoadFilesServlet extends HAPBaseServlet{
 				for(File file : files) {
 					String fileName = file.getName();
 					fileName = fileName.replace(";", "_");
-//					fileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
+					fileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
 					HAPFileUtility.writeFile(HAPSystemUtility.getJSTempFolder()+"files/"+fileName, HAPFileUtility.readFile(file));
 					tempNames.add("temp/files/"+fileName);
 				}

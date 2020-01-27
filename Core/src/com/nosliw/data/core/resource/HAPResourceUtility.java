@@ -17,6 +17,7 @@ public class HAPResourceUtility {
 	public final static String LOADRESOURCEBYFILE_MODE_ALWAYS = "always";
 	public final static String LOADRESOURCEBYFILE_MODE_DEPENDS = "depends";
 	
+	
 	private final static Set<String> loadResourceByFile = HAPSystemUtility.getLoadResoureByFile();
 	public static boolean isLoadResoureByFile(String resourceType) {
 		String mode = HAPSystemUtility.getLoadResourceByFileMode();
@@ -43,15 +44,15 @@ public class HAPResourceUtility {
 	//build literate for id part
 	public static String buildResourceCoreIdLiterate(HAPResourceId resourceId) {
 		StringBuffer out = new StringBuffer();
-		out.append("#").append(resourceId.getStructure()).append("#").append(resourceId.getIdLiterate());
+		out.append(HAPConstant.SEPERATOR_RESOURCEID_START).append(resourceId.getStructure()).append(HAPConstant.SEPERATOR_RESOURCEID_STRUCTURE).append(resourceId.getIdLiterate());
 		return out.toString();
 	}
 	
 	public static String[] parseResourceCoreIdLiterate(String coreIdLiterate) {
 		String[] out = new String[2];
-		if(coreIdLiterate.startsWith("#")) {
-			int index = coreIdLiterate.indexOf("#", 1);
-			out[0] = coreIdLiterate.substring(1, index);
+		if(coreIdLiterate.startsWith(HAPConstant.SEPERATOR_RESOURCEID_START)) {
+			int index = coreIdLiterate.indexOf(HAPConstant.SEPERATOR_RESOURCEID_STRUCTURE, HAPConstant.SEPERATOR_RESOURCEID_START.length());
+			out[0] = coreIdLiterate.substring(HAPConstant.SEPERATOR_RESOURCEID_START.length(), index);
 			out[1] = coreIdLiterate.substring(index+1);
 		}
 		else {

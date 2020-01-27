@@ -3,11 +3,11 @@ package com.nosliw.common.strvalue;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.literate.HAPLiterateType;
-import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.resolve.HAPResolvableString;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -174,8 +174,8 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TYPE, this.m_type.getType());
-		jsonMap.put(SUBTYPE, this.m_type.getSubType());
+		if(this.m_type!=null)   jsonMap.put(TYPE, this.m_type.getType());
+		if(this.m_type!=null)   jsonMap.put(SUBTYPE, this.m_type.getSubType());
 		jsonMap.put(STRINGVALUE, this.m_strValue.toString());
 		jsonMap.put(RESOLVED, String.valueOf(this.m_sovled));
 		jsonMap.put(VALUE, this.m_value==null?null : this.getStringContent());

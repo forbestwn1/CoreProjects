@@ -606,4 +606,9 @@ public class HAPConstant {
 		public static final String RESOURCEID_TYPE_TEMPLATE = "template";
 
 
+
+		public static final String SEPERATOR_RESOURCEID_START = "___";
+		public static final String SEPERATOR_RESOURCEID_STRUCTURE = "_";
+
+
 }

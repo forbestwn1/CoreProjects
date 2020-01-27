@@ -6,6 +6,7 @@ import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -22,7 +23,7 @@ public class HAPResourceManagerUIModule  extends HAPResourceManagerImp{
 
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPResourceIdUIModule uiModuleId = new HAPResourceIdUIModule(resourceId); 
+		HAPResourceIdUIModule uiModuleId = new HAPResourceIdUIModule((HAPResourceIdSimple)resourceId); 
 		HAPExecutableModule uiModule = this.m_uiResourceMan.getUIModule(uiModuleId.getIdLiterate(), new HAPAttachmentContainer(resourceId.getSupplement()));
 		if(uiModule==null)  return null;
 		return new HAPResource(resourceId, uiModule.toResourceData(runtimeInfo), HAPResourceUtility.buildResourceLoadPattern(resourceId, null));
@@ -30,7 +31,7 @@ public class HAPResourceManagerUIModule  extends HAPResourceManagerImp{
 
 	@Override
 	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
-		HAPResourceIdUIModule uiModuleId = new HAPResourceIdUIModule(resourceId); 
+		HAPResourceIdUIModule uiModuleId = new HAPResourceIdUIModule((HAPResourceIdSimple)resourceId); 
 		HAPExecutableModule uiModule = this.m_uiResourceMan.getUIModule(uiModuleId.getIdLiterate(), new HAPAttachmentContainer(resourceId.getSupplement()));
 		return uiModule.getResourceDependency(runtimeInfo);
 	}

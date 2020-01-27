@@ -3,7 +3,6 @@ package com.nosliw.uiresource.resource;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdUIAppEntry  extends HAPResourceIdSimple{
@@ -12,7 +11,7 @@ public class HAPResourceIdUIAppEntry  extends HAPResourceIdSimple{
 	
 	public HAPResourceIdUIAppEntry(){   super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY);      }
 
-	public HAPResourceIdUIAppEntry(HAPResourceId resourceId){
+	public HAPResourceIdUIAppEntry(HAPResourceIdSimple resourceId){
 		this();
 		this.cloneFrom(resourceId);
 	}

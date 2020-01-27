@@ -672,6 +672,10 @@
 			<definition name="RESOURCEID_TYPE_EMBEDED" value="embeded"/>
 			<definition name="RESOURCEID_TYPE_TEMPLATE" value="template"/>
 
+			<definition type="space"/>
+			<definition name="SEPERATOR_RESOURCEID_START" value="___"/>
+			<definition name="SEPERATOR_RESOURCEID_STRUCTURE" value="_"/>
+
 		</definitions>
 	</constants>
 </root>

@@ -4,7 +4,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPIdProcess;
-import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdProcess  extends HAPResourceIdSimple{
@@ -13,7 +12,7 @@ public class HAPResourceIdProcess  extends HAPResourceIdSimple{
 	
 	public HAPResourceIdProcess(){    super(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);     }
 
-	public HAPResourceIdProcess(HAPResourceId resourceId){
+	public HAPResourceIdProcess(HAPResourceIdSimple resourceId){
 		this();
 		this.cloneFrom(resourceId);
 	}

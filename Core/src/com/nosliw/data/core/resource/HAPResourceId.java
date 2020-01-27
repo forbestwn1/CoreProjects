@@ -1,6 +1,5 @@
 package com.nosliw.data.core.resource;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -8,9 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 @HAPEntityWithAttribute
@@ -63,13 +60,14 @@ public abstract class HAPResourceId extends HAPSerializableImp{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(ID, HAPResourceUtility.buildResourceCoreIdLiterate(this));
 		
-		Map<String, String> jsonMapId = new LinkedHashMap<String, String>();
-		Map<String, Class<?>> typeJsonMapId = new LinkedHashMap<String, Class<?>>();
-		jsonMapId.put(STRUCUTRE, this.getStructure());
-		if(this.m_supplement!=null && !this.m_supplement.isEmpty())   jsonMapId.put(SUP, this.m_supplement.toStringValue(HAPSerializationFormat.JSON));
-		this.buildCoreJsonMap(jsonMapId, typeJsonMapId);
-		jsonMap.put(ID, HAPJsonUtility.buildMapJson(jsonMapId, typeJsonMapId));
+//		Map<String, String> jsonMapId = new LinkedHashMap<String, String>();
+//		Map<String, Class<?>> typeJsonMapId = new LinkedHashMap<String, Class<?>>();
+//		jsonMapId.put(STRUCUTRE, this.getStructure());
+//		if(this.m_supplement!=null && !this.m_supplement.isEmpty())   jsonMapId.put(SUP, this.m_supplement.toStringValue(HAPSerializationFormat.JSON));
+//		this.buildCoreJsonMap(jsonMapId, typeJsonMapId);
+//		jsonMap.put(ID, HAPJsonUtility.buildMapJson(jsonMapId, typeJsonMapId));
 	}
 
 	@Override
@@ -105,37 +103,37 @@ public abstract class HAPResourceId extends HAPSerializableImp{
 	
 	
 	
-	@Override
-	protected boolean buildObjectByFullJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		
-		Object type = jsonObj.opt(TYPE);
-		if(type!=null)		this.m_type = (String)type; 
-		
-		String idLiterate = jsonObj.getString(ID);
-		this.buildCoreIdByLiterate(idLiterate);
-		return true; 
-	}
-
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		this.buildObjectByFullJson(json);
-		return true; 
-	}
-
-	@Override
-	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
-		if(segs.length==1) {
-			//json structure
-			JSONObject jsonObj = new JSONObject(literateValue);
-			this.buildObject(jsonObj, HAPSerializationFormat.JSON);
-		}
-		else {
-			this.m_type = segs[0];
-			buildCoreIdByLiterate(segs[1]);
-		}
-		return true;  
-	}
+//	@Override
+//	protected boolean buildObjectByFullJson(Object json){
+//		JSONObject jsonObj = (JSONObject)json;
+//		
+//		Object type = jsonObj.opt(TYPE);
+//		if(type!=null)		this.m_type = (String)type; 
+//		
+//		String idLiterate = jsonObj.getString(ID);
+//		this.buildCoreIdByLiterate(idLiterate);
+//		return true; 
+//	}
+//
+//	@Override
+//	protected boolean buildObjectByJson(Object json){
+//		this.buildObjectByFullJson(json);
+//		return true; 
+//	}
+//
+//	@Override
+//	protected boolean buildObjectByLiterate(String literateValue){	
+//		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
+//		if(segs.length==1) {
+//			//json structure
+//			JSONObject jsonObj = new JSONObject(literateValue);
+//			this.buildObject(jsonObj, HAPSerializationFormat.JSON);
+//		}
+//		else {
+//			this.m_type = segs[0];
+//			buildCoreIdByLiterate(segs[1]);
+//		}
+//		return true;  
+//	}
 
 }

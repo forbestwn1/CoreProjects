@@ -5,6 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -19,13 +20,22 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	public static String ID = "id";
 
 	protected String m_id;
-	
+
+	public HAPResourceIdSimple(){
+		super(null);
+	}
+
 	protected HAPResourceIdSimple(String type){
 		super(type);
 	}
 
+	public HAPResourceIdSimple(HAPResourceIdSimple resourceId){
+		this(resourceId.getType());
+		this.cloneFrom(resourceId);
+	}
+
 	public String getId() {   return this.m_id;    }
-	protected void setId(String id) {}
+	protected void setId(String id) {  this.m_id = id;   }
 
 	@Override
 	public String getStructure() {  return HAPConstant.RESOURCEID_TYPE_SIMPLE;	}
@@ -81,4 +91,13 @@ public class HAPResourceIdSimple extends HAPResourceId{
 		super.cloneFrom(resourceId);
 		this.setId(resourceId.m_id);
 	}
+	
+	@Override
+	protected boolean buildObjectByLiterate(String literateValue){	
+		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
+		this.setType(segs[0]);
+		buildCoreIdByLiterate(segs[1]);
+		return true;  
+	}
+
 }

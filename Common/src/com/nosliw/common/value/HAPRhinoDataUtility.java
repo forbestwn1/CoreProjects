@@ -125,7 +125,7 @@ public class HAPRhinoDataUtility
         	try {
                 out = new JSONObject(kkkk); 
         	}
-        	catch(Exception e) {
+        	catch(Throwable e) {
         		e.printStackTrace();
         	}
         }
