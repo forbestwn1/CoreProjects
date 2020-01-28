@@ -31,6 +31,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_ServiceInfo;
 	var node_getObjectType;
+	var node_resourceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, handlers, requestInfo){
@@ -40,6 +41,7 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 
 	var createUITagRequest = node_createServiceRequestInfoSequence(undefined);
 	var tagId = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME];
+	tagId = node_resourceUtility.buildSimpleReourceCoreIdLiterate(tagId);
 	createUITagRequest.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
 		success : function(requestInfo, resources){
 			var uiTagResourceObj = resources[tagId];
@@ -338,6 +340,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagRequest", node_createUITagRequest); 
