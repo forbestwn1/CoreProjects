@@ -7,10 +7,13 @@ import java.util.Set;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
 abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implements HAPComponent{
 
+	private HAPResourceId m_resourceId;
+	
 	private String m_id;
 
 	//context definition within this component
@@ -35,6 +38,11 @@ abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implement
 		this();
 		this.m_id = id;
 	}
+	
+	@Override
+	public void setResourceId(HAPResourceId resourceId) {  this.m_resourceId = resourceId;   }
+	@Override
+	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
 	
 	@Override
 	public String getId() {   return this.m_id;   }

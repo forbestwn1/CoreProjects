@@ -23,6 +23,9 @@ public class HAPManagerComponent {
 			String type = simpleId.getType();
 			out = this.m_plugins.get(type).getComponent(simpleId);
 		}
+		
+		//set resource id
+		out.setResourceId(resourceId);
 		return out;
 	}
 	

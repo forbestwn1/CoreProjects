@@ -12,6 +12,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
@@ -139,37 +140,36 @@ public class HAPUIResourceManager {
 	}
 
 	public HAPExecutableUIUnitPage getUIPage(HAPResourceId pageResourceId){
-		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_componentManager.getComponent(pageResourceId);
-		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDefinition, pageResourceId.getIdLiterate(), null, null, null, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
-		return out;
-	}
-	
-	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId) {
-		return getUIPageDefinition(pageResourceId.getIdLiterate(), new HAPAttachmentContainer(pageResourceId.getSupplement()));
-	}
-
-	public HAPDefinitionUIPage getUIPageDefinition(String uiResourceDefId, HAPAttachmentContainer parentExternalMapping) {
-		//get definition itself
-		HAPDefinitionUIPage def = HAPUtilityPage.getPageDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
-		//resolve attachment
-		HAPUtilityPage.solveExternalMapping(def, parentExternalMapping, this.m_uiTagMan);
-		//resolve service provider
-		HAPUtilityPage.solveServiceProvider(def, null, m_serviceDefinitionManager);
-		return def;
-	}
-	
-	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId, HAPAttachmentContainer parentExternalMapping){
-		String id = uiResourceDefId;
-		HAPExecutableUIUnitPage out = (HAPExecutableUIUnitPage)this.m_resourceCache.getResource(id, parentExternalMapping==null?null:parentExternalMapping.toResourceIdSupplement());
+		HAPExecutableUIUnitPage out = (HAPExecutableUIUnitPage)this.m_resourceCache.getResource(pageResourceId);
 		if(out==null) {
-			out = this.getUIPage(uiResourceDefId, id, null, null, parentExternalMapping);
+			HAPDefinitionUIPage pageDefinition = this.getUIPageDefinition(pageResourceId, null);
+			out = HAPProcessorUIPage.processUIResource(pageDefinition, pageResourceId.getIdLiterate(), null, null, null, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
 		}
 		return out;
 	}
-
-	public HAPExecutableUIUnitPage getUIPage(String uiResourceDefId, String id, HAPContextGroup context, HAPContextGroup parentContext, HAPAttachmentContainer parentExternalMapping){
+	
+	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
-		HAPDefinitionUIPage def = getUIPageDefinition(uiResourceDefId, parentExternalMapping); 
+		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_componentManager.getComponent(pageResourceId);
+
+		//parent attachment
+		HAPAttachmentContainer attachment = new HAPAttachmentContainer(pageDefinition.getResourceId().getSupplement());
+		attachment.merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
+
+		//process include tag
+		pageDefinition = HAPUtilityPage.processInclude(pageDefinition, this.m_uiResourceParser, this, this.m_componentManager);
+
+		//resolve attachment
+		HAPUtilityPage.solveExternalMapping(pageDefinition, attachment, this.m_uiTagMan);
+
+		//resolve service provider
+		HAPUtilityPage.solveServiceProvider(pageDefinition, null, m_serviceDefinitionManager);
+		return pageDefinition;
+	}
+
+	public HAPExecutableUIUnitPage getEmbededUIPage(HAPResourceId uiResourceDefId, String id, HAPContextGroup context, HAPContextGroup parentContext, HAPAttachmentContainer parentAttachment){
+		//get definition itself
+		HAPDefinitionUIPage def = getUIPageDefinition(uiResourceDefId, parentAttachment); 
 		//compile it
 		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(def, id, context, parentContext, null, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
 		return out;

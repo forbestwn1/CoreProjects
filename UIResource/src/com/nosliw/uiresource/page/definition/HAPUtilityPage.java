@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
+import com.nosliw.data.core.component.HAPManagerComponent;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
@@ -15,6 +15,7 @@ import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.resource.HAPResourceIdUIResource;
 
 public class HAPUtilityPage {
 
@@ -73,20 +74,15 @@ public class HAPUtilityPage {
 		}
 	}
 
-	public static HAPDefinitionUIPage getPageDefinitionById(String id, HAPParserPage pageParser, HAPUIResourceManager uiResourceManager){
-		String file = HAPFileUtility.getUIPageFolder()+id+".res";
-		HAPDefinitionUIPage uiResourceDef = pageParser.parseFile(file);
-		uiResourceDef = processInclude(uiResourceDef, pageParser, uiResourceManager);
-		return uiResourceDef;
-	}
-	
-	private static HAPDefinitionUIPage processInclude(HAPDefinitionUIPage uiResourceDef, HAPParserPage uiResourceParser, HAPUIResourceManager uiResourceMan) {
+	public static HAPDefinitionUIPage processInclude(HAPDefinitionUIPage uiResourceDef, HAPParserPage uiResourceParser, HAPUIResourceManager uiResourceMan, HAPManagerComponent componentManager) {
 		Set<HAPDefinitionUITag> includeTags = new HashSet<HAPDefinitionUITag>();
 		HAPUtilityPage.getUITagByName(uiResourceDef, HAPConstant.UITAG_NAME_INCLUDE, includeTags);
 		for(HAPDefinitionUITag includeTagResource : includeTags){
 			//include resource
 			String includeResourceName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_SOURCE);
-			HAPDefinitionUIPage uiResource = getPageDefinitionById(includeResourceName, uiResourceParser, uiResourceMan);
+//			HAPDefinitionUIPage uiResource = getPageDefinitionById(includeResourceName, uiResourceParser, uiResourceMan);
+			HAPDefinitionUIPage uiResource = (HAPDefinitionUIPage)componentManager.getComponent(new HAPResourceIdUIResource(includeResourceName));
+			uiResource = processInclude(uiResource, uiResourceParser, uiResourceMan, componentManager);
 			uiResourceParser.parseContent(includeTagResource, uiResource.getSource());
 		}
 		return uiResourceDef; 

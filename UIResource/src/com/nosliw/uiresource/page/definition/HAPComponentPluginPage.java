@@ -16,7 +16,9 @@ public class HAPComponentPluginPage implements HAPPluginComponent{
 	
 	@Override
 	public HAPComponent getComponent(HAPResourceIdSimple resourceId) {
+		//read content
 		String file = HAPFileUtility.getUIPageFolder()+resourceId.getId()+".res";
+		//parse content
 		HAPDefinitionUIPage uiResourceDef = m_pageParser.parseFile(file);
 		return uiResourceDef;
 	}

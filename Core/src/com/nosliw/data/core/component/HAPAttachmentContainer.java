@@ -40,6 +40,8 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 		}
 	}
 	
+	public boolean isEmpty() {     return this.m_element.isEmpty();   }
+	
 	public Map<String, HAPAttachment> getAttachmentByType(String type){
 		return this.m_element.get(type);
 	}
@@ -55,6 +57,7 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 
 	//merge with parent
 	public void merge(HAPAttachmentContainer parent, String mode) {
+		if(parent==null)  return;
 		if(mode==null)   mode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;
 		if(mode.equals(HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE))  return;
 		
