@@ -50,6 +50,9 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	}
 	
 	@Override
+	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE;  }
+
+	@Override
 	public String getId() {   return this.m_id;   }
 	 
 	public List<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentUseServiceImp;
 import com.nosliw.data.core.component.HAPComponentUtility;
@@ -76,6 +77,9 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 		this.m_nameMapping = new HAPNameMapping();
 	}
 	
+	@Override
+	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE;  }
+
 	abstract public String getType(); 
 
 	public HAPDefinitionUIUnit getParent() {   return this.m_parent;  }

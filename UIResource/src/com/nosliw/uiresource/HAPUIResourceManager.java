@@ -4,6 +4,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPManagerComponent;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceCache;
@@ -52,6 +53,8 @@ public class HAPUIResourceManager {
 	
 	private HAPManagerServiceDefinition m_serviceDefinitionManager;
 	
+	private HAPManagerComponent m_componentManager;
+	
 	private HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
 
 	private HAPParserPage m_uiResourceParser;
@@ -67,7 +70,8 @@ public class HAPUIResourceManager {
 			HAPManagerProcessDefinition processMan,
 			HAPRuntime runtime, 
 			HAPDataTypeHelper dataTypeHelper,
-			HAPManagerServiceDefinition serviceDefinitionManager){
+			HAPManagerServiceDefinition serviceDefinitionManager,
+			HAPManagerComponent componentManager){
 		this.m_uiTagMan = uiTagMan;
 		this.m_expressionMan = expressionMan;
 		this.m_resourceMan = resourceMan;
@@ -79,6 +83,7 @@ public class HAPUIResourceManager {
 		this.m_moduleParser = new HAPParserModule(this.m_processMan.getPluginManager());
 		this.m_miniAppParser = new HAPParseMiniApp(this.m_processMan.getPluginManager());
 		this.m_serviceDefinitionManager = serviceDefinitionManager;
+		this.m_componentManager = componentManager;
 	}
 
 	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId) {
@@ -131,6 +136,12 @@ public class HAPUIResourceManager {
 	public HAPExecutableModule getUIModule(String moduleId, HAPAttachmentContainer parentExternalMapping) {
 		HAPDefinitionModule moduleDef = getModuleDefinition(moduleId, parentExternalMapping); 
 		return HAPProcessorModule.process(moduleDef, moduleId, parentExternalMapping, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager);
+	}
+
+	public HAPExecutableUIUnitPage getUIPage(HAPResourceId pageResourceId){
+		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_componentManager.getComponent(pageResourceId);
+		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDefinition, pageResourceId.getIdLiterate(), null, null, null, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
+		return out;
 	}
 	
 	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId) {

@@ -75,7 +75,7 @@ var node_utility = {
 		},
 		
 		createTagResourceId : function(name){
-			return node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, name);
+			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, name);
 		},
 };
 

@@ -20,5 +20,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/mysql-connector-java-8.0.13.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/UIResource"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

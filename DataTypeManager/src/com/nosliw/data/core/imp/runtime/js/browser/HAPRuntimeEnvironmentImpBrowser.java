@@ -2,6 +2,7 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.data.core.component.HAPManagerComponent;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
@@ -20,6 +21,9 @@ import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.service.provide.HAPGatewayService;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
+import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.page.definition.HAPComponentPluginPage;
+import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
@@ -32,7 +36,9 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 	@HAPAttribute
 	public static final String GATEWAY_SERVICE = "service";
 	
-	HAPModuleRuntimeJS m_runtimeJSModule;
+	private HAPModuleRuntimeJS m_runtimeJSModule;
+	
+	private HAPUIResourceManager m_uiResourceManager;
 	
 	public HAPRuntimeEnvironmentImpBrowser(){
 		this(new HAPModuleRuntimeJS().init(HAPValueInfoManager.getInstance()));
@@ -49,6 +55,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPExpressionSuiteManager expSuiteMan = new HAPExpressionSuiteManager();
 		HAPManagerProcessDefinition processDefMan = new HAPManagerProcessDefinition(new HAPManagerActivityPlugin(), HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
 		HAPManagerProcess processMan = new HAPManagerProcessImp(processDefMan, runtime);
+		HAPManagerComponent componentManager = new HAPManagerComponent();
 		
 		init(new HAPResourceManagerJSImp(
 				runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess()),
@@ -57,13 +64,30 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 				expSuiteMan,
 			new HAPGatewayManager(),
 			serviceManager,
+			componentManager,
 			runtime
 		);
-		
+
+		this.m_uiResourceManager = new HAPUIResourceManager(
+				new HAPUITagManager(),
+				this.getExpressionSuiteManager(),
+				this.getResourceManager(),
+				this.getProcessDefinitionManager(),
+				this.getRuntime(),
+				HAPExpressionManager.dataTypeHelper,
+				this.getServiceManager().getServiceDefinitionManager(),
+				this.getComponentManager());
+
+		//gateway
 		this.getGatewayManager().registerGateway(GATEWAY_SERVICE, new HAPGatewayService(this.getServiceManager()));
 		
 		this.getGatewayManager().registerGateway(GATEWAY_LOADLIBRARIES, new HAPGatewayBrowserLoadLibrary(this.getGatewayManager()));
 		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression());
+
+		//component
+		this.getComponentManager().registerPlugin(new HAPComponentPluginPage(this.m_uiResourceManager.getUIResourceParser()));
 	}
+	
+	public HAPUIResourceManager getUIResourceManager() {   return this.m_uiResourceManager;   }
 
 }

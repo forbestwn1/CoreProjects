@@ -17,7 +17,7 @@ public interface HAPComponent extends HAPEntityInfo, HAPWithAttachment, HAPWithL
 	@HAPAttribute
 	public static String CONTEXT = "context";
 	
-//	String getComponentType();
+	String getComponentType();
 	
 	String getId();
 	void setId(String id);

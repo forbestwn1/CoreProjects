@@ -8,8 +8,11 @@ var packageObj = library.getChildPackage("entity");
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_ResourceId = function(type, id){
-	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = type; 
-	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = node_COMMONCONSTANT.SEPERATOR_RESOURCEID_START+node_COMMONCONSTANT.RESOURCEID_TYPE_SIMPLE+node_COMMONCONSTANT.SEPERATOR_RESOURCEID_STRUCTURE+id; 
+	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = type;
+	if(!id.startsWith(node_COMMONCONSTANT.SEPERATOR_RESOURCEID_START)){
+		id = node_COMMONCONSTANT.SEPERATOR_RESOURCEID_START+node_COMMONCONSTANT.RESOURCEID_TYPE_SIMPLE+node_COMMONCONSTANT.SEPERATOR_RESOURCEID_STRUCTURE+id;
+	}
+	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = id;
 };	
 	
 var node_Resource = function(resourceInfo, resourceData, info){

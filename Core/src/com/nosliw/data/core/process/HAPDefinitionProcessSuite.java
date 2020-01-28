@@ -7,6 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
@@ -23,6 +24,9 @@ public class HAPDefinitionProcessSuite extends HAPComponentImp{
 	public HAPDefinitionProcessSuite() {
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionProcess>();
 	}
+
+	@Override
+	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
 
 	public HAPDefinitionProcess getProcess(String processId) {  return this.m_processes.get(processId);   }
 	public Map<String, HAPDefinitionProcess> getProcesses(){   return this.m_processes;   }

@@ -1,6 +1,7 @@
 package com.nosliw.data.core.event;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
 
@@ -30,6 +31,9 @@ public class HAPDefinitionEventTask extends HAPComponentImp{
 		super(id);
 	}
 
+	@Override
+	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_EVENTTASK;  }
+	
 	public HAPDefinitionEvent getEventInfo() {   return this.m_eventInfo;  }
 	public void setEventInfo(HAPDefinitionEvent eventInfo) {   this.m_eventInfo = eventInfo;    }
 	

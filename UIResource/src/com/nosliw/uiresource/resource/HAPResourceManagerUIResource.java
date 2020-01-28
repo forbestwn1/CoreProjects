@@ -2,7 +2,6 @@ package com.nosliw.uiresource.resource;
 
 import java.util.List;
 
-import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -24,7 +23,8 @@ public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource((HAPResourceIdSimple)resourceId); 
-		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIPage(uiResourceId.getIdLiterate(), new HAPAttachmentContainer(resourceId.getSupplement()));
+//		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIPage(uiResourceId.getIdLiterate(), new HAPAttachmentContainer(resourceId.getSupplement()));
+		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIPage(uiResourceId);
 		if(uiResource==null)  return null;
 		return new HAPResource(resourceId, uiResource.toResourceData(runtimeInfo), HAPResourceUtility.buildResourceLoadPattern(resourceId, null));
 	}
@@ -32,7 +32,8 @@ public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 	@Override
 	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource((HAPResourceIdSimple)resourceId); 
-		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIPage(uiResourceId.getIdLiterate(), new HAPAttachmentContainer(resourceId.getSupplement()));
+//		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIPage(uiResourceId.getIdLiterate(), new HAPAttachmentContainer(resourceId.getSupplement()));
+		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIPage(uiResourceId);
 		return uiResource.getResourceDependency(runtimeInfo);
 	}
 }
