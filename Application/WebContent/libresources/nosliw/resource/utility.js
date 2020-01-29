@@ -44,8 +44,12 @@ var node_utility =
 			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONVERTER, node_namingConvensionUtility.cascadeLevel1(dataTypeId));
 		},
 		
-		buildSimpleReourceCoreIdLiterate : function(name){
-			return node_COMMONCONSTANT.SEPERATOR_RESOURCEID_START+node_COMMONCONSTANT.RESOURCEID_TYPE_SIMPLE+node_COMMONCONSTANT.SEPERATOR_RESOURCEID_STRUCTURE+name;
+		buildReourceCoreIdLiterate : function(id){
+			var out = id;
+			if(!id.startsWith(node_COMMONCONSTANT.SEPERATOR_RESOURCEID_START)){
+				out = node_COMMONCONSTANT.SEPERATOR_RESOURCEID_START+node_COMMONCONSTANT.RESOURCEID_TYPE_SIMPLE+node_COMMONCONSTANT.SEPERATOR_RESOURCEID_STRUCTURE+id;
+			}
+			return out;
 		}
 };
 

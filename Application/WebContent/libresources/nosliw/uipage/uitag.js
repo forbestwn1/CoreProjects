@@ -41,7 +41,7 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 
 	var createUITagRequest = node_createServiceRequestInfoSequence(undefined);
 	var tagId = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME];
-	tagId = node_resourceUtility.buildSimpleReourceCoreIdLiterate(tagId);
+	tagId = node_resourceUtility.buildReourceCoreIdLiterate(tagId);
 	createUITagRequest.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
 		success : function(requestInfo, resources){
 			var uiTagResourceObj = resources[tagId];

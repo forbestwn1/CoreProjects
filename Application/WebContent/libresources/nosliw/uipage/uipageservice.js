@@ -26,13 +26,14 @@ var node_createUIPageService = function(){
 	
 	var loc_out = {
 
-			getCreateUIPageRequest : function(name, context, handlers, requester_parent){
+			getCreateUIPageRequest : function(pageId, context, handlers, requester_parent){
+				pageId = node_resourceUtility.buildReourceCoreIdLiterate(pageId);
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
-				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo);
+				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIResourceView", {"name":pageId}), handlers, requestInfo);
 
-				out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([name], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE, {
+				out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([pageId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE, {
 					success : function(requestInfo, uiResources){
-						var uiResource = uiResources[name];
+						var uiResource = uiResources[pageId];
 						return loc_uiResourceViewFactory.getCreateUIViewRequest(uiResource, loc_getResourceViewId(), undefined, context, {
 							success : function(requestInfo, uiView){
 								return node_createUIPage(uiView);
@@ -43,8 +44,8 @@ var node_createUIPageService = function(){
 				
 				return out;
 			},	
-			executeCreateUIPageRequest : function(name, context, handlers, requester_parent){
-				var requestInfo = this.getCreateUIPageRequest(name, context, handlers, requester_parent);
+			executeCreateUIPageRequest : function(pageId, context, handlers, requester_parent){
+				var requestInfo = this.getCreateUIPageRequest(pageId, context, handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo);
 			},
 			

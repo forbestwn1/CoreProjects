@@ -10,10 +10,7 @@ var packageObj = library.getChildPackage("entity");
 
 var node_ResourceId = function(type, id){
 	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = type;
-	if(!id.startsWith(node_COMMONCONSTANT.SEPERATOR_RESOURCEID_START)){
-		id = node_resourceUtility.buildSimpleReourceCoreIdLiterate(id);
-	}
-	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = id;
+	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = node_resourceUtility.buildReourceCoreIdLiterate(id);
 };	
 	
 var node_Resource = function(resourceInfo, resourceData, info){
