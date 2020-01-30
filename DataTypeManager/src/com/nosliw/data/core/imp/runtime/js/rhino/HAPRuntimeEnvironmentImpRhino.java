@@ -42,7 +42,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPExpressionSuiteManager expSuiteMan = new HAPExpressionSuiteManager();
 		HAPManagerProcessDefinition processDefMan = new HAPManagerProcessDefinition(new HAPManagerActivityPlugin(), HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
 		HAPManagerProcess processMan = new HAPManagerProcessImp(processDefMan, runtime);
-		HAPManagerResourceDefinition componentManager = new HAPManagerResourceDefinition();
+		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition();
 
 		init(new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess()),
 				processDefMan,
@@ -50,7 +50,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 				expSuiteMan,
 				new HAPGatewayManager(),
 				serviceManager,
-				componentManager,
+				resourceDefManager,
 				runtime
 		);
 

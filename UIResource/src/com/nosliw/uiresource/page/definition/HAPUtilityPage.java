@@ -74,15 +74,15 @@ public class HAPUtilityPage {
 		}
 	}
 
-	public static HAPDefinitionUIPage processInclude(HAPDefinitionUIPage uiResourceDef, HAPParserPage uiResourceParser, HAPUIResourceManager uiResourceMan, HAPManagerResourceDefinition componentManager) {
+	public static HAPDefinitionUIPage processInclude(HAPDefinitionUIPage uiResourceDef, HAPParserPage uiResourceParser, HAPUIResourceManager uiResourceMan, HAPManagerResourceDefinition resourceDefManager) {
 		Set<HAPDefinitionUITag> includeTags = new HashSet<HAPDefinitionUITag>();
 		HAPUtilityPage.getUITagByName(uiResourceDef, HAPConstant.UITAG_NAME_INCLUDE, includeTags);
 		for(HAPDefinitionUITag includeTagResource : includeTags){
 			//include resource
 			String includeResourceName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_SOURCE);
 //			HAPDefinitionUIPage uiResource = getPageDefinitionById(includeResourceName, uiResourceParser, uiResourceMan);
-			HAPDefinitionUIPage uiResource = (HAPDefinitionUIPage)componentManager.getResourceDefinition(new HAPResourceIdUIResource(includeResourceName));
-			uiResource = processInclude(uiResource, uiResourceParser, uiResourceMan, componentManager);
+			HAPDefinitionUIPage uiResource = (HAPDefinitionUIPage)resourceDefManager.getResourceDefinition(new HAPResourceIdUIResource(includeResourceName));
+			uiResource = processInclude(uiResource, uiResourceParser, uiResourceMan, resourceDefManager);
 			uiResourceParser.parseContent(includeTagResource, uiResource.getSource());
 		}
 		return uiResourceDef; 

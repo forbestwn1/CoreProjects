@@ -62,10 +62,10 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 									HAPExpressionSuiteManager expressionSuiteManager,
 								    HAPGatewayManager gatewayManager,
 								    HAPManagerService serviceManager,
-								    HAPManagerResourceDefinition componentManager,
+								    HAPManagerResourceDefinition resourceDefManager,
 								    HAPRuntime runtime){
 		super();
-		this.init(resourceMan, processDefManager, processManager, expressionSuiteManager, gatewayManager, serviceManager, componentManager, runtime);
+		this.init(resourceMan, processDefManager, processManager, expressionSuiteManager, gatewayManager, serviceManager, resourceDefManager, runtime);
 	}
 	
 	protected void init(HAPResourceManagerRoot resourceMan,
@@ -74,14 +74,14 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 						HAPExpressionSuiteManager expressionSuiteManager,
 					    HAPGatewayManager gatewayManager,
 					    HAPManagerService serviceManager,
-					    HAPManagerResourceDefinition componentManager,
+					    HAPManagerResourceDefinition resourceDefManager,
 					    HAPRuntime runtime){ 
 		this.m_resourceManager = resourceMan;
 		this.m_processDefinitionManager = processDefManager;
 		this.m_processManager = processManager;
 		this.m_expressionSuiteManager = expressionSuiteManager;
 		this.m_serviceManager = serviceManager;
-		this.m_resourceDefinitionManager = componentManager;
+		this.m_resourceDefinitionManager = resourceDefManager;
 
 		this.m_resourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, new HAPResourceManagerProcess(this.m_processDefinitionManager));
 		this.m_resourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, new HAPResourceManagerActivityPlugin(this.m_processDefinitionManager.getPluginManager()));

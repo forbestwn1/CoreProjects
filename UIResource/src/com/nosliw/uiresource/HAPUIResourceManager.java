@@ -52,7 +52,7 @@ public class HAPUIResourceManager {
 	
 	private HAPManagerServiceDefinition m_serviceDefinitionManager;
 	
-	private HAPManagerResourceDefinition m_componentManager;
+	private HAPManagerResourceDefinition m_resourceDefManager;
 	
 	private HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
 
@@ -70,7 +70,7 @@ public class HAPUIResourceManager {
 			HAPRuntime runtime, 
 			HAPDataTypeHelper dataTypeHelper,
 			HAPManagerServiceDefinition serviceDefinitionManager,
-			HAPManagerResourceDefinition componentManager){
+			HAPManagerResourceDefinition resourceDefManager){
 		this.m_uiTagMan = uiTagMan;
 		this.m_expressionMan = expressionMan;
 		this.m_resourceMan = resourceMan;
@@ -82,12 +82,12 @@ public class HAPUIResourceManager {
 		this.m_moduleParser = new HAPParserModule(this.m_processMan.getPluginManager());
 		this.m_miniAppParser = new HAPParseMiniApp(this.m_processMan.getPluginManager());
 		this.m_serviceDefinitionManager = serviceDefinitionManager;
-		this.m_componentManager = componentManager;
+		this.m_resourceDefManager = resourceDefManager;
 	}
 
 	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
-		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_componentManager.getResourceDefinition(appId);
+		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefManager.getResourceDefinition(appId);
 		
 		//merged with parent attachment
 		HAPAttachmentContainer attachment = mergeWithParentAttachment(appDef, parentAttachment);
@@ -98,7 +98,7 @@ public class HAPUIResourceManager {
 	}
 	
 	public HAPDefinitionAppEntryWrapper getMiniAppEntryDefinition(HAPResourceId appEntryId, HAPAttachmentContainer parentAttachment) {
-		HAPDefinitionAppEntryWrapper appEntryDef = (HAPDefinitionAppEntryWrapper)this.m_componentManager.getResourceDefinition(appEntryId);
+		HAPDefinitionAppEntryWrapper appEntryDef = (HAPDefinitionAppEntryWrapper)this.m_resourceDefManager.getResourceDefinition(appEntryId);
 		//merged with parent attachment
 		HAPAttachmentContainer attachment = mergeWithParentAttachment(appEntryDef.getAppDefinition(), parentAttachment);
 		//resolve attachment mapping
@@ -163,7 +163,7 @@ public class HAPUIResourceManager {
 
 	public HAPDefinitionModule getModuleDefinition(HAPResourceId moduleId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
-		HAPDefinitionModule moduleDef = (HAPDefinitionModule)this.m_componentManager.getResourceDefinition(moduleId);
+		HAPDefinitionModule moduleDef = (HAPDefinitionModule)this.m_resourceDefManager.getResourceDefinition(moduleId);
 		
 		//merged with parent attachment
 		HAPAttachmentContainer attachment = mergeWithParentAttachment(moduleDef, parentAttachment);
@@ -209,13 +209,13 @@ public class HAPUIResourceManager {
 	
 	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
-		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_componentManager.getResourceDefinition(pageResourceId);
+		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_resourceDefManager.getResourceDefinition(pageResourceId);
 
 		//merged with parent attachment
 		HAPAttachmentContainer attachment = mergeWithParentAttachment(pageDefinition, parentAttachment);
 
 		//process include tag
-		pageDefinition = HAPUtilityPage.processInclude(pageDefinition, this.m_uiResourceParser, this, this.m_componentManager);
+		pageDefinition = HAPUtilityPage.processInclude(pageDefinition, this.m_uiResourceParser, this, this.m_resourceDefManager);
 
 		//resolve attachment
 		HAPUtilityPage.solveExternalMapping(pageDefinition, attachment, this.m_uiTagMan);

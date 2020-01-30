@@ -9,10 +9,10 @@ import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
 
 public class HAPResourceDefinitionPluginAppEntry implements HAPPluginResourceDefinition{
 
-	private HAPManagerResourceDefinition m_componentMan;
+	private HAPManagerResourceDefinition m_resourceDefMan;
 	
-	public HAPResourceDefinitionPluginAppEntry(HAPManagerResourceDefinition componentMan) {
-		this.m_componentMan = componentMan;
+	public HAPResourceDefinitionPluginAppEntry(HAPManagerResourceDefinition resourceDefMan) {
+		this.m_resourceDefMan = resourceDefMan;
 	}
 	
 	@Override
@@ -22,7 +22,7 @@ public class HAPResourceDefinitionPluginAppEntry implements HAPPluginResourceDef
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
 		HAPResourceIdUIAppEntry appEntryResourceId = new HAPResourceIdUIAppEntry(resourceId);
 		HAPResourceIdSimple appResourceId = appEntryResourceId.getUIAppResourceId();
-		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_componentMan.getResourceDefinition(appResourceId);
+		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefMan.getResourceDefinition(appResourceId);
 		return new HAPDefinitionAppEntryWrapper(appDef, appEntryResourceId.getUIAppEntryId().getEntry());
 	}
 }
