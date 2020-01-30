@@ -34,7 +34,7 @@ public class HAPResourceIdUIModule  extends HAPResourceIdSimple{
 		this.m_uiModuleId = new HAPUIModuleId(id);
 	}
 
-	public HAPUIModuleId getUIResourceId(){  return this.m_uiModuleId;	}
+	public HAPUIModuleId getUIModuleId(){  return this.m_uiModuleId;	}
 	
 	@Override
 	public HAPResourceIdUIModule clone(){

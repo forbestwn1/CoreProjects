@@ -95,45 +95,4 @@ public abstract class HAPResourceId extends HAPSerializableImp{
 		this.m_supplement = resourceId.m_supplement;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-//	@Override
-//	protected boolean buildObjectByFullJson(Object json){
-//		JSONObject jsonObj = (JSONObject)json;
-//		
-//		Object type = jsonObj.opt(TYPE);
-//		if(type!=null)		this.m_type = (String)type; 
-//		
-//		String idLiterate = jsonObj.getString(ID);
-//		this.buildCoreIdByLiterate(idLiterate);
-//		return true; 
-//	}
-//
-//	@Override
-//	protected boolean buildObjectByJson(Object json){
-//		this.buildObjectByFullJson(json);
-//		return true; 
-//	}
-//
-//	@Override
-//	protected boolean buildObjectByLiterate(String literateValue){	
-//		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
-//		if(segs.length==1) {
-//			//json structure
-//			JSONObject jsonObj = new JSONObject(literateValue);
-//			this.buildObject(jsonObj, HAPSerializationFormat.JSON);
-//		}
-//		else {
-//			this.m_type = segs[0];
-//			buildCoreIdByLiterate(segs[1]);
-//		}
-//		return true;  
-//	}
-
 }

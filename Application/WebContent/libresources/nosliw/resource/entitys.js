@@ -11,6 +11,7 @@ var packageObj = library.getChildPackage("entity");
 var node_ResourceId = function(type, id){
 	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = type;
 	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = node_resourceUtility.buildReourceCoreIdLiterate(id);
+	this.name = id;
 };	
 	
 var node_Resource = function(resourceInfo, resourceData, info){

@@ -22,6 +22,9 @@ import com.nosliw.data.core.service.provide.HAPGatewayService;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.application.HAPComponentPluginApp;
+import com.nosliw.uiresource.application.HAPComponentPluginAppEntry;
+import com.nosliw.uiresource.module.HAPComponentPluginModule;
 import com.nosliw.uiresource.page.definition.HAPComponentPluginPage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
@@ -86,6 +89,9 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
 		//component
 		this.getComponentManager().registerPlugin(new HAPComponentPluginPage(this.m_uiResourceManager.getUIResourceParser()));
+		this.getComponentManager().registerPlugin(new HAPComponentPluginModule(this.m_uiResourceManager.getModuleParser()));
+		this.getComponentManager().registerPlugin(new HAPComponentPluginApp(this.m_uiResourceManager.getMinitAppParser()));
+		this.getComponentManager().registerPlugin(new HAPComponentPluginAppEntry(this.getComponentManager()));
 	}
 	
 	public HAPUIResourceManager getUIResourceManager() {   return this.m_uiResourceManager;   }

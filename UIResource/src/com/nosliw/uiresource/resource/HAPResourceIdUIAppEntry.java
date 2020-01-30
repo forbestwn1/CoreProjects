@@ -35,6 +35,12 @@ public class HAPResourceIdUIAppEntry  extends HAPResourceIdSimple{
 	}
 
 	public HAPUIAppEntryId getUIAppEntryId(){	return this.m_uiAppEntryId;	}
+
+	public HAPResourceIdUIApp getUIAppResourceId() {     
+		HAPUIAppEntryId appEntryId = this.getUIAppEntryId();
+		HAPResourceIdUIApp appResourceId = new HAPResourceIdUIApp(appEntryId.getAppId(), this.getSupplement());
+		return appResourceId; 
+	}
 	
 	@Override
 	public HAPResourceIdUIAppEntry clone(){

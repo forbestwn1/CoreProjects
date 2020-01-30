@@ -27,7 +27,7 @@ var node_createUIPageService = function(){
 	var loc_out = {
 
 			getCreateUIPageRequest : function(pageId, context, handlers, requester_parent){
-				pageId = node_resourceUtility.buildReourceCoreIdLiterate(pageId);
+//				pageId = node_resourceUtility.buildReourceCoreIdLiterate(pageId);
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIResourceView", {"name":pageId}), handlers, requestInfo);
 

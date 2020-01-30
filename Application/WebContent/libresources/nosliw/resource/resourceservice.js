@@ -219,10 +219,16 @@ var node_createResourceService = function(resourceManager){
 				success : function(requestInfo, resourceTree){
 					//translate tree to resources by id
 					var resourcesData = {};
-					var resources = node_resourceUtility.getResourcesByTypeFromTree(resourceTree, resourceType);
-					_.each(resources, function(resource, id){
-						resourcesData[id] = resource.resourceData;
+					
+					_.each(resourceIds, function(resourceId, i){
+						var resource = node_resourceUtility.getResourceFromTree(resourceTree, resourceId);
+						resourcesData[resourceId.name] = resource.resourceData;
 					});
+					
+//					var resources = node_resourceUtility.getResourcesByTypeFromTree(resourceTree, resourceType);
+//					_.each(resources, function(resource, id){
+//						resourcesData[id] = resource.resourceData;
+//					});
 					return resourcesData;
 				}
 			}));

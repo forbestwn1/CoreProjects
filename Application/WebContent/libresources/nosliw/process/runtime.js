@@ -16,6 +16,7 @@ var packageObj = library;
 	var node_IOTaskResult;
 	var node_IOTaskInfo;
 	var node_ProcessResult;
+	var node_resourceUtility;
 
 //*******************************************   Start Node Definition  **************************************
 var node_createProcessRuntime = function(envObj){
@@ -27,6 +28,8 @@ var node_createProcessRuntime = function(envObj){
 		//execute process by resource id
 		//return ProcessResult with resultName and mapped output value by result
 		getExecuteProcessResourceRequest : function(id, inputValue, outputMappingsByResult, handlers, requester_parent){
+//			id = node_resourceUtility.buildReourceCoreIdLiterate(id);
+
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteProcessResource", {"id":id, "input":inputValue}), handlers, requestInfo);
 			//get process resource first
@@ -195,6 +198,7 @@ nosliw.registerSetNodeDataEvent("iotask.taskUtility", function(){node_taskUtilit
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
+nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 
 
 //Register Node by Name
