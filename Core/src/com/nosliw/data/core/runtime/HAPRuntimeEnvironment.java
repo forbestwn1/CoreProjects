@@ -1,6 +1,6 @@
 package com.nosliw.data.core.runtime;
 
-import com.nosliw.data.core.component.HAPManagerComponent;
+import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
@@ -29,7 +29,7 @@ public interface HAPRuntimeEnvironment {
 
 	HAPManagerService getServiceManager();
 	
-	HAPManagerComponent getComponentManager();
+	HAPManagerResourceDefinition getResourceDefinitionManager();
 	
 	HAPRuntime getRuntime();
 	

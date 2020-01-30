@@ -2,20 +2,20 @@ package com.nosliw.uiresource.page.definition;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPComponent;
-import com.nosliw.data.core.component.HAPPluginComponent;
+import com.nosliw.data.core.component.HAPPluginResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPComponentPluginPage implements HAPPluginComponent{
+public class HAPResourceDefinitionPluginPage implements HAPPluginResourceDefinition{
 
 	private HAPParserPage m_pageParser;
 	
-	public HAPComponentPluginPage(HAPParserPage pageParser) {
+	public HAPResourceDefinitionPluginPage(HAPParserPage pageParser) {
 		this.m_pageParser = pageParser;
 	}
 	
 	@Override
-	public HAPComponent getComponent(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
 		//read content
 		String file = HAPFileUtility.getUIPageFolder()+resourceId.getId()+".res";
 		//parse content
@@ -24,6 +24,6 @@ public class HAPComponentPluginPage implements HAPPluginComponent{
 	}
 
 	@Override
-	public String getComponentType() {		return HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE;	}
+	public String getResourceType() {		return HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE;	}
 
 }

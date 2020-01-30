@@ -14,10 +14,11 @@ import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.data.core.component.HAPWithAttachment;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
-public class HAPDefinitionAppEntryWrapper implements HAPComponent{
+public class HAPDefinitionAppEntryWrapper implements HAPComponent, HAPResourceDefinition{
 
 	private HAPDefinitionApp m_app;
 	

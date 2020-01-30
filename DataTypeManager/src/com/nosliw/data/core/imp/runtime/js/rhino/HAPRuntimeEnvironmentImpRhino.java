@@ -2,7 +2,7 @@ package com.nosliw.data.core.imp.runtime.js.rhino;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.data.core.component.HAPManagerComponent;
+import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
@@ -42,7 +42,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPExpressionSuiteManager expSuiteMan = new HAPExpressionSuiteManager();
 		HAPManagerProcessDefinition processDefMan = new HAPManagerProcessDefinition(new HAPManagerActivityPlugin(), HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
 		HAPManagerProcess processMan = new HAPManagerProcessImp(processDefMan, runtime);
-		HAPManagerComponent componentManager = new HAPManagerComponent();
+		HAPManagerResourceDefinition componentManager = new HAPManagerResourceDefinition();
 
 		init(new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess()),
 				processDefMan,

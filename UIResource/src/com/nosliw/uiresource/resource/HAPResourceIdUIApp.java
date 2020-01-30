@@ -10,7 +10,7 @@ public class HAPResourceIdUIApp  extends HAPResourceIdSimple{
 
 	private HAPUIAppId m_uiAppId; 
 	
-	public HAPResourceIdUIApp(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE);    }
+	public HAPResourceIdUIApp(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPP);    }
 
 	public HAPResourceIdUIApp(HAPResourceIdSimple resourceId){
 		this();
@@ -30,6 +30,7 @@ public class HAPResourceIdUIApp  extends HAPResourceIdSimple{
 	}
 	
 	public HAPResourceIdUIApp(String id, HAPResourceIdSupplement supplement){
+		this();
 		init(id, supplement);
 	}
 

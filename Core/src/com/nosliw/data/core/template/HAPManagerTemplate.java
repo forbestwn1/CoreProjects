@@ -7,7 +7,7 @@ import com.nosliw.data.core.HAPData;
 public class HAPManagerTemplate {
 
 	
-	public HAPResourceDefinition build(String templateId, Map<String, HAPData> parms) {
+	public HAPResourceDefinitionkkkk build(String templateId, Map<String, HAPData> parms) {
 		return null;
 	}
 	

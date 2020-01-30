@@ -7,10 +7,11 @@ import java.util.Set;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
-abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implements HAPComponent{
+abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implements HAPComponent, HAPResourceDefinition{
 
 	private HAPResourceId m_resourceId;
 	

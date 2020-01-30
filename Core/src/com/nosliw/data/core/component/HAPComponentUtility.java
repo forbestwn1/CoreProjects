@@ -87,7 +87,10 @@ public class HAPComponentUtility {
 	}
 
 	public static HAPAttachmentContainer buildNameMappedAttachment(HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
-		HAPAttachmentContainer out = withNameMapping.getNameMapping().mapAttachment(attachment);
+		HAPAttachmentContainer out = null;
+		if(withNameMapping==null)   out = attachment;
+		else out = withNameMapping.getNameMapping().mapAttachment(attachment);
+		if(out==null)  out = new HAPAttachmentContainer();
 		return out;
 	}
 

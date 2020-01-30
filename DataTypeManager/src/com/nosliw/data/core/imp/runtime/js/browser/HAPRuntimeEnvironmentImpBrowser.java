@@ -2,7 +2,7 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.data.core.component.HAPManagerComponent;
+import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
@@ -22,10 +22,10 @@ import com.nosliw.data.core.service.provide.HAPGatewayService;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.application.HAPComponentPluginApp;
-import com.nosliw.uiresource.application.HAPComponentPluginAppEntry;
-import com.nosliw.uiresource.module.HAPComponentPluginModule;
-import com.nosliw.uiresource.page.definition.HAPComponentPluginPage;
+import com.nosliw.uiresource.application.HAPResourceDefinitionPluginApp;
+import com.nosliw.uiresource.application.HAPResourceDefinitionPluginAppEntry;
+import com.nosliw.uiresource.module.HAPResourceDefinitionPluginModule;
+import com.nosliw.uiresource.page.definition.HAPResourceDefinitionPluginPage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
@@ -58,7 +58,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPExpressionSuiteManager expSuiteMan = new HAPExpressionSuiteManager();
 		HAPManagerProcessDefinition processDefMan = new HAPManagerProcessDefinition(new HAPManagerActivityPlugin(), HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
 		HAPManagerProcess processMan = new HAPManagerProcessImp(processDefMan, runtime);
-		HAPManagerComponent componentManager = new HAPManagerComponent();
+		HAPManagerResourceDefinition componentManager = new HAPManagerResourceDefinition();
 		
 		init(new HAPResourceManagerJSImp(
 				runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess()),
@@ -79,7 +79,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 				this.getRuntime(),
 				HAPExpressionManager.dataTypeHelper,
 				this.getServiceManager().getServiceDefinitionManager(),
-				this.getComponentManager());
+				this.getResourceDefinitionManager());
 
 		//gateway
 		this.getGatewayManager().registerGateway(GATEWAY_SERVICE, new HAPGatewayService(this.getServiceManager()));
@@ -88,10 +88,10 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression());
 
 		//component
-		this.getComponentManager().registerPlugin(new HAPComponentPluginPage(this.m_uiResourceManager.getUIResourceParser()));
-		this.getComponentManager().registerPlugin(new HAPComponentPluginModule(this.m_uiResourceManager.getModuleParser()));
-		this.getComponentManager().registerPlugin(new HAPComponentPluginApp(this.m_uiResourceManager.getMinitAppParser()));
-		this.getComponentManager().registerPlugin(new HAPComponentPluginAppEntry(this.getComponentManager()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginPage(this.m_uiResourceManager.getUIResourceParser()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginModule(this.m_uiResourceManager.getModuleParser()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginApp(this.m_uiResourceManager.getMinitAppParser()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginAppEntry(this.getResourceDefinitionManager()));
 	}
 	
 	public HAPUIResourceManager getUIResourceManager() {   return this.m_uiResourceManager;   }

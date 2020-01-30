@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 @HAPEntityWithAttribute
-public abstract class HAPResourceId extends HAPSerializableImp{
+public abstract class HAPResourceId extends HAPSerializableImp implements HAPResourceDefinitionOrReference{
 
 	@HAPAttribute
 	public static String TYPE = "type";

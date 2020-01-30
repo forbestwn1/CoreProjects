@@ -2,7 +2,6 @@ package com.nosliw.data.core.component;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
 //entity info : name, description, info
@@ -20,9 +19,6 @@ public interface HAPComponent extends HAPEntityInfo, HAPWithAttachment, HAPWithL
 	
 	String getComponentType();
 
-	void setResourceId(HAPResourceId resourceId);
-	HAPResourceId getResourceId();
-	
 	String getId();
 	void setId(String id);
 

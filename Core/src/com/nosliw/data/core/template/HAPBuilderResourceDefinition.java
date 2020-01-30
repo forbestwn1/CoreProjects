@@ -9,6 +9,6 @@ public interface HAPBuilderResourceDefinition extends HAPEntityInfo{
 
 	String getId();
 	
-	HAPResourceDefinition build(HAPContentTemplate templateContent, Map<String, HAPData> parms);
+	HAPResourceDefinitionkkkk build(HAPContentTemplate templateContent, Map<String, HAPData> parms);
 
 }
