@@ -88,5 +88,6 @@ abstract public class HAPComponentImp extends HAPEntityInfoWritableImp implement
 		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
 		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildJson(this.m_lifecycleAction, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
+		jsonMap.put(HAPWithAttachment.ATTACHMENT, m_attachmentContainer.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

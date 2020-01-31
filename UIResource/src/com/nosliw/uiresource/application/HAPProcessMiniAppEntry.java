@@ -45,8 +45,7 @@ import com.nosliw.uiresource.module.HAPExecutableModule;
 public class HAPProcessMiniAppEntry {
 
 	public static HAPExecutableAppEntry process(
-			HAPDefinitionApp miniAppDef,
-			String entry, 
+			HAPDefinitionAppEntryWrapper minAppEntryDef,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcessDefinition processMan,
 			HAPUIResourceManager uiResourceMan,
@@ -55,6 +54,9 @@ public class HAPProcessMiniAppEntry {
 			HAPExpressionSuiteManager expressionManager,
 			HAPManagerServiceDefinition serviceDefinitionManager,
 			HAPProcessTracker processTracker) {
+
+		HAPDefinitionApp miniAppDef = minAppEntryDef.getAppDefinition();
+		String entry = minAppEntryDef.getEntry();
 
 		HAPExecutableAppEntry out = new HAPExecutableAppEntry(entry, miniAppDef);
 		
@@ -113,16 +115,17 @@ public class HAPProcessMiniAppEntry {
 		HAPExecutableAppModule out = new HAPExecutableAppModule(module);
 		
 		HAPAttachment moduleAttachment = parentAttachment.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getModule());
-		HAPDefinitionModule moduleDef = null;
 		HAPResourceDefinitionOrReference defOrRef = null;
 		if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
 			defOrRef = ((HAPAttachmentReference)moduleAttachment).getId();
+
 		}
 		else if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_ENTITY)){
 			
 		}
 		//module
 		HAPExecutableModule moduleExe = uiResourceMan.getEmbededUIModule(defOrRef, parentAttachment, module);
+		HAPDefinitionModule moduleDef = moduleExe.getDefinition();
 		out.setModule(moduleExe);
 		
 		HAPParentContext parentContext = HAPParentContext.createDefault(entryExe.getContext());
