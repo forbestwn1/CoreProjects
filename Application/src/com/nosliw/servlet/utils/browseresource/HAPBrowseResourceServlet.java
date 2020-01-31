@@ -29,6 +29,7 @@ import com.nosliw.uiresource.application.HAPDefinitionAppEntryWrapper;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.resource.HAPResourceIdUIModule;
+import com.nosliw.uiresource.resource.HAPResourceIdUIResource;
 
 public class HAPBrowseResourceServlet extends HAPBaseServlet{
 
@@ -97,7 +98,7 @@ public class HAPBrowseResourceServlet extends HAPBaseServlet{
 		Set<File> files = HAPFileUtility.getAllFiles(HAPFileUtility.getUIPageFolder());
 		for(File file : files) {
 			String resourceId = HAPFileUtility.getFileName(file);
-			HAPResourceNode node = createResourceNodePage(resourceId, new HAPResourceIdUIModule(resourceId), null);
+			HAPResourceNode node = createResourceNodePage(resourceId, new HAPResourceIdUIResource(resourceId), null);
 			out.addElement(node);
 		}
 		return out;
