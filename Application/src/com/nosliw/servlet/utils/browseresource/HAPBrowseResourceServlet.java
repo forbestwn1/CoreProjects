@@ -22,11 +22,10 @@ import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.servlet.HAPBaseServlet;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
-import com.nosliw.uiresource.application.HAPDefinitionAppEntryUI;
+import com.nosliw.uiresource.application.HAPDefinitionAppEntryWrapper;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.resource.HAPResourceIdUIModule;
@@ -104,13 +103,13 @@ public class HAPBrowseResourceServlet extends HAPBaseServlet{
 		return out;
 	}
 
-	private HAPResourceNode createResourceNodePage(String name, HAPResourceIdSimple resourceId, HAPInfo info) {
+	private HAPResourceNode createResourceNodePage(String name, HAPResourceId resourceId, HAPInfo info) {
 		HAPResourceNode out = new HAPResourceNode(name);
 		out.setResourceId(resourceId);
 		String url = "http://localhost:8082/nosliw/page.html?name="+resourceId.getIdLiterate();
 		out.setUrl(url);
 		try {
-			HAPDefinitionUIPage pageDef = this.m_uiResourceMan.getUIPageDefinition(resourceId);
+			HAPDefinitionUIPage pageDef = this.m_uiResourceMan.getUIPageDefinition(resourceId, null);
 			this.processChildren(out, pageDef.getChildrenComponentId());
 		}
 		catch(Throwable e) {
@@ -125,7 +124,7 @@ public class HAPBrowseResourceServlet extends HAPBaseServlet{
 		String url = "http://localhost:8082/nosliw/module_framework7.html?name="+resourceId.getIdLiterate()+"&setting=setting";
 		out.setUrl(url);
 		try {
-			HAPDefinitionModule moduleDef = this.m_uiResourceMan.getModuleDefinition(resourceId);
+			HAPDefinitionModule moduleDef = this.m_uiResourceMan.getModuleDefinition(resourceId, null);
 			this.processChildren(out, moduleDef.getChildrenComponentId());
 		}
 		catch(Throwable e) {
@@ -141,7 +140,7 @@ public class HAPBrowseResourceServlet extends HAPBaseServlet{
 		String url = "http://localhost:8082/nosliw/app.html?name="+resourceId.getIdLiterate()+"&setting=setting";
 		out.setUrl(url);
 		try {
-			HAPDefinitionAppEntryUI appEntryDef = this.m_uiResourceMan.getMiniAppEntryDefinition(resourceId);
+			HAPDefinitionAppEntryWrapper appEntryDef = this.m_uiResourceMan.getMiniAppEntryDefinition(resourceId, null);
 			this.processChildren(out, appEntryDef.getChildrenComponentId());
 		}
 		catch(Throwable e) {
@@ -150,8 +149,8 @@ public class HAPBrowseResourceServlet extends HAPBaseServlet{
 		return out;
 	}
 
-	private HAPResourceNode createResourceNodeApp(HAPResourceIdSimple resourceId) {
-		HAPDefinitionApp appDef = m_uiResourceMan.getMiniAppDefinition(resourceId);
+	private HAPResourceNode createResourceNodeApp(HAPResourceId resourceId) {
+		HAPDefinitionApp appDef = m_uiResourceMan.getMiniAppDefinition(resourceId, null);
 		HAPResourceNode out = new HAPResourceNode(appDef.getId());
 		this.processChildren(out, appDef.getChildrenComponentId());
 		return out;

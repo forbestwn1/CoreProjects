@@ -33,6 +33,11 @@ public class HAPDefinitionAppEntryWrapper implements HAPComponent, HAPResourceDe
 	public String getEntry() {   return this.m_entry;   }
 	
 	@Override
+	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+		return this.m_app.getEntry(this.m_entry).getChildrenComponentId();
+	}
+	
+	@Override
 	public HAPInfo getInfo() {
 		// TODO Auto-generated method stub
 		return null;
@@ -164,12 +169,4 @@ public class HAPDefinitionAppEntryWrapper implements HAPComponent, HAPResourceDe
 		
 	}
 
-	@Override
-	public HAPChildrenComponentIdContainer getChildrenComponentId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	
 }
