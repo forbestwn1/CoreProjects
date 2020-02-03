@@ -17,10 +17,10 @@ var node_createComponentResourceNode = function(){
 		},
 		props : ['data'],
 		components : {
-			"group" : node_createComponentResourceGroup(),
+			"resource-group" : node_createComponentResourceGroup(),
 		},
 		methods : {
-			onSelectMiniApp : function(miniAppId) {
+			onSelectResource : function(resourceInfo) {
 				this.$emit("selectMiniApp", miniAppId);
 			},
 		},
@@ -34,7 +34,7 @@ var node_createComponentResourceNode = function(){
 		
 			<div class="list accordion-list">
 				<ul>
-					<group 
+					<resource-group 
 						v-for="miniAppGroup in data.children"
 						v-bind:key="miniAppGroup.group.id"
 						v-bind:data="miniAppGroup"
@@ -54,6 +54,6 @@ var node_createComponentResourceNode = function(){
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createComponentUserApps", node_createComponentUserApps); 
+packageObj.createChildNode("createComponentUserApps", node_createComponentResourceNode); 
 
 })(packageObj);

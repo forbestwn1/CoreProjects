@@ -71,7 +71,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>browseResourceServlet</servlet-name>
-    <url-pattern>/browseResource</url-pattern>
+    <url-pattern>/browseresource</url-pattern>
   </servlet-mapping>
 
 

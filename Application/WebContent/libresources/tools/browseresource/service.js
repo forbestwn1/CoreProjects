@@ -29,17 +29,21 @@ var node_createService = function(){
 	
 	loc_out = {
 
-		getResourceTreeRequest : function(handlers, requester_parent){
-			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo("", ""), undefined, handlers, requestInfo);
+		getResourceTreeRequest : function(handlers, requestInfo){
+//			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo("browseResource", ""), undefined, handlers, requestInfo);
 			return remoteRequest;
 		},
 
-		executeResourceTreeRequest : function(userInfo, handlers, requester_parent){
+		executeResourceTreeRequest : function(handlers, requester_parent){
 			var remoteRequest = this.getResourceTreeRequest(handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(remoteRequest);
 		},
-	}
+	};
+	
+	loc_out = node_buildServiceProvider(loc_out, "browseresource");
+
+	return loc_out;
 };	
 
 //*******************************************   End Node Definition  ************************************** 	

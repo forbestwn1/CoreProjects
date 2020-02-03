@@ -1,30 +1,3 @@
-// First of all, we need to initialize/enable Framework7 Vue plugin:
-// We need to pass Framework7Vue plugin to Framework7's .use() method
-Framework7.use(Framework7Vue);
-
-// Init Vue App
-new Vue({
-  // App Root Element
-  el: '#app',
-
-  // App root data
-  data() {
-    return {
-      // Framework7 parameters that we pass to <f7-app> component
-      f7params: {
-        routes: [],
-        name: 'My App',
-        id: 'com.myapp.test',
-      }
-    };
-  },
-  methods: {
-  }
-})
-
-/**
- * 
- */
 //get/create package
 var packageObj = library.getChildPackage("module.userapps");    
 
@@ -52,14 +25,19 @@ var node_createResourceTreeApp = function(parm){
 	var loc_eventListener = node_createEventObject();
 
 	var loc_componentData = {
-		f7params: {
-          routes: [],
-          name: 'My App',
-          id: 'com.myapp.test',
-        },
-		resourceTree : {}
+		resources : {}
 	};
-	
+
+	var loc_framework7App = new Framework7({
+		  // App root element
+		  root: $("#appDiv").get(),
+		  name: 'My App',
+		  id: 'com.myapp.test',
+		  panel: {
+			    swipe: 'both',
+		  },				
+	});
+
 	var loc_vue;
 
 	var loc_triggerEvent = function(eventName, eventData, request){
@@ -72,7 +50,7 @@ var node_createResourceTreeApp = function(parm){
 			el: loc_root,
 			data: loc_componentData,
 			components : {
-				"group" : node_createComponentResourceGroup(),
+				"resource-group" : node_createComponentResourceGroup(),
 			},
 			computed : {
 			},
@@ -82,11 +60,15 @@ var node_createResourceTreeApp = function(parm){
 				},
 			},
 			template : `
-				<div>
-				  	<user-apps 
-				  		v-bind:data="userInfo"
-				  		v-on:selectMiniApp="onSelectMiniApp"
-				  	></user-apps>
+				<div class="list accordion-list">
+					<ul>
+						<div>
+						  	<resource-group 
+								v-for="group in resources"
+						  		v-bind:data="group"
+						  	></resource-group>
+						</div>
+					</ul>
 				</div>
 			`
 		});
@@ -94,18 +76,17 @@ var node_createResourceTreeApp = function(parm){
 
 	var loc_out = {
 		
-		refreshRequest : function(userInfo, configureData, handlers, requestInfo){
+		refreshRequest : function(resources, configureData, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshUserApps", {}), handlers, requestInfo);
 			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUserApps", {}), 
 				function(requestInfo){
-					loc_componentData.userInfo = userInfo;
+					loc_componentData.resources = resources;
 				})); 
 			return out;
 		},
 
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
-
 	};
 	
 	node_makeObjectWithLifecycle(loc_out, lifecycleCallback);

@@ -1,15 +1,12 @@
 package com.nosliw.servlet.utils.browseresource;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.info.HAPInfo;
@@ -22,7 +19,7 @@ import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
-import com.nosliw.servlet.HAPBaseServlet;
+import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntryWrapper;
@@ -31,18 +28,18 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.resource.HAPResourceIdUIModule;
 import com.nosliw.uiresource.resource.HAPResourceIdUIResource;
 
-public class HAPBrowseResourceServlet extends HAPBaseServlet{
+public class HAPBrowseResourceServlet extends HAPServiceServlet{
 
 	private HAPUIResourceManager m_uiResourceMan;
-	
-	@Override
-	protected void doGet (HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
-		m_uiResourceMan = (HAPUIResourceManager)request.getServletContext().getAttribute("uiResourceManager");
-		Map<String, HAPResourceNodeContainerByType> resourceTree = this.buildResourceTree();
-		HAPServiceData serviceData = HAPServiceData.createSuccessData(resourceTree);
-		this.printContent(serviceData, response);
-	}
 
+	@Override
+	protected HAPServiceData processServiceRequest(String command, JSONObject parms) {
+		m_uiResourceMan = (HAPUIResourceManager)this.getServletContext().getAttribute("uiResourceManager");
+		Map<String, HAPResourceNodeContainerByType> resourceTree = this.buildResourceTree();
+		HAPServiceData out = HAPServiceData.createSuccessData(resourceTree);
+		return out;
+	}
+	
 	public static void main(String[] args) {
 		HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();
 		HAPUIResourceManager uiResourceMan = runtimeEnvironment.getUIResourceManager();

@@ -27,10 +27,10 @@ var node_createComponentResourceGroup = function(){
 		template : `
 			<div>
 				<p>
-					<a v-on:click.prevent="onSelectMiniApp">{{data.name}}</a>
+					{{data.type}}
 				</p>
 			</div>
-		
+		<!--
 			<div class="list accordion-list">
 				<ul>
 					<node 
@@ -42,6 +42,7 @@ var node_createComponentResourceGroup = function(){
 					</node>
 				</ul>
 			</div>
+		-->
 		`
 	};
 	return loc_vueComponent;
@@ -54,6 +55,6 @@ var node_createComponentResourceGroup = function(){
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createComponentResourceByType", node_createComponentResourceByType); 
+packageObj.createChildNode("createComponentResourceGroup", node_createComponentResourceGroup); 
 
 })(packageObj);
