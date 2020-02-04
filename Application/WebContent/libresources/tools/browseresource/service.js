@@ -31,7 +31,7 @@ var node_createService = function(){
 
 		getResourceTreeRequest : function(handlers, requestInfo){
 //			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo("browseResource", ""), undefined, handlers, requestInfo);
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo("browseResource", {}), undefined, handlers, requestInfo);
 			return remoteRequest;
 		},
 
