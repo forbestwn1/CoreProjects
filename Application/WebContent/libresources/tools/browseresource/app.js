@@ -30,7 +30,8 @@ var node_createResourceTreeApp = function(parm, resources){
 	var loc_eventListener = node_createEventObject();
 
 	var loc_componentData = {
-		resources : {}
+		resources : {},
+		info : {}
 	};
 
 	var loc_vue;
@@ -51,16 +52,29 @@ var node_createResourceTreeApp = function(parm, resources){
 			el: loc_root,
 			data: loc_componentData,
 			methods : {
-				onChildSelectResource : function(resourceInfo) {
-					this.$emit("selectResource", resourceInfo);
+				onSelectResource : function(resourceInfo) {
+					loc_componentData.info = resourceInfo;
 				},
 			},
 			template : `
-				<div class="treeview">
-				  	<resource-children 
-				  		v-bind:data="resources"
-						v-on:selectResource="onChildSelectResource"
-				  	></resource-children>
+				<div class="row">
+				    <!-- Each "cell" has col-[width in percents] class -->
+				    <div class="col col-50 resizable">
+						<div class="treeview" style="overflow-y: scroll; height:400px;">
+						  	<resource-children 
+						  		v-bind:data="resources"
+								v-on:selectResource="onSelectResource"
+						  	></resource-children>
+						</div>
+						<span class="resize-handler"></span>
+				    </div>
+				    <div id="infoDiv" class="col col-50 resizable">
+				    	<div>
+						  	<resource-info 
+						  		v-bind:data="info"
+						  	></resource-info>
+				    	</div>
+				    </div>
 				</div>
 			`
 		});
@@ -109,7 +123,7 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("browseresource.createComponentChildren", function(){node_createComponentChildren = this.getData();});
 nosliw.registerSetNodeDataEvent("browseresource.createComponentGroup", function(){node_createComponentGroup = this.getData();});
 nosliw.registerSetNodeDataEvent("browseresource.createComponentResource", function(){node_createComponentResource = this.getData();});
-nosliw.registerSetNodeDataEvent("browseresource.createComponentInfo", function(){node_createComponentResource = this.getData();});
+nosliw.registerSetNodeDataEvent("browseresource.createComponentInfo", function(){node_createComponentInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createResourceTreeApp", node_createResourceTreeApp); 

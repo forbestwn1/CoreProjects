@@ -16,19 +16,12 @@ var node_createComponentInfo = function(){
 			return {};
 		},
 		methods : {
-			onChildSelectResource : function(resourceInfo) {
-				this.$emit("selectResource", resourceInfo);
-			},
 		},
 		props : ['data'],
 		template : `
 			<div>
-			  	<resource-group 
-					v-for="group in data"
-					v-bind:key="group.type"
-			  		v-bind:data="group"
-					v-on:selectResource="onChildSelectResource"
-			  	></resource-group>
+				<p>{{data.name}}</p>
+				<a class="link external" v-bind:href="data.url" target="_blank">{{data.url}}</a>
 		  	</div>
 		`
 	};
