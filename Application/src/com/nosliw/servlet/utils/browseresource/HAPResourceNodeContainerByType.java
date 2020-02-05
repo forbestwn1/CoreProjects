@@ -1,6 +1,8 @@
 package com.nosliw.servlet.utils.browseresource;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,8 +40,13 @@ public class HAPResourceNodeContainerByType extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.m_type);
+		
+		Collections.sort(this.m_elements, new Comparator<HAPResourceNode>(){
+			@Override
+			public int compare(HAPResourceNode arg0, HAPResourceNode arg1) {
+				return arg0.getName().compareToIgnoreCase(arg1.getName());
+			}
+		});
 		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}
-
-	
 }

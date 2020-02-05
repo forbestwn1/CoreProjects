@@ -25,14 +25,16 @@ var node_createComponentResource = function(){
 		},
 		props : ['data'],
 		template : `
-			
 			<div class="treeview-item">
-			    <a v-on:click.prevent="onSelectResource" class="treeview-item-root treeview-item-selectable">
-				      <div class="treeview-toggle"></div>
-				      <div class="treeview-item-content">
-							<div class="treeview-item-label">{{data.name}}</div>
-				      </div>
-			    </a>
+				    <a v-on:click.prevent="onSelectResource" class="treeview-item-root treeview-item-selectable">
+					      <div v-if="data.children" class="treeview-toggle"></div>
+					      <div class="treeview-item-content">
+								<i class="icon f7-icons">doc</i>
+								<div class="treeview-item-label">{{data.name}}</div>
+					      </div>
+				    </a>
+				<!--div class="treeview-item-root">
+			    </div-->
 			    <div class="treeview-item-children">
 					<resource-children 
 						v-bind:data="data.children"

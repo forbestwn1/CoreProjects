@@ -28,7 +28,7 @@ var node_createComponentGroup = function(){
 		    <div class="treeview-item-root">
 			      <div class="treeview-toggle"></div>
 			      <div class="treeview-item-content">
-			      		<i class="icon f7-icons"></i>
+						<i class="icon f7-icons">folder_fill</i>
 						<div class="treeview-item-label">{{data.type}}</div>
 			      </div>
 		    </div>

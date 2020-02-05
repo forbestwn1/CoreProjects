@@ -1,7 +1,6 @@
 package com.nosliw.servlet.utils.browseresource;
 
 import java.io.File;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,7 +34,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 	@Override
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) {
 		m_uiResourceMan = (HAPUIResourceManager)this.getServletContext().getAttribute("uiResourceManager");
-		Map<String, HAPResourceNodeContainerByType> resourceTree = this.buildResourceTree();
+		HAPResourceNodeContainer resourceTree = this.buildResourceTree();
 		HAPServiceData out = HAPServiceData.createSuccessData(resourceTree);
 		return out;
 	}
@@ -45,25 +44,25 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 		HAPUIResourceManager uiResourceMan = runtimeEnvironment.getUIResourceManager();
 		HAPBrowseResourceServlet that = new HAPBrowseResourceServlet();
 		that.m_uiResourceMan = uiResourceMan;
-		Map<String, HAPResourceNodeContainerByType> resourceTree = that.buildResourceTree();
+		HAPResourceNodeContainer resourceTree = that.buildResourceTree();
 		System.out.println(HAPJsonUtility.buildJson(resourceTree, HAPSerializationFormat.JSON));
 	}
 	
-	private Map<String, HAPResourceNodeContainerByType> buildResourceTree(){
-		Map<String, HAPResourceNodeContainerByType> out = new LinkedHashMap<String, HAPResourceNodeContainerByType>();
+	private HAPResourceNodeContainer buildResourceTree(){
+		HAPResourceNodeContainer out = new HAPResourceNodeContainer();
 		{
 			HAPResourceNodeContainerByType byType = this.buildAllApp(); 
-			out.put(byType.getType(), byType);
+			out.addTypeResourceContainer(byType);
 		}
 
 		{
 			HAPResourceNodeContainerByType byType = this.buildAllModule(); 
-			out.put(byType.getType(), byType);
+			out.addTypeResourceContainer(byType);
 		}
 
 		{
 			HAPResourceNodeContainerByType byType = this.buildAllPage(); 
-			out.put(byType.getType(), byType);
+			out.addTypeResourceContainer(byType);
 		}
 
 		return out;

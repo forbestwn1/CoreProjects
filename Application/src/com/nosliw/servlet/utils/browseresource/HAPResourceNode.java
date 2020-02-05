@@ -1,6 +1,5 @@
 package com.nosliw.servlet.utils.browseresource;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -32,15 +31,17 @@ public class HAPResourceNode extends HAPSerializableImp{
 	
 	private String m_url;
 	
-	private Map<String, HAPResourceNodeContainerByType> m_children;
+	private HAPResourceNodeContainer m_children;
 
 	private boolean m_isValid;
 	
 	public HAPResourceNode(String name) {
 		this.m_name = name;
-		this.m_children = new LinkedHashMap<String, HAPResourceNodeContainerByType>();
+		this.m_children = new HAPResourceNodeContainer();
 		this.m_isValid = true;
 	}
+	
+	public String getName() {  return this.m_name;   }
 
 	public void setResourceId(HAPResourceId resourceId) {	this.m_resourceId = resourceId;	}
 	
@@ -50,12 +51,7 @@ public class HAPResourceNode extends HAPSerializableImp{
 	public boolean getIsValid() {    return this.m_isValid;    }
 
 	public void addChild(String type, HAPResourceNode node) {
-		HAPResourceNodeContainerByType byType = this.m_children.get(type);
-		if(byType==null) {
-			byType = new HAPResourceNodeContainerByType(type);
-			this.m_children.put(type, byType);
-		}
-		byType.addElement(node);
+		this.m_children.addResource(type, node);
 	}
 	
 	@Override
@@ -66,8 +62,7 @@ public class HAPResourceNode extends HAPSerializableImp{
 		if(this.m_resourceId!=null) jsonMap.put(RESOURCEID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ISVALID, Boolean.toString(this.m_isValid));
 		typeJsonMap.put(ISVALID, Boolean.class);
-		
-		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.m_children, HAPSerializationFormat.JSON));
+		if(!this.m_children.isEmpty())	jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.m_children, HAPSerializationFormat.JSON));
 	}
 
 }
