@@ -76,7 +76,7 @@ public class HAPResourceIdSupplement  extends HAPSerializableImp{
 			Map<String, HAPResourceId> byName = this.m_resources.get(type);
 			Map<String, String> byNameMap = new LinkedHashMap<String, String>();
 			for(String name : byName.keySet()) {
-				byNameMap.put(name, byName.get(name).toStringValue(HAPSerializationFormat.JSON));
+				byNameMap.put(name, byName.get(name).toStringValue(HAPSerializationFormat.JSON_FULL));
 			}
 			jsonMap.put(type, HAPJsonUtility.buildMapJson(byNameMap));
 		}
@@ -84,7 +84,14 @@ public class HAPResourceIdSupplement  extends HAPSerializableImp{
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildFullJsonMap(jsonMap, typeJsonMap);
+		for(String type : this.m_resources.keySet()) {
+			Map<String, HAPResourceId> byName = this.m_resources.get(type);
+			Map<String, String> byNameMap = new LinkedHashMap<String, String>();
+			for(String name : byName.keySet()) {
+				byNameMap.put(name, byName.get(name).toStringValue(HAPSerializationFormat.JSON));
+			}
+			jsonMap.put(type, HAPJsonUtility.buildMapJson(byNameMap));
+		}
 	}
 
 	@Override

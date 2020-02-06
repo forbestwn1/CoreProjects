@@ -22,6 +22,7 @@ var node_createComponentInfo = function(){
 			<div>
 				<p>{{data.name}}</p>
 				<a class="link external" v-bind:href="data.url" target="_blank">{{data.url}}</a>
+				<p>{{data.resourceId}}</p>
 		  	</div>
 		`
 	};

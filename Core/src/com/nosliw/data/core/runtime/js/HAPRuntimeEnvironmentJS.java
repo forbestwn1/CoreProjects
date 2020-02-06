@@ -17,6 +17,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayExpressionDiscovery;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
+import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResourceDefinition;
 import com.nosliw.data.core.service.provide.HAPFactoryServiceProcess;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 
@@ -28,6 +29,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	@HAPAttribute
 	public static final String GATEWAY_RESOURCE = "resources";
+
+	@HAPAttribute
+	public static final String GATEWAY_RESOURCEDEFINITION = "resourceDefinition";
 
 	@HAPAttribute
 	public static final String GATEWAY_CRITERIA = "criteria";
@@ -92,6 +96,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		
 		//gateway
 		this.m_gatewayManager = gatewayManager;
+		this.getGatewayManager().registerGateway(GATEWAY_RESOURCEDEFINITION, new HAPGatewayResourceDefinition(this));
 		this.getGatewayManager().registerGateway(GATEWAY_RESOURCE, new HAPGatewayResource(this));
 		this.getGatewayManager().registerGateway(GATEWAY_CRITERIA, new HAPGatewayCriteriaOperation());
 		this.getGatewayManager().registerGateway(GATEWAY_DISCOVERY, new HAPGatewayExpressionDiscovery(this.getExpressionSuiteManager(), runtime));

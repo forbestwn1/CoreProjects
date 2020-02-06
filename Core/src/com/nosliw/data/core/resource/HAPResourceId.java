@@ -1,5 +1,6 @@
 package com.nosliw.data.core.resource;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -7,7 +8,9 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 @HAPEntityWithAttribute
@@ -60,19 +63,19 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, this.getType());
-		jsonMap.put(ID, HAPResourceUtility.buildResourceCoreIdLiterate(this));
 		
-//		Map<String, String> jsonMapId = new LinkedHashMap<String, String>();
-//		Map<String, Class<?>> typeJsonMapId = new LinkedHashMap<String, Class<?>>();
-//		jsonMapId.put(STRUCUTRE, this.getStructure());
-//		if(this.m_supplement!=null && !this.m_supplement.isEmpty())   jsonMapId.put(SUP, this.m_supplement.toStringValue(HAPSerializationFormat.JSON));
-//		this.buildCoreJsonMap(jsonMapId, typeJsonMapId);
-//		jsonMap.put(ID, HAPJsonUtility.buildMapJson(jsonMapId, typeJsonMapId));
+		Map<String, String> jsonMapId = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> typeJsonMapId = new LinkedHashMap<String, Class<?>>();
+		jsonMapId.put(STRUCUTRE, this.getStructure());
+		if(this.m_supplement!=null && !this.m_supplement.isEmpty())   jsonMapId.put(SUP, this.m_supplement.toStringValue(HAPSerializationFormat.JSON_FULL));
+		this.buildCoreJsonMap(jsonMapId, typeJsonMapId);
+		jsonMap.put(ID, HAPJsonUtility.buildMapJson(jsonMapId, typeJsonMapId));
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(ID, HAPResourceUtility.buildResourceCoreIdLiterate(this));
 	}
 
 	@Override
