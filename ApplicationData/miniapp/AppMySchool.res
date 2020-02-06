@@ -35,6 +35,9 @@
 	},
 	"entry": [{
 		"name": "main",
+		"info": {
+			"setting": "application"
+		},
 		"module": [{
 				"status": "disabled111",
 				"role": "setting",

@@ -97,6 +97,16 @@ var node_createResourceService = function(resourceManager){
 	};
 	
 	var loc_out = {
+			
+		getResourceDefinitionRequest : function(resourceId, handlers, request){
+			var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCEDEFINITION;
+			var command = node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCEDEFINITION_COMMAND_LOADRESOURCEDEFINITION;
+			var parms = {};
+			parms[node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCEDEFINITION_COMMAND_LOADRESOURCEDEFINITION_ID] = resourceId;
+			var out = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers, request);
+			return out;
+		},
+			
 		//resource get
 		getRequireResourcesRequest : function(resourcesInfo, handlers, requester_parent){
 			var serviceInfo = new node_ServiceInfo("RequireResources", {"resourcesInfo":resourcesInfo});

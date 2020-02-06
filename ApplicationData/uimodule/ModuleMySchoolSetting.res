@@ -1,6 +1,9 @@
 {
 	"name": "ModuleMySchoolSetting",
 	"description": "",
+	"info": {
+		"setting": "setting"
+	},
 	"context": {
 		"group": {
 			"public": {

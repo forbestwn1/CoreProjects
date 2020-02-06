@@ -69,9 +69,9 @@ $(document).on("nosliwActive", function(){
 		framework7App : framework7App,
 		ownerConfigure : {
 			defaultOwnerType : "app",
-			defaultOwnerId : parms.app,
+			defaultOwnerId : parms.name,
 			ownerIdByType : {
-				"app" : parms.app,
+				"app" : parms.name,
 				"group" : parms.group,
 			}
 		}
@@ -82,7 +82,7 @@ $(document).on("nosliwActive", function(){
 		dataView : $('#dataDebug').get(),
 		eventView : $('#eventDebug').get(),
 		resetView : $('#resetDebug').get(), 
-	}, configureParms, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, parms.app, undefined, parms.setting, {
+	}, configureParms, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, parms.name, undefined, parms.setting, {
 		success : function(request, componentObj){
 			var lifecycleObj = node_getComponentLifecycleInterface(componentObj);
 			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE);

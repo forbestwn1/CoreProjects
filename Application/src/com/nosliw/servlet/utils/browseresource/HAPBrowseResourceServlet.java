@@ -118,7 +118,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 	private HAPResourceNode createResourceNodeModule(String name, HAPResourceId resourceId, HAPInfo info) {
 		HAPResourceNode out = new HAPResourceNode(name);
 		out.setResourceId(resourceId);
-		String url = "/nosliw/module_framework7.html?name="+resourceId.getIdLiterate()+"&setting=setting";
+		String url = "/nosliw/module_framework7.html?name="+resourceId.getIdLiterate();
 		out.setUrl(url);
 		try {
 			HAPDefinitionModule moduleDef = this.m_uiResourceMan.getModuleDefinition(resourceId, null);
@@ -134,7 +134,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 	private HAPResourceNode createResourceNodeAppEntry(String name, HAPResourceId resourceId, HAPInfo info) {
 		HAPResourceNode out = new HAPResourceNode(name);
 		out.setResourceId(resourceId);
-		String url = "/nosliw/app.html?name="+resourceId.getIdLiterate()+"&setting=setting";
+		String url = "/nosliw/app.html?name="+resourceId.getIdLiterate();
 		out.setUrl(url);
 		try {
 			HAPDefinitionAppEntryWrapper appEntryDef = this.m_uiResourceMan.getMiniAppEntryDefinition(resourceId, null);

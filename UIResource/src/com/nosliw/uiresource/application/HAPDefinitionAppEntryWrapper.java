@@ -3,9 +3,12 @@ package com.nosliw.uiresource.application;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPAttachment;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
@@ -18,7 +21,15 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
-public class HAPDefinitionAppEntryWrapper implements HAPComponent, HAPResourceDefinition{
+public class HAPDefinitionAppEntryWrapper extends HAPSerializableImp implements HAPComponent, HAPResourceDefinition{
+
+	@HAPAttribute
+	public static String APP = "app";
+
+	@HAPAttribute
+	public static String ENTRY = "entry";
+
+	private HAPResourceId m_resourceId;
 
 	private HAPDefinitionApp m_app;
 	
@@ -39,10 +50,26 @@ public class HAPDefinitionAppEntryWrapper implements HAPComponent, HAPResourceDe
 	
 	@Override
 	public HAPInfo getInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.m_app.getEntry(m_entry).getInfo();
 	}
 
+	
+	@Override
+	public void setResourceId(HAPResourceId resourceId) {  this.m_resourceId = resourceId; }
+
+	@Override
+	public HAPResourceId getResourceId() {  return this.m_resourceId;  }
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ENTRY, this.m_entry);
+		jsonMap.put(APP, HAPJsonUtility.buildJson(this.m_app, HAPSerializationFormat.JSON));
+		jsonMap.put(HAPEntityInfo.INFO, HAPJsonUtility.buildJson(this.getInfo(), HAPSerializationFormat.JSON));
+	}
+
+	
+	
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
@@ -71,18 +98,6 @@ public class HAPDefinitionAppEntryWrapper implements HAPComponent, HAPResourceDe
 	public HAPEntityInfo clone() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public String toStringValue(HAPSerializationFormat format) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean buildObject(Object value, HAPSerializationFormat format) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -129,18 +144,6 @@ public class HAPDefinitionAppEntryWrapper implements HAPComponent, HAPResourceDe
 
 	@Override
 	public String getComponentType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setResourceId(HAPResourceId resourceId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public HAPResourceId getResourceId() {
 		// TODO Auto-generated method stub
 		return null;
 	}

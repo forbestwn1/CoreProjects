@@ -1,6 +1,9 @@
 {
 	"name": "ModuleMySchoolResult",
 	"description": "",
+	"info": {
+		"setting": "application"
+	},
 	"context": {
 		"group": {
 			"public": {

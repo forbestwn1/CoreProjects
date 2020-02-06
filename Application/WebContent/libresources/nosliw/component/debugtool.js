@@ -12,6 +12,9 @@ var packageObj = library.getChildPackage("debug");
 	var node_createServiceRequestInfoSequence;
 	var node_createAppConfigure;
 	var node_createModuleConfigure;
+	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoSequence;
+	var node_ResourceId;
 
 	var node_createComponentLifeCycleDebugView;
 	var node_createComponentDataView;
@@ -36,6 +39,27 @@ node_createDebugTool = function(views, configureParms, resourceType, resourceId,
 	var loc_dataView;
 	var loc_eventView;
 	var loc_resetView;
+	
+	var loc_getSettingNameRequest = function(resourceType, resourceId, setting, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		if(setting==undefined){
+			//get setting value from info in definition
+			out.addRequest(nosliw.runtime.getResourceService().getResourceDefinitionRequest(new node_ResourceId(resourceType, resourceId), {
+				success : function(request, resourceDef){
+					var setting;
+					var resourceInfo = resourceDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
+					if(resourceInfo!=undefined)   setting = resourceInfo.setting;
+					return setting;
+				}
+			}));
+		}
+		else{
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return setting;
+			}));
+		}
+		return out;
+	};
 	
 	//
 	var loc_setComponent = function(requestInfo, componentObj){
@@ -85,33 +109,39 @@ node_createDebugTool = function(views, configureParms, resourceType, resourceId,
 	};
 	
 	var loc_init = function(views, configureParms, resourceType, resourceId, inputValue, settingName, handlers, request){
-		var lifecycleView = views.lifecycleView;
-		if(lifecycleView!=undefined){
-			loc_lifecycleView = node_createComponentLifeCycleDebugView();
-			$(lifecycleView).append(loc_lifecycleView.getView());
-		}
-		
-		var dataView = views.dataView;
-		if(dataView!=undefined){
-			loc_dataView = node_createComponentDataView(); 
-			$(dataView).append(loc_dataView.getView());
-		}
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_getSettingNameRequest(resourceType, resourceId, settingName, {
+			success : function(request, settingName){
+				var lifecycleView = views.lifecycleView;
+				if(lifecycleView!=undefined){
+					loc_lifecycleView = node_createComponentLifeCycleDebugView();
+					$(lifecycleView).append(loc_lifecycleView.getView());
+				}
+				
+				var dataView = views.dataView;
+				if(dataView!=undefined){
+					loc_dataView = node_createComponentDataView(); 
+					$(dataView).append(loc_dataView.getView());
+				}
 
-		var eventView = views.eventView;
-		if(eventView!=undefined){
-			loc_eventView = node_createComponentEventView();
-			$(eventView).append(loc_eventView.getView());
-		}
+				var eventView = views.eventView;
+				if(eventView!=undefined){
+					loc_eventView = node_createComponentEventView();
+					$(eventView).append(loc_eventView.getView());
+				}
 
-		var resetView = views.resetView;
-		if(resetView!=undefined){
-			loc_resetView = node_createComponentResetView(function(resourceId, resourceType, inputValue, settingName, handlers, request){
-				return loc_getResetComponentRequest(resourceType, resourctId, inputValue, settingName, handlers, request);
-			}, resourceType, resourceId, inputValue, settingName);
-			$(resetView).append(loc_resetView.getView());
-		}
-
-		node_requestServiceProcessor.processRequest(loc_getResetComponentRequest(resourceType, resourceId, inputValue, settingName, handlers, request));
+				var resetView = views.resetView;
+				if(resetView!=undefined){
+					loc_resetView = node_createComponentResetView(function(resourceId, resourceType, inputValue, settingName, handlers, request){
+						return loc_getResetComponentRequest(resourceType, resourctId, inputValue, settingName, handlers, request);
+					}, resourceType, resourceId, inputValue, settingName);
+					$(resetView).append(loc_resetView.getView());
+				}
+				
+				return loc_getResetComponentRequest(resourceType, resourceId, inputValue, settingName);
+			}
+		}));
+		node_requestServiceProcessor.processRequest(out);
 	};
 	
 	var loc_out = {
@@ -135,6 +165,11 @@ nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node
 nosliw.registerSetNodeDataEvent("uiapp.createAppConfigure", function(){node_createAppConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){	node_ResourceId = this.getData();	});
 
 
 nosliw.registerSetNodeDataEvent("component.debug.createComponentLifeCycleDebugView", function(){node_createComponentLifeCycleDebugView = this.getData();});
