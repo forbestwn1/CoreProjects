@@ -32,7 +32,7 @@ public class HAPDefinitionPollTask extends HAPSerializableImp implements HAPWith
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		HAPDataUtility.buildDataWrapperMapFromJson(jsonObj.optJSONObject(INPUT));
+		this.m_input = HAPDataUtility.buildDataWrapperMapFromJson(jsonObj.optJSONObject(INPUT));
 		HAPUtilityProcess.parseWithProcessTask(this, jsonObj);
 		return true;  
 	}

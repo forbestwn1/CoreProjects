@@ -6,6 +6,7 @@ import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.service.provide.HAPManagerService;
+import com.nosliw.data.core.template.HAPManagerTemplate;
 
 /**
  * Runtime environment, 
@@ -30,6 +31,8 @@ public interface HAPRuntimeEnvironment {
 	HAPManagerService getServiceManager();
 	
 	HAPManagerResourceDefinition getResourceDefinitionManager();
+	
+	HAPManagerTemplate getTmeplateManager();
 	
 	HAPRuntime getRuntime();
 	

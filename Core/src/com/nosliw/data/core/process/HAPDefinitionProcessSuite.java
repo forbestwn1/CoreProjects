@@ -19,10 +19,16 @@ public class HAPDefinitionProcessSuite extends HAPComponentImp{
 	@HAPAttribute
 	public static String PROCESS = "process";
 
+	@HAPAttribute
+	public static String REFERENCE = "reference";
+
 	private Map<String, HAPDefinitionProcess> m_processes;
-	
+
+	private Map<String, HAPDefinitionProcessReference> m_references;
+
 	public HAPDefinitionProcessSuite() {
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionProcess>();
+		this.m_references = new LinkedHashMap<String, HAPDefinitionProcessReference>();
 	}
 
 	@Override
@@ -30,12 +36,16 @@ public class HAPDefinitionProcessSuite extends HAPComponentImp{
 
 	public HAPDefinitionProcess getProcess(String processId) {  return this.m_processes.get(processId);   }
 	public Map<String, HAPDefinitionProcess> getProcesses(){   return this.m_processes;   }
-	
+
 	public void addProcess(String id, HAPDefinitionProcess process) {
 		process.getAttachmentContainer().merge(this.getAttachmentContainer(), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
 		this.m_processes.put(id, process);  
 	}
 
+	public void addReference(String id, HAPDefinitionProcessReference reference) {
+		this.m_references.put(id, reference);
+	}
+	
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		return null;

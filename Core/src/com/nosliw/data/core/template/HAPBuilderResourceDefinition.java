@@ -4,11 +4,12 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 
 public interface HAPBuilderResourceDefinition extends HAPEntityInfo{
 
 	String getId();
 	
-	HAPResourceDefinitionkkkk build(HAPContentTemplate templateContent, Map<String, HAPData> parms);
+	HAPResourceDefinition build(HAPContentTemplate templateContent, Map<String, HAPData> parms);
 
 }

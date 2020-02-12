@@ -2,6 +2,7 @@ package com.nosliw.data.core.component;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
 //entity info : name, description, info
@@ -9,7 +10,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 //context
 //attachment mapping
 //
-public interface HAPComponent extends HAPEntityInfo, HAPWithAttachment, HAPWithLifecycleAction, HAPWithEventHanlder{
+public interface HAPComponent extends HAPEntityInfo, HAPWithAttachment, HAPWithLifecycleAction, HAPWithEventHanlder, HAPResourceDefinition{
 
 	@HAPAttribute
 	public static String ID = "id";

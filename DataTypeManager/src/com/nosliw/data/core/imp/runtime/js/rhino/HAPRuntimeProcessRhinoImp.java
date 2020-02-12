@@ -2,8 +2,11 @@ package com.nosliw.data.core.imp.runtime.js.rhino;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPProcessResultHandler;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
@@ -38,7 +41,8 @@ public class HAPRuntimeProcessRhinoImp implements HAPRuntimeProcess{
 		HAPRuntimeTaskExecuteProcessEmbededRhino task = new HAPRuntimeTaskExecuteProcessEmbededRhino(processExe, input);
 		HAPServiceData out = m_runtimeEnvironment.getRuntime().executeTaskSync(task);
 		if(out.isSuccess()) {
-			resultHandler.onSuccess("", null);
+			JSONObject dataJsonObj = (JSONObject)out.getData();
+			resultHandler.onSuccess(dataJsonObj.getString("resultName"), HAPDataUtility.buildDataWrapperMapFromJson(dataJsonObj.getJSONObject("resultValue")));
 		}
 		else {
 			

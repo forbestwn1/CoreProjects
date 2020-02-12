@@ -1,8 +1,5 @@
 package com.nosliw.data.core.process;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,13 +9,11 @@ import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPAttachment;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPAttachmentEntity;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
-import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
@@ -59,15 +54,15 @@ public class HAPUtilityProcess {
 		return out;
 	}
 	
-	public static HAPDefinitionProcessSuite getProcessSuite(String id, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionProcessSuite suite = null;
-		try {
-			suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPFileUtility.getProcessFolder()+id+".process")), activityPluginMan);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return suite;
-	}
+//	public static HAPDefinitionProcessSuite getProcessSuite(String id, HAPManagerActivityPlugin activityPluginMan) {
+//		HAPDefinitionProcessSuite suite = null;
+//		try {
+//			suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPFileUtility.getProcessFolder()+id+".process")), activityPluginMan);
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		return suite;
+//	}
 
 	public static void buildScriptExpressionProcessContext(HAPContext context, HAPProcessContextScriptExpression expProcessContext) {
 		//prepare constant value 

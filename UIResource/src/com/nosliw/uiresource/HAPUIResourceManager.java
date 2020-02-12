@@ -14,7 +14,6 @@ import com.nosliw.data.core.resource.HAPResourceDefinitionOrReference;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
@@ -87,25 +86,12 @@ public class HAPUIResourceManager {
 
 	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
-		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefManager.getResourceDefinition(appId);
-		
-		//merged with parent attachment
-		HAPAttachmentContainer attachment = mergeWithParentAttachment(appDef, parentAttachment);
-
-		//resolve attachment mapping
-		HAPComponentUtility.solveAttachment(appDef, attachment);
+		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefManager.getComponentDefinition(appId, parentAttachment);
 		return appDef;
 	}
 	
 	public HAPDefinitionAppEntryWrapper getMiniAppEntryDefinition(HAPResourceId appEntryId, HAPAttachmentContainer parentAttachment) {
-		HAPDefinitionAppEntryWrapper appEntryDef = (HAPDefinitionAppEntryWrapper)this.m_resourceDefManager.getResourceDefinition(appEntryId);
-		//merged with parent attachment
-		HAPAttachmentContainer attachment = mergeWithParentAttachment(appEntryDef.getAppDefinition(), parentAttachment);
-		//resolve attachment in app
-		HAPComponentUtility.solveAttachment(appEntryDef.getAppDefinition(), attachment);
-		//resolve attachment in app entry
-		HAPComponentUtility.solveAttachment(appEntryDef.getAppDefinition().getEntry(appEntryDef.getEntry()), appEntryDef.getAppDefinition().getAttachmentContainer());
-
+		HAPDefinitionAppEntryWrapper appEntryDef = (HAPDefinitionAppEntryWrapper)this.m_resourceDefManager.getComponentDefinition(appEntryId, parentAttachment);
 		return appEntryDef;
 	}
 
@@ -121,59 +107,9 @@ public class HAPUIResourceManager {
 		return out;
 	}
 	
-	
-//	public HAPDefinitionAppEntryUI getMiniAppEntryDefinition(HAPResourceId appId, String entry, HAPAttachmentContainer parentExternalMapping) {
-//		HAPDefinitionApp appDef = this.getMiniAppDefinition(appId, parentExternalMapping);
-//		//resolve attachment for entry
-//		HAPComponentUtility.solveAttachment(appDef.getEntry(entry), appDef.getAttachmentContainer());
-//		return appDef.getEntry(entry);
-//	}
-	
-	
-	
-	
-//	public HAPDefinitionApp getMiniAppDefinition(String appId, HAPAttachmentContainer parentExternalMapping) {
-//		HAPDefinitionApp miniAppDef = HAPUtilityApp.getAppDefinitionById(appId, this.m_miniAppParser);
-//		//resolve attachment for app
-//		HAPComponentUtility.solveAttachment(miniAppDef, parentExternalMapping);
-//		return miniAppDef;
-//	}
-
-//	public HAPDefinitionAppEntryUI getMiniAppEntryDefinition(HAPResourceIdSimple resourceId) {
-//		HAPUIAppEntryId appEntryId = new HAPResourceIdUIAppEntry(resourceId).getUIAppEntryId();
-//		return getMiniAppEntryDefinition(appEntryId.getAppId(), appEntryId.getEntry(), new HAPAttachmentContainer(resourceId.getSupplement()));
-//	}
-	
-//	public HAPDefinitionAppEntryUI getMiniAppEntryDefinition(String appId, String entry, HAPAttachmentContainer parentExternalMapping) {
-//		HAPDefinitionApp appDef = this.getMiniAppDefinition(appId, parentExternalMapping);
-//		
-//		//resolve attachment for entry
-//		HAPComponentUtility.solveAttachment(appDef.getEntry(entry), appDef.getAttachmentContainer());
-//		return appDef.getEntry(entry);
-//	}
-
-	
-//	public HAPExecutableAppEntry getMiniAppEntry(String appId, String entry, HAPAttachmentContainer parentExternalMapping) {
-//		HAPDefinitionApp miniAppDef = getMiniAppDefinition(appId, parentExternalMapping);
-//		//resolve attachment for entry
-//		HAPComponentUtility.solveAttachment(miniAppDef.getEntry(entry), miniAppDef.getAttachmentContainer());
-//		
-//		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-//		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(miniAppDef, entry, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
-//		return out;
-//	}
-
-
-
 	public HAPDefinitionModule getModuleDefinition(HAPResourceId moduleId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
-		HAPDefinitionModule moduleDef = (HAPDefinitionModule)this.m_resourceDefManager.getResourceDefinition(moduleId);
-		
-		//merged with parent attachment
-		HAPAttachmentContainer attachment = mergeWithParentAttachment(moduleDef, parentAttachment);
-
-		//resolve attachment mapping
-		HAPComponentUtility.solveAttachment(moduleDef, attachment);
+		HAPDefinitionModule moduleDef = (HAPDefinitionModule)this.m_resourceDefManager.getComponentDefinition(moduleId, parentAttachment);
 		return moduleDef;
 	}
 
@@ -196,7 +132,7 @@ public class HAPUIResourceManager {
 		}
 		else if(defOrRef instanceof HAPResourceDefinition) {
 			moduleDef = (HAPDefinitionModule)defOrRef;
-			HAPComponentUtility.solveAttachment(moduleDef, attachmentEx);
+			HAPComponentUtility.mergeWithParentAttachment(moduleDef, attachmentEx);
 		}
 		return HAPProcessorModule.process(moduleDef, id, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager);
 	}
@@ -211,17 +147,14 @@ public class HAPUIResourceManager {
 	}
 	
 	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId, HAPAttachmentContainer parentAttachment) {
-		//get definition itself
-		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_resourceDefManager.getResourceDefinition(pageResourceId);
-
-		//merged with parent attachment
-		HAPAttachmentContainer attachment = mergeWithParentAttachment(pageDefinition, parentAttachment);
+		
+		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_resourceDefManager.getComponentDefinition(pageResourceId, parentAttachment);
 
 		//process include tag
 		pageDefinition = HAPUtilityPage.processInclude(pageDefinition, this.m_uiResourceParser, this, this.m_resourceDefManager);
 
 		//resolve attachment
-		HAPUtilityPage.solveExternalMapping(pageDefinition, attachment, this.m_uiTagMan);
+		HAPUtilityPage.solveAttachment(pageDefinition, null, this.m_uiTagMan);
 
 		//resolve service provider
 		HAPUtilityPage.solveServiceProvider(pageDefinition, null, m_serviceDefinitionManager);
@@ -245,12 +178,4 @@ public class HAPUIResourceManager {
 	public HAPParserModule getModuleParser() {    return this.m_moduleParser;   }
 	public HAPParserPage getUIResourceParser() {    return this.m_uiResourceParser;  }
 	public HAPParseMiniApp getMinitAppParser() {    return this.m_miniAppParser;     }
-
-	//
-	private HAPAttachmentContainer mergeWithParentAttachment(HAPResourceDefinition resourceDefinition, HAPAttachmentContainer parentAttachment) {
-		HAPAttachmentContainer out = new HAPAttachmentContainer(resourceDefinition.getResourceId().getSupplement());
-		out.merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
-		return out;
-	}
-	
 }

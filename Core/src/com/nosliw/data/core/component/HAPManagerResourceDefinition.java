@@ -7,13 +7,18 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPResourceIdTemplate;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.template.HAPManagerTemplate;
 
 public class HAPManagerResourceDefinition {
 
 	private Map<String, HAPPluginResourceDefinition> m_plugins;
+	private HAPManagerTemplate m_templateMan;
 	
-	public HAPManagerResourceDefinition() {
+	public HAPManagerResourceDefinition(HAPManagerTemplate templateMan) {
 		this.m_plugins = new LinkedHashMap<String, HAPPluginResourceDefinition>();
+		this.m_templateMan = templateMan;
 	}
 	
 	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId) {
@@ -24,9 +29,24 @@ public class HAPManagerResourceDefinition {
 			String type = simpleId.getType();
 			out = this.m_plugins.get(type).getResource(simpleId);
 		}
+		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_TEMPLATE)) {
+			HAPResourceIdTemplate templateResourceId = (HAPResourceIdTemplate)resourceId;
+			this.m_templateMan.build(templateResourceId.getTemplateId(), templateResourceId.getParms());
+		}
+		
+		if(out instanceof HAPWithAttachment) {
+			//merge attachment with supplment in resource id
+			((HAPWithAttachment)out).getAttachmentContainer().merge(new HAPAttachmentContainer(resourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+		}
 		
 		//set resource id
 		out.setResourceId(resourceId);
+		return out;
+	}
+
+	public HAPComponent getComponentDefinition(HAPResourceId resourceId, HAPAttachmentContainer parentAttachment) {
+		HAPComponent out = (HAPComponent)this.getResourceDefinition(resourceId);
+		HAPComponentUtility.mergeWithParentAttachment(out, parentAttachment);
 		return out;
 	}
 	

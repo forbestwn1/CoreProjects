@@ -17,9 +17,29 @@ import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 public class HAPComponentUtility {
 
-	public static void solveAttachment(HAPComponentImp component, HAPAttachmentContainer parentAttachment) {
-		component.getAttachmentContainer().merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+	public static void mergeWithParentAttachment(HAPWithAttachment withAttachment, HAPAttachmentContainer parentAttachment) {
+		withAttachment.getAttachmentContainer().merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
 	}
+	
+	public static HAPAttachmentContainer buildNameMappedAttachment(HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
+		HAPAttachmentContainer out = null;
+		if(withNameMapping==null)   out = attachment;
+		else out = withNameMapping.getNameMapping().mapAttachment(attachment);
+		if(out==null)  out = new HAPAttachmentContainer();
+		return out;
+	}
+
+	
+	//build attachment mapping for internal component
+	public static HAPAttachmentContainer buildInternalAttachment(HAPResourceId resourceId, HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
+		HAPAttachmentContainer out = buildNameMappedAttachment(attachment, withNameMapping); 
+		if(resourceId!=null) {
+			out.merge(new HAPAttachmentContainer(resourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+		}
+		return out;
+	}
+	
+
 	
 	public static void parseComponentChild(HAPComponentChildImp child, JSONObject jsonObj) {
 		child.buildEntityInfoByJson(jsonObj);
@@ -86,24 +106,6 @@ public class HAPComponentUtility {
 		}
 	}
 
-	public static HAPAttachmentContainer buildNameMappedAttachment(HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
-		HAPAttachmentContainer out = null;
-		if(withNameMapping==null)   out = attachment;
-		else out = withNameMapping.getNameMapping().mapAttachment(attachment);
-		if(out==null)  out = new HAPAttachmentContainer();
-		return out;
-	}
-
-	
-	//build attachment mapping for internal component
-	public static HAPAttachmentContainer buildInternalAttachment(HAPResourceId resourceId, HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
-		HAPAttachmentContainer out = buildNameMappedAttachment(attachment, withNameMapping); 
-		if(resourceId!=null) {
-			out.merge(new HAPAttachmentContainer(resourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
-		}
-		return out;
-	}
-	
 	public static void buildServiceChildrenComponent(HAPChildrenComponentIdContainer out, HAPWithServiceUse withServiceProvider, HAPAttachmentContainer attachment) {
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = withServiceProvider.getServiceProviderDefinitions(); 
 		Map<String, HAPDefinitionServiceUse> serviceUseDefs = withServiceProvider.getServiceUseDefinitions();

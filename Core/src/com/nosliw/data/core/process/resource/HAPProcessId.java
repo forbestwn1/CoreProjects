@@ -1,19 +1,19 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.process.resource;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
-public class HAPIdProcess extends HAPSerializableImp{
+public class HAPProcessId extends HAPSerializableImp{
 
 	private String m_processId;
 	private String m_suiteId;
 	
-	public HAPIdProcess(String suiteId, String processId){
+	public HAPProcessId(String suiteId, String processId){
 		this.m_processId = processId;
 		this.m_suiteId = suiteId;
 	}
 
-	public HAPIdProcess(String id){
+	public HAPProcessId(String id){
 		this.parseId(id);
 	}
 

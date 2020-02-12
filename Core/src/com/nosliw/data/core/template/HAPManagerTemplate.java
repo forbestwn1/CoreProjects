@@ -1,14 +1,30 @@
 package com.nosliw.data.core.template;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 
 public class HAPManagerTemplate {
 
+	private Map<String, HAPBuilderResourceDefinition> m_builders;
 	
-	public HAPResourceDefinitionkkkk build(String templateId, Map<String, HAPData> parms) {
+	public HAPManagerTemplate() {
+		this.m_builders = new LinkedHashMap<String, HAPBuilderResourceDefinition>();
+	}
+	
+	private HAPBuilderResourceDefinition getResourceBuilder(String builderId) {		return this.m_builders.get(builderId);	}
+	
+	private HAPDefinitionTemplate getTemplateDefinition(String templateId) {
 		return null;
+	}
+	
+	public HAPResourceDefinition build(String templateId, Map<String, HAPData> parms) {
+		HAPDefinitionTemplate templateDef = this.getTemplateDefinition(templateId);
+		HAPBuilderResourceDefinition builder = this.getResourceBuilder(templateDef.getBuilderId());
+		HAPResourceDefinition out = builder.build(templateDef.getContent(), parms);
+		return out;
 	}
 	
 }

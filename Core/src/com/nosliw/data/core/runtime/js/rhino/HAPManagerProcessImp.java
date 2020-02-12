@@ -6,9 +6,9 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.process.HAPIdProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
+import com.nosliw.data.core.process.resource.HAPProcessId;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessEmbededRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessRhino;
@@ -26,7 +26,7 @@ public class HAPManagerProcessImp implements HAPManagerProcess{
 	
 	@Override
 	public HAPServiceData executeProcess(String processId, String suitId, Map<String, HAPData> input) {
-		HAPExecutableProcess processExe = m_processDefMan.getProcess(new HAPIdProcess(suitId, processId));
+		HAPExecutableProcess processExe = m_processDefMan.getProcess(new HAPProcessId(suitId, processId));
 		return this.executeProcess(processExe, input);
 	}
 

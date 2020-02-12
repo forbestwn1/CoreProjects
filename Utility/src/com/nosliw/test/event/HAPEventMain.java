@@ -3,6 +3,8 @@ package com.nosliw.test.event;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.event.HAPDefinitionEventTask;
 import com.nosliw.data.core.event.HAPExecutableEventTask;
@@ -29,6 +31,7 @@ public class HAPEventMain {
 			@Override
 			public void onSuccess(String resultName, Map<String, HAPData> resultData) {
 				System.out.println(resultName);
+				System.out.println(HAPJsonUtility.buildJson(resultData, HAPSerializationFormat.JSON));
 			}
 
 			@Override

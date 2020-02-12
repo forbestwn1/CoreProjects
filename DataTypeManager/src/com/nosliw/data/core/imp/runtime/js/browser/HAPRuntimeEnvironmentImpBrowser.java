@@ -20,6 +20,7 @@ import com.nosliw.data.core.runtime.js.rhino.HAPManagerProcessImp;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.service.provide.HAPGatewayService;
 import com.nosliw.data.core.service.provide.HAPManagerService;
+import com.nosliw.data.core.template.HAPManagerTemplate;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.application.HAPResourceDefinitionPluginApp;
@@ -54,11 +55,12 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPExpressionManager.expressionParser = new HAPExpressionParserImp();
 
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
+		HAPManagerTemplate templateManager = new HAPManagerTemplate();
+		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(templateManager);
 		HAPManagerService serviceManager = new HAPManagerService();
 		HAPExpressionSuiteManager expSuiteMan = new HAPExpressionSuiteManager();
-		HAPManagerProcessDefinition processDefMan = new HAPManagerProcessDefinition(new HAPManagerActivityPlugin(), HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
+		HAPManagerProcessDefinition processDefMan = new HAPManagerProcessDefinition(new HAPManagerActivityPlugin(), resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
 		HAPManagerProcess processMan = new HAPManagerProcessImp(processDefMan, runtime);
-		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition();
 		
 		init(new HAPResourceManagerJSImp(
 				runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess()),
@@ -67,6 +69,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 				expSuiteMan,
 			new HAPGatewayManager(),
 			serviceManager,
+			templateManager,
 			resourceDefManager,
 			runtime
 		);

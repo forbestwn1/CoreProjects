@@ -4,8 +4,13 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.component.HAPAttachmentContainer;
+import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.process.resource.HAPProcessId;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -21,22 +26,31 @@ public class HAPManagerProcessDefinition {
 	
 	private HAPRequirementContextProcessor m_contextProcessRequirement;
 	
+	private HAPManagerResourceDefinition m_resourceDefManager;
+	
 	public HAPManagerProcessDefinition(
 			HAPManagerActivityPlugin pluginMan,
+			HAPManagerResourceDefinition resourceDefManager,
 			HAPDataTypeHelper dataTypeHelper,
 			HAPRuntime runtime,
 			HAPExpressionSuiteManager expressionManager,
 			HAPManagerServiceDefinition serviceDefinitionManager) {
 		this.m_pluginManager = pluginMan;
+		this.m_resourceDefManager = resourceDefManager;
 		this.m_contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, null);
 	}
 
-	public HAPDefinitionProcessSuite getProcessSuite(String suiteId) {
-		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite(suiteId, this.getPluginManager());
-		return suite;
+	public HAPDefinitionProcessSuite getProcessSuiteDefinition(HAPResourceId suiteId, HAPAttachmentContainer parentAttachment) {
+		HAPDefinitionProcessSuite suiteDef = (HAPDefinitionProcessSuite)this.m_resourceDefManager.getComponentDefinition(suiteId, parentAttachment);
+		return suiteDef;
 	}
 	
-	public HAPDefinitionProcessWithContext getProcessDefinition(HAPIdProcess processId) {
+	public HAPDefinitionProcessWrapper getProcessDefinition(HAPResourceId processId, HAPAttachmentContainer parentAttachment) {
+		HAPDefinitionProcessWrapper processDef = (HAPDefinitionProcessWrapper)this.m_resourceDefManager.getComponentDefinition(processId, parentAttachment);
+		return processDef;
+	}
+	
+	public HAPDefinitionProcessWithContext getProcessDefinitionWithContext(HAPProcessId processId, HAPAttachmentContainer parentAttachment) {
 		HAPDefinitionProcessWithContext out = null;
 		String suiteId = processId.getSuiteId();
 		HAPDefinitionProcessSuite suite = this.getProcessSuite(suiteId);
@@ -44,7 +58,25 @@ public class HAPManagerProcessDefinition {
 		return out;
 	}
 	
-	public HAPExecutableProcess getProcess(HAPIdProcess processId) {
+	
+	
+	
+	public HAPDefinitionProcessSuite getProcessSuite(String suiteId) {
+		HAPDefinitionProcessSuite suite = this.m_resourceDefManager.getResourceDefinition(suiteId)
+		
+		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite(suiteId, this.getPluginManager());
+		return suite;
+	}
+	
+	public HAPDefinitionProcessWithContext getProcessDefinition(HAPProcessId processId) {
+		HAPDefinitionProcessWithContext out = null;
+		String suiteId = processId.getSuiteId();
+		HAPDefinitionProcessSuite suite = this.getProcessSuite(suiteId);
+		out = new HAPDefinitionProcessWithContext(suite.getProcess(processId.getProcessId()), HAPContextProcessor.createContext(suite, this));
+		return out;
+	}
+	
+	public HAPExecutableProcess getProcess(HAPProcessId processId) {
 		HAPDefinitionProcessSuite suite = this.getProcessSuite(processId.getSuiteId());
 		return this.getProcess(processId.getProcessId(), suite);
 	}

@@ -2,6 +2,8 @@ package com.nosliw.data.core.process;
 
 import java.util.Map;
 
+import com.nosliw.data.core.process.resource.HAPProcessId;
+
 //context for processing process
 //it include related suite or process
 public class HAPContextProcessor {
@@ -35,7 +37,7 @@ public class HAPContextProcessor {
 	
 	public HAPDefinitionProcessWithContext getProcessDefinition(String processId) {
 		HAPDefinitionProcessWithContext out = null;
-		HAPIdProcess id = new HAPIdProcess(processId);
+		HAPProcessId id = new HAPProcessId(processId);
 		if(id.getSuiteId()!=null) {
 			HAPDefinitionProcessSuite suite = this.m_processDefMan.getProcessSuite(id.getSuiteId());
 			out = new HAPDefinitionProcessWithContext(suite.getProcess(id.getProcessId()), HAPContextProcessor.createContext(suite, m_processDefMan));
@@ -49,7 +51,6 @@ public class HAPContextProcessor {
 			}
 		}
 		return out;
-	}
-	
+	}	
 }
 

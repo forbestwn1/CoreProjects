@@ -56,11 +56,10 @@ public class HAPProcessMiniAppEntry {
 			HAPProcessTracker processTracker) {
 
 		HAPDefinitionApp miniAppDef = minAppEntryDef.getAppDefinition();
-		String entry = minAppEntryDef.getEntry();
 
-		HAPExecutableAppEntry out = new HAPExecutableAppEntry(entry, miniAppDef);
+		HAPExecutableAppEntry out = new HAPExecutableAppEntry(minAppEntryDef);
 		
-		HAPDefinitionAppEntryUI entryDefinition = miniAppDef.getEntry(entry);
+		HAPDefinitionAppEntryUI entryDefinition = minAppEntryDef.getEntry();
 		
 		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
 		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityApp.getContextProcessConfigurationForApp();

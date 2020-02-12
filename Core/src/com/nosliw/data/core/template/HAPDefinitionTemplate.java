@@ -1,7 +1,9 @@
 package com.nosliw.data.core.template;
 
+import java.util.Map;
+
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.data.core.script.context.HAPContextEntity;
+import com.nosliw.data.core.script.context.HAPParmDefinition;
 
 public class HAPDefinitionTemplate extends HAPEntityInfoImp{
 
@@ -9,7 +11,7 @@ public class HAPDefinitionTemplate extends HAPEntityInfoImp{
 	private String m_resourceType;
 	
 	//parameter definition
-	private HAPContextEntity m_parmsDefinition;
+	private Map<String, HAPParmDefinition> m_parmsDefinition;
 	
 	//template content
 	private HAPContentTemplate m_content;
@@ -17,4 +19,10 @@ public class HAPDefinitionTemplate extends HAPEntityInfoImp{
 	//builder to build resource from template and input parameter
 	private String m_builderId;
 	
+	public String getResourceType() {   return this.m_resourceType;  }
+
+	public String getBuilderId() {   return this.m_builderId;    }
+	
+	public HAPContentTemplate getContent() {   return this.m_content;   }
+
 }

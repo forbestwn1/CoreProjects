@@ -1,5 +1,6 @@
 {
 	"name" : "flightarrive",
+	"id" : "flightarrive",
 	"context" : {
 		"group": {
 			"public": {
@@ -32,12 +33,6 @@
 		},
 		
 		"pollTask" : {
-			"input" : {
-				"flightNumber": {
-					"dataTypeId": "test.string;1.0.0",
-					"value": "5678"
-				}
-			},
 			"process" : "checkFlightInfo",	
 		}
 	},
@@ -153,7 +148,11 @@
 						{
 							"id": "withoutEventEndId",
 							"name": "withoutEventEndId",
-							"type": "end"
+							"type": "end",
+							"output": {
+								"element": {
+								}
+							}
 						}
 					]
 				}

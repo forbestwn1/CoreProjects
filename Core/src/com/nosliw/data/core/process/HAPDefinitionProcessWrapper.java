@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.application;
+package com.nosliw.data.core.process;
 
 import java.util.Map;
 import java.util.Set;
@@ -22,64 +22,58 @@ import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
-public class HAPDefinitionAppEntryWrapper extends HAPSerializableImp implements HAPComponent{
+public class HAPDefinitionProcessWrapper  extends HAPSerializableImp implements HAPComponent{
 
 	@HAPAttribute
-	public static String APP = "app";
+	public static String SUITE = "suite";
 
 	@HAPAttribute
-	public static String ENTRY = "entry";
+	public static String PROCESS = "process";
+
+	@HAPAttribute
+	public static String PROCESSNAME = "processName";
 
 	private HAPResourceId m_resourceId;
 
-	private HAPDefinitionApp m_app;
+	private HAPDefinitionProcessSuite m_suite;
 	
-	private String m_entryName;
+	private String m_processName;
 	
-	private HAPDefinitionAppEntryUI m_entry;
+	private HAPDefinitionProcess m_process;
 
-	public HAPDefinitionAppEntryWrapper(HAPDefinitionApp app, String entry) {
-		this.m_app = app;
-		this.m_entryName = entry;
-		this.m_entry = this.m_app.getEntry(this.m_entryName);
-		//solve entry attachment
-		HAPComponentUtility.mergeWithParentAttachment(this.m_entry, app.getAttachmentContainer());
+	public HAPDefinitionProcessWrapper(HAPDefinitionProcessSuite suite, String process) {
+		this.m_suite = suite;
+		this.m_processName = process;
+		this.m_process = this.m_suite.getProcess(this.m_processName);
+		HAPComponentUtility.mergeWithParentAttachment(this.m_process, this.m_suite.getAttachmentContainer());
 	}
 	
 	@Override
-	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY;  }
+	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS;  }
 	
-	public HAPDefinitionApp getAppDefinition() {   return this.m_app;   }
+	public HAPDefinitionProcess getProcess() {    return this.m_process;   }
 	
-	@Override
-	public HAPChildrenComponentIdContainer getChildrenComponentId() {		return this.getEntry().getChildrenComponentId();	}
-	
-	@Override
-	public HAPInfo getInfo() {	return this.getEntry().getInfo();	}
+	public HAPDefinitionProcessSuite getSuite() {   return this.m_suite;  }
 
 	@Override
-	public HAPAttachmentContainer getAttachmentContainer() {  return this.getEntry().getAttachmentContainer();  }
+	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+		return this.m_process.getChildrenComponentId();
+	}
 	
+	@Override
+	public HAPInfo getInfo() {		return this.m_process.getInfo();	}
+
 	@Override
 	public void setResourceId(HAPResourceId resourceId) {  this.m_resourceId = resourceId; }
 
 	@Override
 	public HAPResourceId getResourceId() {  return this.m_resourceId;  }
 
-	public HAPDefinitionAppEntryUI getEntry() {   return this.m_entry;   }
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ENTRY, HAPJsonUtility.buildJson(this.m_entry, HAPSerializationFormat.JSON));
-		jsonMap.put(APP, HAPJsonUtility.buildJson(this.m_app, HAPSerializationFormat.JSON));
-		jsonMap.put(HAPEntityInfo.INFO, HAPJsonUtility.buildJson(this.getInfo(), HAPSerializationFormat.JSON));
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		jsonMap.put(PROCESS, this.m_processName);
+		jsonMap.put(SUITE, HAPJsonUtility.buildJson(this.m_suite, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -102,6 +96,12 @@ public class HAPDefinitionAppEntryWrapper extends HAPSerializableImp implements 
 
 	@Override
 	public HAPEntityInfo clone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPAttachmentContainer getAttachmentContainer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -164,6 +164,12 @@ public class HAPDefinitionAppEntryWrapper extends HAPSerializableImp implements 
 	public void setContext(HAPContextGroup context) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

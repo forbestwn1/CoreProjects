@@ -31,6 +31,10 @@ public class HAPResourceIdTemplate extends HAPResourceId{
 	@Override
 	public String getStructure() {  return HAPConstant.RESOURCEID_TYPE_TEMPLATE; };
 
+	public String getTemplateId() {   return this.m_templateId;    }
+	
+	public Map<String, HAPData> getParms(){    return this.m_parms;    }
+	
 	@Override
 	public String getIdLiterate() {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();

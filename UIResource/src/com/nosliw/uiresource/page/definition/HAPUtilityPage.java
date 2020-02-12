@@ -37,11 +37,11 @@ public class HAPUtilityPage {
 		uiUnitDef.setNameMapping(HAPNameMapping.newNamingMapping(uiUnitDef.getAttributes().get(HAPConstant.UITAG_PARM_MAPPING)));
 	}
 	
-	public static void solveExternalMapping(HAPDefinitionUIUnit uiUnitDef, HAPAttachmentContainer parentExternalMapping, HAPUITagManager uiTagMan) {
+	public static void solveAttachment(HAPDefinitionUIUnit uiUnitDef, HAPAttachmentContainer parentAttachment, HAPUITagManager uiTagMan) {
 		buildUIUnitNameMapping(uiUnitDef);
 		
 		//if attribute has mapping, then do mapping first
-		HAPAttachmentContainer mapped = uiUnitDef.getNameMapping().mapAttachment(parentExternalMapping);
+		HAPAttachmentContainer mapped = uiUnitDef.getNameMapping().mapAttachment(parentAttachment);
 		
 		//get inherit mode
 		String inheritableMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT;
@@ -49,10 +49,10 @@ public class HAPUtilityPage {
 			inheritableMode = getTagInheritableMode(((HAPDefinitionUITag)uiUnitDef).getTagName(), uiTagMan);
 		}		
 		//merge
-		uiUnitDef.getAttachmentContainer().merge(parentExternalMapping, inheritableMode);
+		uiUnitDef.getAttachmentContainer().merge(parentAttachment, inheritableMode);
 		
 		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
-			solveExternalMapping(uiTag, uiUnitDef.getAttachmentContainer(), uiTagMan);
+			solveAttachment(uiTag, uiUnitDef.getAttachmentContainer(), uiTagMan);
 		}
 	}
 	

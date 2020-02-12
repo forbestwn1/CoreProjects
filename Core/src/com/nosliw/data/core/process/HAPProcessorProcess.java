@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.process.resource.HAPProcessId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
@@ -24,7 +25,7 @@ public class HAPProcessorProcess{
 			HAPManagerProcessDefinition processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
-		String id = new HAPIdProcess(suite.getId(), processId).getId();
+		String id = new HAPProcessId(suite.getId(), processId).getId();
 		HAPContextProcessor processContext = HAPContextProcessor.createContext(suite, processMan);
 		return process(id, new HAPDefinitionProcessWithContext(suite.getProcess(processId), processContext), suite.getContext(), serviceProviders, processMan, contextProcessRequirement, processTracker);
 	}
