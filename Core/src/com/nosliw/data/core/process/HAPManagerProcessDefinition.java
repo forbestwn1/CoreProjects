@@ -2,6 +2,8 @@ package com.nosliw.data.core.process;
 
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
@@ -10,6 +12,7 @@ import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPProcessId;
+import com.nosliw.data.core.process.resource.HAPResourceIdProcess;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPParentContext;
@@ -50,13 +53,14 @@ public class HAPManagerProcessDefinition {
 		return processDef;
 	}
 	
-	public HAPDefinitionProcessWithContext getProcessDefinitionWithContext(HAPProcessId processId, HAPAttachmentContainer parentAttachment) {
-		HAPDefinitionProcessWithContext out = null;
-		String suiteId = processId.getSuiteId();
-		HAPDefinitionProcessSuite suite = this.getProcessSuite(suiteId);
-		out = new HAPDefinitionProcessWithContext(suite.getProcess(processId.getProcessId()), HAPContextProcessor.createContext(suite, this));
+	public HAPDefinitionProcessWithContext getProcessDefinitionWithContext(HAPResourceId processId, HAPAttachmentContainer parentAttachment) {
+		HAPDefinitionProcessWrapper processDef = this.getProcessDefinition(processId, parentAttachment);
+		HAPDefinitionProcessWithContext out = new HAPDefinitionProcessWithContext(processDef, HAPContextProcessor.createContext(processDef.getSuite(), this));
 		return out;
 	}
+	
+	
+
 	
 	
 	

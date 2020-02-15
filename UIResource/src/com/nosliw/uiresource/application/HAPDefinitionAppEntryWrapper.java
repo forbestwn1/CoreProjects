@@ -19,6 +19,7 @@ import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.data.core.component.HAPWithAttachment;
+import com.nosliw.data.core.process.HAPDefinitionProcessWrapper;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
@@ -164,6 +165,12 @@ public class HAPDefinitionAppEntryWrapper extends HAPSerializableImp implements 
 	public void setContext(HAPContextGroup context) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public HAPDefinitionProcessWrapper getProcess(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

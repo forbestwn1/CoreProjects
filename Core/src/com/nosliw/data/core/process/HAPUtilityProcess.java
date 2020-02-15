@@ -40,10 +40,17 @@ public class HAPUtilityProcess {
 		return "nosliw_" + name;
 	}
 	
-	public static HAPDefinitionProcessSuite buildProcessSuiteFromAttachment(HAPAttachmentContainer attachmentContainer) {
-		return null;
+	public static HAPDefinitionProcessSuite buildProcessSuiteFromAttachment(HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
+		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
+		Map<String, HAPAttachment> attachments = attachmentContainer.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
+		for(String id : attachments.keySet()) {
+			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachments.get(id);
+			HAPDefinitionProcess processDef = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
+			out.addProcess(id, processDef);
+		}
+		return out;
 	}
-	
+
 	public static HAPDefinitionProcess getProcessDefinitionFromAttachment(String name, HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
 		HAPDefinitionProcess out = null;
 		HAPAttachment attachment = attachmentContainer.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, name);
@@ -54,16 +61,6 @@ public class HAPUtilityProcess {
 		return out;
 	}
 	
-//	public static HAPDefinitionProcessSuite getProcessSuite(String id, HAPManagerActivityPlugin activityPluginMan) {
-//		HAPDefinitionProcessSuite suite = null;
-//		try {
-//			suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPFileUtility.getProcessFolder()+id+".process")), activityPluginMan);
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		return suite;
-//	}
-
 	public static void buildScriptExpressionProcessContext(HAPContext context, HAPProcessContextScriptExpression expProcessContext) {
 		//prepare constant value 
 		expProcessContext.addConstants(context.getConstantValue());

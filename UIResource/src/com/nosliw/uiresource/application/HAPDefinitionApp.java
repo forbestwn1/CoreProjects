@@ -9,7 +9,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
@@ -38,9 +37,6 @@ public class HAPDefinitionApp extends HAPComponentImp{
 		this.m_applicationData = new LinkedHashMap<String, HAPDefinitionAppData>();
 	}
 	
-	@Override
-	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPP;  }
-
 	public Map<String, HAPDefinitionAppData> getApplicationData(){   return this.m_applicationData;   }
 	public void setApplicationData(Map<String, HAPDefinitionAppData> dataDef) {		if(dataDef!=null)   this.m_applicationData = dataDef;	}
 

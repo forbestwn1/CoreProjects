@@ -9,7 +9,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -35,9 +34,6 @@ public class HAPDefinitionProcess extends HAPComponentImp{
 		this.m_requiredResources = new HashSet<HAPResourceDependency>();
 	}
  
-	@Override
-	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS;  }
-
 	//steps within task
 	public Map<String, HAPDefinitionActivity> getActivities(){  return this.m_activities;  }
 	public HAPDefinitionActivity getActivityById(String activityId) {  return this.m_activities.get(activityId);   }

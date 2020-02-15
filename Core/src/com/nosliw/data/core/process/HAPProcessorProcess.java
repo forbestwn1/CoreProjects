@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPErrorUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.process.resource.HAPProcessId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
@@ -19,15 +19,14 @@ public class HAPProcessorProcess{
 
 	//process process in suite
 	public static HAPExecutableProcess process(
-			String processId, 
-			HAPDefinitionProcessSuite suite, 			
+			HAPDefinitionProcessWrapper processDef,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcessDefinition processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
-		String id = new HAPProcessId(suite.getId(), processId).getId();
-		HAPContextProcessor processContext = HAPContextProcessor.createContext(suite, processMan);
-		return process(id, new HAPDefinitionProcessWithContext(suite.getProcess(processId), processContext), suite.getContext(), serviceProviders, processMan, contextProcessRequirement, processTracker);
+		String id = processDef.getResourceId().toStringValue(HAPSerializationFormat.LITERATE); 
+		HAPContextProcessor processContext = HAPContextProcessor.createContext(processDef.getSuite(), processMan);
+		return process(id, new HAPDefinitionProcessWithContext(processDef, processContext), processDef.getSuite().getContext(), serviceProviders, processMan, contextProcessRequirement, processTracker);
 	}
 
 	public static HAPExecutableProcess process(
@@ -64,8 +63,8 @@ public class HAPProcessorProcess{
 
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(out.getDefinition().getAttachmentContainer(), serviceProviders, contextProcessRequirement.serviceDefinitionManager); 
 		
-		for(String activityId : out.getDefinition().getActivities().keySet()) {
-			HAPDefinitionActivity activity = out.getDefinition().getActivityById(activityId);
+		for(String activityId : out.getDefinition().getProcess().getActivities().keySet()) {
+			HAPDefinitionActivity activity = out.getDefinition().getProcess().getActivityById(activityId);
 			
 			//start activity
 			if(activity.getType().equals(HAPConstant.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    

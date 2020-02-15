@@ -40,13 +40,11 @@ public class HAPDefinitionAppEntryUI  extends HAPComponentImp implements HAPDefi
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>>();
 	}
 	
-	@Override
-	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY;  }
-
 	public List<HAPDefinitionAppModule> getModules(){  return this.m_modules;  }
 	public void addModules(List<HAPDefinitionAppModule> modules) {   if(modules!=null)   this.m_modules.addAll(modules);   }
 	public void addModule(HAPDefinitionAppModule module) {  this.m_modules.add(module);  }
 	
+	@Override
 	public HAPDefinitionWrapperTask<HAPDefinitionProcess> getProcess(String name) {  return this.m_processes.get(name);   }
 	public Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> getProcesses(){   return this.m_processes;  }
 	public void addProcess(String name, HAPDefinitionWrapperTask<HAPDefinitionProcess> process) {  this.m_processes.put(name, process);    }

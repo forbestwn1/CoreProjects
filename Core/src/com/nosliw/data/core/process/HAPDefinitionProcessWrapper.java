@@ -44,12 +44,12 @@ public class HAPDefinitionProcessWrapper  extends HAPSerializableImp implements 
 	public HAPDefinitionProcessWrapper(HAPDefinitionProcessSuite suite, String process) {
 		this.m_suite = suite;
 		this.m_processName = process;
-		this.m_process = this.m_suite.getProcess(this.m_processName);
+		this.m_process = this.m_suite.getProcessElement(this.m_processName);
 		HAPComponentUtility.mergeWithParentAttachment(this.m_process, this.m_suite.getAttachmentContainer());
 	}
 	
 	@Override
-	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS;  }
+	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS;  }
 	
 	public HAPDefinitionProcess getProcess() {    return this.m_process;   }
 	
@@ -168,6 +168,12 @@ public class HAPDefinitionProcessWrapper  extends HAPSerializableImp implements 
 
 	@Override
 	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPDefinitionProcessWrapper getProcess(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -9,12 +9,12 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
-import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPComplexResourceDefinitionImp;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
 //application that contains multiple tasks
 @HAPEntityWithAttribute
-public class HAPDefinitionProcessSuite extends HAPComponentImp{
+public class HAPDefinitionProcessSuite extends HAPComplexResourceDefinitionImp{
 
 	@HAPAttribute
 	public static String PROCESS = "process";
@@ -32,9 +32,9 @@ public class HAPDefinitionProcessSuite extends HAPComponentImp{
 	}
 
 	@Override
-	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
+	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
 
-	public HAPDefinitionProcess getProcess(String processId) {  return this.m_processes.get(processId);   }
+	public HAPDefinitionProcess getProcessElement(String processId) {  return this.m_processes.get(processId);   }
 	public Map<String, HAPDefinitionProcess> getProcesses(){   return this.m_processes;   }
 
 	public void addProcess(String id, HAPDefinitionProcess process) {

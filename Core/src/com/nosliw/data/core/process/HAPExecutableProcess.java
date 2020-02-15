@@ -46,7 +46,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	public static String INITSCRIPT = "initScript";
 
 	//process definition
-	private HAPDefinitionProcess m_processDefinition;
+	private HAPDefinitionProcessWrapper m_processDefinition;
 	
 	//unique in system
 	private String m_id;
@@ -63,7 +63,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	//all possible result
 	private Map<String, HAPExecutableDataAssociation> m_results;
 	
-	public HAPExecutableProcess(HAPDefinitionProcess definition, String id) {
+	public HAPExecutableProcess(HAPDefinitionProcessWrapper definition, String id) {
 		this.m_activities = new LinkedHashMap<String, HAPExecutableActivity>();
 		this.m_results = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 		this.m_processDefinition = definition;
@@ -87,7 +87,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 		return out;
 	}
 
-	public HAPDefinitionProcess getDefinition() {   return this.m_processDefinition;    }
+	public HAPDefinitionProcessWrapper getDefinition() {   return this.m_processDefinition;    }
 	
 	public Map<String, HAPExecutableActivity> getActivities(){  return this.m_activities;   }
 	
