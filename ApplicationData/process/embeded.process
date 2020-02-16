@@ -8,7 +8,7 @@
 			}
 		}
 	},
-	"process": [{
+	"element": [{
 			"id": "main",
 			"name": "mainProcess",
 			"description": "process including expression activity",

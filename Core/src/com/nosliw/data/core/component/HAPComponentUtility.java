@@ -50,21 +50,25 @@ public class HAPComponentUtility {
 		parseEventHandler(child, jsonObj);
 	}
 
-	public static void parseComponent(HAPComponentImp component, JSONObject jsonObj) {
+	public static void parseComplextResourceDefinition(HAPComplexResourceDefinitionImp complexResourceDef, JSONObject jsonObj) {
 		//entity info
-		component.buildEntityInfoByJson(jsonObj);
+		complexResourceDef.buildEntityInfoByJson(jsonObj);
 		
 		//parse attachment
 		JSONObject pageInfoObj = jsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
 		if(pageInfoObj!=null) {
-			HAPAttachmentUtility.parseDefinition(pageInfoObj, component.getAttachmentContainer());
+			HAPAttachmentUtility.parseDefinition(pageInfoObj, complexResourceDef.getAttachmentContainer());
 		}
 		
 		//context
 		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPComponentImp.CONTEXT);
 		if(contextJsonObj!=null) {
-			component.setContext(HAPParserContext.parseContextGroup(contextJsonObj));
+			complexResourceDef.setContext(HAPParserContext.parseContextGroup(contextJsonObj));
 		}
+	}
+	
+	public static void parseComponent(HAPComponentImp component, JSONObject jsonObj) {
+		parseComplextResourceDefinition(component, jsonObj);
 		
 		//lifecycle
 		parseLifecycleAction(component, jsonObj);

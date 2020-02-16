@@ -674,6 +674,10 @@
 			<definition name="RESOURCEID_TYPE_TEMPLATE" value="template"/>
 
 			<definition type="space"/>
+			<definition name="PROCESSSUITE_ELEMENTTYPE_ENTITY" value="entity"/>
+			<definition name="PROCESSSUITE_ELEMENTTYPE_REFERENCE" value="reference"/>
+
+			<definition type="space"/>
 			<definition name="SEPERATOR_RESOURCEID_START" value="___"/>
 			<definition name="SEPERATOR_RESOURCEID_STRUCTURE" value="_"/>
 

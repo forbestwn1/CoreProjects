@@ -21,7 +21,8 @@ public abstract class HAPComplexResourceDefinitionImp extends HAPEntityInfoWrita
 		this.m_context = new HAPContextGroup();
 		this.m_attachmentContainer = new HAPAttachmentContainer();
 	}
-	
+
+
 	@Override
 	public String getResourceType() {   return this.getResourceId().getType();  }
 
@@ -40,17 +41,31 @@ public abstract class HAPComplexResourceDefinitionImp extends HAPEntityInfoWrita
 	
 	@Override
 	public HAPAttachmentContainer getAttachmentContainer() {		return this.m_attachmentContainer;	}
+	@Override
+	public void setAttachmentContainer(HAPAttachmentContainer attachmentContainer) {  this.m_attachmentContainer = attachmentContainer;}  
 
 	@Override
-	public Map<String, HAPAttachment> getAttachmentsByType(String type) {
-		return this.m_attachmentContainer.getAttachmentByType(type);
-	}
+	public Map<String, HAPAttachment> getAttachmentsByType(String type) {	return this.m_attachmentContainer.getAttachmentByType(type);	}
 
 	@Override
-	public void mergeBy(HAPWithAttachment parent, String mode) {
-		this.m_attachmentContainer.merge(parent.getAttachmentContainer(), mode);
-	}
+	public void mergeBy(HAPWithAttachment parent, String mode) {	this.m_attachmentContainer.merge(parent.getAttachmentContainer(), mode);	}
  
+	@Override
+	public void cloneToDataContext(HAPWithDataContext withDataContext) {
+		this.m_context.cloneTo(withDataContext.getContext());
+	}
+
+	@Override
+	public void cloneToAttachment(HAPWithAttachment withAttachment) {
+		withAttachment.setAttachmentContainer(this.m_attachmentContainer.cloneAttachmentContainer());
+	}
+
+	protected void cloneToComplexEntity(HAPComplexResourceDefinition complexEntity) {
+		this.cloneToEntityInfo(complexEntity);
+		this.cloneToAttachment(complexEntity);
+		this.cloneToDataContext(complexEntity);
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);

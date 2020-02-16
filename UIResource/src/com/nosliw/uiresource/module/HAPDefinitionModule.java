@@ -15,6 +15,7 @@ import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 /**
@@ -43,8 +44,8 @@ public class HAPDefinitionModule extends HAPComponentImp{
 
 	private List<HAPInfoDecoration> m_uiDecoration;
 	
-	public HAPDefinitionModule(String id) {
-		super(id);
+	public HAPDefinitionModule(String id, HAPManagerActivityPlugin activityPluginMan) {
+		super(id, activityPluginMan);
 		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
 	}

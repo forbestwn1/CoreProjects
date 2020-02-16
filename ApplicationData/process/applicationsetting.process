@@ -8,7 +8,7 @@
 			}
 		}
 	},
-	"process": [{
+	"element": [{
 			"id": "submitsetting",
 			"name": "submitsetting",
 			"description": "submit setting to update application",

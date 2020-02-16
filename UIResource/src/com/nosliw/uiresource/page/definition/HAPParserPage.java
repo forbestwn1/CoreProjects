@@ -26,6 +26,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.component.HAPAttachmentUtility;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
@@ -53,9 +54,12 @@ public class HAPParserPage {
 	//configuration object
 	private HAPConfigure m_setting;
 	
-	public HAPParserPage(HAPConfigure setting, HAPIdGenerator idGenerator){
+	private HAPManagerActivityPlugin m_activityPluginMan;
+	
+	public HAPParserPage(HAPConfigure setting, HAPIdGenerator idGenerator, HAPManagerActivityPlugin activityPluginMan){
 		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
+		this.m_activityPluginMan = activityPluginMan;
 	}
 	
 	//resourceUnit : target ui resource object
@@ -81,7 +85,7 @@ public class HAPParserPage {
 	}
 
 	public HAPDefinitionUIPage parseContent(String resourceId, String content){
-		HAPDefinitionUIPage resource = new HAPDefinitionUIPage(resourceId, content);
+		HAPDefinitionUIPage resource = new HAPDefinitionUIPage(resourceId, content, this.m_activityPluginMan);
 		Document doc = Jsoup.parse(content, "UTF-8");
 		this.parseUIDefinitionUnit(resource, doc.body(), null);
 		return resource;
@@ -166,7 +170,7 @@ public class HAPParserPage {
 		if(customTag!=null){
 			//process custome tag
 			String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
-			HAPDefinitionUITag uiTag = new HAPDefinitionUITag(customTag, uiId);
+			HAPDefinitionUITag uiTag = new HAPDefinitionUITag(customTag, uiId, this.m_activityPluginMan);
 			parseUIDefinitionUnit(uiTag, ele, parentUnit);
 			parentUnit.addUITag(uiTag);
 			return false;

@@ -11,6 +11,7 @@ import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentUseServiceImp;
 import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.component.HAPNameMapping;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -61,8 +62,8 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 	//mapping from attachment name to internal name(service, resource, ...)
 	private HAPNameMapping m_nameMapping;
 	
-	public HAPDefinitionUIUnit(String id){
-		super(id);
+	public HAPDefinitionUIUnit(String id, HAPManagerActivityPlugin activityPluginMan){
+		super(id, activityPluginMan);
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPDefinitionUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPDefinitionUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInContent = new HashSet<HAPDefinitionUIEmbededScriptExpressionInContent>();

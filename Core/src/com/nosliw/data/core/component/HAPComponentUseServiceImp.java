@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -11,8 +12,8 @@ import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 public abstract class HAPComponentUseServiceImp extends HAPComponentImp implements HAPWithServiceUse{
 
-	public HAPComponentUseServiceImp(String id) {
-		super(id);
+	public HAPComponentUseServiceImp(String id, HAPManagerActivityPlugin activityPluginMan) {
+		super(id, activityPluginMan);
 		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
 	}
 	

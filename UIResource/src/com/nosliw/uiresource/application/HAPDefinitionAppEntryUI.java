@@ -16,7 +16,8 @@ import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPComponentUtility;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementEntity;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
@@ -32,12 +33,12 @@ public class HAPDefinitionAppEntryUI  extends HAPComponentImp implements HAPDefi
 	//all modules in this entry
 	private List<HAPDefinitionAppModule> m_modules;
 
-	private Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> m_processes;
+	private Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity>> m_processes;
 
-	public HAPDefinitionAppEntryUI(String id) {
-		super(id);
+	public HAPDefinitionAppEntryUI(String id, HAPManagerActivityPlugin activityPluginMan) {
+		super(id, activityPluginMan);
 		this.m_modules = new ArrayList<HAPDefinitionAppModule>();
-		this.m_processes = new LinkedHashMap<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>>();
+		this.m_processes = new LinkedHashMap<String, HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity>>();
 	}
 	
 	public List<HAPDefinitionAppModule> getModules(){  return this.m_modules;  }
@@ -45,9 +46,9 @@ public class HAPDefinitionAppEntryUI  extends HAPComponentImp implements HAPDefi
 	public void addModule(HAPDefinitionAppModule module) {  this.m_modules.add(module);  }
 	
 	@Override
-	public HAPDefinitionWrapperTask<HAPDefinitionProcess> getProcess(String name) {  return this.m_processes.get(name);   }
-	public Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> getProcesses(){   return this.m_processes;  }
-	public void addProcess(String name, HAPDefinitionWrapperTask<HAPDefinitionProcess> process) {  this.m_processes.put(name, process);    }
+	public HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity> getProcess(String name) {  return this.m_processes.get(name);   }
+	public Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity>> getProcesses(){   return this.m_processes;  }
+	public void addProcess(String name, HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity> process) {  this.m_processes.put(name, process);    }
 
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {

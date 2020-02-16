@@ -608,6 +608,11 @@ public class HAPConstant {
 
 
 
+		public static final String PROCESSSUITE_ELEMENTTYPE_ENTITY = "entity";
+		public static final String PROCESSSUITE_ELEMENTTYPE_REFERENCE = "reference";
+
+
+
 		public static final String SEPERATOR_RESOURCEID_START = "___";
 		public static final String SEPERATOR_RESOURCEID_STRUCTURE = "_";
 

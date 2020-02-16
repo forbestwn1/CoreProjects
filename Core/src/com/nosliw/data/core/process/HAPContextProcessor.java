@@ -16,7 +16,7 @@ public class HAPContextProcessor {
 	
 	private HAPManagerProcessDefinition m_processDefMan;
 	
-	private Map<String, HAPDefinitionProcess> m_processes;
+	private Map<String, HAPDefinitionProcessSuiteElementEntity> m_processes;
 	
 	
 	public static HAPContextProcessor createContext(HAPDefinitionProcessSuite suite, HAPManagerProcessDefinition processDefMan) {
@@ -26,7 +26,7 @@ public class HAPContextProcessor {
 		return out;
 	}
 	
-	public static HAPContextProcessor createContext(Map<String, HAPDefinitionProcess> processes, HAPManagerProcessDefinition processDefMan) {
+	public static HAPContextProcessor createContext(Map<String, HAPDefinitionProcessSuiteElementEntity> processes, HAPManagerProcessDefinition processDefMan) {
 		HAPContextProcessor out = new HAPContextProcessor();
 		out.m_processDefMan = processDefMan;
 		out.m_processes = processes;

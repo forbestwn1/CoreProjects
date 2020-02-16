@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementEntity;
 import com.nosliw.data.core.process.HAPDefinitionProcessWithContext;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
@@ -39,7 +39,7 @@ public class HAPProcessorEventTask {
 		
 		//poll task
 		HAPDefinitionPollTask pollTaskDef = source.getPollTask();
-		HAPDefinitionProcess pollProcessDef = HAPUtilityProcess.getProcessDefinitionFromAttachment(pollTaskDef.getProcess().getTaskDefinition(), definition.getAttachmentContainer(), processMan.getPluginManager());
+		HAPDefinitionProcessSuiteElementEntity pollProcessDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(pollTaskDef.getProcess().getTaskDefinition(), definition.getAttachmentContainer(), processMan.getPluginManager());
 		HAPExecutableProcess pollProcessExe = HAPProcessorProcess.process(null, new HAPDefinitionProcessWithContext(pollProcessDef), definition.getContext(), allServiceProviders, processMan, contextProcessRequirement, new HAPProcessTracker());
 		HAPExecutableWrapperTask pollProcessExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(pollTaskDef.getProcess(), pollProcessExe, HAPParentContext.createDefault(definition.getContext()), null, contextProcessRequirement);			
 		HAPExecutablePollTask pollTask = new HAPExecutablePollTask(source.getPollTask());
@@ -48,7 +48,7 @@ public class HAPProcessorEventTask {
 
 		//event handler
 		HAPDefinitionEventHandle eventHandleDef = definition.getEventHandle();
-		HAPDefinitionProcess eventHandleProcessDef = HAPUtilityProcess.getProcessDefinitionFromAttachment(eventHandleDef.getProcess().getTaskDefinition(), definition.getAttachmentContainer(), processMan.getPluginManager());
+		HAPDefinitionProcessSuiteElementEntity eventHandleProcessDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(eventHandleDef.getProcess().getTaskDefinition(), definition.getAttachmentContainer(), processMan.getPluginManager());
 		HAPExecutableProcess eventHandleProcessExe = HAPProcessorProcess.process(null, new HAPDefinitionProcessWithContext(eventHandleProcessDef), definition.getContext(), allServiceProviders, processMan, contextProcessRequirement, new HAPProcessTracker());
 		HAPExecutableWrapperTask eventHandleProcessExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(pollTaskDef.getProcess(), eventHandleProcessExe, HAPParentContext.createDefault(definition.getContext()), null, contextProcessRequirement);			
 		HAPExecutableEventHandler eventHandler = new HAPExecutableEventHandler(eventHandleDef);

@@ -8,16 +8,23 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
 
-public class HAPDefinitionProcessReference extends HAPEntityInfoWritableImp{
+public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWritableImp implements HAPDefinitionProcessSuiteElement{
 
 	@HAPAttribute
 	public static String REFERENCE = "reference";
 
 	private HAPResourceId m_resourceId;
 
-	public HAPResourceId getResourceId() {
-		return this.m_resourceId;
+	public HAPDefinitionProcessSuiteElementReference() {}
+
+	public HAPDefinitionProcessSuiteElementReference(HAPResourceId resourceId) {
+		this.m_resourceId = resourceId;
 	}
+
+	@Override
+	public String getType() {	return HAPConstant.PROCESSSUITE_ELEMENTTYPE_REFERENCE;	}
+
+	public HAPResourceId getResourceId() {	return this.m_resourceId;	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object obj){

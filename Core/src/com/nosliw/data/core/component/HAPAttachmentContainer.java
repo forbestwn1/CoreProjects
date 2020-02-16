@@ -110,6 +110,17 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 		return out;
 	}
 	
+	public HAPAttachmentContainer cloneAttachmentContainer() {
+		HAPAttachmentContainer out = new HAPAttachmentContainer();
+		for(String type : this.m_element.keySet()) {
+			Map<String, HAPAttachment> byName = this.m_element.get(type);
+			for(String name : byName.keySet()) {
+				out.addAttachment(type, byName.get(name));
+			}
+		}
+		return out;
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);

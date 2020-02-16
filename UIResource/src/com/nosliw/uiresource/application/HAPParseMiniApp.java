@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPComponentUtility;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementEntity;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPParserContext;
@@ -44,7 +44,7 @@ public class HAPParseMiniApp {
 	}
 	
 	private HAPDefinitionApp parseAppJson(JSONObject jsonObj) {
-		HAPDefinitionApp out = new HAPDefinitionApp(jsonObj.optString(HAPDefinitionApp.ID));
+		HAPDefinitionApp out = new HAPDefinitionApp(jsonObj.optString(HAPDefinitionApp.ID), this.m_activityPluginMan);
 
 		HAPComponentUtility.parseComponent(out, jsonObj);
 		
@@ -60,7 +60,7 @@ public class HAPParseMiniApp {
 	}
 
 	private HAPDefinitionAppEntryUI parseAppEntry(JSONObject jsonObj) {
-		HAPDefinitionAppEntryUI out = new HAPDefinitionAppEntryUI(null);
+		HAPDefinitionAppEntryUI out = new HAPDefinitionAppEntryUI(null, this.m_activityPluginMan);
 
 		HAPComponentUtility.parseComponent(out, jsonObj);
 
@@ -75,7 +75,7 @@ public class HAPParseMiniApp {
 				String processName = (String)key;
 				JSONObject processJson = processesJson.getJSONObject(processName);
 
-				HAPDefinitionWrapperTask<HAPDefinitionProcess> process = HAPParserProcessDefinition.parseEmbededProcess(processJson, this.m_activityPluginMan);
+				HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity> process = HAPParserProcessDefinition.parseEmbededProcess(processJson, this.m_activityPluginMan);
 				process.getTaskDefinition().setName((String)key);
 				out.addProcess(processName, process);
 			}

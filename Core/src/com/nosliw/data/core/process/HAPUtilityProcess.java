@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPAttachment;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPAttachmentEntity;
+import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
@@ -45,22 +46,39 @@ public class HAPUtilityProcess {
 		Map<String, HAPAttachment> attachments = attachmentContainer.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
 		for(String id : attachments.keySet()) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachments.get(id);
-			HAPDefinitionProcess processDef = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
+			HAPDefinitionProcessSuiteElementEntity processDef = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
 			out.addProcess(id, processDef);
 		}
 		return out;
 	}
 
-	public static HAPDefinitionProcess getProcessDefinitionFromAttachment(String name, HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionProcess out = null;
+	public static HAPDefinitionProcessSuiteElement getProcessDefinitionElementFromAttachment(String name, HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
+		HAPDefinitionProcessSuiteElement out = null;
 		HAPAttachment attachment = attachmentContainer.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, name);
 		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
 			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
 		}
+		else if(HAPConstant.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
+			HAPAttachmentReference referenceAttachment = (HAPAttachmentReference)attachment;
+			out = new HAPDefinitionProcessSuiteElementReference(referenceAttachment.getId());
+		}
 		return out;
 	}
-	
+
+	public static HAPDefinitionProcessSuiteElement getProcessDefinitionElementFromAttachment(HAPAttachment attachment, HAPManagerActivityPlugin activityPluginMan) {
+		HAPDefinitionProcessSuiteElement out = null;
+		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
+			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
+			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
+		}
+		else if(HAPConstant.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
+			HAPAttachmentReference referenceAttachment = (HAPAttachmentReference)attachment;
+			out = new HAPDefinitionProcessSuiteElementReference(referenceAttachment.getId());
+		}
+		return out;
+	}
+
 	public static void buildScriptExpressionProcessContext(HAPContext context, HAPProcessContextScriptExpression expProcessContext) {
 		//prepare constant value 
 		expProcessContext.addConstants(context.getConstantValue());

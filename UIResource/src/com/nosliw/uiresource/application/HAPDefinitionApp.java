@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
 import com.nosliw.uiresource.resource.HAPUIAppEntryId;
 
@@ -31,8 +32,8 @@ public class HAPDefinitionApp extends HAPComponentImp{
 	//it can be stateful data(the data that can retrieve next time you use the app)
 	private Map<String, HAPDefinitionAppData> m_applicationData;
 
-	public HAPDefinitionApp(String id) {
-		super(id);
+	public HAPDefinitionApp(String id, HAPManagerActivityPlugin activityPluginMan) {
+		super(id, activityPluginMan);
 		this.m_entries = new LinkedHashMap<String, HAPDefinitionAppEntryUI>();
 		this.m_applicationData = new LinkedHashMap<String, HAPDefinitionAppData>();
 	}

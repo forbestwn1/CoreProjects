@@ -17,35 +17,28 @@ import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 public class HAPDefinitionProcessSuite extends HAPComplexResourceDefinitionImp{
 
 	@HAPAttribute
-	public static String PROCESS = "process";
+	public static String ELEMENT = "element";
 
-	@HAPAttribute
-	public static String REFERENCE = "reference";
-
-	private Map<String, HAPDefinitionProcess> m_processes;
-
-	private Map<String, HAPDefinitionProcessReference> m_references;
+	private Map<String, HAPDefinitionProcessSuiteElement> m_elements;
 
 	public HAPDefinitionProcessSuite() {
-		this.m_processes = new LinkedHashMap<String, HAPDefinitionProcess>();
-		this.m_references = new LinkedHashMap<String, HAPDefinitionProcessReference>();
+		this.m_elements = new LinkedHashMap<String, HAPDefinitionProcessSuiteElement>();
 	}
 
 	@Override
 	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
 
-	public HAPDefinitionProcess getProcessElement(String processId) {  return this.m_processes.get(processId);   }
-	public Map<String, HAPDefinitionProcess> getProcesses(){   return this.m_processes;   }
+	public HAPDefinitionProcessSuiteElement getProcessElement(String processId) {  return this.m_elements.get(processId);   }
+	public Map<String, HAPDefinitionProcessSuiteElement> getProcesses(){   return this.m_elements;   }
 
-	public void addProcess(String id, HAPDefinitionProcess process) {
-		process.getAttachmentContainer().merge(this.getAttachmentContainer(), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
-		this.m_processes.put(id, process);  
+	public void addProcess(String id, HAPDefinitionProcessSuiteElement process) {
+		String type = process.getType();
+		if(type.equals(HAPConstant.PROCESSSUITE_ELEMENTTYPE_ENTITY)) {
+			((HAPDefinitionProcessSuiteElementEntity)process).getAttachmentContainer().merge(this.getAttachmentContainer(), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+		}
+		this.m_elements.put(id, process);  
 	}
 
-	public void addReference(String id, HAPDefinitionProcessReference reference) {
-		this.m_references.put(id, reference);
-	}
-	
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		return null;
@@ -54,7 +47,6 @@ public class HAPDefinitionProcessSuite extends HAPComplexResourceDefinitionImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}
-
 }

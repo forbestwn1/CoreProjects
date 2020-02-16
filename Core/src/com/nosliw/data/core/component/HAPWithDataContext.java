@@ -11,4 +11,5 @@ public interface HAPWithDataContext {
 	HAPContextGroup getContext();
 	void setContext(HAPContextGroup context);
 
+	void cloneToDataContext(HAPWithDataContext dataContext);
 }

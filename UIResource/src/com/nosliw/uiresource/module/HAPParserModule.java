@@ -38,7 +38,7 @@ public class HAPParserModule {
 
 	private HAPDefinitionModule parseContent(String content, String id) {
 		JSONObject jsonObj = new JSONObject(content);
-		HAPDefinitionModule out = new HAPDefinitionModule(id);
+		HAPDefinitionModule out = new HAPDefinitionModule(id, this.m_activityPluginMan);
 
 		//build component part from json object
 		HAPComponentUtility.parseComponent(out, jsonObj);

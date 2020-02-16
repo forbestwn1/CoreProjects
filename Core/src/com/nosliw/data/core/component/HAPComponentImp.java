@@ -6,8 +6,11 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPDefinitionProcessWrapper;
+import com.nosliw.data.core.process.HAPUtilityProcess;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 
 abstract public class HAPComponentImp extends HAPComplexResourceDefinitionImp implements HAPComponent{
 
@@ -21,13 +24,16 @@ abstract public class HAPComponentImp extends HAPComplexResourceDefinitionImp im
 
 	private HAPDefinitionProcessSuite m_processSuite;
 	
-	public HAPComponentImp() {
+	private HAPManagerActivityPlugin m_activityPluginMan;
+	
+	public HAPComponentImp(HAPManagerActivityPlugin activityPluginMan) {
+		this.m_activityPluginMan = activityPluginMan;
 		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
 		this.m_eventHandlers = new HashSet<HAPHandlerEvent>();
 	}
 
-	public HAPComponentImp(String id) {
-		this();
+	public HAPComponentImp(String id, HAPManagerActivityPlugin activityPluginMan) {
+		this(activityPluginMan);
 		this.m_id = id;
 	}
 	
@@ -39,7 +45,13 @@ abstract public class HAPComponentImp extends HAPComplexResourceDefinitionImp im
 	private HAPDefinitionProcessSuite getProcessSuite() {
 		if(this.m_processSuite==null) {
 			this.m_processSuite = new HAPDefinitionProcessSuite();
+			this.cloneToComplexEntity(m_processSuite);
+			Map<String, HAPAttachment> processAtts = this.getAttachmentContainer().getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
 			
+			for(String name : processAtts.keySet()) {
+				HAPAttachment attachment = processAtts.get(name);
+				this.m_processSuite.addProcess(attachment.getName(), HAPUtilityProcess.getProcessDefinitionElementFromAttachment(attachment, m_activityPluginMan));
+			}
 		}
 		return this.m_processSuite;
 	}

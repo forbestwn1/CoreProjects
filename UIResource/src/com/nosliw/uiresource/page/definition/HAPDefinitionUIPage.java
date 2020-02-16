@@ -2,14 +2,15 @@ package com.nosliw.uiresource.page.definition;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 
 public class HAPDefinitionUIPage extends HAPDefinitionUIUnit{
 
 	//source code of resource definition
 	private String m_source;
 	
-	public HAPDefinitionUIPage(String id, String source){
-		super(id);
+	public HAPDefinitionUIPage(String id, String source, HAPManagerActivityPlugin activityPluginMan){
+		super(id, activityPluginMan);
 		this.m_source = source;
 	}
 	

@@ -39,7 +39,7 @@ public class HAPDefinitionProcessWrapper  extends HAPSerializableImp implements 
 	
 	private String m_processName;
 	
-	private HAPDefinitionProcess m_process;
+	private HAPDefinitionProcessSuiteElementEntity m_process;
 
 	public HAPDefinitionProcessWrapper(HAPDefinitionProcessSuite suite, String process) {
 		this.m_suite = suite;
@@ -51,7 +51,7 @@ public class HAPDefinitionProcessWrapper  extends HAPSerializableImp implements 
 	@Override
 	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS;  }
 	
-	public HAPDefinitionProcess getProcess() {    return this.m_process;   }
+	public HAPDefinitionProcessSuiteElementEntity getProcess() {    return this.m_process;   }
 	
 	public HAPDefinitionProcessSuite getSuite() {   return this.m_suite;  }
 
