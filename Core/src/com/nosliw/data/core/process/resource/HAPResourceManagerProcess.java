@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.process.HAPManagerProcessDefinition;
+import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -15,9 +15,9 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 
 public class HAPResourceManagerProcess  extends HAPResourceManagerImp{
 
-	private HAPManagerProcessDefinition m_processMan;
+	private HAPManagerProcess m_processMan;
 	
-	public HAPResourceManagerProcess(HAPManagerProcessDefinition processMan){
+	public HAPResourceManagerProcess(HAPManagerProcess processMan){
 		this.m_processMan = processMan;
 	}
 	

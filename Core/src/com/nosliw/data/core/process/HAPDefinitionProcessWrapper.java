@@ -71,6 +71,10 @@ public class HAPDefinitionProcessWrapper  extends HAPSerializableImp implements 
 	public HAPResourceId getResourceId() {  return this.m_resourceId;  }
 
 	@Override
+	public HAPAttachmentContainer getAttachmentContainer() {  return this.getProcess().getAttachmentContainer(); }
+
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PROCESS, this.m_processName);
@@ -97,12 +101,6 @@ public class HAPDefinitionProcessWrapper  extends HAPSerializableImp implements 
 
 	@Override
 	public HAPEntityInfo clone() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HAPAttachmentContainer getAttachmentContainer() {
 		// TODO Auto-generated method stub
 		return null;
 	}

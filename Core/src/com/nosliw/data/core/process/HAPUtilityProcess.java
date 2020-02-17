@@ -15,7 +15,10 @@ import com.nosliw.data.core.component.HAPAttachmentEntity;
 import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.process.resource.HAPProcessId;
+import com.nosliw.data.core.process.resource.HAPResourceIdProcess;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
@@ -39,6 +42,10 @@ public class HAPUtilityProcess {
 
 	public static String buildOutputVarialbeName(String name) {
 		return "nosliw_" + name;
+	}
+	
+	public static HAPResourceId buildResourceId(String suiteId, String processId) {
+		return new HAPResourceIdProcess(new HAPProcessId(suiteId, processId));
 	}
 	
 	public static HAPDefinitionProcessSuite buildProcessSuiteFromAttachment(HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.process.HAPManagerProcessDefinition;
+import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
@@ -15,7 +15,7 @@ public class HAPProcessorEventTask {
 
 	public static HAPExecutableEventTask process(
 			HAPDefinitionEventTask definition, 
-			HAPManagerProcessDefinition processMan,
+			HAPManagerProcess processMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
 			HAPExpressionSuiteManager expressionManager,

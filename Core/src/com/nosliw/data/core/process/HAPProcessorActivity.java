@@ -21,7 +21,7 @@ public interface HAPProcessorActivity {
 			HAPContextGroup context,
 			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcessDefinition processManager,
+			HAPManagerProcess processManager,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker

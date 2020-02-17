@@ -1,5 +1,5 @@
 var node_createIODataSet = nosliw.getNodeData("iotask.entity.createIODataSet");
-var inputDataSet = node_createIODataSet(||inputData||);
+var inputDataSet = node_createIODataSet(||parentContextData||);
 
 var env = {
 	getExecuteProcessRequest : function(process, input, extraInputDataSet, handlers, request){

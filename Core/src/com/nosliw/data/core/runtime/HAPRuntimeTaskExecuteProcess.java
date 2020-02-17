@@ -1,11 +1,9 @@
 package com.nosliw.data.core.runtime;
 
-import java.util.Map;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.process.HAPExecutableProcess;
+import com.nosliw.data.core.script.context.data.HAPContextData;
 
 @HAPEntityWithAttribute
 public abstract class HAPRuntimeTaskExecuteProcess extends HAPRuntimeTask{
@@ -20,15 +18,15 @@ public abstract class HAPRuntimeTaskExecuteProcess extends HAPRuntimeTask{
 
 	private HAPExecutableProcess m_process;
 	
-	private Map<String, HAPData> m_input;
+	private HAPContextData m_input;
 	
-	public HAPRuntimeTaskExecuteProcess(HAPExecutableProcess process, Map<String, HAPData> input) {
+	public HAPRuntimeTaskExecuteProcess(HAPExecutableProcess process, HAPContextData input) {
 		this.m_process = process;
 		this.m_input = input;
 	}
 	
 	public HAPExecutableProcess getProcess() {   return this.m_process;    }
-	public Map<String, HAPData> getInput(){    return this.m_input;    }
+	public HAPContextData getInput(){    return this.m_input;    }
 
 	@Override
 	public String getTaskType(){  return TASK; }

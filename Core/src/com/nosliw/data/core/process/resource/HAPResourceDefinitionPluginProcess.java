@@ -24,7 +24,7 @@ public class HAPResourceDefinitionPluginProcess implements HAPPluginResourceDefi
 		HAPResourceIdProcess processResourceId = new HAPResourceIdProcess(resourceId);
 		HAPResourceIdSimple processSuiteResourceId = processResourceId.getProcessSuiteResourceId();
 		HAPDefinitionProcessSuite processSuiteDef = (HAPDefinitionProcessSuite)this.m_resourceDefMan.getResourceDefinition(processSuiteResourceId);
-		return new HAPDefinitionProcessWrapper(processSuiteDef, processResourceId.getProcessId().getId());
+		return new HAPDefinitionProcessWrapper(processSuiteDef, processResourceId.getProcessId().getProcessId());
 	}
 
 }

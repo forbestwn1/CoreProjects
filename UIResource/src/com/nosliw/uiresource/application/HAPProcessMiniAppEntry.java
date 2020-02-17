@@ -16,7 +16,7 @@ import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcessWithContext;
 import com.nosliw.data.core.process.HAPDefinitionProcessWrapper;
 import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.process.HAPManagerProcessDefinition;
+import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrReference;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -45,7 +45,7 @@ public class HAPProcessMiniAppEntry {
 	public static HAPExecutableAppEntry process(
 			HAPDefinitionAppEntryWrapper minAppEntryDef,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcessDefinition processMan,
+			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
@@ -105,7 +105,7 @@ public class HAPProcessMiniAppEntry {
 			HAPAttachmentContainer parentAttachment,
 			Map<String, HAPContextStructure> extraContexts,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcessDefinition processMan,
+			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {

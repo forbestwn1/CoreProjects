@@ -11,11 +11,12 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPManagerProcess;
-import com.nosliw.data.core.process.HAPManagerProcessDefinition;
+import com.nosliw.data.core.process.HAPRuntimeProcess;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPParentContext;
+import com.nosliw.data.core.script.context.data.HAPContextDataFactory;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
@@ -35,12 +36,12 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 	@HAPAttribute
 	public static String INPUTMAPPING = "inputMapping";
 
-	private HAPManagerProcess m_processManager;
-	private HAPManagerProcessDefinition m_processDefMan;
+	private HAPRuntimeProcess m_processRuntime;
+	private HAPManagerProcess m_processMan;
 
-	public HAPFactoryServiceProcess(HAPManagerProcess processManager, HAPManagerProcessDefinition processDefMan) {
-		this.m_processManager = processManager;
-		this.m_processDefMan = processDefMan;
+	public HAPFactoryServiceProcess(HAPRuntimeProcess processRuntime, HAPManagerProcess processMan) {
+		this.m_processRuntime = processRuntime;
+		this.m_processMan = processMan;
 	}
 	
 	@Override
@@ -54,7 +55,7 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		JSONObject configJson = (JSONObject)runtimeInfo.getConfigure();
 		
 		//process suite definition
-		HAPDefinitionProcessSuite suite = HAPParserProcessDefinition.parsePocessSuite(configJson.optJSONObject(SUITE), this.m_processDefMan.getPluginManager());
+		HAPDefinitionProcessSuite suite = HAPParserProcessDefinition.parsePocessSuite(configJson.optJSONObject(SUITE), this.m_processMan.getPluginManager());
 		suite.setName(staticInfo.getName());
 
 		//input mapping for process
@@ -86,7 +87,7 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 			outputExternalContexts.put(resultName, HAPParentContext.createDefault(outputContext));
 		}
 		
-		HAPExecutableWrapperTask processExe = this.m_processDefMan.getEmbededProcess(
+		HAPExecutableWrapperTask processExe = this.m_processMan.getEmbededProcess(
 				"main", 
 				suite, 
 				inputMapping, 
@@ -108,7 +109,7 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		
 		@Override
 		public HAPResultService execute(Map<String, HAPData> parms) {
-			JSONObject dataObj = (JSONObject)m_processManager.executeProcess(m_processExe, parms).getData();
+			JSONObject dataObj = (JSONObject)m_processRuntime.executeEmbededProcess(m_processExe, HAPContextDataFactory.newContextDataFlat(parms)).getData();
 //			JSONObject dataObj = (JSONObject)m_processManager.executeProcess("main", suite, parms).getData();
 			HAPResultService out = new HAPResultService();
 			out.buildObject(dataObj, HAPSerializationFormat.JSON);

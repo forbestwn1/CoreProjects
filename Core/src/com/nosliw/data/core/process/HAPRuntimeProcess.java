@@ -1,14 +1,17 @@
 package com.nosliw.data.core.process;
 
-import java.util.Map;
-
-import com.nosliw.data.core.HAPData;
+import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.data.core.script.context.data.HAPContextData;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
 public interface HAPRuntimeProcess {
 
-	public void executeProcess(HAPExecutableProcess processExe, Map<String, HAPData> input, HAPProcessResultHandler resultHandler);
+	void executeProcess(HAPExecutableProcess processExe, HAPContextData input, HAPProcessResultHandler resultHandler);
 
-	public void executeEmbededProcess(HAPExecutableWrapperTask<HAPExecutableProcess> processExe, Map<String, HAPData> input, HAPProcessResultHandler resultHandler);
+	void executeEmbededProcess(HAPExecutableWrapperTask<HAPExecutableProcess> processExe, HAPContextData parentContext, HAPProcessResultHandler resultHandler);
 
+	HAPServiceData executeProcess(HAPExecutableProcess process, HAPContextData parentContext);
+ 
+	HAPServiceData executeEmbededProcess(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData input);
+	
 }

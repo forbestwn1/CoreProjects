@@ -359,8 +359,8 @@ public class HAPRuntimeJSScriptUtility {
 		
 		templateParms.put("processDef", task.getProcess().toResourceData(runtime.getRuntimeInfo()).toString());
 		
-		String inputJson = HAPJsonUtility.buildJson(task.getInput(), HAPSerializationFormat.JSON);
-		templateParms.put("inputData", inputJson);
+		String parentContextDataJson = HAPJsonUtility.buildJson(task.getParentContextData(), HAPSerializationFormat.JSON);
+		templateParms.put("parentContextData", parentContextDataJson);
 		
 		templateParms.put("taskId", task.getTaskId());
 

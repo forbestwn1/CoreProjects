@@ -14,28 +14,27 @@ public class HAPContextProcessor {
 
 	private HAPDefinitionProcessSuite m_suite; 
 	
-	private HAPManagerProcessDefinition m_processDefMan;
+	private HAPManagerProcess m_processMan;
 	
 	private Map<String, HAPDefinitionProcessSuiteElementEntity> m_processes;
 	
-	
-	public static HAPContextProcessor createContext(HAPDefinitionProcessSuite suite, HAPManagerProcessDefinition processDefMan) {
+	public static HAPContextProcessor createContext(HAPDefinitionProcessSuite suite, HAPManagerProcess processMan) {
 		HAPContextProcessor out = new HAPContextProcessor();
-		out.m_processDefMan = processDefMan;
+		out.m_processMan = processMan;
 		out.m_suite = suite;
 		return out;
 	}
 	
-	public static HAPContextProcessor createContext(Map<String, HAPDefinitionProcessSuiteElementEntity> processes, HAPManagerProcessDefinition processDefMan) {
+	public static HAPContextProcessor createContext(Map<String, HAPDefinitionProcessSuiteElementEntity> processes, HAPManagerProcess processMan) {
 		HAPContextProcessor out = new HAPContextProcessor();
-		out.m_processDefMan = processDefMan;
+		out.m_processMan = processMan;
 		out.m_processes = processes;
 		return out;
 	}
 	
-	public static HAPContextProcessor createContext(HAPManagerProcessDefinition processDefMan) {
+	public static HAPContextProcessor createContext(HAPManagerProcess processMan) {
 		HAPContextProcessor out = new HAPContextProcessor();
-		out.m_processDefMan = processDefMan;
+		out.m_processMan = processMan;
 		return out;
 	}
 	
@@ -45,16 +44,16 @@ public class HAPContextProcessor {
 		if(processId.getType().equals(HAPConstant.RESOURCEID_TYPE_SIMPLE)) {
 			HAPResourceIdProcess processResourceId = new HAPResourceIdProcess((HAPResourceIdSimple)processId);
 			if(!HAPBasicUtility.isStringEmpty(processResourceId.getProcessId().getSuiteId())) {
-				processDef = this.m_processDefMan.getProcessDefinition(processId, null);
+				processDef = this.m_processMan.getProcessDefinition(processId, null);
 			}
 			else {
 				processDef = new HAPDefinitionProcessWrapper(this.m_suite, processResourceId.getProcessId().getProcessId());
 			}
 		}
 		else {
-			processDef = this.m_processDefMan.getProcessDefinition(processId, null);
+			processDef = this.m_processMan.getProcessDefinition(processId, null);
 		}
-		out = new HAPDefinitionProcessWithContext(processDef, HAPContextProcessor.createContext(processDef.getSuite(), m_processDefMan));
+		out = new HAPDefinitionProcessWithContext(processDef, HAPContextProcessor.createContext(processDef.getSuite(), m_processMan));
 		return out;
 	}	
 	

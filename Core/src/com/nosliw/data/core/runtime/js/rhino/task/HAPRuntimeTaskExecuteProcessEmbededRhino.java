@@ -2,10 +2,8 @@ package com.nosliw.data.core.runtime.js.rhino.task;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceInfo;
@@ -16,12 +14,13 @@ import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcessEmbeded;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
+import com.nosliw.data.core.script.context.data.HAPContextData;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
 public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExecuteProcessEmbeded{
 
-	public HAPRuntimeTaskExecuteProcessEmbededRhino(HAPExecutableWrapperTask<HAPExecutableProcess> process, Map<String, HAPData> input) {
-		super(process, input);
+	public HAPRuntimeTaskExecuteProcessEmbededRhino(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContextData) {
+		super(process, parentContextData);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class HAPProcessorProcess{
 	public static HAPExecutableProcess process(
 			HAPDefinitionProcessWrapper processDef,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcessDefinition processMan,
+			HAPManagerProcess processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		String id = processDef.getResourceId().toStringValue(HAPSerializationFormat.LITERATE); 
@@ -34,7 +34,7 @@ public class HAPProcessorProcess{
 			HAPDefinitionProcessWithContext process,
 			HAPContextGroup parentContext, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcessDefinition processMan,
+			HAPManagerProcess processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		HAPExecutableProcess out = null;
@@ -54,7 +54,7 @@ public class HAPProcessorProcess{
 			HAPContextGroup originContext, 
 			HAPContextProcessor processContext,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcessDefinition processMan,
+			HAPManagerProcess processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		if(processContext==null)   processContext = HAPContextProcessor.createContext(processMan);

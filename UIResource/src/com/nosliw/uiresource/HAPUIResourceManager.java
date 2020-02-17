@@ -7,7 +7,7 @@ import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.process.HAPManagerProcessDefinition;
+import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrReference;
@@ -47,7 +47,7 @@ public class HAPUIResourceManager {
 
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
-	private HAPManagerProcessDefinition m_processMan;
+	private HAPManagerProcess m_processMan;
 	
 	private HAPManagerServiceDefinition m_serviceDefinitionManager;
 	
@@ -65,7 +65,7 @@ public class HAPUIResourceManager {
 			HAPUITagManager uiTagMan,
 			HAPExpressionSuiteManager expressionMan, 
 			HAPResourceManagerRoot resourceMan,
-			HAPManagerProcessDefinition processMan,
+			HAPManagerProcess processMan,
 			HAPRuntime runtime, 
 			HAPDataTypeHelper dataTypeHelper,
 			HAPManagerServiceDefinition serviceDefinitionManager,
