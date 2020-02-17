@@ -19,6 +19,7 @@ import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.data.core.component.HAPWithAttachment;
+import com.nosliw.data.core.component.HAPWithDataContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
@@ -44,7 +45,7 @@ public class HAPDefinitionProcessWrapper  extends HAPSerializableImp implements 
 	public HAPDefinitionProcessWrapper(HAPDefinitionProcessSuite suite, String process) {
 		this.m_suite = suite;
 		this.m_processName = process;
-		this.m_process = this.m_suite.getProcessElement(this.m_processName);
+		this.m_process = (HAPDefinitionProcessSuiteElementEntity)this.m_suite.getProcessElement(this.m_processName);
 		HAPComponentUtility.mergeWithParentAttachment(this.m_process, this.m_suite.getAttachmentContainer());
 	}
 	
@@ -176,6 +177,42 @@ public class HAPDefinitionProcessWrapper  extends HAPSerializableImp implements 
 	public HAPDefinitionProcessWrapper getProcess(String name) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setName(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDescription(String description) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setInfo(HAPInfo info) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cloneToDataContext(HAPWithDataContext dataContext) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setAttachmentContainer(HAPAttachmentContainer attachmentContainer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cloneToAttachment(HAPWithAttachment withAttachment) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

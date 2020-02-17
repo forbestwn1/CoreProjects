@@ -86,12 +86,12 @@ public class HAPUIResourceManager {
 
 	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
-		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefManager.getComponentDefinition(appId, parentAttachment);
+		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(appId, parentAttachment);
 		return appDef;
 	}
 	
 	public HAPDefinitionAppEntryWrapper getMiniAppEntryDefinition(HAPResourceId appEntryId, HAPAttachmentContainer parentAttachment) {
-		HAPDefinitionAppEntryWrapper appEntryDef = (HAPDefinitionAppEntryWrapper)this.m_resourceDefManager.getComponentDefinition(appEntryId, parentAttachment);
+		HAPDefinitionAppEntryWrapper appEntryDef = (HAPDefinitionAppEntryWrapper)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(appEntryId, parentAttachment);
 		return appEntryDef;
 	}
 
@@ -109,7 +109,7 @@ public class HAPUIResourceManager {
 	
 	public HAPDefinitionModule getModuleDefinition(HAPResourceId moduleId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
-		HAPDefinitionModule moduleDef = (HAPDefinitionModule)this.m_resourceDefManager.getComponentDefinition(moduleId, parentAttachment);
+		HAPDefinitionModule moduleDef = (HAPDefinitionModule)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(moduleId, parentAttachment);
 		return moduleDef;
 	}
 
@@ -148,7 +148,7 @@ public class HAPUIResourceManager {
 	
 	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId, HAPAttachmentContainer parentAttachment) {
 		
-		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_resourceDefManager.getComponentDefinition(pageResourceId, parentAttachment);
+		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(pageResourceId, parentAttachment);
 
 		//process include tag
 		pageDefinition = HAPUtilityPage.processInclude(pageDefinition, this.m_uiResourceParser, this, this.m_resourceDefManager);

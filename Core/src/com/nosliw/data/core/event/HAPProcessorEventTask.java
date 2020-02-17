@@ -2,20 +2,11 @@ package com.nosliw.data.core.event;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementEntity;
-import com.nosliw.data.core.process.HAPDefinitionProcessWithContext;
-import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
-import com.nosliw.data.core.process.HAPProcessorProcess;
-import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
@@ -37,23 +28,23 @@ public class HAPProcessorEventTask {
 
 		HAPDefinitionEventSource source = definition.getEventSourceInfo();
 		
-		//poll task
-		HAPDefinitionPollTask pollTaskDef = source.getPollTask();
-		HAPDefinitionProcessSuiteElementEntity pollProcessDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(pollTaskDef.getProcess().getTaskDefinition(), definition.getAttachmentContainer(), processMan.getPluginManager());
-		HAPExecutableProcess pollProcessExe = HAPProcessorProcess.process(null, new HAPDefinitionProcessWithContext(pollProcessDef), definition.getContext(), allServiceProviders, processMan, contextProcessRequirement, new HAPProcessTracker());
-		HAPExecutableWrapperTask pollProcessExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(pollTaskDef.getProcess(), pollProcessExe, HAPParentContext.createDefault(definition.getContext()), null, contextProcessRequirement);			
-		HAPExecutablePollTask pollTask = new HAPExecutablePollTask(source.getPollTask());
-		pollTask.setProcess(pollProcessExeWrapper);
-		out.setPollTask(pollTask);
-
-		//event handler
-		HAPDefinitionEventHandle eventHandleDef = definition.getEventHandle();
-		HAPDefinitionProcessSuiteElementEntity eventHandleProcessDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(eventHandleDef.getProcess().getTaskDefinition(), definition.getAttachmentContainer(), processMan.getPluginManager());
-		HAPExecutableProcess eventHandleProcessExe = HAPProcessorProcess.process(null, new HAPDefinitionProcessWithContext(eventHandleProcessDef), definition.getContext(), allServiceProviders, processMan, contextProcessRequirement, new HAPProcessTracker());
-		HAPExecutableWrapperTask eventHandleProcessExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(pollTaskDef.getProcess(), eventHandleProcessExe, HAPParentContext.createDefault(definition.getContext()), null, contextProcessRequirement);			
-		HAPExecutableEventHandler eventHandler = new HAPExecutableEventHandler(eventHandleDef);
-		eventHandler.setProcess(eventHandleProcessExeWrapper);
-		out.setEventHandler(eventHandler);
+//		//poll task
+//		HAPDefinitionPollTask pollTaskDef = source.getPollTask();
+//		HAPDefinitionProcessSuiteElementEntity pollProcessDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(pollTaskDef.getProcess().getTaskDefinition(), definition.getAttachmentContainer(), processMan.getPluginManager());
+//		HAPExecutableProcess pollProcessExe = HAPProcessorProcess.process(null, new HAPDefinitionProcessWithContext(pollProcessDef), definition.getContext(), allServiceProviders, processMan, contextProcessRequirement, new HAPProcessTracker());
+//		HAPExecutableWrapperTask pollProcessExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(pollTaskDef.getProcess(), pollProcessExe, HAPParentContext.createDefault(definition.getContext()), null, contextProcessRequirement);			
+//		HAPExecutablePollTask pollTask = new HAPExecutablePollTask(source.getPollTask());
+//		pollTask.setProcess(pollProcessExeWrapper);
+//		out.setPollTask(pollTask);
+//
+//		//event handler
+//		HAPDefinitionEventHandle eventHandleDef = definition.getEventHandle();
+//		HAPDefinitionProcessSuiteElementEntity eventHandleProcessDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(eventHandleDef.getProcess().getTaskDefinition(), definition.getAttachmentContainer(), processMan.getPluginManager());
+//		HAPExecutableProcess eventHandleProcessExe = HAPProcessorProcess.process(null, new HAPDefinitionProcessWithContext(eventHandleProcessDef), definition.getContext(), allServiceProviders, processMan, contextProcessRequirement, new HAPProcessTracker());
+//		HAPExecutableWrapperTask eventHandleProcessExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(pollTaskDef.getProcess(), eventHandleProcessExe, HAPParentContext.createDefault(definition.getContext()), null, contextProcessRequirement);			
+//		HAPExecutableEventHandler eventHandler = new HAPExecutableEventHandler(eventHandleDef);
+//		eventHandler.setProcess(eventHandleProcessExeWrapper);
+//		out.setEventHandler(eventHandler);
 
 		//poll schedule
 		

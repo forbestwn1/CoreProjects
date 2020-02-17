@@ -13,12 +13,11 @@ import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementEntity;
 import com.nosliw.data.core.process.HAPDefinitionProcessWithContext;
+import com.nosliw.data.core.process.HAPDefinitionProcessWrapper;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcessDefinition;
 import com.nosliw.data.core.process.HAPProcessorProcess;
-import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrReference;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
@@ -29,7 +28,6 @@ import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
@@ -80,12 +78,12 @@ public class HAPProcessMiniAppEntry {
 		}
 		
 		//process
-		Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity>> processes = entryDefinition.getProcesses();
-		for(String name : processes.keySet()) {
-			HAPExecutableProcess processExe = HAPProcessorProcess.process(name, new HAPDefinitionProcessWithContext(processes.get(name).getTaskDefinition()), out.getContext(), entryServiceProviders, processMan, contextProcessRequirement, processTracker);
-			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(processes.get(name), processExe, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
-			out.addProcess(name, processExeWrapper);
-		}
+//		Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity>> processes = entryDefinition.getProcesses();
+//		for(String name : processes.keySet()) {
+//			HAPExecutableProcess processExe = HAPProcessorProcess.process(name, new HAPDefinitionProcessWithContext(processes.get(name).getTaskDefinition()), out.getContext(), entryServiceProviders, processMan, contextProcessRequirement, processTracker);
+//			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(processes.get(name), processExe, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
+//			out.addProcess(name, processExeWrapper);
+//		}
 
 		//prepare extra context
 		Map<String, HAPContextStructure> extraContext = out.getExtraContext();
@@ -154,7 +152,8 @@ public class HAPProcessMiniAppEntry {
 		for(HAPHandlerEvent eventHandlerDef :eventHandlerDefs) {
 			String eventName = eventHandlerDef.getName();
 			HAPContextGroup eventContext = entryExe.getContext().cloneContextGroup();
-			HAPDefinitionProcessSuiteElementEntity processDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(eventHandlerDef.getProcess().getTaskDefinition(), moduleExe.getDefinition().getAttachmentContainer(), processMan.getPluginManager());
+			HAPDefinitionProcessWrapper processDef = moduleExe.getDefinition().getProcess(eventHandlerDef.getProcess().getTaskDefinition());
+//			HAPDefinitionProcessSuiteElementEntity processDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(eventHandlerDef.getProcess().getTaskDefinition(), moduleExe.getDefinition().getAttachmentContainer(), processMan.getPluginManager());
 			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(eventName, new HAPDefinitionProcessWithContext(processDef), eventContext, serviceProviders, processMan, contextProcessRequirement, processTracker);
 			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getProcess(), eventProcessor, HAPParentContext.createDefault(moduleExe.getContext()), null, contextProcessRequirement);			
 			out.addEventHandler(eventName, processExeWrapper);

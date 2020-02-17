@@ -19,6 +19,7 @@ import com.nosliw.data.core.component.HAPComponentUtility;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.data.core.component.HAPWithAttachment;
+import com.nosliw.data.core.component.HAPWithDataContext;
 import com.nosliw.data.core.process.HAPDefinitionProcessWrapper;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -48,7 +49,7 @@ public class HAPDefinitionAppEntryWrapper extends HAPSerializableImp implements 
 	}
 	
 	@Override
-	public String getComponentType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY;  }
+	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY;  }
 	
 	public HAPDefinitionApp getAppDefinition() {   return this.m_app;   }
 	
@@ -171,6 +172,42 @@ public class HAPDefinitionAppEntryWrapper extends HAPSerializableImp implements 
 	public HAPDefinitionProcessWrapper getProcess(String name) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setName(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDescription(String description) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setInfo(HAPInfo info) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cloneToDataContext(HAPWithDataContext dataContext) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setAttachmentContainer(HAPAttachmentContainer attachmentContainer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cloneToAttachment(HAPWithAttachment withAttachment) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

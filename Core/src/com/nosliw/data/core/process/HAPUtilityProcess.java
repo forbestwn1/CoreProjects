@@ -53,17 +53,8 @@ public class HAPUtilityProcess {
 	}
 
 	public static HAPDefinitionProcessSuiteElement getProcessDefinitionElementFromAttachment(String name, HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionProcessSuiteElement out = null;
 		HAPAttachment attachment = attachmentContainer.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, name);
-		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
-			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
-			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
-		}
-		else if(HAPConstant.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
-			HAPAttachmentReference referenceAttachment = (HAPAttachmentReference)attachment;
-			out = new HAPDefinitionProcessSuiteElementReference(referenceAttachment.getId());
-		}
-		return out;
+		return getProcessDefinitionElementFromAttachment(attachment, activityPluginMan);
 	}
 
 	public static HAPDefinitionProcessSuiteElement getProcessDefinitionElementFromAttachment(HAPAttachment attachment, HAPManagerActivityPlugin activityPluginMan) {

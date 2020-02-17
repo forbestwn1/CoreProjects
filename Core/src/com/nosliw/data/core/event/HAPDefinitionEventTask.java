@@ -27,7 +27,7 @@ public class HAPDefinitionEventTask extends HAPComponentImp{
 	private HAPDefinitionEventHandle m_eventHandle;
 
 	public HAPDefinitionEventTask(String id) {
-		super(id);
+		super(id, null);  //kkkk
 	}
 
 	public HAPDefinitionEvent getEventInfo() {   return this.m_eventInfo;  }

@@ -5,32 +5,36 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivityTask;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdFactory;
 
 public class HAPProcessActivityDefinition extends HAPDefinitionActivityTask{
 
 	@HAPAttribute
 	public static String PROCESS = "process";
 	
-	private String m_process;
+	private HAPResourceId m_process;
 	
 	public HAPProcessActivityDefinition(String type) {
 		super(type);
 	}
 	
-	public String getProcess(){  return this.m_process;    }
+	public HAPResourceId getProcess(){  return this.m_process;    }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_process = jsonObj.optString(PROCESS);
+		this.m_process = HAPResourceIdFactory.newInstance(jsonObj.opt(PROCESS));
 		return true;  
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PROCESS, this.m_process);
+		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_process, HAPSerializationFormat.JSON));
 	}
 }

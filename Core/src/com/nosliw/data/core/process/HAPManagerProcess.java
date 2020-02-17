@@ -8,7 +8,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperT
 
 public interface HAPManagerProcess {
 
-	HAPServiceData executeProcess(String process, HAPDefinitionProcessSuite suit, Map<String, HAPData> input);
+//	HAPServiceData executeProcess(String process, HAPDefinitionProcessSuite suit, Map<String, HAPData> input);
 
 	HAPServiceData executeProcess(String process, String suitId, Map<String, HAPData> input);
 

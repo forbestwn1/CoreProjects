@@ -6,6 +6,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
@@ -33,9 +35,8 @@ public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 	private String m_elementName;
 
 	//step in loop, include input mapping, output mapping, and process for this step
-	private HAPDefinitionWrapperTask<String> m_step;
+	private HAPDefinitionWrapperTask<HAPResourceId> m_step;
 
-	
 	public HAPLoopActivityDefinition(String type) {
 		super(type);
 	}
@@ -43,7 +44,7 @@ public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 	public String getContainerName(){  return this.m_containerName;    }
 	public String getIndexName(){  return this.m_indexName;    }
 	public String getElementName(){  return this.m_elementName;    }
-	public HAPDefinitionWrapperTask<String> getStep(){   return this.m_step;   }
+	public HAPDefinitionWrapperTask<HAPResourceId> getStep(){   return this.m_step;   }
 	
 	@Override
 	public HAPContextStructure getInputContextStructure(HAPContextStructure parentContextStructure) {  return parentContextStructure;   }
@@ -61,8 +62,8 @@ public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 		this.m_elementName = jsonObj.optString(ELEMENTNAME);
 		
 		JSONObject stepObj = jsonObj.optJSONObject(STEP);
-		String processName = stepObj.optString(PROCESS);
-		this.m_step = new HAPDefinitionWrapperTask(processName);
+		HAPResourceId process = HAPResourceIdFactory.newInstance(stepObj.opt(PROCESS));
+		this.m_step = new HAPDefinitionWrapperTask(process);
 		this.m_step.buildMapping(stepObj);
 		
 		return true;  

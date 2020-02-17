@@ -9,11 +9,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPComponentUtility;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementEntity;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
-import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPParserContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 public class HAPParseMiniApp {
@@ -69,17 +66,17 @@ public class HAPParseMiniApp {
 			out.addModule(parseModule(moduleArrayJson.getJSONObject(i), m_activityPluginMan));
 		}
 		
-		JSONObject processesJson = jsonObj.optJSONObject(HAPDefinitionAppEntryUI.PROCESS);
-		if(processesJson!=null) {
-			for(Object key :processesJson.keySet()) {
-				String processName = (String)key;
-				JSONObject processJson = processesJson.getJSONObject(processName);
-
-				HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity> process = HAPParserProcessDefinition.parseEmbededProcess(processJson, this.m_activityPluginMan);
-				process.getTaskDefinition().setName((String)key);
-				out.addProcess(processName, process);
-			}
-		}
+//		JSONObject processesJson = jsonObj.optJSONObject(HAPDefinitionAppEntryUI.PROCESS);
+//		if(processesJson!=null) {
+//			for(Object key :processesJson.keySet()) {
+//				String processName = (String)key;
+//				JSONObject processJson = processesJson.getJSONObject(processName);
+//
+//				HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity> process = HAPParserProcessDefinition.parseEmbededProcess(processJson, this.m_activityPluginMan);
+//				process.getTaskDefinition().setName((String)key);
+//				out.addProcess(processName, process);
+//			}
+//		}
 		
 		out.setContext(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionAppEntryUI.CONTEXT))); 
 		return out;
