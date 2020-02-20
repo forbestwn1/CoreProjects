@@ -3,7 +3,7 @@ package com.nosliw.uiresource;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
-import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
@@ -100,7 +100,7 @@ public class HAPUIResourceManager {
 	}
 	
 	public HAPExecutableAppEntry getEmbededMiniAppEntry(HAPResourceId appEntryId, HAPAttachmentContainer parentAttachment, HAPWithNameMapping withNameMapping) {
-		HAPAttachmentContainer attachmentEx = HAPComponentUtility.buildNameMappedAttachment(parentAttachment, withNameMapping);
+		HAPAttachmentContainer attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
 		HAPDefinitionAppEntryWrapper appEntryDef = this.getMiniAppEntryDefinition(appEntryId, attachmentEx);
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
 		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(appEntryDef, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
@@ -124,7 +124,7 @@ public class HAPUIResourceManager {
 	public HAPExecutableModule getEmbededUIModule(HAPResourceDefinitionOrReference defOrRef, HAPAttachmentContainer parentAttachment, HAPWithNameMapping withNameMapping) {
 		HAPDefinitionModule moduleDef = null;
 		String id = null;
-		HAPAttachmentContainer attachmentEx = HAPComponentUtility.buildNameMappedAttachment(parentAttachment, withNameMapping);
+		HAPAttachmentContainer attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
 		if(defOrRef instanceof HAPResourceId) {
 			HAPResourceId moduleId = (HAPResourceId)defOrRef;
 			moduleDef = getModuleDefinition(moduleId, attachmentEx);
@@ -132,7 +132,7 @@ public class HAPUIResourceManager {
 		}
 		else if(defOrRef instanceof HAPResourceDefinition) {
 			moduleDef = (HAPDefinitionModule)defOrRef;
-			HAPComponentUtility.mergeWithParentAttachment(moduleDef, attachmentEx);
+			HAPUtilityComponent.mergeWithParentAttachment(moduleDef, attachmentEx);
 		}
 		return HAPProcessorModule.process(moduleDef, id, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager);
 	}
@@ -166,7 +166,7 @@ public class HAPUIResourceManager {
 		HAPAttachmentContainer attachmentEx = null;
 		if(defOrRef instanceof HAPResourceId) {
 			HAPResourceId pageId = (HAPResourceId)defOrRef;
-			attachmentEx = HAPComponentUtility.buildInternalAttachment(pageId, parentAttachment, withNameMapping);
+			attachmentEx = HAPUtilityComponent.buildInternalAttachment(pageId, parentAttachment, withNameMapping);
 			pageDef = getUIPageDefinition(pageId, attachmentEx);
 		}
 		

@@ -8,11 +8,10 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
-import com.nosliw.data.core.process.HAPDefinitionProcessWrapper;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 
-abstract public class HAPComponentImp extends HAPComplexResourceDefinitionImp implements HAPComponent{
+abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp implements HAPComponent{
 
 	private String m_id;
 
@@ -38,11 +37,7 @@ abstract public class HAPComponentImp extends HAPComplexResourceDefinitionImp im
 	}
 	
 	@Override
-	public HAPDefinitionProcessWrapper getProcess(String name) {
-		return new HAPDefinitionProcessWrapper(this.getProcessSuite(), name);
-	}
-
-	private HAPDefinitionProcessSuite getProcessSuite() {
+	public HAPDefinitionProcessSuite getProcessSuite() {
 		if(this.m_processSuite==null) {
 			this.m_processSuite = new HAPDefinitionProcessSuite();
 			this.cloneToComplexEntity(m_processSuite);

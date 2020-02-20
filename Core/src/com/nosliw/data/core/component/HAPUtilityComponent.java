@@ -10,13 +10,24 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPParserContext;
+import com.nosliw.data.core.script.context.HAPProcessorContext;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
-public class HAPComponentUtility {
+public class HAPUtilityComponent {
 
+	public static HAPContextGroup processElementComponentContext(HAPComponentContainerElement component, HAPContextGroup extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
+		HAPContextGroup parentContext = HAPUtilityContext.hardMerge(component.getContext(), extraContext); 
+		return HAPProcessorContext.process(component.getElement().getContext(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);
+	}
+
+	
 	public static void mergeWithParentAttachment(HAPWithAttachment withAttachment, HAPAttachmentContainer parentAttachment) {
 		withAttachment.getAttachmentContainer().merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
 	}
@@ -50,7 +61,7 @@ public class HAPComponentUtility {
 		parseEventHandler(child, jsonObj);
 	}
 
-	public static void parseComplextResourceDefinition(HAPComplexResourceDefinitionImp complexResourceDef, JSONObject jsonObj) {
+	public static void parseComplextResourceDefinition(HAPResourceDefinitionComplexImp complexResourceDef, JSONObject jsonObj) {
 		//entity info
 		complexResourceDef.buildEntityInfoByJson(jsonObj);
 		

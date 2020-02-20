@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPUtilityComponent;
 
 public class HAPParserEventTask {
 	private static HAPParserEventTask m_instance;
@@ -38,7 +38,7 @@ public class HAPParserEventTask {
 		JSONObject jsonObj = new JSONObject(content);
 		HAPDefinitionEventTask out = new HAPDefinitionEventTask(id);
 		
-		HAPComponentUtility.parseComponent(out, jsonObj);
+		HAPUtilityComponent.parseComponent(out, jsonObj);
 		out.setEventInfo(this.parseEventInfo(jsonObj.optJSONObject(HAPDefinitionEventTask.EVENTINFO)));
 		out.setEventSourceInfo(this.parseSource(jsonObj.optJSONObject(HAPDefinitionEventTask.SOURCE)));
 		out.setEventHandle((this.parseEventHandler(jsonObj.optJSONObject(HAPDefinitionEventTask.HANDLER))));

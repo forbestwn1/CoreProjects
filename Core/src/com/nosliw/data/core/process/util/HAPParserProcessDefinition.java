@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementEntity;
@@ -17,7 +17,7 @@ public class HAPParserProcessDefinition {
 	public static HAPDefinitionProcessSuite parsePocessSuite(JSONObject processSuiteJson, HAPManagerActivityPlugin activityPluginMan) {
 		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
 
-		HAPComponentUtility.parseComplextResourceDefinition(out, processSuiteJson);
+		HAPUtilityComponent.parseComplextResourceDefinition(out, processSuiteJson);
 		
 		JSONArray processesArray = processSuiteJson.getJSONArray(HAPDefinitionProcessSuite.ELEMENT);
 		for(int i=0; i<processesArray.length(); i++){
@@ -58,7 +58,7 @@ public class HAPParserProcessDefinition {
 	}
 
 	public static void parseProcess(HAPDefinitionProcessSuiteElementEntity out, JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
-		HAPComponentUtility.parseComponent(out, processJson);
+		HAPUtilityComponent.parseComponent(out, processJson);
 		
 		JSONArray activityArrayJson = processJson.optJSONArray(HAPDefinitionProcessSuiteElementEntity.ACTIVITY);
 		for(int i=0; i<activityArrayJson.length(); i++) {

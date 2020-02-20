@@ -12,14 +12,14 @@ import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 public abstract class HAPComponentUseServiceImp extends HAPComponentImp implements HAPWithServiceUse{
 
+	//service definition
+	private HAPDefinitionServiceInEntity m_serviceDefinition;
+
 	public HAPComponentUseServiceImp(String id, HAPManagerActivityPlugin activityPluginMan) {
 		super(id, activityPluginMan);
 		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
 	}
 	
-	//service definition
-	private HAPDefinitionServiceInEntity m_serviceDefinition;
-
 	@Override
 	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
 	@Override

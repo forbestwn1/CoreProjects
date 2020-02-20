@@ -14,7 +14,7 @@ import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
-import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
@@ -65,7 +65,7 @@ public class HAPDefinitionModule extends HAPComponentImp{
 		//ui part
 		for(HAPDefinitionModuleUI ui : this.getUIs()) {
 			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(ui.getStatus())) {
-				HAPAttachmentContainer mappedParentAttachment = HAPComponentUtility.buildNameMappedAttachment(this.getAttachmentContainer(), ui);
+				HAPAttachmentContainer mappedParentAttachment = HAPUtilityComponent.buildNameMappedAttachment(this.getAttachmentContainer(), ui);
 				HAPAttachmentReference pageAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, ui.getPage());
 				out.addChildCompoentId(new HAPChildrenComponentId(ui.getName(), pageAttachment.getId(), ui.getInfo()), mappedParentAttachment);
 			}

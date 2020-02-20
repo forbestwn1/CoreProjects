@@ -44,9 +44,9 @@ public class HAPManagerResourceDefinition {
 		return out;
 	}
 
-	public HAPComplexResourceDefinition getAdjustedComplextResourceDefinition(HAPResourceId resourceId, HAPAttachmentContainer parentAttachment) {
-		HAPComplexResourceDefinition out = (HAPComplexResourceDefinition)this.getResourceDefinition(resourceId);
-		HAPComponentUtility.mergeWithParentAttachment(out, parentAttachment);
+	public HAPResourceDefinitionComplex getAdjustedComplextResourceDefinition(HAPResourceId resourceId, HAPAttachmentContainer parentAttachment) {
+		HAPResourceDefinitionComplex out = (HAPResourceDefinitionComplex)this.getResourceDefinition(resourceId);
+		HAPUtilityComponent.mergeWithParentAttachment(out, parentAttachment);
 		return out;
 	}
 	

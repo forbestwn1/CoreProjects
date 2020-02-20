@@ -9,12 +9,13 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
-import com.nosliw.data.core.component.HAPComplexResourceDefinitionImp;
+import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
 //application that contains multiple tasks
 @HAPEntityWithAttribute
-public class HAPDefinitionProcessSuite extends HAPComplexResourceDefinitionImp{
+public class HAPDefinitionProcessSuite extends HAPResourceDefinitionContainer{
 
 	@HAPAttribute
 	public static String ELEMENT = "element";
@@ -27,6 +28,9 @@ public class HAPDefinitionProcessSuite extends HAPComplexResourceDefinitionImp{
 
 	@Override
 	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
+
+	@Override
+	public HAPComponent getElement(String name) {		return (HAPComponent)this.getProcessElement(name);	}
 
 	public HAPDefinitionProcessSuiteElement getProcessElement(String processId) {  return this.m_elements.get(processId);   }
 	public Map<String, HAPDefinitionProcessSuiteElement> getProcesses(){   return this.m_elements;   }
@@ -49,4 +53,13 @@ public class HAPDefinitionProcessSuite extends HAPComplexResourceDefinitionImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}
+	
+	@Override
+	public HAPDefinitionProcessSuite clone() {
+		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
+		this.cloneToComplexEntity(out);
+		this.cloneToEntityInfo(out);
+		return out;
+	}
+
 }

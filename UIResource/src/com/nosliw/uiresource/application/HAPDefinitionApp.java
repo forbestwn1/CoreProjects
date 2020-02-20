@@ -11,13 +11,17 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
-import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
 import com.nosliw.uiresource.resource.HAPUIAppEntryId;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionApp extends HAPComponentImp{
+public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
+
+	@HAPAttribute
+	public static final String ID = "id";
 
 	@HAPAttribute
 	public static final String ENTRY = "entry";
@@ -32,15 +36,21 @@ public class HAPDefinitionApp extends HAPComponentImp{
 	//it can be stateful data(the data that can retrieve next time you use the app)
 	private Map<String, HAPDefinitionAppData> m_applicationData;
 
+	private String m_id;
+	
 	public HAPDefinitionApp(String id, HAPManagerActivityPlugin activityPluginMan) {
-		super(id, activityPluginMan);
+		this.m_id = id;
 		this.m_entries = new LinkedHashMap<String, HAPDefinitionAppEntryUI>();
 		this.m_applicationData = new LinkedHashMap<String, HAPDefinitionAppData>();
 	}
 	
+	public String getId() {   return this.m_id;   }
 	public Map<String, HAPDefinitionAppData> getApplicationData(){   return this.m_applicationData;   }
 	public void setApplicationData(Map<String, HAPDefinitionAppData> dataDef) {		if(dataDef!=null)   this.m_applicationData = dataDef;	}
 
+	@Override
+	public HAPComponent getElement(String name) {  return this.getEntry(name);  }
+	
 	public Collection<HAPDefinitionAppEntryUI> getEntrys(){   return this.m_entries.values();    }
 	public HAPDefinitionAppEntryUI getEntry(String entry) {  return this.m_entries.get(entry);  }
 	public void addEntry(HAPDefinitionAppEntryUI entry) {

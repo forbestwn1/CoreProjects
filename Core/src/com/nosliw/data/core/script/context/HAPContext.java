@@ -52,9 +52,11 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	public void addElement(String name, HAPContextDefinitionElement contextEle) {   this.m_elements.put(name, new HAPContextDefinitionRoot(contextEle));  }
 	
 	public void hardMergeWith(HAPContext context){
-		Map<String, HAPContextDefinitionRoot> eles = context.getElements();
-		for(String rootName : eles.keySet()){
-			this.m_elements.put(rootName, eles.get(rootName));
+		if(context!=null) {
+			Map<String, HAPContextDefinitionRoot> eles = context.getElements();
+			for(String rootName : eles.keySet()){
+				this.m_elements.put(rootName, eles.get(rootName));
+			}
 		}
 	}
 

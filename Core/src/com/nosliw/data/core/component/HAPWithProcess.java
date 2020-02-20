@@ -1,9 +1,8 @@
 package com.nosliw.data.core.component;
 
-import com.nosliw.data.core.process.HAPDefinitionProcessWrapper;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 
 public interface HAPWithProcess {
 
-	HAPDefinitionProcessWrapper getProcess(String name);
-	
+	HAPDefinitionProcessSuite getProcessSuite();
 }

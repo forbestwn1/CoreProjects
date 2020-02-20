@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
-public abstract class HAPComplexResourceDefinitionImp extends HAPEntityInfoWritableImp implements HAPComplexResourceDefinition{
+public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWritableImp implements HAPResourceDefinitionComplex{
 
 	private HAPResourceId m_resourceId;
 	
@@ -17,7 +17,7 @@ public abstract class HAPComplexResourceDefinitionImp extends HAPEntityInfoWrita
 	
 	private HAPAttachmentContainer m_attachmentContainer;
 
-	public HAPComplexResourceDefinitionImp() {
+	public HAPResourceDefinitionComplexImp() {
 		this.m_context = new HAPContextGroup();
 		this.m_attachmentContainer = new HAPAttachmentContainer();
 	}
@@ -60,7 +60,7 @@ public abstract class HAPComplexResourceDefinitionImp extends HAPEntityInfoWrita
 		withAttachment.setAttachmentContainer(this.m_attachmentContainer.cloneAttachmentContainer());
 	}
 
-	protected void cloneToComplexEntity(HAPComplexResourceDefinition complexEntity) {
+	protected void cloneToComplexEntity(HAPResourceDefinitionComplex complexEntity) {
 		this.cloneToEntityInfo(complexEntity);
 		this.cloneToAttachment(complexEntity);
 		this.cloneToDataContext(complexEntity);

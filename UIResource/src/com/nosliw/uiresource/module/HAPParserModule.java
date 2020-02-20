@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
@@ -41,7 +41,7 @@ public class HAPParserModule {
 		HAPDefinitionModule out = new HAPDefinitionModule(id, this.m_activityPluginMan);
 
 		//build component part from json object
-		HAPComponentUtility.parseComponent(out, jsonObj);
+		HAPUtilityComponent.parseComponent(out, jsonObj);
 		
 		//ui decoration
 		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UIDECORATION);
@@ -66,7 +66,7 @@ public class HAPParserModule {
 
 		out.buildEntityInfoByJson(jsonObj);
 		
-		HAPComponentUtility.parseComponentChild(out, jsonObj);
+		HAPUtilityComponent.parseComponentChild(out, jsonObj);
 		
 		out.setPage(jsonObj.optString(HAPDefinitionModuleUI.PAGE));
 		out.setType(jsonObj.optString(HAPDefinitionModuleUI.TYPE));

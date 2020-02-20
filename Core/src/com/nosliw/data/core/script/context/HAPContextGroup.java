@@ -185,8 +185,10 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	}
 	
 	public void hardMergeWith(HAPContextGroup contextGroup){
-		for(String type : contextGroup.getContextTypes()){
-			this.getChildContext(type).hardMergeWith(contextGroup.getContext(type));
+		if(contextGroup!=null) {
+			for(String type : contextGroup.getContextTypes()){
+				this.getChildContext(type).hardMergeWith(contextGroup.getContext(type));
+			}
 		}
 	}
 	

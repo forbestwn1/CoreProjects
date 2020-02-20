@@ -9,7 +9,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentUseServiceImp;
-import com.nosliw.data.core.component.HAPComponentUtility;
+import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 
@@ -120,7 +120,7 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
-		HAPComponentUtility.buildServiceChildrenComponent(out, this, this.getAttachmentContainer());
+		HAPUtilityComponent.buildServiceChildrenComponent(out, this, this.getAttachmentContainer());
 		return out;
 	}
 }

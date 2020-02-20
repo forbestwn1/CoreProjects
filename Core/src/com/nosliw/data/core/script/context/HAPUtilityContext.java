@@ -23,6 +23,8 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPUtilityContext {
 
+	
+	
 	public static HAPContextFlat buildFlatContextFromContextGroup(HAPContextGroup context, Set<String> excludedInfo) {
 		HAPContextFlat out = new HAPContextFlat(excludedInfo);
 		
@@ -460,6 +462,15 @@ public class HAPUtilityContext {
 			}
 			}
 		}
-		
 	}
+	
+	public static HAPContextGroup hardMerge(HAPContextGroup child, HAPContextGroup parent) {
+		HAPContextGroup out = null;
+		if(child==null) out = parent.cloneContextGroup();
+		else {
+			child.cloneContextGroup().hardMergeWith(parent);;
+		}
+		return out;
+	}
+	
 }
