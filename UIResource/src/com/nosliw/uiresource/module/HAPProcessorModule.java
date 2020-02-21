@@ -13,8 +13,8 @@ import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
@@ -83,7 +83,8 @@ public class HAPProcessorModule {
 
 		//process process suite
 		HAPDefinitionProcessSuite processSuite = moduleDefinition.getProcessSuite().clone();
-		processSuite.setContext(HAPProcessorContext.process(processSuite.getContext(), HAPParentContext.createDefault(out.getContext()), contextProcessConfg, contextProcessRequirement));
+		processSuite.setContext(out.getContext());   //kkk
+//		processSuite.setContext(HAPProcessorContext.process(processSuite.getContext(), HAPParentContext.createDefault(out.getContext()), contextProcessConfg, contextProcessRequirement));
 		out.setProcessSuite(processSuite);
 		
 		//process lifecycle action

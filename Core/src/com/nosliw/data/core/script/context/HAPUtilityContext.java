@@ -468,7 +468,8 @@ public class HAPUtilityContext {
 		HAPContextGroup out = null;
 		if(child==null) out = parent.cloneContextGroup();
 		else {
-			child.cloneContextGroup().hardMergeWith(parent);;
+			out = child.cloneContextGroup();
+			out.hardMergeWith(parent);;
 		}
 		return out;
 	}
