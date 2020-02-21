@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
-import com.nosliw.data.core.process.HAPDefinitionProcessWrapper;
+import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -24,7 +24,7 @@ public class HAPResourceDefinitionPluginProcess implements HAPPluginResourceDefi
 		HAPResourceIdProcess processResourceId = new HAPResourceIdProcess(resourceId);
 		HAPResourceIdSimple processSuiteResourceId = processResourceId.getProcessSuiteResourceId();
 		HAPDefinitionProcessSuite processSuiteDef = (HAPDefinitionProcessSuite)this.m_resourceDefMan.getResourceDefinition(processSuiteResourceId);
-		return new HAPDefinitionProcessWrapper(processSuiteDef, processResourceId.getProcessId().getProcessId());
+		return new HAPDefinitionProcess(processSuiteDef, processResourceId.getProcessId().getProcessId());
 	}
 
 }

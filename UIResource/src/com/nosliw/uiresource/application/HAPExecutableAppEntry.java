@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
-import com.nosliw.data.core.process.HAPDefinitionProcessWrapper;
+import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -56,11 +56,11 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	
 	private Map<String, HAPDefinitionAppData> m_applicationData;
 
-	private HAPDefinitionAppEntryWrapper m_definition;
+	private HAPDefinitionAppEntry m_definition;
 	
 	private HAPDefinitionProcessSuite m_processSuite;
 	
-	public HAPExecutableAppEntry(HAPDefinitionAppEntryWrapper entryDef) {
+	public HAPExecutableAppEntry(HAPDefinitionAppEntry entryDef) {
 		super(entryDef);
 		this.m_processes = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
 		this.m_modules = new LinkedHashMap<String, HAPExecutableAppModule>();
@@ -68,7 +68,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 		this.m_definition = entryDef;
 	}
 
-	public HAPDefinitionAppEntryWrapper getDefinition() {   return this.m_definition;   }
+	public HAPDefinitionAppEntry getDefinition() {   return this.m_definition;   }
 	
 	public String getId() {  return this.m_id;   }
 	public void setId(String id) {  this.m_id = id;  }
@@ -92,7 +92,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 
 	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {    this.m_processSuite = processSuite;    }
 	
-	public HAPDefinitionProcessWrapper getProcessDefinition(String name) {    return new HAPDefinitionProcessWrapper(this.m_processSuite, name);    }
+	public HAPDefinitionProcess getProcessDefinition(String name) {    return new HAPDefinitionProcess(this.m_processSuite, name);    }
 	
 
 	@Override

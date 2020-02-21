@@ -17,7 +17,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
-import com.nosliw.uiresource.application.HAPDefinitionAppEntryWrapper;
+import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
 import com.nosliw.uiresource.application.HAPParseMiniApp;
 import com.nosliw.uiresource.application.HAPProcessMiniAppEntry;
@@ -90,8 +90,8 @@ public class HAPUIResourceManager {
 		return appDef;
 	}
 	
-	public HAPDefinitionAppEntryWrapper getMiniAppEntryDefinition(HAPResourceId appEntryId, HAPAttachmentContainer parentAttachment) {
-		HAPDefinitionAppEntryWrapper appEntryDef = (HAPDefinitionAppEntryWrapper)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(appEntryId, parentAttachment);
+	public HAPDefinitionAppEntry getMiniAppEntryDefinition(HAPResourceId appEntryId, HAPAttachmentContainer parentAttachment) {
+		HAPDefinitionAppEntry appEntryDef = (HAPDefinitionAppEntry)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(appEntryId, parentAttachment);
 		return appEntryDef;
 	}
 
@@ -101,7 +101,7 @@ public class HAPUIResourceManager {
 	
 	public HAPExecutableAppEntry getEmbededMiniAppEntry(HAPResourceId appEntryId, HAPAttachmentContainer parentAttachment, HAPWithNameMapping withNameMapping) {
 		HAPAttachmentContainer attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
-		HAPDefinitionAppEntryWrapper appEntryDef = this.getMiniAppEntryDefinition(appEntryId, attachmentEx);
+		HAPDefinitionAppEntry appEntryDef = this.getMiniAppEntryDefinition(appEntryId, attachmentEx);
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
 		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(appEntryDef, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
 		return out;

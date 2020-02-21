@@ -3,9 +3,9 @@ package com.nosliw.data.core.process;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
 
-public class HAPDefinitionProcessWrapper extends HAPComponentContainerElement{
+public class HAPDefinitionProcess extends HAPComponentContainerElement{
 
-	public HAPDefinitionProcessWrapper(HAPDefinitionProcessSuite suite, String process) {
+	public HAPDefinitionProcess(HAPDefinitionProcessSuite suite, String process) {
 		super(suite, process);
 	}
 

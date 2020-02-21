@@ -23,6 +23,6 @@ public class HAPResourceDefinitionPluginAppEntry implements HAPPluginResourceDef
 		HAPResourceIdUIAppEntry appEntryResourceId = new HAPResourceIdUIAppEntry(resourceId);
 		HAPResourceIdSimple appResourceId = appEntryResourceId.getUIAppResourceId();
 		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefMan.getResourceDefinition(appResourceId);
-		return new HAPDefinitionAppEntryWrapper(appDef, appEntryResourceId.getUIAppEntryId().getEntry());
+		return new HAPDefinitionAppEntry(appDef, appEntryResourceId.getUIAppEntryId().getEntry());
 	}
 }

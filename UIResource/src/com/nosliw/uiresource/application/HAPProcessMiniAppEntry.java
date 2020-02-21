@@ -14,7 +14,7 @@ import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
-import com.nosliw.data.core.process.HAPDefinitionProcessWrapper;
+import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
@@ -42,7 +42,7 @@ import com.nosliw.uiresource.module.HAPExecutableModule;
 public class HAPProcessMiniAppEntry {
 
 	public static HAPExecutableAppEntry process(
-			HAPDefinitionAppEntryWrapper minAppEntryDef,
+			HAPDefinitionAppEntry minAppEntryDef,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
@@ -56,7 +56,7 @@ public class HAPProcessMiniAppEntry {
 
 		HAPExecutableAppEntry out = new HAPExecutableAppEntry(minAppEntryDef);
 		
-		HAPDefinitionAppEntryUI entryDefinition = minAppEntryDef.getEntry();
+		HAPDefinitionAppElementUI entryDefinition = minAppEntryDef.getEntry();
 		
 		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
 		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityApp.getContextProcessConfigurationForApp();
@@ -147,7 +147,7 @@ public class HAPProcessMiniAppEntry {
 		Set<HAPHandlerEvent> eventHandlerDefs = module.getEventHandlers();
 		for(HAPHandlerEvent eventHandlerDef :eventHandlerDefs) {
 			String eventName = eventHandlerDef.getName();
-			HAPDefinitionProcessWrapper processDef = entryExe.getProcessDefinition(eventHandlerDef.getProcess().getTaskDefinition());
+			HAPDefinitionProcess processDef = entryExe.getProcessDefinition(eventHandlerDef.getProcess().getTaskDefinition());
 //			HAPDefinitionProcessSuiteElementEntity processDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(eventHandlerDef.getProcess().getTaskDefinition(), moduleExe.getDefinition().getAttachmentContainer(), processMan.getPluginManager());
 			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(processDef, null, serviceProviders, processMan, contextProcessRequirement, processTracker);
 			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getProcess(), eventProcessor, HAPParentContext.createDefault(moduleExe.getContext()), null, contextProcessRequirement);			

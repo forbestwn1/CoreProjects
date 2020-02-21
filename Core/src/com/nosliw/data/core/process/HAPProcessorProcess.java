@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPErrorUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPUtilityComponent;
@@ -18,13 +17,13 @@ public class HAPProcessorProcess{
 
 	//process process in suite
 	public static HAPExecutableProcess process(
-			HAPDefinitionProcessWrapper processDef,
+			HAPDefinitionProcess processDef,
 			HAPContextGroup extraContext,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
-		String id = processDef.getResourceId().toStringValue(HAPSerializationFormat.LITERATE); 
+		String id = processDef.getElementName(); 
 		HAPContextProcessor processContext = HAPContextProcessor.createContext(processDef.getSuite(), processMan);
 		return process(id, new HAPDefinitionProcessWithContext(processDef, processContext), extraContext, serviceProviders, processMan, contextProcessRequirement, processTracker);
 	}

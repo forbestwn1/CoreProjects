@@ -59,6 +59,9 @@ public class HAPDefinitionProcessSuite extends HAPResourceDefinitionContainer{
 		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
 		this.cloneToComplexEntity(out);
 		this.cloneToEntityInfo(out);
+		for(String eleName : this.m_elements.keySet()) {
+			out.addProcess(eleName, this.m_elements.get(eleName));
+		}
 		return out;
 	}
 

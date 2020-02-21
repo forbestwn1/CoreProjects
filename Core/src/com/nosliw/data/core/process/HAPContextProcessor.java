@@ -40,14 +40,14 @@ public class HAPContextProcessor {
 	
 	public HAPDefinitionProcessWithContext getProcessDefinition(HAPResourceId processId) {
 		HAPDefinitionProcessWithContext out = null;
-		HAPDefinitionProcessWrapper processDef = null;
-		if(processId.getType().equals(HAPConstant.RESOURCEID_TYPE_SIMPLE)) {
+		HAPDefinitionProcess processDef = null;
+		if(processId.getStructure().equals(HAPConstant.RESOURCEID_TYPE_SIMPLE)) {
 			HAPResourceIdProcess processResourceId = new HAPResourceIdProcess((HAPResourceIdSimple)processId);
 			if(!HAPBasicUtility.isStringEmpty(processResourceId.getProcessId().getSuiteId())) {
 				processDef = this.m_processMan.getProcessDefinition(processId, null);
 			}
 			else {
-				processDef = new HAPDefinitionProcessWrapper(this.m_suite, processResourceId.getProcessId().getProcessId());
+				processDef = new HAPDefinitionProcess(this.m_suite, processResourceId.getProcessId().getProcessId());
 			}
 		}
 		else {

@@ -23,7 +23,7 @@ import com.nosliw.data.core.service.use.HAPWithServiceUse;
 public class HAPUtilityComponent {
 
 	public static HAPContextGroup processElementComponentContext(HAPComponentContainerElement component, HAPContextGroup extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
-		HAPContextGroup parentContext = HAPUtilityContext.hardMerge(component.getContext(), extraContext); 
+		HAPContextGroup parentContext = HAPUtilityContext.hardMerge(component.getContainer().getContext(), extraContext); 
 		return HAPProcessorContext.process(component.getElement().getContext(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);
 	}
 

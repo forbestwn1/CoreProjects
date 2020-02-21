@@ -56,12 +56,12 @@ public class HAPParseMiniApp {
 		return out;
 	}
 
-	private HAPDefinitionAppEntryUI parseAppEntry(JSONObject jsonObj) {
-		HAPDefinitionAppEntryUI out = new HAPDefinitionAppEntryUI(null, this.m_activityPluginMan);
+	private HAPDefinitionAppElementUI parseAppEntry(JSONObject jsonObj) {
+		HAPDefinitionAppElementUI out = new HAPDefinitionAppElementUI(null, this.m_activityPluginMan);
 
 		HAPUtilityComponent.parseComponent(out, jsonObj);
 
-		JSONArray moduleArrayJson = jsonObj.optJSONArray(HAPDefinitionAppEntryUI.MODULE);
+		JSONArray moduleArrayJson = jsonObj.optJSONArray(HAPDefinitionAppElementUI.MODULE);
 		for(int i=0; i<moduleArrayJson.length(); i++) {
 			out.addModule(parseModule(moduleArrayJson.getJSONObject(i), m_activityPluginMan));
 		}
@@ -78,7 +78,7 @@ public class HAPParseMiniApp {
 //			}
 //		}
 		
-		out.setContext(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionAppEntryUI.CONTEXT))); 
+		out.setContext(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionAppElementUI.CONTEXT))); 
 		return out;
 	}
 	

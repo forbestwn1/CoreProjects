@@ -45,7 +45,9 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 	public boolean isEmpty() {     return this.m_element.isEmpty();   }
 	
 	public Map<String, HAPAttachment> getAttachmentByType(String type){
-		return this.m_element.get(type);
+		Map<String, HAPAttachment> out = this.m_element.get(type);
+		if(out==null)   out = new LinkedHashMap<String, HAPAttachment>();
+		return out;
 	}
 	
 	public void addAttachment(String type, HAPAttachment attachment) {

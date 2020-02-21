@@ -30,7 +30,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	public static final String APPLICATIONDATA = "applicationData";
 	
 	//one mini app may have different entry for different senario. 
-	private Map<String, HAPDefinitionAppEntryUI> m_entries;
+	private Map<String, HAPDefinitionAppElementUI> m_entries;
 
 	//global data definition 
 	//it can be stateful data(the data that can retrieve next time you use the app)
@@ -40,7 +40,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	
 	public HAPDefinitionApp(String id, HAPManagerActivityPlugin activityPluginMan) {
 		this.m_id = id;
-		this.m_entries = new LinkedHashMap<String, HAPDefinitionAppEntryUI>();
+		this.m_entries = new LinkedHashMap<String, HAPDefinitionAppElementUI>();
 		this.m_applicationData = new LinkedHashMap<String, HAPDefinitionAppData>();
 	}
 	
@@ -51,9 +51,9 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	@Override
 	public HAPComponent getElement(String name) {  return this.getEntry(name);  }
 	
-	public Collection<HAPDefinitionAppEntryUI> getEntrys(){   return this.m_entries.values();    }
-	public HAPDefinitionAppEntryUI getEntry(String entry) {  return this.m_entries.get(entry);  }
-	public void addEntry(HAPDefinitionAppEntryUI entry) {
+	public Collection<HAPDefinitionAppElementUI> getEntrys(){   return this.m_entries.values();    }
+	public HAPDefinitionAppElementUI getEntry(String entry) {  return this.m_entries.get(entry);  }
+	public void addEntry(HAPDefinitionAppElementUI entry) {
 		String name = entry.getName();
 		if(HAPBasicUtility.isStringEmpty(name)) {
 			name = HAPUtilityApp.ENTRY_DEFAULT;
@@ -66,7 +66,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
 		//entry part
-		for(HAPDefinitionAppEntryUI entry : this.getEntrys()) {
+		for(HAPDefinitionAppElementUI entry : this.getEntrys()) {
 			out.addChildCompoentId(new HAPChildrenComponentId(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), entry.getInfo()), this.getAttachmentContainer());
 		}
 		return out;

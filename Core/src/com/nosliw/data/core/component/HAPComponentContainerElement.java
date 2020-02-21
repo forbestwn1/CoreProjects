@@ -32,6 +32,8 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	
 	private HAPComponent m_element;
 	
+	private HAPDefinitionProcessSuite m_processSuite;
+
 	public HAPComponentContainerElement(HAPResourceDefinitionContainer componentContainer, String elementName) {
 		this.m_componentContainer = componentContainer;
 		this.m_elementName = elementName;
@@ -65,8 +67,10 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 	@Override
 	public HAPDefinitionProcessSuite getProcessSuite() {
-		// TODO Auto-generated method stub
-		return null;
+		if(this.m_processSuite==null) {
+			m_processSuite = this.m_element.getProcessSuite();
+		}
+		return this.m_processSuite;
 	}
 
 	@Override
