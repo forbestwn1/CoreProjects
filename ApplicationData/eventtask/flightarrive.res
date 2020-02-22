@@ -8,51 +8,37 @@
 					"flightNumber": {
 						"definition": {
 							"criteria": "test.string;1.0.0"
-						},
+						}
 					},
 					"date" : {
 						"definition": {
-							"criteria": "test.string;1.0.0"
-						},
-					},
+							"criteria": "test.date;1.0.0"
+						}
+					}
+				}
+			},
+			"protected": {
+				"element": {
 					"flightInfo": {
 						"definition": {
 							"criteria": "test.map;1.0.0%%||status:test.string;1.0.0,company:test.string;1.0.0,flight:test.string;1.0.0||%%"
-						},
+						}
 					}
 				}
 			}
 		}
 	},
 
-	"source" : {
-		"pollSchedule" : {
-			"interval" : 60,
-			"start" : "",
-			"end" : ""		
-		},
-		
-		"pollTask" : {
-			"process" : "checkFlightInfo",	
-		}
+	"schedule" : {
+		"start" : "",
+		"interval" : 60,
+		"end" : "expression or process"		
 	},
-	
-	"eventInfo" : {
-		"context" : {
-			"element" : {
-				"flightInfo": {
-					"definition": {
-						"path": "flightInfo"
-					},
-				}
-			}
-		}
+
+	"task" : {
+		"process" : "checkFlightInfo",
 	},
-	
-	"handler" : {
-		"process" : "eventHandler",	
-	},
-	
+
 	"attachment" : {
 		"service" : [
 			{
@@ -67,7 +53,7 @@
 		"process" : [
 			{
 				"name": "checkFlightInfo",
-				"entity" : {
+				"entity" : {s
 					"activity": [{
 							"id": "startActivityId",
 							"name": "startActivity",
@@ -122,51 +108,14 @@
 									"value": "arrive"
 								},
 								"flow": {
-									"target": "withEventEndId"
+									"target": "sendEmail"
 								}
 							},
 							{
 								"flow": {
-									"target": "withoutEventEndId"
+									"target": "fail"
 								}
 							}]
-						},
-						{
-							"id": "withEventEndId",
-							"name": "withEventEndId",
-							"type": "end",
-							"output": {
-								"element": {
-									"event": {
-										definition: {
-											"path": "flightInfo"
-										}
-									}
-								}
-							}
-						},
-						{
-							"id": "withoutEventEndId",
-							"name": "withoutEventEndId",
-							"type": "end",
-							"output": {
-								"element": {
-								}
-							}
-						}
-					]
-				}
-			},
-			{
-				"name": "eventHandler",
-				"entity" : {
-					"activity": [{
-							"id": "startActivityId",
-							"name": "startActivity",
-							"type": "start",
-							"flow": {
-								"target": "sendEmail"
-							}
 						},
 						{
 							"id": "sendEmail",
@@ -186,11 +135,24 @@
 						},
 						{
 							"id": "success",
-							"name": "success",
-							"type": "end"
+							"name": "successEnd",
+							"type": "end",
+							"output1": {
+								"element": {
+								}
+							}
+						}
+						{
+							"id": "fail",
+							"name": "failEnd",
+							"type": "end",
+							"output1": {
+								"element": {
+								}
+							}
 						}
 					]
-				}			
+				}
 			}
 		], 
 	}

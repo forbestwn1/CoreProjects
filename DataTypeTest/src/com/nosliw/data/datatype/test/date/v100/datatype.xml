@@ -1,0 +1,16 @@
+<definition name="test.date;1.0.0">
+	
+	<info description="Data type for date."/>
+
+	<operations>
+		<operation name="">
+			<parms>
+				<parm name="base" criteria="test.boolean"  isBase="true"/>
+			</parms>
+			<output criteria="test.boolean"/>
+		</operation>
+	
+	</operations>
+
+
+</definition>
