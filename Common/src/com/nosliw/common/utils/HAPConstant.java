@@ -453,7 +453,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_JSLIBRARY = "jslibrary";
 		public static final String RUNTIME_RESOURCE_TYPE_JSHELPER = "jshelper";
 		public static final String RUNTIME_RESOURCE_TYPE_JSGATEWAY = "jsGateway";
-		public static final String RUNTIME_RESOURCE_TYPE_EVENTTASK = "eventTask";
+		public static final String RUNTIME_RESOURCE_TYPE_CRONJOB = "cronJob";
 		public static final String RUNTIME_RESOURCE_TYPE_UIRESOURCE = "uiResource";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uiTag";
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULE = "uiModule";

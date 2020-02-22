@@ -53,7 +53,7 @@
 		"process" : [
 			{
 				"name": "checkFlightInfo",
-				"entity" : {s
+				"entity" : {
 					"activity": [{
 							"id": "startActivityId",
 							"name": "startActivity",

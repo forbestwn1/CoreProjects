@@ -40,7 +40,7 @@ public class HAPFileUtility {
 	public static String getUIPageFolder(){  return getApplicationDataFolder() + "page/";  }
 	public static String getUIModuleFolder(){  return getApplicationDataFolder() + "uimodule/";  }
 	public static String getMiniAppFolder(){  return getApplicationDataFolder() + "miniapp/";  }
-	public static String getEventTaskFolder(){  return getApplicationDataFolder() + "eventtask/";  }
+	public static String getCronJobFolder(){  return getApplicationDataFolder() + "cronjob/";  }
 	public static String getTemplateFolder(){  return getApplicationDataFolder() + "template/";  }
 
 	public static String getTempFolder(){		return HAPSystemUtility.getTempFolder();	}
