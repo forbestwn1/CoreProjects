@@ -1,6 +1,8 @@
 package com.nosliw.data.core.resource;
 
-public interface HAPResourceDefinition extends HAPResourceDefinitionOrReference{
+import com.nosliw.data.core.common.HAPEntityOrReference;
+
+public interface HAPResourceDefinition extends HAPEntityOrReference{
 
 	void setResourceId(HAPResourceId resourceId);
 	

@@ -23,6 +23,15 @@
 						"definition": {
 							"criteria": "test.map;1.0.0%%||status:test.string;1.0.0,company:test.string;1.0.0,flight:test.string;1.0.0||%%"
 						}
+					},
+					"result": {
+						"definition": {
+							"criteria": "test.boolean;1.0.0"
+						},
+						"defaultValue" : {
+							"dataTypeId": "test.boolean;1.0.0",
+							"value": false
+						}
 					}
 				}
 			}
@@ -32,7 +41,12 @@
 	"schedule" : {
 		"start" : "",
 		"interval" : 60,
-		"end" : "expression or process"		
+		"end" : {
+			"reference" : {
+				"type" : "expression",
+				"name" : "endCriteria"
+			}
+		}
 	},
 
 	"task" : {
@@ -40,6 +54,14 @@
 	},
 
 	"attachment" : {
+		"expression" : [
+			{
+				"name" : "endCriteria",
+				"entity" : {
+					expression : "#|?(result)?|#"
+				}
+			}
+		],
 		"service" : [
 			{
 				"name": "getPearsonFlightArrivalService",
@@ -91,6 +113,14 @@
 										"flightInfo": {
 											"definition": {
 												"path": "outputInService"
+											}
+										},
+										"result": {
+											"definition": {
+												"value" : {
+													"dataTypeId": "test.boolean;1.0.0",
+													"value": true
+												}
 											}
 										}
 									}

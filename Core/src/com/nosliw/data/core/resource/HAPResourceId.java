@@ -12,9 +12,10 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.data.core.common.HAPEntityOrReference;
 
 @HAPEntityWithAttribute
-public abstract class HAPResourceId extends HAPSerializableImp implements HAPResourceDefinitionOrReference{
+public abstract class HAPResourceId extends HAPSerializableImp implements HAPEntityOrReference{
 
 	@HAPAttribute
 	public static String TYPE = "type";

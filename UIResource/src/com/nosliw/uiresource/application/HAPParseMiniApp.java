@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.component.HAPUtilityComponentParse;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
@@ -43,7 +43,7 @@ public class HAPParseMiniApp {
 	private HAPDefinitionApp parseAppJson(JSONObject jsonObj) {
 		HAPDefinitionApp out = new HAPDefinitionApp(jsonObj.optString(HAPDefinitionApp.ID), this.m_activityPluginMan);
 
-		HAPUtilityComponent.parseComplextResourceDefinition(out, jsonObj);
+		HAPUtilityComponentParse.parseComplextResourceDefinition(out, jsonObj);
 		
 		out.setApplicationData(HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(HAPDefinitionApp.APPLICATIONDATA)));
 
@@ -59,7 +59,7 @@ public class HAPParseMiniApp {
 	private HAPDefinitionAppElementUI parseAppEntry(JSONObject jsonObj) {
 		HAPDefinitionAppElementUI out = new HAPDefinitionAppElementUI(null, this.m_activityPluginMan);
 
-		HAPUtilityComponent.parseComponent(out, jsonObj);
+		HAPUtilityComponentParse.parseComponent(out, jsonObj);
 
 		JSONArray moduleArrayJson = jsonObj.optJSONArray(HAPDefinitionAppElementUI.MODULE);
 		for(int i=0; i<moduleArrayJson.length(); i++) {
@@ -91,7 +91,7 @@ public class HAPParseMiniApp {
 		out.getInputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.INPUTMAPPING), HAPSerializationFormat.JSON);
 		out.getOutputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.OUTPUTMAPPING), HAPSerializationFormat.JSON);
 		
-		HAPUtilityComponent.parseComponentChild(out, moduleJson);
+		HAPUtilityComponentParse.parseComponentChild(out, moduleJson);
 		return out;
 	}
 }

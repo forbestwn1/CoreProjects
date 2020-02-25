@@ -2,6 +2,7 @@ package com.nosliw.uiresource;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.common.HAPEntityOrReference;
 import com.nosliw.data.core.component.HAPAttachmentContainer;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
@@ -10,7 +11,6 @@ import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinitionOrReference;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -121,7 +121,7 @@ public class HAPUIResourceManager {
 		return out;
 	}
 
-	public HAPExecutableModule getEmbededUIModule(HAPResourceDefinitionOrReference defOrRef, HAPAttachmentContainer parentAttachment, HAPWithNameMapping withNameMapping) {
+	public HAPExecutableModule getEmbededUIModule(HAPEntityOrReference defOrRef, HAPAttachmentContainer parentAttachment, HAPWithNameMapping withNameMapping) {
 		HAPDefinitionModule moduleDef = null;
 		String id = null;
 		HAPAttachmentContainer attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
@@ -161,7 +161,7 @@ public class HAPUIResourceManager {
 		return pageDefinition;
 	}
 
-	public HAPExecutableUIUnitPage getEmbededUIPage(HAPResourceDefinitionOrReference defOrRef, String id, HAPContextGroup context, HAPContextGroup parentContext, HAPAttachmentContainer parentAttachment, HAPWithNameMapping withNameMapping){
+	public HAPExecutableUIUnitPage getEmbededUIPage(HAPEntityOrReference defOrRef, String id, HAPContextGroup context, HAPContextGroup parentContext, HAPAttachmentContainer parentAttachment, HAPWithNameMapping withNameMapping){
 		HAPDefinitionUIPage pageDef = null;
 		HAPAttachmentContainer attachmentEx = null;
 		if(defOrRef instanceof HAPResourceId) {
