@@ -1,39 +1,18 @@
 package com.nosliw.data.core.cronjob;
 
-import java.util.Date;
-
 import org.json.JSONObject;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.process.HAPUtilityProcess;
 
 public class HAPDefinitionSchedule extends HAPSerializableImp{
 
-	@HAPAttribute
-	public static String START = "start";
-
-	@HAPAttribute
-	public static String INTERVAL = "interval";
-
-	@HAPAttribute
-	public static String END = "end";
-
-	//when 
-	private Date m_start;
+	private JSONObject m_definition;
 	
-	//interval between tiguing the task
-	private String m_interval;
-	
-	//
-	private HAPDefinitionEnd m_end;
-
+	public JSONObject getDefinition() {   return this.m_definition;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		
-		HAPUtilityProcess.parseWithProcessTask(this, jsonObj);
+		this.m_definition = (JSONObject)json;
 		return true;  
 	}
 

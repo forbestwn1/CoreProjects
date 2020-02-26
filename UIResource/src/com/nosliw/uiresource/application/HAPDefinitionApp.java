@@ -13,7 +13,6 @@ import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
 import com.nosliw.uiresource.resource.HAPUIAppEntryId;
 
@@ -38,7 +37,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 
 	private String m_id;
 	
-	public HAPDefinitionApp(String id, HAPManagerActivityPlugin activityPluginMan) {
+	public HAPDefinitionApp(String id) {
 		this.m_id = id;
 		this.m_entries = new LinkedHashMap<String, HAPDefinitionAppElementUI>();
 		this.m_applicationData = new LinkedHashMap<String, HAPDefinitionAppData>();

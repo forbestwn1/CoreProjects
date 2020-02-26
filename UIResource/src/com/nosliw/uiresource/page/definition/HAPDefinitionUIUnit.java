@@ -9,9 +9,8 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentUseServiceImp;
-import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPNameMapping;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.component.HAPUtilityComponent;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -62,8 +61,8 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 	//mapping from attachment name to internal name(service, resource, ...)
 	private HAPNameMapping m_nameMapping;
 	
-	public HAPDefinitionUIUnit(String id, HAPManagerActivityPlugin activityPluginMan){
-		super(id, activityPluginMan);
+	public HAPDefinitionUIUnit(String id){
+		super(id);
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPDefinitionUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPDefinitionUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInContent = new HashSet<HAPDefinitionUIEmbededScriptExpressionInContent>();

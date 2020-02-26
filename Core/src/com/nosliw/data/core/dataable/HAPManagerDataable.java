@@ -10,10 +10,11 @@ public class HAPManagerDataable {
 		return null;
 	}
 	
-	public HAPData execute() {
+	public HAPExecutableDataable process(HAPDefinitionDataable definition) {
 		return null;
 	}
 	
-	
-	
+	public HAPData execute() {
+		return null;
+	}
 }

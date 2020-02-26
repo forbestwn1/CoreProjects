@@ -3,10 +3,10 @@ package com.nosliw.uiresource;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.common.HAPEntityOrReference;
-import com.nosliw.data.core.component.HAPAttachmentContainer;
-import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
+import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPResourceCache;
@@ -77,9 +77,9 @@ public class HAPUIResourceManager {
 		this.m_runtime = runtime;
 		this.m_resourceCache = new HAPResourceCache();
 		this.m_dataTypeHelper = dataTypeHelper;
-		this.m_uiResourceParser = new HAPParserPage(null, m_idGengerator, processMan.getPluginManager());
-		this.m_moduleParser = new HAPParserModule(this.m_processMan.getPluginManager());
-		this.m_miniAppParser = new HAPParseMiniApp(this.m_processMan.getPluginManager());
+		this.m_uiResourceParser = new HAPParserPage(null, m_idGengerator);
+		this.m_moduleParser = new HAPParserModule();
+		this.m_miniAppParser = new HAPParseMiniApp();
 		this.m_serviceDefinitionManager = serviceDefinitionManager;
 		this.m_resourceDefManager = resourceDefManager;
 	}

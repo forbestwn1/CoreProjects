@@ -9,6 +9,8 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.attachment.HAPAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -66,12 +68,9 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public HAPAttachmentContainer getAttachmentContainer() {  return this.getElement().getAttachmentContainer(); }
 
 	@Override
-	public HAPDefinitionProcessSuite getProcessSuite() {
-		if(this.m_processSuite==null) {
-			m_processSuite = this.m_element.getProcessSuite();
-		}
-		return this.m_processSuite;
-	}
+	public HAPDefinitionProcessSuite getProcessSuite() {	return this.m_processSuite;  }
+	@Override
+	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {  this.m_processSuite = processSuite;   }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -206,6 +205,11 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		
 	}
 
+	@Override
+	public void cloneToComplexEntity(HAPResourceDefinitionComplex complexEntity) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }

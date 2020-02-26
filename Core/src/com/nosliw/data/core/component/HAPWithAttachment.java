@@ -2,6 +2,9 @@ package com.nosliw.data.core.component;
 
 import java.util.Map;
 
+import com.nosliw.data.core.component.attachment.HAPAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+
 public interface HAPWithAttachment {
 
 	public static final String ATTACHMENT = "attachment";

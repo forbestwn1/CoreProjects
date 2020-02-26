@@ -1,4 +1,4 @@
-package com.nosliw.data.core.component;
+package com.nosliw.data.core.component.attachment;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

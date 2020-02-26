@@ -8,17 +8,13 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 public class HAPParserModule {
 
-	private HAPManagerActivityPlugin m_activityPluginMan;
-	
-	public HAPParserModule(HAPManagerActivityPlugin activityPluginMan) {
-		this.m_activityPluginMan = activityPluginMan;
+	public HAPParserModule() {
 	}
 	
 	public HAPDefinitionModule parseFile(String fileName){
@@ -38,7 +34,7 @@ public class HAPParserModule {
 
 	private HAPDefinitionModule parseContent(String content, String id) {
 		JSONObject jsonObj = new JSONObject(content);
-		HAPDefinitionModule out = new HAPDefinitionModule(id, this.m_activityPluginMan);
+		HAPDefinitionModule out = new HAPDefinitionModule(id);
 
 		//build component part from json object
 		HAPUtilityComponentParse.parseComponent(out, jsonObj);
@@ -53,7 +49,7 @@ public class HAPParserModule {
 		JSONArray uiJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UI);
 		if(uiJsonArray!=null) {
 			for(int i=0; i<uiJsonArray.length(); i++) {
-				HAPDefinitionModuleUI moduleUI = parseModuleUIDefinition(uiJsonArray.optJSONObject(i), m_activityPluginMan); 
+				HAPDefinitionModuleUI moduleUI = parseModuleUIDefinition(uiJsonArray.optJSONObject(i)); 
 				out.addUI(moduleUI);
 			}
 		}
@@ -61,7 +57,7 @@ public class HAPParserModule {
 		return out;
 	}
 
-	public HAPDefinitionModuleUI parseModuleUIDefinition(JSONObject jsonObj, HAPManagerActivityPlugin activityPluginMan) {
+	public HAPDefinitionModuleUI parseModuleUIDefinition(JSONObject jsonObj) {
 		HAPDefinitionModuleUI out = new HAPDefinitionModuleUI();
 
 		out.buildEntityInfoByJson(jsonObj);

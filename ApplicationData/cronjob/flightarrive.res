@@ -39,13 +39,15 @@
 	},
 
 	"schedule" : {
+		"type" : "",
 		"start" : "",
 		"interval" : 60,
-		"end" : {
-			"reference" : {
-				"type" : "expression",
-				"name" : "endCriteria"
-			}
+	},
+
+	"end" : {
+		"reference" : {
+			"type" : "expression",
+			"name" : "endCriteria"
 		}
 	},
 

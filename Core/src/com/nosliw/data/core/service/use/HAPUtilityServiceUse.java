@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.component.HAPAttachment;
-import com.nosliw.data.core.component.HAPAttachmentContainer;
-import com.nosliw.data.core.component.HAPAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;

@@ -15,5 +15,5 @@ public class HAPDefinitionAppEntry extends HAPComponentContainerElement{
 	public HAPDefinitionApp getAppDefinition() {   return (HAPDefinitionApp)this.getContainer();   }
 	
 	public HAPDefinitionAppElementUI getEntry() {   return (HAPDefinitionAppElementUI)this.getElement();   }
-	
+
 }

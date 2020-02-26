@@ -4,8 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.script.context.HAPParserContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
@@ -80,15 +80,4 @@ public class HAPUtilityComponentParse {
 		}
 	}
 
-	public static HAPDefinitionWrapperTask<HAPReferenceAttachment> parseEmbededAttachmentReference(JSONObject jsonObj) {
-		HAPDefinitionWrapperTask<HAPReferenceAttachment> out = new HAPDefinitionWrapperTask<HAPReferenceAttachment>();
-		HAPReferenceAttachment referenceAttachment = new HAPReferenceAttachment();
-		referenceAttachment
-		out.setTaskDefinition(referenceAttachment);
-		out.buildMapping(jsonObj);
-		return out;
-	}
-	
-
-	
 }

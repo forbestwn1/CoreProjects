@@ -9,10 +9,11 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.common.HAPEntityOrReference;
-import com.nosliw.data.core.component.HAPAttachment;
-import com.nosliw.data.core.component.HAPAttachmentContainer;
-import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPHandlerEvent;
+import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.component.attachment.HAPAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
@@ -68,7 +69,7 @@ public class HAPProcessMiniAppEntry {
 		out.setContext(HAPProcessorContext.process(entryDefinition.getContext(), HAPParentContext.createDefault(miniAppDef.getContext()), contextProcessConfg, contextProcessRequirement));
 
 		//process process suite
-		HAPDefinitionProcessSuite processSuite = minAppEntryDef.getProcessSuite().clone();
+		HAPDefinitionProcessSuite processSuite = HAPUtilityComponent.getProcessSuite(minAppEntryDef, processMan.getPluginManager()).clone(); 
 		processSuite.setContext(out.getContext());   //kkkk
 //		processSuite.setContext(HAPProcessorContext.process(processSuite.getContext(), HAPParentContext.createDefault(out.getContext()), contextProcessConfg, contextProcessRequirement));
 		out.setProcessSuite(processSuite);

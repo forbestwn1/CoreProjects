@@ -5,6 +5,8 @@ import java.util.Map;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.attachment.HAPAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
@@ -60,7 +62,8 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWrita
 		withAttachment.setAttachmentContainer(this.m_attachmentContainer.cloneAttachmentContainer());
 	}
 
-	protected void cloneToComplexEntity(HAPResourceDefinitionComplex complexEntity) {
+	@Override
+	public void cloneToComplexEntity(HAPResourceDefinitionComplex complexEntity) {
 		this.cloneToEntityInfo(complexEntity);
 		this.cloneToAttachment(complexEntity);
 		this.cloneToDataContext(complexEntity);

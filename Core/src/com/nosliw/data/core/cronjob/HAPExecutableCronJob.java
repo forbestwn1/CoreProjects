@@ -1,28 +1,25 @@
 package com.nosliw.data.core.cronjob;
 
-import java.util.List;
+import com.nosliw.data.core.dataable.HAPExecutableDataable;
+import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
-import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.info.HAPEntityInfoImpWrapper;
-import com.nosliw.data.core.resource.HAPResourceData;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+public class HAPExecutableCronJob extends HAPExecutableImpComponent{
 
-public class HAPExecutableCronJob extends HAPEntityInfoImpWrapper implements HAPExecutable{
+	private HAPExecutableWrapperTask m_task; 
 
-	public HAPExecutableCronJob(HAPEntityInfo entityInfo) {
-		super(entityInfo);
+	private HAPExecutablePollSchedule m_schedule;
+	
+	private HAPExecutableWrapperTask<HAPExecutableDataable> m_end;
+	
+	public HAPExecutableCronJob(HAPDefinitionCronJob cronJobDef, String id) {
+		super(cronJobDef);
 	}
+	
+	public void setTask(HAPExecutableWrapperTask task) {     this.m_task = task;      }
+	
+	public void setEnd(HAPExecutableWrapperTask<HAPExecutableDataable> end) {    this.m_end = end;    }
 
-	@Override
-	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		return null;
-	}
-
-	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void setSchedule(HAPExecutablePollSchedule schedule) {   this.m_schedule = schedule;    }
+	
 }

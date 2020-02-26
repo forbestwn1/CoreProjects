@@ -38,7 +38,7 @@ public class HAPParserProcessDefinition {
 
 	public static HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity> parseEmbededProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
 		HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity> out = new HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity>();
-		HAPDefinitionProcessSuiteElementEntity process = new HAPDefinitionProcessSuiteElementEntity(activityPluginMan);
+		HAPDefinitionProcessSuiteElementEntity process = new HAPDefinitionProcessSuiteElementEntity();
 		parseProcess(process, processJson, activityPluginMan);
 		out.setTaskDefinition(process);
 		out.buildMapping(processJson);
@@ -52,7 +52,7 @@ public class HAPParserProcessDefinition {
 	}
 	
 	public static HAPDefinitionProcessSuiteElementEntity parseProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionProcessSuiteElementEntity out = new HAPDefinitionProcessSuiteElementEntity(activityPluginMan);
+		HAPDefinitionProcessSuiteElementEntity out = new HAPDefinitionProcessSuiteElementEntity();
 		parseProcess(out, processJson, activityPluginMan);
 		return out;
 	}

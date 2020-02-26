@@ -12,7 +12,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 
 /**
@@ -31,8 +30,8 @@ public class HAPDefinitionProcessSuiteElementEntity extends HAPComponentImp impl
 	//dependent resources
 	private Set<HAPResourceDependency> m_requiredResources;
 
-	public HAPDefinitionProcessSuiteElementEntity(HAPManagerActivityPlugin activityPluginMan){
-		super(activityPluginMan);
+	public HAPDefinitionProcessSuiteElementEntity(){
+		super();
 		this.m_activities = new LinkedHashMap<String, HAPDefinitionActivity>();
 		this.m_requiredResources = new HashSet<HAPResourceDependency>();
 	}

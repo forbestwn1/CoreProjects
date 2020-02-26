@@ -25,8 +25,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.component.HAPAttachmentUtility;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
@@ -54,12 +53,9 @@ public class HAPParserPage {
 	//configuration object
 	private HAPConfigure m_setting;
 	
-	private HAPManagerActivityPlugin m_activityPluginMan;
-	
-	public HAPParserPage(HAPConfigure setting, HAPIdGenerator idGenerator, HAPManagerActivityPlugin activityPluginMan){
+	public HAPParserPage(HAPConfigure setting, HAPIdGenerator idGenerator){
 		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
-		this.m_activityPluginMan = activityPluginMan;
 	}
 	
 	//resourceUnit : target ui resource object
@@ -85,7 +81,7 @@ public class HAPParserPage {
 	}
 
 	public HAPDefinitionUIPage parseContent(String resourceId, String content){
-		HAPDefinitionUIPage resource = new HAPDefinitionUIPage(resourceId, content, this.m_activityPluginMan);
+		HAPDefinitionUIPage resource = new HAPDefinitionUIPage(resourceId, content);
 		Document doc = Jsoup.parse(content, "UTF-8");
 		this.parseUIDefinitionUnit(resource, doc.body(), null);
 		return resource;
@@ -170,7 +166,7 @@ public class HAPParserPage {
 		if(customTag!=null){
 			//process custome tag
 			String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
-			HAPDefinitionUITag uiTag = new HAPDefinitionUITag(customTag, uiId, this.m_activityPluginMan);
+			HAPDefinitionUITag uiTag = new HAPDefinitionUITag(customTag, uiId);
 			parseUIDefinitionUnit(uiTag, ele, parentUnit);
 			parentUnit.addUITag(uiTag);
 			return false;

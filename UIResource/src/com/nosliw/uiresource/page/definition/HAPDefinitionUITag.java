@@ -1,15 +1,14 @@
 package com.nosliw.uiresource.page.definition;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 
 public class HAPDefinitionUITag extends HAPDefinitionUIUnit{
 
 	//name of this customer tag
 	private String m_tagName;
 
-	public HAPDefinitionUITag(String tagName, String id, HAPManagerActivityPlugin activityPluginMan){
-		super(id, activityPluginMan);
+	public HAPDefinitionUITag(String tagName, String id){
+		super(id);
 		this.m_tagName = tagName;
 	}
 	

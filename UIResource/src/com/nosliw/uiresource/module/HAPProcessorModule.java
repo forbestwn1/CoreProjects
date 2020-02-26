@@ -9,9 +9,10 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
+import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
@@ -82,7 +83,7 @@ public class HAPProcessorModule {
 		out.setContextGroup(HAPProcessorContext.process(moduleDefinition.getContext(), HAPParentContext.createDefault(parentContext==null?new HAPContextGroup():parentContext), contextProcessConfg, contextProcessRequirement));
 
 		//process process suite
-		HAPDefinitionProcessSuite processSuite = moduleDefinition.getProcessSuite().clone();
+		HAPDefinitionProcessSuite processSuite = HAPUtilityComponent.getProcessSuite(moduleDefinition, processMan.getPluginManager()).clone(); 
 		processSuite.setContext(out.getContext());   //kkk
 //		processSuite.setContext(HAPProcessorContext.process(processSuite.getContext(), HAPParentContext.createDefault(out.getContext()), contextProcessConfg, contextProcessRequirement));
 		out.setProcessSuite(processSuite);

@@ -9,13 +9,12 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.component.HAPAttachmentContainer;
-import com.nosliw.data.core.component.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 /**
@@ -37,22 +36,16 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	@HAPAttribute
 	public static String UIDECORATION = "uiDecoration";
 	
-	private String m_id;
-	
 	// all the module uis (name -- definition)
 	private List<HAPDefinitionModuleUI> m_uis;
 
 	private List<HAPInfoDecoration> m_uiDecoration;
 	
-	public HAPDefinitionModule(String id, HAPManagerActivityPlugin activityPluginMan) {
-		super(id, activityPluginMan);
+	public HAPDefinitionModule(String id) {
 		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
 	}
 	
-	@Override
-	public String getId() {   return this.m_id;   }
-	 
 	public List<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }
 	public void addUI(HAPDefinitionModuleUI ui) {   this.m_uis.add(ui);   }
 	

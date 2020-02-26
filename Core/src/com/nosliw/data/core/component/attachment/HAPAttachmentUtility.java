@@ -1,9 +1,13 @@
-package com.nosliw.data.core.component;
+package com.nosliw.data.core.component.attachment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPManagerResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPAttachmentUtility {
 
@@ -13,6 +17,20 @@ public class HAPAttachmentUtility {
 
 	public static final String ATTRIBUTE_FLAG_OVERRIDE = "flagOveride"; 
 
+	
+	public static HAPResourceDefinition getResourceDefinition(HAPAttachmentContainer attContainer, String type, String name, HAPManagerResourceDefinition resourceDefMan) {
+		HAPResourceDefinition out = null;
+		HAPAttachment attachment = attContainer.getElement(type, name);
+		if(attachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
+			HAPResourceId resourceId = ((HAPAttachmentReference)attachment).getId();
+			out = resourceDefMan.getResourceDefinition(resourceId);
+		}
+		else if(attachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_ENTITY)){
+			out = resourceDefMan.parseResourceDefinition(type, ((HAPAttachmentEntity)attachment).getEntity());
+		}
+		return out;
+	}
+	
 	public static void parseDefinition(JSONObject attachmentDefJson, HAPAttachmentContainer attachmentContainer) {
 		for(Object key : attachmentDefJson.keySet()) {
 			String type = (String)key;

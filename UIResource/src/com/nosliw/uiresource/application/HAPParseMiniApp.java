@@ -9,16 +9,12 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 public class HAPParseMiniApp {
 
-	private HAPManagerActivityPlugin m_activityPluginMan;
-	
-	public HAPParseMiniApp(HAPManagerActivityPlugin activityPluginMan) {
-		this.m_activityPluginMan = activityPluginMan;
+	public HAPParseMiniApp() {
 	}
 	
 	public HAPDefinitionApp parseFile(String fileName){
@@ -41,7 +37,7 @@ public class HAPParseMiniApp {
 	}
 	
 	private HAPDefinitionApp parseAppJson(JSONObject jsonObj) {
-		HAPDefinitionApp out = new HAPDefinitionApp(jsonObj.optString(HAPDefinitionApp.ID), this.m_activityPluginMan);
+		HAPDefinitionApp out = new HAPDefinitionApp(jsonObj.optString(HAPDefinitionApp.ID));
 
 		HAPUtilityComponentParse.parseComplextResourceDefinition(out, jsonObj);
 		
@@ -57,13 +53,13 @@ public class HAPParseMiniApp {
 	}
 
 	private HAPDefinitionAppElementUI parseAppEntry(JSONObject jsonObj) {
-		HAPDefinitionAppElementUI out = new HAPDefinitionAppElementUI(null, this.m_activityPluginMan);
+		HAPDefinitionAppElementUI out = new HAPDefinitionAppElementUI(null);
 
 		HAPUtilityComponentParse.parseComponent(out, jsonObj);
 
 		JSONArray moduleArrayJson = jsonObj.optJSONArray(HAPDefinitionAppElementUI.MODULE);
 		for(int i=0; i<moduleArrayJson.length(); i++) {
-			out.addModule(parseModule(moduleArrayJson.getJSONObject(i), m_activityPluginMan));
+			out.addModule(parseModule(moduleArrayJson.getJSONObject(i)));
 		}
 		
 //		JSONObject processesJson = jsonObj.optJSONObject(HAPDefinitionAppEntryUI.PROCESS);
@@ -82,7 +78,7 @@ public class HAPParseMiniApp {
 		return out;
 	}
 	
-	private HAPDefinitionAppModule parseModule(JSONObject moduleJson, HAPManagerActivityPlugin activityPluginMan) {
+	private HAPDefinitionAppModule parseModule(JSONObject moduleJson) {
 		HAPDefinitionAppModule out = new HAPDefinitionAppModule();
 		out.buildEntityInfoByJson(moduleJson);
 		out.setModule((String)moduleJson.opt(HAPDefinitionAppModule.MODULE));

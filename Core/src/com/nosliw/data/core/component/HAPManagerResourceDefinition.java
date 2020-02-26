@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -48,6 +49,10 @@ public class HAPManagerResourceDefinition {
 		HAPResourceDefinitionComplex out = (HAPResourceDefinitionComplex)this.getResourceDefinition(resourceId);
 		HAPUtilityComponent.mergeWithParentAttachment(out, parentAttachment);
 		return out;
+	}
+	
+	public HAPResourceDefinition parseResourceDefinition(String type, Object content) {
+		
 	}
 	
 	public void registerPlugin(HAPPluginResourceDefinition plugin) {

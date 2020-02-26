@@ -3,6 +3,11 @@ package com.nosliw.data.core.component;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.attachment.HAPAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
+import com.nosliw.data.core.process.HAPUtilityProcess;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
@@ -17,6 +22,28 @@ import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 public class HAPUtilityComponent {
 
+	public static HAPDefinitionProcessSuite getProcessSuite(HAPComponent component, HAPManagerActivityPlugin activityPluginMan) {
+		HAPDefinitionProcessSuite out = component.getProcessSuite();
+		if(out==null) {
+			out = new HAPDefinitionProcessSuite();
+			if(component instanceof HAPComponentImp) {
+				component.cloneToComplexEntity(out);
+				Map<String, HAPAttachment> processAtts = component.getAttachmentContainer().getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
+				
+				for(String name : processAtts.keySet()) {
+					HAPAttachment attachment = processAtts.get(name);
+					out.addProcess(attachment.getName(), HAPUtilityProcess.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan));
+				}
+			}
+			else if(component instanceof HAPComponentContainerElement) {
+				out = ((HAPComponentContainerElement)component).getElement().getProcessSuite();
+			}
+			
+			component.setProcessSuite(out);
+		}
+		return out;
+	}
+	
 	public static HAPContextGroup processElementComponentContext(HAPComponentContainerElement component, HAPContextGroup extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
 		HAPContextGroup parentContext = HAPUtilityContext.hardMerge(component.getContainer().getContext(), extraContext); 
 		return HAPProcessorContext.process(component.getElement().getContext(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);

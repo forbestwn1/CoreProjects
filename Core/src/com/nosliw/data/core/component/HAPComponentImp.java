@@ -6,10 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
-import com.nosliw.data.core.process.HAPUtilityProcess;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 
 abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp implements HAPComponent{
 
@@ -23,33 +20,20 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 
 	private HAPDefinitionProcessSuite m_processSuite;
 	
-	private HAPManagerActivityPlugin m_activityPluginMan;
-	
-	public HAPComponentImp(HAPManagerActivityPlugin activityPluginMan) {
-		this.m_activityPluginMan = activityPluginMan;
+	public HAPComponentImp() {
 		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
 		this.m_eventHandlers = new HashSet<HAPHandlerEvent>();
 	}
 
-	public HAPComponentImp(String id, HAPManagerActivityPlugin activityPluginMan) {
-		this(activityPluginMan);
+	public HAPComponentImp(String id) {
 		this.m_id = id;
 	}
 	
 	@Override
-	public HAPDefinitionProcessSuite getProcessSuite() {
-		if(this.m_processSuite==null) {
-			this.m_processSuite = new HAPDefinitionProcessSuite();
-			this.cloneToComplexEntity(m_processSuite);
-			Map<String, HAPAttachment> processAtts = this.getAttachmentContainer().getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
-			
-			for(String name : processAtts.keySet()) {
-				HAPAttachment attachment = processAtts.get(name);
-				this.m_processSuite.addProcess(attachment.getName(), HAPUtilityProcess.getProcessDefinitionElementFromAttachment(attachment, m_activityPluginMan));
-			}
-		}
-		return this.m_processSuite;
-	}
+	public HAPDefinitionProcessSuite getProcessSuite() {		return this.m_processSuite;	}
+	@Override
+	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {  this.m_processSuite = processSuite;   }
+
 	
 	@Override
 	public String getId() {   return this.m_id;   }
