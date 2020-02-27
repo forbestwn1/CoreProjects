@@ -22,4 +22,5 @@ public class HAPExecutableCronJob extends HAPExecutableImpComponent{
 
 	public void setSchedule(HAPExecutablePollSchedule schedule) {   this.m_schedule = schedule;    }
 	
+	public HAPExecutablePollSchedule getSchedule() {    return this.m_schedule;    }
 }

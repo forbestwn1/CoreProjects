@@ -6,11 +6,8 @@ public class HAPInstancePollSchedule {
 
 	private String id;
 	
-	//task id this schedule belong to
-	private String m_taskId;
-	
-	//schedule definition id 
-	private String m_definitionId;
+	//job id this schedule belong to
+	private String m_jobId;
 	
 	//next poll time
 	private Date m_pollTime;
@@ -22,5 +19,6 @@ public class HAPInstancePollSchedule {
 	
 	public void setPollTime(Date date) {   this.m_pollTime = date;    }
 	
+	public void setJobId(String jobId) {   this.m_jobId = jobId;     }
 	
 }

@@ -1,8 +1,18 @@
-package com.nosliw.test.event;
+package com.nosliw.test.cronjob;
 
-public class HAPEventMain {
+import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.data.core.process.HAPRuntimeProcess;
+import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeProcessRhinoImp;
+
+public class HAPCronJob {
 
 	public static void main(String[] args) {
+
+		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
+		HAPRuntimeProcess processRuntime = new HAPRuntimeProcessRhinoImp(runtimeEnvironment);
+		
+		
+		
 		
 //		HAPDefinitionEventTask eventTaskDef = HAPUtilityEventTask.getEventTaskDefinitionById("flightarrive", HAPParserEventTask.getInstance());
 //		
