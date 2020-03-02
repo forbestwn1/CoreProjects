@@ -26,4 +26,10 @@ public class HAPResourceDefinitionPluginPage implements HAPPluginResourceDefinit
 	@Override
 	public String getResourceType() {		return HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE;	}
 
+	@Override
+	public HAPResourceDefinition parseResourceDefinition(Object content) {
+		String str = (String)content;
+		return this.m_pageParser.parseUIDefinition(null, str);
+	}
+
 }

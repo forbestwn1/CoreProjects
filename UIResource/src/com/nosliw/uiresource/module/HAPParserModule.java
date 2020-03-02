@@ -34,7 +34,13 @@ public class HAPParserModule {
 
 	private HAPDefinitionModule parseContent(String content, String id) {
 		JSONObject jsonObj = new JSONObject(content);
-		HAPDefinitionModule out = new HAPDefinitionModule(id);
+		HAPDefinitionModule out = parseModuleDefinition(jsonObj);
+		out.setId(id);
+		return out;
+	}
+
+	public HAPDefinitionModule parseModuleDefinition(JSONObject jsonObj) {
+		HAPDefinitionModule out = new HAPDefinitionModule();
 
 		//build component part from json object
 		HAPUtilityComponentParse.parseComponent(out, jsonObj);
@@ -56,7 +62,7 @@ public class HAPParserModule {
 		
 		return out;
 	}
-
+	
 	public HAPDefinitionModuleUI parseModuleUIDefinition(JSONObject jsonObj) {
 		HAPDefinitionModuleUI out = new HAPDefinitionModuleUI();
 

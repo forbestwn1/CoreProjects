@@ -8,6 +8,7 @@ import com.nosliw.data.core.cronjob.HAPExecutableCronJob;
 import com.nosliw.data.core.cronjob.HAPInstancePollSchedule;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.script.context.data.HAPContextDataGroup;
 
 public class HAPRuntimeCronJob {
 
@@ -30,24 +31,35 @@ public class HAPRuntimeCronJob {
 		return out;
 	}
 
-	public List<HAPCronJobState> findValidCronJobState(){
-		
+	public void execute() {
+		List<HAPCronJobState> jobStates = this.m_dataAccess.findAllValidJobState();
+		for(HAPCronJobState jobState : jobStates) {
+			this.processCronJob(jobState);
+		}
 	}
 	
 	public void processCronJob(HAPCronJobState jobState) {
 		
 		HAPInstanceCronJob cronJob = this.m_dataAccess.getCronJob(jobState.getCronJobId());
 		
-		executeTask(cronJob, jobState.getState());
+		//task
+		HAPContextDataGroup state = executeTask(cronJob, jobState.getState());
 		
-		finishTask();
+		//next schedule
+		HAPInstancePollSchedule newSchedule = cronJob.getCronJob().getSchedule().prepareForNextPoll(jobState.getSchedule());
+		jobState.setSchedule(newSchedule);
+		
+		this.m_dataAccess.updateOrNewState(jobState);
+		
+		//if finish
+		finishTask(state);
 	}
 	
-	public void finishTask() {
+	public void finishTask(HAPContextDataGroup state) {
 		
 	}
 	
-	public void executeTask(HAPInstanceCronJob cronJob, Map<String, HAPData> state) {
+	public HAPContextDataGroup executeTask(HAPInstanceCronJob cronJob, Map<String, HAPData> state) {
 		
 	}
 	

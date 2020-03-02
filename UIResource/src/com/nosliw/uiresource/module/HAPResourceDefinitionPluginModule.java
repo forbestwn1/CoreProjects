@@ -1,5 +1,7 @@
 package com.nosliw.uiresource.module;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
@@ -22,6 +24,12 @@ public class HAPResourceDefinitionPluginModule implements HAPPluginResourceDefin
 		String file = HAPFileUtility.getUIModuleFolder()+resourceId.getId()+".res";
 		HAPDefinitionModule moduleDef = m_moduleParser.parseFile(file);
 		return moduleDef;
+	}
+
+	@Override
+	public HAPResourceDefinition parseResourceDefinition(Object content) {
+		JSONObject jsonObj = (JSONObject)content;
+		return this.m_moduleParser.parseModuleDefinition(jsonObj);
 	}
 
 }

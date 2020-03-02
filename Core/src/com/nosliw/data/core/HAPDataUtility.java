@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPDataUtility {
@@ -34,6 +35,19 @@ public class HAPDataUtility {
 		boolean result = wrapper.buildObjectByJson(jsonObj);
 		if(result)   return wrapper;
 		else return null;
+	}
+
+	public static Map<String, HAPData> buildDataWrapperMap(Object obj){
+		JSONObject jsonObj = null;
+		if(obj instanceof String) {
+			if(HAPBasicUtility.isStringNotEmpty((String)obj)) {
+				jsonObj = new JSONObject((String)obj);
+			}
+		}
+		else if(obj instanceof JSONObject){
+			jsonObj = (JSONObject)obj;
+		}
+		return buildDataWrapperMapFromJson(jsonObj);
 	}
 	
 	public static Map<String, HAPData> buildDataWrapperMapFromJson(JSONObject jsonObj){

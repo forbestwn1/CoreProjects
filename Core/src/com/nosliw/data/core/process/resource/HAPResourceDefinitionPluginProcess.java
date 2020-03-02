@@ -3,8 +3,8 @@ package com.nosliw.data.core.process.resource;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -25,6 +25,12 @@ public class HAPResourceDefinitionPluginProcess implements HAPPluginResourceDefi
 		HAPResourceIdSimple processSuiteResourceId = processResourceId.getProcessSuiteResourceId();
 		HAPDefinitionProcessSuite processSuiteDef = (HAPDefinitionProcessSuite)this.m_resourceDefMan.getResourceDefinition(processSuiteResourceId);
 		return new HAPDefinitionProcess(processSuiteDef, processResourceId.getProcessId().getProcessId());
+	}
+
+	@Override
+	public HAPResourceDefinition parseResourceDefinition(Object content) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

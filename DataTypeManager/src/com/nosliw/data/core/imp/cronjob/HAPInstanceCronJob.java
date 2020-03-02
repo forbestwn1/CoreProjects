@@ -1,8 +1,9 @@
 package com.nosliw.data.core.imp.cronjob;
 
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.cronjob.HAPExecutableCronJob;
 
-public class HAPInstanceCronJob {
+public class HAPInstanceCronJob extends HAPSerializableImp{
 
 	private String m_id;
 	
@@ -14,6 +15,9 @@ public class HAPInstanceCronJob {
 	}
 	
 	public String getId() {   return this.m_id;    }
+	public void setId(String id) {   this.m_id = id;    }
+	
 	public HAPExecutableCronJob getCronJob() {   return this.m_cronJob;    }
+	public void setCronJob(HAPExecutableCronJob job) {   this.m_cronJob = job;    }
 	
 }

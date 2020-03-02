@@ -60,7 +60,7 @@ public class HAPParserPage {
 	
 	//resourceUnit : target ui resource object
 	//content : html content
-	public void parseContent(HAPDefinitionUIUnit resourceUnit, String content){
+	public void parseAndBuildUIDefinition(HAPDefinitionUIUnit resourceUnit, String content){
 		try{
 			Document doc = Jsoup.parse(content, "UTF-8");
 			parseUIDefinitionUnit(resourceUnit, doc.body(), null);
@@ -76,11 +76,11 @@ public class HAPParserPage {
 		//use file name as ui resource id
 		String resourceId = HAPFileUtility.getFileName(input);
 		String source = HAPFileUtility.readFile(input);
-		resource = this.parseContent(resourceId, source);
+		resource = this.parseUIDefinition(resourceId, source);
 		return resource;
 	}
 
-	public HAPDefinitionUIPage parseContent(String resourceId, String content){
+	public HAPDefinitionUIPage parseUIDefinition(String resourceId, String content){
 		HAPDefinitionUIPage resource = new HAPDefinitionUIPage(resourceId, content);
 		Document doc = Jsoup.parse(content, "UTF-8");
 		this.parseUIDefinitionUnit(resource, doc.body(), null);

@@ -27,9 +27,15 @@ public class HAPParserCronJobDefinition {
 		return out;
 	}
 
-	public HAPDefinitionCronJob parsePocessCronJob(String content, String id) {
+	public HAPDefinitionCronJob parseCronJob(String content, String id) {
 		HAPDefinitionCronJob out = new HAPDefinitionCronJob(id);
 		out.buildObject(new JSONObject(content), HAPSerializationFormat.JSON);
+		return out;
+	}
+
+	public HAPDefinitionCronJob parseCronJob(JSONObject jsonObj, String id) {
+		HAPDefinitionCronJob out = new HAPDefinitionCronJob(id);
+		out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		return out;
 	}
 }

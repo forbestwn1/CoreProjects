@@ -24,7 +24,7 @@ public class HAPParseMiniApp {
 			//use file name as ui resource id
 			String resourceId = HAPFileUtility.getFileName(input);
 			String source = HAPFileUtility.readFile(input);
-			out = this.parseContent(source);
+			out = this.parseMiniApp(source);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -32,11 +32,11 @@ public class HAPParseMiniApp {
 		return out;
 	}
 
-	public HAPDefinitionApp parseContent(String content) {
-		return parseAppJson(new JSONObject(content));
+	public HAPDefinitionApp parseMiniApp(String content) {
+		return parseMiniApp(new JSONObject(content));
 	}
 	
-	private HAPDefinitionApp parseAppJson(JSONObject jsonObj) {
+	public HAPDefinitionApp parseMiniApp(JSONObject jsonObj) {
 		HAPDefinitionApp out = new HAPDefinitionApp(jsonObj.optString(HAPDefinitionApp.ID));
 
 		HAPUtilityComponentParse.parseComplextResourceDefinition(out, jsonObj);

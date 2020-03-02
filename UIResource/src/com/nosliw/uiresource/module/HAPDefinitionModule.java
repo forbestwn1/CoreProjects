@@ -42,6 +42,10 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	private List<HAPInfoDecoration> m_uiDecoration;
 	
 	public HAPDefinitionModule(String id) {
+		this();
+	}
+
+	public HAPDefinitionModule() {
 		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
 	}

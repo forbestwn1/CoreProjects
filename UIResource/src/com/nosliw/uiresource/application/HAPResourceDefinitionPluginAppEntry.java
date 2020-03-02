@@ -25,4 +25,10 @@ public class HAPResourceDefinitionPluginAppEntry implements HAPPluginResourceDef
 		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefMan.getResourceDefinition(appResourceId);
 		return new HAPDefinitionAppEntry(appDef, appEntryResourceId.getUIAppEntryId().getEntry());
 	}
+
+	@Override
+	public HAPResourceDefinition parseResourceDefinition(Object content) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

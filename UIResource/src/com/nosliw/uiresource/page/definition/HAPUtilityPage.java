@@ -83,7 +83,7 @@ public class HAPUtilityPage {
 //			HAPDefinitionUIPage uiResource = getPageDefinitionById(includeResourceName, uiResourceParser, uiResourceMan);
 			HAPDefinitionUIPage uiResource = (HAPDefinitionUIPage)resourceDefManager.getResourceDefinition(new HAPResourceIdUIResource(includeResourceName));
 			uiResource = processInclude(uiResource, uiResourceParser, uiResourceMan, resourceDefManager);
-			uiResourceParser.parseContent(includeTagResource, uiResource.getSource());
+			uiResourceParser.parseAndBuildUIDefinition(includeTagResource, uiResource.getSource());
 		}
 		return uiResourceDef; 
 	}

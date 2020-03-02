@@ -1,5 +1,7 @@
 package com.nosliw.data.core.cronjob;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
@@ -22,6 +24,12 @@ public class HAPResourceDefinitionPluginCronJob implements HAPPluginResourceDefi
 		String file = HAPFileUtility.getUIModuleFolder()+resourceId.getId()+".res";
 		HAPDefinitionCronJob cronJobDef = m_cronJobParser.parseFile(file);
 		return cronJobDef;
+	}
+
+	@Override
+	public HAPResourceDefinition parseResourceDefinition(Object content) {
+		JSONObject jsonObj = (JSONObject)content;
+		return this.m_cronJobParser.parseCronJob(jsonObj, null);
 	}
 
 }

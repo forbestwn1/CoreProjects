@@ -9,4 +9,6 @@ public interface HAPPluginResourceDefinition {
 	
 	HAPResourceDefinition getResource(HAPResourceIdSimple resourceId);
 	
+	HAPResourceDefinition parseResourceDefinition(Object content);
+
 }

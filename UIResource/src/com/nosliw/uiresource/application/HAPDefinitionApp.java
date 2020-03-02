@@ -44,6 +44,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	}
 	
 	public String getId() {   return this.m_id;   }
+	public void setId(String id) {   this.m_id = id;   }
 	public Map<String, HAPDefinitionAppData> getApplicationData(){   return this.m_applicationData;   }
 	public void setApplicationData(Map<String, HAPDefinitionAppData> dataDef) {		if(dataDef!=null)   this.m_applicationData = dataDef;	}
 

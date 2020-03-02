@@ -52,7 +52,7 @@ public class HAPManagerResourceDefinition {
 	}
 	
 	public HAPResourceDefinition parseResourceDefinition(String type, Object content) {
-		
+		return this.m_plugins.get(type).parseResourceDefinition(content);
 	}
 	
 	public void registerPlugin(HAPPluginResourceDefinition plugin) {
