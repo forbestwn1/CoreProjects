@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 //context
 //attachment mapping
 //
-public interface HAPComponent extends HAPResourceDefinitionComplex, HAPWithLifecycleAction, HAPWithEventHanlder, HAPWithProcess{
+public interface HAPComponent extends HAPResourceDefinitionComplex, HAPWithLifecycleAction, HAPWithEventHanlder{
 
 	@HAPAttribute
 	public static String ID = "id";

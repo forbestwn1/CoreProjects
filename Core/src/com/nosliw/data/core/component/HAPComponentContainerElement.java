@@ -67,10 +67,10 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	@Override
 	public HAPAttachmentContainer getAttachmentContainer() {  return this.getElement().getAttachmentContainer(); }
 
-	@Override
-	public HAPDefinitionProcessSuite getProcessSuite() {	return this.m_processSuite;  }
-	@Override
-	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {  this.m_processSuite = processSuite;   }
+//	@Override
+//	public HAPDefinitionProcessSuite getProcessSuite() {	return this.m_processSuite;  }
+//	@Override
+//	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {  this.m_processSuite = processSuite;   }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

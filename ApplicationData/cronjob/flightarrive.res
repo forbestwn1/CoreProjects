@@ -39,9 +39,9 @@
 	},
 
 	"schedule" : {
-		"type" : "",
+		"type" : "normal",
 		"start" : "",
-		"interval" : 60,
+		"interval" : 5,
 	},
 
 	"end" : {

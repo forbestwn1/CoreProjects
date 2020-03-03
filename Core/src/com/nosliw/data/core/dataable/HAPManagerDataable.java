@@ -1,16 +1,16 @@
 package com.nosliw.data.core.dataable;
 
-import org.json.JSONObject;
-
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 
 public class HAPManagerDataable {
 
-	public HAPDefinitionDataable parseDefinition(JSONObject defJson) {
-		return null;
-	}
-	
 	public HAPExecutableDataable process(HAPDefinitionDataable definition) {
+		String type = definition.getDataableType();
+		if(type.equals(HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION)) {
+			
+		}
+		
 		return null;
 	}
 	

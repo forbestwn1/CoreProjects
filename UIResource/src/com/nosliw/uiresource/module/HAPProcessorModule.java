@@ -85,7 +85,6 @@ public class HAPProcessorModule {
 		//process process suite
 		HAPDefinitionProcessSuite processSuite = HAPUtilityComponent.getProcessSuite(moduleDefinition, processMan.getPluginManager()).clone(); 
 		processSuite.setContext(out.getContext());   //kkk
-//		processSuite.setContext(HAPProcessorContext.process(processSuite.getContext(), HAPParentContext.createDefault(out.getContext()), contextProcessConfg, contextProcessRequirement));
 		out.setProcessSuite(processSuite);
 		
 		//process lifecycle action

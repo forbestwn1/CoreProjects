@@ -9,35 +9,44 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
 public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implements HAPExecutable{
 
 	@HAPAttribute
 	public static String CONTEXT = "context";
 
+	private HAPComponent m_component;
+	
 	// hook up with real data during runtime
 	private HAPContextGroup m_context;
 
 	private HAPDefinitionProcessSuite m_processSuite;
 
-	public HAPExecutableImpComponent(HAPEntityInfo entityInfo) {
-		super(entityInfo);
+	private Map<String, HAPDefinitionServiceProvider> m_serviceProviders;
+	
+	public HAPExecutableImpComponent(HAPComponent component) {
+		super(component);
+		this.m_component = component;
 	}
 
+	public HAPComponent getDefinition() {   return this.m_component;    }
+	
 	public HAPContextGroup getContext() {   return this.m_context;   }
-
 	public void setContextGroup(HAPContextGroup contextGroup) { 	this.m_context = contextGroup;	}
 
 	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {    this.m_processSuite = processSuite;    }
-	
 	public HAPDefinitionProcess getProcessDefinition(String name) {    return new HAPDefinitionProcess(this.m_processSuite, name);    }
 
+	public void setServiceProviders(Map<String, HAPDefinitionServiceProvider> serviceProviders) {    this.m_serviceProviders = serviceProviders;    }
+	public Map<String, HAPDefinitionServiceProvider> getServiceProviders(){    return this.m_serviceProviders;     }
 	
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {

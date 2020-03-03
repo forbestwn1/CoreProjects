@@ -29,10 +29,10 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 		this.m_id = id;
 	}
 	
-	@Override
-	public HAPDefinitionProcessSuite getProcessSuite() {		return this.m_processSuite;	}
-	@Override
-	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {  this.m_processSuite = processSuite;   }
+//	@Override
+//	public HAPDefinitionProcessSuite getProcessSuite() {		return this.m_processSuite;	}
+//	@Override
+//	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {  this.m_processSuite = processSuite;   }
 
 	
 	@Override

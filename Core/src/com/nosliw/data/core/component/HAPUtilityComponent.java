@@ -10,6 +10,7 @@ import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParentContext;
@@ -18,31 +19,71 @@ import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 public class HAPUtilityComponent {
 
+	public static void processComponentExecutable(
+			HAPExecutableImpComponent componentExe,
+			HAPContextGroup parentContext,
+			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPConfigureContextProcessor contextProcessConfg,
+			HAPManagerActivityPlugin activityPluginMan
+			) {
+		HAPComponent component = componentExe.getDefinition();
+		
+		//service providers
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(component.getAttachmentContainer(), null, contextProcessRequirement.serviceDefinitionManager); 
+		componentExe.setServiceProviders(allServiceProviders);
+		
+		//process context 
+		componentExe.setContextGroup(HAPProcessorContext.process(component.getContext(), HAPParentContext.createDefault(parentContext==null?new HAPContextGroup():parentContext), contextProcessConfg, contextProcessRequirement));
+		
+		//process process suite
+		HAPDefinitionProcessSuite processSuite = HAPUtilityComponent.getProcessSuite(component, activityPluginMan).clone(); 
+		processSuite.setContext(componentExe.getContext());   //kkk
+		componentExe.setProcessSuite(processSuite);
+	}
+	
 	public static HAPDefinitionProcessSuite getProcessSuite(HAPComponent component, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionProcessSuite out = component.getProcessSuite();
-		if(out==null) {
-			out = new HAPDefinitionProcessSuite();
-			if(component instanceof HAPComponentImp) {
-				component.cloneToComplexEntity(out);
-				Map<String, HAPAttachment> processAtts = component.getAttachmentContainer().getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
-				
-				for(String name : processAtts.keySet()) {
-					HAPAttachment attachment = processAtts.get(name);
-					out.addProcess(attachment.getName(), HAPUtilityProcess.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan));
-				}
-			}
-			else if(component instanceof HAPComponentContainerElement) {
-				out = ((HAPComponentContainerElement)component).getElement().getProcessSuite();
-			}
+		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
+		if(component instanceof HAPComponentImp) {
+			component.cloneToComplexEntity(out);
+			Map<String, HAPAttachment> processAtts = component.getAttachmentContainer().getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
 			
-			component.setProcessSuite(out);
+			for(String name : processAtts.keySet()) {
+				HAPAttachment attachment = processAtts.get(name);
+				out.addProcess(attachment.getName(), HAPUtilityProcess.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan));
+			}
+		}
+		else if(component instanceof HAPComponentContainerElement) {
+			out = getProcessSuite(((HAPComponentContainerElement)component).getElement(), activityPluginMan);
 		}
 		return out;
 	}
+
+//	public static HAPDefinitionProcessSuite getProcessSuite(HAPComponent component, HAPManagerActivityPlugin activityPluginMan) {
+//		HAPDefinitionProcessSuite out = component.getProcessSuite();
+//		if(out==null) {
+//			out = new HAPDefinitionProcessSuite();
+//			if(component instanceof HAPComponentImp) {
+//				component.cloneToComplexEntity(out);
+//				Map<String, HAPAttachment> processAtts = component.getAttachmentContainer().getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
+//				
+//				for(String name : processAtts.keySet()) {
+//					HAPAttachment attachment = processAtts.get(name);
+//					out.addProcess(attachment.getName(), HAPUtilityProcess.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan));
+//				}
+//			}
+//			else if(component instanceof HAPComponentContainerElement) {
+//				out = ((HAPComponentContainerElement)component).getElement().getProcessSuite();
+//			}
+//			
+//			component.setProcessSuite(out);
+//		}
+//		return out;
+//	}
 	
 	public static HAPContextGroup processElementComponentContext(HAPComponentContainerElement component, HAPContextGroup extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
 		HAPContextGroup parentContext = HAPUtilityContext.hardMerge(component.getContainer().getContext(), extraContext); 

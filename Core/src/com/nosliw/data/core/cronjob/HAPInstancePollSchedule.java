@@ -13,6 +13,6 @@ public class HAPInstancePollSchedule {
 	
 	public Instant getPollTime() {   return this.m_pollTime;   }
 	
-	public void setPollTime(Instant date) {   this.m_pollTime = date;    }
+	public void setPollTime(Instant time) {   this.m_pollTime = time;    }
 	
 }
