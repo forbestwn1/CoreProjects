@@ -4,9 +4,6 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
-import com.nosliw.data.core.dataable.HAPDefinitionDataable;
-import com.nosliw.data.core.dataable.HAPExecutableDataable;
 import com.nosliw.data.core.dataable.HAPManagerDataable;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
@@ -46,18 +43,18 @@ public class HAPProcessorCronJob {
 		HAPUtilityComponent.processComponentExecutable(out, parentContext, contextProcessRequirement, contextProcessConfg, processMan.getPluginManager());
 
 		//process task
-		HAPDefinitionProcess processDef = out.getProcessDefinition(cronJobDefinition.getTask().getTaskDefinition());
+		HAPDefinitionProcess processDef = out.getProcessDefinition(cronJobDefinition.getTask().getProcess());
 		HAPExecutableProcess processExe = HAPProcessorProcess.process(processDef, null, out.getServiceProviders(), processMan, contextProcessRequirement, processTracker);
-		HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(cronJobDefinition.getTask(), processExe, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
+		HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(cronJobDefinition.getTask().getTask(), processExe, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
 		out.setTask(processExeWrapper);
  
 		//process end
-		HAPDefinitionEnd endDef = cronJobDefinition.getEnd();
-		HAPDefinitionDataable resourceDef = (HAPDefinitionDataable)HAPAttachmentUtility.getResourceDefinition(cronJobDefinition.getAttachmentContainer(), endDef.getAttachmentReference().getType(), endDef.getAttachmentReference().getName(), resourceDefMan);
-		HAPExecutableDataable exetable = dataableMan.process(resourceDef);
-		
-		HAPExecutableWrapperTask endExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(endDef.getEmbeded(), exetable, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
-		out.setEnd(endExeWrapper);
+//		HAPDefinitionEnd endDef = cronJobDefinition.getEnd();
+//		HAPDefinitionDataable resourceDef = (HAPDefinitionDataable)HAPAttachmentUtility.getResourceDefinition(cronJobDefinition.getAttachmentContainer(), endDef.getAttachmentReference().getType(), endDef.getAttachmentReference().getName(), resourceDefMan);
+//		HAPExecutableDataable exetable = dataableMan.process(resourceDef);
+//		
+//		HAPExecutableWrapperTask endExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(endDef.getEmbeded(), exetable, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
+//		out.setEnd(endExeWrapper);
 	
 		//process schedule
 		HAPExecutablePollSchedule schedule = scheduleMan.parsePollSchedule(cronJobDefinition.getSchedule().getDefinition());

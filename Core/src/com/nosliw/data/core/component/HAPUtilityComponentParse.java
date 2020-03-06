@@ -11,7 +11,7 @@ import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 public class HAPUtilityComponentParse {
 
-	public static void parseComponentChild(HAPComponentChildImp child, JSONObject jsonObj) {
+	public static void parseComponentChild(HAPEmbededComponent child, JSONObject jsonObj) {
 		child.buildEntityInfoByJson(jsonObj);
 		
 		child.setNameMapping(HAPNameMapping.newNamingMapping(jsonObj.optJSONObject(HAPWithNameMapping.NAMEMAPPING)));
@@ -51,7 +51,9 @@ public class HAPUtilityComponentParse {
 		JSONArray eventHandlersArray = jsonObj.optJSONArray(HAPWithEventHanlder.EVENTHANDLER);
 		if(eventHandlersArray!=null) {
 			for(int i=0; i<eventHandlersArray.length(); i++) {
-				withEventHandler.addEventHandler(HAPHandlerEvent.newInstance(eventHandlersArray.getJSONObject(i)));
+				HAPHandlerEvent eventHandlerTask = new HAPHandlerEvent();
+				eventHandlerTask.buildObject(eventHandlersArray.getJSONObject(i), HAPSerializationFormat.JSON);
+				withEventHandler.addEventHandler(eventHandlerTask);
 			}
 		}
 		return withEventHandler;
@@ -61,7 +63,9 @@ public class HAPUtilityComponentParse {
 		JSONArray lifecycleActionArray = jsonObj.optJSONArray(HAPWithLifecycleAction.LIFECYCLE);
 		if(lifecycleActionArray!=null) {
 			for(int i=0; i<lifecycleActionArray.length(); i++) {
-				withLifecycelAction.addLifecycleAction(HAPHandlerLifecycle.newInstance(lifecycleActionArray.getJSONObject(i)));
+				HAPHandlerLifecycle lifecycleAction = new HAPHandlerLifecycle();
+				lifecycleAction.buildObject(lifecycleActionArray.getJSONObject(i), HAPSerializationFormat.JSON);
+				withLifecycelAction.addLifecycleAction(lifecycleAction);
 			}
 		}
 		return withLifecycelAction;

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
@@ -76,5 +77,16 @@ public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 		jsonMap.put(CONTAINERNAME, this.m_containerName);
 		jsonMap.put(INDEXNAME, this.m_indexName);
 		jsonMap.put(ELEMENTNAME, this.m_elementName);
+	}
+
+	@Override
+	public HAPDefinitionActivity cloneActivityDefinition() {
+		HAPLoopActivityDefinition out = new HAPLoopActivityDefinition(this.getType());
+		this.cloneToNormalActivityDefinition(out);
+		out.m_containerName = this.m_containerName;
+		out.m_indexName = this.m_indexName;
+		out.m_elementName = this.m_elementName;
+		out.m_step = this.m_step.clone();
+		return out;
 	}
 }

@@ -27,6 +27,10 @@ public class HAPDataAccess {
 
 	private long i = System.currentTimeMillis();
 
+	public HAPDataAccess() {
+		this.m_dbSource = HAPDBSource.getDefaultDBSource();
+	}
+	
 	public List<HAPCronJobState> findAllValidJobState() {
 		List<HAPCronJobState> out = new ArrayList<HAPCronJobState>();
 		try {

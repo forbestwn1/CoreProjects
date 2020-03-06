@@ -1,8 +1,11 @@
 package com.nosliw.data.core.script.context;
 
+import java.util.Map;
+
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPContextStructureEmpty implements HAPContextStructure{
+public class HAPContextStructureEmpty extends HAPSerializableImp implements HAPContextStructure{
 
 	private boolean m_isFlat;
 	
@@ -29,4 +32,8 @@ public class HAPContextStructureEmpty implements HAPContextStructure{
 		return  new HAPContextStructureEmpty(this.m_isFlat);
 	}
 
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(TYPE, this.getType());
+	}
 }

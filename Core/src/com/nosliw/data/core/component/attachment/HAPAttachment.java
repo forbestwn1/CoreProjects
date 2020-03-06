@@ -8,6 +8,5 @@ public interface HAPAttachment extends HAPEntityInfoWritable{
 
 	String getResourceType();
 	
-	@Override
-	HAPAttachment clone();
+	HAPAttachment cloneAttachment();
 }

@@ -28,7 +28,6 @@ public class HAPDefinitionWrapperTask<T> extends HAPSerializableImp{
 
 	private T m_taskDefinition;
 
-	
 	public HAPDefinitionWrapperTask() {
 		this.m_outputMapping = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
 	}
@@ -67,5 +66,16 @@ public class HAPDefinitionWrapperTask<T> extends HAPSerializableImp{
 		jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_taskDefinition, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
+	}
+	
+	@Override
+	public HAPDefinitionWrapperTask<T> clone(){
+		HAPDefinitionWrapperTask<T> out = new HAPDefinitionWrapperTask<T>();
+		out.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
+		for(String name : this.m_outputMapping.keySet()) {
+			out.m_outputMapping.put(name, this.m_outputMapping.get(name).cloneDataAssocation());
+		}
+		out.m_taskDefinition = this.m_taskDefinition;
+		return out;
 	}
 }

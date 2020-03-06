@@ -19,5 +19,4 @@ public class HAPEntityInfoUtility {
 		jsonMap.put(HAPEntityInfo.INFO, HAPJsonUtility.buildJson(entityInfo.getInfo(), HAPSerializationFormat.JSON));
 	}
 
-	
 }

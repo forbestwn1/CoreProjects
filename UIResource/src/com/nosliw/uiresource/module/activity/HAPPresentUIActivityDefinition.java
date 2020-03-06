@@ -5,6 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 
 public class HAPPresentUIActivityDefinition extends HAPDefinitionActivityNormal{
@@ -41,6 +42,15 @@ public class HAPPresentUIActivityDefinition extends HAPDefinitionActivityNormal{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(UI, this.m_ui);
+	}
+
+	@Override
+	public HAPDefinitionActivity cloneActivityDefinition() {
+		HAPPresentUIActivityDefinition out = new HAPPresentUIActivityDefinition(this.getType());
+		this.cloneToNormalActivityDefinition(out);
+		out.m_ui = this.m_ui;
+		out.m_setting = this.m_setting;
+		return out;
 	}
 
 }

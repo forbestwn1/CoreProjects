@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.context.dataassociation;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoUtility;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPInfo;
@@ -83,6 +84,12 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImp 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
+	}
+
+	@Override
+	public HAPEntityInfo cloneEntityInfo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

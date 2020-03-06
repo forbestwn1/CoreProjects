@@ -160,4 +160,13 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 		}
 		return out;
 	}
+
+	@Override
+	public HAPData cloneData() {
+		HAPDataWrapper out = new HAPDataWrapper();
+		out.m_dataTypeId = this.m_dataTypeId.clone();
+		out.m_value = this.m_value;
+		out.m_valueFormat = this.m_valueFormat;
+		return out;
+	}
 }

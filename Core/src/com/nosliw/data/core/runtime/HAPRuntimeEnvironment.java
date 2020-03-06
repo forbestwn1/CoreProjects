@@ -1,6 +1,7 @@
 package com.nosliw.data.core.runtime;
 
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
+import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
@@ -33,6 +34,8 @@ public interface HAPRuntimeEnvironment {
 	HAPManagerResourceDefinition getResourceDefinitionManager();
 	
 	HAPManagerTemplate getTmeplateManager();
+	
+	HAPManagerCronJob getCronJobManager();
 	
 	HAPRuntime getRuntime();
 	

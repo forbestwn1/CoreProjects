@@ -15,4 +15,5 @@ public interface HAPComponent extends HAPResourceDefinitionComplex, HAPWithLifec
 	String getId();
 	void setId(String id);
 
+	HAPComponent cloneComponent();
 }

@@ -23,6 +23,12 @@ public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 	public HAPDefinitionDataAssociation getDataAssociation(String name) {  return this.m_dataAssociations.get(name);   }
 	public HAPDefinitionDataAssociation getDefaultDataAssociation() {  return this.m_dataAssociations.get(this.getDefaultName());   }
 	
+	public void addDataAssociation(String name, HAPDefinitionDataAssociation dataAssociation) {
+		if(HAPBasicUtility.isStringEmpty(name))  name = this.getDefaultName();
+		this.m_dataAssociations.put(name, dataAssociation);   
+	}
+	public void addDataAssociation(HAPDefinitionDataAssociation dataAssociation) {   this.addDataAssociation(null, dataAssociation);    }
+	
 	public Map<String, HAPDefinitionDataAssociation> getDataAssociations(){  return this.m_dataAssociations;   }
 
 	@Override
@@ -48,4 +54,12 @@ public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 	}
 	
 	private String getDefaultName() {  return HAPConstant.GLOBAL_VALUE_DEFAULT;   }
+	
+	public HAPDefinitionGroupDataAssociation cloneGroupDataAssociation() {
+		HAPDefinitionGroupDataAssociation out = new HAPDefinitionGroupDataAssociation();
+		for(String name : this.m_dataAssociations.keySet()) {
+			out.m_dataAssociations.put(name, this.m_dataAssociations.get(name).cloneDataAssocation());
+		}
+		return out;
+	}
 }

@@ -7,5 +7,5 @@ public interface HAPResourceDefinitionComplex extends HAPEntityInfoWritable, HAP
 
 	HAPChildrenComponentIdContainer getChildrenComponentId();
 
-	void cloneToComplexEntity(HAPResourceDefinitionComplex complexEntity);
+	void cloneToComplexResourceDefinition(HAPResourceDefinitionComplex complexEntity);
 }

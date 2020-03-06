@@ -62,4 +62,12 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 		jsonMap.put(FLOW, m_flow.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_output!=null)  	jsonMap.put(OUTPUT, m_output.toStringValue(HAPSerializationFormat.JSON));
 	}
+	
+	public HAPDefinitionResultActivityNormal cloneNormalActivityResultDefinition() {
+		HAPDefinitionResultActivityNormal out = new HAPDefinitionResultActivityNormal();
+		this.cloneToEntityInfo(out);
+		out.m_flow = this.m_flow.cloneSequenceFlowDefinition();
+		out.m_output = this.m_output.cloneDataAssocation();
+		return out;
+	}
 }

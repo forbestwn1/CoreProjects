@@ -5,11 +5,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPParentContext {
+public class HAPParentContext extends HAPSerializableImp{
 
+	@HAPAttribute
+	public static final String ELEMENT = "element";
+	
 	private Map<String, HAPContextStructure> m_parents;
 	private List<String> m_parentNames;
 	
@@ -50,5 +57,10 @@ public class HAPParentContext {
 			out.addContext(name, this.getContext(name));
 		}
 		return out;
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_parents, HAPSerializationFormat.JSON));
 	}
 }

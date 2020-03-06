@@ -75,17 +75,19 @@ public class HAPParserModule {
 		out.setStatus(jsonObj.optString(HAPDefinitionModuleUI.STATUS));
 
 		//input mapping
+//		out.getInputMapping().buildObject(jsonObj.optJSONArray(HAPDefinitionAppModule.INPUTMAPPING), HAPSerializationFormat.JSON);
 		JSONObject inputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.INPUTMAPPING);
 		if(inputMappingJson!=null) {
 			HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildObjectByJson(inputMappingJson); 
-			out.setInputMapping(dataAssociation);
+			out.addInputMapping(null, dataAssociation);
 		}
 
 		//output mapping
+//		out.getOutputMapping().buildObject(jsonObj.optJSONArray(HAPDefinitionAppModule.OUTPUTMAPPING), HAPSerializationFormat.JSON);
 		JSONObject outputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.OUTPUTMAPPING);
 		if(outputMappingJson!=null) {
 			HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildObjectByJson(outputMappingJson);
-			out.setOutputMapping(dataAssociation);
+			out.addOutputMapping(null, dataAssociation);
 		}
 
 		//ui decoration

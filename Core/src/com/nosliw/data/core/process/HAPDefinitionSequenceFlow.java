@@ -40,4 +40,9 @@ public class HAPDefinitionSequenceFlow extends HAPSerializableImp{
 		jsonMap.put(TARGET, m_target);
 	}
 	
+	public HAPDefinitionSequenceFlow cloneSequenceFlowDefinition() {
+		HAPDefinitionSequenceFlow out = new HAPDefinitionSequenceFlow();
+		out.m_target = this.m_target;
+		return out;
+	}
 }

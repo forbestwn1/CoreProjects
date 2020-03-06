@@ -34,4 +34,12 @@ public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWrit
 		return true;  
 	}
 
+	@Override
+	public HAPDefinitionProcessSuiteElement cloneProcessSuiteElementDefinition() {
+		HAPDefinitionProcessSuiteElementReference out = new HAPDefinitionProcessSuiteElementReference();
+		this.cloneToEntityInfo(out);
+		out.m_resourceId = this.m_resourceId.clone();
+		return out;
+	}
+
 }

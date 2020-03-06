@@ -49,7 +49,7 @@ public class HAPUtilityComponent {
 	public static HAPDefinitionProcessSuite getProcessSuite(HAPComponent component, HAPManagerActivityPlugin activityPluginMan) {
 		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
 		if(component instanceof HAPComponentImp) {
-			component.cloneToComplexEntity(out);
+			component.cloneToComplexResourceDefinition(out);
 			Map<String, HAPAttachment> processAtts = component.getAttachmentContainer().getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
 			
 			for(String name : processAtts.keySet()) {

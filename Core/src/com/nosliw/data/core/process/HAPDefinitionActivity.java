@@ -37,4 +37,11 @@ public abstract class HAPDefinitionActivity extends HAPEntityInfoWritableImp{
 			return false;
 		}
 	}
+	
+	public void cloneToActivityDefinition(HAPDefinitionActivity activity) {
+		this.cloneToEntityInfo(activity);
+		activity.m_type = this.m_type;
+	}
+	
+	public abstract HAPDefinitionActivity cloneActivityDefinition();
 }

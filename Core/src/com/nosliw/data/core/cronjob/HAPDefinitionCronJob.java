@@ -5,9 +5,9 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
 public class HAPDefinitionCronJob extends HAPComponentImp{
 
@@ -22,7 +22,7 @@ public class HAPDefinitionCronJob extends HAPComponentImp{
 
 	private HAPDefinitionSchedule m_schedule;
 	
-	private HAPDefinitionWrapperTask<String> m_task;
+	private HAPDefinitionTask m_task;
 
 	//criteria that end the cron job
 	private HAPDefinitionEnd m_end;
@@ -34,8 +34,8 @@ public class HAPDefinitionCronJob extends HAPComponentImp{
 	public HAPDefinitionSchedule getSchedule() {    return this.m_schedule;    }
 	public void setSchedule(HAPDefinitionSchedule schedule) {  this.m_schedule = schedule;  }
 	
-	public HAPDefinitionWrapperTask<String> getTask(){   return this.m_task;     }
-	public void setTask(HAPDefinitionWrapperTask<String> task) {   this.m_task = task;   }
+	public HAPDefinitionTask getTask(){   return this.m_task;     }
+	public void setTask(HAPDefinitionTask task) {   this.m_task = task;   }
 
 	public HAPDefinitionEnd getEnd() {    return this.m_end;     }
 	
@@ -55,9 +55,19 @@ public class HAPDefinitionCronJob extends HAPComponentImp{
 		schedule.buildObject(jsonObj.getJSONObject(SCHEDULE), HAPSerializationFormat.JSON);
 		this.setSchedule(schedule);
 
+		HAPDefinitionTask task = new HAPDefinitionTask();
+		task.buildObject(jsonObj.getJSONObject(TASK), HAPSerializationFormat.JSON);
+		this.setTask(task);
+		
 		this.m_end = new HAPDefinitionEnd();
 		this.m_end.buildEmbededAttachmentReferenceByJson(jsonObj.optJSONObject(END), null);
 		
 		return true;  
+	}
+
+	@Override
+	public HAPComponent cloneComponent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

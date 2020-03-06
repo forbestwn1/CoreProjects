@@ -30,6 +30,25 @@ public class HAPManagerCronJob {
 	
 	private HAPManagerResourceDefinition m_resourceDefManager;
 	
+	private HAPManagerScheduleDefinition m_scheduleDefManager;
+	
+	public HAPManagerCronJob(
+			HAPExpressionSuiteManager expressionMan, 
+			HAPResourceManagerRoot resourceMan,
+			HAPManagerProcess processMan,
+			HAPRuntime runtime, 
+			HAPDataTypeHelper dataTypeHelper,
+			HAPManagerServiceDefinition serviceDefinitionManager,
+			HAPManagerResourceDefinition resourceDefManager){
+		this.m_expressionMan = expressionMan;
+		this.m_resourceMan = resourceMan;
+		this.m_processMan = processMan;
+		this.m_runtime = runtime;
+		this.m_dataTypeHelper = dataTypeHelper;
+		this.m_serviceDefinitionManager = serviceDefinitionManager;
+		this.m_resourceDefManager = resourceDefManager;
+		this.m_scheduleDefManager = new HAPManagerScheduleDefinition();
+	}
 	
 	public HAPDefinitionCronJob getCronJobDefinition(HAPResourceId cronJobId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
@@ -54,7 +73,7 @@ public class HAPManagerCronJob {
 			cronJobDef = (HAPDefinitionCronJob)defOrRef;
 			HAPUtilityComponent.mergeWithParentAttachment(cronJobDef, attachmentEx);
 		}
-		return HAPProcessorCronJob.process(cronJobDef, id, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager);
+		return HAPProcessorCronJob.process(cronJobDef, id, null, m_processMan, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, m_resourceDefManager, null, m_scheduleDefManager);
 		
 	}
 

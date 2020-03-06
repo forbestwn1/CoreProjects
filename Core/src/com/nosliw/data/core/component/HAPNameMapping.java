@@ -60,7 +60,7 @@ public class HAPNameMapping {
 				for(String parentName : byParentName.keySet()) {
 					String childName = byParentName.get(parentName);
 					HAPAttachment ele = original.getElement(type, parentName);
-					ele = ele.clone();
+					ele = ele.cloneAttachment();
 					ele.setName(childName);
 					mapped.addAttachment(type, ele);
 				}
@@ -75,7 +75,7 @@ public class HAPNameMapping {
 			Map<String, String> mapping = m_nameMapping.get(type);
 			if(mapping!=null && !mapping.isEmpty()) {
 				for(String pName : mapping.keySet()) {
-					HAPEntityInfoWritable provider = (HAPEntityInfoWritable)parent.get(pName).clone();
+					HAPEntityInfoWritable provider = (HAPEntityInfoWritable)parent.get(pName).cloneEntityInfo();
 					provider.setName(mapping.get(pName));
 					mappedParentProviders.put(mapping.get(pName), provider);
 				}
@@ -96,4 +96,10 @@ public class HAPNameMapping {
 		byName.put(parent, child);
 	}
 
+	public HAPNameMapping cloneNameMapping() {
+		HAPNameMapping out = new HAPNameMapping();
+		out.m_nameMapping.putAll(this.m_nameMapping);
+		return out;
+	}
+	
 }

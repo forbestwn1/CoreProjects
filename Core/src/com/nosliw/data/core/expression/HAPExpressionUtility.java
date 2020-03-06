@@ -47,7 +47,6 @@ public class HAPExpressionUtility {
 		return out;
 	}
 	
-	
 	  public static Map<String, HAPVariableInfo> buildVariablesInfoMapFromJson(JSONObject jsonObj) {
 		  Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>(); 
 		  if(jsonObj!=null) {

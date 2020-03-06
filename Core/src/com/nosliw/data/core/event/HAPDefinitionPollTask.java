@@ -9,10 +9,10 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.process.HAPUtilityProcess;
-import com.nosliw.data.core.process.HAPWithProcessTask;
+import com.nosliw.data.core.process.HAPEmbededProcessTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
-public class HAPDefinitionPollTask extends HAPSerializableImp implements HAPWithProcessTask{
+public class HAPDefinitionPollTask extends HAPSerializableImp implements HAPEmbededProcessTask{
 
 	@HAPAttribute
 	public static String INPUT = "input";
@@ -22,10 +22,10 @@ public class HAPDefinitionPollTask extends HAPSerializableImp implements HAPWith
 	private HAPDefinitionWrapperTask<String> m_process;
 	
 	@Override
-	public HAPDefinitionWrapperTask<String> getProcess() {  return this.m_process;   }
+	public HAPDefinitionWrapperTask<String> getTask() {  return this.m_process;   }
 	
 	@Override
-	public void setProcess(HAPDefinitionWrapperTask<String> processTask) { this.m_process = processTask; }
+	public void setTask(HAPDefinitionWrapperTask<String> processTask) { this.m_process = processTask; }
 	
 	public Map<String, HAPData> getInput(){  return this.m_input;   }
 

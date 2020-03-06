@@ -41,7 +41,7 @@
 	"schedule" : {
 		"type" : "normal",
 		"start" : "",
-		"interval" : 5,
+		"interval" : 5
 	},
 
 	"end" : {
@@ -52,7 +52,7 @@
 	},
 
 	"task" : {
-		"process" : "checkFlightInfo",
+		"process" : "checkFlightInfo"
 	},
 
 	"attachment" : {
@@ -60,7 +60,7 @@
 			{
 				"name" : "endCriteria",
 				"entity" : {
-					expression : "#|?(result)?|#"
+					"expression" : "?(result)?"
 				}
 			}
 		],
@@ -162,7 +162,7 @@
 								"name": "success",
 								"flow": {
 									"target": "success"
-								},
+								}
 							}]
 						},
 						{
@@ -173,7 +173,7 @@
 								"element": {
 								}
 							}
-						}
+						},
 						{
 							"id": "fail",
 							"name": "failEnd",
@@ -186,6 +186,6 @@
 					]
 				}
 			}
-		], 
+		]
 	}
 }

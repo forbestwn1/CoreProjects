@@ -189,11 +189,11 @@ public class HAPUtilityProcess {
 		return out;
 	}	
 	
-	public static void parseWithProcessTask(HAPWithProcessTask task, JSONObject jsonObj) {
+	public static void parseWithProcessTask(HAPEmbededProcessTask task, JSONObject jsonObj) {
 		HAPDefinitionWrapperTask<String> process = new HAPDefinitionWrapperTask<String>();
-		process.setTaskDefinition(jsonObj.optString(HAPWithProcessTask.PROCESS));
+		process.setTaskDefinition(jsonObj.optString(HAPEmbededProcessTask.PROCESS));
 		process.buildMapping(jsonObj);
-		task.setProcess(process);
+		task.setTask(process);
 	}
 	
 }

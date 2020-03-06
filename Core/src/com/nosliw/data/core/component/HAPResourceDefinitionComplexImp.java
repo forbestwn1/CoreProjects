@@ -7,6 +7,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
@@ -23,7 +24,6 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWrita
 		this.m_context = new HAPContextGroup();
 		this.m_attachmentContainer = new HAPAttachmentContainer();
 	}
-
 
 	@Override
 	public String getResourceType() {   return this.getResourceId().getType();  }
@@ -63,8 +63,14 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWrita
 	}
 
 	@Override
-	public void cloneToComplexEntity(HAPResourceDefinitionComplex complexEntity) {
+	public void cloneToResourceDefinition(HAPResourceDefinition resourceDef) {
+		resourceDef.setResourceId(this.getResourceId().clone());
+	}
+
+	@Override
+	public void cloneToComplexResourceDefinition(HAPResourceDefinitionComplex complexEntity) {
 		this.cloneToEntityInfo(complexEntity);
+		this.cloneToResourceDefinition(complexEntity);
 		this.cloneToAttachment(complexEntity);
 		this.cloneToDataContext(complexEntity);
 	}

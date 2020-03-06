@@ -152,8 +152,8 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	
 	protected void cloneFrom(HAPResourceInfo resourceInfo){
 		this.m_resourceId = resourceInfo.getId().clone();
-		for(HAPResourceDependency dependency : resourceInfo.getDependency())			this.addDependency(dependency.clone());
-		for(HAPResourceDependency child : resourceInfo.getChildren())			this.m_children.add(child.clone());
+		for(HAPResourceDependency dependency : resourceInfo.getDependency())			this.addDependency(dependency.cloneResourceDependency());
+		for(HAPResourceDependency child : resourceInfo.getChildren())			this.m_children.add(child.cloneResourceDependency());
 	}
 	
 	@Override

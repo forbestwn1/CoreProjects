@@ -15,5 +15,17 @@ public class HAPInfoUtility {
 		
 		return out;
 	}
+
+	public static void hardMerge(HAPInfo base, HAPInfo top) {
+		for(String name : top.getNames())   base.setValue(name, top.getValue(name));
+	}
+	
+	public static void softMerge(HAPInfo base, HAPInfo top) {
+		for(String name : top.getNames()) {
+			if(base.getValue(name)==null) {
+				base.setValue(name, top.getValue(name));
+			}
+		}
+	}
 	
 }

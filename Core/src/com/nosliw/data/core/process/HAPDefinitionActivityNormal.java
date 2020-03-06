@@ -92,4 +92,12 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 		if(this.m_inputMapping!=null)		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
 	}
+	
+	protected void cloneToNormalActivityDefinition(HAPDefinitionActivityNormal activity) {
+		this.cloneToActivityDefinition(activity);
+		activity.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
+		for(String name : this.m_results.keySet()) {
+			activity.m_results.put(name, this.m_results.get(name).cloneNormalActivityResultDefinition());
+		}
+	}
 }

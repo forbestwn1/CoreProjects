@@ -16,6 +16,11 @@ public class HAPRuntimeCronJob {
 	
 	public HAPDataAccess m_dataAccess = null;
 	
+	public HAPRuntimeCronJob(HAPManagerCronJob cronJobMan) {
+		this.m_cronJobMan = cronJobMan;
+		this.m_dataAccess = new HAPDataAccess();
+	}
+	
 	public HAPInstanceCronJob newJob(HAPResourceId cronJobId, Map<String, HAPData> parms) {
 		HAPExecutableCronJob cronJob = this.m_cronJobMan.getCronJob(cronJobId);
 		return this.newJob(cronJob, parms);
@@ -60,11 +65,11 @@ public class HAPRuntimeCronJob {
 	}
 	
 	public HAPContextDataGroup executeTask(HAPInstanceCronJob cronJob, Map<String, HAPData> state) {
-		
+		return null;
 	}
 	
 	public boolean ifStop(String id) {
-		
+		return true;
 	}
 	
 }

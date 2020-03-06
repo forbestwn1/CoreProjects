@@ -72,14 +72,14 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 				HAPAttachment thisEle = this.getElement(type, name);
 				if(thisEle==null || thisEle.getType().equals(HAPConstant.ATTACHMENT_TYPE_PLACEHOLDER)) {
 					//element not exist, or empty, borrow from parent
-					HAPAttachment newEle = parentEle.clone();
+					HAPAttachment newEle = parentEle.cloneAttachment();
 					HAPAttachmentUtility.setOverridenByParent(newEle);
 					this.addAttachment(type, newEle);
 				}
 				else {
 					if(mode.equals(HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT)&&HAPAttachmentUtility.isOverridenByParentMode(thisEle)) {
 						//if configurable, then parent override child
-						HAPAttachment newEle = parentEle.clone();
+						HAPAttachment newEle = parentEle.cloneAttachment();
 						this.addAttachment(type, newEle);
 					}
 				}

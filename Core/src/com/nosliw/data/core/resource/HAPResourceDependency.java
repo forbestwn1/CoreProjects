@@ -96,8 +96,7 @@ public class HAPResourceDependency extends HAPSerializableImp{
 		return true;  
 	}
 	
-	@Override
-	public HAPResourceDependency clone(){
+	public HAPResourceDependency cloneResourceDependency(){
 		HAPResourceDependency out = new HAPResourceDependency();
 		out.cloneFrom(this);
 		return out;

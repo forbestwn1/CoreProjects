@@ -20,11 +20,12 @@ public interface HAPData extends HAPSerializable{
 	/**
 	 * get data type object
 	 */
-	public HAPDataTypeId getDataTypeId();
+	HAPDataTypeId getDataTypeId();
 	
 	/**
 	 * get value within data
 	 */
-	public Object getValue();
+	Object getValue();
 	
+	HAPData cloneData();
 }

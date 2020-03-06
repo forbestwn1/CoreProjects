@@ -83,4 +83,15 @@ public class HAPDefinitionActivityBranch extends HAPDefinitionActivity{
 		if(this.m_inputMapping!=null)		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(BRANCH, HAPJsonUtility.buildJson(this.m_branchs, HAPSerializationFormat.JSON));
 	}
+
+	@Override
+	public HAPDefinitionActivity cloneActivityDefinition() {
+		HAPDefinitionActivityBranch out = new HAPDefinitionActivityBranch(this.getType());
+		this.cloneToActivityDefinition(out);
+		out.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
+		for(HAPDefinitionResultActivityBranch branch : this.m_branchs) {
+			out.m_branchs.add(branch.cloneBranchActivityResultDefinition());
+		}
+		return out;
+	}
 }

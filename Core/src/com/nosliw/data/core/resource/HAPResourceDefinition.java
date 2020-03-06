@@ -9,4 +9,7 @@ public interface HAPResourceDefinition extends HAPEntityOrReference{
 	HAPResourceId getResourceId();
 	
 	String getResourceType();
+
+	void cloneToResourceDefinition(HAPResourceDefinition resourceDef);
+
 }

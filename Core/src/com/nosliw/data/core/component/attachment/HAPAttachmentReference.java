@@ -72,7 +72,7 @@ public class HAPAttachmentReference extends HAPAttachmentImp{
 	}
 	
 	@Override
-	public HAPAttachmentReference clone() {
+	public HAPAttachmentReference cloneAttachment() {
 		HAPAttachmentReference out = new HAPAttachmentReference();
 		super.cloneToObject(out);
 		out.m_id = this.m_id.clone();

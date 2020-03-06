@@ -9,8 +9,14 @@ import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPParserCronJobDefinition {
 
-	public HAPParserCronJobDefinition() {
+	private static HAPParserCronJobDefinition m_instance;
+	
+	public static HAPParserCronJobDefinition getInstance() {
+		if(m_instance==null)   m_instance = new HAPParserCronJobDefinition();
+		return m_instance;
 	}
+	
+	private HAPParserCronJobDefinition() {}
 
 	public HAPDefinitionCronJob parseFile(String fileName){
 		HAPDefinitionCronJob out = null;
@@ -19,7 +25,7 @@ public class HAPParserCronJobDefinition {
 			//use file name as ui resource id
 			String resourceId = HAPFileUtility.getFileName(input);
 			String source = HAPFileUtility.readFile(input);
-			out = this.parsePocessCronJob(source, resourceId);
+			out = this.parseCronJob(source, resourceId);
 		}
 		catch(Exception e){
 			e.printStackTrace();

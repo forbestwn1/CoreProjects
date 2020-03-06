@@ -45,4 +45,10 @@ public class HAPInfoDecoration extends HAPSerializableImp{
 		jsonMap.put(CONFIGURE, HAPJsonUtility.buildJson(this.m_configure, HAPSerializationFormat.JSON));
 	}
 	
+	public HAPInfoDecoration cloneDecorationInfo() {
+		HAPInfoDecoration out = new HAPInfoDecoration();
+		out.m_id = this.m_id;
+		out.m_configure = this.m_configure;
+		return out;
+	}
 }

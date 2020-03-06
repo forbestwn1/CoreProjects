@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
@@ -75,5 +76,18 @@ public class HAPDefinitionModule extends HAPComponentImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
 		jsonMap.put(UIDECORATION, HAPJsonUtility.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
+	}
+
+	@Override
+	public HAPComponent cloneComponent() {
+		HAPDefinitionModule out = new HAPDefinitionModule();
+		this.cloneToComponent(out);
+		for(HAPDefinitionModuleUI ui : this.m_uis) {
+			out.m_uis.add(ui.cloneModuleUIDef());
+		}
+		for(HAPInfoDecoration dec : this.m_uiDecoration) {
+			out.m_uiDecoration.add(dec.cloneDecorationInfo());
+		}
+		return out;
 	}
 }

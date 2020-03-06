@@ -4,4 +4,9 @@ public abstract class HAPResourceDefinitionContainer extends HAPResourceDefiniti
 
 	public abstract HAPComponent getElement(String name);
 	
+	public abstract HAPResourceDefinitionContainer cloneResourceDefinitionContainer();
+	
+	public void cloneToResourceDefinitionContainer(HAPResourceDefinitionContainer resourceDefinitionContainer) {
+		this.cloneToComplexResourceDefinition(resourceDefinitionContainer);
+	}
 }

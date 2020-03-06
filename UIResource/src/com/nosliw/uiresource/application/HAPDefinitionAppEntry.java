@@ -1,10 +1,13 @@
 package com.nosliw.uiresource.application;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
 
 public class HAPDefinitionAppEntry extends HAPComponentContainerElement{
   
+	private HAPDefinitionAppEntry() {}
+	
 	public HAPDefinitionAppEntry(HAPDefinitionApp app, String entry) {
 		super(app, entry);
 	}
@@ -15,5 +18,12 @@ public class HAPDefinitionAppEntry extends HAPComponentContainerElement{
 	public HAPDefinitionApp getAppDefinition() {   return (HAPDefinitionApp)this.getContainer();   }
 	
 	public HAPDefinitionAppElementUI getEntry() {   return (HAPDefinitionAppElementUI)this.getElement();   }
+
+	@Override
+	public HAPComponent cloneComponent() {
+		HAPDefinitionAppEntry out = new HAPDefinitionAppEntry();
+		this.cloneToComponentContainerElement(out);
+		return out;
+	}
 
 }

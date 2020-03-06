@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 
@@ -57,4 +58,18 @@ public class HAPDefinitionProcessSuiteElementEntity extends HAPComponentImp impl
 		jsonMap.put(ACTIVITY, HAPJsonUtility.buildJson(this.m_activities, HAPSerializationFormat.JSON));
 	}
 
+	@Override
+	public HAPDefinitionProcessSuiteElement cloneProcessSuiteElementDefinition() {
+		HAPDefinitionProcessSuiteElementEntity out = new HAPDefinitionProcessSuiteElementEntity();
+		this.cloneToComponent(out);
+		for(String name : this.m_activities.keySet()) {
+			out.m_activities.put(name, this.m_activities.get(name).cloneActivityDefinition());
+		}
+		return out;
+	}
+
+	@Override
+	public HAPComponent cloneComponent() {
+		return (HAPComponent)this.cloneProcessSuiteElementDefinition();
+	}
 }

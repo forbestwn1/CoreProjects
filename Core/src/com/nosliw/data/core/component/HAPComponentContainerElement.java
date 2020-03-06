@@ -4,14 +4,16 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPInfoUtility;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
@@ -34,13 +36,14 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	
 	private HAPComponent m_element;
 	
-	private HAPDefinitionProcessSuite m_processSuite;
-
+	protected HAPComponentContainerElement() {}
+	
 	public HAPComponentContainerElement(HAPResourceDefinitionContainer componentContainer, String elementName) {
 		this.m_componentContainer = componentContainer;
 		this.m_elementName = elementName;
-		this.setElement(this.getContainer().getElement(this.getElementName()));
+		this.setElement(this.getContainer().getElement(this.getElementName()).cloneComponent());
 		HAPUtilityComponent.mergeWithParentAttachment(this.m_element, this.m_componentContainer.getAttachmentContainer());
+		HAPInfoUtility.softMerge(this.m_element.getInfo(), this.m_componentContainer.getInfo());
 	}
 
 	public HAPResourceDefinitionContainer getContainer() {   return this.m_componentContainer;    }
@@ -67,23 +70,19 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	@Override
 	public HAPAttachmentContainer getAttachmentContainer() {  return this.getElement().getAttachmentContainer(); }
 
-//	@Override
-//	public HAPDefinitionProcessSuite getProcessSuite() {	return this.m_processSuite;  }
-//	@Override
-//	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {  this.m_processSuite = processSuite;   }
-
+	protected void cloneToComponentContainerElement(HAPComponentContainerElement componentContainerElement) {
+		componentContainerElement.m_elementName = this.m_elementName;
+		componentContainerElement.m_resourceId = this.m_resourceId.clone();
+		componentContainerElement.m_componentContainer = this.m_componentContainer.cloneResourceDefinitionContainer();
+		componentContainerElement.m_element = this.m_element.cloneComponent();
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ELEMENTNAME, this.m_elementName);
 		jsonMap.put(CONTAINER, HAPJsonUtility.buildJson(this.m_componentContainer, HAPSerializationFormat.JSON));
 	}
-	
-	@Override
-	public HAPComponentContainerElement clone() {
-		return null;
-	}
-
 	
 	@Override
 	public HAPContextGroup getContext() {
@@ -206,9 +205,21 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 
 	@Override
-	public void cloneToComplexEntity(HAPResourceDefinitionComplex complexEntity) {
+	public void cloneToComplexResourceDefinition(HAPResourceDefinitionComplex complexEntity) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void cloneToResourceDefinition(HAPResourceDefinition resourceDef) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public HAPEntityInfo cloneEntityInfo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

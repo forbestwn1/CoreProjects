@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
@@ -26,6 +27,8 @@ public class HAPDefinitionAppElementUI  extends HAPComponentImp implements HAPDe
 	//all modules in this entry
 	private List<HAPDefinitionAppModule> m_modules;
 
+	private HAPDefinitionAppElementUI() {}
+	
 	public HAPDefinitionAppElementUI(String id) {
 		super(id);
 		this.m_modules = new ArrayList<HAPDefinitionAppModule>();
@@ -55,4 +58,16 @@ public class HAPDefinitionAppElementUI  extends HAPComponentImp implements HAPDe
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(MODULE, HAPJsonUtility.buildJson(this.m_modules, HAPSerializationFormat.JSON));
 	}
+
+	public HAPDefinitionAppElementUI cloneAppUIElementDefinition() {
+		HAPDefinitionAppElementUI out = new HAPDefinitionAppElementUI();
+		this.cloneToComponent(out);
+		for(HAPDefinitionAppModule module : this.m_modules) {
+			out.addModule(module.cloneAppModuleDef());
+		}
+		return out;
+	}
+	
+	@Override
+	public HAPComponent cloneComponent() {  return cloneAppUIElementDefinition();	}
 }

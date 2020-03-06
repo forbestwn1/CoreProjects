@@ -60,7 +60,7 @@ public class HAPAttachmentEntity extends HAPAttachmentImp{
 	}
 	
 	@Override
-	public HAPAttachmentEntity clone() {
+	public HAPAttachmentEntity cloneAttachment() {
 		HAPAttachmentEntity out = new HAPAttachmentEntity();
 		this.cloneToObject(out);
 		out.m_entity = this.m_entity;

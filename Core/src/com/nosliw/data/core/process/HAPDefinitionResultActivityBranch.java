@@ -55,4 +55,12 @@ public class HAPDefinitionResultActivityBranch extends HAPEntityInfoWritableImp{
 		jsonMap.put(FLOW, m_flow.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_data!=null)  jsonMap.put(DATA, m_data.toStringValue(HAPSerializationFormat.JSON));
 	}
+	
+	public HAPDefinitionResultActivityBranch cloneBranchActivityResultDefinition() {
+		HAPDefinitionResultActivityBranch out = new HAPDefinitionResultActivityBranch();
+		this.cloneToEntityInfo(out);
+		out.m_data = this.m_data.cloneData();
+		out.m_flow = this.m_flow.cloneSequenceFlowDefinition();
+		return out;
+	}
 }

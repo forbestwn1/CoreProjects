@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 
@@ -24,5 +25,12 @@ public class HAPDebugActivityDefinition extends HAPDefinitionActivityNormal{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+	}
+
+	@Override
+	public HAPDefinitionActivity cloneActivityDefinition() {
+		HAPDebugActivityDefinition out = new HAPDebugActivityDefinition(this.getType());
+		this.cloneToNormalActivityDefinition(out);
+		return out;
 	}
 }

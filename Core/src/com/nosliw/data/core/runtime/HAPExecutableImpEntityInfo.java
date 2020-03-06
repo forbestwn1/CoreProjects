@@ -44,4 +44,11 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
 	}
+	
+	@Override
+	public HAPEntityInfo cloneEntityInfo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -26,5 +26,5 @@ public interface HAPEntityInfo extends HAPSerializable{
 
 	void buildEntityInfoByJson(Object json);
 	
-	HAPEntityInfo clone();
+	HAPEntityInfo cloneEntityInfo();
 }

@@ -6,4 +6,5 @@ public interface HAPDefinitionProcessSuiteElement extends HAPEntityInfoWritable{
 
 	String getType();
 	
+	HAPDefinitionProcessSuiteElement cloneProcessSuiteElementDefinition();
 }

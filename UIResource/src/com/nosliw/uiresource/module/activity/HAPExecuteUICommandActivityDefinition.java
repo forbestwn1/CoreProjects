@@ -5,6 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 
 public class HAPExecuteUICommandActivityDefinition extends HAPDefinitionActivityNormal{
@@ -42,6 +43,15 @@ public class HAPExecuteUICommandActivityDefinition extends HAPDefinitionActivity
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PARTID, this.m_componentId);
 		jsonMap.put(COMMAND, this.m_command);
+	}
+
+	@Override
+	public HAPDefinitionActivity cloneActivityDefinition() {
+		HAPExecuteUICommandActivityDefinition out = new HAPExecuteUICommandActivityDefinition(this.getType());
+		this.cloneToNormalActivityDefinition(out);
+		out.m_componentId = this.m_componentId;
+		out.m_command = this.m_command;
+		return out;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.nosliw.uiresource.page.definition;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPComponent;
 
 public class HAPDefinitionUITag extends HAPDefinitionUIUnit{
 
@@ -17,6 +18,12 @@ public class HAPDefinitionUITag extends HAPDefinitionUIUnit{
 	@Override
 	public String getType() {
 		return HAPConstant.UIRESOURCE_TYPE_TAG;
+	}
+
+	@Override
+	public HAPComponent cloneComponent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

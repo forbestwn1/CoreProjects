@@ -2,6 +2,7 @@ package com.nosliw.uiresource.page.definition;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
+import com.nosliw.data.core.component.HAPComponent;
 
 public class HAPDefinitionUIPage extends HAPDefinitionUIUnit{
 
@@ -33,5 +34,11 @@ public class HAPDefinitionUIPage extends HAPDefinitionUIUnit{
 //				this.addContextElement(contextEleInfo);
 			}
 		}
+	}
+
+	@Override
+	public HAPComponent cloneComponent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

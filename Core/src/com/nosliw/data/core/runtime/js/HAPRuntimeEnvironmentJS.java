@@ -4,6 +4,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
+import com.nosliw.data.core.cronjob.HAPManagerCronJob;
+import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
+import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcess;
@@ -61,6 +64,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPManagerTemplate m_templateManager;
 	
+	private HAPManagerCronJob m_cronJobManager;
+	
 	private HAPRuntime m_runtime;
 	
 	public HAPRuntimeEnvironmentJS(){}
@@ -73,9 +78,10 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 								    HAPManagerService serviceManager,
 								    HAPManagerTemplate templateManager,
 								    HAPManagerResourceDefinition resourceDefManager,
+								    HAPManagerCronJob cronJobManager,
 								    HAPRuntime runtime){
 		super();
-		this.init(resourceMan, processManager, processRuntime, expressionSuiteManager, gatewayManager, serviceManager, templateManager, resourceDefManager, runtime);
+		this.init(resourceMan, processManager, processRuntime, expressionSuiteManager, gatewayManager, serviceManager, templateManager, resourceDefManager, cronJobManager, runtime);
 	}
 	
 	protected void init(HAPResourceManagerRoot resourceMan,
@@ -86,6 +92,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 					    HAPManagerService serviceManager,
 					    HAPManagerTemplate templateManager,
 					    HAPManagerResourceDefinition resourceDefManager,
+					    HAPManagerCronJob cronJobManager,
 					    HAPRuntime runtime){ 
 		this.m_resourceManager = resourceMan;
 		this.m_processManager = processManager;
@@ -93,9 +100,11 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_expressionSuiteManager = expressionSuiteManager;
 		this.m_serviceManager = serviceManager;
 		this.m_resourceDefinitionManager = resourceDefManager;
+		this.m_cronJobManager = cronJobManager;
 
 		this.m_resourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, new HAPResourceManagerProcess(this.m_processManager));
 		this.m_resourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, new HAPResourceManagerActivityPlugin(this.m_processManager.getPluginManager()));
+		this.m_resourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_CRONJOB, new HAPResourceManagerCronJob(this.m_cronJobManager));
 
 		
 //		this.m_dataSourceManager.registerDataSourceFactory(HAPDataSourceFactoryTask.FACTORY_TYPE, new HAPDataSourceFactoryTask(this.getTaskManager()));
@@ -116,6 +125,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		//component
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginProcessSuite(this.getProcessManager().getPluginManager()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginProcess(this.getResourceDefinitionManager()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginCronJob());
 		
 		//runtime
 		this.m_runtime = runtime;
@@ -145,6 +155,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@Override
 	public HAPManagerTemplate getTmeplateManager() {  return this.m_templateManager;	}
+
+	@Override
+	public HAPManagerCronJob getCronJobManager() {  return this.m_cronJobManager;	}
 
 	@Override
 	public HAPRuntime getRuntime() {		return this.m_runtime;	}

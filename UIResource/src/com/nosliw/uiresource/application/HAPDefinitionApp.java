@@ -78,4 +78,17 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 		jsonMap.put(ENTRY, HAPJsonUtility.buildJson(this.m_entries, HAPSerializationFormat.JSON));
 		jsonMap.put(APPLICATIONDATA, HAPJsonUtility.buildJson(this.m_applicationData, HAPSerializationFormat.JSON));
 	}
+
+	@Override
+	public HAPResourceDefinitionContainer cloneResourceDefinitionContainer() {
+		HAPDefinitionApp out = new HAPDefinitionApp(this.getId());
+		this.cloneToResourceDefinitionContainer(out);
+		for(String name : this.m_entries.keySet()) {
+			out.m_entries.put(name, this.m_entries.get(name).cloneAppUIElementDefinition());
+		}
+		for(String name : this.m_applicationData.keySet()) {
+			out.m_applicationData.put(name, this.m_applicationData.get(name).cloneAppDataDefinition());
+		}
+		return out;
+	}
 }

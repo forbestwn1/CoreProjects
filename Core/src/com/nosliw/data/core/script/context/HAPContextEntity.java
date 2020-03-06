@@ -45,7 +45,7 @@ public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 	}
 
 	@Override
-	public HAPEntityInfo clone() {	return this.cloneContextEntity();	}
+	public HAPEntityInfo cloneEntityInfo() {	return this.cloneContextEntity();	}
 	
 	public HAPContextEntity cloneBaseInfo() {
 		HAPContextEntity out = new HAPContextEntity();

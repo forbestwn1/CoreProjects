@@ -52,4 +52,12 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_output!=null)		jsonMap.put(OUTPUT, this.m_output.toStringValue(HAPSerializationFormat.JSON));
 	}
+
+	@Override
+	public HAPDefinitionActivity cloneActivityDefinition() {
+		HAPEndActivityDefinition out = new HAPEndActivityDefinition(this.getType());
+		this.cloneToActivityDefinition(out);
+		out.m_output = this.m_output.cloneDataAssocation();
+		return out;
+	}
 }

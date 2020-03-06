@@ -57,12 +57,23 @@ public class HAPDefinitionProcessSuite extends HAPResourceDefinitionContainer{
 	@Override
 	public HAPDefinitionProcessSuite clone() {
 		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
-		this.cloneToComplexEntity(out);
-		this.cloneToEntityInfo(out);
+		this.cloneToComplexResourceDefinition(out);
 		for(String eleName : this.m_elements.keySet()) {
 			out.addProcess(eleName, this.m_elements.get(eleName));
 		}
 		return out;
 	}
+
+	public HAPDefinitionProcessSuite cloneProcessSuiteDefinition() {
+		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
+		this.cloneToResourceDefinitionContainer(out);
+		for(String name : this.m_elements.keySet()) {
+			out.m_elements.put(name, this.m_elements.get(name).cloneProcessSuiteElementDefinition());
+		}
+		return out;
+	}
+
+	@Override
+	public HAPResourceDefinitionContainer cloneResourceDefinitionContainer() {	return this.cloneProcessSuiteDefinition();	}
 
 }

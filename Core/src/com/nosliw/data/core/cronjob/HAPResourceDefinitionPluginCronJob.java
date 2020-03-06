@@ -10,10 +10,9 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceDefinitionPluginCronJob implements HAPPluginResourceDefinition{
 
-	private HAPParserCronJobDefinition m_cronJobParser;
+	private HAPParserCronJobDefinition m_cronJobParser = HAPParserCronJobDefinition.getInstance();
 	
-	public HAPResourceDefinitionPluginCronJob(HAPParserCronJobDefinition cronJobParser) {
-		this.m_cronJobParser = cronJobParser;
+	public HAPResourceDefinitionPluginCronJob() {
 	}
 	
 	@Override
@@ -21,7 +20,7 @@ public class HAPResourceDefinitionPluginCronJob implements HAPPluginResourceDefi
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
-		String file = HAPFileUtility.getUIModuleFolder()+resourceId.getId()+".res";
+		String file = HAPFileUtility.getCronJobFolder()+resourceId.getId()+".res";
 		HAPDefinitionCronJob cronJobDef = m_cronJobParser.parseFile(file);
 		return cronJobDef;
 	}

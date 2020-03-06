@@ -3,6 +3,7 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
+import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
@@ -54,6 +55,8 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPExpressionManager.dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
 		HAPExpressionManager.expressionParser = new HAPExpressionParserImp();
 
+		HAPResourceManagerJSImp resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
+
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
 		HAPManagerTemplate templateManager = new HAPManagerTemplate();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(templateManager);
@@ -61,16 +64,17 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPExpressionSuiteManager expSuiteMan = new HAPExpressionSuiteManager();
 		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
+		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expSuiteMan, resourceMan, processMan, runtime, HAPExpressionManager.dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		
-		init(new HAPResourceManagerJSImp(
-				runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess()),
-				processMan,
-				processRuntimeMan,
-				expSuiteMan,
+		init(resourceMan,
+			processMan,
+			processRuntimeMan,
+			expSuiteMan,
 			new HAPGatewayManager(),
 			serviceManager,
 			templateManager,
 			resourceDefManager,
+			cronJobManager,
 			runtime
 		);
 

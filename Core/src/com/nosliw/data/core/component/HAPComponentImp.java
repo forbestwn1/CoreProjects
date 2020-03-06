@@ -6,7 +6,6 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 
 abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp implements HAPComponent{
 
@@ -18,8 +17,6 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	//event handlers
 	private Set<HAPHandlerEvent> m_eventHandlers;
 
-	private HAPDefinitionProcessSuite m_processSuite;
-	
 	public HAPComponentImp() {
 		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
 		this.m_eventHandlers = new HashSet<HAPHandlerEvent>();
@@ -28,12 +25,6 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	public HAPComponentImp(String id) {
 		this.m_id = id;
 	}
-	
-//	@Override
-//	public HAPDefinitionProcessSuite getProcessSuite() {		return this.m_processSuite;	}
-//	@Override
-//	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {  this.m_processSuite = processSuite;   }
-
 	
 	@Override
 	public String getId() {   return this.m_id;   }
@@ -50,6 +41,17 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	@Override
 	public void addEventHandler(HAPHandlerEvent eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
 
+	protected void cloneToComponent(HAPComponent component) {
+		component.setId(this.getId());
+		this.cloneToComplexResourceDefinition(component);
+		for(HAPHandlerLifecycle handler : this.m_lifecycleAction) {
+			component.addLifecycleAction(handler.cloneLifecycleHander());
+		}
+		for(HAPHandlerEvent handler : this.m_eventHandlers) {
+			component.addEventHandler(handler.cloneEventHandler());
+		}
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);

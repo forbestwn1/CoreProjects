@@ -3,13 +3,15 @@ package com.nosliw.data.core.process;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
-public interface HAPWithProcessTask {
+public interface HAPEmbededProcessTask {
 
 	@HAPAttribute
 	public static String PROCESS = "process";
 	
-	HAPDefinitionWrapperTask<String> getProcess();
+	HAPDefinitionWrapperTask<String> getTask();
 	
-	void setProcess(HAPDefinitionWrapperTask<String> processTask);
+	void setTask(HAPDefinitionWrapperTask<String> processTask);
 
+	String getProcess();
+	
 }

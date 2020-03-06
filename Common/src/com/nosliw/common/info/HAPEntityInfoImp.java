@@ -40,7 +40,7 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	public Object getInfoValue(String name) {  return this.m_info.getValue(name);   }
 	
 	@Override
-	public HAPEntityInfoImp clone() {
+	public HAPEntityInfoImp cloneEntityInfo() {
 		HAPEntityInfoImp out = new HAPEntityInfoImp();
 		out.buildEntityInfoByJson(this.toStringValue(HAPSerializationFormat.JSON));
 		return out;

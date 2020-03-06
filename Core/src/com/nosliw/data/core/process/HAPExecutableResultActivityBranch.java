@@ -63,4 +63,5 @@ public class HAPExecutableResultActivityBranch extends HAPExecutableImpEntityInf
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceDependency(dependency, runtimeInfo);
 	}
+
 }

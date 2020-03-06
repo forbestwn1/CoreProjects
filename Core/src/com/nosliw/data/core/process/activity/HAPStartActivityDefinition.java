@@ -46,4 +46,12 @@ public class HAPStartActivityDefinition extends HAPDefinitionActivity{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_flow!=null)		jsonMap.put(FLOW, this.m_flow.toStringValue(HAPSerializationFormat.JSON));
 	}
+
+	@Override
+	public HAPDefinitionActivity cloneActivityDefinition() {
+		HAPStartActivityDefinition out = new HAPStartActivityDefinition(this.getType());
+		this.cloneToActivityDefinition(out);
+		out.m_flow = this.m_flow.cloneSequenceFlowDefinition();
+		return null;
+	}
 }

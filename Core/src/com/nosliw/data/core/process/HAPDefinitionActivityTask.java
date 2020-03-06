@@ -32,4 +32,13 @@ public class HAPDefinitionActivityTask extends HAPDefinitionActivityNormal{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
+	
+	@Override
+	public HAPDefinitionActivity cloneActivityDefinition() {
+		HAPDefinitionActivityTask out = new HAPDefinitionActivityTask(this.getType());
+		this.cloneToNormalActivityDefinition(out);
+		out.m_taskMapping = this.m_taskMapping.clone();
+		return out;
+	}
+
 }

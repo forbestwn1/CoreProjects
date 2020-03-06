@@ -106,4 +106,9 @@ public class HAPDefinitionScriptExpression extends HAPSerializableImp{
 		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}
 	
+	public HAPDefinitionScriptExpression cloneScriptExpressionDefinition() {
+		HAPDefinitionScriptExpression out = new HAPDefinitionScriptExpression(this.getDefinition());
+		return out;
+	}
+	
 }

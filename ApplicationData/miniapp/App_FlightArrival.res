@@ -1,6 +1,6 @@
 {
-	"name" : "AppFlightArrival",
-	"id" : "AppFlightArrival",
+	"name" : "App_FlightArrival",
+	"id" : "App_FlightArrival",
 	"attachment": {
 		"uiResource" : [
 			{
