@@ -59,7 +59,7 @@ public class HAPDefinitionResultActivityBranch extends HAPEntityInfoWritableImp{
 	public HAPDefinitionResultActivityBranch cloneBranchActivityResultDefinition() {
 		HAPDefinitionResultActivityBranch out = new HAPDefinitionResultActivityBranch();
 		this.cloneToEntityInfo(out);
-		out.m_data = this.m_data.cloneData();
+		if(this.m_data!=null)  out.m_data = this.m_data.cloneData();
 		out.m_flow = this.m_flow.cloneSequenceFlowDefinition();
 		return out;
 	}

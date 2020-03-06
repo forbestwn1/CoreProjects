@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.expression.HAPExecutableExpression;
 
 @HAPEntityWithAttribute
 public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{

@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandAttribute;
@@ -22,7 +23,6 @@ import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.operand.HAPParmInOperationOperand;
-import com.nosliw.data.core.runtime.HAPExecutableExpression;
 
 public class HAPUtilityScriptExpression {
 

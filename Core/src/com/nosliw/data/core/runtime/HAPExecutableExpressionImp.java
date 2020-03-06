@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;

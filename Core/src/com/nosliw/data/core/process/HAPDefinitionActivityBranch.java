@@ -16,7 +16,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 
-public class HAPDefinitionActivityBranch extends HAPDefinitionActivity{
+public abstract class HAPDefinitionActivityBranch extends HAPDefinitionActivity{
 
 	@HAPAttribute
 	public static String INPUTMAPPING = "inputMapping";
@@ -84,14 +84,11 @@ public class HAPDefinitionActivityBranch extends HAPDefinitionActivity{
 		jsonMap.put(BRANCH, HAPJsonUtility.buildJson(this.m_branchs, HAPSerializationFormat.JSON));
 	}
 
-	@Override
-	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPDefinitionActivityBranch out = new HAPDefinitionActivityBranch(this.getType());
+	public void cloneToBranchActivityDefinition(HAPDefinitionActivityBranch out) {
 		this.cloneToActivityDefinition(out);
 		out.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
 		for(HAPDefinitionResultActivityBranch branch : this.m_branchs) {
 			out.m_branchs.add(branch.cloneBranchActivityResultDefinition());
 		}
-		return out;
 	}
 }

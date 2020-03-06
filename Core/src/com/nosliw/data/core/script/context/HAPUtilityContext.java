@@ -408,6 +408,19 @@ public class HAPUtilityContext {
 			}
 			}
 		}
+		else if(expectDef.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT)) {  //kkkkk
+			switch(originDef.getType()) {
+			case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+			{
+				HAPContextDefinitionLeafData dataOrigin = (HAPContextDefinitionLeafData)originDef;
+				 HAPContextDefinitionLeafConstant dataExpect = (HAPContextDefinitionLeafConstant)expectDef.getSolidContextDefinitionElement();
+				//cal matchers
+				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPVariableInfo.buildVariableInfo(dataOrigin.getCriteria().getCriteria()), new HAPDataTypeCriteriaId(dataExpect.getDataValue().getDataTypeId(), null), contextProcessRequirement.dataTypeHelper); 
+				if(!matcher.isVoid())  matchers.put(path, matcher);
+				break;
+			}
+			}
+		}
 		else {
 			if(!originDef.getType().equals(type))   HAPErrorUtility.invalid("");   //not same type, error
 			switch(type) {

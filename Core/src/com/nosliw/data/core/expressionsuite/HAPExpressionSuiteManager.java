@@ -8,7 +8,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.runtime.HAPExecutableExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpression;
 
 public class HAPExpressionSuiteManager {
 

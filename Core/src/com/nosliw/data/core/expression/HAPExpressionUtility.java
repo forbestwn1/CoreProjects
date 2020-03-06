@@ -27,7 +27,6 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;

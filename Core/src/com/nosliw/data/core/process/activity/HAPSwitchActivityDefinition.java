@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityBranch;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
 
@@ -38,5 +39,13 @@ public class HAPSwitchActivityDefinition extends HAPDefinitionActivityBranch{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSION, HAPJsonUtility.buildJson(this.m_expression, HAPSerializationFormat.JSON));
+	}
+	
+	@Override
+	public HAPDefinitionActivity cloneActivityDefinition() {
+		HAPSwitchActivityDefinition out = new HAPSwitchActivityDefinition(this.getType());
+		this.cloneToBranchActivityDefinition(out);
+		out.m_expression = this.m_expression.cloneScriptExpressionDefinition();
+		return out;
 	}
 }
