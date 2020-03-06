@@ -52,6 +52,6 @@ public class HAPStartActivityDefinition extends HAPDefinitionActivity{
 		HAPStartActivityDefinition out = new HAPStartActivityDefinition(this.getType());
 		this.cloneToActivityDefinition(out);
 		out.m_flow = this.m_flow.cloneSequenceFlowDefinition();
-		return null;
+		return out;
 	}
 }

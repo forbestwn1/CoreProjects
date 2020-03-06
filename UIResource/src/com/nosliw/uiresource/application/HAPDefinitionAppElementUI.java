@@ -27,7 +27,9 @@ public class HAPDefinitionAppElementUI  extends HAPComponentImp implements HAPDe
 	//all modules in this entry
 	private List<HAPDefinitionAppModule> m_modules;
 
-	private HAPDefinitionAppElementUI() {}
+	private HAPDefinitionAppElementUI() {
+		this(null);
+	}
 	
 	public HAPDefinitionAppElementUI(String id) {
 		super(id);

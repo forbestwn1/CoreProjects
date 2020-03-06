@@ -7,12 +7,13 @@ import org.json.JSONObject;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
-public class HAPDefinitionActivityTask extends HAPDefinitionActivityNormal{
+public abstract class HAPDefinitionActivityTask extends HAPDefinitionActivityNormal{
 
 	private HAPDefinitionWrapperTask m_taskMapping;
 
 	public HAPDefinitionActivityTask(String type) {
 		super(type);
+		this.m_taskMapping = new HAPDefinitionWrapperTask();
 	}
 
 	public HAPDefinitionWrapperTask getTaskMapping() {   return this.m_taskMapping;  }
@@ -33,12 +34,9 @@ public class HAPDefinitionActivityTask extends HAPDefinitionActivityNormal{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
 	
-	@Override
-	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPDefinitionActivityTask out = new HAPDefinitionActivityTask(this.getType());
-		this.cloneToNormalActivityDefinition(out);
-		out.m_taskMapping = this.m_taskMapping.clone();
-		return out;
+	protected void cloneToTaskActivityDefinition(HAPDefinitionActivityTask activity) {
+		if(this.m_taskMapping!=null)   activity.m_taskMapping = this.m_taskMapping.clone();
+		this.cloneToNormalActivityDefinition(activity);
 	}
-
+	
 }

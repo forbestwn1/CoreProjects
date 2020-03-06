@@ -23,6 +23,7 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	}
 
 	public HAPComponentImp(String id) {
+		this();
 		this.m_id = id;
 	}
 	

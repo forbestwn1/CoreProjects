@@ -95,7 +95,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	
 	protected void cloneToNormalActivityDefinition(HAPDefinitionActivityNormal activity) {
 		this.cloneToActivityDefinition(activity);
-		activity.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
+		if(this.m_inputMapping!=null)  activity.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
 		for(String name : this.m_results.keySet()) {
 			activity.m_results.put(name, this.m_results.get(name).cloneNormalActivityResultDefinition());
 		}

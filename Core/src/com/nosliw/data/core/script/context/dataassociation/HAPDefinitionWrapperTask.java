@@ -71,7 +71,7 @@ public class HAPDefinitionWrapperTask<T> extends HAPSerializableImp{
 	@Override
 	public HAPDefinitionWrapperTask<T> clone(){
 		HAPDefinitionWrapperTask<T> out = new HAPDefinitionWrapperTask<T>();
-		out.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
+		if(this.m_inputMapping!=null)  out.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
 		for(String name : this.m_outputMapping.keySet()) {
 			out.m_outputMapping.put(name, this.m_outputMapping.get(name).cloneDataAssocation());
 		}

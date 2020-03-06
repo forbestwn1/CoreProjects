@@ -5,6 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityTask;
 
 public class HAPServiceActivityDefinition extends HAPDefinitionActivityTask{
@@ -33,4 +34,14 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityTask{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PROVIDER, this.m_provider);
 	}
+	
+	@Override
+	public HAPDefinitionActivity cloneActivityDefinition() {
+		HAPServiceActivityDefinition out = new HAPServiceActivityDefinition(this.getType());
+		this.cloneToTaskActivityDefinition(out);
+		out.m_provider = this.m_provider;
+		return out;
+	}
+
+
 }

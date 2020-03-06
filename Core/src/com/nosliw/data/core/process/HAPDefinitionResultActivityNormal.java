@@ -67,7 +67,7 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 		HAPDefinitionResultActivityNormal out = new HAPDefinitionResultActivityNormal();
 		this.cloneToEntityInfo(out);
 		out.m_flow = this.m_flow.cloneSequenceFlowDefinition();
-		out.m_output = this.m_output.cloneDataAssocation();
+		if(this.m_output!=null)   out.m_output = this.m_output.cloneDataAssocation();
 		return out;
 	}
 }

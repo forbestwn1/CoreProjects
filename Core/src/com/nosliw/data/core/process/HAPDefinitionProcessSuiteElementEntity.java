@@ -65,6 +65,9 @@ public class HAPDefinitionProcessSuiteElementEntity extends HAPComponentImp impl
 		for(String name : this.m_activities.keySet()) {
 			out.m_activities.put(name, this.m_activities.get(name).cloneActivityDefinition());
 		}
+		for(HAPResourceDependency dependency : this.m_requiredResources) {
+			out.m_requiredResources.add(dependency.cloneResourceDependency());
+		}
 		return out;
 	}
 

@@ -57,7 +57,7 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 	public HAPDefinitionActivity cloneActivityDefinition() {
 		HAPEndActivityDefinition out = new HAPEndActivityDefinition(this.getType());
 		this.cloneToActivityDefinition(out);
-		out.m_output = this.m_output.cloneDataAssocation();
+		if(this.m_output!=null)    out.m_output = this.m_output.cloneDataAssocation();
 		return out;
 	}
 }

@@ -64,7 +64,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWrita
 
 	@Override
 	public void cloneToResourceDefinition(HAPResourceDefinition resourceDef) {
-		resourceDef.setResourceId(this.getResourceId().clone());
+		resourceDef.setResourceId(this.getResourceId()==null?null:this.getResourceId().clone());
 	}
 
 	@Override
