@@ -77,4 +77,6 @@ public class HAPManagerCronJob {
 		
 	}
 
+	public HAPManagerScheduleDefinition getScheduleDefinitionManager() {    return this.m_scheduleDefManager;    }
+	
 }

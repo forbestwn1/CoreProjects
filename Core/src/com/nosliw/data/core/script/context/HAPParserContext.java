@@ -6,10 +6,23 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 
 public class HAPParserContext {
 
+	public static HAPContextStructure parseContextStructure(JSONObject jsonObj) {
+		HAPContextStructure out = null;
+		String type = jsonObj.getString(HAPContextStructure.TYPE);
+		if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+			out = parseContextGroup(jsonObj);
+		}
+		else if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+			out = parseContext(jsonObj);
+		}
+		return out;
+	}
+	
 	public static HAPContextGroup parseContextGroup(JSONObject contextGroupJson) {
 		if(contextGroupJson==null)  return null;
 		HAPContextGroup out = new HAPContextGroup();

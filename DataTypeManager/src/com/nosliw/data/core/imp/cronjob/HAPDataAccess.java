@@ -27,8 +27,11 @@ public class HAPDataAccess {
 
 	private long i = System.currentTimeMillis();
 
+	private HAPCronJobInstanceSerializer m_cronJobInstanceSerializer;
+	
 	public HAPDataAccess() {
 		this.m_dbSource = HAPDBSource.getDefaultDBSource();
+		this.m_cronJobInstanceSerializer = new HAPCronJobInstanceSerializer();
 	}
 	
 	public List<HAPCronJobState> findAllValidJobState() {
@@ -45,20 +48,19 @@ public class HAPDataAccess {
 			e.printStackTrace();
 		}
 		return out;
-		
 	}
 	
 	public HAPInstanceCronJob updateOrNewCronJob(HAPInstanceCronJob cronJobInstance) {
 		if(cronJobInstance.getId()==null) {
 			cronJobInstance.setId(this.generateId());
 		}
-		String content = HAPCronJobInstanceSerializer.toString(cronJobInstance);
+		String content = this.m_cronJobInstanceSerializer.toString(cronJobInstance);
 		HAPFileUtility.writeFile(this.getCronJobInstanceFile(cronJobInstance.getId()), content);
 		return cronJobInstance;
 	}
 	
 	public HAPInstanceCronJob getCronJob(String id) {
-		return HAPCronJobInstanceSerializer.parse(HAPFileUtility.readFile(this.getCronJobInstanceFile(id)));
+		return this.m_cronJobInstanceSerializer.parse(HAPFileUtility.readFile(this.getCronJobInstanceFile(id)));
 	}
 	
 	public void deleteCronJob(String instanceId) {

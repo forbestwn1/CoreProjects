@@ -2,6 +2,8 @@ package com.nosliw.data.core;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -12,6 +14,8 @@ public class HAPRelationshipImp extends HAPSerializableImp implements HAPRelatio
 	private HAPDataTypeId m_source;
 	private HAPDataTypeId m_taget;
 	private HAPRelationshipPath m_path;
+	
+	public HAPRelationshipImp() {}
 	
 	public HAPRelationshipImp(HAPDataTypeId source, HAPDataTypeId target, HAPRelationshipPath path) {
 		this.m_source = source;
@@ -28,6 +32,18 @@ public class HAPRelationshipImp extends HAPSerializableImp implements HAPRelatio
 	@Override
 	public HAPRelationshipPath getPath() {  return this.m_path;  }
 
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_source = new HAPDataTypeId();
+		this.m_source.buildObject(jsonObj.getString(SOURCE), HAPSerializationFormat.LITERATE);
+		this.m_taget = new HAPDataTypeId();
+		this.m_taget.buildObject(jsonObj.getString(TARGET), HAPSerializationFormat.LITERATE);
+		this.m_path = new HAPRelationshipPath();
+		this.m_path.buildObject(jsonObj.getString(PATH), HAPSerializationFormat.LITERATE);
+		return true;
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(SOURCE, HAPSerializeManager.getInstance().toStringValue(this.getSource(), HAPSerializationFormat.LITERATE));

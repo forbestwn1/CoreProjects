@@ -9,12 +9,12 @@ import com.nosliw.common.info.HAPEntityInfoUtility;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
+import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfoWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 
 @HAPEntityWithAttribute
-public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInfo{
+public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInfoWrapper{
 
 	@HAPAttribute
 	public static String FLOW = "flow";

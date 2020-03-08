@@ -105,9 +105,7 @@ public class HAPDataTypeId extends HAPSerializableImp{
 	protected String buildJson(){ return this.buildLiterate(); }
 	
 	@Override
-	protected String buildLiterate(){
-		return this.getFullName();
-	}
+	protected String buildLiterate(){	return this.getFullName();  }
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
@@ -119,6 +117,7 @@ public class HAPDataTypeId extends HAPSerializableImp{
 		return HAPNamingConversionUtility.cascadeLevel1(name, version);
 	}
 	
+	@Override
 	public HAPDataTypeId clone(){
 		HAPDataTypeId out = new HAPDataTypeId();
 		out.m_name = this.m_name;

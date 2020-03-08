@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -17,12 +19,12 @@ public class HAPParentContext extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 	
-	private Map<String, HAPContextStructure> m_parents;
-	private List<String> m_parentNames;
+	private Map<String, HAPContextStructure> m_elements;
+	private List<String> m_eleNames;
 	
 	public HAPParentContext() {
-		this.m_parents = new LinkedHashMap<String, HAPContextStructure>();
-		this.m_parentNames = new ArrayList<String>();
+		this.m_elements = new LinkedHashMap<String, HAPContextStructure>();
+		this.m_eleNames = new ArrayList<String>();
 	}
 	
 	static public HAPParentContext createDefault(HAPContextStructure parent) {
@@ -36,18 +38,18 @@ public class HAPParentContext extends HAPSerializableImp{
 		if(this.isSelf(name))  return this;   //ignore self parent
 		
 		if(HAPBasicUtility.isStringEmpty(name))  name = HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
-		this.m_parents.put(name, context);
-		this.m_parentNames.add(name);
+		this.m_elements.put(name, context);
+		this.m_eleNames.add(name);
 		return this;
 	}
 	
-	public boolean isEmpty() {  return this.m_parentNames.isEmpty();  }
+	public boolean isEmpty() {  return this.m_eleNames.isEmpty();  }
 	
-	public HAPContextStructure getContext(String name) {	return this.m_parents.get(name);	}
+	public HAPContextStructure getContext(String name) {	return this.m_elements.get(name);	}
 
-	public HAPContextStructure getContext() {	return this.m_parents.get(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
+	public HAPContextStructure getContext() {	return this.m_elements.get(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
 
-	public List<String> getNames(){  return this.m_parentNames;  }	
+	public List<String> getNames(){  return this.m_eleNames;  }	
 
 	private boolean isSelf(String name) {	return HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name);  }
 	
@@ -61,6 +63,17 @@ public class HAPParentContext extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_parents, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
+	}
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){  
+		JSONObject jsonObj = (JSONObject)json;
+		JSONObject elesJsonObj = jsonObj.getJSONObject(ELEMENT);
+		for(Object key : elesJsonObj.keySet()) {
+			HAPContextStructure ele = HAPParserContext.parseContextStructure(elesJsonObj.getJSONObject((String)key));
+			this.addContext((String)key, ele);
+		}
+		return true;  
 	}
 }

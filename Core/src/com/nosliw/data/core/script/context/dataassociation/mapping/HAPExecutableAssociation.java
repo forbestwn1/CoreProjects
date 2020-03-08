@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -24,6 +26,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
+import com.nosliw.data.core.script.context.HAPParserContext;
 
 @HAPEntityWithAttribute
 public class HAPExecutableAssociation extends HAPExecutableImp{
@@ -35,7 +38,13 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	public static String PATHMAPPING = "pathMapping";
 
 	@HAPAttribute
+	public static String INPUT = "input";
+
+	@HAPAttribute
 	public static String FLATINPUT = "flatInput";
+
+	@HAPAttribute
+	public static String OUTPUT = "output";
 
 	@HAPAttribute
 	public static String FLATOUTPUT = "flatOutput";
@@ -53,8 +62,6 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	//output
 	private HAPContextStructure m_output;
 
-	private HAPContext m_definition;
-	
 	//data association output context
 	private HAPContext m_mapping;
 	
@@ -68,13 +75,13 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		this();
 		for(String inputName : input.getNames())  this.addInputStructure(inputName, input.getContext(inputName).cloneContextStructure()); 
 		this.m_output = output;
-		this.m_definition = definition;
 	}
 
 	public HAPExecutableAssociation() {
 		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_input = new LinkedHashMap<String, HAPContextStructure>();
 		this.m_isFlatInput = new LinkedHashMap<String, Boolean>();
+		this.m_pathMapping = new LinkedHashMap<String, String>();
 	}
 
 	public void addInputStructure(String name, HAPContextStructure structure) {  
@@ -134,14 +141,57 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CONTEXT, this.m_mapping.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(PATHMAPPING, HAPJsonUtility.buildMapJson(m_pathMapping));
+
 		jsonMap.put(FLATOUTPUT, this.isFlatOutput()+"");
 		typeJsonMap.put(FLATOUTPUT, Boolean.class);
+		jsonMap.put(OUTPUT, this.m_output.toStringValue(HAPSerializationFormat.JSON));
+		
 		jsonMap.put(FLATINPUT, HAPJsonUtility.buildJson(this.isFlatInput(), HAPSerializationFormat.JSON));
+		jsonMap.put(INPUT, HAPJsonUtility.buildJson(this.m_input, HAPSerializationFormat.JSON));
+		
 		if(this.m_outputMatchers!=null && !this.m_outputMatchers.isEmpty()) {
 			jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(m_outputMatchers, HAPSerializationFormat.JSON));
 		}
 	}
 
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		super.buildObjectByJson(json);
+		
+		this.m_mapping = new HAPContext();
+		this.m_mapping.buildObject(jsonObj.getJSONObject(CONTEXT), HAPSerializationFormat.JSON);
+		  
+		JSONObject pathMappingJsonObj = jsonObj.getJSONObject(PATHMAPPING);
+		for(Object key1 : pathMappingJsonObj.keySet()) {
+			this.m_pathMapping.put((String)key1, pathMappingJsonObj.getString((String)key1));
+		}
+		
+		JSONObject inputJson = jsonObj.getJSONObject(INPUT);
+		for(Object key2 : inputJson.keySet()) {
+			this.m_input.put((String)key2, HAPParserContext.parseContextStructure(inputJson.getJSONObject((String)key2)));
+		}
+		
+		JSONObject flatInputJsonObj = jsonObj.getJSONObject(FLATINPUT);
+		for(Object key3 : flatInputJsonObj.keySet()) {
+			this.m_isFlatInput.put((String)key3, inputJson.getBoolean((String)key3));
+		}
+
+		JSONObject outputJson = jsonObj.getJSONObject(OUTPUT);
+		this.m_output = HAPParserContext.parseContextStructure(outputJson);
+		
+		JSONObject outputMatchersJson = jsonObj.optJSONObject(OUTPUTMATCHERS);
+		if(outputMatchersJson!=null) {
+			for(Object key4 : outputMatchersJson.keySet()) {
+				HAPMatchers matchers = new HAPMatchers();
+				matchers.buildObject(outputMatchersJson.getJSONObject((String)key4), HAPSerializationFormat.JSON);
+				this.m_outputMatchers.put((String)key4, matchers);
+			}
+		}
+		
+		return true;  
+	}
+	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);

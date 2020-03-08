@@ -45,7 +45,7 @@ public class HAPProcessorCronJob {
 		//process task
 		HAPDefinitionProcess processDef = out.getProcessDefinition(cronJobDefinition.getTask().getProcess());
 		HAPExecutableProcess processExe = HAPProcessorProcess.process(processDef, null, out.getServiceProviders(), processMan, contextProcessRequirement, processTracker);
-		HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(cronJobDefinition.getTask().getTask(), processExe, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
+		HAPExecutableWrapperTask<HAPExecutableProcess> processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(cronJobDefinition.getTask().getTask(), processExe, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
 		out.setTask(processExeWrapper);
  
 		//process end

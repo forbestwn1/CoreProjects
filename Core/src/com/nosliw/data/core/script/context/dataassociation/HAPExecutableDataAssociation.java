@@ -12,8 +12,8 @@ public interface HAPExecutableDataAssociation extends HAPExecutable, HAPEntityIn
 	@HAPAttribute
 	public static String TYPE = "type";
 
-	@HAPAttribute
-	public static String DEFINITION = "definition";
+//	@HAPAttribute
+//	public static String DEFINITION = "definition";
 
 	@HAPAttribute
 	public static String INPUT = "input";
@@ -23,7 +23,7 @@ public interface HAPExecutableDataAssociation extends HAPExecutable, HAPEntityIn
 
 	String getType();
 
-	HAPDefinitionDataAssociation getDefinition();
+//	HAPDefinitionDataAssociation getDefinition();
 
 	HAPParentContext getInput();
 	

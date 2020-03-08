@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -13,6 +15,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
+import com.nosliw.data.core.HAPRelationshipImp;
 
 /**
  * Store matcher information (match from one data type to another data type)
@@ -42,6 +45,8 @@ public class HAPMatcher extends HAPSerializableImp{
 	private HAPRelationship m_relationship;
 	
 	private Map<String, HAPMatchers> m_subMatchers = new LinkedHashMap<String, HAPMatchers>();
+	
+	public HAPMatcher() {}
 	
 	public HAPMatcher(HAPDataTypeId dataTypeId, HAPRelationship relationship){
 		this.m_dataTypeId = dataTypeId;
@@ -78,6 +83,28 @@ public class HAPMatcher extends HAPSerializableImp{
 		this.m_subMatchers.put(name, matcher);
 	}
 
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		
+		this.m_dataTypeId = new HAPDataTypeId();
+		this.m_dataTypeId.buildObject(jsonObj.getString(DATATYPEID), HAPSerializationFormat.LITERATE);
+		
+		this.m_relationship = new HAPRelationshipImp();
+		this.m_relationship.buildObject(jsonObj.getJSONObject(RELATIONSHIP), HAPSerializationFormat.JSON);
+		
+		this.m_reverse = jsonObj.getBoolean(REVERSE);
+		
+		JSONObject subMatchersJsonObj = jsonObj.getJSONObject(SUBMATCHERS);
+		for(Object key : subMatchersJsonObj.keySet()) {
+			HAPMatchers matchers = new HAPMatchers();
+			matchers.buildObject(subMatchersJsonObj.getJSONObject((String)key), HAPSerializationFormat.JSON);
+			this.m_subMatchers.put((String)key, matchers);
+		}
+		
+		return true;
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));

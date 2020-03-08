@@ -27,17 +27,16 @@ public class HAPProcessorDataAssociationMapping {
 
 	public static HAPExecutableDataAssociationMapping processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociationMapping dataAssociation, HAPParentContext output, HAPInfo daProcessConfigure, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableDataAssociationMapping out = new HAPExecutableDataAssociationMapping(dataAssociation, input);
-		processDataAssociation(input, out, output, daProcessConfigure, contextProcessRequirement);
+		processDataAssociation(input, dataAssociation, out, output, daProcessConfigure, contextProcessRequirement);
 		return out;
 	}
 	
 	//process input configure for activity and generate flat context for activity
-	public static void processDataAssociation(HAPParentContext input, HAPExecutableDataAssociationMapping out, HAPParentContext output, HAPInfo daProcessConfigure, HAPRequirementContextProcessor contextProcessRequirement) {
-		out.setProcessConfigure(HAPUtilityDataAssociation.getContextProcessConfigurationForProcess());
-		HAPDefinitionDataAssociationMapping dataAssociation = (HAPDefinitionDataAssociationMapping)out.getDefinition();
+	public static void processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociationMapping dataAssociation, HAPExecutableDataAssociationMapping out, HAPParentContext output, HAPInfo daProcessConfigure, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPConfigureContextProcessor processConfigure = HAPUtilityDataAssociation.getContextProcessConfigurationForProcess();
 		Map<String, HAPContext> associations = dataAssociation.getAssociations();
 		for(String targetName : associations.keySet()) {
-			HAPExecutableAssociation associationExe = processAssociation(input, associations.get(targetName), output.getContext(targetName), out.getInputDependency(), daProcessConfigure, out.getProcessConfigure(), contextProcessRequirement);
+			HAPExecutableAssociation associationExe = processAssociation(input, associations.get(targetName), output.getContext(targetName), out.getInputDependency(), daProcessConfigure, processConfigure, contextProcessRequirement);
 			out.addAssociation(targetName, associationExe);
 		}
 	}

@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -53,6 +55,18 @@ public class HAPMatchers extends HAPSerializableImp{
 		return out;
 	}
 
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		for(Object key : jsonObj.keySet()) {
+			HAPDataTypeId dataTypeId = new HAPDataTypeId();
+			dataTypeId.buildObject(key, HAPSerializationFormat.LITERATE);
+			HAPMatcher matcher = new HAPMatcher();
+			matcher.buildObject(jsonObj.getJSONObject((String)key), HAPSerializationFormat.JSON);
+		}
+		return true;
+	}
+		
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		for(HAPDataTypeId dataTypeId : this.m_matchers.keySet()){

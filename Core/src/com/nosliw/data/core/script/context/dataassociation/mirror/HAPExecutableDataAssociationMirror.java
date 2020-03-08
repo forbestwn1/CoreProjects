@@ -2,6 +2,10 @@ package com.nosliw.data.core.script.context.dataassociation.mirror;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
@@ -9,6 +13,9 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPOutputStructure;
 
 public class HAPExecutableDataAssociationMirror extends HAPExecutableDataAssociationImp{
+
+	@HAPAttribute
+	public static String OUTPUT1 = "output";
 
 	private HAPOutputStructure m_output;
 	
@@ -25,8 +32,18 @@ public class HAPExecutableDataAssociationMirror extends HAPExecutableDataAssocia
 	}
 
 	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		super.buildObjectByJson(json);
+		this.m_output = new HAPOutputStructure();
+		this.m_output.buildObject(jsonObj.getJSONObject(OUTPUT1), HAPSerializationFormat.JSON);
+		return true;  
+	}
+	
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(OUTPUT1, this.m_output.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override

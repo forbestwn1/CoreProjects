@@ -8,7 +8,6 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.cronjob.HAPCronJobId;
-import com.nosliw.data.core.cronjob.HAPExecutableCronJob;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceIdCronJob;
 import com.nosliw.data.core.imp.cronjob.HAPRuntimeCronJob;
@@ -19,9 +18,7 @@ public class HAPCronJob {
 	public static void main(String[] args) {
 
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
-		
 		HAPManagerCronJob cronJobMan = runtimeEnvironment.getCronJobManager();
-		HAPExecutableCronJob cronJob = cronJobMan.getCronJob(new HAPResourceIdCronJob(new HAPCronJobId("flightarrive")));
 		
 		HAPDataWrapper flightNum = new HAPDataWrapper(new HAPDataTypeId("test.string", "1.0.0"), "1234");
 		HAPDataWrapper flightDate = new HAPDataWrapper(new HAPDataTypeId("test.date", "1.0.0"), Instant.now().toString());

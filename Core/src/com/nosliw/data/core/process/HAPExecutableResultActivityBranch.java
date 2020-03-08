@@ -10,11 +10,11 @@ import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
+import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfoWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPExecutableResultActivityBranch extends HAPExecutableImpEntityInfo{
+public class HAPExecutableResultActivityBranch extends HAPExecutableImpEntityInfoWrapper{
 
 	@HAPAttribute
 	public static String FLOW = "flow";

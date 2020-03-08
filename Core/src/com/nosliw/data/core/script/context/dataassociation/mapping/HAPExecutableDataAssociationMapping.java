@@ -5,12 +5,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.script.context.dataassociation.HAPOutputStructure;
@@ -20,9 +21,10 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	@HAPAttribute
 	public static String ASSOCIATION = "association";
 
+	@HAPAttribute
+	public static String INPUTDEPENDENCY = "inputDependency";
+
 	private Map<String, HAPExecutableAssociation> m_associations;
-	
-	private HAPConfigureContextProcessor m_processConfigure;
 	
 	private Set<String> m_inputDependency;
 	
@@ -57,10 +59,20 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	public HAPExecutableAssociation getAssociation() {return this.m_associations.get(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT);  }
 	public Map<String, HAPExecutableAssociation> getAssociations(){ return m_associations;  }
 	
-	public HAPConfigureContextProcessor getProcessConfigure() {   return this.m_processConfigure;   }
-	public void setProcessConfigure(HAPConfigureContextProcessor processConfigure) {   this.m_processConfigure = processConfigure;    }
-	
 	public boolean isEmpty() {   return this.m_associations==null || this.m_associations.isEmpty();   }
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		super.buildObjectByJson(json);
+		JSONObject associationJsonObj = jsonObj.getJSONObject(ASSOCIATION);
+		for(Object key : associationJsonObj.keySet()) {
+			HAPExecutableAssociation assocation = new HAPExecutableAssociation();
+			assocation.buildObject(associationJsonObj.getJSONObject((String)key), HAPSerializationFormat.JSON);
+			this.m_associations.put((String)key, assocation);
+		}
+		return true;  
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

@@ -1,8 +1,9 @@
 package com.nosliw.data.core.script.context;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializable;
 
-public interface HAPContextStructure {
+public interface HAPContextStructure extends HAPSerializable{
 
 	@HAPAttribute
 	public static final String TYPE = "type";

@@ -1,6 +1,7 @@
 package com.nosliw.data.core.cronjob;
 
 import java.time.Instant;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -11,6 +12,9 @@ import com.nosliw.common.utils.HAPBasicUtility;
 public class HAPExecutablePollScheduleImpNormal extends HAPSerializableImp implements HAPExecutablePollSchedule {
 
 	public static final String TYPE = "normal";
+	
+	@HAPAttribute
+	public static String SCHEDULETYPE = "scheduleType";
 	
 	@HAPAttribute
 	public static String START = "start";
@@ -52,5 +56,13 @@ public class HAPExecutablePollScheduleImpNormal extends HAPSerializableImp imple
 		}
 		this.m_intervalSec = jsonObj.optInt(INTERVAL);
 		return true;  
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(SCHEDULETYPE, this.getType());
+		jsonMap.put(START, this.m_start.toString());
+		jsonMap.put(INTERVAL, this.m_intervalSec+"");
+		typeJsonMap.put(INTERVAL, Integer.class);
 	}
 }
