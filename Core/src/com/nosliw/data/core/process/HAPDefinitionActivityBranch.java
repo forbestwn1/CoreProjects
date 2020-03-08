@@ -58,7 +58,7 @@ public abstract class HAPDefinitionActivityBranch extends HAPDefinitionActivity{
 			
 			JSONObject inputJson = jsonObj.optJSONObject(INPUTMAPPING);
 			if(inputJson!=null) {
-				this.m_inputMapping = HAPParserDataAssociation.buildObjectByJson(inputJson); 
+				this.m_inputMapping = HAPParserDataAssociation.buildDefinitionByJson(inputJson); 
 			}
 			
 			JSONArray branchJson = jsonObj.optJSONArray(BRANCH);

@@ -9,6 +9,8 @@ import com.nosliw.data.core.script.context.dataassociation.HAPOutputStructure;
 
 public class HAPExecutableDataAssociationNone extends HAPExecutableDataAssociationImp{
 
+	public HAPExecutableDataAssociationNone() {}
+
 	public HAPExecutableDataAssociationNone(HAPDefinitionDataAssociationNone definition, HAPParentContext input) {
 		super(definition, input);
 	}

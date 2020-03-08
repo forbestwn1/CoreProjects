@@ -29,9 +29,9 @@ public class HAPDataAccess {
 
 	private HAPCronJobInstanceSerializer m_cronJobInstanceSerializer;
 	
-	public HAPDataAccess() {
+	public HAPDataAccess(HAPCronJobInstanceSerializer cronJobInstanceSerializer) {
 		this.m_dbSource = HAPDBSource.getDefaultDBSource();
-		this.m_cronJobInstanceSerializer = new HAPCronJobInstanceSerializer();
+		this.m_cronJobInstanceSerializer = cronJobInstanceSerializer;
 	}
 	
 	public List<HAPCronJobState> findAllValidJobState() {

@@ -7,18 +7,22 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.cronjob.HAPExecutableCronJob;
 import com.nosliw.data.core.cronjob.HAPInstancePollSchedule;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.data.HAPContextDataGroup;
 
 public class HAPRuntimeCronJob {
 
 	private HAPManagerCronJob m_cronJobMan = null;
-	
+
+	private HAPCronJobInstanceSerializer m_cronJobInstanceSerializer;
+
 	public HAPDataAccess m_dataAccess = null;
 	
-	public HAPRuntimeCronJob(HAPManagerCronJob cronJobMan) {
+	public HAPRuntimeCronJob(HAPManagerCronJob cronJobMan, HAPManagerActivityPlugin activityPluginMan) {
 		this.m_cronJobMan = cronJobMan;
-		this.m_dataAccess = new HAPDataAccess();
+		this.m_cronJobInstanceSerializer = new HAPCronJobInstanceSerializer(activityPluginMan); 
+		this.m_dataAccess = new HAPDataAccess(this.m_cronJobInstanceSerializer);
 	}
 	
 	public HAPInstanceCronJob newJob(HAPResourceId cronJobId, Map<String, HAPData> parms) {

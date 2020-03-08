@@ -17,6 +17,8 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 	private HAPParentContext m_input;
 
 	private String m_type;
+
+	public HAPExecutableDataAssociationImp() {}
 	
 	public HAPExecutableDataAssociationImp(HAPDefinitionDataAssociation definition, HAPParentContext input) {
 		super(definition);

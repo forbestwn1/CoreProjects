@@ -37,7 +37,7 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 		try{
 			super.buildObjectByJson(json);
 			JSONObject jsonObj = (JSONObject)json;
-			this.m_output = HAPParserDataAssociation.buildObjectByJson(jsonObj.optJSONObject(OUTPUT));
+			this.m_output = HAPParserDataAssociation.buildDefinitionByJson(jsonObj.optJSONObject(OUTPUT));
 			this.init();
 			return true;  
 		}

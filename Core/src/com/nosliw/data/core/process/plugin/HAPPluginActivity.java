@@ -49,5 +49,7 @@ public interface HAPPluginActivity {
 	
 	HAPDefinitionActivity buildActivityDefinition(Object obj);
 	
+	HAPExecutableActivity buildActivityExecutable(Object obj);
+	
 	HAPScript getScript(String env);
 }

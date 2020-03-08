@@ -45,7 +45,7 @@ public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 		JSONArray jsonArray = (JSONArray)json;
 		for(int i=0; i<jsonArray.length(); i++) {
 			JSONObject jsonObj = jsonArray.getJSONObject(i);
-			HAPDefinitionDataAssociation daItem = HAPParserDataAssociation.buildObjectByJson(jsonObj); 
+			HAPDefinitionDataAssociation daItem = HAPParserDataAssociation.buildDefinitionByJson(jsonObj); 
 			String daName = daItem.getName();
 			if(HAPBasicUtility.isStringEmpty(daName))  daName = this.getDefaultName();
 			this.m_dataAssociations.put(daName, daItem);

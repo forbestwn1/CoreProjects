@@ -18,7 +18,9 @@ public class HAPExecutableDataAssociationMirror extends HAPExecutableDataAssocia
 	public static String OUTPUT1 = "output";
 
 	private HAPOutputStructure m_output;
-	
+
+	public HAPExecutableDataAssociationMirror() {}
+
 	public HAPExecutableDataAssociationMirror(HAPDefinitionDataAssociationMirror definition, HAPParentContext input) {
 		super(definition, input);
 		this.m_output = new HAPOutputStructure();

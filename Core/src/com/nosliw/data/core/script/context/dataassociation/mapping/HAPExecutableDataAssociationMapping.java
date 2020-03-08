@@ -27,6 +27,8 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	private Map<String, HAPExecutableAssociation> m_associations;
 	
 	private Set<String> m_inputDependency;
+
+	public HAPExecutableDataAssociationMapping() {}
 	
 	public HAPExecutableDataAssociationMapping(HAPDefinitionDataAssociationMapping definition, HAPParentContext input) {
 		super(definition, input);

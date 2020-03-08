@@ -22,6 +22,8 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	
 	protected HAPInfo m_info;
 
+	public HAPExecutableImpEntityInfo() {}
+	
 	public HAPExecutableImpEntityInfo(HAPEntityInfo entityInfo) {
 		this.m_name = entityInfo.getName();
 		this.m_description = entityInfo.getDescription();

@@ -56,13 +56,13 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
 		
-		this.m_parmMapping = HAPParserDataAssociation.buildObjectByJson(jsonObj.optJSONObject(PARMMAPPING)); 
+		this.m_parmMapping = HAPParserDataAssociation.buildDefinitionByJson(jsonObj.optJSONObject(PARMMAPPING)); 
 		this.m_parmMapping.buildObject(jsonObj.optJSONObject(PARMMAPPING), HAPSerializationFormat.JSON);
 
 		JSONObject resultJson = jsonObj.optJSONObject(RESULTMAPPING);
 		if(resultJson!=null) {
 			for(Object key : resultJson.keySet()) {
-				HAPDefinitionDataAssociation resultMapping = HAPParserDataAssociation.buildObjectByJson(resultJson.optJSONObject((String)key));
+				HAPDefinitionDataAssociation resultMapping = HAPParserDataAssociation.buildDefinitionByJson(resultJson.optJSONObject((String)key));
 				this.m_resultMapping.put((String)key, resultMapping);
 			}
 		}

@@ -62,7 +62,7 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		HAPDefinitionDataAssociation inputMapping;
 		JSONObject inputMappingJson = configJson.optJSONObject(INPUTMAPPING);
 		if(inputMappingJson!=null) {
-			inputMapping = HAPParserDataAssociation.buildObjectByJson(inputMappingJson); 
+			inputMapping = HAPParserDataAssociation.buildDefinitionByJson(inputMappingJson); 
 		}
 		else {
 			inputMapping = new HAPDefinitionDataAssociationMirror();

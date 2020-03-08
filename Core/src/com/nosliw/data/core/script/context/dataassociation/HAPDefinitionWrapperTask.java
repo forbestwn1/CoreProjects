@@ -50,13 +50,13 @@ public class HAPDefinitionWrapperTask<T> extends HAPSerializableImp{
 		JSONObject outputMappingJson = jsonObj.optJSONObject(OUTPUTMAPPING);
 		if(outputMappingJson!=null) {
 			for(Object key : outputMappingJson.keySet()) {
-				HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildObjectByJson(outputMappingJson.optJSONObject((String)key)); 
+				HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildDefinitionByJson(outputMappingJson.optJSONObject((String)key)); 
 				this.addOutputMapping((String)key, dataAssociation);
 			}
 		}
 		JSONObject inputMappingJson = jsonObj.optJSONObject(INPUTMAPPING);
 		if(inputMappingJson!=null) {
-			this.m_inputMapping = HAPParserDataAssociation.buildObjectByJson(inputMappingJson); 
+			this.m_inputMapping = HAPParserDataAssociation.buildDefinitionByJson(inputMappingJson); 
 		}
 	}
 	

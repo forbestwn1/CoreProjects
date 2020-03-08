@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -46,7 +48,23 @@ public class HAPExecutableWrapperTask<T extends HAPExecutableTask> extends HAPEx
 	public HAPExecutableDataAssociation getOutputMapping(String name) {   return this.m_outputMapping.get(name);   }
 	public void addOutputMapping(String resultName, HAPExecutableDataAssociation dataAssociation) {   this.m_outputMapping.put(resultName, dataAssociation);   }
 	
-	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		super.buildObjectByJson(json);
+		
+		JSONObject inputMappingJson = jsonObj.optJSONObject(INPUTMAPPING);
+		if(inputMappingJson!=null) 	this.m_inputMapping = HAPParserDataAssociation.buildExecutalbeByJson(inputMappingJson);
+		
+		JSONObject outputMappingJson = jsonObj.optJSONObject(OUTPUTMAPPING);
+		if(outputMappingJson!=null) {
+			for(Object key : outputMappingJson.keySet()) {
+				this.m_outputMapping.put((String)key, HAPParserDataAssociation.buildExecutalbeByJson(outputMappingJson.getJSONObject((String)key)));
+			}
+		}
+		return true;  
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);

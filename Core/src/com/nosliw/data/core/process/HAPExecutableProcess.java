@@ -6,20 +6,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParentContext;
+import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableTask;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 @HAPEntityWithAttribute
 public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecutableTask{
@@ -62,8 +67,15 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	
 	//all possible result
 	private Map<String, HAPExecutableDataAssociation> m_results;
+
+	private HAPManagerActivityPlugin m_activityPluginMan;
 	
-	public HAPExecutableProcess(HAPDefinitionProcess definition, String id) {
+	public HAPExecutableProcess(HAPManagerActivityPlugin activityPluginMan) {
+		this.m_activityPluginMan = activityPluginMan;
+	}
+	
+	public HAPExecutableProcess(HAPDefinitionProcess definition, String id, HAPManagerActivityPlugin activityPluginMan) {
+		this(activityPluginMan);
 		this.m_activities = new LinkedHashMap<String, HAPExecutableActivity>();
 		this.m_results = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 		this.m_processDefinition = definition;
@@ -102,6 +114,33 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	public HAPContextGroup getContext() {   return this.m_context;  }
 	public void setContext(HAPContextGroup context) {   this.m_context = context;  }
 	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		super.buildObjectByJson(json);
+		
+		this.m_id = jsonObj.getString(ID);
+		
+		this.m_startActivityId = jsonObj.getString(STARTACTIVITYID);
+		
+		this.m_context = HAPParserContext.parseContextGroup(jsonObj.getJSONObject(CONTEXT));
+		
+		JSONObject dsJsonObj = jsonObj.getJSONObject(RESULT);
+		for(Object key : dsJsonObj.keySet()) {
+			this.m_results.put((String)key, HAPParserDataAssociation.buildExecutalbeByJson(dsJsonObj.getJSONObject((String)key))); 
+		}
+		
+		JSONObject activitysJsonObj = jsonObj.getJSONObject(ACTIVITY);
+		for(Object key : activitysJsonObj.keySet()) {
+			JSONObject activityJsonObj = activitysJsonObj.getJSONObject((String)key);
+			String pluginType = activityJsonObj.getString(HAPExecutableActivity.TYPE);
+			HAPExecutableActivity activityExe = this.m_activityPluginMan.getPlugin(pluginType).buildActivityExecutable(activityJsonObj);
+			this.m_activities.put((String)key, activityExe);
+		}
+		
+		return true;  
+	}
+
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		
 		//process resources

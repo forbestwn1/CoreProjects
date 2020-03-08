@@ -96,4 +96,9 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 		return this.m_scripts.get(env);
 	}
 
+	@Override
+	public HAPExecutableActivity buildActivityExecutable(Object obj) {
+		throw new RuntimeException();
+	}
+
 }
