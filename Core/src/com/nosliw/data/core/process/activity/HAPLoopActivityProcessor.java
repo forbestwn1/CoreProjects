@@ -51,7 +51,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		HAPLoopActivityExecutable out = new HAPLoopActivityExecutable(id, loopActivityDef);
 		
 		//input
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processDataContext, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, loopActivityDef, processDataContext, contextProcessRequirement);
 
 		//build data context for step process (context from process + element data)
 		HAPContextGroup stepDataContext = processDataContext.cloneContextGroup();
@@ -78,7 +78,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		
 		//process success result
 		for(String resultName : loopActivityDef.getResults().keySet()) {
-			HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, resultName, processDataContext, new HAPBuilderResultContext1(processExe), contextProcessRequirement);
+			HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, loopActivityDef, resultName, processDataContext, new HAPBuilderResultContext1(processExe), contextProcessRequirement);
 			out.addResult(resultName, successResultExe);
 		}
 		return out;

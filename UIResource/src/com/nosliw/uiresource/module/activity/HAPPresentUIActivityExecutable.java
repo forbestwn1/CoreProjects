@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -21,16 +23,30 @@ public class HAPPresentUIActivityExecutable extends HAPExecutableActivityNormal{
 	@HAPAttribute
 	public static String SETTING = "setting";
 
+	private String m_ui;
+
+	private JSONObject m_setting;
+	
 	public HAPPresentUIActivityExecutable(String id, HAPPresentUIActivityDefinition activityDef) {
 		super(id, activityDef);
+		this.m_ui = activityDef.getUI();
+		this.m_setting = activityDef.getSetting();
+	}
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_ui = jsonObj.getString(UI);
+		this.m_setting = jsonObj.getJSONObject(SETTING);
+		return true;  
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		HAPPresentUIActivityDefinition activity = (HAPPresentUIActivityDefinition)this.getActivityDefinition();
-		jsonMap.put(UI, activity.getUI());
-		jsonMap.put(SETTING, HAPJsonUtility.buildJson(activity.getSetting(), HAPSerializationFormat.JSON));
+		jsonMap.put(UI, this.m_ui);
+		jsonMap.put(SETTING, HAPJsonUtility.buildJson(this.m_setting, HAPSerializationFormat.JSON));
 	}
 
 	@Override

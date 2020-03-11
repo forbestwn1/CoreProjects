@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 public abstract class HAPExecutableActivityBranch extends HAPExecutableActivity{
 
@@ -31,10 +34,25 @@ public abstract class HAPExecutableActivityBranch extends HAPExecutableActivity{
 	public void setInputDataAssociation(HAPExecutableDataAssociation input) {  this.m_inputMapping = input;  }
 	public HAPExecutableDataAssociation getInputDataAssociation() {   return this.m_inputMapping;   }
 	
-	public HAPDefinitionActivityBranch getBranchActivityDefinition() {   return (HAPDefinitionActivityBranch)this.getActivityDefinition();  }
+//	public HAPDefinitionActivityBranch getBranchActivityDefinition() {   return (HAPDefinitionActivityBranch)this.getActivityDefinition();  }
 	
 	public List<HAPExecutableResultActivityBranch> getBranchs(){   return this.m_branchs;   }
 	public void addBranch(HAPExecutableResultActivityBranch result) {   this.m_branchs.add(result);   }
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_inputMapping = HAPParserDataAssociation.buildExecutalbeByJson(jsonObj.getJSONObject(INPUTMAPPING));
+		JSONObject branchJsonObj = jsonObj.getJSONObject(BRANCH);
+		for(Object key : branchJsonObj.keySet()) {
+			HAPExecutableResultActivityBranch branch = new HAPExecutableResultActivityBranch();
+			branch.buildObject(branchJsonObj.get((String)key), HAPSerializationFormat.JSON);
+			this.m_branchs.add(branch);
+		}
+		return true;  
+	}
+
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

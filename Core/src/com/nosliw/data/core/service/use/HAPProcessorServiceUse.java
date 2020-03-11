@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -48,6 +49,18 @@ public class HAPProcessorServiceUse {
 					out.put(resultName, HAPParentContext.createDefault(resultsContext.get(resultName)));
 				}
 				return out;
+			}
+
+			@Override
+			public String toStringValue(HAPSerializationFormat format) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public boolean buildObject(Object value, HAPSerializationFormat format) {
+				// TODO Auto-generated method stub
+				return false;
 			}
 		};
 		HAPExecutableWrapperTask serviceMappingExe = HAPProcessorDataAssociation.processDataAssociationWithTask(definition.getServiceMapping(), taskExe, HAPParentContext.createDefault(globalContext), null, contextProcessRequirement);

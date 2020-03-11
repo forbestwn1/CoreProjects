@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPExecutableActivityNormal;
+import com.nosliw.data.core.process.HAPExecutableProcess;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 public class HAPLoopActivityExecutable extends HAPExecutableActivityNormal{
 
@@ -29,18 +34,30 @@ public class HAPLoopActivityExecutable extends HAPExecutableActivityNormal{
 	@HAPAttribute
 	public static String INDEXNAME = "indexName";
 
-	private HAPExecutableWrapperTask m_step;
+	private String m_indexName;
+
+	private String m_elementName;
+
+	private HAPExecutableWrapperTask<HAPExecutableProcess> m_step;
 	
 	//path for container data
 	private HAPContextPath m_containerDataPath;
 	
+	private HAPManagerActivityPlugin m_activityPluginMan;
+
+	public HAPLoopActivityExecutable(HAPManagerActivityPlugin activityPluginMan) {
+		this.m_activityPluginMan = activityPluginMan;
+	}
+	
 	public HAPLoopActivityExecutable(String id, HAPLoopActivityDefinition activityDef) {
 		super(id, activityDef);
+		this.m_indexName = activityDef.getIndexName();
+		this.m_elementName = activityDef.getElementName();
 	}
 
-	public HAPLoopActivityDefinition getLoopActivityDefinition() {   return (HAPLoopActivityDefinition)this.getActivityDefinition();   }
-	public void setStep(HAPExecutableWrapperTask step) {  this.m_step = step;   }
-	public HAPExecutableWrapperTask getStep() {  return this.m_step;   }
+//	public HAPLoopActivityDefinition getLoopActivityDefinition() {   return (HAPLoopActivityDefinition)this.getActivityDefinition();   }
+	public void setStep(HAPExecutableWrapperTask<HAPExecutableProcess> step) {  this.m_step = step;   }
+	public HAPExecutableWrapperTask<HAPExecutableProcess> getStep() {  return this.m_step;   }
 	public void setContainerDataPath(HAPContextPath path) {    this.m_containerDataPath = path;   }
 	
 	@Override
@@ -52,11 +69,21 @@ public class HAPLoopActivityExecutable extends HAPExecutableActivityNormal{
 	}
 
 	@Override
+	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_step = HAPParserDataAssociation.buildExecutableWrapperTask(jsonObj, new HAPExecutableProcess(m_activityPluginMan));
+		this.m_containerDataPath = new HAPContextPath();
+		this.m_containerDataPath.buildObject(jsonObj.getJSONObject(CONTAINERDATAPATH), HAPSerializationFormat.JSON);
+		return true;  
+	}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CONTAINERDATAPATH, this.m_containerDataPath.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(INDEXNAME, this.getLoopActivityDefinition().getIndexName());
-		jsonMap.put(ELEMENTNAME, this.getLoopActivityDefinition().getElementName());
+		jsonMap.put(INDEXNAME, this.m_indexName);
+		jsonMap.put(ELEMENTNAME, this.m_elementName);
 		jsonMap.put(STEP, this.m_step.toStringValue(HAPSerializationFormat.JSON));
 	}
 	

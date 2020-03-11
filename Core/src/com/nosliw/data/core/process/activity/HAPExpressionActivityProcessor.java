@@ -50,15 +50,16 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {
 		 
-		HAPExpressionActivityExecutable out = new HAPExpressionActivityExecutable(id, (HAPExpressionActivityDefinition)activityDefinition);
-
+		HAPExpressionActivityDefinition definition = (HAPExpressionActivityDefinition)activityDefinition;
+		HAPExpressionActivityExecutable out = new HAPExpressionActivityExecutable(id, definition);
+		
 		//process input and create flat input context for activity
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processDataContext, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, definition, processDataContext, contextProcessRequirement);
 		HAPContext activityContext = (HAPContext)out.getInputDataAssociation().getOutput().getOutputStructure(); 
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());
-		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(out.getExpressionActivityDefinition().getExpression(), out.getScriptExpressionProcessContext(), HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
+		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(definition.getExpression(), out.getScriptExpressionProcessContext(), HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 		out.setScriptExpression(scriptExpression);
 
 		//merge discovered variable in activity back to process variable
@@ -68,7 +69,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		HAPUtilityProcess.mergeDataVariableInActivityToProcessContext(affectedActivityVariablesInfo, activityContext, processDataContext);
 
 		//process success result
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, contextProcessRequirement);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, definition, HAPConstant.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, contextProcessRequirement);
 		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

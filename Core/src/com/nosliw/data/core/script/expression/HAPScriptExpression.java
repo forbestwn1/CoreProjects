@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
@@ -64,13 +64,20 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	//then script expression turn to constant instead
 	private boolean m_isConstant;
 	private Object m_value;
+	
+	private boolean m_isDataExpression;
 
-	public HAPScriptExpression(HAPDefinitionScriptExpression definition){
+	public HAPScriptExpression(){
 		this.m_elements = new ArrayList<Object>();
 		this.m_expressions = new LinkedHashMap<String, HAPExecutableExpression>();
 		this.m_indexToId = new LinkedHashMap<Integer, String>();
-		this.m_definition = definition;
 		this.m_isConstant = false;
+	}
+	
+	public HAPScriptExpression(HAPDefinitionScriptExpression definition){
+		this();
+		this.m_definition = definition;
+		this.m_isDataExpression = definition.isDataExpression();
 	}
 	
 	public void updateExpressionId(HAPUpdateName update) {
@@ -110,7 +117,7 @@ public class HAPScriptExpression extends HAPExecutableImp{
 		this.m_isConstant = true;
 	}
 
-	public boolean isDataExpression() {		return this.m_definition.isDataExpression();	}
+	public boolean isDataExpression() {		return this.m_isDataExpression;	}
 	
 	public Set<String> getVariableNames(){ 
 		Set<String> out = new HashSet<String>();
@@ -153,8 +160,16 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	}
 	
 	@Override
+	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
+		JSONObject jsonObj = (JSONObject)json;
+		return true;  
+	}
+
+	
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(DEFINITION, this.m_definition.getDefinition());
+//		jsonMap.put(DEFINITION, this.m_definition.getDefinition());
 		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.getVariableNames(), HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(m_expressions, HAPSerializationFormat.JSON));
 	}

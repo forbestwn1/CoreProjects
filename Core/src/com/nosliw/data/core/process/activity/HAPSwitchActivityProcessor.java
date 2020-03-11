@@ -38,16 +38,17 @@ public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {
-		 
-		HAPSwitchActivityExecutable out = new HAPSwitchActivityExecutable(id, (HAPSwitchActivityDefinition)activityDefinition);
+		
+		HAPSwitchActivityDefinition switchActDef = (HAPSwitchActivityDefinition)activityDefinition;
+		HAPSwitchActivityExecutable out = new HAPSwitchActivityExecutable(id, switchActDef);
 
 		//process input and create flat input context for activity
-		HAPUtilityProcess.processBranchActivityInputDataAssocation(out, processDataContext, contextProcessRequirement);
+		HAPUtilityProcess.processBranchActivityInputDataAssocation(out, switchActDef, processDataContext, contextProcessRequirement);
 		HAPContext activityContext = (HAPContext)out.getInputDataAssociation().getOutput().getOutputStructure(); 
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());
-		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(out.getSwitchActivityDefinition().getExpression(), out.getScriptExpressionProcessContext(), HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
+		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(switchActDef.getExpression(), out.getScriptExpressionProcessContext(), HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 		out.setScriptExpression(scriptExpression);
 
 		//merge discovered variable in activity back to process variable
@@ -57,7 +58,7 @@ public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 		HAPUtilityProcess.mergeDataVariableInActivityToProcessContext(affectedActivityVariablesInfo, activityContext, processDataContext);
 
 		//process branch
-		HAPUtilityProcess.processBranchActivityBranch(out);
+		HAPUtilityProcess.processBranchActivityBranch(out, switchActDef);
 		
 		return out;
 	}

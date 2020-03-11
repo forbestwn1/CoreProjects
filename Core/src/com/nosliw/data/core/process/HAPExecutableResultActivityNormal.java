@@ -3,18 +3,21 @@ package com.nosliw.data.core.process;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoUtility;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfoWrapper;
+import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 @HAPEntityWithAttribute
-public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInfoWrapper{
+public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
 	public static String FLOW = "flow";
@@ -24,23 +27,23 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInf
 
 	private HAPExecutableDataAssociation m_dataAssociation;
 	
-	private HAPDefinitionResultActivityNormal m_definition;
+	private HAPDefinitionSequenceFlow m_flow;
 	
+//	private HAPDefinitionResultActivityNormal m_definition;
+
+	public HAPExecutableResultActivityNormal() {}
+
 	//next activity
 	public HAPExecutableResultActivityNormal(HAPDefinitionResultActivityNormal definition) {
 		super(definition);
-		this.m_definition = definition;
+		this.m_flow = definition.getFlow();
+//		this.m_definition = definition;
 	}
 	
-	public HAPDefinitionSequenceFlow getFlow() {  return this.m_definition.getFlow();  }
+	public HAPDefinitionSequenceFlow getFlow() {  return this.m_flow;  }
 	
 	public HAPExecutableDataAssociation getDataAssociation() {   return this.m_dataAssociation;  }
 	public void setDataAssociation(HAPExecutableDataAssociation dataAssociation) {   this.m_dataAssociation = dataAssociation;   }
-
-	@Override
-	public HAPExecutableResultActivityNormal clone() {
-		throw new RuntimeException();
-	}
 
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
@@ -49,6 +52,16 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInf
 
 	@Override
 	public void buildEntityInfoByJson(Object json) {	}
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_dataAssociation = HAPParserDataAssociation.buildExecutalbeByJson(jsonObj.getJSONObject(DATAASSOCIATION));
+		this.m_flow = new HAPDefinitionSequenceFlow();
+		this.m_flow.buildObject(jsonObj.getJSONObject(FLOW), HAPSerializationFormat.JSON);
+		return true;  
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

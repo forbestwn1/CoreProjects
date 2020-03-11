@@ -44,7 +44,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		HAPServiceActivityExecutable out = new HAPServiceActivityExecutable(id, serviceActDef);
 
 		//input
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processDataContext, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, serviceActDef, processDataContext, contextProcessRequirement);
 
 		//provider
 		HAPDefinitionServiceProvider provider = serviceProviders.get(serviceActDef.getProvider());
@@ -61,7 +61,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 
 		//process success result
 		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(processDataContext); 
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, contextProcessRequirement);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, serviceActDef, HAPConstant.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, contextProcessRequirement);
 		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

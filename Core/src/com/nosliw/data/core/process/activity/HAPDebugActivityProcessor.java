@@ -38,10 +38,10 @@ public class HAPDebugActivityProcessor implements HAPProcessorActivity{
 		HAPDebugActivityExecutable out = new HAPDebugActivityExecutable(id, debugActivityDef);
 		
 		//input
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processDataContext, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, debugActivityDef, processDataContext, contextProcessRequirement);
 		
 		//process success result
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, null, null, contextProcessRequirement);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, debugActivityDef, HAPConstant.ACTIVITY_RESULT_SUCCESS, null, null, contextProcessRequirement);
 		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

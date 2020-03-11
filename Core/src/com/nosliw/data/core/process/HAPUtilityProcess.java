@@ -84,21 +84,21 @@ public class HAPUtilityProcess {
 		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(context));
 	}
 
-	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPDefinitionActivityNormal activityDefinition, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
 				HAPParentContext.createDefault(processContext), 
-				activity.getNormalActivityDefinition().getInputMapping(), 
-				HAPParentContext.createDefault(activity.getNormalActivityDefinition().getInputContextStructure(processContext)), 
+				activityDefinition.getInputMapping(), 
+				HAPParentContext.createDefault(activityDefinition.getInputContextStructure(processContext)), 
 				null, 
 				contextProcessRequirement);
 		activity.setInputDataAssociation(da);
 	}
 	
-	public static void processBranchActivityInputDataAssocation(HAPExecutableActivityBranch activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static void processBranchActivityInputDataAssocation(HAPExecutableActivityBranch activity, HAPDefinitionActivityBranch activityDefinition, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
 				HAPParentContext.createDefault(processContext), 
-				activity.getBranchActivityDefinition().getInputMapping(), 
-				HAPParentContext.createDefault(activity.getBranchActivityDefinition().getInputContextStructure(processContext)), 
+				activityDefinition.getInputMapping(), 
+				HAPParentContext.createDefault(activityDefinition.getInputContextStructure(processContext)), 
 				null, 
 				contextProcessRequirement);
 		activity.setInputDataAssociation(da);
@@ -148,11 +148,12 @@ public class HAPUtilityProcess {
 	//process result
 	public static HAPExecutableResultActivityNormal processNormalActivityResult(
 			HAPExecutableActivityNormal activity,
+			HAPDefinitionActivityNormal activityDefinition,
 			String resultName, 
 			HAPContextGroup parentContext,
 			HAPBuilderResultContext resultContextBuilder, 
 			HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPDefinitionResultActivityNormal resultDef = ((HAPDefinitionActivityNormal)activity.getActivityDefinition()).getResult(resultName);
+		HAPDefinitionResultActivityNormal resultDef = activityDefinition.getResult(resultName);
 		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef);
 		if(resultContextBuilder!=null) {
 			//data association input context
@@ -165,8 +166,8 @@ public class HAPUtilityProcess {
 	}
 
 	//process result
-	public static void processBranchActivityBranch(HAPExecutableActivityBranch activity) {
-		for(HAPDefinitionResultActivityBranch branch :activity.getBranchActivityDefinition().getBranch()) {
+	public static void processBranchActivityBranch(HAPExecutableActivityBranch activity, HAPDefinitionActivityBranch activityDefinition) {
+		for(HAPDefinitionResultActivityBranch branch :activityDefinition.getBranch()) {
 			activity.addBranch(new HAPExecutableResultActivityBranch(branch));
 		}
 	}

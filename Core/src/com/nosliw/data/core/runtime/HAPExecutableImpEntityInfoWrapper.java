@@ -11,7 +11,9 @@ import com.nosliw.common.info.HAPInfo;
 abstract public class HAPExecutableImpEntityInfoWrapper extends HAPExecutableImp  implements HAPEntityInfo{
 	
 	private HAPEntityInfo m_entityInfo;
-	
+
+	public HAPExecutableImpEntityInfoWrapper() {}
+
 	public HAPExecutableImpEntityInfoWrapper(HAPEntityInfo entityInfo) {
 		this.m_entityInfo = entityInfo;
 	}

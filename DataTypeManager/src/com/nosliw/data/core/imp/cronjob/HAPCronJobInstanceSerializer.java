@@ -9,6 +9,7 @@ import com.nosliw.data.core.cronjob.HAPManagerScheduleDefinition;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 public class HAPCronJobInstanceSerializer {
 
@@ -42,13 +43,7 @@ public class HAPCronJobInstanceSerializer {
 		
 		//task
 		JSONObject taskJsonObj = jsonObj.optJSONObject(HAPExecutableCronJob.TASK);
-		HAPExecutableWrapperTask taskExe = new HAPExecutableWrapperTask();
-		
-		//process in task
-		JSONObject processJsonObj = taskJsonObj.optJSONObject(HAPExecutableWrapperTask.TASK);
-		HAPExecutableProcess processExe = new HAPExecutableProcess(this.m_activityPluginMan);
-		processExe.buildObject(processJsonObj, HAPSerializationFormat.JSON);
-		taskExe.setTask(processExe);
+		HAPExecutableWrapperTask<HAPExecutableProcess> taskExe = HAPParserDataAssociation.buildExecutableWrapperTask(taskJsonObj, new HAPExecutableProcess(this.m_activityPluginMan));
 		out.setTask(taskExe);
 		
 		return out;

@@ -14,6 +14,16 @@ import com.nosliw.data.core.script.context.dataassociation.none.HAPExecutableDat
 
 public class HAPParserDataAssociation {
 
+	public static <T extends HAPExecutableTask> HAPExecutableWrapperTask<T> buildExecutableWrapperTask(JSONObject jsonObj, T task) {
+		HAPExecutableWrapperTask<T> out = new HAPExecutableWrapperTask<T>();
+		
+		//process in task
+		JSONObject taskJsonObj = jsonObj.optJSONObject(HAPExecutableWrapperTask.TASK);
+		task.buildObject(taskJsonObj, HAPSerializationFormat.JSON);
+		out.setTask(task);
+		return out;
+	}
+	
 	public static HAPExecutableDataAssociation buildExecutalbeByJson(JSONObject asJson) {
 		if(asJson==null)   return null;
 		

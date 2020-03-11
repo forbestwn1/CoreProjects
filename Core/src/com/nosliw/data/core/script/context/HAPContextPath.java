@@ -2,6 +2,8 @@ package com.nosliw.data.core.script.context;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
@@ -90,6 +92,15 @@ public class HAPContextPath extends HAPSerializableImp{
 		else  return HAPNamingConversionUtility.parseComponentPaths(m_path);     
 	}
 	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_path = jsonObj.getString(PATH);
+		this.m_rootNodeId = new HAPContextDefinitionRootId(jsonObj.getString(ROOTNAME));
+		return true;  
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ROOTNAME, this.m_rootNodeId.getFullName());

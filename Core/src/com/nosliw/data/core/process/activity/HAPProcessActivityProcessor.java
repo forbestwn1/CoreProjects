@@ -42,7 +42,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 		HAPProcessActivityExecutable out = new HAPProcessActivityExecutable(id, processActivityDef);
 		
 		//input
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processDataContext, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processActivityDef, processDataContext, contextProcessRequirement);
 
 		HAPExecutableWrapperTask<HAPExecutableProcess> emProcessExe = processManager.getEmbededProcess(
 				processActivityDef.getProcess(),
@@ -58,7 +58,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(processExe); 
 		
 		for(String resultName : emProcessExe.getTask().getResultNames()) {
-			HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, resultName, processDataContext, m_resultContextBuilder, contextProcessRequirement);
+			HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, processActivityDef, resultName, processDataContext, m_resultContextBuilder, contextProcessRequirement);
 			out.addResult(resultName, successResultExe);
 		}
 		return out;

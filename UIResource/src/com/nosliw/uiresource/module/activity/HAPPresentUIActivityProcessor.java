@@ -32,10 +32,11 @@ public class HAPPresentUIActivityProcessor implements HAPProcessorActivity{
 			HAPRequirementContextProcessor contextProcessRequirement, 
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {
-		HAPPresentUIActivityExecutable out = new HAPPresentUIActivityExecutable(id, (HAPPresentUIActivityDefinition)activityDefinition);
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, context, contextProcessRequirement);
+		HAPPresentUIActivityDefinition activity = (HAPPresentUIActivityDefinition)activityDefinition;
+		HAPPresentUIActivityExecutable out = new HAPPresentUIActivityExecutable(id, activity);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, activity, context, contextProcessRequirement);
 		//process success result
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, null, null, contextProcessRequirement);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, activity, HAPConstant.ACTIVITY_RESULT_SUCCESS, null, null, contextProcessRequirement);
 		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

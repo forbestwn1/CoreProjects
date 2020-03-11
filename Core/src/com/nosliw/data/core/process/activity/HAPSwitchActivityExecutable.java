@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -41,8 +43,19 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 	public void setScriptExpression(HAPScriptExpression scriptExpression) {    this.m_scriptExpression = scriptExpression;    }
 	public HAPScriptExpression getScriptExpression() {   return this.m_scriptExpression;  }
 	
-	public HAPSwitchActivityDefinition getSwitchActivityDefinition() {   return (HAPSwitchActivityDefinition)this.getActivityDefinition();   }
+//	public HAPSwitchActivityDefinition getSwitchActivityDefinition() {   return (HAPSwitchActivityDefinition)this.getActivityDefinition();   }
 
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
+		JSONObject jsonObj = (JSONObject)json;
+		
+		this.m_scriptExpression = new HAPScriptExpression();
+		this.m_scriptExpression.buildObject(jsonObj.getJSONObject(SCRIPTEXPRESSION), HAPSerializationFormat.JSON);
+		return true;  
+	}
+
+	
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();

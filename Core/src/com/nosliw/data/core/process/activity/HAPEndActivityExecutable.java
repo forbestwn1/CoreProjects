@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPActivityPluginId;
@@ -30,6 +32,14 @@ public class HAPEndActivityExecutable extends HAPExecutableActivity{
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_END))));
 		return out;
+	}
+
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_resultName = jsonObj.getString(RESULTNAME);
+		return true;  
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class HAPDebugActivityExecutable extends HAPExecutableActivityNormal{
 		super(id, activityDef);
 	}
 
-	public HAPDebugActivityDefinition getDebugActivityDefinition() {   return (HAPDebugActivityDefinition)this.getActivityDefinition();   }
+//	public HAPDebugActivityDefinition getDebugActivityDefinition() {   return (HAPDebugActivityDefinition)this.getActivityDefinition();   }
 	
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
