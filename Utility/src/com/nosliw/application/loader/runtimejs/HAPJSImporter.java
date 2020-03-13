@@ -167,7 +167,7 @@ public class HAPJSImporter {
 		NativeObject operationRequiresObjJS = (NativeObject)operationObjJS.get("requires");
 		Set<HAPResourceDependency> operationResources = new HashSet<HAPResourceDependency>();
 		//add data type requires first
-		for(HAPResourceDependency dataTypeResourceId : dataTypeResources)	this.addDependentResourceIdToSet(dataTypeResourceId.clone(), operationResources);
+		for(HAPResourceDependency dataTypeResourceId : dataTypeResources)	this.addDependentResourceIdToSet(dataTypeResourceId.cloneResourceDependency(), operationResources);
 
     	//get resource from script
     	List<HAPResourceDependency> discoverResources = discoverResources(script);

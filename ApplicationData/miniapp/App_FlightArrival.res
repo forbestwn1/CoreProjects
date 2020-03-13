@@ -35,7 +35,7 @@
 			}		
 		],
 	},
-	"entry": [{
+	"element": [{
 		"name": "main",
 		"module": [{
 				"status": "disabled111",

@@ -36,4 +36,8 @@ public class HAPContextStructureEmpty extends HAPSerializableImp implements HAPC
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, this.getType());
 	}
+
+	@Override
+	public void hardMergeWith(HAPContextStructure context) {
+	}
 }

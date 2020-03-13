@@ -62,6 +62,19 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	@Override
 	public HAPContextDefinitionRoot getElement(String name) {  return this.getElement(new HAPContextDefinitionRootId(name));   }
 
+	@Override
+	public void hardMergeWith(HAPContextStructure context){
+		if(context!=null) {
+			if(context.getType().equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+				HAPContextGroup contextGroup = (HAPContextGroup)context;
+				for(String type : contextGroup.getContextTypes()){
+					this.getChildContext(type).hardMergeWith(contextGroup.getContext(type));
+				}
+			}
+			else  throw new RuntimeException();
+		}
+	}
+
 	public static String[] getAllContextTypes(){
 		String[] contextTypes = {
 			HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
@@ -180,14 +193,6 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 			HAPContext context = this.m_contexts.get(categary);
 			for(String name : context.getElements().keySet()) {
 				out.addElement(name, this.getElement(categary, name).cloneContextDefinitionRoot(), categary);
-			}
-		}
-	}
-	
-	public void hardMergeWith(HAPContextGroup contextGroup){
-		if(contextGroup!=null) {
-			for(String type : contextGroup.getContextTypes()){
-				this.getChildContext(type).hardMergeWith(contextGroup.getContext(type));
 			}
 		}
 	}

@@ -5,10 +5,12 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementReference;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
 
-public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWritableImp implements HAPDefinitionProcessSuiteElement{
+public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWritableImp implements HAPResourceDefinitionContainerElementReference{
 
 	@HAPAttribute
 	public static String REFERENCE = "reference";
@@ -24,6 +26,7 @@ public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWrit
 	@Override
 	public String getType() {	return HAPConstant.PROCESSSUITE_ELEMENTTYPE_REFERENCE;	}
 
+	@Override
 	public HAPResourceId getResourceId() {	return this.m_resourceId;	}
 	
 	@Override
@@ -35,7 +38,7 @@ public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWrit
 	}
 
 	@Override
-	public HAPDefinitionProcessSuiteElement cloneProcessSuiteElementDefinition() {
+	public HAPResourceDefinitionContainerElement cloneResourceDefinitionContainerElement() {
 		HAPDefinitionProcessSuiteElementReference out = new HAPDefinitionProcessSuiteElementReference();
 		this.cloneToEntityInfo(out);
 		out.m_resourceId = this.m_resourceId.clone();

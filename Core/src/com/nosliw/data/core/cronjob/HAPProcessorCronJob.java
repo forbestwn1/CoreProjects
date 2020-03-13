@@ -5,7 +5,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.dataable.HAPManagerDataable;
-import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;

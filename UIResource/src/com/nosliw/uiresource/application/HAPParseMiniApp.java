@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
@@ -43,7 +44,7 @@ public class HAPParseMiniApp {
 		
 		out.setApplicationData(HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(HAPDefinitionApp.APPLICATIONDATA)));
 
-		JSONArray entryArray = jsonObj.optJSONArray(HAPDefinitionApp.ENTRY);
+		JSONArray entryArray = jsonObj.optJSONArray(HAPResourceDefinitionContainer.ELEMENT);
 		if(entryArray!=null) {
 			for(int i=0; i<entryArray.length(); i++) {
 				out.addEntry(this.parseAppEntry(entryArray.getJSONObject(i)));
@@ -74,7 +75,7 @@ public class HAPParseMiniApp {
 //			}
 //		}
 		
-		out.setContext(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionAppElementUI.CONTEXT))); 
+		out.setContextStructure(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionAppElementUI.CONTEXT))); 
 		return out;
 	}
 	

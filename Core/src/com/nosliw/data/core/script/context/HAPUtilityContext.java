@@ -476,6 +476,20 @@ public class HAPUtilityContext {
 			}
 		}
 	}
+
+	public static HAPContextStructure hardMerge(HAPContextStructure child, HAPContextStructure parent) {
+		if(child==null) return parent.cloneContextStructure();
+		
+		String type1 = child.getType();
+		String type2 = parent.getType();
+		if(!type1.equals(type2))  throw new RuntimeException();
+		
+		HAPContextStructure out = null;
+		out = child.cloneContextStructure();
+		out.hardMergeWith(parent);
+		return out;
+	}
+
 	
 	public static HAPContextGroup hardMerge(HAPContextGroup child, HAPContextGroup parent) {
 		HAPContextGroup out = null;

@@ -448,6 +448,7 @@ public class HAPConstant {
 
 
 		public static final String RUNTIME_RESOURCE_TYPE_EXPRESSION = "expression";
+		public static final String RUNTIME_RESOURCE_TYPE_EXPRESSIONSUITE = "expressionSuite";
 		public static final String RUNTIME_RESOURCE_TYPE_OPERATION = "operation";
 		public static final String RUNTIME_RESOURCE_TYPE_DATATYPE = "datatype";
 		public static final String RUNTIME_RESOURCE_TYPE_CONVERTER = "converter";

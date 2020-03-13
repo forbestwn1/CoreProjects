@@ -1,6 +1,5 @@
 package com.nosliw.uiresource.application;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,8 +10,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
-import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
 import com.nosliw.uiresource.resource.HAPUIAppEntryId;
 
@@ -23,14 +22,8 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	public static final String ID = "id";
 
 	@HAPAttribute
-	public static final String ENTRY = "entry";
-	
-	@HAPAttribute
 	public static final String APPLICATIONDATA = "applicationData";
 	
-	//one mini app may have different entry for different senario. 
-	private Map<String, HAPDefinitionAppElementUI> m_entries;
-
 	//global data definition 
 	//it can be stateful data(the data that can retrieve next time you use the app)
 	private Map<String, HAPDefinitionAppData> m_applicationData;
@@ -39,7 +32,6 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	
 	public HAPDefinitionApp(String id) {
 		this.m_id = id;
-		this.m_entries = new LinkedHashMap<String, HAPDefinitionAppElementUI>();
 		this.m_applicationData = new LinkedHashMap<String, HAPDefinitionAppData>();
 	}
 	
@@ -48,25 +40,22 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	public Map<String, HAPDefinitionAppData> getApplicationData(){   return this.m_applicationData;   }
 	public void setApplicationData(Map<String, HAPDefinitionAppData> dataDef) {		if(dataDef!=null)   this.m_applicationData = dataDef;	}
 
-	@Override
-	public HAPComponent getElement(String name) {  return this.getEntry(name);  }
-	
-	public Collection<HAPDefinitionAppElementUI> getEntrys(){   return this.m_entries.values();    }
-	public HAPDefinitionAppElementUI getEntry(String entry) {  return this.m_entries.get(entry);  }
 	public void addEntry(HAPDefinitionAppElementUI entry) {
 		String name = entry.getName();
 		if(HAPBasicUtility.isStringEmpty(name)) {
 			name = HAPUtilityApp.ENTRY_DEFAULT;
 			entry.setName(name);
 		}
-		this.m_entries.put(name, entry);
+		this.addElement(name, entry);
 	}
 	
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
 		//entry part
-		for(HAPDefinitionAppElementUI entry : this.getEntrys()) {
+		Map<String, HAPResourceDefinitionContainerElement> entrys = this.getAllElements();
+		for(String name : entrys.keySet()) {
+			HAPResourceDefinitionContainerElement entry = entrys.get(name);
 			out.addChildCompoentId(new HAPChildrenComponentId(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), entry.getInfo()), this.getAttachmentContainer());
 		}
 		return out;
@@ -75,7 +64,6 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ENTRY, HAPJsonUtility.buildJson(this.m_entries, HAPSerializationFormat.JSON));
 		jsonMap.put(APPLICATIONDATA, HAPJsonUtility.buildJson(this.m_applicationData, HAPSerializationFormat.JSON));
 	}
 
@@ -83,9 +71,6 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	public HAPResourceDefinitionContainer cloneResourceDefinitionContainer() {
 		HAPDefinitionApp out = new HAPDefinitionApp(this.getId());
 		this.cloneToResourceDefinitionContainer(out);
-		for(String name : this.m_entries.keySet()) {
-			out.m_entries.put(name, this.m_entries.get(name).cloneAppUIElementDefinition());
-		}
 		for(String name : this.m_applicationData.keySet()) {
 			out.m_applicationData.put(name, this.m_applicationData.get(name).cloneAppDataDefinition());
 		}

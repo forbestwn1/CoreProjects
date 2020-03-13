@@ -13,6 +13,7 @@ import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -38,11 +39,11 @@ public class HAPUtilityComponent {
 		componentExe.setServiceProviders(allServiceProviders);
 		
 		//process context 
-		componentExe.setContextGroup(HAPProcessorContext.process(component.getContext(), HAPParentContext.createDefault(parentContext==null?new HAPContextGroup():parentContext), contextProcessConfg, contextProcessRequirement));
+		componentExe.setContextStructure(HAPProcessorContext.process(component.getContextStructure(), HAPParentContext.createDefault(parentContext==null?new HAPContextGroup():parentContext), contextProcessConfg, contextProcessRequirement));
 		
 		//process process suite
-		HAPDefinitionProcessSuite processSuite = HAPUtilityComponent.getProcessSuite(component, activityPluginMan).clone(); 
-		processSuite.setContext(componentExe.getContext());   //kkk
+		HAPDefinitionProcessSuite processSuite = HAPUtilityComponent.getProcessSuite(component, activityPluginMan).cloneProcessSuiteDefinition(); 
+		processSuite.setContextStructure(componentExe.getContextStructure());   //kkk
 		componentExe.setProcessSuite(processSuite);
 	}
 	
@@ -54,7 +55,7 @@ public class HAPUtilityComponent {
 			
 			for(String name : processAtts.keySet()) {
 				HAPAttachment attachment = processAtts.get(name);
-				out.addProcess(attachment.getName(), HAPUtilityProcess.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan));
+				out.addElement(attachment.getName(), HAPUtilityProcess.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan));
 			}
 		}
 		else if(component instanceof HAPComponentContainerElement) {
@@ -85,9 +86,9 @@ public class HAPUtilityComponent {
 //		return out;
 //	}
 	
-	public static HAPContextGroup processElementComponentContext(HAPComponentContainerElement component, HAPContextGroup extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
-		HAPContextGroup parentContext = HAPUtilityContext.hardMerge(component.getContainer().getContext(), extraContext); 
-		return HAPProcessorContext.process(component.getElement().getContext(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);
+	public static HAPContextStructure processElementComponentContext(HAPComponentContainerElement component, HAPContextGroup extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
+		HAPContextStructure parentContext = HAPUtilityContext.hardMerge(component.getContainer().getContextStructure(), extraContext); 
+		return HAPProcessorContext.process(component.getElement().getContextStructure(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);
 	}
 
 	

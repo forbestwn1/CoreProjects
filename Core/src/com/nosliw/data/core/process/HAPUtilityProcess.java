@@ -9,6 +9,7 @@ import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
@@ -54,18 +55,18 @@ public class HAPUtilityProcess {
 		for(String id : attachments.keySet()) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachments.get(id);
 			HAPDefinitionProcessSuiteElementEntity processDef = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
-			out.addProcess(id, processDef);
+			out.addElement(id, processDef);
 		}
 		return out;
 	}
 
-	public static HAPDefinitionProcessSuiteElement getProcessDefinitionElementFromAttachment(String name, HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
+	public static HAPResourceDefinitionContainerElement getProcessDefinitionElementFromAttachment(String name, HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
 		HAPAttachment attachment = attachmentContainer.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, name);
 		return getProcessDefinitionElementFromAttachment(attachment, activityPluginMan);
 	}
 
-	public static HAPDefinitionProcessSuiteElement getProcessDefinitionElementFromAttachment(HAPAttachment attachment, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionProcessSuiteElement out = null;
+	public static HAPResourceDefinitionContainerElement getProcessDefinitionElementFromAttachment(HAPAttachment attachment, HAPManagerActivityPlugin activityPluginMan) {
+		HAPResourceDefinitionContainerElement out = null;
 		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
 			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);

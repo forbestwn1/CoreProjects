@@ -1,14 +1,13 @@
-package com.nosliw.data.core.runtime;
+package com.nosliw.data.core.expression;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 //entity that can is runnable within runtime environment
 public abstract class HAPExecutableExpressionImp extends HAPSerializableImp implements HAPExecutableExpression{

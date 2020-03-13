@@ -26,11 +26,11 @@ public class HAPParserProcessDefinition {
 			Object refObj = processObjJson.opt(HAPDefinitionProcessSuiteElementReference.REFERENCE);
 			if(refObj==null) {
 				//process
-				out.addProcess(id, parseProcess(processObjJson, activityPluginMan));
+				out.addElement(id, parseProcess(processObjJson, activityPluginMan));
 			}
 			else {
 				//reference
-				out.addProcess(id, parseProcessReference(processObjJson));
+				out.addElement(id, parseProcessReference(processObjJson));
 			}
 		}
 		return out;

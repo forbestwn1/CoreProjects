@@ -58,7 +58,7 @@ public class HAPProcessorProcess{
 		HAPExecutableProcess out = null;
 		HAPContextGroup oldContext = null;
 		do {
-			if(oldContext==null)   oldContext = HAPUtilityComponent.processElementComponentContext(process.getProcess(), extraContext, contextProcessRequirement, HAPUtilityConfigure.getContextProcessConfigurationForProcess()); 
+			if(oldContext==null)   oldContext = (HAPContextGroup)HAPUtilityComponent.processElementComponentContext(process.getProcess(), extraContext, contextProcessRequirement, HAPUtilityConfigure.getContextProcessConfigurationForProcess()); 
 			else oldContext = out.getContext();
 			out = new HAPExecutableProcess(process.getProcess(), id, processMan.getPluginManager());
 			HAPProcessorProcess.process(out, oldContext, process.getContext(), serviceProviders, processMan, contextProcessRequirement, processTracker);

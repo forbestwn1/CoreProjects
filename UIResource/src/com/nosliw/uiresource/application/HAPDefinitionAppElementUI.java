@@ -12,14 +12,14 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponent;
-import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementEntityImpComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionAppElementUI  extends HAPComponentImp implements HAPDefinitionAppElement{
+public class HAPDefinitionAppElementUI  extends HAPResourceDefinitionContainerElementEntityImpComponent{
 
 	@HAPAttribute
 	public static final String MODULE = "module";

@@ -33,7 +33,7 @@
 			}		
 		]
 	},
-	"entry": [{
+	"element": [{
 		"name": "main",
 		"info": {
 			"setting": "application"

@@ -7,13 +7,25 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPProcessorContext {
 
-	public static HAPContext process(HAPContext context, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
-		return process(context, parent, new HashSet<String>(), configure, contextProcessRequirement);		
+	public static HAPContextStructure process(HAPContextStructure context, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPContextStructure out = null;
+		String type = context.getType();
+		if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+			out = process((HAPContext)context, parent, new HashSet<String>(), configure, contextProcessRequirement);
+		}
+		else if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+			out = process((HAPContextGroup)context, parent, new HashSet<String>(), configure, contextProcessRequirement);
+		}
+		return out;
 	}
-
-	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
-		return process(contextGroup, parent, new HashSet<String>(), configure, contextProcessRequirement);
-	}
+	
+//	public static HAPContext process(HAPContext context, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
+//		return process(context, parent, new HashSet<String>(), configure, contextProcessRequirement);		
+//	}
+//
+//	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
+//		return process(contextGroup, parent, new HashSet<String>(), configure, contextProcessRequirement);
+//	}
 	
 	public static HAPContextGroup processRelative(HAPContextGroup contextGroup, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
 		return processRelative(contextGroup, parent, new HashSet<String>(), configure, contextProcessRequirement);

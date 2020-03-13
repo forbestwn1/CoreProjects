@@ -14,7 +14,7 @@ import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPExecutableProcess;
@@ -23,6 +23,7 @@ import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
@@ -66,18 +67,18 @@ public class HAPProcessMiniAppEntry {
 		Map<String, HAPDefinitionServiceProvider> entryServiceProviders = HAPUtilityServiceUse.buildServiceProvider(entryDefinition.getAttachmentContainer(), null, contextProcessRequirement.serviceDefinitionManager); 
 
 		//context
-		out.setContext(HAPProcessorContext.process(entryDefinition.getContext(), HAPParentContext.createDefault(miniAppDef.getContext()), contextProcessConfg, contextProcessRequirement));
+		out.setContext((HAPContextGroup)HAPProcessorContext.process(entryDefinition.getContextStructure(), HAPParentContext.createDefault(miniAppDef.getContextStructure()), contextProcessConfg, contextProcessRequirement));
 
 		//process process suite
-		HAPDefinitionProcessSuite processSuite = HAPUtilityComponent.getProcessSuite(minAppEntryDef, processMan.getPluginManager()).clone(); 
-		processSuite.setContext(out.getContext());   //kkkk
+		HAPDefinitionProcessSuite processSuite = HAPUtilityComponent.getProcessSuite(minAppEntryDef, processMan.getPluginManager()).cloneProcessSuiteDefinition(); 
+		processSuite.setContextStructure(out.getContext());   //kkkk
 //		processSuite.setContext(HAPProcessorContext.process(processSuite.getContext(), HAPParentContext.createDefault(out.getContext()), contextProcessConfg, contextProcessRequirement));
 		out.setProcessSuite(processSuite);
 
 		//data definition
 		Map<String, HAPDefinitionAppData> dataDefs = miniAppDef.getApplicationData();
 		for(String dataDefName : dataDefs.keySet()) {
-			HAPContext processedContext = HAPProcessorContext.process(dataDefs.get(dataDefName), HAPParentContext.createDefault(miniAppDef.getContext()), contextProcessConfg, contextProcessRequirement);
+			HAPContext processedContext = (HAPContext)HAPProcessorContext.process(dataDefs.get(dataDefName), HAPParentContext.createDefault(miniAppDef.getContextStructure()), contextProcessConfg, contextProcessRequirement);
 			HAPDefinitionAppData processedAppData = dataDefs.get(dataDefName).cloneAppDataDefinition();
 			processedContext.toContext(processedAppData);
 			out.addApplicationData(dataDefName, processedAppData);
@@ -133,7 +134,7 @@ public class HAPProcessMiniAppEntry {
 		//input data association
 		Map<String, HAPDefinitionDataAssociation> inputDas = module.getInputMapping().getDataAssociations();
 		for(String inputDaName : inputDas.keySet()) {
-			HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(parentContext, inputDas.get(inputDaName), HAPParentContext.createDefault(moduleDef.getContext().getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC)), daConfigure, contextProcessRequirement);
+			HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(parentContext, inputDas.get(inputDaName), HAPParentContext.createDefault(moduleDef.getContextNotFlat().getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC)), daConfigure, contextProcessRequirement);
 			out.addInputDataAssociation(inputDaName, inputMapping);
 		}
 		
@@ -141,7 +142,7 @@ public class HAPProcessMiniAppEntry {
 		//output data association
 		Map<String, HAPDefinitionDataAssociation> outputMapping = module.getOutputMapping().getDataAssociations();
 		for(String outputTargetName : outputMapping.keySet()) {
-			HAPExecutableDataAssociation outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleDef.getContext()), outputMapping.get(outputTargetName), parentContext, daConfigure, contextProcessRequirement);
+			HAPExecutableDataAssociation outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleDef.getContextNotFlat()), outputMapping.get(outputTargetName), parentContext, daConfigure, contextProcessRequirement);
 			out.addOutputDataAssociation(outputTargetName, outputMappingByTarget);
 		}
 		

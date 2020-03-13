@@ -9,14 +9,16 @@ import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 
 public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWritableImp implements HAPResourceDefinitionComplex{
 
 	private HAPResourceId m_resourceId;
 	
 	//context definition within this component
-	private HAPContextGroup m_context;
+	private HAPContextStructure m_context;
 	
 	private HAPAttachmentContainer m_attachmentContainer;
 
@@ -34,12 +36,15 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWrita
 	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
 	
 	@Override
-	public HAPContextGroup getContext() {  return this.m_context;   }
+	public HAPContextStructure getContextStructure() {  return this.m_context;   }
 	@Override
-	public void setContext(HAPContextGroup context) {  
+	public void setContextStructure(HAPContextStructure context) {  
 		this.m_context = context;
 		if(this.m_context ==null)  this.m_context = new HAPContextGroup();
 	}
+	
+	public HAPContextGroup getContextNotFlat() {   return (HAPContextGroup)this.getContextStructure();    }
+	public HAPContext getContextFlat() {    return (HAPContext)this.getContextStructure();    }
 	
 	@Override
 	public HAPAttachmentContainer getAttachmentContainer() {		return this.m_attachmentContainer;	}
@@ -54,7 +59,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWrita
  
 	@Override
 	public void cloneToDataContext(HAPWithDataContext withDataContext) {
-		this.m_context.cloneTo(withDataContext.getContext());
+		withDataContext.setContextStructure(this.m_context.cloneContextStructure());
 	}
 
 	@Override

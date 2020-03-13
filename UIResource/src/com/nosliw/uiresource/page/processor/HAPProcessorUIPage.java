@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -43,7 +43,7 @@ public class HAPProcessorUIPage {
 		HAPProcessorCompile.process(out, null);
 		
 		//build page context by parent context override context defined in page
-		HAPContextGroup pageContext = uiPageDef.getContext().cloneContextGroup();
+		HAPContextGroup pageContext = uiPageDef.getContextNotFlat().cloneContextGroup();
 		if(context!=null) {
 			for(String categary : context.getContextTypes()) {
 				HAPContext ctx = context.getContext(categary);

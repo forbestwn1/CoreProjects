@@ -1,19 +1,15 @@
-package com.nosliw.data.core.expressionsuite;
+package com.nosliw.data.core.expression;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
 
-public class HAPDefinitionExpressionSuite  extends HAPSerializableImp{
+public class HAPDefinitionExpressionSuite extends HAPResourceDefinitionContainer{
 
-	private String m_name;
-	
-	private String m_description;
-	
 	private Map<String, HAPVariableInfo> m_variables;
 	
 	private Map<String, HAPData> m_constants;
@@ -56,6 +52,18 @@ public class HAPDefinitionExpressionSuite  extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+	}
+
+	@Override
+	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPResourceDefinitionContainer cloneResourceDefinitionContainer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

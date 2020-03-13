@@ -79,7 +79,7 @@ public class HAPProcessorUIContext {
 		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {
-			processVerticalStructure(childTag, childTag.getUIUnitDefinition().getContext(), uiExe.getContext(), contextProcessorConfig, uiTagMan, contextProcessRequirement);			
+			processVerticalStructure(childTag, childTag.getUIUnitDefinition().getContextNotFlat(), uiExe.getContext(), contextProcessorConfig, uiTagMan, contextProcessRequirement);			
 		}
 	}
 	

@@ -15,5 +15,7 @@ public interface HAPContextStructure extends HAPSerializable{
 	HAPContextDefinitionRoot getElement(String eleName);
 	
 	HAPContextStructure cloneContextStructure();
-	
+
+	void hardMergeWith(HAPContextStructure context);
+
 }

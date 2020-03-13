@@ -9,7 +9,7 @@
 			}		
 		],
 	},
-	"entry": [{
+	"element": [{
 		"name": "main",
 		"module": [
 			{

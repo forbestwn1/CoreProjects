@@ -15,7 +15,7 @@ import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 
 public abstract class HAPComponentContainerElement extends HAPSerializableImp implements HAPComponent{
 
@@ -41,7 +41,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public HAPComponentContainerElement(HAPResourceDefinitionContainer componentContainer, String elementName) {
 		this.m_componentContainer = componentContainer;
 		this.m_elementName = elementName;
-		this.setElement(this.getContainer().getElement(this.getElementName()).cloneComponent());
+		this.setElement(((HAPComponent)this.getContainer().getElement(this.getElementName())).cloneComponent());
 		HAPUtilityComponent.mergeWithParentAttachment(this.m_element, this.m_componentContainer.getAttachmentContainer());
 		HAPInfoUtility.softMerge(this.m_element.getInfo(), this.m_componentContainer.getInfo());
 	}
@@ -86,7 +86,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 	
 	@Override
-	public HAPContextGroup getContext() {
+	public HAPContextStructure getContextStructure() {
 		return null;
 	}
 
@@ -145,7 +145,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 
 	@Override
-	public void setContext(HAPContextGroup context) {
+	public void setContextStructure(HAPContextStructure context) {
 		// TODO Auto-generated method stub
 		
 	}

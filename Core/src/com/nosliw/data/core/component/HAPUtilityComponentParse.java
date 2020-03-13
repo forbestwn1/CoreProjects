@@ -33,7 +33,7 @@ public class HAPUtilityComponentParse {
 		//context
 		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPComponentImp.CONTEXT);
 		if(contextJsonObj!=null) {
-			complexResourceDef.setContext(HAPParserContext.parseContextGroup(contextJsonObj));
+			complexResourceDef.setContextStructure(HAPParserContext.parseContextGroup(contextJsonObj));
 		}
 	}
 	

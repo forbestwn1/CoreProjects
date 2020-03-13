@@ -12,7 +12,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponent;
-import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementEntityImpComponent;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 
 /**
@@ -21,7 +22,7 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
  * Task is a sequence of steps
  */
 @HAPEntityWithAttribute
-public class HAPDefinitionProcessSuiteElementEntity extends HAPComponentImp implements HAPDefinitionProcessSuiteElement{ 
+public class HAPDefinitionProcessSuiteElementEntity extends HAPResourceDefinitionContainerElementEntityImpComponent{ 
 
 	@HAPAttribute
 	public static String ACTIVITY = "activity";
@@ -59,7 +60,12 @@ public class HAPDefinitionProcessSuiteElementEntity extends HAPComponentImp impl
 	}
 
 	@Override
-	public HAPDefinitionProcessSuiteElement cloneProcessSuiteElementDefinition() {
+	public HAPComponent cloneComponent() {
+		return (HAPComponent)this.cloneResourceDefinitionContainerElement();
+	}
+
+	@Override
+	public HAPResourceDefinitionContainerElement cloneResourceDefinitionContainerElement() {
 		HAPDefinitionProcessSuiteElementEntity out = new HAPDefinitionProcessSuiteElementEntity();
 		this.cloneToComponent(out);
 		for(String name : this.m_activities.keySet()) {
@@ -69,10 +75,5 @@ public class HAPDefinitionProcessSuiteElementEntity extends HAPComponentImp impl
 			out.m_requiredResources.add(dependency.cloneResourceDependency());
 		}
 		return out;
-	}
-
-	@Override
-	public HAPComponent cloneComponent() {
-		return (HAPComponent)this.cloneProcessSuiteElementDefinition();
 	}
 }

@@ -37,6 +37,20 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	@Override
 	public HAPContextDefinitionRoot getElement(String name) {  return this.m_elements.get(name);   }
 
+	@Override
+	public void hardMergeWith(HAPContextStructure parent){
+		if(parent!=null) {
+			if(parent.getType().equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+				HAPContext context  = (HAPContext)parent;
+				Map<String, HAPContextDefinitionRoot> eles = context.getElements();
+				for(String rootName : eles.keySet()){
+					this.m_elements.put(rootName, eles.get(rootName));
+				}
+			}
+			else  throw new RuntimeException();
+		}
+	}
+
 	public void empty() {
 		this.m_elements = new LinkedHashMap<String, HAPContextDefinitionRoot>();
 	}
@@ -51,15 +65,6 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	public void addElement(String name, HAPContextDefinitionRoot rootEle){	this.m_elements.put(name, rootEle);	}
 	public void addElement(String name, HAPContextDefinitionElement contextEle) {   this.m_elements.put(name, new HAPContextDefinitionRoot(contextEle));  }
 	
-	public void hardMergeWith(HAPContext context){
-		if(context!=null) {
-			Map<String, HAPContextDefinitionRoot> eles = context.getElements();
-			for(String rootName : eles.keySet()){
-				this.m_elements.put(rootName, eles.get(rootName));
-			}
-		}
-	}
-
 	public void updateRootName(HAPUpdateName nameUpdate) {
 		//update context
 		for(String eleName : new HashSet<String>(this.getElementNames())) {
