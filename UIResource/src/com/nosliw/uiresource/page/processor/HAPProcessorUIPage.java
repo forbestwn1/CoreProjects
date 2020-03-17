@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -27,6 +28,7 @@ public class HAPProcessorUIPage {
 			HAPContextGroup context,
 			HAPContextGroup parentContext,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
+			HAPManagerResourceDefinition resourceDefMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPUITagManager uiTagMan,  
@@ -54,7 +56,7 @@ public class HAPProcessorUIPage {
 		}
 			
 		if(serviceProviders==null)  serviceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
-		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, HAPUtilityCommon.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionMan, serviceDefinitionManager));
+		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, HAPUtilityCommon.getDefaultContextProcessorRequirement(resourceDefMan, dataTypeHelper, runtime, expressionMan, serviceDefinitionManager));
 
 //		HAPPorcessorResolveName.resolve(out);
 		

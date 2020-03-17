@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
 public abstract class HAPResourceDefinitionContainer extends HAPResourceDefinitionComplexImp{
@@ -32,6 +33,8 @@ public abstract class HAPResourceDefinitionContainer extends HAPResourceDefiniti
 		this.m_elements.put(id, ele);  
 	}
 
+	public abstract HAPResourceDefinition getElementResourceDefinition(String eleName);
+	
 	public abstract HAPResourceDefinitionContainer cloneResourceDefinitionContainer();
 	
 	public void cloneToResourceDefinitionContainer(HAPResourceDefinitionContainer to) {

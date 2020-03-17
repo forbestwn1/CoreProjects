@@ -103,7 +103,7 @@ public class HAPUIResourceManager {
 		HAPAttachmentContainer attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
 		HAPDefinitionAppEntry appEntryDef = this.getMiniAppEntryDefinition(appEntryId, attachmentEx);
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(appEntryDef, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
+		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(appEntryDef, null, this.m_resourceDefManager, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
 		return out;
 	}
 	
@@ -134,7 +134,7 @@ public class HAPUIResourceManager {
 			moduleDef = (HAPDefinitionModule)defOrRef;
 			HAPUtilityComponent.mergeWithParentAttachment(moduleDef, attachmentEx);
 		}
-		return HAPProcessorModule.process(moduleDef, id, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager);
+		return HAPProcessorModule.process(moduleDef, id, null, this.m_resourceDefManager, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager);
 	}
 
 	
@@ -171,7 +171,7 @@ public class HAPUIResourceManager {
 		}
 		
 		//compile it
-		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, context, parentContext, null, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
+		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, context, parentContext, null, this.m_resourceDefManager, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
 		return out;
 	}
 

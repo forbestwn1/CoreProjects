@@ -1,0 +1,51 @@
+package com.nosliw.data.core.expression.copy;
+
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPResourceIdSupplement;
+
+public class HAPResourceIdExpressionSuite  extends HAPResourceIdSimple{
+
+	private HAPExpressionSuiteId m_expressionSuiteId; 
+	
+	public HAPResourceIdExpressionSuite(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSIONSUITE);  }
+
+	public HAPResourceIdExpressionSuite(HAPResourceIdSimple resourceId){
+		this();
+		this.cloneFrom(resourceId);
+	}
+	
+	public HAPResourceIdExpressionSuite(String idLiterate) {
+		this();
+		init(idLiterate, null);
+	}
+
+	public HAPResourceIdExpressionSuite(HAPExpressionSuiteId expressionSuiteId){
+		this();
+		init(null, null);
+		this.m_expressionSuiteId = expressionSuiteId;
+		this.m_id = HAPSerializeManager.getInstance().toStringValue(expressionSuiteId, HAPSerializationFormat.LITERATE); 
+	}
+
+	public HAPResourceIdExpressionSuite(String id, HAPResourceIdSupplement supplement){
+		this();
+		init(id, supplement);
+	}
+	
+	@Override
+	protected void setId(String id){
+		super.setId(id);
+		this.m_expressionSuiteId = new HAPExpressionSuiteId(id);
+	}
+
+	public HAPExpressionSuiteId getExpressionSuiteId(){  return this.m_expressionSuiteId;	}
+	
+	@Override
+	public HAPResourceIdExpressionSuite clone(){
+		HAPResourceIdExpressionSuite out = new HAPResourceIdExpressionSuite();
+		out.cloneFrom(this);
+		return out;
+	}
+}

@@ -12,6 +12,7 @@ import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
 import com.nosliw.uiresource.resource.HAPUIAppEntryId;
 
@@ -49,6 +50,9 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 		this.addElement(name, entry);
 	}
 	
+	@Override
+	public HAPResourceDefinition getElementResourceDefinition(String eleName) {	return new HAPDefinitionAppEntry(this, eleName);	}
+
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();

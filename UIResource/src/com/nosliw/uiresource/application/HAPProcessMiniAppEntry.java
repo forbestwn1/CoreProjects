@@ -10,6 +10,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.common.HAPEntityOrReference;
 import com.nosliw.data.core.component.HAPHandlerEvent;
+import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
@@ -46,6 +47,7 @@ public class HAPProcessMiniAppEntry {
 	public static HAPExecutableAppEntry process(
 			HAPDefinitionAppEntry minAppEntryDef,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
+			HAPManagerResourceDefinition resourceDefMan,
 			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
@@ -60,7 +62,7 @@ public class HAPProcessMiniAppEntry {
 		
 		HAPDefinitionAppElementUI entryDefinition = minAppEntryDef.getEntry();
 		
-		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
+		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(resourceDefMan, dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
 		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityApp.getContextProcessConfigurationForApp();
 		
 		//service providers

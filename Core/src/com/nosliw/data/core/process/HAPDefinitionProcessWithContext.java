@@ -1,25 +1,25 @@
 package com.nosliw.data.core.process;
 
+import com.nosliw.data.core.resource.HAPResourceDefinitionWithContext;
 
-public class HAPDefinitionProcessWithContext {
+public class HAPDefinitionProcessWithContext extends HAPResourceDefinitionWithContext{
 
 	//process itself
-	private HAPDefinitionProcess m_process;
+//	private HAPDefinitionProcess m_process;
 	
 	//context that the process depend on
-	private HAPContextProcessor m_context;
+//	private HAPContextProcessor m_context;
 	
 	public HAPDefinitionProcessWithContext(HAPDefinitionProcess processDef, HAPContextProcessor context) {
-		this.m_process = processDef;
-		this.m_context = context;
+		super(processDef, context);
 	}
 	
 	public HAPDefinitionProcessWithContext(HAPDefinitionProcess processDef) {
-		this.m_process = processDef;
+		this(processDef, null);
 	}
 	
-	public HAPDefinitionProcess getProcess() {  return this.m_process;	}
+//	public HAPDefinitionProcess getProcess() {  return (HAPDefinitionProcess)this.getResourceDefinition();	}
 	
-	public HAPContextProcessor getContext() {  return this.m_context;   }
+//	public HAPContextProcessor getContext() {  return (HAPContextProcessor)this.getResourceContext();   }
 	
 }

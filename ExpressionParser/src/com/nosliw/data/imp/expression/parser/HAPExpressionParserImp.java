@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.data.core.expression.HAPExpressionParser;
+import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandAttribute;
 import com.nosliw.data.core.operand.HAPOperandConstant;
@@ -20,7 +20,7 @@ import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
  * This is utility class to parse a expression as a string
  * The result of parsing is operand structure 
  */
-public class HAPExpressionParserImp implements HAPExpressionParser{
+public class HAPExpressionParserImp implements HAPParserExpression{
 	
 	public HAPExpressionParserImp(){
 	}

@@ -9,6 +9,8 @@ import java.util.Set;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSystemUtility;
+import com.nosliw.data.core.component.HAPManagerResourceDefinition;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 
 public class HAPResourceUtility {
@@ -65,6 +67,23 @@ public class HAPResourceUtility {
 	
 	public static String[] parseResourceIdLiterate(String idLiterate) {
 		return HAPNamingConversionUtility.parseLevel2(idLiterate);
+	}
+	
+	public static HAPResourceDefinition getImpliedResourceDefinition(HAPResourceId resourceId, HAPResourceDefinitionContainer container, HAPManagerResourceDefinition resourceDefMan) {
+		HAPResourceDefinition resourceDef = null;
+		if(resourceId.getStructure().equals(HAPConstant.RESOURCEID_TYPE_SIMPLE) && isLocalReference(resourceId)) {
+			//for reference local, get it from container
+			resourceDef = container.getElementResourceDefinition(((HAPResourceIdSimple)resourceId).getId());
+		}
+		else {
+			resourceDef = resourceDefMan.getResourceDefinition(resourceId);
+		}
+		return resourceDef;
+	}	
+	
+	public static boolean isLocalReference(HAPResourceId resourceId) {
+		//kkk
+		return false;
 	}
 	
 	public static String getDefaultResourceStructure() {    return HAPConstant.RESOURCEID_TYPE_SIMPLE;     }

@@ -11,6 +11,7 @@ import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
+import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
@@ -47,6 +48,7 @@ public class HAPProcessorModule {
 			HAPDefinitionModule moduleDefinition, 
 			String id, 
 			HAPContextGroup parentContext, 
+			HAPManagerResourceDefinition resourceDefMan,
 			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
@@ -55,7 +57,7 @@ public class HAPProcessorModule {
 			HAPManagerServiceDefinition serviceDefinitionManager) {
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-		return HAPProcessorModule.process(moduleDefinition, id, parentContext, null, processMan, uiResourceMan, dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, processTracker);
+		return HAPProcessorModule.process(moduleDefinition, id, parentContext, null, resourceDefMan, processMan, uiResourceMan, dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, processTracker);
 	}
 	
 	private static HAPExecutableModule process(
@@ -63,6 +65,7 @@ public class HAPProcessorModule {
 			String id, 
 			HAPContextGroup parentContext, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
+			HAPManagerResourceDefinition resourceDefMan,
 			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
@@ -73,7 +76,7 @@ public class HAPProcessorModule {
 
 		HAPExecutableModule out = new HAPExecutableModule(moduleDefinition, id);
 
-		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
+		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(resourceDefMan, dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
 		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForModule();
 		
 		//service providers

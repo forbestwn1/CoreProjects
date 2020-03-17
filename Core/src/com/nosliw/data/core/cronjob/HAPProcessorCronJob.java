@@ -36,7 +36,7 @@ public class HAPProcessorCronJob {
 
 		HAPExecutableCronJob out = new HAPExecutableCronJob(cronJobDefinition, id);
 
-		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, null);
+		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(resourceDefMan, dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, null);
 		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForCronJob();
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
 
