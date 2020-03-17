@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 
 public class HAPDefinitionExpressionSuite extends HAPResourceDefinitionContainer{
 
@@ -32,5 +33,8 @@ public class HAPDefinitionExpressionSuite extends HAPResourceDefinitionContainer
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public HAPResourceDefinition getElementResourceDefinition(String eleName) {  return new HAPDefinitionExpression(this, eleName);  }
 	
 }

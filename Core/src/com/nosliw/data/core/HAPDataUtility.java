@@ -68,5 +68,4 @@ public class HAPDataUtility {
 		return type==null || HAPConstant.DATAOPERATION_TYPE_NORMAL.equals(type);
 	}
 	
-	
 }

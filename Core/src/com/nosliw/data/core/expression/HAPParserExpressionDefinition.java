@@ -3,6 +3,7 @@ package com.nosliw.data.core.expression;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementReference;
@@ -36,6 +37,16 @@ public class HAPParserExpressionDefinition {
 		HAPUtilityComponentParse.parseComponent(out, jsonObj);
 		String expressionStr = jsonObj.getString(HAPDefinitionExpressionSuiteElementEntity.EXPRESSION);
 		out.setOperand(expressionParser.parseExpression(expressionStr));
+		
+		JSONArray refJsonArray = jsonObj.optJSONArray(HAPDefinitionExpressionSuiteElementEntity.REFERENCE);
+		if(refJsonArray!=null) {
+			for(int i=0; i<refJsonArray.length(); i++) {
+				JSONObject refJsonObj = refJsonArray.getJSONObject(i);
+				HAPDefinitionReference ref = new HAPDefinitionReference();
+				ref.buildObject(refJsonObj, HAPSerializationFormat.JSON);
+				out.addReference(ref);
+			}
+		}
 		return out;
 	}
 	

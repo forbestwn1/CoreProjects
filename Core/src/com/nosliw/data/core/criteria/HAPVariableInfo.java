@@ -6,9 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.info.HAPInfoImpSimple;
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -18,7 +16,7 @@ import com.nosliw.common.utils.HAPConstant;
  * This is variable info for expression 
  */
 @HAPEntityWithAttribute(baseName="VARIABLEINFO")
-public class HAPVariableInfo extends HAPSerializableImp{
+public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String CRITERIA = "criteria";
@@ -26,9 +24,6 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	@HAPAttribute
 	public static String STATUS = "status";
 
-	@HAPAttribute
-	public static String INFO = "info";
-	
 	//use stack to store all the change applied for criteria
 	private HAPDataTypeCriteria m_criteria;
 	
@@ -37,8 +32,6 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	//close : the criteria is close to change
 	private String m_status;
 
-	private HAPInfo m_info;
-	
 	public static HAPVariableInfo buildUndefinedVariableInfo() {
 		return buildVariableInfo(null);
 	}
@@ -66,27 +59,11 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	
 	private HAPVariableInfo() {}
 	
-//	public HAPVariableInfo(){
-//		this(null);
-//	}	
-	
-//	private HAPVariableInfo(HAPDataTypeCriteria criteria, String status){
-//		this.m_status = status;
-//		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
-//		this.initWithDefault();
-//	}
-//
-//	public HAPVariableInfo(HAPDataTypeCriteria criteria){
-//		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
-//		this.initWithDefault();
-//	}
-	
 	private void initWithDefault() {
 		if(this.m_status==null) {
 			if(this.m_criteria==null)   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN;
 			else   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_CLOSE;
 		}
-		if(this.m_info==null)	this.m_info = new HAPInfoImpSimple();
 	}
 	
 	public String getStatus(){		return this.m_status;	}
@@ -98,10 +75,6 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	public void setCriteria(HAPDataTypeCriteria criteria){
 		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
 	}
-	
-	public String getInfoValue(String name) {   return (String)this.m_info.getValue(name);   }
-	
-	public void setInfoValue(String name, String value) {  this.m_info.setValue(name, value);    }
 	
 	@Override
 	public boolean equals(Object obj){
@@ -117,11 +90,11 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(STATUS, this.getStatus());
 		if(this.getCriteria()!=null){
 			jsonMap.put(CRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
 		}
-		jsonMap.put(INFO, this.m_info.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -131,9 +104,8 @@ public class HAPVariableInfo extends HAPSerializableImp{
 		}
 		else if(value instanceof JSONObject){
 			JSONObject jsonValue = (JSONObject)value;
+			this.buildEntityInfoByJson(jsonValue);
 			this.m_status = (String)jsonValue.opt(STATUS);
-			this.m_info = new HAPInfoImpSimple();
-			this.m_info.buildObject(jsonValue.opt(INFO), HAPSerializationFormat.JSON);
 			this.m_criteria = HAPCriteriaParser.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
 		}
 		this.initWithDefault();
@@ -142,9 +114,9 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	
 	public HAPVariableInfo cloneVariableInfo() {
 		HAPVariableInfo out = new HAPVariableInfo();
+		this.cloneToEntityInfo(out);
 		out.m_status = this.m_status;
 		out.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(this.m_criteria);
-		out.m_info = this.m_info.cloneInfo();
 		return out;
 	}
 	

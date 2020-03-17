@@ -63,7 +63,7 @@ public class HAPManagerProcess {
 	}
 	
 	public HAPExecutableProcess getProcess(String processId, HAPDefinitionProcessSuite suite) {
-		HAPExecutableProcess out = HAPProcessorProcess.process(processId, new HAPDefinitionProcessWithContext(new HAPDefinitionProcess(suite, processId)), null, null, this, this.m_contextProcessRequirement, new HAPProcessTracker());
+		HAPExecutableProcess out = HAPProcessorProcess.process(processId, new HAPResourceDefinitionWithContext(new HAPDefinitionProcess(suite, processId)), null, null, this, this.m_contextProcessRequirement, new HAPProcessTracker());
 		return out;
 	}
 
@@ -76,7 +76,7 @@ public class HAPManagerProcess {
 			HAPParentContext inputContext, 
 			Map<String, HAPParentContext> outputContext 
 		) {
-		HAPDefinitionWrapperTask<HAPDefinitionProcessWithContext> suiteWrapper = new HAPDefinitionWrapperTask(context.getResourceDefinition(processId));
+		HAPDefinitionWrapperTask<HAPResourceDefinitionWithContext> suiteWrapper = new HAPDefinitionWrapperTask(context.getResourceDefinition(processId));
 		suiteWrapper.setInputMapping(inputMapping);
 		suiteWrapper.setOutputMapping(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, context);
@@ -92,7 +92,7 @@ public class HAPManagerProcess {
 			HAPParentContext inputContext, 
 			HAPParentContext outputContext 
 		) {
-		HAPDefinitionWrapperTask<HAPDefinitionProcessWithContext> suiteWrapper = new HAPDefinitionWrapperTask(context.getResourceDefinition(processId));
+		HAPDefinitionWrapperTask<HAPResourceDefinitionWithContext> suiteWrapper = new HAPDefinitionWrapperTask(context.getResourceDefinition(processId));
 		suiteWrapper.setInputMapping(inputMapping);
 		suiteWrapper.setOutputMapping(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, context);
@@ -108,7 +108,7 @@ public class HAPManagerProcess {
 			HAPParentContext inputContext, 
 			HAPParentContext outputContext 
 		) {
-		HAPDefinitionWrapperTask<HAPDefinitionProcessWithContext> suiteWrapper = new HAPDefinitionWrapperTask(new HAPDefinitionProcessWithContext(new HAPDefinitionProcess(suite, processId)));
+		HAPDefinitionWrapperTask<HAPResourceDefinitionWithContext> suiteWrapper = new HAPDefinitionWrapperTask(new HAPResourceDefinitionWithContext(new HAPDefinitionProcess(suite, processId)));
 		suiteWrapper.setInputMapping(inputMapping);
 		suiteWrapper.setOutputMapping(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, suite);
@@ -124,7 +124,7 @@ public class HAPManagerProcess {
 			HAPParentContext inputContext, 
 			Map<String, HAPParentContext> outputContext 
 		) {
-		HAPDefinitionWrapperTask<HAPDefinitionProcessWithContext> suiteWrapper = new HAPDefinitionWrapperTask(new HAPDefinitionProcessWithContext(new HAPDefinitionProcess(suite, processId)));
+		HAPDefinitionWrapperTask<HAPResourceDefinitionWithContext> suiteWrapper = new HAPDefinitionWrapperTask(new HAPResourceDefinitionWithContext(new HAPDefinitionProcess(suite, processId)));
 		suiteWrapper.setInputMapping(inputMapping);
 		suiteWrapper.setOutputMapping(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, suite);
@@ -132,103 +132,6 @@ public class HAPManagerProcess {
 		return out;
 	}
 
-	
-/*	
-	public HAPDefinitionProcessSuite getProcessSuite(String suiteId) {
-		HAPDefinitionProcessSuite suite = this.m_resourceDefManager.getResourceDefinition(suiteId)
-		
-		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite(suiteId, this.getPluginManager());
-		return suite;
-	}
-	
-	public HAPDefinitionProcessWithContext getProcessDefinition(HAPProcessId processId) {
-		HAPDefinitionProcessWithContext out = null;
-		String suiteId = processId.getSuiteId();
-		HAPDefinitionProcessSuite suite = this.getProcessSuite(suiteId);
-		out = new HAPDefinitionProcessWithContext(suite.getProcess(processId.getProcessId()), HAPContextProcessor.createContext(suite, this));
-		return out;
-	}
-	
-	public HAPExecutableProcess getProcess(HAPProcessId processId) {
-		HAPDefinitionProcessSuite suite = this.getProcessSuite(processId.getSuiteId());
-		return this.getProcess(processId.getProcessId(), suite);
-	}
-
-	public HAPExecutableProcess getProcess(String processId, HAPDefinitionProcessSuite suite) {
-		HAPExecutableProcess out = HAPProcessorProcess.process(processId, suite, null, this, this.m_contextProcessRequirement, new HAPProcessTracker());
-		return out;
-	}
-
-	public HAPExecutableProcess getProcess(String processId, HAPContextProcessor context) {
-		HAPExecutableProcess out = HAPProcessorProcess.process(processId, context.getProcessDefinition(processId), null, null, this, this.m_contextProcessRequirement, new HAPProcessTracker());
-		return out;
-	}
-	
-	public HAPExecutableWrapperTask<HAPExecutableProcess> getEmbededProcess(
-			String processId, 
-			HAPDefinitionProcessSuite suite, 
-			HAPDefinitionDataAssociation inputMapping, 
-			Map<String, HAPDefinitionDataAssociation> outputMapping,
-			HAPParentContext inputContext, 
-			HAPParentContext outputContext 
-		) {
-		HAPDefinitionWrapperTask<HAPDefinitionProcess> suiteWrapper = new HAPDefinitionWrapperTask(suite.getProcess(processId));
-		suiteWrapper.setInputMapping(inputMapping);
-		suiteWrapper.setOutputMapping(outputMapping);
-		HAPExecutableProcess processExe = this.getProcess(processId, suite);
-		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
-		return out;
-	}
-
-	public HAPExecutableWrapperTask<HAPExecutableProcess> getEmbededProcess(
-			String processId, 
-			HAPDefinitionProcessSuite suite, 
-			HAPDefinitionDataAssociation inputMapping, 
-			Map<String, HAPDefinitionDataAssociation> outputMapping,
-			HAPParentContext inputContext, 
-			Map<String, HAPParentContext> outputContext 
-		) {
-		HAPDefinitionWrapperTask<HAPDefinitionProcess> suiteWrapper = new HAPDefinitionWrapperTask(suite.getProcess(processId));
-		suiteWrapper.setInputMapping(inputMapping);
-		suiteWrapper.setOutputMapping(outputMapping);
-		HAPExecutableProcess processExe = this.getProcess(processId, suite);
-		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
-		return out;
-	}
-
-	//process process by name from processor context
-	public HAPExecutableWrapperTask<HAPExecutableProcess> getEmbededProcess(
-			String processId, 
-			HAPContextProcessor context, 
-			HAPDefinitionDataAssociation inputMapping, 
-			Map<String, HAPDefinitionDataAssociation> outputMapping,
-			HAPParentContext inputContext, 
-			Map<String, HAPParentContext> outputContext 
-		) {
-		HAPDefinitionWrapperTask<HAPDefinitionProcess> suiteWrapper = new HAPDefinitionWrapperTask(context.getProcessDefinition(processId).getProcess());
-		suiteWrapper.setInputMapping(inputMapping);
-		suiteWrapper.setOutputMapping(outputMapping);
-		HAPExecutableProcess processExe = this.getProcess(processId, context);
-		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
-		return out;
-	}
-
-	public HAPExecutableWrapperTask<HAPExecutableProcess> getEmbededProcess(
-			String processId, 
-			HAPContextProcessor context, 
-			HAPDefinitionDataAssociation inputMapping, 
-			Map<String, HAPDefinitionDataAssociation> outputMapping,
-			HAPParentContext inputContext, 
-			HAPParentContext outputContext 
-		) {
-		HAPDefinitionWrapperTask<HAPDefinitionProcess> suiteWrapper = new HAPDefinitionWrapperTask(context.getProcessDefinition(processId).getProcess());
-		suiteWrapper.setInputMapping(inputMapping);
-		suiteWrapper.setOutputMapping(outputMapping);
-		HAPExecutableProcess processExe = this.getProcess(processId, context);
-		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_contextProcessRequirement);
-		return out;
-	}
-*/
 	public HAPManagerActivityPlugin getPluginManager() {   return this.m_pluginManager;    }
 	
 }

@@ -14,6 +14,18 @@
 			"id": "test1",
 			"name": "test1",
 			"description": "test1",
+			"expression" : "!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)",
+			"reference" : [
+				{
+					"name" : "ref1",
+					"resourceId" : "",
+					"inputMapping" : {
+						
+					},
+					
+				}
+			],
+
 			"context": {
 				"group": {
 					"public": {
@@ -73,7 +85,6 @@
 					}
 				}
 			},
-			"expression" : "!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)",
 		},
 	]
 }

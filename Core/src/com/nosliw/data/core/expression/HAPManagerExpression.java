@@ -2,6 +2,7 @@ package com.nosliw.data.core.expression;
 
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.resource.HAPResourceDefinitionWithContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPManagerExpression {
@@ -18,5 +19,11 @@ public class HAPManagerExpression {
 		return expressionDef;
 	}
 	
+	public HAPResourceDefinitionWithContext getExpressionDefinitionWithContext(HAPResourceId processId, HAPAttachmentContainer parentAttachment) {
+		HAPDefinitionExpression expressionDef = this.getExpressionDefinition(processId, parentAttachment);
+		HAPResourceDefinitionWithContext out = new HAPResourceDefinitionWithContext(expressionDef, HAPContextExpression.createContext(expressionDef.getSuite(), this.m_resourceDefManager));
+		return out;
+	}
+
 
 }

@@ -12,8 +12,11 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPDataWrapper;
+import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -213,6 +216,40 @@ public class HAPOperandUtility {
 			}
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && processTracker.isSuccess());
 		return varsInfo;
+	}
+
+	/**
+	 * Process anonomouse parameter in operaion
+	 * Add parm name to it
+	 * It only works for OperationOperand with clear data typeId
+	 * @param expression
+	 */
+	public void processDefaultAnonomousParmInOperation(HAPOperandWrapper operand, HAPDataTypeHelper dataTypeHelper){
+		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_OPERATION)){
+					HAPOperandOperation operationOperand = (HAPOperandOperation)operand.getOperand();
+					HAPDataTypeId dataTypeId = operationOperand.getDataTypeId();
+					if(dataTypeId!=null){
+						HAPDataTypeOperation dataTypeOperation = dataTypeHelper.getOperationInfoByName(dataTypeId, operationOperand.getOperaion());
+						List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
+						Map<String, HAPOperandWrapper> parms = operationOperand.getParms();
+						for(HAPOperationParmInfo parmInfo : parmsInfo){
+							HAPOperandWrapper parmOperand = parms.get(parmInfo.getName());
+							if(parmOperand==null && parmInfo.getIsBase() && operationOperand.getBase()!=null){
+								//if parmInfo is base parm and is located in base
+								parmOperand = operationOperand.getBase();
+								operationOperand.addParm(parmInfo.getName(), parmOperand.getOperand());
+								operationOperand.setBase(null);
+							}
+						}
+					}
+				}
+				return true;
+			}
+		});		
 	}
 
 }
