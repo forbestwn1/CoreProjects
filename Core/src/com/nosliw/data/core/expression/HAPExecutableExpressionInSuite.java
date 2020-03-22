@@ -36,13 +36,19 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
-	public HAPExecutableExpressionInSuite(String id, HAPOperand operand) {
+	private HAPDefinitionExpression m_definition;
+	
+	public HAPExecutableExpressionInSuite(HAPDefinitionExpression definition, String id, HAPOperand operand) {
+		this.m_definition = definition;
 		this.m_id = id;
 		this.m_operand = new HAPOperandWrapper(operand);
 		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
 	}
 	
+	@Override
+	public HAPDefinitionExpression getDefinition() {   return this.m_definition;    }
+
 	@Override
 	public String getId() {  return this.m_id;  }
 	public void setId(String id) {   this.m_id = id;    }
@@ -84,17 +90,11 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	@Override
 	public Map<String, HAPMatchers> getVariableMatchers() {		return this.m_varsMatchers;	}
 
-	public void discover(
-			Map<String, HAPVariableInfo> parentVariablesInfo, 
-			HAPDataTypeCriteria expectOutput,
-			HAPProcessTracker processTracker) {
-
-		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(new HAPOperand[]{this.getOperand().getOperand()}, parentVariablesInfo, expectOutput, processTracker);
-		parentVariablesInfo.clear();
-		parentVariablesInfo.putAll(discoveredVarsInf);
+	@Override
+	public void discover(HAPDataTypeCriteria expectOutput, HAPProcessTracker processTracker) {
+		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(new HAPOperand[]{this.getOperand().getOperand()}, this.m_localVarsInfo, expectOutput, processTracker);
 		this.m_localVarsInfo.clear();
 		this.m_localVarsInfo.putAll(discoveredVarsInf);
-		
 	}
 
 	@Override

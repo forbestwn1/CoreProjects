@@ -6,7 +6,7 @@ import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -16,7 +16,7 @@ import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 
 public class HAPManagerCronJob {
 
-	private HAPExpressionSuiteManager m_expressionMan; 
+	private HAPManagerExpression m_expressionMan; 
 	
 	private HAPResourceManagerRoot m_resourceMan;
 
@@ -33,7 +33,7 @@ public class HAPManagerCronJob {
 	private HAPManagerScheduleDefinition m_scheduleDefManager;
 	
 	public HAPManagerCronJob(
-			HAPExpressionSuiteManager expressionMan, 
+			HAPManagerExpression expressionMan, 
 			HAPResourceManagerRoot resourceMan,
 			HAPManagerProcess processMan,
 			HAPRuntime runtime, 

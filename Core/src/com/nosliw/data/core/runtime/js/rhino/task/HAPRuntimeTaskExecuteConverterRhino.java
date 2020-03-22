@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
+import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
@@ -31,7 +31,7 @@ public class HAPRuntimeTaskExecuteConverterRhino extends HAPRuntimeTaskExecuteCo
 			
 			//prepare resources for data operation in the runtime (resource and dependency)
 			//execute expression after load required resources
-			List<HAPResourceInfo> resourcesId =	HAPExpressionUtility.discoverResourceRequirement(this.getMatchers(),rhinoRuntime.getRuntimeEnvironment().getResourceManager(), runtime.getRuntimeInfo());
+			List<HAPResourceInfo> resourcesId =	HAPUtilityExpressionResource.discoverResourceRequirement(this.getMatchers(),rhinoRuntime.getRuntimeEnvironment().getResourceManager(), runtime.getRuntimeInfo());
 			
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));

@@ -28,7 +28,7 @@ public class HAPResourceDefinitionPluginExpressionSuite implements HAPPluginReso
 		HAPDefinitionExpressionSuite suite = null;
 		try {
 			HAPResourceIdExpressionSuite expressionSuiteResourceId = new HAPResourceIdExpressionSuite(resourceId);
-			suite = HAPImporterExpressionSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPFileUtility.getProcessFolder()+expressionSuiteResourceId.getId()+".process")), this.m_expressionParser);
+			suite = HAPImporterExpressionSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPFileUtility.getExpressionFolder()+expressionSuiteResourceId.getId()+".res")), this.m_expressionParser);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

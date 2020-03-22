@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDefinitionWithContext;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -33,7 +33,7 @@ public class HAPManagerProcess {
 			HAPManagerResourceDefinition resourceDefManager,
 			HAPDataTypeHelper dataTypeHelper,
 			HAPRuntime runtime,
-			HAPExpressionSuiteManager expressionManager,
+			HAPManagerExpression expressionManager,
 			HAPManagerServiceDefinition serviceDefinitionManager) {
 		this.m_pluginManager = pluginMan;
 		this.m_resourceDefManager = resourceDefManager;

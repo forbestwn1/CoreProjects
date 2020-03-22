@@ -8,6 +8,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.script.context.data.HAPContextDataFactory;
+import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
 
 public class HAPAttachmentUtility {
 
@@ -17,6 +19,16 @@ public class HAPAttachmentUtility {
 
 	public static final String ATTRIBUTE_FLAG_OVERRIDE = "flagOveride"; 
 
+	public static HAPContextDataFlat getContextDataFromAttachment(HAPAttachmentContainer attContainer, String type, String name) {
+		HAPContextDataFlat out = new HAPContextDataFlat();
+		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
+		if(attachment!=null) {
+			JSONObject dataObjJson = attachment.getEntity();
+			out = HAPContextDataFactory.newContextDataFlat(dataObjJson);
+		}
+		return out;
+	}
+	
 	public static HAPResourceDefinition getResourceDefinition(HAPAttachmentContainer attContainer, String type, String name, HAPManagerResourceDefinition resourceDefMan) {
 		HAPResourceDefinition out = null;
 		HAPAttachment attachment = attContainer.getElement(type, name);

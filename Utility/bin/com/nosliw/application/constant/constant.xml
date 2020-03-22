@@ -558,6 +558,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICE" value="service"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATA" value="data"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_TESTDATA" value="testData"/>
 
 			<definition name="RUNTIME_RESOURCE_TYPE_MATCHER" value="matcher"/>
 

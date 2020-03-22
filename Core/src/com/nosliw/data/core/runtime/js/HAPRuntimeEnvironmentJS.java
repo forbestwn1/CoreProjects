@@ -8,7 +8,7 @@ import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionPluginProcess;
@@ -54,7 +54,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPRuntimeProcess m_processRuntime;
 	
-	private HAPExpressionSuiteManager m_expressionSuiteManager;
+	private HAPManagerExpression m_expressionManager;
 	
 	private HAPGatewayManager m_gatewayManager;
 	
@@ -73,7 +73,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPRuntimeEnvironmentJS(HAPResourceManagerRoot resourceMan,
 									HAPManagerProcess processManager,
 									HAPRuntimeProcess processRuntime,
-									HAPExpressionSuiteManager expressionSuiteManager,
+									HAPManagerExpression expressionManager,
 								    HAPGatewayManager gatewayManager,
 								    HAPManagerService serviceManager,
 								    HAPManagerTemplate templateManager,
@@ -81,13 +81,13 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 								    HAPManagerCronJob cronJobManager,
 								    HAPRuntime runtime){
 		super();
-		this.init(resourceMan, processManager, processRuntime, expressionSuiteManager, gatewayManager, serviceManager, templateManager, resourceDefManager, cronJobManager, runtime);
+		this.init(resourceMan, processManager, processRuntime, expressionManager, gatewayManager, serviceManager, templateManager, resourceDefManager, cronJobManager, runtime);
 	}
 	
 	protected void init(HAPResourceManagerRoot resourceMan,
 						HAPManagerProcess processManager,
 						HAPRuntimeProcess processRuntime,
-						HAPExpressionSuiteManager expressionSuiteManager,
+						HAPManagerExpression expressionManager,
 					    HAPGatewayManager gatewayManager,
 					    HAPManagerService serviceManager,
 					    HAPManagerTemplate templateManager,
@@ -97,7 +97,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_resourceManager = resourceMan;
 		this.m_processManager = processManager;
 		this.m_processRuntime = processRuntime;
-		this.m_expressionSuiteManager = expressionSuiteManager;
+		this.m_expressionManager = expressionManager;
 		this.m_serviceManager = serviceManager;
 		this.m_resourceDefinitionManager = resourceDefManager;
 		this.m_cronJobManager = cronJobManager;
@@ -115,7 +115,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getGatewayManager().registerGateway(GATEWAY_RESOURCEDEFINITION, new HAPGatewayResourceDefinition(this));
 		this.getGatewayManager().registerGateway(GATEWAY_RESOURCE, new HAPGatewayResource(this));
 		this.getGatewayManager().registerGateway(GATEWAY_CRITERIA, new HAPGatewayCriteriaOperation());
-		this.getGatewayManager().registerGateway(GATEWAY_DISCOVERY, new HAPGatewayExpressionDiscovery(this.getExpressionSuiteManager(), runtime));
+		this.getGatewayManager().registerGateway(GATEWAY_DISCOVERY, new HAPGatewayExpressionDiscovery(this.getExpressionManager(), runtime));
 		this.getGatewayManager().registerGateway(GATEWAY_ERRORLOG, new HAPGatewayErrorLogger());
 		
 		//service factory
@@ -142,7 +142,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPRuntimeProcess getProcessRuntime() {   return this.m_processRuntime;  }
 
 	@Override
-	public HAPExpressionSuiteManager getExpressionSuiteManager(){  return this.m_expressionSuiteManager;  }
+	public HAPManagerExpression getExpressionManager(){  return this.m_expressionManager;  }
 
 	@Override
 	public HAPGatewayManager getGatewayManager(){  return this.m_gatewayManager;   }

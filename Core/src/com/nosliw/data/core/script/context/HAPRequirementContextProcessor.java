@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 
@@ -14,7 +14,7 @@ public class HAPRequirementContextProcessor {
 			HAPManagerResourceDefinition resourceDefMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
-			HAPExpressionSuiteManager expressionManager, 
+			HAPManagerExpression expressionManager, 
 			HAPManagerServiceDefinition serviceDefinitionManager, 
 			Set<String> inheritanceExcludedInfo) {
 		this.resourceDefMan = resourceDefMan;
@@ -28,7 +28,7 @@ public class HAPRequirementContextProcessor {
 	public HAPManagerResourceDefinition resourceDefMan;
 	public HAPDataTypeHelper dataTypeHelper;
 	public HAPRuntime runtime;
-	public HAPExpressionSuiteManager expressionManager;
+	public HAPManagerExpression expressionManager;
 	public HAPManagerServiceDefinition serviceDefinitionManager;
 	public Set<String> inheritanceExcludedInfo;
 	

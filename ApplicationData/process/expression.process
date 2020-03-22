@@ -9,7 +9,7 @@
 		}
 	},
 	"attachment": {
-		"data" : [
+		"testData" : [
 			{
 				"name": "testData1",
 				"entity": {

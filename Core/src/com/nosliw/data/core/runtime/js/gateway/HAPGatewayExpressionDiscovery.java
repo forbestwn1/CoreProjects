@@ -20,7 +20,7 @@ import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
@@ -47,12 +47,12 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 	final public static String COMMAND_EXECUTEEXPRESSION_VARIABLESVALUE = "variablesValue";
 	
 	
-	private HAPExpressionSuiteManager m_expressionSuiteManager;
+	private HAPManagerExpression m_expressionManager;
 	
 	private HAPRuntime m_runtime;
 	
-	public HAPGatewayExpressionDiscovery(HAPExpressionSuiteManager expressionSuiteManager, HAPRuntime runtime){
-		this.m_expressionSuiteManager = expressionSuiteManager;
+	public HAPGatewayExpressionDiscovery(HAPManagerExpression expressionManager, HAPRuntime runtime){
+		this.m_expressionManager = expressionManager;
 		this.m_runtime = runtime;
 	}
 	
@@ -78,7 +78,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 			Map<String, HAPData> constants = HAPDataUtility.buildDataWrapperMapFromJson(constantsJson); 
 			
 			HAPProcessTracker processTracker = new HAPProcessTracker();
-			HAPExecutableExpression expression = this.m_expressionSuiteManager.compileExpression(expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processTracker);
+			HAPExecutableExpression expression = this.m_expressionManager.compileExpression(expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processTracker);
 			HAPDataTypeCriteria outCriteria = expression.getOperand().getOperand().getOutputCriteria();
 			out = this.createSuccessWithObject(outCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 			break;
@@ -103,7 +103,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 			}
 			
 			HAPProcessTracker processTracker = new HAPProcessTracker();
-			HAPExecutableExpression expression = this.m_expressionSuiteManager.compileExpression(expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processTracker);
+			HAPExecutableExpression expression = this.m_expressionManager.compileExpression(expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processTracker);
 			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expression, expressionParms, null);
 			HAPServiceData serviceData = this.m_runtime.executeTaskSync(task);
 			if(serviceData.isSuccess()){

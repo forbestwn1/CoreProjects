@@ -5,7 +5,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.dataable.HAPManagerDataable;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
@@ -28,7 +28,7 @@ public class HAPProcessorCronJob {
 			HAPManagerProcess processMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
-			HAPExpressionSuiteManager expressionManager,
+			HAPManagerExpression expressionManager,
 			HAPManagerServiceDefinition serviceDefinitionManager,
 			HAPManagerResourceDefinition resourceDefMan,
 			HAPManagerDataable dataableMan,

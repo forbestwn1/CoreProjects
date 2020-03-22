@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
+import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
@@ -36,7 +36,7 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 				//execute expression after load required resources
 				List<HAPExecutableExpression> expressions = new ArrayList<HAPExecutableExpression>();
 				expressions.add(this.getExpression());
-				List<HAPResourceInfo> resourcesId =	HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager(), runtime.getRuntimeInfo());
+				List<HAPResourceInfo> resourcesId =	HAPUtilityExpressionResource.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager(), runtime.getRuntimeInfo());
 				
 				HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 				loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));

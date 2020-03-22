@@ -17,7 +17,7 @@ public abstract class HAPExecutableExpressionImp extends HAPSerializableImp impl
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		if(this.m_resources==null) {
-			List<HAPResourceIdSimple> expressionDependency = HAPExpressionUtility.discoverResources(this);
+			List<HAPResourceIdSimple> expressionDependency = HAPUtilityExpressionResource.discoverResources(this);
 			this.m_resources = new ArrayList<HAPResourceDependency>();
 			for(HAPResourceIdSimple id : expressionDependency) {
 				this.m_resources.add(new HAPResourceDependency(id));

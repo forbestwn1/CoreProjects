@@ -20,6 +20,8 @@ public class HAPContextDataFlat extends HAPSerializableImp implements HAPContext
 		this.m_data.putAll(data);
 	}
 	
+	public Map<String, HAPData> getData(){   return this.m_data;   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		for(String name : this.m_data.keySet()) {

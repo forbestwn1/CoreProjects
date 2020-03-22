@@ -5,7 +5,9 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.expression.HAPExpressionManager;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionPluginExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionPluginExpressionSuite;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
@@ -44,15 +46,15 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPManagerTemplate templateManager = new HAPManagerTemplate();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(templateManager);
 		HAPManagerService serviceManager = new HAPManagerService();
-		HAPExpressionSuiteManager expSuiteMan = new HAPExpressionSuiteManager();
-		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
+		HAPManagerExpression expressionMan = new HAPManagerExpression(resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
+		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, expressionMan, serviceManager.getServiceDefinitionManager());
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
-		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expSuiteMan, resourceMan, processMan, runtime, HAPExpressionManager.dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
+		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, HAPExpressionManager.dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 
 		init(resourceMan,
 				processMan,
 				processRuntimeMan,
-				expSuiteMan,
+				expressionMan,
 				new HAPGatewayManager(),
 				serviceManager,
 				templateManager,
@@ -60,6 +62,10 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 				cronJobManager,
 				runtime
 		);
+
+		//resource definition plugin
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginExpressionSuite(new HAPExpressionParserImp()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginExpression(this.getResourceDefinitionManager()));
 
 		this.getGatewayManager().registerGateway(GATEWAY_SERVICE, new HAPGatewayService(this.getServiceManager()));
 	}

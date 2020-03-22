@@ -7,7 +7,7 @@ import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -37,7 +37,7 @@ public class HAPUIResourceManager {
 
 	private HAPResourceCache m_resourceCache;
 	
-	private HAPExpressionSuiteManager m_expressionMan; 
+	private HAPManagerExpression m_expressionMan; 
 	
 	private HAPResourceManagerRoot m_resourceMan;
 
@@ -63,7 +63,7 @@ public class HAPUIResourceManager {
 	
 	public HAPUIResourceManager(
 			HAPUITagManager uiTagMan,
-			HAPExpressionSuiteManager expressionMan, 
+			HAPManagerExpression expressionMan, 
 			HAPResourceManagerRoot resourceMan,
 			HAPManagerProcess processMan,
 			HAPRuntime runtime, 

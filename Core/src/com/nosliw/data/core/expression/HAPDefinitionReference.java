@@ -26,6 +26,13 @@ public class HAPDefinitionReference extends HAPEntityInfoWritableImp{
 	
 	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
 	
+	public HAPDefinitionReference cloneReferenceDefinition() {
+		HAPDefinitionReference out = new HAPDefinitionReference();
+		out.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
+		out.m_resourceId = this.m_resourceId.clone();
+		return out;
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);

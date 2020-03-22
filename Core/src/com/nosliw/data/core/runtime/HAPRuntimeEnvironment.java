@@ -2,7 +2,7 @@ package com.nosliw.data.core.runtime;
 
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -19,7 +19,7 @@ import com.nosliw.data.core.template.HAPManagerTemplate;
  */
 public interface HAPRuntimeEnvironment {
 
-	HAPExpressionSuiteManager getExpressionSuiteManager();
+	HAPManagerExpression getExpressionManager();
 
 	HAPManagerProcess getProcessManager();
 

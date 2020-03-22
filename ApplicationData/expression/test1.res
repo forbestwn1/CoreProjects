@@ -11,14 +11,14 @@
 	"attachment": {
 	},	
 	"element": [{
-			"id": "test1",
-			"name": "test1",
+			"id": "main",
+			"name": "main",
 			"description": "test1",
 			"expression" : "!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)",
-			"reference" : [
+			"referenceMapping" : [
 				{
 					"name" : "ref1",
-					"resourceId" : "",
+					"resourceId" : "aaa|bbb",
 					"inputMapping" : {
 						
 					},

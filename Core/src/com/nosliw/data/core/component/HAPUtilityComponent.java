@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
@@ -18,6 +19,7 @@ import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
@@ -25,6 +27,10 @@ import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 public class HAPUtilityComponent {
 
+	public static HAPContextDataFlat getTestDataFromAttachment(HAPWithAttachment withAttachment, String name) {
+		return HAPAttachmentUtility.getContextDataFromAttachment(withAttachment.getAttachmentContainer(), HAPConstant.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
+	}
+	
 	public static void processComponentExecutable(
 			HAPExecutableImpComponent componentExe,
 			HAPContextGroup parentContext,
@@ -86,7 +92,7 @@ public class HAPUtilityComponent {
 //		return out;
 //	}
 	
-	public static HAPContextStructure processElementComponentContext(HAPComponentContainerElement component, HAPContextGroup extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
+	public static HAPContextStructure processElementComponentContext(HAPComponentContainerElement component, HAPContextStructure extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
 		HAPContextStructure parentContext = HAPUtilityContext.hardMerge(component.getContainer().getContextStructure(), extraContext); 
 		return HAPProcessorContext.process(component.getElement().getContextStructure(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);
 	}

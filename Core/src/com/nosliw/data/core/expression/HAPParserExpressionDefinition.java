@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementReference;
 
 public class HAPParserExpressionDefinition {
 
@@ -19,8 +18,8 @@ public class HAPParserExpressionDefinition {
 		for(int i=0; i<processesArray.length(); i++){
 			JSONObject processObjJson = processesArray.getJSONObject(i);
 			String id = processObjJson.getString("id");
-			Object refObj = processObjJson.opt(HAPDefinitionProcessSuiteElementReference.REFERENCE);
-			if(refObj==null) {
+			Object expressionObj = processObjJson.opt(HAPDefinitionExpressionSuiteElementEntity.EXPRESSION);
+			if(expressionObj!=null) {
 				//process
 				out.addElement(id, parseExpressionDefinition(processObjJson, expressionParser));
 			}
@@ -38,7 +37,7 @@ public class HAPParserExpressionDefinition {
 		String expressionStr = jsonObj.getString(HAPDefinitionExpressionSuiteElementEntity.EXPRESSION);
 		out.setOperand(expressionParser.parseExpression(expressionStr));
 		
-		JSONArray refJsonArray = jsonObj.optJSONArray(HAPDefinitionExpressionSuiteElementEntity.REFERENCE);
+		JSONArray refJsonArray = jsonObj.optJSONArray(HAPDefinitionExpressionSuiteElementEntity.REFERENCEMAPPING);
 		if(refJsonArray!=null) {
 			for(int i=0; i<refJsonArray.length(); i++) {
 				JSONObject refJsonObj = refJsonArray.getJSONObject(i);
