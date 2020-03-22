@@ -24,33 +24,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPExpressionUtility {
 
-//	static public String buildFullVariableName(String parent, String name){
-//		String out = HAPNamingConversionUtility.cascadePath(parent, name); 
-//		return out;
-//	}
-//	
-//	static public String updateVaraible(String parent, String name){
-//		String out = name;
-//		if(!out.startsWith(name+HAPConstant.SEPERATOR_PATH)){
-//			out = buildFullVariableName(parent, name);
-//		}
-//		return out;
-//	}
-	
-//	  public static Map<String, HAPVariableInfo> buildVariablesInfoMapFromJson(JSONObject jsonObj) {
-//		  Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>(); 
-//		  if(jsonObj!=null) {
-//				Iterator<String> its = jsonObj.keys();
-//				while(its.hasNext()){
-//					String name = its.next();
-//					String criteriaStr = jsonObj.optString(name);
-//					HAPDataTypeCriteria criteria = HAPCriteriaUtility.parseCriteria(criteriaStr);
-//					out.put(name, HAPVariableInfo.buildVariableInfo(criteria));
-//				}
-//		  }
-//		  return out;
-//	  }
-
 		/**
 		 * Discover resources required for expression 
 		 * @param expression
@@ -107,23 +80,5 @@ public class HAPExpressionUtility {
 			}
 			return resourceMan.discoverResources(resourceIds, runtimeInfo);
 		}
-		
-		/**
-		 * Discover resources required for expression 
-		 * @param expression
-		 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
-		 */
-//		static private List<HAPResourceIdSimple> getResourceRequirement(HAPExecutableExpression expression){
-//			Set<HAPResourceIdSimple> result = new LinkedHashSet<HAPResourceIdSimple>();
-//			HAPOperandUtility.processAllOperand(expression.getOperand(), result, new HAPOperandTask(){
-//				@Override
-//				public boolean processOperand(HAPOperandWrapper operand, Object data) {
-//					Set<HAPResourceIdSimple> resourceIds = (Set<HAPResourceIdSimple>)data;
-//					resourceIds.addAll(operand.getOperand().getResources());
-//					return true;
-//				}
-//			});
-//			return new ArrayList(result);
-//		}	
 		
 }

@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.updatename.HAPUpdateName;
+import com.nosliw.common.updatename.HAPUpdateNamePrefix;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -60,11 +60,7 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 			HAPScriptExpression scriptExp = (HAPScriptExpression)element;
 			String scriptExpressionId = index + "";
 			//update expression id in script expression 
-			scriptExp.updateExpressionId(new HAPUpdateName() {
-				@Override
-				public String getUpdatedName(String name) {
-					return scriptExpressionId+"_"+name;
-				}});
+			scriptExp.updateExpressionId(new HAPUpdateNamePrefix(scriptExpressionId+"_"));
 			this.m_scriptExpressions.put(scriptExpressionId, scriptExp);
 			this.m_indexToId.put(index, scriptExpressionId);
 		}

@@ -33,9 +33,6 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	
 	public String getAttribute(){   return this.m_attribute;   }
 	
-	@Override
-	public String getType(){	return HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION;}
-
 	public HAPOperandWrapper getBase() {  return this.m_base;  }
 	
 	public void setBase(HAPOperand base){	this.m_base = this.createOperandWrapper(base);	}
@@ -46,7 +43,6 @@ public class HAPOperandAttribute extends HAPOperandImp{
 		if(this.m_base!=null)	out.add(this.m_base);
 		return out;
 	}
-	
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

@@ -8,9 +8,26 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.component.attachment.HAPAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 
 public class HAPDataUtility {
 
+	public static Map<String, HAPDefinitionConstant> buildConstantDefinition(HAPAttachmentContainer attContainer){
+		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
+		Map<String, HAPAttachment> attrs = attContainer.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_DATA);
+		for(String name : attrs.keySet()) {
+			HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
+			HAPAttachmentEntity attr = (HAPAttachmentEntity)attrs.get(name);
+			constantDef.buildEntityInfoByJson(attr);
+			constantDef.setData(buildDataWrapperFromObject(attr.getEntity()));
+			out.put(constantDef.getName(), constantDef);
+		}
+		return out;
+	}
+	
 	public static HAPDataWrapper buildDataWrapperFromObject(Object obj){
 		HAPDataWrapper out = null;
 		if(obj instanceof String){

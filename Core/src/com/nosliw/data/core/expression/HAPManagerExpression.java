@@ -1,5 +1,7 @@
 package com.nosliw.data.core.expression;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResourceDefinitionWithContext;
@@ -25,5 +27,12 @@ public class HAPManagerExpression {
 		return out;
 	}
 
-
+	public HAPExecutableExpression getExpression(HAPResourceId expressionId, HAPContextExpression context) {
+		if(context==null)  context = HAPContextExpression.createContext(this.m_resourceDefManager);
+		HAPExecutableExpression out = HAPProcessorExpression.process(expressionId.toStringValue(HAPSerializationFormat.LITERATE), context.getResourceDefinition(expressionId), null, null, this, this.m_contextProcessRequirement, new HAPProcessTracker());
+		return out;
+	}
+	
+	
+	
 }

@@ -15,14 +15,13 @@ import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
-import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 
 public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOperand{
 
 	private String m_type;
-	
+	 
 	private String m_status;
 	
 	private HAPDataTypeCriteria m_outputCriteria;

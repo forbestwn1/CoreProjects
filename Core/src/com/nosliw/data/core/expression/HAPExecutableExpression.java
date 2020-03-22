@@ -8,6 +8,8 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.updatename.HAPUpdateName;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecutable;
@@ -22,11 +24,17 @@ public interface HAPExecutableExpression extends HAPSerializable, HAPExecutable{
 	@HAPAttribute
 	public static String VARIABLESMATCHERS = "variablesMatchers";
 
+	String getId();
+	
 	//Operand to represent the expression
 	HAPOperandWrapper getOperand();
 
+	Map<String, HAPVariableInfo> getVarsInfo();
+	
 	Map<String, HAPMatchers> getVariableMatchers();
 
+	void updateVariableName(HAPUpdateName nameUpdate);
+	
 	public static void buildJsonMap(HAPExecutableExpression obj, Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(obj.getOperand(), HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLESMATCHERS, HAPJsonUtility.buildJson(obj.getVariableMatchers(), HAPSerializationFormat.JSON));

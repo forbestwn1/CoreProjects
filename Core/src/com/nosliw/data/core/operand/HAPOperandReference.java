@@ -10,12 +10,12 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -24,8 +24,12 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private String m_referenceName;
 	
-	private HAPExecutableProcess m_referencedTask;
+	private HAPDefinitionDataAssociation m_inputMapping;
+	
+	private Map<String, String> m_variableMapping;
 
+	private HAPExecutableExpression m_expression;
+	
 	private HAPOperandReference(){}
 	
 	public HAPOperandReference(String expressionName){
@@ -34,8 +38,15 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 
 	public String getReferenceName(){  return this.m_referenceName;  }
+
+	public HAPExecutableExpression getReferedExpression() {   return this.m_expression;   }
+	public void setReferedExpression(HAPExecutableExpression expression) {   this.m_expression = expression;    }
+
+	public void setInputMapping(HAPDefinitionDataAssociation inputMapping) {  this.m_inputMapping = inputMapping;   }
+	public HAPDefinitionDataAssociation getInputMapping() {    return this.m_inputMapping;    }
 	
-//	public void updateReferenceExecute(Map<String, HAPExecutableTask> refTasks) { this.m_referencedTask = refTasks.get(this.m_referenceName);   }
+	public Map<String, String> getVariableMapping(){   return this.m_variableMapping;   }
+	public void setVariableMapping(Map<String, String> mapping) {   this.m_variableMapping = mapping;    }
 	
 	@Override
 	public Set<HAPDataTypeConverter> getConverters(){

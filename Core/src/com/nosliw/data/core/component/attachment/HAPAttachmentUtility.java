@@ -17,7 +17,6 @@ public class HAPAttachmentUtility {
 
 	public static final String ATTRIBUTE_FLAG_OVERRIDE = "flagOveride"; 
 
-	
 	public static HAPResourceDefinition getResourceDefinition(HAPAttachmentContainer attContainer, String type, String name, HAPManagerResourceDefinition resourceDefMan) {
 		HAPResourceDefinition out = null;
 		HAPAttachment attachment = attContainer.getElement(type, name);

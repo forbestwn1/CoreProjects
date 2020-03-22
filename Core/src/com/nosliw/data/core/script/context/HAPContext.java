@@ -92,6 +92,31 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 			this.addElement(nameUpdate.getUpdatedName(eleName), root);
 		}
 	}
+	
+	public void updateReferenceName(HAPUpdateName nameUpdate) {
+		//update context
+		for(String eleName : new HashSet<String>(this.getElementNames())) {
+			HAPContextDefinitionRoot root = this.getElement(eleName);
+			HAPUtilityContext.processContextDefElement(root.getDefinition(), new HAPContextDefEleProcessor() {
+				@Override
+				public boolean process(HAPContextDefinitionElement ele, Object value) {
+					if(ele instanceof HAPContextDefinitionLeafRelative) {
+						HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)ele;
+						if(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT.equals(relative.getParent())) {
+							//update local relative path
+							HAPContextPath path = relative.getPath();
+							relative.setPath(new HAPContextPath(new HAPContextDefinitionRootId(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));
+						}
+					}
+					return true;
+				}
+
+				@Override
+				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+					return true;
+				}}, null);
+		}
+	}
 
 	public HAPContext toSolidContext() {
 		HAPContext out = new HAPContext();

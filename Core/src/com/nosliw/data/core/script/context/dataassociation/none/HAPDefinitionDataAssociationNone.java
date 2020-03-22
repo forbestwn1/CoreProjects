@@ -5,6 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 
@@ -15,6 +16,12 @@ public class HAPDefinitionDataAssociationNone extends HAPEntityInfoWritableImp i
  
 	@Override
 	public String getType() {  return HAPConstant.DATAASSOCIATION_TYPE_NONE;  }
+
+	@Override
+	public void updateInputVarName(HAPUpdateName updateName) {}
+
+	@Override
+	public void updateOutputVarName(HAPUpdateName updateName) {}
 
  	@Override
 	public HAPDefinitionDataAssociationNone cloneDataAssocation() {

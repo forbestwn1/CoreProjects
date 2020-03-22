@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
@@ -26,6 +27,22 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
  
 	@Override
 	public String getType() {  return HAPConstant.DATAASSOCIATION_TYPE_MAPPING;  }
+
+	@Override
+	public void updateInputVarName(HAPUpdateName updateName) {
+		for(String name : this.m_assocations.keySet()) {
+			HAPContext association = this.m_assocations.get(name);
+			association.updateReferenceName(updateName);
+		}
+	}
+
+	@Override
+	public void updateOutputVarName(HAPUpdateName updateName) {
+		for(String name : this.m_assocations.keySet()) {
+			HAPContext association = this.m_assocations.get(name);
+			association.updateRootName(updateName);
+		}
+	}
 
 	public void addAssociation(String targetName, HAPContext association) {	this.m_assocations.put(targetName, association);}
 	
