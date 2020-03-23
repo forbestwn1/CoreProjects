@@ -11,8 +11,8 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 
-public class HAPManagerExpression {
 
+public class HAPManagerExpression {
 	private HAPManagerResourceDefinition m_resourceDefManager;
 
 	private HAPRequirementContextProcessor m_contextProcessRequirement;

@@ -479,6 +479,7 @@ public class HAPUtilityContext {
 
 	public static HAPContextStructure hardMerge(HAPContextStructure child, HAPContextStructure parent) {
 		if(child==null) return parent.cloneContextStructure();
+		if(parent==null)  return child.cloneContextStructure();
 		
 		String type1 = child.getType();
 		String type2 = parent.getType();
