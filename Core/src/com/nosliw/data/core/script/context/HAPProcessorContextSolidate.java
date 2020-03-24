@@ -8,7 +8,7 @@ import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededExpression;
-import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
+import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
 import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
@@ -60,7 +60,7 @@ public class HAPProcessorContextSolidate {
 		HAPDefinitionEmbededScriptExpression embededScriptExpDef = new HAPDefinitionEmbededScriptExpression(name);
 		if(embededScriptExpDef.isString())  return name;
 		else {
-			HAPProcessContextScriptExpression expProcessContext = new HAPProcessContextScriptExpression();
+			HAPContextProcessScriptExpression expProcessContext = new HAPContextProcessScriptExpression();
 			for(String constantName : constants.keySet()) {
 				HAPDataWrapper constantData = HAPDataUtility.buildDataWrapperFromObject(constants.get(constantName));
 				if(constantData!=null)   expProcessContext.addConstant(constantName, constantData);

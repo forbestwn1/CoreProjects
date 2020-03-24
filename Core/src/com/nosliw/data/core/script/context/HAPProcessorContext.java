@@ -9,12 +9,14 @@ public class HAPProcessorContext {
 
 	public static HAPContextStructure process(HAPContextStructure context, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPContextStructure out = null;
-		String type = context.getType();
-		if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT)) {
-			out = process((HAPContext)context, parent, new HashSet<String>(), configure, contextProcessRequirement);
-		}
-		else if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-			out = process((HAPContextGroup)context, parent, new HashSet<String>(), configure, contextProcessRequirement);
+		if(context!=null) {
+			String type = context.getType();
+			if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+				out = process((HAPContext)context, parent, new HashSet<String>(), configure, contextProcessRequirement);
+			}
+			else if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+				out = process((HAPContextGroup)context, parent, new HashSet<String>(), configure, contextProcessRequirement);
+			}
 		}
 		return out;
 	}

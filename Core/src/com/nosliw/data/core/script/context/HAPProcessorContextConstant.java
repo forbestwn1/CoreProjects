@@ -15,9 +15,9 @@ import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
+import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
-import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
@@ -235,12 +235,12 @@ public class HAPProcessorContextConstant {
 				Set<String> expConstantNames = new HashSet<String>();
 				Set<String> scriptConstantNames = new HashSet<String>();
 				for(Object uiExpEle : sciptExpressionDef.getElements()){
-					if(uiExpEle instanceof HAPDefinitionExpression)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPDefinitionExpression)uiExpEle).getOperand()));
+					if(uiExpEle instanceof HAPDefinitionExpression)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPDefinitionExpression)uiExpEle).getExpression().getOperand()));
 					else if(uiExpEle instanceof HAPScriptInScriptExpression)		scriptConstantNames.addAll(((HAPScriptInScriptExpression)uiExpEle).getConstantNames());
 				}
 				
 				//build constants data required by expression
-				HAPProcessContextScriptExpression expProcessContext = new HAPProcessContextScriptExpression();
+				HAPContextProcessScriptExpression expProcessContext = new HAPContextProcessScriptExpression();
 				for(String constantName : expConstantNames){
 					HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(constantName), contextGroup);
 					HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());

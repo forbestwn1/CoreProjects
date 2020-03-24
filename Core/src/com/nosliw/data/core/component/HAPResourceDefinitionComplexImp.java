@@ -23,7 +23,6 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWrita
 	private HAPAttachmentContainer m_attachmentContainer;
 
 	public HAPResourceDefinitionComplexImp() {
-		this.m_context = new HAPContextGroup();
 		this.m_attachmentContainer = new HAPAttachmentContainer();
 	}
 
@@ -59,7 +58,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWrita
  
 	@Override
 	public void cloneToDataContext(HAPWithDataContext withDataContext) {
-		withDataContext.setContextStructure(this.m_context.cloneContextStructure());
+		if(this.m_context!=null)	withDataContext.setContextStructure(this.m_context.cloneContextStructure());
 	}
 
 	@Override

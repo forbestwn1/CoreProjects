@@ -20,7 +20,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
+import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
@@ -91,7 +91,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	private Map<String, String> m_attributes;
 	
 	//expression unit
-	private HAPProcessContextScriptExpression m_scriptExpressionContext;
+	private HAPContextProcessScriptExpression m_scriptExpressionContext;
 	
 	//all the customer tag within the domain
 	private Map<String, HAPExecutableUIUnitTag> m_uiTags; 
@@ -117,7 +117,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		this.m_scriptExpressionsInContent = new HashSet<HAPUIEmbededScriptExpressionInContent>();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
-		this.m_scriptExpressionContext = new HAPProcessContextScriptExpression();
+		this.m_scriptExpressionContext = new HAPContextProcessScriptExpression();
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
 		this.m_context = new HAPContextGroupInUIResource(this);
 		this.m_attributes = new LinkedHashMap<String, String>();
@@ -163,8 +163,8 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 
 	public HAPDefinitionUIUnit getUIUnitDefinition() {	return this.m_uiUnitDefinition;	}
 	
-	public HAPProcessContextScriptExpression getExpressionContext(){   return this.m_scriptExpressionContext;   }
-	public void setExpressionContext(HAPProcessContextScriptExpression context){  this.m_scriptExpressionContext = context;   }
+	public HAPContextProcessScriptExpression getExpressionContext(){   return this.m_scriptExpressionContext;   }
+	public void setExpressionContext(HAPContextProcessScriptExpression context){  this.m_scriptExpressionContext = context;   }
 
 	public Collection<HAPExecutableUIUnitTag> getUITags(){return this.m_uiTags.values();} 
 	public HAPExecutableUIUnitTag getUITag(String id){return this.m_uiTags.get(id);} 

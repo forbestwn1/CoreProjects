@@ -14,7 +14,7 @@ import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 //		variables criteria
 //		data constants for expression
 //		value constants for script
-public class HAPProcessContextScriptExpression {
+public class HAPContextProcessScriptExpression {
 
 	//every unit has its own expression definition suite
 	//it includes expression definition and constants from parent and its own
@@ -22,7 +22,7 @@ public class HAPProcessContextScriptExpression {
 
 	private Map<String, Object> m_constants;
 	
-	public HAPProcessContextScriptExpression(){
+	public HAPContextProcessScriptExpression(){
 		this.m_expressionDefinitionSuite = new HAPDefinitionExpressionSuite();
 		this.m_constants = new LinkedHashMap<String, Object>();
 	}

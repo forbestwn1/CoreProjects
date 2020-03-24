@@ -21,7 +21,7 @@ public class HAPDataUtility {
 		for(String name : attrs.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
 			HAPAttachmentEntity attr = (HAPAttachmentEntity)attrs.get(name);
-			constantDef.buildEntityInfoByJson(attr);
+			attr.cloneToEntityInfo(constantDef);
 			constantDef.setData(buildDataWrapperFromObject(attr.getEntity()));
 			out.put(constantDef.getName(), constantDef);
 		}

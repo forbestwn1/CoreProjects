@@ -9,7 +9,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
 
 //script expression definition
 //it is used in embeded
@@ -43,15 +42,15 @@ public class HAPDefinitionScriptExpression extends HAPSerializableImp{
 	public List<Object> getElements(){  return this.m_elements;   }
 	
 	public boolean isDataExpression() {
-		if(this.m_elements.size()==1 && this.m_elements.get(0) instanceof HAPDefinitionExpression) return true;
+		if(this.m_elements.size()==1 && this.m_elements.get(0) instanceof HAPDefinitionDataExpression) return true;
 		return false;
 	}
 	
-	public List<HAPDefinitionExpression> getExpressionDefinitions(){
-		List<HAPDefinitionExpression> out = new ArrayList<HAPDefinitionExpression>();
+	public List<HAPDefinitionDataExpression> getExpressionDefinitions(){
+		List<HAPDefinitionDataExpression> out = new ArrayList<HAPDefinitionDataExpression>();
 		for(Object element : this.m_elements){
-			if(element instanceof HAPDefinitionExpression){
-				out.add((HAPDefinitionExpression)element);
+			if(element instanceof HAPDefinitionDataExpression){
+				out.add((HAPDefinitionDataExpression)element);
 			}
 		}
 		return out;
@@ -92,7 +91,7 @@ public class HAPDefinitionScriptExpression extends HAPSerializableImp{
 				String expressionStr = content.substring(expStart, expEnd);
 				content = content.substring(expEnd + EXPRESSION_TOKEN_CLOSE.length());
 				//build expression definition
-				HAPDefinitionExpression expressionDefinition = new HAPDefinitionExpression(expressionStr);
+				HAPDefinitionDataExpression expressionDefinition = new HAPDefinitionDataExpression(expressionStr);
 				this.m_elements.add(expressionDefinition);
 			}
 			i++;

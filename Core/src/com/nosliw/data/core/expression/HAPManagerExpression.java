@@ -1,5 +1,7 @@
 package com.nosliw.data.core.expression;
 
+import java.util.Map;
+
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
@@ -43,7 +45,7 @@ public class HAPManagerExpression {
 		return out;
 	}
 
-	public HAPExecutableExpression getExpression(HAPResourceId expressionId, HAPContextExpression context) {
+	public HAPExecutableExpression getExpression(HAPResourceId expressionId, HAPContextExpression context, Map<String, String> configure) {
 		if(context==null)  context = HAPContextExpression.createContext(this.m_resourceDefManager);
 		HAPExecutableExpression out = HAPProcessorExpression.process(
 				expressionId.toStringValue(HAPSerializationFormat.LITERATE), 
@@ -51,7 +53,7 @@ public class HAPManagerExpression {
 				null, 
 				null, 
 				this, 
-				null, 
+				configure, 
 				m_contextProcessRequirement,
 				new HAPProcessTracker());
 		return out;

@@ -6,20 +6,20 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
 
 public class HAPProcessorScriptExpression {
 
-	public static HAPScriptExpression processScriptExpression(HAPDefinitionScriptExpression scriptExpressionDefinition, HAPProcessContextScriptExpression expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager, HAPRuntime runtime) {
+	public static HAPScriptExpression processScriptExpression(HAPDefinitionScriptExpression scriptExpressionDefinition, HAPContextProcessScriptExpression expressionContext, Map<String, String> configure, HAPManagerExpression expressionManager, HAPRuntime runtime) {
 		HAPScriptExpression out = new HAPScriptExpression(scriptExpressionDefinition);
 		processScriptExpression(out, expressionContext, configure, expressionManager, runtime);
 		return out;
 	}
 	
-	public static void processScriptExpression(HAPScriptExpression scriptExpressionExe ,HAPProcessContextScriptExpression expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager, HAPRuntime runtime) {
+	public static void processScriptExpression(HAPScriptExpression scriptExpressionExe ,HAPContextProcessScriptExpression expressionContext, Map<String, String> configure, HAPManagerExpression expressionManager, HAPRuntime runtime) {
 		HAPDefinitionScriptExpression scriptExpressionDefinition = scriptExpressionExe.getDefinition();
 		for(int i=0; i<scriptExpressionDefinition.getElements().size(); i++) {
 			Object element = scriptExpressionDefinition.getElements().get(i);
@@ -58,13 +58,13 @@ public class HAPProcessorScriptExpression {
 		}
 	}
 	
-	public static HAPEmbededScriptExpression processEmbededScriptExpression(HAPDefinitionEmbededScriptExpression embededScriptExpressionDefinition, HAPProcessContextScriptExpression expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager, HAPRuntime runtime) {
+	public static HAPEmbededScriptExpression processEmbededScriptExpression(HAPDefinitionEmbededScriptExpression embededScriptExpressionDefinition, HAPContextProcessScriptExpression expressionContext, Map<String, String> configure, HAPManagerExpression expressionManager, HAPRuntime runtime) {
 		HAPEmbededScriptExpression out = new HAPEmbededScriptExpression(embededScriptExpressionDefinition);
 		processEmbededScriptExpression(out, expressionContext, configure, expressionManager, runtime);		
 		return out;
 	}
 
-	public static void processEmbededScriptExpression(HAPEmbededScriptExpression embededScriptExpressionDefinitionExe, HAPProcessContextScriptExpression expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager, HAPRuntime runtime) {
+	public static void processEmbededScriptExpression(HAPEmbededScriptExpression embededScriptExpressionDefinitionExe, HAPContextProcessScriptExpression expressionContext, Map<String, String> configure, HAPManagerExpression expressionManager, HAPRuntime runtime) {
 		HAPDefinitionEmbededScriptExpression embededScriptExpressionDefinition = embededScriptExpressionDefinitionExe.getDefinition();
 		for(Object ele : embededScriptExpressionDefinition.getElements()) {
 			if(ele instanceof String)   embededScriptExpressionDefinitionExe.addElement(ele);

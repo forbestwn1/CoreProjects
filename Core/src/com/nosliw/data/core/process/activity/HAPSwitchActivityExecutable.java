@@ -16,7 +16,7 @@ import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
-import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
+import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
 public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
@@ -27,16 +27,16 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 	@HAPAttribute
 	public static String SCRIPTEXPRESSIONSCRIPT = "scriptExpressionScript";
 
-	private HAPProcessContextScriptExpression m_expressionProcessContext;
+	private HAPContextProcessScriptExpression m_expressionProcessContext;
 
 	private HAPScriptExpression m_scriptExpression;
 
 	public HAPSwitchActivityExecutable(String id, HAPSwitchActivityDefinition activityDef) {
 		super(id, activityDef);
-		this.m_expressionProcessContext = new HAPProcessContextScriptExpression();
+		this.m_expressionProcessContext = new HAPContextProcessScriptExpression();
 	}
 
-	public HAPProcessContextScriptExpression getScriptExpressionProcessContext() {
+	public HAPContextProcessScriptExpression getScriptExpressionProcessContext() {
 		return this.m_expressionProcessContext;
 	}
 	
