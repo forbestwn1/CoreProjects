@@ -16,6 +16,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextFlat;
@@ -270,14 +271,14 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		//resource from expression
-		for(HAPUIEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  dependency.addAll(expressionContent.getResourceDependency(runtimeInfo));
-		for(HAPUIEmbededScriptExpressionInAttribute expressionAttr : this.m_scriptExpressionsInAttribute)  dependency.addAll(expressionAttr.getResourceDependency(runtimeInfo));
-		for(HAPUIEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  dependency.addAll(expressionTagAttr.getResourceDependency(runtimeInfo));
+		for(HAPUIEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  dependency.addAll(expressionContent.getResourceDependency(runtimeInfo, resourceManager));
+		for(HAPUIEmbededScriptExpressionInAttribute expressionAttr : this.m_scriptExpressionsInAttribute)  dependency.addAll(expressionAttr.getResourceDependency(runtimeInfo, resourceManager));
+		for(HAPUIEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  dependency.addAll(expressionTagAttr.getResourceDependency(runtimeInfo, resourceManager));
 		
 		//resource from child uiTag
-		for(String uiId : this.m_uiTags.keySet()) dependency.addAll(this.m_uiTags.get(uiId).getResourceDependency(runtimeInfo));	
+		for(String uiId : this.m_uiTags.keySet()) dependency.addAll(this.m_uiTags.get(uiId).getResourceDependency(runtimeInfo, resourceManager));	
 	}
 
 }

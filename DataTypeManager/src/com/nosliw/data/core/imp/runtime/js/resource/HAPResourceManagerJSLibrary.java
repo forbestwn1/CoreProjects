@@ -13,6 +13,7 @@ import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
@@ -20,6 +21,10 @@ import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSLibrary;
 
 public class HAPResourceManagerJSLibrary extends HAPResourceManagerImp{
 
+	public HAPResourceManagerJSLibrary(HAPResourceManagerRoot rootResourceMan) {
+		super(rootResourceMan);
+	}
+	
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdJSLibrary resourceLibraryId = new HAPResourceIdJSLibrary((HAPResourceIdSimple)resourceId);

@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -76,6 +77,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	
 	public HAPDefinitionUITag getUIUnitTagDefinition() {   return (HAPDefinitionUITag)this.getUIUnitDefinition();  }
 	
+	@Override
 	public void setParent(HAPExecutableUIUnit parent) {		this.m_parent = parent;	}
 	
 	public void setEventMapping(Map<String, String> mapping) {  this.m_eventMapping.putAll(mapping);  }
@@ -95,8 +97,8 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	}
 	
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		List<HAPResourceDependency> out = super.getResourceDependency(runtimeInfo);
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		List<HAPResourceDependency> out = super.getResourceDependency(runtimeInfo, resourceManager);
 		//ui tag
 		out.add(new HAPResourceDependency(new HAPResourceIdUITag(new HAPUITagId(this.getUIUnitTagDefinition().getTagName()))));
 		return out;

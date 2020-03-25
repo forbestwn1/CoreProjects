@@ -7,20 +7,27 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
-import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceInfo;
-import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
+import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 
 public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteExpression{
-
-	public HAPRuntimeTaskExecuteExpressionRhino(HAPExecutableExpression expression, Map<String, HAPData> variablesValue, Map<String, HAPData> referencesValue) {
+	private HAPResourceManagerRoot m_resourceManager;
+	
+	public HAPRuntimeTaskExecuteExpressionRhino(
+			HAPExecutableExpression expression, 
+			Map<String, HAPData> variablesValue, 
+			Map<String, HAPData> referencesValue,
+			HAPResourceManagerRoot resourceManager) {
 		super(expression, variablesValue, referencesValue);
+		this.m_resourceManager = resourceManager;
 	}
 
 	@Override
@@ -34,9 +41,17 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 			if(!HAPRuntime.isDemo) {
 				//prepare resources for expression in the runtime (resource and dependency)
 				//execute expression after load required resources
-				List<HAPExecutableExpression> expressions = new ArrayList<HAPExecutableExpression>();
-				expressions.add(this.getExpression());
-				List<HAPResourceInfo> resourcesId =	HAPUtilityExpressionResource.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager(), runtime.getRuntimeInfo());
+				List<HAPResourceDependency> dependencys = this.getExpression().getResourceDependency(runtime.getRuntimeInfo(), this.m_resourceManager);
+				
+				List<HAPResourceInfo> resourcesId = new ArrayList<HAPResourceInfo>();
+				for(HAPResourceDependency dependency : dependencys) {
+					resourcesId.add(new HAPResourceInfo(dependency.getId()));
+				}
+
+				
+//				List<HAPExecutableExpression> expressions = new ArrayList<HAPExecutableExpression>();
+//				expressions.add(this.getExpression());
+//				List<HAPResourceInfo> resourcesId =	HAPUtilityExpressionResource.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager(), runtime.getRuntimeInfo());
 				
 				HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 				loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));

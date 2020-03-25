@@ -8,6 +8,12 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPResourceManagerImp implements HAPResourceManager{
  
+	protected HAPResourceManagerRoot m_rootResourceMan;
+	
+	public HAPResourceManagerImp(HAPResourceManagerRoot rootResourceMan) {
+		this.m_rootResourceMan = rootResourceMan;
+	}
+	
 	@Override
 	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId, HAPRuntimeInfo runtimeInfo) {
 		HAPLoadResourceResponse out = new HAPLoadResourceResponse();

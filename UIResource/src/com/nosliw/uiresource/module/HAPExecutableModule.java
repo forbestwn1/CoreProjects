@@ -16,6 +16,7 @@ import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
@@ -126,11 +127,11 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		for(HAPExecutableModuleUI ui : this.m_uis) {		out.addAll(ui.getResourceDependency(runtimeInfo));		}
-		for(HAPExecutableWrapperTask process : this.m_processes.values()) {		out.addAll(process.getResourceDependency(runtimeInfo));		}
-		for(HAPExecutableWrapperTask lifecycle : this.m_lifecycle.values()) {	out.addAll(lifecycle.getResourceDependency(runtimeInfo));	}
+		for(HAPExecutableModuleUI ui : this.m_uis) {		out.addAll(ui.getResourceDependency(runtimeInfo, resourceManager));		}
+		for(HAPExecutableWrapperTask process : this.m_processes.values()) {		out.addAll(process.getResourceDependency(runtimeInfo, resourceManager));		}
+		for(HAPExecutableWrapperTask lifecycle : this.m_lifecycle.values()) {	out.addAll(lifecycle.getResourceDependency(runtimeInfo, resourceManager));	}
 		return out;
 	}
 }

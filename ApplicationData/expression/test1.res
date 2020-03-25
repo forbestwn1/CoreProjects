@@ -118,5 +118,11 @@
 			"description": "attribute chain",
 			"expression" : "!(test.string)!.subString(?(business)?.a.aa,from:?(fromVar)?,to:?(toVar)?)",
 		},
+		{
+			"id": "test5",
+			"name": "test5",
+			"description": "reference",
+			"expression" : "!(test.string)!.subString(<(test1)>,from:?(fromVar)?,to:?(toVar)?)",
+		},
 	]
 }

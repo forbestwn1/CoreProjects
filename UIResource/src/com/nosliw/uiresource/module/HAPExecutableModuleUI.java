@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
@@ -111,12 +112,12 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		out.addAll(this.m_page.getResourceDependency(runtimeInfo));
-		out.addAll(this.m_inputMapping.getResourceDependency(runtimeInfo));
-		out.addAll(this.m_outputMapping.getResourceDependency(runtimeInfo));
-		for(HAPExecutableWrapperTask eventHandler : this.m_eventHandlers.values()) {	out.addAll(eventHandler.getResourceDependency(runtimeInfo));	}
+		out.addAll(this.m_page.getResourceDependency(runtimeInfo, resourceManager));
+		out.addAll(this.m_inputMapping.getResourceDependency(runtimeInfo, resourceManager));
+		out.addAll(this.m_outputMapping.getResourceDependency(runtimeInfo, resourceManager));
+		for(HAPExecutableWrapperTask eventHandler : this.m_eventHandlers.values()) {	out.addAll(eventHandler.getResourceDependency(runtimeInfo, resourceManager));	}
 		return out;
 	}
 }

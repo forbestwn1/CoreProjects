@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.miniapp.HAPGatewayAppData;
 //import com.nosliw.miniapp.HAPAppManager;
@@ -36,12 +37,13 @@ public class HAPInitServlet  extends HttpServlet{
 			HAPUIResourceManager uiResourceMan = runtimeEnvironment.getUIResourceManager();
 			this.getServletContext().setAttribute("uiResourceManager", uiResourceMan);
 			
-			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan));
-			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, new HAPResourceManagerUITag(new HAPUITagManager()));
-			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, new HAPResourceManagerUIModule(uiResourceMan));
-			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, new HAPResourceManagerUIModuleDecoration());
-			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, new HAPResourceManagerUIAppEntry(uiResourceMan));
-			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE, new HAPResourceManagerUIAppConfigure());
+			HAPResourceManagerRoot rootResourceManager = runtimeEnvironment.getResourceManager(); 
+			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan, rootResourceManager));
+			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, new HAPResourceManagerUITag(new HAPUITagManager(), rootResourceManager));
+			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, new HAPResourceManagerUIModule(uiResourceMan, rootResourceManager));
+			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, new HAPResourceManagerUIModuleDecoration(rootResourceManager));
+			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, new HAPResourceManagerUIAppEntry(uiResourceMan, rootResourceManager));
+			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE, new HAPResourceManagerUIAppConfigure(rootResourceManager));
 
 			runtimeEnvironment.getGatewayManager().registerGateway(HAPConstant.GATEWAY_OPTIONS, new HAPGatewayOptions());
 			

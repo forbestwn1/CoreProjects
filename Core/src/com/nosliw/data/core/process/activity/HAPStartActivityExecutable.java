@@ -15,6 +15,7 @@ import com.nosliw.data.core.process.HAPDefinitionSequenceFlow;
 import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPStartActivityExecutable extends HAPExecutableActivity{
@@ -46,7 +47,7 @@ public class HAPStartActivityExecutable extends HAPExecutableActivity{
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_START))));
 		return out;

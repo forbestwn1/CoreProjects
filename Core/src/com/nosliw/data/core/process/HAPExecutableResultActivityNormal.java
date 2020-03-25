@@ -11,6 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoUtility;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
@@ -77,7 +78,7 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInf
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
-		super.buildResourceDependency(dependency, runtimeInfo);
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 	}
 }

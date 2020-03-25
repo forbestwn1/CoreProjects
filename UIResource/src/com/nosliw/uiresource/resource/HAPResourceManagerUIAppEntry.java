@@ -6,6 +6,7 @@ import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.uiresource.HAPUIResourceManager;
@@ -15,7 +16,8 @@ public class HAPResourceManagerUIAppEntry  extends HAPResourceManagerImp{
 
 	private HAPUIResourceManager m_uiResourceMan;
 	
-	public HAPResourceManagerUIAppEntry(HAPUIResourceManager uiResourceMan){
+	public HAPResourceManagerUIAppEntry(HAPUIResourceManager uiResourceMan, HAPResourceManagerRoot rootResourceMan){
+		super(rootResourceMan);
 		this.m_uiResourceMan = uiResourceMan;
 	}
 
@@ -29,6 +31,6 @@ public class HAPResourceManagerUIAppEntry  extends HAPResourceManagerImp{
 	@Override
 	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		HAPExecutableAppEntry uiApp = this.m_uiResourceMan.getMiniAppEntry(resourceId); 
-		return uiApp.getResourceDependency(runtimeInfo);
+		return uiApp.getResourceDependency(runtimeInfo, this.m_rootResourceMan);
 	}
 }

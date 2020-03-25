@@ -3,19 +3,24 @@ package com.nosliw.data.core.matcher;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public class HAPMatchers extends HAPSerializableImp{
+public class HAPMatchers extends HAPExecutableImp{
 
 	private Map<HAPDataTypeId, HAPMatcher> m_matchers;
 	
@@ -55,6 +60,15 @@ public class HAPMatchers extends HAPSerializableImp{
 		return out;
 	}
 
+	@Override
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
+		for(HAPResourceId resourceId : HAPMatcherUtility.getMatchersResourceId(this)) {
+			dependency.add(new HAPResourceDependency(resourceId));
+		}
+	}
+
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;

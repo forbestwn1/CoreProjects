@@ -13,6 +13,7 @@ import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -48,7 +49,7 @@ public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implement
 	public Map<String, HAPDefinitionServiceProvider> getServiceProviders(){    return this.m_serviceProviders;     }
 	
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		this.buildResourceDependency(out, runtimeInfo);
 		return out;

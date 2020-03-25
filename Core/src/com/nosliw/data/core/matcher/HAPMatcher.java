@@ -9,13 +9,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipImp;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 /**
  * Store matcher information (match from one data type to another data type)
@@ -24,7 +24,7 @@ import com.nosliw.data.core.HAPRelationshipImp;
  * 		sub matchers by name
  */
 @HAPEntityWithAttribute
-public class HAPMatcher extends HAPSerializableImp{
+public class HAPMatcher extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String REVERSE = "reverse";

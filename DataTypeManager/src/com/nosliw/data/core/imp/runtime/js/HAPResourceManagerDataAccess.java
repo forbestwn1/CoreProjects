@@ -7,13 +7,15 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPResourceManagerDataAccess extends HAPResourceManagerImp{
 
 	private HAPDataAccessRuntimeJS m_dataAccess = null;
 
-	public HAPResourceManagerDataAccess(HAPDataAccessRuntimeJS dataAccess){
+	public HAPResourceManagerDataAccess(HAPDataAccessRuntimeJS dataAccess, HAPResourceManagerRoot rootResourceMan){
+		super(rootResourceMan);
 		this.m_dataAccess = dataAccess;
 	}
 	

@@ -7,6 +7,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceInfo;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
@@ -18,7 +19,8 @@ import com.nosliw.data.core.script.context.data.HAPContextData;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
 public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExecuteProcessEmbeded{
-
+	private HAPResourceManagerRoot m_resourceManager;
+	
 	public HAPRuntimeTaskExecuteProcessEmbededRhino(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContextData) {
 		super(process, parentContextData);
 	}

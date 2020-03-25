@@ -5,13 +5,14 @@ import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerDataAccess;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceManagerJSConverter extends HAPResourceManagerDataAccess{
 
-	public HAPResourceManagerJSConverter(HAPDataAccessRuntimeJS dataAccess){
-		super(dataAccess);
+	public HAPResourceManagerJSConverter(HAPDataAccessRuntimeJS dataAccess, HAPResourceManagerRoot rootResourceMan){
+		super(dataAccess, rootResourceMan);
 	}
 	
 	@Override

@@ -15,6 +15,7 @@ import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
@@ -61,10 +62,10 @@ public class HAPLoopActivityExecutable extends HAPExecutableActivityNormal{
 	public void setContainerDataPath(HAPContextPath path) {    this.m_containerDataPath = path;   }
 	
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_PROCESS))));
-		out.addAll(this.m_step.getResourceDependency(runtimeInfo));
+		out.addAll(this.m_step.getResourceDependency(runtimeInfo, resourceManager));
 		return out;
 	}
 

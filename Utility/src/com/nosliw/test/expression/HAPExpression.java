@@ -14,7 +14,7 @@ public class HAPExpression {
 	public static void main(String[] args) {
 		
 		String suite = "test1";
-		String id = "test4";
+		String id = "test1";
 		String testData = "testData1";
 
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
@@ -22,7 +22,7 @@ public class HAPExpression {
 
 		HAPContextDataFlat input = HAPUtilityComponent.getTestDataFromAttachment(expressionExe.getDefinition(), testData);
 
-		HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, input.getData(), null);
+		HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, input.getData(), null, runtimeEnvironment.getResourceManager());
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 		System.out.println(out);

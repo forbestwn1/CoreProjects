@@ -109,6 +109,4 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_localVarsInfo, HAPSerializationFormat.JSON));
 
 	}
-
-
 }

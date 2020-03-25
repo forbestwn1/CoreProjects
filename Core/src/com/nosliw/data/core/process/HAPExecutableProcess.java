@@ -16,6 +16,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -142,11 +143,11 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {		
 		//process resources
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		 for(HAPExecutableActivity activity : this.getActivities().values()) {
-			 out.addAll(activity.getResourceDependency(runtimeInfo));
+			 out.addAll(activity.getResourceDependency(runtimeInfo, resourceManager));
 		 }
 		return out;	
 	}

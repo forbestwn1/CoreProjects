@@ -18,6 +18,7 @@ import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
@@ -151,10 +152,10 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		for(HAPExecutableExpression exp : this.getExpressions().values()) {
-			out.addAll(exp.getResourceDependency(runtimeInfo));
+			out.addAll(exp.getResourceDependency(runtimeInfo, resourceManager));
 		}
 		return out;
 	}
