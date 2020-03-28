@@ -61,6 +61,9 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	public void setVarsInfo(Map<String, HAPVariableInfo> varsInfo) {   this.m_localVarsInfo = varsInfo;  }
 
 	@Override
+	public HAPDataTypeCriteria getOutputCriteria() {  return this.m_operand.getOperand().getOutputCriteria(); }
+	
+	@Override
 	public void updateVariableName(HAPUpdateName nameUpdate) {
 		HAPOperandUtility.updateVariableName(this.m_operand, nameUpdate);
 		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
@@ -109,4 +112,5 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_localVarsInfo, HAPSerializationFormat.JSON));
 
 	}
+
 }

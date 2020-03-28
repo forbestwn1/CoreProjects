@@ -10,6 +10,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
@@ -29,6 +30,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	private Map<String, String> m_variableMapping;
 
 	private HAPExecutableExpression m_expression;
+	
+	private Map<String, HAPMatchers> m_matchers;
 	
 	private HAPOperandReference(){}
 	
@@ -73,16 +76,36 @@ public class HAPOperandReference extends HAPOperandImp{
 		jsonMap.put(REFERENCENAME, m_referenceName);
 	}
 
+	private String getInternalVariable(String ext) {
+		return null;
+	}
+	
+	private String getExternalVariable(String ext) {
+		return null;
+	}
+	
+	
 	@Override
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
-//		this.setOutputCriteria(this.m_referencedTask.getOutput());
-//		this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, processTracker);
-//		return HAPCriteriaUtility.isMatchable(this.m_referencedTask.getOutput(), expectCriteria, dataTypeHelper);
-		return null;
+		this.m_expression.discover(expectCriteria, processTracker);
+
+		//variable
+		Map<String, HAPVariableInfo> internalVariablesInfo = this.m_expression.getVarsInfo();
+		for(String inVarName : internalVariablesInfo.keySet()) {
+			String exVarName = getExternalVariable(inVarName);
+			HAPVariableInfo inVar = internalVariablesInfo.get(inVarName);
+			HAPVariableInfo exVar = variablesInfo.get(exVarName);
+			HAPMatchers matchers = HAPCriteriaUtility.mergeVariableInfo(exVar, inVar.getCriteria(), dataTypeHelper);
+			this.m_matchers.put(exVarName, matchers);
+		}
+		
+		//output
+		HAPDataTypeCriteria outputCriteria = this.m_expression.getOutputCriteria();
+		return HAPCriteriaUtility.isMatchable(outputCriteria, expectCriteria, dataTypeHelper);
 	}
 	
 	@Override
