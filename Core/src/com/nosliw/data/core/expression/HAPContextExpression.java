@@ -28,8 +28,8 @@ public class HAPContextExpression implements HAPContextResourceDefinition{
 	}
 	
 	@Override
-	public HAPResourceDefinitionWithContext getResourceDefinition(HAPResourceId processId) {
-		HAPDefinitionExpression processDef = (HAPDefinitionExpression)HAPResourceUtility.getImpliedResourceDefinition(processId, this.m_suite, this.m_resourceDefMan);
+	public HAPResourceDefinitionWithContext getResourceDefinition(HAPResourceId expressionId) {
+		HAPDefinitionExpression processDef = (HAPDefinitionExpression)HAPResourceUtility.getImpliedResourceDefinition(expressionId, this.m_suite, this.m_resourceDefMan);
 		HAPResourceDefinitionWithContext out = new HAPResourceDefinitionWithContext(processDef, HAPContextExpression.createContext(processDef.getSuite(), m_resourceDefMan));
 		return out;
 	}	

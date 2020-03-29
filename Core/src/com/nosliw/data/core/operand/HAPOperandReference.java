@@ -27,6 +27,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private HAPDefinitionDataAssociation m_inputMapping;
 	
+	//referred variable name ---- parent variable name
 	private Map<String, String> m_variableMapping;
 
 	private HAPExecutableExpression m_expression;
@@ -81,7 +82,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 	
 	private String getExternalVariable(String ext) {
-		return null;
+		return this.m_variableMapping.get(ext);
 	}
 	
 	

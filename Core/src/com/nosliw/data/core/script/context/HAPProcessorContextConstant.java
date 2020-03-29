@@ -235,7 +235,7 @@ public class HAPProcessorContextConstant {
 				Set<String> expConstantNames = new HashSet<String>();
 				Set<String> scriptConstantNames = new HashSet<String>();
 				for(Object uiExpEle : sciptExpressionDef.getElements()){
-					if(uiExpEle instanceof HAPDefinitionExpression)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPDefinitionExpression)uiExpEle).getExpression().getOperand()));
+					if(uiExpEle instanceof HAPDefinitionExpression)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPDefinitionExpression)uiExpEle).getOperand()));
 					else if(uiExpEle instanceof HAPScriptInScriptExpression)		scriptConstantNames.addAll(((HAPScriptInScriptExpression)uiExpEle).getConstantNames());
 				}
 				

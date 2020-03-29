@@ -122,7 +122,13 @@
 			"id": "test5",
 			"name": "test5",
 			"description": "reference",
-			"expression" : "!(test.string)!.subString(<(test1)>,from:?(fromVar)?,to:?(toVar)?)",
+			"expression" : "!(test.string)!.subString(<(ref1)>,from:?(fromVar)?,to:?(toVar)?)",
+			"referenceMapping" : [
+				{
+					"name" : "ref1",
+					"resourceId" : "test1",
+				}
+			],
 		},
 	]
 }

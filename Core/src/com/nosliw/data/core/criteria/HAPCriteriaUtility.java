@@ -13,7 +13,7 @@ public class HAPCriteriaUtility {
 	
 	
 	public static HAPMatchers mergeVariableInfo(HAPVariableInfo variableInfo, HAPDataTypeCriteria expectCriteria, HAPDataTypeHelper dataTypeHelper) {
-		if(variableInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
+		if(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN.equals(variableInfo.getStatus())){
 			//if variable info is open, calculate new criteria for this variable
 			if(expectCriteria!=null){
 				if(variableInfo.getCriteria()==null){

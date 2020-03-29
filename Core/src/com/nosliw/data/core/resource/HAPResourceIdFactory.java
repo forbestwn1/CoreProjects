@@ -47,7 +47,8 @@ public class HAPResourceIdFactory {
 		if(content instanceof String) {
 			String literate = (String)content;
 			String[] idSegs = HAPResourceUtility.parseResourceIdLiterate(literate);
-			out = newInstance(idSegs[0], idSegs[1]);
+			if(idSegs.length==1)   out = newInstance(null, idSegs[0]);
+			else if(idSegs.length==2)   out = newInstance(idSegs[0], idSegs[1]);
 		}
 		else if(content instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)content;

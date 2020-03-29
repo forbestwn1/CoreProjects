@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPData;
 
 /**
  * This is variable info for expression 
@@ -24,6 +25,9 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String STATUS = "status";
 
+	@HAPAttribute
+	public static String DEFAULTVALUE = "defaultValue";
+
 	//use stack to store all the change applied for criteria
 	private HAPDataTypeCriteria m_criteria;
 	
@@ -32,6 +36,8 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 	//close : the criteria is close to change
 	private String m_status;
 
+	private HAPData m_defaultValue;
+	
 	public static HAPVariableInfo buildUndefinedVariableInfo() {
 		return buildVariableInfo(null);
 	}
@@ -75,6 +81,9 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 	public void setCriteria(HAPDataTypeCriteria criteria){
 		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
 	}
+	
+	public HAPData getDefaultValue() {   return this.m_defaultValue;   }
+	public void setDefaultValue(HAPData data) {    this.m_defaultValue = data;    }
 	
 	@Override
 	public boolean equals(Object obj){

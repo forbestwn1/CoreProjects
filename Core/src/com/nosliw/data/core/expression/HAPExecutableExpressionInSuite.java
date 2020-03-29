@@ -65,6 +65,12 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	
 	@Override
 	public void updateVariableName(HAPUpdateName nameUpdate) {
+		Map<String, HAPVariableInfo> localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		for(String name : this.m_localVarsInfo.keySet()) {
+			localVarsInfo.put(nameUpdate.getUpdatedName(name), this.m_localVarsInfo.get(name));
+		}
+		this.m_localVarsInfo = localVarsInfo;
+		
 		HAPOperandUtility.updateVariableName(this.m_operand, nameUpdate);
 		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
 			@Override

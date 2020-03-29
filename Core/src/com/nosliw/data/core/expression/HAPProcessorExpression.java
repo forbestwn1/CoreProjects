@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.updatename.HAPUpdateNamePrefix;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
@@ -17,6 +16,7 @@ import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.resource.HAPContextResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionWithContext;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
@@ -40,23 +40,13 @@ public class HAPProcessorExpression {
 
 		HAPExecutableExpression out = HAPProcessorExpression.processBasic(id, expressionDefWithContext, extraContext, expressionMan, configure, contextProcessRequirement, processTracker);
 		
-		processReferencesInOperandInputMapping(out, expressionDefWithContext);
+		//normalize input mapping, popup variable
+		processReferencesInputMapping(out);
 		
 		//update reference variable name
-		HAPOperandUtility.processAllOperand(out.getOperand(), null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					HAPExecutableExpression refExpression =	referenceOperand.getReferedExpression();
-					refExpression.updateVariableName(new HAPUpdateNamePrefix(refExpression.getId()+"_"));
-				}
-				return true;
-			}
-		});
+		processReferencesVariableNameUpdate(out);
 
-		processReferencesInOperandNameMapping(out);
+		processReferencesNameMapping(out);
 		
 		if(HAPExpressionProcessConfigureUtil.isDoDiscovery(configure)){
 			//do discovery
@@ -76,7 +66,7 @@ public class HAPProcessorExpression {
 			HAPProcessTracker processTracker) {
 
 		HAPDefinitionExpression expressionDef = (HAPDefinitionExpression)expressionDefWithContext.getResourceDefinition();
-		HAPOperandWrapper operand = expressionDef.getExpression().getOperand().cloneWrapper();
+		HAPOperandWrapper operand = expressionDef.getOperand().cloneWrapper();
 
 		HAPExecutableExpressionInSuite out = new HAPExecutableExpressionInSuite(expressionDef, id, operand.getOperand());
 
@@ -108,7 +98,7 @@ public class HAPProcessorExpression {
 		}
 		
 		//referenced expression
-		processReferencesInOperandBasic(id, operand, expressionDefWithContext, expressionMan, configure, contextProcessRequirement, processTracker);
+		processReferencesInOperandBasic(id, operand, expressionDef.getReferenceDefinitions(), expressionDefWithContext.getResourceContext(), expressionMan, configure, contextProcessRequirement, processTracker);
 		
 		return out;
 	}
@@ -117,7 +107,8 @@ public class HAPProcessorExpression {
 	private static void processReferencesInOperandBasic(
 			String parentId,
 			HAPOperandWrapper operand, 
-			HAPResourceDefinitionWithContext expressionDefWithContext,
+			Map<String, HAPDefinitionReference> referencesDef,
+			HAPContextResourceDefinition resourceContext,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure,
 			HAPRequirementContextProcessor contextProcessRequirement,
@@ -127,15 +118,14 @@ public class HAPProcessorExpression {
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				int[] subId = (int[])data;
-				HAPDefinitionExpression expression = (HAPDefinitionExpression)expressionDefWithContext.getResourceDefinition();
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 					String refName = referenceOperand.getReferenceName();
-					HAPDefinitionReference refDef = expression.getExpression().getReference(refName);
+					HAPDefinitionReference refDef = referencesDef.get(refName);
 
 					//get refered expression definition with context
-					HAPResourceDefinitionWithContext refResourceDefWithContext = expressionDefWithContext.getResourceContext().getResourceDefinition(refDef.getResourceId());
+					HAPResourceDefinitionWithContext refResourceDefWithContext = resourceContext.getResourceDefinition(refDef.getResourceId());
 					
 					//refered expression id
 					String refExpressionId = parentId+"_"+subId[0];
@@ -154,22 +144,16 @@ public class HAPProcessorExpression {
 		});
 	}
 	
-	private static void processReferencesInOperandInputMapping(
-			HAPExecutableExpression expressionExe,
-			HAPResourceDefinitionWithContext expressionDefWithContext) {
+	private static void processReferencesInputMapping(HAPExecutableExpression expressionExe) {
 		HAPOperandUtility.processAllOperand(expressionExe.getOperand(), null, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				HAPDefinitionExpression expression = (HAPDefinitionExpression)expressionDefWithContext.getResourceDefinition();
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					String refName = referenceOperand.getReferenceName();
-					HAPDefinitionReference refDef = expression.getExpression().getReference(refName);
-					HAPResourceDefinitionWithContext refResourceDefWithContext = expressionDefWithContext.getResourceContext().getResourceDefinition(refDef.getResourceId());
 					HAPExecutableExpression refExpressionExe = referenceOperand.getReferedExpression();
 					
-					processReferencesInOperandInputMapping(refExpressionExe, refResourceDefWithContext);
+					processReferencesInputMapping(refExpressionExe);
 					
 					//variable mapping
 					HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
@@ -179,6 +163,7 @@ public class HAPProcessorExpression {
 					if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
 						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
 						HAPContext da = mappingDa.getAssociation();
+						//refered var -- parent var
 						Map<String, String> mappingPath = new LinkedHashMap<String, String>();
 						for(String rootName : da.getElementNames()) {
 							Map<String, String> path = HAPUtilityDataAssociation.buildRelativePathMapping(da.getElement(rootName), rootName, new LinkedHashMap<String, Boolean>());
@@ -209,16 +194,33 @@ public class HAPProcessorExpression {
 		});
 	}
 	
-	private static void processReferencesInOperandNameMapping(
-			HAPExecutableExpression expressionExe) {
+	private static void processReferencesVariableNameUpdate(HAPExecutableExpression expressionExe) {
+		//update reference variable name
 		HAPOperandUtility.processAllOperand(expressionExe.getOperand(), null, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					String refName = referenceOperand.getReferenceName();
-
+					HAPExecutableExpression refExpression =	referenceOperand.getReferedExpression();
+					refExpression.updateVariableName(HAPUtilityExpression.getUpdateExpressionVariableName((refExpression)));
+					
+					processReferencesVariableNameUpdate(refExpression);
+				}
+				return true;
+			}
+		});
+	}
+	
+	private static void processReferencesNameMapping(HAPExecutableExpression expressionExe) {
+		HAPOperandUtility.processAllOperand(expressionExe.getOperand(), null, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+					HAPExecutableExpression refExpressionExe = referenceOperand.getReferedExpression();
+					
 					Map<String, HAPVariableInfo> parentVarsInfo = expressionExe.getVarsInfo();
 					Map<String, HAPVariableInfo> referedVarsInfo = referenceOperand.getReferedExpression().getVarsInfo();
 
@@ -228,7 +230,6 @@ public class HAPProcessorExpression {
 					if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
 						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
 						HAPContext da = mappingDa.getAssociation();
-						Map<String, String> mappingPath = new LinkedHashMap<String, String>();
 						for(String rootName : da.getElementNames()) {
 							Map<String, String> path = HAPUtilityDataAssociation.buildRelativePathMapping(da.getElement(rootName), rootName, new LinkedHashMap<String, Boolean>());
 							nameMapping.putAll(path);
@@ -236,18 +237,18 @@ public class HAPProcessorExpression {
 					}
 					else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MIRROR)) {
 						for(String varName : referedVarsInfo.keySet()) {
-							nameMapping.put(varName, expressionExe.getId() + "_" +  varName);
+							nameMapping.put(varName, HAPUtilityExpression.getBeforeUpdateName(refExpressionExe, varName));
 						}
 					}
 					else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_NONE)) {
 						for(String varName : referedVarsInfo.keySet()) {
 							parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneVariableInfo());
-							nameMapping.put(varName, varName);
+							nameMapping.put(varName, HAPUtilityExpression.getBeforeUpdateName(refExpressionExe, varName));
 						}
 					}
 					referenceOperand.setVariableMapping(nameMapping);
 					
-					processReferencesInOperandNameMapping(referenceOperand.getReferedExpression());
+					processReferencesNameMapping(referenceOperand.getReferedExpression());
 				}
 				return true;
 			}

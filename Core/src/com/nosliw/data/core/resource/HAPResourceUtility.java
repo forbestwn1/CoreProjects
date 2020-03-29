@@ -83,6 +83,7 @@ public class HAPResourceUtility {
 	
 	public static boolean isLocalReference(HAPResourceId resourceId) {
 		//kkk
+		if(resourceId.getType()==null)   return true;
 		return false;
 	}
 	
