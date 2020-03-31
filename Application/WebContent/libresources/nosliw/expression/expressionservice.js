@@ -24,27 +24,6 @@ var packageObj = library.getChildPackage("service");
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createExpressionService = function(){
-	/**
-	 * Request for execute expression
-	 */
-	var loc_getExecuteExpressionRequestkkk = function(expression, variables, constants, references, handlers, requester_parent){
-		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpression", {"expression":expression, "variables":variables}), handlers, requestInfo);
-
-		//execute operand
-		var executeOperandRequest = node_expressionUtility.getExecuteOperandRequest(expression, expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_OPERAND], variables, constants, references, {
-			success : function(requestInfo, operandResult){
-				var outputMatchers = expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_OUTPUTMATCHERS];
-				if(outputMatchers!=undefined){
-					return node_expressionUtility.getMatchDataTaskRequest(operandResult, outputMatchers);
-				}
-				else return operandResult;
-			}
-		}, null);
-		out.addRequest(executeOperandRequest);
-		return out;
-	};
-
 	//execute conterter
 	var loc_getExecuteConverterToRequest = function(data, targetDataTypeId, reverse, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
@@ -75,22 +54,6 @@ var node_createExpressionService = function(){
 		return out;
 	};
 	
-	//execute data operation
-	var loc_getExecuteOperationRequestkkk = function(dataTypeId, operation, parmArray, handlers, requester_parent){
-		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperation", {"dataType":dataTypeId, "operation":operation, "parms":parmArray}), handlers, requestInfo);
-
-		var dataOperationResourceId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
-		var getResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([dataOperationResourceId], {
-			success : function(requestInfo, resourcesTree){
-				var opResult = node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, resourcesTree);
-				return opResult;
-			}
-		});
-		out.addRequest(getResourceRequest);
-		return out;
-	};	
-
 	var loc_getExecuteScriptRequest = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExpressionService_ExecuteScript", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
