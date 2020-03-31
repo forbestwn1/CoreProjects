@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
@@ -83,6 +84,7 @@ public class HAPProcessorExpression {
 		//variable
 		//variable --- from context
 		HAPContext context = (HAPContext)HAPUtilityComponent.processElementComponentContext(expressionDef, extraContext, contextProcessRequirement, HAPExpressionProcessConfigureUtil.getContextProcessConfigurationForExpression());
+		out.setContext(context);
 		out.setVarsInfo(HAPUtilityContext.discoverDataVariablesInContext(context));
 
 		//variable --- attribute chain
@@ -166,7 +168,7 @@ public class HAPProcessorExpression {
 						//refered var -- parent var
 						Map<String, String> mappingPath = new LinkedHashMap<String, String>();
 						for(String rootName : da.getElementNames()) {
-							Map<String, String> path = HAPUtilityDataAssociation.buildRelativePathMapping(da.getElement(rootName), rootName, new LinkedHashMap<String, Boolean>());
+							Map<String, String> path = HAPUtilityDataAssociation.buildRelativePathMapping(da.getElement(rootName), rootName, expressionExe.getContext());
 							mappingPath.putAll(path);
 						}
 						for(String varName : referedVarsInfo.keySet()) {
@@ -202,8 +204,22 @@ public class HAPProcessorExpression {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+
 					HAPExecutableExpression refExpression =	referenceOperand.getReferedExpression();
-					refExpression.updateVariableName(HAPUtilityExpression.getUpdateExpressionVariableName((refExpression)));
+					HAPUpdateName nameUpdate = HAPUtilityExpression.getUpdateExpressionVariableName((refExpression));
+					refExpression.updateVariableName(nameUpdate);
+					
+					HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
+					String inputMappingType = inputMapping.getType();
+					if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
+						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
+						HAPContext da = mappingDa.getAssociation();
+						HAPContext da1 = new HAPContext();
+						for(String rootName : da.getElementNames()) {
+							da1.addElement(nameUpdate.getUpdatedName(rootName), da.getElement(rootName));
+						}
+						mappingDa.addAssociation(null, da1);
+					}
 					
 					processReferencesVariableNameUpdate(refExpression);
 				}
@@ -231,7 +247,7 @@ public class HAPProcessorExpression {
 						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
 						HAPContext da = mappingDa.getAssociation();
 						for(String rootName : da.getElementNames()) {
-							Map<String, String> path = HAPUtilityDataAssociation.buildRelativePathMapping(da.getElement(rootName), rootName, new LinkedHashMap<String, Boolean>());
+							Map<String, String> path = HAPUtilityDataAssociation.buildRelativePathMapping(da.getElement(rootName), rootName, expressionExe.getContext());
 							nameMapping.putAll(path);
 						}
 					}
@@ -254,5 +270,4 @@ public class HAPProcessorExpression {
 			}
 		});
 	}
-
 }

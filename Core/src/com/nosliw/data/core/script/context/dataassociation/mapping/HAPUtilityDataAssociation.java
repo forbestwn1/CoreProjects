@@ -11,9 +11,25 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextPath;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 public class HAPUtilityDataAssociation {
+
+	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, HAPContextStructure context){
+		Map<String, Boolean> isFlatInput = new LinkedHashMap<String, Boolean>();
+		isFlatInput.put(HAPConstant.NAME_DEFAULT, context.isFlat());
+		Map<String, String> mapping = buildRelativePathMapping(contextRoot.getDefinition(), rootName, isFlatInput);
+		Map<String, String> out = new LinkedHashMap<String, String>();
+		for(String name : mapping.keySet()) {
+			String mappedName = mapping.get(name);
+			int index = mappedName.indexOf(".");
+			mappedName = mappedName.substring(index+1);
+			out.put(name, mappedName);
+		}
+		return out;
+	}
+	
 
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
 	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, Map<String, Boolean> isFlatInput){

@@ -31,6 +31,8 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	private String m_id;
 	
 	private HAPOperandWrapper m_operand;
+
+	private HAPContext m_context;
 	
 	private Map<String, HAPVariableInfo> m_localVarsInfo;
 
@@ -56,6 +58,12 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	public HAPOperandWrapper getOperand() {		return this.m_operand;	}
 
 	@Override
+	public HAPContext getContext() {   return this.m_context;  }
+
+	@Override
+	public void setContext(HAPContext context) {   this.m_context = context;  }
+	
+	@Override
 	public Map<String, HAPVariableInfo> getVarsInfo() {  return this.m_localVarsInfo;  }
 	public void setVarsInfo(Map<String, HAPVariableInfo> varsInfo) {   this.m_localVarsInfo = varsInfo;  }
 
@@ -72,6 +80,12 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 			localVarsInfo.put(nameUpdate.getUpdatedName(name), this.m_localVarsInfo.get(name));
 		}
 		this.m_localVarsInfo = localVarsInfo;
+		
+		HAPContext updatedContext = new HAPContext();
+		for(String name : this.m_context.getElementNames()) {
+			updatedContext.addElement(nameUpdate.getUpdatedName(name), this.m_context.getElement(name));
+		}
+		this.m_context = updatedContext;
 		
 		HAPOperandUtility.updateVariableName(this.m_operand, nameUpdate);
 		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){

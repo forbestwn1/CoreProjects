@@ -22,6 +22,25 @@
 					}
 				}
 			},
+			mybusiness : {
+				definition: {
+					child : {
+						a : {
+							child : {
+								aa : {criteria:"test.string;1.0.0"},
+							}
+						}
+					}
+				},
+				defaultValue: {
+					a : {
+						aa : {
+							dataTypeId: "test.string;1.0.0",
+							value: "This is my world!"
+						}
+					}
+				}
+			},
 			"baseVar": {
 				"definition":{
 					criteria: "test.string",
@@ -68,6 +87,10 @@
 					"business.a.aa": {
 						"dataTypeId": "test.string;1.0.0",
 						"value": "This is my world!"
+					},
+					"mybusiness.a.aa": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "Hello This is my world!"
 					},
 					"baseVar": {
 						"dataTypeId": "test.string;1.0.0",
@@ -127,6 +150,27 @@
 				{
 					"name" : "ref1",
 					"resourceId" : "test1",
+				}
+			],
+		},
+		{
+			"id": "test6",
+			"name": "test6",
+			"description": "reference",
+			"expression" : "!(test.string)!.subString(<(ref1)>,from:?(fromVar)?,to:?(toVar)?)",
+			"referenceMapping" : [
+				{
+					"name" : "ref1",
+					"resourceId" : "test1",
+					"inputMapping" : {
+						"element" : {
+							"baseVar" : {
+								"definition": {
+									"path": "mybusiness.a.aa"
+								},
+							}
+						}
+					}
 				}
 			],
 		},

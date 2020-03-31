@@ -15,6 +15,7 @@ import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecutable;
+import com.nosliw.data.core.script.context.HAPContext;
 
 //entity that can is runnable within runtime environment
 @HAPEntityWithAttribute(baseName="EXPRESSION")
@@ -31,6 +32,9 @@ public interface HAPExecutableExpression extends HAPSerializable, HAPExecutable{
 	//Operand to represent the expression
 	HAPOperandWrapper getOperand();
 
+	HAPContext getContext();
+	void setContext(HAPContext context);
+	
 	Map<String, HAPVariableInfo> getVarsInfo();
 
 	HAPMatchers getOutputMatchers();

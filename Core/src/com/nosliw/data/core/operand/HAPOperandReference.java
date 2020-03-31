@@ -47,10 +47,14 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private Map<String, HAPMatchers> m_matchers;
 	
-	private HAPOperandReference(){}
+	private HAPOperandReference(){
+		super(HAPConstant.EXPRESSION_OPERAND_REFERENCE);
+		this.m_variableMapping = new LinkedHashMap<String, String>();
+		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
+	}
 	
 	public HAPOperandReference(String expressionName){
-		super(HAPConstant.EXPRESSION_OPERAND_REFERENCE);
+		this();
 		this.m_referenceName = expressionName;
 	}
 

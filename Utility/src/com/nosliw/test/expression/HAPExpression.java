@@ -15,7 +15,7 @@ public class HAPExpression {
 
 		try {
 			String suite = "test1";
-			String id = "test1";
+			String id = "test6";
 			String testData = "testData1";
 
 			HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
@@ -31,7 +31,7 @@ public class HAPExpression {
 //			HAPUrlUtility.openUrlInBrowser("http://localhost:8082/nosliw/fileload.html?name="+HAPRuntimeEnvironment.id);
 		}
 		catch(Throwable e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 }
