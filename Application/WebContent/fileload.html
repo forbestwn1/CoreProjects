@@ -19,7 +19,9 @@
 
 <script>
 $(document).on("nosliwActive", function(){
-	nosliw.utility.requestLoadFileResources(["C:/temp/nosliw/temp/scriptexport/scripts/1585103773136"], 
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var parms = node_basicUtility.getParmsInUrl();
+	nosliw.utility.requestLoadFileResources(["C:/temp/nosliw/temp/scriptexport/scripts/"+parms.name], 
 			function(){
 		});
 });

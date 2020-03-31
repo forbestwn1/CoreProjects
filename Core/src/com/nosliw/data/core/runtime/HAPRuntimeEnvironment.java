@@ -19,6 +19,8 @@ import com.nosliw.data.core.template.HAPManagerTemplate;
  */
 public interface HAPRuntimeEnvironment {
 
+	public static final String id = System.currentTimeMillis()+"";
+	
 	HAPManagerExpression getExpressionManager();
 
 	HAPManagerProcess getProcessManager();

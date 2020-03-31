@@ -1,10 +1,10 @@
 package com.nosliw.uiresource.page.definition;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceDefinitionPluginPage implements HAPPluginResourceDefinition{
 
@@ -17,7 +17,7 @@ public class HAPResourceDefinitionPluginPage implements HAPPluginResourceDefinit
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
 		//read content
-		String file = HAPFileUtility.getUIPageFolder()+resourceId.getId()+".res";
+		String file = HAPSystemFolderUtility.getUIPageFolder()+resourceId.getId()+".res";
 		//parse content
 		HAPDefinitionUIPage uiResourceDef = m_pageParser.parseFile(file);
 		return uiResourceDef;

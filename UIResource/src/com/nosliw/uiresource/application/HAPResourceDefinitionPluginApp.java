@@ -3,10 +3,10 @@ package com.nosliw.uiresource.application;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceDefinitionPluginApp implements HAPPluginResourceDefinition{
 
@@ -21,7 +21,7 @@ public class HAPResourceDefinitionPluginApp implements HAPPluginResourceDefiniti
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
-		String file = HAPFileUtility.getMiniAppFolder()+resourceId.getId()+".res";
+		String file = HAPSystemFolderUtility.getMiniAppFolder()+resourceId.getId()+".res";
 		HAPDefinitionApp miniAppDef = m_miniAppParser.parseFile(file);
 		return miniAppDef;
 	}

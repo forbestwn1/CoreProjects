@@ -35,6 +35,7 @@ import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 import com.nosliw.data.core.script.expression.HAPVariableInScript;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPRuntimeJSScriptUtility {
 
@@ -64,7 +65,7 @@ public class HAPRuntimeJSScriptUtility {
 		case HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE:
 			//load as file, create temp file first
 			String name = resource.getId().toStringValue(HAPSerializationFormat.LITERATE);
-			String resourceFile = HAPFileUtility.getResourceTempFileFolder() + name + ".js";
+			String resourceFile = HAPSystemFolderUtility.getResourceTempFileFolder() + name + ".js";
 			resourceFile = HAPFileUtility.writeFile(resourceFile, script);
 			out = HAPJSScriptInfo.buildByFile(resourceFile, name);
 			

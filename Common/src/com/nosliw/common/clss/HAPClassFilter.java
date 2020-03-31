@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import com.google.common.reflect.ClassPath;
-import com.nosliw.common.utils.HAPSystemUtility;
+import com.nosliw.common.utils.HAPNosliwUtility;
 
 public abstract class HAPClassFilter {
 	
@@ -18,7 +18,7 @@ public abstract class HAPClassFilter {
 		    
 		    //loop all the classes
 			for(ClassPath.ClassInfo classInfo : classeInfos){
-				if(HAPSystemUtility.isHAPClass(classInfo.getName())){
+				if(HAPNosliwUtility.isHAPClass(classInfo.getName())){
 					//only check nosliw package
 					Class checkClass = classInfo.load();
 //					if(!checkClass.isInterface() && !Modifier.isAbstract(checkClass.getModifiers()))

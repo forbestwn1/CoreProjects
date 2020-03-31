@@ -10,8 +10,7 @@ public class HAPUtilityExpression {
 	}
 	
 	public static String getBeforeUpdateName(HAPExecutableExpression expression, String name) {
-		int index = name.indexOf(expression.getId()+"_");
-		return name.substring(index);
+		return name.substring((expression.getId()+"_").length());
 	}
 	
 }

@@ -34,7 +34,7 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	
 	private Map<String, HAPVariableInfo> m_localVarsInfo;
 
-	private Map<String, HAPMatchers> m_varsMatchers;
+	private HAPMatchers m_outputMatchers;
 	
 	private HAPDefinitionExpression m_definition;
 	
@@ -43,7 +43,6 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 		this.m_id = id;
 		this.m_operand = new HAPOperandWrapper(operand);
 		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
 	}
 	
 	@Override
@@ -63,6 +62,9 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	@Override
 	public HAPDataTypeCriteria getOutputCriteria() {  return this.m_operand.getOperand().getOutputCriteria(); }
 	
+	@Override
+	public HAPMatchers getOutputMatchers() {		return this.m_outputMatchers;	}
+
 	@Override
 	public void updateVariableName(HAPUpdateName nameUpdate) {
 		Map<String, HAPVariableInfo> localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
@@ -97,11 +99,17 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	}
 	
 	@Override
-	public Map<String, HAPMatchers> getVariableMatchers() {		return this.m_varsMatchers;	}
-
-	@Override
 	public void discover(HAPDataTypeCriteria expectOutput, HAPProcessTracker processTracker) {
-		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(new HAPOperand[]{this.getOperand().getOperand()}, this.m_localVarsInfo, expectOutput, processTracker);
+		Map<String, HAPVariableInfo> discoveredVarsInf = new LinkedHashMap<String, HAPVariableInfo>();
+		HAPMatchers[] matchers = new HAPMatchers[1]; 
+		HAPOperandUtility.discover(
+				new HAPOperand[]{this.getOperand().getOperand()},
+				new HAPDataTypeCriteria[] {expectOutput},
+				this.m_localVarsInfo,
+				discoveredVarsInf,
+				matchers,
+				processTracker);
+		this.m_outputMatchers = matchers[0];
 		this.m_localVarsInfo.clear();
 		this.m_localVarsInfo.putAll(discoveredVarsInf);
 	}
@@ -118,5 +126,4 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_localVarsInfo, HAPSerializationFormat.JSON));
 
 	}
-
 }

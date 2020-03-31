@@ -8,10 +8,10 @@ import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
+import com.nosliw.data.core.system.HAPSystemUtility;
 
 public class HAPResourceUtility {
 

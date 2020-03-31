@@ -14,11 +14,12 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayBrowserLoadLibrary;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
+import com.nosliw.data.core.system.HAPSystemUtility;
 import com.nosliw.servlet.HAPBaseServlet;
 import com.nosliw.servlet.HAPRequestInfo;
 
@@ -57,7 +58,7 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 						if(i!=-1) {
 							file1 = fileName.substring(0, i);
 						}
-						libraryContent.append(HAPFileUtility.readFile(HAPFileUtility.getJSFolder()+file1));
+						libraryContent.append(HAPFileUtility.readFile(HAPSystemFolderUtility.getJSFolder()+file1));
 					}
 					HAPFileUtility.writeFile(HAPSystemUtility.getJSTempFolder()+"libs/"+m_libraryTempFile, libraryContent.toString());
 				}

@@ -3,10 +3,10 @@ package com.nosliw.data.core.cronjob;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceDefinitionPluginCronJob implements HAPPluginResourceDefinition{
 
@@ -20,7 +20,7 @@ public class HAPResourceDefinitionPluginCronJob implements HAPPluginResourceDefi
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
-		String file = HAPFileUtility.getCronJobFolder()+resourceId.getId()+".res";
+		String file = HAPSystemFolderUtility.getCronJobFolder()+resourceId.getId()+".res";
 		HAPDefinitionCronJob cronJobDef = m_cronJobParser.parseFile(file);
 		return cronJobDef;
 	}

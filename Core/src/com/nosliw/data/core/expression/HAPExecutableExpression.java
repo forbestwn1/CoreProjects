@@ -24,7 +24,7 @@ public interface HAPExecutableExpression extends HAPSerializable, HAPExecutable{
 	public static String OPERAND = "operand";
 	
 	@HAPAttribute
-	public static String VARIABLESMATCHERS = "variablesMatchers";
+	public static String OUTPUTMATCHERS = "outputMatchers";
 
 	String getId();
 	
@@ -32,9 +32,9 @@ public interface HAPExecutableExpression extends HAPSerializable, HAPExecutable{
 	HAPOperandWrapper getOperand();
 
 	Map<String, HAPVariableInfo> getVarsInfo();
-	
-	Map<String, HAPMatchers> getVariableMatchers();
 
+	HAPMatchers getOutputMatchers();
+	
 	void updateVariableName(HAPUpdateName nameUpdate);
 	
 	HAPDefinitionExpression getDefinition();
@@ -45,7 +45,7 @@ public interface HAPExecutableExpression extends HAPSerializable, HAPExecutable{
 
 	public static void buildJsonMap(HAPExecutableExpression obj, Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(obj.getOperand(), HAPSerializationFormat.JSON));
-		jsonMap.put(VARIABLESMATCHERS, HAPJsonUtility.buildJson(obj.getVariableMatchers(), HAPSerializationFormat.JSON));
+		jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(obj.getOutputMatchers(), HAPSerializationFormat.JSON));
 	}
 	
 }

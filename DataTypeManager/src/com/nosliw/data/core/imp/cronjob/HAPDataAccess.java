@@ -18,6 +18,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.cronjob.HAPInstancePollSchedule;
 import com.nosliw.data.core.imp.io.HAPDBSource;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPDataAccess {
 
@@ -72,7 +73,7 @@ public class HAPDataAccess {
 	}
 
 	private String getCronJobInstanceFolder(String instanceId) {
-		return HAPFileUtility.getCronJobInstanceFolder() + instanceId + "/";
+		return HAPSystemFolderUtility.getCronJobInstanceFolder() + instanceId + "/";
 	}
 
 	public HAPCronJobState updateOrNewState(HAPCronJobState state) {

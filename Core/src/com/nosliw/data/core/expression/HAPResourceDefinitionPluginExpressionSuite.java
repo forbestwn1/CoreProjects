@@ -7,10 +7,10 @@ import java.io.FileNotFoundException;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceDefinitionPluginExpressionSuite implements HAPPluginResourceDefinition{
 
@@ -28,7 +28,7 @@ public class HAPResourceDefinitionPluginExpressionSuite implements HAPPluginReso
 		HAPDefinitionExpressionSuite suite = null;
 		try {
 			HAPResourceIdExpressionSuite expressionSuiteResourceId = new HAPResourceIdExpressionSuite(resourceId);
-			suite = HAPImporterExpressionSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPFileUtility.getExpressionFolder()+expressionSuiteResourceId.getId()+".res")), this.m_expressionParser);
+			suite = HAPImporterExpressionSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPSystemFolderUtility.getExpressionFolder()+expressionSuiteResourceId.getId()+".res")), this.m_expressionParser);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

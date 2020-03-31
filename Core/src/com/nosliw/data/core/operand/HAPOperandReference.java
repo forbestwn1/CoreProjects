@@ -1,11 +1,14 @@
 package com.nosliw.data.core.operand;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeConverter;
@@ -14,6 +17,7 @@ import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
@@ -22,6 +26,15 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	@HAPAttribute
 	public static final String REFERENCENAME = "referenceName";
+	
+	@HAPAttribute
+	public static final String EXPRESSION = "expression";
+	
+	@HAPAttribute
+	public static final String VARMATCHERS = "varMatchers";
+	
+	@HAPAttribute
+	public static final String VARMAPPING = "varMapping";
 	
 	private String m_referenceName;
 	
@@ -55,10 +68,9 @@ public class HAPOperandReference extends HAPOperandImp{
 	@Override
 	public Set<HAPDataTypeConverter> getConverters(){
 		Set<HAPDataTypeConverter> out = new HashSet<HAPDataTypeConverter>();
-//		Map<String, HAPMatchers> varConverters = this.m_referencedTask.getVariableMatchers();
-//		for(String var : varConverters.keySet()){
-//			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(varConverters.get(var).discoverRelationships()));
-//		}
+		for(String var : m_matchers.keySet()){
+			out.addAll(HAPMatcherUtility.getConverterResourceIdFromRelationship(m_matchers.get(var).discoverRelationships()));
+		}
 		return out;	
 	}
 
@@ -75,6 +87,9 @@ public class HAPOperandReference extends HAPOperandImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(REFERENCENAME, m_referenceName);
+		jsonMap.put(EXPRESSION, this.m_expression.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VARMATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
+		jsonMap.put(VARMAPPING, HAPJsonUtility.buildJson(this.m_variableMapping, HAPSerializationFormat.JSON));
 	}
 
 	private String getInternalVariable(String ext) {
@@ -85,13 +100,14 @@ public class HAPOperandReference extends HAPOperandImp{
 		return this.m_variableMapping.get(ext);
 	}
 	
-	
 	@Override
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
+		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
+		
 		this.m_expression.discover(expectCriteria, processTracker);
 
 		//variable
@@ -101,7 +117,7 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPVariableInfo inVar = internalVariablesInfo.get(inVarName);
 			HAPVariableInfo exVar = variablesInfo.get(exVarName);
 			HAPMatchers matchers = HAPCriteriaUtility.mergeVariableInfo(exVar, inVar.getCriteria(), dataTypeHelper);
-			this.m_matchers.put(exVarName, matchers);
+			this.m_matchers.put(inVarName, matchers);
 		}
 		
 		//output
@@ -120,5 +136,5 @@ public class HAPOperandReference extends HAPOperandImp{
 		super.cloneTo(operand);
 		operand.m_referenceName = this.m_referenceName;
 	}
-
+	
 }

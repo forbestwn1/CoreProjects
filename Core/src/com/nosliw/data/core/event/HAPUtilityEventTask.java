@@ -1,11 +1,11 @@
 package com.nosliw.data.core.event;
 
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityEventTask {
 
 	public static HAPDefinitionEventTask getEventTaskDefinitionById(String id, HAPParserEventTask eventTaskParser){
-		String file = HAPFileUtility.getCronJobFolder()+id+".res";
+		String file = HAPSystemFolderUtility.getCronJobFolder()+id+".res";
 		HAPDefinitionEventTask eventTaskDef = eventTaskParser.parseFile(file);
 		return eventTaskDef;
 	}

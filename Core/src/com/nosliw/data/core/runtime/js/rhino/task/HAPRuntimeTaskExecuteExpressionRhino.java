@@ -48,7 +48,6 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 					resourcesId.add(new HAPResourceInfo(dependency.getId()));
 				}
 
-				
 //				List<HAPExecutableExpression> expressions = new ArrayList<HAPExecutableExpression>();
 //				expressions.add(this.getExpression());
 //				List<HAPResourceInfo> resourcesId =	HAPUtilityExpressionResource.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager(), runtime.getRuntimeInfo());

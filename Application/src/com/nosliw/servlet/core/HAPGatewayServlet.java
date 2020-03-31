@@ -9,12 +9,13 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.browser.HAPRuntimeBrowserUtility;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
+import com.nosliw.data.core.system.HAPSystemUtility;
 import com.nosliw.servlet.HAPServiceServlet;
 
 /**
@@ -46,7 +47,7 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 				if(file==null){
 					if(HAPResourceUtility.LOADRESOURCEBYFILE_MODE_ALWAYS.equals(HAPSystemUtility.getLoadResourceByFileMode())){
 						String name = "gatewayCommand_"+gatewayId+"_"+command+""+index++;
-						String resourceFile = HAPFileUtility.getResourceTempFileFolder() + name + ".js";
+						String resourceFile = HAPSystemFolderUtility.getResourceTempFileFolder() + name + ".js";
 						resourceFile = HAPFileUtility.writeFile(resourceFile, scriptInfo.getScript());
 						scriptInfo.setFile(HAPRuntimeBrowserUtility.getBrowserScriptPath(resourceFile));
 						scriptInfo.setScript(null);

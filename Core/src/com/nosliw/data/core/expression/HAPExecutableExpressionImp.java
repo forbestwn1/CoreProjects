@@ -1,7 +1,6 @@
 package com.nosliw.data.core.expression;
 
 import java.util.List;
-import java.util.Map;
 
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandTask;
@@ -24,11 +23,9 @@ public abstract class HAPExecutableExpressionImp extends HAPExecutableImp implem
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		//get converter resource id from var converter in expression 
-		Map<String, HAPMatchers> matchers = this.getVariableMatchers();
+		HAPMatchers matchers = this.getOutputMatchers();
 		if(matchers!=null){
-			for(String varName : matchers.keySet()){
-				dependency.addAll(matchers.get(varName).getResourceDependency(runtimeInfo, resourceManager));
-			}
+			dependency.addAll(matchers.getResourceDependency(runtimeInfo, resourceManager));
 		}
 		
 		HAPOperandUtility.processAllOperand(this.getOperand(), dependency, new HAPOperandTask(){

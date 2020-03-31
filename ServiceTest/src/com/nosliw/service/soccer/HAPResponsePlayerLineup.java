@@ -8,8 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPSystemUtility;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.data.core.system.HAPSystemUtility;
 
 @HAPEntityWithAttribute
 public class HAPResponsePlayerLineup extends HAPExecutableImp{

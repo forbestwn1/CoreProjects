@@ -127,6 +127,7 @@ public class HAPRhinoDataUtility
         	}
         	catch(Throwable e) {
         		e.printStackTrace();
+//        		throw e;
         	}
         }
         else if(nativeObject instanceof Function){

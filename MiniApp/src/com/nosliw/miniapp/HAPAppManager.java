@@ -8,6 +8,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 import com.nosliw.miniapp.data.HAPAppDataManagerImp;
 import com.nosliw.miniapp.entity.HAPUser;
 import com.nosliw.miniapp.entity.HAPUserInfo;
@@ -27,7 +28,7 @@ public class HAPAppManager {
 	public HAPAppDataManagerImp getAppDataManager() {	return this.m_appDataMan;	}
 	
 	public HAPDefinitionApp getMinAppDefinition(String minAppDefId) {
-		String file = HAPFileUtility.getMiniAppFolder()+minAppDefId+".res";
+		String file = HAPSystemFolderUtility.getMiniAppFolder()+minAppDefId+".res";
 		HAPDefinitionApp out = (HAPDefinitionApp)HAPSerializeManager.getInstance().buildObject(HAPDefinitionApp.class.getName(), new JSONObject(HAPFileUtility.readFile(new File(file))), HAPSerializationFormat.JSON);
 		out.setId(minAppDefId);
 		return out;

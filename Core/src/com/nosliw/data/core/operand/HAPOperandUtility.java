@@ -21,6 +21,7 @@ import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandUtility {
 
@@ -292,14 +293,16 @@ public class HAPOperandUtility {
 		}
 	}
 
-	static public Map<String, HAPVariableInfo> discover(
+	static public void discover(
 			HAPOperand[] operands, 
-			Map<String, HAPVariableInfo> parentVariablesInfo, 
-			HAPDataTypeCriteria expectOutput,
+			HAPDataTypeCriteria[] expectOutputs,
+			Map<String, HAPVariableInfo> inVariablesInfo, 
+			Map<String, HAPVariableInfo> outVariablesInfo,
+			HAPMatchers[] matchers,
 			HAPProcessTracker processTracker) {
 		//do discovery on operand
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		varsInfo.putAll(parentVariablesInfo);
+		varsInfo.putAll(inVariablesInfo);
 		
 		Map<String, HAPVariableInfo> oldVarsInfo;
 		//Do discovery until local vars definition not change or fail 
@@ -307,11 +310,12 @@ public class HAPOperandUtility {
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);
 			processTracker.clear();
-			for(HAPOperand operand : operands) {
-				operand.discover(varsInfo, expectOutput, processTracker, HAPExpressionManager.dataTypeHelper);
+			for(int i=0; i<operands.length; i++) {
+				matchers[i] = operands[i].discover(varsInfo, expectOutputs[i], processTracker, HAPExpressionManager.dataTypeHelper);
 			}
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && processTracker.isSuccess());
-		return varsInfo;
+		outVariablesInfo.clear();
+		outVariablesInfo.putAll(varsInfo);
 	}
 
 	/**

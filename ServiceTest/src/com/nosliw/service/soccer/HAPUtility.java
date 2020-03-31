@@ -3,7 +3,7 @@ package com.nosliw.service.soccer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPSystemUtility;
+import com.nosliw.data.core.system.HAPSystemUtility;
 import com.nosliw.miniapp.data.HAPAppDataInfo;
 import com.nosliw.miniapp.data.HAPAppDataInfoContainer;
 

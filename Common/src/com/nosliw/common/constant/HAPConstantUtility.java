@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.clss.HAPClassProcessor;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPSystemUtility;
+import com.nosliw.common.utils.HAPNosliwUtility;
 
 public class HAPConstantUtility {
 
@@ -19,7 +19,7 @@ public class HAPConstantUtility {
 				out = entityWithAttr.baseName();
 				if(HAPBasicUtility.isStringEmpty(out)){
 					//if not defined, then use class name as base name
-					out = HAPSystemUtility.getHAPBaseClassName(cs);
+					out = HAPNosliwUtility.getHAPBaseClassName(cs);
 				}
 			}
 			else{

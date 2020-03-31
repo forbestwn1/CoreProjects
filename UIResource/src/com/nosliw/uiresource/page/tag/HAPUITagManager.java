@@ -2,12 +2,12 @@ package com.nosliw.uiresource.page.tag;
 
 import java.io.File;
 
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUITagManager {
 
 	public HAPUITagDefinition getUITagDefinition(HAPUITagId id){
-		String fileName = HAPFileUtility.getTagDefinitionFolder() + id.getId() + ".js";
+		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + id.getId() + ".js";
 		File file = new File(fileName);
 		
 		HAPUITagDefinition out = HAPUITagDefinitionParser.parseFromFile(file);

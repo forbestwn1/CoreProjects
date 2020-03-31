@@ -18,9 +18,14 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpressionImp;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -28,22 +33,19 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.resource.HAPResourceInfo;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteExpressionRhino;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPRhinoRuntimeUtility {
 
 	private static int index = 1;
 	
-	private static String scriptTempFolder = HAPFileUtility.getScriptExportFolder() + System.currentTimeMillis() + "/";
-
-	public static HAPData executeOperandSync(HAPOperandWrapper operand, Map<String, HAPData> parms, Map<String, HAPData> referenceValues, HAPRuntime runtime) {
+	public static HAPData executeOperandSync(HAPOperandWrapper operand, Map<String, HAPData> parms, Map<String, HAPData> referenceValues, HAPRuntime runtime, HAPResourceManagerRoot resourceManager) {
 		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecutableExpressionImp() {
 			@Override
 			public HAPOperandWrapper getOperand() {  return operand;  }
-
-			@Override
-			public Map<String, HAPMatchers> getVariableMatchers() {	return null; }
 
 			@Override
 			public String toStringValue(HAPSerializationFormat format) {
@@ -57,7 +59,49 @@ public class HAPRhinoRuntimeUtility {
 			public boolean buildObject(Object value, HAPSerializationFormat format) {
 				return false;
 			}
-		}, parms, referenceValues);
+
+			@Override
+			public String getId() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public Map<String, HAPVariableInfo> getVarsInfo() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public HAPMatchers getOutputMatchers() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void updateVariableName(HAPUpdateName nameUpdate) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public HAPDefinitionExpression getDefinition() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void discover(HAPDataTypeCriteria expectOutput, HAPProcessTracker processTracker) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public HAPDataTypeCriteria getOutputCriteria() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		}, parms, referenceValues, resourceManager);
 		HAPData out = (HAPData)runtime.executeTaskSync(exeExpTask).getData();
 		return out;
 	}
@@ -140,7 +184,7 @@ public class HAPRhinoRuntimeUtility {
 	}
 	
 	public static String getScriptTempFolder(){
-		File directory = new File(scriptTempFolder);
+		File directory = new File(HAPSystemFolderUtility.getCurrentScriptExportFolder());
 	    if (! directory.exists()){
 	    	directory.mkdir();
 	    }
@@ -187,7 +231,7 @@ public class HAPRhinoRuntimeUtility {
 	}
 
 	private static void appendLibraryToScript(StringBuffer scriptContent, String libDir) {
-		List<File> files = HAPFileUtility.sortFiles(HAPFileUtility.getAllFiles(HAPFileUtility.getNosliwJSFolder(libDir)));
+		List<File> files = HAPFileUtility.sortFiles(HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getNosliwJSFolder(libDir)));
 		for(File file : files) {
 			appendFileToScript(scriptContent, file.getAbsolutePath());
 		}

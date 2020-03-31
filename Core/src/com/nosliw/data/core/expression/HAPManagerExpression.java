@@ -1,5 +1,6 @@
 package com.nosliw.data.core.expression;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -47,9 +48,20 @@ public class HAPManagerExpression {
 
 	public HAPExecutableExpression getExpression(HAPResourceId expressionId, HAPContextExpression context, Map<String, String> configure) {
 		if(context==null)  context = HAPContextExpression.createContext(this.m_resourceDefManager);
+		HAPResourceDefinitionWithContext resourceDefWithContext = context.getResourceDefinition(expressionId);
+		
+		if(configure==null) {
+			//build configure from definition info
+			HAPDefinitionExpression expressionDef = (HAPDefinitionExpression)resourceDefWithContext.getResourceDefinition();
+			configure = new LinkedHashMap<String, String>();
+			for(String n : expressionDef.getInfo().getNames()) {
+				configure.put(n, (String)expressionDef.getInfo().getValue(n)); 
+			}
+		}
+		
 		HAPExecutableExpression out = HAPProcessorExpression.process(
 				expressionId.toStringValue(HAPSerializationFormat.LITERATE), 
-				context.getResourceDefinition(expressionId), 
+				resourceDefWithContext, 
 				null, 
 				null, 
 				this, 
@@ -58,7 +70,4 @@ public class HAPManagerExpression {
 				new HAPProcessTracker());
 		return out;
 	}
-	
-	
-	
 }

@@ -21,7 +21,7 @@ public class HAPExpressionProcessConfigureUtil {
 	}
 
 	static public boolean isDoDiscovery(Map<String, String> configure){
-		boolean out = false;
+		boolean out = true;
 		if(configure!=null) {
 			out = "true".equals(configure.get(CONFIGURE_DISCOVERY));
 		}

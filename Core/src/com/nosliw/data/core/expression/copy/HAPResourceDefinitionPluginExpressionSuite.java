@@ -7,13 +7,13 @@ import java.io.FileNotFoundException;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceDefinitionPluginExpressionSuite implements HAPPluginResourceDefinition{
 
@@ -31,7 +31,7 @@ public class HAPResourceDefinitionPluginExpressionSuite implements HAPPluginReso
 		HAPDefinitionProcessSuite suite = null;
 		try {
 			HAPResourceIdExpressionSuite processSuiteResourceId = new HAPResourceIdExpressionSuite(resourceId);
-			suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPFileUtility.getProcessFolder()+processSuiteResourceId.getId()+".process")), m_activityPluginMan);
+			suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPSystemFolderUtility.getProcessFolder()+processSuiteResourceId.getId()+".process")), m_activityPluginMan);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

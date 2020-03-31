@@ -1,12 +1,12 @@
 package com.nosliw.common.clss;
 
-import com.nosliw.common.utils.HAPSystemUtility;
+import com.nosliw.common.utils.HAPNosliwUtility;
 
 public abstract class HAPClassProcessor {
 
 	public void process(Class cls, Object data){
 		try {
-			if(HAPSystemUtility.isHAPClass(cls)){
+			if(HAPNosliwUtility.isHAPClass(cls)){
 				if(this.isValid(cls)){
 					this.processClass(cls, data);
 					this.process(cls.getSuperclass(), data);

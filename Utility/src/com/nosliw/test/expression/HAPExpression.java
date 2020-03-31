@@ -12,21 +12,26 @@ import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
 public class HAPExpression {
 
 	public static void main(String[] args) {
-		
-		String suite = "test1";
-		String id = "test5";
-		String testData = "testData1";
 
-		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
-		HAPExecutableExpression expressionExe = runtimeEnvironment.getExpressionManager().getExpression(HAPUtilityExpressionResource.buildResourceId(suite, id), null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+		try {
+			String suite = "test1";
+			String id = "test1";
+			String testData = "testData1";
 
-		HAPContextDataFlat input = HAPUtilityComponent.getTestDataFromAttachment(expressionExe.getDefinition(), testData);
+			HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
+			HAPExecutableExpression expressionExe = runtimeEnvironment.getExpressionManager().getExpression(HAPUtilityExpressionResource.buildResourceId(suite, id), null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 
-		HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, input.getData(), null, runtimeEnvironment.getResourceManager());
-		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
+			HAPContextDataFlat input = HAPUtilityComponent.getTestDataFromAttachment(expressionExe.getDefinition(), testData);
 
-		System.out.println(out);
+			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, input.getData(), null, runtimeEnvironment.getResourceManager());
+			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
+
+			System.out.println(out);
+
+//			HAPUrlUtility.openUrlInBrowser("http://localhost:8082/nosliw/fileload.html?name="+HAPRuntimeEnvironment.id);
+		}
+		catch(Throwable e) {
+//			e.printStackTrace();
+		}
 	}
-	
-	
 }

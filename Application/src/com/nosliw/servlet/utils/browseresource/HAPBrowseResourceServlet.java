@@ -18,6 +18,7 @@ import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
@@ -70,7 +71,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 	
 	private HAPResourceNodeContainerByType buildAllApp(){
 		HAPResourceNodeContainerByType out = new HAPResourceNodeContainerByType(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPP);
-		Set<File> files = HAPFileUtility.getAllFiles(HAPFileUtility.getMiniAppFolder());
+		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getMiniAppFolder());
 		for(File file : files) {
 			HAPResourceNode node = createResourceNodeApp(HAPResourceIdFactory.newInstance(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPP, HAPFileUtility.getFileName(file)));
 			out.addElement(node);
@@ -80,7 +81,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 
 	private HAPResourceNodeContainerByType buildAllModule(){
 		HAPResourceNodeContainerByType out = new HAPResourceNodeContainerByType(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE);
-		Set<File> files = HAPFileUtility.getAllFiles(HAPFileUtility.getUIModuleFolder());
+		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getUIModuleFolder());
 		for(File file : files) {
 			String resourceId = HAPFileUtility.getFileName(file);
 			HAPResourceNode node = createResourceNodeModule(resourceId, new HAPResourceIdUIModule(resourceId), null);
@@ -91,7 +92,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 
 	private HAPResourceNodeContainerByType buildAllPage(){
 		HAPResourceNodeContainerByType out = new HAPResourceNodeContainerByType(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
-		Set<File> files = HAPFileUtility.getAllFiles(HAPFileUtility.getUIPageFolder());
+		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getUIPageFolder());
 		for(File file : files) {
 			String resourceId = HAPFileUtility.getFileName(file);
 			HAPResourceNode node = createResourceNodePage(resourceId, new HAPResourceIdUIResource(resourceId), null);

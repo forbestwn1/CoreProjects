@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
@@ -15,6 +14,7 @@ import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceDefinitionPluginProcessSuite implements HAPPluginResourceDefinition{
 
@@ -34,7 +34,7 @@ public class HAPResourceDefinitionPluginProcessSuite implements HAPPluginResourc
 		HAPDefinitionProcessSuite suite = null;
 		try {
 			HAPResourceIdProcessSuite processSuiteResourceId = new HAPResourceIdProcessSuite(resourceId);
-			suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPFileUtility.getProcessFolder()+processSuiteResourceId.getId()+".process")), m_activityPluginMan);
+			suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPSystemFolderUtility.getProcessFolder()+processSuiteResourceId.getId()+".process")), m_activityPluginMan);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

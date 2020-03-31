@@ -8,6 +8,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceManagerUIAppConfigure extends HAPResourceManagerImp{
 
@@ -18,7 +19,7 @@ public class HAPResourceManagerUIAppConfigure extends HAPResourceManagerImp{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdUIAppConfigure id = new HAPResourceIdUIAppConfigure((HAPResourceIdSimple)resourceId);
-		String file = HAPFileUtility.getUIAppConfigureFolder()+id.getIdLiterate()+".js";
+		String file = HAPSystemFolderUtility.getUIAppConfigureFolder()+id.getIdLiterate()+".js";
 		return new HAPResource(resourceId, HAPResourceDataFactory.createJSValueResourceData(HAPFileUtility.readFile(file)), null);
 	}
 

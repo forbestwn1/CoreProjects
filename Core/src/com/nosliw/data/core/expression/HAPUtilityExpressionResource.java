@@ -3,7 +3,6 @@ package com.nosliw.data.core.expression;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.HAPDataTypeConverter;
@@ -44,11 +43,9 @@ public class HAPUtilityExpressionResource {
 	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableExpression expression){
 		Set<HAPResourceIdSimple> result = new LinkedHashSet<HAPResourceIdSimple>();
 		//get converter resource id from var converter in expression 
-		Map<String, HAPMatchers> matchers = expression.getVariableMatchers();
+		HAPMatchers matchers = expression.getOutputMatchers();
 		if(matchers!=null){
-			for(String varName : matchers.keySet()){
-				result.addAll(HAPMatcherUtility.getMatchersResourceId(matchers.get(varName)));
-			}
+			result.addAll(HAPMatcherUtility.getMatchersResourceId(matchers));
 		}
 		
 		HAPOperandUtility.processAllOperand(expression.getOperand(), result, new HAPOperandTask(){
