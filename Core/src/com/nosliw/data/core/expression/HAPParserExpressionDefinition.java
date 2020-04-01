@@ -18,10 +18,10 @@ public class HAPParserExpressionDefinition {
 		for(int i=0; i<processesArray.length(); i++){
 			JSONObject processObjJson = processesArray.getJSONObject(i);
 			String id = processObjJson.getString("id");
-			Object expressionObj = processObjJson.opt(HAPDefinitionExpressionSuiteElementEntity.EXPRESSION);
+			Object expressionObj = processObjJson.opt(HAPDefinitionExpressionSuiteElementEntity.ELEMENT);
 			if(expressionObj!=null) {
 				//process
-				out.addElement(id, parseExpressionDefinition(processObjJson, expressionParser));
+				out.addElement(id, parseExpressionSuiteElement(processObjJson, expressionParser));
 			}
 			else {
 				//reference
@@ -31,13 +31,33 @@ public class HAPParserExpressionDefinition {
 		return out;
 	}
 
-	private static HAPDefinitionExpressionSuiteElementEntity parseExpressionDefinition(JSONObject jsonObj, HAPParserExpression expressionParser) {
+	private static HAPDefinitionExpressionSuiteElementEntity parseExpressionSuiteElement(JSONObject jsonObj, HAPParserExpression expressionParser) {
 		HAPDefinitionExpressionSuiteElementEntity out = new HAPDefinitionExpressionSuiteElementEntity();
 		HAPUtilityComponentParse.parseComponent(out, jsonObj);
-		String expressionStr = jsonObj.getString(HAPDefinitionExpressionSuiteElementEntity.EXPRESSION);
+
+		JSONArray eleArrayJson = jsonObj.getJSONArray(HAPDefinitionExpressionSuiteElementEntity.ELEMENT);
+		for(int i=0; i<eleArrayJson.length(); i++) {
+			JSONObject expressionJsonObj = eleArrayJson.getJSONObject(i);
+			Object expressionObj = expressionJsonObj.opt(HAPDefinitionExpressionSuiteElementEntityExpression.EXPRESSION);
+			if(expressionObj!=null) {
+				//process
+				out.addExpression(parseExpressionDefinition(expressionJsonObj, expressionParser));
+			}
+			else {
+				//reference
+//				out.addProcess(id, parseProcessReference(processObjJson));
+			}
+		}
+		return out;
+	}
+
+	private static HAPDefinitionExpressionSuiteElementEntityExpression parseExpressionDefinition(JSONObject jsonObj, HAPParserExpression expressionParser) {
+		HAPDefinitionExpressionSuiteElementEntityExpression out = new HAPDefinitionExpressionSuiteElementEntityExpression();
+		out.buildEntityInfoByJson(jsonObj);
+		String expressionStr = jsonObj.getString(HAPDefinitionExpressionSuiteElementEntityExpression.EXPRESSION);
 		out.setOperand(expressionParser.parseExpression(expressionStr));
 		
-		JSONArray refJsonArray = jsonObj.optJSONArray(HAPDefinitionExpressionSuiteElementEntity.REFERENCEMAPPING);
+		JSONArray refJsonArray = jsonObj.optJSONArray(HAPDefinitionExpressionSuiteElementEntityExpression.REFERENCEMAPPING);
 		if(refJsonArray!=null) {
 			for(int i=0; i<refJsonArray.length(); i++) {
 				JSONObject refJsonObj = refJsonArray.getJSONObject(i);
@@ -48,5 +68,4 @@ public class HAPParserExpressionDefinition {
 		}
 		return out;
 	}
-	
 }

@@ -294,11 +294,11 @@ public class HAPOperandUtility {
 	}
 
 	static public void discover(
-			HAPOperand[] operands, 
-			HAPDataTypeCriteria[] expectOutputs,
+			List<HAPOperand> operands, 
+			List<HAPDataTypeCriteria> expectOutputs,
 			Map<String, HAPVariableInfo> inVariablesInfo, 
 			Map<String, HAPVariableInfo> outVariablesInfo,
-			HAPMatchers[] matchers,
+			List<HAPMatchers> matchers,
 			HAPProcessTracker processTracker) {
 		//do discovery on operand
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
@@ -307,11 +307,12 @@ public class HAPOperandUtility {
 		Map<String, HAPVariableInfo> oldVarsInfo;
 		//Do discovery until local vars definition not change or fail 
 		do{
+			matchers.clear();
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);
 			processTracker.clear();
-			for(int i=0; i<operands.length; i++) {
-				matchers[i] = operands[i].discover(varsInfo, expectOutputs[i], processTracker, HAPExpressionManager.dataTypeHelper);
+			for(int i=0; i<operands.size(); i++) {
+				matchers.add(operands.get(i).discover(varsInfo, expectOutputs.get(i), processTracker, HAPExpressionManager.dataTypeHelper));
 			}
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && processTracker.isSuccess());
 		outVariablesInfo.clear();

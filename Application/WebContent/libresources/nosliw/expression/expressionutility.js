@@ -40,13 +40,17 @@ var node_utility = function()
 		return out;
 	};	
 
-	var loc_getExecuteExpressionRequest = function(expression, variables, constants, references, handlers, requestInfo){
+	var loc_getExecuteExpressionRequest = function(expression, itemName, variables, constants, references, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpression", {"expression":expression, "variables":variables}), handlers, requestInfo);
 
+		//expression item
+		if(itemName==undefined || itemName=='')   itemName = node_COMMONCONSTANT.NAME_DEFAULT;
+		var expressionItem = expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_EXPRESSIONS][itemName];
+		
 		//execute operand
-		var executeOperandRequest = node_expressionUtility.getExecuteOperandRequest(expression, expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_OPERAND], variables, constants, references, {
+		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONITEM_OPERAND], variables, constants, references, {
 			success : function(requestInfo, operandResult){
-				var outputMatchers = expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_OUTPUTMATCHERS];
+				var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONITEM_OUTPUTMATCHERS];
 				if(outputMatchers!=undefined){
 					return node_expressionUtility.getMatchDataTaskRequest(operandResult, outputMatchers);
 				}
@@ -188,7 +192,7 @@ var node_utility = function()
 	};
 
 	//execute operation operand
-	var loc_getExecuteOperationOperandRequest = function(expression, operationOperand, variables, constants, references, handlers, requestInfo){
+	var loc_getExecuteOperationOperandRequest = function(operationOperand, variables, constants, references, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperationOperand", {"operationOperand":operationOperand, "variables":variables}), handlers, requestInfo);
 
 		//cal all parms
@@ -231,7 +235,7 @@ var node_utility = function()
 			}
 		});
 		_.each(parmsOperand, function(parmOperand, parmName, list){
-			var parmOperandRequest = loc_getExecuteOperandRequest(expression, parmOperand, variables, constants, references, {
+			var parmOperandRequest = loc_getExecuteOperandRequest(parmOperand, variables, constants, references, {
 				success :function(request, parmValue){
 					return parmValue;
 				}
@@ -243,7 +247,7 @@ var node_utility = function()
 		return out;
 	};
 
-	var loc_getExecuteOperandRequest = function(expression, operand, variables, constants, references, handlers, requestInfo){
+	var loc_getExecuteOperandRequest = function(operand, variables, constants, references, handlers, requestInfo){
 		var out;
 		var operandType = operand[node_COMMONATRIBUTECONSTANT.OPERAND_TYPE];
 		switch(operandType){
@@ -266,7 +270,7 @@ var node_utility = function()
 					handlers, requestInfo);
 		    break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_OPERATION:
-			out = loc_getExecuteOperationOperandRequest(expression, operand, variables, constants, references, handlers, requestInfo);
+			out = loc_getExecuteOperationOperandRequest(operand, variables, constants, references, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_REFERENCE:
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteReferenceOperand", {}), handlers, requestInfo);
@@ -295,7 +299,7 @@ var node_utility = function()
 							reqInfo.setData(matchedVars);
 							
 							//execute operand
-							return loc_getExecuteExpressionRequest(operand[node_COMMONATRIBUTECONSTANT.OPERAND_EXPRESSION], variables, constants, references);
+							return loc_getExecuteExpressionRequest(operand[node_COMMONATRIBUTECONSTANT.OPERAND_EXPRESSION], operand[node_COMMONATRIBUTECONSTANT.OPERAND_ELEMENTNAME], variables, constants, references);
 						}, 
 					}, 
 					null).withData(refVarValue);
@@ -308,9 +312,6 @@ var node_utility = function()
 				}
 			}, this);
 			out.addRequest(varsMatchRequest);
-			break;
-		case node_COMMONCONSTANT.EXPRESSION_OPERAND_DATASOURCE:
-			out = loc_getExecuteDataSourceOperandRequest(expression, operand, variables, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
 			break;
@@ -385,16 +386,16 @@ var node_utility = function()
 		},
 		
 		//execute general operand
-		getExecuteOperandRequest : function(expression, operand, variables, constants, references, handlers, requester_parent){
-			return loc_getExecuteOperandRequest(expression, operand, variables, constants, references, handlers, requester_parent);
+		getExecuteOperandRequest : function(operand, variables, constants, references, handlers, requester_parent){
+			return loc_getExecuteOperandRequest(operand, variables, constants, references, handlers, requester_parent);
 		},
 
 		getMatchDataTaskRequest : function(data, matchers, handlers, requester_parent){
 			return 	loc_getMatchDataTaskRequest(data, matchers, handlers, requester_parent);
 		},
 		
-		getExecuteExpressionRequest : function(expression, variables, constants, references, handlers, requestInfo){
-			return loc_getExecuteExpressionRequest(expression, variables, constants, references, handlers, requestInfo);
+		getExecuteExpressionRequest : function(expression, eleName, variables, constants, references, handlers, requestInfo){
+			return loc_getExecuteExpressionRequest(expression, eleName, variables, constants, references, handlers, requestInfo);
 		}
 
 	};

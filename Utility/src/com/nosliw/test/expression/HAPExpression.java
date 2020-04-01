@@ -23,7 +23,7 @@ public class HAPExpression {
 
 			HAPContextDataFlat input = HAPUtilityComponent.getTestDataFromAttachment(expressionExe.getDefinition(), testData);
 
-			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, input.getData(), null, runtimeEnvironment.getResourceManager());
+			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, null, input.getData(), null, runtimeEnvironment.getResourceManager());
 			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 			System.out.println(out);
@@ -32,6 +32,7 @@ public class HAPExpression {
 		}
 		catch(Throwable e) {
 			e.printStackTrace();
+//			HAPUrlUtility.openUrlInBrowser("http://localhost:8082/nosliw/fileload.html?name="+HAPRuntimeEnvironment.id);
 		}
 	}
 }

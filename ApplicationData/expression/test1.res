@@ -112,67 +112,82 @@
 			"id": "test1",
 			"name": "test1",
 			"description": "standard",
-			"expression" : "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
-			"referenceMapping" : [
+			"element" : [
 				{
-					"name" : "ref1",
-					"resourceId" : "aaa|bbb",
-					"inputMapping" : {
-						
-					},
+					"expression" : "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
 				}
-			],
+			]
 		},
 		{
 			"id": "test2",
 			"name": "test2",
 			"description": "discover base",
-			"expression" : "?(baseVar)?.subString(from:?(fromVar)?,to:?(toVar)?)",
+			"element" : [
+				{
+					"expression" : "?(baseVar)?.subString(from:?(fromVar)?,to:?(toVar)?)",
+				}
+			]
 		},
 		{
 			"id": "test3",
 			"name": "test3",
 			"description": "constant",
-			"expression" : "!(test.string)!.subString(?(baseVar)?,from:&(fromConstant)&,to:?(toVar)?)",
+			"element" : [
+				{
+					"expression" : "!(test.string)!.subString(?(baseVar)?,from:&(fromConstant)&,to:?(toVar)?)",
+				}
+			]
 		},
 		{
 			"id": "test4",
 			"name": "test4",
 			"description": "attribute chain",
-			"expression" : "!(test.string)!.subString(?(business)?.a.aa,from:?(fromVar)?,to:?(toVar)?)",
+			"element" : [
+				{
+					"expression" : "!(test.string)!.subString(?(business)?.a.aa,from:?(fromVar)?,to:?(toVar)?)",
+				}
+			]
 		},
 		{
 			"id": "test5",
 			"name": "test5",
 			"description": "reference",
-			"expression" : "!(test.string)!.subString(<(ref1)>,from:?(fromVar)?,to:?(toVar)?)",
-			"referenceMapping" : [
+			"element" : [
 				{
-					"name" : "ref1",
-					"resourceId" : "test1",
+					"expression" : "!(test.string)!.subString(<(ref1)>,from:?(fromVar)?,to:?(toVar)?)",
+					"referenceMapping" : [
+						{
+							"name" : "ref1",
+							"resourceId" : "test1",
+						}
+					],
 				}
-			],
+			]
 		},
 		{
 			"id": "test6",
 			"name": "test6",
 			"description": "reference",
-			"expression" : "!(test.string)!.subString(<(ref1)>,from:?(fromVar)?,to:?(toVar)?)",
-			"referenceMapping" : [
+			"element" : [
 				{
-					"name" : "ref1",
-					"resourceId" : "test1",
-					"inputMapping" : {
-						"element" : {
-							"baseVar" : {
-								"definition": {
-									"path": "mybusiness.a.aa"
-								},
+					"expression" : "!(test.string)!.subString(<(ref1)>,from:?(fromVar)?,to:?(toVar)?)",
+					"referenceMapping" : [
+						{
+							"name" : "ref1",
+							"resourceId" : "test1",
+							"inputMapping" : {
+								"element" : {
+									"baseVar" : {
+										"definition": {
+											"path": "mybusiness.a.aa"
+										},
+									}
+								}
 							}
 						}
-					}
+					],
 				}
-			],
+			]
 		},
 	]
 }

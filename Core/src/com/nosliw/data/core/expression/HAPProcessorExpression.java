@@ -33,7 +33,7 @@ public class HAPProcessorExpression {
 			String id,
 			HAPResourceDefinitionWithContext expressionDefWithContext,
 			HAPContext extraContext,
-			HAPDataTypeCriteria expectOutput,
+			Map<String, HAPDataTypeCriteria> expectOutput,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure,
 			HAPRequirementContextProcessor contextProcessRequirement,
@@ -66,41 +66,51 @@ public class HAPProcessorExpression {
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 
-		HAPDefinitionExpression expressionDef = (HAPDefinitionExpression)expressionDefWithContext.getResourceDefinition();
-		HAPOperandWrapper operand = expressionDef.getOperand().cloneWrapper();
-
-		HAPExecutableExpressionInSuite out = new HAPExecutableExpressionInSuite(expressionDef, id, operand.getOperand());
+		HAPDefinitionExpression expressionResourceDef = (HAPDefinitionExpression)expressionDefWithContext.getResourceDefinition();
+		HAPExecutableExpressionInSuite out = new HAPExecutableExpressionInSuite(expressionResourceDef, id);
 
 		//constant
 		//constant --- discover constant
 		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>();
-		Map<String, HAPDefinitionConstant> cstDefs = HAPDataUtility.buildConstantDefinition(expressionDef.getAttachmentContainer());
+		Map<String, HAPDefinitionConstant> cstDefs = HAPDataUtility.buildConstantDefinition(expressionResourceDef.getAttachmentContainer());
 		for(String name : cstDefs.keySet()) {
 			constants.put(name, cstDefs.get(name).getData());
 		}
-		//constant --- update constant data in expression
-		HAPOperandUtility.updateConstantData(operand, constants);
-		
+
 		//variable
 		//variable --- from context
-		HAPContext context = (HAPContext)HAPUtilityComponent.processElementComponentContext(expressionDef, extraContext, contextProcessRequirement, HAPExpressionProcessConfigureUtil.getContextProcessConfigurationForExpression());
+		HAPContext context = (HAPContext)HAPUtilityComponent.processElementComponentContext(expressionResourceDef, extraContext, contextProcessRequirement, HAPExpressionProcessConfigureUtil.getContextProcessConfigurationForExpression());
 		out.setContext(context);
 		out.setVarsInfo(HAPUtilityContext.discoverDataVariablesInContext(context));
 
-		//variable --- attribute chain
-		HAPOperandUtility.processAttributeOperandInExpressionOperand(operand, out.getVarsInfo());
-		
-		//variable --- discover variable
-		Map<String, HAPVariableInfo> varsInfo = out.getVarsInfo();
-		Set<String> varNames = HAPOperandUtility.discoverVariables(operand);
-		for(String varName : varNames) {
-			if(varsInfo.get(varName)==null) {
-				varsInfo.put(varName, HAPVariableInfo.buildUndefinedVariableInfo());
-			}
+		Map<String, HAPDefinitionExpressionSuiteElementEntityExpression> expressionDefs = expressionResourceDef.getExpressions();
+		for(String name : expressionDefs.keySet()) {
+			out.addExpression(name, expressionDefs.get(name).getOperand());
 		}
-		
-		//referenced expression
-		processReferencesInOperandBasic(id, operand, expressionDef.getReferenceDefinitions(), expressionDefWithContext.getResourceContext(), expressionMan, configure, contextProcessRequirement, processTracker);
+
+		Map<String, HAPVariableInfo> varsInfo = out.getVarsInfo();
+
+		Map<String, HAPExecutableExpressionItem> expressionItems = out.getExpressions();
+		for(String name : expressionItems.keySet()) {
+			HAPExecutableExpressionItem expressionItem = expressionItems.get(name);
+			HAPOperandWrapper operand = expressionItem.getOperand();
+			//constant --- update constant data in expression
+			HAPOperandUtility.updateConstantData(operand, constants);
+
+			//variable --- attribute chain
+			HAPOperandUtility.processAttributeOperandInExpressionOperand(operand, varsInfo);
+
+			//variable --- discover variable
+			Set<String> varNames = HAPOperandUtility.discoverVariables(operand);
+			for(String varName : varNames) {
+				if(varsInfo.get(varName)==null) {
+					varsInfo.put(varName, HAPVariableInfo.buildUndefinedVariableInfo());
+				}
+			}
+
+			//referenced expression
+			processReferencesInOperandBasic(id, operand, expressionDefs.get(name).getReference(), expressionDefWithContext.getResourceContext(), expressionMan, configure, contextProcessRequirement, processTracker);
+		}
 		
 		return out;
 	}
@@ -126,6 +136,8 @@ public class HAPProcessorExpression {
 					String refName = referenceOperand.getReferenceName();
 					HAPDefinitionReference refDef = referencesDef.get(refName);
 
+					referenceOperand.setElementName(refDef.getElementName());
+					
 					//get refered expression definition with context
 					HAPResourceDefinitionWithContext refResourceDefWithContext = resourceContext.getResourceDefinition(refDef.getResourceId());
 					
@@ -147,127 +159,139 @@ public class HAPProcessorExpression {
 	}
 	
 	private static void processReferencesInputMapping(HAPExecutableExpression expressionExe) {
-		HAPOperandUtility.processAllOperand(expressionExe.getOperand(), null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					HAPExecutableExpression refExpressionExe = referenceOperand.getReferedExpression();
-					
-					processReferencesInputMapping(refExpressionExe);
-					
-					//variable mapping
-					HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
-					Map<String, HAPVariableInfo> parentVarsInfo = expressionExe.getVarsInfo();
-					Map<String, HAPVariableInfo> referedVarsInfo = referenceOperand.getReferedExpression().getVarsInfo();
-					String inputMappingType = inputMapping.getType();
-					if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
-						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-						HAPContext da = mappingDa.getAssociation();
-						//refered var -- parent var
-						Map<String, String> mappingPath = new LinkedHashMap<String, String>();
-						for(String rootName : da.getElementNames()) {
-							Map<String, String> path = HAPUtilityDataAssociation.buildRelativePathMapping(da.getElement(rootName), rootName, expressionExe.getContext());
-							mappingPath.putAll(path);
-						}
-						for(String varName : referedVarsInfo.keySet()) {
-							if(mappingPath.get(varName)==null) {
-								parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneVariableInfo());
-								HAPContextDefinitionLeafRelative relativeEle = new HAPContextDefinitionLeafRelative();
-								relativeEle.setPath(varName);
-								da.addElement(varName, relativeEle);
-							}
-						}
-					}
-					else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MIRROR)) {
-						for(String varName : referedVarsInfo.keySet()) {
-							if(parentVarsInfo.get(varName)==null) {
-								parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneVariableInfo());
-							}
-						}
-					}
-					else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_NONE)) {
+		Map<String, HAPExecutableExpressionItem> expressionItems = expressionExe.getExpressions();
+		for(String name : expressionItems.keySet()) {
+			HAPExecutableExpressionItem expressionItem = expressionItems.get(name);
+			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){
+				@Override
+				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+					String opType = operand.getOperand().getType();
+					if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+						HAPExecutableExpression refExpressionExe = referenceOperand.getReferedExpression();
 						
+						processReferencesInputMapping(refExpressionExe);
+						
+						//variable mapping
+						HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
+						Map<String, HAPVariableInfo> parentVarsInfo = expressionExe.getVarsInfo();
+						Map<String, HAPVariableInfo> referedVarsInfo = referenceOperand.getReferedExpression().getVarsInfo();
+						String inputMappingType = inputMapping.getType();
+						if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
+							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
+							HAPContext da = mappingDa.getAssociation();
+							//refered var -- parent var
+							Map<String, String> mappingPath = new LinkedHashMap<String, String>();
+							for(String rootName : da.getElementNames()) {
+								Map<String, String> path = HAPUtilityDataAssociation.buildRelativePathMapping(da.getElement(rootName), rootName, expressionExe.getContext());
+								mappingPath.putAll(path);
+							}
+							for(String varName : referedVarsInfo.keySet()) {
+								if(mappingPath.get(varName)==null) {
+									parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneVariableInfo());
+									HAPContextDefinitionLeafRelative relativeEle = new HAPContextDefinitionLeafRelative();
+									relativeEle.setPath(varName);
+									da.addElement(varName, relativeEle);
+								}
+							}
+						}
+						else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MIRROR)) {
+							for(String varName : referedVarsInfo.keySet()) {
+								if(parentVarsInfo.get(varName)==null) {
+									parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneVariableInfo());
+								}
+							}
+						}
+						else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_NONE)) {
+							
+						}
 					}
+					return true;
 				}
-				return true;
-			}
-		});
+			});
+		}
 	}
 	
 	private static void processReferencesVariableNameUpdate(HAPExecutableExpression expressionExe) {
-		//update reference variable name
-		HAPOperandUtility.processAllOperand(expressionExe.getOperand(), null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+		Map<String, HAPExecutableExpressionItem> expressionItems = expressionExe.getExpressions();
+		for(String name : expressionItems.keySet()) {
+			HAPExecutableExpressionItem expressionItem = expressionItems.get(name);
+			//update reference variable name
+			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){
+				@Override
+				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+					String opType = operand.getOperand().getType();
+					if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 
-					HAPExecutableExpression refExpression =	referenceOperand.getReferedExpression();
-					HAPUpdateName nameUpdate = HAPUtilityExpression.getUpdateExpressionVariableName((refExpression));
-					refExpression.updateVariableName(nameUpdate);
-					
-					HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
-					String inputMappingType = inputMapping.getType();
-					if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
-						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-						HAPContext da = mappingDa.getAssociation();
-						HAPContext da1 = new HAPContext();
-						for(String rootName : da.getElementNames()) {
-							da1.addElement(nameUpdate.getUpdatedName(rootName), da.getElement(rootName));
+						HAPExecutableExpression refExpression =	referenceOperand.getReferedExpression();
+						HAPUpdateName nameUpdate = HAPUtilityExpression.getUpdateExpressionVariableName((refExpression));
+						refExpression.updateVariableName(nameUpdate);
+						
+						HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
+						String inputMappingType = inputMapping.getType();
+						if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
+							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
+							HAPContext da = mappingDa.getAssociation();
+							HAPContext da1 = new HAPContext();
+							for(String rootName : da.getElementNames()) {
+								da1.addElement(nameUpdate.getUpdatedName(rootName), da.getElement(rootName));
+							}
+							mappingDa.addAssociation(null, da1);
 						}
-						mappingDa.addAssociation(null, da1);
+						
+						processReferencesVariableNameUpdate(refExpression);
 					}
-					
-					processReferencesVariableNameUpdate(refExpression);
+					return true;
 				}
-				return true;
-			}
-		});
+			});
+		}
 	}
 	
 	private static void processReferencesNameMapping(HAPExecutableExpression expressionExe) {
-		HAPOperandUtility.processAllOperand(expressionExe.getOperand(), null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					HAPExecutableExpression refExpressionExe = referenceOperand.getReferedExpression();
-					
-					Map<String, HAPVariableInfo> parentVarsInfo = expressionExe.getVarsInfo();
-					Map<String, HAPVariableInfo> referedVarsInfo = referenceOperand.getReferedExpression().getVarsInfo();
+		Map<String, HAPExecutableExpressionItem> expressionItems = expressionExe.getExpressions();
+		for(String name : expressionItems.keySet()) {
+			HAPExecutableExpressionItem expressionItem = expressionItems.get(name);
+			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){
+				@Override
+				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+					String opType = operand.getOperand().getType();
+					if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+						HAPExecutableExpression refExpressionExe = referenceOperand.getReferedExpression();
+						
+						Map<String, HAPVariableInfo> parentVarsInfo = expressionExe.getVarsInfo();
+						Map<String, HAPVariableInfo> referedVarsInfo = referenceOperand.getReferedExpression().getVarsInfo();
 
-					Map<String, String> nameMapping = new LinkedHashMap<String, String>();
-					HAPDefinitionDataAssociation inputMapping =	referenceOperand.getInputMapping();
-					String inputMappingType = inputMapping.getType();
-					if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
-						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-						HAPContext da = mappingDa.getAssociation();
-						for(String rootName : da.getElementNames()) {
-							Map<String, String> path = HAPUtilityDataAssociation.buildRelativePathMapping(da.getElement(rootName), rootName, expressionExe.getContext());
-							nameMapping.putAll(path);
+						Map<String, String> nameMapping = new LinkedHashMap<String, String>();
+						HAPDefinitionDataAssociation inputMapping =	referenceOperand.getInputMapping();
+						String inputMappingType = inputMapping.getType();
+						if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
+							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
+							HAPContext da = mappingDa.getAssociation();
+							for(String rootName : da.getElementNames()) {
+								Map<String, String> path = HAPUtilityDataAssociation.buildRelativePathMapping(da.getElement(rootName), rootName, expressionExe.getContext());
+								nameMapping.putAll(path);
+							}
 						}
-					}
-					else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MIRROR)) {
-						for(String varName : referedVarsInfo.keySet()) {
-							nameMapping.put(varName, HAPUtilityExpression.getBeforeUpdateName(refExpressionExe, varName));
+						else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MIRROR)) {
+							for(String varName : referedVarsInfo.keySet()) {
+								nameMapping.put(varName, HAPUtilityExpression.getBeforeUpdateName(refExpressionExe, varName));
+							}
 						}
-					}
-					else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_NONE)) {
-						for(String varName : referedVarsInfo.keySet()) {
-							parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneVariableInfo());
-							nameMapping.put(varName, HAPUtilityExpression.getBeforeUpdateName(refExpressionExe, varName));
+						else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_NONE)) {
+							for(String varName : referedVarsInfo.keySet()) {
+								parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneVariableInfo());
+								nameMapping.put(varName, HAPUtilityExpression.getBeforeUpdateName(refExpressionExe, varName));
+							}
 						}
+						referenceOperand.setVariableMapping(nameMapping);
+						
+						processReferencesNameMapping(referenceOperand.getReferedExpression());
 					}
-					referenceOperand.setVariableMapping(nameMapping);
-					
-					processReferencesNameMapping(referenceOperand.getReferedExpression());
+					return true;
 				}
-				return true;
-			}
-		});
+			});
+		}
 	}
 }

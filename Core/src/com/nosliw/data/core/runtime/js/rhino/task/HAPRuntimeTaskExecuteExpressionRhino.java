@@ -23,10 +23,11 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 	
 	public HAPRuntimeTaskExecuteExpressionRhino(
 			HAPExecutableExpression expression, 
+			String itemName,
 			Map<String, HAPData> variablesValue, 
 			Map<String, HAPData> referencesValue,
 			HAPResourceManagerRoot resourceManager) {
-		super(expression, variablesValue, referencesValue);
+		super(expression, itemName, variablesValue, referencesValue);
 		this.m_resourceManager = resourceManager;
 	}
 

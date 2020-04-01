@@ -4,36 +4,29 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementEntityImpComponent;
-import com.nosliw.data.core.operand.HAPOperand;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
 
 public class HAPDefinitionExpressionSuiteElementEntity extends HAPResourceDefinitionContainerElementEntityImpComponent{
 
 	@HAPAttribute
-	public static String EXPRESSION = "expression";
+	public static String ELEMENT = "element";
 
-	@HAPAttribute
-	public static String REFERENCEMAPPING = "referenceMapping";
-
-	private HAPOperandWrapper m_operand;
-
-	private Map<String, HAPDefinitionReference> m_references;
+	private Map<String, HAPDefinitionExpressionSuiteElementEntityExpression> m_element;
 	
 	public HAPDefinitionExpressionSuiteElementEntity() {
-		this.m_references = new LinkedHashMap<String, HAPDefinitionReference>();
+		this.m_element = new LinkedHashMap<String, HAPDefinitionExpressionSuiteElementEntityExpression>();
 	}
 	
-	public HAPOperandWrapper getOperand() {    return this.m_operand;   }
-	
-	public void setOperand(HAPOperandWrapper operand) {   this.m_operand = operand;    }
-	public void setOperand(HAPOperand operand) {   this.m_operand = new HAPOperandWrapper(operand);    }
-	
-	public void addReference(HAPDefinitionReference reference) {  this.m_references.put(reference.getName(), reference);   }
-	public Map<String, HAPDefinitionReference> getReference(){   return this.m_references;    }
-	public HAPDefinitionReference getReference(String name) {   return this.m_references.get(name);    }
+	public Map<String, HAPDefinitionExpressionSuiteElementEntityExpression> getExpressions(){   return this.m_element;   }
+	public void addExpression(HAPDefinitionExpressionSuiteElementEntityExpression expression) {
+		String name = expression.getName();
+		if(HAPBasicUtility.isStringEmpty(name)) name = HAPConstant.NAME_DEFAULT;
+		this.m_element.put(name, expression);    
+	}
 	
 	@Override
 	public HAPComponent cloneComponent() {  return (HAPComponent)this.cloneResourceDefinitionContainerElement(); }
@@ -42,9 +35,8 @@ public class HAPDefinitionExpressionSuiteElementEntity extends HAPResourceDefini
 	public HAPResourceDefinitionContainerElement cloneResourceDefinitionContainerElement() {
 		HAPDefinitionExpressionSuiteElementEntity out = new HAPDefinitionExpressionSuiteElementEntity();
 		this.cloneToResourceDefinitionContainerElementEntityImpComponent(out);
-		out.m_operand = this.m_operand.cloneWrapper();
-		for(String name : this.m_references.keySet()) {
-			out.m_references.put(name, this.m_references.get(name).cloneReferenceDefinition());
+		for(String name : this.m_element.keySet()) {
+			out.m_element.put(name, this.m_element.get(name).cloneDefinitionExpressionSuiteElementEntityExpression());
 		}
 		return out;
 	}

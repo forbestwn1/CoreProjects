@@ -3,6 +3,7 @@ package com.nosliw.data.core.expression;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.HAPDataTypeConverter;
@@ -40,22 +41,26 @@ public class HAPUtilityExpressionResource {
 		return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds), runtimeInfo);
 	}
 
-	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableExpression expression){
+	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableExpression expressions){
 		Set<HAPResourceIdSimple> result = new LinkedHashSet<HAPResourceIdSimple>();
-		//get converter resource id from var converter in expression 
-		HAPMatchers matchers = expression.getOutputMatchers();
-		if(matchers!=null){
-			result.addAll(HAPMatcherUtility.getMatchersResourceId(matchers));
-		}
-		
-		HAPOperandUtility.processAllOperand(expression.getOperand(), result, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				Set<HAPResourceIdSimple> resourceIds = (Set<HAPResourceIdSimple>)data;
-				resourceIds.addAll(operand.getOperand().getResources());
-				return true;
+		Map<String, HAPExecutableExpressionItem> items = expressions.getExpressions();
+		for(String name : items.keySet()) {
+			HAPExecutableExpressionItem expression = items.get(name);
+			//get converter resource id from var converter in expression 
+			HAPMatchers matchers = expression.getOutputMatchers();
+			if(matchers!=null){
+				result.addAll(HAPMatcherUtility.getMatchersResourceId(matchers));
 			}
-		});
+			
+			HAPOperandUtility.processAllOperand(expression.getOperand(), result, new HAPOperandTask(){
+				@Override
+				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+					Set<HAPResourceIdSimple> resourceIds = (Set<HAPResourceIdSimple>)data;
+					resourceIds.addAll(operand.getOperand().getResources());
+					return true;
+				}
+			});
+		}
 		return new ArrayList(result);
 	}	
 	

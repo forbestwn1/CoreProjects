@@ -5,7 +5,6 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
 
 public class HAPDefinitionExpression  extends HAPComponentContainerElement{
 
@@ -15,12 +14,14 @@ public class HAPDefinitionExpression  extends HAPComponentContainerElement{
 		super(suite, name);
 	}
 
-	public HAPDefinitionExpressionSuiteElementEntity getExpression() {    return (HAPDefinitionExpressionSuiteElementEntity)this.getElement();   }
+	public HAPDefinitionExpressionSuiteElementEntity getExpressionBody() {    return (HAPDefinitionExpressionSuiteElementEntity)this.getElement();   }
 	public HAPDefinitionExpressionSuite getSuite() {   return (HAPDefinitionExpressionSuite)this.getContainer();  }
 
-	public HAPOperandWrapper getOperand() {   return this.getExpression().getOperand();   }
-	public HAPDefinitionReference getReferenceDefinition(String name) {   return this.getExpression().getReference(name);    }
-	public Map<String, HAPDefinitionReference> getReferenceDefinitions() {   return this.getExpression().getReference();    }
+	public Map<String, HAPDefinitionExpressionSuiteElementEntityExpression> getExpressions(){   return this.getExpressionBody().getExpressions();   }
+	
+//	public HAPOperandWrapper getOperand() {   return this.getExpression().getOperand();   }
+//	public HAPDefinitionReference getReferenceDefinition(String name) {   return this.getExpression().getReference(name);    }
+//	public Map<String, HAPDefinitionReference> getReferenceDefinitions() {   return this.getExpression().getReference();    }
 	
 	@Override
 	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION;  }

@@ -31,6 +31,9 @@ public class HAPOperandReference extends HAPOperandImp{
 	public static final String EXPRESSION = "expression";
 	
 	@HAPAttribute
+	public static final String ELEMENTNAME = "elementName";
+	
+	@HAPAttribute
 	public static final String VARMATCHERS = "varMatchers";
 	
 	@HAPAttribute
@@ -44,6 +47,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	private Map<String, String> m_variableMapping;
 
 	private HAPExecutableExpression m_expression;
+	
+	private String m_elementName;
 	
 	private Map<String, HAPMatchers> m_matchers;
 	
@@ -63,6 +68,9 @@ public class HAPOperandReference extends HAPOperandImp{
 	public HAPExecutableExpression getReferedExpression() {   return this.m_expression;   }
 	public void setReferedExpression(HAPExecutableExpression expression) {   this.m_expression = expression;    }
 
+	public String getElementName() {   return this.m_elementName;   }
+	public void setElementName(String name) {   this.m_elementName = name;    }
+	
 	public void setInputMapping(HAPDefinitionDataAssociation inputMapping) {  this.m_inputMapping = inputMapping;   }
 	public HAPDefinitionDataAssociation getInputMapping() {    return this.m_inputMapping;    }
 	
@@ -92,6 +100,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(REFERENCENAME, m_referenceName);
 		jsonMap.put(EXPRESSION, this.m_expression.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTNAME, this.m_elementName);
 		jsonMap.put(VARMATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 		jsonMap.put(VARMAPPING, HAPJsonUtility.buildJson(this.m_variableMapping, HAPSerializationFormat.JSON));
 	}
@@ -112,7 +121,9 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPDataTypeHelper dataTypeHelper) {
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		
-		this.m_expression.discover(expectCriteria, processTracker);
+		Map<String, HAPDataTypeCriteria> cs = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		cs.put(this.m_elementName, expectCriteria);
+		this.m_expression.discover(cs, processTracker);
 
 		//variable
 		Map<String, HAPVariableInfo> internalVariablesInfo = this.m_expression.getVarsInfo();
@@ -125,7 +136,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		}
 		
 		//output
-		HAPDataTypeCriteria outputCriteria = this.m_expression.getOutputCriteria();
+		HAPDataTypeCriteria outputCriteria = this.m_expression.getExpressions().get(this.m_elementName).getOutputCriteria();
 		return HAPCriteriaUtility.isMatchable(outputCriteria, expectCriteria, dataTypeHelper);
 	}
 	
