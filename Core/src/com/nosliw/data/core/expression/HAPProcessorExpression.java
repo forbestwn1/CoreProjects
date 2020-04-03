@@ -39,7 +39,7 @@ public class HAPProcessorExpression {
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 
-		HAPExecutableExpression out = HAPProcessorExpression.processBasic(id, expressionDefWithContext, extraContext, expressionMan, configure, contextProcessRequirement, processTracker);
+		HAPExecutableExpression out = processBasic(id, expressionDefWithContext, extraContext, expressionMan, configure, contextProcessRequirement, processTracker);
 		
 		//normalize input mapping, popup variable
 		processReferencesInputMapping(out);

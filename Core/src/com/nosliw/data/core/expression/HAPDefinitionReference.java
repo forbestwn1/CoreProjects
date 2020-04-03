@@ -30,14 +30,25 @@ public class HAPDefinitionReference extends HAPEntityInfoWritableImp{
 	private HAPDefinitionDataAssociation m_inputMapping;
 	
 	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
-
+	public void setResourceId(HAPResourceId resourceId) {    this.m_resourceId = resourceId;     }
+	
 	public String getElementName() {   return this.m_elementName;    }
+	public void setElementName(String name) {    
+		this.m_elementName = name;    
+		if(HAPBasicUtility.isStringEmpty(this.m_elementName))   this.m_elementName = HAPConstant.NAME_DEFAULT;
+	}
 	
 	public HAPDefinitionDataAssociation getInputMapping() {   return this.m_inputMapping;    }
+	public void setInputMapping(HAPDefinitionDataAssociation inputMapping) {   
+		this.m_inputMapping = inputMapping;    
+		if(this.m_inputMapping==null) {
+			this.m_inputMapping = new HAPDefinitionDataAssociationMirror();
+		}
+	}
 	
 	public HAPDefinitionReference cloneReferenceDefinition() {
 		HAPDefinitionReference out = new HAPDefinitionReference();
-		out.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
+		if(this.m_inputMapping!=null)  out.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
 		out.m_resourceId = this.m_resourceId.clone();
 		out.m_elementName = this.m_elementName; 
 		return out;
@@ -48,16 +59,12 @@ public class HAPDefinitionReference extends HAPEntityInfoWritableImp{
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
-		
-		this.m_inputMapping = HAPParserDataAssociation.buildDefinitionByJson(jsonObj.optJSONObject(INPUTMAPPING));
-		if(this.m_inputMapping==null) {
-			this.m_inputMapping = new HAPDefinitionDataAssociationMirror();
-		}
+
+		setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(jsonObj.optJSONObject(INPUTMAPPING)));
 		
 		this.m_resourceId = HAPResourceIdFactory.newInstance(jsonObj.opt(RESOURCEID));
 		
-		this.m_elementName = jsonObj.optString(ELEMENTNAME);
-		if(HAPBasicUtility.isStringEmpty(this.m_elementName))   this.m_elementName = HAPConstant.NAME_DEFAULT;
+		setElementName(jsonObj.optString(ELEMENTNAME));
 		
 		return true;  
 	}

@@ -15,7 +15,7 @@ public class HAPExpression {
 
 		try {
 			String suite = "test1";
-			String id = "test6";
+			String id = "test7";
 			String testData = "testData1";
 
 			HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();

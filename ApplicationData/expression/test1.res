@@ -151,7 +151,7 @@
 		{
 			"id": "test5",
 			"name": "test5",
-			"description": "reference",
+			"description": "reference with default mapping",
 			"element" : [
 				{
 					"expression" : "!(test.string)!.subString(<(ref1)>,from:?(fromVar)?,to:?(toVar)?)",
@@ -167,7 +167,7 @@
 		{
 			"id": "test6",
 			"name": "test6",
-			"description": "reference",
+			"description": "reference with specified mapping",
 			"element" : [
 				{
 					"expression" : "!(test.string)!.subString(<(ref1)>,from:?(fromVar)?,to:?(toVar)?)",
@@ -186,6 +186,16 @@
 							}
 						}
 					],
+				}
+			]
+		},
+		{
+			"id": "test7",
+			"name": "test7",
+			"description": "default reference",
+			"element" : [
+				{
+					"expression" : "!(test.string)!.subString(<(test1)>,from:?(fromVar)?,to:?(toVar)?)",
 				}
 			]
 		},

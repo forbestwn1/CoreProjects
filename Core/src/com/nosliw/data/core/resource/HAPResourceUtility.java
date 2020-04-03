@@ -87,5 +87,11 @@ public class HAPResourceUtility {
 		return false;
 	}
 	
+	public static HAPResourceId buildLocalReferenceResourceId(String name) {
+		HAPResourceIdSimple out = new HAPResourceIdSimple();
+		out.setId(name);
+		return out;
+	}
+	
 	public static String getDefaultResourceStructure() {    return HAPConstant.RESOURCEID_TYPE_SIMPLE;     }
 }
