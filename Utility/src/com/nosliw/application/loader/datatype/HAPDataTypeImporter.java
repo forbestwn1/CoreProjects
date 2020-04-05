@@ -16,7 +16,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypePicture;
 import com.nosliw.data.core.HAPDataTypeProvider;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
@@ -121,7 +121,7 @@ public class HAPDataTypeImporter {
 			List<HAPOperationImp> ownOperations = this.m_dataAccess.getOperationInfosByDataType((HAPDataTypeId)dataType.getName());
 			for(HAPOperationImp ownOperation : ownOperations){
 				HAPDataTypeOperationImp ownDataTypeOperation = new HAPDataTypeOperationImp(ownOperation);
-				if(HAPDataUtility.isNormalDataOpration(ownOperation)){
+				if(HAPUtilityData.isNormalDataOpration(ownOperation)){
 					//regular operation
 					out.put(ownDataTypeOperation.getName(), ownDataTypeOperation);
 				}

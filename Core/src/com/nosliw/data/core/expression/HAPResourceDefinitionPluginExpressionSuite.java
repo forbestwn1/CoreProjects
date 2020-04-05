@@ -25,7 +25,7 @@ public class HAPResourceDefinitionPluginExpressionSuite implements HAPPluginReso
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
-		HAPDefinitionExpressionSuite suite = null;
+		HAPResourceDefinitionExpressionSuite suite = null;
 		try {
 			HAPResourceIdExpressionSuite expressionSuiteResourceId = new HAPResourceIdExpressionSuite(resourceId);
 			suite = HAPImporterExpressionSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPSystemFolderUtility.getExpressionFolder()+expressionSuiteResourceId.getId()+".res")), this.m_expressionParser);

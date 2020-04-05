@@ -21,8 +21,8 @@ public class HAPResourceDefinitionPluginExpression implements HAPPluginResourceD
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
 		HAPResourceIdExpression expressionResourceId = new HAPResourceIdExpression(resourceId);
 		HAPResourceIdSimple expressionSuiteResourceId = expressionResourceId.getExpressionSuiteResourceId();
-		HAPDefinitionExpressionSuite expressionSuiteDef = (HAPDefinitionExpressionSuite)this.m_resourceDefMan.getResourceDefinition(expressionSuiteResourceId);
-		return new HAPDefinitionExpression(expressionSuiteDef, expressionResourceId.getExpressionId().getExpressionId());
+		HAPResourceDefinitionExpressionSuite expressionSuiteDef = (HAPResourceDefinitionExpressionSuite)this.m_resourceDefMan.getResourceDefinition(expressionSuiteResourceId);
+		return new HAPResourceDefinitionExpression(expressionSuiteDef, expressionResourceId.getExpressionId().getExpressionId());
 	}
 
 	@Override

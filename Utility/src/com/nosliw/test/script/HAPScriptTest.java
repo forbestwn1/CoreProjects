@@ -1,27 +1,33 @@
-package com.nosliw.test.expression;
+package com.nosliw.test.script;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
-import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteExpressionRhino;
 import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
+import com.nosliw.data.core.script.expression.HAPResourceDefinitionScriptGroup;
+import com.nosliw.data.core.script.expression.HAPUtilityScriptResource;
 
-public class HAPExpression {
+public class HAPScriptTest {
 
 	public static void main(String[] args) {
 
 		try {
-			String suite = "test1";
-			String id = "test7";
+			String id = "test1";
 			String testData = "testData1";
 
+			HAPResourceId resourceId = HAPUtilityScriptResource.buildResourceId(id);
+			
 			HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
-			HAPExecutableExpression expressionExe = runtimeEnvironment.getExpressionManager().getExpression(HAPUtilityExpressionResource.buildResourceId(suite, id), null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+			
+			HAPResourceDefinitionScriptGroup scriptGroupDef = runtimeEnvironment.getScriptManager().getScriptDefinition(resourceId, null);
+			
+			HAPExecutableScriptGroup scriptExe = runtimeEnvironment.getScriptManager().getScript(resourceId, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 
-			HAPContextDataFlat input = HAPUtilityComponent.getTestDataFromAttachment(expressionExe.getDefinition(), testData);
+			HAPContextDataFlat input = HAPUtilityComponent.getTestDataFromAttachment(scriptGroupDef, testData);
 
 			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, null, input.getData(), null, runtimeEnvironment.getResourceManager());
 			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);

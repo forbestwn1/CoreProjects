@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 
 @HAPEntityWithAttribute
 public class HAPResultService extends HAPSerializableImp{
@@ -46,7 +46,7 @@ public class HAPResultService extends HAPSerializableImp{
 		if(outputObj!=null) {
 			for(Object key : outputObj.keySet()) {
 				String name = (String)key;
-				this.m_resultValue.put(name, HAPDataUtility.buildDataWrapperFromJson(outputObj.getJSONObject(name)));
+				this.m_resultValue.put(name, HAPUtilityData.buildDataWrapperFromJson(outputObj.getJSONObject(name)));
 			}
 		}
 		return false;  

@@ -6,6 +6,7 @@ import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.template.HAPManagerTemplate;
 
@@ -22,6 +23,8 @@ public interface HAPRuntimeEnvironment {
 	public static final String id = System.currentTimeMillis()+"";
 	
 	HAPManagerExpression getExpressionManager();
+
+	HAPManagerScript getScriptManager();
 
 	HAPManagerProcess getProcessManager();
 

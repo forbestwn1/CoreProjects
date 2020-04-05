@@ -538,6 +538,7 @@
 			<definition type="space"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_EXPRESSION" value="expression"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_EXPRESSIONSUITE" value="expressionSuite"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPTGROUP" value="scriptGroup"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_OPERATION" value="operation"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATATYPE" value="datatype"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_CONVERTER" value="converter"/>

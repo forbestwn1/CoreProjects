@@ -1,0 +1,50 @@
+package com.nosliw.data.core.expression;
+
+import java.util.Map;
+
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPComponentContainerElement;
+import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPResourceDefinitionComplex;
+import com.nosliw.data.core.component.attachment.HAPAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
+
+public class HAPUtilityExpressionComponent {
+
+	public static HAPResourceDefinitionExpressionSuite buildExpressionSuiteFromComponent(HAPResourceDefinitionComplex component, HAPParserExpression expressionParser) {
+		HAPResourceDefinitionExpressionSuite out = new HAPResourceDefinitionExpressionSuite();
+		
+		if(component instanceof HAPComponentContainerElement) {
+			out = buildExpressionSuiteFromComponent(((HAPComponentContainerElement)component).getElement(), expressionParser);
+		}
+		else if(component instanceof HAPComponentImp) {
+			component.cloneToComplexResourceDefinition(out);
+			buildExpressionSuiteFromAttachment(out, component.getAttachmentContainer(), expressionParser);
+		}
+		else {
+			buildExpressionSuiteFromAttachment(out, component.getAttachmentContainer(), expressionParser);
+		}
+		
+		return out;
+	}
+	
+	public static void buildExpressionSuiteFromAttachment(HAPResourceDefinitionExpressionSuite suite, HAPAttachmentContainer attachmentContainer, HAPParserExpression expressionParser) {
+		Map<String, HAPAttachment> expressionAtts = attachmentContainer.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION);
+		for(String name : expressionAtts.keySet()) {
+			HAPAttachment attachment = expressionAtts.get(name);
+			suite.addElement(attachment.getName(), buildExpressionSuiteElementFromAttachment(attachment, expressionParser));
+		}
+	}
+
+	private static HAPDefinitionExpressionSuiteElementEntity buildExpressionSuiteElementFromAttachment(HAPAttachment attachment, HAPParserExpression expressionParser) {
+		HAPDefinitionExpressionSuiteElementEntity out = null;
+		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
+			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
+			out = HAPParserExpressionDefinition.parseExpressionSuiteElement(entityAttachment.getEntity(), expressionParser);
+		}
+		else if(HAPConstant.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
+		}
+		return out;
+	}
+}

@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
@@ -31,7 +31,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 	
 	public HAPOperandConstant(String constantStr){
 		super(HAPConstant.EXPRESSION_OPERAND_CONSTANT);
-		HAPData data = HAPDataUtility.buildDataWrapper(constantStr);
+		HAPData data = HAPUtilityData.buildDataWrapper(constantStr);
 		if(data==null){
 			//not a valid data literate, then it is a constant name
 			this.m_name = constantStr;

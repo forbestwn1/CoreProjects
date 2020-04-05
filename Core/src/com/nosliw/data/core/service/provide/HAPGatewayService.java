@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
@@ -40,7 +40,7 @@ public class HAPGatewayService extends HAPGatewayImp{
 			HAPQueryService serviceQuery = new HAPQueryService();
 			serviceQuery.buildObject(parms.optJSONObject(COMMAND_REQUEST_QUERY), HAPSerializationFormat.JSON);
 			JSONObject parmsJson = parms.optJSONObject(COMMAND_REQUEST_PARMS);
-			Map<String, HAPData> dataSourceParms = HAPDataUtility.buildDataWrapperMapFromJson(parmsJson);
+			Map<String, HAPData> dataSourceParms = HAPUtilityData.buildDataWrapperMapFromJson(parmsJson);
 			HAPResultService serviceResult = this.m_serviceManager.execute(serviceQuery, dataSourceParms);
 			out = this.createSuccessWithObject(serviceResult);
 			break;

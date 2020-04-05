@@ -2,7 +2,7 @@ package com.nosliw.uiresource.page.processor;
 
 import java.util.Map;
 
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
@@ -16,7 +16,7 @@ public class HAPProcessorUIConstant {
 		Map<String, Object> constantsValue = exeUnit.getFlatContext().getConstantValue();
 		
 		//expression
-		Map<String, HAPDefinitionExpression> expressions = exeUnit.getExpressionContext().getExpressionDefinitions();
+		Map<String, HAPResourceDefinitionExpression> expressions = exeUnit.getExpressionContext().getExpressionDefinitions();
 		for(String name : expressions.keySet()) {
 			HAPOperandUtility.updateConstantData(expressions.get(name).getOperand(), HAPUtilityScriptExpression.getConstantData(constantsValue));
 		}

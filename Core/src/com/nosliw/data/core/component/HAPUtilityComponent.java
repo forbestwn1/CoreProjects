@@ -3,11 +3,10 @@ package com.nosliw.data.core.component;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
-import com.nosliw.data.core.process.HAPUtilityProcess;
+import com.nosliw.data.core.process.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
@@ -48,28 +47,11 @@ public class HAPUtilityComponent {
 		componentExe.setContextStructure(HAPProcessorContext.process(component.getContextStructure(), HAPParentContext.createDefault(parentContext==null?new HAPContextGroup():parentContext), contextProcessConfg, contextProcessRequirement));
 		
 		//process process suite
-		HAPDefinitionProcessSuite processSuite = HAPUtilityComponent.getProcessSuite(component, activityPluginMan).cloneProcessSuiteDefinition(); 
+		HAPDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(component, activityPluginMan).cloneProcessSuiteDefinition(); 
 		processSuite.setContextStructure(componentExe.getContextStructure());   //kkk
 		componentExe.setProcessSuite(processSuite);
 	}
 	
-	public static HAPDefinitionProcessSuite getProcessSuite(HAPComponent component, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
-		if(component instanceof HAPComponentImp) {
-			component.cloneToComplexResourceDefinition(out);
-			Map<String, HAPAttachment> processAtts = component.getAttachmentContainer().getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
-			
-			for(String name : processAtts.keySet()) {
-				HAPAttachment attachment = processAtts.get(name);
-				out.addElement(attachment.getName(), HAPUtilityProcess.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan));
-			}
-		}
-		else if(component instanceof HAPComponentContainerElement) {
-			out = getProcessSuite(((HAPComponentContainerElement)component).getElement(), activityPluginMan);
-		}
-		return out;
-	}
-
 //	public static HAPDefinitionProcessSuite getProcessSuite(HAPComponent component, HAPManagerActivityPlugin activityPluginMan) {
 //		HAPDefinitionProcessSuite out = component.getProcessSuite();
 //		if(out==null) {

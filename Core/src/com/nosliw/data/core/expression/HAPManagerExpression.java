@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
-import com.nosliw.data.core.resource.HAPResourceDefinitionWithContext;
+import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -30,29 +30,29 @@ public class HAPManagerExpression {
 		this.m_contextProcessRequirement = new HAPRequirementContextProcessor(this.m_resourceDefManager, dataTypeHelper, runtime, this, serviceDefinitionManager, null);
 	}
 	
-	public HAPDefinitionExpressionSuite getExpressionSuiteDefinition(HAPResourceId suiteId, HAPAttachmentContainer parentAttachment) {
-		HAPDefinitionExpressionSuite suiteDef = (HAPDefinitionExpressionSuite)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(suiteId, parentAttachment);
+	public HAPResourceDefinitionExpressionSuite getExpressionSuiteDefinition(HAPResourceId suiteId, HAPAttachmentContainer parentAttachment) {
+		HAPResourceDefinitionExpressionSuite suiteDef = (HAPResourceDefinitionExpressionSuite)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(suiteId, parentAttachment);
 		return suiteDef;
 	}
 
-	public HAPDefinitionExpression getExpressionDefinition(HAPResourceId expressionId, HAPAttachmentContainer parentAttachment) {
-		HAPDefinitionExpression expressionDef = (HAPDefinitionExpression)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(expressionId, parentAttachment);
+	public HAPResourceDefinitionExpression getExpressionDefinition(HAPResourceId expressionId, HAPAttachmentContainer parentAttachment) {
+		HAPResourceDefinitionExpression expressionDef = (HAPResourceDefinitionExpression)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(expressionId, parentAttachment);
 		return expressionDef;
 	}
 	
-	public HAPResourceDefinitionWithContext getExpressionDefinitionWithContext(HAPResourceId processId, HAPAttachmentContainer parentAttachment) {
-		HAPDefinitionExpression expressionDef = this.getExpressionDefinition(processId, parentAttachment);
-		HAPResourceDefinitionWithContext out = new HAPResourceDefinitionWithContext(expressionDef, HAPContextExpression.createContext(expressionDef.getSuite(), this.m_resourceDefManager));
+	public HAPEntityWithResourceContext getExpressionDefinitionWithContext(HAPResourceId processId, HAPAttachmentContainer parentAttachment) {
+		HAPResourceDefinitionExpression expressionDef = this.getExpressionDefinition(processId, parentAttachment);
+		HAPEntityWithResourceContext out = new HAPEntityWithResourceContext(expressionDef, HAPContextExpression.createContext(expressionDef.getSuite(), this.m_resourceDefManager));
 		return out;
 	}
 
 	public HAPExecutableExpression getExpression(HAPResourceId expressionId, HAPContextExpression context, Map<String, String> configure) {
 		if(context==null)  context = HAPContextExpression.createContext(this.m_resourceDefManager);
-		HAPResourceDefinitionWithContext resourceDefWithContext = context.getResourceDefinition(expressionId);
+		HAPEntityWithResourceContext resourceDefWithContext = context.getResourceDefinition(expressionId);
 		
 		if(configure==null) {
 			//build configure from definition info
-			HAPDefinitionExpression expressionDef = (HAPDefinitionExpression)resourceDefWithContext.getResourceDefinition();
+			HAPResourceDefinitionExpression expressionDef = (HAPResourceDefinitionExpression)resourceDefWithContext.getEntity();
 			configure = new LinkedHashMap<String, String>();
 			for(String n : expressionDef.getInfo().getNames()) {
 				configure.put(n, (String)expressionDef.getInfo().getValue(n)); 

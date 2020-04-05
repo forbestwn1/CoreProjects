@@ -23,7 +23,7 @@ public class HAPUtilityExpression {
 		return name.substring((expression.getId()+"_").length());
 	}
 
-	public static void normalizeReference(HAPDefinitionExpressionSuite expressionSuite) {
+	public static void normalizeReference(HAPResourceDefinitionExpressionSuite expressionSuite) {
 		Map<String, HAPResourceDefinitionContainerElement> elements = expressionSuite.getAllElements();
 		for(String name : elements.keySet()) {
 			HAPResourceDefinitionContainerElement element = elements.get(name);

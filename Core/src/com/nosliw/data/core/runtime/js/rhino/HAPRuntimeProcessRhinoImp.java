@@ -3,7 +3,7 @@ package com.nosliw.data.core.runtime.js.rhino;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPProcessResultHandler;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
@@ -40,7 +40,7 @@ public class HAPRuntimeProcessRhinoImp implements HAPRuntimeProcess{
 		HAPServiceData out = m_runtimeEnvironment.getRuntime().executeTaskSync(task);
 		if(out.isSuccess()) {
 			JSONObject dataJsonObj = (JSONObject)out.getData();
-			resultHandler.onSuccess(dataJsonObj.getString("resultName"), HAPDataUtility.buildDataWrapperMapFromJson(dataJsonObj.getJSONObject("resultValue")));
+			resultHandler.onSuccess(dataJsonObj.getString("resultName"), HAPUtilityData.buildDataWrapperMapFromJson(dataJsonObj.getJSONObject("resultValue")));
 		}
 		else {
 			

@@ -28,12 +28,6 @@ public interface HAPExecutableExpression extends HAPSerializable, HAPExecutable{
 	
 	void updateVariableName(HAPUpdateName nameUpdate);
 	
-	HAPDefinitionExpression getDefinition();
-
 	void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPProcessTracker processTracker);
 	
-//	public static void buildJsonMap(HAPExecutableExpression obj, Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-//		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(obj.getOperand(), HAPSerializationFormat.JSON));
-//		jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(obj.getOutputMatchers(), HAPSerializationFormat.JSON));
-//	}
 }

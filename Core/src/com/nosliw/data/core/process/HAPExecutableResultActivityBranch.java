@@ -11,7 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoUtility;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
@@ -63,7 +63,7 @@ public class HAPExecutableResultActivityBranch extends HAPExecutableImpEntityInf
 		this.m_flow.buildObject(jsonObj.getJSONObject(FLOW), HAPSerializationFormat.JSON);
 		
 		JSONObject dataJsonObj = jsonObj.optJSONObject(DATA);
-		if(dataJsonObj!=null)	HAPDataUtility.buildDataWrapperFromJson(dataJsonObj);
+		if(dataJsonObj!=null)	HAPUtilityData.buildDataWrapperFromJson(dataJsonObj);
 		return true;  
 	}
 

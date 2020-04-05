@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.process.HAPEmbededProcessTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
@@ -32,7 +32,7 @@ public class HAPDefinitionPollTask extends HAPSerializableImp implements HAPEmbe
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_input = HAPDataUtility.buildDataWrapperMapFromJson(jsonObj.optJSONObject(INPUT));
+		this.m_input = HAPUtilityData.buildDataWrapperMapFromJson(jsonObj.optJSONObject(INPUT));
 		HAPUtilityProcess.parseWithProcessTask(this, jsonObj);
 		return true;  
 	}

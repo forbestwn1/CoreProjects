@@ -2,7 +2,7 @@ package com.nosliw.data.core.expression;
 
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPContextResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinitionWithContext;
+import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 
@@ -10,11 +10,11 @@ import com.nosliw.data.core.resource.HAPResourceUtility;
 //it include related suite or process
 public class HAPContextExpression implements HAPContextResourceDefinition{
 
-	private HAPDefinitionExpressionSuite m_suite; 
+	private HAPResourceDefinitionExpressionSuite m_suite; 
 	
 	private HAPManagerResourceDefinition m_resourceDefMan;
 	
-	public static HAPContextExpression createContext(HAPDefinitionExpressionSuite suite, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPContextExpression createContext(HAPResourceDefinitionExpressionSuite suite, HAPManagerResourceDefinition resourceDefMan) {
 		HAPContextExpression out = new HAPContextExpression();
 		out.m_resourceDefMan = resourceDefMan;
 		out.m_suite = suite;
@@ -28,9 +28,9 @@ public class HAPContextExpression implements HAPContextResourceDefinition{
 	}
 	
 	@Override
-	public HAPResourceDefinitionWithContext getResourceDefinition(HAPResourceId expressionId) {
-		HAPDefinitionExpression processDef = (HAPDefinitionExpression)HAPResourceUtility.getImpliedResourceDefinition(expressionId, this.m_suite, this.m_resourceDefMan);
-		HAPResourceDefinitionWithContext out = new HAPResourceDefinitionWithContext(processDef, HAPContextExpression.createContext(processDef.getSuite(), m_resourceDefMan));
+	public HAPEntityWithResourceContext getResourceDefinition(HAPResourceId expressionId) {
+		HAPResourceDefinitionExpression processDef = (HAPResourceDefinitionExpression)HAPResourceUtility.getImpliedResourceDefinition(expressionId, this.m_suite, this.m_resourceDefMan);
+		HAPEntityWithResourceContext out = new HAPEntityWithResourceContext(processDef, HAPContextExpression.createContext(processDef.getSuite(), m_resourceDefMan));
 		return out;
 	}	
 }

@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 
 public class HAPContextDataFactory {
 
@@ -14,6 +14,6 @@ public class HAPContextDataFactory {
 	}
 	
 	public static HAPContextDataFlat newContextDataFlat(JSONObject dataMapJson) {
-		return newContextDataFlat(HAPDataUtility.buildDataWrapperMapFromJson(dataMapJson));
+		return newContextDataFlat(HAPUtilityData.buildDataWrapperMapFromJson(dataMapJson));
 	}
 }

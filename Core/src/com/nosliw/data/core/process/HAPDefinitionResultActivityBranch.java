@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionResultActivityBranch extends HAPEntityInfoWritableImp{
@@ -39,7 +39,7 @@ public class HAPDefinitionResultActivityBranch extends HAPEntityInfoWritableImp{
 			this.m_flow.buildObject(jsonObj.optJSONObject(FLOW), HAPSerializationFormat.JSON);
 			
 			JSONObject dataJsonObj = jsonObj.optJSONObject(DATA);
-			if(dataJsonObj!=null)	this.m_data = HAPDataUtility.buildDataWrapperFromJson(dataJsonObj);
+			if(dataJsonObj!=null)	this.m_data = HAPUtilityData.buildDataWrapperFromJson(dataJsonObj);
 			
 			return true;  
 		}

@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
@@ -45,7 +45,7 @@ public class HAPServiceParm extends HAPEntityInfoWritableImp{
 			this.m_criteria = HAPExpressionManager.criteriaParser.parseCriteria(objJson.getString(CRITERIA));
 			
 			JSONObject defaultJson = objJson.optJSONObject(DEFAULT);
-			if(defaultJson!=null)	this.m_default = HAPDataUtility.buildDataWrapperFromJson(defaultJson);
+			if(defaultJson!=null)	this.m_default = HAPUtilityData.buildDataWrapperFromJson(defaultJson);
 		}
 		catch(Exception e){
 			e.printStackTrace();

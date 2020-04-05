@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionSuite;
 
 //
 //context for processing script expressions: 
@@ -18,23 +18,23 @@ public class HAPContextProcessScriptExpression {
 
 	//every unit has its own expression definition suite
 	//it includes expression definition and constants from parent and its own
-	private HAPDefinitionExpressionSuite m_expressionDefinitionSuite;
+	private HAPResourceDefinitionExpressionSuite m_expressionDefinitionSuite;
 
 	private Map<String, Object> m_constants;
 	
 	public HAPContextProcessScriptExpression(){
-		this.m_expressionDefinitionSuite = new HAPDefinitionExpressionSuite();
+		this.m_expressionDefinitionSuite = new HAPResourceDefinitionExpressionSuite();
 		this.m_constants = new LinkedHashMap<String, Object>();
 	}
 
-	public HAPDefinitionExpressionSuite getExpressionDefinitionSuite(){		return this.m_expressionDefinitionSuite;	}
+	public HAPResourceDefinitionExpressionSuite getExpressionDefinitionSuite(){		return this.m_expressionDefinitionSuite;	}
 
 	public Map<String, HAPVariableInfo> getDataVariables(){  return this.m_expressionDefinitionSuite.getVariablesInfo();  }
 	
 	public Map<String, Object> getConstants(){  return this.m_constants;   }
 	public Map<String, HAPData> getDataConstants(){  return this.m_expressionDefinitionSuite.getConstants();  }
 	
-	public Map<String, HAPDefinitionExpression> getExpressionDefinitions(){  return this.m_expressionDefinitionSuite.getExpressionDefinitions();   }
+	public Map<String, HAPResourceDefinitionExpression> getExpressionDefinitions(){  return this.m_expressionDefinitionSuite.getExpressionDefinitions();   }
 	
 	public void addConstant(String name, Object value) {
 		this.m_constants.put(name, value);
@@ -46,8 +46,8 @@ public class HAPContextProcessScriptExpression {
 			this.addConstant(name, datas.get(name));
 		}
 	}
-	public void addExpressionDefinition(String name, HAPDefinitionExpression expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(name, expressionDefinition);  }
-	public void addExpressionDefinition(Map<String, HAPDefinitionExpression> expressions){	this.m_expressionDefinitionSuite.addExpressionDefinition(expressions);	}
+	public void addExpressionDefinition(String name, HAPResourceDefinitionExpression expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(name, expressionDefinition);  }
+	public void addExpressionDefinition(Map<String, HAPResourceDefinitionExpression> expressions){	this.m_expressionDefinitionSuite.addExpressionDefinition(expressions);	}
 	public void addDataVariables(Map<String, HAPVariableInfo> variables){
 		for(String varName : variables.keySet()) {
 			this.m_expressionDefinitionSuite.addVariableInfo(varName, variables.get(varName));

@@ -26,7 +26,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationParm;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.resource.HAPResourceHelper;
@@ -111,7 +111,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	@Override
 	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData) {
 		//new expression definition
-		HAPDefinitionExpression expDefinition = new HAPDefinitionExpression(expressionStr); 
+		HAPResourceDefinitionExpression expDefinition = new HAPResourceDefinitionExpression(expressionStr); 
 		//build expression obj
 		HAPProcessTracker processTracker = new HAPProcessTracker();
 		HAPExecutableExpression expression = this.getRuntimeEnvironment().getExpressionSuiteManager().compileExpression(expDefinition, null, null, null, HAPExpressionProcessConfigureUtil.setDontDiscovery(null), processTracker);

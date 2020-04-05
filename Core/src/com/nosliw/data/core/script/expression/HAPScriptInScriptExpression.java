@@ -48,6 +48,9 @@ public class HAPScriptInScriptExpression extends HAPSerializableImp implements H
 		this.processSegments();
 	}
 	
+	public String getScript() {   return this.m_orignalScript;   }
+	
+	
 	public List<Object> getElements(){	return this.m_elements;	}
 	
 	@Override

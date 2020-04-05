@@ -2,7 +2,7 @@ package com.nosliw.data.core.process;
 
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPContextResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinitionWithContext;
+import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 
@@ -28,9 +28,9 @@ public class HAPContextProcessor implements HAPContextResourceDefinition{
 	}
 	
 	@Override
-	public HAPResourceDefinitionWithContext getResourceDefinition(HAPResourceId processId) {
+	public HAPEntityWithResourceContext getResourceDefinition(HAPResourceId processId) {
 		HAPDefinitionProcess processDef = (HAPDefinitionProcess)HAPResourceUtility.getImpliedResourceDefinition(processId, this.m_suite, this.m_resourceDefMan);
-		HAPResourceDefinitionWithContext out = new HAPResourceDefinitionWithContext(processDef, HAPContextProcessor.createContext(processDef.getSuite(), m_resourceDefMan));
+		HAPEntityWithResourceContext out = new HAPEntityWithResourceContext(processDef, HAPContextProcessor.createContext(processDef.getSuite(), m_resourceDefMan));
 		return out;
 	}	
 }

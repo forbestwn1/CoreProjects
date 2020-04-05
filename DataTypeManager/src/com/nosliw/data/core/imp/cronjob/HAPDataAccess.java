@@ -15,7 +15,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.cronjob.HAPInstancePollSchedule;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
@@ -127,7 +127,7 @@ public class HAPDataAccess {
 			String cronJobId = (String)resultSet.getObject("CRONJOBID");
 			String id = (String)resultSet.getObject("ID");
 			Instant pollTime = resultSet.getTime("POLLTIME").toInstant();
-			Map<String, HAPData> state = HAPDataUtility.buildDataWrapperMap(resultSet.getObject("STATE"));
+			Map<String, HAPData> state = HAPUtilityData.buildDataWrapperMap(resultSet.getObject("STATE"));
 
 			out = new HAPCronJobState(id, cronJobId, new HAPInstancePollSchedule(pollTime), state);
 		}

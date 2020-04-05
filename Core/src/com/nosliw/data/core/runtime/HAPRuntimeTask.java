@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 
 public abstract class HAPRuntimeTask {
 
@@ -47,7 +47,7 @@ public abstract class HAPRuntimeTask {
 			if(this.getResultDataType()==HAPData.class) {
 				//if result is data, then convert json object to data
 				JSONObject dataJson = (JSONObject)serviceData.getData();
-				HAPData data = HAPDataUtility.buildDataWrapperFromJson(dataJson);
+				HAPData data = HAPUtilityData.buildDataWrapperFromJson(dataJson);
 				serviceData.setData(data);
 			}
 		}

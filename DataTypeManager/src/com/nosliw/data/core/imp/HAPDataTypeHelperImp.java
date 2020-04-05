@@ -19,7 +19,7 @@ import com.nosliw.data.core.HAPDataTypeFamily;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.HAPOperationParm;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
@@ -462,7 +462,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 					String childName = childNameDataJson.getString(HAPData.VALUE);
 					List<HAPOperationParm> parmsDataGetChildData = new ArrayList<HAPOperationParm>();
 					parmsDataGetChildData.add(new HAPOperationParm(data));
-					parmsDataGetChildData.add(new HAPOperationParm("name", HAPDataUtility.buildDataWrapperFromJson(childNameDataJson)));
+					parmsDataGetChildData.add(new HAPOperationParm("name", HAPUtilityData.buildDataWrapperFromJson(childNameDataJson)));
 					HAPServiceData serviceDataChildData = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA, parmsDataGetChildData);
 					HAPData getChildDataResultData = (HAPData)serviceDataChildData.getData();
 					group.addSubCriteria(childName, this.getDataTypeCriteriaByData(getChildDataResultData));

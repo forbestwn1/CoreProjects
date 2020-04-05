@@ -9,11 +9,9 @@ import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPProcessId;
@@ -56,24 +54,6 @@ public class HAPUtilityProcess {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachments.get(id);
 			HAPDefinitionProcessSuiteElementEntity processDef = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
 			out.addElement(id, processDef);
-		}
-		return out;
-	}
-
-	public static HAPResourceDefinitionContainerElement getProcessDefinitionElementFromAttachment(String name, HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
-		HAPAttachment attachment = attachmentContainer.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, name);
-		return getProcessDefinitionElementFromAttachment(attachment, activityPluginMan);
-	}
-
-	public static HAPResourceDefinitionContainerElement getProcessDefinitionElementFromAttachment(HAPAttachment attachment, HAPManagerActivityPlugin activityPluginMan) {
-		HAPResourceDefinitionContainerElement out = null;
-		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
-			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
-			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
-		}
-		else if(HAPConstant.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
-			HAPAttachmentReference referenceAttachment = (HAPAttachmentReference)attachment;
-			out = new HAPDefinitionProcessSuiteElementReference(referenceAttachment.getId());
 		}
 		return out;
 	}

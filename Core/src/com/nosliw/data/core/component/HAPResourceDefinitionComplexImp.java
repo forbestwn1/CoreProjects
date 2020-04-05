@@ -2,28 +2,22 @@ package com.nosliw.data.core.component;
 
 import java.util.Map;
 
-import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 
-public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWritableImp implements HAPResourceDefinitionComplex{
+public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentImp implements HAPResourceDefinitionComplex{
 
 	private HAPResourceId m_resourceId;
 	
 	//context definition within this component
 	private HAPContextStructure m_context;
 	
-	private HAPAttachmentContainer m_attachmentContainer;
-
 	public HAPResourceDefinitionComplexImp() {
-		this.m_attachmentContainer = new HAPAttachmentContainer();
 	}
 
 	@Override
@@ -46,24 +40,8 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWrita
 	public HAPContext getContextFlat() {    return (HAPContext)this.getContextStructure();    }
 	
 	@Override
-	public HAPAttachmentContainer getAttachmentContainer() {		return this.m_attachmentContainer;	}
-	@Override
-	public void setAttachmentContainer(HAPAttachmentContainer attachmentContainer) {  this.m_attachmentContainer = attachmentContainer;}  
-
-	@Override
-	public Map<String, HAPAttachment> getAttachmentsByType(String type) {	return this.m_attachmentContainer.getAttachmentByType(type);	}
-
-	@Override
-	public void mergeBy(HAPWithAttachment parent, String mode) {	this.m_attachmentContainer.merge(parent.getAttachmentContainer(), mode);	}
- 
-	@Override
 	public void cloneToDataContext(HAPWithDataContext withDataContext) {
 		if(this.m_context!=null)	withDataContext.setContextStructure(this.m_context.cloneContextStructure());
-	}
-
-	@Override
-	public void cloneToAttachment(HAPWithAttachment withAttachment) {
-		withAttachment.setAttachmentContainer(this.m_attachmentContainer.cloneAttachmentContainer());
 	}
 
 	@Override
@@ -83,7 +61,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPEntityInfoWrita
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
-		jsonMap.put(HAPWithAttachment.ATTACHMENT, m_attachmentContainer.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(HAPWithAttachment.ATTACHMENT, this.getAttachmentContainer().toStringValue(HAPSerializationFormat.JSON));
 	}
 
 }

@@ -9,8 +9,8 @@ import com.nosliw.data.core.component.HAPUtilityComponentParse;
 
 public class HAPParserExpressionDefinition {
 
-	public static HAPDefinitionExpressionSuite parseExpressionSuite(JSONObject expressionSuiteJson, HAPParserExpression expressionParser) {
-		HAPDefinitionExpressionSuite out = new HAPDefinitionExpressionSuite();
+	public static HAPResourceDefinitionExpressionSuite parseExpressionSuite(JSONObject expressionSuiteJson, HAPParserExpression expressionParser) {
+		HAPResourceDefinitionExpressionSuite out = new HAPResourceDefinitionExpressionSuite();
 
 		HAPUtilityComponentParse.parseComplextResourceDefinition(out, expressionSuiteJson);
 		
@@ -31,7 +31,7 @@ public class HAPParserExpressionDefinition {
 		return out;
 	}
 
-	private static HAPDefinitionExpressionSuiteElementEntity parseExpressionSuiteElement(JSONObject jsonObj, HAPParserExpression expressionParser) {
+	public static HAPDefinitionExpressionSuiteElementEntity parseExpressionSuiteElement(JSONObject jsonObj, HAPParserExpression expressionParser) {
 		HAPDefinitionExpressionSuiteElementEntity out = new HAPDefinitionExpressionSuiteElementEntity();
 		HAPUtilityComponentParse.parseComponent(out, jsonObj);
 

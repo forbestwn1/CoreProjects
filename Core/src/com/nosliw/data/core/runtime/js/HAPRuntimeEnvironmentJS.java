@@ -24,6 +24,7 @@ import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayExpressionDiscovery;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResourceDefinition;
+import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.service.provide.HAPFactoryServiceProcess;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.template.HAPManagerTemplate;
@@ -57,6 +58,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPManagerExpression m_expressionManager;
 	
+	private HAPManagerScript m_scriptManager;
+	
 	private HAPGatewayManager m_gatewayManager;
 	
 	private HAPManagerService m_serviceManager;
@@ -75,6 +78,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 									HAPManagerProcess processManager,
 									HAPRuntimeProcess processRuntime,
 									HAPManagerExpression expressionManager,
+									HAPManagerScript scriptManager,
 								    HAPGatewayManager gatewayManager,
 								    HAPManagerService serviceManager,
 								    HAPManagerTemplate templateManager,
@@ -82,13 +86,14 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 								    HAPManagerCronJob cronJobManager,
 								    HAPRuntime runtime){
 		super();
-		this.init(resourceMan, processManager, processRuntime, expressionManager, gatewayManager, serviceManager, templateManager, resourceDefManager, cronJobManager, runtime);
+		this.init(resourceMan, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, templateManager, resourceDefManager, cronJobManager, runtime);
 	}
 	
 	protected void init(HAPResourceManagerRoot resourceMan,
 						HAPManagerProcess processManager,
 						HAPRuntimeProcess processRuntime,
 						HAPManagerExpression expressionManager,
+						HAPManagerScript scriptManager,
 					    HAPGatewayManager gatewayManager,
 					    HAPManagerService serviceManager,
 					    HAPManagerTemplate templateManager,
@@ -99,6 +104,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_processManager = processManager;
 		this.m_processRuntime = processRuntime;
 		this.m_expressionManager = expressionManager;
+		this.m_scriptManager = scriptManager;
 		this.m_serviceManager = serviceManager;
 		this.m_resourceDefinitionManager = resourceDefManager;
 		this.m_cronJobManager = cronJobManager;
@@ -145,6 +151,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@Override
 	public HAPManagerExpression getExpressionManager(){  return this.m_expressionManager;  }
+
+	@Override
+	public HAPManagerScript getScriptManager() {    return this.m_scriptManager;    }
 
 	@Override
 	public HAPGatewayManager getGatewayManager(){  return this.m_gatewayManager;   }

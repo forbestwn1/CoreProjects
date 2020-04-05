@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
@@ -234,8 +234,8 @@ public class HAPProcessorContextConstant {
 				//find all required constants names in script expressions
 				Set<String> expConstantNames = new HashSet<String>();
 				Set<String> scriptConstantNames = new HashSet<String>();
-				for(Object uiExpEle : sciptExpressionDef.getElements()){
-					if(uiExpEle instanceof HAPDefinitionExpression)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPDefinitionExpression)uiExpEle).getOperand()));
+				for(Object uiExpEle : sciptExpressionDef.getSegments()){
+					if(uiExpEle instanceof HAPResourceDefinitionExpression)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPResourceDefinitionExpression)uiExpEle).getOperand()));
 					else if(uiExpEle instanceof HAPScriptInScriptExpression)		scriptConstantNames.addAll(((HAPScriptInScriptExpression)uiExpEle).getConstantNames());
 				}
 				

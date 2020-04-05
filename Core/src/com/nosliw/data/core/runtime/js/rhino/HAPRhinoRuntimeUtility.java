@@ -25,7 +25,7 @@ import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpressionImp;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -85,7 +85,7 @@ public class HAPRhinoRuntimeUtility {
 			}
 
 			@Override
-			public HAPDefinitionExpression getDefinition() {
+			public HAPResourceDefinitionExpression getDefinition() {
 				// TODO Auto-generated method stub
 				return null;
 			}

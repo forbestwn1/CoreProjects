@@ -36,11 +36,8 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 
 	private Map<String, HAPExecutableExpressionItem> m_expressionItem;
 	
-	private HAPDefinitionExpression m_definition;
-	
-	public HAPExecutableExpressionInSuite(HAPDefinitionExpression definition, String id) {
+	public HAPExecutableExpressionInSuite(String id) {
 		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpressionItem>();
-		this.m_definition = definition;
 		this.m_id = id;
 		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 	}
@@ -54,9 +51,6 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	public Map<String, HAPExecutableExpressionItem> getExpressions(){
 		return this.m_expressionItem;
 	}
-
-	@Override
-	public HAPDefinitionExpression getDefinition() {   return this.m_definition;    }
 
 	@Override
 	public String getId() {  return this.m_id;  }

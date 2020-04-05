@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.updatename.HAPEntityWithName;
 import com.nosliw.common.updatename.HAPUpdateNameMap;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;

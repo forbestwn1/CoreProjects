@@ -21,6 +21,7 @@ import com.nosliw.data.core.runtime.js.browser.HAPGatewayBrowserLoadLibrary;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayLoadTestExpression;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeProcessRhinoImp;
+import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.service.provide.HAPGatewayService;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.template.HAPManagerTemplate;
@@ -64,6 +65,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(templateManager);
 		HAPManagerService serviceManager = new HAPManagerService();
 		HAPManagerExpression expressionMan = new HAPManagerExpression(resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
+		HAPManagerScript scriptMan = new HAPManagerScript(expressionMan, resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
 		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, expressionMan, serviceManager.getServiceDefinitionManager());
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, HAPExpressionManager.dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
@@ -72,6 +74,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			processMan,
 			processRuntimeMan,
 			expressionMan,
+			scriptMan,
 			new HAPGatewayManager(),
 			serviceManager,
 			templateManager,

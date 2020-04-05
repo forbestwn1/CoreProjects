@@ -8,26 +8,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
-import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 
-public class HAPDataUtility {
+public class HAPUtilityData {
 
-	public static Map<String, HAPDefinitionConstant> buildConstantDefinition(HAPAttachmentContainer attContainer){
-		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
-		Map<String, HAPAttachment> attrs = attContainer.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_DATA);
-		for(String name : attrs.keySet()) {
-			HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
-			HAPAttachmentEntity attr = (HAPAttachmentEntity)attrs.get(name);
-			attr.cloneToEntityInfo(constantDef);
-			constantDef.setData(buildDataWrapperFromObject(attr.getEntity()));
-			out.put(constantDef.getName(), constantDef);
-		}
-		return out;
-	}
-	
 	public static HAPDataWrapper buildDataWrapperFromObject(Object obj){
 		HAPDataWrapper out = null;
 		if(obj instanceof String){
@@ -74,7 +57,7 @@ public class HAPDataUtility {
 			while(it2.hasNext()){
 				String constantName = it2.next();
 				JSONObject constantJson = jsonObj.getJSONObject(constantName);
-				constants.put(constantName, HAPDataUtility.buildDataWrapperFromJson(constantJson));
+				constants.put(constantName, HAPUtilityData.buildDataWrapperFromJson(constantJson));
 			}
 		}
 		return constants;

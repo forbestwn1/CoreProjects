@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 
 public class HAPResourceIdTemplate extends HAPResourceId{
 
@@ -57,7 +57,7 @@ public class HAPResourceIdTemplate extends HAPResourceId{
 	@Override
 	protected void buildCoreIdByJSON(JSONObject jsonObj) {
 		this.m_templateId = jsonObj.getString(TEMPLATE);
-		this.m_parms = HAPDataUtility.buildDataWrapperMapFromJson(jsonObj);
+		this.m_parms = HAPUtilityData.buildDataWrapperMapFromJson(jsonObj);
 	}
 
 	@Override

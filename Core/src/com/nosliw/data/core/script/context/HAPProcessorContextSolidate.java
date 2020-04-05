@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededExpression;
@@ -62,7 +62,7 @@ public class HAPProcessorContextSolidate {
 		else {
 			HAPContextProcessScriptExpression expProcessContext = new HAPContextProcessScriptExpression();
 			for(String constantName : constants.keySet()) {
-				HAPDataWrapper constantData = HAPDataUtility.buildDataWrapperFromObject(constants.get(constantName));
+				HAPDataWrapper constantData = HAPUtilityData.buildDataWrapperFromObject(constants.get(constantName));
 				if(constantData!=null)   expProcessContext.addConstant(constantName, constantData);
 			}
 			HAPEmbededScriptExpression embededScriptExp = HAPProcessorScriptExpression.processEmbededScriptExpression(embededScriptExpDef, expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
