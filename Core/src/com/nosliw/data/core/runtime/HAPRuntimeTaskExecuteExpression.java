@@ -28,11 +28,11 @@ public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
 	
 	private String m_itemName;
 	
-	private Map<String, HAPData> m_variablesValue;
+	private Map<String, Object> m_variablesValue;
 
 	private Map<String, HAPData> m_referencesValue;
 	
-	public HAPRuntimeTaskExecuteExpression(HAPExecutableExpression expression, String itemName, Map<String, HAPData> variablesValue, Map<String, HAPData> referencesValue){
+	public HAPRuntimeTaskExecuteExpression(HAPExecutableExpression expression, String itemName, Map<String, Object> variablesValue, Map<String, HAPData> referencesValue){
 		this.m_expression = expression;
 		this.m_itemName = itemName;
 		if(HAPBasicUtility.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstant.NAME_DEFAULT;
@@ -44,7 +44,7 @@ public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
 	
 	public String getItemName() {    return this.m_itemName;   }
 	
-	public Map<String, HAPData> getVariablesValue(){  return this.m_variablesValue;  }
+	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 
 	public Map<String, HAPData> getReferencesValue(){  return this.m_referencesValue;  }
 	

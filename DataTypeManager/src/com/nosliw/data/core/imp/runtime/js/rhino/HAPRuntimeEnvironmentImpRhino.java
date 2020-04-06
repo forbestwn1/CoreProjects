@@ -20,6 +20,7 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeProcessRhinoImp;
 import com.nosliw.data.core.script.expression.HAPManagerScript;
+import com.nosliw.data.core.script.expression.HAPResourceDefinitionPluginScriptGroup;
 import com.nosliw.data.core.service.provide.HAPGatewayService;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.template.HAPManagerTemplate;
@@ -47,7 +48,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPManagerTemplate templateManager = new HAPManagerTemplate();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(templateManager);
 		HAPManagerService serviceManager = new HAPManagerService();
-		HAPManagerExpression expressionMan = new HAPManagerExpression(resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
+		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
 		HAPManagerScript scriptMan = new HAPManagerScript(expressionMan, resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
 		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, expressionMan, serviceManager.getServiceDefinitionManager());
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
@@ -67,8 +68,9 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		);
 
 		//resource definition plugin
-		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginExpressionSuite(new HAPExpressionParserImp()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginExpressionSuite(this.getExpressionManager().getExpressionParser()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginExpression(this.getResourceDefinitionManager()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginScriptGroup(this.getExpressionManager().getExpressionParser()));
 
 		this.getGatewayManager().registerGateway(GATEWAY_SERVICE, new HAPGatewayService(this.getServiceManager()));
 	}

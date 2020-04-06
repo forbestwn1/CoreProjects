@@ -13,22 +13,22 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
-public class HAPResourceDefinitionPluginScript implements HAPPluginResourceDefinition{
+public class HAPResourceDefinitionPluginScriptGroup implements HAPPluginResourceDefinition{
 
 	private HAPParserExpression m_expressionParser;
 	
-	public HAPResourceDefinitionPluginScript(HAPParserExpression expressionParser) {
+	public HAPResourceDefinitionPluginScriptGroup(HAPParserExpression expressionParser) {
 		this.m_expressionParser = expressionParser;
 	}
 	
 	@Override
-	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_SCRIPT;  }
+	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_SCRIPTGROUP;  }
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
 		HAPResourceDefinitionScriptGroup scriptResourceDefinition = null;
 		try {
-			scriptResourceDefinition = HAPImporterScriptDefinition.readScriptResourceDefinitionFromFile(new FileInputStream(new File(HAPSystemFolderUtility.getExpressionFolder()+resourceId.getId()+".res")), this.m_expressionParser);
+			scriptResourceDefinition = HAPImporterScriptDefinition.readScriptResourceDefinitionFromFile(new FileInputStream(new File(HAPSystemFolderUtility.getScriptGroupFolder()+resourceId.getId()+".res")), this.m_expressionParser);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

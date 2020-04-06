@@ -1,11 +1,15 @@
 package com.nosliw.data.core.component.attachment;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
+import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.data.HAPContextDataFactory;
@@ -19,6 +23,10 @@ public class HAPAttachmentUtility {
 
 	public static final String ATTRIBUTE_FLAG_OVERRIDE = "flagOveride"; 
 
+	public static HAPContextDataFlat getTestDataFromAttachment(HAPWithAttachment withAttachment, String name) {
+		return HAPAttachmentUtility.getContextDataFromAttachment(withAttachment.getAttachmentContainer(), HAPConstant.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
+	}
+	
 	public static HAPContextDataFlat getContextDataFromAttachment(HAPAttachmentContainer attContainer, String type, String name) {
 		HAPContextDataFlat out = new HAPContextDataFlat();
 		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
@@ -28,6 +36,24 @@ public class HAPAttachmentUtility {
 		}
 		return out;
 	}
+	
+	public static Map<String, Object> getTestValueFromAttachment(HAPWithAttachment withAttachment, String name) {
+		return HAPAttachmentUtility.getContextValueFromAttachment(withAttachment.getAttachmentContainer(), HAPConstant.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
+	}
+	
+	public static Map<String, Object> getContextValueFromAttachment(HAPAttachmentContainer attContainer, String type, String name) {
+		Map<String, Object> out = new LinkedHashMap<String, Object>();
+		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
+		if(attachment!=null) {
+			JSONObject dataObjJson = attachment.getEntity();
+			for(Object key : dataObjJson.keySet()) {
+				String n  = (String)key;
+				out.put(n, dataObjJson.get(n));
+			}
+		}
+		return out;
+	}
+	
 	
 	public static HAPResourceDefinition getResourceDefinition(HAPAttachmentContainer attContainer, String type, String name, HAPManagerResourceDefinition resourceDefMan) {
 		HAPResourceDefinition out = null;

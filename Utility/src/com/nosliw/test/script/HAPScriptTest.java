@@ -1,12 +1,13 @@
 package com.nosliw.test.script;
 
+import java.util.Map;
+
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteExpressionRhino;
-import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPResourceDefinitionScriptGroup;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptResource;
@@ -17,6 +18,7 @@ public class HAPScriptTest {
 
 		try {
 			String id = "test1";
+			String script = "test1";
 			String testData = "testData1";
 
 			HAPResourceId resourceId = HAPUtilityScriptResource.buildResourceId(id);
@@ -27,9 +29,10 @@ public class HAPScriptTest {
 			
 			HAPExecutableScriptGroup scriptExe = runtimeEnvironment.getScriptManager().getScript(resourceId, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 
-			HAPContextDataFlat input = HAPUtilityComponent.getTestDataFromAttachment(scriptGroupDef, testData);
+			Map<String, Object> input = HAPAttachmentUtility.getTestValueFromAttachment(scriptGroupDef, testData);
 
-			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, null, input.getData(), null, runtimeEnvironment.getResourceManager());
+			
+			HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExe, script, input, null);
 			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 			System.out.println(out);

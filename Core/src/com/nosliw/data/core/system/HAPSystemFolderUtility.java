@@ -27,7 +27,7 @@ public class HAPSystemFolderUtility {
 	public static String getCronJobFolder(){  return getApplicationDataFolder() + "cronjob/";  }
 	public static String getTemplateFolder(){  return getApplicationDataFolder() + "template/";  }
 	public static String getExpressionFolder(){  return getApplicationDataFolder() + "expression/";  }
-	public static String getScriptFolder(){  return getApplicationDataFolder() + "script/";  }
+	public static String getScriptGroupFolder(){  return getApplicationDataFolder() + "script/";  }
 
 	public static String getTempFolder(){		return HAPSystemUtility.getTempFolder();	}
 	public static String getResourceTempFileFolder(){  return HAPSystemUtility.getJSTempFolder() + "resources/";  }

@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.expression;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPUtilityDataComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.expression.HAPContextExpression;
@@ -20,7 +21,14 @@ import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 
 public class HAPProcessorScriptExpression {
 
-	public static HAPExecutableScriptGroup processScript(HAPResourceDefinitionScriptGroup scriptGroupDef, HAPContext extraContext, HAPParserExpression expressionParser, HAPManagerExpression expressionMan, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static HAPExecutableScriptGroup processScript(
+			HAPResourceDefinitionScriptGroup scriptGroupDef, 
+			HAPContext extraContext, 
+			HAPParserExpression expressionParser, 
+			HAPManagerExpression expressionMan, 
+			Map<String, String> configure, 
+			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPProcessTracker processTracker) {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 		
 		//build expression suite
@@ -29,11 +37,13 @@ public class HAPProcessorScriptExpression {
 		//expression definition containing all expression in script 
 		HAPDefinitionExpressionImp expressionDef = new HAPDefinitionExpressionImp();
 		HAPUtilityComponent.mergeWithParentAttachment(expressionDef, scriptGroupDef.getAttachmentContainer());
+		expressionDef.setContextStructure(scriptGroupDef.getContextStructure());
 		
 		List<HAPResourceDefinitionScriptElement> scriptElements = scriptGroupDef.getElements();
 		for(int i=0; i<scriptElements.size(); i++) {
 			HAPExecutableScript scriptExt = new HAPExecutableScript();
 			HAPResourceDefinitionScriptElement scriptEle = scriptElements.get(i);
+			scriptEle.cloneToEntityInfo(scriptExt);
 			List<Object> scriptSegs = scriptEle.getScript().getSegments();
 			for(int j=0; j<scriptSegs.size(); j++) {
 				Object scriptSeg = scriptSegs.get(j);
@@ -59,7 +69,7 @@ public class HAPProcessorScriptExpression {
 		}
 		
 		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionDef, HAPContextExpression.createContext(expressionSuite, contextProcessRequirement.resourceDefMan));
-		HAPExecutableExpression expressionExe = HAPProcessorExpression.process(scriptGroupDef.getResourceId().toString(), resourceWithContext, extraContext, null, expressionMan, null, contextProcessRequirement, null);
+		HAPExecutableExpression expressionExe = HAPProcessorExpression.process(scriptGroupDef.getResourceId().toString(), resourceWithContext, extraContext, null, expressionMan, configure, contextProcessRequirement, processTracker);
 		out.setExpression(expressionExe);
 		
 		return out;

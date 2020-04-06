@@ -136,7 +136,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		}
 		
 		//output
-		HAPDataTypeCriteria outputCriteria = this.m_expression.getExpressions().get(this.m_elementName).getOutputCriteria();
+		HAPDataTypeCriteria outputCriteria = this.m_expression.getExpressionItems().get(this.m_elementName).getOutputCriteria();
 		return HAPCriteriaUtility.isMatchable(outputCriteria, expectCriteria, dataTypeHelper);
 	}
 	

@@ -24,7 +24,7 @@ public interface HAPExecutableExpression extends HAPSerializable, HAPExecutable{
 	Map<String, HAPVariableInfo> getVarsInfo();
 
 	void addExpression(String name, HAPOperandWrapper operand);
-	Map<String, HAPExecutableExpressionItem> getExpressions();
+	Map<String, HAPExecutableExpressionItem> getExpressionItems();
 	
 	void updateVariableName(HAPUpdateName nameUpdate);
 	

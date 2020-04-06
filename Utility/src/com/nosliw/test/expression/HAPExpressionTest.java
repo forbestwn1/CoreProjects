@@ -1,7 +1,9 @@
 package com.nosliw.test.expression;
 
+import java.util.Map;
+
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
@@ -9,7 +11,6 @@ import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteExpressionRhino;
-import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
 
 public class HAPExpressionTest {
 
@@ -17,7 +18,7 @@ public class HAPExpressionTest {
 
 		try {
 			String suite = "test1";
-			String id = "test7";
+			String id = "test1";
 			String testData = "testData1";
 
 			HAPResourceId resourceId = HAPUtilityExpressionResource.buildResourceId(suite, id);
@@ -28,9 +29,9 @@ public class HAPExpressionTest {
 			
 			HAPExecutableExpression expressionExe = runtimeEnvironment.getExpressionManager().getExpression(resourceId, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 
-			HAPContextDataFlat input = HAPUtilityComponent.getTestDataFromAttachment(expressionDef, testData);
+			Map<String, Object> input = HAPAttachmentUtility.getTestValueFromAttachment(expressionDef, testData);
 
-			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, null, input.getData(), null, runtimeEnvironment.getResourceManager());
+			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, null, input, null, runtimeEnvironment.getResourceManager());
 			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 			System.out.println(out);

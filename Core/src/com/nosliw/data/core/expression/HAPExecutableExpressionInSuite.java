@@ -48,7 +48,7 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	}
 
 	@Override
-	public Map<String, HAPExecutableExpressionItem> getExpressions(){
+	public Map<String, HAPExecutableExpressionItem> getExpressionItems(){
 		return this.m_expressionItem;
 	}
 
@@ -123,7 +123,7 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(this.getExpressions(), HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(this.getExpressionItems(), HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_localVarsInfo, HAPSerializationFormat.JSON));
 	}
 }

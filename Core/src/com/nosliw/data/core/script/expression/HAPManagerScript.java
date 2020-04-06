@@ -3,16 +3,11 @@ package com.nosliw.data.core.script.expression;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
-import com.nosliw.data.core.expression.HAPContextExpression;
 import com.nosliw.data.core.expression.HAPManagerExpression;
-import com.nosliw.data.core.expression.HAPProcessorExpression;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
-import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -46,27 +41,17 @@ public class HAPManagerScript {
 	}
 
 	public HAPExecutableScriptGroup getScript(HAPResourceId resourceId, Map<String, String> configure) {
-		if(context==null)  context = HAPContextExpression.createContext(this.m_resourceDefManager);
-		HAPEntityWithResourceContext resourceDefWithContext = context.getResourceDefinition(expressionId);
+		HAPResourceDefinitionScriptGroup scriptGroupDef = this.getScriptDefinition(resourceId, null);
 		
 		if(configure==null) {
 			//build configure from definition info
-			HAPResourceDefinitionExpression expressionDef = (HAPResourceDefinitionExpression)resourceDefWithContext.getEntity();
 			configure = new LinkedHashMap<String, String>();
-			for(String n : expressionDef.getInfo().getNames()) {
-				configure.put(n, (String)expressionDef.getInfo().getValue(n)); 
+			for(String n : scriptGroupDef.getInfo().getNames()) {
+				configure.put(n, (String)scriptGroupDef.getInfo().getValue(n)); 
 			}
 		}
 		
-		HAPExecutableExpression out = HAPProcessorExpression.process(
-				expressionId.toStringValue(HAPSerializationFormat.LITERATE), 
-				resourceDefWithContext, 
-				null, 
-				null, 
-				this, 
-				configure, 
-				m_contextProcessRequirement,
-				new HAPProcessTracker());
+		HAPExecutableScriptGroup out = HAPProcessorScriptExpression.processScript(scriptGroupDef, null, this.m_expressionMan.getExpressionParser(), m_expressionMan, configure, m_contextProcessRequirement, new HAPProcessTracker());
 		return out;
 	}
 }

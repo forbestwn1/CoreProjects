@@ -1,5 +1,6 @@
 package com.nosliw.data.core.expression;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
@@ -35,12 +37,18 @@ public class HAPExecutableExpressionItem extends HAPExecutableImp{
 	@HAPAttribute
 	public static String OUTPUTMATCHERS = "outputMatchers";
 
+	@HAPAttribute
+	public static String VARIABLEINFOS = "variableInfos";
+	
 	private HAPOperandWrapper m_operand;
 
 	private HAPMatchers m_outputMatchers;
 	
+	private Map<String, HAPVariableInfo> m_varInfos;
+	
 	public HAPExecutableExpressionItem(HAPOperandWrapper operand) {
 		this.m_operand = operand;
+		this.m_varInfos = new LinkedHashMap<String, HAPVariableInfo>();
 	}
 	
 	public HAPOperandWrapper getOperand() {		return this.m_operand;	}
@@ -50,6 +58,9 @@ public class HAPExecutableExpressionItem extends HAPExecutableImp{
 	public HAPMatchers getOutputMatchers() {		return this.m_outputMatchers;	}
 	public void setOutputMatchers(HAPMatchers matchers) {    this.m_outputMatchers = matchers;    }
 
+	public Map<String, HAPVariableInfo> getVariablesInfo(){   return this.m_varInfos;    }
+	public void setVariablesInfo(Map<String, HAPVariableInfo> varsInfo) {   this.m_varInfos.putAll(varsInfo);     }
+	
 	public void updateVariableName(HAPUpdateName nameUpdate) {
 		HAPOperandUtility.updateVariableName(this.m_operand, nameUpdate);
 		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
@@ -107,5 +118,6 @@ public class HAPExecutableExpressionItem extends HAPExecutableImp{
 	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(this.getOperand(), HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(this.getOutputMatchers(), HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_varInfos, HAPSerializationFormat.JSON));
 	}
 }

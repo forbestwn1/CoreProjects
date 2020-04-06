@@ -16,7 +16,25 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 		this.m_elements = new ArrayList<HAPExecutableScript>();
 	}
 	
+	public HAPExecutableExpression getExpression() {    return this.m_expressionExe;   }
 	public void setExpression(HAPExecutableExpression expression) {    this.m_expressionExe = expression;    }
 	
 	public void addScript(HAPExecutableScript script) {   this.m_elements.add(script);    }
+	public HAPExecutableScript getScript(Object id) {
+		HAPExecutableScript out = null;
+		if(id instanceof String) {
+			for(HAPExecutableScript script : this.m_elements) {
+				if(id.equals(script.getName())) {
+					out = script;
+					break;
+				}
+			}
+		}
+		else if(id instanceof Integer) {
+			int index = (Integer)id;
+			out = this.m_elements.get(index);
+		}
+		return out;
+	}
+
 }

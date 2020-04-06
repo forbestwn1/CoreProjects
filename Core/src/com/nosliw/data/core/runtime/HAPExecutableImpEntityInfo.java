@@ -12,7 +12,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
-abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  implements HAPEntityInfo{
+abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  implements HAPEntityInfoWritable{
 	
 	//name, for display
 	protected String m_name;
@@ -32,14 +32,17 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	
 	@Override
 	public HAPInfo getInfo() {  return this.m_info;  }
+	@Override
 	public void setInfo(HAPInfo info) {   this.m_info = info;    }
 	
 	@Override
 	public String getName() {  return this.m_name;  }
+	@Override
 	public void setName(String name) {   this.m_name = name;    }
 
 	@Override
 	public String getDescription() {   return this.m_description;  }
+	@Override
 	public void setDescription(String description) {    this.m_description = description;      }
 
 	@Override

@@ -56,7 +56,23 @@ public class HAPProcessorExpression {
 			out.discover(expectOutput, processTracker);
 		}
 		
+		discoverExpressionItemVariable(out);
+		
 		return out;
+	}
+
+	private static void discoverExpressionItemVariable(HAPExecutableExpression expression) {
+		Map<String, HAPVariableInfo> expressionVarsInfo = expression.getVarsInfo();
+		Map<String, HAPExecutableExpressionItem> items = expression.getExpressionItems();
+		for(String name : items.keySet()) {
+			HAPExecutableExpressionItem item = items.get(name);
+			Map<String, HAPVariableInfo> itemVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+			Set<String> varNames = HAPOperandUtility.discoverVariables(item.getOperand());
+			for(String varName : varNames) {
+				itemVarsInfo.put(varName, expressionVarsInfo.get(varName));
+			}
+			item.setVariablesInfo(itemVarsInfo);
+		}
 	}
 	
 	private static HAPExecutableExpression processBasic(
@@ -98,7 +114,7 @@ public class HAPProcessorExpression {
 
 		Map<String, HAPVariableInfo> varsInfo = out.getVarsInfo();
 
-		Map<String, HAPExecutableExpressionItem> expressionItems = out.getExpressions();
+		Map<String, HAPExecutableExpressionItem> expressionItems = out.getExpressionItems();
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpressionItem expressionItem = expressionItems.get(name);
 			HAPOperandWrapper operand = expressionItem.getOperand();
@@ -167,7 +183,7 @@ public class HAPProcessorExpression {
 	}
 	
 	private static void processReferencesInputMapping(HAPExecutableExpression expressionExe) {
-		Map<String, HAPExecutableExpressionItem> expressionItems = expressionExe.getExpressions();
+		Map<String, HAPExecutableExpressionItem> expressionItems = expressionExe.getExpressionItems();
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpressionItem expressionItem = expressionItems.get(name);
 			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){
@@ -221,7 +237,7 @@ public class HAPProcessorExpression {
 	}
 	
 	private static void processReferencesVariableNameUpdate(HAPExecutableExpression expressionExe) {
-		Map<String, HAPExecutableExpressionItem> expressionItems = expressionExe.getExpressions();
+		Map<String, HAPExecutableExpressionItem> expressionItems = expressionExe.getExpressionItems();
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpressionItem expressionItem = expressionItems.get(name);
 			//update reference variable name
@@ -257,7 +273,7 @@ public class HAPProcessorExpression {
 	}
 	
 	private static void processReferencesNameMapping(HAPExecutableExpression expressionExe) {
-		Map<String, HAPExecutableExpressionItem> expressionItems = expressionExe.getExpressions();
+		Map<String, HAPExecutableExpressionItem> expressionItems = expressionExe.getExpressionItems();
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpressionItem expressionItem = expressionItems.get(name);
 			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){

@@ -23,7 +23,7 @@ public class HAPResourceManagerScript  extends HAPResourceManagerImp{
 	
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPExecutableScriptGroup expression = this.m_scriptMan.getScript(resourceId, null, null);
+		HAPExecutableScriptGroup expression = this.m_scriptMan.getScript(resourceId, null);
 		if(expression==null)  return null;
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
@@ -32,7 +32,7 @@ public class HAPResourceManagerScript  extends HAPResourceManagerImp{
 
 	@Override
 	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
-		HAPExecutableScriptGroup expression = this.m_scriptMan.getScript(resourceId, null, null);
+		HAPExecutableScriptGroup expression = this.m_scriptMan.getScript(resourceId, null);
 		return expression.getResourceDependency(runtimeInfo, this.m_rootResourceMan);
 	}
 }

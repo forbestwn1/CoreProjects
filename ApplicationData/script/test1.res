@@ -121,11 +121,7 @@
 			"id": "test1",
 			"name": "test1",
 			"description": "standard",
-			"element" : [
-				{
-					"script" : "<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value=='s isfff'?'red':'blue'%>",
-				}
-			]
+			"script" : "#|?(business)?.a.aa.subString(from:?(fromVar)?,to:?(toVar)?)|#.value=='s isfff'?'red':'blue'",
 		}
 	]
 }

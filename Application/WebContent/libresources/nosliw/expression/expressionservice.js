@@ -54,30 +54,56 @@ var node_createExpressionService = function(){
 		return out;
 	};
 	
-	var loc_getExecuteScriptRequest = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
+//	var loc_getExecuteScriptRequest = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
+//		var requestInfo = loc_out.getRequestInfo(requester_parent);
+//		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExpressionService_ExecuteScript", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
+//
+//		//calculate multiple expression
+//		var executeMultipleExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressions, "variables":variables}), {
+//			success : function(requestInfo, expressionsResult){
+//				var expressionsData = expressionsResult.getResults();
+//				return script.call(undefined, expressionsData, scriptConstants, variables);
+//			}
+//		});
+//		_.each(expressions, function(expression, name){
+//			//find variable value only for this expression
+//			var expVariables = {};
+//			_.each(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS], function(varInfo, name){
+//				expVariables[name] = variables[name];
+//			});
+//			executeMultipleExpressionRequest.addRequest(name, node_expressionUtility.getExecuteExpressionRequest(expression, expVariables, {}, {}));
+//		});
+//		
+//		out.addRequest(executeMultipleExpressionRequest);
+//		return out;
+//	};
+
+	var loc_getExecuteScriptRequest = function(script, expressionItems, variables, scriptConstants, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExpressionService_ExecuteScript", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExpressionService_ExecuteScript", {"script":script, "expressions":expressionItems, "variables":variables}), handlers, requestInfo);
 
 		//calculate multiple expression
-		var executeMultipleExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressions, "variables":variables}), {
+		var executeMultipleExpressionItemRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressionItems, "variables":variables}), {
 			success : function(requestInfo, expressionsResult){
 				var expressionsData = expressionsResult.getResults();
 				return script.call(undefined, expressionsData, scriptConstants, variables);
 			}
 		});
-		_.each(expressions, function(expression, name){
+		_.each(expressionItems, function(expressionItem, name){
 			//find variable value only for this expression
 			var expVariables = {};
-			_.each(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS], function(varInfo, name){
+			_.each(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONITEM_VARIABLEINFOS], function(varInfo, name){
 				expVariables[name] = variables[name];
 			});
-			executeMultipleExpressionRequest.addRequest(name, node_expressionUtility.getExecuteExpressionRequest(expression, expVariables, {}, {}));
+			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, expVariables, {}, {}));
 		});
 		
-		out.addRequest(executeMultipleExpressionRequest);
+		out.addRequest(executeMultipleExpressionItemRequest);
 		return out;
 	};
 
+
+	
 	var loc_out = {
 		
 		getExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){
@@ -89,12 +115,12 @@ var node_createExpressionService = function(){
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
-		getExecuteExpressionRequest : function(expression, variables, constants, references, handlers, requester_parent){
-			return node_expressionUtility.getExecuteExpressionRequest(expression, variables, constants, references, handlers, requester_parent);
+		getExecuteExpressionRequest : function(expression, eleName, variables, constants, references, handlers, requester_parent){
+			return node_expressionUtility.getExecuteExpressionRequest(expression, eleName, variables, constants, references, handlers, requester_parent);
 		},
 			
-		executeExecuteExpressionRequest : function(expression, variables, constants, references, handlers, requester_parent){
-			var requestInfo = this.getExecuteExpressionRequest(expression, variables, constants, references, handlers, requester_parent);
+		executeExecuteExpressionRequest : function(expression, eleName, variables, constants, references, handlers, requester_parent){
+			var requestInfo = this.getExecuteExpressionRequest(expression, eleName, variables, constants, references, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
@@ -114,14 +140,24 @@ var node_createExpressionService = function(){
 		 * 		variables : variables for expression
 		 * 		scriptConstants : constants in script
 		 */
-		getExecuteScriptRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
-			return loc_getExecuteScriptRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
+//		getExecuteScriptRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
+//			return loc_getExecuteScriptRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
+//		},
+	
+		getExecuteScriptRequest : function(script, expressionsItems, variables, scriptConstants, handlers, requester_parent){
+			return loc_getExecuteScriptRequest(script, expressionsItems, variables, scriptConstants, handlers, requester_parent);
 		},
 	
-		executeExecuteScriptExpressionRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
-			var requestInfo = this.getExecuteScriptRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
+//		executeExecuteScriptExpressionRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
+//			var requestInfo = this.getExecuteScriptRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
+//			node_requestServiceProcessor.processRequest(requestInfo);
+//		},
+
+		executeExecuteScriptExpressionRequest : function(script, expressionsItems, variables, scriptConstants, handlers, requester_parent){
+			var requestInfo = this.getExecuteScriptRequest(script, expressionsItems, variables, scriptConstants, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
+
 	};
 	
 	loc_out = node_buildServiceProvider(loc_out, "expressionService");

@@ -16,19 +16,26 @@ import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 
 
 public class HAPManagerExpression {
+	
+	private HAPParserExpression m_expressionParser;
+	
 	private HAPManagerResourceDefinition m_resourceDefManager;
 
 	private HAPRequirementContextProcessor m_contextProcessRequirement;
 
 	public HAPManagerExpression(
+			HAPParserExpression expressionParser,
 			HAPManagerResourceDefinition resourceDefManager,
 			HAPDataTypeHelper dataTypeHelper,
 			HAPRuntime runtime,
 			HAPManagerServiceDefinition serviceDefinitionManager
 			) {
+		this.m_expressionParser = expressionParser;
 		this.m_resourceDefManager = resourceDefManager;
 		this.m_contextProcessRequirement = new HAPRequirementContextProcessor(this.m_resourceDefManager, dataTypeHelper, runtime, this, serviceDefinitionManager, null);
 	}
+	
+	public HAPParserExpression getExpressionParser() {   return this.m_expressionParser;    }
 	
 	public HAPResourceDefinitionExpressionSuite getExpressionSuiteDefinition(HAPResourceId suiteId, HAPAttachmentContainer parentAttachment) {
 		HAPResourceDefinitionExpressionSuite suiteDef = (HAPResourceDefinitionExpressionSuite)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(suiteId, parentAttachment);

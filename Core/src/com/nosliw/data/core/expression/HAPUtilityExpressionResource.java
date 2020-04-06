@@ -43,7 +43,7 @@ public class HAPUtilityExpressionResource {
 
 	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableExpression expressions){
 		Set<HAPResourceIdSimple> result = new LinkedHashSet<HAPResourceIdSimple>();
-		Map<String, HAPExecutableExpressionItem> items = expressions.getExpressions();
+		Map<String, HAPExecutableExpressionItem> items = expressions.getExpressionItems();
 		for(String name : items.keySet()) {
 			HAPExecutableExpressionItem expression = items.get(name);
 			//get converter resource id from var converter in expression 
