@@ -2,6 +2,7 @@ package com.nosliw.data.core.component.attachment;
 
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -15,7 +16,7 @@ public class HAPAttachmentEntity extends HAPAttachmentImp{
 	@HAPAttribute
 	public static String ENTITY = "entity";
 
-	private JSONObject m_entity;
+	private Object m_entity;
 	
 	private HAPAttachmentEntity() {}
 	
@@ -28,8 +29,14 @@ public class HAPAttachmentEntity extends HAPAttachmentImp{
 		return HAPConstant.ATTACHMENT_TYPE_ENTITY;
 	}
 
-	public JSONObject getEntity() {    return this.m_entity;    }
-	public void setEntity(JSONObject entityObj) {    this.m_entity = entityObj;    }
+	public Object getEntity() {    return this.m_entity;    }
+	public void setEntity(Object entityObj) {    this.m_entity = entityObj;    }
+
+	public String getEntityString() {   return (String)this.getEntity();   }
+	public Integer getEntityInteger() {   return (Integer)this.getEntity();   }
+	public Boolean getEntityBoolean() {   return (Boolean)this.getEntity();   }
+	public JSONObject getEntityJsonObj() {   return (JSONObject)this.getEntity();   }
+	public JSONArray getEntityJsonArray() {   return (JSONArray)this.getEntity();   }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -41,7 +48,7 @@ public class HAPAttachmentEntity extends HAPAttachmentImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
-		this.m_entity = jsonObj.optJSONObject(ENTITY);
+		this.m_entity = jsonObj.opt(ENTITY);
 		return true;  
 	}
 

@@ -37,6 +37,14 @@ public class HAPUtilityExpression {
 		}
 	}
 	
+	public static void normalizeReference(HAPDefinitionExpression expressionDef) {
+		Map<String, HAPDefinitionExpressionSuiteElementEntityExpression> elements = expressionDef.getExpressionElements();
+		for(String name : elements.keySet()) {
+			HAPDefinitionExpressionSuiteElementEntityExpression element = elements.get(name);
+			normalizeReference(element);
+		}
+	}
+	
 	public static void normalizeReference(HAPDefinitionExpressionSuiteElementEntityExpression expressionEntity) {
 		HAPOperandUtility.processAllOperand(expressionEntity.getOperand(), null, new HAPOperandTask(){
 			@Override

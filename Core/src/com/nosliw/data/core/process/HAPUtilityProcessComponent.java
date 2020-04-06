@@ -37,7 +37,7 @@ public class HAPUtilityProcessComponent {
 		HAPResourceDefinitionContainerElement out = null;
 		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
-			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntity(), activityPluginMan);
+			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntityJsonObj(), activityPluginMan);
 		}
 		else if(HAPConstant.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
 			HAPAttachmentReference referenceAttachment = (HAPAttachmentReference)attachment;

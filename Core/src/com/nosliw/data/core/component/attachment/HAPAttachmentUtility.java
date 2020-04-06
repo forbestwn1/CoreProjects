@@ -31,7 +31,7 @@ public class HAPAttachmentUtility {
 		HAPContextDataFlat out = new HAPContextDataFlat();
 		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
 		if(attachment!=null) {
-			JSONObject dataObjJson = attachment.getEntity();
+			JSONObject dataObjJson = attachment.getEntityJsonObj();
 			out = HAPContextDataFactory.newContextDataFlat(dataObjJson);
 		}
 		return out;
@@ -45,7 +45,7 @@ public class HAPAttachmentUtility {
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
 		if(attachment!=null) {
-			JSONObject dataObjJson = attachment.getEntity();
+			JSONObject dataObjJson = attachment.getEntityJsonObj();
 			for(Object key : dataObjJson.keySet()) {
 				String n  = (String)key;
 				out.put(n, dataObjJson.get(n));
@@ -63,7 +63,7 @@ public class HAPAttachmentUtility {
 			out = resourceDefMan.getResourceDefinition(resourceId);
 		}
 		else if(attachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_ENTITY)){
-			out = resourceDefMan.parseResourceDefinition(type, ((HAPAttachmentEntity)attachment).getEntity());
+			out = resourceDefMan.parseResourceDefinition(type, ((HAPAttachmentEntity)attachment).getEntityJsonObj());
 		}
 		return out;
 	}

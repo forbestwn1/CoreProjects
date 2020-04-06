@@ -14,6 +14,7 @@ public class HAPUtilityExpressionComponent {
 
 	public static HAPResourceDefinitionExpressionSuite buildExpressionSuiteFromComponent(HAPResourceDefinitionComplex component, HAPParserExpression expressionParser) {
 		HAPResourceDefinitionExpressionSuite out = new HAPResourceDefinitionExpressionSuite();
+		component.cloneToComplexResourceDefinition(out);
 		
 		if(component instanceof HAPComponentContainerElement) {
 			out = buildExpressionSuiteFromComponent(((HAPComponentContainerElement)component).getElement(), expressionParser);
@@ -35,13 +36,14 @@ public class HAPUtilityExpressionComponent {
 			HAPAttachment attachment = expressionAtts.get(name);
 			suite.addElement(attachment.getName(), buildExpressionSuiteElementFromAttachment(attachment, expressionParser));
 		}
+		HAPUtilityExpression.normalizeReference(suite);
 	}
 
 	private static HAPDefinitionExpressionSuiteElementEntity buildExpressionSuiteElementFromAttachment(HAPAttachment attachment, HAPParserExpression expressionParser) {
 		HAPDefinitionExpressionSuiteElementEntity out = null;
 		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
-			out = HAPParserExpressionDefinition.parseExpressionSuiteElement(entityAttachment.getEntity(), expressionParser);
+			out = HAPParserExpressionDefinition.parseExpressionSuiteElement(entityAttachment.getEntityJsonObj(), expressionParser);
 		}
 		else if(HAPConstant.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
 		}

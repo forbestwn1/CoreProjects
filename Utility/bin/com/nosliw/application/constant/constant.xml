@@ -685,6 +685,10 @@
 			<definition name="SEPERATOR_RESOURCEID_START" value="___"/>
 			<definition name="SEPERATOR_RESOURCEID_STRUCTURE" value="_"/>
 
+			<definition type="space"/>
+			<definition name="ENTITYINFO_INFONAME_DISABLE" value="disable"/>
+
+
 		</definitions>
 	</constants>
 </root>

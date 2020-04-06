@@ -44,11 +44,16 @@ public class HAPJsonUtility {
 			out = buildArrayJson(arrayJson.toArray(new String[0]));
 		} else if (o instanceof Map) {
 			Map<String, String> mapJson = new LinkedHashMap<String, String>();
+			Map<String, Class<?>> typeMap = new LinkedHashMap<String, Class<?>>();
 			Map<String, ?> mapValue = (Map) o;
 			for (String key : mapValue.keySet()) {
-				mapJson.put(key, buildJson(mapValue.get(key), format));
+				Object value = mapValue.get(key);
+				mapJson.put(key, buildJson(value, format));
+				if(value instanceof Integer)   typeMap.put(key, Integer.class);
+				else if(value instanceof Boolean)   typeMap.put(key, Boolean.class);
+				else if(value instanceof Double)   typeMap.put(key, Double.class);
 			}
-			out = buildMapJson(mapJson);
+			out = buildMapJson(mapJson, typeMap);
 		} else {
 			out = o + "";
 		}

@@ -621,4 +621,8 @@ public class HAPConstant {
 		public static final String SEPERATOR_RESOURCEID_STRUCTURE = "_";
 
 
+
+		public static final String ENTITYINFO_INFONAME_DISABLE = "disable";
+
+
 }

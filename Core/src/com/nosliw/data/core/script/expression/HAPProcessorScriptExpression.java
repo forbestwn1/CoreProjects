@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.expression;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPUtilityDataComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
@@ -14,6 +15,7 @@ import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.expression.HAPProcessorExpression;
 import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.HAPUtilityExpression;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -30,6 +32,9 @@ public class HAPProcessorScriptExpression {
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
+		
+		Map<String, Object> constantsValue = HAPUtilityDataComponent.buildConstantValue(scriptGroupDef.getAttachmentContainer());
+		out.addConstants(constantsValue);
 		
 		//build expression suite
 		HAPResourceDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(scriptGroupDef, expressionParser);
@@ -58,18 +63,20 @@ public class HAPProcessorScriptExpression {
 				}
 				else if(scriptSeg instanceof HAPScriptInScriptExpression) {
 					HAPScriptInScriptExpression sSeg = (HAPScriptInScriptExpression)scriptSeg;
+					HAPExecutableScriptSegScript scriptSegExe = new HAPExecutableScriptSegScript(sSeg.getScript());
 					//update with constant value
 					Map<String, Object> cstValues = HAPUtilityDataComponent.buildConstantValue(scriptGroupDef.getAttachmentContainer());
-					sSeg.updateConstantValue(cstValues);
+					scriptSegExe.updateConstantValue(cstValues);
 					
-					scriptExt.addSegment(new HAPExecutableScriptSegScript(sSeg.getScript()));
+					scriptExt.addSegment(scriptSegExe);
 				}
 			}
 			out.addScript(scriptExt);
 		}
 		
+		HAPUtilityExpression.normalizeReference(expressionDef);
 		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionDef, HAPContextExpression.createContext(expressionSuite, contextProcessRequirement.resourceDefMan));
-		HAPExecutableExpression expressionExe = HAPProcessorExpression.process(scriptGroupDef.getResourceId().toString(), resourceWithContext, extraContext, null, expressionMan, configure, contextProcessRequirement, processTracker);
+		HAPExecutableExpression expressionExe = HAPProcessorExpression.process(scriptGroupDef.getResourceId().toStringValue(HAPSerializationFormat.LITERATE), resourceWithContext, extraContext, null, expressionMan, configure, contextProcessRequirement, processTracker);
 		out.setExpression(expressionExe);
 		
 		return out;
