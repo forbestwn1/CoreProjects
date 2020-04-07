@@ -6,11 +6,11 @@ import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceDefinitionPluginExpressionGroup implements HAPPluginResourceDefinition{
+public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginResourceDefinition{
 
 	private HAPManagerResourceDefinition m_resourceDefMan;
 	
-	public HAPResourceDefinitionPluginExpressionGroup(HAPManagerResourceDefinition resourceDefMan) {
+	public HAPPluginResourceDefinitionExpressionGroup(HAPManagerResourceDefinition resourceDefMan) {
 		this.m_resourceDefMan = resourceDefMan;
 	}
 	

@@ -2,11 +2,11 @@ package com.nosliw.data.core.script.expression;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 
-public class HAPScriptGroupId extends HAPSerializableImp{
+public class HAPIdScriptGroup extends HAPSerializableImp{
 
 	private String m_id;
 	
-	public HAPScriptGroupId(String id){
+	public HAPIdScriptGroup(String id){
 		this.m_id = id;
 	}
 	

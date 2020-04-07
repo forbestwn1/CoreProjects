@@ -7,7 +7,7 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdScriptGroup  extends HAPResourceIdSimple{
 
-	private HAPScriptGroupId m_scriptId; 
+	private HAPIdScriptGroup m_scriptId; 
 	
 	public HAPResourceIdScriptGroup(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_SCRIPTGROUP);    }
 
@@ -21,7 +21,7 @@ public class HAPResourceIdScriptGroup  extends HAPResourceIdSimple{
 		init(idLiterate, null);
 	}
 
-	public HAPResourceIdScriptGroup(HAPScriptGroupId scriptId){
+	public HAPResourceIdScriptGroup(HAPIdScriptGroup scriptId){
 		this();
 		init(null, null);
 		this.m_scriptId = scriptId;
@@ -31,10 +31,10 @@ public class HAPResourceIdScriptGroup  extends HAPResourceIdSimple{
 	@Override
 	protected void setId(String id){
 		super.setId(id);
-		this.m_scriptId = new HAPScriptGroupId(id);
+		this.m_scriptId = new HAPIdScriptGroup(id);
 	}
 
-	public HAPScriptGroupId getUIModuleId(){  return this.m_scriptId;	}
+	public HAPIdScriptGroup getUIModuleId(){  return this.m_scriptId;	}
 	
 	@Override
 	public HAPResourceIdScriptGroup clone(){

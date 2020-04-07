@@ -6,8 +6,8 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.expression.HAPManagerExpression;
-import com.nosliw.data.core.expression.HAPResourceDefinitionPluginExpressionGroup;
-import com.nosliw.data.core.expression.HAPResourceDefinitionPluginExpressionSuite;
+import com.nosliw.data.core.expression.HAPPluginResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.HAPPluginResourceDefinitionExpressionSuite;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
@@ -22,7 +22,7 @@ import com.nosliw.data.core.runtime.js.browser.HAPGatewayLoadTestExpression;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeProcessRhinoImp;
 import com.nosliw.data.core.script.expression.HAPManagerScript;
-import com.nosliw.data.core.script.expression.HAPResourceDefinitionPluginScriptGroup;
+import com.nosliw.data.core.script.expression.HAPPluginResourceDefinitionScriptGroup;
 import com.nosliw.data.core.service.provide.HAPGatewayService;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.template.HAPManagerTemplate;
@@ -100,9 +100,9 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression());
 
 		//resource definition plugin
-		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginExpressionSuite(this.getExpressionManager().getExpressionParser()));
-		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginExpressionGroup(this.getResourceDefinitionManager()));
-		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginScriptGroup(this.getExpressionManager().getExpressionParser()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionSuite(this.getExpressionManager().getExpressionParser()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionGroup(this.getResourceDefinitionManager()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionScriptGroup(this.getExpressionManager().getExpressionParser()));
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginPage(this.m_uiResourceManager.getUIResourceParser()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginModule(this.m_uiResourceManager.getModuleParser()));

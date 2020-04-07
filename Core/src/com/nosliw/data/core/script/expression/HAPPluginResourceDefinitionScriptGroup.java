@@ -13,11 +13,11 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
-public class HAPResourceDefinitionPluginScriptGroup implements HAPPluginResourceDefinition{
+public class HAPPluginResourceDefinitionScriptGroup implements HAPPluginResourceDefinition{
 
 	private HAPParserExpression m_expressionParser;
 	
-	public HAPResourceDefinitionPluginScriptGroup(HAPParserExpression expressionParser) {
+	public HAPPluginResourceDefinitionScriptGroup(HAPParserExpression expressionParser) {
 		this.m_expressionParser = expressionParser;
 	}
 	
