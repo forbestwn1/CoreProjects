@@ -92,7 +92,7 @@ var node_createExpressionService = function(){
 		_.each(expressionItems, function(expressionItem, name){
 			//find variable value only for this expression
 			var expVariables = {};
-			_.each(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONITEM_VARIABLEINFOS], function(varInfo, name){
+			_.each(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS], function(varInfo, name){
 				expVariables[name] = variables[name];
 			});
 			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, expVariables, {}, {}));

@@ -5,8 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
@@ -20,7 +18,6 @@ import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.script.context.HAPContext;
 
-@HAPEntityWithAttribute(baseName="EXPRESSION")
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
 
 	private String m_id;
@@ -29,21 +26,21 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	
 	private Map<String, HAPVariableInfo> m_localVarsInfo;
 
-	private Map<String, HAPExecutableExpressionItem> m_expressionItem;
-	
+	private Map<String, HAPExecutableExpression> m_expressionItem;
+	 
 	public HAPExecutableExpressionGroupInSuite(String id) {
-		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpressionItem>();
+		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpression>();
 		this.m_id = id;
 		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 	}
 	
 	@Override
 	public void addExpression(String name, HAPOperandWrapper operand) {
-		this.m_expressionItem.put(name, new HAPExecutableExpressionItem(operand.cloneWrapper()));
+		this.m_expressionItem.put(name, new HAPExecutableExpression(operand.cloneWrapper()));
 	}
 
 	@Override
-	public Map<String, HAPExecutableExpressionItem> getExpressionItems(){
+	public Map<String, HAPExecutableExpression> getExpressionItems(){
 		return this.m_expressionItem;
 	}
 

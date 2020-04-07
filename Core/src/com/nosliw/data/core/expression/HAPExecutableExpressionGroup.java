@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.script.context.HAPContext;
 
 //entity that can is runnable within runtime environment
-@HAPEntityWithAttribute(baseName="EXPRESSION")
+@HAPEntityWithAttribute(baseName="EXPRESSIONGROUP")
 public interface HAPExecutableExpressionGroup extends HAPSerializable, HAPExecutable{
 
 	@HAPAttribute
@@ -32,7 +32,7 @@ public interface HAPExecutableExpressionGroup extends HAPSerializable, HAPExecut
 	Map<String, HAPVariableInfo> getVarsInfo();
 
 	void addExpression(String name, HAPOperandWrapper operand);
-	Map<String, HAPExecutableExpressionItem> getExpressionItems();
+	Map<String, HAPExecutableExpression> getExpressionItems();
 	
 	void updateVariableName(HAPUpdateName nameUpdate);
 	

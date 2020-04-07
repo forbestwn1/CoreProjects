@@ -29,7 +29,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAsso
 import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 
 @HAPEntityWithAttribute
-public class HAPExecutableExpressionItem extends HAPExecutableImp{
+public class HAPExecutableExpression extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String OPERAND = "operand";
@@ -46,7 +46,7 @@ public class HAPExecutableExpressionItem extends HAPExecutableImp{
 	
 	private Map<String, HAPVariableInfo> m_varInfos;
 	
-	public HAPExecutableExpressionItem(HAPOperandWrapper operand) {
+	public HAPExecutableExpression(HAPOperandWrapper operand) {
 		this.m_operand = operand;
 		this.m_varInfos = new LinkedHashMap<String, HAPVariableInfo>();
 	}

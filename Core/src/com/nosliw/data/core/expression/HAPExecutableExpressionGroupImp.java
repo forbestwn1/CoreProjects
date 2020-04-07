@@ -15,7 +15,7 @@ public abstract class HAPExecutableExpressionGroupImp extends HAPExecutableImp i
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		
-		Map<String, HAPExecutableExpressionItem> expressionItems = this.getExpressionItems();
+		Map<String, HAPExecutableExpression> expressionItems = this.getExpressionItems();
 		for(String name : expressionItems.keySet()) {
 			dependency.addAll(expressionItems.get(name).getResourceDependency(runtimeInfo, resourceManager));
 		}

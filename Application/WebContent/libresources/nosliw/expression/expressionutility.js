@@ -43,7 +43,7 @@ var node_utility = function()
 	var loc_getExecuteExpressionRequest = function(expression, itemName, variables, constants, references, handlers, requestInfo){
 		//expression item
 		if(itemName==undefined || itemName=='')   itemName = node_COMMONCONSTANT.NAME_DEFAULT;
-		var expressionItem = expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_EXPRESSIONS][itemName];
+		var expressionItem = expression[node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS][itemName];
 		
 		return loc_getExecuteExpressionItemRequest(expressionItem, variables, constants, references, handlers, requestInfo);
 	};
@@ -52,9 +52,9 @@ var node_utility = function()
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
 
 		//execute operand
-		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONITEM_OPERAND], variables, constants, references, {
+		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_OPERAND], variables, constants, references, {
 			success : function(requestInfo, operandResult){
-				var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONITEM_OUTPUTMATCHERS];
+				var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_OUTPUTMATCHERS];
 				if(outputMatchers!=undefined){
 					return node_expressionUtility.getMatchDataTaskRequest(operandResult, outputMatchers);
 				}

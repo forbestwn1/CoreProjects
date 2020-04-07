@@ -8,7 +8,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
-import com.nosliw.data.core.expression.HAPExecutableExpressionItem;
+import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
@@ -55,7 +55,7 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecute
 	@Override
 	public String getScriptFunction() {		return HAPRuntimeJSScriptUtility.buildScriptJSFunction(this.m_scriptGroup, this.m_scriptId);	}
 	@Override
-	public Map<String, HAPExecutableExpressionItem> getExpressionItems(){  return this.m_scriptGroup.getExpression().getExpressionItems(); }
+	public Map<String, HAPExecutableExpression> getExpressionItems(){  return this.m_scriptGroup.getExpression().getExpressionItems(); }
 	@Override
 	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 	@Override
