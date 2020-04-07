@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPUtilityDataComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.expression.HAPContextResourceExpressionGroup;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroupImp;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPManagerExpression;
@@ -20,8 +20,9 @@ import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.expression.expression.HAPProcessorScriptExpression;
 
-public class HAPProcessorScriptExpression {
+public class HAPProcessorScript {
 
 	public static HAPExecutableScriptGroup processScript(
 			HAPResourceDefinitionScriptGroup scriptGroupDef, 
@@ -44,34 +45,16 @@ public class HAPProcessorScriptExpression {
 		HAPUtilityComponent.mergeWithParentAttachment(expressionDef, scriptGroupDef.getAttachmentContainer());
 		expressionDef.setContextStructure(scriptGroupDef.getContextStructure());
 		
-		List<HAPResourceDefinitionScriptElement> scriptElements = scriptGroupDef.getElements();
+		List<HAPDefinitionScript> scriptElements = scriptGroupDef.getElements();
 		for(int i=0; i<scriptElements.size(); i++) {
-			HAPExecutableScript scriptExt = new HAPExecutableScript();
-			HAPResourceDefinitionScriptElement scriptEle = scriptElements.get(i);
-			scriptEle.cloneToEntityInfo(scriptExt);
-			List<Object> scriptSegs = scriptEle.getScript().getSegments();
-			for(int j=0; j<scriptSegs.size(); j++) {
-				Object scriptSeg = scriptSegs.get(j);
-				if(scriptSeg instanceof HAPDefinitionDataExpression) {
-					HAPDefinitionDataExpression expressionSeg = (HAPDefinitionDataExpression)scriptSeg;
-					HAPDefinitionExpression expressionItem = new HAPDefinitionExpression();
-					String expressionId = i+"_"+j;
-					expressionItem.setName(expressionId);
-					expressionItem.setOperand(expressionParser.parseExpression(expressionSeg.getExpression()));
-					expressionDef.addExpressionElement(expressionItem);
-					scriptExt.addSegment(new HAPExecutableScriptSegExpression(expressionId));
-				}
-				else if(scriptSeg instanceof HAPScriptInScriptExpression) {
-					HAPScriptInScriptExpression sSeg = (HAPScriptInScriptExpression)scriptSeg;
-					HAPExecutableScriptSegScript scriptSegExe = new HAPExecutableScriptSegScript(sSeg.getScript());
-					//update with constant value
-					Map<String, Object> cstValues = HAPUtilityDataComponent.buildConstantValue(scriptGroupDef.getAttachmentContainer());
-					scriptSegExe.updateConstantValue(cstValues);
-					
-					scriptExt.addSegment(scriptSegExe);
-				}
+			HAPDefinitionScript scriptDef = scriptElements.get(i);
+			HAPExecutableScript scriptExe = null;
+			
+			String type = scriptDef.getType();
+			if(HAPConstant.SCRIPT_TYPE_EXPRESSION.equals(type)) {
+				scriptExe = HAPProcessorScriptExpression.process(i+"", scriptDef, out.getConstantsValue(), expressionDef, expressionParser);
 			}
-			out.addScript(scriptExt);
+			out.addScript(scriptExe);
 		}
 		
 		HAPUtilityExpression.normalizeReference(expressionDef);

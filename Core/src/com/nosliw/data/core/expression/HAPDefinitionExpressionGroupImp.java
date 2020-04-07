@@ -21,7 +21,7 @@ public class HAPDefinitionExpressionGroupImp extends HAPWithAttachmentImp implem
 	@Override
 	public Map<String, HAPDefinitionExpression> getExpressions() {  return this.m_elements;  }  
 
-	public void addExpressionElement(HAPDefinitionExpression element) {   this.m_elements.put(element.getName(), element);   }
+	public void addExpression(HAPDefinitionExpression element) {   this.m_elements.put(element.getName(), element);   }
 
 	@Override
 	public HAPContextStructure getContextStructure() {   return this.m_context;  }

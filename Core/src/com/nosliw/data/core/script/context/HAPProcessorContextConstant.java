@@ -16,11 +16,11 @@ import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
-import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
-import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
-import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
-import com.nosliw.data.core.script.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPDefinitionScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.literate.HAPDefinitionEmbededScriptExpression;
 
 public class HAPProcessorContextConstant {
 
@@ -259,7 +259,7 @@ public class HAPProcessorContextConstant {
 				}
 				
 				//process expression in scriptExpression
-				HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(sciptExpressionDef, expProcessContext, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
+				HAPScriptExpression scriptExpression = HAPProcessorScript.processScriptExpression(sciptExpressionDef, expProcessContext, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 				
 				//execute script expression
 				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpression, null, expProcessContext.getConstants());

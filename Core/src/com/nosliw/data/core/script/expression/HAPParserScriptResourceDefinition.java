@@ -17,12 +17,11 @@ public class HAPParserScriptResourceDefinition {
 		for(int i=0; i<elementsArrayJson.length(); i++) {
 			JSONObject eleJsonObj = elementsArrayJson.getJSONObject(i);
 			if(HAPEntityInfoUtility.isEnabled(eleJsonObj)) {
-				HAPResourceDefinitionScriptElement element = new HAPResourceDefinitionScriptElement();
+				HAPDefinitionScript element = new HAPDefinitionScript();
 				element.buildObject(eleJsonObj, HAPSerializationFormat.JSON);
 				out.addElement(element);
 			}
 		}
-		
 		return out;
 	}
 	

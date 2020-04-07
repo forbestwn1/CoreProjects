@@ -625,4 +625,9 @@ public class HAPConstant {
 		public static final String ENTITYINFO_INFONAME_DISABLE = "disable";
 
 
+
+		public static final String SCRIPT_TYPE_EXPRESSION = "expression";
+		public static final String SCRIPT_TYPE_LITERATE = "literate";
+
+
 }

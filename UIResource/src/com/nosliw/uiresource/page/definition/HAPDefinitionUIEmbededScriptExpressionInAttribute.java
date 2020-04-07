@@ -1,6 +1,6 @@
 package com.nosliw.uiresource.page.definition;
 
-import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPDefinitionScriptExpression;
 
 public class HAPDefinitionUIEmbededScriptExpressionInAttribute extends HAPDefinitionUIEmbededScriptExpression{
 

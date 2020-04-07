@@ -8,4 +8,6 @@ public interface HAPDefinitionExpressionGroup extends HAPWithAttachment{
 
 	Map<String, HAPDefinitionExpression> getExpressions();
 	
+	void addExpression(HAPDefinitionExpression expression);
+
 }

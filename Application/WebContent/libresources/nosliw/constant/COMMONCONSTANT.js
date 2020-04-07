@@ -388,7 +388,9 @@ var COMMONCONSTANT=
   "PROCESSSUITE_ELEMENTTYPE_REFERENCE": "reference",
   "SEPERATOR_RESOURCEID_START": "___",
   "SEPERATOR_RESOURCEID_STRUCTURE": "_",
-  "ENTITYINFO_INFONAME_DISABLE": "disable"
+  "ENTITYINFO_INFONAME_DISABLE": "disable",
+  "SCRIPT_TYPE_EXPRESSION": "expression",
+  "SCRIPT_TYPE_LITERATE": "literate"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

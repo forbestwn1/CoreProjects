@@ -30,16 +30,16 @@ import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpressionAbstract;
-import com.nosliw.data.core.script.expression.HAPConstantInScript;
-import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
-import com.nosliw.data.core.script.expression.HAPExecutableScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptSeg;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptSegExpression;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptSegScript;
-import com.nosliw.data.core.script.expression.HAPScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
-import com.nosliw.data.core.script.expression.HAPVariableInScript;
+import com.nosliw.data.core.script.expression.expression.HAPConstantInScript;
+import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSeg;
+import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSegExpression;
+import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSegScript;
+import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPVariableInScript;
+import com.nosliw.data.core.script.expression.literate.HAPEmbededScriptExpression;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPRuntimeJSScriptUtility {
@@ -297,7 +297,7 @@ public class HAPRuntimeJSScriptUtility {
 		String constantsDataParmName = "constantsData"; 
 		String variablesDataParmName = "variablesData"; 
 		
-		HAPExecutableScript script = scriptGroup.getScript(scriptId);
+		HAPExecutableScriptExpression script = (HAPExecutableScriptExpression)scriptGroup.getScript(scriptId);
 		
 		//build javascript function to execute the script
 		StringBuffer funScript = new StringBuffer();

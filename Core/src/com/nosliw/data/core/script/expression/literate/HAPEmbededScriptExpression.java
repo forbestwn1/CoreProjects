@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.expression;
+package com.nosliw.data.core.script.expression.literate;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -19,6 +19,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
+import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
 
 /**
  *  EmbededScriptExpression: a string which contains script expression

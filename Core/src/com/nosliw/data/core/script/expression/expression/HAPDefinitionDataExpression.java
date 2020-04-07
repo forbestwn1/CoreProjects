@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.expression;
+package com.nosliw.data.core.script.expression.expression;
 
 public class HAPDefinitionDataExpression {
 

@@ -19,8 +19,8 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
-import com.nosliw.data.core.script.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.HAPProcessorScript;
+import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
 public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
@@ -48,7 +48,7 @@ public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());
-		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(switchActDef.getExpression(), out.getScriptExpressionProcessContext(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
+		HAPScriptExpression scriptExpression = HAPProcessorScript.processScriptExpression(switchActDef.getExpression(), out.getScriptExpressionProcessContext(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 		out.setScriptExpression(scriptExpression);
 
 		//merge discovered variable in activity back to process variable

@@ -28,8 +28,8 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParserContext;
-import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
-import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPDefinitionScriptExpression;
+import com.nosliw.data.core.script.expression.literate.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 

@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityBranch;
-import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPDefinitionScriptExpression;
 
 public class HAPSwitchActivityDefinition extends HAPDefinitionActivityBranch{
 

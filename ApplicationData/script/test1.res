@@ -161,6 +161,7 @@
 				"disable" : ""
 			},
 			"name": "test1",
+			"type": "expression",
 			"description": "without expression",
 			"script" : "#|?(business)?.a.aa.subString(from:?(fromVar)?,to:?(toVar)?)|#.value=='s isfff'?'red':'blue'",
 		},
@@ -170,6 +171,7 @@
 				"disable" : ""
 			},
 			"name": "test2",
+			"type": "expression",
 			"description": "with referred expression",
 			"script" : "#|!(test.string)!.subString(<(expression1)>,from:?(fromVar)?,to:?(toVar)?)|#.value=='s isfff'?'red':'blue'",
 		},
@@ -179,12 +181,14 @@
 				"disable" : ""
 			},
 			"name": "test3",
+			"type": "expression",
 			"description": "with constant data in expression",
 			"script" : "#|!(test.string)!.subString(?(business)?.a.aa,from:&(fromConstant)&,to:?(toVar)?)|#.value=='s isfff'?'red':'blue'+&(fromConstant)&.value",
 		},
 		{
 			"id": "test4",
 			"name": "test4",
+			"type": "expression",
 			"description": "script only",
 			"script" : "(&(fromConstant)&.value+&(constantValueInteger)&)+&(constantValueString)&",
 		},

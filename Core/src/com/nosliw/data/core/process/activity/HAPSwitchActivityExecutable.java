@@ -18,7 +18,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
-import com.nosliw.data.core.script.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
 
 public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 

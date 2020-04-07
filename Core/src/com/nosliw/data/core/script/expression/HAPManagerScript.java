@@ -51,7 +51,7 @@ public class HAPManagerScript {
 			}
 		}
 		
-		HAPExecutableScriptGroup out = HAPProcessorScriptExpression.processScript(scriptGroupDef, null, this.m_expressionMan.getExpressionParser(), m_expressionMan, configure, m_contextProcessRequirement, new HAPProcessTracker());
+		HAPExecutableScriptGroup out = HAPProcessorScript.processScript(scriptGroupDef, null, this.m_expressionMan.getExpressionParser(), m_expressionMan, configure, m_contextProcessRequirement, new HAPProcessTracker());
 		return out;
 	}
 }

@@ -9,9 +9,9 @@ import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededExpression;
 import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
-import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
-import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
-import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.HAPProcessorScript;
+import com.nosliw.data.core.script.expression.literate.HAPDefinitionEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.literate.HAPEmbededScriptExpression;
 
 public class HAPProcessorContextSolidate {
 
@@ -65,7 +65,7 @@ public class HAPProcessorContextSolidate {
 				HAPDataWrapper constantData = HAPUtilityData.buildDataWrapperFromObject(constants.get(constantName));
 				if(constantData!=null)   expProcessContext.addConstant(constantName, constantData);
 			}
-			HAPEmbededScriptExpression embededScriptExp = HAPProcessorScriptExpression.processEmbededScriptExpression(embededScriptExpDef, expProcessContext, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
+			HAPEmbededScriptExpression embededScriptExp = HAPProcessorScript.processEmbededScriptExpression(embededScriptExpDef, expProcessContext, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 			HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(embededScriptExp, null, constants);
 			HAPServiceData serviceData = contextProcessRequirement.runtime.executeTaskSync(task);
 			if(serviceData.isSuccess())   return (String)serviceData.getData();
