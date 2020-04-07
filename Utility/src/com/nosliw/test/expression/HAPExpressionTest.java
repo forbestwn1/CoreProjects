@@ -4,9 +4,9 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
-import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -25,9 +25,9 @@ public class HAPExpressionTest {
 			
 			HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 			
-			HAPResourceDefinitionExpression expressionDef = runtimeEnvironment.getExpressionManager().getExpressionDefinition(resourceId, null);
+			HAPResourceDefinitionExpressionGroup expressionDef = runtimeEnvironment.getExpressionManager().getExpressionDefinition(resourceId, null);
 			
-			HAPExecutableExpression expressionExe = runtimeEnvironment.getExpressionManager().getExpression(resourceId, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+			HAPExecutableExpressionGroup expressionExe = runtimeEnvironment.getExpressionManager().getExpression(resourceId, null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null));
 
 			Map<String, Object> input = HAPAttachmentUtility.getTestValueFromAttachment(expressionDef, testData);
 

@@ -6,11 +6,11 @@ import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceDefinitionPluginExpression implements HAPPluginResourceDefinition{
+public class HAPResourceDefinitionPluginExpressionGroup implements HAPPluginResourceDefinition{
 
 	private HAPManagerResourceDefinition m_resourceDefMan;
 	
-	public HAPResourceDefinitionPluginExpression(HAPManagerResourceDefinition resourceDefMan) {
+	public HAPResourceDefinitionPluginExpressionGroup(HAPManagerResourceDefinition resourceDefMan) {
 		this.m_resourceDefMan = resourceDefMan;
 	}
 	
@@ -22,7 +22,7 @@ public class HAPResourceDefinitionPluginExpression implements HAPPluginResourceD
 		HAPResourceIdExpression expressionResourceId = new HAPResourceIdExpression(resourceId);
 		HAPResourceIdSimple expressionSuiteResourceId = expressionResourceId.getExpressionSuiteResourceId();
 		HAPResourceDefinitionExpressionSuite expressionSuiteDef = (HAPResourceDefinitionExpressionSuite)this.m_resourceDefMan.getResourceDefinition(expressionSuiteResourceId);
-		return new HAPResourceDefinitionExpression(expressionSuiteDef, expressionResourceId.getExpressionId().getExpressionId());
+		return new HAPResourceDefinitionExpressionGroup(expressionSuiteDef, expressionResourceId.getExpressionId().getExpressionGroupId());
 	}
 
 	@Override

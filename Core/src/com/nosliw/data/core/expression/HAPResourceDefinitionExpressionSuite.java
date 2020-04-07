@@ -35,6 +35,6 @@ public class HAPResourceDefinitionExpressionSuite extends HAPResourceDefinitionC
 	}
 
 	@Override
-	public HAPResourceDefinition getElementResourceDefinition(String eleName) {  return new HAPResourceDefinitionExpression(this, eleName);  }
+	public HAPResourceDefinition getElementResourceDefinition(String eleName) {  return new HAPResourceDefinitionExpressionGroup(this, eleName);  }
 	
 }

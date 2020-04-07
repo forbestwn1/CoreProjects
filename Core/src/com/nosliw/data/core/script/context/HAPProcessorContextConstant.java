@@ -11,8 +11,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
-import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
@@ -235,7 +235,7 @@ public class HAPProcessorContextConstant {
 				Set<String> expConstantNames = new HashSet<String>();
 				Set<String> scriptConstantNames = new HashSet<String>();
 				for(Object uiExpEle : sciptExpressionDef.getSegments()){
-					if(uiExpEle instanceof HAPResourceDefinitionExpression)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPResourceDefinitionExpression)uiExpEle).getOperand()));
+					if(uiExpEle instanceof HAPResourceDefinitionExpressionGroup)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPResourceDefinitionExpressionGroup)uiExpEle).getOperand()));
 					else if(uiExpEle instanceof HAPScriptInScriptExpression)		scriptConstantNames.addAll(((HAPScriptInScriptExpression)uiExpEle).getConstantNames());
 				}
 				
@@ -259,7 +259,7 @@ public class HAPProcessorContextConstant {
 				}
 				
 				//process expression in scriptExpression
-				HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(sciptExpressionDef, expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
+				HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(sciptExpressionDef, expProcessContext, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 				
 				//execute script expression
 				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpression, null, expProcessContext.getConstants());

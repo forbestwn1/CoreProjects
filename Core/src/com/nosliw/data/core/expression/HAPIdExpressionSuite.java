@@ -2,11 +2,11 @@ package com.nosliw.data.core.expression;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 
-public class HAPExpressionSuiteId extends HAPSerializableImp{
+public class HAPIdExpressionSuite extends HAPSerializableImp{
 
 	private String m_id;
 	
-	public HAPExpressionSuiteId(String id){
+	public HAPIdExpressionSuite(String id){
 		this.m_id = id;
 	}
 	

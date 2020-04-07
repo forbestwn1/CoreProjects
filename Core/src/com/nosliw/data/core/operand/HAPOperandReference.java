@@ -16,7 +16,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -46,7 +46,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	//referred variable name ---- parent variable name
 	private Map<String, String> m_variableMapping;
 
-	private HAPExecutableExpression m_expression;
+	private HAPExecutableExpressionGroup m_expression;
 	
 	private String m_elementName;
 	
@@ -65,8 +65,8 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	public String getReferenceName(){  return this.m_referenceName;  }
 
-	public HAPExecutableExpression getReferedExpression() {   return this.m_expression;   }
-	public void setReferedExpression(HAPExecutableExpression expression) {   this.m_expression = expression;    }
+	public HAPExecutableExpressionGroup getReferedExpression() {   return this.m_expression;   }
+	public void setReferedExpression(HAPExecutableExpressionGroup expression) {   this.m_expression = expression;    }
 
 	public String getElementName() {   return this.m_elementName;   }
 	public void setElementName(String name) {   this.m_elementName = name;    }

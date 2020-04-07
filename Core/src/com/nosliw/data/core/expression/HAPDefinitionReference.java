@@ -23,19 +23,19 @@ public class HAPDefinitionReference extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String INPUTMAPPING = "inputMapping";
 
-	private HAPResourceId m_resourceId;
+	private HAPResourceId m_groupExprssionResourceId;
 	
-	private String m_elementName;
+	private String m_groupElementName;
 	
 	private HAPDefinitionDataAssociation m_inputMapping;
 	
-	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
-	public void setResourceId(HAPResourceId resourceId) {    this.m_resourceId = resourceId;     }
+	public HAPResourceId getResourceId() {   return this.m_groupExprssionResourceId;   }
+	public void setResourceId(HAPResourceId resourceId) {    this.m_groupExprssionResourceId = resourceId;     }
 	
-	public String getElementName() {   return this.m_elementName;    }
+	public String getElementName() {   return this.m_groupElementName;    }
 	public void setElementName(String name) {    
-		this.m_elementName = name;    
-		if(HAPBasicUtility.isStringEmpty(this.m_elementName))   this.m_elementName = HAPConstant.NAME_DEFAULT;
+		this.m_groupElementName = name;    
+		if(HAPBasicUtility.isStringEmpty(this.m_groupElementName))   this.m_groupElementName = HAPConstant.NAME_DEFAULT;
 	}
 	
 	public HAPDefinitionDataAssociation getInputMapping() {   return this.m_inputMapping;    }
@@ -49,8 +49,8 @@ public class HAPDefinitionReference extends HAPEntityInfoWritableImp{
 	public HAPDefinitionReference cloneReferenceDefinition() {
 		HAPDefinitionReference out = new HAPDefinitionReference();
 		if(this.m_inputMapping!=null)  out.m_inputMapping = this.m_inputMapping.cloneDataAssocation();
-		out.m_resourceId = this.m_resourceId.clone();
-		out.m_elementName = this.m_elementName; 
+		out.m_groupExprssionResourceId = this.m_groupExprssionResourceId.clone();
+		out.m_groupElementName = this.m_groupElementName; 
 		return out;
 	}
 	
@@ -62,7 +62,7 @@ public class HAPDefinitionReference extends HAPEntityInfoWritableImp{
 
 		setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(jsonObj.optJSONObject(INPUTMAPPING)));
 		
-		this.m_resourceId = HAPResourceIdFactory.newInstance(jsonObj.opt(RESOURCEID));
+		this.m_groupExprssionResourceId = HAPResourceIdFactory.newInstance(jsonObj.opt(RESOURCEID));
 		
 		setElementName(jsonObj.optString(ELEMENTNAME));
 		

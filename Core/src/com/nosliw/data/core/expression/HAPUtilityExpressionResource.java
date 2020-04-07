@@ -25,7 +25,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 public class HAPUtilityExpressionResource {
 
 	public static HAPResourceId buildResourceId(String suiteId, String expressionId) {
-		return new HAPResourceIdExpression(new HAPExpressionId(suiteId, expressionId));
+		return new HAPResourceIdExpression(new HAPIdExpressionGroup(suiteId, expressionId));
 	}
 	
 	/**
@@ -33,15 +33,15 @@ public class HAPUtilityExpressionResource {
 	 * @param expression
 	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecutableExpression> expressions, HAPResourceManagerRoot resourceMan, HAPRuntimeInfo runtimeInfo) {
+	static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecutableExpressionGroup> expressions, HAPResourceManagerRoot resourceMan, HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-		for(HAPExecutableExpression expression : expressions){
+		for(HAPExecutableExpressionGroup expression : expressions){
 			resourceIds.addAll(discoverResources(expression));
 		}
 		return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds), runtimeInfo);
 	}
 
-	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableExpression expressions){
+	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableExpressionGroup expressions){
 		Set<HAPResourceIdSimple> result = new LinkedHashSet<HAPResourceIdSimple>();
 		Map<String, HAPExecutableExpressionItem> items = expressions.getExpressionItems();
 		for(String name : items.keySet()) {

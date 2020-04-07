@@ -8,7 +8,7 @@ import com.nosliw.data.core.resource.HAPResourceIdSupplement;
 
 public class HAPResourceIdExpressionSuite  extends HAPResourceIdSimple{
 
-	private HAPExpressionSuiteId m_expressionSuiteId; 
+	private HAPIdExpressionSuite m_expressionSuiteId; 
 	
 	public HAPResourceIdExpressionSuite(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSIONSUITE);  }
 
@@ -22,7 +22,7 @@ public class HAPResourceIdExpressionSuite  extends HAPResourceIdSimple{
 		init(idLiterate, null);
 	}
 
-	public HAPResourceIdExpressionSuite(HAPExpressionSuiteId expressionSuiteId){
+	public HAPResourceIdExpressionSuite(HAPIdExpressionSuite expressionSuiteId){
 		this();
 		init(null, null);
 		this.m_expressionSuiteId = expressionSuiteId;
@@ -37,10 +37,10 @@ public class HAPResourceIdExpressionSuite  extends HAPResourceIdSimple{
 	@Override
 	protected void setId(String id){
 		super.setId(id);
-		this.m_expressionSuiteId = new HAPExpressionSuiteId(id);
+		this.m_expressionSuiteId = new HAPIdExpressionSuite(id);
 	}
 
-	public HAPExpressionSuiteId getExpressionSuiteId(){  return this.m_expressionSuiteId;	}
+	public HAPIdExpressionSuite getExpressionSuiteId(){  return this.m_expressionSuiteId;	}
 	
 	@Override
 	public HAPResourceIdExpressionSuite clone(){

@@ -10,19 +10,21 @@ import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementEntityImpComponent;
 
-public class HAPDefinitionExpressionSuiteElementEntity extends HAPResourceDefinitionContainerElementEntityImpComponent{
+public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity extends HAPResourceDefinitionContainerElementEntityImpComponent implements HAPDefinitionExpressionGroup{
 
 	@HAPAttribute
 	public static String ELEMENT = "element";
 
-	private Map<String, HAPDefinitionExpressionSuiteElementEntityExpression> m_element;
+	private Map<String, HAPDefinitionExpression> m_element;
 	
-	public HAPDefinitionExpressionSuiteElementEntity() {
-		this.m_element = new LinkedHashMap<String, HAPDefinitionExpressionSuiteElementEntityExpression>();
+	public HAPDefinitionResourceDefinitionExpressionSuiteElementEntity() {
+		this.m_element = new LinkedHashMap<String, HAPDefinitionExpression>();
 	}
 	
-	public Map<String, HAPDefinitionExpressionSuiteElementEntityExpression> getExpressions(){   return this.m_element;   }
-	public void addExpression(HAPDefinitionExpressionSuiteElementEntityExpression expression) {
+	@Override
+	public Map<String, HAPDefinitionExpression> getExpressions(){   return this.m_element;   }
+
+	public void addExpression(HAPDefinitionExpression expression) {
 		String name = expression.getName();
 		if(HAPBasicUtility.isStringEmpty(name)) name = HAPConstant.NAME_DEFAULT;
 		this.m_element.put(name, expression);    
@@ -33,7 +35,7 @@ public class HAPDefinitionExpressionSuiteElementEntity extends HAPResourceDefini
 
 	@Override
 	public HAPResourceDefinitionContainerElement cloneResourceDefinitionContainerElement() {
-		HAPDefinitionExpressionSuiteElementEntity out = new HAPDefinitionExpressionSuiteElementEntity();
+		HAPDefinitionResourceDefinitionExpressionSuiteElementEntity out = new HAPDefinitionResourceDefinitionExpressionSuiteElementEntity();
 		this.cloneToResourceDefinitionContainerElementEntityImpComponent(out);
 		for(String name : this.m_element.keySet()) {
 			out.m_element.put(name, this.m_element.get(name).cloneDefinitionExpressionSuiteElementEntityExpression());

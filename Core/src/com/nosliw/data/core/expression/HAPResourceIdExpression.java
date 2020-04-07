@@ -7,7 +7,7 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdExpression  extends HAPResourceIdSimple{
 
-	private HAPExpressionId m_expressionId; 
+	private HAPIdExpressionGroup m_expressionId; 
 	
 	public HAPResourceIdExpression(){    super(HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION);     }
 
@@ -21,7 +21,7 @@ public class HAPResourceIdExpression  extends HAPResourceIdSimple{
 		init(idLiterate, null);
 	}
 
-	public HAPResourceIdExpression(HAPExpressionId expressionId){
+	public HAPResourceIdExpression(HAPIdExpressionGroup expressionId){
 		this();
 		init(null, null);
 		this.m_expressionId = expressionId;
@@ -31,13 +31,13 @@ public class HAPResourceIdExpression  extends HAPResourceIdSimple{
 	@Override
 	protected void setId(String id){
 		super.setId(id);
-		this.m_expressionId = new HAPExpressionId(id);
+		this.m_expressionId = new HAPIdExpressionGroup(id);
 	}
 
-	public HAPExpressionId getExpressionId(){  return this.m_expressionId;	}
+	public HAPIdExpressionGroup getExpressionId(){  return this.m_expressionId;	}
 	
 	public HAPResourceIdExpressionSuite getExpressionSuiteResourceId() {
-		HAPExpressionId expressionId = this.getExpressionId();
+		HAPIdExpressionGroup expressionId = this.getExpressionId();
 		HAPResourceIdExpressionSuite out = new HAPResourceIdExpressionSuite(expressionId.getSuiteId(), this.getSupplement());
 		return out;
 	}

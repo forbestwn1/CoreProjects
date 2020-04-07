@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateNamePrefix;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -125,8 +125,8 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 	public String getScriptExpressionIdByIndex(int index) {		return this.m_indexToId.get(index);	}
 	
 	public Map<String, HAPScriptExpression> getScriptExpressions(){  return this.m_scriptExpressions;  }
-	public Map<String, HAPExecutableExpression> getExpressions(){
-		Map<String, HAPExecutableExpression> out = new LinkedHashMap<String, HAPExecutableExpression>();
+	public Map<String, HAPExecutableExpressionGroup> getExpressions(){
+		Map<String, HAPExecutableExpressionGroup> out = new LinkedHashMap<String, HAPExecutableExpressionGroup>();
 		for(HAPScriptExpression scriptExpression : this.m_scriptExpressions.values()){
 			out.putAll(scriptExpression.getExpressions());
 		}

@@ -8,7 +8,7 @@ import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 /**
  * Utility to build expression process configure
  */
-public class HAPExpressionProcessConfigureUtil {
+public class HAPUtilityExpressionProcessConfigure {
 
 	public static final String CONFIGURE_DISCOVERY = "discovery";
 	
@@ -39,6 +39,4 @@ public class HAPExpressionProcessConfigureUtil {
 		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
 		return out;
 	}
-
-
 }

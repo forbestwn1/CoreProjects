@@ -25,9 +25,9 @@ import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
-import com.nosliw.data.core.expression.HAPExecutableExpressionImp;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroupImp;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -43,7 +43,7 @@ public class HAPRhinoRuntimeUtility {
 	private static int index = 1;
 	
 	public static HAPData executeOperandSync(HAPOperandWrapper operand, Map<String, HAPData> parms, Map<String, HAPData> referenceValues, HAPRuntime runtime, HAPResourceManagerRoot resourceManager) {
-		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecutableExpressionImp() {
+		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecutableExpressionGroupImp() {
 			@Override
 			public HAPOperandWrapper getOperand() {  return operand;  }
 
@@ -51,7 +51,7 @@ public class HAPRhinoRuntimeUtility {
 			public String toStringValue(HAPSerializationFormat format) {
 				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
 				Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
-				HAPExecutableExpression.buildJsonMap(this, outJsonMap, typeJsonMap);
+				HAPExecutableExpressionGroup.buildJsonMap(this, outJsonMap, typeJsonMap);
 				return HAPJsonUtility.buildMapJson(outJsonMap, typeJsonMap);
 			}
 
@@ -85,7 +85,7 @@ public class HAPRhinoRuntimeUtility {
 			}
 
 			@Override
-			public HAPResourceDefinitionExpression getDefinition() {
+			public HAPResourceDefinitionExpressionGroup getDefinition() {
 				// TODO Auto-generated method stub
 				return null;
 			}

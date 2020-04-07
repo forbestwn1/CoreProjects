@@ -15,11 +15,11 @@ import com.nosliw.data.core.resource.HAPResourceUtility;
 
 public class HAPUtilityExpression {
 
-	public static HAPUpdateName getUpdateExpressionVariableName(HAPExecutableExpression expression) {
+	public static HAPUpdateName getUpdateExpressionVariableName(HAPExecutableExpressionGroup expression) {
 		return new HAPUpdateNamePrefix(expression.getId()+"_");
 	}
 	
-	public static String getBeforeUpdateName(HAPExecutableExpression expression, String name) {
+	public static String getBeforeUpdateName(HAPExecutableExpressionGroup expression, String name) {
 		return name.substring((expression.getId()+"_").length());
 	}
 
@@ -28,8 +28,8 @@ public class HAPUtilityExpression {
 		for(String name : elements.keySet()) {
 			HAPResourceDefinitionContainerElement element = elements.get(name);
 			if(element.getType().equals(HAPResourceDefinitionContainerElement.TYPE_ENTITY)) {
-				HAPDefinitionExpressionSuiteElementEntity expressionEle = (HAPDefinitionExpressionSuiteElementEntity)element;
-				Map<String, HAPDefinitionExpressionSuiteElementEntityExpression> expressions = expressionEle.getExpressions();
+				HAPDefinitionResourceDefinitionExpressionSuiteElementEntity expressionEle = (HAPDefinitionResourceDefinitionExpressionSuiteElementEntity)element;
+				Map<String, HAPDefinitionExpression> expressions = expressionEle.getExpressions();
 				for(String expName : expressions.keySet()) {
 					normalizeReference(expressions.get(expName));
 				}
@@ -37,15 +37,15 @@ public class HAPUtilityExpression {
 		}
 	}
 	
-	public static void normalizeReference(HAPDefinitionExpression expressionDef) {
-		Map<String, HAPDefinitionExpressionSuiteElementEntityExpression> elements = expressionDef.getExpressionElements();
+	public static void normalizeReference(HAPDefinitionExpressionGroup expressionDef) {
+		Map<String, HAPDefinitionExpression> elements = expressionDef.getExpressions();
 		for(String name : elements.keySet()) {
-			HAPDefinitionExpressionSuiteElementEntityExpression element = elements.get(name);
+			HAPDefinitionExpression element = elements.get(name);
 			normalizeReference(element);
 		}
 	}
 	
-	public static void normalizeReference(HAPDefinitionExpressionSuiteElementEntityExpression expressionEntity) {
+	public static void normalizeReference(HAPDefinitionExpression expressionEntity) {
 		HAPOperandUtility.processAllOperand(expressionEntity.getOperand(), null, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
-import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
+import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
@@ -27,7 +27,7 @@ public class HAPScriptTest {
 			
 			HAPResourceDefinitionScriptGroup scriptGroupDef = runtimeEnvironment.getScriptManager().getScriptDefinition(resourceId, null);
 			
-			HAPExecutableScriptGroup scriptExe = runtimeEnvironment.getScriptManager().getScript(resourceId, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+			HAPExecutableScriptGroup scriptExe = runtimeEnvironment.getScriptManager().getScript(resourceId, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null));
 
 			Map<String, Object> input = HAPAttachmentUtility.getTestValueFromAttachment(scriptGroupDef, testData);
 

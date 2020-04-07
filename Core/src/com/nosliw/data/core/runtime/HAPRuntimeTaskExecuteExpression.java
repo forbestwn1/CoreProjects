@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 
 @HAPEntityWithAttribute
 public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
@@ -24,7 +24,7 @@ public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
 	public static String VARIABLESVALUE = "variablesValue";
 
 	
-	private HAPExecutableExpression m_expression;
+	private HAPExecutableExpressionGroup m_expression;
 	
 	private String m_itemName;
 	
@@ -32,7 +32,7 @@ public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
 
 	private Map<String, HAPData> m_referencesValue;
 	
-	public HAPRuntimeTaskExecuteExpression(HAPExecutableExpression expression, String itemName, Map<String, Object> variablesValue, Map<String, HAPData> referencesValue){
+	public HAPRuntimeTaskExecuteExpression(HAPExecutableExpressionGroup expression, String itemName, Map<String, Object> variablesValue, Map<String, HAPData> referencesValue){
 		this.m_expression = expression;
 		this.m_itemName = itemName;
 		if(HAPBasicUtility.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstant.NAME_DEFAULT;
@@ -40,7 +40,7 @@ public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
 		this.m_referencesValue = referencesValue;
 	}
 	
-	public HAPExecutableExpression getExpression(){return this.m_expression;}
+	public HAPExecutableExpressionGroup getExpression(){return this.m_expression;}
 	
 	public String getItemName() {    return this.m_itemName;   }
 	

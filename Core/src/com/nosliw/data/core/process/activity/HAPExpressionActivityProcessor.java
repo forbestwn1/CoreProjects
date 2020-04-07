@@ -8,8 +8,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
-import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.process.HAPBuilderResultContext;
 import com.nosliw.data.core.process.HAPContextProcessor;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
@@ -59,7 +59,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());
-		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(definition.getExpression(), out.getScriptExpressionProcessContext(), HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
+		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(definition.getExpression(), out.getScriptExpressionProcessContext(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 		out.setScriptExpression(scriptExpression);
 
 		//merge discovered variable in activity back to process variable
@@ -85,7 +85,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 				HAPScriptExpression scriptExpression = expressionActExt.getScriptExpression();
 				if(scriptExpression.isDataExpression()) {
 					//if script expression is data expression only, then affect result
-					HAPExecutableExpression expExe = scriptExpression.getExpressions().values().iterator().next();
+					HAPExecutableExpressionGroup expExe = scriptExpression.getExpressions().values().iterator().next();
 					HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
 					out.addElement(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(outputCriteria)));
 				}

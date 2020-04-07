@@ -42,31 +42,31 @@ public class HAPManagerExpression {
 		return suiteDef;
 	}
 
-	public HAPResourceDefinitionExpression getExpressionDefinition(HAPResourceId expressionId, HAPAttachmentContainer parentAttachment) {
-		HAPResourceDefinitionExpression expressionDef = (HAPResourceDefinitionExpression)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(expressionId, parentAttachment);
+	public HAPResourceDefinitionExpressionGroup getExpressionDefinition(HAPResourceId expressionId, HAPAttachmentContainer parentAttachment) {
+		HAPResourceDefinitionExpressionGroup expressionDef = (HAPResourceDefinitionExpressionGroup)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(expressionId, parentAttachment);
 		return expressionDef;
 	}
 	
 	public HAPEntityWithResourceContext getExpressionDefinitionWithContext(HAPResourceId processId, HAPAttachmentContainer parentAttachment) {
-		HAPResourceDefinitionExpression expressionDef = this.getExpressionDefinition(processId, parentAttachment);
-		HAPEntityWithResourceContext out = new HAPEntityWithResourceContext(expressionDef, HAPContextExpression.createContext(expressionDef.getSuite(), this.m_resourceDefManager));
+		HAPResourceDefinitionExpressionGroup expressionDef = this.getExpressionDefinition(processId, parentAttachment);
+		HAPEntityWithResourceContext out = new HAPEntityWithResourceContext(expressionDef, HAPContextResourceExpressionGroup.createContext(expressionDef.getSuite(), this.m_resourceDefManager));
 		return out;
 	}
 
-	public HAPExecutableExpression getExpression(HAPResourceId expressionId, HAPContextExpression context, Map<String, String> configure) {
-		if(context==null)  context = HAPContextExpression.createContext(this.m_resourceDefManager);
+	public HAPExecutableExpressionGroup getExpression(HAPResourceId expressionId, HAPContextResourceExpressionGroup context, Map<String, String> configure) {
+		if(context==null)  context = HAPContextResourceExpressionGroup.createContext(this.m_resourceDefManager);
 		HAPEntityWithResourceContext resourceDefWithContext = context.getResourceDefinition(expressionId);
 		
 		if(configure==null) {
 			//build configure from definition info
-			HAPResourceDefinitionExpression expressionDef = (HAPResourceDefinitionExpression)resourceDefWithContext.getEntity();
+			HAPResourceDefinitionExpressionGroup expressionDef = (HAPResourceDefinitionExpressionGroup)resourceDefWithContext.getEntity();
 			configure = new LinkedHashMap<String, String>();
 			for(String n : expressionDef.getInfo().getNames()) {
 				configure.put(n, (String)expressionDef.getInfo().getValue(n)); 
 			}
 		}
 		
-		HAPExecutableExpression out = HAPProcessorExpression.process(
+		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(
 				expressionId.toStringValue(HAPSerializationFormat.LITERATE), 
 				resourceDefWithContext, 
 				null, 

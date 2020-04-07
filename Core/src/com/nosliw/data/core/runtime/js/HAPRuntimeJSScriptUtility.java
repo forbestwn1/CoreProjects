@@ -17,7 +17,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPOperationParm;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteConverter;
@@ -347,7 +347,7 @@ public class HAPRuntimeJSScriptUtility {
 		StringBuffer funScript = new StringBuffer();
 		int i=0;
 		for(Object ele : scriptExpression.getElements()){
-			if(ele instanceof HAPExecutableExpression){
+			if(ele instanceof HAPExecutableExpressionGroup){
 				funScript.append(expressionsDataParmName+"[\""+scriptExpression.getIdByIndex(i)+"\"]");
 			}
 			else if(ele instanceof HAPScriptInScriptExpression){

@@ -10,8 +10,8 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPUtilityData;
+import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 
 @HAPEntityWithAttribute
 public class HAPServiceParm extends HAPEntityInfoWritableImp{
@@ -42,7 +42,7 @@ public class HAPServiceParm extends HAPEntityInfoWritableImp{
 			JSONObject objJson = (JSONObject)json;
 			super.buildObjectByJson(objJson);
 
-			this.m_criteria = HAPExpressionManager.criteriaParser.parseCriteria(objJson.getString(CRITERIA));
+			this.m_criteria = HAPCriteriaParser.getInstance().parseCriteria(objJson.getString(CRITERIA));
 			
 			JSONObject defaultJson = objJson.optJSONObject(DEFAULT);
 			if(defaultJson!=null)	this.m_default = HAPUtilityData.buildDataWrapperFromJson(defaultJson);

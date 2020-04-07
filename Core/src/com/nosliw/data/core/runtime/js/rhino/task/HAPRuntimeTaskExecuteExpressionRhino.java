@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -22,7 +22,7 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 	private HAPResourceManagerRoot m_resourceManager;
 	
 	public HAPRuntimeTaskExecuteExpressionRhino(
-			HAPExecutableExpression expression, 
+			HAPExecutableExpressionGroup expression, 
 			String itemName,
 			Map<String, Object> variablesValue, 
 			Map<String, HAPData> referencesValue,

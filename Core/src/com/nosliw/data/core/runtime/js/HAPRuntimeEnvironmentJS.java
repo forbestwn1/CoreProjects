@@ -3,6 +3,7 @@ package com.nosliw.data.core.runtime.js;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
@@ -50,6 +51,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	@HAPAttribute
 	public static final String GATEWAY_ERRORLOG = "errorLog";
 
+	private HAPDataTypeHelper m_dataTypeHelper;
+	
 	private HAPResourceManagerRoot m_resourceManager;
 	
 	private HAPManagerProcess m_processManager;
@@ -74,32 +77,36 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	public HAPRuntimeEnvironmentJS(){}
 	
-	public HAPRuntimeEnvironmentJS(HAPResourceManagerRoot resourceMan,
-									HAPManagerProcess processManager,
-									HAPRuntimeProcess processRuntime,
-									HAPManagerExpression expressionManager,
-									HAPManagerScript scriptManager,
-								    HAPGatewayManager gatewayManager,
-								    HAPManagerService serviceManager,
-								    HAPManagerTemplate templateManager,
-								    HAPManagerResourceDefinition resourceDefManager,
-								    HAPManagerCronJob cronJobManager,
-								    HAPRuntime runtime){
+	public HAPRuntimeEnvironmentJS(
+			HAPDataTypeHelper dataTypeHelper,
+			HAPResourceManagerRoot resourceMan,
+			HAPManagerProcess processManager,
+			HAPRuntimeProcess processRuntime,
+			HAPManagerExpression expressionManager,
+			HAPManagerScript scriptManager,
+		    HAPGatewayManager gatewayManager,
+		    HAPManagerService serviceManager,
+		    HAPManagerTemplate templateManager,
+		    HAPManagerResourceDefinition resourceDefManager,
+		    HAPManagerCronJob cronJobManager,
+		    HAPRuntime runtime){
 		super();
-		this.init(resourceMan, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, templateManager, resourceDefManager, cronJobManager, runtime);
+		this.init(dataTypeHelper, resourceMan, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, templateManager, resourceDefManager, cronJobManager, runtime);
 	}
 	
-	protected void init(HAPResourceManagerRoot resourceMan,
-						HAPManagerProcess processManager,
-						HAPRuntimeProcess processRuntime,
-						HAPManagerExpression expressionManager,
-						HAPManagerScript scriptManager,
-					    HAPGatewayManager gatewayManager,
-					    HAPManagerService serviceManager,
-					    HAPManagerTemplate templateManager,
-					    HAPManagerResourceDefinition resourceDefManager,
-					    HAPManagerCronJob cronJobManager,
-					    HAPRuntime runtime){ 
+	protected void init(
+				HAPDataTypeHelper dataTypeHelper,
+				HAPResourceManagerRoot resourceMan,
+				HAPManagerProcess processManager,
+				HAPRuntimeProcess processRuntime,
+				HAPManagerExpression expressionManager,
+				HAPManagerScript scriptManager,
+			    HAPGatewayManager gatewayManager,
+			    HAPManagerService serviceManager,
+			    HAPManagerTemplate templateManager,
+			    HAPManagerResourceDefinition resourceDefManager,
+			    HAPManagerCronJob cronJobManager,
+			    HAPRuntime runtime){ 
 		this.m_resourceManager = resourceMan;
 		this.m_processManager = processManager;
 		this.m_processRuntime = processRuntime;

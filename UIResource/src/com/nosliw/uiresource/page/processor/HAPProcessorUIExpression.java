@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
+import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
@@ -21,7 +21,7 @@ public class HAPProcessorUIExpression {
 		//process all embeded script expression
 		List<HAPEmbededScriptExpression> embededScriptExpressions = HAPUtilityExecutable.getEmbededScriptExpressionFromExeUnit(exeUnit);
 		for(HAPEmbededScriptExpression embededScriptExpression : embededScriptExpressions) {
-			HAPProcessorScriptExpression.processEmbededScriptExpression(embededScriptExpression, exeUnit.getExpressionContext(), HAPExpressionProcessConfigureUtil.setDoDiscovery(null), expressionManager, runtime);
+			HAPProcessorScriptExpression.processEmbededScriptExpression(embededScriptExpression, exeUnit.getExpressionContext(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), expressionManager, runtime);
 		}
 
 		//when a embeded in tag attribute turn out to be constant, then replace constant value with embeded  

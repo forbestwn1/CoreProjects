@@ -20,7 +20,6 @@ import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandUtility {
@@ -306,6 +305,7 @@ public class HAPOperandUtility {
 			Map<String, HAPVariableInfo> inVariablesInfo, 
 			Map<String, HAPVariableInfo> outVariablesInfo,
 			List<HAPMatchers> matchers,
+			HAPDataTypeHelper dataTypeHelper,
 			HAPProcessTracker processTracker) {
 		//do discovery on operand
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
@@ -319,7 +319,7 @@ public class HAPOperandUtility {
 			oldVarsInfo.putAll(varsInfo);
 			processTracker.clear();
 			for(int i=0; i<operands.size(); i++) {
-				matchers.add(operands.get(i).discover(varsInfo, expectOutputs.get(i), processTracker, HAPExpressionManager.dataTypeHelper));
+				matchers.add(operands.get(i).discover(varsInfo, expectOutputs.get(i), processTracker, dataTypeHelper));
 			}
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && processTracker.isSuccess());
 		outVariablesInfo.clear();

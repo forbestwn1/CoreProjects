@@ -14,7 +14,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -56,7 +56,7 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	
 	//expressions used in script expression
 	//element index ---- processed expression
-	private Map<String, HAPExecutableExpression> m_expressions;
+	private Map<String, HAPExecutableExpressionGroup> m_expressions;
 
 	private Map<Integer, String> m_indexToId;
 	
@@ -70,7 +70,7 @@ public class HAPScriptExpression extends HAPExecutableImp{
 
 	public HAPScriptExpression(){
 		this.m_elements = new ArrayList<Object>();
-		this.m_expressions = new LinkedHashMap<String, HAPExecutableExpression>();
+		this.m_expressions = new LinkedHashMap<String, HAPExecutableExpressionGroup>();
 		this.m_indexToId = new LinkedHashMap<Integer, String>();
 		this.m_isConstant = false;
 	}
@@ -82,7 +82,7 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	}
 	
 	public void updateExpressionId(HAPUpdateName update) {
-		Map<String, HAPExecutableExpression> expressions = new LinkedHashMap<String, HAPExecutableExpression>();
+		Map<String, HAPExecutableExpressionGroup> expressions = new LinkedHashMap<String, HAPExecutableExpressionGroup>();
 		for(String id : this.m_expressions.keySet()) 		expressions.put(update.getUpdatedName(id), this.m_expressions.get(id));
 		this.m_expressions.clear();
 		this.m_expressions.putAll(expressions);
@@ -96,9 +96,9 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	public void addElement(Object ele) {
 		int index = this.m_elements.size();
 		this.m_elements.add(ele);
-		if(ele instanceof HAPExecutableExpression) {
+		if(ele instanceof HAPExecutableExpressionGroup) {
 			String expId = index+"";
-			this.m_expressions.put(expId, (HAPExecutableExpression)ele);
+			this.m_expressions.put(expId, (HAPExecutableExpressionGroup)ele);
 			this.m_indexToId.put(index, expId);
 		}
 	}
@@ -109,7 +109,7 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	
 	public HAPDefinitionScriptExpression getDefinition(){  return this.m_definition;  } 
 
-	public Map<String, HAPExecutableExpression> getExpressions(){   return this.m_expressions;    }
+	public Map<String, HAPExecutableExpressionGroup> getExpressions(){   return this.m_expressions;    }
 	
 	public boolean isConstant(){  return this.m_isConstant;  }
 	public Object getValue(){  return this.m_value;  }
@@ -123,8 +123,8 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	public Set<String> getVariableNames(){ 
 		Set<String> out = new HashSet<String>();
 		for(Object ele : this.m_elements){
-			if(ele instanceof HAPExecutableExpression){
-				HAPExecutableExpression expExe = (HAPExecutableExpression)ele;
+			if(ele instanceof HAPExecutableExpressionGroup){
+				HAPExecutableExpressionGroup expExe = (HAPExecutableExpressionGroup)ele;
 				out.addAll(HAPOperandUtility.discoverVariables(expExe.getOperand()));
 			}
 			else if(ele instanceof HAPScriptInScriptExpression){
@@ -138,8 +138,8 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	public Set<String> getDataVariableNames(){
 		Set<String> out = new HashSet<String>();
 		for(Object ele : this.m_elements){
-			if(ele instanceof HAPExecutableExpression){
-				HAPExecutableExpression expExe = (HAPExecutableExpression)ele;
+			if(ele instanceof HAPExecutableExpressionGroup){
+				HAPExecutableExpressionGroup expExe = (HAPExecutableExpressionGroup)ele;
 				out.addAll(HAPOperandUtility.discoverVariables(expExe.getOperand()));
 			}
 		}
@@ -154,7 +154,7 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		for(HAPExecutableExpression exp : this.getExpressions().values()) {
+		for(HAPExecutableExpressionGroup exp : this.getExpressions().values()) {
 			out.addAll(exp.getResourceDependency(runtimeInfo, resourceManager));
 		}
 		return out;

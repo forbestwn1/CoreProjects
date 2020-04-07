@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -20,13 +21,7 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.script.context.HAPContext;
 
 @HAPEntityWithAttribute(baseName="EXPRESSION")
-public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
-
-	@HAPAttribute
-	public static String VARIABLEINFOS = "variableInfos";
-
-	@HAPAttribute
-	public static String EXPRESSIONS = "expressions";
+public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
 
 	private String m_id;
 	
@@ -36,7 +31,7 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 
 	private Map<String, HAPExecutableExpressionItem> m_expressionItem;
 	
-	public HAPExecutableExpressionInSuite(String id) {
+	public HAPExecutableExpressionGroupInSuite(String id) {
 		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpressionItem>();
 		this.m_id = id;
 		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
@@ -86,7 +81,7 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	}
 	
 	@Override
-	public void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPProcessTracker processTracker) {
+	public void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker) {
 		Map<String, HAPVariableInfo> discoveredVarsInf = new LinkedHashMap<String, HAPVariableInfo>();
 		List<String> names = new ArrayList<String>();
 		List<HAPOperand> operands = new ArrayList<HAPOperand>();
@@ -106,6 +101,7 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 				this.m_localVarsInfo,
 				discoveredVarsInf,
 				matchers,
+				dataTypeHelper,
 				processTracker);
 		
 		for(int i=0; i<names.size(); i++) {

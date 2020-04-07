@@ -39,8 +39,8 @@ public class HAPUtilityExpressionComponent {
 		HAPUtilityExpression.normalizeReference(suite);
 	}
 
-	private static HAPDefinitionExpressionSuiteElementEntity buildExpressionSuiteElementFromAttachment(HAPAttachment attachment, HAPParserExpression expressionParser) {
-		HAPDefinitionExpressionSuiteElementEntity out = null;
+	private static HAPDefinitionResourceDefinitionExpressionSuiteElementEntity buildExpressionSuiteElementFromAttachment(HAPAttachment attachment, HAPParserExpression expressionParser) {
+		HAPDefinitionResourceDefinitionExpressionSuiteElementEntity out = null;
 		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
 			out = HAPParserExpressionDefinition.parseExpressionSuiteElement(entityAttachment.getEntityJsonObj(), expressionParser);

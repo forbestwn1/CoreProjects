@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
@@ -49,7 +49,7 @@ public class HAPRuntimeTaskExecuteScriptExpression1 extends HAPRuntimeTaskExecut
 	@Override
 	public String getScriptFunction() {		return HAPRuntimeJSScriptUtility.buildScriptExpressionJSFunction(this.m_scriptExpression);	}
 	@Override
-	public Map<String, HAPExecutableExpression> getExpressions(){  return this.m_scriptExpression.getExpressions(); }
+	public Map<String, HAPExecutableExpressionGroup> getExpressions(){  return this.m_scriptExpression.getExpressions(); }
 	@Override
 	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 	@Override
@@ -64,7 +64,7 @@ public class HAPRuntimeTaskExecuteScriptExpression1 extends HAPRuntimeTaskExecut
 			
 			//prepare resources for expression in the runtime (resource and dependency)
 			//execute expression after load required resources
-			List<HAPExecutableExpression> expressions = new ArrayList(this.m_scriptExpression.getExpressions().values());
+			List<HAPExecutableExpressionGroup> expressions = new ArrayList(this.m_scriptExpression.getExpressions().values());
 			List<HAPResourceInfo> resourcesId =  HAPUtilityExpressionResource.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager(), runtime.getRuntimeInfo());
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));

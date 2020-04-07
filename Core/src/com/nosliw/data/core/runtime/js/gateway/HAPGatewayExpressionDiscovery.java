@@ -17,9 +17,9 @@ import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
-import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -62,7 +62,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 		switch(command){
 		case COMMAND_GETOUTPUTCRITERIA:
 		{
-			HAPResourceDefinitionExpression expressionDef = new HAPResourceDefinitionExpression(parms.getString(COMMAND_GETOUTPUTCRITERIA_EXPRESSION));
+			HAPResourceDefinitionExpressionGroup expressionDef = new HAPResourceDefinitionExpressionGroup(parms.getString(COMMAND_GETOUTPUTCRITERIA_EXPRESSION));
 			
 			Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			JSONObject varCriteriasJson = parms.optJSONObject(COMMAND_GETOUTPUTCRITERIA_VARIABLESCRITERIA);
@@ -78,14 +78,14 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 			Map<String, HAPData> constants = HAPUtilityData.buildDataWrapperMapFromJson(constantsJson); 
 			
 			HAPProcessTracker processTracker = new HAPProcessTracker();
-			HAPExecutableExpression expression = this.m_expressionManager.compileExpression(expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processTracker);
+			HAPExecutableExpressionGroup expression = this.m_expressionManager.compileExpression(expressionDef, varsInfo, constants, null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), processTracker);
 			HAPDataTypeCriteria outCriteria = expression.getOperand().getOperand().getOutputCriteria();
 			out = this.createSuccessWithObject(outCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 			break;
 		}
 		case COMMAND_EXECUTEEXPRESSION:
 		{
-			HAPResourceDefinitionExpression expressionDef = new HAPResourceDefinitionExpression(parms.getString(COMMAND_EXECUTEEXPRESSION_EXPRESSION));
+			HAPResourceDefinitionExpressionGroup expressionDef = new HAPResourceDefinitionExpressionGroup(parms.getString(COMMAND_EXECUTEEXPRESSION_EXPRESSION));
 
 			JSONObject constantsJson = parms.optJSONObject(COMMAND_EXECUTEEXPRESSION_CONSTANTS);
 			Map<String, HAPData> constants = HAPUtilityData.buildDataWrapperMapFromJson(constantsJson); 
@@ -103,7 +103,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 			}
 			
 			HAPProcessTracker processTracker = new HAPProcessTracker();
-			HAPExecutableExpression expression = this.m_expressionManager.compileExpression(expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processTracker);
+			HAPExecutableExpressionGroup expression = this.m_expressionManager.compileExpression(expressionDef, varsInfo, constants, null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), processTracker);
 			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expression, expressionParms, null);
 			HAPServiceData serviceData = this.m_runtime.executeTaskSync(task);
 			if(serviceData.isSuccess()){

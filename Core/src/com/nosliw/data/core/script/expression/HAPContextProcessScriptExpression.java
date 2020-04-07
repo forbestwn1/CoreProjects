@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionSuite;
 
 //
@@ -34,7 +34,7 @@ public class HAPContextProcessScriptExpression {
 	public Map<String, Object> getConstants(){  return this.m_constants;   }
 	public Map<String, HAPData> getDataConstants(){  return this.m_expressionDefinitionSuite.getConstants();  }
 	
-	public Map<String, HAPResourceDefinitionExpression> getExpressionDefinitions(){  return this.m_expressionDefinitionSuite.getExpressionDefinitions();   }
+	public Map<String, HAPResourceDefinitionExpressionGroup> getExpressionDefinitions(){  return this.m_expressionDefinitionSuite.getExpressionDefinitions();   }
 	
 	public void addConstant(String name, Object value) {
 		this.m_constants.put(name, value);
@@ -46,8 +46,8 @@ public class HAPContextProcessScriptExpression {
 			this.addConstant(name, datas.get(name));
 		}
 	}
-	public void addExpressionDefinition(String name, HAPResourceDefinitionExpression expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(name, expressionDefinition);  }
-	public void addExpressionDefinition(Map<String, HAPResourceDefinitionExpression> expressions){	this.m_expressionDefinitionSuite.addExpressionDefinition(expressions);	}
+	public void addExpressionDefinition(String name, HAPResourceDefinitionExpressionGroup expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(name, expressionDefinition);  }
+	public void addExpressionDefinition(Map<String, HAPResourceDefinitionExpressionGroup> expressions){	this.m_expressionDefinitionSuite.addExpressionDefinition(expressions);	}
 	public void addDataVariables(Map<String, HAPVariableInfo> variables){
 		for(String varName : variables.keySet()) {
 			this.m_expressionDefinitionSuite.addVariableInfo(varName, variables.get(varName));

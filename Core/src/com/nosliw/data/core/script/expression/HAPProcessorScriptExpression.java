@@ -7,10 +7,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPUtilityDataComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.expression.HAPContextExpression;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionImp;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionSuiteElementEntityExpression;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.expression.HAPContextResourceExpressionGroup;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionGroupImp;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.expression.HAPProcessorExpression;
@@ -40,7 +40,7 @@ public class HAPProcessorScriptExpression {
 		HAPResourceDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(scriptGroupDef, expressionParser);
 
 		//expression definition containing all expression in script 
-		HAPDefinitionExpressionImp expressionDef = new HAPDefinitionExpressionImp();
+		HAPDefinitionExpressionGroupImp expressionDef = new HAPDefinitionExpressionGroupImp();
 		HAPUtilityComponent.mergeWithParentAttachment(expressionDef, scriptGroupDef.getAttachmentContainer());
 		expressionDef.setContextStructure(scriptGroupDef.getContextStructure());
 		
@@ -54,7 +54,7 @@ public class HAPProcessorScriptExpression {
 				Object scriptSeg = scriptSegs.get(j);
 				if(scriptSeg instanceof HAPDefinitionDataExpression) {
 					HAPDefinitionDataExpression expressionSeg = (HAPDefinitionDataExpression)scriptSeg;
-					HAPDefinitionExpressionSuiteElementEntityExpression expressionItem = new HAPDefinitionExpressionSuiteElementEntityExpression();
+					HAPDefinitionExpression expressionItem = new HAPDefinitionExpression();
 					String expressionId = i+"_"+j;
 					expressionItem.setName(expressionId);
 					expressionItem.setOperand(expressionParser.parseExpression(expressionSeg.getExpression()));
@@ -75,8 +75,8 @@ public class HAPProcessorScriptExpression {
 		}
 		
 		HAPUtilityExpression.normalizeReference(expressionDef);
-		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionDef, HAPContextExpression.createContext(expressionSuite, contextProcessRequirement.resourceDefMan));
-		HAPExecutableExpression expressionExe = HAPProcessorExpression.process(scriptGroupDef.getResourceId().toStringValue(HAPSerializationFormat.LITERATE), resourceWithContext, extraContext, null, expressionMan, configure, contextProcessRequirement, processTracker);
+		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionDef, HAPContextResourceExpressionGroup.createContext(expressionSuite, contextProcessRequirement.resourceDefMan));
+		HAPExecutableExpressionGroup expressionExe = HAPProcessorExpression.process(scriptGroupDef.getResourceId().toStringValue(HAPSerializationFormat.LITERATE), resourceWithContext, extraContext, null, expressionMan, configure, contextProcessRequirement, processTracker);
 		out.setExpression(expressionExe);
 		
 		return out;

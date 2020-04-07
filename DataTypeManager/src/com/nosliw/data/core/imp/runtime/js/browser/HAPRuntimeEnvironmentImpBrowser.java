@@ -2,11 +2,11 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPManagerExpression;
-import com.nosliw.data.core.expression.HAPResourceDefinitionPluginExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionPluginExpressionGroup;
 import com.nosliw.data.core.expression.HAPResourceDefinitionPluginExpressionSuite;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
@@ -56,22 +56,21 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 	public HAPRuntimeEnvironmentImpBrowser(HAPModuleRuntimeJS runtimeJSModule) {
 		this.m_runtimeJSModule = runtimeJSModule;
 		
-		HAPExpressionManager.dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
-		HAPExpressionManager.expressionParser = new HAPExpressionParserImp();
-
+		HAPDataTypeHelper dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
 		HAPResourceManagerJSImp resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
-
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
 		HAPManagerTemplate templateManager = new HAPManagerTemplate();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(templateManager);
 		HAPManagerService serviceManager = new HAPManagerService();
-		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
-		HAPManagerScript scriptMan = new HAPManagerScript(expressionMan, resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
-		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), resourceDefManager, HAPExpressionManager.dataTypeHelper, runtime, expressionMan, serviceManager.getServiceDefinitionManager());
+		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), resourceDefManager, dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
+		HAPManagerScript scriptMan = new HAPManagerScript(expressionMan, resourceDefManager, dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
+		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), resourceDefManager, dataTypeHelper, runtime, expressionMan, serviceManager.getServiceDefinitionManager());
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
-		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, HAPExpressionManager.dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
+		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		
-		init(resourceMan,
+		init(
+			dataTypeHelper,
+			resourceMan,
 			processMan,
 			processRuntimeMan,
 			expressionMan,
@@ -90,7 +89,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 				this.getResourceManager(),
 				this.getProcessManager(),
 				this.getRuntime(),
-				HAPExpressionManager.dataTypeHelper,
+				dataTypeHelper,
 				this.getServiceManager().getServiceDefinitionManager(),
 				this.getResourceDefinitionManager());
 
@@ -102,7 +101,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
 		//resource definition plugin
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginExpressionSuite(this.getExpressionManager().getExpressionParser()));
-		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginExpression(this.getResourceDefinitionManager()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginExpressionGroup(this.getResourceDefinitionManager()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginScriptGroup(this.getExpressionManager().getExpressionParser()));
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginPage(this.m_uiResourceManager.getUIResourceParser()));

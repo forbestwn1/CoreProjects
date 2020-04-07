@@ -8,8 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 
 @HAPEntityWithAttribute
 public class HAPServiceOutput extends HAPEntityInfoWritableImp{
@@ -32,7 +32,7 @@ public class HAPServiceOutput extends HAPEntityInfoWritableImp{
 			JSONObject objJson = (JSONObject)json;
 			super.buildObjectByJson(objJson);
 			
-			this.m_criteria = HAPExpressionManager.criteriaParser.parseCriteria(objJson.getString(CRITERIA));
+			this.m_criteria = HAPCriteriaParser.getInstance().parseCriteria(objJson.getString(CRITERIA));
 		}
 		catch(Exception e){
 			e.printStackTrace();

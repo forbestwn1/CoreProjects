@@ -2,7 +2,7 @@ package com.nosliw.uiresource.page.processor;
 
 import java.util.Map;
 
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpression;
+import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -41,11 +41,11 @@ public class HAPProcessorCompile {
 		if(parentUnit!=null) {
 			//from parent
 			Map<String, String> parentExps = parentUnit.getUIUnitDefinition().getExpressionDefinitions();
-			for(String name : parentExps.keySet()) 		exeUnit.getExpressionContext().addExpressionDefinition(name, new HAPResourceDefinitionExpression(parentExps.get(name)));
+			for(String name : parentExps.keySet()) 		exeUnit.getExpressionContext().addExpressionDefinition(name, new HAPResourceDefinitionExpressionGroup(parentExps.get(name)));
 			
 			//it self
 			Map<String, String> expressions = uiUnitDef.getExpressionDefinitions();
-			for(String name : expressions.keySet()) 		exeUnit.getExpressionContext().addExpressionDefinition(name, new HAPResourceDefinitionExpression(expressions.get(name)));
+			for(String name : expressions.keySet()) 		exeUnit.getExpressionContext().addExpressionDefinition(name, new HAPResourceDefinitionExpressionGroup(expressions.get(name)));
 		}
 	
 		//child tag
