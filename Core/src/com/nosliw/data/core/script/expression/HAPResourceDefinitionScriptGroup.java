@@ -12,14 +12,14 @@ public class HAPResourceDefinitionScriptGroup extends HAPResourceDefinitionCompl
 	@HAPAttribute
 	public static String ELEMENT = "element";
 	
-	private List<HAPDefinitionScript> m_element;
+	private List<HAPDefinitionScriptEntity> m_element;
 	
 	public HAPResourceDefinitionScriptGroup() {
-		this.m_element = new ArrayList<HAPDefinitionScript>();
+		this.m_element = new ArrayList<HAPDefinitionScriptEntity>();
 	}
 	
-	public List<HAPDefinitionScript> getElements(){    return this.m_element;    }
-	public void addElement(HAPDefinitionScript element) {   this.m_element.add(element);    }
+	public List<HAPDefinitionScriptEntity> getElements(){    return this.m_element;    }
+	public void addElement(HAPDefinitionScriptEntity element) {   this.m_element.add(element);    }
 	
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {

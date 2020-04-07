@@ -45,12 +45,12 @@ public class HAPProcessorScript {
 		HAPUtilityComponent.mergeWithParentAttachment(expressionDef, scriptGroupDef.getAttachmentContainer());
 		expressionDef.setContextStructure(scriptGroupDef.getContextStructure());
 		
-		List<HAPDefinitionScript> scriptElements = scriptGroupDef.getElements();
+		List<HAPDefinitionScriptEntity> scriptElements = scriptGroupDef.getElements();
 		for(int i=0; i<scriptElements.size(); i++) {
-			HAPDefinitionScript scriptDef = scriptElements.get(i);
+			HAPDefinitionScriptEntity scriptDef = scriptElements.get(i);
 			HAPExecutableScript scriptExe = null;
-			
-			String type = scriptDef.getType();
+			HAPScript script = scriptDef.getScript();
+			String type = script.getType();
 			if(HAPConstant.SCRIPT_TYPE_EXPRESSION.equals(type)) {
 				scriptExe = HAPProcessorScriptExpression.process(i+"", scriptDef, out.getConstantsValue(), expressionDef, expressionParser);
 			}

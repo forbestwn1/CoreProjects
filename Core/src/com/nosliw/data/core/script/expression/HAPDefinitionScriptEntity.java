@@ -5,30 +5,26 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 
-public class HAPDefinitionScript extends HAPEntityInfoWritableImp{
+public class HAPDefinitionScriptEntity extends HAPEntityInfoWritableImp{
 
+	private HAPScript m_script;
+	
 	@HAPAttribute
 	public static String SCRIPT = "script";
 
 	@HAPAttribute
 	public static String TYPE = "type";
 
-	private String m_type;
+	public HAPDefinitionScriptEntity() {
+	}
 	
-	private String m_script;
-	
-	
-	
-	public String getType() {   return this.m_type;    }
-	
-	public String getScript() {   return this.m_script;     }
+	public HAPScript getScript() {  return this.m_script;   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
-		this.m_script = jsonObj.getString(SCRIPT);
-		this.m_type = (String)jsonObj.opt(TYPE);
+		this.m_script = HAPScript.newScript(jsonObj);
 		return true;  
 	}
 }

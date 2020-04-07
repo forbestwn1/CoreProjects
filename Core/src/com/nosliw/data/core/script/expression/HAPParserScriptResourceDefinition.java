@@ -17,7 +17,7 @@ public class HAPParserScriptResourceDefinition {
 		for(int i=0; i<elementsArrayJson.length(); i++) {
 			JSONObject eleJsonObj = elementsArrayJson.getJSONObject(i);
 			if(HAPEntityInfoUtility.isEnabled(eleJsonObj)) {
-				HAPDefinitionScript element = new HAPDefinitionScript();
+				HAPDefinitionScriptEntity element = new HAPDefinitionScriptEntity();
 				element.buildObject(eleJsonObj, HAPSerializationFormat.JSON);
 				out.addElement(element);
 			}

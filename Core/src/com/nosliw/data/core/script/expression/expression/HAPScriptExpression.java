@@ -15,7 +15,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
-import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -23,7 +22,6 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
-import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 
 /**
  * Represent script expression executable
@@ -123,27 +121,27 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	
 	public Set<String> getVariableNames(){ 
 		Set<String> out = new HashSet<String>();
-		for(Object ele : this.m_elements){
-			if(ele instanceof HAPExecutableExpressionGroup){
-				HAPExecutableExpressionGroup expExe = (HAPExecutableExpressionGroup)ele;
-				out.addAll(HAPOperandUtility.discoverVariables(expExe.getOperand()));
-			}
-			else if(ele instanceof HAPScriptInScriptExpression){
-				HAPScriptInScriptExpression scriptSegment = (HAPScriptInScriptExpression)ele;
-				out.addAll(scriptSegment.getVariableNames());
-			}
-		}
+//		for(Object ele : this.m_elements){
+//			if(ele instanceof HAPExecutableExpressionGroup){
+//				HAPExecutableExpressionGroup expExe = (HAPExecutableExpressionGroup)ele;
+//				out.addAll(HAPOperandUtility.discoverVariables(expExe.getOperand()));
+//			}
+//			else if(ele instanceof HAPScriptInScriptExpression){
+//				HAPScriptInScriptExpression scriptSegment = (HAPScriptInScriptExpression)ele;
+//				out.addAll(scriptSegment.getVariableNames());
+//			}
+//		}
 		return out;
 	}
 
 	public Set<String> getDataVariableNames(){
 		Set<String> out = new HashSet<String>();
-		for(Object ele : this.m_elements){
-			if(ele instanceof HAPExecutableExpressionGroup){
-				HAPExecutableExpressionGroup expExe = (HAPExecutableExpressionGroup)ele;
-				out.addAll(HAPOperandUtility.discoverVariables(expExe.getOperand()));
-			}
-		}
+//		for(Object ele : this.m_elements){
+//			if(ele instanceof HAPExecutableExpressionGroup){
+//				HAPExecutableExpressionGroup expExe = (HAPExecutableExpressionGroup)ele;
+//				out.addAll(HAPOperandUtility.discoverVariables(expExe.getOperand()));
+//			}
+//		}
 		return out;
 	}
 	
