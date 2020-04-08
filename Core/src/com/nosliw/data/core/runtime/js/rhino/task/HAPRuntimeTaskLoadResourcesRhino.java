@@ -8,7 +8,7 @@ import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
+import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 
 public class HAPRuntimeTaskLoadResourcesRhino extends HAPRuntimeTaskLoadResources{
@@ -26,7 +26,7 @@ public class HAPRuntimeTaskLoadResourcesRhino extends HAPRuntimeTaskLoadResource
 			}
 			else{
 				HAPRuntimeImpRhino rhinoRuntime = (HAPRuntimeImpRhino)runtime;
-				HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForLoadResourceTask(this, rhinoRuntime);
+				HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForLoadResourceTask(this, rhinoRuntime);
 				rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
 			}
 		}

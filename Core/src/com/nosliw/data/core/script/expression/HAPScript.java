@@ -9,10 +9,6 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPScript extends HAPSerializableImp{
 
-	public static final String SCRIPT_TYPE_EXPRESSION = "expression";
-	public static final String SCRIPT_TYPE_SCRIPT = "script";
-	public static final String SCRIPT_TYPE_LITERATE = "literate";
-	
 	@HAPAttribute
 	public static String SCRIPT = "script";
 

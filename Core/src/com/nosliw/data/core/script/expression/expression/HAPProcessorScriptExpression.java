@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
+import com.nosliw.data.core.script.expression.HAPExecutableScript;
 import com.nosliw.data.core.script.expression.HAPScript;
 
 public class HAPProcessorScriptExpression {
@@ -23,30 +25,43 @@ public class HAPProcessorScriptExpression {
 			HAPDefinitionExpressionGroup expressionDef,
 			HAPParserExpression expressionParser 
 		) {
-		HAPExecutableScriptExpression out = new HAPExecutableScriptExpression();
+		HAPExecutableScriptExpression out = new HAPExecutableScriptExpression(id);
 		scriptDef.cloneToEntityInfo(out);
-		List<HAPScript> scriptSegs = parseScript(scriptDef.getScript().getScript());
+		out.addSegments(process(id, scriptDef.getScript(), constantValues, expressionDef, expressionParser));
+		return out;
+	}
+	
+	public static List<HAPExecutableScript> process(
+			String id,
+			HAPScript script,
+			Map<String, Object> constantValues,
+			HAPDefinitionExpressionGroup expressionDef,
+			HAPParserExpression expressionParser 
+		) {
+		List<HAPExecutableScript> out = new ArrayList<HAPExecutableScript>();
+		List<HAPScript> scriptSegs = parseScript(script.getScript());
 		for(int j=0; j<scriptSegs.size(); j++) {
 			HAPScript scriptSeg = scriptSegs.get(j);
 			String scriptType = scriptSeg.getType();
-			if(HAPScript.SCRIPT_TYPE_EXPRESSION.equals(scriptType)) {
+			String scriptId = id+"_"+j;
+			if(HAPConstant.SCRIPT_TYPE_SEG_EXPRESSION.equals(scriptType)) {
 				HAPDefinitionExpression expressionItem = new HAPDefinitionExpression();
-				String expressionId = id+"_"+j;
-				expressionItem.setName(expressionId);
+				expressionItem.setName(scriptId);
 				expressionItem.setOperand(expressionParser.parseExpression(scriptSeg.getScript()));
 				expressionDef.addExpression(expressionItem);
-				out.addSegment(new HAPExecutableScriptSegExpression(expressionId));
+				out.add(new HAPExecutableScriptSegExpression(scriptId, scriptId));
 			}
-			else if(HAPScript.SCRIPT_TYPE_SCRIPT.equals(scriptType)) {
-				HAPExecutableScriptSegScript scriptSegExe = new HAPExecutableScriptSegScript(scriptSeg.getScript());
+			else if(HAPConstant.SCRIPT_TYPE_SEG_SCRIPT.equals(scriptType)) {
+				HAPExecutableScriptSegScript scriptSegExe = new HAPExecutableScriptSegScript(scriptId, scriptSeg.getScript());
 				//update with constant value
 				scriptSegExe.updateConstantValue(constantValues);
-				out.addSegment(scriptSegExe);
+				out.add(scriptSegExe);
 			}
 		}
-
 		return out;
 	}
+	
+	
 	
 //	public boolean isDataExpression() {
 //		if(this.m_segments.size()==1 && this.m_segments.get(0) instanceof HAPDefinitionDataExpression) return true;
@@ -82,12 +97,12 @@ public class HAPProcessorScriptExpression {
 			int index = content.indexOf(EXPRESSION_TOKEN_OPEN);
 			if(index==-1){
 				//no expression
-				out.add(HAPScript.newScript(content, HAPScript.SCRIPT_TYPE_SCRIPT));
+				out.add(HAPScript.newScript(content, HAPConstant.SCRIPT_TYPE_SEG_SCRIPT));
 				content = null;
 			}
 			else if(index!=0){
 				//start with text
-				out.add(HAPScript.newScript(content.substring(0, index), HAPScript.SCRIPT_TYPE_SCRIPT));
+				out.add(HAPScript.newScript(content.substring(0, index), HAPConstant.SCRIPT_TYPE_SEG_SCRIPT));
 				content = content.substring(index);
 			}
 			else{
@@ -98,7 +113,7 @@ public class HAPProcessorScriptExpression {
 				String expressionStr = content.substring(expStart, expEnd);
 				content = content.substring(expEnd + EXPRESSION_TOKEN_CLOSE.length());
 				//build expression definition
-				out.add(HAPScript.newScript(expressionStr, HAPScript.SCRIPT_TYPE_EXPRESSION));
+				out.add(HAPScript.newScript(expressionStr, HAPConstant.SCRIPT_TYPE_SEG_EXPRESSION));
 			}
 			i++;
 		}

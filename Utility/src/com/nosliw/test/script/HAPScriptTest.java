@@ -7,7 +7,7 @@ import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPResourceDefinitionScriptGroup;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptResource;
@@ -18,7 +18,7 @@ public class HAPScriptTest {
 
 		try {
 			String id = "test1";
-			String script = "test4";
+			String script = "test5";
 			String testData = "testData1";
 
 			HAPResourceId resourceId = HAPUtilityScriptResource.buildResourceId(id);
@@ -32,7 +32,7 @@ public class HAPScriptTest {
 			Map<String, Object> input = HAPAttachmentUtility.getTestValueFromAttachment(scriptGroupDef, testData);
 
 			
-			HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExe, script, input, null);
+			HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(scriptExe, script, input, null);
 			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 			System.out.println(out);

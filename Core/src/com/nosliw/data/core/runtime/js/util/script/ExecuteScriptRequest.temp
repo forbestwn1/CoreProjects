@@ -1,6 +1,7 @@
 var expressionService = nosliw.runtime.getExpressionService();
 	expressionService.executeExecuteScriptExpressionRequest(
 		||functionScript||, 
+		||functions||, 
 		||expressions||, 
 		||variables||, 
 		||constants||, 

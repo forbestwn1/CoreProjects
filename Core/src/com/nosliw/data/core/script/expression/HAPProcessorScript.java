@@ -21,6 +21,7 @@ import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.expression.expression.HAPProcessorScriptExpression;
+import com.nosliw.data.core.script.expression.literate.HAPProcessorScriptLiterate;
 
 public class HAPProcessorScript {
 
@@ -48,11 +49,14 @@ public class HAPProcessorScript {
 		List<HAPDefinitionScriptEntity> scriptElements = scriptGroupDef.getElements();
 		for(int i=0; i<scriptElements.size(); i++) {
 			HAPDefinitionScriptEntity scriptDef = scriptElements.get(i);
-			HAPExecutableScript scriptExe = null;
+			HAPExecutableScriptEntity scriptExe = null;
 			HAPScript script = scriptDef.getScript();
 			String type = script.getType();
 			if(HAPConstant.SCRIPT_TYPE_EXPRESSION.equals(type)) {
 				scriptExe = HAPProcessorScriptExpression.process(i+"", scriptDef, out.getConstantsValue(), expressionDef, expressionParser);
+			}
+			else if(HAPConstant.SCRIPT_TYPE_LITERATE.equals(type)) {
+				scriptExe = HAPProcessorScriptLiterate.process(i+"", scriptDef, out.getConstantsValue(), expressionDef, expressionParser);
 			}
 			out.addScript(scriptExe);
 		}

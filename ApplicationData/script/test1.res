@@ -187,10 +187,23 @@
 		},
 		{
 			"id": "test4",
+			"info": {
+				"disable" : ""
+			},
 			"name": "test4",
 			"type": "expression",
 			"description": "script only",
 			"script" : "(&(fromConstant)&.value+&(constantValueInteger)&)+&(constantValueString)&",
+		},
+		{
+			"id": "test5",
+			"info": {
+				"disable1" : ""
+			},
+			"name": "test5",
+			"type": "literate",
+			"description": "literate",
+			"script" : "HaHaHa  <%=(&(fromConstant)&.value+&(constantValueInteger)&)+&(constantValueString)&%>  End!!!!",
 		},
 	]
 }

@@ -13,7 +13,7 @@ import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
+import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
 
@@ -47,7 +47,7 @@ public class HAPRuntimeTaskExecuteScriptExpression1 extends HAPRuntimeTaskExecut
 	public String getTaskType() {		return TASK;	}
 
 	@Override
-	public String getScriptFunction() {		return HAPRuntimeJSScriptUtility.buildScriptExpressionJSFunction(this.m_scriptExpression);	}
+	public String getScriptFunction() {		return HAPUtilityRuntimeJSScript.buildScriptExpressionJSFunction(this.m_scriptExpression);	}
 	@Override
 	public Map<String, HAPExecutableExpressionGroup> getExpressions(){  return this.m_scriptExpression.getExpressions(); }
 	@Override
@@ -92,7 +92,7 @@ public class HAPRuntimeTaskExecuteScriptExpression1 extends HAPRuntimeTaskExecut
 			if(resourceTaskResult.isSuccess()){
 				//after resource loaded, execute expression
 				try{
-					HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteScriptExpressionTask(this.m_parent, this.m_runtime);
+					HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteScriptExpressionTask(this.m_parent, this.m_runtime);
 					this.m_runtime.loadTaskScript(scriptInfo, m_parent.getTaskId());
 				}
 				catch(Exception e){

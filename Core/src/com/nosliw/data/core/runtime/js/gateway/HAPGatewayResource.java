@@ -21,7 +21,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
+import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 
 @HAPEntityWithAttribute
 public class HAPGatewayResource extends HAPGatewayImp{
@@ -140,7 +140,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 			List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
 			for(HAPResource resource : loadResourceResponse.getLoadedResources()){
 				HAPResourceInfo resourceInfo = resourcesInfo.get(resource.getId());
-				scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resourceInfo, resource));
+				scriptsInfo.addAll(HAPUtilityRuntimeJSScript.buildScriptForResource(resourceInfo, resource));
 			}
 			serviceData = this.createSuccessWithScripts(scriptsInfo); 
 		}

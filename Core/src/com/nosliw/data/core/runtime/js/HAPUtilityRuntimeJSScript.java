@@ -30,11 +30,11 @@ import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpressionAbstract;
+import com.nosliw.data.core.script.expression.HAPExecutableScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 import com.nosliw.data.core.script.expression.expression.HAPConstantInScript;
 import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptExpression;
-import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSeg;
 import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSegExpression;
 import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSegScript;
 import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
@@ -42,7 +42,7 @@ import com.nosliw.data.core.script.expression.expression.HAPVariableInScript;
 import com.nosliw.data.core.script.expression.literate.HAPEmbededScriptExpression;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
-public class HAPRuntimeJSScriptUtility {
+public class HAPUtilityRuntimeJSScript {
 
 	public static List<HAPJSScriptInfo> buildScriptForResource(HAPResourceInfo resourceInfo, HAPResource resource){
 		List<HAPJSScriptInfo> out = new ArrayList<HAPJSScriptInfo>();
@@ -64,10 +64,10 @@ public class HAPRuntimeJSScriptUtility {
 		HAPJSScriptInfo out = null;
 		String script = buildImportResourceScriptForResource(resourceInfo, resource, scriptValue);
 		
-		String loadPattern = (String)resource.getInfoValue(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN);
-		if(loadPattern==null)  loadPattern = HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_VALUE;
+		String loadPattern = (String)resource.getInfoValue(HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN);
+		if(loadPattern==null)  loadPattern = HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_VALUE;
 		switch(loadPattern){
-		case HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE:
+		case HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_FILE:
 			//load as file, create temp file first
 			String name = resource.getId().toStringValue(HAPSerializationFormat.LITERATE);
 			String resourceFile = HAPSystemFolderUtility.getResourceTempFileFolder() + name + ".js";
@@ -75,7 +75,7 @@ public class HAPRuntimeJSScriptUtility {
 			out = HAPJSScriptInfo.buildByFile(resourceFile, name);
 			
 			break;
-		case HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_VALUE:
+		case HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_VALUE:
 			//load as value
 			out = HAPJSScriptInfo.buildByScript(script.toString(), "Resource__"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE));
 			break;
@@ -101,7 +101,7 @@ public class HAPRuntimeJSScriptUtility {
 		if(valueScript==null)  valueScript = "undefined";
 		templateParms.put(HAPResourceDataJSValue.VALUE, valueScript);
 
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ImportResource.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ImportResource.temp");
 		script.append("\n");
 		String resoruceDataScript = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		script.append(resoruceDataScript);
@@ -141,7 +141,7 @@ public class HAPRuntimeJSScriptUtility {
 		templateParms.put("taskId", executeDataOperationTask.getTaskId());
 		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteDataOperationScript.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteDataOperationScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, executeDataOperationTask.getTaskId());
 		return out;
@@ -161,7 +161,7 @@ public class HAPRuntimeJSScriptUtility {
 		templateParms.put("taskId", executeConverterTask.getTaskId());
 		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteDataConvertScript.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteDataConvertScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, executeConverterTask.getTaskId());
 		return out;
@@ -185,7 +185,7 @@ public class HAPRuntimeJSScriptUtility {
 		templateParms.put("taskId", executeExpressionTask.getTaskId());
 		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteExpressionScript.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteExpressionScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, executeExpressionTask.getTaskId());
 		return out;
@@ -204,7 +204,7 @@ public class HAPRuntimeJSScriptUtility {
 
 		templateParms.put("resourceInfos", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(loadResourcesTask.getResourcesInfo(), HAPSerializationFormat.JSON)));
 		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "LoadResources.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "LoadResources.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, loadResourcesTask.getTaskId());
 		return out;
@@ -233,7 +233,7 @@ public class HAPRuntimeJSScriptUtility {
 		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
 		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteScriptExpressionScript.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteScriptExpressionScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
 		return out;
@@ -251,7 +251,7 @@ public class HAPRuntimeJSScriptUtility {
 			scriptExpressionFunScript.append(scriptExpressionParmName +  "["+ expId  + "]="  +buildScriptExpressionJSFunction(scriptExpressions.get(expId)) + "("+expressionsDataParmName+","+constantsDataParmName+","+variablesDataParmName+");");
 		}
 		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "EmbededScriptExpressionFunction.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "EmbededScriptExpressionFunction.temp");
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("embededScriptExpressionFunction", buildMainScriptEmbededScriptExpression(embedScriptExpression));
 		
@@ -283,7 +283,7 @@ public class HAPRuntimeJSScriptUtility {
 			i++;
 		}
 		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "EmbededScriptExpressionSubFunction.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "EmbededScriptExpressionSubFunction.temp");
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("functionScript", funScript.toString());
 		templateParms.put("scriptExpressionData", scriptExpressionDataParmName);
@@ -302,7 +302,7 @@ public class HAPRuntimeJSScriptUtility {
 		//build javascript function to execute the script
 		StringBuffer funScript = new StringBuffer();
 		int i=0;
-		for(HAPExecutableScriptSeg seg : script.getSegments()){
+		for(HAPExecutableScript seg : script.getSegments()){
 			if(seg instanceof HAPExecutableScriptSegExpression){
 				HAPExecutableScriptSegExpression expressionSeg = (HAPExecutableScriptSegExpression)seg;
 				funScript.append(expressionsDataParmName+"[\""+expressionSeg.getExpressionId()+"\"]");
@@ -325,7 +325,7 @@ public class HAPRuntimeJSScriptUtility {
 			i++;
 		}
 		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ScriptExpressionFunction.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ScriptExpressionFunction.temp");
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("functionScript", funScript.toString());
 		templateParms.put("expressionsData", expressionsDataParmName);
@@ -368,7 +368,7 @@ public class HAPRuntimeJSScriptUtility {
 			i++;
 		}
 		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ScriptExpressionFunction.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ScriptExpressionFunction.temp");
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("functionScript", funScript.toString());
 		templateParms.put("expressionsData", expressionsDataParmName);
@@ -396,7 +396,7 @@ public class HAPRuntimeJSScriptUtility {
 		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
 		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteProcessScript.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteProcessScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
 		return out;
@@ -420,7 +420,7 @@ public class HAPRuntimeJSScriptUtility {
 		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
 		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteProcessEmbededScript.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteProcessEmbededScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
 		return out;

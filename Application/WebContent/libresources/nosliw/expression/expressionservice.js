@@ -78,7 +78,7 @@ var node_createExpressionService = function(){
 //		return out;
 //	};
 
-	var loc_getExecuteScriptRequest = function(script, expressionItems, variables, scriptConstants, handlers, requester_parent){
+	var loc_getExecuteScriptRequest = function(script, functions, expressionItems, variables, scriptConstants, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExpressionService_ExecuteScript", {"script":script, "expressions":expressionItems, "variables":variables}), handlers, requestInfo);
 
@@ -86,7 +86,7 @@ var node_createExpressionService = function(){
 		var executeMultipleExpressionItemRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressionItems, "variables":variables}), {
 			success : function(requestInfo, expressionsResult){
 				var expressionsData = expressionsResult.getResults();
-				return script.call(undefined, expressionsData, scriptConstants, variables);
+				return script.call(undefined, functions, expressionsData, scriptConstants, variables);
 			}
 		});
 		_.each(expressionItems, function(expressionItem, name){
@@ -140,21 +140,12 @@ var node_createExpressionService = function(){
 		 * 		variables : variables for expression
 		 * 		scriptConstants : constants in script
 		 */
-//		getExecuteScriptRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
-//			return loc_getExecuteScriptRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
-//		},
-	
-		getExecuteScriptRequest : function(script, expressionsItems, variables, scriptConstants, handlers, requester_parent){
-			return loc_getExecuteScriptRequest(script, expressionsItems, variables, scriptConstants, handlers, requester_parent);
+		getExecuteScriptRequest : function(script, functions, expressionsItems, variables, scriptConstants, handlers, requester_parent){
+			return loc_getExecuteScriptRequest(script, functions, expressionsItems, variables, scriptConstants, handlers, requester_parent);
 		},
 	
-//		executeExecuteScriptExpressionRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
-//			var requestInfo = this.getExecuteScriptRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
-//			node_requestServiceProcessor.processRequest(requestInfo);
-//		},
-
-		executeExecuteScriptExpressionRequest : function(script, expressionsItems, variables, scriptConstants, handlers, requester_parent){
-			var requestInfo = this.getExecuteScriptRequest(script, expressionsItems, variables, scriptConstants, handlers, requester_parent);
+		executeExecuteScriptExpressionRequest : function(script, functions, expressionsItems, variables, scriptConstants, handlers, requester_parent){
+			var requestInfo = this.getExecuteScriptRequest(script, functions, expressionsItems, variables, scriptConstants, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 

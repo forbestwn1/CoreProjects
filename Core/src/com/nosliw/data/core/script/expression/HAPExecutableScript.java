@@ -1,8 +1,16 @@
 package com.nosliw.data.core.script.expression;
 
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
+import com.nosliw.common.constant.HAPAttribute;
 
-public abstract class HAPExecutableScript extends HAPExecutableImpEntityInfo{
+public interface HAPExecutableScript {
 
-	
+	@HAPAttribute
+	public static String SCRIPTTYPE = "scriptType";
+
+	@HAPAttribute
+	public static String ID = "id";
+
+	String getScriptType();
+
+	String getId();
 }

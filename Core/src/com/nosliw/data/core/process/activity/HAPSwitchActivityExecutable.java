@@ -16,7 +16,7 @@ import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
+import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
 import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
 
@@ -74,7 +74,7 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		jsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPRuntimeJSScriptUtility.buildScriptExpressionJSFunction(this.m_scriptExpression));
+		jsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPUtilityRuntimeJSScript.buildScriptExpressionJSFunction(this.m_scriptExpression));
 		typeJsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPScript.class);
 	}	
 }

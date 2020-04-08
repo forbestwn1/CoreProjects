@@ -691,6 +691,10 @@
 			<definition type="space"/>
 			<definition name="SCRIPT_TYPE_EXPRESSION" value="expression"/>
 			<definition name="SCRIPT_TYPE_LITERATE" value="literate"/>
+			<definition name="SCRIPT_TYPE_SEG_SCRIPT" value="scriptSeg"/>
+			<definition name="SCRIPT_TYPE_SEG_EXPRESSION" value="expressionSeg"/>
+			<definition name="SCRIPT_TYPE_SEG_TEXT" value="textSeg"/>
+			<definition name="SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT" value="exprssionScriptSeg"/>
 
 		</definitions>
 	</constants>

@@ -12,7 +12,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcess;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
+import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.script.context.data.HAPContextData;
 
@@ -44,7 +44,7 @@ public class HAPRuntimeTaskExecuteProcessRhino extends HAPRuntimeTaskExecuteProc
 			}
 			else {
 				//pppp			
-				HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteProcessTask(this, rhinoRuntime);
+				HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteProcessTask(this, rhinoRuntime);
 				rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
 			}
 		}
@@ -70,7 +70,7 @@ public class HAPRuntimeTaskExecuteProcessRhino extends HAPRuntimeTaskExecuteProc
 			if(resourceTaskResult.isSuccess()){
 				//after resource loaded, execute expression
 				try{
-					HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteProcessTask(this.m_parent, this.m_runtime);
+					HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteProcessTask(this.m_parent, this.m_runtime);
 					this.m_runtime.loadTaskScript(scriptInfo, m_parent.getTaskId());
 				}
 				catch(Exception e){

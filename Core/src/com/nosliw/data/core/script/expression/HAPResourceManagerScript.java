@@ -10,7 +10,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
+import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 
 public class HAPResourceManagerScript  extends HAPResourceManagerImp{
 
@@ -26,7 +26,7 @@ public class HAPResourceManagerScript  extends HAPResourceManagerImp{
 		HAPExecutableScriptGroup expression = this.m_scriptMan.getScript(resourceId, null);
 		if(expression==null)  return null;
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
-		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
+		info.put(HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN, HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_FILE);
 		return new HAPResource(resourceId, expression.toResourceData(runtimeInfo), null);
 	}
 

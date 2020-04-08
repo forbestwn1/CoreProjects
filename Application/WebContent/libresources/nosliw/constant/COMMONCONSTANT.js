@@ -390,7 +390,11 @@ var COMMONCONSTANT=
   "SEPERATOR_RESOURCEID_STRUCTURE": "_",
   "ENTITYINFO_INFONAME_DISABLE": "disable",
   "SCRIPT_TYPE_EXPRESSION": "expression",
-  "SCRIPT_TYPE_LITERATE": "literate"
+  "SCRIPT_TYPE_LITERATE": "literate",
+  "SCRIPT_TYPE_SEG_SCRIPT": "scriptSeg",
+  "SCRIPT_TYPE_SEG_EXPRESSION": "expressionSeg",
+  "SCRIPT_TYPE_SEG_TEXT": "textSeg",
+  "SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT": "exprssionScriptSeg"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

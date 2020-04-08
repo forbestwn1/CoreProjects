@@ -18,7 +18,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
+import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
 
 /**
@@ -145,7 +145,7 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
 
-		jsonMap.put(SCRIPTFUNCTION, new HAPScript(HAPRuntimeJSScriptUtility.buildMainScriptEmbededScriptExpression(this)).toStringValue(HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(SCRIPTFUNCTION, new HAPScript(HAPUtilityRuntimeJSScript.buildMainScriptEmbededScriptExpression(this)).toStringValue(HAPSerializationFormat.JSON_FULL));
 		typeJsonMap.put(SCRIPTFUNCTION, HAPScript.class);
 		
 		Map<String, String> scriptJsonMap = new LinkedHashMap<String, String>();

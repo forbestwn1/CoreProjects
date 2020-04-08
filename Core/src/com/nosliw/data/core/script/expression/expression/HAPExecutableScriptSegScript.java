@@ -13,16 +13,20 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPEntityWithName;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.data.core.script.expression.HAPExecutableScript;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 
-public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HAPExecutableScriptSeg, HAPEntityWithName{
+public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HAPExecutableScript, HAPEntityWithName{
 
 	@HAPAttribute
 	public static String SCRIPT = "script";
 
 	@HAPAttribute
 	public static String ELEMENTS = "elements";
+	
+	private String m_id;
 	
 	private String m_orignalScript;
 
@@ -38,12 +42,19 @@ public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HA
 			{"?(", ")?", HAPVariableInScript.class}
 	};
 	
-	public HAPExecutableScriptSegScript(String script){
+	public HAPExecutableScriptSegScript(String id, String script){
 		this.m_elements = new ArrayList<Object>();
+		this.m_id = id;
 		this.m_orignalScript = script;
 		this.processSegments();
 	}
+
+	@Override
+	public String getId() {   return this.m_id;    }
 	
+	@Override
+	public String getScriptType() {  return HAPConstant.SCRIPT_TYPE_SEG_SCRIPT;  }
+
 	public List<Object> getElements(){	return this.m_elements;	}
 	
 	@Override
@@ -175,6 +186,8 @@ public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HA
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(SCRIPTTYPE, this.getScriptType());
+		jsonMap.put(ID, this.m_id);
 		jsonMap.put(SCRIPT, this.m_orignalScript);
 		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}
