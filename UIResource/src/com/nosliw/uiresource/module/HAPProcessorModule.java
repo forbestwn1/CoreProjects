@@ -6,13 +6,14 @@ import java.util.Set;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPNosliwUtility;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPExecutableProcess;
@@ -36,7 +37,6 @@ import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssoc
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
-import com.nosliw.data.core.system.HAPSystemUtility;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
@@ -53,7 +53,7 @@ public class HAPProcessorModule {
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
-			HAPExpressionSuiteManager expressionManager,
+			HAPManagerExpression expressionManager,
 			HAPManagerServiceDefinition serviceDefinitionManager) {
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
@@ -70,7 +70,7 @@ public class HAPProcessorModule {
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
-			HAPExpressionSuiteManager expressionManager,
+			HAPManagerExpression expressionManager,
 			HAPManagerServiceDefinition serviceDefinitionManager,
 			HAPProcessTracker processTracker) {
 
@@ -160,7 +160,7 @@ public class HAPProcessorModule {
 			String eventName = eventHandlerDef.getName();
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getEventDefinition(eventName));
 			HAPContextGroup eventContext = new HAPContextGroup();
-			eventContext.addElement(HAPSystemUtility.buildNosliwFullName("EVENT"), eventRootNode, HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+			eventContext.addElement(HAPNosliwUtility.buildNosliwFullName("EVENT"), eventRootNode, HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 			HAPDefinitionProcess processDef = moduleExe.getProcessDefinition(eventHandlerDef.getTask().getTaskDefinition());
 			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(processDef, eventContext, serviceProviders, processMan, contextProcessRequirement, processTracker);
 			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getTask(), eventProcessor, HAPParentContext.createDefault(moduleExe.getContext()), null, contextProcessRequirement);			

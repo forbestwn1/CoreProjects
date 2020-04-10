@@ -3,7 +3,7 @@ package com.nosliw.data.core.event;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -18,7 +18,7 @@ public class HAPProcessorEventTask {
 			HAPManagerProcess processMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
-			HAPExpressionSuiteManager expressionManager,
+			HAPManagerExpression expressionManager,
 			HAPManagerServiceDefinition serviceDefinitionManager) {
 		
 		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, null);

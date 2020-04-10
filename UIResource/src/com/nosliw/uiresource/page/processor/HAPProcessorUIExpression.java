@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.data.core.script.expression.literate.HAPEmbededScriptExpression;
@@ -16,7 +16,7 @@ import com.nosliw.uiresource.page.execute.HAPUtilityExecutable;
 
 public class HAPProcessorUIExpression {
 
-	public static void processUIExpression(HAPExecutableUIUnit exeUnit, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
+	public static void processUIExpression(HAPExecutableUIUnit exeUnit, HAPRuntime runtime, HAPManagerExpression expressionManager){
 
 		//process all embeded script expression
 		List<HAPEmbededScriptExpression> embededScriptExpressions = HAPUtilityExecutable.getEmbededScriptExpressionFromExeUnit(exeUnit);

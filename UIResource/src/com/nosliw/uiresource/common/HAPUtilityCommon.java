@@ -6,7 +6,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
-import com.nosliw.data.core.expression.HAPExpressionSuiteManager;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
@@ -17,7 +17,7 @@ public class HAPUtilityCommon {
 			HAPManagerResourceDefinition resourceDefMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
-			HAPExpressionSuiteManager expressionMan,
+			HAPManagerExpression expressionMan,
 			HAPManagerServiceDefinition serviceDefinitionManager) { 
 		Set<String> inheritanceExcludedInfo = new HashSet<String>();
 		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_INSTANTIATE);
