@@ -1,15 +1,17 @@
-package com.nosliw.data.core.expression;
+package com.nosliw.data.core.expression.resource;
 
 import java.util.Map;
 
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 
-public class HAPResourceDefinitionExpressionSuite extends HAPResourceDefinitionContainer{
+public class HAPResourceDefinitionExpressionSuite extends HAPResourceDefinitionContainer implements HAPDefinitionExpressionSuite{
 
 	public HAPResourceDefinitionExpressionSuite() {
 	}
+
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -36,5 +38,5 @@ public class HAPResourceDefinitionExpressionSuite extends HAPResourceDefinitionC
 
 	@Override
 	public HAPResourceDefinition getElementResourceDefinition(String eleName) {  return new HAPResourceDefinitionExpressionGroup(this, eleName);  }
-	
+
 }

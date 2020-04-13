@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -79,7 +79,7 @@ public class HAPResource extends HAPSerializableImp{
 		jsonMap.put(ID, HAPSerializeManager.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));
 		if(this.m_resourceData instanceof HAPResourceDataJSValue)  jsonMap.put(RESOURCEDATA, ((HAPResourceDataJSValue)this.m_resourceData).getValue());
 		else jsonMap.put(RESOURCEDATA, this.m_resourceData.toString());
-		typeJsonMap.put(RESOURCEDATA, HAPScript.class);
+		typeJsonMap.put(RESOURCEDATA, HAPJsonTypeScript.class);
 		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}

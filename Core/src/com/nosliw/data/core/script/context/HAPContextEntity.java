@@ -22,13 +22,28 @@ public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 	}
 
 	@Override
-	public HAPInfo getInfo() {  return this.m_entityInfo.getInfo();  }
+	public String getId() {  return this.m_entityInfo.getId();  }
 
 	@Override
 	public String getName() {  return this.m_entityInfo.getName();  }
 
 	@Override
 	public String getDescription() {  return this.m_entityInfo.getDescription();  }
+
+	@Override
+	public HAPInfo getInfo() {  return this.m_entityInfo.getInfo();  }
+
+	@Override
+	public void setId(String id) {   this.m_entityInfo.setId(id); }
+
+	@Override
+	public void setName(String name) {  this.m_entityInfo.setName(name);  }
+
+	@Override
+	public void setDescription(String description) {  this.m_entityInfo.setDescription(description);  }
+
+	@Override
+	public void setInfo(HAPInfo info) {  this.m_entityInfo.setInfo(info);  }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -74,4 +89,5 @@ public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 
 	@Override
 	public void buildEntityInfoByJson(Object json) {	this.m_entityInfo.buildObject(json, HAPSerializationFormat.JSON);	}
+
 }

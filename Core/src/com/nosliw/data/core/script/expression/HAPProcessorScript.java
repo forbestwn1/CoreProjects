@@ -10,11 +10,11 @@ import com.nosliw.data.core.HAPUtilityDataComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.expression.HAPContextResourceExpressionGroup;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroupImp;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.expression.HAPProcessorExpression;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionSuite;
 import com.nosliw.data.core.expression.HAPUtilityExpression;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
@@ -39,7 +39,7 @@ public class HAPProcessorScript {
 		out.addConstants(constantsValue);
 		
 		//build expression suite
-		HAPResourceDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(scriptGroupDef, expressionParser);
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(scriptGroupDef, expressionParser);
 
 		//expression definition containing all expression in script 
 		HAPDefinitionExpressionGroupImp expressionDef = new HAPDefinitionExpressionGroupImp();

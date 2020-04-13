@@ -6,11 +6,12 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
-public abstract class HAPResourceDefinitionContainer extends HAPResourceDefinitionComplexImp{
-
+public abstract class HAPResourceDefinitionContainer extends HAPResourceDefinitionComplexImp implements HAPWithEntityElement<? extends HAPResourceDefinitionContainerElement>{
+ 
 	@HAPAttribute
 	public static String ELEMENT = "element";
 
@@ -20,17 +21,20 @@ public abstract class HAPResourceDefinitionContainer extends HAPResourceDefiniti
 		this.m_elements = new LinkedHashMap<String, HAPResourceDefinitionContainerElement>();
 	}
 	
-	public HAPResourceDefinitionContainerElement getElement(String name) {     return this.m_elements.get(name);     }
+	@Override
+	public HAPResourceDefinitionContainerElement getEntityElement(String name) {     return this.m_elements.get(name);     }
 	
-	public Map<String, HAPResourceDefinitionContainerElement> getAllElements(){    return this.m_elements;    }
+	@Override
+	public Map<String, HAPResourceDefinitionContainerElement> getEntityElements(){    return this.m_elements;    }
 	
-	public void addElement(String id, HAPResourceDefinitionContainerElement ele) {
+	@Override
+	public void addEntityElement(HAPResourceDefinitionContainerElement ele) {
 		String type = ele.getType();
 		if(type.equals(HAPResourceDefinitionContainerElement.TYPE_ENTITY)) {
 			HAPResourceDefinitionContainerElementEntity entityEle = (HAPResourceDefinitionContainerElementEntity)ele;
 			entityEle.getAttachmentContainer().merge(this.getAttachmentContainer(), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
 		}
-		this.m_elements.put(id, ele);  
+		this.m_elements.put(ele.getId(), ele);  
 	}
 
 	public abstract HAPResourceDefinition getElementResourceDefinition(String eleName);

@@ -11,8 +11,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
+import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;

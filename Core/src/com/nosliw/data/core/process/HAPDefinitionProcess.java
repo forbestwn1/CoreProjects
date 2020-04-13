@@ -12,7 +12,7 @@ public class HAPDefinitionProcess extends HAPComponentContainerElement{
 		super(suite, process);
 	}
 
-	public HAPDefinitionProcessSuiteElementEntity getProcess() {    return (HAPDefinitionProcessSuiteElementEntity)this.getElement();   }
+	public HAPDefinitionProcessSuiteElementEntity getProcess() {    return (HAPDefinitionProcessSuiteElementEntity)this.getEntityElement();   }
 	public HAPDefinitionProcessSuite getSuite() {   return (HAPDefinitionProcessSuite)this.getContainer();  }
 
 	@Override

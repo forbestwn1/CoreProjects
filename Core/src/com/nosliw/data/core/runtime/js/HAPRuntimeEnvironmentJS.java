@@ -10,7 +10,7 @@ import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
 import com.nosliw.data.core.expression.HAPManagerExpression;
-import com.nosliw.data.core.expression.HAPResourceManagerExpression;
+import com.nosliw.data.core.expression.resource.HAPResourceManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionPluginProcess;

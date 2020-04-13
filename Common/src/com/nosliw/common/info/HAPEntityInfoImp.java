@@ -10,13 +10,15 @@ import com.nosliw.common.utils.HAPBasicUtility;
 
 public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInfo{
 
+	private String m_id;
+	
 	//name, for display
-	protected String m_name;
+	private String m_name;
 
 	//description
-	protected String m_description;
+	private String m_description;
 	
-	protected HAPInfo m_info;
+	private HAPInfo m_info;
 
 	public HAPEntityInfoImp() {
 		this.m_info = new HAPInfoImpSimple(); 
@@ -29,15 +31,38 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	}
 
 	@Override
+	public void setId(String id) {
+		this.m_id = id;
+		if(this.m_name==null)   this.m_name = id;
+	}
+
+	@Override
+	public String getId() {    return this.m_id;    }
+	
+	@Override
 	public String getName() {  return this.m_name;   }
+
+	@Override
+	public void setName(String name) {  
+		this.m_name = name;
+		if(this.m_id==null)   this.m_id = name;
+	}
 
 	@Override
 	public String getDescription() {   return this.m_description;   }
 	
 	@Override
+	public void setDescription(String description) {   this.m_description = description;   }
+
+	@Override
 	public HAPInfo getInfo() {  return this.m_info;  }
 
 	public Object getInfoValue(String name) {  return this.m_info.getValue(name);   }
+
+	@Override
+	public void setInfo(HAPInfo info) {
+		if(info!=null)		this.m_info = info.cloneInfo();  
+	}
 	
 	@Override
 	public HAPEntityInfoImp cloneEntityInfo() {
@@ -66,8 +91,9 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	@Override
 	public void buildEntityInfoByJson(Object json) {
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_name = jsonObj.optString(NAME);
-		this.m_description = jsonObj.optString(DESCRIPTION);
+		this.setId((String)jsonObj.opt(ID));
+		this.setName((String)jsonObj.opt(NAME));
+		this.setDescription(jsonObj.optString(DESCRIPTION));
 		this.m_info = new HAPInfoImpSimple();
 		this.m_info.buildObject(jsonObj.optJSONObject(INFO), HAPSerializationFormat.JSON);
 	}
@@ -76,6 +102,7 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	public boolean equals(Object obj) {
 		if(obj instanceof HAPEntityInfoImp) {
 			HAPEntityInfoImp infoEntity = (HAPEntityInfoImp)obj;
+			if(!HAPBasicUtility.isEquals(infoEntity.m_id, this.m_id))   return false;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_name, this.m_name))   return false;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_description, this.m_description))   return false;;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_info, this.m_info))  return false;

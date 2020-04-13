@@ -1,16 +1,9 @@
 package com.nosliw.uiresource.page.definition;
 
-import com.nosliw.data.core.script.expression.expression.HAPDefinitionScriptExpression;
-
 public class HAPDefinitionUIEmbededScriptExpressionInAttribute extends HAPDefinitionUIEmbededScriptExpression{
 
 	//attribute name
 	private String m_attribute;
-
-	public HAPDefinitionUIEmbededScriptExpressionInAttribute(String attribute, String uiId, HAPDefinitionScriptExpression scriptExpression) {
-		super(uiId, scriptExpression);
-		this.m_attribute = attribute;
-	}
 
 	public HAPDefinitionUIEmbededScriptExpressionInAttribute(String attribute, String uiId, String content) {
 		super(uiId, content);

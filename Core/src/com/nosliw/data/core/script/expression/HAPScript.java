@@ -30,7 +30,7 @@ public class HAPScript extends HAPSerializableImp{
 	
 	private HAPScript() {}
 	
-	private HAPScript(String script, String type) {
+	protected HAPScript(String script, String type) {
 		this.m_script = script;
 		this.m_type = type;
 	}
@@ -38,6 +38,7 @@ public class HAPScript extends HAPSerializableImp{
 	public String getType() {   return this.m_type;    }
 	
 	public String getScript() {   return this.m_script;     }
+	public void setScript(String script) {   this.m_script = script;   }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

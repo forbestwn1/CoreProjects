@@ -53,7 +53,7 @@ public class HAPUtilityProcess {
 		for(String id : attachments.keySet()) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachments.get(id);
 			HAPDefinitionProcessSuiteElementEntity processDef = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntityJsonObj(), activityPluginMan);
-			out.addElement(id, processDef);
+			out.addEntityElement(processDef);
 		}
 		return out;
 	}

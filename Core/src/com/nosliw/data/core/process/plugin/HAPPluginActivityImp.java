@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.process.HAPContextProcessor;
@@ -33,10 +33,10 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 	
 	private HAPProcessorActivity m_processor;
 	
-	private Map<String, HAPScript> m_scripts;
+	private Map<String, HAPJsonTypeScript> m_scripts;
 	
 	public HAPPluginActivityImp() {
-		this.m_scripts = new LinkedHashMap<String, HAPScript>();
+		this.m_scripts = new LinkedHashMap<String, HAPJsonTypeScript>();
 	}
 	
 	@Override
@@ -60,7 +60,7 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 	}
 	
 	public void addScript(String type, String script) {
-		this.m_scripts.put(type, new HAPScript(script));
+		this.m_scripts.put(type, new HAPJsonTypeScript(script));
 	}
 	
 	@Override
@@ -92,7 +92,7 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 	}
 
 	@Override
-	public HAPScript getScript(String env) {
+	public HAPJsonTypeScript getScript(String env) {
 		return this.m_scripts.get(env);
 	}
 

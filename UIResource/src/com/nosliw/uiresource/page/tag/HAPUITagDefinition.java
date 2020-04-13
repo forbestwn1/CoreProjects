@@ -9,7 +9,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -36,7 +36,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	private HAPUITagId m_name;
 	
 	//javascript
-	private HAPScript m_script;
+	private HAPJsonTypeScript m_script;
 
 	//attribute definition
 	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
@@ -54,7 +54,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	
 	public HAPUITagDefinition(HAPUITagId name, String script){
 		this.m_name = name;
-		this.m_script = new HAPScript(script);
+		this.m_script = new HAPJsonTypeScript(script);
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
 		this.m_context = new HAPUITagDefinitionContext();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependency>();
@@ -63,7 +63,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	
 	public HAPUITagId getName(){return this.m_name;}
 	
-	public HAPScript getScript(){return this.m_script;}
+	public HAPJsonTypeScript getScript(){return this.m_script;}
 	
 	public HAPUITagDefinitionContext getContext(){  return this.m_context;   }
 

@@ -2,7 +2,7 @@ package com.nosliw.uiresource.page.processor;
 
 import java.util.Map;
 
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;

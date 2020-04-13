@@ -1,6 +1,6 @@
 package com.nosliw.data.core.event;
 
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.service.interfacee.HAPServiceRequest;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 

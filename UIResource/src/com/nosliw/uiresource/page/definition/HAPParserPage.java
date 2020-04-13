@@ -2,7 +2,6 @@ package com.nosliw.uiresource.page.definition;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -18,8 +17,8 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import com.nosliw.common.configure.HAPConfigure;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -28,8 +27,8 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParserContext;
-import com.nosliw.data.core.script.expression.expression.HAPDefinitionScriptExpression;
-import com.nosliw.data.core.script.expression.literate.HAPDefinitionEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.HAPScript;
+import com.nosliw.data.core.script.expression.literate.HAPUtilityScriptLiterate;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 
@@ -40,7 +39,7 @@ import com.nosliw.uiresource.common.HAPIdGenerator;
 public class HAPParserPage {
 
 	public static final String EVENT = "events";
-	public static final String ATTATCHMENT = "attachment";
+	public static final String ATTACHMENT = "attachment";
 	public static final String SERVICE = "services";
 	public static final String SERVICE_USE = "use";
 	public static final String SERVICE_PROVIDER = "provider";
@@ -95,7 +94,7 @@ public class HAPParserPage {
 		//process context block
 		this.parseUnitContextBlocks(unitEle, uiUnit);
 		//process expression block
-		this.parseUnitExpressionBlocks(unitEle, uiUnit);
+//		this.parseUnitExpressionBlocks(unitEle, uiUnit);
 		
 		//parse event definition block
 		this.parseUnitEventBlocks(unitEle, uiUnit);
@@ -206,7 +205,7 @@ public class HAPParserPage {
 	}
 
 	private void parseAttachmentBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, ATTATCHMENT);
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, ATTACHMENT);
 		for(Element childEle : childEles){
 			try {
 				JSONObject attachmentDefJson = new JSONObject(childEle.html());
@@ -271,26 +270,26 @@ public class HAPParserPage {
 		for(Element childEle : childEles)  childEle.remove();
 	}
 	
-	private void parseUnitExpressionBlocks(Element ele, HAPDefinitionUIUnit resource){
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EXPRESSION);
-
-		for(Element childEle : childEles){
-			try {
-				String content = childEle.html();
-				JSONObject defsJson = new JSONObject(content);
-				Iterator<String> defNames = defsJson.keys();
-				while(defNames.hasNext()){
-					String defName = defNames.next();
-					resource.addExpressionDefinition(defName, defsJson.optString(defName));
-				}
-				break;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}		
-
-		for(Element childEle : childEles)   childEle.remove();
-	}
+//	private void parseUnitExpressionBlocks(Element ele, HAPDefinitionUIUnit resource){
+//		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EXPRESSION);
+//
+//		for(Element childEle : childEles){
+//			try {
+//				String content = childEle.html();
+//				JSONObject defsJson = new JSONObject(content);
+//				Iterator<String> defNames = defsJson.keys();
+//				while(defNames.hasNext()){
+//					String defName = defNames.next();
+//					resource.addExpressionDefinition(defName, defsJson.optString(defName));
+//				}
+//				break;
+//			} catch (JSONException e) {
+//				e.printStackTrace();
+//			}
+//		}		
+//
+//		for(Element childEle : childEles)   childEle.remove();
+//	}
 	
 	/*
 	 * process all script blocks under unit
@@ -300,7 +299,7 @@ public class HAPParserPage {
 		
 		scirptEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SCRIPT);
 		for(Element scriptEle : scirptEles){
-			HAPScript jsBlock = new HAPScript(scriptEle.html());
+			HAPJsonTypeScript jsBlock = new HAPJsonTypeScript(scriptEle.html());
 			resource.setJSBlock(jsBlock);
 			break;
 		}
@@ -315,15 +314,19 @@ public class HAPParserPage {
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
-			HAPDefinitionEmbededScriptExpression embededScriptExpressionDef = new HAPDefinitionEmbededScriptExpression(text);
+			
+			List<HAPScript> scriptSegs = HAPUtilityScriptLiterate.parseScriptLiterate(text);
 			StringBuffer newText = new StringBuffer();
-			for(Object segment : embededScriptExpressionDef.getElements()){
-				if(segment instanceof String){
-					newText.append((String)segment);
+			for(HAPScript scriptSeg : scriptSegs){
+				String scriptType = scriptSeg.getType();
+				if(HAPConstant.SCRIPT_TYPE_SEG_TEXT.equals(scriptType)){
+					newText.append(scriptSeg.getScript());
 				}
-				else if(segment instanceof HAPDefinitionScriptExpression){
-					HAPDefinitionScriptExpression scriptExpression = (HAPDefinitionScriptExpression)segment;
-					HAPDefinitionUIEmbededScriptExpressionInContent expressionContent = new HAPDefinitionUIEmbededScriptExpressionInContent(this.m_idGenerator.createId(), scriptExpression);
+				else if(HAPConstant.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT.equals(scriptType)) {
+					List<HAPScript> s = new ArrayList<HAPScript>(); 
+					s.add(scriptSeg);
+					String sStr = HAPUtilityScriptLiterate.buildScriptLiterate(s);
+					HAPDefinitionUIEmbededScriptExpressionInContent expressionContent = new HAPDefinitionUIEmbededScriptExpressionInContent(this.m_idGenerator.createId(), sStr);
 					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
 					resource.addScriptExpressionInContent(expressionContent);
 				}
@@ -356,8 +359,9 @@ public class HAPParserPage {
 		for(Attribute eleAttr : eleAttrs){
 			String eleAttrKey = eleAttr.getKey();
 			//replace express attribute value with; create ExpressEle object
-			HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr = new HAPDefinitionUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, eleAttr.getValue());
-			if(!eAttr.isString()){
+			String attrValue = eleAttr.getValue();
+			if(!HAPUtilityScriptLiterate.isText(attrValue)) {
+				HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr = new HAPDefinitionUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, eleAttr.getValue());
 				if(isCustomerTag)  resource.addScriptExpressionInTagAttribute(eAttr);
 				else  resource.addScriptExpressionInAttribute(eAttr);
 				ele.attr(eleAttrKey, "");

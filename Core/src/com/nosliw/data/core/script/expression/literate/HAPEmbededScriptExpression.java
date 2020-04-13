@@ -8,7 +8,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateNamePrefix;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
@@ -145,15 +145,15 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
 
-		jsonMap.put(SCRIPTFUNCTION, new HAPScript(HAPUtilityRuntimeJSScript.buildMainScriptEmbededScriptExpression(this)).toStringValue(HAPSerializationFormat.JSON_FULL));
-		typeJsonMap.put(SCRIPTFUNCTION, HAPScript.class);
+		jsonMap.put(SCRIPTFUNCTION, new HAPJsonTypeScript(HAPUtilityRuntimeJSScript.buildMainScriptEmbededScriptExpression(this)).toStringValue(HAPSerializationFormat.JSON_FULL));
+		typeJsonMap.put(SCRIPTFUNCTION, HAPJsonTypeScript.class);
 		
 		Map<String, String> scriptJsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> scriptTypeJsonMap = new LinkedHashMap<String, Class<?>>();
 		for(String name : this.getScriptExpressions().keySet()) {
 			HAPScriptExpression scriptExpression = this.getScriptExpressions().get(name);
 			scriptJsonMap.put(name, scriptExpression.toResourceData(runtimeInfo).toString());
-			scriptTypeJsonMap.put(name, HAPScript.class);
+			scriptTypeJsonMap.put(name, HAPJsonTypeScript.class);
 		}
 		jsonMap.put(SCRIPTEXPRESSIONSCRIPTFUNCTION, HAPJsonUtility.buildMapJson(scriptJsonMap, scriptTypeJsonMap));
 

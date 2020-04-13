@@ -1,9 +1,11 @@
-package com.nosliw.data.core.expression;
+package com.nosliw.data.core.expression.resource;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;

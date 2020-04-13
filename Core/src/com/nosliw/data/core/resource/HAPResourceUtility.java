@@ -68,7 +68,19 @@ public class HAPResourceUtility {
 	public static String[] parseResourceIdLiterate(String idLiterate) {
 		return HAPNamingConversionUtility.parseLevel2(idLiterate);
 	}
-	
+
+	public static Object getImpliedEntity(HAPResourceId resourceId, Map<String, ?extends Object> container, HAPManagerResourceDefinition resourceDefMan) {
+		Object out = null;
+		if(resourceId.getStructure().equals(HAPConstant.RESOURCEID_TYPE_SIMPLE) && isLocalReference(resourceId)) {
+			//for reference local, get it from container
+			out = container.get(((HAPResourceIdSimple)resourceId).getId());
+		}
+		else {
+			out = resourceDefMan.getResourceDefinition(resourceId);
+		}
+		return out;
+	}	
+
 	public static HAPResourceDefinition getImpliedResourceDefinition(HAPResourceId resourceId, HAPResourceDefinitionContainer container, HAPManagerResourceDefinition resourceDefMan) {
 		HAPResourceDefinition resourceDef = null;
 		if(resourceId.getStructure().equals(HAPConstant.RESOURCEID_TYPE_SIMPLE) && isLocalReference(resourceId)) {

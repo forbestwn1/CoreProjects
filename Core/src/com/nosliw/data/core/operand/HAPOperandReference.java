@@ -123,7 +123,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		
 		Map<String, HAPDataTypeCriteria> cs = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		cs.put(this.m_elementName, expectCriteria);
-		this.m_expression.discover(cs, processTracker);
+		this.m_expression.discover(cs, dataTypeHelper, processTracker);
 
 		//variable
 		Map<String, HAPVariableInfo> internalVariablesInfo = this.m_expression.getVarsInfo();

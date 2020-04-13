@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
@@ -200,7 +200,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 			jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(m_outputMatchers, HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(CONVERTFUNCTION, HAPUtilityScript.buildAssociationConvertFunction(this).getScript());
-		typeJsonMap.put(CONVERTFUNCTION, HAPScript.class);
+		typeJsonMap.put(CONVERTFUNCTION, HAPJsonTypeScript.class);
 	}
 	
 	@Override

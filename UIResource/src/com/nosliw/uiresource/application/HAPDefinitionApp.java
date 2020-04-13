@@ -36,18 +36,20 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 		this.m_applicationData = new LinkedHashMap<String, HAPDefinitionAppData>();
 	}
 	
+	@Override
 	public String getId() {   return this.m_id;   }
+	@Override
 	public void setId(String id) {   this.m_id = id;   }
 	public Map<String, HAPDefinitionAppData> getApplicationData(){   return this.m_applicationData;   }
 	public void setApplicationData(Map<String, HAPDefinitionAppData> dataDef) {		if(dataDef!=null)   this.m_applicationData = dataDef;	}
 
 	public void addEntry(HAPDefinitionAppElementUI entry) {
-		String name = entry.getName();
-		if(HAPBasicUtility.isStringEmpty(name)) {
-			name = HAPUtilityApp.ENTRY_DEFAULT;
-			entry.setName(name);
+		String id = entry.getId();
+		if(HAPBasicUtility.isStringEmpty(id)) {
+			id = HAPUtilityApp.ENTRY_DEFAULT;
+			entry.setName(id);
 		}
-		this.addElement(name, entry);
+		this.addEntityElement(entry);
 	}
 	
 	@Override
@@ -57,7 +59,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
 		//entry part
-		Map<String, HAPResourceDefinitionContainerElement> entrys = this.getAllElements();
+		Map<String, HAPResourceDefinitionContainerElement> entrys = this.getEntityElements();
 		for(String name : entrys.keySet()) {
 			HAPResourceDefinitionContainerElement entry = entrys.get(name);
 			out.addChildCompoentId(new HAPChildrenComponentId(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), entry.getInfo()), this.getAttachmentContainer());

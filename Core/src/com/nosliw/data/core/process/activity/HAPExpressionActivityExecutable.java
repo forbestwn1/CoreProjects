@@ -7,7 +7,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPActivityPluginId;
@@ -73,7 +73,7 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		jsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPUtilityRuntimeJSScript.buildScriptExpressionJSFunction(this.m_scriptExpression));
-		typeJsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPScript.class);
+		typeJsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPJsonTypeScript.class);
 	}	
 	
 }

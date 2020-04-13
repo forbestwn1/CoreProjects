@@ -9,6 +9,8 @@ import com.nosliw.data.core.component.HAPResourceDefinitionComplex;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.expression.resource.HAPDefinitionResourceDefinitionExpressionSuiteElementEntity;
+import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
 
 public class HAPUtilityExpressionComponent {
 
@@ -17,7 +19,7 @@ public class HAPUtilityExpressionComponent {
 		component.cloneToComplexResourceDefinition(out);
 		
 		if(component instanceof HAPComponentContainerElement) {
-			out = buildExpressionSuiteFromComponent(((HAPComponentContainerElement)component).getElement(), expressionParser);
+			out = buildExpressionSuiteFromComponent(((HAPComponentContainerElement)component).getEntityElement(), expressionParser);
 		}
 		else if(component instanceof HAPComponentImp) {
 			component.cloneToComplexResourceDefinition(out);
@@ -30,11 +32,11 @@ public class HAPUtilityExpressionComponent {
 		return out;
 	}
 	
-	public static void buildExpressionSuiteFromAttachment(HAPResourceDefinitionExpressionSuite suite, HAPAttachmentContainer attachmentContainer, HAPParserExpression expressionParser) {
+	public static void buildExpressionSuiteFromAttachment(HAPDefinitionExpressionSuite suite, HAPAttachmentContainer attachmentContainer, HAPParserExpression expressionParser) {
 		Map<String, HAPAttachment> expressionAtts = attachmentContainer.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION);
 		for(String name : expressionAtts.keySet()) {
 			HAPAttachment attachment = expressionAtts.get(name);
-			suite.addElement(attachment.getName(), buildExpressionSuiteElementFromAttachment(attachment, expressionParser));
+			suite.addExpressionGroup(buildExpressionSuiteElementFromAttachment(attachment, expressionParser));
 		}
 		HAPUtilityExpression.normalizeReference(suite);
 	}
@@ -44,6 +46,7 @@ public class HAPUtilityExpressionComponent {
 		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
 			out = HAPParserExpressionDefinition.parseExpressionSuiteElement(entityAttachment.getEntityJsonObj(), expressionParser);
+			attachment.cloneToEntityInfo(out);
 		}
 		else if(HAPConstant.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
 		}

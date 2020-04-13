@@ -70,7 +70,7 @@ public class HAPUtilityComponent {
 	
 	public static HAPContextStructure processElementComponentContext(HAPComponentContainerElement component, HAPContextStructure extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
 		HAPContextStructure parentContext = HAPUtilityContext.hardMerge(component.getContainer().getContextStructure(), extraContext); 
-		HAPContextStructure processedEleContext = HAPProcessorContext.process(component.getElement().getContextStructure(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);
+		HAPContextStructure processedEleContext = HAPProcessorContext.process(component.getEntityElement().getContextStructure(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);
 		return HAPUtilityContext.hardMerge(parentContext, processedEleContext);
 	}
 
@@ -78,7 +78,13 @@ public class HAPUtilityComponent {
 	public static void mergeWithParentAttachment(HAPWithAttachment withAttachment, HAPAttachmentContainer parentAttachment) {
 		withAttachment.getAttachmentContainer().merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
 	}
-	
+
+	public static HAPAttachmentContainer mergeWithParentAttachment(HAPAttachmentContainer attachment, HAPAttachmentContainer parentAttachment) {
+		HAPAttachmentContainer out = attachment.cloneAttachmentContainer();
+		out.merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
+		return out;
+	}
+
 	public static HAPAttachmentContainer buildNameMappedAttachment(HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
 		HAPAttachmentContainer out = null;
 		if(withNameMapping==null)   out = attachment;
@@ -87,7 +93,6 @@ public class HAPUtilityComponent {
 		return out;
 	}
 
-	
 	//build attachment mapping for internal component
 	public static HAPAttachmentContainer buildInternalAttachment(HAPResourceId resourceId, HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
 		HAPAttachmentContainer out = buildNameMappedAttachment(attachment, withNameMapping); 
@@ -96,8 +101,6 @@ public class HAPUtilityComponent {
 		}
 		return out;
 	}
-	
-
 	
 	public static void buildServiceChildrenComponent(HAPChildrenComponentIdContainer out, HAPWithServiceUse withServiceProvider, HAPAttachmentContainer attachment) {
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = withServiceProvider.getServiceProviderDefinitions(); 

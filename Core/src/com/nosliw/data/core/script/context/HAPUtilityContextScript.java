@@ -8,14 +8,14 @@ import org.json.JSONObject;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPUtilityContextScript {
 
-	public static HAPScript buildContextInitScript(HAPContextGroup context) {
+	public static HAPJsonTypeScript buildContextInitScript(HAPContextGroup context) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		//build init output object 
 		JSONObject output = HAPUtilityContextScript.buildDefaultJsonObject(context);
@@ -23,7 +23,7 @@ public class HAPUtilityContextScript {
 
 		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityContextScript.class, "ContextInitFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
-		return new HAPScript(script);
+		return new HAPJsonTypeScript(script);
 	}
 	
 	//build default value structure for context group

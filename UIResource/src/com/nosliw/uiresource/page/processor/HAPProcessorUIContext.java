@@ -6,7 +6,6 @@ import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
@@ -190,10 +189,11 @@ public class HAPProcessorUIContext {
 		}
 		
 		//build variables
-		Map<String, HAPVariableInfo> varsInfo = HAPUtilityContext.discoverDataVariablesInContext(flatContext.getContext());
-		for(String varName : varsInfo.keySet()) {
-			uiExe.getExpressionContext().addDataVariable(varName, varsInfo.get(varName));
-		}
+		uiExe.getExpressionContext().getExpressionDefinitionSuite().setContextStructure(flatContext.getContext());
+//		Map<String, HAPVariableInfo> varsInfo = HAPUtilityContext.discoverDataVariablesInContext(flatContext.getContext());
+//		for(String varName : varsInfo.keySet()) {
+//			uiExe.getExpressionContext().addDataVariable(varName, varsInfo.get(varName));
+//		}
 		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {

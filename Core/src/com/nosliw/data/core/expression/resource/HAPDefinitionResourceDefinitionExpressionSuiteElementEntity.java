@@ -1,4 +1,4 @@
-package com.nosliw.data.core.expression;
+package com.nosliw.data.core.expression.resource;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,6 +9,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementEntityImpComponent;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 
 public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity extends HAPResourceDefinitionContainerElementEntityImpComponent implements HAPDefinitionExpressionGroup{
 

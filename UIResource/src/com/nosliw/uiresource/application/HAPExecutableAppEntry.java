@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
@@ -128,7 +128,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 		jsonMap.put(PROCESS, HAPJsonUtility.buildMapJson(jsonProcessMap)); 
 
 		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
-		typeJsonMap.put(INITSCRIPT, HAPScript.class);
+		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
 
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}

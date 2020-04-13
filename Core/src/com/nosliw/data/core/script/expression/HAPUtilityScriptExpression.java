@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 
 public class HAPUtilityScriptExpression {

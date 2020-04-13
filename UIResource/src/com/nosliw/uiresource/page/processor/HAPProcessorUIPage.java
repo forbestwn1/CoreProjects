@@ -42,8 +42,8 @@ public class HAPProcessorUIPage {
 		HAPExecutableUIUnitPage out = new HAPExecutableUIUnitPage(uiPageDef, id);
 
 		//compile definition to executable
-		HAPProcessorCompile.process(out, null);
-		
+		HAPProcessorCompile.process(uiPageDef, out, null);
+
 		//build page context by parent context override context defined in page
 		HAPContextGroup pageContext = uiPageDef.getContextNotFlat().cloneContextGroup();
 		if(context!=null) {

@@ -13,7 +13,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -243,7 +243,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
-		HAPScript script = this.m_uiUnitDefinition.getScriptBlock();
+		HAPJsonTypeScript script = this.m_uiUnitDefinition.getScriptBlock();
 		if(script!=null){
 			jsonMap.put(SCRIPT, script.toStringValue(HAPSerializationFormat.JSON_FULL));
 			typeJsonMap.put(SCRIPT, script.getClass());

@@ -10,9 +10,10 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPUtilityDataComponent;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.common.HAPWithDataContext;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.component.HAPWithDataContext;
+import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperandReference;
@@ -90,9 +91,14 @@ public class HAPProcessorExpression {
 		//constant
 		//constant --- discover constant
 		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>();
-		Map<String, HAPDefinitionConstant> cstDefs = HAPUtilityDataComponent.buildDataConstantDefinition(expressionDef.getAttachmentContainer());
-		for(String name : cstDefs.keySet()) {
-			constants.put(name, cstDefs.get(name).getData());
+		if(expressionDef instanceof HAPWithAttachment) {
+			Map<String, HAPDefinitionConstant> cstDefs = HAPUtilityDataComponent.buildDataConstantDefinition(((HAPWithAttachment)expressionDef).getAttachmentContainer());
+			for(String name : cstDefs.keySet()) {
+				constants.put(name, cstDefs.get(name).getData());
+			}
+		}
+		else {
+			throw new RuntimeException();
 		}
 
 		//variable

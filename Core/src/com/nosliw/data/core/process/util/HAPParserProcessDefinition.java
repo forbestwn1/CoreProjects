@@ -22,15 +22,14 @@ public class HAPParserProcessDefinition {
 		JSONArray processesArray = processSuiteJson.getJSONArray(HAPDefinitionProcessSuite.ELEMENT);
 		for(int i=0; i<processesArray.length(); i++){
 			JSONObject processObjJson = processesArray.getJSONObject(i);
-			String id = processObjJson.getString("id");
 			Object refObj = processObjJson.opt(HAPDefinitionProcessSuiteElementReference.REFERENCE);
 			if(refObj==null) {
 				//process
-				out.addElement(id, parseProcess(processObjJson, activityPluginMan));
+				out.addEntityElement(parseProcess(processObjJson, activityPluginMan));
 			}
 			else {
 				//reference
-				out.addElement(id, parseProcessReference(processObjJson));
+				out.addEntityElement(parseProcessReference(processObjJson));
 			}
 		}
 		return out;

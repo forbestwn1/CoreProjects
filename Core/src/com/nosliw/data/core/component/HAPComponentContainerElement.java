@@ -11,6 +11,7 @@ import com.nosliw.common.info.HAPInfoUtility;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.common.HAPWithDataContext;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -41,7 +42,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public HAPComponentContainerElement(HAPResourceDefinitionContainer componentContainer, String elementName) {
 		this.m_componentContainer = componentContainer;
 		this.m_elementName = elementName;
-		this.setElement(((HAPComponent)this.getContainer().getElement(this.getElementName())).cloneComponent());
+		this.setElement(((HAPComponent)this.getContainer().getEntityElement(this.getElementName())).cloneComponent());
 		HAPUtilityComponent.mergeWithParentAttachment(this.m_element, this.m_componentContainer.getAttachmentContainer());
 		HAPInfoUtility.softMerge(this.m_element.getInfo(), this.m_componentContainer.getInfo());
 	}
@@ -52,7 +53,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public String getElementName() {   return this.m_elementName;   }
 	public void setElementName(String name) {   this.m_elementName = name;    }
 	
-	public HAPComponent getElement() {   return this.m_element;   }
+	public HAPComponent getEntityElement() {   return this.m_element;   }
 	public void setElement(HAPComponent element) {   this.m_element = element;   }
 	
 
@@ -68,7 +69,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public HAPInfo getInfo() {		return this.m_element.getInfo();	}
 	
 	@Override
-	public HAPAttachmentContainer getAttachmentContainer() {  return this.getElement().getAttachmentContainer(); }
+	public HAPAttachmentContainer getAttachmentContainer() {  return this.getEntityElement().getAttachmentContainer(); }
 
 	protected void cloneToComponentContainerElement(HAPComponentContainerElement componentContainerElement) {
 		componentContainerElement.m_elementName = this.m_elementName;

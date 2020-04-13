@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.process.HAPContextProcessor;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
@@ -51,5 +51,5 @@ public interface HAPPluginActivity {
 	
 	HAPExecutableActivity buildActivityExecutable(Object obj);
 	
-	HAPScript getScript(String env);
+	HAPJsonTypeScript getScript(String env);
 }

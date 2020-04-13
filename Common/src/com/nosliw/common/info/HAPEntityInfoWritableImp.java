@@ -9,17 +9,6 @@ public class HAPEntityInfoWritableImp extends HAPEntityInfoImp implements HAPEnt
 	}
 	
 	@Override
-	public void setInfo(HAPInfo info) {
-		if(info!=null)		this.m_info = info.cloneInfo();  
-	}
-	
-	@Override
-	public void setName(String name) {  this.m_name = name;    }
-
-	@Override
-	public void setDescription(String description) {   this.m_description = description;   }
-
-	@Override
 	public HAPEntityInfoImp cloneEntityInfo() {
 		HAPEntityInfoWritableImp out = new HAPEntityInfoWritableImp();
 		this.cloneToEntityInfo(out);

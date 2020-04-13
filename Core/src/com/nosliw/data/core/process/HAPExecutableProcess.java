@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
@@ -168,7 +168,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 		jsonMap.put(RESULT, HAPJsonUtility.buildMapJson(resultsJsonMap));
 	
 		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
-		typeJsonMap.put(INITSCRIPT, HAPScript.class);
+		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
 	}
 
 	@Override

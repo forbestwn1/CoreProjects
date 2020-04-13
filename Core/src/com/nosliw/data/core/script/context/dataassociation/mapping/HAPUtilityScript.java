@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -22,7 +22,7 @@ import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 
 public class HAPUtilityScript {
 
-	public static HAPScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationMapping dataAssociation) {
+	public static HAPJsonTypeScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationMapping dataAssociation) {
 		StringBuffer assocationScripts = new StringBuffer();
 		Map<String, HAPExecutableAssociation> associations = dataAssociation.getAssociations();
 		for(String targetName : associations.keySet()) {
@@ -33,10 +33,10 @@ public class HAPUtilityScript {
 		templateParms.put("buildAssociations", assocationScripts.toString());
 		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityScript.class, "DataAssociationFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
-		return new HAPScript(script);
+		return new HAPJsonTypeScript(script);
 	}
 	
-	public static HAPScript buildAssociationConvertFunction(HAPExecutableAssociation association) {
+	public static HAPJsonTypeScript buildAssociationConvertFunction(HAPExecutableAssociation association) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("isFlatOutput", association.isFlatOutput()+"");
 		templateParms.put("isFlatInput", association.isFlatInput()+"");
@@ -64,7 +64,7 @@ public class HAPUtilityScript {
 		
 		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityScript.class, "AssociationFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
-		return new HAPScript(script);
+		return new HAPJsonTypeScript(script);
 	}
 
 	private static String buildJSArrayFromContextPath(String path) {

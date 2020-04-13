@@ -1,13 +1,14 @@
 package com.nosliw.data.core.expression;
 
-import java.util.Map;
+import com.nosliw.common.info.HAPEntityInfoWritable;
+import com.nosliw.data.core.common.HAPWithConstantDefinition;
+import com.nosliw.data.core.common.HAPWithDataContext;
+import com.nosliw.data.core.common.HAPWithEntityElement;
 
-import com.nosliw.data.core.component.HAPWithAttachment;
-
-public interface HAPDefinitionExpressionGroup extends HAPWithAttachment{
-
-	Map<String, HAPDefinitionExpression> getExpressions();
-	
-	void addExpression(HAPDefinitionExpression expression);
+public interface HAPDefinitionExpressionGroup extends 
+			HAPWithEntityElement<HAPDefinitionExpression>, 
+			HAPEntityInfoWritable, 
+			HAPWithDataContext, 
+			HAPWithConstantDefinition{
 
 }

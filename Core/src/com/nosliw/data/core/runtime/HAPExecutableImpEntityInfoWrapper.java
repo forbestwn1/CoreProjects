@@ -19,6 +19,9 @@ abstract public class HAPExecutableImpEntityInfoWrapper extends HAPExecutableImp
 	}
 	
 	@Override
+	public String getId() {  return this.m_entityInfo.getId(); }
+
+	@Override
 	public HAPInfo getInfo() {  return this.m_entityInfo.getInfo();  }
 
 	@Override
@@ -26,6 +29,19 @@ abstract public class HAPExecutableImpEntityInfoWrapper extends HAPExecutableImp
 
 	@Override
 	public String getDescription() {   return this.m_entityInfo.getDescription();  }
+
+	@Override
+	public void setId(String id) {   this.m_entityInfo.setId(id); }
+
+	@Override
+	public void setName(String name) {  this.m_entityInfo.setName(name);  }
+
+	@Override
+	public void setDescription(String description) {  this.m_entityInfo.setDescription(description);  }
+
+	@Override
+	public void setInfo(HAPInfo info) {  this.m_entityInfo.setInfo(info);  }
+
 
 	@Override
 	public HAPExecutableImpEntityInfoWrapper clone() {

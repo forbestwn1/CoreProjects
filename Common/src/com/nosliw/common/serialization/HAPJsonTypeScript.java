@@ -1,10 +1,10 @@
 package com.nosliw.common.serialization;
 
-public class HAPScript extends HAPSerializableImp implements HAPJsonTypeAsItIs{
+public class HAPJsonTypeScript extends HAPSerializableImp implements HAPJsonTypeAsItIs{
 
 	private String m_script;
 	
-	public HAPScript(String script){
+	public HAPJsonTypeScript(String script){
 		this.m_script = script;
 	}
 	

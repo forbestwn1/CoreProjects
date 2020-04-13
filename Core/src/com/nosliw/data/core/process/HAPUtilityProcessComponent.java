@@ -24,11 +24,11 @@ public class HAPUtilityProcessComponent {
 			
 			for(String name : processAtts.keySet()) {
 				HAPAttachment attachment = processAtts.get(name);
-				out.addElement(attachment.getName(), HAPUtilityProcessComponent.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan));
+				out.addEntityElement(HAPUtilityProcessComponent.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan));
 			}
 		}
 		else if(component instanceof HAPComponentContainerElement) {
-			out = buildProcessSuiteFromComponent(((HAPComponentContainerElement)component).getElement(), activityPluginMan);
+			out = buildProcessSuiteFromComponent(((HAPComponentContainerElement)component).getEntityElement(), activityPluginMan);
 		}
 		return out;
 	}

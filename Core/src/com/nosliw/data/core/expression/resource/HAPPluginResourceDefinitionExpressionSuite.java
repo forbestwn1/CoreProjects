@@ -1,4 +1,4 @@
-package com.nosliw.data.core.expression;
+package com.nosliw.data.core.expression.resource;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +8,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
+import com.nosliw.data.core.expression.HAPImporterExpressionSuiteDefinition;
+import com.nosliw.data.core.expression.HAPParserExpression;
+import com.nosliw.data.core.expression.HAPParserExpressionDefinition;
+import com.nosliw.data.core.expression.HAPResourceIdExpressionSuite;
+import com.nosliw.data.core.expression.HAPUtilityExpression;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;

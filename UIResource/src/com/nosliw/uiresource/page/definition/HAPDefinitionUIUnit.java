@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponentUseServiceImp;
 import com.nosliw.data.core.component.HAPNameMapping;
@@ -24,10 +24,10 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 	private HAPDefinitionUIUnit m_parent;
 	
 	//all java script blocks within this unit
-	private HAPScript m_script;
+	private HAPJsonTypeScript m_script;
 
 	//expression definition within this unit
-	private Map<String, String> m_expressionDefinitions;
+//	private Map<String, String> m_expressionDefinitions;
 
 	//html content after compilation
 	private String m_content; 
@@ -70,7 +70,7 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 		this.m_normalTagEvents = new HashSet<HAPElementEvent>();
 		this.m_customTagEvents = new HashSet<HAPElementEvent>();
 		this.m_attributes = new LinkedHashMap<String, String>();
-		this.m_expressionDefinitions = new LinkedHashMap<String, String>();
+//		this.m_expressionDefinitions = new LinkedHashMap<String, String>();
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 		this.m_nameMapping = new HAPNameMapping();
@@ -79,17 +79,17 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 	abstract public String getType(); 
 
 	public HAPDefinitionUIUnit getParent() {   return this.m_parent;  }
-	public HAPScript getScriptBlock() {  return this.m_script;  }
+	public HAPJsonTypeScript getScriptBlock() {  return this.m_script;  }
 	public Set<HAPElementEvent> getNormalTagEvents(){  return this.m_normalTagEvents;   }
 	public Set<HAPElementEvent> getCustomTagEvents(){   return this.m_customTagEvents;   }
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public String getContent() {  return this.m_content;  }
 	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_eventsDefinition;    }
 	public Map<String, HAPDefinitionUICommand> getCommandDefinition() {   return this.m_commandsDefinition;  }
-	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
+//	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
 	
 	public void setParent(HAPDefinitionUIUnit parent) {	this.m_parent = parent;	}
-	public void setJSBlock(HAPScript jsBlock){this.m_script = jsBlock;}
+	public void setJSBlock(HAPJsonTypeScript jsBlock){this.m_script = jsBlock;}
 	public void setContent(String content){	this.m_content = content;	}
 	public Collection<HAPDefinitionUITag> getUITags(){return this.m_uiTags.values();} 
 
@@ -99,7 +99,7 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 	
 	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
 	public void addEventDefinition(HAPDefinitionUIEvent def) {  this.m_eventsDefinition.put(def.getName(), def);   }
-	public void addExpressionDefinition(String name, String expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
+//	public void addExpressionDefinition(String name, String expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
 	public void addScriptExpressionInAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
 	public void addScriptExpressionInTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}
 	public void addScriptExpressionInContent(HAPDefinitionUIEmbededScriptExpressionInContent scriptExpressionInContent){	this.m_scriptExpressionsInContent.add(scriptExpressionInContent);	}

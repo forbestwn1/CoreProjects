@@ -6,7 +6,7 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.updatename.HAPUpdateNamePrefix;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
+import com.nosliw.data.core.expression.resource.HAPDefinitionResourceDefinitionExpressionSuiteElementEntity;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -23,16 +23,14 @@ public class HAPUtilityExpression {
 		return name.substring((expression.getId()+"_").length());
 	}
 
-	public static void normalizeReference(HAPResourceDefinitionExpressionSuite expressionSuite) {
-		Map<String, HAPResourceDefinitionContainerElement> elements = expressionSuite.getAllElements();
+	public static void normalizeReference(HAPDefinitionExpressionSuite expressionSuite) {
+		Map<String, HAPDefinitionExpressionGroup> elements = expressionSuite.getExpressionGroups();
 		for(String name : elements.keySet()) {
-			HAPResourceDefinitionContainerElement element = elements.get(name);
-			if(element.getType().equals(HAPResourceDefinitionContainerElement.TYPE_ENTITY)) {
-				HAPDefinitionResourceDefinitionExpressionSuiteElementEntity expressionEle = (HAPDefinitionResourceDefinitionExpressionSuiteElementEntity)element;
-				Map<String, HAPDefinitionExpression> expressions = expressionEle.getExpressions();
-				for(String expName : expressions.keySet()) {
-					normalizeReference(expressions.get(expName));
-				}
+			HAPDefinitionExpressionGroup element = elements.get(name);
+			HAPDefinitionResourceDefinitionExpressionSuiteElementEntity expressionEle = (HAPDefinitionResourceDefinitionExpressionSuiteElementEntity)element;
+			Map<String, HAPDefinitionExpression> expressions = expressionEle.getExpressions();
+			for(String expName : expressions.keySet()) {
+				normalizeReference(expressions.get(expName));
 			}
 		}
 	}

@@ -105,7 +105,7 @@
 				"name": "fromConstant",
 				"entity": {
 					"dataTypeId": "test.integer;1.0.0",
-					"value": 12345
+					"value": 3
 				}
 			},
 			{
@@ -149,7 +149,7 @@
 				"name": "expression1",
 				"description": "standard",
 				"entity" : {
-					"expression" : "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
+					"expression" : "!(test.string)!.subString(?(baseVar)?,from:&(fromConstant)&,to:?(toVar)?)",
 				}
 			},		
 		]
@@ -168,7 +168,7 @@
 		{
 			"id": "test2",
 			"info": {
-				"disable" : ""
+				"disable1" : ""
 			},
 			"name": "test2",
 			"type": "expression",
@@ -198,7 +198,7 @@
 		{
 			"id": "test5",
 			"info": {
-				"disable1" : ""
+				"disable" : ""
 			},
 			"name": "test5",
 			"type": "literate",

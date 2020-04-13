@@ -14,6 +14,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 
 abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  implements HAPEntityInfoWritable{
 	
+	protected String m_id;
+	
 	//name, for display
 	protected String m_name;
 
@@ -29,6 +31,11 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 		this.m_description = entityInfo.getDescription();
 		this.m_info = entityInfo.getInfo();
 	}
+	
+	@Override
+	public String getId() {   return this.m_id;   }
+	@Override
+	public void setId(String id) {    this.m_id = id;   }
 	
 	@Override
 	public HAPInfo getInfo() {  return this.m_info;  }

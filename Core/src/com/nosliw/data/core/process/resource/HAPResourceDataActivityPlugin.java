@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.process.plugin.HAPPluginActivity;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
@@ -26,7 +26,7 @@ public class HAPResourceDataActivityPlugin extends HAPResourceDataJSValueImp{
 		Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		outJsonMap.put(HAPPluginActivity.SCRIPT, this.m_activityPlugin.getScript(m_env).getScript());
-		typeJsonMap.put(HAPPluginActivity.SCRIPT, HAPScript.class);
+		typeJsonMap.put(HAPPluginActivity.SCRIPT, HAPJsonTypeScript.class);
 		this.buildFullJsonMap(outJsonMap, typeJsonMap);
 		return HAPJsonUtility.buildMapJson(outJsonMap, typeJsonMap);
 	}

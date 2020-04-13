@@ -5,8 +5,9 @@ import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionGroup;
-import com.nosliw.data.core.expression.HAPResourceDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
 
 //
 //context for processing script expressions: 
@@ -18,7 +19,7 @@ public class HAPContextProcessScriptExpression {
 
 	//every unit has its own expression definition suite
 	//it includes expression definition and constants from parent and its own
-	private HAPResourceDefinitionExpressionSuite m_expressionDefinitionSuite;
+	private HAPDefinitionExpressionSuite m_expressionDefinitionSuite;
 
 	private Map<String, Object> m_constants;
 	
@@ -27,12 +28,13 @@ public class HAPContextProcessScriptExpression {
 		this.m_constants = new LinkedHashMap<String, Object>();
 	}
 
-	public HAPResourceDefinitionExpressionSuite getExpressionDefinitionSuite(){		return this.m_expressionDefinitionSuite;	}
+	public HAPDefinitionExpressionSuite getExpressionDefinitionSuite(){		return this.m_expressionDefinitionSuite;	}
+	public void setExpressionDefinitionSuite(HAPDefinitionExpressionSuite expressionSuite) {   this.m_expressionDefinitionSuite = expressionSuite;    }
 
 	public Map<String, HAPVariableInfo> getDataVariables(){  return this.m_expressionDefinitionSuite.getVariablesInfo();  }
 	
 	public Map<String, Object> getConstants(){  return this.m_constants;   }
-	public Map<String, HAPData> getDataConstants(){  return this.m_expressionDefinitionSuite.getConstants();  }
+	public Map<String, HAPData> getDataConstants(){  return this.m_expressionDefinitionSuite.getConstantDefinitions();  }
 	
 	public Map<String, HAPResourceDefinitionExpressionGroup> getExpressionDefinitions(){  return this.m_expressionDefinitionSuite.getExpressionDefinitions();   }
 	

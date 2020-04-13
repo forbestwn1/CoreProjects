@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
+import com.nosliw.data.core.expression.resource.HAPDefinitionResourceDefinitionExpressionSuiteElementEntity;
+import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
 
 public class HAPParserExpressionDefinition {
 
@@ -17,11 +19,10 @@ public class HAPParserExpressionDefinition {
 		JSONArray processesArray = expressionSuiteJson.getJSONArray(HAPResourceDefinitionContainer.ELEMENT);
 		for(int i=0; i<processesArray.length(); i++){
 			JSONObject processObjJson = processesArray.getJSONObject(i);
-			String id = processObjJson.getString("id");
 			Object expressionObj = processObjJson.opt(HAPDefinitionResourceDefinitionExpressionSuiteElementEntity.ELEMENT);
 			if(expressionObj!=null) {
 				//process
-				out.addElement(id, parseExpressionSuiteElement(processObjJson, expressionParser));
+				out.addEntityElement(parseExpressionSuiteElement(processObjJson, expressionParser));
 			}
 			else {
 				//reference

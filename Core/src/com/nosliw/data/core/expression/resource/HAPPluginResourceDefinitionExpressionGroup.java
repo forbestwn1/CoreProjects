@@ -1,8 +1,9 @@
-package com.nosliw.data.core.expression;
+package com.nosliw.data.core.expression.resource;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
+import com.nosliw.data.core.expression.HAPResourceIdExpression;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
