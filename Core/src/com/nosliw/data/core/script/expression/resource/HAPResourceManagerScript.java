@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.expression;
+package com.nosliw.data.core.script.expression.resource;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,6 +11,8 @@ import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
+import com.nosliw.data.core.script.expression.HAPManagerScript;
 
 public class HAPResourceManagerScript  extends HAPResourceManagerImp{
 

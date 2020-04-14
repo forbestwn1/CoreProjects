@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.expression.HAPParserExpression;
+import com.nosliw.data.core.script.expression.resource.HAPParserScriptResourceDefinition;
+import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScriptGroup;
 
 public class HAPImporterScriptDefinition {
 

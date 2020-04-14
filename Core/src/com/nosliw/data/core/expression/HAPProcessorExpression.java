@@ -8,12 +8,6 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPUtilityDataComponent;
-import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.common.HAPWithDataContext;
-import com.nosliw.data.core.component.HAPComponentContainerElement;
-import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperandReference;
@@ -34,7 +28,7 @@ public class HAPProcessorExpression {
 
 	public static HAPExecutableExpressionGroup process(
 			String id,
-			HAPEntityWithResourceContext expressionDefWithContext,
+			HAPEntityWithResourceContext expressionGroupDefWithContext,
 			HAPContext extraContext,
 			Map<String, HAPDataTypeCriteria> expectOutput,
 			HAPManagerExpression expressionMan,
@@ -42,7 +36,7 @@ public class HAPProcessorExpression {
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 
-		HAPExecutableExpressionGroup out = processBasic(id, expressionDefWithContext, extraContext, expressionMan, configure, contextProcessRequirement, processTracker);
+		HAPExecutableExpressionGroup out = processBasic(id, expressionGroupDefWithContext, extraContext, expressionMan, configure, contextProcessRequirement, processTracker);
 		
 		//normalize input mapping, popup variable
 		processReferencesInputMapping(out);
@@ -77,45 +71,30 @@ public class HAPProcessorExpression {
 	}
 	
 	private static HAPExecutableExpressionGroup processBasic(
-			String id,
-			HAPEntityWithResourceContext expressionDefWithContext,
+			String exeId,
+			HAPEntityWithResourceContext expressionGroupDefWithContext,
 			HAPContext extraContext,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 
-		HAPDefinitionExpressionGroup expressionDef = (HAPDefinitionExpressionGroup)expressionDefWithContext.getEntity();
-		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(id);
+		HAPDefinitionExpressionGroup expressionGroupDef = (HAPDefinitionExpressionGroup)expressionGroupDefWithContext.getEntity();
+		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(exeId);
 
 		//constant
 		//constant --- discover constant
-		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>();
-		if(expressionDef instanceof HAPWithAttachment) {
-			Map<String, HAPDefinitionConstant> cstDefs = HAPUtilityDataComponent.buildDataConstantDefinition(((HAPWithAttachment)expressionDef).getAttachmentContainer());
-			for(String name : cstDefs.keySet()) {
-				constants.put(name, cstDefs.get(name).getData());
-			}
-		}
-		else {
-			throw new RuntimeException();
-		}
+		Map<String, HAPData> constants = HAPUtilityExpression.getDataConstants(expressionGroupDef); 
 
 		//variable
 		//variable --- from context
-		HAPContext context = null;
-		if(expressionDef instanceof HAPComponentContainerElement) {
-			context = (HAPContext)HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)expressionDef, extraContext, contextProcessRequirement, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression());
-		}
-		else if(expressionDef instanceof HAPWithDataContext){
-			context = (HAPContext)HAPUtilityContext.hardMerge(((HAPWithDataContext)expressionDef).getContextStructure(), extraContext); 
-		}
+		HAPContext context = HAPUtilityExpression.getContext(expressionGroupDef, extraContext, contextProcessRequirement);
 		out.setContext(context);
 		out.setVarsInfo(HAPUtilityContext.discoverDataVariablesInContext(context));
 
-		Map<String, HAPDefinitionExpression> expressionDefs = expressionDef.getEntityElements();
-		for(String name : expressionDefs.keySet()) {
-			out.addExpression(name, expressionDefs.get(name).getOperand());
+		Map<String, HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();
+		for(String id : expressionDefs.keySet()) {
+			out.addExpression(id, new HAPOperandWrapper(expressionMan.getExpressionParser().parseExpression(expressionDefs.get(id).getExpression())));
 		}
 
 		Map<String, HAPVariableInfo> varsInfo = out.getVarsInfo();
@@ -139,7 +118,8 @@ public class HAPProcessorExpression {
 			}
 
 			//referenced expression
-			processReferencesInOperandBasic(id, operand, expressionDefs.get(name).getReference(), expressionDefWithContext.getResourceContext(), expressionMan, configure, contextProcessRequirement, processTracker);
+			Map<String, HAPDefinitionReference> refDef = HAPUtilityExpression.normalizeReferenceDefinition(operand, expressionDefs.get(name).getReference());
+			processReferencesInOperandBasic(exeId, operand, refDef, expressionGroupDefWithContext.getResourceContext(), expressionMan, configure, contextProcessRequirement, processTracker);
 		}
 		
 		return out;

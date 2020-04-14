@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.expression;
+package com.nosliw.data.core.script.expression.resource;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +11,7 @@ import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.script.expression.HAPImporterScriptDefinition;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPPluginResourceDefinitionScriptGroup implements HAPPluginResourceDefinition{

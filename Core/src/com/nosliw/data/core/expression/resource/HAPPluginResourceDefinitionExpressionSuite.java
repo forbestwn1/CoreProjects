@@ -8,10 +8,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
-import com.nosliw.data.core.expression.HAPImporterExpressionSuiteDefinition;
 import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.expression.HAPResourceIdExpressionSuite;
-import com.nosliw.data.core.expression.HAPUtilityExpression;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
@@ -33,7 +31,6 @@ public class HAPPluginResourceDefinitionExpressionSuite implements HAPPluginReso
 		try {
 			HAPResourceIdExpressionSuite expressionSuiteResourceId = new HAPResourceIdExpressionSuite(resourceId);
 			suite = HAPImporterExpressionSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPSystemFolderUtility.getExpressionFolder()+expressionSuiteResourceId.getId()+".res")), this.m_expressionParser);
-			HAPUtilityExpression.normalizeReference(suite);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -43,6 +40,6 @@ public class HAPPluginResourceDefinitionExpressionSuite implements HAPPluginReso
 	@Override
 	public HAPResourceDefinition parseResourceDefinition(Object content) {
 		JSONObject jsonObj = (JSONObject)content;
-		return HAPParserResourceExpressionDefinition.parseExpressionSuite(jsonObj, this.m_expressionParser);
+		return HAPParserResourceExpressionDefinition.parseExpressionSuite(jsonObj);
 	}
 }

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.expression;
+package com.nosliw.data.core.expression.resource;
 
 import java.io.InputStream;
 
@@ -6,8 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.expression.resource.HAPParserResourceExpressionDefinition;
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.HAPParserExpression;
 
 public class HAPImporterExpressionSuiteDefinition {
 
@@ -16,7 +15,7 @@ public class HAPImporterExpressionSuiteDefinition {
 		try{
 			String content = HAPFileUtility.readFile(inputStream);
 			JSONObject contentJson = HAPJsonUtility.newJsonObject(content);
-			suite = HAPParserResourceExpressionDefinition.parseExpressionSuite(contentJson, expressionParser);
+			suite = HAPParserResourceExpressionDefinition.parseExpressionSuite(contentJson);
 		}
 		catch(Exception e){
 			e.printStackTrace();

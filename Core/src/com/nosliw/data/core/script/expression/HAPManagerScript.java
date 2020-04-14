@@ -11,6 +11,7 @@ import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScriptGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 
 

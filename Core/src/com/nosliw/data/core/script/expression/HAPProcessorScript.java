@@ -22,6 +22,7 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.expression.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.literate.HAPProcessorScriptLiterate;
+import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScriptGroup;
 
 public class HAPProcessorScript {
 

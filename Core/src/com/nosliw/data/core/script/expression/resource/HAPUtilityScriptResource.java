@@ -1,6 +1,7 @@
-package com.nosliw.data.core.script.expression;
+package com.nosliw.data.core.script.expression.resource;
 
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.script.expression.HAPIdScriptGroup;
 
 public class HAPUtilityScriptResource {
 

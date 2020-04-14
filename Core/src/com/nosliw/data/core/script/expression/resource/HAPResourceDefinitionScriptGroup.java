@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.expression;
+package com.nosliw.data.core.script.expression.resource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
+import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 
 public class HAPResourceDefinitionScriptGroup extends HAPResourceDefinitionComplexImp{
 

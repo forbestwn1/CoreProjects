@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.expression;
+package com.nosliw.data.core.script.expression.resource;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
+import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 
 public class HAPParserScriptResourceDefinition {
 

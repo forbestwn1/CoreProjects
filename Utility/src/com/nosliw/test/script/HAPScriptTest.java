@@ -9,8 +9,8 @@ import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
-import com.nosliw.data.core.script.expression.HAPResourceDefinitionScriptGroup;
-import com.nosliw.data.core.script.expression.HAPUtilityScriptResource;
+import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScriptGroup;
+import com.nosliw.data.core.script.expression.resource.HAPUtilityScriptResource;
 
 public class HAPScriptTest {
 

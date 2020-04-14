@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
@@ -69,11 +70,20 @@ public class HAPResourceUtility {
 		return HAPNamingConversionUtility.parseLevel2(idLiterate);
 	}
 
-	public static Object getImpliedEntity(HAPResourceId resourceId, Map<String, ?extends Object> container, HAPManagerResourceDefinition resourceDefMan) {
+	public static Object getImpliedEntity(HAPResourceId resourceId, Object container, HAPManagerResourceDefinition resourceDefMan) {
 		Object out = null;
 		if(resourceId.getStructure().equals(HAPConstant.RESOURCEID_TYPE_SIMPLE) && isLocalReference(resourceId)) {
 			//for reference local, get it from container
-			out = container.get(((HAPResourceIdSimple)resourceId).getId());
+			String id = ((HAPResourceIdSimple)resourceId).getId();
+			if(container instanceof HAPResourceDefinitionContainer) {
+				out = ((HAPResourceDefinitionContainer)container).getElementResourceDefinition(id);
+			}
+			else if(container instanceof HAPWithEntityElement) {
+				out = ((HAPWithEntityElement)container).getEntityElement(id);
+			}
+			else if(container instanceof Map) {
+				out = ((Map)container).get(id);
+			}
 		}
 		else {
 			out = resourceDefMan.getResourceDefinition(resourceId);

@@ -35,7 +35,7 @@ public class HAPProcessorScriptExpression {
 			String id,
 			HAPScript script,
 			Map<String, Object> constantValues,
-			HAPDefinitionExpressionGroup expressionDef,
+			HAPDefinitionExpressionGroup expressionGroup,
 			HAPParserExpression expressionParser 
 		) {
 		List<HAPExecutableScript> out = new ArrayList<HAPExecutableScript>();
@@ -48,7 +48,7 @@ public class HAPProcessorScriptExpression {
 				HAPDefinitionExpression expressionItem = new HAPDefinitionExpression();
 				expressionItem.setName(scriptId);
 				expressionItem.setOperand(expressionParser.parseExpression(scriptSeg.getScript()));
-				expressionDef.addExpression(expressionItem);
+				expressionGroup.addEntityElement(expressionItem);
 				out.add(new HAPExecutableScriptSegExpression(scriptId, scriptId));
 			}
 			else if(HAPConstant.SCRIPT_TYPE_SEG_SCRIPT.equals(scriptType)) {
