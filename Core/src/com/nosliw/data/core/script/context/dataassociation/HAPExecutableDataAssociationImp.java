@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.info.HAPEntityInfoUtility;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
@@ -47,7 +47,7 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.getType());
-		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
+		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
 
 		Map<String, String> outputFlatMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> outputFlatTypeMap = new LinkedHashMap<String, Class<?>>();

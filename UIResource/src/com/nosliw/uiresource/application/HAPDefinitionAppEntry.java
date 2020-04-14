@@ -15,9 +15,9 @@ public class HAPDefinitionAppEntry extends HAPComponentContainerElement{
 	@Override
 	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY;  }
 	
-	public HAPDefinitionApp getAppDefinition() {   return (HAPDefinitionApp)this.getContainer();   }
+	public HAPDefinitionApp getAppDefinition() {   return (HAPDefinitionApp)this.getResourceContainer();   }
 	
-	public HAPDefinitionAppElementUI getEntry() {   return (HAPDefinitionAppElementUI)this.getEntityElement();   }
+	public HAPDefinitionAppElementUI getEntry() {   return (HAPDefinitionAppElementUI)this.getComponentEntity();   }
 
 	@Override
 	public HAPComponent cloneComponent() {

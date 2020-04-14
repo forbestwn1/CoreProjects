@@ -12,7 +12,7 @@ public interface HAPWithEntityElement <T extends HAPEntityInfo> {
 	
 	Map<String, T> getEntityElements();
 	
-	T getEntityElement(String name);
+	T getEntityElement(String id);
 	
 	void addEntityElement(T entityElement);
 	

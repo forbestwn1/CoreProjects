@@ -3,19 +3,17 @@ package com.nosliw.data.core.expression.resource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementEntityImpComponent;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 
-public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity extends HAPResourceDefinitionContainerElementEntityImpComponent implements HAPDefinitionExpressionGroup{
-
-	@HAPAttribute
-	public static String ELEMENT = "element";
+public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity 
+		extends HAPResourceDefinitionContainerElementEntityImpComponent 
+		implements HAPDefinitionExpressionGroup{
 
 	private Map<String, HAPDefinitionExpression> m_element;
 	
@@ -24,14 +22,27 @@ public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity extends
 	}
 	
 	@Override
-	public Map<String, HAPDefinitionExpression> getExpressions(){   return this.m_element;   }
+	public Map<String, HAPDefinitionExpression> getEntityElements() {  return this.m_element;  }
 
-	public void addExpression(HAPDefinitionExpression expression) {
-		String name = expression.getName();
-		if(HAPBasicUtility.isStringEmpty(name)) name = HAPConstant.NAME_DEFAULT;
-		this.m_element.put(name, expression);    
+	@Override
+	public HAPDefinitionExpression getEntityElement(String id) {  return this.m_element.get(id); }
+
+	@Override
+	public void addEntityElement(HAPDefinitionExpression expression) {
+		//validate id
+		HAPUtilityEntityInfo.processEntityId(expression);
+		this.m_element.put(expression.getId(), expression); 
 	}
-	
+
+	@Override
+	public Map<String, HAPDefinitionConstant> getConstantDefinitions() {		return null;	}
+
+	@Override
+	public HAPDefinitionConstant getConstantDefinition(String name) {		return null;	}
+
+	@Override
+	public void addConstantDefinition(HAPDefinitionConstant constantDef) {	}
+
 	@Override
 	public HAPComponent cloneComponent() {  return (HAPComponent)this.cloneResourceDefinitionContainerElement(); }
 
@@ -44,5 +55,8 @@ public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity extends
 		}
 		return out;
 	}
+
+	@Override
+	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() {  return (HAPDefinitionExpressionGroup)this.cloneResourceDefinitionContainerElement(); }
 
 }

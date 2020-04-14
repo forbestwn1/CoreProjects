@@ -3,6 +3,7 @@ package com.nosliw.data.core.expression.resource;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
@@ -12,21 +13,21 @@ public class HAPResourceDefinitionExpressionGroup  extends HAPComponentContainer
 
 	public HAPResourceDefinitionExpressionGroup() {}
 	
-	public HAPResourceDefinitionExpressionGroup(HAPResourceDefinitionExpressionSuite suite, String name) {
-		super(suite, name);
+	public HAPResourceDefinitionExpressionGroup(HAPResourceDefinitionExpressionSuite suite, String id) {
+		super(suite, id);
 	}
-
-	public HAPDefinitionResourceDefinitionExpressionSuiteElementEntity getExpressionBody() {    return (HAPDefinitionResourceDefinitionExpressionSuiteElementEntity)this.getEntityElement();   }
-	public HAPResourceDefinitionExpressionSuite getSuite() {   return (HAPResourceDefinitionExpressionSuite)this.getContainer();  }
-
-	@Override
-	public Map<String, HAPDefinitionExpression> getExpressions(){   return this.getExpressionBody().getExpressions();   }
-	
-	@Override
-	public void addExpression(HAPDefinitionExpression expression) {   this.getExpressionBody().addExpression(expression); }
 
 	@Override
 	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION;  }
+
+	public HAPDefinitionResourceDefinitionExpressionSuiteElementEntity getExpressionGroupEntity() {    return (HAPDefinitionResourceDefinitionExpressionSuiteElementEntity)this.getComponentEntity();   }
+	public HAPResourceDefinitionExpressionSuite getSuite() {   return (HAPResourceDefinitionExpressionSuite)this.getResourceContainer();  }
+
+	@Override
+	public Map<String, HAPDefinitionExpression> getEntityElements() {		return this.getExpressionGroupEntity().getEntityElements();	}
+
+	@Override
+	public HAPDefinitionExpression getEntityElement(String id) {  return this.getExpressionGroupEntity().getEntityElement(id);  }
 
 	@Override
 	public HAPComponent cloneComponent() {
@@ -34,4 +35,30 @@ public class HAPResourceDefinitionExpressionGroup  extends HAPComponentContainer
 		this.cloneToComponentContainerElement(out);
 		return out;
 	}
+
+	@Override
+	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() { return (HAPDefinitionExpressionGroup)cloneComponent();  }
+
+	@Override
+	public void addEntityElement(HAPDefinitionExpression entityElement) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Map<String, HAPDefinitionConstant> getConstantDefinitions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPDefinitionConstant getConstantDefinition(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addConstantDefinition(HAPDefinitionConstant constantDef) {
+		// TODO Auto-generated method stub
+	}
+
 }

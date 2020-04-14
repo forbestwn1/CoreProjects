@@ -21,14 +21,6 @@ public class HAPProcessorContext {
 		return out;
 	}
 	
-//	public static HAPContext process(HAPContext context, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
-//		return process(context, parent, new HashSet<String>(), configure, contextProcessRequirement);		
-//	}
-//
-//	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
-//		return process(contextGroup, parent, new HashSet<String>(), configure, contextProcessRequirement);
-//	}
-	
 	public static HAPContextGroup processRelative(HAPContextGroup contextGroup, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
 		return processRelative(contextGroup, parent, new HashSet<String>(), configure, contextProcessRequirement);
 	}

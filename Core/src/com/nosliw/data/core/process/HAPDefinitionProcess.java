@@ -12,8 +12,8 @@ public class HAPDefinitionProcess extends HAPComponentContainerElement{
 		super(suite, process);
 	}
 
-	public HAPDefinitionProcessSuiteElementEntity getProcess() {    return (HAPDefinitionProcessSuiteElementEntity)this.getEntityElement();   }
-	public HAPDefinitionProcessSuite getSuite() {   return (HAPDefinitionProcessSuite)this.getContainer();  }
+	public HAPDefinitionProcessSuiteElementEntity getProcess() {    return (HAPDefinitionProcessSuiteElementEntity)this.getComponentEntity();   }
+	public HAPDefinitionProcessSuite getSuite() {   return (HAPDefinitionProcessSuite)this.getResourceContainer();  }
 
 	@Override
 	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS;  }

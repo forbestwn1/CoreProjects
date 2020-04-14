@@ -9,8 +9,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 
 abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp implements HAPComponent{
 
-	private String m_id;
-
 	//lifecycle definition
 	private Set<HAPHandlerLifecycle> m_lifecycleAction;
 	
@@ -24,14 +22,9 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 
 	public HAPComponentImp(String id) {
 		this();
-		this.m_id = id;
+		this.setId(id);
 	}
 	
-	@Override
-	public String getId() {   return this.m_id;   }
-	@Override
-	public void setId(String id) {  this.m_id = id;   }
- 	 
 	@Override
 	public Set<HAPHandlerLifecycle> getLifecycleAction(){    return this.m_lifecycleAction;    }
 	@Override
@@ -56,7 +49,6 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ID, this.m_id);
 		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildJson(this.m_lifecycleAction, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
 	}

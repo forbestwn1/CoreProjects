@@ -6,9 +6,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPEntityInfoUtility {
+public class HAPUtilityEntityInfo {
 
 	public static HAPEntityInfo buildEntityInfoFromJson(JSONObject jsonObj) {
 		HAPEntityInfo out = new HAPEntityInfoImp();
@@ -42,4 +43,10 @@ public class HAPEntityInfoUtility {
 		else  return true;
 	}
 	
+	public static void processEntityId(HAPEntityInfo entityInfo) {
+		String id = entityInfo.getId();
+		if(HAPBasicUtility.isStringEmpty(id)) id = HAPConstant.NAME_DEFAULT;
+		entityInfo.setId(id);
+	}
+
 }

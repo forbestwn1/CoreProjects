@@ -10,7 +10,6 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.expression.HAPImporterExpressionSuiteDefinition;
 import com.nosliw.data.core.expression.HAPParserExpression;
-import com.nosliw.data.core.expression.HAPParserExpressionDefinition;
 import com.nosliw.data.core.expression.HAPResourceIdExpressionSuite;
 import com.nosliw.data.core.expression.HAPUtilityExpression;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -44,6 +43,6 @@ public class HAPPluginResourceDefinitionExpressionSuite implements HAPPluginReso
 	@Override
 	public HAPResourceDefinition parseResourceDefinition(Object content) {
 		JSONObject jsonObj = (JSONObject)content;
-		return HAPParserExpressionDefinition.parseExpressionSuite(jsonObj, this.m_expressionParser);
+		return HAPParserResourceExpressionDefinition.parseExpressionSuite(jsonObj, this.m_expressionParser);
 	}
 }

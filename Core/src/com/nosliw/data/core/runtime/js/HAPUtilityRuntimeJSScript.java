@@ -352,7 +352,7 @@ public class HAPUtilityRuntimeJSScript {
 			}
 			else if(ele instanceof HAPScriptInScriptExpression){
 				HAPScriptInScriptExpression scriptSegment = (HAPScriptInScriptExpression)ele;
-				List<Object> scriptSegmentEles = scriptSegment.getEntityElements();
+				List<Object> scriptSegmentEles = scriptSegment.getContainerElements();
 				for(Object scriptSegmentEle : scriptSegmentEles){
 					if(scriptSegmentEle instanceof String){
 						funScript.append((String)scriptSegmentEle);

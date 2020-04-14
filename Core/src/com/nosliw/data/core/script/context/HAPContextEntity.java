@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.info.HAPEntityInfoUtility;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPInfo;
@@ -48,7 +48,7 @@ public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
+		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoUtility;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -48,7 +48,7 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInf
 
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
-		HAPEntityInfoUtility.cloneTo(this, entityInfo);
+		HAPUtilityEntityInfo.cloneTo(this, entityInfo);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInf
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
+		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
 		if(this.m_dataAssociation!=null)  jsonMap.put(DATAASSOCIATION, this.m_dataAssociation.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
 	}

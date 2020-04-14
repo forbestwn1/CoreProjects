@@ -24,38 +24,36 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public static String CONTAINER = "container";
 
 	@HAPAttribute
-	public static String ELEMENT = "element";
+	public static String COMPONENTENTITY = "componentEntity";
 
 	@HAPAttribute
-	public static String ELEMENTNAME = "elementName";
+	public static String ELEMENTID = "elementId";
 
 	private HAPResourceId m_resourceId;
 
 	private HAPResourceDefinitionContainer m_componentContainer;
 	
-	private String m_elementName;
+	private String m_elementId;
 	
-	private HAPComponent m_element;
+	private HAPComponent m_componentEntity;
 	
 	protected HAPComponentContainerElement() {}
 	
-	public HAPComponentContainerElement(HAPResourceDefinitionContainer componentContainer, String elementName) {
+	public HAPComponentContainerElement(HAPResourceDefinitionContainer componentContainer, String elementId) {
 		this.m_componentContainer = componentContainer;
-		this.m_elementName = elementName;
-		this.setElement(((HAPComponent)this.getContainer().getEntityElement(this.getElementName())).cloneComponent());
-		HAPUtilityComponent.mergeWithParentAttachment(this.m_element, this.m_componentContainer.getAttachmentContainer());
-		HAPInfoUtility.softMerge(this.m_element.getInfo(), this.m_componentContainer.getInfo());
+		this.m_elementId = elementId;
+		this.m_componentEntity = ((HAPComponent)this.getResourceContainer().getContainerElement(this.getElementId())).cloneComponent();
+		HAPUtilityComponent.mergeWithParentAttachment(this.m_componentEntity, this.m_componentContainer.getAttachmentContainer());
+		HAPInfoUtility.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
 	}
 
-	public HAPResourceDefinitionContainer getContainer() {   return this.m_componentContainer;    }
+	public HAPResourceDefinitionContainer getResourceContainer() {   return this.m_componentContainer;    }
 	public void setResourceContainer(HAPResourceDefinitionContainer container) {   this.m_componentContainer = container;     }
 	
-	public String getElementName() {   return this.m_elementName;   }
-	public void setElementName(String name) {   this.m_elementName = name;    }
+	public String getElementId() {   return this.m_elementId;   }
+	public void setElementId(String id) {   this.m_elementId = id;    }
 	
-	public HAPComponent getEntityElement() {   return this.m_element;   }
-	public void setElement(HAPComponent element) {   this.m_element = element;   }
-	
+	public HAPComponent getComponentEntity() {   return this.m_componentEntity;   }
 
 	@Override
 	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
@@ -63,26 +61,26 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public void setResourceId(HAPResourceId resourceId) {   this.m_resourceId = resourceId;    }
 	
 	@Override
-	public HAPChildrenComponentIdContainer getChildrenComponentId() {	return this.m_element.getChildrenComponentId();	}
+	public HAPChildrenComponentIdContainer getChildrenComponentId() {	return this.m_componentEntity.getChildrenComponentId();	}
 
 	@Override
-	public HAPInfo getInfo() {		return this.m_element.getInfo();	}
+	public HAPInfo getInfo() {		return this.m_componentEntity.getInfo();	}
 	
 	@Override
-	public HAPAttachmentContainer getAttachmentContainer() {  return this.getEntityElement().getAttachmentContainer(); }
+	public HAPAttachmentContainer getAttachmentContainer() {  return this.getComponentEntity().getAttachmentContainer(); }
 
 	protected void cloneToComponentContainerElement(HAPComponentContainerElement componentContainerElement) {
-		componentContainerElement.m_elementName = this.m_elementName;
+		componentContainerElement.m_elementId = this.m_elementId;
 		componentContainerElement.m_resourceId = this.m_resourceId.clone();
 		componentContainerElement.m_componentContainer = this.m_componentContainer.cloneResourceDefinitionContainer();
-		componentContainerElement.m_element = this.m_element.cloneComponent();
+		componentContainerElement.m_componentEntity = this.m_componentEntity.cloneComponent();
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.getInfo(), HAPSerializationFormat.JSON));
-		jsonMap.put(ELEMENTNAME, this.m_elementName);
+		jsonMap.put(ELEMENTID, this.m_elementId);
 		jsonMap.put(CONTAINER, HAPJsonUtility.buildJson(this.m_componentContainer, HAPSerializationFormat.JSON));
 	}
 	

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.info.HAPEntityInfoUtility;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPInfo;
 
@@ -50,7 +50,7 @@ abstract public class HAPExecutableImpEntityInfoWrapper extends HAPExecutableImp
 	
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
-		HAPEntityInfoUtility.cloneTo(this, entityInfo);
+		HAPUtilityEntityInfo.cloneTo(this, entityInfo);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ abstract public class HAPExecutableImpEntityInfoWrapper extends HAPExecutableImp
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
+		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
 	}
 	
 	@Override

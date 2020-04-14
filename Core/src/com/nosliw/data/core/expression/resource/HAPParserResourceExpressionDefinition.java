@@ -1,4 +1,4 @@
-package com.nosliw.data.core.expression;
+package com.nosliw.data.core.expression.resource;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -6,10 +6,11 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
-import com.nosliw.data.core.expression.resource.HAPDefinitionResourceDefinitionExpressionSuiteElementEntity;
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expression.HAPDefinitionReference;
+import com.nosliw.data.core.expression.HAPParserExpression;
 
-public class HAPParserExpressionDefinition {
+public class HAPParserResourceExpressionDefinition {
 
 	public static HAPResourceDefinitionExpressionSuite parseExpressionSuite(JSONObject expressionSuiteJson, HAPParserExpression expressionParser) {
 		HAPResourceDefinitionExpressionSuite out = new HAPResourceDefinitionExpressionSuite();
@@ -22,7 +23,7 @@ public class HAPParserExpressionDefinition {
 			Object expressionObj = processObjJson.opt(HAPDefinitionResourceDefinitionExpressionSuiteElementEntity.ELEMENT);
 			if(expressionObj!=null) {
 				//process
-				out.addEntityElement(parseExpressionSuiteElement(processObjJson, expressionParser));
+				out.addContainerElement(parseExpressionSuiteElement(processObjJson, expressionParser));
 			}
 			else {
 				//reference
@@ -43,7 +44,7 @@ public class HAPParserExpressionDefinition {
 				Object expressionObj = expressionJsonObj.opt(HAPDefinitionExpression.EXPRESSION);
 				if(expressionObj!=null) {
 					//process
-					out.addExpression(parseExpressionDefinition(expressionJsonObj, expressionParser));
+					out.addEntityElement(parseExpressionDefinition(expressionJsonObj, expressionParser));
 				}
 				else {
 					//reference
@@ -55,7 +56,7 @@ public class HAPParserExpressionDefinition {
 			Object expressionObj = jsonObj.opt(HAPDefinitionExpression.EXPRESSION);
 			if(expressionObj!=null) {
 				//process
-				out.addExpression(parseExpressionDefinition(jsonObj, expressionParser));
+				out.addEntityElement(parseExpressionDefinition(jsonObj, expressionParser));
 			}
 			else {
 				//reference

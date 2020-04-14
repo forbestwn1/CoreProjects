@@ -73,13 +73,13 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
-		HAPEntityInfoUtility.cloneTo(this, entityInfo);
+		HAPUtilityEntityInfo.cloneTo(this, entityInfo);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
+		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
 	}
 
 	@Override

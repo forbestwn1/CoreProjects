@@ -17,9 +17,9 @@ import com.nosliw.data.core.resource.HAPResourceIdFactory;
 public class HAPAttachmentReference extends HAPAttachmentImp{
 
 	@HAPAttribute
-	public static String ID = "id";
+	public static String REFERENCEID = "referenceId";
 	
-	private HAPResourceId m_id;
+	private HAPResourceId m_referenceId;
 
 	private HAPAttachmentReference() {	}
 	
@@ -28,31 +28,31 @@ public class HAPAttachmentReference extends HAPAttachmentImp{
 	}
 
 	public HAPAttachmentReference(HAPResourceId resourceId) {
-		this.m_id = resourceId;
+		this.m_referenceId = resourceId;
 	}
 
 	@Override
 	public String getType() {  return HAPConstant.ATTACHMENT_TYPE_REFERENCE;  }
 	
-	public HAPResourceId getId() {	return this.m_id;  }
-	public void setId(HAPResourceId id) {    
-		this.m_id = id;
-		this.setResourceType(this.m_id.getType());
+	public HAPResourceId getReferenceId() {	return this.m_referenceId;  }
+	public void setId(HAPResourceId referenceId) {    
+		this.m_referenceId = referenceId;
+		this.setResourceType(this.m_referenceId.getType());
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_id!=null)		jsonMap.put(ID, this.m_id.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_referenceId!=null)		jsonMap.put(ID, this.m_referenceId.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(json);
-		Object id = jsonObj.opt(ID);
-		if(id!=null) {
-			this.m_id = HAPResourceIdFactory.newInstance(this.getResourceType(), id);
+		Object referenceId = jsonObj.opt(REFERENCEID);
+		if(referenceId!=null) {
+			this.m_referenceId = HAPResourceIdFactory.newInstance(this.getResourceType(), referenceId);
 		}
 		return true;  
 	}
@@ -63,7 +63,7 @@ public class HAPAttachmentReference extends HAPAttachmentImp{
 		if(obj instanceof HAPAttachmentReference) {
 			HAPAttachmentReference ele = (HAPAttachmentReference)obj;
 			if(super.equals(ele)) {
-				if(HAPBasicUtility.isEquals(ele.m_id, this.m_id)) {
+				if(HAPBasicUtility.isEquals(ele.m_referenceId, this.m_referenceId)) {
 					out = true;
 				}
 			}
@@ -75,7 +75,7 @@ public class HAPAttachmentReference extends HAPAttachmentImp{
 	public HAPAttachmentReference cloneAttachment() {
 		HAPAttachmentReference out = new HAPAttachmentReference();
 		super.cloneToObject(out);
-		out.m_id = this.m_id.clone();
+		out.m_referenceId = this.m_referenceId.clone();
 		return out;
 	}
 }

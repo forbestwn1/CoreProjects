@@ -6,29 +6,25 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
-public abstract class HAPResourceDefinitionContainer extends HAPResourceDefinitionComplexImp implements HAPWithEntityElement<? extends HAPResourceDefinitionContainerElement>{
+public abstract class HAPResourceDefinitionContainer <T extends HAPResourceDefinitionContainerElement> extends HAPResourceDefinitionComplexImp {
  
 	@HAPAttribute
 	public static String ELEMENT = "element";
 
-	private Map<String, HAPResourceDefinitionContainerElement> m_elements;
+	private Map<String, T> m_elements;
 
 	public HAPResourceDefinitionContainer() {
-		this.m_elements = new LinkedHashMap<String, HAPResourceDefinitionContainerElement>();
+		this.m_elements = new LinkedHashMap<String, T>();
 	}
 	
-	@Override
-	public HAPResourceDefinitionContainerElement getEntityElement(String name) {     return this.m_elements.get(name);     }
+	public T getContainerElement(String id) {     return this.m_elements.get(id);     }
 	
-	@Override
-	public Map<String, HAPResourceDefinitionContainerElement> getEntityElements(){    return this.m_elements;    }
+	public Map<String, T> getContainerElements(){    return this.m_elements;    }
 	
-	@Override
-	public void addEntityElement(HAPResourceDefinitionContainerElement ele) {
+	public void addContainerElement(T ele) {
 		String type = ele.getType();
 		if(type.equals(HAPResourceDefinitionContainerElement.TYPE_ENTITY)) {
 			HAPResourceDefinitionContainerElementEntity entityEle = (HAPResourceDefinitionContainerElementEntity)ele;
@@ -37,14 +33,14 @@ public abstract class HAPResourceDefinitionContainer extends HAPResourceDefiniti
 		this.m_elements.put(ele.getId(), ele);  
 	}
 
-	public abstract HAPResourceDefinition getElementResourceDefinition(String eleName);
+	public abstract HAPResourceDefinition getElementResourceDefinition(String eleId);
 	
-	public abstract HAPResourceDefinitionContainer cloneResourceDefinitionContainer();
+	public abstract HAPResourceDefinitionContainer<T> cloneResourceDefinitionContainer();
 	
-	public void cloneToResourceDefinitionContainer(HAPResourceDefinitionContainer to) {
+	public void cloneToResourceDefinitionContainer(HAPResourceDefinitionContainer<T> to) {
 		this.cloneToComplexResourceDefinition(to);
-		for(String name : this.m_elements.keySet()) {
-			to.m_elements.put(name, this.m_elements.get(name).cloneResourceDefinitionContainerElement());
+		for(String id : this.m_elements.keySet()) {
+			to.addContainerElement((T)this.m_elements.get(id).cloneResourceDefinitionContainerElement());
 		}
 	}
 	
@@ -53,5 +49,4 @@ public abstract class HAPResourceDefinitionContainer extends HAPResourceDefiniti
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}
-
 }

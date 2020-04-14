@@ -49,7 +49,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 			id = HAPUtilityApp.ENTRY_DEFAULT;
 			entry.setName(id);
 		}
-		this.addEntityElement(entry);
+		this.addContainerElement(entry);
 	}
 	
 	@Override
@@ -59,7 +59,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
 		//entry part
-		Map<String, HAPResourceDefinitionContainerElement> entrys = this.getEntityElements();
+		Map<String, HAPResourceDefinitionContainerElement> entrys = this.getContainerElements();
 		for(String name : entrys.keySet()) {
 			HAPResourceDefinitionContainerElement entry = entrys.get(name);
 			out.addChildCompoentId(new HAPChildrenComponentId(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), entry.getInfo()), this.getAttachmentContainer());

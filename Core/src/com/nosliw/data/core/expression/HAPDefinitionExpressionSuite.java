@@ -4,5 +4,6 @@ import com.nosliw.data.core.common.HAPWithEntityElement;
 
 public interface HAPDefinitionExpressionSuite extends HAPWithEntityElement<HAPDefinitionExpressionGroup>{
 
+	HAPDefinitionExpressionSuite cloneExpressionSuiteDefinition();
 	
 }

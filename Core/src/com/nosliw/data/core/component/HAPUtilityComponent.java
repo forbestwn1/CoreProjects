@@ -69,8 +69,8 @@ public class HAPUtilityComponent {
 //	}
 	
 	public static HAPContextStructure processElementComponentContext(HAPComponentContainerElement component, HAPContextStructure extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
-		HAPContextStructure parentContext = HAPUtilityContext.hardMerge(component.getContainer().getContextStructure(), extraContext); 
-		HAPContextStructure processedEleContext = HAPProcessorContext.process(component.getEntityElement().getContextStructure(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);
+		HAPContextStructure parentContext = HAPUtilityContext.hardMerge(component.getResourceContainer().getContextStructure(), extraContext); 
+		HAPContextStructure processedEleContext = HAPProcessorContext.process(component.getComponentEntity().getContextStructure(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);
 		return HAPUtilityContext.hardMerge(parentContext, processedEleContext);
 	}
 

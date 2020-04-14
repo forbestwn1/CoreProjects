@@ -24,11 +24,11 @@ public class HAPUtilityExpression {
 	}
 
 	public static void normalizeReference(HAPDefinitionExpressionSuite expressionSuite) {
-		Map<String, HAPDefinitionExpressionGroup> elements = expressionSuite.getExpressionGroups();
+		Map<String, HAPDefinitionExpressionGroup> elements = expressionSuite.getEntityElements();
 		for(String name : elements.keySet()) {
 			HAPDefinitionExpressionGroup element = elements.get(name);
 			HAPDefinitionResourceDefinitionExpressionSuiteElementEntity expressionEle = (HAPDefinitionResourceDefinitionExpressionSuiteElementEntity)element;
-			Map<String, HAPDefinitionExpression> expressions = expressionEle.getExpressions();
+			Map<String, HAPDefinitionExpression> expressions = expressionEle.getEntityElements();
 			for(String expName : expressions.keySet()) {
 				normalizeReference(expressions.get(expName));
 			}
@@ -36,7 +36,7 @@ public class HAPUtilityExpression {
 	}
 	
 	public static void normalizeReference(HAPDefinitionExpressionGroup expressionDef) {
-		Map<String, HAPDefinitionExpression> elements = expressionDef.getExpressions();
+		Map<String, HAPDefinitionExpression> elements = expressionDef.getEntityElements();
 		for(String name : elements.keySet()) {
 			HAPDefinitionExpression element = elements.get(name);
 			normalizeReference(element);

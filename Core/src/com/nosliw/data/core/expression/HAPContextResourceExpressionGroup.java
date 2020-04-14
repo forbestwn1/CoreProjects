@@ -30,7 +30,7 @@ public class HAPContextResourceExpressionGroup implements HAPContextResourceDefi
 	
 	@Override
 	public HAPEntityWithResourceContext getResourceDefinition(HAPResourceId expressionId) {
-		HAPDefinitionExpressionGroup expressionGroup = (HAPDefinitionExpressionGroup)HAPResourceUtility.getImpliedEntity(expressionId, this.m_suite==null?null:this.m_suite.getExpressionGroups(), this.m_resourceDefMan);
+		HAPDefinitionExpressionGroup expressionGroup = (HAPDefinitionExpressionGroup)HAPResourceUtility.getImpliedEntity(expressionId, this.m_suite==null?null:this.m_suite.getEntityElements(), this.m_resourceDefMan);
 		HAPDefinitionExpressionSuite suite = this.m_suite;
 		if(expressionGroup instanceof HAPResourceDefinitionExpressionGroup) {
 			suite = ((HAPResourceDefinitionExpressionGroup)expressionGroup).getSuite();

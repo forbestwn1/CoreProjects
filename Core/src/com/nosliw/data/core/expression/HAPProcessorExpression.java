@@ -113,7 +113,7 @@ public class HAPProcessorExpression {
 		out.setContext(context);
 		out.setVarsInfo(HAPUtilityContext.discoverDataVariablesInContext(context));
 
-		Map<String, HAPDefinitionExpression> expressionDefs = expressionDef.getExpressions();
+		Map<String, HAPDefinitionExpression> expressionDefs = expressionDef.getEntityElements();
 		for(String name : expressionDefs.keySet()) {
 			out.addExpression(name, expressionDefs.get(name).getOperand());
 		}

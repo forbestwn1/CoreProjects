@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.info.HAPEntityInfoUtility;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
@@ -61,13 +61,13 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
-		HAPEntityInfoUtility.cloneTo(this, entityInfo);
+		HAPUtilityEntityInfo.cloneTo(this, entityInfo);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		HAPEntityInfoUtility.buildJsonMap(jsonMap, this);
+		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public class HAPProcessorProcess{
 			HAPManagerProcess processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
-		String id = processDef.getElementName(); 
+		String id = processDef.getElementId(); 
 		HAPContextProcessor processContext = HAPContextProcessor.createContext(processDef.getSuite(), contextProcessRequirement.resourceDefMan);
 		return process(id, new HAPEntityWithResourceContext(processDef, processContext), extraContext, serviceProviders, processMan, contextProcessRequirement, processTracker);
 	}
