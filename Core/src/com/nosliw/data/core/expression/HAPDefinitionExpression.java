@@ -37,7 +37,7 @@ public class HAPDefinitionExpression extends HAPEntityInfoWritableImp{
 	public Map<String, HAPDefinitionReference> getReference(){   return this.m_references;    }
 	public HAPDefinitionReference getReference(String name) {   return this.m_references.get(name);    }
 	
-	public HAPDefinitionExpression cloneDefinitionExpressionSuiteElementEntityExpression() {
+	public HAPDefinitionExpression cloneDefinitionExpression() {
 		HAPDefinitionExpression out = new HAPDefinitionExpression(this.m_expression);
 		this.cloneToEntityInfo(out);
 		for(String name : this.m_references.keySet()) {

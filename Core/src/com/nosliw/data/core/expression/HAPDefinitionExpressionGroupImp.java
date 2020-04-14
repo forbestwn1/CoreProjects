@@ -1,22 +1,27 @@
 package com.nosliw.data.core.expression;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithDataContext;
-import com.nosliw.data.core.component.HAPWithAttachmentImp;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 
-public class HAPDefinitionExpressionGroupImp extends HAPWithAttachmentImp implements HAPDefinitionExpressionGroup, HAPWithDataContext{
+public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements HAPDefinitionExpressionGroup, HAPWithDataContext{
 
 	private Map<String, HAPDefinitionExpression> m_elements;
 	
 	private HAPContext m_context;
 	
+	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
+	
 	public HAPDefinitionExpressionGroupImp() {
 		this.m_elements = new LinkedHashMap<String, HAPDefinitionExpression>();
+		this.m_constantDefinitions = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 	
 	public void addExpression(HAPDefinitionExpression element) {   this.m_elements.put(element.getName(), element);   }
@@ -31,44 +36,33 @@ public class HAPDefinitionExpressionGroupImp extends HAPWithAttachmentImp implem
 	public void cloneToDataContext(HAPWithDataContext dataContext) {   dataContext.setContextStructure(this.m_context.cloneContext());  }
 
 	@Override
-	public Map<String, HAPDefinitionExpression> getEntityElements() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Map<String, HAPDefinitionExpression> getEntityElements() {  return this.m_elements; }
 
 	@Override
-	public HAPDefinitionExpression getEntityElement(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPDefinitionExpression getEntityElement(String id) {  return this.m_elements.get(id);  }
 
 	@Override
-	public void addEntityElement(HAPDefinitionExpression entityElement) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void addEntityElement(HAPDefinitionExpression entityElement) {  this.m_elements.put(entityElement.getId(), entityElement);  }
 
 	@Override
-	public Map<String, HAPDefinitionConstant> getConstantDefinitions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Set<HAPDefinitionConstant> getConstantDefinitions() {  return new HashSet(this.m_constantDefinitions.values());  }  
 
 	@Override
-	public HAPDefinitionConstant getConstantDefinition(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPDefinitionConstant getConstantDefinition(String id) {  return this.m_constantDefinitions.get(id);  }
 
 	@Override
-	public void addConstantDefinition(HAPDefinitionConstant constantDef) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void addConstantDefinition(HAPDefinitionConstant constantDef) {  this.m_constantDefinitions.put(constantDef.getId(), constantDef);  }
 
 	@Override
 	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() {
-		// TODO Auto-generated method stub
-		return null;
+		HAPDefinitionExpressionGroupImp out = new HAPDefinitionExpressionGroupImp();
+		if(this.m_context!=null)	out.m_context = this.m_context.cloneContext();
+		for(String id : this.m_elements.keySet()) {
+			out.m_elements.put(id, this.m_elements.get(id).cloneDefinitionExpression());
+		}
+		for(String id : this.m_constantDefinitions.keySet()) {
+			out.m_constantDefinitions.put(id, this.m_constantDefinitions.get(id).cloneConstantDefinition());
+		}
+		return out;
 	}
 }

@@ -54,12 +54,11 @@ public class HAPAttachmentUtility {
 		return out;
 	}
 	
-	
 	public static HAPResourceDefinition getResourceDefinition(HAPAttachmentContainer attContainer, String type, String name, HAPManagerResourceDefinition resourceDefMan) {
 		HAPResourceDefinition out = null;
 		HAPAttachment attachment = attContainer.getElement(type, name);
 		if(attachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
-			HAPResourceId resourceId = ((HAPAttachmentReference)attachment).getId();
+			HAPResourceId resourceId = ((HAPAttachmentReference)attachment).getReferenceId();
 			out = resourceDefMan.getResourceDefinition(resourceId);
 		}
 		else if(attachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_ENTITY)){

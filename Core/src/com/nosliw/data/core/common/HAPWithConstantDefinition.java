@@ -1,12 +1,12 @@
 package com.nosliw.data.core.common;
 
-import java.util.Map;
+import java.util.Set;
 
 public interface HAPWithConstantDefinition {
 
-	Map<String, HAPDefinitionConstant> getConstantDefinitions(); 
+	Set<HAPDefinitionConstant> getConstantDefinitions(); 
 	
-	HAPDefinitionConstant getConstantDefinition(String name);
+	HAPDefinitionConstant getConstantDefinition(String id);
 	
 	void addConstantDefinition(HAPDefinitionConstant constantDef);
 	

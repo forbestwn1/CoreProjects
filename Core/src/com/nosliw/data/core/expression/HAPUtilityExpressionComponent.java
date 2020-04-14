@@ -2,51 +2,51 @@ package com.nosliw.data.core.expression;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.component.HAPComponentContainerElement;
-import com.nosliw.data.core.component.HAPComponentImp;
-import com.nosliw.data.core.component.HAPResourceDefinitionComplex;
+import com.nosliw.data.core.HAPUtilityDataComponent;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.component.HAPDefinitionComplex;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.expression.resource.HAPParserResourceExpressionDefinition;
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
 
 public class HAPUtilityExpressionComponent {
 
-	public static HAPResourceDefinitionExpressionSuite buildExpressionSuiteFromComponent(HAPResourceDefinitionComplex component, HAPParserExpression expressionParser) {
-		HAPResourceDefinitionExpressionSuite out = new HAPResourceDefinitionExpressionSuite();
-		component.cloneToComplexResourceDefinition(out);
+	public static HAPDefinitionExpressionSuite buildExpressionSuiteFromComponent(HAPDefinitionComplex complexEntity) {
+		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
 		
-		if(component instanceof HAPComponentContainerElement) {
-			out = buildExpressionSuiteFromComponent(((HAPComponentContainerElement)component).getComponentEntity(), expressionParser);
+		//build context
+		complexEntity.cloneToDataContext(out);
+		
+		//build constant
+		for(HAPDefinitionConstant constantDef : HAPUtilityDataComponent.buildDataConstantDefinition(complexEntity.getAttachmentContainer())) {
+			out.addConstantDefinition(constantDef);
 		}
-		else if(component instanceof HAPComponentImp) {
-			component.cloneToComplexResourceDefinition(out);
-			buildExpressionSuiteFromAttachment(out, component.getAttachmentContainer(), expressionParser);
-		}
-		else {
-			buildExpressionSuiteFromAttachment(out, component.getAttachmentContainer(), expressionParser);
-		}
+		
+		//build expression definition
+		buildExpressionSuiteFromAttachment(out, complexEntity.getAttachmentContainer());
 		
 		return out;
 	}
 	
-	public static void buildExpressionSuiteFromAttachment(HAPDefinitionExpressionSuite suite, HAPAttachmentContainer attachmentContainer, HAPParserExpression expressionParser) {
+	public static void buildExpressionSuiteFromAttachment(HAPDefinitionExpressionSuite suite, HAPAttachmentContainer attachmentContainer) {
 		Map<String, HAPAttachment> expressionAtts = attachmentContainer.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION);
 		for(String name : expressionAtts.keySet()) {
 			HAPAttachment attachment = expressionAtts.get(name);
-			suite.addExpressionGroup(buildExpressionGroup(attachment, expressionParser));
+			suite.addEntityElement(buildExpressionGroup(attachment));
 		}
-		HAPUtilityExpression.normalizeReference(suite);
 	}
 
-	private static HAPDefinitionExpressionGroup buildExpressionGroup(HAPAttachment attachment, HAPParserExpression expressionParser) {
-		HAPDefinitionExpressionGroupImp out = null;
+	private static HAPDefinitionExpressionGroup buildExpressionGroup(HAPAttachment attachment) {
+		HAPDefinitionExpressionGroupImp out = new HAPDefinitionExpressionGroupImp();
+		attachment.cloneToEntityInfo(out);
 		if(HAPConstant.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
-			out = HAPParserResourceExpressionDefinition.parseExpressionSuiteElement(entityAttachment.getEntityJsonObj(), expressionParser);
-			attachment.cloneToEntityInfo(out);
+			entityAttachment.cloneToEntityInfo(out);
+			JSONObject attachmentEntityJsonObj = entityAttachment.getEntityJsonObj();
+			HAPParserExpressionDefinition.parseExpressionDefinitionList(out, attachmentEntityJsonObj);
 		}
 		else if(HAPConstant.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
 		}

@@ -2,6 +2,7 @@ package com.nosliw.data.core.expression;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.updatename.HAPUpdateName;
@@ -27,16 +28,15 @@ public class HAPUtilityExpression {
 
 	public static Map<String, HAPData> getDataConstants(HAPDefinitionExpressionGroup expressionGroupDef){
 		Map<String, HAPData> out = new LinkedHashMap<String, HAPData>();
-		Map<String, HAPDefinitionConstant> cstDefs = getConstantsDefinition(expressionGroupDef);
-		for(String id : cstDefs.keySet()) {
-			HAPData data = cstDefs.get(id).getData();
-			if(data!=null)	out.put(id, data);
+		for(HAPDefinitionConstant constantDef : getConstantsDefinition(expressionGroupDef)) {
+			HAPData data = constantDef.getData();
+			if(data!=null)	out.put(constantDef.getId(), data);
 		}
 		return out;
 	}
 	
-	public static Map<String, HAPDefinitionConstant> getConstantsDefinition(HAPDefinitionExpressionGroup expressionGroupDef){
-		Map<String, HAPDefinitionConstant> out = null;
+	public static Set<HAPDefinitionConstant> getConstantsDefinition(HAPDefinitionExpressionGroup expressionGroupDef){
+		Set<HAPDefinitionConstant> out = null;
 		if(expressionGroupDef instanceof HAPWithAttachment) {
 			out = HAPUtilityDataComponent.buildDataConstantDefinition(((HAPWithAttachment)expressionGroupDef).getAttachmentContainer());
 		}

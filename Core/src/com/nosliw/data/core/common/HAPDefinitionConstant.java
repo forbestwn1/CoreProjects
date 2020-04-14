@@ -32,4 +32,11 @@ public class HAPDefinitionConstant extends HAPEntityInfoWritableImp{
 		this.setValue(jsonObj.get(VALUE));
 		return true;  
 	}
+	
+	public HAPDefinitionConstant cloneConstantDefinition() {
+		HAPDefinitionConstant out = new HAPDefinitionConstant();
+		this.cloneToEntityInfo(out);
+		out.setValue(this.m_value);
+		return out;
+	}
 }

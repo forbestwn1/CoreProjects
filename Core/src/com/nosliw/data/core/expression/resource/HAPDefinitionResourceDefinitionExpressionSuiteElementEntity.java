@@ -2,6 +2,7 @@ package com.nosliw.data.core.expression.resource;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
@@ -35,7 +36,7 @@ public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity
 	}
 
 	@Override
-	public Map<String, HAPDefinitionConstant> getConstantDefinitions() {		return null;	}
+	public Set<HAPDefinitionConstant> getConstantDefinitions() {		return null;	}
 
 	@Override
 	public HAPDefinitionConstant getConstantDefinition(String name) {		return null;	}
@@ -51,7 +52,7 @@ public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity
 		HAPDefinitionResourceDefinitionExpressionSuiteElementEntity out = new HAPDefinitionResourceDefinitionExpressionSuiteElementEntity();
 		this.cloneToResourceDefinitionContainerElementEntityImpComponent(out);
 		for(String name : this.m_element.keySet()) {
-			out.m_element.put(name, this.m_element.get(name).cloneDefinitionExpressionSuiteElementEntityExpression());
+			out.m_element.put(name, this.m_element.get(name).cloneDefinitionExpression());
 		}
 		return out;
 	}

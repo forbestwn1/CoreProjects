@@ -35,7 +35,7 @@ public class HAPAttachmentReference extends HAPAttachmentImp{
 	public String getType() {  return HAPConstant.ATTACHMENT_TYPE_REFERENCE;  }
 	
 	public HAPResourceId getReferenceId() {	return this.m_referenceId;  }
-	public void setId(HAPResourceId referenceId) {    
+	public void setResourceId(HAPResourceId referenceId) {    
 		this.m_referenceId = referenceId;
 		this.setResourceType(this.m_referenceId.getType());
 	}

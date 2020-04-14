@@ -1,6 +1,7 @@
 package com.nosliw.data.core.expression.resource;
 
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
@@ -45,7 +46,7 @@ public class HAPResourceDefinitionExpressionGroup  extends HAPComponentContainer
 	}
 
 	@Override
-	public Map<String, HAPDefinitionConstant> getConstantDefinitions() {
+	public Set<HAPDefinitionConstant> getConstantDefinitions() {
 		// TODO Auto-generated method stub
 		return null;
 	}
