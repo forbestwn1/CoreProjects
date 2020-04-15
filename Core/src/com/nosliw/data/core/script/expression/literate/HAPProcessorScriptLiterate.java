@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
-import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.data.core.script.expression.expression.HAPProcessorScriptExpression;
@@ -16,8 +15,7 @@ public class HAPProcessorScriptLiterate {
 		String id,
 		HAPDefinitionScriptEntity scriptDef,
 		Map<String, Object> constantValues,
-		HAPDefinitionExpressionGroup expressionDef,
-		HAPParserExpression expressionParser 
+		HAPDefinitionExpressionGroup expressionDef
 	) {
 		HAPExecutableScriptLiterate out = new HAPExecutableScriptLiterate(id);
 		scriptDef.cloneToEntityInfo(out);
@@ -28,7 +26,7 @@ public class HAPProcessorScriptLiterate {
 			String scriptId = id+"_"+j;
 			if(HAPConstant.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT.equals(scriptType)) {
 				HAPExecutableScriptSegExpressionScript expressionScriptSegExe = new HAPExecutableScriptSegExpressionScript(scriptId);
-				expressionScriptSegExe.addSegments(HAPProcessorScriptExpression.process(scriptId, scriptSeg, constantValues, expressionDef, expressionParser));
+				expressionScriptSegExe.addSegments(HAPProcessorScriptExpression.process(scriptId, scriptSeg, constantValues, expressionDef));
 				out.addSegment(expressionScriptSegExe);
 			}
 			else if(HAPConstant.SCRIPT_TYPE_SEG_TEXT.equals(scriptType)) {

@@ -20,7 +20,7 @@ public class HAPParserScriptResourceDefinition {
 			if(HAPUtilityEntityInfo.isEnabled(eleJsonObj)) {
 				HAPDefinitionScriptEntity element = new HAPDefinitionScriptEntity();
 				element.buildObject(eleJsonObj, HAPSerializationFormat.JSON);
-				out.addElement(element);
+				out.addEntityElement(element);
 			}
 		}
 		return out;

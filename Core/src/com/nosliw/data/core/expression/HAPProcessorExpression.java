@@ -92,16 +92,16 @@ public class HAPProcessorExpression {
 		out.setContext(context);
 		out.setVarsInfo(HAPUtilityContext.discoverDataVariablesInContext(context));
 
-		Map<String, HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();
-		for(String id : expressionDefs.keySet()) {
-			out.addExpression(id, new HAPOperandWrapper(expressionMan.getExpressionParser().parseExpression(expressionDefs.get(id).getExpression())));
+		Set<HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();
+		for(HAPDefinitionExpression expressionDef : expressionDefs) {
+			out.addExpression(expressionDef.getId(), new HAPOperandWrapper(expressionMan.getExpressionParser().parseExpression(expressionDef.getExpression())));
 		}
 
 		Map<String, HAPVariableInfo> varsInfo = out.getVarsInfo();
 
 		Map<String, HAPExecutableExpression> expressionItems = out.getExpressionItems();
-		for(String name : expressionItems.keySet()) {
-			HAPExecutableExpression expressionItem = expressionItems.get(name);
+		for(String id : expressionItems.keySet()) {
+			HAPExecutableExpression expressionItem = expressionItems.get(id);
 			HAPOperandWrapper operand = expressionItem.getOperand();
 			//constant --- update constant data in expression
 			HAPOperandUtility.updateConstantData(operand, constants);
@@ -118,7 +118,7 @@ public class HAPProcessorExpression {
 			}
 
 			//referenced expression
-			Map<String, HAPDefinitionReference> refDef = HAPUtilityExpression.normalizeReferenceDefinition(operand, expressionDefs.get(name).getReference());
+			Map<String, HAPDefinitionReference> refDef = HAPUtilityExpression.normalizeReferenceDefinition(operand, expressionGroupDef.getEntityElement(id).getReference());
 			processReferencesInOperandBasic(exeId, operand, refDef, expressionGroupDefWithContext.getResourceContext(), expressionMan, configure, contextProcessRequirement, processTracker);
 		}
 		

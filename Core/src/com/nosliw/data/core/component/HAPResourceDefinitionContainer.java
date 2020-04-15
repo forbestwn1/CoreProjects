@@ -1,7 +1,9 @@
 package com.nosliw.data.core.component;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -22,7 +24,7 @@ public abstract class HAPResourceDefinitionContainer <T extends HAPResourceDefin
 	
 	public T getContainerElement(String id) {     return this.m_elements.get(id);     }
 	
-	public Map<String, T> getContainerElements(){    return this.m_elements;    }
+	public Set<T> getContainerElements(){    return new HashSet<T>(this.m_elements.values());    }
 	
 	public void addContainerElement(T ele) {
 		String type = ele.getType();

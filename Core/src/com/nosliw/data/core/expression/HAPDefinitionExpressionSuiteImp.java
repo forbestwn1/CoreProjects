@@ -25,7 +25,7 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 	}
 	
 	@Override
-	public Map<String, HAPDefinitionExpressionGroup> getEntityElements() {  return this.m_expressionGroups; }
+	public Set<HAPDefinitionExpressionGroup> getEntityElements() {  return new HashSet<HAPDefinitionExpressionGroup>(this.m_expressionGroups.values()); }
 
 	@Override
 	public HAPDefinitionExpressionGroup getEntityElement(String id) {  return this.m_expressionGroups.get(id);  }

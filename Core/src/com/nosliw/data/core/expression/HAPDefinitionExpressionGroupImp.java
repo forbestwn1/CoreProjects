@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithDataContext;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -36,13 +37,16 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	public void cloneToDataContext(HAPWithDataContext dataContext) {   dataContext.setContextStructure(this.m_context.cloneContext());  }
 
 	@Override
-	public Map<String, HAPDefinitionExpression> getEntityElements() {  return this.m_elements; }
+	public Set<HAPDefinitionExpression> getEntityElements() {  return new HashSet<HAPDefinitionExpression>(this.m_elements.values()); }
 
 	@Override
 	public HAPDefinitionExpression getEntityElement(String id) {  return this.m_elements.get(id);  }
 
 	@Override
-	public void addEntityElement(HAPDefinitionExpression entityElement) {  this.m_elements.put(entityElement.getId(), entityElement);  }
+	public void addEntityElement(HAPDefinitionExpression expression) {  
+		HAPUtilityEntityInfo.processEntityId(expression);
+		this.m_elements.put(expression.getId(), expression);  
+	}
 
 	@Override
 	public Set<HAPDefinitionConstant> getConstantDefinitions() {  return new HashSet(this.m_constantDefinitions.values());  }  

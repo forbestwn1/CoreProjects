@@ -7,11 +7,30 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 
 public class HAPUtilityDataComponent {
+
+	public static Map<String, Object> getConstantsValue(HAPWithConstantDefinition withConstantDef){
+		Map<String, Object> out = new LinkedHashMap<String, Object>();
+		for(HAPDefinitionConstant def : withConstantDef.getConstantDefinitions()) {
+			out.put(def.getId(), def.getValue());
+		}
+		return out;
+	}
+
+	public static Map<String, HAPData> getConstantsData(HAPWithConstantDefinition withConstantDef){
+		Map<String, HAPData> out = new LinkedHashMap<String, HAPData>();
+		for(HAPDefinitionConstant def : withConstantDef.getConstantDefinitions()) {
+			if(def.isData()) {
+				out.put(def.getId(), def.getData());
+			}
+		}
+		return out;
+	}
 
 	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPAttachmentContainer attContainer){
 		Set<HAPDefinitionConstant> out = new HashSet<HAPDefinitionConstant>();

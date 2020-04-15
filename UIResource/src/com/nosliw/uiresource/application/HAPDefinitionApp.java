@@ -2,6 +2,7 @@ package com.nosliw.uiresource.application;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -59,9 +60,8 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
 		//entry part
-		Map<String, HAPResourceDefinitionContainerElement> entrys = this.getContainerElements();
-		for(String name : entrys.keySet()) {
-			HAPResourceDefinitionContainerElement entry = entrys.get(name);
+		Set<HAPResourceDefinitionContainerElement> entrys = this.getContainerElements();
+		for(HAPResourceDefinitionContainerElement entry : entrys) {
 			out.addChildCompoentId(new HAPChildrenComponentId(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), entry.getInfo()), this.getAttachmentContainer());
 		}
 		return out;

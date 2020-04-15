@@ -1,6 +1,5 @@
 package com.nosliw.data.core.expression.resource;
 
-import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
@@ -25,7 +24,7 @@ public class HAPResourceDefinitionExpressionGroup  extends HAPComponentContainer
 	public HAPResourceDefinitionExpressionSuite getSuite() {   return (HAPResourceDefinitionExpressionSuite)this.getResourceContainer();  }
 
 	@Override
-	public Map<String, HAPDefinitionExpression> getEntityElements() {		return this.getExpressionGroupEntity().getEntityElements();	}
+	public Set<HAPDefinitionExpression> getEntityElements() {		return this.getExpressionGroupEntity().getEntityElements();	}
 
 	@Override
 	public HAPDefinitionExpression getEntityElement(String id) {  return this.getExpressionGroupEntity().getEntityElement(id);  }

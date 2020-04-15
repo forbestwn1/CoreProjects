@@ -18,7 +18,7 @@ public class HAPScriptTest {
 
 		try {
 			String id = "test1";
-			String script = "test2";
+			String script = "test5";
 			String testData = "testData1";
 
 			HAPResourceId resourceId = HAPUtilityScriptResource.buildResourceId(id);

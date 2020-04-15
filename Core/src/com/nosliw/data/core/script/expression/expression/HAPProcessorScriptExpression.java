@@ -8,7 +8,6 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
-import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScript;
 import com.nosliw.data.core.script.expression.HAPScript;
@@ -22,12 +21,11 @@ public class HAPProcessorScriptExpression {
 			String id,
 			HAPDefinitionScriptEntity scriptDef,
 			Map<String, Object> constantValues,
-			HAPDefinitionExpressionGroup expressionDef,
-			HAPParserExpression expressionParser 
+			HAPDefinitionExpressionGroup expressionDef
 		) {
 		HAPExecutableScriptExpression out = new HAPExecutableScriptExpression(id);
 		scriptDef.cloneToEntityInfo(out);
-		out.addSegments(process(id, scriptDef.getScript(), constantValues, expressionDef, expressionParser));
+		out.addSegments(process(id, scriptDef.getScript(), constantValues, expressionDef));
 		return out;
 	}
 	
@@ -35,8 +33,7 @@ public class HAPProcessorScriptExpression {
 			String id,
 			HAPScript script,
 			Map<String, Object> constantValues,
-			HAPDefinitionExpressionGroup expressionGroup,
-			HAPParserExpression expressionParser 
+			HAPDefinitionExpressionGroup expressionGroup
 		) {
 		List<HAPExecutableScript> out = new ArrayList<HAPExecutableScript>();
 		List<HAPScript> scriptSegs = parseScript(script.getScript());
@@ -45,9 +42,8 @@ public class HAPProcessorScriptExpression {
 			String scriptType = scriptSeg.getType();
 			String scriptId = id+"_"+j;
 			if(HAPConstant.SCRIPT_TYPE_SEG_EXPRESSION.equals(scriptType)) {
-				HAPDefinitionExpression expressionItem = new HAPDefinitionExpression();
+				HAPDefinitionExpression expressionItem = new HAPDefinitionExpression(scriptSeg.getScript());
 				expressionItem.setName(scriptId);
-				expressionItem.setOperand(expressionParser.parseExpression(scriptSeg.getScript()));
 				expressionGroup.addEntityElement(expressionItem);
 				out.add(new HAPExecutableScriptSegExpression(scriptId, scriptId));
 			}

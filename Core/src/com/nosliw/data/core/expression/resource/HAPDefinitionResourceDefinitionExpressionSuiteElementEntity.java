@@ -1,5 +1,6 @@
 package com.nosliw.data.core.expression.resource;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -23,7 +24,7 @@ public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity
 	}
 	
 	@Override
-	public Map<String, HAPDefinitionExpression> getEntityElements() {  return this.m_element;  }
+	public Set<HAPDefinitionExpression> getEntityElements() {  return new HashSet<HAPDefinitionExpression>(this.m_element.values());  }
 
 	@Override
 	public HAPDefinitionExpression getEntityElement(String id) {  return this.m_element.get(id); }
