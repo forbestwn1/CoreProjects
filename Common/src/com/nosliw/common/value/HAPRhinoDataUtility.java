@@ -127,6 +127,7 @@ public class HAPRhinoDataUtility
         	}
         	catch(Throwable e) {
         		e.printStackTrace();
+        		System.out.println(kkkk);
 //        		throw e;
         	}
         }

@@ -22,7 +22,6 @@ import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteConverter;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteDataOperation;
-import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcessEmbeded;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
@@ -168,29 +167,6 @@ public class HAPUtilityRuntimeJSScript {
 	}
 	
 
-	public static HAPJSScriptInfo buildRequestScriptForExecuteExpressionTask(HAPRuntimeTaskExecuteExpression executeExpressionTask, HAPRuntimeImpRhino runtime){
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("expression", HAPJsonUtility.formatJson(HAPSerializeManager.getInstance().toStringValue(executeExpressionTask.getExpression(), HAPSerializationFormat.JSON)));
-		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(executeExpressionTask.getVariablesValue()==null?new LinkedHashMap<String, HAPData>() : executeExpressionTask.getVariablesValue(), HAPSerializationFormat.JSON)));
-		templateParms.put("references", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(executeExpressionTask.getReferencesValue()==null?new LinkedHashMap<String, HAPData>() : executeExpressionTask.getReferencesValue(), HAPSerializationFormat.JSON)));
-		templateParms.put("constants", "{}");
-		templateParms.put("itemName", executeExpressionTask.getItemName());
-		
-		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
-		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
-		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
-		
-		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
-		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
-		templateParms.put("taskId", executeExpressionTask.getTaskId());
-		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
-		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteExpressionScript.temp");
-		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
-		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, executeExpressionTask.getTaskId());
-		return out;
-	}
-	
 	public static HAPJSScriptInfo buildRequestScriptForLoadResourceTask(HAPRuntimeTaskLoadResources loadResourcesTask, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
@@ -227,7 +203,7 @@ public class HAPUtilityRuntimeJSScript {
 		
 		templateParms.put("expressions", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(task.getExpressionItems(), HAPSerializationFormat.JSON)));
 		templateParms.put("taskId", task.getTaskId());
-		templateParms.put("constants", HAPJsonUtility.buildJson(task.getScriptConstants(), HAPSerializationFormat.JSON));
+		templateParms.put("constants", HAPJsonUtility.buildJson(task.getConstantsValue(), HAPSerializationFormat.JSON));
 
 		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
 		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);

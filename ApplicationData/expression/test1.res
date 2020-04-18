@@ -174,7 +174,7 @@
 					"referenceMapping" : [
 						{
 							"name" : "ref1",
-							"resourceId" : "test1",
+							"resourceId" : "test3",
 							"inputMapping" : {
 								"element" : {
 									"baseVar" : {

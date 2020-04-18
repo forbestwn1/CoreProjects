@@ -3,23 +3,20 @@ package com.nosliw.data.core.script.expression;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
+public abstract class HAPExecutableScriptWithSegmentImp implements HAPExecutableScriptWithSegment{
 
-public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implements HAPExecutableScriptWithSegment{
-
-	private String m_scriptType;
+	private String m_id;
 	
 	private List<HAPExecutableScript> m_segs;
 
-	public HAPExecutableScriptEntity(String scriptType, String id) {
+	public HAPExecutableScriptWithSegmentImp(String id) {
 		this.m_segs = new ArrayList<HAPExecutableScript>();
-		this.m_scriptType = scriptType;
-		this.setId(id);
+		this.m_id = id;
 	}
 	
 	@Override
-	public String getScriptType() {  return this.m_scriptType;  }
-
+	public String getId() {    return this.m_id;    }
+	
 	@Override
 	public void addSegment(HAPExecutableScript segment) {    this.m_segs.add(segment);   }
 	@Override
@@ -27,4 +24,5 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 	
 	@Override
 	public List<HAPExecutableScript> getSegments(){    return this.m_segs;     }
+
 }

@@ -50,7 +50,7 @@ public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecut
 	@Override
 	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 	@Override
-	public Map<String, Object> getScriptConstants(){  return this.m_scriptConstants;  }
+	public Map<String, Object> getConstantsValue(){  return this.m_scriptConstants;  }
 	@Override
 	public Map<String, HAPExecutableExpressionGroup> getExpressions(){	return this.m_embededExpression.getExpressions();	}
 	

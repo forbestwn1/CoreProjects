@@ -20,7 +20,8 @@ public class HAPScriptProcessorLiterate implements HAPScriptProcessor{
 		StringBuffer funScript = new StringBuffer();
 		for(HAPExecutableScript seg : literateScript.getSegments()){
 			if(seg instanceof HAPExecutableScriptSegExpressionScript){
-				funScript.append(funciontParmName+"[\""+seg.getId()+"\"]");
+				funScript.append(funciontParmName+"[\""+seg.getId()+"\"]("+funciontParmName+", "+expressionsDataParmName+", "+constantsDataParmName+", "+variablesDataParmName+")");
+				out.addChildren(seg);
 			}
 			else if(seg instanceof HAPExecutableScriptSegText){
 				HAPExecutableScriptSegText textSeg = (HAPExecutableScriptSegText)seg;

@@ -19,6 +19,9 @@ public class HAPUtilityData {
 		else if(obj instanceof JSONObject){
 			out = buildDataWrapperFromJson((JSONObject)obj);
 		}
+		else if(obj instanceof HAPDataWrapper) {
+			out = (HAPDataWrapper)obj;
+		}
 		return out;
 	}
 	

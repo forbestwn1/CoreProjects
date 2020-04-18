@@ -2,9 +2,10 @@ package com.nosliw.data.core.runtime.js.util.script;
 
 import java.util.List;
 
+import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.script.expression.HAPExecutableScript;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptWithSegment;
 import com.nosliw.data.core.script.expression.expression.HAPConstantInScript;
-import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptExpression;
 import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSegExpression;
 import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSegScript;
 import com.nosliw.data.core.script.expression.expression.HAPVariableInScript;
@@ -20,7 +21,7 @@ public class HAPScriptProcessorExpression implements HAPScriptProcessor{
 			String variablesDataParmName) {
 		HAPOutputScriptProcessor out = new HAPOutputScriptProcessor();
 		
-		HAPExecutableScriptExpression expressionScript = (HAPExecutableScriptExpression)scriptExe;
+		HAPExecutableScriptWithSegment expressionScript = (HAPExecutableScriptWithSegment)scriptExe;
 		StringBuffer funScript = new StringBuffer();
 		int i=0;
 		for(HAPExecutableScript seg : expressionScript.getSegments()){
@@ -36,7 +37,15 @@ public class HAPScriptProcessorExpression implements HAPScriptProcessor{
 						funScript.append((String)scriptSegmentEle);
 					}
 					else if(scriptSegmentEle instanceof HAPConstantInScript){
-						funScript.append(constantsDataParmName + "[\"" + ((HAPConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
+						HAPConstantInScript constantInScript = (HAPConstantInScript)scriptSegmentEle;
+						Object constantValue = constantInScript.getValue();
+						if(constantValue==null) {
+							//if constant value not processed, then wait until runtime
+							funScript.append(constantsDataParmName + "[\"" + ((HAPConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
+						}
+						else {
+							funScript.append(HAPUtilityRuntimeJS.buildConstantValue(constantValue));
+						}
 					}
 					else if(scriptSegmentEle instanceof HAPVariableInScript){
 						funScript.append(variablesDataParmName + "[\"" + ((HAPVariableInScript)scriptSegmentEle).getVariableName()+"\"]");

@@ -156,7 +156,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		else return new HAPContextFlat();
 	}
 	
-	public Map<String, Object> getConstantsValue(){   return this.m_scriptExpressionContext.getConstants();    }
+	public Map<String, Object> getConstantsValue(){   return this.m_scriptExpressionContext.getConstantsValue();    }
 	public void addConstantValue(String name, Object value) {		this.m_scriptExpressionContext.addConstant(name, value);	}
 
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
@@ -213,7 +213,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		htmlContent = htmlContent.replaceAll("(\\r|\\n)", "");
 		jsonMap.put(HTML, htmlContent);
 		
-		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_scriptExpressionContext.getConstants(), HAPSerializationFormat.JSON));
+		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_scriptExpressionContext.getConstantsValue(), HAPSerializationFormat.JSON));
 	
 		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
 		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commands, HAPSerializationFormat.JSON));

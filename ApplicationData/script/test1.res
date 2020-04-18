@@ -158,7 +158,7 @@
 		{
 			"id": "test1",
 			"info": {
-				"disable1" : ""
+				"disable" : ""
 			},
 			"name": "test1",
 			"type": "expression",
@@ -168,7 +168,7 @@
 		{
 			"id": "test2",
 			"info": {
-				"disable1" : ""
+				"disable" : ""
 			},
 			"name": "test2",
 			"type": "expression",
@@ -178,7 +178,7 @@
 		{
 			"id": "test3",
 			"info": {
-				"disable1" : ""
+				"disable" : ""
 			},
 			"name": "test3",
 			"type": "expression",
@@ -188,7 +188,7 @@
 		{
 			"id": "test4",
 			"info": {
-				"disable1" : ""
+				"disable" : ""
 			},
 			"name": "test4",
 			"type": "expression",

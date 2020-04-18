@@ -16,6 +16,13 @@ public class HAPDefinitionConstant extends HAPEntityInfoWritableImp{
 	
 	private HAPData m_data;
 	
+	public HAPDefinitionConstant() {}
+	
+	public HAPDefinitionConstant(String id, Object value) {
+		this.setId(id);
+		this.setValue(value);
+	}
+	
 	public Object getValue() {   return this.m_value;   }
 	public void setValue(Object value) {   
 		this.m_value = value;    

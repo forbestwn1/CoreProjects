@@ -63,7 +63,7 @@ public class HAPRuntimeTaskExecuteScript extends HAPRuntimeTaskExecuteScriptExpr
 	@Override
 	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 	@Override
-	public Map<String, Object> getScriptConstants(){  return this.m_scriptGroup.getConstantsValue();  }
+	public Map<String, Object> getConstantsValue(){  return this.m_scriptGroup.getConstantsValue();  }
 
 //	public HAPScriptExpression getScriptExpression(){ return this.m_scriptGroup;  }
 	

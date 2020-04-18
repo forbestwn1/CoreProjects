@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPJsonTypeUnchange;
+import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
@@ -30,6 +30,7 @@ public class HAPUtilityScriptForExecuteJSScript {
 	static {
 		m_processors.put(HAPConstant.SCRIPT_TYPE_EXPRESSION, new HAPScriptProcessorExpression());
 		m_processors.put(HAPConstant.SCRIPT_TYPE_LITERATE, new HAPScriptProcessorLiterate());
+		m_processors.put(HAPConstant.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT, new HAPScriptProcessorExpression());
 	}
 	
 	public static HAPScriptFunctionInfo buildFunctionInfo(HAPExecutableScript scriptExe) {
@@ -70,7 +71,7 @@ public class HAPUtilityScriptForExecuteJSScript {
 			Map<String, Class<?>> funScriptTypeMap = new LinkedHashMap<String, Class<?>>();
 			for(HAPJSScriptInfo childFun : childrenFun) {
 				funScriptMap.put(childFun.getName(), childFun.getScript());
-				funScriptTypeMap.put(childFun.getName(), HAPJsonTypeUnchange.class);
+				funScriptTypeMap.put(childFun.getName(), HAPJsonTypeAsItIs.class);
 			}
 			functionParmValue = HAPJsonUtility.buildMapJson(funScriptMap, funScriptTypeMap);
 		}
@@ -82,7 +83,7 @@ public class HAPUtilityScriptForExecuteJSScript {
 		
 		templateParms.put("expressions", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(task.getExpressionItems(), HAPSerializationFormat.JSON)));
 		templateParms.put("taskId", task.getTaskId());
-		templateParms.put("constants", HAPJsonUtility.buildJson(task.getScriptConstants(), HAPSerializationFormat.JSON));
+		templateParms.put("constants", HAPJsonUtility.buildJson(task.getConstantsValue(), HAPSerializationFormat.JSON));
 
 		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
 		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);

@@ -11,5 +11,5 @@ public abstract class HAPRuntimeTaskExecuteScriptExpressionAbstract extends HAPR
 	abstract public HAPScriptFunctionInfo getScriptFunction();	
 	abstract public Map<String, HAPExecutableExpression> getExpressionItems();
 	abstract public Map<String, Object> getVariablesValue();
-	abstract public Map<String, Object> getScriptConstants();
+	abstract public Map<String, Object> getConstantsValue();
 }

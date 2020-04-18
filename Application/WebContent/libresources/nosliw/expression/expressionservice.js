@@ -78,7 +78,7 @@ var node_createExpressionService = function(){
 //		return out;
 //	};
 
-	var loc_getExecuteScriptRequest = function(script, functions, expressionItems, variables, scriptConstants, handlers, requester_parent){
+	var loc_getExecuteScriptRequest = function(script, functions, expressionItems, variables, constants, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExpressionService_ExecuteScript", {"script":script, "expressions":expressionItems, "variables":variables}), handlers, requestInfo);
 
@@ -86,7 +86,7 @@ var node_createExpressionService = function(){
 		var executeMultipleExpressionItemRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressionItems, "variables":variables}), {
 			success : function(requestInfo, expressionsResult){
 				var expressionsData = expressionsResult.getResults();
-				return script.call(undefined, functions, expressionsData, scriptConstants, variables);
+				return script.call(undefined, functions, expressionsData, constants, variables);
 			}
 		});
 		_.each(expressionItems, function(expressionItem, name){
@@ -95,7 +95,7 @@ var node_createExpressionService = function(){
 			_.each(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS], function(varInfo, name){
 				expVariables[name] = variables[name];
 			});
-			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, expVariables, {}, {}));
+			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, expVariables, constants, {}));
 		});
 		
 		out.addRequest(executeMultipleExpressionItemRequest);
@@ -138,14 +138,14 @@ var node_createExpressionService = function(){
 		 * 		script : function with parameter map (name : expression result)
 		 * 		expressions : map (name : expression)
 		 * 		variables : variables for expression
-		 * 		scriptConstants : constants in script
+		 * 		constants : constants in script
 		 */
-		getExecuteScriptRequest : function(script, functions, expressionsItems, variables, scriptConstants, handlers, requester_parent){
-			return loc_getExecuteScriptRequest(script, functions, expressionsItems, variables, scriptConstants, handlers, requester_parent);
+		getExecuteScriptRequest : function(script, functions, expressionsItems, variables, constants, handlers, requester_parent){
+			return loc_getExecuteScriptRequest(script, functions, expressionsItems, variables, constants, handlers, requester_parent);
 		},
 	
-		executeExecuteScriptExpressionRequest : function(script, functions, expressionsItems, variables, scriptConstants, handlers, requester_parent){
-			var requestInfo = this.getExecuteScriptRequest(script, functions, expressionsItems, variables, scriptConstants, handlers, requester_parent);
+		executeExecuteScriptExpressionRequest : function(script, functions, expressionsItems, variables, constants, handlers, requester_parent){
+			var requestInfo = this.getExecuteScriptRequest(script, functions, expressionsItems, variables, constants, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
