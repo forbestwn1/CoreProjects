@@ -1,8 +1,10 @@
 package com.nosliw.data.core.expression;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -11,9 +13,12 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.operand.HAPOperandConstant;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -60,6 +65,38 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 
 	public Map<String, HAPVariableInfo> getVariablesInfo(){   return this.m_varInfos;    }
 	public void setVariablesInfo(Map<String, HAPVariableInfo> varsInfo) {   this.m_varInfos.putAll(varsInfo);     }
+
+	public void updateConstant(Map<String, Object> value) {
+		HAPOperandUtility.processAllOperand(this.m_operand, value, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
+					Map<String, Object> value = (Map<String, Object>)data; 
+					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
+					constantOperand.setData((HAPData)value.get(constantOperand.getName()));
+				}
+				return true;
+			}
+		});
+	}
+	
+	public Set<HAPDefinitionConstant> getConstantsDefinition(){
+		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
+		HAPOperandUtility.processAllOperand(this.m_operand, out, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
+					Map<String, HAPDefinitionConstant> out = (Map<String, HAPDefinitionConstant>)data; 
+					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
+					out.put(constantOperand.getName(), new HAPDefinitionConstant(constantOperand.getName(), constantOperand.getData()));
+				}
+				return true;
+			}
+		});
+		return new HashSet<HAPDefinitionConstant>(out.values());
+	}
 	
 	public void updateVariableName(HAPUpdateName nameUpdate) {
 		HAPOperandUtility.updateVariableName(this.m_operand, nameUpdate);

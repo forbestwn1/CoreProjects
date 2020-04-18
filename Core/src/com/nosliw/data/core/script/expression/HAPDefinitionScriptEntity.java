@@ -15,10 +15,14 @@ public class HAPDefinitionScriptEntity extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String TYPE = "type";
 
-	public HAPDefinitionScriptEntity() {
+	public HAPDefinitionScriptEntity() {}
+
+	public HAPDefinitionScriptEntity(HAPScript script) {
+		this.m_script = script;
 	}
-	
+
 	public HAPScript getScript() {  return this.m_script;   }
+	public void setScript(HAPScript script) {    this.m_script = script;     }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

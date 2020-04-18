@@ -1,24 +1,21 @@
 package com.nosliw.data.core.script.context;
 
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
-import com.nosliw.data.core.operand.HAPOperandUtility;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
-import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
+import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
-import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
-import com.nosliw.data.core.script.expression.expression.HAPDefinitionScriptExpression;
-import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
-import com.nosliw.data.core.script.expression.literate.HAPDefinitionEmbededScriptExpression;
 
 public class HAPProcessorContextConstant {
 
@@ -217,78 +214,32 @@ public class HAPProcessorContextConstant {
 			HAPContextGroup contextGroup,
 			HAPRequirementContextProcessor contextProcessRequirement) {
 
-		//if leafData is a script expression, then use valueObj to respect the type of return value
-		Object valueObj = null;
-		//otherwise, if leafData contains both script expression and plain text, then build string value instead
-		StringBuffer valueStr = new StringBuffer();
-		//try to discover script expression in leaf content
-		HAPDefinitionEmbededScriptExpression embededScriptExpDef = new HAPDefinitionEmbededScriptExpression(leafData.toString());
-		List<Object> segments = embededScriptExpDef.getElements();
-		for(Object segment : segments){
-			if(segment instanceof HAPDefinitionScriptExpression){
-				//only process script expression
-				HAPDefinitionScriptExpression sciptExpressionDef = (HAPDefinitionScriptExpression)segment;
-
-				//find all required constants names in script expressions
-				Set<String> expConstantNames = new HashSet<String>();
-				Set<String> scriptConstantNames = new HashSet<String>();
-				for(Object uiExpEle : sciptExpressionDef.getSegments()){
-					if(uiExpEle instanceof HAPResourceDefinitionExpressionGroup)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPResourceDefinitionExpressionGroup)uiExpEle).getOperand()));
-					else if(uiExpEle instanceof HAPScriptInScriptExpression)		scriptConstantNames.addAll(((HAPScriptInScriptExpression)uiExpEle).getConstantNames());
-				}
-				
-				//build constants data required by expression
-				HAPContextProcessScriptExpression expProcessContext = new HAPContextProcessScriptExpression();
-				for(String constantName : expConstantNames){
-					HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(constantName), contextGroup);
-					HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());
-					solidateConstantDefEle(refContextDefEle, contextGroup, contextProcessRequirement);
-					expProcessContext.addConstant(constantName, refContextDefEle.getDataValue());
-				}
-				
-				//build constants required by script
-//				Map<String, Object> scriptConstants = new LinkedHashMap<String, Object>();
-				for(String scriptConstantName : scriptConstantNames){
-					HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(scriptConstantName), contextGroup);
-					HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());
-					solidateConstantDefEle(refContextDefEle, contextGroup, contextProcessRequirement);
-//					scriptConstants.put(scriptConstantName, refContextDefEle.getValue());
-					expProcessContext.addConstant(scriptConstantName, refContextDefEle.getValue());
-				}
-				
-				//process expression in scriptExpression
-				HAPScriptExpression scriptExpression = HAPProcessorScript.processScriptExpression(sciptExpressionDef, expProcessContext, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
-				
-				//execute script expression
-				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpression, null, expProcessContext.getConstantsValue());
-				HAPServiceData serviceData = contextProcessRequirement.runtime.executeTaskSync(task);
-				
-				if(segments.size()>1){
-					//if have more than one segment, use the string value of result of script expression
-					valueStr.append(serviceData.getData().toString());
-				}
-				else{
-					//if have only one script expression, then use its object value
-					valueObj = serviceData.getData();
-				}
-			}
-			else{
-				//build string value
-				valueStr.append(segment.toString());
-			}
-		}
+		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processScript(leafData.toString(), null, null, contextProcessRequirement.expressionManager, contextProcessRequirement, new HAPProcessTracker());
+		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
 		
-		if(valueObj!=null){
-			//if only have one js expression
-			return valueObj;
+		String scriptType = scriptExe.getScriptType();
+		//if pure data
+		if(HAPConstant.SCRIPT_TYPE_TEXT.equals(scriptType))  return leafData;
+		
+		///if contain script
+		//discover all constant
+		Map<String, Object> constantsValue = new LinkedHashMap<String, Object>();
+		Set<HAPDefinitionConstant> constantsDef = groupExe.getConstantsDefinition();
+		for(HAPDefinitionConstant constantDef : constantsDef){
+			String constantId = constantDef.getId();
+			HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(constantId), contextGroup);
+			HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());
+			solidateConstantDefEle(refContextDefEle, contextGroup, contextProcessRequirement);
+			constantsValue.put(constantId, refContextDefEle.getDataValue());
 		}
-		else if(segments.size()==1){
-			//if no js expression, use the original one
-			return leafData;
-		}
-		else{
-			return valueStr.toString();
-		}
+
+		//update all constant value
+		groupExe.updateConstant(constantsValue);
+
+		//execute script expression
+		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(groupExe, null, null, null);
+		HAPServiceData out = contextProcessRequirement.runtime.executeTaskSync(task);
+		return out.getData();
 	}
 	
 

@@ -4,15 +4,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.HAPUtilityData;
-import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededExpression;
-import com.nosliw.data.core.script.expression.HAPContextProcessScript;
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
-import com.nosliw.data.core.script.expression.literate.HAPDefinitionEmbededScriptExpression;
-import com.nosliw.data.core.script.expression.literate.HAPEmbededScriptExpression;
 
 public class HAPProcessorContextSolidate {
 
@@ -78,23 +75,18 @@ public class HAPProcessorContextSolidate {
 //	}
 
 	public static String getSolidName(String name, Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement){
-		HAPDefinitionEmbededScriptExpression embededScriptExpDef = new HAPDefinitionEmbededScriptExpression(name);
-		if(embededScriptExpDef.isString())  return name;
-		else {
-			HAPContextProcessScript expProcessContext = new HAPContextProcessScript();
-			for(String constantName : constants.keySet()) {
-				HAPDataWrapper constantData = HAPUtilityData.buildDataWrapperFromObject(constants.get(constantName));
-				if(constantData!=null)   expProcessContext.addConstantDefinition(new HAPDefinitionConstant(constantName, constantData));
-			}
-			HAPEmbededScriptExpression embededScriptExp = HAPProcessorScript.processEmbededScriptExpression(embededScriptExpDef, expProcessContext, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
-			HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(embededScriptExp, null, constants);
-			HAPServiceData serviceData = contextProcessRequirement.runtime.executeTaskSync(task);
-			if(serviceData.isSuccess())   return (String)serviceData.getData();
-			else{
-				System.err.println("Fail to solidate name : " + name);
-				return null;
-			}
-		}
+		
+		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processScript(name, null, constants, contextProcessRequirement.expressionManager, contextProcessRequirement, new HAPProcessTracker());
+		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
+		
+		String scriptType = scriptExe.getScriptType();
+		//if pure data
+		if(HAPConstant.SCRIPT_TYPE_TEXT.equals(scriptType))  return name;
+		
+		//execute script expression
+		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(groupExe, null, null, null);
+		HAPServiceData out = contextProcessRequirement.runtime.executeTaskSync(task);
+		return (String)out.getData();
 	}
 
 }

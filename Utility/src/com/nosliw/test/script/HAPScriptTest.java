@@ -3,12 +3,10 @@ package com.nosliw.test.script;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPUrlUtility;
 import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScriptGroup;
@@ -39,11 +37,11 @@ public class HAPScriptTest {
 
 			System.out.println(out);
 
-			HAPUrlUtility.openUrlInBrowser("http://localhost:8082/nosliw/fileload.html?name="+HAPRuntimeEnvironment.id);
+//			HAPUrlUtility.openUrlInBrowser("http://localhost:8082/nosliw/fileload.html?name="+HAPRuntimeEnvironment.id);
 		}
 		catch(Throwable e) {
 			e.printStackTrace();
-			HAPUrlUtility.openUrlInBrowser("http://localhost:8082/nosliw/fileload.html?name="+HAPRuntimeEnvironment.id);
+//			HAPUrlUtility.openUrlInBrowser("http://localhost:8082/nosliw/fileload.html?name="+HAPRuntimeEnvironment.id);
 		}
 	}
 }

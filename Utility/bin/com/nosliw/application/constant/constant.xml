@@ -689,6 +689,7 @@
 			<definition name="ENTITYINFO_INFONAME_DISABLE" value="disable"/>
 
 			<definition type="space"/>
+			<definition name="SCRIPT_TYPE_TEXT" value="text"/>
 			<definition name="SCRIPT_TYPE_EXPRESSION" value="expression"/>
 			<definition name="SCRIPT_TYPE_LITERATE" value="literate"/>
 			<definition name="SCRIPT_TYPE_SEG_SCRIPT" value="scriptSeg"/>

@@ -57,16 +57,14 @@ public class HAPRuntimeTaskExecuteScript extends HAPRuntimeTaskExecuteScriptExpr
 	public HAPScriptFunctionInfo getScriptFunction() {
 		return HAPUtilityScriptForExecuteJSScript.buildFunctionInfo(this.m_scriptGroup.getScript(m_scriptId));
 	}
-//	public HAPScriptFunctionInfo getScriptFunction() {		return HAPUtilityRuntimeJSScript.buildScriptJSFunction(this.m_scriptGroup, this.m_scriptId);	}
 	@Override
 	public Map<String, HAPExecutableExpression> getExpressionItems(){  return this.m_scriptGroup.getExpression().getExpressionItems(); }
 	@Override
 	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 	@Override
-	public Map<String, Object> getConstantsValue(){  return this.m_scriptGroup.getConstantsValue();  }
+	public Map<String, Object> getConstantsValue(){  return new LinkedHashMap<String, Object>();  }
+//	public Map<String, Object> getConstantsValue(){  return this.m_scriptGroup.getConstantsValue();  }
 
-//	public HAPScriptExpression getScriptExpression(){ return this.m_scriptGroup;  }
-	
 	@Override
 	public HAPRuntimeTask execute(HAPRuntime runtime) {
 		try{

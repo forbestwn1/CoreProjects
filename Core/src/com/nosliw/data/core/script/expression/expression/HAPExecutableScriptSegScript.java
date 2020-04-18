@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.expression.expression;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,9 +15,12 @@ import com.nosliw.common.updatename.HAPEntityWithName;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.script.expression.HAPExecutableScript;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
+import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 
 public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HAPExecutableScript, HAPEntityWithName{
 
@@ -57,6 +61,43 @@ public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HA
 
 	public List<Object> getElements(){	return this.m_elements;	}
 	
+	@Override
+	public Set<HAPVariableInfo> getVariablesInfo() {
+		Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>();
+		for(Object ele : this.m_elements) {
+			if(ele instanceof HAPVariableInScript) {
+				HAPVariableInScript varInScript = (HAPVariableInScript)ele;
+				HAPVariableInfo varInfo = HAPVariableInfo.buildUndefinedVariableInfo();
+				varInfo.setId(varInScript.getVariableName());
+				HAPUtilityScriptExpression.addVariableInfo(out, varInfo);
+			}
+		}
+		return new HashSet<HAPVariableInfo>(out.values());  
+	}
+
+	@Override
+	public void updateConstant(Map<String, Object> value) {	
+		for(Object ele : this.m_elements) {
+			if(ele instanceof HAPConstantInScript) {
+				HAPConstantInScript constantInScript = (HAPConstantInScript)ele;
+				constantInScript.setValue(value.get(constantInScript.getConstantName()));
+			}
+		}
+	}
+
+	@Override
+	public Set<HAPDefinitionConstant> getConstantsDefinition() {
+		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
+		for(Object ele : this.m_elements) {
+			if(ele instanceof HAPConstantInScript) {
+				HAPConstantInScript constantInScript = (HAPConstantInScript)ele;
+				HAPDefinitionConstant constantDef = new HAPDefinitionConstant(constantInScript.getConstantName(), constantInScript.getValue());
+				HAPUtilityScriptExpression.addConstantDefinition(out, constantDef);
+			}
+		}
+		return new HashSet<HAPDefinitionConstant>(out.values());  
+	}
+
 	@Override
 	public Set<String> getConstantNames(){
 		Set<String> out = new HashSet<String>();
@@ -191,4 +232,5 @@ public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HA
 		jsonMap.put(SCRIPT, this.m_orignalScript);
 		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}
+
 }

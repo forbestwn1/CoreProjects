@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPUtilityDataComponent;
@@ -15,6 +16,7 @@ import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.expression.HAPProcessorExpression;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
+import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -24,6 +26,27 @@ import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScri
 
 public class HAPProcessorScript {
 
+	public static HAPExecutableScriptGroup processScript(
+			String script,
+			String scriptType, 
+			Map<String, Object> constants,
+			HAPManagerExpression expressionMan,
+			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPProcessTracker processTracker) {
+		HAPContextProcessScript processScriptContext = new HAPContextProcessScript(); 
+		if(constants!=null) {
+			for(String id : constants.keySet()) {
+				processScriptContext.addConstantDefinition(new HAPDefinitionConstant(id, constants.get(id)));
+			}
+		}
+		
+		HAPDefinitionScriptGroup group = new HAPDefinitionScriptGroupImp();
+		group.addEntityElement(new HAPDefinitionScriptEntity(HAPScript.newScript(script, scriptType)));
+		
+		HAPExecutableScriptGroup groupExe = processScript(null, group, processScriptContext, expressionMan, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), contextProcessRequirement, processTracker);
+		return groupExe;
+	}
+	
 	public static HAPExecutableScriptGroup processScript(
 			HAPResourceDefinitionScriptGroup scriptGroupDef, 
 			HAPContext extraContext, 
@@ -68,7 +91,7 @@ public class HAPProcessorScript {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 		
 		Map<String, Object> constantsValue = HAPUtilityDataComponent.getConstantsValue(processScriptContext);
-		out.addConstants(constantsValue);
+//		out.addConstants(constantsValue);
 		
 		//build expression suite
 		HAPDefinitionExpressionSuite expressionSuite = processScriptContext.getExpressionDefinitionSuite();
@@ -87,11 +110,17 @@ public class HAPProcessorScript {
 			HAPExecutableScriptEntity scriptExe = null;
 			HAPScript script = scriptDef.getScript();
 			String type = script.getType();
+			//if script type not specified, discover it
+			if(HAPBasicUtility.isStringEmpty(type)) type = HAPUtilityScriptExpression.getScriptExpressionType(script.getScript());  
+			String scriptId = i+"";
 			if(HAPConstant.SCRIPT_TYPE_EXPRESSION.equals(type)) {
-				scriptExe = HAPProcessorScriptExpression.process(i+"", scriptDef, out.getConstantsValue(), expressionDef);
+				scriptExe = HAPProcessorScriptExpression.process(scriptId, scriptDef, constantsValue, expressionDef);
 			}
 			else if(HAPConstant.SCRIPT_TYPE_LITERATE.equals(type)) {
-				scriptExe = HAPProcessorScriptLiterate.process(i+"", scriptDef, out.getConstantsValue(), expressionDef);
+				scriptExe = HAPProcessorScriptLiterate.process(scriptId, scriptDef, constantsValue, expressionDef);
+			}
+			else if(HAPConstant.SCRIPT_TYPE_TEXT.equals(type)) {
+				scriptExe = new HAPExecutableScriptText(scriptId, script.getScript());
 			}
 			out.addScript(scriptExe);
 			i++;

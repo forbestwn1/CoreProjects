@@ -626,6 +626,7 @@ public class HAPConstant {
 
 
 
+		public static final String SCRIPT_TYPE_TEXT = "text";
 		public static final String SCRIPT_TYPE_EXPRESSION = "expression";
 		public static final String SCRIPT_TYPE_LITERATE = "literate";
 		public static final String SCRIPT_TYPE_SEG_SCRIPT = "scriptSeg";
