@@ -46,14 +46,24 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 	public HAPDefinitionConstant getConstantDefinition(String id) {    return this.m_constantDefinitions.get(id);  }
 
 	@Override
-	public void addConstantDefinition(HAPDefinitionConstant constantDef) {  this.m_constantDefinitions.put(constantDef.getId(), constantDef);  }
+	public void addConstantDefinition(HAPDefinitionConstant constantDef) {  
+		this.m_constantDefinitions.put(constantDef.getId(), constantDef);
+		for(String id : this.m_expressionGroups.keySet()) {
+			this.m_expressionGroups.get(id).addConstantDefinition(constantDef);
+		}
+	}
 
 	@Override
 	public HAPContextStructure getContextStructure() {  return this.m_context; }
 
 	@Override
-	public void setContextStructure(HAPContextStructure context) {  this.m_context = (HAPContext)context;  }
-
+	public void setContextStructure(HAPContextStructure context) {  
+		this.m_context = (HAPContext)context;  
+		for(String id : this.m_expressionGroups.keySet()) {
+			this.m_expressionGroups.get(id).setContextStructure(context.cloneContextStructure());
+		}
+	}
+	
 	@Override
 	public HAPDefinitionExpressionSuite cloneExpressionSuiteDefinition() {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();

@@ -1,11 +1,13 @@
 package com.nosliw.uiresource.page.processor;
 
 import java.util.Map;
+import java.util.Set;
 
+import com.nosliw.data.core.HAPUtilityDataComponent;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.expression.HAPParserExpression;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -17,16 +19,22 @@ import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 //compile definition to executable
 public class HAPProcessorCompile {
 
-	public static void process(HAPExecutableUIUnit exeUnit, HAPDefinitionUIUnit parentUnitDef, HAPParserExpression expressionParser) {
+	public static void process(HAPExecutableUIUnit exeUnit, HAPDefinitionUIUnit parentUnitDef) {
 		
 		HAPDefinitionUIUnit uiUnitDef = exeUnit.getUIUnitDefinition();
 
 		//attachment
 		HAPUtilityComponent.mergeWithParentAttachment(uiUnitDef, parentUnitDef.getAttachmentContainer());
-		HAPResourceDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, expressionParser);
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef);
 		
 		//expression suite from attachment
 		exeUnit.getExpressionContext().setExpressionDefinitionSuite(expressionSuite);
+		
+		//constant from attachment
+		Set<HAPDefinitionConstant> constantsDef = HAPUtilityDataComponent.buildConstantDefinition(uiUnitDef.getAttachmentContainer());
+		for(HAPDefinitionConstant constantDef : constantsDef) {
+			exeUnit.getExpressionContext().addConstantDefinition(constantDef);
+		}
 		
 		//embeded script in content
 		for(HAPDefinitionUIEmbededScriptExpressionInContent embededContent : uiUnitDef.getScriptExpressionsInContent()) {
@@ -60,7 +68,7 @@ public class HAPProcessorCompile {
 	
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
-			process(childTag, exeUnit.getUIUnitDefinition(), expressionParser);			
+			process(childTag, exeUnit.getUIUnitDefinition());			
 		}
 		
 	}

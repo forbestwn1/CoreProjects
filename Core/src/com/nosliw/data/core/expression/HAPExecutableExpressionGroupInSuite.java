@@ -16,6 +16,9 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContext;
 
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
@@ -118,5 +121,21 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(this.getExpressionItems(), HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_localVarsInfo, HAPSerializationFormat.JSON));
+	}
+
+	@Override
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		Map<String, String> expressionsJson = new LinkedHashMap<String, String>();
+		for(String id : this.m_expressionItem.keySet()) {
+			expressionsJson.put(id, this.m_expressionItem.get(id).toResourceData(runtimeInfo).toString());
+		}
+		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildMapJson(jsonMap));
+	}
+
+	@Override
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		for(String id : this.m_expressionItem.keySet()) {
+			dependency.addAll(this.m_expressionItem.get(id).getResourceDependency(runtimeInfo, resourceManager));
+		}
 	}
 }

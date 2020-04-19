@@ -12,16 +12,18 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionSuiteImp;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
+import com.nosliw.data.core.script.expression.HAPContextProcessScript;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
@@ -45,6 +47,8 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	public static final String SCRIPTEXPRESSIONINATTRIBUTES = "scriptExpressionInAttributes";
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONINTAGATTRIBUTES = "scriptExpressionTagAttributes";
+	@HAPAttribute
+	public static final String SCRIPTGROUP = "scriptGroup";
 	@HAPAttribute
 	public static final String SCRIPT = "script";
 	@HAPAttribute
@@ -92,7 +96,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	private Map<String, String> m_attributes;
 	
 	//expression unit
-	private HAPContextProcessScriptExpression m_scriptExpressionContext;
+	private HAPContextProcessScript m_processScriptContext;
 	
 	//all the customer tag within the domain
 	private Map<String, HAPExecutableUIUnitTag> m_uiTags; 
@@ -104,6 +108,9 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	//all the attribute expressions in customer tag under this domain
 	private Set<HAPUIEmbededScriptExpressionInAttribute> m_scriptExpressionsInTagAttribute;
 
+	//executable script group
+	private HAPExecutableScriptGroup m_scriptGroupExe;
+	
 	//event definition 
 	private Map<String, HAPDefinitionUIEvent> m_events;
 	private Map<String, HAPDefinitionUICommand> m_commands;
@@ -118,7 +125,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		this.m_scriptExpressionsInContent = new HashSet<HAPUIEmbededScriptExpressionInContent>();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
-		this.m_scriptExpressionContext = new HAPContextProcessScriptExpression();
+		this.m_processScriptContext = new HAPContextProcessScript();
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
 		this.m_context = new HAPContextGroupInUIResource(this);
 		this.m_attributes = new LinkedHashMap<String, String>();
@@ -156,17 +163,19 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		else return new HAPContextFlat();
 	}
 	
-	public Map<String, Object> getConstantsValue(){   return this.m_scriptExpressionContext.getConstantsValue();    }
-	public void addConstantValue(String name, Object value) {		this.m_scriptExpressionContext.addConstant(name, value);	}
+//	public Map<String, Object> getConstantsValue(){   return this.m_processScriptContext.getConstantsValue();    }
+//	public void addConstantValue(String name, Object value) {		this.m_processScriptContext.addConstant(name, value);	}
 
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public void addAttribute(String name, String value) {   this.m_attributes.put(name, value);   }
 
 	public HAPDefinitionUIUnit getUIUnitDefinition() {	return this.m_uiUnitDefinition;	}
 	
-	public HAPContextProcessScriptExpression getExpressionContext(){   return this.m_scriptExpressionContext;   }
-	public void setExpressionContext(HAPContextProcessScriptExpression context){  this.m_scriptExpressionContext = context;   }
+	public HAPContextProcessScript getExpressionContext(){   return this.m_processScriptContext;   }
+	public void setExpressionContext(HAPContextProcessScript context){  this.m_processScriptContext = context;   }
 
+	public HAPDefinitionExpressionSuiteImp getExpressionSuiteInContext() {    return (HAPDefinitionExpressionSuiteImp)this.m_processScriptContext.getExpressionDefinitionSuite();   }
+	
 	public Collection<HAPExecutableUIUnitTag> getUITags(){return this.m_uiTags.values();} 
 	public HAPExecutableUIUnitTag getUITag(String id){return this.m_uiTags.get(id);} 
 	public Map<String, HAPExecutableUIUnitTag> getUITagesByName(){   return this.m_uiTags;   }
@@ -179,6 +188,9 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	public Set<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionsInAttribute() {  return this.m_scriptExpressionsInAttribute;   }
 	public Set<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttribute() {  return this.m_scriptExpressionsInTagAttribute;   }
 
+	public HAPExecutableScriptGroup getScriptGroupExecutable() {   return this.m_scriptGroupExe;    }
+	public void setScriptGroupExecutable(HAPExecutableScriptGroup scriptGroupExe) {   this.m_scriptGroupExe = scriptGroupExe;     }
+	
 	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_events;    }
 	public HAPDefinitionUIEvent getEventDefinition(String name) {   return this.m_events.get(name);  }
 	public void addEventDefinition(HAPDefinitionUIEvent eventDef) {  this.m_events.put(eventDef.getName(), eventDef);    }
@@ -213,7 +225,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		htmlContent = htmlContent.replaceAll("(\\r|\\n)", "");
 		jsonMap.put(HTML, htmlContent);
 		
-		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_scriptExpressionContext.getConstantsValue(), HAPSerializationFormat.JSON));
+//		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_processScriptContext.getConstantsValue(), HAPSerializationFormat.JSON));
 	
 		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
 		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commands, HAPSerializationFormat.JSON));
@@ -221,8 +233,6 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_services, HAPSerializationFormat.JSON));
 		jsonMap.put(SERVICEPROVIDERS, HAPJsonUtility.buildJson(this.m_serviceProviders, HAPSerializationFormat.JSON));
 
-		
-		
 		List<String> expressionContentJsons = new ArrayList<String>();
 		for(HAPUIEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(SCRIPTEXPRESSIONSINCONTENT, HAPJsonUtility.buildArrayJson(expressionContentJsons.toArray(new String[0])));
@@ -235,7 +245,8 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		for(HAPUIEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  expressionTagAttributeJsons.add(expressionTagAttr.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(SCRIPTEXPRESSIONINTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
 
-	
+		jsonMap.put(SCRIPTGROUP, this.m_scriptGroupExe.toStringValue(HAPSerializationFormat.JSON));
+		
 		Map<String, String> uiTagJsons = new LinkedHashMap<String, String>();
 		for(String uiId : this.m_uiTags.keySet())	uiTagJsons.put(uiId, this.m_uiTags.get(uiId).toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(UITAGS, HAPJsonUtility.buildMapJson(uiTagJsons));
@@ -248,18 +259,22 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 			jsonMap.put(SCRIPT, script.toStringValue(HAPSerializationFormat.JSON_FULL));
 			typeJsonMap.put(SCRIPT, script.getClass());
 		}
-		
-		List<String> expressionContentJsons = new ArrayList<String>();
-		for(HAPUIEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toResourceData(runtimeInfo).toString());
-		jsonMap.put(SCRIPTEXPRESSIONSINCONTENT, HAPJsonUtility.buildArrayJson(expressionContentJsons.toArray(new String[0])));
-		
-		List<String> expressionAttributeJsons = new ArrayList<String>();
-		for(HAPUIEmbededScriptExpressionInAttribute expressionAttr : this.m_scriptExpressionsInAttribute)  expressionAttributeJsons.add(expressionAttr.toResourceData(runtimeInfo).toString());
-		jsonMap.put(SCRIPTEXPRESSIONINATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionAttributeJsons.toArray(new String[0])));
 
-		List<String> expressionTagAttributeJsons = new ArrayList<String>();
-		for(HAPUIEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  expressionTagAttributeJsons.add(expressionTagAttr.toResourceData(runtimeInfo).toString());
-		jsonMap.put(SCRIPTEXPRESSIONINTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
+//		List<String> expressionContentJsons = new ArrayList<String>();
+//		for(HAPUIEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toResourceData(runtimeInfo).toString());
+//		jsonMap.put(SCRIPTEXPRESSIONSINCONTENT, HAPJsonUtility.buildArrayJson(expressionContentJsons.toArray(new String[0])));
+//		
+//		List<String> expressionAttributeJsons = new ArrayList<String>();
+//		for(HAPUIEmbededScriptExpressionInAttribute expressionAttr : this.m_scriptExpressionsInAttribute)  expressionAttributeJsons.add(expressionAttr.toResourceData(runtimeInfo).toString());
+//		jsonMap.put(SCRIPTEXPRESSIONINATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionAttributeJsons.toArray(new String[0])));
+//
+//		List<String> expressionTagAttributeJsons = new ArrayList<String>();
+//		for(HAPUIEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  expressionTagAttributeJsons.add(expressionTagAttr.toResourceData(runtimeInfo).toString());
+//		jsonMap.put(SCRIPTEXPRESSIONINTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
+
+		jsonMap.put(SCRIPTGROUP, this.m_scriptGroupExe.toResourceData(runtimeInfo).toString());
+		
+
 		
 		Map<String, String> serviceResourceMap = new LinkedHashMap<String, String>();
 		for(String serviceName : this.m_services.keySet()) 	serviceResourceMap.put(serviceName, this.m_services.get(serviceName).toResourceData(runtimeInfo).toString());
@@ -273,12 +288,9 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		//resource from expression
-		for(HAPUIEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  dependency.addAll(expressionContent.getResourceDependency(runtimeInfo, resourceManager));
-		for(HAPUIEmbededScriptExpressionInAttribute expressionAttr : this.m_scriptExpressionsInAttribute)  dependency.addAll(expressionAttr.getResourceDependency(runtimeInfo, resourceManager));
-		for(HAPUIEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  dependency.addAll(expressionTagAttr.getResourceDependency(runtimeInfo, resourceManager));
+		dependency.addAll(this.m_scriptGroupExe.getResourceDependency(runtimeInfo, resourceManager));
 		
 		//resource from child uiTag
 		for(String uiId : this.m_uiTags.keySet()) dependency.addAll(this.m_uiTags.get(uiId).getResourceDependency(runtimeInfo, resourceManager));	
 	}
-
 }

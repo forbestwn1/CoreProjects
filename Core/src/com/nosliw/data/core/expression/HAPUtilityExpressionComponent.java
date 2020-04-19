@@ -14,7 +14,7 @@ import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 
 public class HAPUtilityExpressionComponent {
 
-	public static HAPDefinitionExpressionSuite buildExpressionSuiteFromComponent(HAPDefinitionComplex complexEntity) {
+	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionComplex complexEntity) {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
 		
 		//build context

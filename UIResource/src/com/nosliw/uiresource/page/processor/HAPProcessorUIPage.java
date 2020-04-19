@@ -10,6 +10,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.uiresource.HAPUIResourceManager;
@@ -41,8 +42,10 @@ public class HAPProcessorUIPage {
 		
 		HAPExecutableUIUnitPage out = new HAPExecutableUIUnitPage(uiPageDef, id);
 
+		HAPRequirementContextProcessor requirementContextProcessor = HAPUtilityCommon.getDefaultContextProcessorRequirement(resourceDefMan, dataTypeHelper, runtime, expressionMan, serviceDefinitionManager);
+		
 		//compile definition to executable
-		HAPProcessorCompile.process(uiPageDef, out, null);
+		HAPProcessorCompile.process(out, null);
 
 		//build page context by parent context override context defined in page
 		HAPContextGroup pageContext = uiPageDef.getContextNotFlat().cloneContextGroup();
@@ -56,13 +59,13 @@ public class HAPProcessorUIPage {
 		}
 			
 		if(serviceProviders==null)  serviceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
-		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, HAPUtilityCommon.getDefaultContextProcessorRequirement(resourceDefMan, dataTypeHelper, runtime, expressionMan, serviceDefinitionManager));
+		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, requirementContextProcessor);
 
 //		HAPPorcessorResolveName.resolve(out);
 		
 		HAPProcessorUIConstant.resolveConstants(out, runtime);
 		
-		HAPProcessorUIExpression.processUIExpression(out, runtime, expressionMan);
+		HAPProcessorUIExpression.processUIExpression(out, runtime, expressionMan, requirementContextProcessor);
 		
 		HAPProcessorUIEventEscalate.process(out, uiTagMan);
 		

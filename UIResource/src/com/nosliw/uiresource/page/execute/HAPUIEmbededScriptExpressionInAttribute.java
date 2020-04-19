@@ -10,11 +10,14 @@ public class HAPUIEmbededScriptExpressionInAttribute extends HAPUIEmbededScriptE
 	@HAPAttribute
 	public static final String ATTRIBUTE = "attribute";
 
+	private String m_attribute;
+	
 	public HAPUIEmbededScriptExpressionInAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute uiEmbededScriptExpressionAttr){
 		super(uiEmbededScriptExpressionAttr);
+		this.m_attribute = uiEmbededScriptExpressionAttr.getAttribute();
 	}
 
-	public String getAttribute(){return ((HAPDefinitionUIEmbededScriptExpressionInAttribute)this.getDefinition()).getAttribute(); }
+	public String getAttribute(){return this.m_attribute; }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

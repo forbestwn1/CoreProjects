@@ -9,7 +9,10 @@ import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implements HAPExecutableScriptWithSegment{
 
@@ -62,4 +65,20 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 			seg.updateConstant(value);
 		}
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+	}
+	
+	@Override
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
+		
+	}
+
+	@Override
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		
+	}
+
 }

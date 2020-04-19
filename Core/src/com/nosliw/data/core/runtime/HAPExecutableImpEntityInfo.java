@@ -6,10 +6,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  implements HAPEntityInfoWritable{
@@ -84,5 +84,4 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 		this.m_info = new HAPInfoImpSimple();
 		this.m_info.buildObject(jsonObj.optJSONObject(INFO), HAPSerializationFormat.JSON);
 	}
-	
 }
