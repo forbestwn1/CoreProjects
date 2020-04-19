@@ -18,7 +18,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
-import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPScriptExpression111;
 
 public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal{
 
@@ -30,7 +30,7 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 
 	private HAPContextProcessScriptExpression m_expressionProcessContext;
 
-	private HAPScriptExpression m_scriptExpression;
+	private HAPScriptExpression111 m_scriptExpression;
 
 	public HAPExpressionActivityExecutable(String id, HAPExpressionActivityDefinition activityDef) {
 		super(id, activityDef);
@@ -41,8 +41,8 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 		return this.m_expressionProcessContext;
 	}
 	
-	public void setScriptExpression(HAPScriptExpression scriptExpression) {    this.m_scriptExpression = scriptExpression;    }
-	public HAPScriptExpression getScriptExpression() {   return this.m_scriptExpression;  }
+	public void setScriptExpression(HAPScriptExpression111 scriptExpression) {    this.m_scriptExpression = scriptExpression;    }
+	public HAPScriptExpression111 getScriptExpression() {   return this.m_scriptExpression;  }
 	
 //	public HAPExpressionActivityDefinition getExpressionActivityDefinition() {   return (HAPExpressionActivityDefinition)this.getActivityDefinition();   }
 
@@ -50,7 +50,7 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_scriptExpression = new HAPScriptExpression();
+		this.m_scriptExpression = new HAPScriptExpression111();
 		this.m_scriptExpression.buildObject(jsonObj.getJSONObject(SCRIPTEXPRESSION), HAPSerializationFormat.JSON);
 		return true;  
 	}

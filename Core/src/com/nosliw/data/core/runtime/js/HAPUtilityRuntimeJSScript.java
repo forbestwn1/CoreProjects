@@ -36,9 +36,9 @@ import com.nosliw.data.core.script.expression.expression.HAPConstantInScript;
 import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptExpression;
 import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSegExpression;
 import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSegScript;
-import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPScriptExpression111;
 import com.nosliw.data.core.script.expression.expression.HAPVariableInScript;
-import com.nosliw.data.core.script.expression.literate.HAPEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.literate.HAPEmbededScriptExpression111;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityRuntimeJSScript {
@@ -166,6 +166,29 @@ public class HAPUtilityRuntimeJSScript {
 		return out;
 	}
 	
+	public static HAPJSScriptInfo buildRequestScriptForExecuteProcessTask(HAPRuntimeTaskExecuteProcess task, HAPRuntimeImpRhino runtime){
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+
+		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
+		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
+		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
+		
+		templateParms.put("processDef", task.getProcess().toResourceData(runtime.getRuntimeInfo()).toString());
+		
+		String inputJson = HAPJsonUtility.buildJson(task.getInput(), HAPSerializationFormat.JSON);
+		templateParms.put("inputData", inputJson);
+		
+		templateParms.put("taskId", task.getTaskId());
+
+		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
+		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
+		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
+
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteProcessScript.temp");
+		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
+		return out;
+	}
 
 	public static HAPJSScriptInfo buildRequestScriptForLoadResourceTask(HAPRuntimeTaskLoadResources loadResourcesTask, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
@@ -186,8 +209,81 @@ public class HAPUtilityRuntimeJSScript {
 		return out;
 	}
 	
+
+	
+	
+	
+	
+	
+
+	
+	//build execute function for script expression
+	public static String buildScriptExpressionJSFunction(HAPScriptExpression111 scriptExpression){
+		String expressionsDataParmName = "expressionsData"; 
+		String constantsDataParmName = "constantsData"; 
+		String variablesDataParmName = "variablesData"; 
+		
+		//build javascript function to execute the script
+		StringBuffer funScript = new StringBuffer();
+		int i=0;
+		for(Object ele : scriptExpression.getElements()){
+			if(ele instanceof HAPExecutableExpressionGroup){
+				funScript.append(expressionsDataParmName+"[\""+scriptExpression.getIdByIndex(i)+"\"]");
+			}
+			else if(ele instanceof HAPScriptInScriptExpression){
+				HAPScriptInScriptExpression scriptSegment = (HAPScriptInScriptExpression)ele;
+				List<Object> scriptSegmentEles = scriptSegment.getContainerElements();
+				for(Object scriptSegmentEle : scriptSegmentEles){
+					if(scriptSegmentEle instanceof String){
+						funScript.append((String)scriptSegmentEle);
+					}
+					else if(scriptSegmentEle instanceof HAPConstantInScript){
+						funScript.append(constantsDataParmName + "[\"" + ((HAPConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
+					}
+					else if(scriptSegmentEle instanceof HAPVariableInScript){
+						funScript.append(variablesDataParmName + "[\"" + ((HAPVariableInScript)scriptSegmentEle).getVariableName()+"\"]");
+					}
+				}
+			}
+			i++;
+		}
+		
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ScriptExpressionFunction.temp");
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		templateParms.put("functionScript", funScript.toString());
+		templateParms.put("expressionsData", expressionsDataParmName);
+		templateParms.put("constantsData", constantsDataParmName);
+		templateParms.put("variablesData", variablesDataParmName);
+		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		return script;
+	}
+
+	public static HAPJSScriptInfo buildRequestScriptForExecuteProcessEmbededTask111(HAPRuntimeTaskExecuteProcessEmbeded task, HAPRuntimeImpRhino runtime){
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+
+		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
+		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
+		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
+		
+		templateParms.put("processDef", task.getProcess().toResourceData(runtime.getRuntimeInfo()).toString());
+		
+		String parentContextDataJson = HAPJsonUtility.buildJson(task.getParentContextData(), HAPSerializationFormat.JSON);
+		templateParms.put("parentContextData", parentContextDataJson);
+		
+		templateParms.put("taskId", task.getTaskId());
+
+		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
+		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
+		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
+
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteProcessEmbededScript.temp");
+		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
+		return out;
+	}
+
 	//build script for execute script expression task 
-	public static HAPJSScriptInfo buildRequestScriptForExecuteScriptExpressionTask(HAPRuntimeTaskExecuteScriptExpressionAbstract task, HAPRuntimeImpRhino runtime){
+	public static HAPJSScriptInfo buildRequestScriptForExecuteScriptExpressionTask11(HAPRuntimeTaskExecuteScriptExpressionAbstract task, HAPRuntimeImpRhino runtime){
 		Map<String, Object> variableValue = task.getVariablesValue();
 
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
@@ -215,14 +311,14 @@ public class HAPUtilityRuntimeJSScript {
 		return out;
 	}
 
-	public static String buildEmbedScriptExpressionJSFunction(HAPEmbededScriptExpression embedScriptExpression){
+	public static String buildEmbedScriptExpressionJSFunction111(HAPEmbededScriptExpression111 embedScriptExpression){
 		String expressionsDataParmName = "expressionsData"; 
 		String constantsDataParmName = "constantsData"; 
 		String variablesDataParmName = "variablesData"; 
 		String scriptExpressionParmName = "scriptExpressionData";
 
 		StringBuffer scriptExpressionFunScript = new StringBuffer();
-		Map<String, HAPScriptExpression> scriptExpressions = embedScriptExpression.getScriptExpressions();
+		Map<String, HAPScriptExpression111> scriptExpressions = embedScriptExpression.getScriptExpressions();
 		for(String expId : scriptExpressions.keySet()) {
 			scriptExpressionFunScript.append(scriptExpressionParmName +  "["+ expId  + "]="  +buildScriptExpressionJSFunction(scriptExpressions.get(expId)) + "("+expressionsDataParmName+","+constantsDataParmName+","+variablesDataParmName+");");
 		}
@@ -242,8 +338,7 @@ public class HAPUtilityRuntimeJSScript {
 		return script;
 	}
 	
-	
-	public static String buildMainScriptEmbededScriptExpression(HAPEmbededScriptExpression embededScriptExp) {
+	public static String buildMainScriptEmbededScriptExpression111(HAPEmbededScriptExpression111 embededScriptExp) {
 		//build javascript function to execute the script
 		String scriptExpressionDataParmName = "scriptExpressionData"; 
 		StringBuffer funScript = new StringBuffer();
@@ -253,7 +348,7 @@ public class HAPUtilityRuntimeJSScript {
 			if(ele instanceof String){
 				funScript.append("\""+ele+"\"");
 			}
-			else if(ele instanceof HAPScriptExpression){
+			else if(ele instanceof HAPScriptExpression111){
 				funScript.append(scriptExpressionDataParmName+"[\""+embededScriptExp.getScriptExpressionIdByIndex(i)+"\"]");
 			}
 			i++;
@@ -268,7 +363,7 @@ public class HAPUtilityRuntimeJSScript {
 	}
 
 	//build execute function for script expression
-	public static String buildScriptJSFunction(HAPExecutableScriptGroup scriptGroup, Object scriptId){
+	public static String buildScriptJSFunction111(HAPExecutableScriptGroup scriptGroup, Object scriptId){
 		String expressionsDataParmName = "expressionsData"; 
 		String constantsDataParmName = "constantsData"; 
 		String variablesDataParmName = "variablesData"; 
@@ -311,95 +406,5 @@ public class HAPUtilityRuntimeJSScript {
 		return out;
 	}
 
-
-	
-	//build execute function for script expression
-	public static String buildScriptExpressionJSFunction(HAPScriptExpression scriptExpression){
-		String expressionsDataParmName = "expressionsData"; 
-		String constantsDataParmName = "constantsData"; 
-		String variablesDataParmName = "variablesData"; 
-		
-		//build javascript function to execute the script
-		StringBuffer funScript = new StringBuffer();
-		int i=0;
-		for(Object ele : scriptExpression.getElements()){
-			if(ele instanceof HAPExecutableExpressionGroup){
-				funScript.append(expressionsDataParmName+"[\""+scriptExpression.getIdByIndex(i)+"\"]");
-			}
-			else if(ele instanceof HAPScriptInScriptExpression){
-				HAPScriptInScriptExpression scriptSegment = (HAPScriptInScriptExpression)ele;
-				List<Object> scriptSegmentEles = scriptSegment.getContainerElements();
-				for(Object scriptSegmentEle : scriptSegmentEles){
-					if(scriptSegmentEle instanceof String){
-						funScript.append((String)scriptSegmentEle);
-					}
-					else if(scriptSegmentEle instanceof HAPConstantInScript){
-						funScript.append(constantsDataParmName + "[\"" + ((HAPConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
-					}
-					else if(scriptSegmentEle instanceof HAPVariableInScript){
-						funScript.append(variablesDataParmName + "[\"" + ((HAPVariableInScript)scriptSegmentEle).getVariableName()+"\"]");
-					}
-				}
-			}
-			i++;
-		}
-		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ScriptExpressionFunction.temp");
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("functionScript", funScript.toString());
-		templateParms.put("expressionsData", expressionsDataParmName);
-		templateParms.put("constantsData", constantsDataParmName);
-		templateParms.put("variablesData", variablesDataParmName);
-		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
-		return script;
-	}
-
-	public static HAPJSScriptInfo buildRequestScriptForExecuteProcessTask(HAPRuntimeTaskExecuteProcess task, HAPRuntimeImpRhino runtime){
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-
-		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
-		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
-		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
-		
-		templateParms.put("processDef", task.getProcess().toResourceData(runtime.getRuntimeInfo()).toString());
-		
-		String inputJson = HAPJsonUtility.buildJson(task.getInput(), HAPSerializationFormat.JSON);
-		templateParms.put("inputData", inputJson);
-		
-		templateParms.put("taskId", task.getTaskId());
-
-		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
-		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
-		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
-
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteProcessScript.temp");
-		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
-		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
-		return out;
-	}
-
-	public static HAPJSScriptInfo buildRequestScriptForExecuteProcessEmbededTask(HAPRuntimeTaskExecuteProcessEmbeded task, HAPRuntimeImpRhino runtime){
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-
-		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
-		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
-		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
-		
-		templateParms.put("processDef", task.getProcess().toResourceData(runtime.getRuntimeInfo()).toString());
-		
-		String parentContextDataJson = HAPJsonUtility.buildJson(task.getParentContextData(), HAPSerializationFormat.JSON);
-		templateParms.put("parentContextData", parentContextDataJson);
-		
-		templateParms.put("taskId", task.getTaskId());
-
-		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
-		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
-		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
-
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteProcessEmbededScript.temp");
-		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
-		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
-		return out;
-	}
 
 }

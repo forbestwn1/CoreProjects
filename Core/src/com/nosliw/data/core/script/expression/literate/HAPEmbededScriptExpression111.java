@@ -19,13 +19,13 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
-import com.nosliw.data.core.script.expression.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.expression.HAPScriptExpression111;
 
 /**
  *  EmbededScriptExpression: a string which contains script expression
  */
 @HAPEntityWithAttribute
-public class HAPEmbededScriptExpression extends HAPExecutableImp{
+public class HAPEmbededScriptExpression111 extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONS = "scriptExpressions";
@@ -41,15 +41,15 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 	private List<Object> m_elements;
 	
 	//all script expressions by id
-	private Map<String, HAPScriptExpression> m_scriptExpressions;
+	private Map<String, HAPScriptExpression111> m_scriptExpressions;
 	
 	//from index in elements to script expression id
 	private Map<Integer, String> m_indexToId;
 	
-	public HAPEmbededScriptExpression(HAPDefinitionEmbededScriptExpression definition) {
+	public HAPEmbededScriptExpression111(HAPDefinitionEmbededScriptExpression definition) {
 		this.m_elements = new ArrayList<Object>();
 		this.m_indexToId = new LinkedHashMap<Integer, String>();
-		this.m_scriptExpressions = new LinkedHashMap<String, HAPScriptExpression>();
+		this.m_scriptExpressions = new LinkedHashMap<String, HAPScriptExpression111>();
 		this.m_definition = definition;
 	}
 	
@@ -58,8 +58,8 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 	public void addElement(Object element) {
 		int index = this.m_elements.size();
 		this.m_elements.add(element);
-		if(element instanceof HAPScriptExpression) {
-			HAPScriptExpression scriptExp = (HAPScriptExpression)element;
+		if(element instanceof HAPScriptExpression111) {
+			HAPScriptExpression111 scriptExp = (HAPScriptExpression111)element;
 			String scriptExpressionId = index + "";
 			//update expression id in script expression 
 			scriptExp.updateExpressionId(new HAPUpdateNamePrefix(scriptExpressionId+"_"));
@@ -73,8 +73,8 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 	public boolean isConstant(){
 		boolean out = true;
 		for(Object ele : this.m_elements){
-			if(ele instanceof HAPScriptExpression){
-				if(!((HAPScriptExpression)ele).isConstant()){
+			if(ele instanceof HAPScriptExpression111){
+				if(!((HAPScriptExpression111)ele).isConstant()){
 					out = false;
 				}
 			}
@@ -104,8 +104,8 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 		if(this.isConstant()){
 			StringBuffer out = new StringBuffer();
 			for(Object ele : this.m_elements){
-				if(ele instanceof HAPScriptExpression){
-					HAPScriptExpression scriptExpression = (HAPScriptExpression)ele; 
+				if(ele instanceof HAPScriptExpression111){
+					HAPScriptExpression111 scriptExpression = (HAPScriptExpression111)ele; 
 					if(!scriptExpression.isConstant()){
 						out.append(scriptExpression.getValue().toString());
 					}
@@ -121,14 +121,14 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 		}
 	}
 	
-	public List<HAPScriptExpression> getScriptExpressionsList(){		return new ArrayList(this.m_scriptExpressions.values());	}
+	public List<HAPScriptExpression111> getScriptExpressionsList(){		return new ArrayList(this.m_scriptExpressions.values());	}
 	
 	public String getScriptExpressionIdByIndex(int index) {		return this.m_indexToId.get(index);	}
 	
-	public Map<String, HAPScriptExpression> getScriptExpressions(){  return this.m_scriptExpressions;  }
+	public Map<String, HAPScriptExpression111> getScriptExpressions(){  return this.m_scriptExpressions;  }
 	public Map<String, HAPExecutableExpressionGroup> getExpressions(){
 		Map<String, HAPExecutableExpressionGroup> out = new LinkedHashMap<String, HAPExecutableExpressionGroup>();
-		for(HAPScriptExpression scriptExpression : this.m_scriptExpressions.values()){
+		for(HAPScriptExpression111 scriptExpression : this.m_scriptExpressions.values()){
 			out.putAll(scriptExpression.getExpressions());
 		}
 		return out;
@@ -151,7 +151,7 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 		Map<String, String> scriptJsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> scriptTypeJsonMap = new LinkedHashMap<String, Class<?>>();
 		for(String name : this.getScriptExpressions().keySet()) {
-			HAPScriptExpression scriptExpression = this.getScriptExpressions().get(name);
+			HAPScriptExpression111 scriptExpression = this.getScriptExpressions().get(name);
 			scriptJsonMap.put(name, scriptExpression.toResourceData(runtimeInfo).toString());
 			scriptTypeJsonMap.put(name, HAPJsonTypeScript.class);
 		}
@@ -163,7 +163,7 @@ public class HAPEmbededScriptExpression extends HAPExecutableImp{
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		for(HAPScriptExpression scriptExpression : this.getScriptExpressionsList()){
+		for(HAPScriptExpression111 scriptExpression : this.getScriptExpressionsList()){
 			out.addAll(scriptExpression.getResourceDependency(runtimeInfo, resourceManager));
 		}
 		return out;

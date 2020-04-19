@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.script.expression.literate.HAPEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.literate.HAPEmbededScriptExpression111;
 
 public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecuteScriptExpressionAbstract{
 
@@ -27,7 +27,7 @@ public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecut
 	@HAPAttribute
 	public static String VARIABLESVALUE = "variablesValue";
 	
-	private HAPEmbededScriptExpression m_embededExpression;
+	private HAPEmbededScriptExpression111 m_embededExpression;
 	
 	//variable value can be data or other object
 	Map<String, Object> m_variablesValue;
@@ -35,7 +35,7 @@ public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecut
 	Map<String, Object> m_scriptConstants;
 	
 	public HAPRuntimeTaskExecuteEmbededExpression(
-			HAPEmbededScriptExpression embededExpression, 
+			HAPEmbededScriptExpression111 embededExpression, 
 			Map<String, Object> variablesValue, 
 			Map<String, Object> scriptConstants){
 		this.m_embededExpression = embededExpression;
@@ -46,7 +46,7 @@ public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecut
 	@Override
 	public String getTaskType() {		return TASK;	}
 
-	public HAPEmbededScriptExpression getEmbededScriptExpression(){ return this.m_embededExpression;  }
+	public HAPEmbededScriptExpression111 getEmbededScriptExpression(){ return this.m_embededExpression;  }
 	@Override
 	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 	@Override

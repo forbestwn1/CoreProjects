@@ -33,7 +33,7 @@ import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
  * 		constant definition
  */
 @HAPEntityWithAttribute
-public class HAPScriptExpression extends HAPExecutableImp{
+public class HAPScriptExpression111 extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static final String DEFINITION = "definition";
@@ -67,14 +67,14 @@ public class HAPScriptExpression extends HAPExecutableImp{
 	
 	private boolean m_isDataExpression;
 
-	public HAPScriptExpression(){
+	public HAPScriptExpression111(){
 		this.m_elements = new ArrayList<Object>();
 		this.m_expressions = new LinkedHashMap<String, HAPExecutableExpressionGroup>();
 		this.m_indexToId = new LinkedHashMap<Integer, String>();
 		this.m_isConstant = false;
 	}
 	
-	public HAPScriptExpression(HAPDefinitionScriptExpression definition){
+	public HAPScriptExpression111(HAPDefinitionScriptExpression definition){
 		this();
 		this.m_definition = definition;
 		this.m_isDataExpression = definition.isDataExpression();
