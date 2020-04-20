@@ -1,5 +1,7 @@
 package com.nosliw.data.core.script.expression;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -48,4 +50,10 @@ public class HAPScript extends HAPSerializableImp{
 		return true;  
 	}
 
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.m_type);
+		jsonMap.put(SCRIPT, this.m_script);
+	}
 }

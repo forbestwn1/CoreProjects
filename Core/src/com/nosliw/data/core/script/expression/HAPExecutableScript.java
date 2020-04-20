@@ -6,8 +6,10 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.runtime.HAPExecutable;
 
-public interface HAPExecutableScript {
+public interface HAPExecutableScript extends HAPExecutable{
 
 	@HAPAttribute
 	public static String SCRIPTTYPE = "scriptType";
@@ -19,8 +21,10 @@ public interface HAPExecutableScript {
 
 	String getId();
 
-	Set<HAPVariableInfo> getVariablesInfo();
+	Set<HAPVariableInfo> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup);
 	
-	Set<HAPDefinitionConstant> getConstantsDefinition();
+	Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup);
 	void updateConstant(Map<String, Object> value);
+	
+	Set<String> discoverExpressionReference(HAPExecutableExpressionGroup expressionGroup);
 }

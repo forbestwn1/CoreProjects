@@ -29,7 +29,7 @@ var packageObj = library;
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
-	var node_createUIResourceScriptExpression = function(varNames, scriptFun, supportFuns, expressions, constants, context, requestInfo){
+	var node_createUIResourceScriptExpression = function(scriptExpression, scriptFun, constants, context, requestInfo){
 		
 		var loc_constants = {};
 		
@@ -38,8 +38,6 @@ var packageObj = library;
 		var loc_contextVarGroup;
 		
 		var loc_scriptFunction;
-		
-		var loc_supportFuns;
 		
 		//store result from last time calculation
 		var loc_result;
@@ -62,15 +60,15 @@ var packageObj = library;
 		}
 		
 		var lifecycleCallback = {};
-		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(varNames, scriptFun, supportFuns, expressions, constants, context, requestInfo){
+		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(scriptExpression, scriptFun, constants, context, requestInfo){
 			loc_constants = constants;
 			
-			loc_expressions = expressions;
+			loc_expressions = scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_EXPRESSIONS];
 			
 			loc_scriptFunction = scriptFun; 
-			
-			loc_supportFuns = supportFuns;
+//				scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_SCRIPTFUNCTION];
 
+			var varNames = scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_VARIABLENAMES];
 			var contextVariables = [];
 			_.each(varNames, function(varName, index){
 				contextVariables.push(node_createContextVariableInfo(varName));
@@ -98,7 +96,7 @@ var packageObj = library;
 							_.each(varsValue.getResults(), function(varData, varName){
 								variableParms[varName] = node_dataUtility.getValueOfData(varData);
 							});
-							return nosliw.runtime.getExpressionService().getExecuteScriptRequest(loc_scriptFunction, loc_supportFuns, loc_expressions, variableParms, loc_constants);
+							return nosliw.runtime.getExpressionService().getExecuteScriptRequest(loc_scriptFunction, loc_expressions, variableParms, loc_constants);
 						}
 					});
 				//parepare variable parms
@@ -138,7 +136,7 @@ var packageObj = library;
 
 		//append resource and object life cycle method to out obj
 		loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-		node_getLifecycleInterface(loc_out).init(varNames, scriptFun, supportFuns, expressions, constants, context, requestInfo);
+		node_getLifecycleInterface(loc_out).init(scriptExpression, scriptFun, constants, context, requestInfo);
 		return loc_out;
 	};
 
@@ -166,6 +164,6 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 
 	//Register Node by Name
-	packageObj.createChildNode("createUIResourceScriptExpression", node_createUIResourceScriptExpression); 
+	packageObj.createChildNode("createUIResourceScriptExpression2", node_createUIResourceScriptExpression); 
 
 	})(packageObj);

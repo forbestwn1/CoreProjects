@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
@@ -19,6 +20,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
+@HAPEntityWithAttribute
 public class HAPExecutableScriptGroup extends HAPExecutableImp{
 
 	@HAPAttribute
@@ -57,7 +59,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	public Set<HAPDefinitionConstant> getConstantsDefinition() {
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>(); 
 		for(HAPExecutableScriptEntity scriptExe : this.m_elements) {
-			HAPUtilityScriptExpression.addConstantDefinition(out, scriptExe.getConstantsDefinition());
+			HAPUtilityScriptExpression.addConstantDefinition(out, scriptExe.discoverConstantsDefinition(null));
 		}
 		
 		for(HAPExecutableExpression expressionExe : this.m_expressionExe.getExpressionItems().values()) {
@@ -67,6 +69,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	}
 	
 	public void addScript(HAPExecutableScriptEntity script) {   this.m_elements.add(script);    }
+	public List<HAPExecutableScriptEntity> getScripts(){    return this.m_elements;    }
 	public HAPExecutableScriptEntity getScript(Object id) {
 		HAPExecutableScriptEntity out = null;
 		if(id==null)  id = HAPConstant.NAME_DEFAULT;
@@ -106,11 +109,6 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 		Map<String, String> elementJsonMap = new LinkedHashMap<String, String>();
 		for(HAPExecutableScriptEntity ele : this.m_elements) {
 			elementJsonMap.put(ele.getId(), ele.toResourceData(runtimeInfo).toString());
-		}
-		
-		Map<String, String> eleMap = new LinkedHashMap<String, String>();
-		for(HAPExecutableScriptEntity script : this.m_elements) {
-			eleMap.put(script.getId(), script.toResourceData(runtimeInfo).toString());
 		}
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildMapJson(elementJsonMap));
 	}

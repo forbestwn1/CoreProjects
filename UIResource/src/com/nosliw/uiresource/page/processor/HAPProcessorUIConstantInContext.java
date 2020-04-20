@@ -2,16 +2,25 @@ package com.nosliw.uiresource.page.processor;
 
 import java.util.Map;
 
+import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.script.expression.HAPContextProcessScript;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 
-public class HAPProcessorUIConstant {
+public class HAPProcessorUIConstantInContext {
 
-	//resolve the name 
+	//resolve constants defined in context
 	public static void resolveConstants(HAPExecutableUIUnit exeUnit, HAPRuntime runtime) {
+		HAPContextProcessScript scriptContext = exeUnit.getExpressionContext();
 		Map<String, Object> constantsValue = exeUnit.getFlatContext().getConstantValue();
-		
+		for(String id : constantsValue.keySet()) {
+			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
+			scriptContext.addConstantDefinition(constantDef);
+			if(constantDef.isData()) {
+				exeUnit.getExpressionSuiteInContext().addConstantDefinition(constantDef);
+			}
+		}
 		
 		//expression
 //		Map<String, HAPResourceDefinitionExpressionGroup> expressions = exeUnit.getExpressionContext().getExpressionDefinitions();

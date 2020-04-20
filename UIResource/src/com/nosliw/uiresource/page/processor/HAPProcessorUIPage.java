@@ -63,7 +63,7 @@ public class HAPProcessorUIPage {
 
 //		HAPPorcessorResolveName.resolve(out);
 		
-		HAPProcessorUIConstant.resolveConstants(out, runtime);
+		HAPProcessorUIConstantInContext.resolveConstants(out, runtime);
 		
 		HAPProcessorUIExpression.processUIExpression(out, runtime, expressionMan, requirementContextProcessor);
 		

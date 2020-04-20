@@ -182,11 +182,11 @@ public class HAPProcessorUIContext {
 		uiExe.setFlatContext(flatContext);
 
 		//constants
-		Map<String, Object> constantsValue = flatContext.getConstantValue();
-		for(String name : constantsValue.keySet()) {
-			Object constantValue = constantsValue.get(name);
-			uiExe.addConstantValue(name, constantValue);
-		}
+//		Map<String, Object> constantsValue = flatContext.getConstantValue();
+//		for(String name : constantsValue.keySet()) {
+//			Object constantValue = constantsValue.get(name);
+//			uiExe.addConstantValue(name, constantValue);
+//		}
 		
 		//build variables
 		uiExe.getExpressionSuiteInContext().setContextStructure(flatContext.getContext());

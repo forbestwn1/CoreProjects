@@ -17,20 +17,18 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
-import com.nosliw.data.core.script.expression.HAPExecutableScript;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 
-public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HAPExecutableScript, HAPEntityWithName{
+public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp implements HAPEntityWithName{
 
 	@HAPAttribute
 	public static String SCRIPT = "script";
 
 	@HAPAttribute
 	public static String ELEMENTS = "elements";
-	
-	private String m_id;
 	
 	private String m_orignalScript;
 
@@ -47,22 +45,19 @@ public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HA
 	};
 	
 	public HAPExecutableScriptSegScript(String id, String script){
+		super(id);
 		this.m_elements = new ArrayList<Object>();
-		this.m_id = id;
 		this.m_orignalScript = script;
 		this.processSegments();
 	}
 
-	@Override
-	public String getId() {   return this.m_id;    }
-	
 	@Override
 	public String getScriptType() {  return HAPConstant.SCRIPT_TYPE_SEG_SCRIPT;  }
 
 	public List<Object> getElements(){	return this.m_elements;	}
 	
 	@Override
-	public Set<HAPVariableInfo> getVariablesInfo() {
+	public Set<HAPVariableInfo> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {
 		Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>();
 		for(Object ele : this.m_elements) {
 			if(ele instanceof HAPVariableInScript) {
@@ -86,7 +81,7 @@ public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HA
 	}
 
 	@Override
-	public Set<HAPDefinitionConstant> getConstantsDefinition() {
+	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup) {
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
 		for(Object ele : this.m_elements) {
 			if(ele instanceof HAPConstantInScript) {
@@ -227,8 +222,6 @@ public class HAPExecutableScriptSegScript extends HAPExecutableImp implements HA
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(SCRIPTTYPE, this.getScriptType());
-		jsonMap.put(ID, this.m_id);
 		jsonMap.put(SCRIPT, this.m_orignalScript);
 		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}

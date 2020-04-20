@@ -130,6 +130,12 @@ public class HAPProcessorScript {
 		HAPExecutableExpressionGroup expressionExe = HAPProcessorExpression.process(id, resourceWithContext, null, null, expressionMan, configure, contextProcessRequirement, processTracker);
 		out.setExpression(expressionExe);
 		
+		for(HAPExecutableScriptEntity script : out.getScripts()) {
+			script.discoverConstantsDefinition(out.getExpression());
+			script.discoverExpressionReference(out.getExpression());
+			script.discoverVariablesInfo(out.getExpression());
+		}
+		
 		return out;
 	}
 

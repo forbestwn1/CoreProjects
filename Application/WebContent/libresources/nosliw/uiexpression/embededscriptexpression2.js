@@ -17,11 +17,7 @@ var packageObj = library;
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
-	var node_createUIResourceEmbededScriptExpression = function(id, scriptGroup, constants, context, requestInfo){
-		
-		var loc_script;
-		var loc_expressions = {};
-		var loc_scriptExprssionObj;
+	var node_createUIResourceEmbededScriptExpression = function(embededScriptExpression, constants, context, requestInfo){
 		
 		var loc_scriptExpressions = {};
 		
@@ -30,30 +26,29 @@ var packageObj = library;
 		var loc_dataEventObject = node_createEventObject();
 		
 		var lifecycleCallback = {};
-		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(id, scriptGroup, constants, context, requestInfo){
-			loc_script = scriptGroup[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTGROUP_ELEMENT][id];
+		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(embededScriptExpression, constants, context, requestInfo){
+
+			loc_scriptFunction = embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_SCRIPTFUNCTION];
 			
-			_.each(loc_script[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_EXPRESSIONREF], function(expressionId, i){
-				loc_expressions[expressionId] = scriptGroup[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTGROUP_EXPRESSIONGROUP][EXPRESSIONGROUP_EXPRESSIONS][expressionId]; 
-			});
-			
-			var varNames = loc_script[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_VARIABLESINFO];
-			var scriptFun = loc_script[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SCRIPTFUNCTION];
-			var supportFuns = loc_script[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SUPPORTFUNCTION];
-			loc_scriptExprssionObj = node_createUIResourceScriptExpression(varNames, scriptFun, supportFuns, loc_expressions, constants, context, requestInfo);
-			loc_scriptExprssionObj.registerListener(loc_dataEventObject, function(eventName, data){
-				switch(eventName){
-				case node_CONSTANT.REQUESTRESULT_EVENT_SUCCESS:
-					var result = loc_calculateResult();
-					loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_SUCCESS, result);
-					break;
-				case node_CONSTANT.REQUESTRESULT_EVENT_ERROR:
-					loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_ERROR, data);
-					break;
-				case node_CONSTANT.REQUESTRESULT_EVENT_EXCEPTION:
-					loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_EXCEPTION, data);
-					break;
-				}
+			_.each(embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_SCRIPTEXPRESSIONS], function(scriptExpression, id){
+				var scriptFun = embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_SCRIPTEXPRESSIONSCRIPTFUNCTION][id];
+				var scriptExprssionObj = node_createUIResourceScriptExpression(scriptExpression, scriptFun, constants, context, requestInfo);
+				loc_scriptExpressions[id] = scriptExprssionObj;
+				scriptExprssionObj.registerListener(loc_dataEventObject, function(eventName, data){
+					switch(eventName){
+					case node_CONSTANT.REQUESTRESULT_EVENT_SUCCESS:
+						var result = loc_calculateResult();
+						loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_SUCCESS, result);
+						break;
+					case node_CONSTANT.REQUESTRESULT_EVENT_ERROR:
+						loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_ERROR, data);
+						break;
+					case node_CONSTANT.REQUESTRESULT_EVENT_EXCEPTION:
+						loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_EXCEPTION, data);
+						break;
+					}
+				});
+				
 			});
 		};
 		
@@ -113,7 +108,7 @@ var packageObj = library;
 
 		//append resource and object life cycle method to out obj
 		loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-		node_getLifecycleInterface(loc_out).init(id, scriptGroup, constants, context, requestInfo);
+		node_getLifecycleInterface(loc_out).init(embededScriptExpression, constants, context, requestInfo);
 		return loc_out;
 	};
 
@@ -130,6 +125,6 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("uiexpression.createUIResourceScriptExpression", function(){node_createUIResourceScriptExpression = this.getData();});
 
 	//Register Node by Name
-	packageObj.createChildNode("createUIResourceEmbededScriptExpression", node_createUIResourceEmbededScriptExpression); 
+	packageObj.createChildNode("createUIResourceEmbededScriptExpression2", node_createUIResourceEmbededScriptExpression); 
 
 	})(packageObj);
