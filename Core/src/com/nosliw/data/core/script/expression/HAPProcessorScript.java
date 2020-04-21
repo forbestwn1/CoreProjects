@@ -16,7 +16,6 @@ import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.expression.HAPProcessorExpression;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
-import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -26,11 +25,12 @@ import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScri
 
 public class HAPProcessorScript {
 
-	public static HAPExecutableScriptGroup processScript(
+	public static HAPExecutableScriptGroup processSimpleScript(
 			String script,
 			String scriptType, 
 			Map<String, Object> constants,
 			HAPManagerExpression expressionMan,
+			Map<String, String> configure, 
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		HAPContextProcessScript processScriptContext = new HAPContextProcessScript(); 
@@ -44,7 +44,7 @@ public class HAPProcessorScript {
 		HAPDefinitionScriptGroup group = new HAPDefinitionScriptGroupImp();
 		group.addEntityElement(new HAPDefinitionScriptEntity(HAPScript.newScript(script, scriptType)));
 		
-		HAPExecutableScriptGroup groupExe = processScript(null, group, processScriptContext, expressionMan, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), contextProcessRequirement, processTracker);
+		HAPExecutableScriptGroup groupExe = processScript(null, group, processScriptContext, expressionMan, configure, contextProcessRequirement, processTracker);
 		return groupExe;
 	}
 	

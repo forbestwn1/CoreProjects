@@ -25,9 +25,12 @@ public class HAPProcessorCompile {
 
 		//attachment
 		if(parentUnitDef!=null)   HAPUtilityComponent.mergeWithParentAttachment(uiUnitDef, parentUnitDef.getAttachmentContainer());
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, exeUnit.getFlatContext().getContext());
+
+		//expression context
+		exeUnit.getExpressionContext().setContextStructure(exeUnit.getFlatContext().getContext());
 		
 		//expression suite from attachment
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, exeUnit.getFlatContext().getContext());
 		exeUnit.getExpressionContext().setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment

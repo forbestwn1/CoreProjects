@@ -3,12 +3,12 @@ package com.nosliw.uiresource.page.execute;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpression;
 
-public class HAPUIEmbededScriptExpression extends HAPSerializableImp{
+public class HAPUIEmbededScriptExpression extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static final String UIID = "uiId";
@@ -21,6 +21,7 @@ public class HAPUIEmbededScriptExpression extends HAPSerializableImp{
 	private HAPScript m_script;
 	
 	public HAPUIEmbededScriptExpression(HAPDefinitionUIEmbededScriptExpression uiEmbededScriptExpression){
+		uiEmbededScriptExpression.cloneToEntityInfo(this);
 		this.m_uiId = uiEmbededScriptExpression.getUIId();
 		this.m_script = uiEmbededScriptExpression.getScript();
 	}

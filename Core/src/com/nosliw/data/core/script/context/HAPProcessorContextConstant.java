@@ -12,6 +12,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
@@ -214,7 +215,8 @@ public class HAPProcessorContextConstant {
 			HAPContextGroup contextGroup,
 			HAPRequirementContextProcessor contextProcessRequirement) {
 
-		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processScript(leafData.toString(), null, null, contextProcessRequirement.expressionManager, contextProcessRequirement, new HAPProcessTracker());
+		//simply process script
+		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, null, contextProcessRequirement.expressionManager, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), contextProcessRequirement, new HAPProcessTracker());
 		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
 		
 		String scriptType = scriptExe.getScriptType();
@@ -233,8 +235,8 @@ public class HAPProcessorContextConstant {
 			constantsValue.put(constantId, refContextDefEle.getValue());
 		}
 
-		//update all constant value
-		groupExe.updateConstant(constantsValue);
+		//process script again with constant and discovery
+		groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, constantsValue, contextProcessRequirement.expressionManager, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement, new HAPProcessTracker());		
 
 		//execute script expression
 		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(groupExe, null, null, null);

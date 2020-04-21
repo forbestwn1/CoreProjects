@@ -95,7 +95,7 @@
 					},
 					eeee : {
 						definition: {
-							value : "<%=#|!(test.string)!.subString(&(ffff)&, from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
+							value : "<%=#|!(test.string)!.subString(&(ffff)&,from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
 						}
 					},
 					base: {

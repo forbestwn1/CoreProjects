@@ -189,7 +189,7 @@ public class HAPProcessorUIContext {
 //		}
 		
 		//build variables
-		uiExe.getExpressionSuiteInContext().setContextStructure(flatContext.getContext());
+//		uiExe.getExpressionSuiteInContext().setContextStructure(flatContext.getContext());
 //		Map<String, HAPVariableInfo> varsInfo = HAPUtilityContext.discoverDataVariablesInContext(flatContext.getContext());
 //		for(String varName : varsInfo.keySet()) {
 //			uiExe.getExpressionContext().addDataVariable(varName, varsInfo.get(varName));

@@ -44,7 +44,7 @@ public class HAPScriptProcessorExpression implements HAPScriptProcessor{
 							funScript.append(constantsDataParmName + "[\"" + ((HAPConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
 						}
 						else {
-							funScript.append(HAPUtilityRuntimeJS.buildConstantValue(constantValue));
+							funScript.append("("+HAPUtilityRuntimeJS.buildConstantValue(constantValue)+")");
 						}
 					}
 					else if(scriptSegmentEle instanceof HAPVariableInScript){

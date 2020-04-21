@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
@@ -75,8 +76,7 @@ public class HAPProcessorContextSolidate {
 //	}
 
 	public static String getSolidName(String name, Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement){
-		
-		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processScript(name, null, constants, contextProcessRequirement.expressionManager, contextProcessRequirement, new HAPProcessTracker());
+		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(name, null, constants, contextProcessRequirement.expressionManager, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement, new HAPProcessTracker());
 		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
 		
 		String scriptType = scriptExe.getScriptType();
