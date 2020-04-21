@@ -105,6 +105,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 
 	//all content expression objects
 	var loc_expressionContents = [];
+	var loc_scriptGroup = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTGROUP];
 	
 	//all events on regular elements
 	var loc_elementEvents = [];
@@ -268,7 +269,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 
 		//init expression content
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONSINCONTENT], function(expressionContent, key, list){
-			loc_expressionContents.push(node_createEmbededScriptExpressionInContent(expressionContent, loc_out, requestInfo));
+			loc_expressionContents.push(node_createEmbededScriptExpressionInContent(expressionContent, loc_scriptGroup, loc_out, requestInfo));
 		});
 
 		//init normal expression attribute

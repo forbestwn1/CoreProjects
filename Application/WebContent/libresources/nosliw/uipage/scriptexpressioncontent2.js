@@ -17,7 +17,10 @@ var packageObj = library;
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
-	var node_createEmbededScriptExpressionInContent = function(embededScriptExpression, scriptGroup, uiResourceView, requestInfo){
+	var node_createEmbededScriptExpressionInContent = function(embededScriptExpression, uiResourceView, requestInfo){
+		
+		//script expression definition
+		var loc_embededScriptExpression = node_createUIResourceEmbededScriptExpression(embededScriptExpression, uiResourceView.getConstants(), uiResourceView.getContext(), requestInfo);
 		
 		//parent resource view
 		var loc_uiResourceView = uiResourceView;
@@ -25,10 +28,6 @@ var packageObj = library;
 		var loc_uiId = loc_uiResourceView.prv_getUpdateUIId(embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_UIID]);
 		//element
 		var loc_ele = loc_uiResourceView.prv_getLocalElementByUIId(loc_uiId);
-
-		//script expression definition
-		var loc_embededScriptExpression = node_createUIResourceEmbededScriptExpression(embededScriptExpression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], scriptGroup, uiResourceView.getConstants(), uiResourceView.getContext(), requestInfo);
-		
 
 		var loc_dataEventObject = node_createEventObject();
 		
@@ -88,6 +87,6 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("uiexpression.createUIResourceEmbededScriptExpression", function(){node_createUIResourceEmbededScriptExpression = this.getData();});
 
 	//Register Node by Name
-	packageObj.createChildNode("createEmbededScriptExpressionInContent", node_createEmbededScriptExpressionInContent); 
+	packageObj.createChildNode("createEmbededScriptExpressionInContent2", node_createEmbededScriptExpressionInContent); 
 
 	})(packageObj);

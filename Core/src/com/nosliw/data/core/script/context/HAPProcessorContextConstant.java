@@ -230,7 +230,7 @@ public class HAPProcessorContextConstant {
 			HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(constantId), contextGroup);
 			HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());
 			solidateConstantDefEle(refContextDefEle, contextGroup, contextProcessRequirement);
-			constantsValue.put(constantId, refContextDefEle.getDataValue());
+			constantsValue.put(constantId, refContextDefEle.getValue());
 		}
 
 		//update all constant value

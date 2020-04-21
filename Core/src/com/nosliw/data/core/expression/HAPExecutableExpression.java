@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
@@ -74,7 +74,9 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
 					Map<String, Object> value = (Map<String, Object>)data; 
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
-					constantOperand.setData((HAPData)value.get(constantOperand.getName()));
+					if(constantOperand.getName()!=null) {
+						constantOperand.setData(HAPUtilityData.buildDataWrapperFromObject(value.get(constantOperand.getName())));
+					}
 				}
 				return true;
 			}
@@ -90,7 +92,9 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
 					Map<String, HAPDefinitionConstant> out = (Map<String, HAPDefinitionConstant>)data; 
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
-					out.put(constantOperand.getName(), new HAPDefinitionConstant(constantOperand.getName(), constantOperand.getData()));
+					if(constantOperand.getName()!=null) {
+						out.put(constantOperand.getName(), new HAPDefinitionConstant(constantOperand.getName(), constantOperand.getData()));
+					}
 				}
 				return true;
 			}

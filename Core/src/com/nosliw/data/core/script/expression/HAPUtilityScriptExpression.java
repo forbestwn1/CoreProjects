@@ -13,13 +13,27 @@ import com.nosliw.data.core.script.expression.literate.HAPUtilityScriptLiterate;
 
 public class HAPUtilityScriptExpression {
 
-	public static String getScriptExpressionType(String script) {
-		if(HAPUtilityScriptLiterate.isText(script))  return HAPConstant.SCRIPT_TYPE_TEXT;
-		List<HAPScript> iterateSegs = HAPUtilityScriptLiterate.parseScriptLiterate(script);
-		if(iterateSegs.size()==1)   return HAPConstant.SCRIPT_TYPE_EXPRESSION;
-		else return HAPConstant.SCRIPT_TYPE_LITERATE;
+	public static HAPScript newScript(String content) {
+		String type = null;
+		String script = null;
+		if(HAPUtilityScriptLiterate.isText(content)) {
+			type = HAPConstant.SCRIPT_TYPE_TEXT;
+			script = content;
+		}
+		else {
+			List<HAPScript> iterateSegs = HAPUtilityScriptLiterate.parseScriptLiterate(content);
+			if(iterateSegs.size()==1) {
+				type = HAPConstant.SCRIPT_TYPE_EXPRESSION;
+				script = iterateSegs.get(0).getScript();
+			}
+			else {
+				type = HAPConstant.SCRIPT_TYPE_LITERATE;
+				script = content;
+			}
+		}
+		return HAPScript.newScript(script, type);
 	}
-
+	
 	public static void addConstantDefinition(Map<String, HAPDefinitionConstant> to, Set<HAPDefinitionConstant> from) {
 		for(HAPDefinitionConstant def : from) {
 			addConstantDefinition(to, def);

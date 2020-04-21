@@ -34,6 +34,7 @@ public class HAPProcessorScript {
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		HAPContextProcessScript processScriptContext = new HAPContextProcessScript(); 
+		processScriptContext.setContextStructure(new HAPContext());
 		if(constants!=null) {
 			for(String id : constants.keySet()) {
 				processScriptContext.addConstantDefinition(new HAPDefinitionConstant(id, constants.get(id)));
@@ -109,10 +110,14 @@ public class HAPProcessorScript {
 		for(HAPDefinitionScriptEntity scriptDef : scriptElements) {
 			HAPExecutableScriptEntity scriptExe = null;
 			HAPScript script = scriptDef.getScript();
-			String type = script.getType();
 			//if script type not specified, discover it
-			if(HAPBasicUtility.isStringEmpty(type)) type = HAPUtilityScriptExpression.getScriptExpressionType(script.getScript());  
-			String scriptId = i+"";
+			if(HAPBasicUtility.isStringEmpty(script.getType())) {
+				script = HAPUtilityScriptExpression.newScript(script.getScript());
+				scriptDef.setScript(script);
+			}
+			String type = script.getType();
+			String scriptId = scriptDef.getId();
+			if(HAPBasicUtility.isStringEmpty(scriptId))  scriptId = i+"";
 			if(HAPConstant.SCRIPT_TYPE_EXPRESSION.equals(type)) {
 				scriptExe = HAPProcessorScriptExpression.process(scriptId, scriptDef, constantsValue, expressionDef);
 			}

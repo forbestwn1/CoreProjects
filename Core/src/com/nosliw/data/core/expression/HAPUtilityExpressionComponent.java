@@ -11,14 +11,20 @@ import com.nosliw.data.core.component.HAPDefinitionComplex;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 
 public class HAPUtilityExpressionComponent {
 
 	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionComplex complexEntity) {
+		return buildExpressionSuiteFromComponent(complexEntity, null);
+	}
+	
+	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionComplex complexEntity, HAPContextStructure contextStructure) {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
 		
 		//build context
-		complexEntity.cloneToDataContext(out);
+		if(contextStructure==null)		complexEntity.cloneToDataContext(out);
+		else   out.setContextStructure(contextStructure);
 		
 		//build constant
 		for(HAPDefinitionConstant constantDef : HAPUtilityDataComponent.buildDataConstantDefinition(complexEntity.getAttachmentContainer())) {

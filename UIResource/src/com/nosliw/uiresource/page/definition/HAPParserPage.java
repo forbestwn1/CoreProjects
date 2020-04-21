@@ -259,7 +259,9 @@ public class HAPParserPage {
 		
 		for(Element childEle : childEles){
 			try {
-				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), (HAPContextGroup)resourceUnit.getContextStructure());
+				HAPContextGroup contextGroup = new HAPContextGroup();
+				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), contextGroup);
+				resourceUnit.setContextStructure(contextGroup);
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();

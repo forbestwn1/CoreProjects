@@ -44,9 +44,6 @@ public class HAPProcessorUIPage {
 
 		HAPRequirementContextProcessor requirementContextProcessor = HAPUtilityCommon.getDefaultContextProcessorRequirement(resourceDefMan, dataTypeHelper, runtime, expressionMan, serviceDefinitionManager);
 		
-		//compile definition to executable
-		HAPProcessorCompile.process(out, null);
-
 		//build page context by parent context override context defined in page
 		HAPContextGroup pageContext = uiPageDef.getContextNotFlat().cloneContextGroup();
 		if(context!=null) {
@@ -60,6 +57,9 @@ public class HAPProcessorUIPage {
 			
 		if(serviceProviders==null)  serviceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, requirementContextProcessor);
+
+		//compile definition to executable
+		HAPProcessorCompile.process(out, null);
 
 //		HAPPorcessorResolveName.resolve(out);
 		
