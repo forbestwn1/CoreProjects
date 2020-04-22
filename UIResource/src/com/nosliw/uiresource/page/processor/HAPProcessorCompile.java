@@ -1,6 +1,5 @@
 package com.nosliw.uiresource.page.processor;
 
-import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.HAPUtilityDataComponent;
@@ -53,10 +52,10 @@ public class HAPProcessorCompile {
 		}
 		
 		//attribute
-		Map<String, String> attrs = uiUnitDef.getAttributes();
-		for(String attrName : attrs.keySet()) {
-			exeUnit.addAttribute(attrName, attrs.get(attrName));
-		}
+//		Map<String, String> attrs = uiUnitDef.getAttributes();
+//		for(String attrName : attrs.keySet()) {
+//			exeUnit.addAttribute(attrName, attrs.get(attrName));
+//		}
 
 		//other expressions : merge with parent + convert
 //		if(parentUnitDef!=null) {

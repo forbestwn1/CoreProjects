@@ -129,7 +129,7 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 		for(String id : this.m_expressionItem.keySet()) {
 			expressionsJson.put(id, this.m_expressionItem.get(id).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildMapJson(jsonMap));
+		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildMapJson(expressionsJson));
 	}
 
 	@Override

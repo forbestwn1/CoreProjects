@@ -137,6 +137,12 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		this.m_services = new LinkedHashMap<String, HAPExecutableServiceUse>();
 		this.m_serviceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 		
+		Map<String, String> attrs = uiUnitDefinition.getAttributes();
+		for(String attrName : attrs.keySet()) {
+			this.addAttribute(attrName, attrs.get(attrName));
+		}
+
+		
 		//build tag trees according to definition
 		for(HAPDefinitionUITag tag : uiUnitDefinition.getUITags()) {
 			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag, uiUnitDefinition.getId());

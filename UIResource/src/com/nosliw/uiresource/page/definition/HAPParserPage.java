@@ -257,11 +257,11 @@ public class HAPParserPage {
 	private void parseUnitContextBlocks(Element ele, HAPDefinitionUIUnit resourceUnit){
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, CONTEXT);
 		
+		HAPContextGroup contextGroup = new HAPContextGroup();
+		resourceUnit.setContextStructure(contextGroup);
 		for(Element childEle : childEles){
 			try {
-				HAPContextGroup contextGroup = new HAPContextGroup();
-				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), contextGroup);
-				resourceUnit.setContextStructure(contextGroup);
+				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), (HAPContextGroup)resourceUnit.getContextStructure());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();
