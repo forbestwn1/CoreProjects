@@ -17,18 +17,18 @@ var packageObj = library;
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
-	var node_createEmbededScriptExpressionInAttribute = function(embededScriptExpression, uiResourceView, requestInfo){
+	var node_createEmbededScriptExpressionInAttribute = function(embededScriptExpression, scriptGroup, uiResourceView, requestInfo){
 		
 		//script expression definition
-		var loc_embededScriptExpression = node_createUIResourceEmbededScriptExpression(embededScriptExpression, uiResourceView.getConstants(), uiResourceView.getContext(), uiResourceView, requestInfo);
+		var loc_embededScriptExpression = node_createUIResourceEmbededScriptExpression(embededScriptExpression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], scriptGroup, uiResourceView.getConstants(), uiResourceView.getContext(), requestInfo);
 
 		//attribute name
-		var loc_attribute = embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_ATTRIBUTE];
+		var loc_attribute = embededScriptExpression[node_COMMONATRIBUTECONSTANT.UIEMBEDEDSCRIPTEXPRESSION_ATTRIBUTE];
 		
 		//parent resource view
 		var loc_uiResourceView = uiResourceView;
 		//ui id for content
-		var loc_uiId = loc_uiResourceView.prv_getUpdateUIId(embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_UIID]);
+		var loc_uiId = loc_uiResourceView.prv_getUpdateUIId(embededScriptExpression[node_COMMONATRIBUTECONSTANT.UIEMBEDEDSCRIPTEXPRESSION_UIID]);
 		//element
 		var loc_ele = loc_uiResourceView.prv_getLocalElementByUIId(loc_uiId);
 

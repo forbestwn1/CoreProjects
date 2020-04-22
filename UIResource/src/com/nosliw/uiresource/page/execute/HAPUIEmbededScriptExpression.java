@@ -3,11 +3,13 @@ package com.nosliw.uiresource.page.execute;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpression;
 
+@HAPEntityWithAttribute
 public class HAPUIEmbededScriptExpression extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute

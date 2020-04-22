@@ -58,54 +58,24 @@ var packageObj = library;
 		};
 		
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){	
-			_.each(loc_scriptExpressions, function(scriptExpression, id){
-				scriptExpression.destroy();
-			});
+			loc_scriptExprssionObj.destry();
 			loc_dataEventObject.clearup();
 			loc_dataEventObject = undefined;
 		};
 
 		var loc_calculateResult = function(){
-			var scriptExpressionResults = {};
-			_.each(loc_scriptExpressions, function(scriptExpression, id){
-				scriptExpressionResults[id] = scriptExpression.getResult();
-			});
-		
-			return loc_scriptFunction.call(loc_out, scriptExpressionResults);
+			return loc_scriptExprssionObj.getResult();
 		};
 		
 		
 		var loc_out = {
 
-			getExecuteEmbededScriptExpressionRequest : function(handlers, requester_parent){
-				var requestInfo = loc_out.getRequestInfo(requester_parent);
-
-				//calculate multiple script expression
-				var executeMutipleScriptExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMutipleEmbededScriptExpression", {"scriptExpressions":loc_scriptExpressions}), {});
-				_.each(loc_scriptExpressions, function(scriptExpression, id){
-					var scriptExpressionRequest = scriptExpression.getExecuteScriptExpressionRequest(undefined, requestInfo);
-					executeEmbededScriptExpressionRequest.addRequest(id, scriptExpressionRequest);
-				});
-
-				var executeEmbededScriptExpressionRequest = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteEmbedScriptExpression", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
-				var requestDependency = new node_DependentServiceRequestInfo(executeMutipleScriptExpressionRequest, {
-					success : function(requestInfo, scriptExpressionsResult){
-						var scriptExpressionsData = scriptExpressionsResult.getResults();
-						return loc_scriptFunction.call(loc_out, scriptExpressionsData);
-					}
-				});
-				executeEmbededScriptExpressionRequest.setDependentService(requestDependency);
-				return executeEmbededScriptExpressionRequest;
-			},
-				
 			registerListener : function(listenerEventObj, handler){
 				loc_dataEventObject.registerListener(undefined, listenerEventObj, handler);
 			},
 			
 			refresh : function(requestInfo){
-				_.each(loc_scriptExpressions, function(scriptExpression, id){
-					scriptExpression.refresh(requestInfo);
-				});
+				loc_scriptExprssionObj.refresh(requestInfo);
 			},
 			
 			destroy : function(requestInfo){  node_getLifecycleInterface(loc_out).destroy(requestInfo);  },

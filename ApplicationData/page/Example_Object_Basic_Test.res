@@ -63,77 +63,12 @@
 							}
 						}
 					},
-					aaaa : {
-						definition: {
-							value : "<%=5+6+7%>",
-						}
-					},
-					bbbb : {
-						definition: {
-							value : "<%=(5+6+7)>5%>"
-						}
-					},
-					cccc : {
-						definition: {
-							value : {
-								a : 12345,
-								b : true,
-								c : "good",
-								d : "<%=5+6+7%>"
-							}
-						}
-					},
-					dddd : {
-						definition : {
-							value : "<%=&(cccc)&.a+6%>"
-						}
-					},
-					ffff : {
-						definition: {
-							value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
-						}
-					},
-					eeee : {
-						definition: {
-							value : "<%=#|!(test.string)!.subString(&(ffff)&,from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
-						}
-					},
-					base: {
-						definition : {
-							value : {
-								dataTypeId: "test.string",
-								value: "This is my world!"
-							}
-						}
-					},
-					from: {
-						definition : {
-							value : {
-								dataTypeId: "test.integer",
-								value: 3
-							}
-						}
-					},
-					to: {
-						definition:{
-							value : {
-								dataTypeId: "test.integer",
-								value: 7
-							}
-						}
-					}
 				}
 			}
 		}
 	}
 	</contexts>
 	
-		<!-- This part can be used to define expressions
-		-->
-	<expressions>
-	{
-	}
-	</expressions>
 	
 	<events>
 	[

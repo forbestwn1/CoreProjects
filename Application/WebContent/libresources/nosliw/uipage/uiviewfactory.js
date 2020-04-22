@@ -274,7 +274,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 
 		//init normal expression attribute
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONINATTRIBUTES], function(expressionAttr, key, list){
-			loc_expressionContents.push(node_createEmbededScriptExpressionInAttribute(expressionAttr, loc_out, requestInfo));
+			loc_expressionContents.push(node_createEmbededScriptExpressionInAttribute(expressionAttr, loc_scriptGroup, loc_out, requestInfo));
 		});
 
 		//init regular tag event
@@ -356,7 +356,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		prv_initCustomTagExpressionAttribute : function(){
 			//init tag expression attribute
 			_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONINTAGATTRIBUTES], function(expressionAttr, key, list){
-				loc_expressionContents.push(node_createEmbededScriptExpressionInTagAttribute(expressionAttr, loc_out, requestInfo));
+				loc_expressionContents.push(node_createEmbededScriptExpressionInTagAttribute(expressionAttr, loc_scriptGroup, loc_out, requestInfo));
 			});
 		},
 		

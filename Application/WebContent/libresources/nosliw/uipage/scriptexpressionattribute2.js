@@ -17,33 +17,33 @@ var packageObj = library;
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
-	var node_createEmbededScriptExpressionInTagAttribute = function(embededScriptExpression, scriptGroup, uiResourceView, requestInfo){
+	var node_createEmbededScriptExpressionInAttribute = function(embededScriptExpression, uiResourceView, requestInfo){
 		
 		//script expression definition
-		var loc_embededScriptExpression = node_createUIResourceEmbededScriptExpression(embededScriptExpression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], scriptGroup, uiResourceView.getConstants(), uiResourceView.getContext(), requestInfo);
+		var loc_embededScriptExpression = node_createUIResourceEmbededScriptExpression(embededScriptExpression, uiResourceView.getConstants(), uiResourceView.getContext(), uiResourceView, requestInfo);
 
 		//attribute name
-		var loc_attribute = embededScriptExpression[node_COMMONATRIBUTECONSTANT.UIEMBEDEDSCRIPTEXPRESSION_ATTRIBUTE];
+		var loc_attribute = embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_ATTRIBUTE];
 		
 		//parent resource view
 		var loc_uiResourceView = uiResourceView;
 		//ui id for content
-		var loc_uiId = loc_uiResourceView.prv_getUpdateUIId(embededScriptExpression[node_COMMONATRIBUTECONSTANT.UIEMBEDEDSCRIPTEXPRESSION_UIID]);
-		//tag
-		var loc_tag = loc_uiResourceView.prv_getTagByUIId(loc_uiId);
+		var loc_uiId = loc_uiResourceView.prv_getUpdateUIId(embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_UIID]);
+		//element
+		var loc_ele = loc_uiResourceView.prv_getLocalElementByUIId(loc_uiId);
 
 		var loc_dataEventObject = node_createEventObject();
 		
 		var loc_scriptExpressionEventHandler = function(eventName, data){
 			switch(eventName){
 			case node_CONSTANT.REQUESTRESULT_EVENT_SUCCESS:
-				loc_tag.setAttribute(loc_attribute, data); 
+				loc_ele.attr(loc_attribute, data); 
 				break;
 			case node_CONSTANT.REQUESTRESULT_EVENT_ERROR:
-				loc_tag.setAttribute(loc_attribute, "[Error]"); 
+				loc_ele.attr(loc_attribute, "[Error]"); 
 				break;
 			case node_CONSTANT.REQUESTRESULT_EVENT_EXCEPTION:
-				loc_tag.setAttribute(loc_attribute, "[Exception]"); 
+				loc_ele.attr(loc_attribute, "[Exception]"); 
 				break;
 			}
 		};
@@ -59,7 +59,7 @@ var packageObj = library;
 			loc_embededScriptExpression.destroy();
 			loc_embededScriptExpression = undefined;
 			loc_uiResourceView = undefined;
-			loc_tag = undefined;
+			loc_ele = undefined;
 			loc_uiId = undefined;
 			loc_attribute = undefined;
 		};
@@ -89,6 +89,6 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("uiexpression.createUIResourceEmbededScriptExpression", function(){node_createUIResourceEmbededScriptExpression = this.getData();});
 
 	//Register Node by Name
-	packageObj.createChildNode("createEmbededScriptExpressionInTagAttribute", node_createEmbededScriptExpressionInTagAttribute); 
+	packageObj.createChildNode("createEmbededScriptExpressionInAttribute2", node_createEmbededScriptExpressionInAttribute); 
 
 	})(packageObj);
