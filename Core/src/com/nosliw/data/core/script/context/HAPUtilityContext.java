@@ -261,7 +261,9 @@ public class HAPUtilityContext {
 			break;
 		case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
 			HAPContextDefinitionLeafData dataEle = (HAPContextDefinitionLeafData)contextDefEle;
-			criterias.put(path, dataEle.getCriteria().cloneVariableInfo());
+			HAPVariableInfo varInfo = dataEle.getCriteria().cloneVariableInfo();
+			varInfo.setId(path);
+			criterias.put(path, varInfo);
 			break;
 		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
 			HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;

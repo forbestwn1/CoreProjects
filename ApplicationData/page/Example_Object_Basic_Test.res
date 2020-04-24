@@ -2,9 +2,18 @@
 <html>
 <body>
 
-	<br>
-	Content:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ?(business.a.dd)? + ' 6666 ' %>
 
+	<br>
+	Content:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ' 6666 ' %>
+
+	<br>
+<!--	TextInput:<nosliw-textinput data="business.a.aa"/>
+
+	<br>
+	<nosliw-contexttree></nosliw-contexttree>
+	<br>
+	<nosliw-contextvalue></nosliw-contextvalue>
+  -->
 </body>
 
 	<scripts>
@@ -47,62 +56,6 @@
 										value: "This is my world 2222!"
 									}
 								],
-								ee : {
-									dataTypeId: "test.array;1.0.0",
-									value: [
-										{
-											dataTypeId: "test.string;1.0.0",
-											value: "This is my world 1111!"
-										},
-										{
-											dataTypeId: "test.string;1.0.0",
-											value: "This is my world 2222!"
-										}
-									]
-								}
-							}
-						}
-					},
-					aaaa : {
-						definition: {
-							value : "<%=5+6+7%>",
-						}
-					},
-					bbbb : {
-						definition: {
-							value : "<%=(5+6+7)>5%>"
-						}
-					},
-					cccc : {
-						definition: {
-							value : {
-								a : 12345,
-								b : true,
-								c : "good",
-								d : "<%=5+6+7%>"
-							}
-						}
-					},
-					dddd : {
-						definition : {
-							value : "<%=&(cccc)&.a+6%>"
-						}
-					},
-					ffff : {
-						definition: {
-							value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
-						}
-					},
-					eeee : {
-						definition: {
-							value : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
-						}
-					},
-					base: {
-						definition : {
-							value : {
-								dataTypeId: "test.string",
-								value: "This is my world!"
 							}
 						}
 					},
