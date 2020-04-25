@@ -7,6 +7,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceInfo;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
@@ -18,8 +19,11 @@ import com.nosliw.data.core.script.context.data.HAPContextData;
 
 public class HAPRuntimeTaskExecuteProcessRhino extends HAPRuntimeTaskExecuteProcess{
 
-	public HAPRuntimeTaskExecuteProcessRhino(HAPExecutableProcess process, HAPContextData input) {
+	private HAPResourceManagerRoot m_resourceManager;
+
+	public HAPRuntimeTaskExecuteProcessRhino(HAPExecutableProcess process, HAPContextData input, HAPResourceManagerRoot resourceManager) {
 		super(process, input);
+		this.m_resourceManager = resourceManager;
 	}
 
 	@Override
@@ -31,7 +35,7 @@ public class HAPRuntimeTaskExecuteProcessRhino extends HAPRuntimeTaskExecuteProc
 //			if(!HAPRuntime.isDemo) {
 				//prepare resources for process in the runtime (resource and dependency)
 				//execute process after load required resources
-				List<HAPResourceDependency> dependencys = this.getProcess().getResourceDependency(runtime.getRuntimeInfo());
+				List<HAPResourceDependency> dependencys = this.getProcess().getResourceDependency(runtime.getRuntimeInfo(), this.m_resourceManager);
 				
 				List<HAPResourceInfo> resourcesId = new ArrayList<HAPResourceInfo>();
 				for(HAPResourceDependency dependency : dependencys) {

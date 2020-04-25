@@ -13,6 +13,7 @@ import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionS
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 
@@ -77,6 +78,18 @@ public class HAPManagerExpression {
 				configure, 
 				m_contextProcessRequirement,
 				new HAPProcessTracker());
+		return out;
+	}
+	
+	public HAPExecutableExpressionGroup getExpression(String expression) {
+		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
+		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
+		expressionGroupDef.setContextStructure(new HAPContext());
+		expressionGroupDef.addExpression(expressionDef);
+		
+		HAPProcessTracker processTracker = new HAPProcessTracker();
+		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionGroupDef, HAPContextResourceExpressionGroup.createContext(null, m_contextProcessRequirement.resourceDefMan));
+		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, resourceWithContext, null, null, this, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), m_contextProcessRequirement, processTracker);
 		return out;
 	}
 }

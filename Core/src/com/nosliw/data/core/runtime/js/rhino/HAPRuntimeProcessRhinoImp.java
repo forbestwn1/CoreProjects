@@ -7,6 +7,7 @@ import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPProcessResultHandler;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessEmbededRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessRhino;
@@ -22,8 +23,8 @@ public class HAPRuntimeProcessRhinoImp implements HAPRuntimeProcess{
 	}
 	
 	@Override
-	public void executeProcess(HAPExecutableProcess processExe, HAPContextData input, HAPProcessResultHandler resultHandler) {
-		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(processExe, input);
+	public void executeProcess(HAPExecutableProcess processExe, HAPContextData input, HAPProcessResultHandler resultHandler, HAPResourceManagerRoot resourceManager) {
+		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(processExe, input, resourceManager);
 		HAPServiceData out = m_runtimeEnvironment.getRuntime().executeTaskSync(task);
 		if(out.isSuccess()) {
 			resultHandler.onSuccess("", null);
@@ -35,8 +36,8 @@ public class HAPRuntimeProcessRhinoImp implements HAPRuntimeProcess{
 
 	@Override
 	public void executeEmbededProcess(HAPExecutableWrapperTask<HAPExecutableProcess> processExe,
-			HAPContextData parentContext, HAPProcessResultHandler resultHandler) {
-		HAPRuntimeTaskExecuteProcessEmbededRhino task = new HAPRuntimeTaskExecuteProcessEmbededRhino(processExe, parentContext);
+			HAPContextData parentContext, HAPProcessResultHandler resultHandler, HAPResourceManagerRoot resourceManager) {
+		HAPRuntimeTaskExecuteProcessEmbededRhino task = new HAPRuntimeTaskExecuteProcessEmbededRhino(processExe, parentContext, resourceManager);
 		HAPServiceData out = m_runtimeEnvironment.getRuntime().executeTaskSync(task);
 		if(out.isSuccess()) {
 			JSONObject dataJsonObj = (JSONObject)out.getData();
@@ -48,14 +49,14 @@ public class HAPRuntimeProcessRhinoImp implements HAPRuntimeProcess{
 	}
 
 	@Override
-	public HAPServiceData executeProcess(HAPExecutableProcess process, HAPContextData input) {
-		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(process, input);
+	public HAPServiceData executeProcess(HAPExecutableProcess process, HAPContextData input, HAPResourceManagerRoot resourceManager) {
+		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(process, input, resourceManager);
 		return this.m_runtimeEnvironment.getRuntime().executeTaskSync(task);
 	}
 
 	@Override
-	public HAPServiceData executeEmbededProcess(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContext) {
-		HAPRuntimeTaskExecuteProcessEmbededRhino task = new HAPRuntimeTaskExecuteProcessEmbededRhino(process, parentContext);
+	public HAPServiceData executeEmbededProcess(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContext, HAPResourceManagerRoot resourceManager) {
+		HAPRuntimeTaskExecuteProcessEmbededRhino task = new HAPRuntimeTaskExecuteProcessEmbededRhino(process, parentContext, resourceManager);
 		return this.m_runtimeEnvironment.getRuntime().executeTaskSync(task);
 	}
 }

@@ -98,11 +98,11 @@ public class HAPProcessorScript {
 		HAPDefinitionExpressionSuite expressionSuite = processScriptContext.getExpressionDefinitionSuite();
 
 		//expression definition containing all expression in script 
-		HAPDefinitionExpressionGroupImp expressionDef = new HAPDefinitionExpressionGroupImp();
-		expressionDef.setContextStructure(processScriptContext.getContextStructure());
+		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
+		expressionGroupDef.setContextStructure(processScriptContext.getContextStructure());
 
 		for(HAPDefinitionConstant constantDef : processScriptContext.getConstantDefinitions()) {
-			expressionDef.addConstantDefinition(constantDef);
+			expressionGroupDef.addConstantDefinition(constantDef);
 		}
 		
 		Set<HAPDefinitionScriptEntity> scriptElements = scriptGroupDef.getEntityElements();
@@ -119,10 +119,10 @@ public class HAPProcessorScript {
 			String scriptId = scriptDef.getId();
 			if(HAPBasicUtility.isStringEmpty(scriptId))  scriptId = i+"";
 			if(HAPConstant.SCRIPT_TYPE_EXPRESSION.equals(type)) {
-				scriptExe = HAPProcessorScriptExpression.process(scriptId, scriptDef, constantsValue, expressionDef);
+				scriptExe = HAPProcessorScriptExpression.process(scriptId, scriptDef, constantsValue, expressionGroupDef);
 			}
 			else if(HAPConstant.SCRIPT_TYPE_LITERATE.equals(type)) {
-				scriptExe = HAPProcessorScriptLiterate.process(scriptId, scriptDef, constantsValue, expressionDef);
+				scriptExe = HAPProcessorScriptLiterate.process(scriptId, scriptDef, constantsValue, expressionGroupDef);
 			}
 			else if(HAPConstant.SCRIPT_TYPE_TEXT.equals(type)) {
 				scriptExe = new HAPExecutableScriptText(scriptId, script.getScript());
@@ -131,7 +131,7 @@ public class HAPProcessorScript {
 			i++;
 		}
 		
-		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionDef, HAPContextResourceExpressionGroup.createContext(expressionSuite, contextProcessRequirement.resourceDefMan));
+		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionGroupDef, HAPContextResourceExpressionGroup.createContext(expressionSuite, contextProcessRequirement.resourceDefMan));
 		HAPExecutableExpressionGroup expressionExe = HAPProcessorExpression.process(id, resourceWithContext, null, null, expressionMan, configure, contextProcessRequirement, processTracker);
 		out.setExpression(expressionExe);
 		

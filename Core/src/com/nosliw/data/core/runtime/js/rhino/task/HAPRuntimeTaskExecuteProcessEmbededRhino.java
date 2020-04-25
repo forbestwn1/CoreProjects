@@ -21,8 +21,9 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperT
 public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExecuteProcessEmbeded{
 	private HAPResourceManagerRoot m_resourceManager;
 	
-	public HAPRuntimeTaskExecuteProcessEmbededRhino(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContextData) {
+	public HAPRuntimeTaskExecuteProcessEmbededRhino(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContextData, HAPResourceManagerRoot resourceManager) {
 		super(process, parentContextData);
+		this.m_resourceManager = resourceManager;
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExec
 //			if(!HAPRuntime.isDemo) {
 				//prepare resources for process in the runtime (resource and dependency)
 				//execute process after load required resources
-				List<HAPResourceDependency> dependencys = this.getProcess().getResourceDependency(runtime.getRuntimeInfo());
+				List<HAPResourceDependency> dependencys = this.getProcess().getResourceDependency(runtime.getRuntimeInfo(), this.m_resourceManager);
 				
 				List<HAPResourceInfo> resourcesId = new ArrayList<HAPResourceInfo>();
 				for(HAPResourceDependency dependency : dependencys) {

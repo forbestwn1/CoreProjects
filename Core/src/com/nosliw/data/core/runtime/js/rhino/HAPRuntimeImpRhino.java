@@ -22,13 +22,10 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationParm;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
-import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.resource.HAPResourceHelper;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceInfo;
@@ -110,15 +107,21 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	
 	@Override
 	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData) {
-		//new expression definition
-		HAPResourceDefinitionExpressionGroup expDefinition = new HAPResourceDefinitionExpressionGroup(expressionStr); 
-		//build expression obj
-		HAPProcessTracker processTracker = new HAPProcessTracker();
-		HAPExecutableExpressionGroup expression = this.getRuntimeEnvironment().getExpressionSuiteManager().compileExpression(expDefinition, null, null, null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), processTracker);
+		HAPExecutableExpressionGroup expression = this.getRuntimeEnvironment().getExpressionManager().getExpression(expressionStr);
 		//execute task
-		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, parmsData, null);
+		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, null, parmsData, null, this.getRuntimeEnvironment().getResourceManager());
 		HAPServiceData serviceData = this.executeTaskSync(task);
 		return serviceData;
+		
+//		//new expression definition
+//		HAPResourceDefinitionExpressionGroup expDefinition = new HAPResourceDefinitionExpressionGroup(expressionStr); 
+//		//build expression obj
+//		HAPProcessTracker processTracker = new HAPProcessTracker();
+//		HAPExecutableExpressionGroup expression = this.getRuntimeEnvironment().getExpressionSuiteManager().compileExpression(expDefinition, null, null, null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), processTracker);
+//		//execute task
+//		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, parmsData, null);
+//		HAPServiceData serviceData = this.executeTaskSync(task);
+//		return serviceData;
 	}
 
 	@Override

@@ -41,7 +41,7 @@ public class HAPUtilityProcessComponent {
 		}
 		else if(HAPConstant.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
 			HAPAttachmentReference referenceAttachment = (HAPAttachmentReference)attachment;
-			out = new HAPDefinitionProcessSuiteElementReference(referenceAttachment.getId());
+			out = new HAPDefinitionProcessSuiteElementReference(referenceAttachment.getReferenceId());
 		}
 		return out;
 	}
