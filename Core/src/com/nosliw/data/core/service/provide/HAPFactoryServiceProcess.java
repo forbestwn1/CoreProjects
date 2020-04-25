@@ -13,6 +13,7 @@ import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPParentContext;
@@ -38,10 +39,12 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 
 	private HAPRuntimeProcess m_processRuntime;
 	private HAPManagerProcess m_processMan;
-
-	public HAPFactoryServiceProcess(HAPRuntimeProcess processRuntime, HAPManagerProcess processMan) {
+	private HAPResourceManagerRoot m_resourceManager;
+	
+	public HAPFactoryServiceProcess(HAPRuntimeProcess processRuntime, HAPManagerProcess processMan, HAPResourceManagerRoot resourceManager) {
 		this.m_processRuntime = processRuntime;
 		this.m_processMan = processMan;
+		this.m_resourceManager = resourceManager;
 	}
 	
 	@Override
@@ -96,20 +99,22 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 				outputExternalContexts 
 		);
 		
-		HAPExecutableService out = new HAPExecutableServiceImp(processExe);
+		HAPExecutableService out = new HAPExecutableServiceImp(processExe, this.m_resourceManager);
 		return out;
 	}
 
 	class HAPExecutableServiceImp implements HAPExecutableService{
 		private HAPExecutableWrapperTask m_processExe;
-		
-		public HAPExecutableServiceImp(HAPExecutableWrapperTask processExe) {
+		private HAPResourceManagerRoot m_resourceManager;
+
+		public HAPExecutableServiceImp(HAPExecutableWrapperTask processExe, HAPResourceManagerRoot resourceManager) {
 			this.m_processExe = processExe;
+			this.m_resourceManager = resourceManager;
 		}
 		
 		@Override
 		public HAPResultService execute(Map<String, HAPData> parms) {
-			JSONObject dataObj = (JSONObject)m_processRuntime.executeEmbededProcess(m_processExe, HAPContextDataFactory.newContextDataFlat(parms)).getData();
+			JSONObject dataObj = (JSONObject)m_processRuntime.executeEmbededProcess(m_processExe, HAPContextDataFactory.newContextDataFlat(parms), this.m_resourceManager).getData();
 //			JSONObject dataObj = (JSONObject)m_processManager.executeProcess("main", suite, parms).getData();
 			HAPResultService out = new HAPResultService();
 			out.buildObject(dataObj, HAPSerializationFormat.JSON);
