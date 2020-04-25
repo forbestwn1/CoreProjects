@@ -58,7 +58,7 @@ var packageObj = library;
 		};
 		
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){	
-			loc_scriptExprssionObj.destry();
+			loc_scriptExprssionObj.destroy();
 			loc_dataEventObject.clearup();
 			loc_dataEventObject = undefined;
 		};

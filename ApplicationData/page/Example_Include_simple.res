@@ -44,13 +44,6 @@
 	}
 	</contexts>
 	
-		<!-- This part can be used to define expressions
-		-->
-	<expressions>
-	{
-	}
-	</expressions>
-	
 	<commands>
 	[
 		{
