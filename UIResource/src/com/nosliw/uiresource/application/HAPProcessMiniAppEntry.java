@@ -115,7 +115,7 @@ public class HAPProcessMiniAppEntry {
 		HAPAttachment moduleAttachment = parentAttachment.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getModule());
 		HAPEntityOrReference defOrRef = null;
 		if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
-			defOrRef = ((HAPAttachmentReference)moduleAttachment).getId();
+			defOrRef = ((HAPAttachmentReference)moduleAttachment).getReferenceId();
 
 		}
 		else if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_ENTITY)){

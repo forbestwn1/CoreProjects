@@ -9,6 +9,7 @@ import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
@@ -35,7 +36,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.script.context.dataassociation.none.HAPDefinitionDataAssociationNone;
-import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
+import com.nosliw.data.core.script.expression.HAPContextProcessScript;
 
 public class HAPUtilityProcess {
 
@@ -58,11 +59,18 @@ public class HAPUtilityProcess {
 		return out;
 	}
 
-	public static void buildScriptExpressionProcessContext(HAPContext context, HAPContextProcessScriptExpression expProcessContext) {
+	public static void buildScriptExpressionProcessContext(HAPContext context, HAPContextProcessScript expProcessContext) {
 		//prepare constant value 
-		expProcessContext.addConstants(context.getConstantValue());
-		//prepare variables 
-		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(context));
+		Map<String, Object> constantsValue = context.getConstantValue();
+		for(String id : constantsValue.keySet()) {
+			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
+			expProcessContext.addConstantDefinition(constantDef);
+		}
+		expProcessContext.setContextStructure(context);
+		
+//		expProcessContext.addConstants(context.getConstantValue());
+//		//prepare variables 
+//		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(context));
 	}
 
 	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPDefinitionActivityNormal activityDefinition, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {

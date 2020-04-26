@@ -6,11 +6,12 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 
 //application that contains multiple tasks
 @HAPEntityWithAttribute
-public class HAPDefinitionProcessSuite extends HAPResourceDefinitionContainer{
+public class HAPDefinitionProcessSuite extends HAPResourceDefinitionContainer<HAPResourceDefinitionContainerElement>{
 
 	public HAPDefinitionProcessSuite() {
 	}

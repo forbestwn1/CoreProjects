@@ -18,7 +18,7 @@ import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
 import com.nosliw.uiresource.resource.HAPUIAppEntryId;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
+public class HAPDefinitionApp extends HAPResourceDefinitionContainer<HAPDefinitionAppElement>{
 
 	@HAPAttribute
 	public static final String ID = "id";
@@ -60,7 +60,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer{
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
 		//entry part
-		Set<HAPResourceDefinitionContainerElement> entrys = this.getContainerElements();
+		Set<HAPDefinitionAppElement> entrys = this.getContainerElements();
 		for(HAPResourceDefinitionContainerElement entry : entrys) {
 			out.addChildCompoentId(new HAPChildrenComponentId(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), entry.getInfo()), this.getAttachmentContainer());
 		}

@@ -12,14 +12,13 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponent;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementEntityImpComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionAppElementUI  extends HAPResourceDefinitionContainerElementEntityImpComponent{
+public class HAPDefinitionAppElementUI  extends HAPDefinitionAppElement{
 
 	@HAPAttribute
 	public static final String MODULE = "module";
@@ -49,7 +48,7 @@ public class HAPDefinitionAppElementUI  extends HAPResourceDefinitionContainerEl
 			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(module.getStatus())) {
 				HAPAttachmentContainer mappedParentAttachment = HAPUtilityComponent.buildNameMappedAttachment(this.getAttachmentContainer(), module);
 				HAPAttachmentReference moduleAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getModule());
-				out.addChildCompoentId(new HAPChildrenComponentId(module.getName(), moduleAttachment.getId(), module.getInfo()), mappedParentAttachment);
+				out.addChildCompoentId(new HAPChildrenComponentId(module.getName(), moduleAttachment.getReferenceId(), module.getInfo()), mappedParentAttachment);
 			}
 		}
 		return out;

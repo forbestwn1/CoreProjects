@@ -65,7 +65,7 @@ public class HAPDefinitionModule extends HAPComponentImp{
 			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(ui.getStatus())) {
 				HAPAttachmentContainer mappedParentAttachment = HAPUtilityComponent.buildNameMappedAttachment(this.getAttachmentContainer(), ui);
 				HAPAttachmentReference pageAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, ui.getPage());
-				out.addChildCompoentId(new HAPChildrenComponentId(ui.getName(), pageAttachment.getId(), ui.getInfo()), mappedParentAttachment);
+				out.addChildCompoentId(new HAPChildrenComponentId(ui.getName(), pageAttachment.getReferenceId(), ui.getInfo()), mappedParentAttachment);
 			}
 		}
 		return out;

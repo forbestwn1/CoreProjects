@@ -124,7 +124,7 @@ public class HAPProcessorModule {
 		//process page, use context in module override context in page
 		//find pape resource id from attachment mapping
 		HAPAttachmentReference pageAttachment = (HAPAttachmentReference)moduleExe.getDefinition().getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, moduleUIDefinition.getPage());
-		HAPResourceId pageResourceId = pageAttachment.getId();
+		HAPResourceId pageResourceId = pageAttachment.getReferenceId();
 
 		//attachment
 //		HAPAttachmentContainer mappedParentAttachment = HAPComponentUtility.buildInternalAttachment(pageResourceId, moduleExe.getDefinition().getAttachmentContainer(), moduleUIDefinition);

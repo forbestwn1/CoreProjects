@@ -17,8 +17,8 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
-import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
-import com.nosliw.data.core.script.expression.expression.HAPScriptExpression111;
+import com.nosliw.data.core.script.expression.HAPContextProcessScript;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 
 public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal{
 
@@ -28,21 +28,21 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 	@HAPAttribute
 	public static String SCRIPTEXPRESSIONSCRIPT = "scriptExpressionScript";
 
-	private HAPContextProcessScriptExpression m_expressionProcessContext;
+	private HAPContextProcessScript m_expressionProcessContext;
 
-	private HAPScriptExpression111 m_scriptExpression;
+	private HAPExecutableScriptGroup m_scriptExpression;
 
 	public HAPExpressionActivityExecutable(String id, HAPExpressionActivityDefinition activityDef) {
 		super(id, activityDef);
-		this.m_expressionProcessContext = new HAPContextProcessScriptExpression();
+		this.m_expressionProcessContext = new HAPContextProcessScript();
 	}
 
-	public HAPContextProcessScriptExpression getScriptExpressionProcessContext() {
+	public HAPContextProcessScript getScriptExpressionProcessContext() {
 		return this.m_expressionProcessContext;
 	}
 	
-	public void setScriptExpression(HAPScriptExpression111 scriptExpression) {    this.m_scriptExpression = scriptExpression;    }
-	public HAPScriptExpression111 getScriptExpression() {   return this.m_scriptExpression;  }
+	public void setScriptExpression(HAPExecutableScriptGroup scriptExpression) {    this.m_scriptExpression = scriptExpression;    }
+	public HAPExecutableScriptGroup getScriptExpression() {   return this.m_scriptExpression;  }
 	
 //	public HAPExpressionActivityDefinition getExpressionActivityDefinition() {   return (HAPExpressionActivityDefinition)this.getActivityDefinition();   }
 
@@ -50,7 +50,7 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_scriptExpression = new HAPScriptExpression111();
+		this.m_scriptExpression = new HAPExecutableScriptGroup();
 		this.m_scriptExpression.buildObject(jsonObj.getJSONObject(SCRIPTEXPRESSION), HAPSerializationFormat.JSON);
 		return true;  
 	}
