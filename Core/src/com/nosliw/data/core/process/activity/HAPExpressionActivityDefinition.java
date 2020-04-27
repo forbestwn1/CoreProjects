@@ -9,44 +9,43 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
-import com.nosliw.data.core.script.expression.expression.HAPDefinitionScriptExpression;
+import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 
 public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal{
 
 	@HAPAttribute
-	public static String EXPRESSION = "expression";
+	public static String SCRIPT = "script";
 	
-	private HAPDefinitionScriptExpression m_expression;
+	private HAPDefinitionScriptEntity m_script;
 	
 	public HAPExpressionActivityDefinition(String type) {
 		super(type);
 	}
 	
-	public HAPDefinitionScriptExpression getExpression(){  return this.m_expression;    }
-	private void setExpression(String expression) {	this.m_expression = new HAPDefinitionScriptExpression(expression);	}
-
-//	public Set<String> getVariableNames() {	return this.m_expression.getVariableNames();	}
+	public HAPDefinitionScriptEntity getScript(){  return this.m_script;    }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		String expressionStr = jsonObj.optString(EXPRESSION);
-		this.setExpression(expressionStr);
+
+		this.m_script = new HAPDefinitionScriptEntity();
+		this.m_script.buildEntityInfoByJson(jsonObj);
+		this.m_script.setId(null);
 		return true;  
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXPRESSION, HAPJsonUtility.buildJson(this.m_expression, HAPSerializationFormat.JSON));
+		jsonMap.put(SCRIPT, HAPJsonUtility.buildJson(this.m_script, HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
 		HAPExpressionActivityDefinition out = new HAPExpressionActivityDefinition(this.getType());
 		this.cloneToNormalActivityDefinition(out);
-		out.m_expression = this.m_expression.cloneScriptExpressionDefinition();
+		out.m_script = this.m_script.cloneScriptEntityDefinition();
 		return out;
 	}
 }

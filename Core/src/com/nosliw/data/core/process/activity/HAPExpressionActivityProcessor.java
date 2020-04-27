@@ -59,7 +59,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());
-		HAPScriptExpression111 scriptExpression = HAPProcessorScript.processScriptExpression(definition.getExpression(), out.getScriptExpressionProcessContext(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
+		HAPScriptExpression111 scriptExpression = HAPProcessorScript.processScriptExpression(definition.getScript(), out.getScriptExpressionProcessContext(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 		out.setScriptExpression(scriptExpression);
 
 		//merge discovered variable in activity back to process variable

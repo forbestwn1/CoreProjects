@@ -119,10 +119,10 @@ public class HAPProcessorScript {
 			String scriptId = scriptDef.getId();
 			if(HAPBasicUtility.isStringEmpty(scriptId))  scriptId = i+"";
 			if(HAPConstant.SCRIPT_TYPE_EXPRESSION.equals(type)) {
-				scriptExe = HAPProcessorScriptExpression.process(scriptId, scriptDef, constantsValue, expressionGroupDef);
+				scriptExe = HAPProcessorScriptExpression.process(scriptId, scriptDef, scriptDef.getReference(), constantsValue, expressionGroupDef);
 			}
 			else if(HAPConstant.SCRIPT_TYPE_LITERATE.equals(type)) {
-				scriptExe = HAPProcessorScriptLiterate.process(scriptId, scriptDef, constantsValue, expressionGroupDef);
+				scriptExe = HAPProcessorScriptLiterate.process(scriptId, scriptDef, scriptDef.getReference(), constantsValue, expressionGroupDef);
 			}
 			else if(HAPConstant.SCRIPT_TYPE_TEXT.equals(type)) {
 				scriptExe = new HAPExecutableScriptText(scriptId, script.getScript());

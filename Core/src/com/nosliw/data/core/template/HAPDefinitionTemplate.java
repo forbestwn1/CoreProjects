@@ -13,9 +13,6 @@ public class HAPDefinitionTemplate extends HAPEntityInfoImp{
 	//parameter definition
 	private Map<String, HAPParmDefinition> m_parmsDefinition;
 	
-	//template content
-	private HAPContentTemplate m_content;
-	
 	//builder to build resource from template and input parameter
 	private String m_builderId;
 	
@@ -23,6 +20,4 @@ public class HAPDefinitionTemplate extends HAPEntityInfoImp{
 
 	public String getBuilderId() {   return this.m_builderId;    }
 	
-	public HAPContentTemplate getContent() {   return this.m_content;   }
-
 }

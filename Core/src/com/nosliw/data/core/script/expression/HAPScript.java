@@ -42,6 +42,11 @@ public class HAPScript extends HAPSerializableImp{
 	public String getScript() {   return this.m_script;     }
 	public void setScript(String script) {   this.m_script = script;   }
 
+	public HAPScript cloneScript() {
+		HAPScript out = new HAPScript(this.m_script, this.m_type);
+		return out;
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;

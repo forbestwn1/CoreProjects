@@ -20,10 +20,10 @@ public class HAPManagerTemplate {
 		return null;
 	}
 	
-	public HAPResourceDefinition build(String templateId, Map<String, HAPData> parms) {
-		HAPDefinitionTemplate templateDef = this.getTemplateDefinition(templateId);
+	public HAPResourceDefinition build(String builderId, Map<String, HAPData> parms) {
+		HAPDefinitionTemplate templateDef = this.getTemplateDefinition(builderId);
 		HAPBuilderResourceDefinition builder = this.getResourceBuilder(templateDef.getBuilderId());
-		HAPResourceDefinition out = builder.build(templateDef.getContent(), parms);
+		HAPBuilderOutput buildOutput = builder.build(parms);
 		return out;
 	}
 	
