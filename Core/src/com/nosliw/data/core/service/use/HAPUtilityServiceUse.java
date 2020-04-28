@@ -18,7 +18,11 @@ import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 public class HAPUtilityServiceUse {
 
 	public static HAPContext buildContextFromServiceParms(HAPServiceInterface serviceInterface) {
-		return buildContextFromServiceParms(serviceInterface.getParms());
+		HAPContext out = new HAPContext();
+		for(String parm : serviceInterface.getParmNames()) {
+			out.addElement(parm, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(serviceInterface.getParm(parm).getCriteria())));
+		}
+		return out;
 	}
 	
 	public static HAPContext buildContextFromServiceParms(Map<String, HAPServiceParm> parms) {

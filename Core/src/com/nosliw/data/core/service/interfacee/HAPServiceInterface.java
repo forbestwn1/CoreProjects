@@ -2,6 +2,7 @@ package com.nosliw.data.core.service.interfacee;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,9 +34,10 @@ public class HAPServiceInterface extends HAPSerializableImp{
 		this.m_results = new LinkedHashMap<String, HAPServiceResult>();
 	}
 
-	public Map<String, HAPServiceParm> getParms(){  return this.m_parms;   }
-	public void addParm(String name, HAPServiceParm parm) { this.m_parms.put(name, parm);  }
+	public Set<String> getParmNames(){  return this.m_parms.keySet();   }
 	public HAPServiceParm getParm(String name) {  return this.m_parms.get(name);    }
+
+	public void addParm(HAPServiceParm parm) { this.m_parms.put(parm.getId(), parm);  }
 	
 	public Map<String, HAPServiceResult> getResults(){ return this.m_results;  }
 	public Map<String, HAPServiceOutput> getResultOutput(String result) {  return this.m_results.get(result).getOutput();  }
@@ -57,7 +59,7 @@ public class HAPServiceInterface extends HAPSerializableImp{
 			for(int i = 0; i<parmsArray.length(); i++){
 				HAPServiceParm parm = new HAPServiceParm();
 				parm.buildObject(parmsArray.get(i), HAPSerializationFormat.JSON);
-				this.m_parms.put(parm.getName(), parm);
+				this.addParm(parm);
 			}
 		}
 		catch(Exception e){

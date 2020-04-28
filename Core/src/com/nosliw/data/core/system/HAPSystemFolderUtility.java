@@ -14,11 +14,6 @@ public class HAPSystemFolderUtility {
 	public static String getApplicationDataFolder(){  return HAPSystemUtility.getApplicationResourceDataFolder();  }
 	public static String getProcessFolder(){  return getApplicationDataFolder() + "process/";   }
 
-	public static String getScriptExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"scriptexport/scripts/";  }
-	public static String getCurrentScriptExportFolder(){  return HAPSystemFolderUtility.getScriptExportFolder() + HAPRuntimeEnvironment.id + "/";  }
-	public static String getTaskLogFolder(){  return HAPSystemFolderUtility.getTempFolder()+"tasklog/";  }
-	public static String getCronJobInstanceFolder(){  return HAPSystemFolderUtility.getTempFolder()+"cronjob/";  }
-	
 	public static String getJSFolder(){  return HAPSystemUtility.getJSFolder();  }
 	public static String getNosliwJSFolder(String lib){  return getJSFolder()+"libresources/nosliw/"+lib+"/";  }
 	public static String getUIPageFolder(){  return getApplicationDataFolder() + "page/";  }
@@ -29,7 +24,15 @@ public class HAPSystemFolderUtility {
 	public static String getExpressionFolder(){  return getApplicationDataFolder() + "expression/";  }
 	public static String getScriptGroupFolder(){  return getApplicationDataFolder() + "script/";  }
 
-	public static String getTempFolder(){		return HAPSystemUtility.getTempFolder();	}
 	public static String getResourceTempFileFolder(){  return HAPSystemUtility.getJSTempFolder() + "resources/";  }
 	public static String getJSLibrayrTempFolder() {    return  HAPSystemUtility.getJSTempFolder() + "libs/";  }
+	
+	public static String getTempFolder(){		return HAPSystemUtility.getTempFolder();	}
+
+	public static String getScriptExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"scriptexport/scripts/";  }
+	public static String getCurrentScriptExportFolder(){  return HAPSystemFolderUtility.getScriptExportFolder() + HAPRuntimeEnvironment.id + "/";  }
+	public static String getTaskLogFolder(){  return HAPSystemFolderUtility.getTempFolder()+"tasklog/";  }
+	public static String getCronJobInstanceFolder(){  return HAPSystemFolderUtility.getTempFolder()+"cronjob/";  }
+	public static String getResourceTemplateExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"resourceexport/";  }
+	
 }
