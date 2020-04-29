@@ -1,4 +1,4 @@
-package com.nosliw.data.core.template;
+package com.nosliw.data.core.resource.dynamic;
 
 import java.util.Set;
 

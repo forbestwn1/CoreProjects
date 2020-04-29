@@ -1,4 +1,4 @@
-package com.nosliw.data.core.template.resource;
+package com.nosliw.data.core.template;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;

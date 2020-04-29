@@ -12,9 +12,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.template.HAPParmDefinition;
+import com.nosliw.data.core.resource.dynamic.HAPParmDefinition;
 
-public class HAPResourceIdTemplate extends HAPResourceId{
+public class HAPResourceIdDynamic extends HAPResourceId{
 
 	@HAPAttribute
 	public static String BUILDER = "builder";
@@ -26,13 +26,13 @@ public class HAPResourceIdTemplate extends HAPResourceId{
 	
 	private Set<HAPParmDefinition> m_parms;
 	
-	public HAPResourceIdTemplate(String type) {
+	public HAPResourceIdDynamic(String type) {
 		super(type);
 		this.m_parms = new HashSet<HAPParmDefinition>();
 	}
 
 	@Override
-	public String getStructure() {  return HAPConstant.RESOURCEID_TYPE_TEMPLATE; }
+	public String getStructure() {  return HAPConstant.RESOURCEID_TYPE_DYNAMIC; }
 
 	public String getBuilderId() {   return this.m_builderId;    }
 	
@@ -70,7 +70,7 @@ public class HAPResourceIdTemplate extends HAPResourceId{
 
 	@Override
 	public HAPResourceId clone() {
-		HAPResourceIdTemplate out = new HAPResourceIdTemplate(this.getType());
+		HAPResourceIdDynamic out = new HAPResourceIdDynamic(this.getType());
 		out.m_builderId = this.m_builderId;
 		out.m_parms = this.m_parms;
 		return null;

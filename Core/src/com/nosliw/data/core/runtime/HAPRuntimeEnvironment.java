@@ -6,6 +6,7 @@ import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.template.HAPManagerTemplate;
@@ -38,9 +39,11 @@ public interface HAPRuntimeEnvironment {
 	
 	HAPManagerResourceDefinition getResourceDefinitionManager();
 	
-	HAPManagerTemplate getTemplateManager();
+	HAPManagerDynamicResource getDynamicResourceManager();
 	
 	HAPManagerCronJob getCronJobManager();
+	
+	HAPManagerTemplate getTemplateManager();
 	
 	HAPRuntime getRuntime();
 	

@@ -40,7 +40,8 @@ public class HAPServiceInterface extends HAPSerializableImp{
 	public void addParm(HAPServiceParm parm) { this.m_parms.put(parm.getId(), parm);  }
 	
 	public Map<String, HAPServiceResult> getResults(){ return this.m_results;  }
-	public Map<String, HAPServiceOutput> getResultOutput(String result) {  return this.m_results.get(result).getOutput();  }
+	public HAPServiceResult getResult(String result) {   return this.m_results.get(result);  }
+	public Map<String, HAPServiceOutput> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
 	public void addResult(String name, HAPServiceResult result) {  this.m_results.put(name, result);  }
 	
 	@Override

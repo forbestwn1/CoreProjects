@@ -7,19 +7,19 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdDynamic;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResourceIdTemplate;
+import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.template.HAPManagerTemplate;
 
 public class HAPManagerResourceDefinition {
 
 	private Map<String, HAPPluginResourceDefinition> m_plugins;
-	private HAPManagerTemplate m_templateMan;
+	private HAPManagerDynamicResource m_dynamicResourceManager;
 	
-	public HAPManagerResourceDefinition(HAPManagerTemplate templateMan) {
+	public HAPManagerResourceDefinition(HAPManagerDynamicResource dynamicResourceMan) {
 		this.m_plugins = new LinkedHashMap<String, HAPPluginResourceDefinition>();
-		this.m_templateMan = templateMan;
+		this.m_dynamicResourceManager = dynamicResourceMan;
 	}
 	
 	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId) {
@@ -30,9 +30,9 @@ public class HAPManagerResourceDefinition {
 			String type = simpleId.getType();
 			out = this.m_plugins.get(type).getResource(simpleId);
 		}
-		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_TEMPLATE)) {
-			HAPResourceIdTemplate templateResourceId = (HAPResourceIdTemplate)resourceId;
-			out = this.m_templateMan.buildResource(templateResourceId.getBuilderId(), templateResourceId.getParms());
+		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_DYNAMIC)) {
+			HAPResourceIdDynamic dynamicResourceId = (HAPResourceIdDynamic)resourceId;
+			out = this.m_dynamicResourceManager.buildResource(dynamicResourceId.getBuilderId(), dynamicResourceId.getParms());
 		}
 		
 		if(out instanceof HAPWithAttachment) {

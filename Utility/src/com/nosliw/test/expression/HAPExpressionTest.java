@@ -31,7 +31,7 @@ public class HAPExpressionTest {
 
 			Map<String, Object> input = HAPAttachmentUtility.getTestValueFromAttachment(expressionDef, testData);
 
-			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, null, input, null, runtimeEnvironment.getResourceManager());
+			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, null, (Map)input, null, runtimeEnvironment.getResourceManager());
 			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 			System.out.println(out);

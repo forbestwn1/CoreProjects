@@ -1,11 +1,11 @@
 package com.nosliw.uiresource.page.tag;
 
-import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPUITageQuery {
 
-	private HAPDataTypeId m_dataTypeId;
+	private HAPDataTypeCriteria m_dataTypeCriteria;
 	
-	public HAPDataTypeId getDataTypeId() {   return this.m_dataTypeId;  }
-	public void setDataTypeId(HAPDataTypeId dataTypeId) {   this.m_dataTypeId = dataTypeId;     }
+	public HAPDataTypeCriteria getDataTypeCriterai() {   return this.m_dataTypeCriteria;  }
+	public void setDataTypeCriteria(HAPDataTypeCriteria dataTypeCriteria) {   this.m_dataTypeCriteria = dataTypeCriteria;     }
 }

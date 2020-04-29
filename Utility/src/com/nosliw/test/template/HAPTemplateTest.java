@@ -1,8 +1,8 @@
 package com.nosliw.test.template;
 
-import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.template.HAPOutputBuilder;
-import com.nosliw.data.core.template.resource.HAPResourceDefinitionTemplate;
+import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.data.core.resource.dynamic.HAPOutputBuilder;
+import com.nosliw.data.core.template.HAPResourceDefinitionTemplate;
 
 public class HAPTemplateTest {
 
@@ -12,10 +12,10 @@ public class HAPTemplateTest {
 			String id = "page_minimum";
 			String parmSet = "testData1";
 
-			HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
+			HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();
 			
 			HAPResourceDefinitionTemplate template = runtimeEnvironment.getTemplateManager().getTemplate(id);
-			HAPOutputBuilder builderOutput = runtimeEnvironment.getTemplateManager().tryBuildResource(template.getBuilderId(), template.getParmsDef(parmSet));
+			HAPOutputBuilder builderOutput = runtimeEnvironment.getDynamicResourceManager().tryBuildResource(template.getBuilderId(), template.getParmsDef(parmSet));
 			
 			System.out.println(builderOutput);
 		}

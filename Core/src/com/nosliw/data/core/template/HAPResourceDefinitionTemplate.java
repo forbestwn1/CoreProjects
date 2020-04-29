@@ -1,4 +1,4 @@
-package com.nosliw.data.core.template.resource;
+package com.nosliw.data.core.template;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
-import com.nosliw.data.core.template.HAPParmDefinition;
+import com.nosliw.data.core.resource.dynamic.HAPParmDefinition;
 
 public class HAPResourceDefinitionTemplate extends HAPResourceDefinitionComplexImp{
 

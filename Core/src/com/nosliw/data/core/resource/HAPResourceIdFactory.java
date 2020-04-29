@@ -19,8 +19,8 @@ public class HAPResourceIdFactory {
 		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_EMBEDED)) {
 			out = new HAPResourceIdEmbeded(resourceType);
 		}
-		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_TEMPLATE)) {
-			out = new HAPResourceIdTemplate(resourceType);
+		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_DYNAMIC)) {
+			out = new HAPResourceIdDynamic(resourceType);
 		}
 		return out;
 	}

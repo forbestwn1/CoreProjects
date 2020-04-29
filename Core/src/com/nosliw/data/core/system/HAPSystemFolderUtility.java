@@ -33,7 +33,7 @@ public class HAPSystemFolderUtility {
 	public static String getCurrentScriptExportFolder(){  return HAPSystemFolderUtility.getScriptExportFolder() + HAPRuntimeEnvironment.id + "/";  }
 	public static String getTaskLogFolder(){  return HAPSystemFolderUtility.getTempFolder()+"tasklog/";  }
 	public static String getCronJobInstanceFolder(){  return HAPSystemFolderUtility.getTempFolder()+"cronjob/";  }
-	public static String getTemplateExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"templateexport/";  }
-	public static String getCurrentTemplateExportFolder(){  return HAPSystemFolderUtility.getTemplateExportFolder() + HAPRuntimeEnvironment.id + "/";  }
+	public static String getDynamicResourceExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"dynamicresourceexport/";  }
+	public static String getCurrentDynamicResourceExportFolder(){  return HAPSystemFolderUtility.getDynamicResourceExportFolder() + HAPRuntimeEnvironment.id + "/";  }
 	
 }

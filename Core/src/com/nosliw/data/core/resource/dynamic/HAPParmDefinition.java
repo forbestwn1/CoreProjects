@@ -1,4 +1,4 @@
-package com.nosliw.data.core.template;
+package com.nosliw.data.core.resource.dynamic;
 
 import java.util.Map;
 
@@ -16,6 +16,8 @@ public class HAPParmDefinition extends HAPEntityInfoImp{
 	public static String DATA = "data";
 
 	private HAPData m_data;
+	
+	public HAPData getData() {    return this.m_data;   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

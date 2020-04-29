@@ -1,4 +1,4 @@
-package com.nosliw.data.core.template;
+package com.nosliw.data.core.resource.dynamic;
 
 import java.io.File;
 import java.util.Set;
@@ -12,10 +12,10 @@ public class HAPUtility {
 
 	static private int index = 0;
 	
-	public static void exportTemplateResourceDefinition(String builderId, String resourceType, Set<HAPParmDefinition> parms, HAPResourceDefinition resourceDef) {
+	public static void exportDynamicResourceDefinition(String builderId, String resourceType, Set<HAPParmDefinition> parms, HAPResourceDefinition resourceDef) {
 		String fileName = resourceType + "_" + builderId + "_" + index++;
 
-		File directory = new File(HAPSystemFolderUtility.getCurrentTemplateExportFolder());
+		File directory = new File(HAPSystemFolderUtility.getCurrentDynamicResourceExportFolder());
 	    if (! directory.exists()){
 	    	directory.mkdir();
 	    }

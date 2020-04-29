@@ -178,4 +178,5 @@ public class HAPUIResourceManager {
 	public HAPParserModule getModuleParser() {    return this.m_moduleParser;   }
 	public HAPParserPage getUIResourceParser() {    return this.m_uiResourceParser;  }
 	public HAPParseMiniApp getMinitAppParser() {    return this.m_miniAppParser;     }
+	public HAPUITagManager getUITagManager() {   return this.m_uiTagMan;   }
 }

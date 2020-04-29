@@ -10,6 +10,8 @@ import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
 import com.nosliw.data.core.expression.HAPManagerExpression;
+import com.nosliw.data.core.expression.resource.HAPPluginResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.resource.HAPPluginResourceDefinitionExpressionSuite;
 import com.nosliw.data.core.expression.resource.HAPResourceManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
@@ -18,6 +20,7 @@ import com.nosliw.data.core.process.resource.HAPResourceDefinitionPluginProcessS
 import com.nosliw.data.core.process.resource.HAPResourceManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPResourceManagerProcess;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -25,9 +28,11 @@ import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResourceDefinition;
 import com.nosliw.data.core.script.expression.HAPManagerScript;
+import com.nosliw.data.core.script.expression.resource.HAPPluginResourceDefinitionScriptGroup;
 import com.nosliw.data.core.service.provide.HAPFactoryServiceProcess;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.template.HAPManagerTemplate;
+import com.nosliw.data.core.template.HAPResourceDefinitionPluginTemplate;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
@@ -65,9 +70,11 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPManagerResourceDefinition m_resourceDefinitionManager;
 	
-	private HAPManagerTemplate m_templateManager;
+	private HAPManagerDynamicResource m_dynamicResourceManager;
 	
 	private HAPManagerCronJob m_cronJobManager;
+	
+	private HAPManagerTemplate m_templateManager;
 	
 	private HAPRuntime m_runtime;
 	
@@ -82,12 +89,13 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			HAPManagerScript scriptManager,
 		    HAPGatewayManager gatewayManager,
 		    HAPManagerService serviceManager,
-		    HAPManagerTemplate templateManager,
+		    HAPManagerDynamicResource dynamicResourceManager,
 		    HAPManagerResourceDefinition resourceDefManager,
 		    HAPManagerCronJob cronJobManager,
+		    HAPManagerTemplate templateManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeHelper, resourceMan, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, templateManager, resourceDefManager, cronJobManager, runtime);
+		this.init(dataTypeHelper, resourceMan, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, cronJobManager, templateManager, runtime);
 	}
 	
 	protected void init(
@@ -99,9 +107,10 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 				HAPManagerScript scriptManager,
 			    HAPGatewayManager gatewayManager,
 			    HAPManagerService serviceManager,
-			    HAPManagerTemplate templateManager,
+			    HAPManagerDynamicResource dynamicResourceManager,
 			    HAPManagerResourceDefinition resourceDefManager,
 			    HAPManagerCronJob cronJobManager,
+			    HAPManagerTemplate templateManager,
 			    HAPRuntime runtime){ 
 		this.m_resourceManager = resourceMan;
 		this.m_processManager = processManager;
@@ -110,6 +119,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_scriptManager = scriptManager;
 		this.m_serviceManager = serviceManager;
 		this.m_resourceDefinitionManager = resourceDefManager;
+		this.m_dynamicResourceManager = dynamicResourceManager;
+		this.m_templateManager = templateManager;
 		this.m_cronJobManager = cronJobManager;
 
 		this.m_resourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION, new HAPResourceManagerExpression(this.m_expressionManager, this.m_resourceManager));
@@ -133,10 +144,16 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_serviceManager.registerServiceFactory(HAPFactoryServiceProcess.FACTORY_TYPE, new HAPFactoryServiceProcess(this.m_processRuntime, this.m_processManager, this.m_resourceManager));
 		
 		//component
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionSuite(this.getExpressionManager().getExpressionParser()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionGroup(this.getResourceDefinitionManager()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionScriptGroup(this.getExpressionManager().getExpressionParser()));
+
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginProcessSuite(this.getProcessManager().getPluginManager()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginProcess(this.getResourceDefinitionManager()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginCronJob());
-		
+
+		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginTemplate());
+
 		//runtime
 		this.m_runtime = runtime;
 		this.m_runtime.start();
@@ -167,11 +184,14 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPManagerResourceDefinition getResourceDefinitionManager() {  return this.m_resourceDefinitionManager;  }
 
 	@Override
-	public HAPManagerTemplate getTemplateManager() {  return this.m_templateManager;	}
+	public HAPManagerDynamicResource getDynamicResourceManager() {  return this.m_dynamicResourceManager;	}
 
 	@Override
 	public HAPManagerCronJob getCronJobManager() {  return this.m_cronJobManager;	}
 
+	@Override
+	public HAPManagerTemplate getTemplateManager() {  return this.m_templateManager;   }
+	
 	@Override
 	public HAPRuntime getRuntime() {		return this.m_runtime;	}
 

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.template.resource;
+package com.nosliw.data.core.template;
 
 import org.json.JSONObject;
 
@@ -10,10 +10,8 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceDefinitionPluginTemplate implements HAPPluginResourceDefinition{
 
-	private HAPParserTemplate m_templateParser;
 	
-	public HAPResourceDefinitionPluginTemplate(HAPParserTemplate pageParser) {
-		this.m_templateParser = pageParser;
+	public HAPResourceDefinitionPluginTemplate() {
 	}
 	
 	@Override
@@ -21,7 +19,7 @@ public class HAPResourceDefinitionPluginTemplate implements HAPPluginResourceDef
 		//read content
 		String file = HAPSystemFolderUtility.getTemplateFolder()+resourceId.getId()+".template";
 		//parse content
-		HAPResourceDefinitionTemplate out = m_templateParser.parseFile(file);
+		HAPResourceDefinitionTemplate out = HAPParserTemplate.parseFile(file);
 		return out;
 	}
 
@@ -31,7 +29,7 @@ public class HAPResourceDefinitionPluginTemplate implements HAPPluginResourceDef
 	@Override
 	public HAPResourceDefinition parseResourceDefinition(Object content) {
 		JSONObject jsonObj = (JSONObject)content;
-		return this.m_templateParser.parseTemplateDefinition(jsonObj);
+		return HAPParserTemplate.parseTemplateDefinition(jsonObj);
 	}
 
 }
