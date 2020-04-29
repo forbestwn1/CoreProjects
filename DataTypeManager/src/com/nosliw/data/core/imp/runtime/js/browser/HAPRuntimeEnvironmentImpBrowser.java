@@ -28,11 +28,11 @@ import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.template.HAPManagerTemplate;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.application.HAPResourceDefinitionPluginApp;
-import com.nosliw.uiresource.application.HAPResourceDefinitionPluginAppEntry;
-import com.nosliw.uiresource.module.HAPResourceDefinitionPluginModule;
-import com.nosliw.uiresource.page.definition.HAPResourceDefinitionPluginPage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginApp;
+import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginAppEntry;
+import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginModule;
+import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginPage;
 
 public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 

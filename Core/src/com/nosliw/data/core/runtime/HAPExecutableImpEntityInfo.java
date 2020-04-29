@@ -60,7 +60,7 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	}
 
 	@Override
-	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
+	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {
 		HAPUtilityEntityInfo.cloneTo(this, entityInfo);
 	}
 	

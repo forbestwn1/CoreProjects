@@ -5,7 +5,6 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoUtility;
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -174,7 +173,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 
 	@Override
-	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
+	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {
 		// TODO Auto-generated method stub
 		
 	}

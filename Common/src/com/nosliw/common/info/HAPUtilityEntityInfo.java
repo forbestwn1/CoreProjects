@@ -17,7 +17,7 @@ public class HAPUtilityEntityInfo {
 		return out;
 	}
 	
-	public static void cloneTo(HAPEntityInfo from, HAPEntityInfoWritable to) {
+	public static void cloneTo(HAPEntityInfo from, HAPEntityInfo to) {
 		to.setId(from.getId());
 		to.setName(from.getName());
 		to.setDescription(from.getDescription());

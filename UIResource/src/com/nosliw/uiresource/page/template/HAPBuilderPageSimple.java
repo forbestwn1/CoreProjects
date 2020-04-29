@@ -8,6 +8,7 @@ import java.util.Set;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -66,7 +67,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	}
 	
 	private HAPHtmlSegment buildHtml(HAPServiceResult serviceResult) {
-		
+		serviceResult.get
 	}
 	
 	private HAPContext buildContext(HAPServiceInterface serviceInterface) {
@@ -76,5 +77,8 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	private HAPHtmlSegment buildHtml(HAPDataTypeCriteria dataTypeCriteria) {
 		
 	}
+
+	@Override
+	public String getResourceType() {  return HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE;  }
 	
 }

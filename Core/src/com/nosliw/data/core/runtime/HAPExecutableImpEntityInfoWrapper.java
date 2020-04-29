@@ -4,9 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 
 abstract public class HAPExecutableImpEntityInfoWrapper extends HAPExecutableImp  implements HAPEntityInfo{
 	
@@ -49,7 +48,7 @@ abstract public class HAPExecutableImpEntityInfoWrapper extends HAPExecutableImp
 	}
 	
 	@Override
-	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
+	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {
 		HAPUtilityEntityInfo.cloneTo(this, entityInfo);
 	}
 

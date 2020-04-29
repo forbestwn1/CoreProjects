@@ -32,7 +32,7 @@ public class HAPManagerResourceDefinition {
 		}
 		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_TEMPLATE)) {
 			HAPResourceIdTemplate templateResourceId = (HAPResourceIdTemplate)resourceId;
-//			this.m_templateMan.build(templateResourceId.getTemplateId(), templateResourceId.getParms());
+			out = this.m_templateMan.buildResource(templateResourceId.getBuilderId(), templateResourceId.getParms());
 		}
 		
 		if(out instanceof HAPWithAttachment) {

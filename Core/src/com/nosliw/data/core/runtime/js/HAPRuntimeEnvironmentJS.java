@@ -167,7 +167,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPManagerResourceDefinition getResourceDefinitionManager() {  return this.m_resourceDefinitionManager;  }
 
 	@Override
-	public HAPManagerTemplate getTmeplateManager() {  return this.m_templateManager;	}
+	public HAPManagerTemplate getTemplateManager() {  return this.m_templateManager;	}
 
 	@Override
 	public HAPManagerCronJob getCronJobManager() {  return this.m_cronJobManager;	}

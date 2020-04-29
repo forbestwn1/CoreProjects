@@ -8,6 +8,8 @@ public interface HAPBuilderResourceDefinition extends HAPEntityInfo{
 
 	@Override
 	String getId();
+
+	String getResourceType();
 	
 	HAPOutputBuilder build(Set<HAPParmDefinition> parms);
 

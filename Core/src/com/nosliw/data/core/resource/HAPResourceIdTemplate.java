@@ -1,39 +1,42 @@
 package com.nosliw.data.core.resource;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPUtilityData;
+import com.nosliw.data.core.template.HAPParmDefinition;
 
 public class HAPResourceIdTemplate extends HAPResourceId{
 
 	@HAPAttribute
-	public static String TEMPLATE = "template";
+	public static String BUILDER = "builder";
 
 	@HAPAttribute
 	public static String PARMS = "parms";
 
-	private String m_templateId;
+	private String m_builderId;
 	
-	private Map<String, HAPData> m_parms;
+	private Set<HAPParmDefinition> m_parms;
 	
 	public HAPResourceIdTemplate(String type) {
 		super(type);
+		this.m_parms = new HashSet<HAPParmDefinition>();
 	}
 
 	@Override
-	public String getStructure() {  return HAPConstant.RESOURCEID_TYPE_TEMPLATE; };
+	public String getStructure() {  return HAPConstant.RESOURCEID_TYPE_TEMPLATE; }
 
-	public String getTemplateId() {   return this.m_templateId;    }
+	public String getBuilderId() {   return this.m_builderId;    }
 	
-	public Map<String, HAPData> getParms(){    return this.m_parms;    }
+	public Set<HAPParmDefinition> getParms(){    return this.m_parms;    }
 	
 	@Override
 	public String getIdLiterate() {
@@ -44,7 +47,7 @@ public class HAPResourceIdTemplate extends HAPResourceId{
 
 	@Override
 	protected void buildCoreJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		jsonMap.put(TEMPLATE, this.m_templateId);
+		jsonMap.put(BUILDER, this.m_builderId);
 		jsonMap.put(PARMS, HAPJsonUtility.buildJson(m_parms, HAPSerializationFormat.JSON));
 	}
 
@@ -56,14 +59,19 @@ public class HAPResourceIdTemplate extends HAPResourceId{
 
 	@Override
 	protected void buildCoreIdByJSON(JSONObject jsonObj) {
-		this.m_templateId = jsonObj.getString(TEMPLATE);
-		this.m_parms = HAPUtilityData.buildDataWrapperMapFromJson(jsonObj);
+		this.m_builderId = jsonObj.getString(BUILDER);
+		JSONArray parmJsonArray = jsonObj.optJSONArray(PARMS);
+		for(int i=0; i<parmJsonArray.length(); i++) {
+			HAPParmDefinition parmDef = new HAPParmDefinition();
+			parmDef.buildObject(parmJsonArray.getJSONObject(i), HAPSerializationFormat.JSON);
+			this.m_parms.add(parmDef);
+		}
 	}
 
 	@Override
 	public HAPResourceId clone() {
 		HAPResourceIdTemplate out = new HAPResourceIdTemplate(this.getType());
-		out.m_templateId = this.m_templateId;
+		out.m_builderId = this.m_builderId;
 		out.m_parms = this.m_parms;
 		return null;
 	}

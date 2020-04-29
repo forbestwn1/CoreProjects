@@ -72,7 +72,7 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	}
 
 	@Override
-	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
+	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {
 		HAPUtilityEntityInfo.cloneTo(this, entityInfo);
 	}
 	

@@ -1,0 +1,28 @@
+[{
+	"id": "TestTemplateService",
+	"name": "TestTemplateService",
+    "implementation" : "com.nosliw.service.test.template.HAPServiceImp",
+	"description" : "test service implemented by process",
+	"interface" : {
+		"result" : [
+			{
+				"name" : "success",
+				"output" : {
+					"outputInService": {
+						"criteria" : "test.string;1.0.0"
+					}
+				},			
+			}
+		],
+		"parm" : [
+			{
+				name : "serviceParm1",
+				criteria : "test.string;1.0.0",
+				default :{
+					dataTypeId: "test.string;1.0.0",
+					value: "hello"
+				},
+			}
+		]
+	}
+}]

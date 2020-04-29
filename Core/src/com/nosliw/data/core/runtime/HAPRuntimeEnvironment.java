@@ -38,7 +38,7 @@ public interface HAPRuntimeEnvironment {
 	
 	HAPManagerResourceDefinition getResourceDefinitionManager();
 	
-	HAPManagerTemplate getTmeplateManager();
+	HAPManagerTemplate getTemplateManager();
 	
 	HAPManagerCronJob getCronJobManager();
 	

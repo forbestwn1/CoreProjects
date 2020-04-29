@@ -471,6 +471,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICE = "service";
 		public static final String RUNTIME_RESOURCE_TYPE_DATA = "data";
 		public static final String RUNTIME_RESOURCE_TYPE_TESTDATA = "testData";
+		public static final String RUNTIME_RESOURCE_TYPE_TEMPLATE = "template";
 		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";
 
 

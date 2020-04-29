@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.module;
+package com.nosliw.uiresource.resource;
 
 import org.json.JSONObject;
 
@@ -7,6 +7,8 @@ import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
+import com.nosliw.uiresource.module.HAPDefinitionModule;
+import com.nosliw.uiresource.module.HAPParserModule;
 
 public class HAPResourceDefinitionPluginModule implements HAPPluginResourceDefinition{
 

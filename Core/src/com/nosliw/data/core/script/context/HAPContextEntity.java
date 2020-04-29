@@ -6,10 +6,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
@@ -85,7 +85,7 @@ public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 	}
 	
 	@Override
-	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {  this.m_entityInfo.cloneToEntityInfo(entityInfo); }
+	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {  this.m_entityInfo.cloneToEntityInfo(entityInfo); }
 
 	@Override
 	public void buildEntityInfoByJson(Object json) {	this.m_entityInfo.buildObject(json, HAPSerializationFormat.JSON);	}

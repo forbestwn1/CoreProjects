@@ -37,6 +37,9 @@ public class HAPDefinitionUIPage extends HAPDefinitionUIUnit{
 	}
 
 	@Override
+	protected String buildLiterate(){  return this.m_source; }
+	
+	@Override
 	public HAPComponent cloneComponent() {
 		// TODO Auto-generated method stub
 		return null;

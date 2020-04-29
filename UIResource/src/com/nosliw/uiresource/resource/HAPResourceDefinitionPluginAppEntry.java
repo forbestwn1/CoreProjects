@@ -1,11 +1,12 @@
-package com.nosliw.uiresource.application;
+package com.nosliw.uiresource.resource;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
+import com.nosliw.uiresource.application.HAPDefinitionApp;
+import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
 
 public class HAPResourceDefinitionPluginAppEntry implements HAPPluginResourceDefinition{
 

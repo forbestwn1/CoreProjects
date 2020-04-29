@@ -1,10 +1,12 @@
-package com.nosliw.uiresource.page.definition;
+package com.nosliw.uiresource.resource;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
+import com.nosliw.uiresource.page.definition.HAPParserPage;
 
 public class HAPResourceDefinitionPluginPage implements HAPPluginResourceDefinition{
 

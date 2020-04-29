@@ -19,5 +19,5 @@ public class HAPOutputBuilder {
 	public HAPResourceDefinition getResourceDefinition() {    return this.m_resourceDef;    }
 	
 	public void addParmInfo(HAPParmDefinition parmDef) {   this.m_parmsInfo.add(parmDef);    }
-	
+	public Set<HAPParmDefinition> getParmsInfo(){  return this.m_parmsInfo;   }
 }

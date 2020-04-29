@@ -1,0 +1,35 @@
+{
+	"name": "page_minimum",
+	"description": "page_minimum",
+	"builderId" : "page_minimum",
+	"parmDef" : [
+		{
+			"name": "testData1",
+			"parms": [
+				{
+					"name": "service",
+					"data" : {
+						"dataTypeId": "test.service;1.0.0",
+						"value": "TestTemplateService"
+					}
+				},
+			]
+		},
+	]
+	"attachment": {
+		"testData" : [
+			{
+				"name": "testData1",
+				"entity": [
+					{
+						"name": "service",
+						"data" : {
+							"dataTypeId": "test.service;1.0.0",
+							"value": "TestTemplateService"
+						}
+					},
+				]
+			},
+		],
+	},	
+}

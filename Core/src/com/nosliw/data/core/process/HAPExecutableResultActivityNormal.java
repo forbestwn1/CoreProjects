@@ -7,8 +7,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -47,7 +47,7 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInf
 	public void setDataAssociation(HAPExecutableDataAssociation dataAssociation) {   this.m_dataAssociation = dataAssociation;   }
 
 	@Override
-	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {
+	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {
 		HAPUtilityEntityInfo.cloneTo(this, entityInfo);
 	}
 
