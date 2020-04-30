@@ -11,7 +11,6 @@ import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.miniapp.HAPGatewayAppData;
 //import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIAppConfigure;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIAppEntry;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIModule;
@@ -39,7 +38,7 @@ public class HAPInitServlet  extends HttpServlet{
 			
 			HAPResourceManagerRoot rootResourceManager = runtimeEnvironment.getResourceManager(); 
 			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan, rootResourceManager));
-			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, new HAPResourceManagerUITag(new HAPUITagManager(), rootResourceManager));
+			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, new HAPResourceManagerUITag(runtimeEnvironment.getUIResourceManager().getUITagManager(), rootResourceManager));
 			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, new HAPResourceManagerUIModule(uiResourceMan, rootResourceManager));
 			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, new HAPResourceManagerUIModuleDecoration(rootResourceManager));
 			rootResourceManager.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, new HAPResourceManagerUIAppEntry(uiResourceMan, rootResourceManager));

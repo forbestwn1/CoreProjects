@@ -74,7 +74,7 @@ public class HAPAttachmentUtility {
 			for(int i=0; i<byNameArray.length(); i++) {
 				JSONObject attachmentJson = byNameArray.getJSONObject(i);
 				HAPAttachment attachment = null;
-				if(attachmentJson.opt(HAPAttachmentReference.ID)!=null) {
+				if(attachmentJson.opt(HAPAttachmentReference.REFERENCEID)!=null) {
 					attachment = new HAPAttachmentReference(type);
 					attachment.buildObject(attachmentJson, HAPSerializationFormat.JSON);
 				}
