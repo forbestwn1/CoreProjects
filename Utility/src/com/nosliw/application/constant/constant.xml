@@ -698,6 +698,18 @@
 			<definition name="SCRIPT_TYPE_SEG_TEXT" value="textSeg"/>
 			<definition name="SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT" value="exprssionScriptSeg"/>
 
+			<definition type="space"/>
+			<definition name="STORYNODE_TYPE_SERVICE" value="service"/>
+			<definition name="STORYNODE_TYPE_SERVICEPARM" value="serviceParm"/>
+			<definition name="STORYNODE_TYPE_SERVICEOUTPUT" value="serviceOutput"/>
+			<definition name="STORYNODE_TYPE_VARIABLE" value="variable"/>
+			<definition name="STORYNODE_TYPE_UI" value="ui"/>
+			
+			<definition type="space"/>
+			<definition name="STORYNODE_PROFILE_DATAOUT" value="dataOut"/>
+			<definition name="STORYNODE_PROFILE_DATAIN" value="dataIn"/>
+			
+			
 		</definitions>
 	</constants>
 </root>
