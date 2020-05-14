@@ -9,7 +9,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.service.provide.HAPManagerService;
-import com.nosliw.data.core.template.HAPManagerTemplate;
+import com.nosliw.data.core.story.HAPManagerStory;
 
 /**
  * Runtime environment, 
@@ -43,7 +43,7 @@ public interface HAPRuntimeEnvironment {
 	
 	HAPManagerCronJob getCronJobManager();
 	
-	HAPManagerTemplate getTemplateManager();
+	HAPManagerStory getStoryManager();
 	
 	HAPRuntime getRuntime();
 	

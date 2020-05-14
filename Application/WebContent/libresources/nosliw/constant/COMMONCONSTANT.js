@@ -321,6 +321,7 @@ var COMMONCONSTANT=
   "RUNTIME_RESOURCE_TYPE_SERVICE": "service",
   "RUNTIME_RESOURCE_TYPE_DATA": "data",
   "RUNTIME_RESOURCE_TYPE_TESTDATA": "testData",
+  "RUNTIME_RESOURCE_TYPE_STORY": "story",
   "RUNTIME_RESOURCE_TYPE_TEMPLATE": "template",
   "RUNTIME_RESOURCE_TYPE_MATCHER": "matcher",
   "RUNTIME_LANGUAGE_JS": "javascript",
@@ -396,7 +397,14 @@ var COMMONCONSTANT=
   "SCRIPT_TYPE_SEG_SCRIPT": "scriptSeg",
   "SCRIPT_TYPE_SEG_EXPRESSION": "expressionSeg",
   "SCRIPT_TYPE_SEG_TEXT": "textSeg",
-  "SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT": "exprssionScriptSeg"
+  "SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT": "exprssionScriptSeg",
+  "STORYNODE_TYPE_SERVICE": "service",
+  "STORYNODE_TYPE_SERVICEPARM": "serviceParm",
+  "STORYNODE_TYPE_SERVICEOUTPUT": "serviceOutput",
+  "STORYNODE_TYPE_VARIABLE": "variable",
+  "STORYNODE_TYPE_UI": "ui",
+  "STORYNODE_PROFILE_DATAOUT": "dataOut",
+  "STORYNODE_PROFILE_DATAIN": "dataIn"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

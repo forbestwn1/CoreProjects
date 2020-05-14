@@ -20,6 +20,7 @@ public class HAPSystemFolderUtility {
 	public static String getUIModuleFolder(){  return getApplicationDataFolder() + "uimodule/";  }
 	public static String getMiniAppFolder(){  return getApplicationDataFolder() + "miniapp/";  }
 	public static String getCronJobFolder(){  return getApplicationDataFolder() + "cronjob/";  }
+	public static String getStoryFolder(){  return getApplicationDataFolder() + "story/";  }
 	public static String getTemplateFolder(){  return getApplicationDataFolder() + "template/";  }
 	public static String getExpressionFolder(){  return getApplicationDataFolder() + "expression/";  }
 	public static String getScriptGroupFolder(){  return getApplicationDataFolder() + "script/";  }

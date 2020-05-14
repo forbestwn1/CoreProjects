@@ -471,6 +471,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICE = "service";
 		public static final String RUNTIME_RESOURCE_TYPE_DATA = "data";
 		public static final String RUNTIME_RESOURCE_TYPE_TESTDATA = "testData";
+		public static final String RUNTIME_RESOURCE_TYPE_STORY = "story";
 		public static final String RUNTIME_RESOURCE_TYPE_TEMPLATE = "template";
 		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";
 
@@ -634,6 +635,19 @@ public class HAPConstant {
 		public static final String SCRIPT_TYPE_SEG_EXPRESSION = "expressionSeg";
 		public static final String SCRIPT_TYPE_SEG_TEXT = "textSeg";
 		public static final String SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT = "exprssionScriptSeg";
+
+
+
+		public static final String STORYNODE_TYPE_SERVICE = "service";
+		public static final String STORYNODE_TYPE_SERVICEPARM = "serviceParm";
+		public static final String STORYNODE_TYPE_SERVICEOUTPUT = "serviceOutput";
+		public static final String STORYNODE_TYPE_VARIABLE = "variable";
+		public static final String STORYNODE_TYPE_UI = "ui";
+
+
+
+		public static final String STORYNODE_PROFILE_DATAOUT = "dataOut";
+		public static final String STORYNODE_PROFILE_DATAIN = "dataIn";
 
 
 }

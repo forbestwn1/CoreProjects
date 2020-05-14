@@ -23,7 +23,7 @@ import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeProcessRhinoImp;
 import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.service.provide.HAPGatewayService;
 import com.nosliw.data.core.service.provide.HAPManagerService;
-import com.nosliw.data.core.template.HAPManagerTemplate;
+import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
@@ -66,7 +66,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), resourceDefManager, dataTypeHelper, runtime, expressionMan, serviceManager.getServiceDefinitionManager());
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
-		HAPManagerTemplate templateManager = new HAPManagerTemplate(resourceDefManager); 
+		HAPManagerStory storyManager = new HAPManagerStory(resourceDefManager); 
 		
 		init(
 			dataTypeHelper,
@@ -80,7 +80,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			dynamicResourceManager,
 			resourceDefManager,
 			cronJobManager,
-			templateManager,
+			storyManager,
 			runtime
 		);
 

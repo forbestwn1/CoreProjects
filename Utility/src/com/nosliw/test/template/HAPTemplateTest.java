@@ -2,7 +2,7 @@ package com.nosliw.test.template;
 
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.dynamic.HAPOutputBuilder;
-import com.nosliw.data.core.template.HAPResourceDefinitionTemplate;
+import com.nosliw.data.core.story.resource.HAPResourceDefinitionStory;
 
 public class HAPTemplateTest {
 
@@ -14,7 +14,7 @@ public class HAPTemplateTest {
 
 			HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();
 			
-			HAPResourceDefinitionTemplate template = runtimeEnvironment.getTemplateManager().getTemplate(id);
+			HAPResourceDefinitionStory story = runtimeEnvironment.getStoryManager().getStory(id);
 			HAPOutputBuilder builderOutput = runtimeEnvironment.getDynamicResourceManager().tryBuildResource(template.getBuilderId(), template.getParmsDef(parmSet));
 			
 			System.out.println(builderOutput);

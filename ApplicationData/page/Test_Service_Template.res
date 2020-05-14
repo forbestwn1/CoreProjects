@@ -3,7 +3,14 @@
 <body>
 	<br>
 	<br><a href='' nosliw-event="click:refreshService:">Refresh</a><br>
+
+	<br>
+	<%=?(title)?%>
+	<br>
+	Content:<%=#|&(service1_parm_serviceParm2)&|#.value+' 6666 ' %>
 	
+	<br>
+	<br>
 	serviceParm1:<nosliw-textinput data="service1_parm_serviceParm1"/>  
 	<br>
 	<br>
@@ -48,6 +55,14 @@
 							"criteria" : "test.string;1.0.0"
 						}
 					},
+					"service1_parm_serviceParm2" : {
+						definition : {
+							value : {
+								dataTypeId: "test.string",
+								value: "This is my world!"
+							}
+						}
+					},
 					"service1_result_success_outputInService" : {
 						"definition" : {
 							"criteria" : "test.string;1.0.0"
@@ -70,6 +85,11 @@
 						"serviceParm1" : {
 							"definition" : {
 								"path" : "service1_parm_serviceParm1"
+							}
+						},
+						"serviceParm2" : {
+							definition : {
+								"path" : "service1_parm_serviceParm2"
 							}
 						}
 					}
@@ -97,6 +117,19 @@
 				"name": "service1",
 				"referenceId" : "TestTemplateService"
 			}	
+		],
+		"data" : [
+			{
+				"name": "service1_parm_serviceParm2",
+				"entity": {
+					"dataTypeId": "test.string;1.0.0",
+					"value": "Parm2"
+				}
+			},
+			{
+				"name": "title",
+				"entity": "Title"
+			},
 		]
 	}
 	</attachment>
