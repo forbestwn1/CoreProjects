@@ -8,12 +8,17 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
-
+	
+	private String m_resourceType;
+	
 	private Map<String, HAPStoryNode> m_nodes;
 	
 	private Map<String, HAPConnection> m_connections;
 
 	private Map<String, HAPConnectionGroup> m_connectionGroups;
+
+	@Override
+	public String getResourceType() {   return this.m_resourceType;  }
 
 	@Override
 	public Set<HAPStoryNode> getNodes() {  return new HashSet<HAPStoryNode>(this.m_nodes.values());  } 

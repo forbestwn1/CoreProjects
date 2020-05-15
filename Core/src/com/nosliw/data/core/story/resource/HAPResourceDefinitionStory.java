@@ -5,6 +5,7 @@ import java.util.Set;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
 import com.nosliw.data.core.story.HAPConnection;
+import com.nosliw.data.core.story.HAPConnectionGroup;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryImp;
 import com.nosliw.data.core.story.HAPStoryNode;
@@ -16,6 +17,8 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	public HAPResourceDefinitionStory() {
 	}
 
+	public void setStory(HAPStoryImp story) {   this.m_story = story;   }
+	
 	@Override
 	public Set<HAPStoryNode> getNodes() {  return this.m_story.getNodes(); }
 
@@ -27,10 +30,17 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 
 	@Override
 	public HAPConnection getConnection(String id) {  return this.m_story.getConnection(id);  }
-	
+
+	@Override
+	public Set<HAPConnectionGroup> getConnectionGroups() {   return this.m_story.getConnectionGroups();  }
+
+	@Override
+	public HAPConnectionGroup getConnectionGroup(String id) {  return this.m_story.getConnectionGroup(id);  }
+
 	@Override
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }
