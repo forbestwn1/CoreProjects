@@ -50,6 +50,11 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		this.m_reverseMatchers = new LinkedHashMap<String, HAPMatchers>();
 	}
 	
+	public HAPContextDefinitionLeafRelative(String path) {
+		this();
+		this.setPath(path);
+	}
+	
 	@Override
 	public String getType() {		return HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE;	}
 

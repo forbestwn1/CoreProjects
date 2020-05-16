@@ -1,6 +1,7 @@
 package com.nosliw.data.core.story;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	
-	private String m_resourceType;
+	private String m_topicType;
 	
 	private Map<String, HAPStoryNode> m_nodes;
 	
@@ -17,9 +18,17 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 
 	private Map<String, HAPConnectionGroup> m_connectionGroups;
 
+	public HAPStoryImp() {
+		this.m_nodes = new LinkedHashMap<String, HAPStoryNode>();
+		this.m_connections = new LinkedHashMap<String, HAPConnection>();
+		this.m_connectionGroups = new LinkedHashMap<String, HAPConnectionGroup>();
+	}
+	
 	@Override
-	public String getResourceType() {   return this.m_resourceType;  }
+	public String getTopicType() {   return this.m_topicType;  }
 
+	public void setTopicType(String topicType) {    this.m_topicType = topicType;     }
+	
 	@Override
 	public Set<HAPStoryNode> getNodes() {  return new HashSet<HAPStoryNode>(this.m_nodes.values());  } 
 

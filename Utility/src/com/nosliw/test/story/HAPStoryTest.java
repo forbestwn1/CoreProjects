@@ -1,10 +1,10 @@
-package com.nosliw.test.template;
+package com.nosliw.test.story;
 
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionStory;
 
-public class HAPTemplateTest {
+public class HAPStoryTest {
 
 	public static void main(String[] args) {
 

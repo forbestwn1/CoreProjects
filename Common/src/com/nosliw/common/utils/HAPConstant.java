@@ -642,12 +642,25 @@ public class HAPConstant {
 		public static final String STORYNODE_TYPE_SERVICEPARM = "serviceParm";
 		public static final String STORYNODE_TYPE_SERVICEOUTPUT = "serviceOutput";
 		public static final String STORYNODE_TYPE_VARIABLE = "variable";
+		public static final String STORYNODE_TYPE_PAGE = "page";
 		public static final String STORYNODE_TYPE_UI = "ui";
 
 
 
+		public static final String STORYNODE_PROFILE_CONTAINER = "container";
 		public static final String STORYNODE_PROFILE_DATAOUT = "dataOut";
 		public static final String STORYNODE_PROFILE_DATAIN = "dataIn";
+		public static final String STORYNODE_PROFILE_DATAIO = "dataIO";
+
+
+
+		public static final String CONNECTION_TYPE_CONTAIN = "contain";
+		public static final String CONNECTION_TYPE_DATAIO = "dataIO";
+
+
+
+		public static final String SERVICE_CHILD_INPUT = "serviceInput";
+		public static final String SERVICE_CHILD_RESULT = "serviceResult";
 
 
 }

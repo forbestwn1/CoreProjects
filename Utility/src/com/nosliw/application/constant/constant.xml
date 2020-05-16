@@ -701,15 +701,28 @@
 
 			<definition type="space"/>
 			<definition name="STORYNODE_TYPE_SERVICE" value="service"/>
-			<definition name="STORYNODE_TYPE_SERVICEPARM" value="serviceParm"/>
+			<definition name="STORYNODE_TYPE_SERVICEINPUT" value="serviceInput"/>
 			<definition name="STORYNODE_TYPE_SERVICEOUTPUT" value="serviceOutput"/>
+			<definition name="STORYNODE_TYPE_SERVICEINPUTPARM" value="serviceInputParm"/>
+			<definition name="STORYNODE_TYPE_SERVICEOUTPUTITEM" value="serviceOutputItem"/>
 			<definition name="STORYNODE_TYPE_VARIABLE" value="variable"/>
+			<definition name="STORYNODE_TYPE_PAGE" value="page"/>
 			<definition name="STORYNODE_TYPE_UI" value="ui"/>
 			
 			<definition type="space"/>
+			<definition name="STORYNODE_PROFILE_CONTAINER" value="container"/>
 			<definition name="STORYNODE_PROFILE_DATAOUT" value="dataOut"/>
 			<definition name="STORYNODE_PROFILE_DATAIN" value="dataIn"/>
+			<definition name="STORYNODE_PROFILE_DATAIO" value="dataIO"/>
 			
+			<definition type="space"/>
+			<definition name="CONNECTION_TYPE_CONTAIN" value="contain"/>
+			<definition name="CONNECTION_TYPE_DATAIO" value="dataIO"/>
+
+			<definition type="space"/>
+			<definition name="SERVICE_CHILD_INPUT" value="serviceInput"/>
+			<definition name="SERVICE_CHILD_RESULT" value="serviceResult"/>
+
 			
 		</definitions>
 	</constants>

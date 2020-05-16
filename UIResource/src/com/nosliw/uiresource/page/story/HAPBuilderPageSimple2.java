@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page.template;
+package com.nosliw.uiresource.page.story;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
@@ -10,25 +10,22 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.dynamic.HAPBuilderResourceDefinition;
 import com.nosliw.data.core.resource.dynamic.HAPOutputBuilder;
 import com.nosliw.data.core.resource.dynamic.HAPParmDefinition;
 import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
 import com.nosliw.data.core.service.interfacee.HAPServiceResult;
 import com.nosliw.data.core.service.provide.HAPDefinitionService;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
-import com.nosliw.data.core.story.HAPResourceBuilder;
-import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 import com.nosliw.uiresource.page.tag.HAPUITagQueryResult;
 import com.nosliw.uiresource.page.tag.HAPUITageQuery;
 
-public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPResourceBuilder{
+public class HAPBuilderPageSimple2 extends HAPEntityInfoImp implements HAPBuilderResourceDefinition{
 
 	private HAPManagerServiceDefinition m_serviceDefMan;
 	
@@ -36,35 +33,13 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPResourc
 	
 	private HAPUITagManager m_tagManager;
 	
-	public HAPBuilderPageSimple(HAPManagerServiceDefinition serviceDefMan, HAPUITagManager tagManager, HAPParserPage pageParser) {
+	public HAPBuilderPageSimple2(HAPManagerServiceDefinition serviceDefMan, HAPUITagManager tagManager, HAPParserPage pageParser) {
 		this.m_serviceDefMan = serviceDefMan;
 		this.m_tagManager = tagManager;
 		this.m_pageParser = pageParser;
 	}
-
+	
 	@Override
-	public HAPResourceDefinition buildResourceDefinition(HAPStory story) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	private HAPContextGroup buildContext() {
-		
-	}
-
-	private void buildService() {
-		
-	}
-	
-	private void buildServiceUse() {
-		
-	}
-	
-	private void buildUI() {
-		
-	}
-	
-	
 	public HAPOutputBuilder build(Set<HAPParmDefinition> parms) {
 		String serviceId = (String)this.findParmById("service", parms).getData().getValue();
 		
@@ -80,7 +55,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPResourc
 		templateParms.put("serviceId", serviceId);
 		templateParms.put("context", context.toStringValue(HAPSerializationFormat.JSON));
 		
-		InputStream pageTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPBuilderPageSimple.class, "page_framework.temp");
+		InputStream pageTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPBuilderPageSimple2.class, "page_framework.temp");
 		String pageContent = HAPStringTemplateUtil.getStringValue(pageTemplateStream, templateParms);
 
 		HAPDefinitionUIPage pageDef = null;
@@ -125,6 +100,9 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPResourc
 		return new HAPContext();
 	}
 	
+	@Override
+	public String getResourceType() {  return HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE;  }
+	
 	private HAPParmDefinition findParmById(String id, Set<HAPParmDefinition> parms) {
 		for(HAPParmDefinition parm : parms) {
 			if(id.equals(parm.getId())) {
@@ -133,5 +111,4 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPResourc
 		}
 		return null;
 	}
-
 }

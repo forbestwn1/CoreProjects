@@ -402,9 +402,16 @@ var COMMONCONSTANT=
   "STORYNODE_TYPE_SERVICEPARM": "serviceParm",
   "STORYNODE_TYPE_SERVICEOUTPUT": "serviceOutput",
   "STORYNODE_TYPE_VARIABLE": "variable",
+  "STORYNODE_TYPE_PAGE": "page",
   "STORYNODE_TYPE_UI": "ui",
+  "STORYNODE_PROFILE_CONTAINER": "container",
   "STORYNODE_PROFILE_DATAOUT": "dataOut",
-  "STORYNODE_PROFILE_DATAIN": "dataIn"
+  "STORYNODE_PROFILE_DATAIN": "dataIn",
+  "STORYNODE_PROFILE_DATAIO": "dataIO",
+  "CONNECTION_TYPE_CONTAIN": "contain",
+  "CONNECTION_TYPE_DATAIO": "dataIO",
+  "SERVICE_CHILD_INPUT": "serviceInput",
+  "SERVICE_CHILD_RESULT": "serviceResult"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

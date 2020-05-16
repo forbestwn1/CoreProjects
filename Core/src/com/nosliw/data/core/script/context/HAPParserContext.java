@@ -2,9 +2,9 @@ package com.nosliw.data.core.script.context;
 
 import java.util.Iterator;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -60,25 +60,34 @@ public class HAPParserContext {
 	
 	public static void parseContext(JSONObject contextJson, HAPContext context) {
 		if(contextJson!=null) {
-			JSONObject elementsJson = contextJson.optJSONObject(HAPContext.ELEMENT);
-			Iterator<String> it = elementsJson.keys();
-			while(it.hasNext()){
-				String eleName = it.next();
-				JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
-				HAPContextDefinitionRoot contextDefRoot = parseContextRootFromJson(eleDefJson);
-				context.addElement(eleName, contextDefRoot);
+			Object elementsObj = contextJson.opt(HAPContext.ELEMENT);
+			if(elementsObj instanceof JSONObject) {
+				JSONObject elementsJson = (JSONObject)elementsObj;
+				Iterator<String> it = elementsJson.keys();
+				while(it.hasNext()){
+					String eleName = it.next();
+					JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
+					HAPContextDefinitionRoot contextDefRoot = parseContextRootFromJson(eleDefJson);
+					context.addElement(eleName, contextDefRoot);
+				}
+			}
+			else if(elementsObj instanceof JSONArray) {
+				JSONArray elementsArray = (JSONArray)elementsObj;
+				for(int i=0; i<elementsArray.length(); i++) {
+					JSONObject eleDefJson = elementsArray.getJSONObject(i);
+					HAPContextDefinitionRoot contextDefRoot = parseContextRootFromJson(eleDefJson);
+					context.addElement(contextDefRoot);
+				}
 			}
 		}
 	}
 	
 	//parse context root
-	private static HAPContextDefinitionRoot parseContextRootFromJson(JSONObject eleDefJson){
+	public static HAPContextDefinitionRoot parseContextRootFromJson(JSONObject eleDefJson){
 		HAPContextDefinitionRoot out = new HAPContextDefinitionRoot();
 
 		//info
-		HAPEntityInfoWritableImp info = new HAPEntityInfoWritableImp();
-		info.buildObject(eleDefJson, HAPSerializationFormat.JSON);
-		info.cloneToEntityInfo(out);
+		out.buildEntityInfoByJson(eleDefJson);
 		
 		//definition
 		JSONObject defJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionRoot.DEFINITION);

@@ -16,7 +16,6 @@ import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryImp;
 import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
-import com.nosliw.data.core.story.HAPUtilityStory;
 
 public class HAPParserStory {
 
@@ -48,9 +47,6 @@ public class HAPParserStory {
 		//build complex resource part from json object
 		HAPUtilityComponentParse.parseComplextResourceDefinition(out, jsonObj);
 
-		//director id
-		HAPUtilityStory.setBuilderId(out, jsonObj.getString(HAPStory.DIRECTOR));
-		
 		HAPStoryImp storyEntity = parseStory(jsonObj);
 		out.setStory(storyEntity);
 		
@@ -59,6 +55,8 @@ public class HAPParserStory {
 	
 	private static HAPStoryImp parseStory(JSONObject jsonObj) {
 		HAPStoryImp out = new HAPStoryImp();
+		
+		out.setTopicType(jsonObj.getString(HAPStory.TOPICTYPE));
 		
 		JSONArray nodeJsonArray = jsonObj.optJSONArray(HAPStory.NODE);
 		if(nodeJsonArray!=null) {
@@ -74,6 +72,10 @@ public class HAPParserStory {
 			for(int i=0; i<connectionJsonArray.length(); i++) {
 				JSONObject connectionJsonObj = connectionJsonArray.getJSONObject(i);
 				HAPConnection connection = parseConnection(connectionJsonObj);
+				
+				out.getNode(connection.getEnd1().getNodeId()).addConnection(connection.getId());
+				out.getNode(connection.getEnd2().getNodeId()).addConnection(connection.getId());
+				
 				out.addConnection(connection);
 			}
 		}

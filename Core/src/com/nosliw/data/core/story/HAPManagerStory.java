@@ -27,7 +27,7 @@ public class HAPManagerStory {
 	}
 	
 	public HAPResourceDefinition buildResourceDefinition(HAPStory story) {
-		HAPResourceDefinition out = this.m_resourceDefinitionBuilders.get(story.getResourceType()).buildResourceDefinition(story);
+		HAPResourceDefinition out = this.m_resourceDefinitionBuilders.get(story.getTopicType()).buildResourceDefinition(story);
 		HAPUtilityStory.exportBuildResourceDefinition(story, out);
 		return out;
 	}

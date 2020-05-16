@@ -1,425 +1,337 @@
 {
 	"name": "page_minimum",
 	"description": "page_minimum",
-	"builderId" : "page_minimum",
-	"node" : [
-		{
-			"type" : "service",
-			"id" : "1",
-			"configure" : {
-				"editable" : ["id", "name"],
-				"visible" : true, 
+	"topicType": "uiResource",
+	"info": {
+		"director": "page_minimum"
+	},
+	"node": [{
+			"type": "service",
+			"id": "1",
+			"status": {
+				"editable": ["id", "name"],
+				"visible": true
 			},
-			"entity" : {
-				"id": "TestTemplateService",
+			"entity": {
+				"referenceId": "TestTemplateService",
 				"name": "TestTemplateService",
 				"service": {
 					"id": "TestTemplateService",
 					"name": "TestTemplateService",
-				    "implementation" : "com.nosliw.service.test.template.HAPServiceImp",
-					"description" : "test service implemented by process",
-					"interface" : {
-						"result" : [
-							{
-								"name" : "success",
-								"output" : [
-									{
-										"name" : "outputInService"
-										"criteria" : "test.string;1.0.0"
+					"implementation": "com.nosliw.service.test.template.HAPServiceImp",
+					"description": "test service implemented by process",
+					"interface": {
+						"result": [{
+								"name": "success",
+								"output": [{
+										"name": "outputInService",
+										"criteria": "test.string;1.0.0"
 									}
-								],
+								]
 							}
 						],
-						"parm" : [
-							{
-								name : "serviceParm1",
-								criteria : "test.string;1.0.0",
-								default :{
-									dataTypeId: "test.string;1.0.0",
-									value: "hello"
-								},
-							},
-							{
-								name : "serviceParm2",
-								criteria : "test.string;1.0.0",
+						"parm": [{
+								"name": "serviceParm1",
+								"criteria": "test.string;1.0.0",
+								"default": {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "hello"
+								}
+							}, {
+								"name": "serviceParm2",
+								"criteria": "test.string;1.0.0"
 							}
 						]
 					}
-				},
+				}
+			}
+		}, {
+			"type": "serviceInput",
+			"id": "2",
+			"status": {
+				"editable": [],
+				"visible": true
 			},
-		},	
-		{
-			"type" : "serviceInput",
-			"id" : "2",
-			"configure" : {
-				"editable" : [],
-				"visible" : true, 
-			},
-			"entity" : {
-				"name" : "input",
-				"parm" : [
-					{
-						name : "serviceParm1",
-						criteria : "test.string;1.0.0",
-						default :{
-							dataTypeId: "test.string;1.0.0",
-							value: "hello"
-						},
-					},
-					{
-						name : "serviceParm2",
-						criteria : "test.string;1.0.0",
+			"entity": {
+				"name": "input",
+				"parm": [{
+						"name": "serviceParm1",
+						"criteria": "test.string;1.0.0",
+						"default": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "hello"
+						}
+					}, {
+						"name": "serviceParm2",
+						"criteria": "test.string;1.0.0"
 					}
 				]
 			}
-		},	
-		{
-			"type" : "serviceOutput",
-			"id" : "3",
-			"configure" : {
-				"editable" : [],
-				"visible" : true,
+		}, {
+			"type": "serviceOutput",
+			"id": "3",
+			"status": {
+				"editable": [],
+				"visible": true
 			},
-			"entity" : {
-				"name" : "output",
-				"result" : [
-					{
-						"name" : "success",
-						"output" : [
-							{
-								"name" : "outputInService"
-								"criteria" : "test.string;1.0.0"
+			"entity": {
+				"name": "output",
+				"result": [{
+						"name": "success",
+						"output": [{
+								"name": "outputInService",
+								"criteria": "test.string;1.0.0"
 							}
-						],
+						]
 					}
-				],
+				]
 			}
-		},	
-		{
-			"type" : "serviceInputParm",
-			"id" : "4",
-			"configure" : {
-				"editable" : [],
-				"visible" : true,
+		}, {
+			"type": "serviceInputParm",
+			"id": "4",
+			"status": {
+				"editable": [],
+				"visible": true
 			},
-			"entity" : {
-				name : "serviceParm1",
-				criteria : "test.string;1.0.0",
-				default :{
-					dataTypeId: "test.string;1.0.0",
-					value: "hello"
-				},
-			}
-		},	
-		{
-			"type" : "serviceInputParm",
-			"id" : "5",
-			"configure" : {
-				"editable" : [],
-				"visible" : true,
-			},
-			"entity" : {
-				name : "serviceParm2",
-				criteria : "test.string;1.0.0",
-			}
-		},
-		{
-			"type" : "serviceOutputParm",
-			"id" : "6",
-			"configure" : {
-				"editable" : [],
-				"visible" : true,
-			},
-			"entity" : {
-				"name" : "outputInService"
-				"criteria" : "test.string;1.0.0"
-			}
-		},
-		{
-			"type" : "constant",
-			"id" : "7",
-			"configure" : {
-				"editable" : ["data"],
-				"visible" : true,
-				"invisible" : ["data"],
-			},
-			"entity" : {
-				"name" : "TestTemplateService_input_serviceParm1_constant",
-				"data" : {
-					dataTypeId: "test.string;1.0.0",
-					value: "helloaaaaa"
+			"entity": {
+				"name": "serviceParm1",
+				"criteria": "test.string;1.0.0",
+				"default": {
+					"dataTypeId": "test.string;1.0.0",
+					"value": "hello"
 				}
 			}
-		},
-		{
-			"type" : "variable",
-			"id" : "8",
-			"configure" : {
-				"visible" : false, 
+		}, {
+			"type": "serviceInputParm",
+			"id": "5",
+			"status": {
+				"editable": [],
+				"visible": true
 			},
-			"entity" : {
-				"name" : "TestTemplateService_input_serviceParm2_variable",
-				"criteria" : "test.string;1.0.0",
+			"entity": {
+				"name": "serviceParm2",
+				"criteria": "test.string;1.0.0"
 			}
-		},
-		{
-			"type" : "variable",
-			"id" : "9",
-			"configure" : {
-				"visible" : false, 
+		}, {
+			"type": "serviceOutputItem",
+			"id": "6",
+			"status": {
+				"editable": [],
+				"visible": true
 			},
-			"entity" : {
-				"name" : "TestTemplateService_output_outputInService_variable",
-				"criteria" : "test.string;1.0.0",
+			"entity": {
+				"name": "outputInService",
+				"criteria": "test.string;1.0.0"
 			}
-		},
-		{
-			"type" : "UI",
-			"id" : "10",
-			"configure" : {
-				"editable" : [],
-				"visible" : true, 
-				"invisible" : [],
+		}, {
+			"type": "constant",
+			"id": "7",
+			"status": {
+				"editable": ["data"],
+				"visible": true,
+				"invisible": ["data"]
 			},
-			"entity" : {
-				"complexity" : "simple"
-				"title" : true
+			"entity": {
+				"name": "TestTemplateService_input_serviceParm1_constant",
+				"data": {
+					"dataTypeId": "test.string;1.0.0",
+					"value": "helloaaaaa"
+				}
 			}
-		},
-		{
-			"type" : "UI_title",
-			"id" : "12",
-			"configure" : {
-				"editable" : ["title"],
-				"visible" : true, 
-				"invisible" : [],
+		}, {
+			"type": "variable",
+			"id": "8",
+			"status": {
+				"visible": false
 			},
-			"entity" : {
-				"title" : "serviceParm2",
+			"entity": {
+				"name": "TestTemplateService_input_serviceParm1_variable",
+				"definition": {
+					"criteria": "test.string;1.0.0"
+				}
 			}
-		},
-		{
-			"type" : "UI_tag",
-			"id" : "13",
-			"configure" : {
-				"editable" : ["tag"],
-				"visible" : true, 
-				"invisible" : [],
+		}, {
+			"type": "variable",
+			"id": "10",
+			"status": {
+				"visible": false
 			},
-			"entity" : {
-				"tag" : "textinput",
+			"entity": {
+				"name": "TestTemplateService_input_serviceParm2_variable",
+				"definition": {
+					"criteria": "test.string;1.0.0"
+				}
 			}
-		},
-		
+		}, {
+			"type": "variable",
+			"id": "11",
+			"status": {
+				"visible": false
+			},
+			"entity": {
+				"name": "TestTemplateService_output_outputInService_variable",
+				"definition": {
+					"criteria": "test.string;1.0.0"
+				}
+			}
+		}, {
+			"type": "UI",
+			"id": "20",
+			"status": {
+				"editable": [],
+				"visible": true,
+				"invisible": []
+			},
+			"entity": {
+				"complexity": "simple",
+				"title": true
+			}
+		}, {
+			"type": "UI_title",
+			"id": "21",
+			"status": {
+				"editable": ["title"],
+				"visible": true,
+				"invisible": []
+			},
+			"entity": {
+				"title": "serviceParm2"
+			}
+		}, {
+			"type": "UI_tag",
+			"id": "22",
+			"status": {
+				"editable": ["tag"],
+				"visible": true,
+				"invisible": []
+			},
+			"entity": {
+				"tag": "textinput"
+			}
+		}
 	],
-	"connection: : [
-		{
-			"id" : "101",
-			"type" : "contain",
-			"from" : "0",
-			"to" : "1"
-			"entity" : {
-				"element" : "1",
+	"connection": [{
+			"id": "101",
+			"description": "service to serviceInput",
+			"type": "contain",
+			"status": {},
+			"end1": {
+				"nodeId": "1",
+				"profile": "container"
 			},
-		},
-		{
-			"id" : "102",
-			"type" : "contain",
-			"node1" : {
-				"id" : "1",
-				"profile" : "container"
+			"end2": {
+				"nodeId": "2"
 			},
-			"node2" : {
-				"id" : "2",
-				"delete" : true
+			"entity": {
+				"child": "serviceInput"
+			}
+		}, {
+			"id": "102",
+			"description": "service to serviceOutput",
+			"type": "contain",
+			"status": {},
+			"end1": {
+				"nodeId": "1",
+				"profile": "container"
 			},
-			"entity" : {
-				"element" : "input",
+			"end2": {
+				"nodeId": "3"
 			},
-		},
-		{
-			"id" : "103",
-			"type" : "contain",
-			"node1" : {
-				"id" : "1",
-				"profile" : "container"
+			"entity": {
+				"child": "serviceResult"
+			}
+		}, {
+			"id": "103",
+			"description": "serviceInput to parm1",
+			"type": "contain",
+			"status": {},
+			"end1": {
+				"nodeId": "2",
+				"profile": "container"
 			},
-			"node2" : {
-				"id" : "3",
-				"delete" : true
+			"end2": {
+				"nodeId": "4"
 			},
-			"entity" : {
-				"element" : "output",
+			"entity": {
+				"child": "serviceParm1"
+			}
+		}, {
+			"id": "104",
+			"type": "contain",
+			"description": "serviceInput to parm2",
+			"end1": {
+				"nodeId": "2",
+				"profile": "container"
 			},
-		},
-		{
-			"id" : "104",
-			"type" : "contain",
-			"node1" : {
-				"id" : "2",
-				"profile" : "container"
+			"end2": {
+				"nodeId": "5",
+				"delete": true
 			},
-			"node2" : {
-				"id" : "4",
-				"delete" : true
+			"entity": {
+				"child": "serviceParm2"
+			}
+		}, {
+			"id": "105",
+			"type": "contain",
+			"description": "serviceResult to output1",
+			"end1": {
+				"nodeId": "3",
+				"profile": "container"
 			},
-			"entity" : {
-				"element" : "serviceParm1",
+			"end2": {
+				"nodeId": "6",
+				"delete": true
 			},
-		},
-		{
-			"id" : "105",
-			"type" : "contain",
-			"node1" : {
-				"id" : "2",
-				"profile" : "container"
+			"entity": {
+				"child": "outputInService"
+			}
+		}, {
+			"id": "107",
+			"type": "dataIO",
+			"description": "parm1 to var",
+			"end1": {
+				"nodeId": "4",
+				"profile": "dataIn"
 			},
-			"node2" : {
-				"id" : "5",
-				"delete" : true
+			"end2": {
+				"nodeId": "8",
+				"profile": "dataIO",
+				"delete": true
 			},
-			"entity" : {
-				"element" : "serviceParm2",
+			"entity": {
+				"path": ""
+			}
+		}, {
+			"id": "109",
+			"type": "dataIO",
+			"description": "parm2 to var",
+			"end1": {
+				"nodeId": "5",
+				"profile": "dataIn"
 			},
-		},
-		{
-			"id" : "106",
-			"type" : "contain",
-			"node1" : {
-				"id" : "3",
-				"profile" : "container"
+			"end2": {
+				"nodeId": "10",
+				"profile": "dataIO",
+				"delete": true
 			},
-			"node2" : {
-				"id" : "6",
-				"delete" : true
+			"entity": {
+				"path": ""
+			}
+		}, {
+			"id": "110",
+			"type": "dataIO",
+			"end1": {
+				"nodeId": "6",
+				"profile": "dataOut"
 			},
-			"entity" : {
-				"element" : "outputInService",
+			"end2": {
+				"nodeId": "11",
+				"profile": "dataIO",
+				"delete": true
 			},
-		},
-		{
-			"id" : "107",
-			"type" : "input",
-			"node1" : {
-				"id" : "4",
-				"profile" : "input",
-			},
-			"node2" : {
-				"id" : "7",
-				"profile" : "output",
-				"delete" : true
-			},
-			"entity" : {
-				"path" : "",
-			},
-		},
-		{
-			"id" : "108",
-			"type" : "input",
-			"node1" : {
-				"id" : "4",
-				"profile" : "input",
-			},
-			"node2" : {
-				"id" : "17",
-				"profile" : "output",
-				"delete" : true
-			},
-			"entity" : {
-				"path" : "",
-			},
-		},
-		{
-			"id" : "109",
-			"type" : "input",
-			"node1" : {
-				"id" : "17",
-				"profile" : "in",
-			},
-			"node2" : {
-				"id" : "18",
-				"profile" : "io",
-				"delete" : true
-			},
-			"entity" : {
-				"path" : "",
-			},
-		},
-		{
-			"id" : "110",
-			"type" : "contain",
-			"node1" : {
-				"id" : "18",
-				"profile" : "container",
-			},
-			"node2" : {
-				"id" : "19",
-				"delete" : true
-			},
-			"entity" : {
-				"path" : "lable",
-			},
-		},
-		{
-			"id" : "111",
-			"type" : "contain",
-			"node1" : {
-				"id" : "18",
-				"profile" : "container",
-			},
-			"node2" : {
-				"id" : "20",
-				"delete" : true
-			},
-			"entity" : {
-				"path" : "control",
-			},
-		},
-		{
-			"id" : "108",
-			"type" : "input",
-			"from" : "5"
-			"to" : "8"
-			"entity" : {
-				"path" : "",
-			},
-		},
-		{
-			"id" : "109",
-			"type" : "output",
-			"from" : "6"
-			"to" : "9"
-			"entity" : {
-				"path" : "",
-			},
-		},
-		{
-			"id" : "110",
-			"type" : "present",
-			"from" : "8"
-			"to" : "10"
-			"entity" : {
-				"path" : "",
-			},
-		},
-		{
-			"id" : "111",
-			"type" : "contain",
-			"from" : "10"
-			"to" : "12"
-			"entity" : {
-				"element" : "title",
-			},
-		},
-		{
-			"id" : "112",
-			"type" : "contain",
-			"from" : "10"
-			"to" : "13"
-			"entity" : {
-				"element" : "tag",
-			},
-		},
-	
+			"entity": {
+				"path": ""
+			}
+		}
 	]
 }

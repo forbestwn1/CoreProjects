@@ -9,4 +9,6 @@ public interface HAPStoryNode extends HAPStoryElement{
 	//connections node connect to
 	Set<String> getConnections();
 	
+	void addConnection(String connectionId);
+	
 }

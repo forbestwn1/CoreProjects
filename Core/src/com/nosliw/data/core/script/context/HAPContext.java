@@ -62,13 +62,18 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 
 	public Set<String> getElementNames(){  return this.m_elements.keySet();   }
 	public Map<String, HAPContextDefinitionRoot> getElements(){  return this.m_elements;  }
-	public void addElement(String name, HAPContextDefinitionRoot rootEle){	this.m_elements.put(name, rootEle);	}
+	public void addElement(String id, HAPContextDefinitionRoot rootEle){
+		rootEle.setId(id);
+		this.m_elements.put(id, rootEle);	
+	}
+	public void addElement(HAPContextDefinitionRoot rootEle){	this.m_elements.put(rootEle.getId(), rootEle);	}
 	public void addElement(String name, HAPContextDefinitionElement contextEle) {   this.m_elements.put(name, new HAPContextDefinitionRoot(contextEle));  }
 	
 	public void updateRootName(HAPUpdateName nameUpdate) {
 		//update context
 		for(String eleName : new HashSet<String>(this.getElementNames())) {
 			HAPContextDefinitionRoot root = this.getElement(eleName);
+			root.setId(nameUpdate.getUpdatedName(root.getId()));
 			HAPUtilityContext.processContextDefElement(root.getDefinition(), new HAPContextDefEleProcessor() {
 				@Override
 				public boolean process(HAPContextDefinitionElement ele, Object value) {

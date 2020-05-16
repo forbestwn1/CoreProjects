@@ -3,7 +3,6 @@ package com.nosliw.data.core.story;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class HAPStoryNodeImp extends HAPStoryElementImp implements HAPStoryNode{
@@ -20,17 +19,14 @@ public class HAPStoryNodeImp extends HAPStoryElementImp implements HAPStoryNode{
 	
 	@Override
 	public Set<String> getConnections() {  return this.m_connections;  }
-
+ 
+	@Override
+	public void addConnection(String connectionId) {  this.m_connections.add(connectionId);   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
-		
-		JSONArray connectionJsonArray = jsonObj.optJSONArray(CONNECTIONS);
-		for(int i=0; i<connectionJsonArray.length(); i++) {
-			this.m_connections.add(connectionJsonArray.getString(i));
-		}
 		return true;  
 	}
 

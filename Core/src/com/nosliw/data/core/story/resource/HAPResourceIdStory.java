@@ -9,7 +9,7 @@ public class HAPResourceIdStory  extends HAPResourceIdSimple{
 
 	private HAPStoryId m_storyId; 
 	
-	public HAPResourceIdStory(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_TEMPLATE);    }
+	public HAPResourceIdStory(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_STORY);    }
 
 	public HAPResourceIdStory(HAPResourceIdSimple resourceId){
 		this();

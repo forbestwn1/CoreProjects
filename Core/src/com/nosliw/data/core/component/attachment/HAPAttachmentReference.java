@@ -43,7 +43,7 @@ public class HAPAttachmentReference extends HAPAttachmentImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_referenceId!=null)		jsonMap.put(ID, this.m_referenceId.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_referenceId!=null)		jsonMap.put(REFERENCEID, this.m_referenceId.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public interface HAPStory extends HAPEntityInfo{
 
 	public static final String DIRECTOR = "director";
 
-	public static final String RESOURCETYPE = "resourceType";
+	public static final String TOPICTYPE = "topicType";
 
 	public static final String NODE = "node";
 
@@ -16,7 +16,7 @@ public interface HAPStory extends HAPEntityInfo{
 	
 	public static final String CONNECTIONGROUP = "connectionGroup";
 	
-	String getResourceType();
+	String getTopicType();
 	
 	Set<HAPStoryNode> getNodes();
 	HAPStoryNode getNode(String id);

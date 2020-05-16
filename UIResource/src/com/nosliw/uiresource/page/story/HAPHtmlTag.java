@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page.template;
+package com.nosliw.uiresource.page.story;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
