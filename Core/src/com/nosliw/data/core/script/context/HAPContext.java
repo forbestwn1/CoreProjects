@@ -35,6 +35,9 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	public boolean isFlat() {	return true;	}
 
 	@Override
+	public boolean isEmpty() {  return this.m_elements.isEmpty(); }
+
+	@Override
 	public HAPContextDefinitionRoot getElement(String name) {  return this.m_elements.get(name);   }
 
 	@Override
@@ -272,4 +275,5 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 		}
 		return out;
 	}
+
 }

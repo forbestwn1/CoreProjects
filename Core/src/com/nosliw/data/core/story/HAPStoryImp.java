@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
@@ -54,15 +55,11 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public void addConnectionGroup(HAPConnectionGroup connectionGroup) {    this.m_connectionGroups.put(connectionGroup.getId(), connectionGroup);  }
 
 	@Override
-	public String toStringValue(HAPSerializationFormat format) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean buildObject(Object value, HAPSerializationFormat format) {
-		// TODO Auto-generated method stub
-		return false;
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(NODE, HAPJsonUtility.buildJson(this.m_nodes, HAPSerializationFormat.JSON));
+		jsonMap.put(CONNECTION, HAPJsonUtility.buildJson(this.m_connections, HAPSerializationFormat.JSON));
+		jsonMap.put(CONNECTIONGROUP, HAPJsonUtility.buildJson(this.m_connectionGroups, HAPSerializationFormat.JSON));
 	}
 
 }

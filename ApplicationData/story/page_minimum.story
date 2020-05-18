@@ -175,37 +175,19 @@
 				}
 			}
 		}, {
-			"type": "UI",
+			"type": "UI_page",
 			"id": "20",
 			"status": {
-				"editable": [],
-				"visible": true,
-				"invisible": []
 			},
 			"entity": {
-				"complexity": "simple",
-				"title": true
 			}
 		}, {
-			"type": "UI_title",
-			"id": "21",
-			"status": {
-				"editable": ["title"],
-				"visible": true,
-				"invisible": []
-			},
-			"entity": {
-				"title": "serviceParm2"
-			}
-		}, {
-			"type": "UI_tag",
+			"type": "UI_element",
 			"id": "22",
 			"status": {
-				"editable": ["tag"],
-				"visible": true,
-				"invisible": []
 			},
 			"entity": {
+				"type" : "tag",
 				"tag": "textinput"
 			}
 		}
@@ -331,6 +313,32 @@
 			},
 			"entity": {
 				"path": ""
+			}
+		}, {
+			"id": "201",
+			"type": "contain",
+			"end1": {
+				"nodeId": "20",
+				"profile": "container"
+			},
+			"end2": {
+				"nodeId": "22",
+			},
+			"entity": {
+				"child": 1
+			}
+		}, {
+			"id": "202",
+			"type": "dataIO",
+			"end1": {
+				"nodeId": "22",
+				"profile": "dataIO"
+			},
+			"end2": {
+				"nodeId": "10",
+				"profile": "dataIO"
+			},
+			"entity": {
 			}
 		}
 	]

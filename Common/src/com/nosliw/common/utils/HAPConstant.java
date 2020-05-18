@@ -639,11 +639,13 @@ public class HAPConstant {
 
 
 		public static final String STORYNODE_TYPE_SERVICE = "service";
-		public static final String STORYNODE_TYPE_SERVICEPARM = "serviceParm";
+		public static final String STORYNODE_TYPE_SERVICEINPUT = "serviceInput";
 		public static final String STORYNODE_TYPE_SERVICEOUTPUT = "serviceOutput";
+		public static final String STORYNODE_TYPE_SERVICEINPUTPARM = "serviceInputParm";
+		public static final String STORYNODE_TYPE_SERVICEOUTPUTITEM = "serviceOutputItem";
 		public static final String STORYNODE_TYPE_VARIABLE = "variable";
-		public static final String STORYNODE_TYPE_PAGE = "page";
-		public static final String STORYNODE_TYPE_UI = "ui";
+		public static final String STORYNODE_TYPE_PAGE = "UI_page";
+		public static final String STORYNODE_TYPE_UI = "UI_element";
 
 
 

@@ -25,6 +25,9 @@ public class HAPContextStructureEmpty extends HAPSerializableImp implements HAPC
 	public boolean isFlat() {  return this.m_isFlat;  }
 
 	@Override
+	public boolean isEmpty() {   return true;   }
+
+	@Override
 	public HAPContextDefinitionRoot getElement(String eleName) {	return null;	}
 
 	@Override
@@ -40,4 +43,5 @@ public class HAPContextStructureEmpty extends HAPSerializableImp implements HAPC
 	@Override
 	public void hardMergeWith(HAPContextStructure context) {
 	}
+
 }

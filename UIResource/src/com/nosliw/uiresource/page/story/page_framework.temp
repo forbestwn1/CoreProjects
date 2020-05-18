@@ -29,14 +29,16 @@
 	<contexts>
 	{
 		group : {
-			public : {
-				element : {
+			public : 
 					||context||
-				}
-			}
+			
 		}
 	}
 	</contexts>
+	
+	<services>
+		||serviceUse||
+	</services>
 	
 	<events>
 	[
@@ -50,12 +52,9 @@
 	
 	<attachment>
 	{
-		"service" : [
-			{
-				"name": "service",
-				"id" : "||serviceId||"
-			}	
-		],
+		"service" : 
+			||serviceProvider||
+		,
 		"expression" : [
 		],
 		

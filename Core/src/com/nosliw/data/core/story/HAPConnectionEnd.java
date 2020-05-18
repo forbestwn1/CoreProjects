@@ -1,5 +1,7 @@
 package com.nosliw.data.core.story;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -34,4 +36,12 @@ public class HAPConnectionEnd extends HAPSerializableImp{
 		return true;  
 	}
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(NODEID, this.m_nodeId);
+		jsonMap.put(CONNECTIONID, this.m_connectionId);
+		jsonMap.put(PROFILE, this.m_profile);
+	}
+
 }

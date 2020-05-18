@@ -1,9 +1,13 @@
 package com.nosliw.data.core.story;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.json.JSONObject;
+
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPStoryNodeImp extends HAPStoryElementImp implements HAPStoryNode{
 
@@ -26,8 +30,14 @@ public class HAPStoryNodeImp extends HAPStoryElementImp implements HAPStoryNode{
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.buildEntityInfoByJson(jsonObj);
+		super.buildObjectByJson(jsonObj);
 		return true;  
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(CONNECTIONS, HAPJsonUtility.buildJson(this.m_connections, HAPSerializationFormat.JSON));
 	}
 
 }

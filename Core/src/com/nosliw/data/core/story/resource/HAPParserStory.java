@@ -56,6 +56,8 @@ public class HAPParserStory {
 	private static HAPStoryImp parseStory(JSONObject jsonObj) {
 		HAPStoryImp out = new HAPStoryImp();
 		
+		out.buildEntityInfoByJson(jsonObj);
+		
 		out.setTopicType(jsonObj.getString(HAPStory.TOPICTYPE));
 		
 		JSONArray nodeJsonArray = jsonObj.optJSONArray(HAPStory.NODE);

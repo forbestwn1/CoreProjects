@@ -1,7 +1,10 @@
 package com.nosliw.data.core.story;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPConnectionImp extends HAPStoryElementImp implements HAPConnection{
@@ -25,7 +28,7 @@ public class HAPConnectionImp extends HAPStoryElementImp implements HAPConnectio
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.buildEntityInfoByJson(jsonObj);
+		super.buildObjectByJson(jsonObj);
 		
 		this.m_end1 = new HAPConnectionEnd();
 		this.m_end1.buildObject(jsonObj.getJSONObject(HAPConnection.END1), HAPSerializationFormat.JSON);
@@ -36,6 +39,13 @@ public class HAPConnectionImp extends HAPStoryElementImp implements HAPConnectio
 		this.m_end2.setConnectionId(this.getId());
 		
 		return true;  
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(END1, HAPJsonUtility.buildJson(this.m_end1, HAPSerializationFormat.JSON));
+		jsonMap.put(END2, HAPJsonUtility.buildJson(this.m_end2, HAPSerializationFormat.JSON));
 	}
 	
 }

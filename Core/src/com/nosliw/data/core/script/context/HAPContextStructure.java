@@ -12,6 +12,8 @@ public interface HAPContextStructure extends HAPSerializable{
 	
 	boolean isFlat();
 
+	boolean isEmpty();
+	
 	HAPContextDefinitionRoot getElement(String eleName);
 	
 	HAPContextStructure cloneContextStructure();

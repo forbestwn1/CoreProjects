@@ -60,6 +60,14 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	public boolean isFlat() {	return false;	}
 	
 	@Override
+	public boolean isEmpty() {
+		for(String key : this.m_contexts.keySet()) {
+			if(!this.m_contexts.get(key).isEmpty())  return false;
+		}
+		return true;
+	}
+
+	@Override
 	public HAPContextDefinitionRoot getElement(String name) {  return this.getElement(new HAPContextDefinitionRootId(name));   }
 
 	@Override
