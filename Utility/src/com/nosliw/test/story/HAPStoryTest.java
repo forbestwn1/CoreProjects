@@ -15,7 +15,7 @@ public class HAPStoryTest {
 			HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();
 			
 			HAPResourceDefinitionStory story = runtimeEnvironment.getStoryManager().getStory(id);
-			HAPResourceDefinition resourceDefinition = runtimeEnvironment.getStoryManager().buildResourceDefinition(story);
+			HAPResourceDefinition resourceDefinition = runtimeEnvironment.getStoryManager().buildShow(story);
 		}
 		catch(Throwable e) {
 			e.printStackTrace();

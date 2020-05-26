@@ -3,6 +3,9 @@
   <welcome-file-list>
     <welcome-file>main.html</welcome-file>
   </welcome-file-list>
+
+
+<!--  Core service   -->
   <servlet>
     <servlet-name>init</servlet-name>
     <servlet-class>com.nosliw.servlet.core.HAPInitServlet</servlet-class>
@@ -27,6 +30,58 @@
     <url-pattern>/gateway</url-pattern>
   </servlet-mapping>
 
+	<filter>
+	    <filter-name>SetCacheControl</filter-name>
+	    <filter-class>com.nosliw.servlet.HAPCacheControlFilter</filter-class>
+	</filter>                       
+	<filter-mapping>
+	    <filter-name>SetCacheControl</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+<!--  App service   -->
+
+  <servlet>
+    <servlet-name>loginServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.core.HAPLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>buildStoryServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.app.story.HAPStoryBuildServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>buildStoryServlet</servlet-name>
+    <url-pattern>/buildstory</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>miniappServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.app.miniapp.HAPMiniAppServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>miniappServlet</servlet-name>
+    <url-pattern>/miniapp</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>browseResourceServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.app.browseresource.HAPBrowseResourceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>browseResourceServlet</servlet-name>
+    <url-pattern>/browseresource</url-pattern>
+  </servlet-mapping>
+
+
+<!--  Utils service   -->
+
   <servlet>
     <servlet-name>resetGatewayServlet</servlet-name>
     <servlet-class>com.nosliw.servlet.utils.HAPResetGatewayServlet</servlet-class>
@@ -35,7 +90,6 @@
     <servlet-name>resetGatewayServlet</servlet-name>
     <url-pattern>/resetGateway</url-pattern>
   </servlet-mapping>
-
 
   <servlet>
     <servlet-name>loadFilesServlet</servlet-name>
@@ -57,7 +111,7 @@
 
   <servlet>
     <servlet-name>closeConnectionServlet</servlet-name>
-    <servlet-class>com.nosliw.servlet.core.HAPCloseDBConnection</servlet-class>
+    <servlet-class>com.nosliw.servlet.utils.HAPCloseDBConnection</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>closeConnectionServlet</servlet-name>
@@ -65,32 +119,4 @@
   </servlet-mapping>
 
 
-  <servlet>
-    <servlet-name>browseResourceServlet</servlet-name>
-    <servlet-class>com.nosliw.servlet.utils.browseresource.HAPBrowseResourceServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>browseResourceServlet</servlet-name>
-    <url-pattern>/browseresource</url-pattern>
-  </servlet-mapping>
-
-
-
-  <servlet>
-    <servlet-name>miniappServlet</servlet-name>
-    <servlet-class>com.nosliw.servlet.miniapp.HAPMiniAppServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>miniappServlet</servlet-name>
-    <url-pattern>/miniApp</url-pattern>
-  </servlet-mapping>
-
-	<filter>
-	    <filter-name>SetCacheControl</filter-name>
-	    <filter-class>com.nosliw.servlet.HAPCacheControlFilter</filter-class>
-	</filter>                       
-	<filter-mapping>
-	    <filter-name>SetCacheControl</filter-name>
-	    <url-pattern>/*</url-pattern>
-	</filter-mapping>
 </web-app>

@@ -1,7 +1,7 @@
 {
 	"name": "page_minimum",
 	"description": "page_minimum",
-	"topicType": "uiResource",
+	"showType": "uiResource",
 	"info": {
 		"director": "page_minimum"
 	},

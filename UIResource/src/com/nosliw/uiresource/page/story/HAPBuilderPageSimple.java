@@ -32,7 +32,7 @@ import com.nosliw.data.core.service.provide.HAPDefinitionService;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.story.HAPConnectionEnd;
-import com.nosliw.data.core.story.HAPResourceBuilder;
+import com.nosliw.data.core.story.HAPBuilderShow;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityStory;
@@ -42,7 +42,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 import com.nosliw.uiresource.page.tag.HAPUITagQueryResult;
 import com.nosliw.uiresource.page.tag.HAPUITageQuery;
 
-public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPResourceBuilder{
+public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilderShow{
 
 	private HAPManagerServiceDefinition m_serviceDefMan;
 	
@@ -64,7 +64,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPResourc
 	}
 
 	@Override
-	public HAPResourceDefinition buildResourceDefinition(HAPStory story) {
+	public HAPResourceDefinition buildShow(HAPStory story) {
 		this.m_story = story;
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		

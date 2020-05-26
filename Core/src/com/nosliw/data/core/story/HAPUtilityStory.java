@@ -22,7 +22,7 @@ public class HAPUtilityStory {
 	static private int index = 0;
 	
 	public static void exportBuildResourceDefinition(HAPStory story, HAPResourceDefinition resourceDef) {
-		String fileName = story.getTopicType() + "_" + story.getName() + "_" + index++;
+		String fileName = story.getShowType() + "_" + story.getName() + "_" + index++;
 
 		File directory = new File(HAPSystemFolderUtility.getCurrentDynamicResourceExportFolder());
 	    if (! directory.exists()){

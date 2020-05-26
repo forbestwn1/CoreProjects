@@ -1,4 +1,4 @@
-package com.nosliw.servlet.utils.browseresource;
+package com.nosliw.servlet.app.browseresource;
 
 import java.util.Map;
 

@@ -2,9 +2,9 @@ package com.nosliw.miniapp;
 
 import java.util.List;
 
+import com.nosliw.common.user.HAPUser;
 import com.nosliw.miniapp.data.HAPAppDataInfo;
 import com.nosliw.miniapp.entity.HAPGroup;
-import com.nosliw.miniapp.entity.HAPUser;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
 

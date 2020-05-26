@@ -6,12 +6,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.user.HAPUserInfo;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 import com.nosliw.miniapp.data.HAPAppDataManagerImp;
-import com.nosliw.miniapp.entity.HAPUser;
-import com.nosliw.miniapp.entity.HAPUserInfo;
+import com.nosliw.miniapp.entity.HAPUserMiniAppInfo;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 
 public class HAPAppManager {
@@ -34,22 +34,19 @@ public class HAPAppManager {
 		return out;
 	}
 	
-	public HAPUserInfo createUser() {
-		HAPUser user = this.m_dataAccess.createUser();
-		this.m_dataAccess.createSampleDataForUser(user.getId());
-		return getUserInfo(user.getId());
-	}
+//	public HAPUserInfo createUser() {
+//		HAPUser user = this.m_dataAccess.createUser();
+//		this.m_dataAccess.createSampleDataForUser(user.getId());
+//		return getUserInfo(user.getId());
+//	}
 	
-	public HAPUserInfo getUserInfo(String id) {
-		HAPUserInfo out = null;
-		HAPUser user = this.m_dataAccess.getUserById(id);
-		if(user!=null) {
-			out = new HAPUserInfo();
-			out.setUser(user);
-			out.addGroups(this.m_dataAccess.getUserGroups(user.getId()));
-			this.m_dataAccess.updateUserInfoWithMiniApp(out);
-		}
-		return out;
+	
+	
+	public HAPUserInfo updateUserInfo(HAPUserInfo userInfo) {
+		HAPUtility.setUserMiniAppInfo(userInfo, new HAPUserMiniAppInfo());
+		HAPUtility.getUserMiniAppInfo(userInfo).addGroups(this.m_dataAccess.getUserGroups(userInfo.getUser().getId()));
+		this.m_dataAccess.updateUserInfoWithMiniApp(userInfo);
+		return userInfo;
 	}
 
 	

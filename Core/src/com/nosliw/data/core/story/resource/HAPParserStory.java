@@ -58,7 +58,7 @@ public class HAPParserStory {
 		
 		out.buildEntityInfoByJson(jsonObj);
 		
-		out.setTopicType(jsonObj.getString(HAPStory.TOPICTYPE));
+		out.setTopicType(jsonObj.getString(HAPStory.SHOWTYPE));
 		
 		JSONArray nodeJsonArray = jsonObj.optJSONArray(HAPStory.NODE);
 		if(nodeJsonArray!=null) {

@@ -7,14 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.user.HAPUserInfo;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.miniapp.data.HAPAppDataInfo;
 import com.nosliw.miniapp.data.HAPAppDataInfoContainer;
 import com.nosliw.miniapp.entity.HAPGroup;
 import com.nosliw.miniapp.entity.HAPMiniApp;
 import com.nosliw.miniapp.entity.HAPOwnerInfo;
-import com.nosliw.miniapp.entity.HAPUser;
-import com.nosliw.miniapp.entity.HAPUserInfo;
 
 public class HAPDataAccess {
 
@@ -56,34 +55,6 @@ public class HAPDataAccess {
 		}
 	}
 
-	public HAPUser createUser() {
-		HAPUser out = new HAPUser();
-		out.setId(this.generateId());
-		try {
-			PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_USER (NAME, ID) VALUES ('"+out.getId()+"', '"+out.getId()+"');");
-			statement.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return out;
-	}
-
-	public HAPUser getUserById(String id) {
-		HAPUser out = null;
-		try {
-			PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM miniapp_user where id='"+id+"';");
-			ResultSet resultSet = statement.executeQuery();
-			while(resultSet.next()) {
-				out = new HAPUser();
-				out.setId((String)resultSet.getObject(HAPUser.ID));
-				out.setName((String)resultSet.getObject(HAPUser.NAME));
-				break;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return out;
-	}
 
 	public HAPGroup getGroupById(String id) {
 		HAPGroup out = null;
@@ -146,7 +117,7 @@ public class HAPDataAccess {
 				String miniAppId = resultSet.getString("appid");
 				HAPMiniApp miniApp = getMiniApp(miniAppId); 
 				String groupId = resultSet.getString("groupid");
-				userInfo.addMiniApp(miniApp, groupId);
+				HAPUtility.getUserMiniAppInfo(userInfo).addMiniApp(miniApp, groupId);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

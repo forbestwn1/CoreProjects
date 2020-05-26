@@ -26,7 +26,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	}
 	
 	@Override
-	public String getTopicType() {   return this.m_topicType;  }
+	public String getShowType() {   return this.m_topicType;  }
 
 	public void setTopicType(String topicType) {    this.m_topicType = topicType;     }
 	

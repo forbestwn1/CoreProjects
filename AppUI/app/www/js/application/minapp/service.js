@@ -32,12 +32,6 @@ var node_createMiniAppService = function(){
 	
 	loc_out = {
 
-		getLoginRequest : function(userInfo, handlers, requester_parent){
-			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_LOGIN, userInfo), undefined, handlers, requestInfo);
-			return remoteRequest;
-		},
-
 		executeLoginRequest : function(userInfo, handlers, requester_parent){
 			var remoteRequest = this.getLoginRequest(userInfo, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(remoteRequest);

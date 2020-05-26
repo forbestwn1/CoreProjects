@@ -20,7 +20,7 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	public void setStory(HAPStoryImp story) {   this.m_story = story;   }
 	
 	@Override
-	public String getTopicType() {   return this.m_story.getTopicType();  }
+	public String getShowType() {   return this.m_story.getShowType();  }
 
 	@Override
 	public Set<HAPStoryNode> getNodes() {  return this.m_story.getNodes(); }

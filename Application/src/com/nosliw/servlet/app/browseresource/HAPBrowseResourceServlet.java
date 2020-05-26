@@ -1,4 +1,4 @@
-package com.nosliw.servlet.utils.browseresource;
+package com.nosliw.servlet.app.browseresource;
 
 import java.io.File;
 import java.util.List;

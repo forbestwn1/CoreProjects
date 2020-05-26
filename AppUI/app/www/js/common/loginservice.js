@@ -8,14 +8,30 @@ var packageObj = library.getChildPackage();
 	var node_createServiceRequestInfoSequence;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createLoginService = function(miniAppService){
+var node_createLoginService = function(){
 
-	var loc_miniAppService = miniAppService;
+	var loc_configureName = "login";
 	
+	nosliw.registerSetNodeDataEvent("runtime", function(){
+		//register remote task configure
+		var configure = node_createConfigures({
+			url : loc_configureName,
+//			contentType: "application/json; charset=utf-8"
+		});
+		
+		nosliw.runtime.getRemoteService().registerSyncTaskConfigure(loc_configureName, configure);
+	});
+
+	loc_getLoginRequest : function(userInfo, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_LOGIN, userInfo), undefined, handlers, requestInfo);
+		return remoteRequest;
+	},
+
 	var loc_out = {
 
 		getLoginRequest(userInfo, handlers, requestInfo){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("MiniAppLogin", {"userInf":userInfo}), handlers, requestInfo);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("Login", {"userInf":userInfo}), handlers, requestInfo);
 
 			if(userInfo==undefined){
 				userInfo = {};
@@ -25,7 +41,7 @@ var node_createLoginService = function(miniAppService){
 					userInfo.user.id = userId;
 				}
 			}
-			out.addRequest(loc_miniAppService.getLoginRequest(userInfo, {
+			out.addRequest(loc_getLoginRequest(userInfo, {
 				success : function(requestInfo, userInfo){
 					localStorage.userId = userInfo.user.id;
 					nosliw.runtime.getSecurityService().setToken(userInfo.user.id);
