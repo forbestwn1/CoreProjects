@@ -5,7 +5,12 @@ var nosliwApplication = {};
 nosliwApplication.utility = {
 
 	getApplicationObject : function(){   return nosliw.getNodeData("application.application");     },
-		
+	createApplicationObject : function(){   
+		var out = nosliw.getNodeData("application.createApplication")();
+		nosliw.setNodeData("application.application", out);
+		return out;
+	},
+	
 	showPreloader : function(){		nosliwApplication.info.framework7.preloader.show();	},
 	
 	hidePreloader : function(){		nosliwApplication.info.framework7.preloader.hide();	},
@@ -45,7 +50,7 @@ nosliwApplication.utility = {
 		var fileNumber = libs.length;
 		
 		var loadScriptInOrder = function(){
-			var url = libs[count] + "?version="+version;    //attach version information to disable cache in browser 
+			var url = libs[count] + "?version="+nosliwApplication.info.application.version;    //attach version information to disable cache in browser 
 			
 			var script = document.createElement('script');
 			script.setAttribute('src', url);
@@ -69,7 +74,7 @@ nosliwApplication.utility = {
 		loadScriptInOrder();
 	},
 	
-	buildApplicationConfigure : function(parms){
+	buildApplicationProperty : function(parms){
 
 		var loc_dataInput = parms;
 		
@@ -89,7 +94,7 @@ nosliwApplication.utility = {
 			//environment information (address, port, context, library)
 			getEnvironment : function(){
 				var envName =  loc_getParm("env", "product");
-				return loc_environments[envName];
+				return nosliwApplication.environments[envName];
 			},
 			
 			getVersion : function(){ return loc_getParm("version", "0.0.0");     },
@@ -109,11 +114,14 @@ nosliwApplication.lifecycle = {
 			baseServer : env.nosliw_address+':'+env.nosliw_port+'/'+env.nosliw_context+'/',
 			application : {
 				name : appName,
+				appFolder : "js/application/"+ appName +"/",
 				version : version,
 				configureName : configureName,
-				inputData : dataInput
+				configureFolder : this.appFolder + configureName +"/",
+				inputData : dataInput,
+				rootNode : rootNode
 			},
-			framwork7 : new Framework7({
+			framework7 : new Framework7({
 				  // App root element
 				  root: rootNode,
 				  name: appName,
@@ -142,52 +150,40 @@ nosliwApplication.lifecycle = {
 				}
 			});
 			
-			
 			var libsInfo = [];
 			//common lib
 			libsInfo.push({
-				basePath : "common/",
+				basePath : "js/common/",
 				libs : [
 					"0_package_common.js",
 					"loginservice.js",
 				]
 			});
-			
-			//application libs
-			var applicationPath = "js/application/"+ appName +"/";
+
+			//application configure
 			libsInfo.push({
-				basePath : applicationPath,
+				basePath : nosliwApplication.info.application.configureFolder,
+				libs : [
+					"configure.js",
+				]
+			});
+
+			//application libs
+			libsInfo.push({
+				basePath : nosliwApplication.info.application.appFolder,
 				libs : [
 					"0_package_application.js",
+					"applibs.js",
 					"application.js",
 				]
 			});
 
 			//load application libs
 			nosliwApplication.utility.loadMultiRelativeLibrary(libsInfo, function(){
-				var application = nosliwApplication.utility.getApplicationObject();
-				var libInfos = [];
-				
-				var internalLibs = application.getInternalLibs();
-				if(internalLibs!=undefined){
-					libInfos.push({
-						basePath : applicationPath,
-						libs : internalLibs
-					});
-				}
-				
-				var externalLibs = application.getExternalLibs();
-				if(externalLibs!=undefined){
-					libInfos.push({
-						basePath : "",
-						libs : externalLibs
-					});
-				}
-				
-				nosliwApplication.utility.loadMultiRelativeLibrary(libsInfo, function(){
+				nosliwApplication.utility.loadMultiRelativeLibrary(nosliwApplication.info.libsInfo, function(){
 					nosliwApplication.utility.hidePreloader();
-					var application = nosliwApplication.utility.getApplicationObject();
-					application.start();
+					var application = nosliwApplication.utility.createApplicationObject();
+					application.startRequest();
 				});
 			});
 		});

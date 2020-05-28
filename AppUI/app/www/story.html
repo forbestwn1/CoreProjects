@@ -15,7 +15,7 @@
 	<script src="libs/vue/vue.js"></script>
     <script src="libs/jQuery/3.4.1/jquery.js"></script>
     <script type="text/javascript" src="js/init.js"></script>
-    <script type="text/javascript" src="js/common/applicationConfigure.js"></script>
+    <script type="text/javascript" src="js/appenv.js"></script>
 </head>
 
 <body>
@@ -27,14 +27,14 @@ var searchParams = new URLSearchParams(window.location.search);
 var parms = {};
 for (let p of searchParams) parms[p[0]] = p[1];
 
-var appConfigure = buildApplicationConfigure(parms);
+var appProperty = nosliwApplication.utility.buildApplicationProperty(parms);
 nosliwApplication.lifecycle.init(
 	"story",
-	appConfigure.getApplicationConfigureName(),
+	appProperty.getApplicationConfigureName(),
 	document.getElementById("appDiv"),
-	appConfigure.getEnvironment(),
-	appConfigure.getVersion(),	
-	appConfigure.getParms()
+	appProperty.getEnvironment(),
+	appProperty.getVersion(),	
+	appProperty.getParms()
 );
 </script>
 

@@ -19,26 +19,9 @@ var packageObj = library.getChildPackage();
 
 var loc_mduleName = "minApp";
 
-var node_createApplicationConfigure = function(modulesConfigure, layout, initFun, data){
-	var loc_modulesConfigure = modulesConfigure;
-	var loc_layout = layout;
-	var loc_data = data==undefined?{}:data;
-	var loc_initFun = initFun;
-	
-	var loc_out = {
-		getModulesConfigure : function(){   return loc_modulesConfigure;   },
-		getLayout : function(){  return loc_layout;    },
-		getData : function(){   return loc_data;   },
-		getInitFun : function(){  return loc_initFun;   },
-		addData : function(name, value){   loc_data[name] = value;    },
-		addDataSet : function(dataSet){    loc_data = _.extend(loc_data, dataSet);     }
-	};
-	return loc_out;
-};
-
 var node_createApplication = function(){
 
-	var loc_miniAppService = node_createMiniAppService();
+	var loc_storyService = node_createStoryService();
 
 	var loc_loginService = node_createLoginService(loc_miniAppService);
 	
@@ -109,6 +92,15 @@ var node_createApplication = function(){
 		executeLoginRequest(userInfo, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getLoginRequest(userInfo, handlers, requestInfo));	},
 		
 		getRefreshRequest(userInfo){},
+		
+		getStartRequest(handlers, request){
+			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(nosliwApplication.info.application.rootNode, minappConfigure, handlers, request);
+
+		},
+		
+		executeStartRequest(handlers, request){
+			node_requestServiceProcessor.processRequest(this.getStartRequest(handlers, request));
+		},
 	};
 	
 	node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
@@ -136,6 +128,5 @@ nosliw.registerSetNodeDataEvent("miniapp.createLoginService", function(){node_cr
 
 //Register Node by Name
 packageObj.createChildNode("createApplication", node_createApplication); 
-packageObj.createChildNode("createApplicationConfigure", node_createApplicationConfigure); 
 
 })(packageObj);
