@@ -4,6 +4,8 @@
 var nosliwApplication = {};
 nosliwApplication.utility = {
 
+	getModuleFolder : function(module){   return  nosliwApplication.info.application.appFolder + module;   },	
+		
 	getApplicationObject : function(){   return nosliw.getNodeData("application.application");     },
 	createApplicationObject : function(){   
 		var out = nosliw.getNodeData("application.createApplication")();
@@ -119,7 +121,8 @@ nosliwApplication.lifecycle = {
 				configureName : configureName,
 				configureFolder : this.appFolder + configureName +"/",
 				inputData : dataInput,
-				rootNode : rootNode
+				rootNode : rootNode,
+				libs : []
 			},
 			framework7 : new Framework7({
 				  // App root element
@@ -156,6 +159,7 @@ nosliwApplication.lifecycle = {
 				basePath : "js/common/",
 				libs : [
 					"0_package_common.js",
+					"entity.js",
 					"loginservice.js",
 				]
 			});
@@ -168,16 +172,23 @@ nosliwApplication.lifecycle = {
 				]
 			});
 
-			//application libs
+			//application common libs
 			libsInfo.push({
 				basePath : nosliwApplication.info.application.appFolder,
 				libs : [
 					"0_package_application.js",
 					"applibs.js",
 					"application.js",
+					"service.js",
 				]
 			});
 
+			//application specific libs
+			libsInfo.push({
+				basePath : "",
+				libs : nosliwApplication.info.application.libs
+			});
+			
 			//load application libs
 			nosliwApplication.utility.loadMultiRelativeLibrary(libsInfo, function(){
 				nosliwApplication.utility.loadMultiRelativeLibrary(nosliwApplication.info.libsInfo, function(){

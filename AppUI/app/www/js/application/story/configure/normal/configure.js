@@ -1,4 +1,4 @@
-var modulesInfo = [
+nosliwApplication.info.application.modulesConfigure = [
 	{
 		name : "user-apps",
 		initParm : function(env){ 
@@ -37,4 +37,4 @@ var data = {
 };
 
 var createApplicationConfigure = nosliw.getNodeData("miniapp.createApplicationConfigure");
-nosliw.createNode("miniapp.configure", createApplicationConfigure(modulesInfo, "js/application/configure/normal/main.html", undefined, data));
+nosliwApplication.info.application.appConfigure = createApplicationConfigure(nosliwApplication.info.application.modulesConfigure, nosliwApplication.info.application.configureFolder+"main.html", undefined, data);

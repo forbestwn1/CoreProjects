@@ -11,9 +11,9 @@ var packageObj = library.getChildPackage();
 	var node_createServiceRequestInfoSet;
 	var node_makeObjectWithName;
 	var node_makeObjectWithLifecycle;
+	var node_applicationUtility;
 	var node_createMiniAppService;
 	var node_createModuleUserApps;
-	var node_miniAppUtility;
 	var node_createLoginService;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -35,20 +35,16 @@ var node_createApplication = function(){
 	};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(rootNode, appConfigure, handlers, request){
-		loc_appConfigure = appConfigure;
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, request){
+		loc_appConfigure = nosliwApplication.info.application.appConfigure;
 		
 		//set web page title
 		var configureData = loc_appConfigure.getData();
-		var title = configureData.title;
-		if(title==undefined)  title = configureData.groupId;
-		if(title==undefined)  title = configureData.app;
-		document.title = title;
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(node_miniAppUtility.getLoadFilesRequest([loc_appConfigure.getLayout()], {
 			success : function(request, mainSource){
-				$(mainSource[loc_appConfigure.getLayout()]).appendTo(rootNode);
+				$(mainSource[loc_appConfigure.getLayout()]).appendTo(nosliwApplication.info.application.rootNode);
 				_.each(loc_appConfigure.getModulesConfigure(), function(moduleInfo, index){
 					var module = nosliw.getNodeData(moduleInfo.factory)(moduleInfo.initParm(loc_env));
 					loc_modules[moduleInfo.name] = module;
@@ -70,6 +66,9 @@ var node_createApplication = function(){
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			loc_appConfigure.getInitFun()(loc_env);
 		}));
+		
+		out.addRequest(node_createStoryService(getNewDesignRequest(undefined, page_minimum, undefined)));
+		
 		return out;
 	};
 	
@@ -94,8 +93,10 @@ var node_createApplication = function(){
 		getRefreshRequest(userInfo){},
 		
 		getStartRequest(handlers, request){
-			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest(nosliwApplication.info.application.rootNode, minappConfigure, handlers, request);
-
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(this.interfaceObjectLifecycle.initRequest());
+			out.addRequest(loc_refreshRequest(loc_appConfigure.getData()));
+			return out;
 		},
 		
 		executeStartRequest(handlers, request){
@@ -121,9 +122,9 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("application.utility", function(){node_applicationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.createMiniAppService", function(){node_createMiniAppService = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createModuleUserApps", function(){node_createModuleUserApps = this.getData();});
-nosliw.registerSetNodeDataEvent("miniapp.utility", function(){node_miniAppUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.createLoginService", function(){node_createLoginService = this.getData();});
 
 //Register Node by Name
