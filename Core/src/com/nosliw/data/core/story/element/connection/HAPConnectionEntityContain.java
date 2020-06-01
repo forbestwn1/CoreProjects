@@ -2,13 +2,18 @@ package com.nosliw.data.core.story.element.connection;
 
 import org.json.JSONObject;
 
-public class ConnectionEntityContain {
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+
+@HAPEntityWithAttribute
+public class HAPConnectionEntityContain {
 	
+	@HAPAttribute
 	public static final String CHILD = "child";
 
 	private JSONObject m_entity;
 	
-	public ConnectionEntityContain(Object entity) {
+	public HAPConnectionEntityContain(Object entity) {
 		this.m_entity = (JSONObject)entity;
 	}
 

@@ -4,13 +4,19 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 //connect end connect to a profile on a node 
+@HAPEntityWithAttribute
 public class HAPConnectionEnd extends HAPSerializableImp{
 
+	@HAPAttribute
 	public static final String CONNECTIONID = "connectionId";
+	@HAPAttribute
 	public static final String NODEID = "nodeId";
+	@HAPAttribute
 	public static final String PROFILE = "profile";
 	
 	private String m_connectionId;

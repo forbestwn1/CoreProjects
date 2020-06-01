@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.data.core.story.HAPConnectionGroup;
+import com.nosliw.data.core.story.HAPStatus;
 
 public class HAPConnectionGroupSwitch extends HAPEntityInfoImp implements HAPConnectionGroup{
 
@@ -17,5 +18,29 @@ public class HAPConnectionGroupSwitch extends HAPEntityInfoImp implements HAPCon
 	List<String> m_options;
 	
 	int m_current;
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getEntity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPStatus getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<String> getConnections() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

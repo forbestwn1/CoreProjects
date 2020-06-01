@@ -4,12 +4,12 @@
 var nosliwApplication = {};
 nosliwApplication.utility = {
 
-	getModuleFolder : function(module){   return  nosliwApplication.info.application.appFolder + module;   },	
+	getModuleFolder : function(module){   return  nosliwApplication.info.application.appFolder + "module/" + module + "/";   },	
 		
-	getApplicationObject : function(){   return nosliw.getNodeData("application.application");     },
-	createApplicationObject : function(){   
-		var out = nosliw.getNodeData("application.createApplication")();
-		nosliw.setNodeData("application.application", out);
+	getApplicationObject : function(appName){   return nosliw.getNodeData("application.application");     },
+	createApplicationObject : function(appName){   
+		var out = nosliw.getNodeData("application.instance."+appName+".createApplication")();
+		nosliw.createNode("application.application", out);
 		return out;
 	},
 	
@@ -104,22 +104,23 @@ nosliwApplication.utility = {
 			getParms : function(){   return loc_dataInput;  },
 		};
 		return loc_out;
-	}
-
+	},
+	
 };
 
 
 nosliwApplication.lifecycle = {
 	init : function(appName, configureName, rootNode, env, version, dataInput){
 		
+		var appFolder = "js/application/"+ appName +"/";
 		nosliwApplication.info = {
 			baseServer : env.nosliw_address+':'+env.nosliw_port+'/'+env.nosliw_context+'/',
 			application : {
 				name : appName,
-				appFolder : "js/application/"+ appName +"/",
+				appFolder : appFolder,
 				version : version,
 				configureName : configureName,
-				configureFolder : this.appFolder + configureName +"/",
+				configureFolder : appFolder + "configure/"+ configureName +"/",
 				inputData : dataInput,
 				rootNode : rootNode,
 				libs : []
@@ -159,6 +160,7 @@ nosliwApplication.lifecycle = {
 				basePath : "js/common/",
 				libs : [
 					"0_package_common.js",
+					"utility.js",
 					"entity.js",
 					"loginservice.js",
 				]
@@ -183,18 +185,12 @@ nosliwApplication.lifecycle = {
 				]
 			});
 
-			//application specific libs
-			libsInfo.push({
-				basePath : "",
-				libs : nosliwApplication.info.application.libs
-			});
-			
 			//load application libs
 			nosliwApplication.utility.loadMultiRelativeLibrary(libsInfo, function(){
-				nosliwApplication.utility.loadMultiRelativeLibrary(nosliwApplication.info.libsInfo, function(){
+				nosliwApplication.utility.loadMultiRelativeLibrary(nosliwApplication.info.application.libs, function(){
 					nosliwApplication.utility.hidePreloader();
-					var application = nosliwApplication.utility.createApplicationObject();
-					application.startRequest();
+					var application = nosliwApplication.utility.createApplicationObject(nosliwApplication.info.application.name);
+					application.executeStartRequest();
 				});
 			});
 		});

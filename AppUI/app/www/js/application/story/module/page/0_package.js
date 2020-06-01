@@ -1,1 +1,1 @@
-var library = nosliw.getPackage("application.module");
+var library = nosliw.getPackage("application.story.module.page");

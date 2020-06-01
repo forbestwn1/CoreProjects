@@ -1,5 +1,6 @@
 package com.nosliw.data.core.story.resource;
 
+import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
@@ -44,6 +45,12 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	public HAPChildrenComponentIdContainer getChildrenComponentId() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		this.m_story.buildJsonMap(jsonMap, typeJsonMap);
 	}
 
 }

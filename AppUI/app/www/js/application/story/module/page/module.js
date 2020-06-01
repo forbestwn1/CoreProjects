@@ -2,7 +2,7 @@
  * 
  */
 //get/create package
-var packageObj = library.getChildPackage("page");    
+var packageObj = library.getChildPackage();    
 
 (function(packageObj){
 	//get used node
@@ -15,10 +15,8 @@ var packageObj = library.getChildPackage("page");
 	var node_makeObjectWithName;
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
-	var node_createComponentUserApps;
-	var node_createComponentUserInfo;
 	var node_createEventObject;
-	var node_createMiniAppInfo;
+	var node_createUINode;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "userApps";
@@ -43,6 +41,7 @@ var node_createModulePage = function(parm){
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
+		Vue.component('story-uinode', node_createUINode());
 		loc_vue = new Vue({
 			el: loc_root,
 			data: loc_componentData,
@@ -58,38 +57,25 @@ var node_createModulePage = function(parm){
 					loc_triggerEvent("select", node_createMiniAppInfo(miniApp));
 				},
 			},
-			template : 
+			template :
 				`
-			    <li class="accordion-item-opened"><a href="#" class="item-content item-link">
-					<div class="item-inner">
-						<div class="item-title">{{data.group.name}}</div>
-					</div></a>
-					<div class="accordion-item-content">
-					    <div class="block">
-							<mini-app 
-								v-for="miniapp in data.miniApp"
-								v-bind:key="miniapp.id"
-								v-bind:data="miniapp"
-								v-on:selectMiniApp="onSelectMiniApp"
-								v-on:deleteMiniApp="onDeleteMiniApp"
-							></mini-app>
-					    </div>
-					</div>
-			    </li>
+				    <div class="block">
+						<story-uinode 
+							v-bind:data="page"
+						></story-uinode>
+				    </div>
 				`
 		});
+		
 	};
 
 	var loc_out = {
 		
-		refreshRequest : function(userInfo, configureData, handlers, requestInfo){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshUserApps", {}), handlers, requestInfo);
-			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUserApps", {}), 
+		refreshRequest : function(pageTree, handlers, requestInfo){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshPageModule", {}), handlers, requestInfo);
+			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshPageModule", {}), 
 				function(requestInfo){
-					var group = _.find(userInfo.groupMiniApp, function(group, i){
-						return group.group.id==configureData.groupId;
-					});
-					loc_componentData.group = group;
+					loc_componentData.page = pageTree;
 				})); 
 			return out;
 		},
@@ -125,10 +111,8 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon"
 nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createComponentUserApps", function(){node_createComponentUserApps = this.getData();});
-nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createComponentUserInfo", function(){node_createComponentUserInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
-nosliw.registerSetNodeDataEvent("miniapp.module.miniapp.createMiniAppInfo", function(){node_createMiniAppInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.page.createUINode", function(){node_createUINode = this.getData();});
 
 
 //Register Node by Name

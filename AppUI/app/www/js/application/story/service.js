@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage();    
+var packageObj = library.getChildPackage("service");    
 
 (function(packageObj){
 	//get used node
@@ -17,7 +17,7 @@ var packageObj = library.getChildPackage();
  */
 var node_createStoryService = function(){
 
-	var loc_configureName = "story";
+	var loc_configureName = "buildstory";
 	
 	nosliw.registerSetNodeDataEvent("runtime", function(){
 		//register remote task configure

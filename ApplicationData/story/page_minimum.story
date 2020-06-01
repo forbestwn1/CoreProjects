@@ -183,12 +183,29 @@
 			}
 		}, {
 			"type": "UI_element",
+			"id": "21",
+			"status": {
+			},
+			"entity": {
+				"type" : "layout",
+			}
+		}, {
+			"type": "UI_element",
 			"id": "22",
 			"status": {
 			},
 			"entity": {
 				"type" : "tag",
 				"tag": "textinput"
+			}
+		}, {
+			"type": "UI_element",
+			"id": "23",
+			"status": {
+			},
+			"entity": {
+				"type" : "html",
+				"html": "textinput"
 			}
 		}
 	],
@@ -322,10 +339,10 @@
 				"profile": "container"
 			},
 			"end2": {
-				"nodeId": "22",
+				"nodeId": "21",
 			},
 			"entity": {
-				"child": 1
+				"child": 0
 			}
 		}, {
 			"id": "202",
@@ -339,6 +356,32 @@
 				"profile": "dataIO"
 			},
 			"entity": {
+			}
+		}, {
+			"id": "203",
+			"type": "contain",
+			"end1": {
+				"nodeId": "21",
+				"profile": "container"
+			},
+			"end2": {
+				"nodeId": "22",
+			},
+			"entity": {
+				"child": 0
+			}
+		}, {
+			"id": "204",
+			"type": "contain",
+			"end1": {
+				"nodeId": "21",
+				"profile": "container"
+			},
+			"end2": {
+				"nodeId": "23",
+			},
+			"entity": {
+				"child": 1
 			}
 		}
 	]

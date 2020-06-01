@@ -4,6 +4,7 @@ var packageObj = library.getChildPackage();
 (function(packageObj){
 	//get used node
 	var node_CONSTANT;
+	var node_COMMONATRIBUTECONSTANT;
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
 	var node_createServiceRequestInfoSequence;
@@ -12,9 +13,8 @@ var packageObj = library.getChildPackage();
 	var node_makeObjectWithName;
 	var node_makeObjectWithLifecycle;
 	var node_applicationUtility;
-	var node_createMiniAppService;
-	var node_createModuleUserApps;
-	var node_createLoginService;
+	var node_createStoryService;
+	var node_storyUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "minApp";
@@ -23,11 +23,13 @@ var node_createApplication = function(){
 
 	var loc_storyService = node_createStoryService();
 
-	var loc_loginService = node_createLoginService(loc_miniAppService);
+//	var loc_loginService = node_createLoginService(loc_miniAppService);
 	
 	var loc_appConfigure;
 	
 	var loc_modules = {};
+	
+	var loc_design = {};
 	
 	var loc_env = {
 		getModule : function(name){  return loc_modules[name];   },
@@ -42,7 +44,7 @@ var node_createApplication = function(){
 		var configureData = loc_appConfigure.getData();
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_miniAppUtility.getLoadFilesRequest([loc_appConfigure.getLayout()], {
+		out.addRequest(node_applicationUtility.getLoadFilesRequest([loc_appConfigure.getLayout()], {
 			success : function(request, mainSource){
 				$(mainSource[loc_appConfigure.getLayout()]).appendTo(nosliwApplication.info.application.rootNode);
 				_.each(loc_appConfigure.getModulesConfigure(), function(moduleInfo, index){
@@ -57,17 +59,42 @@ var node_createApplication = function(){
 		return out;
 	};
 
-	var loc_refreshRequest = function(userInfo, configureData, handlers, request){
+	var loc_initRequest = function(handlers, request){
+		loc_appConfigure = nosliwApplication.info.application.appConfigure;
+		
+		//set web page title
+		var configureData = loc_appConfigure.getData();
+
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		_.each(loc_modules, function(module, name){
-			if(module.refreshRequest!=undefined)  out.addRequest(module.refreshRequest(userInfo, configureData));
-		});
-		
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			loc_appConfigure.getInitFun()(loc_env);
+		out.addRequest(node_applicationUtility.getLoadFilesRequest([loc_appConfigure.getLayout()], {
+			success : function(request, mainSource){
+				$(mainSource[loc_appConfigure.getLayout()]).appendTo(nosliwApplication.info.application.rootNode);
+				_.each(loc_appConfigure.getModulesConfigure(), function(moduleInfo, index){
+					var module = nosliw.getNodeData(moduleInfo.factory)(moduleInfo.initParm(loc_env));
+					loc_modules[moduleInfo.name] = module;
+					module.interfaceObjectLifecycle.init();
+					moduleInfo.init(module, loc_env, request);
+				});
+			}
+		}));	
+
+		return out;
+	};
+	
+	var loc_refreshRequest = function(design, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_storyService.getNewDesignRequest(undefined, "page_minimum", undefined, {
+			success : function(request, design){
+				loc_design = design;
+				var pageTree = node_storyUtility.buildPageTree(loc_design[node_COMMONATRIBUTECONSTANT.NEWDESIGN_STORY]);
+				return loc_modules["page"].refreshRequest(pageTree);
+			}
 		}));
-		
-		out.addRequest(node_createStoryService(getNewDesignRequest(undefined, page_minimum, undefined)));
+
+
+//		_.each(loc_modules, function(module, name){
+//			if(module.refreshRequest!=undefined)  out.addRequest(module.refreshRequest(loc_design));
+//		});
 		
 		return out;
 	};
@@ -94,7 +121,7 @@ var node_createApplication = function(){
 		
 		getStartRequest(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(this.interfaceObjectLifecycle.initRequest());
+			out.addRequest(loc_initRequest());
 			out.addRequest(loc_refreshRequest(loc_appConfigure.getData()));
 			return out;
 		},
@@ -115,6 +142,7 @@ var node_createApplication = function(){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
@@ -122,10 +150,9 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
-nosliw.registerSetNodeDataEvent("application.utility", function(){node_applicationUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("miniapp.createMiniAppService", function(){node_createMiniAppService = this.getData();});
-nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createModuleUserApps", function(){node_createModuleUserApps = this.getData();});
-nosliw.registerSetNodeDataEvent("miniapp.createLoginService", function(){node_createLoginService = this.getData();});
+nosliw.registerSetNodeDataEvent("application.common.utility", function(){node_applicationUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryService", function(){node_createStoryService = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.utility", function(){node_storyUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createApplication", node_createApplication); 

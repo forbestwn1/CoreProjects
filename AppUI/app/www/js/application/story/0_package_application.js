@@ -1,1 +1,1 @@
-var library = nosliw.getPackage("application");
+var library = nosliw.getPackage("application.instance.story");

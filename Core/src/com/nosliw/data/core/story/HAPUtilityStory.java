@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
-import com.nosliw.data.core.story.element.connection.ConnectionEntityContain;
+import com.nosliw.data.core.story.element.connection.HAPConnectionEntityContain;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityStory {
@@ -45,7 +45,7 @@ public class HAPUtilityStory {
 		Map<Object, HAPStoryNode> out = new LinkedHashMap<Object, HAPStoryNode>();
 		Set<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstant.CONNECTION_TYPE_CONTAIN, HAPConstant.STORYNODE_PROFILE_CONTAINER, null, null, story);
 		for(HAPConnectionEnd connectionEnd : childConnectionEnds) {
-			ConnectionEntityContain containerConnectionEntity = new ConnectionEntityContain(story.getConnection(connectionEnd.getConnectionId()).getEntity());
+			HAPConnectionEntityContain containerConnectionEntity = new HAPConnectionEntityContain(story.getConnection(connectionEnd.getConnectionId()).getEntity());
 			out.put(containerConnectionEntity.getChildId(), story.getNode(connectionEnd.getNodeId()));
 		}
 		return out;
@@ -55,7 +55,7 @@ public class HAPUtilityStory {
 	public static HAPStoryNode getChildNode(HAPStoryNode parent, String childId, HAPStory story) {
 		Set<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstant.CONNECTION_TYPE_CONTAIN, HAPConstant.STORYNODE_PROFILE_CONTAINER, null, null, story);
 		for(HAPConnectionEnd connectionEnd : childConnectionEnds) {
-			ConnectionEntityContain containerConnectionEntity = new ConnectionEntityContain(story.getConnection(connectionEnd.getConnectionId()).getEntity());
+			HAPConnectionEntityContain containerConnectionEntity = new HAPConnectionEntityContain(story.getConnection(connectionEnd.getConnectionId()).getEntity());
 			if(HAPBasicUtility.isEquals(childId, containerConnectionEntity.getChildId())) {
 				return story.getNode(connectionEnd.getNodeId());
 			}
