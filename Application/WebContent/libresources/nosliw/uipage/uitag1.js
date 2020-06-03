@@ -101,27 +101,18 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 	 * 		uiTagResource:	ui tag resource 
 	 * 		parentUIResourceView: 	parent ui resource view
 	 */
-var node_createUITag = function(tagDefinition, id, attributeValues, parentContext, eventNameMapping, uiTagResource){
-	
-	var loc_tagDefinition = tagDefinition;
-	var loc_tagName = tagDefinition.name;
-	
-	//id of this tag object
-	var loc_id = id;
-	//all tag attributes
-	var loc_attributes = {};
-	
-	var loc_eventNameMapping = eventNameMapping;
-	
-	
-	
+var node_createUITag = function(id, uiTagResource, parentUIResourceView){
 	//object to implement tag logic, it is from tag library
 	var loc_uiTagObj;
 	
+	//id of this tag object
+	var loc_id = id;
 	//ui resource definition
 	var loc_uiTagResource = uiTagResource;
 	//parent resource view
 	var loc_parentResourceView = parentUIResourceView;
+	//all tag attributes
+	var loc_attributes = {};
 
 	var loc_tagName = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME];
 	var loc_varNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL];
@@ -130,8 +121,16 @@ var node_createUITag = function(tagDefinition, id, attributeValues, parentContex
 	
 	var loc_context;
 	
+	//boundary element for this tag
+	var loc_startEle = undefined;
+	var loc_endEle = undefined;
+	
 	var loc_tagEventObject = node_createEventObject();
 	var loc_eventObject = node_createEventObject();
+	
+	//get wraper element
+	loc_startEle = loc_parentResourceView.get$EleByUIId(loc_id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX);
+	loc_endEle = loc_parentResourceView.get$EleByUIId(loc_id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX);
 	
 	//init all attributes value
 	_.each(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ATTRIBUTES], function(attrValue, attribute, list){
@@ -159,10 +158,7 @@ var node_createUITag = function(tagDefinition, id, attributeValues, parentContex
 	//exContext extra context element used when create context for tag resource
 	var loc_createContextForTagResource = function(exContext){
 		if(exContext==undefined)   exContext = loc_context;
-		var context = node_contextUtility.buildContext(
-				"TagContent_"+loc_tagName, 
-				loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], 
-				exContext);
+		var context = node_contextUtility.buildContext("TagContent_"+loc_tagName, loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], exContext);
 		return context;
 	};
 	
@@ -350,7 +346,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createUITagRequest", node_createUITagRequest); 
+packageObj.createChildNode("createUITagRequest1", node_createUITagRequest); 
 
 })(packageObj);
 

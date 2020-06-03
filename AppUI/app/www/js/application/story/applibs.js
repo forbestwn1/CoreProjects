@@ -23,5 +23,16 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 			]
 		});
 	}
+	else if(moduleName=='overview'){
+		libsInfo.push({
+			basePath : moduleFoler,
+			libs : [
+				"0_package.js",
+				"module.js",
+				"node.js",
+				"connection.js",
+			]
+		});
+	}
 }
 

@@ -86,8 +86,20 @@ var node_createApplication = function(){
 		out.addRequest(loc_storyService.getNewDesignRequest(undefined, "page_minimum", undefined, {
 			success : function(request, design){
 				loc_design = design;
-				var pageTree = node_storyUtility.buildPageTree(loc_design[node_COMMONATRIBUTECONSTANT.NEWDESIGN_STORY]);
-				return loc_modules["page"].refreshRequest(pageTree);
+				var story = loc_design[node_COMMONATRIBUTECONSTANT.NEWDESIGN_STORY];
+				var pageModule = loc_modules["page"];
+				var uiModule = loc_modules["ui"];
+				var overviewModule = loc_modules["overview"];
+				if(pageModule!=undefined){
+					var pageTree = node_storyUtility.buildPageTree(story);
+					return pageModule.refreshRequest(pageTree);
+				}
+				if(uiModule!=undefined){
+					return uiModule.refreshRequest("22", story);
+				}
+				if(overviewModule!=undefined){
+					return overviewModule.refreshRequest(story);
+				}
 			}
 		}));
 
