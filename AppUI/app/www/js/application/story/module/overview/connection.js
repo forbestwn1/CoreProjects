@@ -16,33 +16,41 @@ var packageObj = library.getChildPackage();
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
 	var node_createEventObject;
+	var node_storyUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createConnection = function(storyConnection){
+var node_createConnectionLink = function(storyConnectionId, module){
 	
-	var loc_storyNode = storyNode;
+	var loc_storyConnectionId = storyConnectionId;
+	var loc_module = module;
 
-    var loc_element = new joint.shapes.standard.Rectangle();
-    rect.position(100, 30);
-    rect.resize(100, 40);
-    rect.attr({
-        body: {
-            fill: 'blue'
-        },
-        label: {
-            text: 'Hello',
-            fill: 'white'
-        }
-    });
+	var loc_link;
+	
+	var loc_init = function(){
+		loc_link = new joint.shapes.standard.Link();
+		var story = loc_module.getStory();
+		var storyConnection = node_storyUtility.getConnectionById(story, loc_storyConnectionId);
+		var storyEnd1 = storyConnection[node_COMMONATRIBUTECONSTANT.CONNECTION_END1];
+		var storyEnd2 = storyConnection[node_COMMONATRIBUTECONSTANT.CONNECTION_END2];
+		var storyNode1 = storyEnd1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID];
+		var storyNode2 = storyEnd2[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID];
+		var nodeElement1 = loc_module.getNodeElementById(storyNode1);
+		var nodeElement2 = loc_module.getNodeElementById(storyNode2);
+		loc_link.source(nodeElement1.getElement());
+		loc_link.target(nodeElement2.getElement());
+		
+	};
 	
 	var loc_out = {
 		
-		getElement : function(){
-			return loc_element;
+		getLink : function(){
+			return loc_link;
 		}
 	
 			
 	};
+	
+	loc_init();
 	
 	return loc_out;
 };	
@@ -61,9 +69,10 @@ nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.utility", function(){node_storyUtility = this.getData();});
 
 
 //Register Node by Name
-packageObj.createChildNode("createConnection", node_createConnection); 
+packageObj.createChildNode("createConnectionLink", node_createConnectionLink); 
 
 })(packageObj);

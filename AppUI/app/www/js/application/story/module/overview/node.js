@@ -18,10 +18,11 @@ var packageObj = library.getChildPackage();
 	var node_createEventObject;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createNodeElement = function(storyNode){
+var node_createNodeElement = function(storyNodeId, module){
 	
-	var loc_storyNode = storyNode;
-
+	var loc_storyNodeId = storyNodeId;
+	var loc_module = module;
+	
     var loc_element = new joint.shapes.standard.Rectangle();
     loc_element.position(100, 30);
     loc_element.resize(100, 40);
@@ -30,7 +31,7 @@ var node_createNodeElement = function(storyNode){
             fill: 'blue'
         },
         label: {
-            text: loc_storyNode[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID],
+            text: loc_storyNodeId,
             fill: 'white'
         }
     });
@@ -38,7 +39,7 @@ var node_createNodeElement = function(storyNode){
 	var loc_out = {
 		
 		getId : function(){
-			return loc_storyNode[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+			return loc_storyNodeId;
 		},
 		
 		getElement : function(){
