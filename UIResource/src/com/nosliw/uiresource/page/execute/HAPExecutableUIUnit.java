@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 
 @HAPEntityWithAttribute
@@ -71,4 +72,10 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildMapJson(this.m_uiUnitDefinition.getAttributes()));
 		jsonMap.put(BODYUNIT, this.m_body.toStringValue(HAPSerializationFormat.JSON));
 	}
+	
+	@Override
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
+		jsonMap.put(BODYUNIT, this.m_body.toResourceData(runtimeInfo).toString());
+	}
+
 }
