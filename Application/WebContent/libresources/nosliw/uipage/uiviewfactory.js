@@ -36,10 +36,16 @@ var loc_createUIViewFactory = function(){
 	
 	var loc_out = {
 		getCreateUIViewRequest : function(uiResource, id, parent, context, handlers, requestInfo){
+			var uiBody = uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT];
+			var attributes = uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_ATTRIBUTES];
+			return this.getCreateUIBodyViewRequest(uiBody, attributes, id, parent, context, handlers, requestInfo);
+		},
+		
+		getCreateUIBodyViewRequest : function(uiBody, attributes, id, parent, context, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIView", {}), handlers, requestInfo);
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-				var uiView = loc_createUIView(uiResource, id, parent, context, requestInfo);
+				var uiView = loc_createUIView(uiBody, attributes, id, parent, context, requestInfo);
 				
 				var createUITagRequest = node_createServiceRequestInfoSet(undefined, {
 					success: function(requestInfo, tagResults){
@@ -52,7 +58,7 @@ var loc_createUIViewFactory = function(){
 				}});
 				
 				//init customer tags
-				_.each(uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT][node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_UITAGS], function(uiTagResource, tagUiId, list){
+				_.each(uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_UITAGS], function(uiTagResource, tagUiId, list){
 					var uiTagId = uiView.prv_getUpdateUIId(tagUiId);
 					createUITagRequest.addRequest(uiTagId, node_createUITagRequest(uiTagId, uiTagResource, uiView, {
 						success : function(requestInfo, uiTag){
@@ -64,6 +70,7 @@ var loc_createUIViewFactory = function(){
 			}));
 			return out;
 		}
+		
 	};
 	
 	return loc_out;
@@ -72,11 +79,12 @@ var loc_createUIViewFactory = function(){
 	
 /*
  * method to create ui resource view according to 
- * 		uiresource object
+ * 		uiBody body for view
+ * 		attributes : 
  * 	 	name space id
  * 		parent uiresource
  */
-var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
+var loc_createUIView = function(uiBody, attributes, id, parent, context, requestInfo){
 
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
@@ -87,8 +95,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	var loc_valueChangeEventListener = node_createEventObject();
 	
 	//temporately store uiResource
-	var loc_uiResource = uiResource;
-	var loc_uiBody = loc_uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT];
+	var loc_uiBody = uiBody;
 
 	//parent ui resource view
 	var loc_parentResourveView = parent;
@@ -237,9 +244,9 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(uiResource, id, parent, context, requestInfo){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(uiBody, attributes, id, parent, context, requestInfo){
 
-		loc_attributes = uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT][node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_ATTRIBUTES];
+		loc_attributes = attributes;
 		
 		//build context element first
 		if(loc_context==undefined){
@@ -544,7 +551,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIVIEW);
 
-	node_getLifecycleInterface(loc_out).init(uiResource, id, parent, context, requestInfo);
+	node_getLifecycleInterface(loc_out).init(uiBody, attributes, id, parent, context, requestInfo);
 	
 	return loc_out;
 };

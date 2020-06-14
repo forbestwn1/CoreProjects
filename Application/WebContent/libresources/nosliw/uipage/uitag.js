@@ -35,14 +35,9 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, handlers, requestInfo){
-	var uiTag = node_createUITag(id, uiTagResource, parentUIResourceView);
-	
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUITag", {}), handlers, requestInfo);
-
-	var createUITagRequest = node_createServiceRequestInfoSequence(undefined);
 	var tagId = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGNAME];
-//	tagId = node_resourceUtility.buildReourceCoreIdLiterate(tagId);
-	createUITagRequest.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
+	out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
 		success : function(requestInfo, resources){
 			var uiTagResourceObj = resources[tagId];
 
@@ -50,47 +45,23 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 					uiTagResourceObj, 
 					id, 
 					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_ATTRIBUTES], 
-					parentContext, 
+					parentUIResourceView!=undefined?parentUIResourceView.getContext():undefined,
 					{
 						mode : node_CONSTANT.TAG_RUNTIME_MODE_PAGE,
 						contextDef : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT],
-						bodyContextDef : loc_uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT][node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT],
-						eventNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_EVENTMAPPING]
+						bodyContextDef : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT][node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT],
+						eventNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_EVENTMAPPING],
+						varNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL],
+						startElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX),
+						endElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX)
 					}, 
 					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT]);
-			
-			var uiTagInitRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("UITagInit"));
-			
-			//overriden method before view is attatched to dom
-			if(uiTagObj.preInit!=undefined){
-				var initObj = uiTagObj.preInit(requestInfo);
-				if(initObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(initObj)){
-					uiTagInitRequest.addRequest(initObj);
+			return uiTag.initRequest({
+				success : function(requestInfo){
+					return uiTag;
 				}
-			}
-			
-			//overridden method to create init view
-			if(uiTagObj.initViews!=undefined){
-				var views = uiTagObj.initViews(requestInfo);
-				//attach view to resourve view
-				if(views!=undefined)  uiTag.prv_getStartElement().after(views);	
-			}
-
-			//overridden method to do sth after view is attatched to dom
-			if(uiTagObj.postInit!=undefined){
-				var postInitObj = uiTagObj.postInit(requestInfo);
-				if(postInitObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(postInitObj)){
-					uiTagInitRequest.addRequest(postInitObj);
-				}
-			}
-			
-			return uiTagInitRequest;
+			});
 		}
-	}));
-
-	out.addRequest(createUITagRequest);
-	out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-		return uiTag;
 	}));
 	return out;
 };
@@ -101,7 +72,7 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
  * 
  * base customer tag object, child tag just provide extendObj which implements its own method 
  * it is also constructor object for customer tag object
- * 		tagDefinition: definition of this tag  
+ * 		uiTagResourceObj: definition of this tag  
  * 		id: 	id for this tag
  * 		attributeValues: values for tag attributes
  * 		parentContext : variable context from parent
@@ -111,7 +82,7 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentContext, tagConfigure, tagBody){
 	
 	var loc_uiTagResourceObj = uiTagResourceObj;   //tag definition from resource
-	var loc_tagName = tagDefinition.name;    //tag name
+	var loc_tagName = uiTagResourceObj.name;    //tag name
 	var loc_tagConfigure = tagConfigure;     //
 	var loc_mode = loc_tagConfigure.mode;
 	var loc_tagBody = tagBody;               //
@@ -143,12 +114,11 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		
 	}
 	
-	
 	//related name: name, name with categary
 	var loc_getRelatedName = function(name){
 		var out = [];
 		out.push(name);
-		var mappedName = loc_varNameMapping[name];
+		var mappedName = loc_tagConfigure.varNameMapping[name];
 		if(mappedName!=undefined)  out.push(mappedName);
 		return out;
 	};
@@ -171,28 +141,8 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		loc_eventObject.triggerEvent(en, eventData, requestInfo);
 	};
 	
-
-	
-	
-	
-	
-	
-	var loc_eventNameMapping = eventNameMapping;
-	//object to implement tag logic, it is from tag library
-	var loc_uiTagObj;
-	
-	//ui resource definition
-	var loc_uiTagResource = uiTagResource;
-	//parent resource view
-	var loc_parentResourceView = parentUIResourceView;
-
-	var loc_tagName = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGNAME];
-	var loc_varNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL];
-	
-	var loc_eventNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_EVENTMAPPING];
-	
-	
-	
+	var loc_getStartElement = function(){   return loc_tagConfigure.startElement;     };
+	var loc_getEndElement = function(){   return loc_tagConfigure.endElement;     };
 	
 	//runtime env for uiTagObj
 	//include : basic info, utility method
@@ -203,8 +153,8 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		getAttributes : function(){   return loc_attributes;   },
 		getTagBody : function(){  return  loc_tagBody; },
 
-		getStartElement : function(){  return loc_startEle;  },
-		getEneElement : function(){  return loc_endEle;  },
+		getStartElement : function(){  return loc_getStartElement();  },
+		getEndElement : function(){  return loc_getEndElement();  },
 		
 		//utility methods
 		createVariable : function(fullPath){  return loc_context.createVariable(node_createContextVariableInfo(fullPath));  },
@@ -214,7 +164,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		getCreateUIViewWithIdRequest : function(id, context, handlers, requestInfo){
 			if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
-				out.addRequest(node_createUIViewFactory().getCreateUIViewRequest(loc_tagBody, id, loc_tagConfigure.parentResourceView, context, {
+				out.addRequest(node_createUIViewFactory().getCreateUIBodyViewRequest(loc_tagBody, {}, id, loc_tagConfigure.parentResourceView, context, {
 					success : function(request, uiView){
 						uiView.registerEventListener(loc_eventObject, loc_processChildUIViewEvent, loc_out);
 					}
@@ -292,7 +242,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 	};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(tagDefinition, id, attributeValues, parentContext, tagConfigure, tagBody){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiTagResourceObj, id, attributeValues, parentContext, tagConfigure, tagBody){
 		loc_uiTagObj = _.extend({
 			findFunctionDown : function(name){},	
 			initViews : function(requestInfo){},
@@ -327,13 +277,40 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		registerTagEventListener : function(eventName, handler, thisContext){	return loc_tagEventObject.registerListener(eventName, undefined, handler, thisContext);	},
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventObject.registerListener(undefined, listener, handler, thisContext);	},
 		
+		initRequest : function(handlers, requestInfo){
+			var uiTagInitRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("UITagInit"), handlers, requestInfo);
+			
+			//overriden method before view is attatched to dom
+			if(loc_uiTagObj.preInit!=undefined){
+				var initObj = loc_uiTagObj.preInit(requestInfo);
+				if(initObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(initObj)){
+					uiTagInitRequest.addRequest(initObj);
+				}
+			}
+			
+			//overridden method to create init view
+			if(loc_uiTagObj.initViews!=undefined){
+				var views = loc_uiTagObj.initViews(requestInfo);
+				//attach view to resourve view
+				if(views!=undefined)  loc_getEndElement().after(views);	
+			}
+
+			//overridden method to do sth after view is attatched to dom
+			if(loc_uiTagObj.postInit!=undefined){
+				var postInitObj = loc_uiTagObj.postInit(requestInfo);
+				if(postInitObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(postInitObj)){
+					uiTagInitRequest.addRequest(postInitObj);
+				}
+			}
+			return uiTagInitRequest;
+		},
 	};
 	
 	//append resource and object life cycle method to out obj
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UITAG);
 
-	node_getLifecycleInterface(loc_out).init(tagDefinition, id, attributeValues, parentContext, tagConfigure, tagBody);
+	node_getLifecycleInterface(loc_out).init(uiTagResourceObj, id, attributeValues, parentContext, tagConfigure, tagBody);
 	
 	return loc_out;
 	
@@ -376,4 +353,3 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 packageObj.createChildNode("createUITagRequest", node_createUITagRequest); 
 
 })(packageObj);
-
