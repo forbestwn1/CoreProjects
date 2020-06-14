@@ -3,21 +3,22 @@ package com.nosliw.uiresource.page.execute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
-public class HAPContextGroupInUIResource extends HAPContextGroup{
+public class HAPContextGroupInUIBody extends HAPContextGroup{
 
 	private HAPExecutableUIUnit m_uiUnit; 
 	
-	public HAPContextGroupInUIResource(HAPExecutableUIUnit uiUnit) {
+	public HAPContextGroupInUIBody(HAPExecutableUIUnit uiUnit) {
 		this.m_uiUnit = uiUnit;
 	}
 	
-	public HAPContextGroupInUIResource(HAPExecutableUIUnit uiUnit, HAPContextGroup contextGroup) {
+	public HAPContextGroupInUIBody(HAPExecutableUIUnit uiUnit, HAPContextGroup contextGroup) {
 		this.m_uiUnit = uiUnit;
+		this.setContext(contextGroup);
+	}
+	
+	public void setContext(HAPContextGroup contextGroup) {
+		this.empty();
 		contextGroup.cloneTo(this);
-	}
-	
-	public void clear() {
-		this.m_uiUnit = null;
 	}
 	
 	@Override

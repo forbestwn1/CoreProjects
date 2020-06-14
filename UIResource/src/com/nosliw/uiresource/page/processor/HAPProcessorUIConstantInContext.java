@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.expression.HAPContextProcessScript;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 
@@ -12,13 +13,14 @@ public class HAPProcessorUIConstantInContext {
 
 	//resolve constants defined in context
 	public static void resolveConstants(HAPExecutableUIUnit exeUnit, HAPRuntime runtime) {
-		HAPContextProcessScript scriptContext = exeUnit.getExpressionContext();
-		Map<String, Object> constantsValue = exeUnit.getFlatContext().getConstantValue();
+		HAPExecutableUIBody body = exeUnit.getBody();
+		HAPContextProcessScript scriptContext = body.getExpressionContext();
+		Map<String, Object> constantsValue = body.getFlatContext().getConstantValue();
 		for(String id : constantsValue.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
 			scriptContext.addConstantDefinition(constantDef);
 			if(constantDef.isData()) {
-				exeUnit.getExpressionSuiteInContext().addConstantDefinition(constantDef);
+				body.getExpressionSuiteInContext().addConstantDefinition(constantDef);
 			}
 		}
 		
@@ -29,7 +31,7 @@ public class HAPProcessorUIConstantInContext {
 //		}
 		
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
 			resolveConstants(childTag, runtime);			
 		}
 		

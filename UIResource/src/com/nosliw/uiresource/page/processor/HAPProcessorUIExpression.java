@@ -11,12 +11,14 @@ import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 
 public class HAPProcessorUIExpression {
 
 	public static void processUIExpression(HAPExecutableUIUnit exeUnit, HAPRuntime runtime, HAPManagerExpression expressionManager, HAPRequirementContextProcessor contextProcessRequirement){
+		HAPExecutableUIBody body = exeUnit.getBody();
 		HAPDefinitionUIUnit uiUnitDef = exeUnit.getUIUnitDefinition();
 		HAPDefinitionScriptGroupImp scriptGroup = new HAPDefinitionScriptGroupImp();
 		for(HAPDefinitionUIEmbededScriptExpressionInContent embededContent : uiUnitDef.getScriptExpressionsInContent()) {
@@ -31,8 +33,8 @@ public class HAPProcessorUIExpression {
 			scriptGroup.addEntityElement(embededAttribute);
 		}
 
-		HAPExecutableScriptGroup scriptGroupExe = HAPProcessorScript.processScript(exeUnit.getId(), scriptGroup, exeUnit.getExpressionContext(), expressionManager, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement, new HAPProcessTracker());
-		exeUnit.setScriptGroupExecutable(scriptGroupExe);
+		HAPExecutableScriptGroup scriptGroupExe = HAPProcessorScript.processScript(exeUnit.getId(), scriptGroup, body.getExpressionContext(), expressionManager, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement, new HAPProcessTracker());
+		body.setScriptGroupExecutable(scriptGroupExe);
 		
 //		//process all embeded script expression
 //		List<HAPEmbededScriptExpression> embededScriptExpressions = HAPUtilityExecutable.getEmbededScriptExpressionFromExeUnit(exeUnit);
@@ -55,7 +57,7 @@ public class HAPProcessorUIExpression {
 
 		
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
 			processUIExpression(childTag, runtime, expressionManager, contextProcessRequirement);			
 		}
 	}

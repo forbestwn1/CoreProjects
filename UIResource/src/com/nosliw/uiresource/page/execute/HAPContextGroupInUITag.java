@@ -21,7 +21,7 @@ public class HAPContextGroupInUITag extends HAPContextGroup{
 	
 	@Override
 	public HAPContextGroup getParent() {		
-		return this.m_uiTag.getParent().getContext();	
+		return this.m_uiTag.getParent().getBody().getContext();	
 	}
 	
 	@Override

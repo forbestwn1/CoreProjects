@@ -40,20 +40,24 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUITag", {}), handlers, requestInfo);
 
 	var createUITagRequest = node_createServiceRequestInfoSequence(undefined);
-	var tagId = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME];
+	var tagId = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGNAME];
 //	tagId = node_resourceUtility.buildReourceCoreIdLiterate(tagId);
 	createUITagRequest.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
 		success : function(requestInfo, resources){
 			var uiTagResourceObj = resources[tagId];
 
-			var uiTagObj = _.extend({
-				findFunctionDown : function(name){},	
-				initViews : function(requestInfo){},
-				postInit : function(){},
-				preInit : function(){},
-				destroy : function(){},
-			}, uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(uiTag, uiTag.prv_getEnvObj()));
-			uiTag.prv_setUITagObj(uiTagObj);
+			var uiTag = node_createUITag(
+					uiTagResourceObj, 
+					id, 
+					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_ATTRIBUTES], 
+					parentContext, 
+					{
+						mode : node_CONSTANT.TAG_RUNTIME_MODE_PAGE,
+						contextDef : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT],
+						bodyContextDef : loc_uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT][node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT],
+						eventNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_EVENTMAPPING]
+					}, 
+					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT]);
 			
 			var uiTagInitRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("UITagInit"));
 			
@@ -93,58 +97,51 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 	
 	
 	
-	/**
-	 * 
-	 * base customer tag object, child tag just provide extendObj which implements its own method 
-	 * it is also constructor object for customer tag object  
-	 * 		id: 	id for this tag
-	 * 		uiTagResource:	ui tag resource 
-	 * 		parentUIResourceView: 	parent ui resource view
-	 */
-var node_createUITag = function(tagDefinition, id, attributeValues, parentContext, eventNameMapping, uiTagResource){
+/**
+ * 
+ * base customer tag object, child tag just provide extendObj which implements its own method 
+ * it is also constructor object for customer tag object
+ * 		tagDefinition: definition of this tag  
+ * 		id: 	id for this tag
+ * 		attributeValues: values for tag attributes
+ * 		parentContext : variable context from parent
+ * 		tagConfigure : configure infor for generate tag, for instance, mode, name mapping, event mapping, variable matcher
+ * 		tagBody : body in tag, it maybe uiresoruce or story node
+ */
+var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentContext, tagConfigure, tagBody){
 	
-	var loc_tagDefinition = tagDefinition;
-	var loc_tagName = tagDefinition.name;
+	var loc_uiTagResourceObj = uiTagResourceObj;   //tag definition from resource
+	var loc_tagName = tagDefinition.name;    //tag name
+	var loc_tagConfigure = tagConfigure;     //
+	var loc_mode = loc_tagConfigure.mode;
+	var loc_tagBody = tagBody;               //
+	var loc_parentContext = parentContext;
+	
+	var loc_uiTagObj;
+	
+	var loc_tagEventObject = node_createEventObject();
+	var loc_eventObject = node_createEventObject();
 	
 	//id of this tag object
 	var loc_id = id;
 	//all tag attributes
 	var loc_attributes = {};
-	
-	var loc_eventNameMapping = eventNameMapping;
-	
-	
-	
-	//object to implement tag logic, it is from tag library
-	var loc_uiTagObj;
-	
-	//ui resource definition
-	var loc_uiTagResource = uiTagResource;
-	//parent resource view
-	var loc_parentResourceView = parentUIResourceView;
-
-	var loc_tagName = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME];
-	var loc_varNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL];
-	
-	var loc_eventNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_EVENTMAPPING];
-	
-	var loc_context;
-	
-	var loc_tagEventObject = node_createEventObject();
-	var loc_eventObject = node_createEventObject();
-	
 	//init all attributes value
-	_.each(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ATTRIBUTES], function(attrValue, attribute, list){
+	_.each(attributeValues, function(attrValue, attribute, list){
 		loc_attributes[attribute] = attrValue;
 	});
 	
 	//create context
-	var parentContext;
-	if(parentUIResourceView!=undefined)   parentContext = parentUIResourceView.getContext();
-	loc_context = node_contextUtility.buildContext(
-			"Tag_"+loc_tagName,
-			uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], 
-			parentContext);
+	var loc_context;
+	if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
+		loc_context = node_contextUtility.buildContext(
+				"Tag_"+loc_tagName,
+				loc_tagConfigure.contextDef, 
+				loc_parentContext);
+	}
+	else if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
+		
+	}
 	
 	
 	//related name: name, name with categary
@@ -155,35 +152,59 @@ var node_createUITag = function(tagDefinition, id, attributeValues, parentContex
 		if(mappedName!=undefined)  out.push(mappedName);
 		return out;
 	};
-	
+
 	//exContext extra context element used when create context for tag resource
-	var loc_createContextForTagResource = function(exContext){
-		if(exContext==undefined)   exContext = loc_context;
-		var context = node_contextUtility.buildContext(
-				"TagContent_"+loc_tagName, 
-				loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], 
-				exContext);
-		return context;
+	var loc_createContextForTagBody = function(exContext){
+		if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
+			if(exContext==undefined)   exContext = loc_context;
+			var context = node_contextUtility.buildContext(
+					"TagContent_"+loc_tagName, 
+					loc_tagConfigure.bodyContextDef, 
+					exContext);
+			return context;
+		}
 	};
 	
 	var loc_processChildUIViewEvent = function(eventName, eventData, requestInfo){
-		var en = loc_eventNameMapping[eventName];
+		var en = loc_tagConfigure.eventNameMapping[eventName];
 		if(en==undefined)  en = eventName;
 		loc_eventObject.triggerEvent(en, eventData, requestInfo);
 	};
+	
+
+	
+	
+	
+	
+	
+	var loc_eventNameMapping = eventNameMapping;
+	//object to implement tag logic, it is from tag library
+	var loc_uiTagObj;
+	
+	//ui resource definition
+	var loc_uiTagResource = uiTagResource;
+	//parent resource view
+	var loc_parentResourceView = parentUIResourceView;
+
+	var loc_tagName = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGNAME];
+	var loc_varNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL];
+	
+	var loc_eventNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_EVENTMAPPING];
+	
+	
 	
 	
 	//runtime env for uiTagObj
 	//include : basic info, utility method
 	var loc_envObj = {
 		getId : function(){  return loc_id;  },
-		getStartElement : function(){  return loc_startEle;  },
-		getEneElement : function(){  return loc_endEle;  },
 		getContext : function(){   return loc_context;  },
 		getAttributeValue : function(name){  return loc_attributes[name];  },
 		getAttributes : function(){   return loc_attributes;   },
-		getParentResourceView : function(){ return loc_parentResourceView;  },
-		getUIResource : function(){  return  loc_uiTagResource; },
+		getTagBody : function(){  return  loc_tagBody; },
+
+		getStartElement : function(){  return loc_startEle;  },
+		getEneElement : function(){  return loc_endEle;  },
 		
 		//utility methods
 		createVariable : function(fullPath){  return loc_context.createVariable(node_createContextVariableInfo(fullPath));  },
@@ -191,17 +212,19 @@ var node_createUITag = function(tagDefinition, id, attributeValues, parentContex
 		
 		//---------------------------------ui resource view
 		getCreateUIViewWithIdRequest : function(id, context, handlers, requestInfo){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
-			out.addRequest(node_createUIViewFactory().getCreateUIViewRequest(loc_uiTagResource, id, loc_parentResourceView, context, {
-				success : function(request, uiView){
-					uiView.registerEventListener(loc_eventObject, loc_processChildUIViewEvent, loc_out);
-				}
-			}, requestInfo));
-			return out;
+			if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
+				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
+				out.addRequest(node_createUIViewFactory().getCreateUIViewRequest(loc_tagBody, id, loc_tagConfigure.parentResourceView, context, {
+					success : function(request, uiView){
+						uiView.registerEventListener(loc_eventObject, loc_processChildUIViewEvent, loc_out);
+					}
+				}, requestInfo));
+				return out;
+			}
 		},
 
 		getCreateDefaultUIViewRequest : function(handlers, requestInfo){
-			return this.getCreateUIViewWithIdRequest(loc_id, loc_createContextForTagResource(), handlers, requestInfo);
+			return this.getCreateUIViewWithIdRequest(loc_id, loc_createContextForTagBody(), handlers, requestInfo);
 		},
 		
 		//---------------------------------build context
@@ -228,13 +251,7 @@ var node_createUITag = function(tagDefinition, id, attributeValues, parentContex
 				}
 			});
 			var extendedContext = node_createExtendedContext(loc_context, extendedVarEles);
-			var context = loc_createContextForTagResource(extendedContext);
-			
-			
-//			var context = loc_createContextForTagResource();
-//			_.each(extendedEleInfos, function(eleInfo, index){
-//				context.addContextElement(eleInfo);
-//			});
+			var context = loc_createContextForTagBody(extendedContext);
 			return context;
 		},
 		
@@ -275,8 +292,14 @@ var node_createUITag = function(tagDefinition, id, attributeValues, parentContex
 	};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(id, uiTagResource, parentUIResourceView){
-		
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(tagDefinition, id, attributeValues, parentContext, tagConfigure, tagBody){
+		loc_uiTagObj = _.extend({
+			findFunctionDown : function(name){},	
+			initViews : function(requestInfo){},
+			postInit : function(){},
+			preInit : function(){},
+			destroy : function(){},
+		}, loc_uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_envObj));
 	};
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY]  = function(){
@@ -310,7 +333,7 @@ var node_createUITag = function(tagDefinition, id, attributeValues, parentContex
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UITAG);
 
-	node_getLifecycleInterface(loc_out).init(id, uiTagResource, parentUIResourceView);
+	node_getLifecycleInterface(loc_out).init(tagDefinition, id, attributeValues, parentContext, tagConfigure, tagBody);
 	
 	return loc_out;
 	

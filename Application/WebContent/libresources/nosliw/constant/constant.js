@@ -265,6 +265,9 @@ var node_CONSTANT=
 	  "LOGGING_MODE_ALL" : "all",
 	  "LOGGING_MODE_NONE" : "none",
 	  "LOGGING_MODE_DEPEND" : "depend",
+	  
+	  "TAG_RUNTIME_MODE_PAGE" : "page",
+	  "TAG_RUNTIME_MODE_DEMO" : "demo",
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -40,7 +40,7 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUITag", {}), handlers, requestInfo);
 
 	var createUITagRequest = node_createServiceRequestInfoSequence(undefined);
-	var tagId = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME];
+	var tagId = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGNAME];
 //	tagId = node_resourceUtility.buildReourceCoreIdLiterate(tagId);
 	createUITagRequest.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
 		success : function(requestInfo, resources){
@@ -114,10 +114,10 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView){
 	//all tag attributes
 	var loc_attributes = {};
 
-	var loc_tagName = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME];
-	var loc_varNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL];
+	var loc_tagName = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGNAME];
+	var loc_varNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL];
 	
-	var loc_eventNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_EVENTMAPPING];
+	var loc_eventNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_EVENTMAPPING];
 	
 	var loc_context;
 	
@@ -133,7 +133,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView){
 	loc_endEle = loc_parentResourceView.get$EleByUIId(loc_id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX);
 	
 	//init all attributes value
-	_.each(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ATTRIBUTES], function(attrValue, attribute, list){
+	_.each(uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_ATTRIBUTES], function(attrValue, attribute, list){
 		loc_attributes[attribute] = attrValue;
 	});
 	
@@ -142,7 +142,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView){
 	if(parentUIResourceView!=undefined)   parentContext = parentUIResourceView.getContext();
 	loc_context = node_contextUtility.buildContext(
 			"Tag_"+loc_tagName,
-			uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], 
+			uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], 
 			parentContext);
 	
 	
@@ -158,7 +158,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView){
 	//exContext extra context element used when create context for tag resource
 	var loc_createContextForTagResource = function(exContext){
 		if(exContext==undefined)   exContext = loc_context;
-		var context = node_contextUtility.buildContext("TagContent_"+loc_tagName, loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], exContext);
+		var context = node_contextUtility.buildContext("TagContent_"+loc_tagName, loc_uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], exContext);
 		return context;
 	};
 	

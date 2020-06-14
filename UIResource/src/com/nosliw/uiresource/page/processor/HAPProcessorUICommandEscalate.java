@@ -7,6 +7,7 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
@@ -15,6 +16,8 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 public class HAPProcessorUICommandEscalate {
 
 	public static void process(HAPExecutableUIUnit exeUnit, HAPUITagManager uiTagMan) {
+		HAPExecutableUIBody body = exeUnit.getBody();
+
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
 			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getContext().getInfo())) {
@@ -22,7 +25,7 @@ public class HAPProcessorUICommandEscalate {
 				
 				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstant.UITAG_PARM_COMMAND));
 				exeTag.setCommandMapping(nameMapping);
-				Map<String, HAPDefinitionUICommand> exeCommandDefs = exeTag.getCommandDefinitions();
+				Map<String, HAPDefinitionUICommand> exeCommandDefs = body.getCommandDefinitions();
 				for(String commandName : exeCommandDefs.keySet()) {
 					String mappedName = nameMapping.get(commandName);
 					if(mappedName==null)   mappedName = commandName;
@@ -33,21 +36,22 @@ public class HAPProcessorUICommandEscalate {
 		}
 
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
 			process(childTag, uiTagMan);
 		}
 	}
 	
 	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPDefinitionUICommand> commandsDef, HAPUITagManager uiTagMan) {
+		HAPExecutableUIBody body = exeUnit.getBody();
 		if(HAPConstant.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
 			for(String commandName : commandsDef.keySet()) {
-				if(exeUnit.getCommandDefinition(commandName)==null) {
-					exeUnit.addCommandDefinition(commandsDef.get(commandName));
+				if(body.getCommandDefinition(commandName)==null) {
+					body.addCommandDefinition(commandsDef.get(commandName));
 				}
 			}
 		}
 		else {
-			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(((HAPExecutableUIUnitTag)exeUnit).getUIUnitTagDefinition().getTagName())).getContext().getInfo())) {
+			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(((HAPExecutableUIUnitTag)exeUnit).getTagName())).getContext().getInfo())) {
 				escalate(exeUnit.getParent(), commandsDef, uiTagMan);
 			}
 		}

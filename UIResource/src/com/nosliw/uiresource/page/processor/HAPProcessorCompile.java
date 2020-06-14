@@ -10,6 +10,7 @@ import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
@@ -21,34 +22,35 @@ public class HAPProcessorCompile {
 	public static void process(HAPExecutableUIUnit exeUnit, HAPDefinitionUIUnit parentUnitDef) {
 		
 		HAPDefinitionUIUnit uiUnitDef = exeUnit.getUIUnitDefinition();
-
+		HAPExecutableUIBody body = exeUnit.getBody();
+		
 		//attachment
 		if(parentUnitDef!=null)   HAPUtilityComponent.mergeWithParentAttachment(uiUnitDef, parentUnitDef.getAttachmentContainer());
 
 		//expression context
-		exeUnit.getExpressionContext().setContextStructure(exeUnit.getFlatContext().getContext());
+		body.getExpressionContext().setContextStructure(body.getFlatContext().getContext());
 		
 		//expression suite from attachment
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, exeUnit.getFlatContext().getContext());
-		exeUnit.getExpressionContext().setExpressionDefinitionSuite(expressionSuite);
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getFlatContext().getContext());
+		body.getExpressionContext().setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment
 		Set<HAPDefinitionConstant> constantsDef = HAPUtilityDataComponent.buildConstantDefinition(uiUnitDef.getAttachmentContainer());
 		for(HAPDefinitionConstant constantDef : constantsDef) {
-			exeUnit.getExpressionContext().addConstantDefinition(constantDef);
+			body.getExpressionContext().addConstantDefinition(constantDef);
 		}
 		
 		//embeded script in content
 		for(HAPDefinitionUIEmbededScriptExpressionInContent embededContent : uiUnitDef.getScriptExpressionsInContent()) {
-			exeUnit.addScriptExpressionsInContent(new HAPUIEmbededScriptExpressionInContent(embededContent));
+			body.addScriptExpressionsInContent(new HAPUIEmbededScriptExpressionInContent(embededContent));
 		}
 		//embeded script in tag attribute 
 		for(HAPDefinitionUIEmbededScriptExpressionInAttribute embededAttribute : uiUnitDef.getScriptExpressionsInAttribute()) {
-			exeUnit.addScriptExpressionsInAttribute(new HAPUIEmbededScriptExpressionInAttribute(embededAttribute));
+			body.addScriptExpressionsInAttribute(new HAPUIEmbededScriptExpressionInAttribute(embededAttribute));
 		}
 		//embeded script in custom tag attribute
 		for(HAPDefinitionUIEmbededScriptExpressionInAttribute embededAttribute : uiUnitDef.getScriptExpressionsInTagAttribute()) {
-			exeUnit.addScriptExpressionsInTagAttribute(new HAPUIEmbededScriptExpressionInAttribute(embededAttribute));
+			body.addScriptExpressionsInTagAttribute(new HAPUIEmbededScriptExpressionInAttribute(embededAttribute));
 		}
 		
 		//attribute
@@ -69,7 +71,7 @@ public class HAPProcessorCompile {
 //		}
 	
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
 			process(childTag, exeUnit.getUIUnitDefinition());			
 		}
 		

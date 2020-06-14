@@ -7,6 +7,7 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
@@ -15,6 +16,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 public class HAPProcessorUIEventEscalate {
 
 	public static void process(HAPExecutableUIUnit exeUnit, HAPUITagManager uiTagMan) {
+		HAPExecutableUIBody body = exeUnit.getBody();
 
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
 			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
@@ -23,7 +25,7 @@ public class HAPProcessorUIEventEscalate {
 				
 				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstant.UITAG_PARM_EVENT));
 				exeTag.setEventMapping(nameMapping);
-				Map<String, HAPDefinitionUIEvent> exeEventDefs = exeTag.getEventDefinitions();
+				Map<String, HAPDefinitionUIEvent> exeEventDefs = body.getEventDefinitions();
 				for(String eventName : exeEventDefs.keySet()) {
 					String mappedName = nameMapping.get(eventName);
 					if(mappedName==null)   mappedName = eventName;
@@ -35,17 +37,18 @@ public class HAPProcessorUIEventEscalate {
 		}
 
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
 			process(childTag, uiTagMan);
 		}
 	}
 
 	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPDefinitionUIEvent> eventsDef) {
+		HAPExecutableUIBody body = exeUnit.getBody();
 		HAPExecutableUIUnit parent = exeUnit.getParent();
 		if(parent==null) {
 			for(String eventName : eventsDef.keySet()) {
-				if(exeUnit.getEventDefinition(eventName)==null) {
-					exeUnit.addEventDefinition(eventsDef.get(eventName));
+				if(body.getEventDefinition(eventName)==null) {
+					body.addEventDefinition(eventsDef.get(eventName));
 				}
 			}
 		}

@@ -17,8 +17,8 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.resource.HAPResourceIdUITag;
 
-public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
-	
+public class HAPExecutableUIUnitTag1 extends HAPExecutableUIBody{
+
 	@HAPAttribute
 	public static final String TAGNAME = "tagName";
 
@@ -40,7 +40,6 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	@HAPAttribute
 	public static final String SERVICEMAPPING = "serviceMapping";
 
-	private String m_tagName;
 	
 	//context for tag
 	private HAPContextGroupInUITag m_tagContext;
@@ -53,9 +52,8 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	private Map<String, String> m_commandMapping;
 	private Map<String, String> m_serviceMapping;
 	
-	public HAPExecutableUIUnitTag(HAPDefinitionUITag uiTagDefinition, String id) {
+	public HAPExecutableUIUnitTag1(HAPDefinitionUITag uiTagDefinition, String id) {
 		super(uiTagDefinition, id);
-		this.m_tagName = uiTagDefinition.getTagName();
 		this.m_tagEvent = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_eventMapping = new LinkedHashMap<String, String>();
 		this.m_contextMapping = new LinkedHashMap<String, String>();
@@ -63,7 +61,6 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 		this.m_serviceMapping = new LinkedHashMap<String, String>();
 	}
 
-	public String getTagName() {    return this.m_tagName;   }
 	public HAPContextGroup getTagContext(){  return this.m_tagContext;   }
 	public void setTagContext(HAPContextGroup context) {
 		if(this.m_tagContext!=null)   this.m_tagContext.clear();
@@ -80,6 +77,9 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	public Map<String, HAPDefinitionUIEvent> getTagEvent(){  return this.m_tagEvent;  }
 	
 	public HAPDefinitionUITag getUIUnitTagDefinition() {   return (HAPDefinitionUITag)this.getUIUnitDefinition();  }
+	
+	@Override
+	public void setParent(HAPExecutableUIBody parent) {		this.m_parent = parent;	}
 	
 	public void setEventMapping(Map<String, String> mapping) {  this.m_eventMapping.putAll(mapping);  }
 	public void setContextMapping(Map<String, String> mapping) {  this.m_contextMapping.putAll(mapping);  }
@@ -101,7 +101,8 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = super.getResourceDependency(runtimeInfo, resourceManager);
 		//ui tag
-		out.add(new HAPResourceDependency(new HAPResourceIdUITag(new HAPUITagId(this.m_tagName))));
+		out.add(new HAPResourceDependency(new HAPResourceIdUITag(new HAPUITagId(this.getUIUnitTagDefinition().getTagName()))));
 		return out;
 	}
+
 }

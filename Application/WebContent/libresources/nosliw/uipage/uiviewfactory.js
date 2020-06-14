@@ -52,7 +52,7 @@ var loc_createUIViewFactory = function(){
 				}});
 				
 				//init customer tags
-				_.each(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_UITAGS], function(uiTagResource, tagUiId, list){
+				_.each(uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT][node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_UITAGS], function(uiTagResource, tagUiId, list){
 					var uiTagId = uiView.prv_getUpdateUIId(tagUiId);
 					createUITagRequest.addRequest(uiTagId, node_createUITagRequest(uiTagId, uiTagResource, uiView, {
 						success : function(requestInfo, uiTag){
@@ -88,6 +88,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	
 	//temporately store uiResource
 	var loc_uiResource = uiResource;
+	var loc_uiBody = loc_uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT];
 
 	//parent ui resource view
 	var loc_parentResourveView = parent;
@@ -98,23 +99,23 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	var loc_idNameSpace = id;
 
 	//all constants defined. they are used in expression
-	var loc_constants = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONSTANTS];
+	var loc_constants = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONSTANTS];
 	
 	//context object for this ui resource view
 	var loc_context = context;
 
 	//all content expression objects
 	var loc_expressionContents = [];
-	var loc_scriptGroup = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTGROUP];
+	var loc_scriptGroup = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPTGROUP];
 	
 	//all events on regular elements
 	var loc_elementEvents = [];
 	
 	//object store all the functions for js block
-	var loc_scriptObject = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPT];
+	var loc_scriptObject = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPT];
 	
-	var loc_services = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SERVICES]; 
-	var loc_serviceProviders = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SERVICEPROVIDERS]; 
+	var loc_services = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SERVICES]; 
+	var loc_serviceProviders = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SERVICEPROVIDERS]; 
 	
 	//all customer tags
 	var loc_uiTags = {};
@@ -236,21 +237,21 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, context, requestInfo){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(uiResource, id, parent, context, requestInfo){
 
-		loc_attributes = uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ATTRIBUTES];
+		loc_attributes = uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT][node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_ATTRIBUTES];
 		
 		//build context element first
 		if(loc_context==undefined){
 			//if context not provide, then build context by parent context and current context definition
 			var parentContext = parent==undefined?undefined:parent.getContext();
-			loc_context = node_contextUtility.buildContext("View_"+id, uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
+			loc_context = node_contextUtility.buildContext("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
 		}
 
 		//wrap html by start and end element
 		var resourceStartId = "-resource-start";
 		var resourceEndId = "-resource-end";
-		var html = node_uiResourceUtility.createPlaceHolderWithId(resourceStartId) + _.unescape(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_HTML]) + node_uiResourceUtility.createPlaceHolderWithId(resourceEndId);
+		var html = node_uiResourceUtility.createPlaceHolderWithId(resourceStartId) + _.unescape(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HTML]) + node_uiResourceUtility.createPlaceHolderWithId(resourceEndId);
 		
 		//update all uiid within html by adding space name to uiid
 		html = node_uiResourceUtility.updateHtmlUIId(html, loc_idNameSpace);
@@ -268,17 +269,17 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		
 
 		//init expression content
-		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONSINCONTENT], function(expressionContent, key, list){
+		_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPTEXPRESSIONSINCONTENT], function(expressionContent, key, list){
 			loc_expressionContents.push(node_createEmbededScriptExpressionInContent(expressionContent, loc_scriptGroup, loc_out, requestInfo));
 		});
 
 		//init normal expression attribute
-		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONINATTRIBUTES], function(expressionAttr, key, list){
+		_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPTEXPRESSIONINATTRIBUTES], function(expressionAttr, key, list){
 			loc_expressionContents.push(node_createEmbededScriptExpressionInAttribute(expressionAttr, loc_scriptGroup, loc_out, requestInfo));
 		});
 
 		//init regular tag event
-		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ELEMENTEVENTS], function(eleEvent, key, list){
+		_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_ELEMENTEVENTS], function(eleEvent, key, list){
 			loc_elementEvents.push(loc_initElementEvent(eleEvent));
 		});
 
@@ -348,14 +349,14 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		
 		prv_initCustomTagEvent : function(){
 			//init customer tag event
-			_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGEVENTS], function(tagEvent, key, list){
+			_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGEVENTS], function(tagEvent, key, list){
 				loc_tagEvents.push(loc_initTagEvent(tagEvent));
 			});
 		},
 		
 		prv_initCustomTagExpressionAttribute : function(){
 			//init tag expression attribute
-			_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONINTAGATTRIBUTES], function(expressionAttr, key, list){
+			_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPTEXPRESSIONINTAGATTRIBUTES], function(expressionAttr, key, list){
 				loc_expressionContents.push(node_createEmbededScriptExpressionInTagAttribute(expressionAttr, loc_scriptGroup, loc_out, requestInfo));
 			});
 		},

@@ -147,18 +147,18 @@ public class HAPProcessorModule {
 
 		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyStructureFalse(new HAPInfoImpSimple());
 		//build input data association
-		HAPExecutableDataAssociation inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPParentContext.createDefault(page.getFlatContext().getContext()), daConfigure, contextProcessRequirement);
+		HAPExecutableDataAssociation inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPParentContext.createDefault(page.getBody().getFlatContext().getContext()), daConfigure, contextProcessRequirement);
 		out.setInputMapping(inputDataAssocation);
 		
 		//build output data association
-		HAPExecutableDataAssociation outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(page.getContext()), moduleUIDefinition.getOutputMapping().getDefaultDataAssociation(), HAPParentContext.createDefault(moduleExe.getContext()), daConfigure, contextProcessRequirement);
+		HAPExecutableDataAssociation outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(page.getBody().getContext()), moduleUIDefinition.getOutputMapping().getDefaultDataAssociation(), HAPParentContext.createDefault(moduleExe.getContext()), daConfigure, contextProcessRequirement);
 		out.setOutputMapping(outputDataAssocation);
 		
 		//event handler
 		Set<HAPHandlerEvent> eventHandlerDefs = moduleUIDefinition.getEventHandlers();
 		for(HAPHandlerEvent eventHandlerDef : eventHandlerDefs) {
 			String eventName = eventHandlerDef.getName();
-			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getEventDefinition(eventName));
+			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getBody().getEventDefinition(eventName));
 			HAPContextGroup eventContext = new HAPContextGroup();
 			eventContext.addElement(HAPNosliwUtility.buildNosliwFullName("EVENT"), eventRootNode, HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 			HAPDefinitionProcess processDef = moduleExe.getProcessDefinition(eventHandlerDef.getTask().getTaskDefinition());

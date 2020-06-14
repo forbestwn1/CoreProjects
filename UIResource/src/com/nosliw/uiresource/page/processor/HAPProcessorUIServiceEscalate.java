@@ -7,6 +7,7 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
@@ -15,6 +16,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 public class HAPProcessorUIServiceEscalate {
 
 	public static void process(HAPExecutableUIUnit exeUnit, HAPUITagManager uiTagMan) {
+		HAPExecutableUIBody body = exeUnit.getBody();
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
 			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getContext().getInfo())) {
@@ -22,7 +24,7 @@ public class HAPProcessorUIServiceEscalate {
 				
 				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstant.UITAG_PARM_SERVICE));
 				exeTag.setServiceMapping(nameMapping);
-				Map<String, HAPExecutableServiceUse> exeServiceDefs = exeTag.getServiceDefinitions();
+				Map<String, HAPExecutableServiceUse> exeServiceDefs = body.getServiceDefinitions();
 				for(String serviceName : exeServiceDefs.keySet()) {
 					String mappedName = nameMapping.get(serviceName);
 					if(mappedName==null)   mappedName = serviceName;
@@ -33,16 +35,17 @@ public class HAPProcessorUIServiceEscalate {
 		}
 
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
 			process(childTag, uiTagMan);
 		}
 	}
 	
 	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPExecutableServiceUse> servicesDef, HAPUITagManager uiTagMan) {
+		HAPExecutableUIBody body = exeUnit.getBody();
 		if(HAPConstant.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
 			for(String serviceName : servicesDef.keySet()) {
-				if(exeUnit.getServiceDefinition(serviceName)==null) {
-					exeUnit.addServiceDefinition(serviceName, servicesDef.get(serviceName));
+				if(body.getServiceDefinition(serviceName)==null) {
+					body.addServiceDefinition(serviceName, servicesDef.get(serviceName));
 				}
 			}
 		}
