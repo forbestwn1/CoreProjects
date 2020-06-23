@@ -11,7 +11,7 @@ var packageObj = library;
 	var node_buildServiceProvider;
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
-	var node_createUIViewFactory;
+	var node_uiResourceViewFactory;
 	var node_createServiceRequestInfoSimple;
 	var node_createUIPage;
 	var node_createServiceRequestInfoSequence;
@@ -20,7 +20,7 @@ var packageObj = library;
 
 var node_createUIPageService = function(){
 	
-	var loc_uiResourceViewFactory = node_createUIViewFactory();
+	var loc_uiResourceViewFactory = node_uiResourceViewFactory;
 	
 	var loc_getResourceViewId = function(){	return nosliw.generateId();	};
 	
@@ -81,7 +81,7 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("uipage.createUIViewFactory", function(){node_createUIViewFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("uipage.uiResourceViewFactory", function(){node_uiResourceViewFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createUIPage", function(){node_createUIPage = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});

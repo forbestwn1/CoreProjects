@@ -21,7 +21,7 @@ var packageObj = library;
 	var node_createEmbededScriptExpressionInTagAttribute;
 	var node_getLifecycleInterface;
 	var node_basicUtility;
-	var node_createUITag;
+	var node_createUITagRequest;
 	var node_createEventObject;
 	var node_createUIDataOperationRequest;
 	var node_requestServiceProcessor;
@@ -32,7 +32,7 @@ var packageObj = library;
 	var node_createDynamicIOData;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_uiResourceViewFactory = function(){
+var loc_createUINodeViewFactory = function(){
 	
 	var loc_out = {
 		getCreateUIViewRequest : function(uiResource, id, parent, context, handlers, requestInfo){
@@ -74,12 +74,11 @@ var loc_uiResourceViewFactory = function(){
 	};
 	
 	return loc_out;
-}();	
+};	
 	
-	
-var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, handlers, requestInfo){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUITag", {}), handlers, requestInfo);
-	var tagId = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_TAGNAME];
+var node_createUINodeRequest = function(id, uiNode, parentContext, startElement, endElement, handlers, requestInfo){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUINode", {}), handlers, requestInfo);
+	var tagId = uiNode.tadId;
 	out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
 		success : function(requestInfo, resources){
 			var uiTagResourceObj = resources[tagId];
@@ -87,29 +86,28 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 			var uiTag = node_createUITag(
 					uiTagResourceObj, 
 					id, 
-					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_ATTRIBUTES], 
-					parentUIResourceView!=undefined?parentUIResourceView.getContext():undefined,
+					uiNode.attributes, 
+					parentContext,
 					{
-						mode : node_CONSTANT.TAG_RUNTIME_MODE_PAGE,
+						mode : node_CONSTANT.TAG_RUNTIME_MODE_DEMO,
 						contextDef : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT],
-						bodyContextDef : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT][node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT],
-						eventNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_EVENTMAPPING],
-						varNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL],
-						startElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX),
-						endElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX)
+						startElement : startElement,
+						endElement : endElement
 					}, 
-					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT]);
-
-			var initRequest = node_getLifecycleInterface(uiTag).initRequest({
+					uiNode.body);
+			return uiTag.initRequest({
 				success : function(requestInfo){
 					return uiTag;
 				}
-			}, requestInfo);
-			return initRequest;
+			});
 		}
 	}));
 	return out;
-};
+};	
+	
+	
+	
+	
 
 /*
  * method to create ui resource view according to 
@@ -118,8 +116,17 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
  * 	 	name space id
  * 		parent uiresource
  */
-var loc_createUIView = function(uiBody, attributes, id, parent, context, requestInfo){
+var loc_createUINodeView = function(uiNodeBody, parentContext, requestInfo){
 
+	
+	
+	
+	var uiChildren = uiNodeBody.children;
+	_.each(uiChildren, function(uiChild, i){
+		out.addRequest(node_createUINodeRequest(loc_id+"_"+i, uiChild, loc_createContextForTagBody, startElement, endElement));
+	});
+
+	
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -611,7 +618,7 @@ nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInAttribute
 nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInTagAttribute", function(){node_createEmbededScriptExpressionInTagAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("uitag.createUITag", function(){node_createUITag = this.getData();});
+nosliw.registerSetNodeDataEvent("uipage.createUITagRequest", function(){node_createUITagRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
@@ -623,6 +630,6 @@ nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){no
 
 
 //Register Node by Name
-packageObj.createChildNode("uiResourceViewFactory", loc_uiResourceViewFactory); 
+packageObj.createChildNode("createUINodeViewFactory", loc_createUINodeViewFactory); 
 
 })(packageObj);

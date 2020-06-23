@@ -51,7 +51,7 @@
 	script : function(env){
 
 		var loc_env = env;
-		var loc_dataVariable = env.createVariable("internal_data");
+		var loc_dataVariable;
 		var loc_view;
 		
 		var loc_revertChange = function(){
@@ -86,6 +86,10 @@
 
 		var loc_out = 
 		{
+			preInit : function(requestInfo){
+				loc_dataVariable = loc_env.createVariable("internal_data");
+			},
+				
 			initViews : function(requestInfo){	
 				loc_view = $('<input type="text" style="background:#e6dedc"/>');	
 				return loc_view;
@@ -104,6 +108,10 @@
 				loc_dataVariable.release();	
 				loc_view.remove();
 			},
+			
+			createContextForDemo : function(id, parentContext) {
+				
+			}
 		};
 		return loc_out;
 	}

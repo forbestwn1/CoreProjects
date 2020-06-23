@@ -1,59 +1,10 @@
 <!DOCTYPE html>
 <html>
 <body>
-			<nosliw-loop data="business.a.cc" element="ele" index="index">  
+	<br>
+	TextInput:<nosliw-textinput data="business.a.aa"/>  
+	<br>
 
-
-			<br>
-			Index: <%=?(index)?%>
-			<br>
-			TextInput:<nosliw-textinput data="ele"/> 
-			<br>
-			<scripts>
-			{
-				deleteElementInLoop : function(data, info){
-					event.preventDefault();
-				
-					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
-					var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-					var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-					var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
-					var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
-					var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
-					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
-
-					
-							var opRequest = node_createBatchUIDataOperationRequest(this.getContext());
-							var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDeleteOperationService(""));
-							opRequest.addUIDataOperation(uiDataOperation);
-					node_requestServiceProcessor.processRequest(opRequest, false);
-					
-/*					
-					var requestInfo = node_createServiceRequestInfoSequence({}, {
-						success:function(requestInfo, data){
-							
-						}
-					});
-					var that = this;
-					requestInfo.addRequest(this.getContext().getDataOperationRequest("index", node_uiDataOperationServiceUtility.createGetOperationService(), {
-						success : function(request, data){
-							var elePath = data.value;
-						
-							var opRequest = node_createBatchUIDataOperationRequest(that.getContext());
-							var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDeleteOperationService(""));
-							opRequest.addUIDataOperation(uiDataOperation);
-							return opRequest;
-						}
-					}));
-					node_requestServiceProcessor.processRequest(requestInfo, false);
-*/					
-				}
-			}
-			</scripts>
-			
-		</nosliw-loop>
-  
 </body>
 
 	<scripts>
