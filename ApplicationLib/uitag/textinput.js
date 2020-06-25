@@ -109,8 +109,14 @@
 				loc_view.remove();
 			},
 			
-			createContextForDemo : function(id, parentContext) {
-				
+			createContextForDemo : function(id, parentContext, request) {
+				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
+				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
+				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
+				var data = node_createData({value:"Hello World", dataTypeId:"test.string;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);
+				var elementInfosArray = [node_createContextElementInfo("internal_data", data)];
+				return node_createContext(id, elementInfosArray, request);
 			}
 		};
 		return loc_out;

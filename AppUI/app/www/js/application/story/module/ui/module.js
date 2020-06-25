@@ -17,6 +17,8 @@ var packageObj = library.getChildPackage();
 	var node_getLifecycleInterface;
 	var node_createEventObject;
 	var node_createUINode;
+	var node_storyUtility;
+	var node_createUINodeViewFactory;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "userApps";
@@ -25,48 +27,13 @@ var node_createModuleUI = function(parm){
 
 	var loc_root = parm;
 
-	var loc_eventSource = node_createEventObject();
-	var loc_eventListener = node_createEventObject();
-
-	var loc_componentData = {
-		page : {}
-	};
-	
-	var loc_vue;
-
-	var loc_triggerEvent = function(eventName, eventData, request){
-		if(request==undefined)  request = node_createServiceRequestInfoCommon();
-		loc_eventSource.triggerEvent(eventName, eventData, request);
-	};
+	var loc_startEle = $("<nosliw></nosliw>");
+	var loc_endEle = $("<nosliw></nosliw>");
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
-		Vue.component('story-uinode', node_createUINode());
-		loc_vue = new Vue({
-			el: loc_root,
-			data: loc_componentData,
-			components : {
-			},
-			computed : {
-				user : function(){
-					return this.userInfo.user;
-				},
-			},
-			methods : {
-				onSelectNode : function(miniApp) {
-					loc_triggerEvent("select", node_createMiniAppInfo(miniApp));
-				},
-			},
-			template :
-				`
-				    <div class="block">
-						<story-uinode 
-							v-bind:data="page"
-						></story-uinode>
-				    </div>
-				`
-		});
-		
+		$(loc_root).append(loc_startEle);
+		$(loc_root).append(loc_endEle);
 	};
 
 	var loc_out = {
@@ -75,10 +42,12 @@ var node_createModuleUI = function(parm){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshUIModule", {}), handlers, requestInfo);
 			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUIModule", {}), 
 				function(requestInfo){
-					var storyNode = node_storyUtility.getNodeById(story, uiNodeId);
-					var nodeEntity = storyNode[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENTITY];
-					var tag = nodeEntity.tag;
-					
+					var uiNode = node_storyUtility.buildUINode(uiNodeId, story);
+					return node_createUINodeViewFactory.getCreateUINodeViewRequest(uiNode, uiNodeId, loc_startEle, loc_endEle, undefined, {
+						success : function(){
+							
+						}
+					});
 			})); 
 			return out;
 		},
@@ -109,6 +78,8 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.page.createUINode", function(){node_createUINode = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.utility", function(){node_storyUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uinode.createUINodeViewFactory", function(){node_createUINodeViewFactory = this.getData();});
 
 
 //Register Node by Name

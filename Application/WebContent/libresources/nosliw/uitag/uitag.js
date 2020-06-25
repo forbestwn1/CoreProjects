@@ -135,7 +135,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 			}
 			else if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUINodeWithId", {}), handlers, requestInfo);
-				out.addRequest(node_uiNodeViewFactory.getCreateUIBodyViewRequest(loc_tagBody, {
+				out.addRequest(node_uiNodeViewFactory.getCreateUIBodyViewRequest(loc_tagBody, id, context, {
 					success : function(request, uiNodeView){
 						return uiNodeView;
 					}

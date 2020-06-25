@@ -5,7 +5,7 @@ var packageObj = library.getChildPackage();
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
-	var node_createPageTreeNode;
+	var node_createUINode;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -14,22 +14,27 @@ var packageObj = library.getChildPackage();
  */
 var node_utility = function(){
 
-	var loc_buildPageTreeNode = function(storyNode, story){
-		var treeNode = node_createPageTreeNode(storyNode);
+	var loc_buildUINode = function(storyNode, story){
+		var uiNode = node_createUINode(storyNode[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], story);
 		var childStoryNodes = loc_out.getAllChildNodes(storyNode, story);
 		_.each(childStoryNodes, function(childStroyNode, childId){
-			var childTreeNode = loc_buildPageTreeNode(childStroyNode, story);
-			treeNode.children[childId] = childTreeNode;
+			var childUINode = loc_buildUINode(childStroyNode, story);
+			uiNode.addChild(childId, childUINode);
 		});
-		return treeNode;
+		return uiNode;
 	};
 	
 	var loc_out = {
 		
 		buildPageTree : function(story){
 			var pageNode = this.getStoryNodeByType(story, node_COMMONCONSTANT.STORYNODE_TYPE_PAGE)[0];
-			return loc_buildPageTreeNode(pageNode, story);
+			return loc_buildUINode(pageNode, story);
 		},	
+		
+		buildUINode : function(storyNodeId, story){
+			var storyNode = this.getNodeById(story, storyNodeId);
+			return loc_buildUINode(storyNode, story);
+		},
 			
 		getStoryNodeByType : function(story, nodeType) {
 			var out = [];
@@ -110,7 +115,7 @@ var node_utility = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("application.instance.story.entity.createPageTreeNode", function(){node_createPageTreeNode = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.entity.createUINode", function(){node_createUINode = this.getData();});
 
 
 //Register Node by Name
