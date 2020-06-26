@@ -33,15 +33,15 @@ var packageObj = library;
 	var node_createUITag;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUINodeViewFactory = function(){
+var node_uiNodeViewFactory = function(){
 	
 	var loc_out = {
 			
-		getCreateUINodeViewRequest : function(uiNode, id, startEle, endEle, context, handlers, requestInfo){
-			return node_createUINodeRequest(id, uiNode, context, startEle, endEle, handlers, requestInfo);
+		getCreateUINodeViewRequest : function(uiNode, id, startEle, endEle, parentContext, handlers, requestInfo){
+			return node_createUINodeRequest(id, uiNode, parentContext, startEle, endEle, handlers, requestInfo);
 		},
 		
-		getCreateUIBodyViewRequest : function(uiBody, id, parentView, context, handlers, requestInfo){
+		getCreateUIBodyViewRequest : function(uiNodeBody, id, parentView, parentContext, handlers, requestInfo){
 
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUINode", {}), handlers, requestInfo);
 
@@ -50,7 +50,7 @@ var node_createUINodeViewFactory = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUINode", {}), handlers, requestInfo);
 			var uiChildren = uiNodeBody.children;
 			_.each(nodeView.getChildren, function(child, i){
-				out.addRequest(node_createUINodeRequest(id+"_"+i, child.getNode(), context, child.getStartElement(), child.getEndElement()));
+				out.addRequest(node_createUINodeRequest(id+"_"+i, child.getNode(), parentContext, child.getStartElement(), child.getEndElement()));
 			});
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
@@ -98,7 +98,7 @@ var node_createUINodeRequest = function(id, uiNode, parentContext, startElement,
 var node_createChildView = function(node, parentView){
 	
 	var loc_node = node;
-	var loc_startEle = "";
+	var loc_startEle = $("<nosliw></nosliw>");
 	var loc_endEle = "";
 	var loc_nodeView;
 	
@@ -133,12 +133,6 @@ var loc_createUINodeView = function(uiNodeBody, id, parentView, parentContext, r
 	var loc_fragmentDocument = $(document.createDocumentFragment());
 	var loc_parentView = $("<div></div>");
 	loc_fragmentDocument.append(loc_parentView);
-	var views = $($.parseHTML(html));
-	loc_parentView.append(views);
-	
-	//get wraper dom element (start and end element)
-	loc_startEle = loc_parentView.find("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceStartId)+"']");
-	loc_endEle = loc_parentView.find("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceEndId)+"']");
 	
 	var uiChildren = uiNodeBody.children;
 	_.each(uiChildren, function(uiChild, i){
@@ -194,6 +188,6 @@ nosliw.registerSetNodeDataEvent("uitag.createUITag", function(){node_createUITag
 
 
 //Register Node by Name
-packageObj.createChildNode("createUINodeViewFactory", node_createUINodeViewFactory); 
+packageObj.createChildNode("uiNodeViewFactory", node_uiNodeViewFactory); 
 
 })(packageObj);

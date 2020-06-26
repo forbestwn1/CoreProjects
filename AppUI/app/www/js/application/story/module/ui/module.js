@@ -18,7 +18,7 @@ var packageObj = library.getChildPackage();
 	var node_createEventObject;
 	var node_createUINode;
 	var node_storyUtility;
-	var node_createUINodeViewFactory;
+	var node_uiNodeViewFactory;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "userApps";
@@ -43,7 +43,7 @@ var node_createModuleUI = function(parm){
 			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUIModule", {}), 
 				function(requestInfo){
 					var uiNode = node_storyUtility.buildUINode(uiNodeId, story);
-					return node_createUINodeViewFactory.getCreateUINodeViewRequest(uiNode, uiNodeId, loc_startEle, loc_endEle, undefined, {
+					return node_uiNodeViewFactory.getCreateUINodeViewRequest(uiNode, uiNodeId, loc_startEle, loc_endEle, undefined, {
 						success : function(){
 							
 						}
@@ -79,7 +79,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.page.createUINode", function(){node_createUINode = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.utility", function(){node_storyUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("uinode.createUINodeViewFactory", function(){node_createUINodeViewFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("uinode.uiNodeViewFactory", function(){node_uiNodeViewFactory = this.getData();});
 
 
 //Register Node by Name

@@ -95,7 +95,7 @@ var node_createApplication = function(){
 					return pageModule.refreshRequest(pageTree);
 				}
 				if(uiModule!=undefined){
-					return uiModule.refreshRequest("22", story);
+					return uiModule.refreshRequest("23", story);
 				}
 				if(overviewModule!=undefined){
 					return overviewModule.refreshRequest(story);

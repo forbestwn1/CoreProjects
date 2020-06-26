@@ -3,13 +3,15 @@
 	description : "",
 	attributes : [
 		{
-			name : "data"
+			name : "data",
 		},
 		{
-			name : "element"
+			name : "element",
+			defaultValue : "element", 
 		},
 		{
-			name : "index"
+			name : "index",
+			defaultValue : "index", 
 		}	
 	],
 	context: {
@@ -144,6 +146,16 @@
 				loc_childVaraibles.splice(index, 1);
 			},
 			
+			createContextForDemo : function(id, parentContext, request) {
+				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
+				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
+				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
+				var data = node_createData([1, 2], node_CONSTANT.WRAPPER_TYPE_OBJECT);
+				var elementInfosArray = [node_createContextElementInfo("internal_data", data)];
+				return node_createContext(id, elementInfosArray, request);
+			},
+			
 			postInit : function(requestInfo){
 				loc_handleEachElementProcessor = loc_env.createHandleEachElementProcessor("internal_data", "");
 				loc_handleEachElementProcessor.registerEventListener(undefined, function(event, eventData, requestInfo){
@@ -173,7 +185,8 @@
 
 			destroy : function(request){
 				loc_handleEachElementProcessor.destroy(request);
-			}
+			},
+			
 		};
 		return loc_out;
 	}

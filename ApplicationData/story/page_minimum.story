@@ -204,8 +204,8 @@
 			"status": {
 			},
 			"entity": {
-				"type" : "html",
-				"html": "textinput"
+				"type" : "tag",
+				"tag": "loop"
 			}
 		}
 	],
@@ -374,11 +374,11 @@
 			"id": "204",
 			"type": "contain",
 			"end1": {
-				"nodeId": "21",
+				"nodeId": "23",
 				"profile": "container"
 			},
 			"end2": {
-				"nodeId": "23",
+				"nodeId": "22",
 			},
 			"entity": {
 				"child": 1

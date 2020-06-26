@@ -630,7 +630,7 @@ var COMMONATRIBUTECONSTANT=
   "UITAGDEFINITION_CONTEXT": "context",
   "UITAGDEFINITION_REQUIRES": "requires",
   "UITAGDEFINITION_EVENT": "event",
-  "_DESCRIPTION": "description",
+  "UITAGDEFINITIONATTRIBUTE_DEFAULTVALUE": "defaultValue",
   "_RESOURCEID": "resourceId",
   "_URL": "url",
   "_ISVALID": "isValid",

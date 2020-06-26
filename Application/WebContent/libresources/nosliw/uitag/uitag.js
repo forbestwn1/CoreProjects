@@ -53,6 +53,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 	var loc_mode = loc_tagConfigure.mode;
 	var loc_tagBody = tagBody;               //
 	var loc_parentContext = parentContext;
+	var loc_attributeDefinition = {};
 	
 	var loc_uiTagObj;
 	
@@ -74,7 +75,8 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 	var loc_getRelatedName = function(name){
 		var out = [];
 		out.push(name);
-		var mappedName = loc_tagConfigure.varNameMapping[name];
+		var mappedName;
+		if(loc_tagConfigure.varNameMapping!=undefined) mappedName = loc_tagConfigure.varNameMapping[name];
 		if(mappedName!=undefined)  out.push(mappedName);
 		return out;
 	};
@@ -110,7 +112,14 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 	var loc_envObj = {
 		getId : function(){  return loc_id;  },
 		getContext : function(){   return loc_context;  },
-		getAttributeValue : function(name){  return loc_attributes[name];  },
+		getAttributeValue : function(name){  
+			var out = loc_attributes[name];
+			if(out==undefined){
+				var attrDef = loc_attributeDefinition[name];
+				if(attrDef!=undefined)	out = attrDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITIONATTRIBUTE_DEFAULTVALUE];
+			}
+			return out;
+		},
 		getAttributes : function(){   return loc_attributes;   },
 		getTagBody : function(){  return  loc_tagBody; },
 
@@ -213,6 +222,10 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(handlers, requestInfo){
+		_.each(loc_uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_ATTRIBUTES], function(attDef, i){
+			loc_attributeDefinition[attDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]] = attDef;
+		});
+		
 		loc_uiTagObj = _.extend({
 			findFunctionDown : function(name){},	
 			initViews : function(request){},
