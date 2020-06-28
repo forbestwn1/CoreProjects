@@ -36,7 +36,9 @@ var node_createUINode = function(nodeId, story){
 		
 		getChildren : function(){   return loc_children;    },
 		
-		
+		getBody : function(){
+			return loc_out;
+		}
 	
 	};
 	return loc_out;

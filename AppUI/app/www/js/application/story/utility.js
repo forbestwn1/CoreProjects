@@ -19,7 +19,7 @@ var node_utility = function(){
 		var childStoryNodes = loc_out.getAllChildNodes(storyNode, story);
 		_.each(childStoryNodes, function(childStroyNode, childId){
 			var childUINode = loc_buildUINode(childStroyNode, story);
-			uiNode.addChild(childId, childUINode);
+			uiNode.addChild(childUINode, childId);
 		});
 		return uiNode;
 	};

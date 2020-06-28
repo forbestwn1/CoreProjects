@@ -27,13 +27,8 @@ var node_createModuleUI = function(parm){
 
 	var loc_root = parm;
 
-	var loc_startEle = $("<nosliw></nosliw>");
-	var loc_endEle = $("<nosliw></nosliw>");
-	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
-		$(loc_root).append(loc_startEle);
-		$(loc_root).append(loc_endEle);
 	};
 
 	var loc_out = {
@@ -43,9 +38,9 @@ var node_createModuleUI = function(parm){
 			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUIModule", {}), 
 				function(requestInfo){
 					var uiNode = node_storyUtility.buildUINode(uiNodeId, story);
-					return node_uiNodeViewFactory.getCreateUINodeViewRequest(uiNode, uiNodeId, loc_startEle, loc_endEle, undefined, {
-						success : function(){
-							
+					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], uiNodeId, undefined, {
+						success : function(request, uiNodeViewGroup){
+							uiNodeViewGroup.appendTo(loc_root);
 						}
 					});
 			})); 

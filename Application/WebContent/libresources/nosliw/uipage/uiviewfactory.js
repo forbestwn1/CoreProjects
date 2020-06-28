@@ -256,7 +256,6 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 	 */
 	var loc_getViews = function(){	return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle);  };
 
-	
 	//io between module context and page context
 	var loc_viewIO = node_createDynamicIOData(
 		function(handlers, request){

@@ -135,20 +135,21 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 			if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
 				out.addRequest(node_uiResourceViewFactory.getCreateUIBodyViewRequest(loc_tagBody, {}, id, loc_tagConfigure.parentResourceView, context, {
-					success : function(request, uiView){
-						uiView.registerEventListener(loc_eventObject, loc_processChildUIViewEvent, loc_out);
-						return uiView;
+					success : function(request, uiBodyView){
+						uiBodyView.registerEventListener(loc_eventObject, loc_processChildUIViewEvent, loc_out);
+						return uiBodyView;
 					}
 				}, requestInfo));
 				return out;
 			}
 			else if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUINodeWithId", {}), handlers, requestInfo);
-				out.addRequest(node_uiNodeViewFactory.getCreateUIBodyViewRequest(loc_tagBody, id, context, {
-					success : function(request, uiNodeView){
-						return uiNodeView;
+				out.addRequest(node_uiNodeViewFactory.getCreateUINodeViewRequest(loc_tagBody.getChildren(), id, context, {
+					success : function(request, uiBodyView){
+						return uiBodyView;
 					}
 				}));
+				return out;
 			}
 		},
 
@@ -260,7 +261,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		if(loc_uiTagObj.initViews!=undefined){
 			var views = loc_uiTagObj.initViews(requestInfo);
 			//attach view to resourve view
-			if(views!=undefined)  loc_getEndElement().after(views);	
+			if(views!=undefined)  loc_getStartElement().after(views);	
 		}
 
 		//overridden method to do sth after view is attatched to dom

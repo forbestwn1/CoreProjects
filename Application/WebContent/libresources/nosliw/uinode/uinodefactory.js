@@ -31,41 +31,38 @@ var packageObj = library;
 	var node_IOTaskResult;
 	var node_createDynamicIOData;
 	var node_createUITag;
+	var node_createUINodeGroupView;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_uiNodeViewFactory = function(){
 	
 	var loc_out = {
 			
-		getCreateUINodeViewRequest : function(uiNode, id, startEle, endEle, parentContext, handlers, requestInfo){
-			return node_createUINodeRequest(id, uiNode, parentContext, startEle, endEle, handlers, requestInfo);
-		},
-		
-		getCreateUIBodyViewRequest : function(uiNodeBody, id, parentView, parentContext, handlers, requestInfo){
-
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUINode", {}), handlers, requestInfo);
-
-			var nodeView = loc_createUINodeView(uiNodeBody, id, parentView, parentContext, requestInfo);
+		getCreateUINodeViewRequest : function(uiNodes, id, parentContext, handlers, requestInfo){
+			var uiNodeGroupView = node_createUINodeGroupView(uiNodes, id, parentContext);
 			
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUINode", {}), handlers, requestInfo);
-			var uiChildren = uiNodeBody.children;
-			_.each(nodeView.getChildren, function(child, i){
-				out.addRequest(node_createUINodeRequest(id+"_"+i, child.getNode(), parentContext, child.getStartElement(), child.getEndElement()));
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUINodeViewRequest", {}), handlers, requestInfo);
+			_.each(uiNodeGroupView.getChildren(), function(uiNodeView, i){
+				out.addRequest(loc_createUITagRequest(uiNodeView.getId(), uiNodeView.getUINode(), parentContext, uiNodeView.getStartElement(), uiNodeView.getEndElement(), {
+					success : function(request, uiTag){
+						uiNodeView.setUITag(uiTag);
+					}
+				}));
 			});
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-				return nodeView;
+				return uiNodeGroupView;
 			}));
-
 			return out;
 		},
-				
+
 	};
 	
 	return loc_out;
 }();	
 	
-var node_createUINodeRequest = function(id, uiNode, parentContext, startElement, endElement, handlers, requestInfo){
+	
+var loc_createUITagRequest = function(id, uiNode, parentContext, startElement, endElement, handlers, requestInfo){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUINode", {}), handlers, requestInfo);
 	var tagId = uiNode.getTagId();
 	out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
@@ -82,7 +79,7 @@ var node_createUINodeRequest = function(id, uiNode, parentContext, startElement,
 						startElement : startElement,
 						endElement : endElement
 					}, 
-					uiNode.body);
+					uiNode.getBody());
 			var initRequest = node_getLifecycleInterface(uiTag).initRequest({
 				success : function(requestInfo){
 					return uiTag;
@@ -94,65 +91,6 @@ var node_createUINodeRequest = function(id, uiNode, parentContext, startElement,
 	return out;
 };	
 	
-	
-var node_createChildView = function(node, parentView){
-	
-	var loc_node = node;
-	var loc_startEle = $("<nosliw></nosliw>");
-	var loc_endEle = "";
-	var loc_nodeView;
-	
-	parentView.append(loc_startEle);
-	parentView.append(loc_endEle);
-	
-	var loc_out = {
-		getStartEle : function(){  return loc_startEle;   },
-		getEndEle : function(){  return loc_endEle;   },
-		setNodeView : function(nodeView){  loc_nodeView = nodeView;    },
-		getNodeView : function(){   return loc_nodeView;   },
-	};
-	
-	return loc_out;
-};
-	
-
-/*
- * method to create ui resource view according to 
- * 		uiBody body for view
- * 		attributes : 
- * 	 	name space id
- * 		parent uiresource
- */
-var loc_createUINodeView = function(uiNodeBody, id, parentView, parentContext, requestInfo){
-
-	var loc_id = id;
-
-	var loc_childrenNode = [];
-	
-	//render html to temporary document fragment
-	var loc_fragmentDocument = $(document.createDocumentFragment());
-	var loc_parentView = $("<div></div>");
-	loc_fragmentDocument.append(loc_parentView);
-	
-	var uiChildren = uiNodeBody.children;
-	_.each(uiChildren, function(uiChild, i){
-		loc_childrenNode.push(node_createChildView(uiChilde, loc_parentView));
-	});
-
-	
-	loc_out = {
-		
-	};
-
-	
-	//append resource and object life cycle method to out obj
-	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIVIEW);
-
-	node_getLifecycleInterface(loc_out).init(uiBody, attributes, id, parent, context, requestInfo);
-	
-	return loc_out;
-};
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -185,6 +123,7 @@ nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contex
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("uitag.createUITag", function(){node_createUITag = this.getData();});
+nosliw.registerSetNodeDataEvent("uinode.entity.createUINodeGroupView", function(){node_createUINodeGroupView = this.getData();});
 
 
 //Register Node by Name
