@@ -17,8 +17,8 @@ public class HAPStoryNodeImp extends HAPStoryElementImp implements HAPStoryNode{
 		this.m_connections = new HashSet<String>();
 	}
 
-	public HAPStoryNodeImp(String type) {
-		super(type);
+	public HAPStoryNodeImp(String type, String id) {
+		super(type, id);
 	}
 	
 	@Override

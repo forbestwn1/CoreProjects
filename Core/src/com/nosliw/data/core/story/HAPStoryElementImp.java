@@ -20,8 +20,9 @@ public class HAPStoryElementImp extends HAPEntityInfoImp implements HAPStoryElem
 		this.m_status = new HAPStatus();
 	}
 
-	public HAPStoryElementImp(String type) {
+	public HAPStoryElementImp(String type, String id) {
 		this();
+		this.setId(id);
 		this.m_type = type;
 	}
 	

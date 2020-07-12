@@ -28,6 +28,7 @@ public interface HAPStory extends HAPEntityInfo{
 	
 	Set<HAPStoryNode> getNodes();
 	HAPStoryNode getNode(String id);
+	void addNode(HAPStoryNode node);
 	
 	Set<HAPConnection> getConnections();
 	HAPConnection getConnection(String id);

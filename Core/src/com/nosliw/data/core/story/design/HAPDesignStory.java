@@ -1,24 +1,31 @@
 package com.nosliw.data.core.story.design;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.HAPStoryImp;
 
-public class HAPDesignStory {
+public class HAPDesignStory extends HAPEntityInfoImp{
 
-	private String m_designId;
-	
 	private HAPStory m_story;
 	
-	private List<HAPChange> m_changes;
-
+	private List<HAPChangeBatch> m_changeHistory;
+	
 	public HAPDesignStory(String designId) {
-		this.m_designId = designId;
-		this.m_changes = new ArrayList<HAPChange>();
+		this.setId(designId);
+		this.m_story = new HAPStoryImp();
 	}
 	
 	public String getBuilder() {
 		return null;
+	}
+
+	public HAPStory getStory() {
+		return this.m_story;
+	}
+	
+	public String getNextId() {
+		
 	}
 }

@@ -1,15 +1,17 @@
 package com.nosliw.servlet.app.story;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.story.HAPManagerStory;
-import com.nosliw.data.core.story.HAPStory;
-import com.nosliw.data.core.story.HAPStoryImp;
+import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.design.HAPDesignStory;
+import com.nosliw.data.core.story.design.HAPRequestChange;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.servlet.core.HAPInitServlet;
 
@@ -20,8 +22,6 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 	public static final String COMMAND_NEWDESIGN = "newDesign";
 	@HAPAttribute
 	public static final String COMMAND_NEWDESIGN_DIRECTORID = "directorId";
-	@HAPAttribute
-	public static final String COMMAND_NEWDESIGN_STORYID = "storyId";
 	
 	@HAPAttribute
 	public static final String COMMAND_DESIGN = "design";
@@ -40,20 +40,24 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 		switch(command){
 		case COMMAND_NEWDESIGN:
 		{
-			HAPNewDesign design = new HAPNewDesign();
-			String storyId = parms.optString(COMMAND_NEWDESIGN_STORYID);
-			design.setStoryId(storyId);
-			String directoryId = parms.optString(COMMAND_NEWDESIGN_STORYID);
-			design.setDirector(directoryId);
-			HAPStory story = null;
-			if(HAPBasicUtility.isStringNotEmpty(storyId)) {
-				story = storyManager.getStory(storyId);
-			}
-			else {
-				story = new HAPStoryImp();
-			}
-			design.setStory(story);
+			String directorId = parms.optString(COMMAND_NEWDESIGN_DIRECTORID);
+			HAPDesignStory design = storyManager.newStoryDesign(directorId);
 			out = HAPServiceData.createSuccessData(design);
+			break;
+		}
+		case COMMAND_DESIGN:
+		{
+			String designId = parms.optString(COMMAND_DESIGN_DESIGNID);
+			HAPRequestChange changeRequest = new HAPRequestChange(designId);
+
+			JSONArray changeArray = parms.optJSONArray(COMMAND_DESIGN_CHANGE);
+			for(int i=0; i<changeArray.length(); i++) {
+				JSONObject changeObj = changeArray.getJSONObject(i);
+				HAPChangeItem changeItem = new HAPChangeItem();
+				changeItem.buildObject(changeObj, HAPSerializationFormat.JSON);
+				changeRequest.addChangeItem(changeItem);
+			}
+			out = storyManager.designStory(changeRequest);
 			break;
 		}
 		}

@@ -3,6 +3,7 @@ package com.nosliw.data.core.story;
 import java.io.File;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,6 +21,10 @@ public class HAPUtilityStory {
 	public static void setBuilderId(HAPStory story, String builderId) {         }
 
 	static private int index = 0;
+	
+	public static List<HAPStoryElement> getAllElementRelyOnIt(HAPStory story, String eleId){
+		
+	}
 	
 	public static void exportBuildResourceDefinition(HAPStory story, HAPResourceDefinition resourceDef) {
 		String fileName = story.getShowType() + "_" + story.getName() + "_" + index++;

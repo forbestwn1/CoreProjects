@@ -37,4 +37,6 @@ public class HAPSystemFolderUtility {
 	public static String getDynamicResourceExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"dynamicresourceexport/";  }
 	public static String getCurrentDynamicResourceExportFolder(){  return HAPSystemFolderUtility.getDynamicResourceExportFolder() + HAPRuntimeEnvironment.id + "/";  }
 	
+	public static String getStoryDesignFolder() {	return HAPSystemUtility.getAppDataFolder()+"/storydesign/";}
+
 }

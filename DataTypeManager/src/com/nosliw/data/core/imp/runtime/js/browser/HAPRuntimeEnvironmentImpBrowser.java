@@ -28,6 +28,7 @@ import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.story.HAPBuilderPageSimple;
+import com.nosliw.uiresource.page.story.HAPStoryBuilderPageSimple;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginApp;
 import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginAppEntry;
@@ -107,6 +108,9 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginApp(this.m_uiResourceManager.getMinitAppParser()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginAppEntry(this.getResourceDefinitionManager()));
 
+		//story builder
+		this.getStoryManager().registerStoryBuilder(HAPStoryBuilderPageSimple.BUILDERID, new HAPStoryBuilderPageSimple());
+		
 		//dynamic resource builder
 		this.getStoryManager().registerShowBuilder(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPBuilderPageSimple(this.getServiceManager().getServiceDefinitionManager(), this.getUIResourceManager().getUITagManager(), this.getUIResourceManager().getUIResourceParser()));
 	}

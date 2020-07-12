@@ -723,6 +723,11 @@
 			<definition name="SERVICE_CHILD_INPUT" value="serviceInput"/>
 			<definition name="SERVICE_CHILD_RESULT" value="serviceResult"/>
 
+			<definition type="space"/>
+			<definition name="STORYDESIGN_CHANGETYPE_ADD" value="add"/>
+			<definition name="STORYDESIGN_CHANGETYPE_DELETE" value="delete"/>
+			<definition name="STORYDESIGN_CHANGETYPE_PATCH" value="patch"/>
+			<definition name="STORYDESIGN_CHANGETYPE_PUT" value="put"/>
 			
 		</definitions>
 	</constants>
