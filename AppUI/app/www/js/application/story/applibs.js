@@ -43,5 +43,14 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 			]
 		});
 	}
+	else if(moduleName=='builder'){
+		libsInfo.push({
+			basePath : moduleFoler,
+			libs : [
+				"0_package.js",
+				"module.js",
+			]
+		});
+	}
 }
 

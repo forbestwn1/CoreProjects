@@ -1,59 +1,13 @@
-package com.nosliw.data.core.story.resource;
-
-import java.io.File;
+package com.nosliw.data.core.story;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPUtilityComponentParse;
-import com.nosliw.data.core.story.HAPConnection;
-import com.nosliw.data.core.story.HAPConnectionGroup;
-import com.nosliw.data.core.story.HAPConnectionGroupImp;
-import com.nosliw.data.core.story.HAPConnectionImp;
-import com.nosliw.data.core.story.HAPStory;
-import com.nosliw.data.core.story.HAPStoryImp;
-import com.nosliw.data.core.story.HAPStoryNode;
-import com.nosliw.data.core.story.HAPStoryNodeImp;
 
 public class HAPParserStory {
 
-	public static HAPResourceDefinitionStory parseFile(String fileName){
-		HAPResourceDefinitionStory out = null;
-		try{
-			File input = new File(fileName);
-			//use file name as ui resource id
-			String resourceId = HAPFileUtility.getFileName(input);
-			String source = HAPFileUtility.readFile(input);
-			out = parseContent(source, resourceId);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return out;
-	}
-
-	private static HAPResourceDefinitionStory parseContent(String content, String id) {
-		JSONObject jsonObj = new JSONObject(content);
-		HAPResourceDefinitionStory out = parseStoryDefinition(jsonObj);
-		out.setId(id);
-		return out;
-	}
-
-	public static HAPResourceDefinitionStory parseStoryDefinition(JSONObject jsonObj) {
-		HAPResourceDefinitionStory out = new HAPResourceDefinitionStory();
-
-		//build complex resource part from json object
-		HAPUtilityComponentParse.parseComplextResourceDefinition(out, jsonObj);
-
-		HAPStoryImp storyEntity = parseStory(jsonObj);
-		out.setStory(storyEntity);
-		
-		return out;
-	}
-	
-	private static HAPStoryImp parseStory(JSONObject jsonObj) {
+	public static HAPStoryImp parseStory(JSONObject jsonObj) {
 		HAPStoryImp out = new HAPStoryImp();
 		
 		out.buildEntityInfoByJson(jsonObj);

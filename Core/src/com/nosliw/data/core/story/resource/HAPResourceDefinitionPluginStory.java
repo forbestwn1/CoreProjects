@@ -18,7 +18,7 @@ public class HAPResourceDefinitionPluginStory implements HAPPluginResourceDefini
 		//read content
 		String file = HAPSystemFolderUtility.getStoryFolder()+resourceId.getId()+".story";
 		//parse content
-		HAPResourceDefinitionStory out = HAPParserStory.parseFile(file);
+		HAPResourceDefinitionStory out = HAPParserStoryResource.parseFile(file);
 		return out;
 	}
 
@@ -28,7 +28,7 @@ public class HAPResourceDefinitionPluginStory implements HAPPluginResourceDefini
 	@Override
 	public HAPResourceDefinition parseResourceDefinition(Object content) {
 		JSONObject jsonObj = (JSONObject)content;
-		return HAPParserStory.parseStoryDefinition(jsonObj);
+		return HAPParserStoryResource.parseStoryDefinition(jsonObj);
 	}
 
 }

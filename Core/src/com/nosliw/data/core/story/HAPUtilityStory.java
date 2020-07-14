@@ -23,7 +23,7 @@ public class HAPUtilityStory {
 	static private int index = 0;
 	
 	public static List<HAPStoryElement> getAllElementRelyOnIt(HAPStory story, String eleId){
-		
+		return null;
 	}
 	
 	public static void exportBuildResourceDefinition(HAPStory story, HAPResourceDefinition resourceDef) {

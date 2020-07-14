@@ -57,7 +57,7 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 				changeItem.buildObject(changeObj, HAPSerializationFormat.JSON);
 				changeRequest.addChangeItem(changeItem);
 			}
-			out = storyManager.designStory(changeRequest);
+			out = storyManager.designStory(designId, changeRequest);
 			break;
 		}
 		}

@@ -27,13 +27,13 @@ public class HAPDesignTest {
 			String designId = design.getId();
 			storyMan.saveStoryDesign(design);
 			
-			HAPRequestChange changeRequest = new HAPRequestChange(HAPStoryBuilderPageSimple.BUILDERID, designId);
+			HAPRequestChange changeRequest = new HAPRequestChange(designId);
 			Map<String, Object> value = new LinkedHashMap<String, Object>();
-			value.put("", "");
+			value.put("entity.service.referenceId", "TestTemplateService");
 			HAPChangeItem changeItem = HAPUtilityChange.buildItemPatch("", value);
 			changeRequest.addChangeItem(changeItem);
-			HAPServiceData serviceData = storyMan.designStory(changeRequest);
-		
+			HAPServiceData serviceData = storyMan.designStory(designId, changeRequest);
+			System.out.println(serviceData);
 		}
 		catch(Throwable e) {
 			e.printStackTrace();

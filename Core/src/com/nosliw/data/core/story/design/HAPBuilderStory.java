@@ -5,7 +5,7 @@ import com.nosliw.common.exception.HAPServiceData;
 //builder that build 
 public interface HAPBuilderStory {
 
-	HAPDesignStory newDesign(String id);
+	void initDesign(HAPDesignStory design);
 	
 	//design story according to change
 	//   storyDesign: current design

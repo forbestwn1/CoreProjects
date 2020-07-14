@@ -6,8 +6,8 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
-import com.nosliw.data.core.story.design.HAPBuilderStory;
 import com.nosliw.data.core.story.design.HAPDesignStory;
+import com.nosliw.data.core.story.design.HAPBuilderStory;
 import com.nosliw.data.core.story.design.HAPRequestChange;
 import com.nosliw.data.core.story.design.HAPUtilityDesign;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionStory;
@@ -22,34 +22,30 @@ public class HAPManagerStory {
 
 	private Map<String, HAPBuilderShow> m_resourceDefinitionBuilders;
 	
-	private Map<String, HAPBuilderStory> m_storyBuilders;
+	private Map<String, HAPBuilderStory> m_storyDirectors;
 	
 	public HAPManagerStory(HAPManagerResourceDefinition resourceDefManager) {
 		this.m_resourceDefManager = resourceDefManager;
 		this.m_resourceDefinitionBuilders = new LinkedHashMap<String, HAPBuilderShow>();
-		this.m_storyBuilders = new LinkedHashMap<String, HAPBuilderStory>();
+		this.m_storyDirectors = new LinkedHashMap<String, HAPBuilderStory>();
 		this.m_idIndex = System.currentTimeMillis();
 	}
 	
-	public HAPDesignStory getStoryDesign(String id) {
-		return HAPUtilityDesign.readStoryDesign(id);
-	}
-	
 	public HAPDesignStory newStoryDesign(String builderId) {
-		HAPBuilderStory storyBuilder = this.getStoryBuilder(builderId);
-		HAPDesignStory out = storyBuilder.newDesign(this.generateId());
+		HAPBuilderStory storyBuilder = this.getStoryDirector(builderId);
+		HAPDesignStory out = new HAPDesignStory(this.generateId(), builderId);
+		storyBuilder.initDesign(out);
 		return out;
 	}
 	
-	public void saveStoryDesign(HAPDesignStory storyDesign) {
-		
-	}
+	public HAPDesignStory getStoryDesign(String id) {	return HAPUtilityDesign.readStoryDesign(id);	}
+
+	public void saveStoryDesign(HAPDesignStory storyDesign) {  HAPUtilityDesign.saveStoryDesign(storyDesign);	}
 	
-	public HAPServiceData designStory(HAPRequestChange changeRequest) {
-		
-//		HAPDesignStory design = this.getStoryDesign(designChange.getDesignId());
-//		return this.m_storyBuilders.get(design.getBuilder()).buildStory(design);
-		return null;
+	public HAPServiceData designStory(String designId, HAPRequestChange changeRequest) {
+		HAPDesignStory design = this.getStoryDesign(designId);
+		String directorId = design.getDirectorId();
+		return this.getStoryDirector(directorId).buildStory(design, changeRequest);
 	}
 
 	//get story by id
@@ -66,8 +62,8 @@ public class HAPManagerStory {
 
 	public void registerShowBuilder(String id, HAPBuilderShow builder) {	this.m_resourceDefinitionBuilders.put(id, builder);	}
 	
-	public void registerStoryBuilder(String id, HAPBuilderStory storyBuilder) {		this.m_storyBuilders.put(id, storyBuilder);	}
+	public void registerStoryDirector(String id, HAPBuilderStory storyDirector) {		this.m_storyDirectors.put(id, storyDirector);	}
 
-	private HAPBuilderStory getStoryBuilder(String buildId) {    return this.m_storyBuilders.get(buildId);   }
+	private HAPBuilderStory getStoryDirector(String directorId) {    return this.m_storyDirectors.get(directorId);   }
 	private String generateId() {		return (this.m_idIndex++) + "";	}
 }

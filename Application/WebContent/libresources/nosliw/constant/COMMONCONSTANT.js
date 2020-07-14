@@ -398,6 +398,8 @@ var COMMONCONSTANT=
   "SCRIPT_TYPE_SEG_EXPRESSION": "expressionSeg",
   "SCRIPT_TYPE_SEG_TEXT": "textSeg",
   "SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT": "exprssionScriptSeg",
+  "STORYELEMENT_CATEGARY_NODE": "node",
+  "STORYELEMENT_CATEGARY_CONNECTION": "connection",
   "STORYNODE_TYPE_SERVICE": "service",
   "STORYNODE_TYPE_SERVICEINPUT": "serviceInput",
   "STORYNODE_TYPE_SERVICEOUTPUT": "serviceOutput",
@@ -413,7 +415,11 @@ var COMMONCONSTANT=
   "CONNECTION_TYPE_CONTAIN": "contain",
   "CONNECTION_TYPE_DATAIO": "dataIO",
   "SERVICE_CHILD_INPUT": "serviceInput",
-  "SERVICE_CHILD_RESULT": "serviceResult"
+  "SERVICE_CHILD_RESULT": "serviceResult",
+  "STORYDESIGN_CHANGETYPE_NEW": "new",
+  "STORYDESIGN_CHANGETYPE_DELETE": "delete",
+  "STORYDESIGN_CHANGETYPE_PATCH": "patch",
+  "STORYDESIGN_CHANGETYPE_PUT": "put"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

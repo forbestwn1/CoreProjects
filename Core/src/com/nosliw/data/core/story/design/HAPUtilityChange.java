@@ -15,8 +15,9 @@ public class HAPUtilityChange {
 		
 	}
 	
-	public static HAPChangeItem buildChangeNew(String itemId) {
-		return null;
+	public static HAPChangeItem buildChangeNew(String itemCategary, String itemId) {
+		HAPChangeItemNew out = new HAPChangeItemNew(itemCategary, itemId);
+		return out;
 		
 	}
 

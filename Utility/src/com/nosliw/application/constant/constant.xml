@@ -700,6 +700,10 @@
 			<definition name="SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT" value="exprssionScriptSeg"/>
 
 			<definition type="space"/>
+			<definition name="STORYELEMENT_CATEGARY_NODE" value="node"/>
+			<definition name="STORYELEMENT_CATEGARY_CONNECTION" value="connection"/>
+
+			<definition type="space"/>
 			<definition name="STORYNODE_TYPE_SERVICE" value="service"/>
 			<definition name="STORYNODE_TYPE_SERVICEINPUT" value="serviceInput"/>
 			<definition name="STORYNODE_TYPE_SERVICEOUTPUT" value="serviceOutput"/>
@@ -724,7 +728,7 @@
 			<definition name="SERVICE_CHILD_RESULT" value="serviceResult"/>
 
 			<definition type="space"/>
-			<definition name="STORYDESIGN_CHANGETYPE_ADD" value="add"/>
+			<definition name="STORYDESIGN_CHANGETYPE_NEW" value="new"/>
 			<definition name="STORYDESIGN_CHANGETYPE_DELETE" value="delete"/>
 			<definition name="STORYDESIGN_CHANGETYPE_PATCH" value="patch"/>
 			<definition name="STORYDESIGN_CHANGETYPE_PUT" value="put"/>

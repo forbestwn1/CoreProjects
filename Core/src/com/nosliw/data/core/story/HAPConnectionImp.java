@@ -13,8 +13,8 @@ public class HAPConnectionImp extends HAPStoryElementImp implements HAPConnectio
 	
 	private HAPConnectionEnd m_end2;
 	
-	public HAPConnectionImp(String type) {
-		super(type);
+	public HAPConnectionImp(String type, String id) {
+		super(type, id);
 	}
 
 	public HAPConnectionImp() {}

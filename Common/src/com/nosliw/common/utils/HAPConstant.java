@@ -638,6 +638,11 @@ public class HAPConstant {
 
 
 
+		public static final String STORYELEMENT_CATEGARY_NODE = "node";
+		public static final String STORYELEMENT_CATEGARY_CONNECTION = "connection";
+
+
+
 		public static final String STORYNODE_TYPE_SERVICE = "service";
 		public static final String STORYNODE_TYPE_SERVICEINPUT = "serviceInput";
 		public static final String STORYNODE_TYPE_SERVICEOUTPUT = "serviceOutput";
@@ -663,6 +668,13 @@ public class HAPConstant {
 
 		public static final String SERVICE_CHILD_INPUT = "serviceInput";
 		public static final String SERVICE_CHILD_RESULT = "serviceResult";
+
+
+
+		public static final String STORYDESIGN_CHANGETYPE_NEW = "new";
+		public static final String STORYDESIGN_CHANGETYPE_DELETE = "delete";
+		public static final String STORYDESIGN_CHANGETYPE_PATCH = "patch";
+		public static final String STORYDESIGN_CHANGETYPE_PUT = "put";
 
 
 }
