@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,6 +13,14 @@ import java.util.Set;
 
 public class HAPBasicUtility {
 
+	public static List toList(Map map){
+		List out = new ArrayList();
+		for(Object item : map.values()) {
+			out.add(item);
+		}
+		return out;
+	}
+	
 	public static String addVersionToUrl(String url, String version) {
 		return url+"?version="+version;
 	}

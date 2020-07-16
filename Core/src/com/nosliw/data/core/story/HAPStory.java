@@ -25,6 +25,7 @@ public interface HAPStory extends HAPEntityInfo{
 	public static final String CONNECTIONGROUP = "connectionGroup";
 	
 	String getShowType();
+	void setShowType(String showType);
 	
 	Set<HAPStoryNode> getNodes();
 	HAPStoryNode getNode(String id);

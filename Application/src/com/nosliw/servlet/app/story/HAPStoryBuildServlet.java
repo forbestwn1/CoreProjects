@@ -6,17 +6,22 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.design.HAPChangeItem;
 import com.nosliw.data.core.story.design.HAPDesignStory;
+import com.nosliw.data.core.story.design.HAPParserChange;
 import com.nosliw.data.core.story.design.HAPRequestChange;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.servlet.core.HAPInitServlet;
 
 @HAPEntityWithAttribute
 public class HAPStoryBuildServlet extends HAPServiceServlet{
+
+	@HAPAttribute
+	public static final String COMMAND_GETDESIGN = "getDesign";
+	@HAPAttribute
+	public static final String COMMAND_GETDESIGN_ID = "id";
 
 	@HAPAttribute
 	public static final String COMMAND_NEWDESIGN = "newDesign";
@@ -38,6 +43,13 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 		HAPManagerStory storyManager = env.getStoryManager();
 		
 		switch(command){
+		case COMMAND_GETDESIGN:
+		{
+			String designId = parms.optString(COMMAND_GETDESIGN_ID);
+			HAPDesignStory design = storyManager.getStoryDesign(designId);
+			out = HAPServiceData.createSuccessData(design);
+			break;
+		}
 		case COMMAND_NEWDESIGN:
 		{
 			String directorId = parms.optString(COMMAND_NEWDESIGN_DIRECTORID);
@@ -53,8 +65,7 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 			JSONArray changeArray = parms.optJSONArray(COMMAND_DESIGN_CHANGE);
 			for(int i=0; i<changeArray.length(); i++) {
 				JSONObject changeObj = changeArray.getJSONObject(i);
-				HAPChangeItem changeItem = new HAPChangeItem();
-				changeItem.buildObject(changeObj, HAPSerializationFormat.JSON);
+				HAPChangeItem changeItem = HAPParserChange.parseChangeItem(changeObj);
 				changeRequest.addChangeItem(changeItem);
 			}
 			out = storyManager.designStory(designId, changeRequest);

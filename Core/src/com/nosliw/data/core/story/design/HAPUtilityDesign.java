@@ -2,6 +2,7 @@ package com.nosliw.data.core.story.design;
 
 import java.util.List;
 
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
@@ -21,17 +22,19 @@ public class HAPUtilityDesign {
 	}
 	
 	public static HAPDesignStory readStoryDesign(String id) {
-		//read content
-		String file = HAPSystemFolderUtility.getStoryDesignFolder()+id+".design";
 		//parse content
-		HAPDesignStory out = HAPParserStoryDesign.parseFile(file);
+		HAPDesignStory out = HAPParserStoryDesign.parseFile(getStoryDesignFile(id));
 		return out;
 	}
 	
 	public static void saveStoryDesign(HAPDesignStory storyDesign) {
 		//read content
-		String file = HAPSystemFolderUtility.getStoryDesignFolder()+storyDesign.getId()+".design";
-		HAPFileUtility.writeFile(file, storyDesign.toStringValue(HAPSerializationFormat.JSON));
+		HAPFileUtility.writeFile(getStoryDesignFile(storyDesign.getId()), HAPJsonUtility.formatJson(storyDesign.toStringValue(HAPSerializationFormat.JSON)));
+	}
+	
+	private static String getStoryDesignFile(String id) {
+		String file = HAPSystemFolderUtility.getStoryDesignFolder()+id+"/design.json";
+		return file;
 	}
 	
 }

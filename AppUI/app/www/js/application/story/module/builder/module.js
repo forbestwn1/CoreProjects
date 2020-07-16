@@ -16,31 +16,33 @@ var packageObj = library.getChildPackage();
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
 	var node_createEventObject;
-	var node_createUINode;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_mduleName = "userApps";
+var loc_mduleName = "storyBuilder";
 
-var node_createModulePage = function(parm){
+var node_createModuleStoryBuilder = function(parm){
 
 	var loc_root = parm;
 
+	var loc_storyService = node_createStoryService();
+	
+	var loc_story;
+	var loc_changeHistory;
+	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
+	
+	
 	var loc_componentData = {
 		page : {}
 	};
 	
 	var loc_vue;
 
-	var loc_triggerEvent = function(eventName, eventData, request){
-		if(request==undefined)  request = node_createServiceRequestInfoCommon();
-		loc_eventSource.triggerEvent(eventName, eventData, request);
-	};
-	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
+/*		
 		Vue.component('story-uinode', node_createUINode());
 		loc_vue = new Vue({
 			el: loc_root,
@@ -66,27 +68,37 @@ var node_createModulePage = function(parm){
 				    </div>
 				`
 		});
-		
+*/		
 	};
 
+	var loc_processChange = function(change){
+		
+	};
+	
+	var loc_processQuestion = function(question){
+		
+	};
+	
 	var loc_out = {
 		
-		refreshRequest : function(pageTree, handlers, requestInfo){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshPageModule", {}), handlers, requestInfo);
-			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshPageModule", {}), 
-				function(requestInfo){
-					loc_componentData.page = pageTree;
-				})); 
+		refreshRequest : function(undefined, handlers, requestInfo){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshStoryBuilderModule", {}), handlers, requestInfo);
+			
+			out.addRequest(loc_storyService.getNewDesignRequest(undefined, "pageSimple", {
+				success : function(request, design){
+					loc_story = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
+					var changeHistory = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_CHANGEHISTORY];
+					var changeBatch = changeHistory[changeHistory.length-1];
+					_.each(changeBatch[node_COMMONATRIBUTECONSTANT.CHANGEBATCH_CHANGES], function(change){
+						loc_processChange(change);
+					});
+					
+					loc_processQuestion(changeBatch[node_COMMONATRIBUTECONSTANT.CHANGEBATCH_QUESTION]);
+				}
+			}));
 			return out;
 		},
 
-		getMiniApp : function(appId){
-			var app = _.find(loc_vue.group.miniApp, function(app, i){
-				return app.id==appId;
-			});
-			return app;
-		},
-		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
@@ -112,10 +124,9 @@ nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
-nosliw.registerSetNodeDataEvent("application.story.module.page.createUINode", function(){node_createUINode = this.getData();});
-
+nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryService", function(){node_createStoryService = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createModulePage", node_createModulePage); 
+packageObj.createChildNode("createModuleStoryBuilder", node_createModuleStoryBuilder); 
 
 })(packageObj);

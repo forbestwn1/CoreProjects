@@ -22,11 +22,11 @@ var node_createLoginService = function(){
 		nosliw.runtime.getRemoteService().registerSyncTaskConfigure(loc_configureName, configure);
 	});
 
-	loc_getLoginRequest : function(userInfo, handlers, requester_parent){
+	var loc_getLoginRequest = function(userInfo, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.MINIAPPSERVLET_COMMAND_LOGIN, userInfo), undefined, handlers, requestInfo);
 		return remoteRequest;
-	},
+	};
 
 	var loc_out = {
 

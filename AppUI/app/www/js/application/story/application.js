@@ -83,13 +83,14 @@ var node_createApplication = function(){
 	
 	var loc_refreshRequest = function(design, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(loc_storyService.getNewDesignRequest(undefined, "page_minimum", undefined, {
+		out.addRequest(loc_storyService.getGetDesignRequest(undefined, "page_minimum", {
 			success : function(request, design){
 				loc_design = design;
-				var story = loc_design[node_COMMONATRIBUTECONSTANT.NEWDESIGN_STORY];
+//				var story = loc_design[node_COMMONATRIBUTECONSTANT.NEWDESIGN_STORY];
 				var pageModule = loc_modules["page"];
 				var uiModule = loc_modules["ui"];
 				var overviewModule = loc_modules["overview"];
+				var storyBuilderModule = loc_modules["builder"];
 				if(pageModule!=undefined){
 					var pageTree = node_storyUtility.buildPageTree(story);
 					return pageModule.refreshRequest(pageTree);
@@ -99,6 +100,9 @@ var node_createApplication = function(){
 				}
 				if(overviewModule!=undefined){
 					return overviewModule.refreshRequest(story);
+				}
+				if(storyBuilderModule!=undefined){
+					return storyBuilderModule.refreshRequest();
 				}
 			}
 		}));
@@ -112,7 +116,7 @@ var node_createApplication = function(){
 	};
 	
 	var loc_out = {
-		getMiniAppService(){  return loc_miniAppService; },
+		getStoryService(){  return loc_storyService; },
 
 		getLoginRequest(userInfo, handlers, request){  
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);

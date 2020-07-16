@@ -23,6 +23,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	
 	@Override
 	public void initDesign(HAPDesignStory design) {
+		design.getStory().setShowType(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
+		
 		HAPStoryNodeImp serviceNode = new HAPStoryNodeImp(HAPConstant.STORYNODE_TYPE_SERVICE, design.getNextId());
 		design.getStory().addNode(serviceNode);
 		

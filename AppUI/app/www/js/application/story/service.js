@@ -32,6 +32,21 @@ var node_createStoryService = function(){
 	
 	loc_out = {
 
+		getGetDesignRequest : function(userInfo, designId, handlers, requester_parent){
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getDesign", {}), handlers, requestInfo);
+			
+			var parms = {};
+			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_GETDESIGN_ID] = designId;
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_GETDESIGN, parms), undefined, {
+				success : function(requestInfo, design){
+					return design;
+				}
+			}, requestInfo);
+			out.addRequest(remoteRequest);
+			return out;
+		},
+			
 		getNewDesignRequest : function(userInfo, directorId, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("newDesign", {}), handlers, requestInfo);

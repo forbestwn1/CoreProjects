@@ -22,6 +22,8 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	
 	@Override
 	public String getShowType() {   return this.m_story.getShowType();  }
+	@Override
+	public void setShowType(String showType) {  this.m_story.setShowType(showType);	}
 
 	@Override
 	public Set<HAPStoryNode> getNodes() {  return this.m_story.getNodes(); }
@@ -51,6 +53,12 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		this.m_story.buildJsonMap(jsonMap, typeJsonMap);
+	}
+
+	@Override
+	public void addNode(HAPStoryNode node) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

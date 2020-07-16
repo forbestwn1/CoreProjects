@@ -36,13 +36,15 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 	
 	private List<HAPChangeBatch> m_changeHistory;
 	
-	public HAPDesignStory() {}
-	
-	public HAPDesignStory(String designId, String directorId) {
-		this.setId(designId);
-		this.m_directorId = directorId;
+	public HAPDesignStory() {
 		this.m_story = new HAPStoryImp();
 		this.m_changeHistory = new ArrayList<HAPChangeBatch>();
+	}
+	
+	public HAPDesignStory(String designId, String directorId) {
+		this();
+		this.setId(designId);
+		this.m_directorId = directorId;
 	}
 	
 	public String getDirectorId() {	return this.m_directorId;	}
@@ -76,6 +78,7 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 			JSONObject changeHistoryItem = changeHistoryArray.getJSONObject(i);
 			HAPChangeBatch changeItem = new HAPChangeBatch();
 			changeItem.buildObject(changeHistoryItem, HAPSerializationFormat.JSON);
+			this.m_changeHistory.add(changeItem);
 		}
 		
 		return true;  
