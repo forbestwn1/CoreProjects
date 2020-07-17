@@ -8,6 +8,7 @@ import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
 import com.nosliw.data.core.story.HAPConnection;
 import com.nosliw.data.core.story.HAPConnectionGroup;
 import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryImp;
 import com.nosliw.data.core.story.HAPStoryNode;
 
@@ -24,6 +25,9 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	public String getShowType() {   return this.m_story.getShowType();  }
 	@Override
 	public void setShowType(String showType) {  this.m_story.setShowType(showType);	}
+
+	@Override
+	public HAPStoryElement getElement(String categary, String id) {  return this.m_story.getElement(categary, id);  }
 
 	@Override
 	public Set<HAPStoryNode> getNodes() {  return this.m_story.getNodes(); }

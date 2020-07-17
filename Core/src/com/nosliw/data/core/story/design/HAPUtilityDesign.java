@@ -29,7 +29,7 @@ public class HAPUtilityDesign {
 	
 	public static void saveStoryDesign(HAPDesignStory storyDesign) {
 		//read content
-		HAPFileUtility.writeFile(getStoryDesignFile(storyDesign.getId()), HAPJsonUtility.formatJson(storyDesign.toStringValue(HAPSerializationFormat.JSON)));
+		HAPFileUtility.writeFile(getStoryDesignFile(storyDesign.getId()), HAPJsonUtility.formatJson(storyDesign.toStringValue(HAPSerializationFormat.JSON_FULL)));
 	}
 	
 	private static String getStoryDesignFile(String id) {

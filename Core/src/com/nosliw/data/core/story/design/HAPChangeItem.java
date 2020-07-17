@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.data.core.story.HAPStory;
 
 @HAPEntityWithAttribute
 public abstract class HAPChangeItem extends HAPEntityInfoImp{
@@ -26,6 +27,8 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 	
 	private String m_targetId;
 
+	private HAPStory m_story;
+	
 	public HAPChangeItem() {}
 	
 	public HAPChangeItem(String changeType, String targetCategary, String targetId) {
@@ -39,6 +42,9 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 	public String getTargetCategary() {   return this.m_targetCategary;   }
 	
 	public String getTargetId() {   return this.m_targetId;    }
+	
+	public void setStory(HAPStory story) {    this.m_story = story;    }
+	protected HAPStory getStory() {    return this.m_story;    }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

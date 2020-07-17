@@ -7,6 +7,7 @@ var packageObj = library.getChildPackage();
 (function(packageObj){
 	//get used node
 	var node_CONSTANT;
+	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSequence;
@@ -71,8 +72,8 @@ var node_createModuleStoryBuilder = function(parm){
 */		
 	};
 
-	var loc_processChange = function(change){
-		
+	var loc_processChangeItem = function(changeItem){
+		node_storyChangeUtility.applyChange(loc_story, changeItem);
 	};
 	
 	var loc_processQuestion = function(question){
@@ -89,8 +90,8 @@ var node_createModuleStoryBuilder = function(parm){
 					loc_story = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
 					var changeHistory = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_CHANGEHISTORY];
 					var changeBatch = changeHistory[changeHistory.length-1];
-					_.each(changeBatch[node_COMMONATRIBUTECONSTANT.CHANGEBATCH_CHANGES], function(change){
-						loc_processChange(change);
+					_.each(changeBatch[node_COMMONATRIBUTECONSTANT.CHANGEBATCH_CHANGES], function(changeItem){
+						loc_processChangeItem(changeItem);
 					});
 					
 					loc_processQuestion(changeBatch[node_COMMONATRIBUTECONSTANT.CHANGEBATCH_QUESTION]);
@@ -115,6 +116,7 @@ var node_createModuleStoryBuilder = function(parm){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});

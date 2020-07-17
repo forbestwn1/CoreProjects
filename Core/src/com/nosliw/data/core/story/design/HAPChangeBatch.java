@@ -12,6 +12,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.story.HAPStory;
 
 @HAPEntityWithAttribute
 public class HAPChangeBatch extends HAPEntityInfoImp{
@@ -25,7 +26,8 @@ public class HAPChangeBatch extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String QUESTION = "question";
 
-
+	private HAPStory m_story;
+	
 	private List<HAPChangeItem> m_initialChange;
 	
 	private List<HAPChangeItem> m_changes;
@@ -37,9 +39,23 @@ public class HAPChangeBatch extends HAPEntityInfoImp{
 		this.m_changes = new ArrayList<HAPChangeItem>();
 	}
 	
-	public void addChange(HAPChangeItem changeItem) {	this.m_changes.add(changeItem);	}
+	public void addChange(HAPChangeItem changeItem) {
+		changeItem.setStory(m_story);
+		this.m_initialChange.add(changeItem);	
+	}
+	
+	public void addInitialChange(HAPChangeItem changeItem) {
+		changeItem.setStory(m_story);
+		this.m_changes.add(changeItem);	
+	}
 	
 	public void setQuestion(HAPQuestionGroup question) {	this.m_question = question; 	}
+	
+	public void setStory(HAPStory story) {    
+		this.m_story = story;
+		for(HAPChangeItem change : this.m_initialChange)   change.setStory(m_story);
+		for(HAPChangeItem change : this.m_changes)  change.setStory(m_story);
+	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -50,14 +66,14 @@ public class HAPChangeBatch extends HAPEntityInfoImp{
 		for(int i=0; i<initChangeArray.length(); i++) {
 			JSONObject changeJson = initChangeArray.getJSONObject(i);
 			HAPChangeItem changeItem = HAPParserChange.parseChangeItem(changeJson);
-			this.m_initialChange.add(changeItem);
+			this.addInitialChange(changeItem);
 		}
 		
 		JSONArray changeArray = jsonObj.getJSONArray(CHANGES);
 		for(int i=0; i<changeArray.length(); i++) {
 			JSONObject changeJson = changeArray.getJSONObject(i);
 			HAPChangeItem changeItem = HAPParserChange.parseChangeItem(changeJson);
-			this.m_changes.add(changeItem);
+			this.addChange(changeItem);
 		}
 		
 		JSONObject questionJson = jsonObj.getJSONObject(QUESTION);
@@ -73,5 +89,4 @@ public class HAPChangeBatch extends HAPEntityInfoImp{
 		jsonMap.put(CHANGES, HAPJsonUtility.buildJson(this.m_changes, HAPSerializationFormat.JSON));
 		jsonMap.put(QUESTION, HAPJsonUtility.buildJson(this.m_question, HAPSerializationFormat.JSON));
 	}
-
 }

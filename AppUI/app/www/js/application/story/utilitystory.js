@@ -14,26 +14,16 @@ var packageObj = library.getChildPackage();
  */
 var node_utility = function(){
 
-	var loc_buildUINode = function(storyNode, story){
-		var uiNode = node_createUINode(storyNode[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], story);
-		var childStoryNodes = loc_out.getAllChildNodes(storyNode, story);
-		_.each(childStoryNodes, function(childStroyNode, childId){
-			var childUINode = loc_buildUINode(childStroyNode, story);
-			uiNode.addChild(childUINode, childId);
-		});
-		return uiNode;
-	};
-	
 	var loc_out = {
 		
-		buildPageTree : function(story){
-			var pageNode = this.getStoryNodeByType(story, node_COMMONCONSTANT.STORYNODE_TYPE_PAGE)[0];
-			return loc_buildUINode(pageNode, story);
-		},	
-		
-		buildUINode : function(storyNodeId, story){
-			var storyNode = this.getNodeById(story, storyNodeId);
-			return loc_buildUINode(storyNode, story);
+		addStoryElement : function(story, elementCategary, element){
+			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){
+				story[node_COMMONATRIBUTECONSTANT.STORY_NODE][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
+			}
+			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
+				story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
+			}
+			
 		},
 			
 		getStoryNodeByType : function(story, nodeType) {
@@ -115,10 +105,8 @@ var node_utility = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("application.instance.story.entity.createUINode", function(){node_createUINode = this.getData();});
-
 
 //Register Node by Name
-packageObj.createChildNode("utility", node_utility); 
+packageObj.createChildNode("storyUtility", node_utility); 
 
 })(packageObj);

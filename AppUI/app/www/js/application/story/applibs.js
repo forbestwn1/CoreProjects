@@ -9,7 +9,9 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 		basePath : nosliwApplication.info.application.appFolder,
 		libs : [
 			"entity.js",
-			"utility.js",
+			"utilitystory.js",
+			"utilitystoryui.js",
+			"utilitystorychange.js",
 		]
 	});
 	

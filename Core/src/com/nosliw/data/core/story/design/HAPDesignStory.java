@@ -61,7 +61,10 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 		return index + "";	
 	}
 	
-	public void addChangeBatch(HAPChangeBatch changeBatch) {    this.m_changeHistory.add(changeBatch);     }
+	public void addChangeBatch(HAPChangeBatch changeBatch) {
+		changeBatch.setStory(this.m_story);
+		this.m_changeHistory.add(changeBatch);     
+	}
 	
 	public List<HAPChangeBatch> getChangeHistory(){    return this.m_changeHistory;    }
 	
@@ -76,14 +79,21 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 		JSONArray changeHistoryArray = jsonObj.optJSONArray(CHANGEHISTORY);
 		for(int i=0; i<changeHistoryArray.length(); i++) {
 			JSONObject changeHistoryItem = changeHistoryArray.getJSONObject(i);
-			HAPChangeBatch changeItem = new HAPChangeBatch();
-			changeItem.buildObject(changeHistoryItem, HAPSerializationFormat.JSON);
-			this.m_changeHistory.add(changeItem);
+			HAPChangeBatch changeBatch = new HAPChangeBatch();
+			changeBatch.buildObject(changeHistoryItem, HAPSerializationFormat.JSON);
+			this.addChangeBatch(changeBatch);
 		}
-		
 		return true;  
 	}
 	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(DIRECTORID, this.m_directorId);
+		jsonMap.put(STORY, this.m_story.toStringValue(HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(CHANGEHISTORY, HAPJsonUtility.buildJson(this.m_changeHistory, HAPSerializationFormat.JSON));
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -91,5 +101,4 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 		jsonMap.put(STORY, this.m_story.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(CHANGEHISTORY, HAPJsonUtility.buildJson(this.m_changeHistory, HAPSerializationFormat.JSON));
 	}
-	
 }
