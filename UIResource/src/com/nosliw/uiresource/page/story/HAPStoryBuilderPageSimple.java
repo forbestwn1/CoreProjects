@@ -35,8 +35,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		changeBatch.addChange(changeItem);
 		
 		//extra info
-		HAPQuestionGroup groupExtraInfo = new HAPQuestionGroup();
-		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem(serviceNode.getId());
+		HAPQuestionGroup groupExtraInfo = new HAPQuestionGroup("Please select service.");
+		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("select service", HAPConstant.STORYELEMENT_CATEGARY_NODE, serviceNode.getId());
 		groupExtraInfo.addItem(serviceItemExtraInfo);
 		changeBatch.setQuestion(groupExtraInfo);
 		

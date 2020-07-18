@@ -677,4 +677,9 @@ public class HAPConstant {
 		public static final String STORYDESIGN_CHANGETYPE_PUT = "put";
 
 
+
+		public static final String STORYDESIGN_QUESTIONTYPE_GROUP = "group";
+		public static final String STORYDESIGN_QUESTIONTYPE_ITEM = "item";
+
+
 }

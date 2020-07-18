@@ -733,6 +733,9 @@
 			<definition name="STORYDESIGN_CHANGETYPE_PATCH" value="patch"/>
 			<definition name="STORYDESIGN_CHANGETYPE_PUT" value="put"/>
 			
+			<definition type="space"/>
+			<definition name="STORYDESIGN_QUESTIONTYPE_GROUP" value="group"/>
+			<definition name="STORYDESIGN_QUESTIONTYPE_ITEM" value="item"/>
 		</definitions>
 	</constants>
 </root>

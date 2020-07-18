@@ -33,8 +33,6 @@ var node_createModuleStoryBuilder = function(parm){
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
-	
-	
 	var loc_componentData = {
 		page : {}
 	};

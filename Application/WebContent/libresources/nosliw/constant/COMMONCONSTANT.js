@@ -419,7 +419,9 @@ var COMMONCONSTANT=
   "STORYDESIGN_CHANGETYPE_NEW": "new",
   "STORYDESIGN_CHANGETYPE_DELETE": "delete",
   "STORYDESIGN_CHANGETYPE_PATCH": "patch",
-  "STORYDESIGN_CHANGETYPE_PUT": "put"
+  "STORYDESIGN_CHANGETYPE_PUT": "put",
+  "STORYDESIGN_QUESTIONTYPE_GROUP": "group",
+  "STORYDESIGN_QUESTIONTYPE_ITEM": "item"
 };
 
 //*******************************************   End Node Definition  ************************************** 	
