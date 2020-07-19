@@ -17,6 +17,10 @@ var packageObj = library.getChildPackage();
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
 	var node_createEventObject;
+	var node_createComponentQuestionStep;
+	var node_createComponentQuestionGroup;
+	var node_createComponentQuestionItem;
+	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "storyBuilder";
@@ -41,8 +45,11 @@ var node_createModuleStoryBuilder = function(parm){
 
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
-/*		
-		Vue.component('story-uinode', node_createUINode());
+		
+		Vue.component('question-step', node_createComponentQuestionStep());
+		Vue.component('question-group', node_createComponentQuestionGroup());
+		Vue.component('question-item', node_createComponentQuestionItem());
+		
 		loc_vue = new Vue({
 			el: loc_root,
 			data: loc_componentData,
@@ -61,21 +68,32 @@ var node_createModuleStoryBuilder = function(parm){
 			template :
 				`
 				    <div class="block">
-						<story-uinode 
+						<question-step 
 							v-bind:data="page"
 						></story-uinode>
 				    </div>
 				`
 		});
-*/		
 	};
 
 	var loc_processChangeItem = function(changeItem){
 		node_storyChangeUtility.applyChange(loc_story, changeItem);
 	};
 	
-	var loc_processQuestion = function(question){
-		
+	var loc_processQuestion = function(question, story){
+		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
+		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
+			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
+			_.each(children, function(child, i){
+				loc_processQuestion(child, story);
+			});
+		}
+		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
+			var targetCategary = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY];
+			var targetId = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID];
+			var element = node_storyUtility.getStoryElement(story, targetCategary, targetId);
+			question.element = element;
+		}
 	};
 	
 	var loc_out = {
@@ -125,6 +143,9 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryService", function(){node_createStoryService = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.service.createComponentQuestionStep", function(){node_createComponentQuestionStep = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.service.createComponentQuestionGroup", function(){node_createComponentQuestionGroup = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.service.createComponentQuestionItem", function(){node_createComponentQuestionItem = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleStoryBuilder", node_createModuleStoryBuilder); 

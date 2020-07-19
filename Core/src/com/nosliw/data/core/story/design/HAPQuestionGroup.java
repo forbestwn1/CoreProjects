@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPConstant;
 public class HAPQuestionGroup extends HAPQuestion{
 
 	@HAPAttribute
-	public static final String ITEMS = "items";
+	public static final String CHILDREN = "children";
 
 	private List<HAPQuestion> m_items;
 
@@ -38,7 +38,7 @@ public class HAPQuestionGroup extends HAPQuestion{
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
 		
-		JSONArray itemArray = jsonObj.getJSONArray(ITEMS);
+		JSONArray itemArray = jsonObj.getJSONArray(CHILDREN);
 		for(int i=0; i<itemArray.length(); i++) {
 			HAPQuestion question = HAPQuestion.parseQuestion(itemArray.getJSONObject(i));
 			this.addItem(question);
@@ -49,6 +49,6 @@ public class HAPQuestionGroup extends HAPQuestion{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ITEMS, HAPJsonUtility.buildJson(this.m_items, HAPSerializationFormat.JSON));
+		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.m_items, HAPSerializationFormat.JSON));
 	}
 }

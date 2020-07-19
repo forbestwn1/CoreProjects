@@ -23,9 +23,19 @@ var node_utility = function(){
 			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
 				story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
 			}
-			
 		},
-			
+
+		getStoryElement : function(story, elementCategary, elementId){
+			var out;
+			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){
+				out = this.getNodeById(story, elementId);
+			}
+			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
+				out = this.getConnectionById(story, elementId);
+			}
+			return out;
+		},
+		
 		getStoryNodeByType : function(story, nodeType) {
 			var out = [];
 			_.each(story[node_COMMONATRIBUTECONSTANT.STORY_NODE], function(node, id){
