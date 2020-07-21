@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 
 public class HAPConnectionImp extends HAPStoryElementImp implements HAPConnection{
 
@@ -14,10 +15,10 @@ public class HAPConnectionImp extends HAPStoryElementImp implements HAPConnectio
 	private HAPConnectionEnd m_end2;
 	
 	public HAPConnectionImp(String type, String id) {
-		super(type, id);
+		super(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION, type, id);
 	}
 
-	public HAPConnectionImp() {}
+	public HAPConnectionImp() {  super(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION);  }
 
 	@Override
 	public HAPConnectionEnd getEnd1() {  return this.m_end1;  }

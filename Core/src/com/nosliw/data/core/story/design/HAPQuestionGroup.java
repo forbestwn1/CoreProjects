@@ -17,20 +17,20 @@ public class HAPQuestionGroup extends HAPQuestion{
 	@HAPAttribute
 	public static final String CHILDREN = "children";
 
-	private List<HAPQuestion> m_items;
+	private List<HAPQuestion> m_children;
 
 	public HAPQuestionGroup() {}
 	
 	public HAPQuestionGroup(String question) {
 		super(question);
-		this.m_items = new ArrayList<HAPQuestion>();
+		this.m_children = new ArrayList<HAPQuestion>();
 	}
 
 	@Override
 	public String getType() {	return HAPConstant.STORYDESIGN_QUESTIONTYPE_GROUP;	}
 
-	public void addItem(HAPQuestion item) {
-		this.m_items.add(item);
+	public void addChild(HAPQuestion item) {
+		this.m_children.add(item);
 	}
 	
 	@Override
@@ -38,10 +38,12 @@ public class HAPQuestionGroup extends HAPQuestion{
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
 		
-		JSONArray itemArray = jsonObj.getJSONArray(CHILDREN);
-		for(int i=0; i<itemArray.length(); i++) {
-			HAPQuestion question = HAPQuestion.parseQuestion(itemArray.getJSONObject(i));
-			this.addItem(question);
+		JSONArray itemArray = jsonObj.optJSONArray(CHILDREN);
+		if(itemArray!=null) {
+			for(int i=0; i<itemArray.length(); i++) {
+				HAPQuestion question = HAPQuestion.parseQuestion(itemArray.getJSONObject(i));
+				this.addChild(question);
+			}
 		}
 		return true;  
 	}
@@ -49,6 +51,6 @@ public class HAPQuestionGroup extends HAPQuestion{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.m_items, HAPSerializationFormat.JSON));
+		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.m_children, HAPSerializationFormat.JSON));
 	}
 }

@@ -8,17 +8,19 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 
 public class HAPStoryNodeImp extends HAPStoryElementImp implements HAPStoryNode{
 
 	private Set<String> m_connections;
 	
 	public HAPStoryNodeImp() {
+		super(HAPConstant.STORYELEMENT_CATEGARY_NODE);
 		this.m_connections = new HashSet<String>();
 	}
 
 	public HAPStoryNodeImp(String type, String id) {
-		super(type, id);
+		super(HAPConstant.STORYELEMENT_CATEGARY_NODE, type, id);
 	}
 	
 	@Override

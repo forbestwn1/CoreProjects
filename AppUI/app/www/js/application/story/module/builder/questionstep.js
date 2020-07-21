@@ -19,11 +19,36 @@ var node_createComponentQuestionStep = function(){
 		components : {
 		},
 		methods : {
+			onPrevious : function(event) {
+				this.$emit("previousStep");
+			},
+			onNext : function(event) {
+				this.$emit("nextStep");
+			},
+			onFinish : function(event) {
+				this.$emit("finishStep");
+			},
 		},
 		template : `
 			<div>
-				<question-group v-bind:data="question">
+				<br>
+		    	QuestionStep
+				<br>
+				<question-group v-bind:data="data">
 				</question-group>
+
+				<br>
+				<a v-on:click.prevent="onPrevious">Previous</a>
+				<br>
+
+				<br>
+				<a v-on:click.prevent="onNext">Next</a>
+				<br>
+
+				<br>
+				<a v-on:click.prevent="onFinish">Finish</a>
+				<br>
+				
 			</div>
 		`
 	};

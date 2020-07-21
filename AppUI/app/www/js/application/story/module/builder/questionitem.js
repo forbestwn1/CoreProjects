@@ -7,6 +7,7 @@ var packageObj = library.getChildPackage();
 (function(packageObj){
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
+	var node_createComponentQuestionItemService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createComponentQuestionItem = function(){
@@ -17,8 +18,7 @@ var node_createComponentQuestionItem = function(){
 		},
 		props : ['data'],
 		components : {
-			"group" : node_createComponentGroup(),
-			"mini-app" : node_createComponentMiniApp()
+			'question-item-service': node_createComponentQuestionItemService()
 		},
 		methods : {
 			onSelectMiniApp : function(miniAppId) {
@@ -26,24 +26,10 @@ var node_createComponentQuestionItem = function(){
 			},
 		},
 		template : `
-			<div class="list accordion-list">
-				<ul>
-					<group 
-						v-for="miniAppGroup in data.groupMiniApp"
-						v-bind:key="miniAppGroup.group.id"
-						v-bind:data="miniAppGroup"
-						v-on:selectMiniApp="onSelectMiniApp"
-					>
-					</group>
-				
-					<mini-app 
-						v-for="miniApp in data.miniApp"
-						v-bind:key="miniApp.id"
-						v-bind:data="miniApp"
-						v-on:selectMiniApp="onSelectMiniApp"
-					>
-					</mini-app>
-				</ul>
+			<div>
+				<question-item-service v-if="data.element.type=='service'" v-bind:data="data"/>
+			
+				QuestionItem
 			</div>
 		`
 	};
@@ -55,6 +41,7 @@ var node_createComponentQuestionItem = function(){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionItemService", function(){node_createComponentQuestionItemService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentQuestionItem", node_createComponentQuestionItem); 

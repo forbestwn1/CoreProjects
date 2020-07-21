@@ -8,6 +8,9 @@ import com.nosliw.common.info.HAPEntityInfo;
 public interface HAPStoryElement extends HAPEntityInfo{
 
 	@HAPAttribute
+	public static final String CATEGARY = "categary";
+	
+	@HAPAttribute
 	public static final String TYPE = "type";
 
 	@HAPAttribute
@@ -16,6 +19,8 @@ public interface HAPStoryElement extends HAPEntityInfo{
 	@HAPAttribute
 	public static final String STATUS = "status";
 
+	String getCategary();
+	
 	String getType();
 
 	//core data

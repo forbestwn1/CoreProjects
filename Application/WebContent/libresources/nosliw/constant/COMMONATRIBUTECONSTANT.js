@@ -514,6 +514,7 @@ var COMMONATRIBUTECONSTANT=
   "STORY_NODE": "node",
   "STORY_CONNECTION": "connection",
   "STORY_CONNECTIONGROUP": "connectionGroup",
+  "STORYELEMENT_CATEGARY": "categary",
   "STORYELEMENT_TYPE": "type",
   "STORYELEMENT_ENTITY": "entity",
   "STORYELEMENT_STATUS": "status",

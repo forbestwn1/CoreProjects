@@ -51,6 +51,10 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 			libs : [
 				"0_package.js",
 				"module.js",
+				"questionstep.js",
+				"questiongroup.js",
+				"questionitem.js",
+				"questionitemservice.js",
 			]
 		});
 	}

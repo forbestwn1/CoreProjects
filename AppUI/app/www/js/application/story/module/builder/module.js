@@ -20,6 +20,7 @@ var packageObj = library.getChildPackage();
 	var node_createComponentQuestionStep;
 	var node_createComponentQuestionGroup;
 	var node_createComponentQuestionItem;
+	var node_storyUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -38,7 +39,7 @@ var node_createModuleStoryBuilder = function(parm){
 	var loc_eventListener = node_createEventObject();
 
 	var loc_componentData = {
-		page : {}
+		question : {}
 	};
 	
 	var loc_vue;
@@ -56,21 +57,27 @@ var node_createModuleStoryBuilder = function(parm){
 			components : {
 			},
 			computed : {
-				user : function(){
-					return this.userInfo.user;
-				},
 			},
 			methods : {
-				onSelectNode : function(miniApp) {
-					loc_triggerEvent("select", node_createMiniAppInfo(miniApp));
+				onPreviousStep : function(event) {
+				},
+				onNextStep : function(event) {
+				},
+				onFinishStep : function(event) {
 				},
 			},
 			template :
 				`
 				    <div class="block">
+						<br>
+				    	QuestionModule
+						<br>
 						<question-step 
-							v-bind:data="page"
-						></story-uinode>
+							v-bind:data="question"
+					  		v-on:previousStep="onPreviousStep"
+					  		v-on:nextStep="onNextStep"
+					  		v-on:finishStep="onFinishStep"
+						></question-step>
 				    </div>
 				`
 		});
@@ -80,18 +87,18 @@ var node_createModuleStoryBuilder = function(parm){
 		node_storyChangeUtility.applyChange(loc_story, changeItem);
 	};
 	
-	var loc_processQuestion = function(question, story){
+	var loc_processQuestion = function(question){
 		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
 			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
 			_.each(children, function(child, i){
-				loc_processQuestion(child, story);
+				loc_processQuestion(child, loc_story);
 			});
 		}
 		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
 			var targetCategary = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY];
 			var targetId = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID];
-			var element = node_storyUtility.getStoryElement(story, targetCategary, targetId);
+			var element = node_storyUtility.getStoryElement(loc_story, targetCategary, targetId);
 			question.element = element;
 		}
 	};
@@ -110,7 +117,10 @@ var node_createModuleStoryBuilder = function(parm){
 						loc_processChangeItem(changeItem);
 					});
 					
-					loc_processQuestion(changeBatch[node_COMMONATRIBUTECONSTANT.CHANGEBATCH_QUESTION]);
+					var question = changeBatch[node_COMMONATRIBUTECONSTANT.CHANGEBATCH_QUESTION];
+					loc_processQuestion(question);
+					
+					loc_componentData.question = question;
 				}
 			}));
 			return out;
@@ -143,9 +153,12 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryService", function(){node_createStoryService = this.getData();});
-nosliw.registerSetNodeDataEvent("application.instance.story.service.createComponentQuestionStep", function(){node_createComponentQuestionStep = this.getData();});
-nosliw.registerSetNodeDataEvent("application.instance.story.service.createComponentQuestionGroup", function(){node_createComponentQuestionGroup = this.getData();});
-nosliw.registerSetNodeDataEvent("application.instance.story.service.createComponentQuestionItem", function(){node_createComponentQuestionItem = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionStep", function(){node_createComponentQuestionStep = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionGroup", function(){node_createComponentQuestionGroup = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionItem", function(){node_createComponentQuestionItem = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
+
+
 
 //Register Node by Name
 packageObj.createChildNode("createModuleStoryBuilder", node_createModuleStoryBuilder); 

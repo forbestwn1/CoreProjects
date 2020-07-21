@@ -25,8 +25,11 @@ var node_utility = function(){
 			if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW){
 				loc_appChangeNew(story, changeItem);
 			}
-		}
+		},
+		
+		createChangeItemPatch : function(element, path, value){
 			
+		},
 	};		
 			
 	return loc_out;

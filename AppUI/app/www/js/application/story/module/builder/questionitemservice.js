@@ -7,43 +7,60 @@ var packageObj = library.getChildPackage();
 (function(packageObj){
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
+	var node_storyChangeUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createComponentQuestionItem = function(){
+var node_createComponentQuestionItemService = function(availableService){
 
+	var loc_availableService = availableService;
+	
+	loc_availableService = [
+		{
+			id : 'TestTemplateService',
+			name : 'TestTemplateService'
+		},
+		{
+			id : 'schoolService',
+			name : 'schoolService'
+		}
+	];
+	
 	var loc_vueComponent = {
 		data : function(){
-			return {};
+			return {
+				allService : loc_availableService
+			};
 		},
 		props : ['data'],
 		components : {
-			"group" : node_createComponentGroup(),
-			"mini-app" : node_createComponentMiniApp()
 		},
 		methods : {
 			onSelectMiniApp : function(miniAppId) {
 				this.$emit("selectMiniApp", miniAppId);
 			},
 		},
-		template : `
-			<div class="list accordion-list">
-				<ul>
-					<group 
-						v-for="miniAppGroup in data.groupMiniApp"
-						v-bind:key="miniAppGroup.group.id"
-						v-bind:data="miniAppGroup"
-						v-on:selectMiniApp="onSelectMiniApp"
-					>
-					</group>
+		computed: {
+			serviceId : {
+				get : function(){
+					return this.data.element.entity.referenceId;
+				},
 				
-					<mini-app 
-						v-for="miniApp in data.miniApp"
-						v-bind:key="miniApp.id"
-						v-bind:data="miniApp"
-						v-on:selectMiniApp="onSelectMiniApp"
-					>
-					</mini-app>
-				</ul>
+				set : function(serviceId){
+					var changeItem = node_storyChangeUtility.createChangeItemPatch(data.element, "entity.referenceId", serviceId);
+					node_storyChangeUtility.applyChange(story, changeItem);
+				}
+				
+			}
+			
+		},
+		template : `
+			<div>
+				aaaa
+				<select v-model="serviceId">
+				  <option v-for="service in allService" v-bind:value="service.id">
+				    {{ service.name }}
+				  </option>
+				</select>			
 			</div>
 		`
 	};
@@ -55,8 +72,9 @@ var node_createComponentQuestionItem = function(){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createComponentQuestionItem", node_createComponentQuestionItem); 
+packageObj.createChildNode("createComponentQuestionItemService", node_createComponentQuestionItemService); 
 
 })(packageObj);

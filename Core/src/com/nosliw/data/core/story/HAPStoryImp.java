@@ -68,7 +68,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public void addConnectionGroup(HAPConnectionGroup connectionGroup) {    this.m_connectionGroups.put(connectionGroup.getId(), connectionGroup);  }
 
 	@Override
-	public void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(SHOWTYPE, this.m_showType);
 		jsonMap.put(NODE, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_nodes), HAPSerializationFormat.JSON));
@@ -77,7 +77,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	}
 
 	@Override
-	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	public void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(SHOWTYPE, this.m_showType);
 		jsonMap.put(NODE, HAPJsonUtility.buildJson(this.m_nodes, HAPSerializationFormat.JSON));

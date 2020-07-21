@@ -23,6 +23,8 @@ public class HAPQuestionItem extends HAPQuestion{
 	
 	public HAPQuestionItem(String question, String targetCategary, String targetId) {
 		super(question);
+		this.m_targetCategary = targetCategary;
+		this.m_targetId = targetId;
 	}
 
 	@Override

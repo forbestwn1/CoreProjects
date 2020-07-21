@@ -3,11 +3,10 @@ package com.nosliw.data.core.story.element.connectiongroup;
 import java.util.List;
 import java.util.Set;
 
-import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.data.core.story.HAPConnectionGroup;
+import com.nosliw.data.core.story.HAPConnectionGroupImp;
 import com.nosliw.data.core.story.HAPStatus;
 
-public class HAPConnectionGroupSwitch extends HAPEntityInfoImp implements HAPConnectionGroup{
+public class HAPConnectionGroupSwitch extends HAPConnectionGroupImp{
 
 	private Set<String> m_connections;
 	
