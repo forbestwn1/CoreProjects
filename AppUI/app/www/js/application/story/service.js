@@ -84,7 +84,7 @@ var node_createStoryService = function(){
 		},
 	
 		executeDoDesignRequest : function(userInfo, designId, changes, handlers, request){
-			var requestInfo = this.getNewDesignRequest(userInfo, designId, changes, handlers, request);
+			var requestInfo = this.getDoDesignRequest(userInfo, designId, changes, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 

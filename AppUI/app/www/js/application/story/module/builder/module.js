@@ -21,6 +21,8 @@ var packageObj = library.getChildPackage();
 	var node_createComponentQuestionGroup;
 	var node_createComponentQuestionItem;
 	var node_storyUtility;
+	var node_storyChangeUtility;
+	var node_errorUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -32,8 +34,9 @@ var node_createModuleStoryBuilder = function(parm){
 
 	var loc_storyService = node_createStoryService();
 	
+	var loc_designId;
 	var loc_story;
-	var loc_changeHistory;
+	var loc_stepHistory = [];
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -44,6 +47,59 @@ var node_createModuleStoryBuilder = function(parm){
 	
 	var loc_vue;
 
+	var loc_processNext = function(){
+		var step = loc_getCurrentStep();
+		var changes = node_storyChangeUtility.discoverAllChanges(step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_QUESTION]);
+		loc_storyService.executeDoDesignRequest(undefined, loc_designId, changes, {
+			success : function(request, serviceData){
+				if(node_errorUtility.isSuccess(serviceData)){
+					var step = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
+					loc_processNewStep(step);
+				}
+			}
+		});
+	};
+	
+	var loc_processNewStep = function(step){
+		loc_stepHistory.push(step);
+		
+		_.each(step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_CHANGES], function(changeItem){
+			loc_processChangeItem(changeItem);
+		});
+		
+		var question = step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_QUESTION];
+		loc_processQuestion(question);
+		
+		loc_componentData.question = question;
+	};
+	
+	var loc_processChangeItem = function(changeItem){
+		node_storyChangeUtility.applyChange(loc_story, changeItem);
+	};
+	
+	var loc_processQuestion = function(question){
+		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
+		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
+			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
+			_.each(children, function(child, i){
+				loc_processQuestion(child, loc_story);
+			});
+		}
+		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
+			var targetCategary = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY];
+			var targetId = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID];
+			var element = node_storyUtility.getStoryElement(loc_story, targetCategary, targetId);
+			question.element = element;
+			question.changes = [];
+		}
+	};
+	
+	
+	var loc_getCurrentStep = function(){
+		return loc_stepHistory[loc_stepHistory.length-1];
+	};
+
+	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
 		
@@ -62,6 +118,7 @@ var node_createModuleStoryBuilder = function(parm){
 				onPreviousStep : function(event) {
 				},
 				onNextStep : function(event) {
+					loc_processNext();
 				},
 				onFinishStep : function(event) {
 				},
@@ -83,26 +140,6 @@ var node_createModuleStoryBuilder = function(parm){
 		});
 	};
 
-	var loc_processChangeItem = function(changeItem){
-		node_storyChangeUtility.applyChange(loc_story, changeItem);
-	};
-	
-	var loc_processQuestion = function(question){
-		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
-		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
-			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
-			_.each(children, function(child, i){
-				loc_processQuestion(child, loc_story);
-			});
-		}
-		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
-			var targetCategary = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY];
-			var targetId = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID];
-			var element = node_storyUtility.getStoryElement(loc_story, targetCategary, targetId);
-			question.element = element;
-		}
-	};
-	
 	var loc_out = {
 		
 		refreshRequest : function(undefined, handlers, requestInfo){
@@ -110,17 +147,10 @@ var node_createModuleStoryBuilder = function(parm){
 			
 			out.addRequest(loc_storyService.getNewDesignRequest(undefined, "pageSimple", {
 				success : function(request, design){
+					loc_designId = design[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
 					loc_story = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
 					var changeHistory = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_CHANGEHISTORY];
-					var changeBatch = changeHistory[changeHistory.length-1];
-					_.each(changeBatch[node_COMMONATRIBUTECONSTANT.CHANGEBATCH_CHANGES], function(changeItem){
-						loc_processChangeItem(changeItem);
-					});
-					
-					var question = changeBatch[node_COMMONATRIBUTECONSTANT.CHANGEBATCH_QUESTION];
-					loc_processQuestion(question);
-					
-					loc_componentData.question = question;
+					loc_processNewStep(changeHistory[changeHistory.length-1]);
 				}
 			}));
 			return out;
@@ -157,6 +187,8 @@ nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponen
 nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionGroup", function(){node_createComponentQuestionGroup = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionItem", function(){node_createComponentQuestionItem = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
 
 
 

@@ -68,7 +68,8 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 				HAPChangeItem changeItem = HAPParserChange.parseChangeItem(changeObj);
 				changeRequest.addChangeItem(changeItem);
 			}
-			out = storyManager.designStory(designId, changeRequest);
+			HAPServiceData result = storyManager.designStory(designId, changeRequest);
+			out = HAPServiceData.createSuccessData(result);
 			break;
 		}
 		}

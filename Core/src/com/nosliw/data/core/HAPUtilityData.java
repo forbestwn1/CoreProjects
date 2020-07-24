@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPConstant;
 public class HAPUtilityData {
 
 	public static HAPDataWrapper buildDataWrapperFromObject(Object obj){
+		if(obj==null)   return null;
 		HAPDataWrapper out = null;
 		if(obj instanceof String){
 			out = buildDataWrapper((String)obj);

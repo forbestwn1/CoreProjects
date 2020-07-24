@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPIdElement;
 
 public class HAPQuestionItem extends HAPQuestion{
 
@@ -25,6 +26,12 @@ public class HAPQuestionItem extends HAPQuestion{
 		super(question);
 		this.m_targetCategary = targetCategary;
 		this.m_targetId = targetId;
+	}
+
+	public HAPQuestionItem(String question, HAPIdElement targetEleId) {
+		super(question);
+		this.m_targetCategary = targetEleId.getCategary();
+		this.m_targetId = targetEleId.getId();
 	}
 
 	@Override

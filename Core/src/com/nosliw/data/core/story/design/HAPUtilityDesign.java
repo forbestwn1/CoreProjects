@@ -11,13 +11,13 @@ public class HAPUtilityDesign {
 
 	private static final String INFO_STAGE = "stage";
 	
-	public static String getChangeStage(HAPChangeBatch change) {	return (String)change.getInfoValue(INFO_STAGE); 	}
+	public static String getChangeStage(HAPDesignStep change) {	return (String)change.getInfoValue(INFO_STAGE); 	}
 	
-	public static void setChangeStage(HAPChangeBatch change, String stage) {    change.getInfo().setValue(INFO_STAGE, stage);	}
+	public static void setChangeStage(HAPDesignStep change, String stage) {    change.getInfo().setValue(INFO_STAGE, stage);	}
 	
 	public static String getDesignStage(HAPDesignStory design) {
-		List<HAPChangeBatch> changes = design.getChangeHistory();
-		HAPChangeBatch latest = changes.get(changes.size()-1);
+		List<HAPDesignStep> changes = design.getChangeHistory();
+		HAPDesignStep latest = changes.get(changes.size()-1);
 		return getChangeStage(latest);
 	}
 	

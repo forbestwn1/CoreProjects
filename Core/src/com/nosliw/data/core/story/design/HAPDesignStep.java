@@ -15,10 +15,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.story.HAPStory;
 
 @HAPEntityWithAttribute
-public class HAPChangeBatch extends HAPEntityInfoImp{
+public class HAPDesignStep extends HAPEntityInfoImp{
 
 	@HAPAttribute
-	public static final String INITIALCHANGE = "initialChange";
+	public static final String ANSWERS = "answers";
 
 	@HAPAttribute
 	public static final String CHANGES = "changes";
@@ -28,23 +28,31 @@ public class HAPChangeBatch extends HAPEntityInfoImp{
 
 	private HAPStory m_story;
 	
-	private List<HAPChangeItem> m_initialChange;
+	private List<HAPChangeItem> m_answers;
 	
 	private List<HAPChangeItem> m_changes;
 
 	private HAPQuestionGroup m_question;
 
-	public HAPChangeBatch() {
-		this.m_initialChange = new ArrayList<HAPChangeItem>();
+	public HAPDesignStep() {
+		this.m_answers = new ArrayList<HAPChangeItem>();
 		this.m_changes = new ArrayList<HAPChangeItem>();
 	}
 	
+	public List<HAPChangeItem> getChanges(){    return this.m_changes;    }
+	
 	public void addChange(HAPChangeItem changeItem) {
 		changeItem.setStory(m_story);
-		this.m_initialChange.add(changeItem);	
+		this.m_answers.add(changeItem);	
+	}
+
+	public void addAnswers(List<HAPChangeItem> changeItems) {
+		for(HAPChangeItem changeItem : changeItems) {
+			this.addAnswer(changeItem);
+		}
 	}
 	
-	public void addInitialChange(HAPChangeItem changeItem) {
+	public void addAnswer(HAPChangeItem changeItem) {
 		changeItem.setStory(m_story);
 		this.m_changes.add(changeItem);	
 	}
@@ -53,7 +61,7 @@ public class HAPChangeBatch extends HAPEntityInfoImp{
 	
 	public void setStory(HAPStory story) {    
 		this.m_story = story;
-		for(HAPChangeItem change : this.m_initialChange)   change.setStory(m_story);
+		for(HAPChangeItem change : this.m_answers)   change.setStory(m_story);
 		for(HAPChangeItem change : this.m_changes)  change.setStory(m_story);
 	}
 	
@@ -62,11 +70,11 @@ public class HAPChangeBatch extends HAPEntityInfoImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
 		
-		JSONArray initChangeArray = jsonObj.getJSONArray(INITIALCHANGE);
+		JSONArray initChangeArray = jsonObj.getJSONArray(ANSWERS);
 		for(int i=0; i<initChangeArray.length(); i++) {
 			JSONObject changeJson = initChangeArray.getJSONObject(i);
 			HAPChangeItem changeItem = HAPParserChange.parseChangeItem(changeJson);
-			this.addInitialChange(changeItem);
+			this.addAnswer(changeItem);
 		}
 		
 		JSONArray changeArray = jsonObj.getJSONArray(CHANGES);
@@ -85,7 +93,7 @@ public class HAPChangeBatch extends HAPEntityInfoImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(INITIALCHANGE, HAPJsonUtility.buildJson(this.m_initialChange, HAPSerializationFormat.JSON));
+		jsonMap.put(ANSWERS, HAPJsonUtility.buildJson(this.m_answers, HAPSerializationFormat.JSON));
 		jsonMap.put(CHANGES, HAPJsonUtility.buildJson(this.m_changes, HAPSerializationFormat.JSON));
 		jsonMap.put(QUESTION, HAPJsonUtility.buildJson(this.m_question, HAPSerializationFormat.JSON));
 	}

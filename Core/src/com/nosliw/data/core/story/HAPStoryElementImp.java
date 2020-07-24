@@ -8,7 +8,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
-public class HAPStoryElementImp extends HAPEntityInfoImp implements HAPStoryElement{
+public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAPStoryElement{
 
 	private String m_categary;
 	
@@ -28,12 +28,14 @@ public class HAPStoryElementImp extends HAPEntityInfoImp implements HAPStoryElem
 		this.m_categary = categary;
 	}
 	
-	public HAPStoryElementImp(String categary, String type, String id) {
+	public HAPStoryElementImp(String categary, String type) {
 		this(categary);
-		this.setId(id);
 		this.m_type = type;
 	}
 	
+	@Override
+	public HAPIdElement getElementId() {	return new HAPIdElement(this.m_categary, this.getId());	}
+
 	@Override
 	public String getCategary() {   return this.m_categary;    }
 

@@ -46,10 +46,10 @@ var node_createComponentQuestionItemService = function(availableService){
 				},
 				
 				set : function(serviceId){
-					var changeItem = node_storyChangeUtility.createChangeItemPatch(data.element, "entity.referenceId", serviceId);
-					node_storyChangeUtility.applyChange(story, changeItem);
+					var changeItem = node_storyChangeUtility.createChangeItemPatch(data.element, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, serviceId);
+					node_storyChangeUtility.applyChange(this.data.element, changeItem);
+					this.data.changes.push(changeItem);
 				}
-				
 			}
 			
 		},

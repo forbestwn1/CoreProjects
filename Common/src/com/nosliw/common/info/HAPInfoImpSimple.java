@@ -59,7 +59,7 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 		Iterator<String> it = jsonObj.keys();
 		while(it.hasNext()){
 			String key = it.next();
-			String value = jsonObj.optString(key);
+			Object value = jsonObj.opt(key);
 			this.setValue(key, value);
 		}
 		return true;

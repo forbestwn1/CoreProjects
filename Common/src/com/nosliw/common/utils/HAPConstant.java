@@ -640,6 +640,7 @@ public class HAPConstant {
 
 		public static final String STORYELEMENT_CATEGARY_NODE = "node";
 		public static final String STORYELEMENT_CATEGARY_CONNECTION = "connection";
+		public static final String STORYELEMENT_CATEGARY_GROUP = "group";
 
 
 
@@ -648,6 +649,7 @@ public class HAPConstant {
 		public static final String STORYNODE_TYPE_SERVICEOUTPUT = "serviceOutput";
 		public static final String STORYNODE_TYPE_SERVICEINPUTPARM = "serviceInputParm";
 		public static final String STORYNODE_TYPE_SERVICEOUTPUTITEM = "serviceOutputItem";
+		public static final String STORYNODE_TYPE_CONSTANT = "constant";
 		public static final String STORYNODE_TYPE_VARIABLE = "variable";
 		public static final String STORYNODE_TYPE_PAGE = "UI_page";
 		public static final String STORYNODE_TYPE_UI = "UI_element";
@@ -661,13 +663,17 @@ public class HAPConstant {
 
 
 
-		public static final String CONNECTION_TYPE_CONTAIN = "contain";
-		public static final String CONNECTION_TYPE_DATAIO = "dataIO";
+		public static final String STORYCONNECTION_TYPE_CONTAIN = "contain";
+		public static final String STORYCONNECTION_TYPE_DATAIO = "dataIO";
 
 
 
 		public static final String SERVICE_CHILD_INPUT = "serviceInput";
 		public static final String SERVICE_CHILD_RESULT = "serviceResult";
+
+
+
+		public static final String STORYGROUP_TYPE_SWITCH = "switch";
 
 
 

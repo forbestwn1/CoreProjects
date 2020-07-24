@@ -702,6 +702,7 @@
 			<definition type="space"/>
 			<definition name="STORYELEMENT_CATEGARY_NODE" value="node"/>
 			<definition name="STORYELEMENT_CATEGARY_CONNECTION" value="connection"/>
+			<definition name="STORYELEMENT_CATEGARY_GROUP" value="group"/>
 
 			<definition type="space"/>
 			<definition name="STORYNODE_TYPE_SERVICE" value="service"/>
@@ -709,6 +710,7 @@
 			<definition name="STORYNODE_TYPE_SERVICEOUTPUT" value="serviceOutput"/>
 			<definition name="STORYNODE_TYPE_SERVICEINPUTPARM" value="serviceInputParm"/>
 			<definition name="STORYNODE_TYPE_SERVICEOUTPUTITEM" value="serviceOutputItem"/>
+			<definition name="STORYNODE_TYPE_CONSTANT" value="constant"/>
 			<definition name="STORYNODE_TYPE_VARIABLE" value="variable"/>
 			<definition name="STORYNODE_TYPE_PAGE" value="UI_page"/>
 			<definition name="STORYNODE_TYPE_UI" value="UI_element"/>
@@ -720,12 +722,15 @@
 			<definition name="STORYNODE_PROFILE_DATAIO" value="dataIO"/>
 			
 			<definition type="space"/>
-			<definition name="CONNECTION_TYPE_CONTAIN" value="contain"/>
-			<definition name="CONNECTION_TYPE_DATAIO" value="dataIO"/>
+			<definition name="STORYCONNECTION_TYPE_CONTAIN" value="contain"/>
+			<definition name="STORYCONNECTION_TYPE_DATAIO" value="dataIO"/>
 
 			<definition type="space"/>
 			<definition name="SERVICE_CHILD_INPUT" value="serviceInput"/>
 			<definition name="SERVICE_CHILD_RESULT" value="serviceResult"/>
+
+			<definition type="space"/>
+			<definition name="STORYGROUP_TYPE_SWITCH" value="switch"/>
 
 			<definition type="space"/>
 			<definition name="STORYDESIGN_CHANGETYPE_NEW" value="new"/>

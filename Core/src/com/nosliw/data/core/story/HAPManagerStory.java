@@ -6,8 +6,8 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
-import com.nosliw.data.core.story.design.HAPDesignStory;
 import com.nosliw.data.core.story.design.HAPBuilderStory;
+import com.nosliw.data.core.story.design.HAPDesignStory;
 import com.nosliw.data.core.story.design.HAPRequestChange;
 import com.nosliw.data.core.story.design.HAPUtilityDesign;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionStory;
@@ -35,6 +35,7 @@ public class HAPManagerStory {
 		HAPBuilderStory storyBuilder = this.getStoryDirector(builderId);
 		HAPDesignStory out = new HAPDesignStory(this.generateId(), builderId);
 		storyBuilder.initDesign(out);
+		this.saveStoryDesign(out);
 		return out;
 	}
 	

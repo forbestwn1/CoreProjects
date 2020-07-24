@@ -19,10 +19,14 @@ public interface HAPStoryElement extends HAPEntityInfo{
 	@HAPAttribute
 	public static final String STATUS = "status";
 
+	HAPIdElement getElementId();
+	
 	String getCategary();
 	
 	String getType();
 
+	void patch(String path, Object value);
+	
 	//core data
 	Object getEntity();
 

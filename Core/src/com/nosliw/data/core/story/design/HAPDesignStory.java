@@ -34,11 +34,11 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 	
 	private HAPStory m_story;
 	
-	private List<HAPChangeBatch> m_changeHistory;
+	private List<HAPDesignStep> m_changeHistory;
 	
 	public HAPDesignStory() {
 		this.m_story = new HAPStoryImp();
-		this.m_changeHistory = new ArrayList<HAPChangeBatch>();
+		this.m_changeHistory = new ArrayList<HAPDesignStep>();
 	}
 	
 	public HAPDesignStory(String designId, String directorId) {
@@ -61,12 +61,13 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 		return index + "";	
 	}
 	
-	public void addChangeBatch(HAPChangeBatch changeBatch) {
-		changeBatch.setStory(this.m_story);
-		this.m_changeHistory.add(changeBatch);     
+	public void addStep(HAPDesignStep step) {
+		step.setStory(this.m_story);
+		this.m_changeHistory.add(step);     
 	}
 	
-	public List<HAPChangeBatch> getChangeHistory(){    return this.m_changeHistory;    }
+	public List<HAPDesignStep> getChangeHistory(){    return this.m_changeHistory;    }
+	public HAPDesignStep getLatestStep() {   return this.m_changeHistory.get(this.m_changeHistory.size()-1);     }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -79,9 +80,9 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 		JSONArray changeHistoryArray = jsonObj.optJSONArray(CHANGEHISTORY);
 		for(int i=0; i<changeHistoryArray.length(); i++) {
 			JSONObject changeHistoryItem = changeHistoryArray.getJSONObject(i);
-			HAPChangeBatch changeBatch = new HAPChangeBatch();
+			HAPDesignStep changeBatch = new HAPDesignStep();
 			changeBatch.buildObject(changeHistoryItem, HAPSerializationFormat.JSON);
-			this.addChangeBatch(changeBatch);
+			this.addStep(changeBatch);
 		}
 		return true;  
 	}

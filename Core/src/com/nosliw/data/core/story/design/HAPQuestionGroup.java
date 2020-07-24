@@ -19,7 +19,9 @@ public class HAPQuestionGroup extends HAPQuestion{
 
 	private List<HAPQuestion> m_children;
 
-	public HAPQuestionGroup() {}
+	public HAPQuestionGroup() {
+		this.m_children = new ArrayList<HAPQuestion>();
+	}
 	
 	public HAPQuestionGroup(String question) {
 		super(question);

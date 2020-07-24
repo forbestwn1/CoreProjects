@@ -27,12 +27,18 @@ public class HAPConnectionEnd extends HAPSerializableImp{
 
 	private boolean m_ifDeleteNode;
 
+	public HAPConnectionEnd(String connectionId) {
+		this.m_connectionId = connectionId;
+	}
+	
 	public String getConnectionId() {    return this.m_connectionId;    }
 	public void setConnectionId(String connectionId) {   this.m_connectionId = connectionId;    }
 	
 	public String getNodeId() {   return this.m_nodeId;   }
+	public void setNodeId(String nodeId) {    this.m_nodeId = nodeId;    }
 	
 	public String getProfile() {    return this.m_profile;  }
+	public void setProfile(String profile) {    this.m_profile = profile;    }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

@@ -22,21 +22,22 @@ public interface HAPStory extends HAPEntityInfo{
 	public static final String CONNECTION = "connection";
 	
 	@HAPAttribute
-	public static final String CONNECTIONGROUP = "connectionGroup";
+	public static final String ELEMENTGROUP = "elementGroup";
 	
 	String getShowType();
 	void setShowType(String showType);
 
+	HAPStoryElement addElement(HAPStoryElement element);
 	HAPStoryElement getElement(String categary, String id);
 	
 	Set<HAPStoryNode> getNodes();
 	HAPStoryNode getNode(String id);
-	void addNode(HAPStoryNode node);
+	HAPStoryNode addNode(HAPStoryNode node);
 	
 	Set<HAPConnection> getConnections();
 	HAPConnection getConnection(String id);
 	
-	Set<HAPConnectionGroup> getConnectionGroups();
-	HAPConnectionGroup getConnectionGroup(String id);
+	Set<HAPElementGroup> getElementGroups();
+	HAPElementGroup getElementGroup(String id);
 	
 }

@@ -18,6 +18,28 @@ var node_utility = function(){
 		node_storyUtility.addStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT]);
 	};
 	
+	var loc_appChangePatch = function(story, changeItem){
+		var element = node_storyUtility.getElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID]);
+		var path = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_PATH];
+		var value = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_VALUE];
+		node_objectOperationUtility.operateObject(element, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);
+	};
+	
+	var loc_discoverAllChanges = function(question, changes){
+		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
+		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
+			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
+			_.each(children, function(child, i){
+				loc_discoverAllChanges(child, changes);
+			});
+		}
+		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
+			_.each(question.changes, function(change, i){
+				changes.push(change);
+			});
+		}
+	};
+	
 	var loc_out = {
 		
 		applyChange : function(story, changeItem){
@@ -25,10 +47,25 @@ var node_utility = function(){
 			if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW){
 				loc_appChangeNew(story, changeItem);
 			}
+			else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_PATCH){
+				loc_appChangePatch(story, changeItem);
+			}
 		},
 		
 		createChangeItemPatch : function(element, path, value){
-			
+			var out = {};
+			out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_PATCH;
+			out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY] = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY];
+			out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID] = element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+			out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_PATH] = path;
+			out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_VALUE] = value;
+			return out;
+		},
+		
+		discoverAllChanges : function(question){
+			var out = [];
+			loc_discoverAllChanges(question, out);
+			return out;
 		},
 	};		
 			
