@@ -46,6 +46,9 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	}
 
 	@Override
+	public HAPStoryElement getElement(HAPIdElement elementId) {   return this.getElement(elementId.getCategary(), elementId.getId());    }
+
+	@Override
 	public HAPStoryElement getElement(String categary, String id) {
 		HAPStoryElement out = null;
 		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.getNode(id);

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
@@ -24,6 +25,7 @@ import com.nosliw.data.core.story.design.HAPQuestionItem;
 import com.nosliw.data.core.story.design.HAPRequestChange;
 import com.nosliw.data.core.story.design.HAPUtilityChange;
 import com.nosliw.data.core.story.design.HAPUtilityDesign;
+import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupBatch;
 import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupSwitch;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeConstant;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
@@ -114,6 +116,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		
 		//parms
 		for(String parmName : serviceInterface.getParmNames()) {
+			
 			HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup("Configure Parm " + parmName);
 			rootQuestionGroup.addChild(parmQuestionGroup);
 			
@@ -123,23 +126,33 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 			HAPChangeResult parmConstantProviderNewResult = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeConstant(parmDef.getCriteria()), step.getChanges());
 			HAPChangeResult parmConstantProviderConnectionNewResult = HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionOnewayDataIO(parmConstantProviderNewResult.getStoryElement().getId(), parmNewResult.getStoryElement().getId(), null, null), step.getChanges());
+			HAPElementGroupBatch constantBatchGroup = new HAPElementGroupBatch(story);
+			constantBatchGroup.addElement(new HAPInfoElement(parmConstantProviderNewResult.getStoryElement().getElementId()));
+			constantBatchGroup.addElement(new HAPInfoElement(parmConstantProviderConnectionNewResult.getStoryElement().getElementId()));
+			HAPChangeResult constantProviderGroupNewResult = HAPUtilityChange.buildChangeNewAndApply(story, constantBatchGroup, step.getChanges());
 			
 			HAPChangeResult parmVariableProviderNewResult = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeVariable(parmName, parmDef.getCriteria()), step.getChanges());
 			HAPChangeResult parmVariableProviderConnectionNewResult = HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionOnewayDataIO(parmVariableProviderNewResult.getStoryElement().getId(), parmNewResult.getStoryElement().getId(), null, null), step.getChanges());
+			HAPElementGroupBatch variableBatchGroup = new HAPElementGroupBatch(story);
+			variableBatchGroup.addElement(new HAPInfoElement(parmVariableProviderNewResult.getStoryElement().getElementId()));
+			variableBatchGroup.addElement(new HAPInfoElement(parmVariableProviderConnectionNewResult.getStoryElement().getElementId()));
+			HAPChangeResult variableProviderGroupNewResult = HAPUtilityChange.buildChangeNewAndApply(story, variableBatchGroup, step.getChanges());
 
-			HAPElementGroupSwitch group = new HAPElementGroupSwitch();
+			HAPElementGroupSwitch group = new HAPElementGroupSwitch(story);
 			//add constant to group
-			HAPInfoElement constantGroupEle = new HAPInfoElement(parmConstantProviderConnectionNewResult.getStoryElement().getElementId());
-			group.addElement(constantGroupEle);
+			HAPInfoElement constantGroupEle = new HAPInfoElement(constantProviderGroupNewResult.getStoryElement().getElementId());
 			constantGroupEle.setName("Constant");
-			group.setChoice(constantGroupEle.getId());
+			group.addElement(constantGroupEle);
 			//add variable to group
-			HAPInfoElement varGroupEle = new HAPInfoElement(parmVariableProviderConnectionNewResult.getStoryElement().getElementId());
+			HAPInfoElement varGroupEle = new HAPInfoElement(variableProviderGroupNewResult.getStoryElement().getElementId());
 			varGroupEle.setName("Variable");
 			group.addElement(varGroupEle);
-
 			HAPChangeResult groupNewResult = HAPUtilityChange.buildChangeNewAndApply(story, group, step.getChanges());
 
+			//set switch group choice
+			HAPUtilityChange.buildChangePatchAndApply(story, groupNewResult.getStoryElement().getElementId(), HAPElementGroupSwitch.CHOICE, constantProviderGroupNewResult.getStoryElement().getElementId().toStringValue(HAPSerializationFormat.LITERATE), step.getChanges());
+
+			//question item
 			HAPQuestionItem groupQuestion = new HAPQuestionItem("select import for parm", groupNewResult.getStoryElement().getElementId());
 			parmQuestionGroup.addChild(groupQuestion);
 			

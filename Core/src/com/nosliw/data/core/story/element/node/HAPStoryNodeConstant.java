@@ -45,10 +45,14 @@ public class HAPStoryNodeConstant extends HAPStoryNodeImp{
 	public void setDataType(HAPDataTypeCriteria dataType) {    this.m_dataType = dataType;    }
 
 	@Override
-	public void patch(String path, Object value) {
-		if(DATA.equals(path)) {
-			this.m_data = HAPUtilityData.buildDataWrapperFromObject(value);
+	public boolean patch(String path, Object value) {
+		if(!super.patch(path, value)) {
+			if(DATA.equals(path)) {
+				this.m_data = HAPUtilityData.buildDataWrapperFromObject(value);
+				return true;
+			}
 		}
+		return false;
 	}
 
 	@Override

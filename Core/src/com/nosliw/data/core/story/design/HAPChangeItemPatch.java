@@ -38,7 +38,7 @@ public class HAPChangeItemPatch extends HAPChangeItem{
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.buildEntityInfoByJson(jsonObj);
+		super.buildObjectByJson(jsonObj);
 		this.m_path = jsonObj.getString(PATH);
 		this.m_value = jsonObj.opt(VALUE);
 		return true;  

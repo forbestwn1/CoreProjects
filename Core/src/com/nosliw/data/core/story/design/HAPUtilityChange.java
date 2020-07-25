@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryElement;
 
@@ -33,8 +34,8 @@ public class HAPUtilityChange {
 		return new HAPChangeResult(change, ele1);
 	}
 	
-	public static HAPChangeResult buildChangePatchAndApply(HAPStory story, String targetCategary, String targetId, String path, String value, List<HAPChangeItem> changes) {
-		HAPChangeItemPatch change = new HAPChangeItemPatch(targetCategary, targetId, path, value);
+	public static HAPChangeResult buildChangePatchAndApply(HAPStory story, HAPIdElement targetEleId, String path, Object value, List<HAPChangeItem> changes) {
+		HAPChangeItemPatch change = new HAPChangeItemPatch(targetEleId.getCategary(), targetEleId.getId(), path, value);
 		HAPStoryElement element = applyChange(story, change);
 		changes.add(change);
 		return new HAPChangeResult(change, element);

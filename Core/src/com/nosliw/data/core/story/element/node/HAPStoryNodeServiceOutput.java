@@ -12,8 +12,9 @@ public class HAPStoryNodeServiceOutput extends HAPStoryNodeImp{
 	}
 
 	@Override
-	public void patch(String path, Object value) {
-		
+	public boolean patch(String path, Object value) {
+		if(!super.patch(path, value)) {
+		}
+		return false;
 	}
-	
 }

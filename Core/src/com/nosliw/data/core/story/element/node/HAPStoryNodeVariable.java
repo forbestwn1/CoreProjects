@@ -44,9 +44,18 @@ public class HAPStoryNodeVariable extends HAPStoryNodeImp{
 	public void setVariableName(String varName) {   this.m_variableName = varName;   }
 	
 	@Override
-	public void patch(String path, Object value) {
-		if(DATATYPE.equals(path)) 	this.m_dataType = HAPCriteriaUtility.parseCriteria((String)value);
-		else if(VARAIBLENAME.equals(path)) 	this.m_variableName = (String)value;
+	public boolean patch(String path, Object value) {
+		if(!super.patch(path, value)) {
+			if(DATATYPE.equals(path)) {
+				this.m_dataType = HAPCriteriaUtility.parseCriteria((String)value);
+				return true;
+			}
+			else if(VARAIBLENAME.equals(path)) {
+				this.m_variableName = (String)value;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

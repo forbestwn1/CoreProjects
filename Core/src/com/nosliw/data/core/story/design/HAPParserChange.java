@@ -13,6 +13,7 @@ public class HAPParserChange {
 	
 	static {
 		m_changeItemClas.put(HAPChangeItemNew.MYCHANGETYPE, HAPChangeItemNew.class);
+		m_changeItemClas.put(HAPChangeItemPatch.MYCHANGETYPE, HAPChangeItemPatch.class);
 	}
 	
 	public static HAPChangeItem parseChangeItem(JSONObject jsonObj) {

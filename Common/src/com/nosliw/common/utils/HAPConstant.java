@@ -674,6 +674,7 @@ public class HAPConstant {
 
 
 		public static final String STORYGROUP_TYPE_SWITCH = "switch";
+		public static final String STORYGROUP_TYPE_BATCH = "batch";
 
 
 

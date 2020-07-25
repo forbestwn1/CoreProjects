@@ -34,7 +34,10 @@ public class HAPConnectionDataIO extends HAPConnectionImp{
 	public void setPath2(String path) {    this.m_path2 = path;    }
 	
 	@Override
-	public void patch(String path, Object value) {
+	public boolean patch(String path, Object value) {
+		if(!super.patch(path, value)) {
+		}
+		return false;
 	}
 	
 	@Override

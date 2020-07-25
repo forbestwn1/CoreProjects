@@ -46,8 +46,8 @@ var node_createComponentQuestionItemService = function(availableService){
 				},
 				
 				set : function(serviceId){
-					var changeItem = node_storyChangeUtility.createChangeItemPatch(data.element, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, serviceId);
-					node_storyChangeUtility.applyChange(this.data.element, changeItem);
+					var changeItem = node_storyChangeUtility.createChangeItemPatch(this.data.element, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, serviceId);
+					node_storyChangeUtility.applyChangeToElement(this.data.element, changeItem);
 					this.data.changes.push(changeItem);
 				}
 			}

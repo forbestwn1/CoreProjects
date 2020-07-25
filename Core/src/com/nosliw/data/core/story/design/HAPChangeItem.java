@@ -49,7 +49,7 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.buildEntityInfoByJson(jsonObj);
+		super.buildObjectByJson(jsonObj);
 		this.m_changeType = jsonObj.getString(CHANGETYPE);
 		this.m_targetCategary = jsonObj.getString(TARGETCATEGARY);
 		this.m_targetId = jsonObj.getString(TARGETID);

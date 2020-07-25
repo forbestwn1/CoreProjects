@@ -15,14 +15,18 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 
 	private List<HAPInfoElement> m_elements;
 
-	public HAPElementGroupImp() {
+	private HAPStory m_story;
+	
+	public HAPElementGroupImp(HAPStory story) {
 		super(HAPConstant.STORYELEMENT_CATEGARY_GROUP);  
 		this.m_elements = new ArrayList<HAPInfoElement>();
+		this.m_story = story;
 	}
 	
-	public HAPElementGroupImp(String type) {
+	public HAPElementGroupImp(String type, HAPStory story) {
 		super(HAPConstant.STORYELEMENT_CATEGARY_GROUP, type);
 		this.m_elements = new ArrayList<HAPInfoElement>();
+		this.m_story = story;
 	}
 
 	@Override
@@ -30,6 +34,8 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 
 	@Override
 	public void addElement(HAPInfoElement eleId) {    this.m_elements.add(eleId);     }
+	
+	protected HAPStory getStory() {    return this.m_story;    }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

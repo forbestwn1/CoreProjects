@@ -27,10 +27,14 @@ public class HAPStoryNodeService extends HAPStoryNodeImp{
 	public void setReferenceId(String refId) {    this.m_referenceId = refId;    }
 
 	@Override
-	public void patch(String path, Object value) {
-		if(REFERENCEID.equals(path)) {
-			this.m_referenceId = (String)value;
+	public boolean patch(String path, Object value) {
+		if(!super.patch(path, value)) {
+			if(REFERENCEID.equals(path)) {
+				this.m_referenceId = (String)value;
+				return true;
+			}
 		}
+		return false;
 	}
 
 	@Override

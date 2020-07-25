@@ -29,6 +29,7 @@ public interface HAPStory extends HAPEntityInfo{
 
 	HAPStoryElement addElement(HAPStoryElement element);
 	HAPStoryElement getElement(String categary, String id);
+	HAPStoryElement getElement(HAPIdElement elementId);
 	
 	Set<HAPStoryNode> getNodes();
 	HAPStoryNode getNode(String id);

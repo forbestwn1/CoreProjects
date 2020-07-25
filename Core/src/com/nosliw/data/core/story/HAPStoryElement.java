@@ -17,6 +17,9 @@ public interface HAPStoryElement extends HAPEntityInfo{
 	public static final String ENTITY = "entity";
 
 	@HAPAttribute
+	public static final String ENABLE = "enable";
+
+	@HAPAttribute
 	public static final String STATUS = "status";
 
 	HAPIdElement getElementId();
@@ -25,12 +28,14 @@ public interface HAPStoryElement extends HAPEntityInfo{
 	
 	String getType();
 
-	void patch(String path, Object value);
+	boolean patch(String path, Object value);
 	
 	//core data
 	Object getEntity();
 
 	//configuration for element, for ui purpose
 	HAPStatus getStatus();
+
+	boolean isEnable();
 	
 }

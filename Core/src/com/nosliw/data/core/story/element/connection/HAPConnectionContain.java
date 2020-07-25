@@ -27,7 +27,10 @@ public class HAPConnectionContain extends HAPConnectionImp{
 	public void setChildId(String childId) {   this.m_childId = childId;   }
 	
 	@Override
-	public void patch(String path, Object value) {
+	public boolean patch(String path, Object value) {
+		if(!super.patch(path, value)) {
+		}
+		return false;
 	}
 	
 	@Override

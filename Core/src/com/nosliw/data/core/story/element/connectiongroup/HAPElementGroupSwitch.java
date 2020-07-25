@@ -9,6 +9,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPElementGroupImp;
+import com.nosliw.data.core.story.HAPStory;
 
 public class HAPElementGroupSwitch extends HAPElementGroupImp{
 
@@ -19,6 +20,10 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 
 	private String m_choice;
 
+	public HAPElementGroupSwitch(HAPStory story) {
+		super(story);
+	}
+	
 	public String getChoice() {    return this.m_choice;     }
 	public void setChoice(String choice) {     this.m_choice = choice;     }
 	
@@ -37,10 +42,14 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 	}
 	
 	@Override
-	public void patch(String path, Object value) {
-		if(CHOICE.equals(path)) {
-			this.m_choice = (String)value;
+	public boolean patch(String path, Object value) {
+		if(!super.patch(path, value)) {
+			if(CHOICE.equals(path)) {
+				this.m_choice = (String)value;
+				return true;
+			}
 		}
+		return false;
 	}
 	
 }
