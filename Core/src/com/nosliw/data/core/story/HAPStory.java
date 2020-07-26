@@ -37,8 +37,10 @@ public interface HAPStory extends HAPEntityInfo{
 	
 	Set<HAPConnection> getConnections();
 	HAPConnection getConnection(String id);
+	HAPConnection addConnection(HAPConnection connection);
 	
 	Set<HAPElementGroup> getElementGroups();
 	HAPElementGroup getElementGroup(String id);
+	HAPElementGroup addElementGroup(HAPElementGroup connectionGroup);
 	
 }

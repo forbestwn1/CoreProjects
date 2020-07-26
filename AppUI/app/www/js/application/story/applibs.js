@@ -55,6 +55,9 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 				"questiongroup.js",
 				"questionitem.js",
 				"questionitemservice.js",
+				"questionitemswitch.js",
+				"questionitemconstant.js",
+				"questionitemvariable.js",
 			]
 		});
 	}

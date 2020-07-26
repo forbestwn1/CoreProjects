@@ -1,10 +1,13 @@
 package com.nosliw.data.core.story.element.node;
 
+import java.util.List;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
+import com.nosliw.data.core.story.design.HAPChangeItem;
 
 @HAPEntityWithAttribute
 public class HAPStoryNodeServiceInputParm extends HAPStoryNodeImp{
@@ -22,9 +25,7 @@ public class HAPStoryNodeServiceInputParm extends HAPStoryNodeImp{
 	}
 
 	@Override
-	public boolean patch(String path, Object value) {
-		if(!super.patch(path, value)) {
-		}
-		return false;
+	public List<HAPChangeItem> patch(String path, Object value) {
+		return super.patch(path, value);
 	}
 }

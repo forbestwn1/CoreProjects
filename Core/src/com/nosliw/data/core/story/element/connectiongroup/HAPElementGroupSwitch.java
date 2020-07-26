@@ -1,5 +1,7 @@
 package com.nosliw.data.core.story.element.connectiongroup;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -9,7 +11,11 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPElementGroupImp;
+import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.HAPStoryElement;
+import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.design.HAPChangeItemPatch;
 
 public class HAPElementGroupSwitch extends HAPElementGroupImp{
 
@@ -42,14 +48,26 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 	}
 	
 	@Override
-	public boolean patch(String path, Object value) {
-		if(!super.patch(path, value)) {
+	public List<HAPChangeItem> patch(String path, Object value) {
+		List<HAPChangeItem> out = super.patch(path, value); 
+		if(out!=null)  return out; 
+		else {
 			if(CHOICE.equals(path)) {
-				this.m_choice = (String)value;
-				return true;
+				out = new ArrayList<HAPChangeItem>();
+				if(!value.equals(this.m_choice)) {
+					if(this.m_choice!=null) {
+						HAPInfoElement old = this.getElement(this.m_choice);
+						out.add(new HAPChangeItemPatch(old.getElementId().getCategary(), old.getElementId().getId(), HAPStoryElement.ENABLE, false));
+					}
+					this.m_choice = (String)value;
+					HAPInfoElement current = this.getElement(this.m_choice);
+					out.add(new HAPChangeItemPatch(current.getElementId().getCategary(), current.getElementId().getId(), HAPStoryElement.ENABLE, true));
+				}
+				
+				return out;
 			}
 		}
-		return false;
+		return null;
 	}
 	
 }

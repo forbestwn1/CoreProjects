@@ -60,12 +60,14 @@ var node_createModuleStoryBuilder = function(parm){
 		});
 	};
 	
-	var loc_processNewStep = function(step){
+	var loc_processNewStep = function(step, processChange){
 		loc_stepHistory.push(step);
 		
-		_.each(step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_CHANGES], function(changeItem){
-			loc_processChangeItem(changeItem);
-		});
+		if(!(processChange==false)){
+			_.each(step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_CHANGES], function(changeItem){
+				loc_processChangeItem(changeItem);
+			});
+		}
 		
 		var question = step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_QUESTION];
 		loc_processQuestion(question);
@@ -150,7 +152,7 @@ var node_createModuleStoryBuilder = function(parm){
 					loc_designId = design[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
 					loc_story = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
 					var changeHistory = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_CHANGEHISTORY];
-					loc_processNewStep(changeHistory[changeHistory.length-1]);
+					loc_processNewStep(changeHistory[changeHistory.length-1], false);
 				}
 			}));
 			return out;

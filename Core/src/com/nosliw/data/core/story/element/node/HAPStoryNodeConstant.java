@@ -1,5 +1,7 @@
 package com.nosliw.data.core.story.element.node;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -13,6 +15,7 @@ import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
+import com.nosliw.data.core.story.design.HAPChangeItem;
 
 @HAPEntityWithAttribute
 public class HAPStoryNodeConstant extends HAPStoryNodeImp{
@@ -45,14 +48,16 @@ public class HAPStoryNodeConstant extends HAPStoryNodeImp{
 	public void setDataType(HAPDataTypeCriteria dataType) {    this.m_dataType = dataType;    }
 
 	@Override
-	public boolean patch(String path, Object value) {
-		if(!super.patch(path, value)) {
+	public List<HAPChangeItem> patch(String path, Object value) {
+		List<HAPChangeItem> out = super.patch(path, value);
+		if(out!=null)  return out; 
+		else {
 			if(DATA.equals(path)) {
 				this.m_data = HAPUtilityData.buildDataWrapperFromObject(value);
-				return true;
+				return new ArrayList<HAPChangeItem>();
 			}
 		}
-		return false;
+		return null;
 	}
 
 	@Override

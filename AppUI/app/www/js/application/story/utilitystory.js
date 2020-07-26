@@ -21,9 +21,13 @@ var node_utility = function(){
 			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){
 				story[node_COMMONATRIBUTECONSTANT.STORY_NODE][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
 			}
-			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
+			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
 				story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
 			}
+			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){
+				story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
+			}
+			
 		},
 
 		getStoryElement : function(story, elementCategary, elementId){
@@ -31,8 +35,11 @@ var node_utility = function(){
 			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){
 				out = this.getNodeById(story, elementId);
 			}
-			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
+			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
 				out = this.getConnectionById(story, elementId);
+			}
+			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){
+				out = this.getGroupById(story, elementId);
 			}
 			return out;
 		},
@@ -106,6 +113,8 @@ var node_utility = function(){
 		
 		getConnectionById : function(story, connectionId){	return story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][connectionId];	},
 			
+		getGroupById : function(story, groupId){	return story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][groupId];	},
+		
 	};		
 			
 	return loc_out;

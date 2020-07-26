@@ -1,5 +1,6 @@
 package com.nosliw.data.core.story.element.connectiongroup;
 
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -8,6 +9,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPElementGroupImp;
 import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.design.HAPChangeItemPatch;
 
 public class HAPElementGroupBatch extends HAPElementGroupImp{
 
@@ -30,12 +33,15 @@ public class HAPElementGroupBatch extends HAPElementGroupImp{
 	}
 	
 	@Override
-	public boolean patch(String path, Object value) {
-		super.patch(path, value);
-		for(HAPInfoElement ele : this.getElements()) {
-			this.getStory().getElement(ele.getElementId()).patch(path, value);
+	public List<HAPChangeItem> patch(String path, Object value) {
+		List<HAPChangeItem> out = super.patch(path, value);
+		if(out==null)  return out;
+		else {
+			for(HAPInfoElement ele : this.getElements()) {
+				out.add(new HAPChangeItemPatch(ele.getElementId().getCategary(), ele.getElementId().getId(), path, value));
+			}
 		}
-		return false;
+		return out;
 	}
 	
 }

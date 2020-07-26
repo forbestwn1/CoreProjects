@@ -35,6 +35,15 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 	@Override
 	public void addElement(HAPInfoElement eleId) {    this.m_elements.add(eleId);     }
 	
+	protected HAPInfoElement getElement(String id) {
+		for(HAPInfoElement ele : this.m_elements) {
+			if(ele.getId().equals(id)) {
+				return ele;
+			}
+		}
+		return null;
+	}
+	
 	protected HAPStory getStory() {    return this.m_story;    }
 	
 	@Override

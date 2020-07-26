@@ -1,8 +1,11 @@
 package com.nosliw.data.core.story;
 
+import java.util.List;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.data.core.story.design.HAPChangeItem;
 
 @HAPEntityWithAttribute
 public interface HAPStoryElement extends HAPEntityInfo{
@@ -28,7 +31,7 @@ public interface HAPStoryElement extends HAPEntityInfo{
 	
 	String getType();
 
-	boolean patch(String path, Object value);
+	List<HAPChangeItem> patch(String path, Object value);
 	
 	//core data
 	Object getEntity();

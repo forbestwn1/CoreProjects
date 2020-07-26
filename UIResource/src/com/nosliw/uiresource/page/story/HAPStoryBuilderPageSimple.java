@@ -52,17 +52,14 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	public void initDesign(HAPDesignStory design) {
 		design.getStory().setShowType(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
 		
-		//new service node
-		HAPStoryNode serviceNode = design.getStory().addNode(new HAPStoryNodeService());
-		
 		HAPDesignStep step = new HAPDesignStep();
 		
-		HAPChangeItem changeItem = HAPUtilityChange.buildChangeNew(HAPConstant.STORYELEMENT_CATEGARY_NODE, serviceNode.getId());
-		step.addChange(changeItem);
+		//new service node
+		HAPChangeResult newServiceNodeChange = HAPUtilityChange.buildChangeNewAndApply(design.getStory(), new HAPStoryNodeService(), step.getChanges());
 		
 		//extra info
 		HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Please select service.");
-		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("select service", serviceNode.getElementId());
+		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("select service", newServiceNodeChange.getStoryElement().getElementId());
 		rootQuestionGroup.addChild(serviceItemExtraInfo);
 		step.setQuestion(rootQuestionGroup);
 		

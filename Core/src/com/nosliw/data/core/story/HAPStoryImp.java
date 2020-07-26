@@ -42,6 +42,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		String categary = element.getCategary();
 		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.addNode((HAPStoryNode)element);
 		else if(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.addConnection((HAPConnection)element);
+		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.addElementGroup((HAPElementGroup)element);
 		return out;
 	}
 
@@ -53,6 +54,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		HAPStoryElement out = null;
 		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.getNode(id);
 		else if(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.getConnection(id);
+		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.getElementGroup(id);
 		return out;
 	}
 
@@ -64,7 +66,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 
 	@Override
 	public HAPStoryNode addNode(HAPStoryNode node) {
-		node.setId(this.getNextId());
+		if(HAPBasicUtility.isStringEmpty(node.getId())) 	node.setId(this.getNextId());
 		this.m_nodes.put(node.getId(), node);
 		return node;
 	}
@@ -74,14 +76,13 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 
 	@Override
 	public HAPConnection getConnection(String id) {  return this.m_connections.get(id);  }
-	
+	 
+	@Override
 	public HAPConnection addConnection(HAPConnection connection) {
-		connection.setId(this.getNextId());
+		if(HAPBasicUtility.isStringEmpty(connection.getId())) 	connection.setId(this.getNextId());
 		this.m_connections.put(connection.getId(), connection);
-		
 		this.getNode(connection.getEnd1().getNodeId()).addConnection(connection.getId());
 		this.getNode(connection.getEnd2().getNodeId()).addConnection(connection.getId());
-
 		return connection;
 	}
 
@@ -91,7 +92,12 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	@Override
 	public HAPElementGroup getElementGroup(String id) {   return this.m_connectionGroups.get(id);  }
 
-	public void addConnectionGroup(HAPElementGroup connectionGroup) {    this.m_connectionGroups.put(connectionGroup.getId(), connectionGroup);  }
+	@Override
+	public HAPElementGroup addElementGroup(HAPElementGroup connectionGroup) {
+		if(HAPBasicUtility.isStringEmpty(connectionGroup.getId())) 	connectionGroup.setId(this.getNextId());
+		this.m_connectionGroups.put(connectionGroup.getId(), connectionGroup);  
+		return connectionGroup;
+	}
 
 	private String getNextId() {
 		Integer index = (Integer)this.getInfoValue(INFO_IDINDEX);
