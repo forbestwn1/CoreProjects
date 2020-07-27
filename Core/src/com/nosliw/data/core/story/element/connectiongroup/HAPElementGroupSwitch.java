@@ -7,6 +7,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
@@ -17,6 +18,7 @@ import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.design.HAPChangeItem;
 import com.nosliw.data.core.story.design.HAPChangeItemPatch;
 
+@HAPEntityWithAttribute
 public class HAPElementGroupSwitch extends HAPElementGroupImp{
 
 	public final static String GROUP_TYPE = HAPConstant.STORYGROUP_TYPE_SWITCH; 
@@ -27,7 +29,7 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 	private String m_choice;
 
 	public HAPElementGroupSwitch(HAPStory story) {
-		super(story);
+		super(GROUP_TYPE, story);
 	}
 	
 	public String getChoice() {    return this.m_choice;     }
@@ -55,13 +57,20 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 			if(CHOICE.equals(path)) {
 				out = new ArrayList<HAPChangeItem>();
 				if(!value.equals(this.m_choice)) {
-					if(this.m_choice!=null) {
-						HAPInfoElement old = this.getElement(this.m_choice);
-						out.add(new HAPChangeItemPatch(old.getElementId().getCategary(), old.getElementId().getId(), HAPStoryElement.ENABLE, false));
+					for(HAPInfoElement eleInfo : this.getElements()) {
+						HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());
+						if(eleInfo.getId().equals(value)) {
+							if(!ele.isEnable()) {
+								out.add(new HAPChangeItemPatch(ele.getCategary(), ele.getId(), HAPStoryElement.ENABLE, true));
+							}
+						}
+						else {
+							if(ele.isEnable()) {
+								out.add(new HAPChangeItemPatch(ele.getCategary(), ele.getId(), HAPStoryElement.ENABLE, false));
+							}
+						}
 					}
 					this.m_choice = (String)value;
-					HAPInfoElement current = this.getElement(this.m_choice);
-					out.add(new HAPChangeItemPatch(current.getElementId().getCategary(), current.getElementId().getId(), HAPStoryElement.ENABLE, true));
 				}
 				
 				return out;

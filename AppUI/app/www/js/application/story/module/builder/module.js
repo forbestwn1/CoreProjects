@@ -9,6 +9,7 @@ var packageObj = library.getChildPackage();
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
+	var node_basicUtility;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSequence;
 	var node_createServiceRequestInfoSimple;
@@ -42,7 +43,7 @@ var node_createModuleStoryBuilder = function(parm){
 	var loc_eventListener = node_createEventObject();
 
 	var loc_componentData = {
-		question : {}
+		question : {},
 	};
 	
 	var loc_vue;
@@ -63,7 +64,7 @@ var node_createModuleStoryBuilder = function(parm){
 	var loc_processNewStep = function(step, processChange){
 		loc_stepHistory.push(step);
 		
-		if(!(processChange==false)){
+		if(processChange!=false){
 			_.each(step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_CHANGES], function(changeItem){
 				loc_processChangeItem(changeItem);
 			});
@@ -117,6 +118,9 @@ var node_createModuleStoryBuilder = function(parm){
 			computed : {
 			},
 			methods : {
+				onShowStory : function(event) {
+					console.log(node_basicUtility.stringify(loc_story));
+				},
 				onPreviousStep : function(event) {
 				},
 				onNextStep : function(event) {
@@ -128,6 +132,9 @@ var node_createModuleStoryBuilder = function(parm){
 			template :
 				`
 				    <div class="block">
+						<br>
+						<a v-on:click.prevent="onShowStory">showStory</a>
+						<br>
 						<br>
 				    	QuestionModule
 						<br>
@@ -176,6 +183,7 @@ var node_createModuleStoryBuilder = function(parm){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});

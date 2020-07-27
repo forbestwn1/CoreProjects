@@ -49,6 +49,7 @@ public class HAPChangeItemPatch extends HAPChangeItem{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PATH, this.m_path);
 		jsonMap.put(VALUE, HAPJsonUtility.buildJson(m_value, HAPSerializationFormat.JSON));
+		typeJsonMap.put(VALUE, this.m_value.getClass());
 	}
 
 }

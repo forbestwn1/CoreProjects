@@ -21,15 +21,17 @@ var node_createComponentQuestionGroup = function(){
 		template : `
 			<div>
 				<br>
-		    	QuestionGroup
+				Group Start: {{data.question}}
 				<br>
-				{{data.question}}
 				<div 
 					v-for="question in data.children"
 				>
 					<question-group v-if="question.type=='group'" v-bind:data="question"/>
 					<question-item v-if="question.type=='item'" v-bind:data="question"/>
 				</div>
+				<br>
+				Group End: {{data.question}}
+				<br>
 			</div>
 		`
 	};

@@ -17,7 +17,7 @@ public class HAPElementGroupBatch extends HAPElementGroupImp{
 	public final static String GROUP_TYPE = HAPConstant.STORYGROUP_TYPE_BATCH; 
 
 	public HAPElementGroupBatch(HAPStory story) {
-		super(story);
+		super(GROUP_TYPE, story);
 	}
 
 	@Override

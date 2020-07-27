@@ -153,18 +153,15 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			HAPQuestionItem groupQuestion = new HAPQuestionItem("select import for parm", groupNewResult.getStoryElement().getElementId());
 			parmQuestionGroup.addChild(groupQuestion);
 			
-			HAPQuestionItem constantQuestion = new HAPQuestionItem("select constant", parmConstantProviderConnectionNewResult.getStoryElement().getElementId());
+			HAPQuestionItem constantQuestion = new HAPQuestionItem("select constant", parmConstantProviderNewResult.getStoryElement().getElementId());
 			parmQuestionGroup.addChild(constantQuestion);
 			
-			HAPQuestionItem varQuestion = new HAPQuestionItem("select variable", parmVariableProviderConnectionNewResult.getStoryElement().getElementId());
+			HAPQuestionItem varQuestion = new HAPQuestionItem("select variable", parmVariableProviderNewResult.getStoryElement().getElementId());
 			parmQuestionGroup.addChild(varQuestion);
 		}
 		
 		HAPStoryNode outputNode = design.getStory().addNode(new HAPStoryNodeServiceOutput());
 		Map<String, HAPServiceResult> resultes = serviceInterface.getResults();
-		
-		HAPQuestionGroup groupExtraInfo = new HAPQuestionGroup("Please configure ui.");
-		step.setQuestion(groupExtraInfo);
 		
 		design.addStep(step);
 

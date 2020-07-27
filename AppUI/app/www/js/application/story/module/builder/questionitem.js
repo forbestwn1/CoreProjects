@@ -29,13 +29,17 @@ var node_createComponentQuestionItem = function(){
 		methods : {
 		},
 		template : `
-			<div>
-				<question-item-service v-if="data.element.type=='service' && data.element.enable==true" v-bind:data="data"/>
-				<question-item-switch v-if="data.element.type=='switch' && data.element.enable==true" v-bind:data="data"/>
-				<question-item-constant v-if="data.element.type=='constant' && data.element.enable==true" v-bind:data="data"/>
-				<question-item-variable v-if="data.element.type=='variable' && data.element.enable==true" v-bind:data="data"/>
-			
-				QuestionItem
+			<div v-if="data.element.enable==true">
+				<br>
+				Item Start {{data.element.id}} : {{data.question}}
+				<br>
+				<question-item-service v-if="data.element.type=='service'" v-bind:data="data"/>
+				<question-item-switch v-if="data.element.type=='switch'" v-bind:data="data"/>
+				<question-item-constant v-if="data.element.type=='constant'" v-bind:data="data"/>
+				<question-item-variable v-if="data.element.type=='variable'" v-bind:data="data"/>
+				<br>
+				Item End {{data.element.id}} : {{data.question}}
+				<br>
 			</div>
 		`
 	};
