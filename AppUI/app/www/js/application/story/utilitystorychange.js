@@ -65,7 +65,7 @@ var node_utility = function(){
 
 		var out = [];
 		if(extend==true){
-			if(eleCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){
+			if(eleCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){ 
 				var children = element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS];
 				if(eleType==node_COMMONCONSTANT.STORYGROUP_TYPE_SWITCH){
 					if(path==node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE){
