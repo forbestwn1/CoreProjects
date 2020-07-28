@@ -46,7 +46,11 @@ public class HAPManagerStory {
 	public HAPServiceData designStory(String designId, HAPRequestChange changeRequest) {
 		HAPDesignStory design = this.getStoryDesign(designId);
 		String directorId = design.getDirectorId();
-		return this.getStoryDirector(directorId).buildStory(design, changeRequest);
+		HAPServiceData out = this.getStoryDirector(directorId).buildStory(design, changeRequest);
+		if(out.isSuccess()) {
+			this.saveStoryDesign(design);
+		}
+		return out;
 	}
 
 	//get story by id

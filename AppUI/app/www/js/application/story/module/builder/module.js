@@ -43,7 +43,8 @@ var node_createModuleStoryBuilder = function(parm){
 
 	var loc_componentData = {
 		question : {},
-		story : {}
+		story : {},
+		designId : ""
 	};
 	
 	var loc_vue;
@@ -116,6 +117,11 @@ var node_createModuleStoryBuilder = function(parm){
 			components : {
 			},
 			computed : {
+				overviewUrl : {
+					get : function(){
+						return "http://localhost:8080/AppUI/story.html?env=local&configure=overviewtest&app=story&version=2&designId="+this.designId;
+					}
+				}
 			},
 			methods : {
 				onShowStory : function(event) {
@@ -132,6 +138,8 @@ var node_createModuleStoryBuilder = function(parm){
 			template :
 				`
 				    <div class="block">
+						<br>
+						<a :href="overviewUrl"  target="_blank">overView</a>
 						<br>
 						<a v-on:click.prevent="onShowStory">showStory</a>
 						<br>
@@ -158,6 +166,7 @@ var node_createModuleStoryBuilder = function(parm){
 			out.addRequest(loc_storyService.getNewDesignRequest(undefined, "pageSimple", {
 				success : function(request, design){
 					loc_designId = design[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+					loc_componentData.designId = loc_designId;
 					loc_componentData.story = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
 					var changeHistory = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_CHANGEHISTORY];
 					loc_processNewStep(changeHistory[changeHistory.length-1], false);

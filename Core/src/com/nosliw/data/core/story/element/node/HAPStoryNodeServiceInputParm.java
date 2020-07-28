@@ -19,6 +19,8 @@ public class HAPStoryNodeServiceInputParm extends HAPStoryNodeImp{
 
 	private HAPServiceParm m_parmDefinition;
 	
+	public HAPStoryNodeServiceInputParm() {}
+	
 	public HAPStoryNodeServiceInputParm(HAPServiceParm parmDefinition) {
 		super(STORYNODE_TYPE);
 		this.m_parmDefinition = parmDefinition;

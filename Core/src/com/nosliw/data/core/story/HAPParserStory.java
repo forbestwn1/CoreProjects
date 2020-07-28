@@ -32,7 +32,7 @@ public class HAPParserStory {
 		
 		JSONArray connectionGroupJsonArray = jsonObj.optJSONArray(HAPStory.ELEMENTGROUP);
 		if(connectionGroupJsonArray!=null) {
-			for(int i=0; i<connectionJsonArray.length(); i++) {
+			for(int i=0; i<connectionGroupJsonArray.length(); i++) {
 				JSONObject connectionGroupJsonObj = connectionGroupJsonArray.getJSONObject(i);
 				HAPElementGroup connectionGroup = HAPParserElement.parseElementGroup(connectionGroupJsonObj, out);
 				out.addElementGroup(connectionGroup);

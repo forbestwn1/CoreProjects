@@ -8,10 +8,15 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
+import com.nosliw.data.core.story.element.connection.HAPConnectionDataIO;
+import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupBatch;
 import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupSwitch;
+import com.nosliw.data.core.story.element.node.HAPStoryNodeConstant;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInput;
+import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutput;
+import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 
 public class HAPParserElement {
 
@@ -22,11 +27,16 @@ public class HAPParserElement {
 	static {
 		m_storyNodeClass.put(HAPStoryNodeService.STORYNODE_TYPE, HAPStoryNodeService.class);
 		m_storyNodeClass.put(HAPStoryNodeServiceInput.STORYNODE_TYPE, HAPStoryNodeServiceInput.class);
+		m_storyNodeClass.put(HAPStoryNodeServiceInputParm.STORYNODE_TYPE, HAPStoryNodeServiceInputParm.class);
 		m_storyNodeClass.put(HAPStoryNodeServiceOutput.STORYNODE_TYPE, HAPStoryNodeServiceOutput.class);
+		m_storyNodeClass.put(HAPStoryNodeConstant.STORYNODE_TYPE, HAPStoryNodeConstant.class);
+		m_storyNodeClass.put(HAPStoryNodeVariable.STORYNODE_TYPE, HAPStoryNodeVariable.class);
 		
 		m_storyConnectionClass.put(HAPConnectionContain.CONNECTION_TYPE, HAPConnectionContain.class);
-	
+		m_storyConnectionClass.put(HAPConnectionDataIO.CONNECTION_TYPE, HAPConnectionDataIO.class);
+
 		m_storyGroupClass.put(HAPElementGroupSwitch.GROUP_TYPE, HAPElementGroupSwitch.class);
+		m_storyGroupClass.put(HAPElementGroupBatch.GROUP_TYPE, HAPElementGroupBatch.class);
 	}
 	
 	public static HAPStoryElement parseElement(JSONObject jsonObj, HAPStory story) {

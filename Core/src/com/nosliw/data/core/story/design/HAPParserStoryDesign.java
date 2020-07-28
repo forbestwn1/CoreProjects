@@ -13,10 +13,8 @@ public class HAPParserStoryDesign {
 		HAPDesignStory out = null;
 		try{
 			File input = new File(fileName);
-			//use file name as ui resource id
-			String resourceId = HAPFileUtility.getFileName(input);
 			String source = HAPFileUtility.readFile(input);
-			out = parseContent(source, resourceId);
+			out = parseContent(source);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -24,10 +22,9 @@ public class HAPParserStoryDesign {
 		return out;
 	}
 
-	private static HAPDesignStory parseContent(String content, String id) {
+	private static HAPDesignStory parseContent(String content) {
 		JSONObject jsonObj = new JSONObject(content);
 		HAPDesignStory out = parseStoryDefinition(jsonObj);
-		out.setId(id);
 		return out;
 	}
 

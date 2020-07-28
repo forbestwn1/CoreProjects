@@ -46,8 +46,8 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 		case COMMAND_GETDESIGN:
 		{
 			String designId = parms.optString(COMMAND_GETDESIGN_ID);
-//			HAPDesignStory design = storyManager.getStoryDesign(designId);
-			out = HAPServiceData.createSuccessData(null);
+			HAPDesignStory design = storyManager.getStoryDesign(designId);
+			out = HAPServiceData.createSuccessData(design);
 			break;
 		}
 		case COMMAND_NEWDESIGN:
