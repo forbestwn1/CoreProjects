@@ -15,7 +15,7 @@ var node_createComponentQuestionGroup = function(){
 		data : function(){
 			return {};
 		},
-		props : ['data'],
+		props : ['data', 'story'],
 		methods : {
 		},
 		template : `
@@ -26,8 +26,8 @@ var node_createComponentQuestionGroup = function(){
 				<div 
 					v-for="question in data.children"
 				>
-					<question-group v-if="question.type=='group'" v-bind:data="question"/>
-					<question-item v-if="question.type=='item'" v-bind:data="question"/>
+					<question-group v-if="question.type=='group'" v-bind:data="question" v-bind:story="story"/>
+					<question-item v-if="question.type=='item'" v-bind:data="question" v-bind:story="story"/>
 				</div>
 				<br>
 				Group End: {{data.question}}

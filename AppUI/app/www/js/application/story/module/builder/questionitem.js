@@ -19,7 +19,7 @@ var node_createComponentQuestionItem = function(){
 		data : function(){
 			return {};
 		},
-		props : ['data'],
+		props : ['data', 'story'],
 		components : {
 			'question-item-service': node_createComponentQuestionItemService(),
 			'question-item-switch': node_createComponentQuestionItemSwitch(),
@@ -31,14 +31,14 @@ var node_createComponentQuestionItem = function(){
 		template : `
 			<div v-if="data.element.enable==true">
 				<br>
-				Item Start {{data.element.id}} : {{data.question}}
+				Item Start {{data.targetId}} : {{data.question}}
 				<br>
-				<question-item-service v-if="data.element.type=='service'" v-bind:data="data"/>
-				<question-item-switch v-if="data.element.type=='switch'" v-bind:data="data"/>
-				<question-item-constant v-if="data.element.type=='constant'" v-bind:data="data"/>
-				<question-item-variable v-if="data.element.type=='variable'" v-bind:data="data"/>
+				<question-item-service v-if="data.element.type=='service'" v-bind:data="data" v-bind:story="story"/>
+				<question-item-switch v-if="data.element.type=='switch'" v-bind:data="data" v-bind:story="story"/>
+				<question-item-constant v-if="data.element.type=='constant'" v-bind:data="data" v-bind:story="story"/>
+				<question-item-variable v-if="data.element.type=='variable'" v-bind:data="data" v-bind:story="story"/>
 				<br>
-				Item End {{data.element.id}} : {{data.question}}
+				Item End {{data.targetId}} : {{data.question}}
 				<br>
 			</div>
 		`

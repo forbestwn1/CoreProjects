@@ -8,6 +8,7 @@ var packageObj = library.getChildPackage();
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_storyChangeUtility;
+	var node_storyUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createComponentQuestionItemSwitch = function(){
@@ -17,7 +18,7 @@ var node_createComponentQuestionItemSwitch = function(){
 			return {
 			};
 		},
-		props : ['data'],
+		props : ['data', 'story'],
 		components : {
 		},
 		methods : {
@@ -25,28 +26,24 @@ var node_createComponentQuestionItemSwitch = function(){
 		computed: {
 			choices : {
 				get : function(){
-					var out = [];
-					_.each(this.data.element.elements, function(ele, i){
-						out.push(ele.name);
-					});
+					var element = node_storyUtility.getQuestionTargetElement(this.story, this.data);
+					return element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS];
 				}
 			},
-			serviceId : {
+			choiceId : {
 				get : function(){
 					return this.data.element.choice;
 				},
 				
 				set : function(choiceId){
-					var changeItem = node_storyChangeUtility.createChangeItemPatch(this.data.element, node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE, choiceId);
-					node_storyChangeUtility.applyChangeToElement(this.data.element, changeItem);
-					this.data.changes.push(changeItem);
+					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.data, node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE, choiceId, this.data.changes);
 				}
 			}
 		},
 		template : `
 			<div>
-				<select v-model="serviceId">
-				  <option v-for="choice in this.data.element.elements" v-bind:value="choice.id">
+				<select v-model="choiceId">
+				  <option v-for="choice in choices" v-bind:value="choice.id">
 				    {{ choice.name }}
 				  </option>
 				</select>			
@@ -66,6 +63,7 @@ var node_createComponentQuestionItemSwitch = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentQuestionItemSwitch", node_createComponentQuestionItemSwitch); 

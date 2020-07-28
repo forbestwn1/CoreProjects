@@ -17,6 +17,10 @@ var node_utility = function(){
 
 	var loc_out = {
 		
+		getQuestionTargetElement : function(story, question){
+			return this.getStoryElement(story, question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY], question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID]);
+		},
+			
 		addStoryElement : function(story, elementCategary, element){
 			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){
 				story[node_COMMONATRIBUTECONSTANT.STORY_NODE][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;

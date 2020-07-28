@@ -36,7 +36,6 @@ var node_createModuleStoryBuilder = function(parm){
 	var loc_storyService = node_createStoryService();
 	
 	var loc_designId;
-	var loc_story;
 	var loc_stepHistory = [];
 	
 	var loc_eventSource = node_createEventObject();
@@ -44,6 +43,7 @@ var node_createModuleStoryBuilder = function(parm){
 
 	var loc_componentData = {
 		question : {},
+		story : {}
 	};
 	
 	var loc_vue;
@@ -77,7 +77,7 @@ var node_createModuleStoryBuilder = function(parm){
 	};
 	
 	var loc_processChangeItem = function(changeItem){
-		node_storyChangeUtility.applyChange(loc_story, changeItem);
+		node_storyChangeUtility.applyChange(loc_componentData.story, changeItem);
 	};
 	
 	var loc_processQuestion = function(question){
@@ -85,13 +85,13 @@ var node_createModuleStoryBuilder = function(parm){
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
 			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
 			_.each(children, function(child, i){
-				loc_processQuestion(child, loc_story);
+				loc_processQuestion(child, loc_componentData.story);
 			});
 		}
 		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
 			var targetCategary = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY];
 			var targetId = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID];
-			var element = node_storyUtility.getStoryElement(loc_story, targetCategary, targetId);
+			var element = node_storyUtility.getStoryElement(loc_componentData.story, targetCategary, targetId);
 			question.element = element;
 			question.changes = [];
 		}
@@ -119,7 +119,7 @@ var node_createModuleStoryBuilder = function(parm){
 			},
 			methods : {
 				onShowStory : function(event) {
-					console.log(node_basicUtility.stringify(loc_story));
+					console.log(node_basicUtility.stringify(this.story));
 				},
 				onPreviousStep : function(event) {
 				},
@@ -140,6 +140,7 @@ var node_createModuleStoryBuilder = function(parm){
 						<br>
 						<question-step 
 							v-bind:data="question"
+							v-bind:story="story"
 					  		v-on:previousStep="onPreviousStep"
 					  		v-on:nextStep="onNextStep"
 					  		v-on:finishStep="onFinishStep"
@@ -157,7 +158,7 @@ var node_createModuleStoryBuilder = function(parm){
 			out.addRequest(loc_storyService.getNewDesignRequest(undefined, "pageSimple", {
 				success : function(request, design){
 					loc_designId = design[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
-					loc_story = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
+					loc_componentData.story = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
 					var changeHistory = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_CHANGEHISTORY];
 					loc_processNewStep(changeHistory[changeHistory.length-1], false);
 				}

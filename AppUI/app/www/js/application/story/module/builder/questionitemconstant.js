@@ -17,7 +17,7 @@ var node_createComponentQuestionItemConstant = function(){
 			return {
 			};
 		},
-		props : ['data'],
+		props : ['data', 'story'],
 		components : {
 		},
 		methods : {

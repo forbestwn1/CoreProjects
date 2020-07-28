@@ -8,6 +8,7 @@ var packageObj = library.getChildPackage();
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_storyChangeUtility;
+	var node_storyUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createComponentQuestionItemService = function(availableService){
@@ -31,27 +32,22 @@ var node_createComponentQuestionItemService = function(availableService){
 				allService : loc_availableService
 			};
 		},
-		props : ['data'],
+		props : ['data', 'story'],
 		components : {
 		},
 		methods : {
-			onSelectMiniApp : function(miniAppId) {
-				this.$emit("selectMiniApp", miniAppId);
-			},
 		},
 		computed: {
 			serviceId : {
 				get : function(){
-					return this.data.element.entity.referenceId;
+					var element = node_storyUtility.getQuestionTargetElement(this.story, this.data);
+					return element[node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID];
 				},
 				
 				set : function(serviceId){
-					var changeItem = node_storyChangeUtility.createChangeItemPatch(this.data.element, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, serviceId);
-					node_storyChangeUtility.applyChangeToElement(this.data.element, changeItem);
-					this.data.changes.push(changeItem);
+					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.data, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, serviceId, this.data.changes);
 				}
 			}
-			
 		},
 		template : `
 			<div>
@@ -73,6 +69,7 @@ var node_createComponentQuestionItemService = function(availableService){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentQuestionItemService", node_createComponentQuestionItemService); 
