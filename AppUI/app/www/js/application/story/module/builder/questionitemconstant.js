@@ -14,6 +14,7 @@ var packageObj = library.getChildPackage();
 	var node_createStoryService;
 	var node_requestServiceProcessor;
 	var node_storyUtility;
+	var node_storyUIUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createComponentQuestionItemConstant = function(){
@@ -31,25 +32,25 @@ var node_createComponentQuestionItemConstant = function(){
 		methods : {
 		},
 		mounted: function () {
-			
+			var that = this;
 			var request = node_createServiceRequestInfoSequence(undefined, {
 				success : function(request, uiTag){
 					
 				}
 			});
 			var element = node_storyUtility.getQuestionTargetElement(this.story, this.data);
-			request.addRequest(loc_storyService.getDefaultUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE]), {
+			request.addRequest(loc_storyService.getDefaultUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE], {
 				success : function(request, tagResult){
 					var tagId = tagResult[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_TAG];
-					var uiNode = node_storyUtility.buildUINodeFromUITag(tagId);
-					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], uiNodeId, undefined, {
+					var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
+					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", undefined, {
 						success : function(request, uiNodeViewGroup){
-							uiNodeViewGroup.appendTo(this.$refs.uiTag);
+							uiNodeViewGroup.appendTo(that.$refs.uiTag);
 						}
 					});
 
 				}
-			});
+			}));
 			node_requestServiceProcessor.processRequest(request);
 			
 //			console.log("Mounted");
@@ -81,6 +82,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon"
 nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryService", function(){node_createStoryService = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.storyUIUtility", function(){node_storyUIUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentQuestionItemConstant", node_createComponentQuestionItemConstant); 
