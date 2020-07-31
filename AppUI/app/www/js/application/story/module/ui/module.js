@@ -37,7 +37,7 @@ var node_createModuleUI = function(parm){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshUIModule", {}), handlers, requestInfo);
 			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUIModule", {}), 
 				function(requestInfo){
-					var uiNode = node_storyUtility.buildUINode(uiNodeId, story);
+					var uiNode = node_storyUtility.buildUINodeFromStoryNode(uiNodeId, story);
 					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], uiNodeId, undefined, {
 						success : function(request, uiNodeViewGroup){
 							uiNodeViewGroup.appendTo(loc_root);

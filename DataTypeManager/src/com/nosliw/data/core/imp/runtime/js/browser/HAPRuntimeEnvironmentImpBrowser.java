@@ -29,6 +29,7 @@ import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.story.HAPBuilderPageSimple;
 import com.nosliw.uiresource.page.story.HAPStoryBuilderPageSimple;
+import com.nosliw.uiresource.page.tag.HAPGatewayUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginApp;
 import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginAppEntry;
@@ -45,6 +46,9 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 	
 	@HAPAttribute
 	public static final String GATEWAY_SERVICE = "service";
+
+	@HAPAttribute
+	public static final String GATEWAY_UITAG = "uiTag";
 	
 	private HAPModuleRuntimeJS m_runtimeJSModule;
 	
@@ -101,6 +105,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		
 		this.getGatewayManager().registerGateway(GATEWAY_LOADLIBRARIES, new HAPGatewayBrowserLoadLibrary(this.getGatewayManager()));
 		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression());
+		this.getGatewayManager().registerGateway(GATEWAY_UITAG, new HAPGatewayUITag(this.m_uiResourceManager.getUITagManager()));
 
 		//resource definition plugin
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginPage(this.m_uiResourceManager.getUIResourceParser()));

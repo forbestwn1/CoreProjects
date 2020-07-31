@@ -8,7 +8,7 @@ var packageObj = library.getChildPackage("entity");
 	var node_storyUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUINode = function(nodeId, story){
+var node_createUINodeFromStoryNode = function(nodeId, story){
 	
 	var loc_story = story;
 	var loc_nodeId = nodeId;
@@ -44,6 +44,29 @@ var node_createUINode = function(nodeId, story){
 	return loc_out;
 };
 	
+var node_createUINodeByTag = function(tagId){
+	
+	var loc_tagId = tagId;
+	var loc_children = [];
+	
+	var loc_out = {
+		
+		getTagId : function(){  return loc_tagId; },
+			
+		addChild : function(uiNode, index){
+			loc_children[index] = uiNode;
+		},
+		
+		getChildren : function(){   return loc_children;    },
+		
+		getBody : function(){
+			return loc_out;
+		}
+	
+	};
+	return loc_out;
+};
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -52,6 +75,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("application.instance.story.utility", function(){node_storyUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createUINode", node_createUINode); 
+packageObj.createChildNode("createUINodeFromStoryNode", node_createUINodeFromStoryNode); 
+packageObj.createChildNode("createUINodeByTag", node_createUINodeByTag); 
 
 })(packageObj);

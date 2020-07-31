@@ -6,7 +6,6 @@ var packageObj = library.getChildPackage();
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
-	var node_createUINode;
 
 //*******************************************   Start Node Definition  ************************************** 	
 

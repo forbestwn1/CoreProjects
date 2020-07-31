@@ -15,7 +15,7 @@ public class HAPUITagManager {
 		this.m_dataTypeHelper = dataTypeHelper;
 	}
 	
-	public HAPUITagQueryResult getDefaultUITagDefnition(HAPUITageQuery query) {
+	public HAPUITagQueryResult getDefaultUITag(HAPUITageQuery query) {
 		HAPUITagQueryResult result = null;
 		Set<HAPDataTypeId> dataTypeIds = query.getDataTypeCriterai().getValidDataTypeId(m_dataTypeHelper);
 		HAPDataTypeId dataTypeId = dataTypeIds.iterator().next();

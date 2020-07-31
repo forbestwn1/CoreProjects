@@ -5,8 +5,9 @@ var packageObj = library.getChildPackage();
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
-	var node_createUINode;
-
+	var node_createUINodeFromStoryNode;
+	var node_createUINodeByTag;
+	
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -14,8 +15,8 @@ var packageObj = library.getChildPackage();
  */
 var node_utility = function(){
 
-	var loc_buildUINode = function(storyNode, story){
-		var uiNode = node_createUINode(storyNode[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], story);
+	var loc_buildUINodeFromStoryNode = function(storyNode, story){
+		var uiNode = node_createUINodeFromStoryNode(storyNode[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], story);
 		var childStoryNodes = loc_out.getAllChildNodes(storyNode, story);
 		_.each(childStoryNodes, function(childStroyNode, childId){
 			var childUINode = loc_buildUINode(childStroyNode, story);
@@ -31,9 +32,13 @@ var node_utility = function(){
 			return loc_buildUINode(pageNode, story);
 		},	
 		
-		buildUINode : function(storyNodeId, story){
+		buildUINodeFromStoryNode : function(storyNodeId, story){
 			var storyNode = this.getNodeById(story, storyNodeId);
-			return loc_buildUINode(storyNode, story);
+			return loc_buildUINodeFromStoryNode(storyNode, story);
+		},
+		
+		buildUINodeFromUITag : function(uiTag){
+			return node_createUINodeByTag(uiTag);
 		},
 			
 		getStoryNodeByType : function(story, nodeType) {
@@ -115,8 +120,8 @@ var node_utility = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("application.instance.story.entity.createUINode", function(){node_createUINode = this.getData();});
-
+nosliw.registerSetNodeDataEvent("application.instance.story.entity.createUINodeFromStoryNode", function(){node_createUINodeFromStoryNode = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.entity.createUINodeByTag", function(){node_createUINodeByTag = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("storyUIUtility", node_utility); 

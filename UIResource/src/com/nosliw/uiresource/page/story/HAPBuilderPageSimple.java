@@ -244,7 +244,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			HAPServiceOutput output = outputs.get(name);
 			HAPUITageQuery uiTagQuery = new HAPUITageQuery();
 			uiTagQuery.setDataTypeCriteria(output.getCriteria());
-			HAPUITagQueryResult tagQueryResult = this.m_tagManager.getDefaultUITagDefnition(uiTagQuery);
+			HAPUITagQueryResult tagQueryResult = this.m_tagManager.getDefaultUITag(uiTagQuery);
 			HAPHtmlTag tagHtml = new HAPHtmlTag(tagQueryResult.getTag());
 			tagHtml.addAttribute(new HAPTagAttribute("data", name));
 			out.addSegment(tagHtml);

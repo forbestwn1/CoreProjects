@@ -10,6 +10,8 @@ var packageObj = library.getChildPackage("service");
 	var node_requestServiceProcessor;
 	var node_buildServiceProvider;
 	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoService;
+	var node_DependentServiceRequestInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -32,6 +34,21 @@ var node_createStoryService = function(){
 	
 	loc_out = {
 
+		//resource discovery
+		getDefaultUITagRequest : function(dataTypeCriteria, handlers, requester_parent){
+			//gateway request
+			var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_UITAG;
+			var command = node_COMMONATRIBUTECONSTANT.GATEWAYUITAG_COMMAND_GETDEFAULTTAG;
+			var parms = {};
+			parms[node_COMMONATRIBUTECONSTANT.GATEWAYUITAG_COMMAND_GETDEFAULTTAG_CRITERIA] = dataTypeCriteria;
+			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms);
+			
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var out = node_createServiceRequestInfoService(undefined, handlers, requestInfo);
+			out.setDependentService(new node_DependentServiceRequestInfo(gatewayRequest));
+			return out;
+		},
+			
 		getGetDesignRequest : function(userInfo, designId, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getDesign", {}), handlers, requestInfo);
@@ -105,6 +122,8 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createStoryService", node_createStoryService); 
