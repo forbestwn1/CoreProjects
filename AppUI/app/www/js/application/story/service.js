@@ -32,7 +32,7 @@ var node_createStoryService = function(){
 	});
 
 	
-	loc_out = {
+	var loc_out = {
 
 		//resource discovery
 		getDefaultUITagRequest : function(dataTypeCriteria, handlers, requester_parent){

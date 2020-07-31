@@ -68,7 +68,7 @@
 		var loc_updateView = function(request){
 			loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
-					if(data==undefined)  loc_view.val("");
+					if(data==undefined || data.value==undefined)  loc_view.val("");
 					else loc_view.val(data.value.value);
 				}
 			}, request);
@@ -104,7 +104,7 @@
 				}, this);
 			},
 
-			destroy : function(){	
+			destroy : function(){
 				loc_dataVariable.release();	
 				loc_view.remove();
 			},
@@ -114,8 +114,19 @@
 				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
 				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
 				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
-				var data = node_createData({value:"Hello World", dataTypeId:"test.string;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);
-				var elementInfosArray = [node_createContextElementInfo("internal_data", data)];
+				
+				var dataVarPar;
+				if(parentContext!=undefined)	dataVarPar = parentContext.getContextElement("data");
+				var dataVarEleInfo = undefined;
+				if(dataVarPar!=undefined){
+					dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar);
+				}
+				else{
+					var data = node_createData({value:"Hello World", dataTypeId:"test.string;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);
+					dataVarEleInfo = node_createContextElementInfo("internal_data", data);
+				}
+				
+				var elementInfosArray = [dataVarEleInfo];
 				return node_createContext(id, elementInfosArray, request);
 			}
 		};

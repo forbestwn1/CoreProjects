@@ -15,6 +15,11 @@ var packageObj = library.getChildPackage();
 	var node_requestServiceProcessor;
 	var node_storyUtility;
 	var node_storyUIUtility;
+	var node_CONSTANT;
+	var node_createData;
+	var node_createContextElementInfo;
+	var node_createContext;
+	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createComponentQuestionItemConstant = function(){
@@ -24,6 +29,8 @@ var node_createComponentQuestionItemConstant = function(){
 	var loc_vueComponent = {
 		data : function(){
 			return {
+				uiNodeView : {},
+				context : {}
 			};
 		},
 		props : ['data', 'story'],
@@ -43,8 +50,19 @@ var node_createComponentQuestionItemConstant = function(){
 				success : function(request, tagResult){
 					var tagId = tagResult[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_TAG];
 					var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
-					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", undefined, {
+					
+					var data = node_createData(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA], node_CONSTANT.WRAPPER_TYPE_APPDATA);
+					var dataVarEleInfo = node_createContextElementInfo("data", data);
+					var elementInfosArray = [dataVarEleInfo];
+					that.context = node_createContext("id", elementInfosArray, request);
+					
+					that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
+						node_storyChangeUtility.applyPatchFromQuestion(that.story, that.data, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, eventData.value, that.data.changes);
+					}, this);
+
+					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, {
 						success : function(request, uiNodeViewGroup){
+							that.uiNodeView = uiNodeViewGroup;
 							uiNodeViewGroup.appendTo(that.$refs.uiTag);
 						}
 					});
@@ -83,6 +101,11 @@ nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryS
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUIUtility", function(){node_storyUIUtility = this.getData();});
+
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.data.entity.createData", function(){node_createData = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentQuestionItemConstant", node_createComponentQuestionItemConstant); 

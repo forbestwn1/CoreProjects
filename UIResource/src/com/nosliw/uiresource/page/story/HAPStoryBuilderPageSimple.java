@@ -165,11 +165,32 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		
 		design.addStep(step);
 
+		//stage
+		HAPUtilityDesign.setChangeStage(step, STAGE_UI);
+
 		return HAPServiceData.createSuccessData(step);
 	}
 
-	private HAPServiceData processUIChangeStage(HAPDesignStory design, HAPRequestChange changeRequest) {
-		return null;
+	private HAPServiceData processUIChangeStage(HAPDesignStory design, HAPRequestChange answer) {
+		HAPStory story = design.getStory();
+		
+		//apply answer to story
+		List<HAPChangeItem> answerChanges = answer.getChangeItems();
+		HAPUtilityChange.applyChange(story, answerChanges);
+				
+		//new step
+		HAPDesignStep step = new HAPDesignStep();
+
+		//question
+		HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Finish.");
+		step.setQuestion(rootQuestionGroup);
+
+		design.addStep(step);
+
+		//stage
+		HAPUtilityDesign.setChangeStage(step, STAGE_END);
+
+		return HAPServiceData.createSuccessData(step);
 	}
 
 
