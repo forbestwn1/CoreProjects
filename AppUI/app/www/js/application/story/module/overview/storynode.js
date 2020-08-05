@@ -16,12 +16,26 @@ var packageObj = library.getChildPackage();
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
 	var node_createEventObject;
+	var node_createBasicLayout;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_ChildInfo = function(nodeElement, connectionId){
-	this.nodeElement = nodeElement;
-	this.connectionId = connectionId;
-	return this;
+var node_createStoryNodeElementChildInfo = function(nodeElement, connectionId){
+	var loc_nodeElement = nodeElement;
+	var loc_connectionId = connectionId;
+	
+	var loc_out = {
+		
+		getElementNode : function(){   return loc_nodeElement;   },
+		getConnectionId : function(){   return loc_connectionId;     },
+		
+		getNeededSize : function(){   return loc_nodeElement.getNeededSize();  },
+		
+		setLocation : function(x, y, width, height){   return loc_nodeElement.setLocation(x, y, width, height);  },
+		
+		addToPaper : function(paper){  return loc_nodeElement.addToPaper(paper);  },
+		
+	};
+	return loc_out;
 };
 	
 var node_createStoryNodeElement = function(storyNodeId, module){
@@ -30,20 +44,16 @@ var node_createStoryNodeElement = function(storyNodeId, module){
 	var loc_module = module;
 	
 	var loc_layer = 1;
-	var loc_children = [];
-	
-	var loc_width = 100;
-	var loc_height = 40;
-	
-	var loc_x;
-	var loc_y;
 	
 	var loc_graphElement;
 	
+	var loc_layout = node_createBasicLayout(); 
+	
     var loc_createElement = function(){
         var element = new joint.shapes.standard.Rectangle();
-        element.position(loc_x, loc_y);
-        element.resize(loc_width, loc_height);
+        var location = loc_layer.getLocation();
+        element.position(location.x, location.y);
+        element.resize(location.width, location.height);
         element.attr({
             body: {
                 fill: node_storyOverviewUtility.getColorByLayer(loc_layer),
@@ -61,37 +71,29 @@ var node_createStoryNodeElement = function(storyNodeId, module){
 		getStoryNodeId : function(){	return loc_storyNodeId;	},
 	
 		addChild : function(nodeElement, connectionId){
-			var childInfo = new node_ChildInfo(nodeElement, connectionId);
-			loc_children.push(childInfo);
+			var childInfo = node_createStoryNodeElementChildInfo(nodeElement, connectionId);
 			node_storyOverviewUtility.updateChild(childInfo, parentNode);
+			loc_layout.addChild(childInfo);
 		},
 		
-		getChildren : function(){   return loc_children;   },
+		getChildren : function(){   return loc_layout.getChildren();   },
 		
 		setLayer : function(layer){    loc_layer = layer;    },
 		
-		getNeedSize : function(){
-			return node_storyOverviewUtility.getNeedSize(this);
-		},
+		getNeededSize : function(){  loc_layout.getNeededSize();  },
 		
-		setSize : function(width, height){  
-			loc_width = width;
-			loc_height = height;
-		},
+		setLocation : function(x, y, width, height){   loc_layout.setLocation(x, y, width, height);  },
 		
-		setPosition : function(x, y){
-			loc_x = x;
-			loc_y = y;
-		},
-		
-		getElement : function(){
+		addToPaper : function(paper){
 			if(loc_graphElement==undefined){
 				loc_graphElement = loc_createElement();
 			}
+			loc_graph.addCells(loc_graphElement);
+			_.each(this.getChildren(), function(child, i){
+				child.addToPaper(paper);
+			});
 			return loc_graphElement;
 		},
-	
-			
 	};
 	
 	return loc_out;
@@ -111,8 +113,10 @@ nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.overview.createBasicLayout", function(){ node_createBasicLayout = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createStoryNodeElement", node_createStoryNodeElement); 
+packageObj.createChildNode("createStoryNodeElementChildInfo", node_createStoryNodeElementChildInfo); 
 
 })(packageObj);

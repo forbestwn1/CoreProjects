@@ -10,7 +10,7 @@ var packageObj = library.getChildPackage();
 	var node_COMMONATRIBUTECONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createBasicLayout = function(){
+var node_createMainLayout = function(){
 	
 	var loc_marginX = 30;
 	var loc_marginY = 30;
@@ -20,7 +20,7 @@ var node_createBasicLayout = function(){
 	var loc_calculated = false;
 	var loc_children = [];
 	var loc_childNeededSize = [];
-	var loc_totalChildrenWidth = 0; 
+	var loc_totalChildrenHeight = 0; 
 	var loc_neededSize;
 	
 	var loc_x;
@@ -31,26 +31,26 @@ var node_createBasicLayout = function(){
 	var loc_calculateNeededSize = function(){
 		if(loc_children.length==0){
 			loc_neededSize = {
-				width : 100,
-				height : 50
+				width : 1000,
+				height : 500
 			}
 		}
 		else{
 			var width = loc_marginX * 2;
 			var height = loc_marginY * 2;
-			var maxHeight = 0;
+			var maxWidth = 0;
 			loc_totalChildrenWidth = 0;
 	    	_.each(loc_children, function(child, i){
 	    		var size = child.getNeededSize();
 	    		loc_childNeededSize.push(size);
-	    		if(size.height>maxHeight)  maxHeight = size.height;
-	    		if(i>=1)  width = width + loc_gapX;
-	    		width = width + size.width;
-	    		loc_totalChildrenWidth = loc_totalChildrenWidth + size.width;
+	    		if(size.width>maxWidth)  maxWidth = size.width;
+	    		if(i>=1)  height = height + loc_gapY;
+	    		height = height + size.height;
+	    		loc_totalChildrenHeight = loc_totalChildrenHeight + size.width;
 	    	});
 	    	loc_neededSize = {
-	    		width : width,
-	    		height : height + maxHeight,
+	    		width : width + maxWidth,
+	    		height : height,
 	    	};
 		}
 		loc_calculated = true;
@@ -64,14 +64,14 @@ var node_createBasicLayout = function(){
 			return;
 		}
 		
-		var totalChildrenWidth = width - loc_marginX * 2 - loc_gapX * loc_children.length;
-		var childHeight = height - loc_marginY * 2;
-		var startX = x + loc_marginX;
+		var totalChildrenHeight = height - loc_marginY * 2 - loc_gapY * loc_children.length;
+		var childWidth = width - loc_marginX * 2;
+		var startY = y + loc_marginY;
     	_.each(loc_children, function(child, i){
     		var neededSize = loc_childNeededSize[i];
-    		var childWidth = needeSize.width * totalChildrenWidth / loc_totalChildrenWidth;
-    		child.setLocation(startX, y+loc_marginY, childWidth, childHeight);
-    		startX = startX + childWidth + loc_marginX;
+    		var childHeight = needeSize.height * totalChildrenHeight / loc_totalChildrenHeight;
+    		child.setLocation(x+loc_marginX, startY, childWidth, childHeight);
+    		startY = startY + childHeight + loc_marginY;
     	});
 	};
 	
@@ -116,6 +116,6 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createBasicLayout", node_createBasicLayout); 
+packageObj.createChildNode("createMainLayout", node_createMainLayout); 
 
 })(packageObj);

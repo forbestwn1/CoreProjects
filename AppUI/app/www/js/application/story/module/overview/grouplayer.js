@@ -16,35 +16,58 @@ var packageObj = library.getChildPackage();
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
 	var node_createEventObject;
+	var node_createBasicLayout;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createGroupLayer = function(name, module){
 	
-	var loc_storyNodeId = storyNodeId;
 	var loc_module = module;
+
+	var loc_layer = 0;
+	var loc_layout = node_createBasicLayout();
 	
-    var loc_element = new joint.shapes.standard.Rectangle();
-    loc_element.position(100, 30);
-    loc_element.resize(100, 40);
-    loc_element.attr({
-        body: {
-            fill: 'blue'
-        },
-        label: {
-            text: loc_storyNodeId,
-            fill: 'white'
-        }
-    });
+    var loc_graphElement;
 	
+    var loc_createElement = function(){
+        var element = new joint.shapes.standard.Rectangle();
+        var location = loc_layer.getLocation();
+        element.position(location.x, location.y);
+        element.resize(location.width, location.height);
+        element.attr({
+            body: {
+                fill: node_storyOverviewUtility.getColorByLayer(loc_layer),
+            },
+            label: {
+                text: loc_storyNodeId,
+                fill: 'white'
+            }
+        });
+    	return element
+    };
+
+    
 	var loc_out = {
 		
-		addChild : function(node){
-			
-		},
+		addChild : function(child){		loc_layout.addChild(child);		},
+
+		getChildren : function(){   return loc_layout.getChildren();   },
 		
-		getElement : function(){
-			return loc_element;
-		},
+		setLayer : function(layer){    loc_layer = layer;    },
+		
+		getNeededSize : function(){  loc_layout.getNeededSize();  },
+		
+		setLocation : function(x, y, width, height){   loc_layout.setLocation(x, y, width, height);  },
+		
+		addToPaper : function(paper){
+			if(loc_graphElement==undefined){
+				loc_graphElement = loc_createElement();
+			}
+			loc_graph.addCells(loc_graphElement);
+			_.each(this.getChildren(), function(child, i){
+				child.addToPaper(paper);
+			});
+			return loc_graphElement;
+		}	
 	};
 	
 	return loc_out;
@@ -64,6 +87,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.overview.createBasicLayout", function(){ node_createBasicLayout = this.getData();});
 
 
 //Register Node by Name

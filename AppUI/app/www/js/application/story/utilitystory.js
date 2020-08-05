@@ -20,7 +20,7 @@ var node_utility = function(){
 			return this.getStoryElement(story, question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY], question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID]);
 		},
 			
-		getAllNodes : function(){  return story[node_COMMONATRIBUTECONSTANT.STORY_NODE];   },
+		getAllNodes : function(story){  return story[node_COMMONATRIBUTECONSTANT.STORY_NODE];   },
 		
 		addStoryElement : function(story, elementCategary, element){
 			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){

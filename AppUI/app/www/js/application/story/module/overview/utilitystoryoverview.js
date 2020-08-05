@@ -5,9 +5,9 @@ var packageObj = library.getChildPackage();
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
-	var node_createUINodeFromStoryNode;
-	var node_createUINodeByTag;
-	
+	var node_storyUtility;
+	var node_createStoryNodeElement;
+	var node_createGroupLayer;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -57,7 +57,7 @@ var node_utility = function(){
 		buildOverviewLayerTree : function(module){
 			var that = this;
 			var layerTree = {};
-			var nodeTree = buildOverviewNodeTree(module);
+			var nodeTree = this.buildOverviewNodeTree(module);
 			_.each(nodeTree, function(node, id){
 				var layerName = that.getLayerByNodeType();
 				var layer = layerTree[layerName];
@@ -73,7 +73,7 @@ var node_utility = function(){
 		buildOverviewNodeTree : function(module){
 			var overViewTree = {};
 			var processed = {};
-			var storyNodes = node_storyUtility.getAllNodes();
+			var storyNodes = node_storyUtility.getAllNodes(module.getStory());
 			_.each(storyNodes, function(storyNode, id){
 				var node = loc_processStoryNode(storyNode, overViewTree, processed, module);
 				if(node!=undefined){
@@ -86,7 +86,7 @@ var node_utility = function(){
 	    updateChild : function(childInfo, parentNode){
 	    	var that = this;
 	    	var layer = parentNode.getLayer();
-	    	var childNode = childInfo.nodeElement;
+	    	var childNode = childInfo.getElementNode();
 	    	childNode.setLayer(layer+1);
 	    	var grandChildrenInfo = childNode.getChildren();
 	    	_.each(grandChildrenInfo, function(grandChildInfo, i){
@@ -127,8 +127,10 @@ var node_utility = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("application.instance.story.entity.createUINodeFromStoryNode", function(){node_createUINodeFromStoryNode = this.getData();});
-nosliw.registerSetNodeDataEvent("application.instance.story.entity.createUINodeByTag", function(){node_createUINodeByTag = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.overview.createStoryNodeElement", function(){ node_createStoryNodeElement = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.overview.createGroupLayer", function(){ node_createGroupLayer = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("storyOverviewUtility", node_utility); 

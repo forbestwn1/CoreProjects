@@ -142,5 +142,5 @@ nosliw.registerSetNodeDataEvent("application.story.module.overview.createConnect
 nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryService", function(){node_createStoryService = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createModuleOverview", node_createModuleOverview); 
+packageObj.createChildNode("createModuleOverview1", node_createModuleOverview); 
 })(packageObj);

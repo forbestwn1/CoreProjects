@@ -31,8 +31,11 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 			libs : [
 				"0_package.js",
 				"module.js",
-				"node.js",
-				"connection.js",
+				"storynode.js",
+				"grouplayer.js",
+				"layoutbasic.js",
+				"layoutmain.js",
+				"utilitystoryoverview.js",
 			]
 		});
 	}

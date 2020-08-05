@@ -19,6 +19,8 @@ var packageObj = library.getChildPackage();
 	var node_createNodeElement;
 	var node_createConnectionLink;
 	var node_createStoryService;
+	var node_storyOverviewUtility;
+	var node_createMainLayout;
 //*******************************************   Start Node Definition  ************************************** 	
 var loc_mduleName = "overview";
 	
@@ -45,6 +47,10 @@ var node_createModuleOverview = function(parm){
 	var loc_design;
 	var loc_layerTree;
 	
+	var loc_mainLayout = node_createMainLayout();
+	
+	var loc_layoutList = ["UI", "data", "service"];
+	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
 		loc_graph = new joint.dia.Graph;
@@ -68,69 +74,41 @@ var node_createModuleOverview = function(parm){
 				success : function(request, design){
 					loc_design = design;
 					var story = loc_design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
-					loc_layerTree = storyOverviewUtility.buildOverviewLayerTree(that);
+					loc_layerTree = node_storyOverviewUtility.buildOverviewLayerTree(that);
 					
-					var width = 0;
-					var height = 50;
-					_.each(loc_layerTree, function(layer, i){
-						var layerSize = layer.getNeedSize();
-						if(layerSize.width?width) width = layerSize.width;
-						height = height + layerSize.height + 50;
+					_.each(loc_layoutList, function(layoutName, i){
+						var child = loc_layerTree[layoutName];
+						if(child!=undefined){
+							loc_mainLayout.addChild(child);
+						}
 					});
 					
-					_.each(loc_layerTree, function(layer, i){
-						layer.setSize(width, height);
-					});
-					
-					
+					var neededSize = loc_mainLayout.getNeededSize();
+					loc_mainLayout.setLocation(0, 0, neededSize.width, neededSize.height);
+
 					 loc_paper = new joint.dia.Paper({
 					        el: loc_root,
 					        model: loc_graph,
-					        width: width,
-					        height: height,
+					        width: neededSize.width,
+					        height: neededSize.height,
 					        gridSize: 1
 					 });
-					
-					_.each(nodes, function(storyNode, id){
-						var nodeEle = node_createNodeElement(id, that);
-						loc_nodeElements[id] = nodeEle; 
-						loc_graph.addCells(nodeEle.getElement());
+					 
+					_.each(loc_mainLayout.getChildren(), function(child, i){
+						child.addToPaper(loc_paper);
 					});
-
-					var connections = story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION];
-					_.each(connections, function(storyConnection, id){
-						var connectionLink = node_createConnectionLink(id, that);
-						loc_connectionLinks[id] = connectionLink; 
-						loc_graph.addCells(connectionLink.getLink());
-					});
+						
+//					var connections = story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION];
+//					_.each(connections, function(storyConnection, id){
+//						var connectionLink = node_createConnectionLink(id, that);
+//						loc_connectionLinks[id] = connectionLink; 
+//						loc_graph.addCells(connectionLink.getLink());
+//					});
 				}
 			}));
 			return out;
 		},
 			
-		refreshRequest1 : function(story, handlers, requestInfo){
-			var that  = this;
-			loc_story = story;
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshOverviewModule", {}), handlers, requestInfo);
-			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshOverviewModule", {}), 
-				function(requestInfo){
-					var nodes = story[node_COMMONATRIBUTECONSTANT.STORY_NODE];
-					_.each(nodes, function(storyNode, id){
-						var nodeEle = node_createNodeElement(id, that);
-						loc_nodeElements[id] = nodeEle; 
-						loc_graph.addCells(nodeEle.getElement());
-					});
-
-					var connections = story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION];
-					_.each(connections, function(storyConnection, id){
-						var connectionLink = node_createConnectionLink(id, that);
-						loc_connectionLinks[id] = connectionLink; 
-						loc_graph.addCells(connectionLink.getLink());
-					});
-				})); 
-			return out;
-		},
-
 		getStory : function(){  return loc_design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];  },
 		getNodeElementById : function(storyNodeId){  return loc_nodeElements[storyNodeId];   },
 		getConnectionLinkById : function(storyConnectionId){  return loc_connectionLinks[storyConnectionId];   },
@@ -164,6 +142,10 @@ nosliw.registerSetNodeDataEvent("application.story.module.overview.createNodeEle
 nosliw.registerSetNodeDataEvent("application.story.module.overview.createConnectionLink", function(){node_createConnectionLink = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryService", function(){node_createStoryService = this.getData();});
 
+nosliw.registerSetNodeDataEvent("application.story.module.overview.storyOverviewUtility", function(){ node_storyOverviewUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.overview.createMainLayout", function(){ node_createMainLayout = this.getData();});
+
+
 //Register Node by Name
-packageObj.createChildNode("createModuleOverview1", node_createModuleOverview); 
+packageObj.createChildNode("createModuleOverview", node_createModuleOverview); 
 })(packageObj);
