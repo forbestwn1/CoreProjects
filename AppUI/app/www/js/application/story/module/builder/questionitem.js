@@ -10,7 +10,7 @@ var packageObj = library.getChildPackage();
 	var node_createComponentQuestionItemService;
 	var node_createComponentQuestionItemSwitch;
 	var node_createComponentQuestionItemConstant;
-	var node_createComponentQuestionItemVariable;
+	var node_createComponentQuestionItemUIData;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createComponentQuestionItem = function(){
@@ -24,7 +24,7 @@ var node_createComponentQuestionItem = function(){
 			'question-item-service': node_createComponentQuestionItemService(),
 			'question-item-switch': node_createComponentQuestionItemSwitch(),
 			'question-item-constant': node_createComponentQuestionItemConstant(),
-			'question-item-variable': node_createComponentQuestionItemVariable(),
+			'question-item-uidata': node_createComponentQuestionItemUIData(),
 		},
 		methods : {
 		},
@@ -36,7 +36,7 @@ var node_createComponentQuestionItem = function(){
 				<question-item-service v-if="data.element.type=='service'" v-bind:data="data" v-bind:story="story"/>
 				<question-item-switch v-if="data.element.type=='switch'" v-bind:data="data" v-bind:story="story"/>
 				<question-item-constant v-if="data.element.type=='constant'" v-bind:data="data" v-bind:story="story"/>
-				<question-item-variable v-if="data.element.type=='variable'" v-bind:data="data" v-bind:story="story"/>
+				<question-item-uidata v-if="data.element.type=='UI_data'" v-bind:data="data" v-bind:story="story"/>
 				<br>
 				Item End {{data.targetId}} : {{data.question}}
 				<br>
@@ -54,7 +54,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionItemService", function(){node_createComponentQuestionItemService = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionItemSwitch", function(){node_createComponentQuestionItemSwitch = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionItemConstant", function(){node_createComponentQuestionItemConstant = this.getData();});
-nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionItemVariable", function(){node_createComponentQuestionItemVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionItemUIData", function(){node_createComponentQuestionItemUIData = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentQuestionItem", node_createComponentQuestionItem); 

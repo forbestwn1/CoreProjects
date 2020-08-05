@@ -23,10 +23,14 @@ public class HAPUITagQueryResult extends HAPSerializableImp{
 	private String m_tag;
 	
 	private Map<String, String> m_attributes;
-	
-	public HAPUITagQueryResult(String tag) {
-		this.m_tag = tag;
+
+	public HAPUITagQueryResult() {
 		this.m_attributes = new LinkedHashMap<String, String>();
+	}
+
+	public HAPUITagQueryResult(String tag) {
+		this();
+		this.m_tag = tag;
 	}
 	
 	public String getTag() {    return this.m_tag;    }

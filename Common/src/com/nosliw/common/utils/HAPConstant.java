@@ -652,7 +652,7 @@ public class HAPConstant {
 		public static final String STORYNODE_TYPE_CONSTANT = "constant";
 		public static final String STORYNODE_TYPE_VARIABLE = "variable";
 		public static final String STORYNODE_TYPE_PAGE = "UI_page";
-		public static final String STORYNODE_TYPE_UI = "UI_element";
+		public static final String STORYNODE_TYPE_UIDATA = "UI_data";
 
 
 

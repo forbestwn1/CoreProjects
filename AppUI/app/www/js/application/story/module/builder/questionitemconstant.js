@@ -70,13 +70,6 @@ var node_createComponentQuestionItemConstant = function(){
 				}
 			}));
 			node_requestServiceProcessor.processRequest(request);
-			
-//			console.log("Mounted");
-//			$(this.$refs.uiTag).append(this.data.targetId);
-//			  this.$nextTick(function () {
-//			    // Code that will run only after the
-//			    // entire view has been rendered
-//			  })
 		},	
 		template : `
 			<div ref="uiTag">

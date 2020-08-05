@@ -49,6 +49,20 @@ var node_createStoryService = function(){
 			return out;
 		},
 			
+		getQueryUITagRequest : function(dataTypeCriteria, handlers, requester_parent){
+			//gateway request
+			var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_UITAG;
+			var command = node_COMMONATRIBUTECONSTANT.GATEWAYUITAG_COMMAND_QUERYTAG;
+			var parms = {};
+			parms[node_COMMONATRIBUTECONSTANT.GATEWAYUITAG_COMMAND_QUERYTAG_CRITERIA] = dataTypeCriteria;
+			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms);
+			
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var out = node_createServiceRequestInfoService(undefined, handlers, requestInfo);
+			out.setDependentService(new node_DependentServiceRequestInfo(gatewayRequest));
+			return out;
+		},
+
 		getGetDesignRequest : function(userInfo, designId, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getDesign", {}), handlers, requestInfo);

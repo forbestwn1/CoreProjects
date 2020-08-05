@@ -10,7 +10,7 @@ var packageObj = library.getChildPackage();
 	var node_storyChangeUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createComponentQuestionItemVariable = function(){
+var node_createComponentQuestionItemUIData = function(){
 
 	var loc_vueComponent = {
 		data : function(){
@@ -24,7 +24,12 @@ var node_createComponentQuestionItemVariable = function(){
 		},
 		template : `
 			<div>
-				Variable question:
+				UI data question:
+				<select v-model="serviceId">
+				  <option v-for="service in allService" v-bind:value="service.id">
+				    {{ service.name }}
+				  </option>
+				</select>			
 			</div>
 		`
 	};
@@ -39,6 +44,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createComponentQuestionItemVariable", node_createComponentQuestionItemVariable); 
+packageObj.createChildNode("createComponentQuestionItemUIData", node_createComponentQuestionItemUIData); 
 
 })(packageObj);

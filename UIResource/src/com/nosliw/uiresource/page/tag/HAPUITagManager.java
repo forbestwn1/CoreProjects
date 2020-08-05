@@ -1,6 +1,7 @@
 package com.nosliw.uiresource.page.tag;
 
 import java.io.File;
+import java.util.List;
 import java.util.Set;
 
 import com.nosliw.data.core.HAPDataTypeHelper;
@@ -17,12 +18,22 @@ public class HAPUITagManager {
 	
 	public HAPUITagQueryResult getDefaultUITag(HAPUITageQuery query) {
 		HAPUITagQueryResult result = null;
+		HAPUITagQueryResultSet resultSet = this.queryUITag(query);
+		List<HAPUITagQueryResult> items = resultSet.getItems();
+		if(items!=null && items.size()>=1) {
+			result = items.get(0);
+		}
+		return result;
+	}
+	
+	public HAPUITagQueryResultSet queryUITag(HAPUITageQuery query) {
+		HAPUITagQueryResultSet out = new HAPUITagQueryResultSet();
 		Set<HAPDataTypeId> dataTypeIds = query.getDataTypeCriterai().getValidDataTypeId(m_dataTypeHelper);
 		HAPDataTypeId dataTypeId = dataTypeIds.iterator().next();
 		if(dataTypeId.getName().equals("test.string")) {
-			result = new HAPUITagQueryResult("textinput");
+			out.addItem(new HAPUITagQueryResult("textinput"));
 		}
-		return result;
+		return out;
 	}
 	
 	public HAPUITagDefinition getUITagDefinition(HAPUITagId id){

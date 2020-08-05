@@ -713,7 +713,7 @@
 			<definition name="STORYNODE_TYPE_CONSTANT" value="constant"/>
 			<definition name="STORYNODE_TYPE_VARIABLE" value="variable"/>
 			<definition name="STORYNODE_TYPE_PAGE" value="UI_page"/>
-			<definition name="STORYNODE_TYPE_UI" value="UI_element"/>
+			<definition name="STORYNODE_TYPE_UIDATA" value="UI_data"/>
 			
 			<definition type="space"/>
 			<definition name="STORYNODE_PROFILE_CONTAINER" value="container"/>

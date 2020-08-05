@@ -17,6 +17,11 @@ public class HAPGatewayUITag extends HAPGatewayImp{
 	@HAPAttribute
 	final public static String COMMAND_GETDEFAULTTAG_CRITERIA = "criteria";
 
+	@HAPAttribute
+	final public static String COMMAND_QUERYTAG = "queryTag";
+	@HAPAttribute
+	final public static String COMMAND_QUERYTAG_CRITERIA = "criteria";
+
 	private HAPUITagManager m_uiTagMan;
 	
 	public HAPGatewayUITag(HAPUITagManager uiTagMan) {
@@ -29,10 +34,19 @@ public class HAPGatewayUITag extends HAPGatewayImp{
 		try{
 			switch(command){
 			case COMMAND_GETDEFAULTTAG:
+			{
 				HAPUITageQuery query = new HAPUITageQuery(HAPCriteriaUtility.parseCriteria(parms.getString(COMMAND_GETDEFAULTTAG_CRITERIA)));
 				HAPUITagQueryResult result = this.m_uiTagMan.getDefaultUITag(query);
 				out = this.createSuccessWithObject(result);
 				break;
+			}
+			case COMMAND_QUERYTAG:
+			{
+				HAPUITageQuery query = new HAPUITageQuery(HAPCriteriaUtility.parseCriteria(parms.getString(COMMAND_QUERYTAG_CRITERIA)));
+				HAPUITagQueryResultSet result = this.m_uiTagMan.queryUITag(query);
+				out = this.createSuccessWithObject(result);
+				break;
+			}
 			}
 		}
 		catch(Exception e){

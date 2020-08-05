@@ -43,19 +43,18 @@ var node_createModuleOverview = function(parm){
 	var loc_connectionLinks = {}; 
 	
 	var loc_design;
-	var loc_layerTree;
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
 		loc_graph = new joint.dia.Graph;
 
-//		 loc_paper = new joint.dia.Paper({
-//		        el: loc_root,
-//		        model: loc_graph,
-//		        width: 1000,
-//		        height: 1000,
-//		        gridSize: 1
-//		    });
+		 loc_paper = new joint.dia.Paper({
+		        el: loc_root,
+		        model: loc_graph,
+		        width: 1000,
+		        height: 1000,
+		        gridSize: 1
+		    });
 	};
 
 	var loc_out = {
@@ -68,29 +67,7 @@ var node_createModuleOverview = function(parm){
 				success : function(request, design){
 					loc_design = design;
 					var story = loc_design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
-					loc_layerTree = storyOverviewUtility.buildOverviewLayerTree(that);
-					
-					var width = 0;
-					var height = 50;
-					_.each(loc_layerTree, function(layer, i){
-						var layerSize = layer.getNeedSize();
-						if(layerSize.width?width) width = layerSize.width;
-						height = height + layerSize.height + 50;
-					});
-					
-					_.each(loc_layerTree, function(layer, i){
-						layer.setSize(width, height);
-					});
-					
-					
-					 loc_paper = new joint.dia.Paper({
-					        el: loc_root,
-					        model: loc_graph,
-					        width: width,
-					        height: height,
-					        gridSize: 1
-					 });
-					
+					var nodes = story[node_COMMONATRIBUTECONSTANT.STORY_NODE];
 					_.each(nodes, function(storyNode, id){
 						var nodeEle = node_createNodeElement(id, that);
 						loc_nodeElements[id] = nodeEle; 
@@ -165,5 +142,5 @@ nosliw.registerSetNodeDataEvent("application.story.module.overview.createConnect
 nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryService", function(){node_createStoryService = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createModuleOverview1", node_createModuleOverview); 
+packageObj.createChildNode("createModuleOverview", node_createModuleOverview); 
 })(packageObj);

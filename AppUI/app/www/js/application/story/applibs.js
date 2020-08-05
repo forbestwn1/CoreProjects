@@ -57,7 +57,7 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 				"questionitemservice.js",
 				"questionitemswitch.js",
 				"questionitemconstant.js",
-				"questionitemvariable.js",
+				"questionitemuidata.js",
 			]
 		});
 	}

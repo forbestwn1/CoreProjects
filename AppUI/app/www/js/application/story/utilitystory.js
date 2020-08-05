@@ -20,6 +20,8 @@ var node_utility = function(){
 			return this.getStoryElement(story, question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY], question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID]);
 		},
 			
+		getAllNodes : function(){  return story[node_COMMONATRIBUTECONSTANT.STORY_NODE];   },
+		
 		addStoryElement : function(story, elementCategary, element){
 			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){
 				story[node_COMMONATRIBUTECONSTANT.STORY_NODE][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
@@ -30,7 +32,6 @@ var node_utility = function(){
 			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){
 				story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
 			}
-			
 		},
 
 		getStoryElement : function(story, elementCategary, elementId){
@@ -64,6 +65,21 @@ var node_utility = function(){
 			_.each(childConnectionEnds, function(connectionEnd, i){
 				var childId = that.getConnectionById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID])[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENTITY][node_COMMONATRIBUTECONSTANT.CONNECTIONENTITYCONTAIN_CHILD];
 				out[childId] = that.getNodeById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]);
+			});
+			return out;
+		},
+
+		getAllChildNodesInfo : function(parent, story) {
+			var that  = this;
+			var out = {};
+			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.CONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
+			_.each(childConnectionEnds, function(connectionEnd, i){
+				var connectionId = connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID];
+				var childId = that.getConnectionById(story, connectionId)[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENTITY][node_COMMONATRIBUTECONSTANT.CONNECTIONENTITYCONTAIN_CHILD];
+				out[childId] = {
+					node: that.getNodeById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]),
+					connectionId : connectionId,
+				}
 			});
 			return out;
 		},
