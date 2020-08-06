@@ -12,10 +12,12 @@ import com.nosliw.data.core.story.element.connection.HAPConnectionDataIO;
 import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupBatch;
 import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupSwitch;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeConstant;
+import com.nosliw.data.core.story.element.node.HAPStoryNodePage;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutput;
+import com.nosliw.data.core.story.element.node.HAPStoryNodeUIData;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 
 public class HAPParserElement {
@@ -31,6 +33,8 @@ public class HAPParserElement {
 		m_storyNodeClass.put(HAPStoryNodeServiceOutput.STORYNODE_TYPE, HAPStoryNodeServiceOutput.class);
 		m_storyNodeClass.put(HAPStoryNodeConstant.STORYNODE_TYPE, HAPStoryNodeConstant.class);
 		m_storyNodeClass.put(HAPStoryNodeVariable.STORYNODE_TYPE, HAPStoryNodeVariable.class);
+		m_storyNodeClass.put(HAPStoryNodePage.STORYNODE_TYPE, HAPStoryNodePage.class);
+		m_storyNodeClass.put(HAPStoryNodeUIData.STORYNODE_TYPE, HAPStoryNodeUIData.class);
 		
 		m_storyConnectionClass.put(HAPConnectionContain.CONNECTION_TYPE, HAPConnectionContain.class);
 		m_storyConnectionClass.put(HAPConnectionDataIO.CONNECTION_TYPE, HAPConnectionDataIO.class);

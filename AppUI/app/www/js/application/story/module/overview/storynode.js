@@ -17,6 +17,7 @@ var packageObj = library.getChildPackage();
 	var node_getLifecycleInterface;
 	var node_createEventObject;
 	var node_createBasicLayout;
+	var node_storyOverviewUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createStoryNodeElementChildInfo = function(nodeElement, connectionId){
@@ -51,7 +52,7 @@ var node_createStoryNodeElement = function(storyNodeId, module){
 	
     var loc_createElement = function(){
         var element = new joint.shapes.standard.Rectangle();
-        var location = loc_layer.getLocation();
+        var location = loc_layout.getLocation();
         element.position(location.x, location.y);
         element.resize(location.width, location.height);
         element.attr({
@@ -72,25 +73,26 @@ var node_createStoryNodeElement = function(storyNodeId, module){
 	
 		addChild : function(nodeElement, connectionId){
 			var childInfo = node_createStoryNodeElementChildInfo(nodeElement, connectionId);
-			node_storyOverviewUtility.updateChild(childInfo, parentNode);
+			node_storyOverviewUtility.updateChild(childInfo, this);
 			loc_layout.addChild(childInfo);
 		},
 		
 		getChildren : function(){   return loc_layout.getChildren();   },
 		
+		getLayer : function(){   return loc_layer;   },
 		setLayer : function(layer){    loc_layer = layer;    },
 		
-		getNeededSize : function(){  loc_layout.getNeededSize();  },
+		getNeededSize : function(){  return loc_layout.getNeededSize();  },
 		
 		setLocation : function(x, y, width, height){   loc_layout.setLocation(x, y, width, height);  },
 		
-		addToPaper : function(paper){
+		addToPaper : function(graph){
 			if(loc_graphElement==undefined){
 				loc_graphElement = loc_createElement();
 			}
-			loc_graph.addCells(loc_graphElement);
+			graph.addCells(loc_graphElement);
 			_.each(this.getChildren(), function(child, i){
-				child.addToPaper(paper);
+				child.addToPaper(graph);
 			});
 			return loc_graphElement;
 		},
@@ -114,6 +116,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.overview.createBasicLayout", function(){ node_createBasicLayout = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.overview.storyOverviewUtility", function(){ node_storyOverviewUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createStoryNodeElement", node_createStoryNodeElement); 

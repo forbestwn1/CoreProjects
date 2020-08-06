@@ -59,7 +59,7 @@ var node_utility = function(){
 			var layerTree = {};
 			var nodeTree = this.buildOverviewNodeTree(module);
 			_.each(nodeTree, function(node, id){
-				var layerName = that.getLayerByNodeType();
+				var layerName = that.getLayerByNodeType(node_storyUtility.getNodeById(module.getStory(), id)[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]);
 				var layer = layerTree[layerName];
 				if(layer==undefined){
 					layer = node_createGroupLayer(layerName, module);
@@ -99,24 +99,6 @@ var node_utility = function(){
 	    	return color[layer];
 	    },
 	    
-	    getNeedSize : function(storyNode){
-	    	var that = this;
-	    	var width = 100;
-	    	var height = 40;
-	    	var childrenInfo = storyNode.getChildren();
-	    	var childHeight = 0;
-	    	_.each(childrenInfo, function(childInfo, i){
-	    		var size = that.getNeedSize(childInf.nodeElement);
-	    		width = width + size.width;
-	    		if(i>=1) width = width + 30;
-	    		if(size.height> childHeight)  childHeight = size.height;
-	    	});
-	    	return {
-	    		width : width,
-	    		height : height + childHeight,
-	    	}; 
-	    },
-		
 	};		
 			
 	return loc_out;

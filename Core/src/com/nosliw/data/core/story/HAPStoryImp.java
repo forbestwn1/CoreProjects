@@ -80,10 +80,15 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	@Override
 	public HAPConnection addConnection(HAPConnection connection) {
 		if(HAPBasicUtility.isStringEmpty(connection.getId())) 	connection.setId(this.getNextId());
-		this.m_connections.put(connection.getId(), connection);
-		this.getNode(connection.getEnd1().getNodeId()).addConnection(connection.getId());
-		this.getNode(connection.getEnd2().getNodeId()).addConnection(connection.getId());
-		return connection;
+		HAPStoryNode node1 = this.getNode(connection.getEnd1().getNodeId());
+		HAPStoryNode node2 = this.getNode(connection.getEnd2().getNodeId());
+		if(node1!=null && node2!=null) {
+			node1.addConnection(connection.getId());
+			node2.addConnection(connection.getId());
+			this.m_connections.put(connection.getId(), connection);
+			return connection;
+		}
+		else return null;
 	}
 
 	@Override

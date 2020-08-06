@@ -61,9 +61,9 @@ var node_utility = function(){
 		getAllChildNodes : function(parent, story) {
 			var that  = this;
 			var out = {};
-			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.CONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
+			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
 			_.each(childConnectionEnds, function(connectionEnd, i){
-				var childId = that.getConnectionById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID])[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENTITY][node_COMMONATRIBUTECONSTANT.CONNECTIONENTITYCONTAIN_CHILD];
+				var childId = that.getConnectionById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID])[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID];
 				out[childId] = that.getNodeById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]);
 			});
 			return out;
@@ -72,10 +72,10 @@ var node_utility = function(){
 		getAllChildNodesInfo : function(parent, story) {
 			var that  = this;
 			var out = {};
-			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.CONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
+			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
 			_.each(childConnectionEnds, function(connectionEnd, i){
 				var connectionId = connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID];
-				var childId = that.getConnectionById(story, connectionId)[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENTITY][node_COMMONATRIBUTECONSTANT.CONNECTIONENTITYCONTAIN_CHILD];
+				var childId = that.getConnectionById(story, connectionId)[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID];
 				out[childId] = {
 					node: that.getNodeById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]),
 					connectionId : connectionId,
@@ -86,23 +86,27 @@ var node_utility = function(){
 
 		getChildNodeByChildId : function(parent, childId, story) {
 			var that  = this;
-			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.CONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
+			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
 			_.each(childConnectionEnds, function(connectionEnd, i){
-				var id = that.getConnectionById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID])[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENTITY][node_COMMONATRIBUTECONSTANT.CONNECTIONENTITYCONTAIN_CHILD];
+				var id = that.getConnectionById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID])[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID];
 				if(id==childId)   return that.getNodeById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]);
 			});
 			return;
 		},
 		
 		getNodeConnectionEnd : function(node1, connectionType, profile1, node2Type, profile2, story) {
+			var node;
+			if(typeof node1 === 'string')  node = this.getNodeById(story, node1);
+			else node = node1;
+
 			var that  = this;
 			var out = [];
-			_.each(node1[node_COMMONATRIBUTECONSTANT.STORYNODE_CONNECTIONS], function(connectionId, i){
+			_.each(node[node_COMMONATRIBUTECONSTANT.STORYNODE_CONNECTIONS], function(connectionId, i){
 				var connection = that.getConnectionById(story, connectionId);
 				if(connectionType==undefined || connection[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]==connectionType){
-					var node1End = that.getConnectionEnd(connection, node1[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
+					var node1End = that.getConnectionEnd(connection, node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
 					if(profile1==undefined || node1End[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_PROFILE]==profile1){
-						var node2End = that.getOtherConnectionEnd(connection, node1[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
+						var node2End = that.getOtherConnectionEnd(connection, node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
 						if(profile2==undefined || node2End[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_PROFILE]==profile2){
 							if(node2Type==undefined || that.getNodeById(node2End[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID])[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]){
 								out.push(node2End);

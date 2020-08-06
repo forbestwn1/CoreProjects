@@ -64,12 +64,12 @@ var node_createBasicLayout = function(){
 			return;
 		}
 		
-		var totalChildrenWidth = width - loc_marginX * 2 - loc_gapX * loc_children.length;
+		var totalChildrenWidth = width - loc_marginX * 2 - loc_gapX * (loc_children.length-1);
 		var childHeight = height - loc_marginY * 2;
 		var startX = x + loc_marginX;
     	_.each(loc_children, function(child, i){
     		var neededSize = loc_childNeededSize[i];
-    		var childWidth = needeSize.width * totalChildrenWidth / loc_totalChildrenWidth;
+    		var childWidth = neededSize.width * totalChildrenWidth / loc_totalChildrenWidth;
     		child.setLocation(startX, y+loc_marginY, childWidth, childHeight);
     		startX = startX + childWidth + loc_marginX;
     	});
@@ -80,6 +80,8 @@ var node_createBasicLayout = function(){
 		addChild : function(child){
 			loc_children.push(child);
 		},
+		
+		getChildren : function(){  return loc_children;   },
 		
 		getNeededSize : function(){
 			if(loc_calculated==false)  loc_calculateNeededSize();

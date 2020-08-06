@@ -95,7 +95,7 @@ var node_createModuleOverview = function(parm){
 					 });
 					 
 					_.each(loc_mainLayout.getChildren(), function(child, i){
-						child.addToPaper(loc_paper);
+						child.addToPaper(loc_graph);
 					});
 						
 //					var connections = story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION];

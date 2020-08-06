@@ -66,7 +66,7 @@ public class HAPStoryNodeUIData extends HAPStoryNodeImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TAGNAME, m_tagName);
-		jsonMap.put(STORYNODE_TYPE, this.m_dataTypeCriteria.toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(DATATYPE, this.m_dataTypeCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 	}
 
 }
