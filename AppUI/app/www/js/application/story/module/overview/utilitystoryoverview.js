@@ -22,6 +22,7 @@ var node_utility = function(){
 		if(processed[storyNodeId]==undefined){
 			//brand new
 			out = node_createStoryNodeElement(storyNodeId, module);
+			module.addStoryNodeElement(out);
 			var childStoryNodesInfo = node_storyUtility.getAllChildNodesInfo(storyNodeId, story);
 			_.each(childStoryNodesInfo, function(childStroyNodeInfo, childId){
 				var childNode = loc_processStoryNode(childStroyNodeInfo.node, overViewTree, processed, module);

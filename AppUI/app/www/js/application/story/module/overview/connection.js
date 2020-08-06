@@ -43,11 +43,11 @@ var node_createConnectionLink = function(storyConnectionId, module){
 	
 	var loc_out = {
 		
-		getLink : function(){
-			return loc_link;
-		}
-	
-			
+		getLink : function(){	return loc_link;	},
+
+		addToPaper : function(graph){
+			graph.addCells(loc_link);
+		},
 	};
 	
 	loc_init();

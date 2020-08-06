@@ -68,7 +68,8 @@ var node_createStoryNodeElement = function(storyNodeId, module){
     };
     
 	var loc_out = {
-		
+		getElement : function(){  return loc_graphElement;  },
+			
 		getStoryNodeId : function(){	return loc_storyNodeId;	},
 	
 		addChild : function(nodeElement, connectionId){

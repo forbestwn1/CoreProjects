@@ -7,6 +7,7 @@ var packageObj = library.getChildPackage();
 (function(packageObj){
 	//get used node
 	var node_CONSTANT;
+	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSequence;
@@ -98,18 +99,23 @@ var node_createModuleOverview = function(parm){
 						child.addToPaper(loc_graph);
 					});
 						
-//					var connections = story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION];
-//					_.each(connections, function(storyConnection, id){
-//						var connectionLink = node_createConnectionLink(id, that);
-//						loc_connectionLinks[id] = connectionLink; 
-//						loc_graph.addCells(connectionLink.getLink());
-//					});
+					var connections = story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION];
+					_.each(connections, function(storyConnection, id){
+						if(storyConnection[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]!=node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN){
+							var connectionLink = node_createConnectionLink(id, that);
+							loc_connectionLinks[id] = connectionLink; 
+							connectionLink.addToPaper(loc_graph);
+						}
+					});
 				}
 			}));
 			return out;
 		},
 			
 		getStory : function(){  return loc_design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];  },
+		
+		addStoryNodeElement : function(storyNodeElement){  loc_nodeElements[storyNodeElement.getStoryNodeId()] = storyNodeElement;    },
+		
 		getNodeElementById : function(storyNodeId){  return loc_nodeElements[storyNodeId];   },
 		getConnectionLinkById : function(storyConnectionId){  return loc_connectionLinks[storyConnectionId];   },
 		
@@ -129,6 +135,7 @@ var node_createModuleOverview = function(parm){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
