@@ -17,6 +17,7 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutput;
+import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutputItem;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeUIData;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 
@@ -31,6 +32,7 @@ public class HAPParserElement {
 		m_storyNodeClass.put(HAPStoryNodeServiceInput.STORYNODE_TYPE, HAPStoryNodeServiceInput.class);
 		m_storyNodeClass.put(HAPStoryNodeServiceInputParm.STORYNODE_TYPE, HAPStoryNodeServiceInputParm.class);
 		m_storyNodeClass.put(HAPStoryNodeServiceOutput.STORYNODE_TYPE, HAPStoryNodeServiceOutput.class);
+		m_storyNodeClass.put(HAPStoryNodeServiceOutputItem.STORYNODE_TYPE, HAPStoryNodeServiceOutputItem.class);
 		m_storyNodeClass.put(HAPStoryNodeConstant.STORYNODE_TYPE, HAPStoryNodeConstant.class);
 		m_storyNodeClass.put(HAPStoryNodeVariable.STORYNODE_TYPE, HAPStoryNodeVariable.class);
 		m_storyNodeClass.put(HAPStoryNodePage.STORYNODE_TYPE, HAPStoryNodePage.class);

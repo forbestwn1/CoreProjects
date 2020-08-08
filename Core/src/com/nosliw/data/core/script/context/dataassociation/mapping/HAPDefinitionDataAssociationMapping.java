@@ -79,11 +79,11 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 			JSONObject daJsonObj = (JSONObject)json;
 			this.buildEntityInfoByJson(daJsonObj);
 			
-			JSONObject associationsJson = daJsonObj.optJSONObject(HAPContext.ELEMENT);
-			if(associationsJson!=null) {
+			JSONObject elesJson = daJsonObj.optJSONObject(HAPContext.ELEMENT);
+			if(elesJson!=null) {
 				//seperate by target name
 				Map<String, JSONObject> jsonMapByTarget = new LinkedHashMap<String, JSONObject>();
-				for(Object key : associationsJson.keySet()) {
+				for(Object key : elesJson.keySet()) {
 					HAPTarget target = new HAPTarget((String)key);
 					String targetName = target.getTargetName();
 					JSONObject jsonByTarget = jsonMapByTarget.get(targetName);
@@ -91,7 +91,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 						jsonByTarget = new JSONObject();
 						jsonMapByTarget.put(targetName, jsonByTarget);
 					}
-					jsonByTarget.put(target.getRootNodeId().getFullName(), associationsJson.optJSONObject((String)key));
+					jsonByTarget.put(target.getRootNodeId().getFullName(), elesJson.optJSONObject((String)key));
 				}
 				
 				for(String targetName : jsonMapByTarget.keySet()) {
@@ -99,6 +99,15 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 					JSONObject targetAssociationJson = new JSONObject();
 					targetAssociationJson.put(HAPContext.ELEMENT, jsonMapByTarget.get(targetName));
 					association.buildObject(targetAssociationJson, HAPSerializationFormat.JSON);
+					this.addAssociation(targetName, association);
+				}
+			}
+			else {
+				JSONObject associationsJson = daJsonObj.optJSONObject(ASSOCIATION);
+				for(Object key : associationsJson.keySet()) {
+					String targetName = (String)key;
+					HAPContext association = new HAPContext();
+					association.buildObject(associationsJson.getJSONObject(targetName), HAPSerializationFormat.JSON);
 					this.addAssociation(targetName, association);
 				}
 			}

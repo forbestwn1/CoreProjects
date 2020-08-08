@@ -46,6 +46,7 @@ var node_createComponentQuestionItemService = function(availableService){
 				
 				set : function(serviceId){
 					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.data, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, serviceId, this.data.changes);
+					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.data, node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME, serviceId, this.data.changes);
 				}
 			}
 		},

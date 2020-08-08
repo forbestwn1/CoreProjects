@@ -38,6 +38,10 @@ public class HAPStoryNodeService extends HAPStoryNodeImp{
 				this.m_referenceId = (String)value;
 				return new ArrayList<HAPChangeItem>();
 			}
+			if(NAME.equals(path)) {
+				this.setName((String)value);
+				return new ArrayList<HAPChangeItem>();
+			}
 		}
 		return null;
 	}

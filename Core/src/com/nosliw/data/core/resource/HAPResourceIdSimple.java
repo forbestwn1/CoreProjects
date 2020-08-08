@@ -29,6 +29,11 @@ public class HAPResourceIdSimple extends HAPResourceId{
 		super(type);
 	}
 
+	public HAPResourceIdSimple(String type, String id){
+		super(type);
+		this.m_id = id;
+	}
+
 	public HAPResourceIdSimple(HAPResourceIdSimple resourceId){
 		this(resourceId.getType());
 		this.cloneFrom(resourceId);

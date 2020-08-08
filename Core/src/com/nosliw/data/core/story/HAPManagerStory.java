@@ -32,27 +32,27 @@ public class HAPManagerStory {
 	}
 	
 	public HAPDesignStory newStoryDesign(String builderId) {
-		HAPBuilderStory storyBuilder = this.getStoryDirector(builderId);
+		HAPBuilderStory storyBuilder = this.getDesignDirector(builderId);
 		HAPDesignStory out = new HAPDesignStory(this.generateId(), builderId);
 		storyBuilder.initDesign(out);
 		this.saveStoryDesign(out);
 		return out;
 	}
 	
-	public HAPDesignStory getStoryDesign(String id) {	return HAPUtilityDesign.readStoryDesign(id);	}
-
-	public void saveStoryDesign(HAPDesignStory storyDesign) {  HAPUtilityDesign.saveStoryDesign(storyDesign);	}
-	
 	public HAPServiceData designStory(String designId, HAPRequestChange changeRequest) {
 		HAPDesignStory design = this.getStoryDesign(designId);
 		String directorId = design.getDirectorId();
-		HAPServiceData out = this.getStoryDirector(directorId).buildStory(design, changeRequest);
+		HAPServiceData out = this.getDesignDirector(directorId).buildStory(design, changeRequest);
 		if(out.isSuccess()) {
 			this.saveStoryDesign(design);
 		}
 		return out;
 	}
 
+	public HAPDesignStory getStoryDesign(String id) {	return HAPUtilityDesign.readStoryDesign(id);	}
+
+	public void saveStoryDesign(HAPDesignStory storyDesign) {  HAPUtilityDesign.saveStoryDesign(storyDesign);	}
+	
 	//get story by id
 	public HAPResourceDefinitionStory getStoryResource(String id) {
 		return (HAPResourceDefinitionStory)this.m_resourceDefManager.getResourceDefinition(new HAPResourceIdStory(new HAPStoryId(id)));
@@ -67,8 +67,8 @@ public class HAPManagerStory {
 
 	public void registerShowBuilder(String id, HAPBuilderShow builder) {	this.m_resourceDefinitionBuilders.put(id, builder);	}
 	
-	public void registerStoryDirector(String id, HAPBuilderStory storyDirector) {		this.m_storyDirectors.put(id, storyDirector);	}
+	public void registerDesignDirector(String id, HAPBuilderStory storyDirector) {		this.m_storyDirectors.put(id, storyDirector);	}
+	private HAPBuilderStory getDesignDirector(String directorId) {    return this.m_storyDirectors.get(directorId);   }
 
-	private HAPBuilderStory getStoryDirector(String directorId) {    return this.m_storyDirectors.get(directorId);   }
 	private String generateId() {		return (this.m_idIndex++) + "";	}
 }

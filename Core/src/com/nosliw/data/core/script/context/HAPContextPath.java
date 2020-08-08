@@ -96,9 +96,9 @@ public class HAPContextPath extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_path = jsonObj.getString(PATH);
+		this.m_path = (String)jsonObj.opt(PATH);
 		this.m_rootNodeId = new HAPContextDefinitionRootId(jsonObj.getString(ROOTNAME));
-		return true;  
+		return true;
 	}
 
 	@Override

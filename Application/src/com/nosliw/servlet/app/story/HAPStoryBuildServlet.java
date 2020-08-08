@@ -35,6 +35,11 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 	@HAPAttribute
 	public static final String COMMAND_DESIGN_CHANGE = "change";
 
+	@HAPAttribute
+	public static final String COMMAND_SHOW = "show";
+	@HAPAttribute
+	public static final String COMMAND_SHOW_DESIGNID = "designId";
+
 	@Override
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) throws Exception {
 		HAPServiceData out = null;
@@ -70,6 +75,13 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 			}
 			HAPServiceData result = storyManager.designStory(designId, changeRequest);
 			out = HAPServiceData.createSuccessData(result);
+			break;
+		}
+		case COMMAND_SHOW:
+		{
+			String designId = parms.optString(COMMAND_SHOW_DESIGNID);
+			HAPDesignStory design = storyManager.getStoryDesign(designId);
+			out = HAPServiceData.createSuccessData(design);
 			break;
 		}
 		}

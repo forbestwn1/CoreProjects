@@ -9,16 +9,18 @@ public class HAPHtmlTag extends HAPHtml{
 	
 	private Map<String, HAPTagAttribute> m_attributes;
 	
-	private HAPHtmlSegment m_html;
+	private HAPHtmlSegment m_body;
 
 	public HAPHtmlTag(String tag) {
+		this.m_body = new HAPHtmlSegment();
 		this.m_attributes = new LinkedHashMap<String, HAPTagAttribute>();
 		this.m_tag = tag;
 	}
 	
 	public String getTag() {   return this.m_tag;    }
 	
-	public HAPHtmlSegment getHtmlContent() {  return this.m_html;    }
+	public HAPHtmlSegment getBody() {  return this.m_body;    }
+	public void addBodySegment(HAPHtml html) {     this.m_body.addSegment(html);    }
 	
 	public void addAttribute(HAPTagAttribute attribute) {  this.m_attributes.put(attribute.getName(), attribute);     }
 	public Map<String, HAPTagAttribute> getAttributes(){  return this.m_attributes;   }
@@ -41,8 +43,8 @@ public class HAPHtmlTag extends HAPHtml{
 		out.append("\n");
 
 		//tag content
-		if(this.m_html!=null) {
-			out.append(this.m_html.toString());
+		if(this.m_body!=null) {
+			out.append(this.m_body.toString());
 		}
 		out.append("\n");
 		

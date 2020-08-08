@@ -104,18 +104,23 @@ public class HAPParserContext {
 	public static HAPContextDefinitionElement parseContextDefinitionElement(JSONObject eleDefJson) {
 		HAPContextDefinitionElement contextRootDef = null;
 		
-		String path = (String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PATH);
+		Object pathObj = eleDefJson.opt(HAPContextDefinitionLeafRelative.PATH);
 		Object criteriaDef = eleDefJson.opt(HAPContextDefinitionLeafData.CRITERIA);
 		Object valueJsonObj = eleDefJson.opt(HAPContextDefinitionLeafConstant.VALUE);
 		JSONObject childrenJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionNode.CHILD);
 		
-		if(path!=null){
+		if(pathObj!=null){
 			//relative
 			contextRootDef = new HAPContextDefinitionLeafRelative();
 			HAPContextDefinitionLeafRelative relativeLeaf = (HAPContextDefinitionLeafRelative)contextRootDef;
 			String parent = (String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PARENT);
 			relativeLeaf.setParent(parent);
-			relativeLeaf.setPath((String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PARENTCATEGARY), path);
+			if(pathObj instanceof String)	relativeLeaf.setPath((String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PARENTCATEGARY), (String)pathObj);
+			else if(pathObj instanceof JSONObject){
+				HAPContextPath contextPath = new HAPContextPath();
+				contextPath.buildObject(pathObj, HAPSerializationFormat.JSON);
+				relativeLeaf.setPath(contextPath);
+			}
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionLeafRelative.DEFINITION);
 			if(definitionJsonObj!=null) 	relativeLeaf.setDefinition(parseContextDefinitionElement(definitionJsonObj));
 			
