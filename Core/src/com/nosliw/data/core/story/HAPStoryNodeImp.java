@@ -1,8 +1,8 @@
 package com.nosliw.data.core.story;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -12,20 +12,20 @@ import com.nosliw.common.utils.HAPConstant;
 
 public abstract class HAPStoryNodeImp extends HAPStoryElementImp implements HAPStoryNode{
 
-	private Set<String> m_connections;
+	private List<String> m_connections;
 	
 	public HAPStoryNodeImp() {
 		super(HAPConstant.STORYELEMENT_CATEGARY_NODE);
-		this.m_connections = new HashSet<String>();
+		this.m_connections = new ArrayList<String>();
 	}
 
 	public HAPStoryNodeImp(String type) {
 		super(HAPConstant.STORYELEMENT_CATEGARY_NODE, type);
-		this.m_connections = new HashSet<String>();
+		this.m_connections = new ArrayList<String>();
 	}
 	
 	@Override
-	public Set<String> getConnections() {  return this.m_connections;  }
+	public List<String> getConnections() {  return this.m_connections;  }
  
 	@Override
 	public void addConnection(String connectionId) {  this.m_connections.add(connectionId);   }

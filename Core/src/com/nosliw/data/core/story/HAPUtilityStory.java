@@ -1,10 +1,9 @@
 package com.nosliw.data.core.story;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -53,16 +52,16 @@ public class HAPUtilityStory {
 		return out;
 	}
 
-	public static Map<Object, HAPStoryNode> getAllChildNode(HAPStoryNode parent, HAPStory story) {  return getChildNode(parent, story, false);  }
-	public static Map<Object, HAPStoryNode> getChildNode(HAPStoryNode parent, HAPStory story) {  return getChildNode(parent, story, true);  }
-	private static Map<Object, HAPStoryNode> getChildNode(HAPStoryNode parent, HAPStory story, boolean onlyEnable) {
-		Map<Object, HAPStoryNode> out = new LinkedHashMap<Object, HAPStoryNode>();
-		Set<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstant.STORYCONNECTION_TYPE_CONTAIN, HAPConstant.STORYNODE_PROFILE_CONTAINER, null, null, story);
+	public static List<HAPInfoNodeChild> getAllChildNode(HAPStoryNode parent, HAPStory story) {  return getChildNode(parent, story, false);  }
+	public static List<HAPInfoNodeChild> getChildNode(HAPStoryNode parent, HAPStory story) {  return getChildNode(parent, story, true);  }
+	private static List<HAPInfoNodeChild> getChildNode(HAPStoryNode parent, HAPStory story, boolean onlyEnable) {
+		List<HAPInfoNodeChild> out = new ArrayList<HAPInfoNodeChild>();
+		List<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstant.STORYCONNECTION_TYPE_CONTAIN, HAPConstant.STORYNODE_PROFILE_CONTAINER, null, null, story);
 		for(HAPConnectionEnd connectionEnd : childConnectionEnds) {
 			HAPConnectionContain containerConnectionEntity = (HAPConnectionContain)story.getConnection(connectionEnd.getConnectionId());
 			HAPStoryNode node = story.getNode(connectionEnd.getNodeId());
 			if(isValid(containerConnectionEntity, onlyEnable) && isValid(node, onlyEnable)) {
-				out.put(containerConnectionEntity.getChildId(), node);
+				out.add(new HAPInfoNodeChild(node, containerConnectionEntity));
 			}
 		}
 		return out;
@@ -71,7 +70,7 @@ public class HAPUtilityStory {
 	public static HAPStoryNode getAllChildNode(HAPStoryNode parent, String childId, HAPStory story) {  return getChildNode(parent, childId, story, false);  }
 	public static HAPStoryNode getChildNode(HAPStoryNode parent, String childId, HAPStory story) {  return getChildNode(parent, childId, story, true);  }
 	private static HAPStoryNode getChildNode(HAPStoryNode parent, String childId, HAPStory story, boolean onlyEnable) {
-		Set<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstant.STORYCONNECTION_TYPE_CONTAIN, HAPConstant.STORYNODE_PROFILE_CONTAINER, null, null, story);
+		List<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstant.STORYCONNECTION_TYPE_CONTAIN, HAPConstant.STORYNODE_PROFILE_CONTAINER, null, null, story);
 		for(HAPConnectionEnd connectionEnd : childConnectionEnds) {
 			HAPConnectionContain containerConnectionEntity = (HAPConnectionContain)story.getConnection(connectionEnd.getConnectionId());
 			if(HAPBasicUtility.isEquals(childId, containerConnectionEntity.getChildId())) {
@@ -85,8 +84,8 @@ public class HAPUtilityStory {
 		return null;
 	}
 	
-	public static Set<HAPConnectionEnd> getConnectionEnd(HAPStoryNode node1, String connectionType, String profile1, String node2Type, String profile2, HAPStory story) {
-		Set<HAPConnectionEnd> out = new HashSet<HAPConnectionEnd>();
+	public static List<HAPConnectionEnd> getConnectionEnd(HAPStoryNode node1, String connectionType, String profile1, String node2Type, String profile2, HAPStory story) {
+		List<HAPConnectionEnd> out = new ArrayList<HAPConnectionEnd>();
 		for(String connectionId :  node1.getConnections()) {
 			HAPConnection connection = story.getConnection(connectionId);
 			if(connectionType==null || connection.getType().equals(connectionType)){
@@ -117,6 +116,4 @@ public class HAPUtilityStory {
 		if(nodeId.equals(connection.getEnd1().getNodeId()))   return connection.getEnd1();
 		else return connection.getEnd2();
 	}
-	
-	
 }

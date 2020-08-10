@@ -29,6 +29,7 @@ import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.story.HAPBuilderShow;
 import com.nosliw.data.core.story.HAPConnectionEnd;
+import com.nosliw.data.core.story.HAPInfoNodeChild;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityStory;
@@ -151,11 +152,10 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 				HAPContext serviceParmMapping = new HAPContext();
 				HAPStoryNode serviceInputNode = HAPUtilityStory.getChildNode(serviceNode, HAPConstant.SERVICE_CHILD_INPUT, this.m_story);
 				if(serviceInputNode!=null) {
-					Map<Object, HAPStoryNode> parmNodes = HAPUtilityStory.getChildNode(serviceInputNode, this.m_story);
-					for(Object key : parmNodes.keySet()) {
-						String parmName = (String)key;
-						HAPStoryNode parmNode = parmNodes.get(key);
-						Set<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, HAPConstant.STORYNODE_PROFILE_DATAIN, HAPConstant.STORYNODE_TYPE_VARIABLE, HAPConstant.STORYNODE_PROFILE_DATAOUT, this.m_story);
+					List<HAPInfoNodeChild> parmNodeInfos = HAPUtilityStory.getChildNode(serviceInputNode, this.m_story);
+					for(HAPInfoNodeChild parmNodeInfo : parmNodeInfos) {
+						HAPStoryNode parmNode = parmNodeInfo.getChildNode();
+						List<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, HAPConstant.STORYNODE_PROFILE_DATAIN, HAPConstant.STORYNODE_TYPE_VARIABLE, HAPConstant.STORYNODE_PROFILE_DATAOUT, this.m_story);
 						for(HAPConnectionEnd varEnd : varsEnd) {
 							HAPStoryNode parmInputNode = this.m_story.getNode(varEnd.getNodeId());
 							String inputNodeType = parmInputNode.getType();
@@ -164,7 +164,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 							}
 							else if(HAPConstant.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
 								HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
-								serviceParmMapping.addElement(parmName, new HAPContextDefinitionLeafRelative(varInputNode.getVariableName()));
+								serviceParmMapping.addElement(parmNodeInfo.getConnection().getChildId(), new HAPContextDefinitionLeafRelative(varInputNode.getVariableName()));
 							}
 						}
 					}
@@ -181,17 +181,16 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 				HAPContext serviceParmMapping = new HAPContext();
 				HAPStoryNode serviceResultNode = HAPUtilityStory.getChildNode(serviceNode, HAPConstant.SERVICE_CHILD_RESULT, this.m_story);
 				if(serviceResultNode!=null) {
-					Map<Object, HAPStoryNode> parmNodes = HAPUtilityStory.getChildNode(serviceResultNode, this.m_story);
-					for(Object key : parmNodes.keySet()) {
-						String parmName = (String)key;
-						HAPStoryNode parmNode = parmNodes.get(key);
-						Set<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, HAPConstant.STORYNODE_PROFILE_DATAOUT, HAPConstant.STORYNODE_TYPE_VARIABLE, HAPConstant.STORYNODE_PROFILE_DATAIN, this.m_story);
+					List<HAPInfoNodeChild> parmNodeInfos = HAPUtilityStory.getChildNode(serviceResultNode, this.m_story);
+					for(HAPInfoNodeChild parmNodeInfo : parmNodeInfos) {
+						HAPStoryNode parmNode = parmNodeInfo.getChildNode();
+						List<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, HAPConstant.STORYNODE_PROFILE_DATAOUT, HAPConstant.STORYNODE_TYPE_VARIABLE, HAPConstant.STORYNODE_PROFILE_DATAIN, this.m_story);
 						for(HAPConnectionEnd varEnd : varsEnd) {
 							HAPStoryNode parmInputNode = this.m_story.getNode(varEnd.getNodeId());
 							String inputNodeType = parmInputNode.getType();
 							if(HAPConstant.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
 								HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
-								serviceParmMapping.addElement(varInputNode.getVariableName(), new HAPContextDefinitionLeafRelative(parmName));
+								serviceParmMapping.addElement(varInputNode.getVariableName(), new HAPContextDefinitionLeafRelative(parmNodeInfo.getConnection().getChildId()));
 							}
 						}
 					}
@@ -217,9 +216,9 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			break;
 		}
 		
-		Map<Object, HAPStoryNode> childrenNode =  HAPUtilityStory.getChildNode(pageNode, this.m_story);
-		for(Object key : childrenNode.keySet()) {
-			HAPHtml html = this.buildUI(childrenNode.get(key));
+		List<HAPInfoNodeChild> childrenNodesInfo =  HAPUtilityStory.getChildNode(pageNode, this.m_story);
+		for(HAPInfoNodeChild childNodeInfo : childrenNodesInfo) {
+			HAPHtml html = this.buildUI(childNodeInfo.getChildNode());
 			out.addSegment(html);
 		}
 		return out;
@@ -233,15 +232,15 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			if(HAPConstant.STORYNODE_TYPE_UIDATA.equals(uiNodeType)) {
 				HAPStoryNodeUIData uiDataNode = (HAPStoryNodeUIData)uiNode;
 				HAPHtmlTag tag = new HAPHtmlTag(uiDataNode.getTagName());
-				Set<HAPConnectionEnd> varEnds = HAPUtilityStory.getConnectionEnd(uiNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, null, HAPConstant.STORYNODE_TYPE_VARIABLE, null, this.m_story);
+				List<HAPConnectionEnd> varEnds = HAPUtilityStory.getConnectionEnd(uiNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, null, HAPConstant.STORYNODE_TYPE_VARIABLE, null, this.m_story);
 				for(HAPConnectionEnd varEnd : varEnds) {
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)this.m_story.getNode(varEnd.getNodeId());
 					tag.addAttribute(new HAPTagAttribute("data", varNode.getVariableName()));
 				}
 
-				Map<Object, HAPStoryNode> childrenNode =  HAPUtilityStory.getChildNode(uiNode, this.m_story);
-				for(Object key : childrenNode.keySet()) {
-					HAPHtml html = this.buildUI(childrenNode.get(key));
+				List<HAPInfoNodeChild> childrenNodesInfo =  HAPUtilityStory.getChildNode(uiNode, this.m_story);
+				for(HAPInfoNodeChild childNodeInfo : childrenNodesInfo) {
+					HAPHtml html = this.buildUI(childNodeInfo.getChildNode());
 					if(html!=null)	tag.addBodySegment(html);
 				}
 				out = tag;
