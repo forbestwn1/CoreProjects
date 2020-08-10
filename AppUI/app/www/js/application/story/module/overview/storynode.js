@@ -18,6 +18,7 @@ var packageObj = library.getChildPackage();
 	var node_createEventObject;
 	var node_createBasicLayout;
 	var node_storyOverviewUtility;
+	var node_storyUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createStoryNodeElementChildInfo = function(nodeElement, connectionId){
@@ -50,6 +51,11 @@ var node_createStoryNodeElement = function(storyNodeId, module){
 	
 	var loc_layout = node_createBasicLayout(); 
 	
+	var loc_getElementTitle = function(){
+		var storyNode = node_storyUtility.getNodeById(loc_module.getStory(), loc_storyNodeId);
+		return storyNode.type + "_" + storyNode.name + "_" + storyNode.id; 
+	};
+	
     var loc_createElement = function(){
         var element = new joint.shapes.standard.Rectangle();
         var location = loc_layout.getLocation();
@@ -60,8 +66,9 @@ var node_createStoryNodeElement = function(storyNodeId, module){
                 fill: node_storyOverviewUtility.getColorByLayer(loc_layer),
             },
             label: {
-                text: loc_storyNodeId,
-                fill: 'white'
+                text: loc_getElementTitle(),
+                fill: 'white',
+                'ref-y': -1*location.height/2+15,
             }
         });
     	return element
@@ -118,6 +125,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.overview.createBasicLayout", function(){ node_createBasicLayout = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.overview.storyOverviewUtility", function(){ node_storyOverviewUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createStoryNodeElement", node_createStoryNodeElement); 

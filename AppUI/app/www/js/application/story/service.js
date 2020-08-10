@@ -118,7 +118,25 @@ var node_createStoryService = function(){
 			var requestInfo = this.getDoDesignRequest(userInfo, designId, changes, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
-
+		
+		getConvertDesignRequest : function(designId, handlers, requester_parent){
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("convertDesign", {}), handlers, requestInfo);
+			
+			var parms = {};
+			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_CONVERTTOSHOW_DESIGNID] = designId;
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_CONVERTTOSHOW, parms), undefined, {
+				success : function(requestInfo, resourceId){
+					return resourceId;
+				}
+			});
+			out.addRequest(remoteRequest);
+			return out;
+		},
+		executeGetConvertDesignRequest : function(designId, handlers, requester_parent){
+			var requestInfo = this.getConvertDesignRequest(designId, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
 	};
 	
 	loc_out = node_buildServiceProvider(loc_out, "storyService");

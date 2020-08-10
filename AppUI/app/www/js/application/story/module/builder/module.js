@@ -44,7 +44,8 @@ var node_createModuleStoryBuilder = function(parm){
 	var loc_componentData = {
 		question : {},
 		story : {},
-		designId : ""
+		designId : "",
+		resourceId : "",
 	};
 	
 	var loc_vue;
@@ -121,11 +122,33 @@ var node_createModuleStoryBuilder = function(parm){
 					get : function(){
 						return "http://localhost:8080/AppUI/story.html?env=local&configure=overviewtest&app=story&version=2&designId="+this.designId;
 					}
-				}
+				},
+				resourceUrl : {
+					get : function(){
+						if(this.resourceId.id!=undefined){
+							return "http://localhost:8082/nosliw/page.html?name="+this.resourceId.id.id;
+						}
+						else return undefined;
+					}
+				},
 			},
 			methods : {
-				onShowStory : function(event) {
+				onStory : function(event) {
 					console.log(node_basicUtility.stringify(this.story));
+				},
+				onConvertToShow : function(){
+					var that = this;
+					loc_storyService.executeGetConvertDesignRequest(this.designId, {
+						success : function(request, resourceId){
+							that.resourceId = resourceId;
+						}
+					});
+				},
+				onShowDefinition : function(){
+					
+				},
+				onShow : function(){
+					
 				},
 				onPreviousStep : function(event) {
 				},
@@ -139,9 +162,15 @@ var node_createModuleStoryBuilder = function(parm){
 				`
 				    <div class="block">
 						<br>
-						<a :href="overviewUrl"  target="_blank">overView</a>
+						<a :href="overviewUrl"  target="_blank">overview</a>
 						<br>
-						<a v-on:click.prevent="onShowStory">showStory</a>
+						<a v-on:click.prevent="onStory">story</a>
+						<br>
+						<a v-on:click.prevent="onConvertToShow">convertToShow</a>
+						<br>
+						<a v-on:click.prevent="onShowDefinition">showDefinition</a>
+						<br>
+						<a :href="resourceUrl"  target="_blank">show</a>
 						<br>
 						<br>
 				    	QuestionModule
@@ -209,8 +238,6 @@ nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponen
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
-
-
 
 //Register Node by Name
 packageObj.createChildNode("createModuleStoryBuilder", node_createModuleStoryBuilder); 

@@ -22,4 +22,5 @@ public interface HAPResourceManager {
 	 * @return
 	 */
 	HAPResourceInfo discoverResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo);
+
 }

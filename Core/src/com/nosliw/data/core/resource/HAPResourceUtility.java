@@ -1,5 +1,8 @@
 package com.nosliw.data.core.resource;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -116,4 +119,27 @@ public class HAPResourceUtility {
 	}
 	
 	public static String getDefaultResourceStructure() {    return HAPConstant.RESOURCEID_TYPE_SIMPLE;     }
+	
+	private static final String FILEBASERESOURCE_STARTER = "file_";
+	public static HAPResourceIdSimple createFileBaseResourceId(String resourceType, String fileName) {
+		try {
+			return new HAPResourceIdSimple(resourceType, FILEBASERESOURCE_STARTER+URLEncoder.encode(fileName, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String isFileBased(HAPResourceIdSimple resourceId) {
+		String id = resourceId.getId();
+		if(id.startsWith(FILEBASERESOURCE_STARTER)) {
+			try {
+				return URLDecoder.decode(id.substring(FILEBASERESOURCE_STARTER.length()), "UTF-8") ;
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
 }

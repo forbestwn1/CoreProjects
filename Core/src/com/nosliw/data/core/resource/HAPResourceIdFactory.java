@@ -25,7 +25,19 @@ public class HAPResourceIdFactory {
 		return out;
 	}
 	
-	public static HAPResourceId newInstance(String type, Object coreIdObj) {
+	public static HAPResourceId newInstance(String type, Object obj) {
+		Object coreIdObj = obj;
+		String structure = null;
+		if(obj instanceof JSONObject) {
+			Object typeObj = ((JSONObject) obj).opt(HAPResourceId.TYPE);
+			if(typeObj!=null) {
+				type = (String)typeObj;
+				coreIdObj = ((JSONObject) obj).opt(HAPResourceId.ID);
+				structure = ((JSONObject) obj).optString(HAPResourceId.STRUCUTRE);
+				if(HAPBasicUtility.isStringEmpty(structure))  structure = HAPResourceUtility.getDefaultResourceStructure();
+			}
+		}
+		
 		HAPResourceId out = null;
 		if(coreIdObj instanceof String) {
 			String[] segs = HAPResourceUtility.parseResourceCoreIdLiterate((String)coreIdObj);
@@ -34,8 +46,6 @@ public class HAPResourceIdFactory {
 		}
 		else if(coreIdObj instanceof JSONObject) {
 			JSONObject coreIdJson = (JSONObject)coreIdObj;
-			String structure = coreIdJson.optString(HAPResourceId.STRUCUTRE);
-			if(HAPBasicUtility.isStringEmpty(structure))  structure = HAPResourceUtility.getDefaultResourceStructure();
 			out = HAPResourceIdFactory.newInstanceByType(type, structure);
 			out.buildCoreIdByJSON(coreIdJson);
 		}

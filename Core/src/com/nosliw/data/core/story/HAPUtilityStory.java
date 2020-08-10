@@ -26,14 +26,16 @@ public class HAPUtilityStory {
 		return null;
 	}
 	
-	public static void exportBuildResourceDefinition(HAPStory story, HAPResourceDefinition resourceDef) {
+	public static String exportBuildResourceDefinition(HAPStory story, HAPResourceDefinition resourceDef) {
 		String fileName = story.getShowType() + "_" + story.getName() + "_" + index++;
 
 		File directory = new File(HAPSystemFolderUtility.getCurrentDynamicResourceExportFolder());
 	    if (! directory.exists()){
 	    	directory.mkdir();
 	    }
-	    HAPFileUtility.writeFile(directory.getAbsolutePath()+"/"+fileName, resourceDef.toStringValue(HAPSerializationFormat.LITERATE));
+	    String fileFullName = directory.getAbsolutePath()+"/"+fileName;
+	    HAPFileUtility.writeFile(fileFullName, resourceDef.toStringValue(HAPSerializationFormat.LITERATE));
+	    return fileFullName;
 	}
 
 	public static Set<HAPStoryNode> getAllStoryNodeByType(HAPStory story, String type) {  return getStoryNodeByType(story, type, false);  }

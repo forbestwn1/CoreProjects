@@ -7,7 +7,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.story.HAPManagerStory;
+import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.design.HAPChangeItem;
 import com.nosliw.data.core.story.design.HAPDesignStory;
 import com.nosliw.data.core.story.design.HAPParserChange;
@@ -34,6 +36,11 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 	public static final String COMMAND_DESIGN_DESIGNID = "designId";
 	@HAPAttribute
 	public static final String COMMAND_DESIGN_CHANGE = "change";
+
+	@HAPAttribute
+	public static final String COMMAND_CONVERTTOSHOW = "convertToShow";
+	@HAPAttribute
+	public static final String COMMAND_CONVERTTOSHOW_DESIGNID = "designId";
 
 	@HAPAttribute
 	public static final String COMMAND_SHOW = "show";
@@ -77,11 +84,13 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 			out = HAPServiceData.createSuccessData(result);
 			break;
 		}
-		case COMMAND_SHOW:
+		case COMMAND_CONVERTTOSHOW:
 		{
-			String designId = parms.optString(COMMAND_SHOW_DESIGNID);
+			String designId = parms.optString(COMMAND_CONVERTTOSHOW_DESIGNID);
 			HAPDesignStory design = storyManager.getStoryDesign(designId);
-			out = HAPServiceData.createSuccessData(design);
+			HAPStory story = design.getStory();
+			HAPResourceDefinition resourceDef = storyManager.buildShow(story);
+			out = HAPServiceData.createSuccessData(resourceDef.getResourceId());
 			break;
 		}
 		}

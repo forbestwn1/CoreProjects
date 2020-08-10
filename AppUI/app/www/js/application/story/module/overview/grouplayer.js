@@ -40,7 +40,8 @@ var node_createGroupLayer = function(name, module){
             },
             label: {
                 text: loc_name,
-                fill: 'white'
+                fill: 'white',
+                'ref-y': -1*location.height/2+15,
             }
         });
     	return element
