@@ -1,10 +1,8 @@
 package com.nosliw.data.core.story.element.node;
 
-import java.util.List;
-
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
-import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.design.HAPChangeResult;
 
 public class HAPStoryNodeServiceOutput extends HAPStoryNodeImp{
 
@@ -15,7 +13,7 @@ public class HAPStoryNodeServiceOutput extends HAPStoryNodeImp{
 	}
 
 	@Override
-	public List<HAPChangeItem> patch(String path, Object value) {
+	public HAPChangeResult patch(String path, Object value) {
 		return super.patch(path, value);
 	}
 }

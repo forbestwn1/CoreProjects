@@ -1,6 +1,5 @@
 package com.nosliw.data.core.story.element.node;
 
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -8,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
-import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.design.HAPChangeResult;
 
 @HAPEntityWithAttribute
 public class HAPStoryNodePage extends HAPStoryNodeImp{
@@ -20,7 +19,7 @@ public class HAPStoryNodePage extends HAPStoryNodeImp{
 	}
 	
 	@Override
-	public List<HAPChangeItem> patch(String path, Object value) {
+	public HAPChangeResult patch(String path, Object value) {
 		return super.patch(path, value);
 	}
 

@@ -1,7 +1,5 @@
 package com.nosliw.data.core.story;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -9,7 +7,8 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.design.HAPChangeResult;
+import com.nosliw.data.core.story.design.HAPUtilityChange;
 
 public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAPStoryElement{
 
@@ -52,10 +51,12 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 	public boolean isEnable() {   return this.m_enable;   }
 
 	@Override
-	public List<HAPChangeItem> patch(String path, Object value) {
+	public HAPChangeResult patch(String path, Object value) {
+		HAPChangeResult out = new HAPChangeResult();
 		if(ENABLE.equals(path)) {
+			out.addRevertChange(HAPUtilityChange.buildChangePatch(this, path, this.m_enable));
 			this.m_enable = (Boolean)value;
-			return new ArrayList<HAPChangeItem>();
+			return out;
 		}
 		return null;
 	}

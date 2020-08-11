@@ -1,6 +1,5 @@
 package com.nosliw.data.core.story.element.connection;
 
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -9,7 +8,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPConnectionImp;
-import com.nosliw.data.core.story.design.HAPChangeItem;
 
 @HAPEntityWithAttribute
 public class HAPConnectionDataIO extends HAPConnectionImp{
@@ -34,11 +32,6 @@ public class HAPConnectionDataIO extends HAPConnectionImp{
 	public void setPath1(String path) {    this.m_path1 = path;    }
 	public String getPath2() {    return this.m_path2;    }
 	public void setPath2(String path) {    this.m_path2 = path;    }
-	
-	@Override
-	public List<HAPChangeItem> patch(String path, Object value) {
-		return super.patch(path, value);
-	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

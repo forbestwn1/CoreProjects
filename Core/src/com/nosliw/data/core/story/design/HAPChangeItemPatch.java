@@ -48,8 +48,10 @@ public class HAPChangeItemPatch extends HAPChangeItem{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PATH, this.m_path);
-		jsonMap.put(VALUE, HAPJsonUtility.buildJson(m_value, HAPSerializationFormat.JSON));
-		typeJsonMap.put(VALUE, this.m_value.getClass());
+		if(this.m_value!=null) {
+			jsonMap.put(VALUE, HAPJsonUtility.buildJson(m_value, HAPSerializationFormat.JSON));
+			typeJsonMap.put(VALUE, this.m_value.getClass());
+		}
 	}
 
 }

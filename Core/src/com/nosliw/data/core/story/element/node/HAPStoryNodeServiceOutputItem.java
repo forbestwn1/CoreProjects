@@ -1,6 +1,5 @@
 package com.nosliw.data.core.story.element.node;
 
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -11,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
-import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.design.HAPChangeResult;
 
 @HAPEntityWithAttribute
 public class HAPStoryNodeServiceOutputItem extends HAPStoryNodeImp{
@@ -31,7 +30,7 @@ public class HAPStoryNodeServiceOutputItem extends HAPStoryNodeImp{
 	}
 
 	@Override
-	public List<HAPChangeItem> patch(String path, Object value) {
+	public HAPChangeResult patch(String path, Object value) {
 		return super.patch(path, value);
 	}
 

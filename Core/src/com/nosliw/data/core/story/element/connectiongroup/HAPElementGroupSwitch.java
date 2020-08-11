@@ -1,7 +1,5 @@
 package com.nosliw.data.core.story.element.connectiongroup;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -15,8 +13,9 @@ import com.nosliw.data.core.story.HAPElementGroupImp;
 import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryElement;
-import com.nosliw.data.core.story.design.HAPChangeItem;
 import com.nosliw.data.core.story.design.HAPChangeItemPatch;
+import com.nosliw.data.core.story.design.HAPChangeResult;
+import com.nosliw.data.core.story.design.HAPUtilityChange;
 
 @HAPEntityWithAttribute
 public class HAPElementGroupSwitch extends HAPElementGroupImp{
@@ -50,23 +49,24 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 	}
 	
 	@Override
-	public List<HAPChangeItem> patch(String path, Object value) {
-		List<HAPChangeItem> out = super.patch(path, value); 
+	public HAPChangeResult patch(String path, Object value) {
+		HAPChangeResult out = super.patch(path, value); 
 		if(out!=null)  return out; 
 		else {
 			if(CHOICE.equals(path)) {
-				out = new ArrayList<HAPChangeItem>();
+				out = new HAPChangeResult();
 				if(!value.equals(this.m_choice)) {
+					out.addRevertChange(HAPUtilityChange.buildChangePatch(this, CHOICE, this.m_choice));
 					for(HAPInfoElement eleInfo : this.getElements()) {
 						HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());
 						if(eleInfo.getId().equals(value)) {
 							if(!ele.isEnable()) {
-								out.add(new HAPChangeItemPatch(ele.getCategary(), ele.getId(), HAPStoryElement.ENABLE, true));
+								out.addExtraChange(new HAPChangeItemPatch(ele.getCategary(), ele.getId(), HAPStoryElement.ENABLE, true));
 							}
 						}
 						else {
 							if(ele.isEnable()) {
-								out.add(new HAPChangeItemPatch(ele.getCategary(), ele.getId(), HAPStoryElement.ENABLE, false));
+								out.addExtraChange(new HAPChangeItemPatch(ele.getCategary(), ele.getId(), HAPStoryElement.ENABLE, false));
 							}
 						}
 					}

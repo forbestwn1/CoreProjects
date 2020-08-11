@@ -689,4 +689,9 @@ public class HAPConstant {
 		public static final String STORYDESIGN_QUESTIONTYPE_ITEM = "item";
 
 
+
+		public static final String STORYDESIGN_INFO_STAGES = "stages";
+		public static final String STORYDESIGN_CHANGE_INFO_STAGE = "stage";
+
+
 }

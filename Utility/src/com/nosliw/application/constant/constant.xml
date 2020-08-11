@@ -742,6 +742,11 @@
 			<definition type="space"/>
 			<definition name="STORYDESIGN_QUESTIONTYPE_GROUP" value="group"/>
 			<definition name="STORYDESIGN_QUESTIONTYPE_ITEM" value="item"/>
+
+			<definition type="space"/>
+			<definition name="STORYDESIGN_INFO_STAGES" value="stages"/>
+			<definition name="STORYDESIGN_CHANGE_INFO_STAGE" value="stage"/>
+
 		</definitions>
 	</constants>
 </root>

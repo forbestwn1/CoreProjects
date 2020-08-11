@@ -21,12 +21,12 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	
 	private Map<String, HAPConnection> m_connections;
 
-	private Map<String, HAPElementGroup> m_connectionGroups;
+	private Map<String, HAPElementGroup> m_elementGroups;
 
 	public HAPStoryImp() {
 		this.m_nodes = new LinkedHashMap<String, HAPStoryNode>();
 		this.m_connections = new LinkedHashMap<String, HAPConnection>();
-		this.m_connectionGroups = new LinkedHashMap<String, HAPElementGroup>();
+		this.m_elementGroups = new LinkedHashMap<String, HAPElementGroup>();
 	}
 	
 	@Override
@@ -35,7 +35,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public void setShowType(String showType) {  this.m_showType = showType;	}
 
 	public void setTopicType(String topicType) {    this.m_showType = topicType;     }
-
+	
 	@Override
 	public HAPStoryElement addElement(HAPStoryElement element) {
 		HAPStoryElement out = null;
@@ -58,6 +58,22 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		return out;
 	}
 
+	@Override
+	public HAPStoryElement deleteElement(HAPStoryElement element) {  return this.deleteElement(element.getCategary(), element.getId());  }
+	
+	@Override
+	public HAPStoryElement deleteElement(String categary, String id) {
+		HAPStoryElement out = null;
+		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.deleteNode(id);
+		else if(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.deleteConnection(id);
+		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.deleteElementGroup(id);
+		return out;
+	}
+	
+	public HAPStoryElement deleteNode(String id) {	return this.m_nodes.remove(id);	}
+	public HAPStoryElement deleteConnection(String id) {	return this.m_connections.remove(id);	}
+	public HAPStoryElement deleteElementGroup(String id) {	return this.m_elementGroups.remove(id);	}
+	
 	@Override
 	public Set<HAPStoryNode> getNodes() {  return new HashSet<HAPStoryNode>(this.m_nodes.values());  } 
 
@@ -95,12 +111,12 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public Set<HAPElementGroup> getElementGroups() {  return new HashSet<HAPElementGroup>(this.getElementGroups());  }
 
 	@Override
-	public HAPElementGroup getElementGroup(String id) {   return this.m_connectionGroups.get(id);  }
+	public HAPElementGroup getElementGroup(String id) {   return this.m_elementGroups.get(id);  }
 
 	@Override
 	public HAPElementGroup addElementGroup(HAPElementGroup connectionGroup) {
 		if(HAPBasicUtility.isStringEmpty(connectionGroup.getId())) 	connectionGroup.setId(this.getNextId());
-		this.m_connectionGroups.put(connectionGroup.getId(), connectionGroup);  
+		this.m_elementGroups.put(connectionGroup.getId(), connectionGroup);  
 		return connectionGroup;
 	}
 
@@ -120,7 +136,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		jsonMap.put(SHOWTYPE, this.m_showType);
 		jsonMap.put(NODE, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_nodes), HAPSerializationFormat.JSON));
 		jsonMap.put(CONNECTION, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_connections), HAPSerializationFormat.JSON));
-		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_connectionGroups), HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_elementGroups), HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -129,7 +145,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		jsonMap.put(SHOWTYPE, this.m_showType);
 		jsonMap.put(NODE, HAPJsonUtility.buildJson(this.m_nodes, HAPSerializationFormat.JSON));
 		jsonMap.put(CONNECTION, HAPJsonUtility.buildJson(this.m_connections, HAPSerializationFormat.JSON));
-		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(this.m_connectionGroups, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(this.m_elementGroups, HAPSerializationFormat.JSON));
 	}
 
 }

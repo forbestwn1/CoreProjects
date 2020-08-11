@@ -1,11 +1,9 @@
 package com.nosliw.data.core.story;
 
-import java.util.List;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.design.HAPChangeResult;
 
 @HAPEntityWithAttribute
 public interface HAPStoryElement extends HAPEntityInfo{
@@ -28,7 +26,7 @@ public interface HAPStoryElement extends HAPEntityInfo{
 	
 	String getType();
 
-	List<HAPChangeItem> patch(String path, Object value);
+	HAPChangeResult patch(String path, Object value);
 	
 	//configuration for element, for ui purpose
 	HAPStatus getStatus();

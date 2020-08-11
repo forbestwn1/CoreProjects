@@ -1,8 +1,6 @@
 package com.nosliw.data.core.story.element.node;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -15,7 +13,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
-import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.design.HAPChangeResult;
+import com.nosliw.data.core.story.design.HAPUtilityChange;
 
 @HAPEntityWithAttribute
 public class HAPStoryNodeUIData extends HAPStoryNodeImp{
@@ -53,13 +52,15 @@ public class HAPStoryNodeUIData extends HAPStoryNodeImp{
 	public void addAttribute(String name, String value) {     this.m_attributes.put(name, value);      }
 	
 	@Override
-	public List<HAPChangeItem> patch(String path, Object value) {
-		List<HAPChangeItem> out = super.patch(path, value); 
+	public HAPChangeResult patch(String path, Object value) {
+		HAPChangeResult out = super.patch(path, value);
 		if(out!=null)  return out; 
 		else {
+			out = new HAPChangeResult();
 			if(TAGNAME.equals(path)) {
+				out.addRevertChange(HAPUtilityChange.buildChangePatch(this, TAGNAME, this.m_tagName));
 				this.m_tagName = (String)value;
-				return new ArrayList<HAPChangeItem>();
+				return out;
 			}
 		}
 		return null;

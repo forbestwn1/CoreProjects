@@ -1,19 +1,23 @@
 package com.nosliw.data.core.story.design;
 
-import com.nosliw.data.core.story.HAPStoryElement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HAPChangeResult {
 
-	private HAPStoryElement m_element;
+	private List<HAPChangeItem> m_extraChanges;
 	
-	private HAPChangeItem m_changeItem;
+	private List<HAPChangeItem> m_revertChanges;
 	
-	public HAPChangeResult(HAPChangeItem changeItem, HAPStoryElement element) {
-		this.m_element = element;
-		this.m_changeItem = changeItem;
+	public HAPChangeResult() {
+		this.m_extraChanges = new ArrayList<HAPChangeItem>();
+		this.m_revertChanges = new ArrayList<HAPChangeItem>();
 	}
 	
-	public HAPStoryElement getStoryElement() {    return this.m_element;   }
-	public HAPChangeItem getChangeItem() {   return this.m_changeItem;    }
+	public void addExtraChange(HAPChangeItem change) {  this.m_extraChanges.add(change);     }
+	public List<HAPChangeItem> getExtraChanges(){    return this.m_extraChanges;     }
+	
+	public void addRevertChange(HAPChangeItem change) {   this.m_revertChanges.add(change);     }
+	public List<HAPChangeItem> getRevertChanges(){   return this.m_revertChanges;    }
 	
 }
