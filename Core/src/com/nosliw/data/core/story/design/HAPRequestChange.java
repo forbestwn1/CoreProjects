@@ -5,17 +5,17 @@ import java.util.List;
 
 public class HAPRequestChange {
 
-	private List<HAPChangeItem> m_changes;
+	private List<HAPAnswer> m_answer;
 
 	private String m_designId;
 	
 	public HAPRequestChange(String buildId) {
-		this.m_changes = new ArrayList<HAPChangeItem>();
+		this.m_answer = new ArrayList<HAPAnswer>();
 	}
 	
 	public String getDesignId() {   return this.m_designId;   }
 	
-	public void addChangeItem(HAPChangeItem changeItem) {  this.m_changes.add(changeItem);   }
+	public void addAnswer(HAPAnswer answer) {  this.m_answer.add(answer);   }
 
-	public List<HAPChangeItem> getChangeItems(){    return this.m_changes;    }
+	public List<HAPAnswer> getAnswers(){    return this.m_answer;    }
 }

@@ -24,6 +24,7 @@ var packageObj = library.getChildPackage();
 	var node_storyUtility;
 	var node_storyChangeUtility;
 	var node_errorUtility;
+	var node_designUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -35,54 +36,57 @@ var node_createModuleStoryBuilder = function(parm){
 
 	var loc_storyService = node_createStoryService();
 	
-	var loc_designId;
-	var loc_stepHistory = [];
-	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
-	var loc_componentData = {
+	var loc_componentData1 = {
 		question : {},
 		story : {},
 		designId : "",
 		resourceId : "",
+		stages : [],
+		currentStage : "",
+		errorMessages : []
 	};
+	
+	var loc_componentData = {
+		designId : "",
+		resourceId : "",
+		story : {},
+
+		steps : [],
+		stepCursor : -1,
+
+		stageInfos : [],
+
+		errorMessages : []
+	};
+
 	
 	var loc_vue;
 
-	var loc_processNext = function(){
-		var step = loc_getCurrentStep();
-		var changes = node_storyChangeUtility.discoverAllChanges(step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_QUESTION]);
-		loc_storyService.executeDoDesignRequest(undefined, loc_designId, changes, {
-			success : function(request, serviceData){
-				if(node_errorUtility.isSuccess(serviceData)){
-					var step = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
-					loc_processNewStep(step);
-				}
-			}
-		});
-	};
 	
+	//process design step from backend
 	var loc_processNewStep = function(step, processChange){
-		loc_stepHistory.push(step);
 		
+		var changes = step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_CHANGES];
+		var questionair = step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_QUESTIONAIRE];
+
+		var question = questionair[node_COMMONATRIBUTECONSTANT.QUESTIONNAIRE_QUESTIONS];
+		var answers = questionair[node_COMMONATRIBUTECONSTANT.QUESTIONNAIRE_ANSWERS];
+		loc_processQuestion(question, answers);
+		
+		loc_componentData.push(node_DesignStep(changes, question, [node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO]));
+
+		//apply step changes
 		if(processChange!=false){
-			_.each(step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_CHANGES], function(changeItem){
+			_.each(changes, function(changeItem){
 				loc_processChangeItem(changeItem);
 			});
 		}
-		
-		var question = step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_QUESTION];
-		loc_processQuestion(question);
-		
-		loc_componentData.question = question;
 	};
 	
-	var loc_processChangeItem = function(changeItem){
-		node_storyChangeUtility.applyChange(loc_componentData.story, changeItem);
-	};
-	
-	var loc_processQuestion = function(question){
+	var loc_processQuestion = function(question, answers){
 		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
 			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
@@ -95,8 +99,45 @@ var node_createModuleStoryBuilder = function(parm){
 			var targetId = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID];
 			var element = node_storyUtility.getStoryElement(loc_componentData.story, targetCategary, targetId);
 			question.element = element;
-			question.changes = [];
+			question.changes = answers[question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]];
+			if(question.changes==undefined)  question.changes = [];
 		}
+	};
+	
+
+	
+	
+	
+	
+	var loc_processPrevious = function(){
+		
+	};
+	
+	
+	
+	
+	
+	
+	
+	var loc_processNext = function(){
+		var step = loc_getCurrentStep();
+		var changes = node_storyChangeUtility.discoverAllChanges(step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_QUESTION]);
+		loc_storyService.executeDoDesignRequest(undefined, loc_designId, changes, {
+			success : function(request, serviceData){
+				if(node_errorUtility.isSuccess(serviceData)){
+					var step = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
+					loc_processNewStep(step);
+					loc_componentData.errorMessages = [];
+				}
+				else{
+					loc_componentData.errorMessages = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
+				}
+			}
+		});
+	};
+	
+	var loc_processChangeItem = function(changeItem){
+		node_storyChangeUtility.applyChange(loc_componentData.story, changeItem);
 	};
 	
 	
@@ -120,7 +161,7 @@ var node_createModuleStoryBuilder = function(parm){
 			computed : {
 				overviewUrl : {
 					get : function(){
-						return "http://localhost:8080/AppUI/story.html?env=local&configure=overviewtest&app=story&version=2&designId="+this.designId;
+						return "http://localhost:8080/AppUI/story.html?env=local&configure=overviewtest&app=story&version=2&designId="+loc_designId;
 					}
 				},
 				resourceUrl : {
@@ -138,7 +179,7 @@ var node_createModuleStoryBuilder = function(parm){
 				},
 				onConvertToShow : function(){
 					var that = this;
-					loc_storyService.executeGetConvertDesignRequest(this.designId, {
+					loc_storyService.executeGetConvertDesignRequest(loc_designId, {
 						success : function(request, resourceId){
 							that.resourceId = resourceId;
 						}
@@ -150,12 +191,14 @@ var node_createModuleStoryBuilder = function(parm){
 				onShow : function(){
 					
 				},
-				onPreviousStep : function(event) {
+				onPreviousStage : function(event) {
+					
 				},
-				onNextStep : function(event) {
+				onNextStage : function(event) {
 					loc_processNext();
 				},
-				onFinishStep : function(event) {
+				onFinishStage : function(event) {
+					loc_processNext();
 				},
 			},
 			template :
@@ -178,9 +221,12 @@ var node_createModuleStoryBuilder = function(parm){
 						<question-step 
 							v-bind:data="question"
 							v-bind:story="story"
-					  		v-on:previousStep="onPreviousStep"
-					  		v-on:nextStep="onNextStep"
-					  		v-on:finishStep="onFinishStep"
+							v-bind:stages="stages"
+							v-bind:errorMessages="errorMessages"
+							v-bind:currentStage="currentStage"
+					  		v-on:previousStage="onPreviousStage"
+					  		v-on:nextStage="onNextStage"
+					  		v-on:finishStage="onFinishStage"
 						></question-step>
 				    </div>
 				`
@@ -194,9 +240,9 @@ var node_createModuleStoryBuilder = function(parm){
 			
 			out.addRequest(loc_storyService.getNewDesignRequest(undefined, "pageSimple", {
 				success : function(request, design){
-					loc_designId = design[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
-					loc_componentData.designId = loc_designId;
+					loc_componentData.designId = design[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
 					loc_componentData.story = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
+					loc_componentData.stageInfos = node_designUtility.getDesignStages(design);
 					var changeHistory = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_CHANGEHISTORY];
 					loc_processNewStep(changeHistory[changeHistory.length-1], false);
 				}
@@ -238,6 +284,7 @@ nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponen
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.designUtility", function(){node_designUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleStoryBuilder", node_createModuleStoryBuilder); 

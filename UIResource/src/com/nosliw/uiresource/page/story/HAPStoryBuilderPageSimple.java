@@ -17,6 +17,7 @@ import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityConnection;
 import com.nosliw.data.core.story.HAPUtilityStory;
+import com.nosliw.data.core.story.design.HAPAnswer;
 import com.nosliw.data.core.story.design.HAPBuilderStory;
 import com.nosliw.data.core.story.design.HAPChangeInfo;
 import com.nosliw.data.core.story.design.HAPChangeItem;
@@ -68,6 +69,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	@Override
 	public void initDesign(HAPDesignStory design) {
 		design.getStory().setShowType(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
+
+		HAPUtilityDesign.setDesignAllStages(design, m_stages);
 		
 		HAPDesignStep step = new HAPDesignStep();
 
@@ -106,23 +109,26 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		return out;
 	}
 	
-	private HAPServiceData validateServiceAnswer(HAPDesignStory design, HAPRequestChange answer) {
+	private HAPServiceData validateServiceAnswer(HAPDesignStory design, HAPRequestChange answerRequest) {
 		HAPStory story = design.getStory();
-		//apply answer to story
-		List<HAPChangeItem> answerChanges = answer.getChangeItems();
-		HAPUtilityChange.applyChange(story, answerChanges);
 
+		List<HAPChangeItem> answerChanges = new ArrayList<HAPChangeItem>();
+		for(HAPAnswer answer : answerRequest.getAnswers()){		answerChanges.addAll(answer.getChanges());	}
+		
+		//apply answer changes to story
+		HAPUtilityChange.applyChange(story, answerChanges);
+		
 		HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_SERVICE).iterator().next();
 		if(!HAPBasicUtility.isStringEmpty(serviceStoryNode.getReferenceId())){
 			//valid
 			//add answer to step
 			HAPDesignStep latestStep = design.getLatestStep();
-			latestStep.addAnswers(answer.getChangeItems());
+			latestStep.addAnswers(answerRequest.getAnswers());
 			return HAPServiceData.createSuccessData();
 		}
 		else {
 			//failure
-			//revert change
+			//revert answer changes
 			HAPUtilityChange.revertChange(story, answerChanges);
 			//
 			String[] errorMsg = {"Service should not be empty!!"};
@@ -264,11 +270,13 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		}
 	}
 
-	private HAPServiceData processUIChangeStage(HAPDesignStory design, HAPRequestChange answer) {
+	private HAPServiceData processUIChangeStage(HAPDesignStory design, HAPRequestChange answerRequest) {
 		HAPStory story = design.getStory();
 		
+		List<HAPChangeItem> answerChanges = new ArrayList<HAPChangeItem>();
+		for(HAPAnswer answer : answerRequest.getAnswers()){		answerChanges.addAll(answer.getChanges());	}
+
 		//apply answer to story
-		List<HAPChangeItem> answerChanges = answer.getChangeItems();
 		HAPUtilityChange.applyChange(story, answerChanges);
 				
 		//new step

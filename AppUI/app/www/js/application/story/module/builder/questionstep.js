@@ -15,8 +15,20 @@ var node_createComponentQuestionStep = function(){
 		data : function(){
 			return {};
 		},
-		props : ['data', 'story'],
+		props : ['data', 'story', 'stages', 'currentStage', 'errorMessages'],
 		components : {
+		},
+		computed: {
+			stageIndex : {
+				get : function(){
+					var that = this;
+					var index;
+					_.each(this.stages, function(stage, i){
+						if(stage.name==that.currentStage)  index=i;
+					});
+					return index;
+				},
+			}
 		},
 		methods : {
 			onPrevious : function(event) {
@@ -31,6 +43,18 @@ var node_createComponentQuestionStep = function(){
 		},
 		template : `
 			<div>
+		    	<div>
+				  <span v-for="errorMessage in errorMessages" style="color:red;"><br>{{errorMessage}}
+				  </span>
+		    	</div>
+
+		    	<div>
+				  <span v-for="stage in stages">
+    					<span v-if="stage.name==currentStage" style="color:red;"><br>{{stage.name}}</span>
+    					<span v-if="stage.name!=currentStage"><br>{{stage.name}}</span>
+				  </span>
+		    	</div>
+				    
 				<br>
 		    	QuestionStep
 				<br>
@@ -38,15 +62,15 @@ var node_createComponentQuestionStep = function(){
 				</question-group>
 
 				<br>
-				<a v-on:click.prevent="onPrevious">Previous</a>
+				<a v-on:click.prevent="onPrevious" v-if="stageIndex>=1">Previous</a>
 				<br>
 
 				<br>
-				<a v-on:click.prevent="onNext">Next</a>
+				<a v-on:click.prevent="onNext" v-if="stageIndex<stages.length-2">Next</a>
 				<br>
 
 				<br>
-				<a v-on:click.prevent="onFinish">Finish</a>
+				<a v-on:click.prevent="onFinish" v-if="stageIndex>=stages.length-2">Finish</a>
 				<br>
 				
 			</div>

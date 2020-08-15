@@ -31,6 +31,13 @@ public class HAPQuestionGroup extends HAPQuestion{
 	@Override
 	public String getType() {	return HAPConstant.STORYDESIGN_QUESTIONTYPE_GROUP;	}
 
+	@Override
+	public void setId(String id) {
+		for(int i=0; i<this.m_children.size(); i++) {
+			this.m_children.get(i).setId(id+"_"+i);
+		}
+	}
+	
 	public void addChild(HAPQuestion item) {
 		this.m_children.add(item);
 	}

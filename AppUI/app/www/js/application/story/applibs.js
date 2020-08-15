@@ -11,6 +11,7 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 			"entity.js",
 			"utilitystory.js",
 			"utilitystoryui.js",
+			"utilitydesign.js",
 			"utilitystorychange.js",
 		]
 	});
@@ -54,6 +55,7 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 			basePath : moduleFoler,
 			libs : [
 				"0_package.js",
+				"entity.js",
 				"module.js",
 				"questionstep.js",
 				"questiongroup.js",
