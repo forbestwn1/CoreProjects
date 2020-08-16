@@ -14,18 +14,23 @@ var packageObj = library.getChildPackage();
  * 
  */
 var node_utility = function(){
-	var loc_discoverAllChanges = function(question, changes){
+	var loc_discoverAllQuestionAnswers = function(question, answers){
 		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
 			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
 			_.each(children, function(child, i){
-				loc_discoverAllChanges(child, changes);
+				loc_discoverAllQuestionAnswers(child, answers);
 			});
 		}
 		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
+			var answer = {};
+			var changes = [];
 			_.each(question.changes, function(change, i){
 				changes.push(change);
 			});
+			answer[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES] = changes;
+			answer[node_COMMONATRIBUTECONSTANT.ANSWER_QUESTIONID] = question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+			answers.push(answer);
 		}
 	};
 	
@@ -132,9 +137,9 @@ var node_utility = function(){
 
 		createChangeItemPatch : function(targetCategary, targetId, path, value){  return loc_createChangeItemPatch(targetCategary, targetId, path, value);		},
 		
-		discoverAllChanges : function(question){
+		discoverAllQuestionAnswers : function(question){
 			var out = [];
-			loc_discoverAllChanges(question, out);
+			loc_discoverAllQuestionAnswers(question, out);
 			return out;
 		},
 	};		

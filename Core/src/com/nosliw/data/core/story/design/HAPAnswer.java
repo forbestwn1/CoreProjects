@@ -18,7 +18,7 @@ import com.nosliw.data.core.story.HAPStory;
 public class HAPAnswer extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static final String CHANGES = "children";
+	public static final String CHANGES = "changes";
 
 	@HAPAttribute
 	public static final String QUESTIONID = "questionId";

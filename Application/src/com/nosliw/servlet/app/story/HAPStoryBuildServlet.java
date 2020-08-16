@@ -6,13 +6,13 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.HAPStory;
-import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.design.HAPAnswer;
 import com.nosliw.data.core.story.design.HAPDesignStory;
-import com.nosliw.data.core.story.design.HAPParserChange;
 import com.nosliw.data.core.story.design.HAPRequestChange;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.servlet.core.HAPInitServlet;
@@ -35,7 +35,7 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 	@HAPAttribute
 	public static final String COMMAND_DESIGN_DESIGNID = "designId";
 	@HAPAttribute
-	public static final String COMMAND_DESIGN_CHANGE = "change";
+	public static final String COMMAND_DESIGN_ANSWER = "answer";
 
 	@HAPAttribute
 	public static final String COMMAND_CONVERTTOSHOW = "convertToShow";
@@ -74,11 +74,12 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 			String designId = parms.optString(COMMAND_DESIGN_DESIGNID);
 			HAPRequestChange changeRequest = new HAPRequestChange(designId);
 
-			JSONArray changeArray = parms.optJSONArray(COMMAND_DESIGN_CHANGE);
-			for(int i=0; i<changeArray.length(); i++) {
-				JSONObject changeObj = changeArray.getJSONObject(i);
-				HAPChangeItem changeItem = HAPParserChange.parseChangeItem(changeObj);
-				changeRequest.addChangeItem(changeItem);
+			JSONArray answerArray = parms.optJSONArray(COMMAND_DESIGN_ANSWER);
+			for(int i=0; i<answerArray.length(); i++) {
+				JSONObject answerObj = answerArray.getJSONObject(i);
+				HAPAnswer answer = new HAPAnswer();
+				answer.buildObject(answerObj, HAPSerializationFormat.JSON);
+				changeRequest.addAnswer(answer);
 			}
 			HAPServiceData result = storyManager.designStory(designId, changeRequest);
 			out = HAPServiceData.createSuccessData(result);

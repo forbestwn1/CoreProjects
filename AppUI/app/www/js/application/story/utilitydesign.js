@@ -22,7 +22,7 @@ var node_utility = function(){
 		},
 
 		getStepStage : function(step){
-			var info = step[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
+			var info = step.info;
 			return info[node_COMMONCONSTANT.STORYDESIGN_CHANGE_INFO_STAGE];
 		},
 		

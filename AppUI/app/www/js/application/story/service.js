@@ -98,13 +98,13 @@ var node_createStoryService = function(){
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
-		getDoDesignRequest : function(userInfo, designId, changes, handlers, requester_parent){
+		getDoDesignRequest : function(userInfo, designId, answers, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("design", {}), handlers, requestInfo);
 			
 			var parms = {};
 			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_DESIGNID] = designId;
-			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_CHANGE] = changes;
+			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_ANSWER] = answers;
 			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN, parms), undefined, {
 				success : function(requestInfo, serviceData){
 					return serviceData;
@@ -114,8 +114,8 @@ var node_createStoryService = function(){
 			return out;
 		},
 	
-		executeDoDesignRequest : function(userInfo, designId, changes, handlers, request){
-			var requestInfo = this.getDoDesignRequest(userInfo, designId, changes, handlers, request);
+		executeDoDesignRequest : function(userInfo, designId, answers, handlers, request){
+			var requestInfo = this.getDoDesignRequest(userInfo, designId, answers, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		

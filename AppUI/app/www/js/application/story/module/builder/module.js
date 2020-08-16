@@ -25,6 +25,7 @@ var packageObj = library.getChildPackage();
 	var node_storyChangeUtility;
 	var node_errorUtility;
 	var node_designUtility;
+	var node_DesignStep;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -39,16 +40,6 @@ var node_createModuleStoryBuilder = function(parm){
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
-	var loc_componentData1 = {
-		question : {},
-		story : {},
-		designId : "",
-		resourceId : "",
-		stages : [],
-		currentStage : "",
-		errorMessages : []
-	};
-	
 	var loc_componentData = {
 		designId : "",
 		resourceId : "",
@@ -76,7 +67,7 @@ var node_createModuleStoryBuilder = function(parm){
 		var answers = questionair[node_COMMONATRIBUTECONSTANT.QUESTIONNAIRE_ANSWERS];
 		loc_processQuestion(question, answers);
 		
-		loc_componentData.push(node_DesignStep(changes, question, [node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO]));
+		loc_componentData.steps.push(new node_DesignStep(changes, question, step[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO]));
 
 		//apply step changes
 		if(processChange!=false){
@@ -121,8 +112,8 @@ var node_createModuleStoryBuilder = function(parm){
 	
 	var loc_processNext = function(){
 		var step = loc_getCurrentStep();
-		var changes = node_storyChangeUtility.discoverAllChanges(step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_QUESTION]);
-		loc_storyService.executeDoDesignRequest(undefined, loc_designId, changes, {
+		var answers = node_storyChangeUtility.discoverAllQuestionAnswers(step.question);
+		loc_storyService.executeDoDesignRequest(undefined, loc_componentData.designId, answers, {
 			success : function(request, serviceData){
 				if(node_errorUtility.isSuccess(serviceData)){
 					var step = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
@@ -140,11 +131,9 @@ var node_createModuleStoryBuilder = function(parm){
 		node_storyChangeUtility.applyChange(loc_componentData.story, changeItem);
 	};
 	
-	
 	var loc_getCurrentStep = function(){
-		return loc_stepHistory[loc_stepHistory.length-1];
+		return loc_componentData.steps[loc_componentData.stepCursor];
 	};
-
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
@@ -159,9 +148,25 @@ var node_createModuleStoryBuilder = function(parm){
 			components : {
 			},
 			computed : {
+				question : {
+					get : function(){
+						if(this.stepCursor!=-1){
+							var step = this.steps[this.stepCursor];
+							return step.question;
+						}
+					}
+				},
+				currentStage : {
+					get : function(){
+						if(this.stepCursor!=-1){
+							var step = this.steps[this.stepCursor];
+							return node_designUtility.getStepStage(step);
+						}
+					}
+				},
 				overviewUrl : {
 					get : function(){
-						return "http://localhost:8080/AppUI/story.html?env=local&configure=overviewtest&app=story&version=2&designId="+loc_designId;
+						return "http://localhost:8080/AppUI/story.html?env=local&configure=overviewtest&app=story&version=2&designId="+this.designId;
 					}
 				},
 				resourceUrl : {
@@ -219,14 +224,14 @@ var node_createModuleStoryBuilder = function(parm){
 				    	QuestionModule
 						<br>
 						<question-step 
-							v-bind:data="question"
+							v-bind:question="question"
 							v-bind:story="story"
-							v-bind:stages="stages"
+							v-bind:stages="stageInfos"
 							v-bind:errorMessages="errorMessages"
 							v-bind:currentStage="currentStage"
-					  		v-on:previousStage="onPreviousStage"
-					  		v-on:nextStage="onNextStage"
-					  		v-on:finishStage="onFinishStage"
+					  		v-on:previousStep="onPreviousStage"
+					  		v-on:nextStep="onNextStage"
+					  		v-on:finishStep="onFinishStage"
 						></question-step>
 				    </div>
 				`
@@ -244,7 +249,10 @@ var node_createModuleStoryBuilder = function(parm){
 					loc_componentData.story = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
 					loc_componentData.stageInfos = node_designUtility.getDesignStages(design);
 					var changeHistory = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_CHANGEHISTORY];
-					loc_processNewStep(changeHistory[changeHistory.length-1], false);
+					_.each(changeHistory, function(changeStep, i){
+						loc_processNewStep(changeStep, false);
+					});
+					loc_componentData.stepCursor = loc_componentData.stepCursor + changeHistory.length;
 				}
 			}));
 			return out;
@@ -285,6 +293,7 @@ nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", funct
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.designUtility", function(){node_designUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.builder.DesignStep", function(){node_DesignStep = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleStoryBuilder", node_createModuleStoryBuilder); 
