@@ -63,18 +63,19 @@ var node_createModuleStoryBuilder = function(parm){
 		var changes = step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_CHANGES];
 		var questionair = step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_QUESTIONAIRE];
 
-		var question = questionair[node_COMMONATRIBUTECONSTANT.QUESTIONNAIRE_QUESTIONS];
-		var answers = questionair[node_COMMONATRIBUTECONSTANT.QUESTIONNAIRE_ANSWERS];
-		loc_processQuestion(question, answers);
-		
-		loc_componentData.steps.push(new node_DesignStep(changes, question, step[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO]));
-
 		//apply step changes
 		if(processChange!=false){
 			_.each(changes, function(changeItem){
 				loc_processChangeItem(changeItem);
 			});
 		}
+
+		var question = questionair[node_COMMONATRIBUTECONSTANT.QUESTIONNAIRE_QUESTIONS];
+		var answers = questionair[node_COMMONATRIBUTECONSTANT.QUESTIONNAIRE_ANSWERS];
+		loc_processQuestion(question, answers);
+		
+		loc_componentData.steps.push(new node_DesignStep(changes, question, step[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO]));
+
 	};
 	
 	var loc_processQuestion = function(question, answers){
@@ -100,40 +101,38 @@ var node_createModuleStoryBuilder = function(parm){
 	
 	
 	
-	var loc_processPrevious = function(){
-		
+	var loc_onPrevious = function(){
+		loc_componentData.stepCursor--;
 	};
-	
-	
-	
-	
-	
-	
-	
-	var loc_processNext = function(){
-		var step = loc_getCurrentStep();
-		var answers = node_storyChangeUtility.discoverAllQuestionAnswers(step.question);
-		loc_storyService.executeDoDesignRequest(undefined, loc_componentData.designId, answers, {
-			success : function(request, serviceData){
-				if(node_errorUtility.isSuccess(serviceData)){
-					var step = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
-					loc_processNewStep(step);
-					loc_componentData.errorMessages = [];
+
+	var loc_onNext = function(){
+		if(loc_isAtLastStep()){
+			var step = loc_getCurrentStep();
+			var answers = node_storyChangeUtility.discoverAllQuestionAnswers(step.question);
+			loc_storyService.executeDoDesignRequest(undefined, loc_componentData.designId, answers, {
+				success : function(request, serviceData){
+					if(node_errorUtility.isSuccess(serviceData)){
+						var step = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
+						loc_processNewStep(step);
+						loc_componentData.errorMessages = [];
+						loc_componentData.stepCursor++;
+					}
+					else{
+						loc_componentData.errorMessages = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
+					}
 				}
-				else{
-					loc_componentData.errorMessages = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
-				}
-			}
-		});
+			});
+		}
+		else{
+			loc_componentData.stepCursor++;
+		}
 	};
 	
-	var loc_processChangeItem = function(changeItem){
-		node_storyChangeUtility.applyChange(loc_componentData.story, changeItem);
-	};
+	var loc_processChangeItem = function(changeItem){		node_storyChangeUtility.applyChange(loc_componentData.story, changeItem);	};
 	
-	var loc_getCurrentStep = function(){
-		return loc_componentData.steps[loc_componentData.stepCursor];
-	};
+	var loc_getCurrentStep = function(){	return loc_componentData.steps[loc_componentData.stepCursor];	};
+	
+	var loc_isAtLastStep = function(){  return loc_componentData.steps.length-1== loc_componentData.stepCursor;  };
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
@@ -197,13 +196,13 @@ var node_createModuleStoryBuilder = function(parm){
 					
 				},
 				onPreviousStage : function(event) {
-					
+					loc_onPrevious();
 				},
 				onNextStage : function(event) {
-					loc_processNext();
+					loc_onNext();
 				},
 				onFinishStage : function(event) {
-					loc_processNext();
+					loc_onNext();
 				},
 			},
 			template :
