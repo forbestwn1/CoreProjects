@@ -32,6 +32,8 @@ var packageObj = library.getChildPackage();
 var loc_mduleName = "storyBuilder";
 
 var node_createModuleStoryBuilder = function(parm){
+	var loc_vue;
+
 
 	var loc_root = parm;
 
@@ -54,8 +56,6 @@ var node_createModuleStoryBuilder = function(parm){
 	};
 
 	
-	var loc_vue;
-
 	
 	//process design step from backend
 	var loc_processNewStep = function(step, processChange){
@@ -83,7 +83,7 @@ var node_createModuleStoryBuilder = function(parm){
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
 			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
 			_.each(children, function(child, i){
-				loc_processQuestion(child, loc_componentData.story);
+				loc_processQuestion(child, answers);
 			});
 		}
 		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
@@ -91,12 +91,26 @@ var node_createModuleStoryBuilder = function(parm){
 			var targetId = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID];
 			var element = node_storyUtility.getStoryElement(loc_componentData.story, targetCategary, targetId);
 			question.element = element;
-			question.changes = answers[question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]];
-			if(question.changes==undefined)  question.changes = [];
+			var answerInfo = answers[question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]];
+			if(answerInfo!=undefined)  question.answer = answerInfo[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES];
+			if(question.answer==undefined)  question.answer = [];
 		}
 	};
 	
-
+	//update answers in question
+	var loc_updateQuestion = function(question, answers){
+		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
+		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
+			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
+			_.each(children, function(child, i){
+				loc_updateQuestion(child, loc_componentData.story);
+			});
+		}
+		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
+			var answerInfo = answers[question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]];
+			if(answerInfo!=undefined)  question.answer = answerInfo[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES];
+		}
+	};
 	
 	
 	
@@ -112,7 +126,10 @@ var node_createModuleStoryBuilder = function(parm){
 			loc_storyService.executeDoDesignRequest(undefined, loc_componentData.designId, answers, {
 				success : function(request, serviceData){
 					if(node_errorUtility.isSuccess(serviceData)){
-						var step = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
+						var response = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
+						var step = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_STEP];
+						var answers = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_ANSWER];
+						loc_updateQuestion(loc_getCurrentStep().question, answers);
 						loc_processNewStep(step);
 						loc_componentData.errorMessages = [];
 						loc_componentData.stepCursor++;
@@ -204,6 +221,14 @@ var node_createModuleStoryBuilder = function(parm){
 				onFinishStage : function(event) {
 					loc_onNext();
 				},
+				onAnswerChange : function(event) {
+					if(!loc_isAtLastStep()){
+						//reverse steps behind
+						for(var i=this.steps.length-1; i>this.stepCursor; i--){
+							node_storyChangeUtility.reverseStep(this.story, this.steps[i]);
+						}
+					}	
+				},
 			},
 			template :
 				`
@@ -231,6 +256,7 @@ var node_createModuleStoryBuilder = function(parm){
 					  		v-on:previousStep="onPreviousStage"
 					  		v-on:nextStep="onNextStage"
 					  		v-on:finishStep="onFinishStage"
+					  		v-on:answerChange="onAnswerChange"
 						></question-step>
 				    </div>
 				`

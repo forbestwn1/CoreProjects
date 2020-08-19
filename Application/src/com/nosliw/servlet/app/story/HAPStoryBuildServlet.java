@@ -13,7 +13,7 @@ import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.design.HAPAnswer;
 import com.nosliw.data.core.story.design.HAPDesignStory;
-import com.nosliw.data.core.story.design.HAPRequestChange;
+import com.nosliw.data.core.story.design.HAPRequestDesign;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.servlet.core.HAPInitServlet;
 
@@ -72,7 +72,7 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 		case COMMAND_DESIGN:
 		{
 			String designId = parms.optString(COMMAND_DESIGN_DESIGNID);
-			HAPRequestChange changeRequest = new HAPRequestChange(designId);
+			HAPRequestDesign changeRequest = new HAPRequestDesign(designId);
 
 			JSONArray answerArray = parms.optJSONArray(COMMAND_DESIGN_ANSWER);
 			for(int i=0; i<answerArray.length(); i++) {

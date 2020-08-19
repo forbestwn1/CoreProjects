@@ -11,6 +11,6 @@ public interface HAPBuilderStory {
 	//   storyDesign: current design
 	//   change : change
 	//out: design after change
-	HAPServiceData buildStory(HAPDesignStory storyDesign, HAPRequestChange changeRequest);
+	HAPServiceData buildStory(HAPDesignStory storyDesign, HAPRequestDesign changeRequest);
 	
 }

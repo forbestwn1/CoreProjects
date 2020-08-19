@@ -48,6 +48,21 @@ var node_utility = function(){
 			return out;
 		},
 		
+		deleteStoryElement : function(story, elementCategary, elementId){
+			var out;
+			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){
+				out = this.deleteNodeById(story, elementId);
+			}
+			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
+				out = this.deleteConnectionById(story, elementId);
+			}
+			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){
+				out = this.deleteGroupById(story, elementId);
+			}
+			return out;
+		},
+		
+		
 		getStoryNodeByType : function(story, nodeType) {
 			var out = [];
 			_.each(story[node_COMMONATRIBUTECONSTANT.STORY_NODE], function(node, id){
@@ -137,6 +152,24 @@ var node_utility = function(){
 		getConnectionById : function(story, connectionId){	return story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][connectionId];	},
 			
 		getGroupById : function(story, groupId){	return story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][groupId];	},
+		
+		deleteNodeById : function(story, nodeId){
+			var out = story[node_COMMONATRIBUTECONSTANT.STORY_NODE][nodeId];
+			delete story[node_COMMONATRIBUTECONSTANT.STORY_NODE][nodeId];
+			return out;
+		},
+		
+		deleteConnectionById : function(story, connectionId){	
+			var out = story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][connectionId];
+			delete story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][connectionId];
+			return out;
+		},
+
+		deleteGroupById : function(story, groupId){	
+			var out = story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][groupId];
+			delete story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][groupId];
+			return out;
+		},
 		
 	};		
 			

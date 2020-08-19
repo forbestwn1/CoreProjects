@@ -32,7 +32,7 @@ var node_createComponentQuestionItemService = function(availableService){
 				allService : loc_availableService
 			};
 		},
-		props : ['data', 'story'],
+		props : ['question', 'story'],
 		components : {
 		},
 		methods : {
@@ -40,13 +40,14 @@ var node_createComponentQuestionItemService = function(availableService){
 		computed: {
 			serviceId : {
 				get : function(){
-					var element = node_storyUtility.getQuestionTargetElement(this.story, this.data);
+					var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
 					return element[node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID];
 				},
 				
 				set : function(serviceId){
-					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.data, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, serviceId, this.data.changes);
-					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.data, node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME, serviceId, this.data.changes);
+					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, serviceId, this.question.answer);
+					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME, serviceId, this.question.answer);
+					this.$emit("answerChange");
 				}
 			}
 		},

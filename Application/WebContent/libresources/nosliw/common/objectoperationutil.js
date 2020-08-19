@@ -60,6 +60,7 @@ var node_objectOperationUtility =
 		},
 
 		operateObjectByPathSegs : function(obj, pathSegs, command, data){
+			var out;
 			var baseObj = obj;
 			var attribute = "";
 			
@@ -86,6 +87,7 @@ var node_objectOperationUtility =
 			}
 			
 			if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
+				out = baseObj[attribute];
 				baseObj[attribute] = data;
 			}
 			else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
@@ -102,8 +104,10 @@ var node_objectOperationUtility =
 				}
 			}
 			else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
+				out = baseObj[attribute][data];
 				delete baseObj[attribute][data];
-			}			
+			}
+			return out;
 		},
 
 

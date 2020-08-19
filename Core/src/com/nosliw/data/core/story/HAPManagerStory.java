@@ -9,7 +9,7 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.story.design.HAPBuilderStory;
 import com.nosliw.data.core.story.design.HAPDesignStory;
-import com.nosliw.data.core.story.design.HAPRequestChange;
+import com.nosliw.data.core.story.design.HAPRequestDesign;
 import com.nosliw.data.core.story.design.HAPUtilityDesign;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionStory;
 import com.nosliw.data.core.story.resource.HAPResourceIdStory;
@@ -40,7 +40,7 @@ public class HAPManagerStory {
 		return out;
 	}
 	
-	public HAPServiceData designStory(String designId, HAPRequestChange changeRequest) {
+	public HAPServiceData designStory(String designId, HAPRequestDesign changeRequest) {
 		HAPDesignStory design = this.getStoryDesign(designId);
 		String directorId = design.getDirectorId();
 		HAPServiceData out = this.getDesignDirector(directorId).buildStory(design, changeRequest);

@@ -43,7 +43,7 @@ public class HAPChangeItemNew extends HAPChangeItem{
 		super.buildObjectByJson(jsonObj);
 		JSONObject eleObj = jsonObj.optJSONObject(ELEMENT);
 		if(eleObj!=null) {
-			HAPParserElement.parseElement(jsonObj, this.getStory());
+			HAPParserElement.parseElement(eleObj, this.getStory());
 		}
 		return true;  
 	}

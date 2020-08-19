@@ -33,7 +33,7 @@ var node_createComponentQuestionItemConstant = function(){
 				context : {}
 			};
 		},
-		props : ['data', 'story'],
+		props : ['question', 'story'],
 		components : {
 		},
 		methods : {
@@ -45,7 +45,7 @@ var node_createComponentQuestionItemConstant = function(){
 					
 				}
 			});
-			var element = node_storyUtility.getQuestionTargetElement(this.story, this.data);
+			var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
 			request.addRequest(loc_storyService.getDefaultUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE], {
 				success : function(request, tagResult){
 					var tagId = tagResult[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_TAG];
@@ -57,7 +57,8 @@ var node_createComponentQuestionItemConstant = function(){
 					that.context = node_createContext("id", elementInfosArray, request);
 					
 					that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
-						node_storyChangeUtility.applyPatchFromQuestion(that.story, that.data, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, eventData.value, that.data.changes);
+						node_storyChangeUtility.applyPatchFromQuestion(that.story, that.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, eventData.value, that.question.answer);
+						this.$emit("answerChange");
 					}, this);
 
 					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, {

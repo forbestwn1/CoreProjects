@@ -15,22 +15,25 @@ var node_createComponentQuestionGroup = function(){
 		data : function(){
 			return {};
 		},
-		props : ['data', 'story'],
+		props : ['question', 'story'],
 		methods : {
+			onAnswerChange : function(event) {
+				this.$emit("answerChange");
+			},
 		},
 		template : `
 			<div>
 				<br>
-				Group Start: {{data.question}}
+				Group Start: {{question.question}}
 				<br>
 				<div 
-					v-for="question in data.children"
+					v-for="question in question.children"
 				>
-					<question-group v-if="question.type=='group'" v-bind:data="question" v-bind:story="story"/>
-					<question-item v-if="question.type=='item'" v-bind:data="question" v-bind:story="story"/>
+					<question-group v-if="question.type=='group'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
+					<question-item v-if="question.type=='item'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
 				</div>
 				<br>
-				Group End: {{data.question}}
+				Group End: {{question.question}}
 				<br>
 			</div>
 		`

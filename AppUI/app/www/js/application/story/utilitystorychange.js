@@ -14,6 +14,22 @@ var packageObj = library.getChildPackage();
  * 
  */
 var node_utility = function(){
+
+	var loc_discoverAllQuestionChanges = function(question, changes){
+		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
+		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
+			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
+			_.each(children, function(child, i){
+				loc_discoverAllQuestionChanges(child, answers);
+			});
+		}
+		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
+			_.each(question.answer, function(change, i){
+				changes.push(change);
+			});
+		}
+	};
+
 	var loc_discoverAllQuestionAnswers = function(question, answers){
 		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
@@ -25,7 +41,7 @@ var node_utility = function(){
 		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
 			var answer = {};
 			var changes = [];
-			_.each(question.changes, function(change, i){
+			_.each(question.answer, function(change, i){
 				changes.push(change);
 			});
 			answer[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES] = changes;
@@ -33,9 +49,23 @@ var node_utility = function(){
 			answers.push(answer);
 		}
 	};
+
+	var loc_createChangeItemDelete = function(targetCategary, targetId){
+		var out = {};
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE;
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY] = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY];
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID] = element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT] = element;
+		return out;
+	};
 	
-	var loc_createChangeItemPatchForElement = function(element, path, value){
-		return loc_createChangeItemPatch(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], path, value);
+	var loc_createChangeItemNew = function(element){             
+		var out = {};
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW;
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY] = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY];
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID] = element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT] = element;
+		return out;
 	};
 	
 	var loc_createChangeItemPatch = function(targetCategary, targetId, path, value){
@@ -48,7 +78,12 @@ var node_utility = function(){
 		return out;
 	};
 	
+	var loc_createChangeItemDeleteForElement = function(element){  return loc_createChangeItemDelete(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);   };
+	var loc_createChangeItemPatchForElement = function(element, path, value){	return loc_createChangeItemPatch(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], path, value);	};
+	var loc_createChangeItemNewForElement = function(element){  return loc_createChangeItemNew(element);   };
+
 	var loc_applyChangeNew = function(story, changeItem){
+		changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemDeleteForElement(element)];
 		node_storyUtility.addStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT]);
 	};
 	
@@ -58,6 +93,10 @@ var node_utility = function(){
 		_.each(changes, function(change, i){
 			loc_applyChangePatch(story, change, extend, allChanges);
 		});
+	};
+	
+	var loc_applyChangeDelete = function(story, changeItem){
+		node_storyUtility.deleteStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID]]);
 	};
 	
 	//output: a array of new change item
@@ -106,7 +145,9 @@ var node_utility = function(){
 			}
 		}
 		
-		node_objectOperationUtility.operateObject(element, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);
+		var oldValue = node_objectOperationUtility.operateObject(element, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);
+		changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForElement(element, path, oldValue)];
+		
 		return out;
 	};
 	
@@ -120,6 +161,9 @@ var node_utility = function(){
 			else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_PATCH){
 				loc_applyChangePatch(story, changeItem);
 			}
+			else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE){
+				loc_applyChangeDelete(story, changeItem);
+			}
 		},
 		
 		//return an array of all changes
@@ -127,6 +171,12 @@ var node_utility = function(){
 			var changeType = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE];
 			if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_PATCH){
 				loc_applyChangePatch(story, changeItem, true, allChanges);
+			}
+			else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW){
+				loc_applyChangeNew(story, changeItem);
+			}
+			else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE){
+				loc_applyChangeDelete(story, changeItem);
 			}
 		},
 		
@@ -141,6 +191,30 @@ var node_utility = function(){
 			var out = [];
 			loc_discoverAllQuestionAnswers(question, out);
 			return out;
+		},
+		
+		reverseStep : function(story, step){
+			var that = this;
+			var changes = step.changes;
+			for(var i=changes.length-1; i>=0; i--){
+				this.reverseChange(story, changes[i]);
+			}
+			
+			var answerChanges = [];
+			loc_discoverAllQuestionChanges(step.question, answerChanges);
+			for(var i=answerChanges.length-1; i>=0; i--){
+				this.reverseChange(story, answerChanges[i]);
+			}
+		},
+		
+		reverseChange : function(story, changeItem){
+			var that  = this;
+			var reverseChanges = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES];
+			if(reverseChanges!=undefined){
+				_.each(reverseChanges, function(reverseChange, i){
+					that.applyChange(story, reverseChange);
+				});
+			}
 		},
 	};		
 			

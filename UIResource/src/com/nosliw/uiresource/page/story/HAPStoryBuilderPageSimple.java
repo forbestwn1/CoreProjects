@@ -25,7 +25,8 @@ import com.nosliw.data.core.story.design.HAPDesignStep;
 import com.nosliw.data.core.story.design.HAPDesignStory;
 import com.nosliw.data.core.story.design.HAPQuestionGroup;
 import com.nosliw.data.core.story.design.HAPQuestionItem;
-import com.nosliw.data.core.story.design.HAPRequestChange;
+import com.nosliw.data.core.story.design.HAPRequestDesign;
+import com.nosliw.data.core.story.design.HAPResponseDesign;
 import com.nosliw.data.core.story.design.HAPStageInfo;
 import com.nosliw.data.core.story.design.HAPUtilityChange;
 import com.nosliw.data.core.story.design.HAPUtilityDesign;
@@ -93,7 +94,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	}
 
 	@Override
-	public HAPServiceData buildStory(HAPDesignStory storyDesign, HAPRequestChange answer) {
+	public HAPServiceData buildStory(HAPDesignStory storyDesign, HAPRequestDesign answer) {
 		HAPServiceData out = null;
 		String stage = HAPUtilityDesign.getDesignStage(storyDesign);
 		if(stage.equals(STAGE_SERVICE)) {
@@ -109,7 +110,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		return out;
 	}
 	
-	private HAPServiceData validateServiceAnswer(HAPDesignStory design, HAPRequestChange answerRequest) {
+	private HAPServiceData validateServiceAnswer(HAPDesignStory design, HAPRequestDesign answerRequest) {
 		HAPStory story = design.getStory();
 
 		List<HAPChangeItem> answerChanges = new ArrayList<HAPChangeItem>();
@@ -136,7 +137,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		}
 	}
 	
-	private HAPServiceData processServiceStage(HAPDesignStory design, HAPRequestChange answer) {
+	private HAPServiceData processServiceStage(HAPDesignStory design, HAPRequestDesign answer) {
 		HAPStory story = design.getStory();
 		
 		HAPServiceData validateResult = validateServiceAnswer(design, answer);
@@ -266,11 +267,11 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			//stage
 			HAPUtilityDesign.setChangeStage(step, STAGE_UI);
 
-			return HAPServiceData.createSuccessData(step);
+			return HAPServiceData.createSuccessData(new HAPResponseDesign(answer.getAnswers(), step));
 		}
 	}
 
-	private HAPServiceData processUIChangeStage(HAPDesignStory design, HAPRequestChange answerRequest) {
+	private HAPServiceData processUIChangeStage(HAPDesignStory design, HAPRequestDesign answerRequest) {
 		HAPStory story = design.getStory();
 		
 		List<HAPChangeItem> answerChanges = new ArrayList<HAPChangeItem>();
@@ -291,6 +292,6 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		//stage
 		HAPUtilityDesign.setChangeStage(step, STAGE_END);
 
-		return HAPServiceData.createSuccessData(step);
+		return HAPServiceData.createSuccessData(new HAPResponseDesign(answerRequest.getAnswers(), step));
 	}
 }

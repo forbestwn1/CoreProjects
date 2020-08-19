@@ -19,7 +19,7 @@ var node_createComponentQuestionItem = function(){
 		data : function(){
 			return {};
 		},
-		props : ['data', 'story'],
+		props : ['question', 'story'],
 		components : {
 			'question-item-service': node_createComponentQuestionItemService(),
 			'question-item-switch': node_createComponentQuestionItemSwitch(),
@@ -27,18 +27,21 @@ var node_createComponentQuestionItem = function(){
 			'question-item-uidata': node_createComponentQuestionItemUIData(),
 		},
 		methods : {
+			onAnswerChange : function(event) {
+				this.$emit("answerChange");
+			},
 		},
 		template : `
-			<div v-if="data.element.enable==true">
+			<div v-if="question.element.enable==true">
 				<br>
-				Item Start {{data.targetId}} : {{data.question}}
+				Item Start {{question.targetId}} : {{question.question}}
 				<br>
-				<question-item-service v-if="data.element.type=='service'" v-bind:data="data" v-bind:story="story"/>
-				<question-item-switch v-if="data.element.type=='switch'" v-bind:data="data" v-bind:story="story"/>
-				<question-item-constant v-if="data.element.type=='constant'" v-bind:data="data" v-bind:story="story"/>
-				<question-item-uidata v-if="data.element.type=='UI_data'" v-bind:data="data" v-bind:story="story"/>
+				<question-item-service v-if="question.element.type=='service'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
+				<question-item-switch v-if="question.element.type=='switch'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
+				<question-item-constant v-if="question.element.type=='constant'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
+				<question-item-uidata v-if="question.element.type=='UI_data'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
 				<br>
-				Item End {{data.targetId}} : {{data.question}}
+				Item End {{question.targetId}} : {{question.question}}
 				<br>
 			</div>
 		`

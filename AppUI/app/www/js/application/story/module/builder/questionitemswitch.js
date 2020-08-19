@@ -18,7 +18,7 @@ var node_createComponentQuestionItemSwitch = function(){
 			return {
 			};
 		},
-		props : ['data', 'story'],
+		props : ['question', 'story'],
 		components : {
 		},
 		methods : {
@@ -26,17 +26,18 @@ var node_createComponentQuestionItemSwitch = function(){
 		computed: {
 			choices : {
 				get : function(){
-					var element = node_storyUtility.getQuestionTargetElement(this.story, this.data);
+					var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
 					return element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS];
 				}
 			},
 			choiceId : {
 				get : function(){
-					return this.data.element.choice;
+					return this.question.element.choice;
 				},
 				
 				set : function(choiceId){
-					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.data, node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE, choiceId, this.data.changes);
+					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE, choiceId, this.question.answer);
+					this.$emit("answerChange");
 				}
 			}
 		},

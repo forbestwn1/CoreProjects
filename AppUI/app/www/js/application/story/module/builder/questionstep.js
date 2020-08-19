@@ -58,7 +58,7 @@ var node_createComponentQuestionStep = function(){
 				<br>
 		    	QuestionStep
 				<br>
-				<question-group v-bind:data="question" v-if="question!=undefined" v-bind:story="story">
+				<question-group v-bind:question="question" v-if="question!=undefined" v-bind:story="story">
 				</question-group>
 
 				<br>

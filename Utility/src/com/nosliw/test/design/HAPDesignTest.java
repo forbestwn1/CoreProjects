@@ -8,7 +8,7 @@ import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrows
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.design.HAPChangeItem;
 import com.nosliw.data.core.story.design.HAPDesignStory;
-import com.nosliw.data.core.story.design.HAPRequestChange;
+import com.nosliw.data.core.story.design.HAPRequestDesign;
 import com.nosliw.data.core.story.design.HAPUtilityChange;
 import com.nosliw.uiresource.page.story.HAPStoryBuilderPageSimple;
 
@@ -27,7 +27,7 @@ public class HAPDesignTest {
 			String designId = design.getId();
 			storyMan.saveStoryDesign(design);
 			
-			HAPRequestChange changeRequest = new HAPRequestChange(designId);
+			HAPRequestDesign changeRequest = new HAPRequestDesign(designId);
 			Map<String, Object> value = new LinkedHashMap<String, Object>();
 			value.put("entity.service.referenceId", "TestTemplateService");
 			HAPChangeItem changeItem = HAPUtilityChange.buildItemPatch("", value);

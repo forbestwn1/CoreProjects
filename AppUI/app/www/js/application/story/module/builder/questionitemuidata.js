@@ -17,7 +17,7 @@ var node_createComponentQuestionItemUIData = function(){
 			return {
 			};
 		},
-		props : ['data', 'story'],
+		props : ['question', 'story'],
 		components : {
 		},
 		methods : {

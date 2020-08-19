@@ -39,7 +39,7 @@ public class HAPUtilityChange {
 			//extra changes info
 			if(extraChanges!=null) 	extraChanges.addAll(changeResult.getExtraChanges());
 			//revert changes info
-			if(saveRevert) 	changeItem.setRevertChanges(changeResult.getRevertChanges());
+			if(saveRevert && changeItem.getRevertChanges()==null) 	changeItem.setRevertChanges(changeResult.getRevertChanges());
 		}
 		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_NEW)) {
 			HAPChangeItemNew changeNew = (HAPChangeItemNew)changeItem;

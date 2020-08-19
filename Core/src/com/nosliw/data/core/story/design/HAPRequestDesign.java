@@ -3,13 +3,13 @@ package com.nosliw.data.core.story.design;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HAPRequestChange {
+public class HAPRequestDesign {
 
 	private List<HAPAnswer> m_answer;
 
 	private String m_designId;
 	
-	public HAPRequestChange(String buildId) {
+	public HAPRequestDesign(String buildId) {
 		this.m_answer = new ArrayList<HAPAnswer>();
 	}
 	
