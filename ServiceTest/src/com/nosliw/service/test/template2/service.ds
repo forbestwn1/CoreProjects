@@ -1,7 +1,7 @@
 [{
-	"id": "TestTemplateService",
-	"name": "TestTemplateService",
-    "implementation" : "com.nosliw.service.test.template.HAPServiceImp",
+	"id": "TestTemplateService2",
+	"name": "TestTemplateService2",
+    "implementation" : "com.nosliw.service.test.template2.HAPServiceImp",
 	"description" : "test service implemented by process",
 	"interface" : {
 		"result" : [
@@ -25,6 +25,10 @@
 			},
 			{
 				name : "serviceParm2",
+				criteria : "test.string;1.0.0",
+			},
+			{
+				name : "serviceParm3",
 				criteria : "test.string;1.0.0",
 			}
 			

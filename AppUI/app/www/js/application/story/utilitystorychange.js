@@ -53,9 +53,8 @@ var node_utility = function(){
 	var loc_createChangeItemDelete = function(targetCategary, targetId){
 		var out = {};
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY] = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY];
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID] = element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT] = element;
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY] = targetCategary;
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID] = targetId;
 		return out;
 	};
 	
@@ -83,7 +82,7 @@ var node_utility = function(){
 	var loc_createChangeItemNewForElement = function(element){  return loc_createChangeItemNew(element);   };
 
 	var loc_applyChangeNew = function(story, changeItem){
-		changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemDeleteForElement(element)];
+		changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemDelete(changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID])];
 		node_storyUtility.addStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT]);
 	};
 	
@@ -96,7 +95,8 @@ var node_utility = function(){
 	};
 	
 	var loc_applyChangeDelete = function(story, changeItem){
-		node_storyUtility.deleteStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID]]);
+		var element = node_storyUtility.deleteStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID]]);
+		changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemNew(element)];
 	};
 	
 	//output: a array of new change item

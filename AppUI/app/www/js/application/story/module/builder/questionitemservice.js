@@ -17,8 +17,12 @@ var node_createComponentQuestionItemService = function(availableService){
 	
 	loc_availableService = [
 		{
-			id : 'TestTemplateService',
-			name : 'TestTemplateService'
+			id : 'TestTemplateService1',
+			name : 'TestTemplateService1'
+		},
+		{
+			id : 'TestTemplateService2',
+			name : 'TestTemplateService2'
 		},
 		{
 			id : 'schoolService',

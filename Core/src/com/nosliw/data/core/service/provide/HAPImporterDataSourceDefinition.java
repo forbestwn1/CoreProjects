@@ -19,7 +19,8 @@ public class HAPImporterDataSourceDefinition {
 			"com.nosliw.service.test.process.HAPServiceProviderImp",
 			"com.nosliw.service.pearsonflight.HAPServiceImp",
 			"com.nosliw.service.email.HAPServiceImp",
-			"com.nosliw.service.test.template.HAPServiceImp"
+			"com.nosliw.service.test.template1.HAPServiceImp",
+			"com.nosliw.service.test.template2.HAPServiceImp"
 	};
 	
 	public static List<HAPDefinitionService> loadDataSourceDefinition() {

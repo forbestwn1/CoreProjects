@@ -18,7 +18,7 @@
 				"service": {
 					"id": "TestTemplateService",
 					"name": "TestTemplateService",
-					"implementation": "com.nosliw.service.test.template.HAPServiceImp",
+					"implementation": "com.nosliw.service.test.template1.HAPServiceImp",
 					"description": "test service implemented by process",
 					"interface": {
 						"result": [{
