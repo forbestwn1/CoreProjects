@@ -9,9 +9,15 @@ public class HAPRequestDesign {
 
 	private String m_designId;
 	
-	public HAPRequestDesign(String buildId) {
+	private int m_stepCursor = -1;
+	
+	public HAPRequestDesign(String designId) {
 		this.m_answer = new ArrayList<HAPAnswer>();
+		this.m_designId = designId;
 	}
+	
+	public int getStepCursor() {   return this.m_stepCursor;    }
+	public void setStepCursor(int stepCursor) {   this.m_stepCursor = stepCursor;    }
 	
 	public String getDesignId() {   return this.m_designId;   }
 	

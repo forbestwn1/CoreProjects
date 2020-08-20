@@ -56,6 +56,8 @@ public class HAPDesignStep extends HAPEntityInfoImp{
 		this.m_questionaire.setQuestionGroup(question); 
 	}
 	
+	public HAPQuestionnaire getQuestionair() {   return this.m_questionaire;   }
+	
 	public void setStory(HAPStory story) {    
 		this.m_story = story;
 		this.m_questionaire.setStory(m_story);

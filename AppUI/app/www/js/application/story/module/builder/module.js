@@ -123,7 +123,7 @@ var node_createModuleStoryBuilder = function(parm){
 		if(loc_isAtLastStep()){
 			var step = loc_getCurrentStep();
 			var answers = node_storyChangeUtility.discoverAllQuestionAnswers(step.question);
-			loc_storyService.executeDoDesignRequest(undefined, loc_componentData.designId, answers, {
+			loc_storyService.executeDoDesignRequest(undefined, loc_componentData.designId, answers, loc_componentData.stepCursor, {
 				success : function(request, serviceData){
 					if(node_errorUtility.isSuccess(serviceData)){
 						var response = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
@@ -226,6 +226,7 @@ var node_createModuleStoryBuilder = function(parm){
 						//reverse steps behind
 						for(var i=this.steps.length-1; i>this.stepCursor; i--){
 							node_storyChangeUtility.reverseStep(this.story, this.steps[i]);
+							this.steps.pop();
 						}
 					}	
 				},
@@ -233,6 +234,9 @@ var node_createModuleStoryBuilder = function(parm){
 			template :
 				`
 				    <div class="block">
+						<br>
+						{{designId}}
+						<br>
 						<br>
 						<a :href="overviewUrl"  target="_blank">overview</a>
 						<br>

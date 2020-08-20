@@ -36,6 +36,8 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 	public static final String COMMAND_DESIGN_DESIGNID = "designId";
 	@HAPAttribute
 	public static final String COMMAND_DESIGN_ANSWER = "answer";
+	@HAPAttribute
+	public static final String COMMAND_DESIGN_STEPCUSOR = "stepCursor";
 
 	@HAPAttribute
 	public static final String COMMAND_CONVERTTOSHOW = "convertToShow";
@@ -81,7 +83,11 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 				answer.buildObject(answerObj, HAPSerializationFormat.JSON);
 				changeRequest.addAnswer(answer);
 			}
-			HAPServiceData result = storyManager.designStory(designId, changeRequest);
+			
+			int stepCursor = parms.optInt(COMMAND_DESIGN_STEPCUSOR, -1);
+			changeRequest.setStepCursor(stepCursor);
+			
+			HAPServiceData result = storyManager.designStory(changeRequest);
 			out = HAPServiceData.createSuccessData(result);
 			break;
 		}

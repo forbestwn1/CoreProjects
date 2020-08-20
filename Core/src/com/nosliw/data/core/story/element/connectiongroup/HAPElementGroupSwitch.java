@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPElementGroupImp;
 import com.nosliw.data.core.story.HAPInfoElement;
@@ -55,7 +56,7 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 		else {
 			if(CHOICE.equals(path)) {
 				out = new HAPChangeResult();
-				if(!value.equals(this.m_choice)) {
+				if(!HAPBasicUtility.isEquals(value, this.m_choice)) {
 					out.addRevertChange(HAPUtilityChange.buildChangePatch(this, CHOICE, this.m_choice));
 					for(HAPInfoElement eleInfo : this.getElements()) {
 						HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());

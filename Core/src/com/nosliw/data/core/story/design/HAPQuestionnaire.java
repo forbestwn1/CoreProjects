@@ -1,7 +1,9 @@
 package com.nosliw.data.core.story.design;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -41,6 +43,10 @@ public class HAPQuestionnaire extends HAPSerializableImp{
 		answer.setStory(m_story);
 	}
 
+	public Set<HAPAnswer> getAnswers(){   return new HashSet<HAPAnswer>(this.m_answers.values());     }
+	
+	public void clearAnswer() {   this.m_answers.clear();    }
+	
 	public void setStory(HAPStory story) {
 		this.m_story = story;
 		for(HAPAnswer answer : this.m_answers.values()) {

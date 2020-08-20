@@ -2,6 +2,7 @@ package com.nosliw.data.core.story.design;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPIdElement;
@@ -10,6 +11,20 @@ import com.nosliw.data.core.story.HAPStoryElement;
 
 public class HAPUtilityChange {
 
+	public static void reverseChangeStep(HAPStory story, HAPDesignStep step) {
+		List<HAPChangeItem> changes = step.getChanges();
+		revertChange(story, changes);
+		reverseQuestionAnswer(story, step.getQuestionair());
+	}
+	
+	public static void reverseQuestionAnswer(HAPStory story, HAPQuestionnaire questionair) {
+		Set<HAPAnswer> answers = questionair.getAnswers();
+		for(HAPAnswer answer : answers) {
+			revertChange(story, answer.getChanges());
+		}
+		questionair.clearAnswer();
+	}
+	
 	public static void applyChange(HAPStory story, List<HAPChangeItem> changeItems) {
 		for(HAPChangeItem changeItem : changeItems) {
 			applyChange(story, changeItem, null, true);

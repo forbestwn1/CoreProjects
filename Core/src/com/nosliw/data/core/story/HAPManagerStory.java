@@ -1,6 +1,7 @@
 package com.nosliw.data.core.story;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
@@ -8,8 +9,11 @@ import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.story.design.HAPBuilderStory;
+import com.nosliw.data.core.story.design.HAPDesignStep;
 import com.nosliw.data.core.story.design.HAPDesignStory;
+import com.nosliw.data.core.story.design.HAPQuestionnaire;
 import com.nosliw.data.core.story.design.HAPRequestDesign;
+import com.nosliw.data.core.story.design.HAPUtilityChange;
 import com.nosliw.data.core.story.design.HAPUtilityDesign;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionStory;
 import com.nosliw.data.core.story.resource.HAPResourceIdStory;
@@ -40,9 +44,24 @@ public class HAPManagerStory {
 		return out;
 	}
 	
-	public HAPServiceData designStory(String designId, HAPRequestDesign changeRequest) {
-		HAPDesignStory design = this.getStoryDesign(designId);
+	public HAPServiceData designStory(HAPRequestDesign changeRequest) {
+		HAPDesignStory design = this.getStoryDesign(changeRequest.getDesignId());
+		HAPStory story = design.getStory();
 		String directorId = design.getDirectorId();
+		
+		//clear step on top of step index
+		int stepIndex = changeRequest.getStepCursor();
+		List<HAPDesignStep> changeHistory = design.getChangeHistory();
+		for(int i=changeHistory.size()-1; i>stepIndex; i--) {
+			HAPUtilityChange.reverseChangeStep(story, changeHistory.get(i));
+			changeHistory.remove(i);
+		}
+		
+		//clear current questionair
+		HAPQuestionnaire currentQuestionair = changeHistory.get(stepIndex).getQuestionair();
+		HAPUtilityChange.reverseQuestionAnswer(story, currentQuestionair);
+		
+		
 		HAPServiceData out = this.getDesignDirector(directorId).buildStory(design, changeRequest);
 		if(out.isSuccess()) {
 			this.saveStoryDesign(design);

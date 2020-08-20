@@ -40,6 +40,9 @@ var node_createComponentQuestionStep = function(){
 			onFinish : function(event) {
 				this.$emit("finishStep");
 			},
+			onAnswerChange : function(event) {
+				this.$emit("answerChange");
+			},
 		},
 		template : `
 			<div>
@@ -58,7 +61,7 @@ var node_createComponentQuestionStep = function(){
 				<br>
 		    	QuestionStep
 				<br>
-				<question-group v-bind:question="question" v-if="question!=undefined" v-bind:story="story">
+				<question-group v-bind:question="question" v-if="question!=undefined" v-bind:story="story"  v-on:answerChange="onAnswerChange">
 				</question-group>
 
 				<br>
