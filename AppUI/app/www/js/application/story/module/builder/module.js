@@ -200,7 +200,7 @@ var node_createModuleStoryBuilder = function(parm){
 				},
 				onConvertToShow : function(){
 					var that = this;
-					loc_storyService.executeGetConvertDesignRequest(loc_designId, {
+					loc_storyService.executeGetConvertDesignRequest(this.designId, {
 						success : function(request, resourceId){
 							that.resourceId = resourceId;
 						}
@@ -243,6 +243,8 @@ var node_createModuleStoryBuilder = function(parm){
 						<a v-on:click.prevent="onStory">story</a>
 						<br>
 						<a v-on:click.prevent="onConvertToShow">convertToShow</a>
+						<br>
+						Page Id : {{resourceId}}
 						<br>
 						<a v-on:click.prevent="onShowDefinition">showDefinition</a>
 						<br>

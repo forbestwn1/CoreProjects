@@ -714,6 +714,7 @@
 			<definition name="STORYNODE_TYPE_VARIABLE" value="variable"/>
 			<definition name="STORYNODE_TYPE_PAGE" value="UI_page"/>
 			<definition name="STORYNODE_TYPE_UIDATA" value="UI_data"/>
+			<definition name="STORYNODE_TYPE_HTML" value="UI_html"/>
 			
 			<definition type="space"/>
 			<definition name="STORYNODE_PROFILE_CONTAINER" value="container"/>
