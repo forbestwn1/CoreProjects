@@ -2,6 +2,7 @@ package com.nosliw.data.core.story.element.node;
 
 import java.util.Map;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -19,8 +20,11 @@ public class HAPStoryNodeUIHtml extends HAPStoryNodeImp{
 
 	private String m_html;
 	
-	public HAPStoryNodeUIHtml() {
-		super(STORYNODE_TYPE);
+	public HAPStoryNodeUIHtml() {	super(STORYNODE_TYPE);	}
+	
+	public HAPStoryNodeUIHtml(String html) {
+		this();
+		this.m_html = html;
 	}
 	
 	public String getHtml() {   return this.m_html;     }
@@ -45,11 +49,13 @@ public class HAPStoryNodeUIHtml extends HAPStoryNodeImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
+		this.m_html = StringEscapeUtils.unescapeJson(jsonObj.optString(HTML));
 		return true;  
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(HTML, StringEscapeUtils.escapeJson(this.m_html));
 	}
 }

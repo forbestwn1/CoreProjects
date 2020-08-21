@@ -51,6 +51,7 @@ var node_utility = function(){
 				"variable" : "data",
 				"UI_page" : "UI",
 				"UI_data" : "UI",
+				"UI_html" : "UI",
 			};
 			return layers[nodeType];
 		},

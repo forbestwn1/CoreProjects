@@ -67,21 +67,21 @@ public class HAPUtilityStory {
 		return out;
 	}
 	
-	public static HAPStoryNode getAllChildNode(HAPStoryNode parent, String childId, HAPStory story) {  return getChildNode(parent, childId, story, false);  }
-	public static HAPStoryNode getChildNode(HAPStoryNode parent, String childId, HAPStory story) {  return getChildNode(parent, childId, story, true);  }
-	private static HAPStoryNode getChildNode(HAPStoryNode parent, String childId, HAPStory story, boolean onlyEnable) {
+	public static List<HAPStoryNode> getAllChildNode(HAPStoryNode parent, String childId, HAPStory story) {  return getChildNode(parent, childId, story, false);  }
+	public static List<HAPStoryNode> getChildNode(HAPStoryNode parent, String childId, HAPStory story) {  return getChildNode(parent, childId, story, true);  }
+	private static List<HAPStoryNode> getChildNode(HAPStoryNode parent, String childId, HAPStory story, boolean onlyEnable) {
+		List<HAPStoryNode> out = new ArrayList<HAPStoryNode>();
 		List<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstant.STORYCONNECTION_TYPE_CONTAIN, HAPConstant.STORYNODE_PROFILE_CONTAINER, null, null, story);
 		for(HAPConnectionEnd connectionEnd : childConnectionEnds) {
 			HAPConnectionContain containerConnectionEntity = (HAPConnectionContain)story.getConnection(connectionEnd.getConnectionId());
 			if(HAPBasicUtility.isEquals(childId, containerConnectionEntity.getChildId())) {
 				HAPStoryNode node = story.getNode(connectionEnd.getNodeId());
 				if(isValid(containerConnectionEntity, onlyEnable) && isValid(node, onlyEnable)) {
-					return node;
+					out.add(node);
 				}
-				else return null;
 			}
 		}
-		return null;
+		return out;
 	}
 	
 	public static List<HAPConnectionEnd> getConnectionEnd(HAPStoryNode node1, String connectionType, String profile1, String node2Type, String profile2, HAPStory story) {

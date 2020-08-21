@@ -189,6 +189,11 @@ public class HAPFileUtility {
 		}
 		return out.toString();
 	}
+
+	public static String readFile(Class c, String fileName) {
+		InputStream inputStream = getInputStreamOnClassPath(c, fileName);
+		return readFile(inputStream);
+	}
 	
 	public static InputStream getInputStreamOnClassPath(Class c, String fileName){
 		InputStream stream = c.getResourceAsStream(fileName);

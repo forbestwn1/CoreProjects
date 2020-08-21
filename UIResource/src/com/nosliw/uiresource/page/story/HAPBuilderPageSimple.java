@@ -36,6 +36,7 @@ import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeConstant;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeUIData;
+import com.nosliw.data.core.story.element.node.HAPStoryNodeUIHtml;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
@@ -145,13 +146,14 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			
 			String serviceName = node.getName();
 			serviceUseDef.setProvider(serviceName);
-			serviceUseDef.setName(serviceName);
+			serviceUseDef.setName("service");
 			
 			{
 				//input
 				HAPContext serviceParmMapping = new HAPContext();
-				HAPStoryNode serviceInputNode = HAPUtilityStory.getChildNode(serviceNode, HAPConstant.SERVICE_CHILD_INPUT, this.m_story);
-				if(serviceInputNode!=null) {
+				List<HAPStoryNode> serviceInputNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstant.SERVICE_CHILD_INPUT, this.m_story);
+				if(!serviceInputNodes.isEmpty()) {
+					HAPStoryNode serviceInputNode = serviceInputNodes.get(0); 
 					List<HAPInfoNodeChild> parmNodeInfos = HAPUtilityStory.getChildNode(serviceInputNode, this.m_story);
 					for(HAPInfoNodeChild parmNodeInfo : parmNodeInfos) {
 						HAPStoryNode parmNode = parmNodeInfo.getChildNode();
@@ -179,8 +181,9 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			{
 				//output
 				HAPContext serviceParmMapping = new HAPContext();
-				HAPStoryNode serviceResultNode = HAPUtilityStory.getChildNode(serviceNode, HAPConstant.SERVICE_CHILD_RESULT, this.m_story);
-				if(serviceResultNode!=null) {
+				List<HAPStoryNode> serviceResultNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstant.SERVICE_CHILD_RESULT, this.m_story);
+				if(!serviceResultNodes.isEmpty()) {
+					HAPStoryNode serviceResultNode = serviceResultNodes.get(0);
 					List<HAPInfoNodeChild> parmNodeInfos = HAPUtilityStory.getChildNode(serviceResultNode, this.m_story);
 					for(HAPInfoNodeChild parmNodeInfo : parmNodeInfos) {
 						HAPStoryNode parmNode = parmNodeInfo.getChildNode();
@@ -244,6 +247,29 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 					if(html!=null)	tag.addBodySegment(html);
 				}
 				out = tag;
+			}
+			else if(HAPConstant.STORYNODE_TYPE_HTML.equals(uiNodeType)) {
+				HAPStoryNodeUIHtml uiHtmlNode = (HAPStoryNodeUIHtml)uiNode;
+				String html = uiHtmlNode.getHtml();
+				
+				Map<String, StringBuffer> placeHolders = new LinkedHashMap<String, StringBuffer>();
+				List<HAPInfoNodeChild> childrenNodesInfo =  HAPUtilityStory.getChildNode(uiNode, this.m_story);
+				for(HAPInfoNodeChild childNodeInfo : childrenNodesInfo) {
+					String childId = childNodeInfo.getConnection().getChildId();
+					StringBuffer text = placeHolders.get(childId);
+					if(text==null) {
+						text = new StringBuffer();
+						placeHolders.put(childId, text);
+					}
+					text.append(this.buildUI(childNodeInfo.getChildNode()).toString());
+				}
+				
+				for(String key : placeHolders.keySet()) {
+					html = html.replace("{{"+key+"}}", placeHolders.get(key).toString());
+				}
+				
+				HAPHtmlText textHtml = new HAPHtmlText(html);
+				out = textHtml;
 			}
 		}
 		return out;
