@@ -88,13 +88,15 @@ public class HAPUtilityStory {
 		List<HAPConnectionEnd> out = new ArrayList<HAPConnectionEnd>();
 		for(String connectionId :  node1.getConnections()) {
 			HAPConnection connection = story.getConnection(connectionId);
-			if(connectionType==null || connection.getType().equals(connectionType)){
-				HAPConnectionEnd node1End = getConnectionEnd(connection, node1.getId());
-				if(profile1==null || profile1.equals(node1End.getProfile())) {
-					HAPConnectionEnd node2End = getOtherConnectionEnd(connection, node1.getId());
-					if(profile2==null || profile2.equals(node2End.getProfile())) {
-						if(node2Type==null || node2Type.equals(story.getNode(node2End.getNodeId()).getType())){
-							out.add(node2End);
+			if(connection.isEnable()) {
+				if(connectionType==null || connection.getType().equals(connectionType)){
+					HAPConnectionEnd node1End = getConnectionEnd(connection, node1.getId());
+					if(profile1==null || profile1.equals(node1End.getProfile())) {
+						HAPConnectionEnd node2End = getOtherConnectionEnd(connection, node1.getId());
+						if(profile2==null || profile2.equals(node2End.getProfile())) {
+							if(node2Type==null || node2Type.equals(story.getNode(node2End.getNodeId()).getType())){
+								out.add(node2End);
+							}
 						}
 					}
 				}

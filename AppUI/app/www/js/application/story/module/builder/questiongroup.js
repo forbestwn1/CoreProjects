@@ -23,6 +23,18 @@ var node_createComponentQuestionGroup = function(){
 		},
 		template : `
 			<div>
+			<div class="block-title">{{question.question}}</div>
+			<div class="block inset block-strong">
+				<div 
+					v-for="question in question.children"
+				>
+					<question-group v-if="question.type=='group'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
+					<question-item v-if="question.type=='item'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
+				</div>
+			</div>
+			</div>
+<!--
+			<div>
 				<br>
 				Group Start: {{question.question}}
 				<br>
@@ -36,6 +48,7 @@ var node_createComponentQuestionGroup = function(){
 				Group End: {{question.question}}
 				<br>
 			</div>
+-->			
 		`
 	};
 	return loc_vueComponent;

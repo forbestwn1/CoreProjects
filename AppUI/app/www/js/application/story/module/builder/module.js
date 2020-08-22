@@ -250,9 +250,6 @@ var node_createModuleStoryBuilder = function(parm){
 						<br>
 						<a :href="resourceUrl"  target="_blank">show</a>
 						<br>
-						<br>
-				    	QuestionModule
-						<br>
 						<question-step 
 							v-bind:question="question"
 							v-bind:story="story"

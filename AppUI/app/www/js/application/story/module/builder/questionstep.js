@@ -52,28 +52,22 @@ var node_createComponentQuestionStep = function(){
 		    	</div>
 
 		    	<div>
+		    	  ---&nbsp;&nbsp;
 				  <span v-for="stage in stages">
-    					<span v-if="stage.name==currentStage" style="color:red;"><br>{{stage.name}}</span>
-    					<span v-if="stage.name!=currentStage"><br>{{stage.name}}</span>
+    					<span v-if="stage.name==currentStage" style="color:red;">{{stage.name}}</span>
+    					<span v-if="stage.name!=currentStage">{{stage.name}}</span>
+    					&nbsp;&nbsp;---&nbsp;&nbsp;
 				  </span>
 		    	</div>
 				    
-				<br>
-		    	QuestionStep
 				<br>
 				<question-group v-bind:question="question" v-if="question!=undefined" v-bind:story="story"  v-on:answerChange="onAnswerChange">
 				</question-group>
 
 				<br>
-				<a v-on:click.prevent="onPrevious" v-if="stageIndex>=1">Previous</a>
-				<br>
-
-				<br>
-				<a v-on:click.prevent="onNext" v-if="stageIndex<stages.length-2">Next</a>
-				<br>
-
-				<br>
-				<a v-on:click.prevent="onFinish" v-if="stageIndex>=stages.length-2">Finish</a>
+				<span v-if="stageIndex>=1"><a v-on:click.prevent="onPrevious">Previous</a>&nbsp;&nbsp;</span>
+				<span v-if="stageIndex<stages.length-2"><a v-on:click.prevent="onNext">Next</a>&nbsp;&nbsp;</span>
+				<span v-if="stageIndex>=stages.length-2"><a v-on:click.prevent="onFinish">Finish</a>&nbsp;&nbsp;</span>
 				<br>
 				
 			</div>

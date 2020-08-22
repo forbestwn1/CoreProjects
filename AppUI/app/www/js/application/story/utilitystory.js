@@ -73,28 +73,29 @@ var node_utility = function(){
 			return out;
 		},
 		
-		getAllChildNodes : function(parent, story) {
-			var that  = this;
-			var out = {};
-			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
-			_.each(childConnectionEnds, function(connectionEnd, i){
-				var childId = that.getConnectionById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID])[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID];
-				out[childId] = that.getNodeById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]);
-			});
-			return out;
-		},
+//		getAllChildNodes : function(parent, story) {
+//			var that  = this;
+//			var out = {};
+//			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
+//			_.each(childConnectionEnds, function(connectionEnd, i){
+//				var childId = that.getConnectionById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID])[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID];
+//				out[childId] = that.getNodeById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]);
+//			});
+//			return out;
+//		},
 
 		getAllChildNodesInfo : function(parent, story) {
 			var that  = this;
-			var out = {};
+			var out = [];
 			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
 			_.each(childConnectionEnds, function(connectionEnd, i){
 				var connectionId = connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID];
 				var childId = that.getConnectionById(story, connectionId)[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID];
-				out[childId] = {
+				out.push({
 					node: that.getNodeById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]),
 					connectionId : connectionId,
-				}
+					childId : childId
+				});
 			});
 			return out;
 		},

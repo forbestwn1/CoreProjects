@@ -22,6 +22,7 @@ import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
@@ -157,16 +158,19 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 					List<HAPInfoNodeChild> parmNodeInfos = HAPUtilityStory.getChildNode(serviceInputNode, this.m_story);
 					for(HAPInfoNodeChild parmNodeInfo : parmNodeInfos) {
 						HAPStoryNode parmNode = parmNodeInfo.getChildNode();
-						List<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, HAPConstant.STORYNODE_PROFILE_DATAIN, HAPConstant.STORYNODE_TYPE_VARIABLE, HAPConstant.STORYNODE_PROFILE_DATAOUT, this.m_story);
+						List<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, HAPConstant.STORYNODE_PROFILE_DATAIN, null, HAPConstant.STORYNODE_PROFILE_DATAOUT, this.m_story);
 						for(HAPConnectionEnd varEnd : varsEnd) {
 							HAPStoryNode parmInputNode = this.m_story.getNode(varEnd.getNodeId());
-							String inputNodeType = parmInputNode.getType();
-							if(HAPConstant.STORYNODE_TYPE_CONSTANT.equals(inputNodeType)) {
-								
-							}
-							else if(HAPConstant.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
-								HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
-								serviceParmMapping.addElement(parmNodeInfo.getConnection().getChildId(), new HAPContextDefinitionLeafRelative(varInputNode.getVariableName()));
+							if(parmInputNode.isEnable()) {
+								String inputNodeType = parmInputNode.getType();
+								if(HAPConstant.STORYNODE_TYPE_CONSTANT.equals(inputNodeType)) {
+									HAPStoryNodeConstant constantInputNode = (HAPStoryNodeConstant)parmInputNode;
+									serviceParmMapping.addElement(parmNodeInfo.getConnection().getChildId(), new HAPContextDefinitionLeafConstant(constantInputNode.getData()));
+								}
+								else if(HAPConstant.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
+									HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
+									serviceParmMapping.addElement(parmNodeInfo.getConnection().getChildId(), new HAPContextDefinitionLeafRelative(varInputNode.getVariableName()));
+								}
 							}
 						}
 					}

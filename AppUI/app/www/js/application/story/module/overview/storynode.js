@@ -56,6 +56,17 @@ var node_createStoryNodeElement = function(storyNodeId, module){
 		return storyNode.type + "_" + storyNode.name + "_" + storyNode.id; 
 	};
 	
+	var loc_getLayerColor = function(){
+		var storyNode = node_storyUtility.getNodeById(loc_module.getStory(), loc_storyNodeId);
+		var enable = storyNode[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE];
+		if(enable==false){
+			return "grey";
+		}
+		else{
+			return node_storyOverviewUtility.getColorByLayer(loc_layer)
+		}
+	};
+	
     var loc_createElement = function(){
         var element = new joint.shapes.standard.Rectangle();
         var location = loc_layout.getLocation();
@@ -63,7 +74,7 @@ var node_createStoryNodeElement = function(storyNodeId, module){
         element.resize(location.width, location.height);
         element.attr({
             body: {
-                fill: node_storyOverviewUtility.getColorByLayer(loc_layer),
+                fill: loc_getLayerColor(),
             },
             label: {
                 text: loc_getElementTitle(),

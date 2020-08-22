@@ -21,7 +21,6 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 		
 		HAPData outData = new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), parm1.getValue()+"_"+parm2.getValue());
 		
-		
 		output.put("outputInService", outData);
 		return HAPUtilityService.generateSuccessResult(output);
 	}

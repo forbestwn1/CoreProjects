@@ -24,7 +24,7 @@ var node_utility = function(){
 			out = node_createStoryNodeElement(storyNodeId, module);
 			module.addStoryNodeElement(out);
 			var childStoryNodesInfo = node_storyUtility.getAllChildNodesInfo(storyNodeId, story);
-			_.each(childStoryNodesInfo, function(childStroyNodeInfo, childId){
+			_.each(childStoryNodesInfo, function(childStroyNodeInfo, i){
 				var childNode = loc_processStoryNode(childStroyNodeInfo.node, overViewTree, processed, module);
 				if(childNode==undefined){
 					var childStoryNodeId = childStroyNodeInfo.node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
@@ -97,7 +97,7 @@ var node_utility = function(){
 	    },
 	    
 	    getColorByLayer : function(layer){
-	    	var color = ["grey", "blue", "red", "green", "yellow"];
+	    	var color = ["pink", "blue", "red", "green", "yellow"];
 	    	return color[layer];
 	    },
 	    

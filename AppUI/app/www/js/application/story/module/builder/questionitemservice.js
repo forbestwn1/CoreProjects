@@ -56,14 +56,11 @@ var node_createComponentQuestionItemService = function(availableService){
 			}
 		},
 		template : `
-			<div>
-				aaaa
-				<select v-model="serviceId">
-				  <option v-for="service in allService" v-bind:value="service.id">
-				    {{ service.name }}
-				  </option>
-				</select>			
-			</div>
+			<select style="display:inline;" v-model="serviceId" placeholder="Select service...">
+			  <option v-for="service in allService" v-bind:value="service.id">
+			    {{ service.name }}
+			  </option>
+			</select>	
 		`
 	};
 	return loc_vueComponent;

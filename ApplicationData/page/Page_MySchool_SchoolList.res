@@ -222,8 +222,17 @@
 		"service" : [
 			{
 				"name": "getSchoolDataService",
-				"id" : "schoolService"
+				"referenceId" : "schoolService"
 			}	
+		],
+		"data" : [
+			{
+				"name": "schoolAttribute",
+				"entity" : {
+					dataTypeId: "test.string;1.0.0",
+					value: "schoolName"
+				}
+			}
 		]
 	}
 	</attachment>

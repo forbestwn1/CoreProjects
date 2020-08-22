@@ -58,7 +58,7 @@ var node_createComponentQuestionItemConstant = function(){
 					
 					that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
 						node_storyChangeUtility.applyPatchFromQuestion(that.story, that.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, eventData.value, that.question.answer);
-						this.$emit("answerChange");
+						that.$emit("answerChange");
 					}, this);
 
 					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, {
