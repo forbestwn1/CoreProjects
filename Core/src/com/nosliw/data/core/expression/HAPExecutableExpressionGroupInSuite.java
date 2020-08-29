@@ -8,6 +8,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -39,6 +40,7 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	
 	@Override
 	public void addExpression(String name, HAPOperandWrapper operand) {
+		if(name==null)   name = HAPConstant.NAME_DEFAULT;
 		this.m_expressionItem.put(name, new HAPExecutableExpression(operand.cloneWrapper()));
 	}
 

@@ -25,7 +25,10 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 		this.m_constantDefinitions = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 	
-	public void addExpression(HAPDefinitionExpression element) {   this.m_elements.put(element.getName(), element);   }
+	public void addExpression(HAPDefinitionExpression element) {
+		this.addEntityElement(element);
+//		this.m_elements.put(element.getName(), element);   
+	}
 
 	@Override
 	public HAPContextStructure getContextStructure() {   return this.m_context;  }

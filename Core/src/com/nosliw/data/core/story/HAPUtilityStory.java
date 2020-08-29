@@ -33,7 +33,10 @@ public class HAPUtilityStory {
 	    	directory.mkdir();
 	    }
 	    String fileFullName = directory.getAbsolutePath()+"/"+fileName;
-	    HAPFileUtility.writeFile(fileFullName, resourceDef.toStringValue(HAPSerializationFormat.LITERATE));
+	    String tempFileName = HAPSystemFolderUtility.getDynamicResourceExportFolder() + "/" + "temp.res";
+	    String resourceDefStr = resourceDef.toStringValue(HAPSerializationFormat.LITERATE);
+	    HAPFileUtility.writeFile(fileFullName, resourceDefStr);
+	    HAPFileUtility.writeFile(tempFileName, resourceDefStr);
 	    return fileFullName;
 	}
 
