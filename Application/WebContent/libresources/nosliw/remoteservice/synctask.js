@@ -67,7 +67,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 	
 		$.ajax(_.extend({
 			data : remoteRequestData,
-			timeout: 15000,
+			timeout: 150000,
 		}, loc_setting.getConfiguresObject())).done(function(serviceDataResult, status){
 				var syncTasks = loc_syncTasks;
 				//clear tasks

@@ -197,16 +197,40 @@ var node_createResourceService = function(resourceManager){
 		getDiscoverResourcesRequest : function(resourceIds, handlers, requester_parent){
 			loc_validateResourceId(resourceIds);
 			
+//			//gateway request
+//			var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;
+//			var command = node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES;
+//			var parms = {};
+//			parms[node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds;
+//			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms);
+//			
+//			var requestInfo = loc_out.getRequestInfo(requester_parent);
+//			var out = node_createServiceRequestInfoService(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), handlers, requestInfo);
+//			out.setDependentService(new node_DependentServiceRequestInfo(gatewayRequest));
+//			return out;
+
+			
+			
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), handlers, loc_out.getRequestInfo(requester_parent));
+
 			//gateway request
 			var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;
 			var command = node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES;
 			var parms = {};
 			parms[node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds;
-			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms);
+			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, {
+				success : function(request, data){
+					return data;
+				},
+				error : function(){
+					var kkk = 555;
+				},
+				exception : function(){
+					var kkk = 555;
+				}
+			});
+			out.addRequest(gatewayRequest);
 			
-			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var out = node_createServiceRequestInfoService(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), handlers, requestInfo);
-			out.setDependentService(new node_DependentServiceRequestInfo(gatewayRequest));
 			return out;
 		},
 
