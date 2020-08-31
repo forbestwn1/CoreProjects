@@ -1,5 +1,5 @@
 {
-	name : "floatinput",
+	name : "float",
 	description : "",
 	attributes : [
 		{
@@ -29,9 +29,20 @@
 			inherit : "false"
 		}
 	},
-	events : {
-		
-	},
+	event : [
+		{
+			name : "valueChanged",
+			data : {
+				element : {
+					value : {
+						definition : {
+							path: "internal_data"
+						}
+					}
+				}
+			}
+		}
+	],
 	requires:{
 		"operation" : { 
 			op1: "test.integer;1.0.0;add",
@@ -40,7 +51,7 @@
 	script : function(env){
 
 		var loc_env = env;
-		var loc_dataVariable = env.createVariable("internal_data");
+		var loc_dataVariable;
 		var loc_view;
 		
 		var loc_revertChange = function(){
@@ -73,7 +84,9 @@
 
 		var loc_out = 
 		{
-			preInit : function(){	},
+			preInit : function(){	
+				loc_dataVariable = loc_env.createVariable("internal_data");
+			},
 				
 			initViews : function(requestInfo){	
 				loc_view = $('<input type="text"/>');	
@@ -89,12 +102,39 @@
 				}, this);
 			},
 
+			destroy : function(){
+				loc_dataVariable.release();	
+				loc_view.remove();
+			},
+
 			processAttribute : function(name, value){},
 
 			destroy : function(){	
 				loc_dataVariable.release();	
 				loc_view.remove();
 			},
+			
+			createContextForDemo : function(id, parentContext, request) {
+				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
+				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
+				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
+				
+				var dataVarPar;
+				if(parentContext!=undefined)	dataVarPar = parentContext.getContextElement("data");
+				var dataVarEleInfo = undefined;
+				if(dataVarPar!=undefined){
+					dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar);
+				}
+				else{
+					var data = node_createData({value:100, dataTypeId:"test.float;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);
+					dataVarEleInfo = node_createContextElementInfo("internal_data", data);
+				}
+				
+				var elementInfosArray = [dataVarEleInfo];
+				return node_createContext(id, elementInfosArray, request);
+			}
+			
 		};
 		return loc_out;
 	}

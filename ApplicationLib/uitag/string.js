@@ -1,10 +1,7 @@
 {
-	name : "options",
+	name : "string",
 	description : "",
 	attributes : [
-		{
-			name : "id"
-		},
 		{
 			name : "data"
 		}
@@ -21,7 +18,7 @@
 						definition: {
 							path : "<%=&(nosliwattribute_data)&%>",
 							definition : {
-								criteria : "test.options;1.0.0"
+								criteria : "test.string;1.0.0"
 							}
 						}
 					}
@@ -32,15 +29,26 @@
 			inherit : "false"
 		}
 	},
-	events : {
-		
-	},
+	event : [
+		{
+			name : "valueChanged",
+			data : {
+				element : {
+					value : {
+						definition : {
+							path: "internal_data"
+						}
+					}
+				}
+			}
+		}
+	],
 	requires:{
 		"operation" : { 
+			op1: "test.integer;1.0.0;add",
 		},
 	},
 	script : function(env){
-		var node_OperationParm = nosliw.getNodeData("expression.entity.OperationParm");
 
 		var loc_env = env;
 		var loc_dataVariable;
@@ -52,62 +60,43 @@
 
 		var loc_getViewData = function(){
 			return {
-				dataTypeId: "test.options;1.0.0",
-				value: {
-					value : loc_view.val(),
-					optionsId : loc_env.getAttributeValue("id")
-				}
+				dataTypeId: "test.string;1.0.0",
+				value: loc_view.val()
 			};
 		};
 
 		var loc_updateView = function(request){
 			loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
-					if(data==undefined)  loc_view.val();
-					else loc_view.val(data.value.value.value);
+					if(data==undefined || data.value==undefined)  loc_view.val("");
+					else loc_view.val(data.value.value);
 				}
 			}, request);
 		};
 
 		var loc_setupUIEvent = function(){
 			loc_view.bind('change', function(){
+				var data = loc_getViewData();
 				loc_env.executeBatchDataOperationRequest([
-					loc_env.getDataOperationSet(loc_dataVariable, "", loc_getViewData())
+					loc_env.getDataOperationSet(loc_dataVariable, "", data)
 				]);
+				loc_env.trigueEvent("valueChanged", data);
 			});
 		};
 
 		var loc_out = 
 		{
-			preInit : function(){
+			preInit : function(requestInfo){
 				loc_dataVariable = loc_env.createVariable("internal_data");
 			},
 				
 			initViews : function(requestInfo){	
-				loc_view = $('<select style="background:#e6dedc;border:solid red"/>');	
-				var operationParms = [];
-				operationParms.push(new node_OperationParm(
-					{
-						dataTypeId: "test.string;1.0.0",
-						value: loc_env.getAttributeValue("id")
-					}, "optionsId"));
-				
-				loc_env.executeExecuteOperationRequest("test.options;1.0.0", "all", operationParms, {
-					success : function(request, optionsValueArray){
-						_.each(optionsValueArray.value, function(optionsValue, i){
-							loc_view.append($('<option>', {
-								value: optionsValue.value,
-								text: optionsValue.value
-							}));
-						});
-						loc_updateView(request);
-					}
-				}, requestInfo);
+				loc_view = $('<input type="text" style="background:#e6dedc"/>');	
 				return loc_view;
 			},
 				
-			postInit : function(request){
-				loc_updateView(request);
+			postInit : function(requestInfo){
+				loc_updateView(requestInfo);
 				loc_setupUIEvent();
 
 				loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, request){
@@ -115,7 +104,7 @@
 				}, this);
 			},
 
-			destroy : function(){	
+			destroy : function(){
 				loc_dataVariable.release();	
 				loc_view.remove();
 			},
@@ -133,14 +122,13 @@
 					dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar);
 				}
 				else{
-					var data = node_createData({value:"Select", dataTypeId:"test.options;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);
+					var data = node_createData({value:"Hello World", dataTypeId:"test.string;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);
 					dataVarEleInfo = node_createContextElementInfo("internal_data", data);
 				}
 				
 				var elementInfosArray = [dataVarEleInfo];
 				return node_createContext(id, elementInfosArray, request);
 			}
-			
 		};
 		return loc_out;
 	}

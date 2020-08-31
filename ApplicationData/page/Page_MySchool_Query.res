@@ -5,7 +5,7 @@
 	<br>
 	
 	
-	SchoolRating:<nosliw-floatinput data="schoolRating"/>  
+	SchoolRating:<nosliw-float data="schoolRating"/>  
 	<br>
 	<br>
 	SchoolType:<nosliw-options id="schoolType" data="schoolType"/>

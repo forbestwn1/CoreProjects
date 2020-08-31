@@ -3,10 +3,10 @@
 <body>
 	<br>
 	<br>
-	SchoolRating:<nosliw-floatinput data="criteria.schoolRating"/>  
+	SchoolRating:<nosliw-float data="criteria.schoolRating"/>  
 	<br>
 	<br>
-	SchoolRating:<nosliw-floatinput data="criteria.schoolRating"/>  
+	SchoolRating:<nosliw-float data="criteria.schoolRating"/>  
 	<br>
 
 	<br>

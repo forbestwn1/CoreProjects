@@ -30,9 +30,10 @@ public class HAPUITagManager {
 		HAPUITagQueryResultSet out = new HAPUITagQueryResultSet();
 		Set<HAPDataTypeId> dataTypeIds = query.getDataTypeCriterai().getValidDataTypeId(m_dataTypeHelper);
 		HAPDataTypeId dataTypeId = dataTypeIds.iterator().next();
-		if(dataTypeId.getName().equals("test.string")) {
-			out.addItem(new HAPUITagQueryResult("textinput"));
-		}
+		
+		String dataTypeName = dataTypeId.getName();
+		String coreName = dataTypeName.substring("test.".length());
+		out.addItem(new HAPUITagQueryResult(coreName));
 		return out;
 	}
 	
