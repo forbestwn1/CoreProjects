@@ -20,6 +20,15 @@ public class HAPUtilityStory {
 	public static void setBuilderId(HAPStory story, String builderId) {         }
 
 	static private int index = 0;
+
+	public static String buildStoryElementId(HAPStoryElement ele, String id) {
+		return ele.getCategary()+HAPConstant.SEPERATOR_LEVEL1+ele.getType()+HAPConstant.SEPERATOR_LEVEL1+id;
+	}
+	
+	public static HAPIdElementInfo parseStoryElementId(String id) {
+		String[] segs = id.split(HAPConstant.SEPERATOR_LEVEL1);
+		return new HAPIdElementInfo(segs[0], segs[1], segs[2]);
+	}
 	
 	public static List<HAPStoryElement> getAllElementRelyOnIt(HAPStory story, String eleId){
 		return null;

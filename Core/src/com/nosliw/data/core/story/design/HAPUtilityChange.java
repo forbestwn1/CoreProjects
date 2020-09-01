@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPElementGroup;
 import com.nosliw.data.core.story.HAPIdElement;
+import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryElement;
 
@@ -82,6 +84,12 @@ public class HAPUtilityChange {
 		return out;
 	}
 	
+	public static HAPChangeInfo buildChangeNewAndApply(HAPStory story, HAPStoryElement ele, List<HAPChangeItem> changes, HAPElementGroup group) {
+		HAPChangeInfo out = buildChangeNewAndApply(story, ele, changes);
+		group.addElement(new HAPInfoElement(out.getStoryElement().getElementId()));
+		return out;
+	}
+
 	public static HAPChangeInfo buildChangeNewAndApply(HAPStory story, HAPStoryElement ele, List<HAPChangeItem> changes) {
 		HAPChangeItemNew change = new HAPChangeItemNew(ele);
 		HAPStoryElement element = applyChangeAll(story, change, changes);
