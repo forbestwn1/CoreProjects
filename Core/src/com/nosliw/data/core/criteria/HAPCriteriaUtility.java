@@ -1,5 +1,8 @@
 package com.nosliw.data.core.criteria;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -82,6 +85,15 @@ public class HAPCriteriaUtility {
 		if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
 			HAPDataTypeSubCriteriaGroup subGroup = ((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria();
 			if(subGroup!=null)		out = subGroup.getSubCriteria(childName);
+		}
+		return out;
+	}
+	
+	public static List<String> getCriteriaChildrenNames(HAPDataTypeCriteria criteria){
+		List<String> out = new ArrayList<String>();
+		if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
+			HAPDataTypeSubCriteriaGroup subGroup = ((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria();
+			if(subGroup!=null)		out = new ArrayList<String>(subGroup.getSubCriteriaNames());
 		}
 		return out;
 	}

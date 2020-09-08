@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page.story;
+package com.nosliw.uiresource.page.story.design;
 
 import java.util.Set;
 

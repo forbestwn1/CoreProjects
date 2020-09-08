@@ -4,14 +4,13 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinitionContext;
 
 public class HAPUtilityConfiguration {
 
-	public static HAPConfigureContextProcessor getContextProcessConfigurationForUIUit(HAPExecutableUIUnit uiUnit) {
+	public static HAPConfigureContextProcessor getContextProcessConfigurationForUIUit(String type) {
 		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
-		if(uiUnit.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) 	out.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;  //for tag, child keeps same
+		if(type.equals(HAPConstant.UIRESOURCE_TYPE_TAG)) 	out.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;  //for tag, child keeps same
 		else out.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT;   //for resource, parent overwrite child
 		return out;
 	}

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.story.element.node;
+package com.nosliw.uiresource.page.story.element;
 
 import java.util.Map;
 
@@ -7,11 +7,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.story.HAPStoryNodeImp;
 import com.nosliw.data.core.story.design.HAPChangeResult;
 import com.nosliw.data.core.story.design.HAPUtilityChange;
 
-public class HAPStoryNodeUIHtml extends HAPStoryNodeImp{
+public class HAPStoryNodeUIHtml extends HAPStoryNodeUI{
 
 	public final static String STORYNODE_TYPE = HAPConstant.STORYNODE_TYPE_HTML; 
 	

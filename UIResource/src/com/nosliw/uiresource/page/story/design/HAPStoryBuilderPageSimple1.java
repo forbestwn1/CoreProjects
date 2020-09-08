@@ -1,14 +1,20 @@
-package com.nosliw.uiresource.page.story;
+package com.nosliw.uiresource.page.story.design;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.HAPDataType;
+import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
@@ -36,22 +42,22 @@ import com.nosliw.data.core.story.design.HAPUtilityDesign;
 import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupBatch;
 import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupSwitch;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeConstant;
-import com.nosliw.data.core.story.element.node.HAPStoryNodePage;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutputItem;
-import com.nosliw.data.core.story.element.node.HAPStoryNodeUIData;
-import com.nosliw.data.core.story.element.node.HAPStoryNodeUIHtml;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
-import com.nosliw.data.core.story.model.HAPContainerNode;
-import com.nosliw.data.core.story.model.HAPContainerTree;
+import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
+import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
+import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
+import com.nosliw.uiresource.page.story.model.HAPUINode;
+import com.nosliw.uiresource.page.story.model.HAPUITree;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 import com.nosliw.uiresource.page.tag.HAPUITagQueryResult;
 import com.nosliw.uiresource.page.tag.HAPUITageQuery;
 
-public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
+public class HAPStoryBuilderPageSimple1 implements HAPBuilderStory{
 
 	public final static String BUILDERID = "pageSimple";
 	
@@ -64,7 +70,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	
 	private List<HAPStageInfo> m_stages;
 	
-	public HAPStoryBuilderPageSimple(HAPManagerService serviceManager, HAPUITagManager uiTagMan) {
+	public HAPStoryBuilderPageSimple1(HAPManagerService serviceManager, HAPUITagManager uiTagMan) {
 		this.m_serviceManager = serviceManager;
 		this.m_uiTagManager = uiTagMan;
 		this.m_stages = new ArrayList<HAPStageInfo>();
@@ -159,7 +165,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			//get page node
 			HAPStoryNodePage pageStoryNode = (HAPStoryNodePage)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_PAGE).iterator().next();
 			//page layout node
-			HAPChangeInfo pageLayoutNewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "page_html.tmp")), step.getChanges());
+			HAPChangeInfo pageLayoutNewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple1.class, "page_html.tmp")), step.getChanges());
 			HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionContain(pageStoryNode.getId(), pageLayoutNewChange.getStoryElement().getId(), null), step.getChanges());
 
 			//get service node
@@ -194,11 +200,14 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPChangeInfo parmVariableProviderConnectionNewChange = HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionOnewayDataIO(parmVariableProviderNewChange.getStoryElement().getId(), parmNewChange.getStoryElement().getId(), null, null), step.getChanges(), variableBatchGroup);
 
 					//ui
-					HAPContainerTree dataUITree = buildDataUITree(parmDef.getCriteria(), parmName, story, step);
+					HAPUINode dataUITreeNode = buildDataUINode(parmDef.getCriteria(), parmName, story, step);
+					HAPUITree dataUITree = new HAPUITree(story, dataUITreeNode);
+
 					HAPIdElement uiDataEleId = dataUITree.searchNodeByType(HAPConstant.STORYELEMENT_CATEGARY_NODE, HAPConstant.STORYNODE_TYPE_UIDATA).get(0);
 					dataUITree.realize(step.getChanges());
 					HAPChangeInfo layoutToUIContainerConnectionNewChange = HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionContain(pageLayoutNewChange.getStoryElement().getId(), dataUITree.getRootElementId().getId(), "input"), step.getChanges(), variableBatchGroup);
 
+					//variable to ui connection
 					HAPChangeInfo parmParmUIConnectionNewChange = HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionOnewayDataIO(uiDataEleId.getId(), parmVariableProviderNewChange.getStoryElement().getId(), null, null), step.getChanges(), variableBatchGroup);
 					
 					//variable group
@@ -253,7 +262,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPChangeInfo parmVariableConnectionNewChange = HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionOnewayDataIO(parmNewChange.getStoryElement().getId(), parmVariableNewChange.getStoryElement().getId(), null, null), step.getChanges());
 
 					//ui container
-					HAPChangeInfo parmParmUIContainerNewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "uiData.tmp")), step.getChanges());
+					HAPChangeInfo parmParmUIContainerNewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple1.class, "uiData.tmp")), step.getChanges());
 					HAPChangeInfo layoutToUIContainerConnectionNewChange = HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionContain(pageLayoutNewChange.getStoryElement().getId(), parmParmUIContainerNewChange.getStoryElement().getId(), "output"), step.getChanges());
 					HAPChangeInfo parmParmUILabelNewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIHtml(parmName), step.getChanges());
 					HAPChangeInfo uiContainerToUILabelConnectionNewChange = HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionContain(parmParmUIContainerNewChange.getStoryElement().getId(), parmParmUILabelNewChange.getStoryElement().getId(), "label"), step.getChanges());
@@ -294,23 +303,55 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	}
 
 	
-	private HAPContainerTree buildDataUITree(HAPDataTypeCriteria dataCriteria, String label, HAPStory story, HAPDesignStep step) {
+	private HAPUINode buildDataUINode(HAPDataTypeCriteria dataCriteria, String label, HAPStory story, HAPDesignStep step) {
 		//ui container
-		HAPChangeInfo parmParmUIContainerNewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "uiData.tmp")), step.getChanges());
-		HAPContainerNode rootNode = new HAPContainerNode(parmParmUIContainerNewChange.getStoryElement().getId(), story);
+		HAPChangeInfo parmParmUIContainerNewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple1.class, "uiData.tmp")), step.getChanges());
+		HAPUINode rootNode = new HAPUINode(parmParmUIContainerNewChange.getStoryElement().getId(), story);
 
 		//label
 		HAPChangeInfo parmParmUILabelNewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIHtml(label), step.getChanges());
 		rootNode.addChildNode(parmParmUILabelNewChange.getStoryElement().getId(), "label");
 
 		//data tag
-		HAPUITagQueryResult uiTagInfo = this.m_uiTagManager.getDefaultUITag(new HAPUITageQuery(dataCriteria));
-		HAPChangeInfo parmParmUINewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIData(uiTagInfo.getTag(), dataCriteria), step.getChanges());
-		rootNode.addChildNode(parmParmUINewChange.getStoryElement().getId(), "uiData");
+		HAPDataTypeHelper dataTypeHelper = null;
+		Set<HAPDataTypeId> dataTypeIds = dataCriteria.getValidDataTypeId(dataTypeHelper);
+		HAPDataTypeId dataTypeId = dataTypeIds.iterator().next();
+		HAPDataTypeManager dataTypeMan = null;
+		HAPDataType dataType = dataTypeMan.getDataType(dataTypeId);
+		boolean isComplex = dataType.getIsComplex();
+		if(isComplex) {
+			if(dataTypeId.getFullName().contains("array")){
+				//array
+				HAPChangeInfo parmParmUINewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIData("loop", dataCriteria), step.getChanges());
+				HAPUINode uiDataNode = rootNode.addChildNode(parmParmUINewChange.getStoryElement().getId(), "uiData");
+
+				//array child
+				HAPDataTypeCriteria childCriteria = HAPCriteriaUtility.getChildCriteria(dataCriteria, "element");
+				HAPUINode childNode = buildDataUINode(childCriteria, null, story, step);
+				uiDataNode.addChildNode(childNode, childId);
+			}
+			else if(dataTypeId.getFullName().contains("map")) {
+				//map
+				//array
+				HAPChangeInfo parmParmUINewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIData("loop", dataCriteria), step.getChanges());
+				HAPUINode uiDataNode = rootNode.addChildNode(parmParmUINewChange.getStoryElement().getId(), "uiData");
+
+				List<String> names = HAPCriteriaUtility.getCriteriaChildrenNames(dataCriteria);
+				for(String name : names) {
+					HAPDataTypeCriteria childCriteria = HAPCriteriaUtility.getChildCriteria(dataCriteria, name);
+					HAPUINode childNode = buildDataUINode(childCriteria, null, story, step);
+					uiDataNode.addChildNode(childNode, name);
+				}
+			}
+		}
+		else {
+			//simple
+			HAPUITagQueryResult uiTagInfo = this.m_uiTagManager.getDefaultUITag(new HAPUITageQuery(dataCriteria));
+			HAPChangeInfo parmParmUINewChange = HAPUtilityChange.buildChangeNewAndApply(story, new HAPStoryNodeUIData(uiTagInfo.getTag(), dataCriteria), step.getChanges());
+			HAPUINode uiDataNode = rootNode.addChildNode(parmParmUINewChange.getStoryElement().getId(), "uiData");
+		}
 		
-		HAPContainerTree tree = new HAPContainerTree(story, rootNode);
-		
-		return tree;		
+		return rootNode;		
 	}
 	
 	private HAPServiceData processUIChangeStage(HAPDesignStory design, HAPRequestDesign answerRequest) {
