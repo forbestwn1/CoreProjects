@@ -5,6 +5,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.interfac.HAPEventListener;
 
 @HAPEntityWithAttribute
 public interface HAPStory extends HAPEntityInfo{
@@ -46,4 +47,6 @@ public interface HAPStory extends HAPEntityInfo{
 	HAPElementGroup getElementGroup(String id);
 	HAPElementGroup addElementGroup(HAPElementGroup connectionGroup);
 	
+	void registerListener(HAPEventListener listener);
+	void trigueEvent(String eventName, Object eventData);
 }

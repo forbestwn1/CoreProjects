@@ -748,6 +748,8 @@
 			<definition name="STORYDESIGN_INFO_STAGES" value="stages"/>
 			<definition name="STORYDESIGN_CHANGE_INFO_STAGE" value="stage"/>
 
+			<definition type="space"/>
+			<definition name="STORY_EVENT_CHANGE" value="change"/>
 		</definitions>
 	</constants>
 </root>

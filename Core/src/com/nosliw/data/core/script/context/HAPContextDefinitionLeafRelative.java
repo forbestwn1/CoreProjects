@@ -65,7 +65,8 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		if(HAPBasicUtility.isStringNotEmpty(this.m_parent))   return this.m_parent;
 		return HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
 	}
-	public void setParent(String parent) { 
+	
+	public void setParent(String parent) {
 		this.m_parent = parent;  
 	}
 	

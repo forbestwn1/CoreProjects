@@ -428,7 +428,8 @@ var COMMONCONSTANT=
   "STORYDESIGN_QUESTIONTYPE_GROUP": "group",
   "STORYDESIGN_QUESTIONTYPE_ITEM": "item",
   "STORYDESIGN_INFO_STAGES": "stages",
-  "STORYDESIGN_CHANGE_INFO_STAGE": "stage"
+  "STORYDESIGN_CHANGE_INFO_STAGE": "stage",
+  "STORY_EVENT_CHANGE": "change"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

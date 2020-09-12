@@ -18,9 +18,6 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutputItem;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
-import com.nosliw.data.core.story.ui.node.HAPStoryNodePage;
-import com.nosliw.data.core.story.ui.node.HAPStoryNodeUIData;
-import com.nosliw.data.core.story.ui.node.HAPStoryNodeUIHtml;
 
 public class HAPParserElement {
 
@@ -36,9 +33,6 @@ public class HAPParserElement {
 		m_storyNodeClass.put(HAPStoryNodeServiceOutputItem.STORYNODE_TYPE, HAPStoryNodeServiceOutputItem.class);
 		m_storyNodeClass.put(HAPStoryNodeConstant.STORYNODE_TYPE, HAPStoryNodeConstant.class);
 		m_storyNodeClass.put(HAPStoryNodeVariable.STORYNODE_TYPE, HAPStoryNodeVariable.class);
-		m_storyNodeClass.put(HAPStoryNodePage.STORYNODE_TYPE, HAPStoryNodePage.class);
-		m_storyNodeClass.put(HAPStoryNodeUIData.STORYNODE_TYPE, HAPStoryNodeUIData.class);
-		m_storyNodeClass.put(HAPStoryNodeUIHtml.STORYNODE_TYPE, HAPStoryNodeUIHtml.class);
 		
 		m_storyConnectionClass.put(HAPConnectionContain.CONNECTION_TYPE, HAPConnectionContain.class);
 		m_storyConnectionClass.put(HAPConnectionDataIO.CONNECTION_TYPE, HAPConnectionDataIO.class);
@@ -46,6 +40,9 @@ public class HAPParserElement {
 		m_storyGroupClass.put(HAPElementGroupSwitch.GROUP_TYPE, HAPElementGroupSwitch.class);
 		m_storyGroupClass.put(HAPElementGroupBatch.GROUP_TYPE, HAPElementGroupBatch.class);
 	}
+	
+	public static void registerStoryNode(String nodeType, Class<? extends HAPStoryNode> node) {	m_storyNodeClass.put(nodeType, node);	}
+	public static void registerStoryConnection(String nodeType, Class<HAPConnection> connection) {	m_storyConnectionClass.put(nodeType, connection);	}
 	
 	public static HAPStoryElement parseElement(JSONObject jsonObj, HAPStory story) {
 		HAPStoryElement out = null;

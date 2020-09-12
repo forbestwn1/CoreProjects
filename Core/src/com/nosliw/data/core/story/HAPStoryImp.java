@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.interfac.HAPEventListener;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -23,10 +24,23 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 
 	private Map<String, HAPElementGroup> m_elementGroups;
 
+	private Set<HAPEventListener> m_eventListeners;
+	
 	public HAPStoryImp() {
 		this.m_nodes = new LinkedHashMap<String, HAPStoryNode>();
 		this.m_connections = new LinkedHashMap<String, HAPConnection>();
 		this.m_elementGroups = new LinkedHashMap<String, HAPElementGroup>();
+		this.m_eventListeners = new HashSet<HAPEventListener>();
+	}
+	
+	@Override
+	public void registerListener(HAPEventListener listener) {   this.m_eventListeners.add(listener);  }
+	
+	@Override
+	public void trigueEvent(String eventName, Object eventData) {
+		for(HAPEventListener listener : this.m_eventListeners) {
+			listener.onEvent(eventName, eventData);
+		}
 	}
 	
 	@Override

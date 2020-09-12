@@ -695,4 +695,8 @@ public class HAPConstant {
 		public static final String STORYDESIGN_CHANGE_INFO_STAGE = "stage";
 
 
+
+		public static final String STORY_EVENT_CHANGE = "change";
+
+
 }
