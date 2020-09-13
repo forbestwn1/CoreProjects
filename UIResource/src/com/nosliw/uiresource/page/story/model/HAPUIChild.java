@@ -1,5 +1,7 @@
 package com.nosliw.uiresource.page.story.model;
 
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPStory;
 
 public class HAPUIChild {
@@ -29,4 +31,6 @@ public class HAPUIChild {
 	
 	public String getConnectionId() {    return this.m_connectionId;     }
 	
+	public HAPIdElement getConnectionElementId() {    return new HAPIdElement(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION, this.m_connectionId);     }
+
 }

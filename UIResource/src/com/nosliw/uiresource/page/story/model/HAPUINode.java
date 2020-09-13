@@ -6,12 +6,17 @@ import java.util.List;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPContextPath;
+import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.story.HAPIdElement;
+import com.nosliw.data.core.story.HAPIdElementInfo;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityConnection;
+import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.design.HAPChangeInfo;
 import com.nosliw.data.core.story.design.HAPChangeItem;
 import com.nosliw.data.core.story.design.HAPUtilityChange;
@@ -81,7 +86,39 @@ public class HAPUINode {
 	}
 	
 	public HAPUIDataInfo getDataInfo(String name) {
-		
+		HAPInfoRelativeContextResolve resolve = HAPUtilityContext.resolveReferencedParentContextNode(HAPContextPath contextPath, HAPContextGroup parentContext, String[] categaryes, String mode);
+		HAPUIDataInfo out = new HAPUIDataInfo();
+		return out;
+	}
+	
+	public HAPUINode getFirstDataUINode() {
+		HAPIdElement eleId = this.getStoryElementId();
+		HAPIdElementInfo idInfo = HAPUtilityStory.parseStoryElementId(eleId.getId());
+		if(idInfo.getType().equals(HAPConstant.STORYNODE_TYPE_UIDATA)) 	return this;
+		for(HAPUIChild child : this.getChildren()) {
+			HAPUINode firstDataUINode = child.getUINode().getFirstDataUINode();
+			if(firstDataUINode!=null)  return firstDataUINode;
+		}
+		return null;
+	}
+	
+	public List<HAPIdElement> getAllStoryElements(){
+		List<HAPIdElement> out = new ArrayList<HAPIdElement>();
+		out.add(this.getStoryElementId());
+		for(HAPUIChild child : this.getChildren()) {
+			out.add(child.getConnectionElementId());
+			out.addAll(child.getUINode().getAllStoryElements());
+		}
+		return out;
+	}
+	
+	public List<HAPUINode> getAllUINodes(){
+		List<HAPUINode> out = new ArrayList<HAPUINode>();
+		out.add(this);
+		for(HAPUIChild child : this.getChildren()) {
+			out.addAll(child.getUINode().getAllUINodes());
+		}
+		return out;
 	}
 	
 	private HAPStoryNodeUI getStoryNode() {

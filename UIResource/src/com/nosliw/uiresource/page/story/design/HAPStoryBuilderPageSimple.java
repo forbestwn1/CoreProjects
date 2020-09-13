@@ -201,7 +201,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "input", variableName, parmName);
 					
 					//variable group
-					for(HAPIdElement eleId : dataUITree.getAllElements()) 	variableBatchGroup.addElement(new HAPInfoElement(eleId));
+					for(HAPIdElement eleId : dataUINode.getAllStoryElements())   variableBatchGroup.addElement(new HAPInfoElement(eleId));
 					
 					HAPChangeInfo variableProviderGroupNewChange = HAPUtilityChange.buildChangeNewAndApply(story, variableBatchGroup, step.getChanges());
 
@@ -227,7 +227,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPQuestionItem constantQuestion = new HAPQuestionItem("select constant", parmConstantProviderNewChange.getStoryElement().getElementId());
 					parmQuestionGroup.addChild(constantQuestion);
 					
-					HAPQuestionItem uiDataQuestion = new HAPQuestionItem("select ui tag", uiDataEleId);
+					HAPQuestionItem uiDataQuestion = new HAPQuestionItem("select ui tag", dataUINode.getStoryElementId());
 					parmQuestionGroup.addChild(uiDataQuestion);
 				}
 			}
