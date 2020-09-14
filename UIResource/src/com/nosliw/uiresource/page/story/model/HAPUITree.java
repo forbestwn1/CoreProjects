@@ -1,18 +1,6 @@
 package com.nosliw.uiresource.page.story.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.story.HAPIdElement;
-import com.nosliw.data.core.story.HAPIdElementInfo;
 import com.nosliw.data.core.story.HAPStory;
-import com.nosliw.data.core.story.HAPUtilityConnection;
-import com.nosliw.data.core.story.HAPUtilityStory;
-import com.nosliw.data.core.story.design.HAPChangeInfo;
-import com.nosliw.data.core.story.design.HAPChangeItem;
-import com.nosliw.data.core.story.design.HAPUtilityChange;
-import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
 
 public class HAPUITree extends HAPUINode{
@@ -25,6 +13,7 @@ public class HAPUITree extends HAPUINode{
 		super(storyNode, story);
 	}
 
+/*	
 	public List<HAPChangeInfo> realize(List<HAPChangeItem> changesItem){
 		List<HAPChangeInfo> out = new ArrayList<HAPChangeInfo>();
 		realize(this.m_rootNode, changesItem, out);
@@ -72,4 +61,5 @@ public class HAPUITree extends HAPUINode{
 			eles.add(child.getStoryElementId());
 		}
 	}
+*/	
 }

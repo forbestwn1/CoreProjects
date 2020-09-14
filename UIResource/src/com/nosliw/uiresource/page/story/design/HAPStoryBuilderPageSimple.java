@@ -312,7 +312,9 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		if(isComplex) {
 			if(dataTypeId.getFullName().contains("array")){
 				//array
-				dataUINode = layoutUINode.newChildNode(new HAPStoryNodeUIData("loop", uiDataInfo), "uiData", m_contextProcessRequirement, m_uiTagManager);
+				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData("loop", uiDataInfo);
+				uiDataStoryNode.addAttribute("data", varName);
+				dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", m_contextProcessRequirement, m_uiTagManager);
 				HAPUINode elementUINode = buildDataUINode(dataUINode, null, "element", null);
 			}
 			else if(dataTypeId.getFullName().contains("map")) {
@@ -326,7 +328,9 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		else {
 			//simple
 			HAPUITagQueryResult uiTagInfo = this.m_uiTagManager.getDefaultUITag(new HAPUITageQuery(dataTypeCriteria));
-			dataUINode = layoutUINode.newChildNode(new HAPStoryNodeUIData(uiTagInfo.getTag(), uiDataInfo), "uiData", m_contextProcessRequirement, m_uiTagManager);
+			HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getTag(), uiDataInfo);
+			uiDataStoryNode.addAttribute("data", varName);
+			dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", m_contextProcessRequirement, m_uiTagManager);
 		}
 		return layoutUINode;
 	}

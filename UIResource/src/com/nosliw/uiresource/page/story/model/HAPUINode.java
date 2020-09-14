@@ -1,10 +1,13 @@
 package com.nosliw.uiresource.page.story.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
@@ -52,7 +55,7 @@ public class HAPUINode {
 	}
 
 	public HAPUINode addChildNode(HAPStoryNodeUI childStoryNode, HAPConnectionContain connection) {
-		HAPUIChild child = new HAPUIChild(HAPUtility.createUINodeFromStoryNode(childStoryNode), connection.getChildId(), connection.getId(), m_story);
+		HAPUIChild child = new HAPUIChild(HAPUtility.createUINodeFromStoryNode(childStoryNode, m_story), connection.getChildId(), connection.getId(), m_story);
 		this.m_children.add(child);
 		return child.getUINode();
 	}
@@ -86,8 +89,14 @@ public class HAPUINode {
 	}
 	
 	public HAPUIDataInfo getDataInfo(String name) {
-		HAPInfoRelativeContextResolve resolve = HAPUtilityContext.resolveReferencedParentContextNode(HAPContextPath contextPath, HAPContextGroup parentContext, String[] categaryes, String mode);
 		HAPUIDataInfo out = new HAPUIDataInfo();
+		HAPInfoRelativeContextResolve resolve = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(name), this.getStoryNode().getDataStructureInfo().getContext(), Arrays.asList(HAPContextGroup.getVisibleContextTypes()).toArray(new String[0]), HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstant.UIRESOURCE_TYPE_RESOURCE).relativeResolveMode);
+		HAPContextDefinitionElement resolvedNode = resolve.resolvedNode;
+		String nodeType = resolvedNode.getType();
+		if(nodeType.equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+			HAPContextDefinitionLeafData dataNode = (HAPContextDefinitionLeafData)resolvedNode;
+			out.setDataTypeCriteria(dataNode.getCriteria().getCriteria());
+		}
 		return out;
 	}
 	
