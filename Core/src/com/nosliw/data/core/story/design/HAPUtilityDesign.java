@@ -1,11 +1,15 @@
 package com.nosliw.data.core.story.design;
 
 import java.util.List;
+import java.util.Set;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.change.HAPChangeItem;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityDesign {
@@ -39,4 +43,19 @@ public class HAPUtilityDesign {
 		return file;
 	}
 	
+	public static void reverseChangeStep(HAPStory story, HAPDesignStep step) {
+		List<HAPChangeItem> changes = step.getChanges();
+		HAPUtilityChange.revertChange(story, changes);
+		reverseQuestionAnswer(story, step.getQuestionair());
+	}
+	
+	public static void reverseQuestionAnswer(HAPStory story, HAPQuestionnaire questionair) {
+		Set<HAPAnswer> answers = questionair.getAnswers();
+		for(HAPAnswer answer : answers) {
+			HAPUtilityChange.revertChange(story, answer.getChanges());
+		}
+		questionair.clearAnswer();
+	}
+	
+
 }

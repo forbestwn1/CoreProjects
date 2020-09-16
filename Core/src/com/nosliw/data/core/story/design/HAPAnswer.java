@@ -13,6 +13,8 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.change.HAPChangeItem;
+import com.nosliw.data.core.story.change.HAPParserChange;
 
 @HAPEntityWithAttribute
 public class HAPAnswer extends HAPSerializableImp{

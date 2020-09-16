@@ -20,9 +20,9 @@ import com.nosliw.data.core.story.HAPIdElementInfo;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityConnection;
 import com.nosliw.data.core.story.HAPUtilityStory;
-import com.nosliw.data.core.story.design.HAPChangeInfo;
-import com.nosliw.data.core.story.design.HAPChangeItem;
-import com.nosliw.data.core.story.design.HAPUtilityChange;
+import com.nosliw.data.core.story.change.HAPChangeInfo;
+import com.nosliw.data.core.story.change.HAPChangeItem;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
 import com.nosliw.uiresource.page.processor.HAPUtilityProcess;
@@ -79,10 +79,10 @@ public class HAPUINode {
 		}
 		
 		//add node to story
-		HAPChangeInfo newNodeChangeInfo = HAPUtilityChange.buildChangeNewAndApply(this.m_story, childStoryNode, this.m_changes);
+		HAPChangeInfo newNodeChangeInfo = HAPUtilityChange.applyNew(this.m_story, childStoryNode, this.m_changes);
 		
 		//connection
-		HAPChangeInfo connectionNewChange = HAPUtilityChange.buildChangeNewAndApply(this.m_story, HAPUtilityConnection.newConnectionContain(this.m_nodeId, newNodeChangeInfo.getChangeItem().getId(), (String)childId), this.m_changes);
+		HAPChangeInfo connectionNewChange = HAPUtilityChange.applyNew(this.m_story, HAPUtilityConnection.newConnectionContain(this.m_nodeId, newNodeChangeInfo.getStoryElement().getId(), (String)childId), this.m_changes);
 
 		HAPUIChild childNode = new HAPUIChild(newNodeChangeInfo.getStoryElement().getId(), childId, connectionNewChange.getStoryElement().getId(), this.m_story);
 		return childNode.getUINode();
@@ -143,4 +143,5 @@ public class HAPUINode {
 	public String getNodeId() {  return this.m_nodeId; 	}
 	public HAPIdElement getStoryElementId() {    return new HAPIdElement(HAPConstant.STORYELEMENT_CATEGARY_NODE, this.m_nodeId);     }
 	
+	protected HAPStory getStory() {    return this.m_story;     }
 }

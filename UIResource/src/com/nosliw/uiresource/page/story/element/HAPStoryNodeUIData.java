@@ -10,8 +10,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.story.design.HAPChangeResult;
-import com.nosliw.data.core.story.design.HAPUtilityChange;
+import com.nosliw.data.core.story.change.HAPChangeResult;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.uiresource.page.story.model.HAPUIDataInfo;
 
 @HAPEntityWithAttribute

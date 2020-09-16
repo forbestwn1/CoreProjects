@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
-import com.nosliw.data.core.story.design.HAPChangeResult;
+import com.nosliw.data.core.story.change.HAPChangeResult;
 
 @HAPEntityWithAttribute
 public class HAPStoryNodeServiceInputParm extends HAPStoryNodeImp{

@@ -1,18 +1,53 @@
 package com.nosliw.uiresource.page.story.model;
 
+import java.util.List;
+
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPIdElementInfo;
 import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.HAPUtilityStory;
+import com.nosliw.data.core.story.change.HAPChangeItem;
+import com.nosliw.data.core.story.change.HAPHandlerChange;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
 
-public class HAPUITree extends HAPUINode{
+public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 
 	public HAPUITree(String nodeId, HAPStory story) {
 		super(nodeId, story);
+		init();
 	}
 
 	public HAPUITree(HAPStoryNodePage storyNode, HAPStory story) {
 		super(storyNode, story);
+		init();
+	}
+	
+	private void init() {
+		this.getStory().registerChangeHandler(this);
 	}
 
+	@Override
+	public void onChanges(List<HAPChangeItem> changes) {
+		if(this.isDataRelatedChange(changes)) {
+			
+		}
+	}
+
+	private boolean isDataRelatedChange(List<HAPChangeItem> changes) {
+		boolean out = false;
+		for(HAPChangeItem change : changes) {
+			if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(change.getTargetCategary())){
+				String nodeId = change.getTargetId();
+				HAPIdElementInfo idInfo = HAPUtilityStory.parseStoryElementId(nodeId);
+				String nodeType = idInfo.getType();
+				if(nodeType.equals(HAPConstant.STORYNODE_TYPE_VARIABLE)) {
+					return true;
+				}
+			}
+		}
+		return out;
+	}
+	
 /*	
 	public List<HAPChangeInfo> realize(List<HAPChangeItem> changesItem){
 		List<HAPChangeInfo> out = new ArrayList<HAPChangeInfo>();

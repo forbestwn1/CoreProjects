@@ -13,7 +13,6 @@ import com.nosliw.data.core.story.design.HAPDesignStep;
 import com.nosliw.data.core.story.design.HAPDesignStory;
 import com.nosliw.data.core.story.design.HAPQuestionnaire;
 import com.nosliw.data.core.story.design.HAPRequestDesign;
-import com.nosliw.data.core.story.design.HAPUtilityChange;
 import com.nosliw.data.core.story.design.HAPUtilityDesign;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionStory;
 import com.nosliw.data.core.story.resource.HAPResourceIdStory;
@@ -53,13 +52,13 @@ public class HAPManagerStory {
 		int stepIndex = changeRequest.getStepCursor();
 		List<HAPDesignStep> changeHistory = design.getChangeHistory();
 		for(int i=changeHistory.size()-1; i>stepIndex; i--) {
-			HAPUtilityChange.reverseChangeStep(story, changeHistory.get(i));
+			HAPUtilityDesign.reverseChangeStep(story, changeHistory.get(i));
 			changeHistory.remove(i);
 		}
 		
 		//clear current questionair
 		HAPQuestionnaire currentQuestionair = changeHistory.get(stepIndex).getQuestionair();
-		HAPUtilityChange.reverseQuestionAnswer(story, currentQuestionair);
+		HAPUtilityDesign.reverseQuestionAnswer(story, currentQuestionair);
 		
 		
 		HAPServiceData out = this.getDesignDirector(directorId).buildStory(design, changeRequest);

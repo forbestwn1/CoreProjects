@@ -2,7 +2,7 @@ package com.nosliw.data.core.story.element.node;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
-import com.nosliw.data.core.story.design.HAPChangeResult;
+import com.nosliw.data.core.story.change.HAPChangeResult;
 
 public class HAPStoryNodeServiceOutput extends HAPStoryNodeImp{
 

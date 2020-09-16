@@ -7,8 +7,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.story.design.HAPChangeResult;
-import com.nosliw.data.core.story.design.HAPUtilityChange;
+import com.nosliw.data.core.story.change.HAPChangeResult;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 
 public class HAPStoryNodeUIHtml extends HAPStoryNodeUI{
 

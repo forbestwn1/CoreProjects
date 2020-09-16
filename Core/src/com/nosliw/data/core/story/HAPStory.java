@@ -5,7 +5,9 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.interfac.HAPEventListener;
+import com.nosliw.data.core.story.change.HAPHandlerChange;
+import com.nosliw.data.core.story.change.HAPRequestChange;
+import com.nosliw.data.core.story.change.HAPResultChange;
 
 @HAPEntityWithAttribute
 public interface HAPStory extends HAPEntityInfo{
@@ -47,6 +49,10 @@ public interface HAPStory extends HAPEntityInfo{
 	HAPElementGroup getElementGroup(String id);
 	HAPElementGroup addElementGroup(HAPElementGroup connectionGroup);
 	
-	void registerListener(HAPEventListener listener);
-	void trigueEvent(String eventName, Object eventData);
+	void startTransaction();
+	HAPResultChange commitTransaction();
+	void rollbackTransaction();
+	void registerChangeHandler(HAPHandlerChange handler);
+	void unregisterChangeHandler(HAPHandlerChange handler);
+	void change(HAPRequestChange changeRequest);
 }

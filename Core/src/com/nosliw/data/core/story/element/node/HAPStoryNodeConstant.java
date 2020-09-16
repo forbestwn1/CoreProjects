@@ -13,8 +13,8 @@ import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
-import com.nosliw.data.core.story.design.HAPChangeResult;
-import com.nosliw.data.core.story.design.HAPUtilityChange;
+import com.nosliw.data.core.story.change.HAPChangeResult;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 
 @HAPEntityWithAttribute
 public class HAPStoryNodeConstant extends HAPStoryNodeImp{

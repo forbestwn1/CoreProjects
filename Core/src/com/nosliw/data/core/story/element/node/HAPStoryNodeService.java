@@ -8,8 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
-import com.nosliw.data.core.story.design.HAPChangeResult;
-import com.nosliw.data.core.story.design.HAPUtilityChange;
+import com.nosliw.data.core.story.change.HAPChangeResult;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 
 @HAPEntityWithAttribute
 public class HAPStoryNodeService extends HAPStoryNodeImp{

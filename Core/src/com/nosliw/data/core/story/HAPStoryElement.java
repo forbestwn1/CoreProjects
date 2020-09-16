@@ -3,7 +3,7 @@ package com.nosliw.data.core.story;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.data.core.story.design.HAPChangeResult;
+import com.nosliw.data.core.story.change.HAPChangeResult;
 
 @HAPEntityWithAttribute
 public interface HAPStoryElement extends HAPEntityInfo{

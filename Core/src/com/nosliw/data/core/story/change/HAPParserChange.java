@@ -1,4 +1,4 @@
-package com.nosliw.data.core.story.design;
+package com.nosliw.data.core.story.change;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

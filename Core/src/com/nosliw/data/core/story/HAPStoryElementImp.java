@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.story.design.HAPChangeResult;
-import com.nosliw.data.core.story.design.HAPUtilityChange;
+import com.nosliw.data.core.story.change.HAPChangeResult;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 
 public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAPStoryElement{
 

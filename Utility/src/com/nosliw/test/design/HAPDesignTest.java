@@ -6,10 +6,10 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.story.HAPManagerStory;
-import com.nosliw.data.core.story.design.HAPChangeItem;
+import com.nosliw.data.core.story.change.HAPChangeItem;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.data.core.story.design.HAPDesignStory;
 import com.nosliw.data.core.story.design.HAPRequestDesign;
-import com.nosliw.data.core.story.design.HAPUtilityChange;
 import com.nosliw.uiresource.page.story.design.HAPStoryBuilderPageSimple;
 
 public class HAPDesignTest {

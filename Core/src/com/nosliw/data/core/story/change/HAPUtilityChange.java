@@ -1,8 +1,7 @@
-package com.nosliw.data.core.story.design;
+package com.nosliw.data.core.story.change;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPElementGroup;
@@ -13,26 +12,6 @@ import com.nosliw.data.core.story.HAPStoryElement;
 
 public class HAPUtilityChange {
 
-	public static void reverseChangeStep(HAPStory story, HAPDesignStep step) {
-		List<HAPChangeItem> changes = step.getChanges();
-		revertChange(story, changes);
-		reverseQuestionAnswer(story, step.getQuestionair());
-	}
-	
-	public static void reverseQuestionAnswer(HAPStory story, HAPQuestionnaire questionair) {
-		Set<HAPAnswer> answers = questionair.getAnswers();
-		for(HAPAnswer answer : answers) {
-			revertChange(story, answer.getChanges());
-		}
-		questionair.clearAnswer();
-	}
-	
-	public static void applyChange(HAPStory story, List<HAPChangeItem> changeItems) {
-		for(HAPChangeItem changeItem : changeItems) {
-			applyChange(story, changeItem, null, true);
-		}
-	}
-	
 	public static void revertChange(HAPStory story, List<HAPChangeItem> changeItems) {
 		//apply in revert sequence
 		for(int i=changeItems.size()-1; i>=0; i--) {
@@ -40,13 +19,49 @@ public class HAPUtilityChange {
 			List<HAPChangeItem> revertChanges = changeItem.getRevertChanges();
 			if(revertChanges!=null) {
 				for(HAPChangeItem revertChange : revertChanges) {
-					applyChange(story, revertChange, null, false);
+					applySingleChange(story, revertChange, null, false);
 				}
 			}
 		}
 	}
+
+	//apply change, not triggured extra changes to story
+	public static void applyChanges(HAPStory story, List<HAPChangeItem> changeItems) {		
+		for(HAPChangeItem change : changeItems) {
+			applyChange(story, change);
+		}
+	}
+
+	//apply change and triggued extra changes to story
+	//allChanges : story all changes
+	public static void applyChanges(HAPStory story, List<HAPChangeItem> changeItems, List<HAPChangeItem> allChanges) {
+		for(HAPChangeItem change : changeItems) {
+			applyChange(story, change, allChanges);
+		}
+	}
 	
-	public static HAPStoryElement applyChange(HAPStory story, HAPChangeItem changeItem, List<HAPChangeItem> extraChanges, boolean saveRevert) {
+	//apply change, not triggured extra changes to story
+	public static void applyChange(HAPStory story, HAPChangeItem changeItem) {		applySingleChange(story, changeItem, null, true);	}
+	
+	//apply change and triggued extra changes to story
+	//allChanges : story all changes
+	public static HAPStoryElement applyChange(HAPStory story, HAPChangeItem change, List<HAPChangeItem> allChanges) {
+		allChanges.add(change);
+		
+		List<HAPChangeItem> extraChanges = new ArrayList<HAPChangeItem>();
+		HAPStoryElement element = applySingleChange(story, change, extraChanges, true);
+		
+		for(HAPChangeItem extraChange : extraChanges) {
+			applyChange(story, extraChange, allChanges);
+		}
+		return element;
+	}	
+
+	//apply change to story
+	//     extraChanges :  sometimes, one change may trigue more extra changes
+	//     saveRevert : whether save revert information when apply change.
+	//return story element related with change
+	private static HAPStoryElement applySingleChange(HAPStory story, HAPChangeItem changeItem, List<HAPChangeItem> extraChanges, boolean saveRevert) {
 		HAPStoryElement out = null;
 		String changeType = changeItem.getChangeType();
 		if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_PATCH)) {
@@ -84,48 +99,32 @@ public class HAPUtilityChange {
 		return out;
 	}
 	
-	public static HAPChangeInfo buildChangeNewAndApply(HAPStory story, HAPStoryElement ele, List<HAPChangeItem> changes, HAPElementGroup group) {
-		HAPChangeInfo out = buildChangeNewAndApply(story, ele, changes);
+	public static HAPChangeInfo applyNew(HAPStory story, HAPStoryElement ele, List<HAPChangeItem> changes, HAPElementGroup group) {
+		HAPChangeInfo out = applyNew(story, ele, changes);
 		group.addElement(new HAPInfoElement(out.getStoryElement().getElementId()));
 		return out;
 	}
 
-	public static HAPChangeInfo buildChangeNewAndApply(HAPStory story, HAPStoryElement ele, List<HAPChangeItem> changes) {
+	public static HAPChangeInfo applyNew(HAPStory story, HAPStoryElement ele, List<HAPChangeItem> changes) {
 		HAPChangeItemNew change = new HAPChangeItemNew(ele);
-		HAPStoryElement element = applyChangeAll(story, change, changes);
+		HAPStoryElement element = applyChange(story, change, changes);
 		return new HAPChangeInfo(change, element);
 	}
 	
-	public static HAPChangeInfo buildChangeDeleteAndApply(HAPStory story, HAPIdElement elementId, List<HAPChangeItem> changes) {
+	public static HAPChangeInfo applyDelete(HAPStory story, HAPIdElement elementId, List<HAPChangeItem> changes) {
 		HAPChangeItemDelete change = new HAPChangeItemDelete(elementId.getCategary(), elementId.getId());
-		HAPStoryElement element = applyChangeAll(story, change, changes);
+		HAPStoryElement element = applyChange(story, change, changes);
 		return new HAPChangeInfo(change, element);
 	}
 	
-	public static HAPChangeInfo buildChangePatchAndApply(HAPStory story, HAPIdElement targetEleId, String path, Object value, List<HAPChangeItem> changes) {
+	public static HAPChangeInfo applyPatch(HAPStory story, HAPIdElement targetEleId, String path, Object value, List<HAPChangeItem> changes) {
 		HAPChangeItemPatch change = new HAPChangeItemPatch(targetEleId.getCategary(), targetEleId.getId(), path, value);
-		HAPStoryElement element = applyChangeAll(story, change, changes);
+		HAPStoryElement element = applyChange(story, change, changes);
 		return new HAPChangeInfo(change, element);
 	}
 	
-	public static HAPChangeItem buildChangePatch(HAPStoryElement element, String path, Object value) {
-		return new HAPChangeItemPatch(element.getCategary(), element.getId(), path, value);
-	}
+	public static HAPChangeItem buildChangePatch(HAPStoryElement element, String path, Object value) {	return new HAPChangeItemPatch(element.getCategary(), element.getId(), path, value);	}
 	
-	private static HAPStoryElement applyChangeAll(HAPStory story, HAPChangeItem change, List<HAPChangeItem> allChanges) {
-		allChanges.add(change);
-		
-		List<HAPChangeItem> extraChanges = new ArrayList<HAPChangeItem>();
-		HAPStoryElement element = applyChange(story, change, extraChanges, true);
-		
-		for(HAPChangeItem extraChange : extraChanges) {
-			applyChangeAll(story, extraChange, allChanges);
-		}
-		return element;
-	}
+	public static HAPChangeItem buildChangeNew(String itemCategary, String itemId) { return new HAPChangeItemNew(itemCategary, itemId); }
 	
-	public static HAPChangeItem buildChangeNew(String itemCategary, String itemId) {
-		HAPChangeItemNew out = new HAPChangeItemNew(itemCategary, itemId);
-		return out;
-	}
 }

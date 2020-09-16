@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.story.design.HAPChangeResult;
+import com.nosliw.data.core.story.change.HAPChangeResult;
 
 @HAPEntityWithAttribute
 public class HAPStoryNodePage extends HAPStoryNodeUI{

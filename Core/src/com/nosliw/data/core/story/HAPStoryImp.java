@@ -1,16 +1,22 @@
 package com.nosliw.data.core.story;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.interfac.HAPEventListener;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.change.HAPChangeItem;
+import com.nosliw.data.core.story.change.HAPHandlerChange;
+import com.nosliw.data.core.story.change.HAPRequestChange;
+import com.nosliw.data.core.story.change.HAPResultChange;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 
 public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	
@@ -24,22 +30,57 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 
 	private Map<String, HAPElementGroup> m_elementGroups;
 
-	private Set<HAPEventListener> m_eventListeners;
+	private Set<HAPHandlerChange> m_changeHandlers;
+	
+	private HAPResultChange m_changeResult;
 	
 	public HAPStoryImp() {
 		this.m_nodes = new LinkedHashMap<String, HAPStoryNode>();
 		this.m_connections = new LinkedHashMap<String, HAPConnection>();
 		this.m_elementGroups = new LinkedHashMap<String, HAPElementGroup>();
-		this.m_eventListeners = new HashSet<HAPEventListener>();
+		this.m_changeHandlers = new HashSet<HAPHandlerChange>();
 	}
 	
 	@Override
-	public void registerListener(HAPEventListener listener) {   this.m_eventListeners.add(listener);  }
+	public void startTransaction() {
+		this.m_changeResult = new HAPResultChange();
+	}
 	
 	@Override
-	public void trigueEvent(String eventName, Object eventData) {
-		for(HAPEventListener listener : this.m_eventListeners) {
-			listener.onEvent(eventName, eventData);
+	public HAPResultChange commitTransaction() {
+		HAPResultChange out = new HAPResultChange();
+
+		//change handlers process the change first
+		List<HAPChangeItem> changes = new ArrayList<HAPChangeItem>();
+		changes.addAll(this.m_changeResult.getChanges());
+		for(HAPHandlerChange handler : this.m_changeHandlers) {
+			handler.onChanges(changes);
+		}
+		
+		//add all changes
+		out.addChanges(this.m_changeResult.getChanges());
+
+		this.m_changeResult = null;
+		return out;
+	}
+	
+	@Override
+	public void rollbackTransaction() {		HAPUtilityChange.revertChange(this, this.m_changeResult.getChanges());	}
+	
+	@Override
+	public void registerChangeHandler(HAPHandlerChange handler) {		this.m_changeHandlers.add(handler);	}
+	
+	@Override
+	public void unregisterChangeHandler(HAPHandlerChange handler) {		this.m_changeHandlers.remove(handler);	}
+	
+	@Override
+	public void change(HAPRequestChange changeRequest) {
+		if(changeRequest.isExtend()) {
+			HAPUtilityChange.applyChanges(this, changeRequest.getChanges(), this.m_changeResult.getChanges());
+		}
+		else {
+			HAPUtilityChange.applyChanges(this, changeRequest.getChanges());
+			this.m_changeResult.getChanges().addAll(changeRequest.getChanges());
 		}
 	}
 	
@@ -161,5 +202,4 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		jsonMap.put(CONNECTION, HAPJsonUtility.buildJson(this.m_connections, HAPSerializationFormat.JSON));
 		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(this.m_elementGroups, HAPSerializationFormat.JSON));
 	}
-
 }
