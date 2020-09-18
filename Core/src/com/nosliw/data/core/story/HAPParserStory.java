@@ -3,6 +3,8 @@ package com.nosliw.data.core.story;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+
 public class HAPParserStory {
 
 	public static HAPStoryImp parseStory(JSONObject jsonObj) {
@@ -38,8 +40,18 @@ public class HAPParserStory {
 				out.addElementGroup(connectionGroup);
 			}
 		}
+
+		JSONObject aliasObjects = jsonObj.optJSONObject(HAPStory.ALIAS);
+		if(aliasObjects!=null) {
+			for(Object key : aliasObjects.keySet()) {
+				String aliasName = (String)key;
+				JSONObject eleIdObj = aliasObjects.getJSONObject(aliasName);
+				HAPIdElement eleId = new HAPIdElement();
+				eleId.buildObject(eleIdObj, HAPSerializationFormat.JSON);
+				out.setAlias(aliasName, eleId);
+			}
+		}
 		
 		return out;
 	}
-	
 }

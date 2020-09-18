@@ -8,9 +8,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPBasicUtility;
 
 @HAPEntityWithAttribute
-public class HAPIdElement extends HAPSerializableImp{
+public class HAPIdElement extends HAPSerializableImp implements HAPReferenceElement{
 
 	@HAPAttribute
 	public static final String CATEGARY = "categary";
@@ -59,5 +60,19 @@ public class HAPIdElement extends HAPSerializableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CATEGARY, this.m_categary);
 		jsonMap.put(ID, this.m_id);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		boolean out = false;
+		if(obj instanceof HAPIdElement) {
+			HAPIdElement eleId = (HAPIdElement)obj;
+			if(HAPBasicUtility.isEquals(this.m_categary, eleId.m_categary)) {
+				if(HAPBasicUtility.isEquals(this.m_id, eleId.m_id)) {
+					out = true;
+				}
+			}
+		}
+		return out;
 	}
 }

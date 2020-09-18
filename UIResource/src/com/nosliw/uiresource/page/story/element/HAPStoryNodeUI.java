@@ -22,9 +22,8 @@ public class HAPStoryNodeUI extends HAPStoryNodeImp{
 		this.m_dataStructureInfo = new HAPUIDataStructureInfo();
 	}
 	
-	public HAPUIDataStructureInfo getDataStructureInfo() {
-		return this.m_dataStructureInfo;
-	}
+	public HAPUIDataStructureInfo getDataStructureInfo() {		return this.m_dataStructureInfo;	}
+	public void setDataStructureInfo(HAPUIDataStructureInfo dataStructureInfo) {     this.m_dataStructureInfo = dataStructureInfo;       }
 	
 	@Override
 	public HAPChangeResult patch(String path, Object value) {

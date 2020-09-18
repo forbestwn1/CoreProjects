@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.data.core.story.change.HAPHandlerChange;
 import com.nosliw.data.core.story.change.HAPRequestChange;
-import com.nosliw.data.core.story.change.HAPResultChange;
+import com.nosliw.data.core.story.change.HAPResultTransaction;
 
 @HAPEntityWithAttribute
 public interface HAPStory extends HAPEntityInfo{
@@ -27,12 +27,18 @@ public interface HAPStory extends HAPEntityInfo{
 	@HAPAttribute
 	public static final String ELEMENTGROUP = "elementGroup";
 	
+	@HAPAttribute
+	public static final String ALIAS = "alias";
+	
 	String getShowType();
 	void setShowType(String showType);
 
-	HAPStoryElement addElement(HAPStoryElement element);
+	HAPStoryElement addElement(HAPStoryElement element, String alias);
 	HAPStoryElement getElement(String categary, String id);
 	HAPStoryElement getElement(HAPIdElement elementId);
+	
+	HAPIdElement getElementId(String alias);
+	String getAlias(HAPIdElement eleId);
 	
 	HAPStoryElement deleteElement(HAPStoryElement element);
 	HAPStoryElement deleteElement(String categary, String id);
@@ -50,7 +56,7 @@ public interface HAPStory extends HAPEntityInfo{
 	HAPElementGroup addElementGroup(HAPElementGroup connectionGroup);
 	
 	void startTransaction();
-	HAPResultChange commitTransaction();
+	HAPResultTransaction commitTransaction();
 	void rollbackTransaction();
 	void registerChangeHandler(HAPHandlerChange handler);
 	void unregisterChangeHandler(HAPHandlerChange handler);

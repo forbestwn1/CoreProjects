@@ -19,6 +19,8 @@ public class HAPRequestChange {
 	}
 
 	public List<HAPChangeItem> getChanges(){   return this.m_changes;    }
+	public void addChange(HAPChangeItem change) {    this.m_changes.add(change);     }
+	public void addChanges(List<HAPChangeItem> changes) {   this.m_changes.addAll(changes);    }
 	
 	public boolean isExtend() {   return this.m_extend;    }
 	public void notExtend() {   this.m_extend = false;    }

@@ -130,4 +130,10 @@ public class HAPUtilityStory {
 		if(nodeId.equals(connection.getEnd1().getNodeId()))   return connection.getEnd1();
 		else return connection.getEnd2();
 	}
+	
+	public static HAPIdElement getElementIdByReference(HAPReferenceElement eleRef, HAPStory story) {
+		if(eleRef instanceof HAPIdElement)  return (HAPIdElement)eleRef;
+		else if(eleRef instanceof HAPAlias)  return story.getElementId(((HAPAlias)eleRef).getAlias());
+		return null;
+	}
 }

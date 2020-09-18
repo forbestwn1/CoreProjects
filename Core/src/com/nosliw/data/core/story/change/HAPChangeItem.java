@@ -12,6 +12,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPStory;
 
 @HAPEntityWithAttribute
@@ -48,6 +49,8 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 	}
 	
 	public String getChangeType() {    return this.m_changeType;    }
+	
+	public HAPIdElement getTargetElementId() {    return new HAPIdElement(this.m_targetCategary, this.m_targetId);   }
 	
 	public String getTargetCategary() {   return this.m_targetCategary;   }
 	

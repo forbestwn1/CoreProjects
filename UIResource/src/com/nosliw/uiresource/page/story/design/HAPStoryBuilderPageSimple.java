@@ -26,6 +26,9 @@ import com.nosliw.data.core.story.HAPUtilityConnection;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPChangeInfo;
 import com.nosliw.data.core.story.change.HAPChangeItem;
+import com.nosliw.data.core.story.change.HAPChangeItemNew;
+import com.nosliw.data.core.story.change.HAPRequestChange;
+import com.nosliw.data.core.story.change.HAPResultTransaction;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.data.core.story.design.HAPAnswer;
 import com.nosliw.data.core.story.design.HAPBuilderStory;
@@ -61,6 +64,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	public final static String STAGE_SERVICE = "service";
 	public final static String STAGE_UI = "ui";
 	public final static String STAGE_END = "end";
+
+	private final static String ELEMENT_SERVICE = "service";
 	
 	private HAPManagerService m_serviceManager;
 	private HAPUITagManager m_uiTagManager;
@@ -80,21 +85,24 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	
 	@Override
 	public void initDesign(HAPDesignStory design) {
-		design.getStory().setShowType(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
+		HAPStory story = design.getStory();
 
+		story.setShowType(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
 		HAPUtilityDesign.setDesignAllStages(design, m_stages);
 		
+		story.startTransaction();
+		HAPRequestChange changeRequest = new HAPRequestChange();
+		changeRequest.addChange(new HAPChangeItemNew(HAPUtility.buildPageStoryNode(story), null));
+		changeRequest.addChange(new HAPChangeItemNew(new HAPStoryNodeService(), ELEMENT_SERVICE));
+		story.change(changeRequest);
+		HAPResultTransaction transactionResult = story.commitTransaction();
+		
 		HAPDesignStep step = new HAPDesignStep();
-
-		//new page node
-		HAPChangeInfo newPageNodeChange = HAPUtilityChange.applyNew(design.getStory(), HAPUtility.buildPageStoryNode(design.getStory()), step.getChanges());
-
-		//new service node
-		HAPChangeInfo newServiceNodeChange = HAPUtilityChange.applyNew(design.getStory(), new HAPStoryNodeService(), step.getChanges());
+		step.addChanges(transactionResult.getChanges());
 		
 		//extra info
 		HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Please select service.");
-		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("select service", newServiceNodeChange.getStoryElement().getElementId());
+		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("select service", story.getElementId(ELEMENT_SERVICE));
 		rootQuestionGroup.addChild(serviceItemExtraInfo);
 		step.setQuestion(rootQuestionGroup);
 		
@@ -124,11 +132,9 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	private HAPServiceData validateServiceAnswer(HAPDesignStory design, HAPRequestDesign answerRequest) {
 		HAPStory story = design.getStory();
 
-		List<HAPChangeItem> answerChanges = new ArrayList<HAPChangeItem>();
-		for(HAPAnswer answer : answerRequest.getAnswers()){		answerChanges.addAll(answer.getChanges());	}
-		
-		//apply answer changes to story
-		HAPUtilityChange.applyChange(story, answerChanges);
+		HAPRequestChange changeRequest = new HAPRequestChange(false);
+		for(HAPAnswer answer : answerRequest.getAnswers()){		changeRequest.addChanges(answer.getChanges());	}
+		story.change(changeRequest);
 		
 		HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_SERVICE).iterator().next();
 		if(!HAPBasicUtility.isStringEmpty(serviceStoryNode.getReferenceId())){
@@ -141,7 +147,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		else {
 			//failure
 			//revert answer changes
-			HAPUtilityChange.revertChange(story, answerChanges);
+			story.rollbackTransaction();
 			//
 			String[] errorMsg = {"Service should not be empty!!"};
 			return HAPServiceData.createFailureData(errorMsg, "Validation Fail!!");
@@ -150,7 +156,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	
 	private HAPServiceData processServiceStage(HAPDesignStory design, HAPRequestDesign answer) {
 		HAPStory story = design.getStory();
-		HAPUITree uiTree = HAPUtility.buildUITree(story);
+		
+		story.startTransaction();
+		
+		HAPUITree uiTree = HAPUtility.buildUITree(story, this.m_contextProcessRequirement, this.m_uiTagManager);
 		
 		HAPServiceData validateResult = validateServiceAnswer(design, answer);
 		if(validateResult.isFail())   return validateResult;

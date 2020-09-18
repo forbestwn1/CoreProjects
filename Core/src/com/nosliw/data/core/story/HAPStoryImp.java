@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPHandlerChange;
 import com.nosliw.data.core.story.change.HAPRequestChange;
-import com.nosliw.data.core.story.change.HAPResultChange;
+import com.nosliw.data.core.story.change.HAPResultTransaction;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 
 public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
@@ -30,25 +30,30 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 
 	private Map<String, HAPElementGroup> m_elementGroups;
 
+	private Map<String, HAPIdElement> m_aliases;
+	
+	//handlers when transaction commit
 	private Set<HAPHandlerChange> m_changeHandlers;
 	
-	private HAPResultChange m_changeResult;
+	//changes during transaction
+	private HAPResultTransaction m_changeResult;
 	
 	public HAPStoryImp() {
 		this.m_nodes = new LinkedHashMap<String, HAPStoryNode>();
 		this.m_connections = new LinkedHashMap<String, HAPConnection>();
 		this.m_elementGroups = new LinkedHashMap<String, HAPElementGroup>();
 		this.m_changeHandlers = new HashSet<HAPHandlerChange>();
+		this.m_aliases = new LinkedHashMap<String, HAPIdElement>();
 	}
 	
 	@Override
 	public void startTransaction() {
-		this.m_changeResult = new HAPResultChange();
+		this.m_changeResult = new HAPResultTransaction();
 	}
 	
 	@Override
-	public HAPResultChange commitTransaction() {
-		HAPResultChange out = new HAPResultChange();
+	public HAPResultTransaction commitTransaction() {
+		HAPResultTransaction out = new HAPResultTransaction();
 
 		//change handlers process the change first
 		List<HAPChangeItem> changes = new ArrayList<HAPChangeItem>();
@@ -92,13 +97,32 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public void setTopicType(String topicType) {    this.m_showType = topicType;     }
 	
 	@Override
-	public HAPStoryElement addElement(HAPStoryElement element) {
+	public HAPStoryElement addElement(HAPStoryElement element, String alias) {
 		HAPStoryElement out = null;
 		String categary = element.getCategary();
 		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.addNode((HAPStoryNode)element);
 		else if(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.addConnection((HAPConnection)element);
 		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.addElementGroup((HAPElementGroup)element);
+		//set alias
+		if(alias!=null)   this.m_aliases.put(alias, out.getElementId());
 		return out;
+	}
+	
+	@Override
+	public HAPIdElement getElementId(String alias) {	return this.m_aliases.get(alias);	}
+	public void setAlias(String alias, HAPIdElement eleId) {    this.m_aliases.put(alias, eleId);     }
+	public void deleteAlias(String alias) {   this.m_aliases.remove(alias);   }
+	public void deleteAlias(HAPIdElement eleId) {
+		String alias = this.getAlias(eleId);
+		if(alias!=null)  this.deleteAlias(alias);
+	}
+	
+	@Override
+	public String getAlias(HAPIdElement eleId) {
+		for(String alias : this.m_aliases.keySet()) {
+			if(eleId.equals(this.m_aliases.get(alias)))  return alias;
+		}
+		return null;
 	}
 
 	@Override
@@ -122,6 +146,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.deleteNode(id);
 		else if(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.deleteConnection(id);
 		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.deleteElementGroup(id);
+		
 		return out;
 	}
 	
@@ -192,6 +217,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		jsonMap.put(NODE, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_nodes), HAPSerializationFormat.JSON));
 		jsonMap.put(CONNECTION, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_connections), HAPSerializationFormat.JSON));
 		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_elementGroups), HAPSerializationFormat.JSON));
+		jsonMap.put(ALIAS, HAPJsonUtility.buildJson(this.m_aliases, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -201,5 +227,6 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		jsonMap.put(NODE, HAPJsonUtility.buildJson(this.m_nodes, HAPSerializationFormat.JSON));
 		jsonMap.put(CONNECTION, HAPJsonUtility.buildJson(this.m_connections, HAPSerializationFormat.JSON));
 		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(this.m_elementGroups, HAPSerializationFormat.JSON));
+		jsonMap.put(ALIAS, HAPJsonUtility.buildJson(this.m_aliases, HAPSerializationFormat.JSON));
 	}
 }

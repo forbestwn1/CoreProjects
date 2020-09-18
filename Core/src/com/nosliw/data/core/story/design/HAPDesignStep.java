@@ -42,6 +42,12 @@ public class HAPDesignStep extends HAPEntityInfoImp{
 		changeItem.setStory(m_story);
 		this.m_changes.add(changeItem);	
 	}
+	
+	public void addChanges(List<HAPChangeItem> changeItems) {
+		for(HAPChangeItem changeItem : changeItems) {
+			this.addChange(changeItem);
+		}
+	}
 
 	public void addAnswers(List<HAPAnswer> answers) {
 		for(HAPAnswer answer : answers) {

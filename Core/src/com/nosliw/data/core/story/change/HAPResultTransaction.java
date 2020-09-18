@@ -2,7 +2,7 @@ package com.nosliw.data.core.story.change;
 
 import java.util.List;
 
-public class HAPResultChange {
+public class HAPResultTransaction {
 
 	private List<HAPChangeItem> m_changes;
 	
