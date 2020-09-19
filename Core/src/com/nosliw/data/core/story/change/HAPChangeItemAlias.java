@@ -1,0 +1,59 @@
+package com.nosliw.data.core.story.change;
+
+import java.util.Map;
+
+import org.json.JSONObject;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPIdElement;
+
+public class HAPChangeItemAlias extends HAPChangeItem{
+
+	public static final String MYCHANGETYPE = HAPConstant.STORYDESIGN_CHANGETYPE_ALIAS;
+
+	@HAPAttribute
+	public static final String ALIAS = "alias";
+
+	@HAPAttribute
+	public static final String ELEMENTID = "elementId";
+	
+	private String m_alias;
+	
+	private HAPIdElement m_eleId;
+	
+	public HAPChangeItemAlias() {
+		super(MYCHANGETYPE);
+	}
+	
+	public HAPChangeItemAlias(String alias, HAPIdElement eleId) {
+		this();
+		this.m_alias = alias;
+		this.m_eleId = eleId;
+	}
+	
+	public String getAlias() {   return this.m_alias;    }
+	public HAPIdElement getElementId() {   return this.m_eleId;   }
+
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		super.buildObjectByJson(jsonObj);
+		
+		JSONObject eleIdObj = jsonObj.getJSONObject(ELEMENTID);
+		if(eleIdObj!=null) {
+			this.m_eleId = new HAPIdElement();
+			this.m_eleId.buildObject(eleIdObj, HAPSerializationFormat.JSON);
+		}
+		return true;  
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ALIAS, this.m_alias);
+		jsonMap.put(ELEMENTID, HAPJsonUtility.buildJson(this.m_eleId, HAPSerializationFormat.JSON));
+	}
+}

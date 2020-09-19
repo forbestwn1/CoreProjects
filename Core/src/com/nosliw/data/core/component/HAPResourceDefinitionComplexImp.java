@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.common.HAPWithDataContext;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -20,6 +21,9 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	
 	public HAPResourceDefinitionComplexImp() {
 	}
+
+	@Override
+	public String getEntityOrReferenceType() {   return HAPConstant.ENTITY;    }
 
 	@Override
 	public String getResourceType() {   return this.getResourceId().getType();  }

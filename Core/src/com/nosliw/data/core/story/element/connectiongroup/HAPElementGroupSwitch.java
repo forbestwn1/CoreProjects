@@ -62,12 +62,12 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 						HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());
 						if(eleInfo.getId().equals(value)) {
 							if(!ele.isEnable()) {
-								out.addExtraChange(new HAPChangeItemPatch(ele.getCategary(), ele.getId(), HAPStoryElement.ENABLE, true));
+								out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, true));
 							}
 						}
 						else {
 							if(ele.isEnable()) {
-								out.addExtraChange(new HAPChangeItemPatch(ele.getCategary(), ele.getId(), HAPStoryElement.ENABLE, false));
+								out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, false));
 							}
 						}
 					}

@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 
@@ -35,6 +36,9 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 		this.m_type = type;
 	}
 	
+	@Override
+	public String getEntityOrReferenceType() {   return HAPConstant.ENTITY;    }
+
 	@Override
 	public HAPIdElement getElementId() {	return new HAPIdElement(this.m_categary, this.getId());	}
 

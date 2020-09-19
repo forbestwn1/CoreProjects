@@ -5,8 +5,10 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPParserElement;
 import com.nosliw.data.core.story.HAPStoryElement;
 
@@ -20,29 +22,36 @@ public class HAPChangeItemNew extends HAPChangeItem{
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
-	private HAPStoryElement m_element;
-	
 	private String m_alias;
 	
-	public HAPChangeItemNew() {}
-
-	public HAPChangeItemNew(HAPStoryElement element, String alias) {
-		this(element.getCategary(), element.getId(), alias);
-		this.m_element = element;
+	private HAPEntityOrReference m_entityOrReference;
+	
+	public HAPChangeItemNew() {
+		super(MYCHANGETYPE);
 	}
 
-	public HAPChangeItemNew(String targetCategary, String targetId, String alias) {
-		super(MYCHANGETYPE, targetCategary, targetId);
+	public HAPChangeItemNew(HAPEntityOrReference entityOrReference, String alias) {
+		this();
+		this.m_alias = alias;
+		this.m_entityOrReference = entityOrReference;
 	}
 	
 	public String getAlias() {	return this.m_alias;	}
+
+	public HAPEntityOrReference getEntityOrReference() {   return this.m_entityOrReference;    }
+	public void setEntityOrReference(HAPEntityOrReference entityOrReference) {   this.m_entityOrReference = entityOrReference;   }
 	
-	public HAPStoryElement getElement() {
-		HAPStoryElement out = this.m_element;
-		if(out==null)   out = this.getStory().getElement(this.getTargetCategary(), this.getTargetId());
+	private HAPStoryElement getElement() {
+		HAPStoryElement out = null;
+		if(this.m_entityOrReference.getEntityOrReferenceType().equals(HAPConstant.ENTITY)) {
+			out = (HAPStoryElement)this.m_entityOrReference;
+		}
+		else {
+			HAPIdElement elementId = (HAPIdElement)this.m_entityOrReference;
+			out = this.getStory().getElement(elementId);
+		}
 		return out;
 	}
-	public void setElement(HAPStoryElement element) {   this.m_element = element;   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

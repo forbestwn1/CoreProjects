@@ -3,15 +3,18 @@ package com.nosliw.data.core.story.change;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPReferenceElement;
 
-public class HAPChangeItemDelete extends HAPChangeItem{
+public class HAPChangeItemDelete extends HAPChangeItemModifyElement{
 
 	public static final String MYCHANGETYPE = HAPConstant.STORYDESIGN_CHANGETYPE_DELETE;
 
-	public HAPChangeItemDelete() {}
+	public HAPChangeItemDelete() {
+		super(MYCHANGETYPE);
+	}
 	
-	public HAPChangeItemDelete(String targetCategary, String targetId) {
-		super(MYCHANGETYPE, targetCategary, targetId);
+	public HAPChangeItemDelete(HAPReferenceElement targetReference) {
+		super(MYCHANGETYPE, targetReference);
 	}
 	
 	@Override

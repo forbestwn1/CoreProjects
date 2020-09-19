@@ -1,8 +1,8 @@
 package com.nosliw.uiresource;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.common.HAPEntityOrReference;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;

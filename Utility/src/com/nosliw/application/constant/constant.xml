@@ -739,6 +739,7 @@
 			<definition name="STORYDESIGN_CHANGETYPE_DELETE" value="delete"/>
 			<definition name="STORYDESIGN_CHANGETYPE_PATCH" value="patch"/>
 			<definition name="STORYDESIGN_CHANGETYPE_PUT" value="put"/>
+			<definition name="STORYDESIGN_CHANGETYPE_ALIAS" value="alias"/>
 			
 			<definition type="space"/>
 			<definition name="STORYDESIGN_QUESTIONTYPE_GROUP" value="group"/>
@@ -750,6 +751,11 @@
 
 			<definition type="space"/>
 			<definition name="STORY_EVENT_CHANGE" value="change"/>
+
+			<definition type="space"/>
+			<definition name="REFERENCE" value="reference"/>
+			<definition name="ENTITY" value="entity"/>
+
 		</definitions>
 	</constants>
 </root>

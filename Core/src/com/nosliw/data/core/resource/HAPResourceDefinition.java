@@ -1,7 +1,7 @@
 package com.nosliw.data.core.resource;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.data.core.common.HAPEntityOrReference;
 
 public interface HAPResourceDefinition extends HAPEntityOrReference, HAPSerializable{
 

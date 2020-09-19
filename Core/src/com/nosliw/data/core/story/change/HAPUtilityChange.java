@@ -66,7 +66,7 @@ public class HAPUtilityChange {
 		String changeType = changeItem.getChangeType();
 		if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_PATCH)) {
 			HAPChangeItemPatch changePatch = (HAPChangeItemPatch)changeItem;
-			out = story.getElement(changePatch.getTargetCategary(), changePatch.getTargetId());
+			out = story.getElement(changePatch.getTargetElementId());
 			HAPChangeResult changeResult = out.patch(changePatch.getPath(), changePatch.getValue());
 			//extra changes info
 			if(extraChanges!=null) 	extraChanges.addAll(changeResult.getExtraChanges());
@@ -75,14 +75,16 @@ public class HAPUtilityChange {
 		}
 		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_NEW)) {
 			HAPChangeItemNew changeNew = (HAPChangeItemNew)changeItem;
-			HAPStoryElement element = changeNew.getElement();
-			out = story.addElement(element, changeNew.getAlias());
-			changeNew.setElement(null);
-			changeNew.setTargetId(out.getId());
+			HAPStoryElement element = (HAPStoryElement)changeNew.getEntityOrReference();
+			String alias = changeNew.getAlias();
+			HAPIdElement oldAliasEleId = story.getElementId(alias);
+			out = story.addElement(element, alias);
+			changeNew.setEntityOrReference(out.getElementId());
 			//revert changes info
 			if(saveRevert) {
 				List<HAPChangeItem> revertChanges = new ArrayList<HAPChangeItem>();
-				revertChanges.add(new HAPChangeItemDelete(out.getCategary(), out.getId()));
+				revertChanges.add(new HAPChangeItemDelete(out.getElementId()));
+				if(oldAliasEleId!=null) revertChanges.add(new HAPChangeItemAlias(alias, oldAliasEleId));
 				changeItem.setRevertChanges(revertChanges);
 			}
 		}		
@@ -94,6 +96,16 @@ public class HAPUtilityChange {
 			if(saveRevert) {
 				List<HAPChangeItem> revertChanges = new ArrayList<HAPChangeItem>();
 				revertChanges.add(new HAPChangeItemNew(element, alias));
+				changeItem.setRevertChanges(revertChanges);
+			}
+		}
+		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_ALIAS)) {
+			HAPChangeItemAlias changeAlias = (HAPChangeItemAlias)changeItem;
+			HAPIdElement oldElementId = story.setAlias(changeAlias.getAlias(), changeAlias.getElementId());
+			//revert changes info
+			if(saveRevert) {
+				List<HAPChangeItem> revertChanges = new ArrayList<HAPChangeItem>();
+				revertChanges.add(new HAPChangeItemAlias(changeAlias.getAlias(), oldElementId));
 				changeItem.setRevertChanges(revertChanges);
 			}
 		}
@@ -113,20 +125,20 @@ public class HAPUtilityChange {
 	}
 	
 	public static HAPChangeInfo applyDelete(HAPStory story, HAPIdElement elementId, List<HAPChangeItem> changes) {
-		HAPChangeItemDelete change = new HAPChangeItemDelete(elementId.getCategary(), elementId.getId());
+		HAPChangeItemDelete change = new HAPChangeItemDelete(elementId);
 		HAPStoryElement element = applyChange(story, change, changes);
 		return new HAPChangeInfo(change, element);
 	}
 	
 	public static HAPChangeInfo applyPatch(HAPStory story, HAPIdElement targetEleId, String path, Object value, List<HAPChangeItem> changes) {
-		HAPChangeItemPatch change = new HAPChangeItemPatch(targetEleId.getCategary(), targetEleId.getId(), path, value);
+		HAPChangeItemPatch change = new HAPChangeItemPatch(targetEleId, path, value);
 		HAPStoryElement element = applyChange(story, change, changes);
 		return new HAPChangeInfo(change, element);
 	}
 	
-	public static HAPChangeItem buildChangePatch(HAPStoryElement element, String path, Object value) {	return new HAPChangeItemPatch(element.getCategary(), element.getId(), path, value);	}
-	public static HAPChangeItem buildChangePatch(HAPIdElement elementId, String path, Object value) {	return new HAPChangeItemPatch(elementId.getCategary(), elementId.getId(), path, value);	}
+	public static HAPChangeItem buildChangePatch(HAPStoryElement element, String path, Object value) {	return new HAPChangeItemPatch(element.getElementId(), path, value);	}
+	public static HAPChangeItem buildChangePatch(HAPIdElement elementId, String path, Object value) {	return new HAPChangeItemPatch(elementId, path, value);	}
 	
-	public static HAPChangeItem buildChangeNew(String itemCategary, String itemId, String alias) { return new HAPChangeItemNew(itemCategary, itemId, alias); }
+	public static HAPChangeItem buildChangeNew(String itemCategary, String itemId, String alias) { return new HAPChangeItemNew(new HAPIdElement(itemCategary, itemId), alias); }
 	
 }

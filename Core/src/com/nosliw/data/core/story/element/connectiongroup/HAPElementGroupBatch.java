@@ -37,7 +37,7 @@ public class HAPElementGroupBatch extends HAPElementGroupImp{
 		if(out==null)  return out;
 		else {
 			for(HAPInfoElement ele : this.getElements()) {
-				out.addExtraChange(new HAPChangeItemPatch(ele.getElementId().getCategary(), ele.getElementId().getId(), path, value));
+				out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), path, value));
 			}
 		}
 		return out;

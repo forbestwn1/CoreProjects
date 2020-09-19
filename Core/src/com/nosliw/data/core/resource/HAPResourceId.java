@@ -7,12 +7,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.common.HAPEntityOrReference;
+import com.nosliw.common.utils.HAPConstant;
 
 @HAPEntityWithAttribute
 public abstract class HAPResourceId extends HAPSerializableImp implements HAPEntityOrReference{
@@ -39,6 +40,9 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPEnt
 		this.m_type = type;
 	}
 	
+	@Override
+	public String getEntityOrReferenceType() {   return HAPConstant.REFERENCE;    }
+
 	public String getType() {  return this.m_type;  }
 	protected void setType(String type) {    this.m_type = type;    }
 	

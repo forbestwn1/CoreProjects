@@ -110,7 +110,13 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	
 	@Override
 	public HAPIdElement getElementId(String alias) {	return this.m_aliases.get(alias);	}
-	public void setAlias(String alias, HAPIdElement eleId) {    this.m_aliases.put(alias, eleId);     }
+	@Override
+	public HAPIdElement setAlias(String alias, HAPIdElement eleId) {
+		HAPIdElement old = this.m_aliases.remove(alias);
+		if(eleId!=null)   this.m_aliases.put(alias, eleId);
+		return old;
+	}
+
 	public void deleteAlias(String alias) {   this.m_aliases.remove(alias);   }
 	public void deleteAlias(HAPIdElement eleId) {
 		String alias = this.getAlias(eleId);
@@ -136,6 +142,9 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.getElementGroup(id);
 		return out;
 	}
+
+	@Override
+	public HAPStoryElement getElement(String alias) {		return this.getElement(this.getElementId(alias));	}
 
 	@Override
 	public HAPStoryElement deleteElement(HAPStoryElement element) {  return this.deleteElement(element.getCategary(), element.getId());  }

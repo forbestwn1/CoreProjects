@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 
 @HAPEntityWithAttribute
 public class HAPIdElement extends HAPSerializableImp implements HAPReferenceElement{
@@ -30,6 +31,9 @@ public class HAPIdElement extends HAPSerializableImp implements HAPReferenceElem
 		this.m_id = id;
 	}
 	
+	@Override
+	public String getEntityOrReferenceType() {  return HAPConstant.REFERENCE;  }
+
 	public String getCategary() {    return this.m_categary;     }
 	
 	public String getId() {    return this.m_id;    }

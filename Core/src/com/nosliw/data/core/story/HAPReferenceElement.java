@@ -1,5 +1,7 @@
 package com.nosliw.data.core.story;
 
-public interface HAPReferenceElement {
+import com.nosliw.common.interfac.HAPEntityOrReference;
+
+public interface HAPReferenceElement extends HAPEntityOrReference{
 
 }

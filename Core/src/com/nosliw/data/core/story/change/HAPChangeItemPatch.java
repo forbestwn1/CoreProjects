@@ -8,8 +8,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPReferenceElement;
 
-public class HAPChangeItemPatch extends HAPChangeItem{
+public class HAPChangeItemPatch extends HAPChangeItemModifyElement{
 
 	public static final String MYCHANGETYPE = HAPConstant.STORYDESIGN_CHANGETYPE_PATCH;
 	
@@ -27,10 +28,12 @@ public class HAPChangeItemPatch extends HAPChangeItem{
 	
 	public Object getValue() {   return this.m_value;   }
 
-	public HAPChangeItemPatch() {}
+	public HAPChangeItemPatch() {
+		super(MYCHANGETYPE);
+	}
 	
-	public HAPChangeItemPatch(String targetCategary, String targetId, String path, Object value) {
-		super(MYCHANGETYPE, targetCategary, targetId);
+	public HAPChangeItemPatch(HAPReferenceElement targetReference, String path, Object value) {
+		super(MYCHANGETYPE, targetReference);
 		this.m_path = path;
 		this.m_value = value;
 	}
@@ -53,5 +56,4 @@ public class HAPChangeItemPatch extends HAPChangeItem{
 			typeJsonMap.put(VALUE, this.m_value.getClass());
 		}
 	}
-
 }

@@ -683,6 +683,7 @@ public class HAPConstant {
 		public static final String STORYDESIGN_CHANGETYPE_DELETE = "delete";
 		public static final String STORYDESIGN_CHANGETYPE_PATCH = "patch";
 		public static final String STORYDESIGN_CHANGETYPE_PUT = "put";
+		public static final String STORYDESIGN_CHANGETYPE_ALIAS = "alias";
 
 
 
@@ -698,5 +699,7 @@ public class HAPConstant {
 
 		public static final String STORY_EVENT_CHANGE = "change";
 
+		public static final String REFERENCE = "reference";
+		public static final String ENTITY = "reference";
 
 }

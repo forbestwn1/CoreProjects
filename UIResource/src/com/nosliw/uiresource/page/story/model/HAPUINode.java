@@ -19,6 +19,7 @@ import com.nosliw.data.core.story.HAPUtilityConnection;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPChangeInfo;
 import com.nosliw.data.core.story.change.HAPChangeItem;
+import com.nosliw.data.core.story.change.HAPChangeItemNew;
 import com.nosliw.data.core.story.change.HAPRequestChange;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
@@ -60,6 +61,9 @@ public class HAPUINode {
 		//build data info in ui node
 		HAPUIDataStructureInfo dataStructureInfo = HAPUtility.buildDataStructureInfoForUIStoryNode(childStoryNode, this.getStoryNode().getDataStructureInfo().getContext(), contextProcessRequirement, uiTagMan);
 		childStoryNode.setDataStructureInfo(dataStructureInfo);
+		
+		HAPRequestChange changeRequest = new HAPRequestChange();
+		changeRequest.addChange(new HAPChangeItemNew(childStoryNode, "temp"));
 		
 		//add node to story
 		HAPChangeInfo newNodeChangeInfo1 = HAPUtilityChange.applyNew(this.m_story, childStoryNode, this.m_changes);

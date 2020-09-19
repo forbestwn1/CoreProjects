@@ -36,8 +36,10 @@ public interface HAPStory extends HAPEntityInfo{
 	HAPStoryElement addElement(HAPStoryElement element, String alias);
 	HAPStoryElement getElement(String categary, String id);
 	HAPStoryElement getElement(HAPIdElement elementId);
+	HAPStoryElement getElement(String alias);
 	
 	HAPIdElement getElementId(String alias);
+	HAPIdElement setAlias(String alias, HAPIdElement eleId);
 	String getAlias(HAPIdElement eleId);
 	
 	HAPStoryElement deleteElement(HAPStoryElement element);
