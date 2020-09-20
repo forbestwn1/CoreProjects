@@ -16,18 +16,33 @@ public class HAPInfoElement extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String ELEMENTID = "elementId";
 
-	private HAPIdElement m_eleId;
+	private HAPReferenceElement m_eleRef;
+	
+	private HAPStory m_story;
 	
 	public HAPInfoElement() {}
 	
-	public HAPInfoElement(HAPIdElement eleId) {
-		this.setElementId(eleId);
+	public HAPInfoElement(HAPReferenceElement eleRef) {
+		this.m_eleRef = eleRef;
 	}
 	
-	public HAPIdElement getElementId() {    return this.m_eleId;     }
+	public HAPIdElement getElementId() {
+		HAPIdElement out = null;
+		if(this.m_eleRef instanceof HAPAliasElement) {
+			HAPAliasElement alias = (HAPAliasElement)this.m_eleRef;
+			out = this.m_story.getElementId(alias.getAlias());
+			this.setElementId(out);
+		}
+		else {
+			out = (HAPIdElement)this.m_eleRef;
+		}
+		return out;     
+	}
+	
+	public void setStory(HAPStory story) {  this.m_story = story;    }
 	
 	private void setElementId(HAPIdElement eleId) {
-		this.m_eleId = eleId;
+		this.m_eleRef = eleId;
 		this.setId(eleId.toStringValue(HAPSerializationFormat.LITERATE));
 	}
 	
@@ -44,6 +59,6 @@ public class HAPInfoElement extends HAPEntityInfoImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ELEMENTID, HAPJsonUtility.buildJson(this.m_eleId, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTID, HAPJsonUtility.buildJson(this.m_eleRef, HAPSerializationFormat.JSON));
 	}
 }

@@ -6,8 +6,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPParserElement;
 import com.nosliw.data.core.story.HAPStoryElement;
@@ -22,7 +24,7 @@ public class HAPChangeItemNew extends HAPChangeItem{
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
-	private String m_alias;
+	private HAPAliasElement m_alias;
 	
 	private HAPEntityOrReference m_entityOrReference;
 	
@@ -30,13 +32,17 @@ public class HAPChangeItemNew extends HAPChangeItem{
 		super(MYCHANGETYPE);
 	}
 
-	public HAPChangeItemNew(HAPEntityOrReference entityOrReference, String alias) {
+	public HAPChangeItemNew(HAPEntityOrReference entityOrReference, HAPAliasElement alias) {
 		this();
 		this.m_alias = alias;
 		this.m_entityOrReference = entityOrReference;
 	}
 	
-	public String getAlias() {	return this.m_alias;	}
+	public HAPChangeItemNew(HAPEntityOrReference entityOrReference) {
+		this(entityOrReference, null);
+	}
+
+	public HAPAliasElement getAlias() {	return this.m_alias;	}
 
 	public HAPEntityOrReference getEntityOrReference() {   return this.m_entityOrReference;    }
 	public void setEntityOrReference(HAPEntityOrReference entityOrReference) {   this.m_entityOrReference = entityOrReference;   }
@@ -57,7 +63,13 @@ public class HAPChangeItemNew extends HAPChangeItem{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		this.m_alias = (String)jsonObj.opt(ALIAS);
+		
+		JSONObject aliasObj = jsonObj.optJSONObject(ALIAS);
+		if(aliasObj!=null) {
+			this.m_alias = new HAPAliasElement();
+			this.m_alias.buildObject(aliasObj, HAPSerializationFormat.JSON);
+		}
+		
 		JSONObject eleObj = jsonObj.optJSONObject(ELEMENT);
 		if(eleObj!=null) {
 			HAPParserElement.parseElement(eleObj, this.getStory());
@@ -69,6 +81,6 @@ public class HAPChangeItemNew extends HAPChangeItem{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ELEMENT, this.getElement().toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(ALIAS, this.m_alias);
+		jsonMap.put(ALIAS, HAPJsonUtility.buildJson(this.m_alias, HAPSerializationFormat.JSON));
 	}
 }

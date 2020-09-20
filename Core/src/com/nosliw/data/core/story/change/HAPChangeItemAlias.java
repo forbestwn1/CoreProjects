@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
 
 public class HAPChangeItemAlias extends HAPChangeItem{
@@ -20,7 +21,7 @@ public class HAPChangeItemAlias extends HAPChangeItem{
 	@HAPAttribute
 	public static final String ELEMENTID = "elementId";
 	
-	private String m_alias;
+	private HAPAliasElement m_alias;
 	
 	private HAPIdElement m_eleId;
 	
@@ -28,19 +29,25 @@ public class HAPChangeItemAlias extends HAPChangeItem{
 		super(MYCHANGETYPE);
 	}
 	
-	public HAPChangeItemAlias(String alias, HAPIdElement eleId) {
+	public HAPChangeItemAlias(HAPAliasElement alias, HAPIdElement eleId) {
 		this();
 		this.m_alias = alias;
 		this.m_eleId = eleId;
 	}
 	
-	public String getAlias() {   return this.m_alias;    }
+	public HAPAliasElement getAlias() {   return this.m_alias;    }
 	public HAPIdElement getElementId() {   return this.m_eleId;   }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
+		
+		JSONObject aliasObj = jsonObj.getJSONObject(ALIAS);
+		if(aliasObj!=null) {
+			this.m_alias = new HAPAliasElement();
+			this.m_alias.buildObject(aliasObj, HAPSerializationFormat.JSON);
+		}
 		
 		JSONObject eleIdObj = jsonObj.getJSONObject(ELEMENTID);
 		if(eleIdObj!=null) {
@@ -53,7 +60,7 @@ public class HAPChangeItemAlias extends HAPChangeItem{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ALIAS, this.m_alias);
+		jsonMap.put(ALIAS, HAPJsonUtility.buildJson(this.m_alias, HAPSerializationFormat.JSON));
 		jsonMap.put(ELEMENTID, HAPJsonUtility.buildJson(this.m_eleId, HAPSerializationFormat.JSON));
 	}
 }

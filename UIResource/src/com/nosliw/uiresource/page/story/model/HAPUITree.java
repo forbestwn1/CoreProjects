@@ -4,11 +4,13 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPIdElementInfo;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPHandlerChange;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
@@ -45,12 +47,15 @@ public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 	private boolean isDataRelatedChange(List<HAPChangeItem> changes) {
 		boolean out = false;
 		for(HAPChangeItem change : changes) {
-			if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(change.getTargetCategary())){
-				String nodeId = change.getTargetId();
-				HAPIdElementInfo idInfo = HAPUtilityStory.parseStoryElementId(nodeId);
-				String nodeType = idInfo.getType();
-				if(nodeType.equals(HAPConstant.STORYNODE_TYPE_VARIABLE)) {
-					return true;
+			if(HAPUtilityChange.isElementChange(change)) {
+				HAPIdElement targetEleId = HAPUtilityChange.getChangeTargetElementId(change);
+				if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(targetEleId.getCategary())){
+					String nodeId = targetEleId.getId();
+					HAPIdElementInfo idInfo = HAPUtilityStory.parseStoryElementId(nodeId);
+					String nodeType = idInfo.getType();
+					if(nodeType.equals(HAPConstant.STORYNODE_TYPE_VARIABLE)) {
+						return true;
+					}
 				}
 			}
 		}

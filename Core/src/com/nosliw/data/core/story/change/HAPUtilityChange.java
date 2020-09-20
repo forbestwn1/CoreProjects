@@ -3,10 +3,10 @@ package com.nosliw.data.core.story.change;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.interfac.HAPCalculateObject;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.story.HAPElementGroup;
+import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
-import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryElement;
 
@@ -67,6 +67,10 @@ public class HAPUtilityChange {
 		if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_PATCH)) {
 			HAPChangeItemPatch changePatch = (HAPChangeItemPatch)changeItem;
 			out = story.getElement(changePatch.getTargetElementId());
+			Object patchObj = changePatch.getValue();
+			if(patchObj instanceof HAPCalculateObject) {
+				changePatch.setValue(((HAPCalculateObject)patchObj).calculate());
+			}
 			HAPChangeResult changeResult = out.patch(changePatch.getPath(), changePatch.getValue());
 			//extra changes info
 			if(extraChanges!=null) 	extraChanges.addAll(changeResult.getExtraChanges());
@@ -76,21 +80,23 @@ public class HAPUtilityChange {
 		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_NEW)) {
 			HAPChangeItemNew changeNew = (HAPChangeItemNew)changeItem;
 			HAPStoryElement element = (HAPStoryElement)changeNew.getEntityOrReference();
-			String alias = changeNew.getAlias();
-			HAPIdElement oldAliasEleId = story.getElementId(alias);
+			HAPAliasElement alias = changeNew.getAlias();
+			HAPIdElement oldAliasEleId = story.getElementId(alias.getAlias());
 			out = story.addElement(element, alias);
 			changeNew.setEntityOrReference(out.getElementId());
 			//revert changes info
 			if(saveRevert) {
 				List<HAPChangeItem> revertChanges = new ArrayList<HAPChangeItem>();
 				revertChanges.add(new HAPChangeItemDelete(out.getElementId()));
-				if(oldAliasEleId!=null) revertChanges.add(new HAPChangeItemAlias(alias, oldAliasEleId));
+				if(!alias.isTemporary()) {
+					if(oldAliasEleId!=null) revertChanges.add(new HAPChangeItemAlias(alias, oldAliasEleId));
+				}
 				changeItem.setRevertChanges(revertChanges);
 			}
 		}		
 		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_DELETE)) {
 			HAPChangeItemDelete changeDelete = (HAPChangeItemDelete)changeItem;
-			String alias = story.getAlias(changeDelete.getTargetElementId());
+			HAPAliasElement alias = story.getAlias(changeDelete.getTargetElementId());
 			HAPStoryElement element = story.deleteElement(changeDelete.getTargetCategary(), changeDelete.getTargetId());
 			//revert changes info
 			if(saveRevert) {
@@ -112,33 +118,48 @@ public class HAPUtilityChange {
 		return out;
 	}
 	
-	public static HAPChangeInfo applyNew(HAPStory story, HAPStoryElement ele, String alias, List<HAPChangeItem> changes, HAPElementGroup group) {
-		HAPChangeInfo out = applyNew(story, ele, alias, changes);
-		group.addElement(new HAPInfoElement(out.getStoryElement().getElementId()));
-		return out;
-	}
-
-	public static HAPChangeInfo applyNew(HAPStory story, HAPStoryElement ele, String alias, List<HAPChangeItem> changes) {
-		HAPChangeItemNew change = new HAPChangeItemNew(ele, alias);
-		HAPStoryElement element = applyChange(story, change, changes);
-		return new HAPChangeInfo(change, element);
-	}
-	
-	public static HAPChangeInfo applyDelete(HAPStory story, HAPIdElement elementId, List<HAPChangeItem> changes) {
-		HAPChangeItemDelete change = new HAPChangeItemDelete(elementId);
-		HAPStoryElement element = applyChange(story, change, changes);
-		return new HAPChangeInfo(change, element);
-	}
-	
-	public static HAPChangeInfo applyPatch(HAPStory story, HAPIdElement targetEleId, String path, Object value, List<HAPChangeItem> changes) {
-		HAPChangeItemPatch change = new HAPChangeItemPatch(targetEleId, path, value);
-		HAPStoryElement element = applyChange(story, change, changes);
-		return new HAPChangeInfo(change, element);
-	}
+//	public static HAPChangeInfo applyNew(HAPStory story, HAPStoryElement ele, String alias, List<HAPChangeItem> changes, HAPElementGroup group) {
+//		HAPChangeInfo out = applyNew(story, ele, alias, changes);
+//		group.addElement(new HAPInfoElement(out.getStoryElement().getElementId()));
+//		return out;
+//	}
+//
+//	public static HAPChangeInfo applyNew(HAPStory story, HAPStoryElement ele, String alias, List<HAPChangeItem> changes) {
+//		HAPChangeItemNew change = new HAPChangeItemNew(ele, alias);
+//		HAPStoryElement element = applyChange(story, change, changes);
+//		return new HAPChangeInfo(change, element);
+//	}
+//	
+//	public static HAPChangeInfo applyDelete(HAPStory story, HAPIdElement elementId, List<HAPChangeItem> changes) {
+//		HAPChangeItemDelete change = new HAPChangeItemDelete(elementId);
+//		HAPStoryElement element = applyChange(story, change, changes);
+//		return new HAPChangeInfo(change, element);
+//	}
+//	
+//	public static HAPChangeInfo applyPatch(HAPStory story, HAPIdElement targetEleId, String path, Object value, List<HAPChangeItem> changes) {
+//		HAPChangeItemPatch change = new HAPChangeItemPatch(targetEleId, path, value);
+//		HAPStoryElement element = applyChange(story, change, changes);
+//		return new HAPChangeInfo(change, element);
+//	}
 	
 	public static HAPChangeItem buildChangePatch(HAPStoryElement element, String path, Object value) {	return new HAPChangeItemPatch(element.getElementId(), path, value);	}
 	public static HAPChangeItem buildChangePatch(HAPIdElement elementId, String path, Object value) {	return new HAPChangeItemPatch(elementId, path, value);	}
 	
-	public static HAPChangeItem buildChangeNew(String itemCategary, String itemId, String alias) { return new HAPChangeItemNew(new HAPIdElement(itemCategary, itemId), alias); }
+//	public static HAPChangeItem buildChangeNew(String itemCategary, String itemId, String alias) { return new HAPChangeItemNew(new HAPIdElement(itemCategary, itemId), alias); }
 	
+	public static boolean isElementChange(HAPChangeItem change) {
+		String type = change.getChangeType();
+		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_NEW))  return true;
+		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_PATCH))  return true;
+		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_DELETE))  return true;
+		else return false;
+	}
+	
+	public static HAPIdElement getChangeTargetElementId(HAPChangeItem change) {
+		String type = change.getChangeType();
+		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_NEW))  return (HAPIdElement)((HAPChangeItemNew)change).getEntityOrReference();
+		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_PATCH))  return ((HAPChangeItemPatch)change).getTargetElementId();
+		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_DELETE))  return ((HAPChangeItemDelete)change).getTargetElementId();
+		return null;
+	}
 }

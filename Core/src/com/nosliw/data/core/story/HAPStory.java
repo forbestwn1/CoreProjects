@@ -1,10 +1,12 @@
 package com.nosliw.data.core.story;
 
+import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPHandlerChange;
 import com.nosliw.data.core.story.change.HAPRequestChange;
 import com.nosliw.data.core.story.change.HAPResultTransaction;
@@ -33,14 +35,16 @@ public interface HAPStory extends HAPEntityInfo{
 	String getShowType();
 	void setShowType(String showType);
 
-	HAPStoryElement addElement(HAPStoryElement element, String alias);
+	HAPStoryElement addElement(HAPStoryElement element, HAPAliasElement alias);
+	
 	HAPStoryElement getElement(String categary, String id);
-	HAPStoryElement getElement(HAPIdElement elementId);
+	HAPStoryElement getElement(HAPReferenceElement elementRef);
 	HAPStoryElement getElement(String alias);
 	
+	
 	HAPIdElement getElementId(String alias);
-	HAPIdElement setAlias(String alias, HAPIdElement eleId);
-	String getAlias(HAPIdElement eleId);
+	HAPIdElement setAlias(HAPAliasElement alias, HAPIdElement eleId);
+	HAPAliasElement getAlias(HAPIdElement eleId);
 	
 	HAPStoryElement deleteElement(HAPStoryElement element);
 	HAPStoryElement deleteElement(String categary, String id);
@@ -60,7 +64,8 @@ public interface HAPStory extends HAPEntityInfo{
 	void startTransaction();
 	HAPResultTransaction commitTransaction();
 	void rollbackTransaction();
+	HAPAliasElement generateTemporaryAlias();
 	void registerChangeHandler(HAPHandlerChange handler);
 	void unregisterChangeHandler(HAPHandlerChange handler);
-	void change(HAPRequestChange changeRequest);
+	List<HAPChangeItem> change(HAPRequestChange changeRequest);
 }

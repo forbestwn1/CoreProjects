@@ -16,14 +16,12 @@ public abstract class HAPConnectionImp extends HAPStoryElementImp implements HAP
 	
 	public HAPConnectionImp(String type) {
 		super(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION, type);
-		this.m_end1 = new HAPConnectionEnd(this.getId());
-		this.m_end2 = new HAPConnectionEnd(this.getId());
+		this.m_end1 = new HAPConnectionEnd();
+		this.m_end2 = new HAPConnectionEnd();
 	}
 
-	public HAPConnectionImp() {  
-		super(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION);  
-		this.m_end1 = new HAPConnectionEnd(this.getId());
-		this.m_end2 = new HAPConnectionEnd(this.getId());
+	public HAPConnectionImp() {
+		this(null);
 	}
 
 	@Override

@@ -27,7 +27,8 @@ public class HAPChangeItemPatch extends HAPChangeItemModifyElement{
 	public String getPath() {	return this.m_path;	}
 	
 	public Object getValue() {   return this.m_value;   }
-
+	public void setValue(Object value) {   this.m_value = value;    }
+	
 	public HAPChangeItemPatch() {
 		super(MYCHANGETYPE);
 	}

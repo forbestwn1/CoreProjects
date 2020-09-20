@@ -48,7 +48,7 @@ public class HAPParserStory {
 				JSONObject eleIdObj = aliasObjects.getJSONObject(aliasName);
 				HAPIdElement eleId = new HAPIdElement();
 				eleId.buildObject(eleIdObj, HAPSerializationFormat.JSON);
-				out.setAlias(aliasName, eleId);
+				out.setAlias(new HAPAliasElement(aliasName, false), eleId);
 			}
 		}
 		

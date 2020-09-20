@@ -71,7 +71,7 @@ public class HAPUtilityStory {
 		List<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstant.STORYCONNECTION_TYPE_CONTAIN, HAPConstant.STORYNODE_PROFILE_CONTAINER, null, null, story);
 		for(HAPConnectionEnd connectionEnd : childConnectionEnds) {
 			HAPConnectionContain containerConnectionEntity = (HAPConnectionContain)story.getConnection(connectionEnd.getConnectionId());
-			HAPStoryNode node = story.getNode(connectionEnd.getNodeId());
+			HAPStoryNode node = (HAPStoryNode)story.getElement(connectionEnd.getNodeRef());
 			if(isValid(containerConnectionEntity, onlyEnable) && isValid(node, onlyEnable)) {
 				out.add(new HAPInfoNodeChild(node, containerConnectionEntity));
 			}
@@ -87,7 +87,7 @@ public class HAPUtilityStory {
 		for(HAPConnectionEnd connectionEnd : childConnectionEnds) {
 			HAPConnectionContain containerConnectionEntity = (HAPConnectionContain)story.getConnection(connectionEnd.getConnectionId());
 			if(HAPBasicUtility.isEquals(childId, containerConnectionEntity.getChildId())) {
-				HAPStoryNode node = story.getNode(connectionEnd.getNodeId());
+				HAPStoryNode node = (HAPStoryNode)story.getElement(connectionEnd.getNodeRef());
 				if(isValid(containerConnectionEntity, onlyEnable) && isValid(node, onlyEnable)) {
 					out.add(node);
 				}
@@ -106,7 +106,7 @@ public class HAPUtilityStory {
 					if(profile1==null || profile1.equals(node1End.getProfile())) {
 						HAPConnectionEnd node2End = getOtherConnectionEnd(connection, node1.getId());
 						if(profile2==null || profile2.equals(node2End.getProfile())) {
-							if(node2Type==null || node2Type.equals(story.getNode(node2End.getNodeId()).getType())){
+							if(node2Type==null || node2Type.equals(story.getElement(node2End.getNodeRef()).getType())){
 								out.add(node2End);
 							}
 						}
@@ -122,12 +122,12 @@ public class HAPUtilityStory {
 	}
 	
 	public static HAPConnectionEnd getOtherConnectionEnd(HAPConnection connection, String nodeId) {
-		if(nodeId.equals(connection.getEnd1().getNodeId()))   return connection.getEnd2();
+		if(nodeId.equals(connection.getEnd1().getNodeElementId().getId()))   return connection.getEnd2();
 		else return connection.getEnd1();
 	}
 	
 	public static HAPConnectionEnd getConnectionEnd(HAPConnection connection, String nodeId) {
-		if(nodeId.equals(connection.getEnd1().getNodeId()))   return connection.getEnd1();
+		if(nodeId.equals(connection.getEnd1().getNodeElementId().getId()))   return connection.getEnd1();
 		else return connection.getEnd2();
 	}
 	
@@ -136,4 +136,6 @@ public class HAPUtilityStory {
 		else if(eleRef instanceof HAPAliasElement)  return story.getElementId(((HAPAliasElement)eleRef).getAlias());
 		return null;
 	}
+	
+	public static HAPIdElement newNodeId(String id) {   return new HAPIdElement(HAPConstant.STORYELEMENT_CATEGARY_NODE, id);    }
 }

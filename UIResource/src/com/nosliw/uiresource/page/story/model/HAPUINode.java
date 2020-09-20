@@ -12,12 +12,12 @@ import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPIdElementInfo;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityConnection;
 import com.nosliw.data.core.story.HAPUtilityStory;
-import com.nosliw.data.core.story.change.HAPChangeInfo;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPChangeItemNew;
 import com.nosliw.data.core.story.change.HAPRequestChange;
@@ -62,16 +62,16 @@ public class HAPUINode {
 		HAPUIDataStructureInfo dataStructureInfo = HAPUtility.buildDataStructureInfoForUIStoryNode(childStoryNode, this.getStoryNode().getDataStructureInfo().getContext(), contextProcessRequirement, uiTagMan);
 		childStoryNode.setDataStructureInfo(dataStructureInfo);
 		
+		HAPAliasElement nodeName = this.m_story.generateTemporaryAlias();
+		HAPAliasElement connectionName = this.m_story.generateTemporaryAlias();
+		
 		HAPRequestChange changeRequest = new HAPRequestChange();
-		changeRequest.addChange(new HAPChangeItemNew(childStoryNode, "temp"));
+		changeRequest.addChange(new HAPChangeItemNew(childStoryNode, nodeName));
+		changeRequest.addChange(new HAPChangeItemNew(HAPUtilityConnection.newConnectionContain(HAPUtilityStory.newNodeId(this.m_nodeId), nodeName, (String)childId), connectionName));
+		List<HAPChangeItem> changes = this.m_story.change(changeRequest);
+		this.m_changes.addAll(changes);
 		
-		//add node to story
-		HAPChangeInfo newNodeChangeInfo1 = HAPUtilityChange.applyNew(this.m_story, childStoryNode, this.m_changes);
-		
-		//connection
-		HAPChangeInfo connectionNewChange1 = HAPUtilityChange.applyNew(this.m_story, HAPUtilityConnection.newConnectionContain(this.m_nodeId, newNodeChangeInfo.getStoryElement().getId(), (String)childId), this.m_changes);
-
-		HAPUIChild childNode = new HAPUIChild(newNodeChangeInfo.getStoryElement().getId(), childId, connectionNewChange.getStoryElement().getId(), this.m_story);
+		HAPUIChild childNode = new HAPUIChild(this.m_story.getElementId(nodeName.getAlias()).getId(), childId, this.m_story.getElementId(connectionName.getAlias()).getId(), this.m_story);
 		return childNode.getUINode();
 	}
 	
