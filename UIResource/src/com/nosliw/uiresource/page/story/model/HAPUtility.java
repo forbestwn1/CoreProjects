@@ -74,10 +74,10 @@ public class HAPUtility {
 		String nodeType = storyNode.getType();
 		switch(nodeType) {
 		case HAPConstant.STORYNODE_TYPE_PAGE:
-			out = new HAPUITree((HAPStoryNodePage)storyNode, story, contextProcessRequirement, uiTagMan); 
+			out = new HAPUITree(storyNode.getElementId(), story, contextProcessRequirement, uiTagMan); 
 			break;
 		default:
-			out = new HAPUINode(storyNode, story); 
+			out = new HAPUINode(storyNode.getElementId(), story); 
 			break;
 		}
 		

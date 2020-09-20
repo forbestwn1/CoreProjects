@@ -13,14 +13,12 @@ import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.story.HAPAliasElement;
-import com.nosliw.data.core.story.HAPIdElement;
-import com.nosliw.data.core.story.HAPIdElementInfo;
+import com.nosliw.data.core.story.HAPReferenceElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityConnection;
-import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
-import com.nosliw.data.core.story.change.HAPChangeItemNew;
 import com.nosliw.data.core.story.change.HAPRequestChange;
+import com.nosliw.data.core.story.change.HAPRequestChangeWrapper;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
@@ -32,7 +30,7 @@ public class HAPUINode {
 
 	private HAPStory m_story;
 
-	private String m_nodeId;
+	private HAPReferenceElement m_nodeRef;
 	
 	private List<HAPUIChild> m_children;
 	
@@ -40,38 +38,34 @@ public class HAPUINode {
 	
 	private HAPStoryNodeUI m_storyNode;
 	
-	public HAPUINode(String nodeId, HAPStory story) {
+	public HAPUINode(HAPReferenceElement nodeRef, HAPStory story) {
 		this.m_children = new ArrayList<HAPUIChild>();
 		this.m_story = story;
-		this.m_nodeId = nodeId;
+		this.m_nodeRef = nodeRef;
 	}
 
-	public HAPUINode(HAPStoryNodeUI storyNode, HAPStory story) {
-		this(storyNode.getId(), story);
+	//this is for new story node
+	public HAPUINode(HAPStoryNodeUI storyNode, HAPAliasElement alias, HAPStory story) {
+		this(alias, story);
 		this.m_storyNode = storyNode;
 	}
 
 	public HAPUINode addChildNode(HAPStoryNodeUI childStoryNode, HAPConnectionContain connection) {
-		HAPUIChild child = new HAPUIChild(new HAPUINode(childStoryNode, m_story), connection.getChildId(), connection.getId(), m_story);
+		HAPUIChild child = new HAPUIChild(new HAPUINode(childStoryNode.getElementId(), m_story), connection.getChildId(), connection.getElementId(), m_story);
 		this.m_children.add(child);
 		return child.getUINode();
 	}
 	
-	public HAPUINode newChildNode(HAPStoryNodeUI childStoryNode, Object childId, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
+	public HAPUINode newChildNode(HAPStoryNodeUI childStoryNode, Object childId, HAPRequestChangeWrapper changeRequest, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
 		//build data info in ui node
 		HAPUIDataStructureInfo dataStructureInfo = HAPUtility.buildDataStructureInfoForUIStoryNode(childStoryNode, this.getStoryNode().getDataStructureInfo().getContext(), contextProcessRequirement, uiTagMan);
 		childStoryNode.setDataStructureInfo(dataStructureInfo);
 		
-		HAPAliasElement nodeName = this.m_story.generateTemporaryAlias();
-		HAPAliasElement connectionName = this.m_story.generateTemporaryAlias();
+		HAPAliasElement nodeName = changeRequest.addNewChange(childStoryNode);
+		HAPAliasElement connectionName = changeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(m_nodeRef, nodeName, (String)childId));
 		
-		HAPRequestChange changeRequest = new HAPRequestChange();
-		changeRequest.addChange(new HAPChangeItemNew(childStoryNode, nodeName));
-		changeRequest.addChange(new HAPChangeItemNew(HAPUtilityConnection.newConnectionContain(HAPUtilityStory.newNodeId(this.m_nodeId), nodeName, (String)childId), connectionName));
-		List<HAPChangeItem> changes = this.m_story.change(changeRequest);
-		this.m_changes.addAll(changes);
-		
-		HAPUIChild childNode = new HAPUIChild(this.m_story.getElementId(nodeName.getAlias()).getId(), childId, this.m_story.getElementId(connectionName.getAlias()).getId(), this.m_story);
+		HAPUIChild childNode = new HAPUIChild(childStoryNode, nodeName, childId, connectionName, this.m_story);
+		this.m_children.add(childNode);
 		return childNode.getUINode();
 	}
 	
@@ -87,22 +81,22 @@ public class HAPUINode {
 		return out;
 	}
 	
-	public HAPUINode getFirstDataUINode() {
-		HAPIdElement eleId = this.getStoryElementId();
-		HAPIdElementInfo idInfo = HAPUtilityStory.parseStoryElementId(eleId.getId());
-		if(idInfo.getType().equals(HAPConstant.STORYNODE_TYPE_UIDATA)) 	return this;
-		for(HAPUIChild child : this.getChildren()) {
-			HAPUINode firstDataUINode = child.getUINode().getFirstDataUINode();
-			if(firstDataUINode!=null)  return firstDataUINode;
-		}
-		return null;
-	}
+//	public HAPUINode getFirstDataUINode() {
+//		HAPIdElement eleId = this.getStoryElementId();
+//		HAPIdElementInfo idInfo = HAPUtilityStory.parseStoryElementId(eleId.getId());
+//		if(idInfo.getType().equals(HAPConstant.STORYNODE_TYPE_UIDATA)) 	return this;
+//		for(HAPUIChild child : this.getChildren()) {
+//			HAPUINode firstDataUINode = child.getUINode().getFirstDataUINode();
+//			if(firstDataUINode!=null)  return firstDataUINode;
+//		}
+//		return null;
+//	}
 	
-	public List<HAPIdElement> getAllStoryElements(){
-		List<HAPIdElement> out = new ArrayList<HAPIdElement>();
-		out.add(this.getStoryElementId());
+	public List<HAPReferenceElement> getAllStoryElements(){
+		List<HAPReferenceElement> out = new ArrayList<HAPReferenceElement>();
+		out.add(this.getStoryNodeRef());
 		for(HAPUIChild child : this.getChildren()) {
-			out.add(child.getConnectionElementId());
+			out.add(child.getConnectionRef());
 			out.addAll(child.getUINode().getAllStoryElements());
 		}
 		return out;
@@ -121,7 +115,7 @@ public class HAPUINode {
 		HAPRequestChange changeRequest = new HAPRequestChange();
 		//update data structure
 		HAPUIDataStructureInfo dataStructureInfo = buildDataStructureInfo(parentDataStructureInfo, contextProcessRequirement, uiTagMan);
-		changeRequest.addChange(HAPUtilityChange.buildChangePatch(this.getStoryElementId(), HAPStoryNodeUI.DATASTRUCTURE, dataStructureInfo));
+		changeRequest.addChange(HAPUtilityChange.buildChangePatch(this.getStoryNodeRef(), HAPStoryNodeUI.DATASTRUCTURE, dataStructureInfo));
 		this.getStory().change(changeRequest);
 		
 		for(HAPUIChild child : this.getChildren()) {
@@ -145,16 +139,16 @@ public class HAPUINode {
 	
 	private HAPStoryNodeUI getStoryNode() {
 		if(this.m_storyNode==null) {
-			this.m_story.getNode(this.m_nodeId);
+			this.m_storyNode = (HAPStoryNodeUI)this.m_story.getElement(this.m_nodeRef);
 		}
 		return this.m_storyNode;
 	}
 	
-	
 	public List<HAPUIChild> getChildren(){   return this.m_children;    }
+	public HAPReferenceElement getStoryNodeRef() {   return this.m_nodeRef;    }
 	
-	public String getNodeId() {  return this.m_nodeId; 	}
-	public HAPIdElement getStoryElementId() {    return new HAPIdElement(HAPConstant.STORYELEMENT_CATEGARY_NODE, this.m_nodeId);     }
+//	public String getNodeId() {  return this.m_nodeId; 	}
+//	public HAPIdElement getStoryElementId() {    return new HAPIdElement(HAPConstant.STORYELEMENT_CATEGARY_NODE, this.m_nodeId);     }
 	
 	protected HAPStory getStory() {    return this.m_story;     }
 }

@@ -7,6 +7,7 @@ import com.nosliw.common.interfac.HAPCalculateObject;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
+import com.nosliw.data.core.story.HAPReferenceElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryElement;
 
@@ -143,7 +144,7 @@ public class HAPUtilityChange {
 //	}
 	
 	public static HAPChangeItem buildChangePatch(HAPStoryElement element, String path, Object value) {	return new HAPChangeItemPatch(element.getElementId(), path, value);	}
-	public static HAPChangeItem buildChangePatch(HAPIdElement elementId, String path, Object value) {	return new HAPChangeItemPatch(elementId, path, value);	}
+	public static HAPChangeItem buildChangePatch(HAPReferenceElement elementRef, String path, Object value) {	return new HAPChangeItemPatch(elementRef, path, value);	}
 	
 //	public static HAPChangeItem buildChangeNew(String itemCategary, String itemId, String alias) { return new HAPChangeItemNew(new HAPIdElement(itemCategary, itemId), alias); }
 	

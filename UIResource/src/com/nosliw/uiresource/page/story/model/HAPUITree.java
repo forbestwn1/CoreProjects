@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPIdElementInfo;
+import com.nosliw.data.core.story.HAPReferenceElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
@@ -19,15 +21,15 @@ public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 	private HAPRequirementContextProcessor m_contextProcessRequirement;
 	private HAPUITagManager m_uiTagMan;
 	
-	public HAPUITree(String nodeId, HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
-		super(nodeId, story);
+	public HAPUITree(HAPReferenceElement nodeRef, HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
+		super(nodeRef, story);
 		this.m_contextProcessRequirement = contextProcessRequirement;
 		this.m_uiTagMan = uiTagMan;
 		init();
 	}
 
-	public HAPUITree(HAPStoryNodePage storyNode, HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
-		super(storyNode, story);
+	public HAPUITree(HAPStoryNodePage storyNode, HAPAliasElement alias, HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
+		super(storyNode, alias, story);
 		this.m_contextProcessRequirement = contextProcessRequirement;
 		this.m_uiTagMan = uiTagMan;
 		init();

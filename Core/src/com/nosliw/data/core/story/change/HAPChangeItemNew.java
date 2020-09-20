@@ -47,7 +47,7 @@ public class HAPChangeItemNew extends HAPChangeItem{
 	public HAPEntityOrReference getEntityOrReference() {   return this.m_entityOrReference;    }
 	public void setEntityOrReference(HAPEntityOrReference entityOrReference) {   this.m_entityOrReference = entityOrReference;   }
 	
-	private HAPStoryElement getElement() {
+	public HAPStoryElement getElement() {
 		HAPStoryElement out = null;
 		if(this.m_entityOrReference.getEntityOrReferenceType().equals(HAPConstant.ENTITY)) {
 			out = (HAPStoryElement)this.m_entityOrReference;
