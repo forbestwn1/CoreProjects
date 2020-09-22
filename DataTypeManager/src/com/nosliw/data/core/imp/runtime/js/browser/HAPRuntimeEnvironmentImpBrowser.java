@@ -114,12 +114,11 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginAppEntry(this.getResourceDefinitionManager()));
 
 		//story builder
-		this.getStoryManager().registerDesignDirector(HAPStoryBuilderPageSimple.BUILDERID, new HAPStoryBuilderPageSimple(this.getServiceManager(), this.m_uiResourceManager.getUITagManager()));
+		this.getStoryManager().registerDesignDirector(HAPStoryBuilderPageSimple.BUILDERID, new HAPStoryBuilderPageSimple(this.getServiceManager(), this.m_uiResourceManager.getUITagManager(), this.getResourceDefinitionManager(), dataTypeHelper, this.getRuntime(), this.getExpressionManager(), this.getServiceManager().getServiceDefinitionManager()));
 		
 		//dynamic resource builder
 		this.getStoryManager().registerShowBuilder(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPBuilderPageSimple(this.getServiceManager().getServiceDefinitionManager(), this.getUIResourceManager().getUITagManager(), this.getUIResourceManager().getUIResourceParser()));
 	}
 	
 	public HAPUIResourceManager getUIResourceManager() {   return this.m_uiResourceManager;   }
-
 }

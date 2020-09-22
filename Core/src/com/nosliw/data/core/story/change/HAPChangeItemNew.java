@@ -5,12 +5,10 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPAliasElement;
-import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPParserElement;
 import com.nosliw.data.core.story.HAPStoryElement;
 
@@ -26,38 +24,27 @@ public class HAPChangeItemNew extends HAPChangeItem{
 
 	private HAPAliasElement m_alias;
 	
-	private HAPEntityOrReference m_entityOrReference;
+	private HAPStoryElement m_storyElement;
 	
 	public HAPChangeItemNew() {
 		super(MYCHANGETYPE);
 	}
 
-	public HAPChangeItemNew(HAPEntityOrReference entityOrReference, HAPAliasElement alias) {
+	public HAPChangeItemNew(HAPStoryElement storyElement, HAPAliasElement alias) {
 		this();
 		this.m_alias = alias;
-		this.m_entityOrReference = entityOrReference;
+		this.m_storyElement = storyElement;
 	}
 	
-	public HAPChangeItemNew(HAPEntityOrReference entityOrReference) {
-		this(entityOrReference, null);
+	public HAPChangeItemNew(HAPStoryElement storyElement) {
+		this(storyElement, null);
 	}
 
 	public HAPAliasElement getAlias() {	return this.m_alias;	}
 
-	public HAPEntityOrReference getEntityOrReference() {   return this.m_entityOrReference;    }
-	public void setEntityOrReference(HAPEntityOrReference entityOrReference) {   this.m_entityOrReference = entityOrReference;   }
+	public HAPStoryElement getElement() {  return this.m_storyElement;  }
 	
-	public HAPStoryElement getElement() {
-		HAPStoryElement out = null;
-		if(this.m_entityOrReference.getEntityOrReferenceType().equals(HAPConstant.ENTITY)) {
-			out = (HAPStoryElement)this.m_entityOrReference;
-		}
-		else {
-			HAPIdElement elementId = (HAPIdElement)this.m_entityOrReference;
-			out = this.getStory().getElement(elementId);
-		}
-		return out;
-	}
+	public void setElement(HAPStoryElement storyEle) {    this.m_storyElement = storyEle;     }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -72,9 +59,9 @@ public class HAPChangeItemNew extends HAPChangeItem{
 		
 		JSONObject eleObj = jsonObj.optJSONObject(ELEMENT);
 		if(eleObj!=null) {
-			HAPParserElement.parseElement(eleObj, this.getStory());
+			this.m_storyElement = HAPParserElement.parseElement(eleObj);
 		}
-		return true;  
+		return true;
 	}
 	
 	@Override

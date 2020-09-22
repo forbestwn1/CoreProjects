@@ -12,7 +12,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.story.HAPStory;
 
 @HAPEntityWithAttribute
 public abstract class HAPChangeItem extends HAPEntityInfoImp{
@@ -27,8 +26,6 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 	
 	private List<HAPChangeItem> m_revertChanges;
 	
-	private HAPStory m_story;
-	
 	public HAPChangeItem(String changeType) {
 		this.m_changeType = changeType;
 	}
@@ -37,9 +34,6 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 	
 	public void setRevertChanges(List<HAPChangeItem> revertChanges) {    this.m_revertChanges = revertChanges;      }
 	public List<HAPChangeItem> getRevertChanges(){     return this.m_revertChanges;       }
-	
-	public void setStory(HAPStory story) {    this.m_story = story;    }
-	protected HAPStory getStory() {    return this.m_story;    }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

@@ -11,6 +11,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPStory;
 
 public class HAPQuestionGroup extends HAPQuestion{
 
@@ -37,10 +38,14 @@ public class HAPQuestionGroup extends HAPQuestion{
 			this.m_children.get(i).setId(id+"_"+i);
 		}
 	}
-	
-	public void addChild(HAPQuestion item) {
-		this.m_children.add(item);
+
+	@Override
+	public void processAlias(HAPStory story) {
+		for(HAPQuestion child : this.m_children)  child.processAlias(story);
 	}
+
+	public List<HAPQuestion> getChildren(){   return this.m_children;   }
+	public void addChild(HAPQuestion item) {	this.m_children.add(item);	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

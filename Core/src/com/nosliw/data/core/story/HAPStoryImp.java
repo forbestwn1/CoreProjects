@@ -121,8 +121,8 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.addElementGroup((HAPElementGroup)element);
 		//set alias
 		if(alias!=null) {
-			this.m_aliases.put(alias.getAlias(), out.getElementId());
-			if(alias.isTemporary())   this.m_temporyAlias.add(alias.getAlias());
+			this.m_aliases.put(alias.getName(), out.getElementId());
+			if(alias.isTemporary())   this.m_temporyAlias.add(alias.getName());
 		}
 		return out;
 	}
@@ -131,9 +131,9 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public HAPIdElement getElementId(String alias) {	return this.m_aliases.get(alias);	}
 	@Override
 	public HAPIdElement setAlias(HAPAliasElement alias, HAPIdElement eleId) {
-		HAPIdElement old = this.m_aliases.remove(alias.getAlias());
-		if(eleId!=null)   this.m_aliases.put(alias.getAlias(), eleId);
-		if(alias.isTemporary())  this.m_temporyAlias.add(alias.getAlias());
+		HAPIdElement old = this.m_aliases.remove(alias.getName());
+		if(eleId!=null)   this.m_aliases.put(alias.getName(), eleId);
+		if(alias.isTemporary())  this.m_temporyAlias.add(alias.getName());
 		return old;
 	}
 
@@ -143,7 +143,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	}
 	public void deleteAlias(HAPIdElement eleId) {
 		HAPAliasElement alias = this.getAlias(eleId);
-		if(alias!=null)  this.deleteAlias(alias.getAlias());
+		if(alias!=null)  this.deleteAlias(alias.getName());
 	}
 	
 	@Override
@@ -165,7 +165,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		}
 		else if(elementRef instanceof HAPAliasElement) {
 			HAPAliasElement eleAlias = (HAPAliasElement)elementRef;
-			return this.getElement(eleAlias.getAlias());
+			return this.getElement(eleAlias.getName());
 		}
 		return null;
 	}
@@ -191,10 +191,12 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.deleteNode(id);
 		else if(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.deleteConnection(id);
 		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.deleteElementGroup(id);
-		
 		return out;
 	}
-	
+
+	@Override
+	public HAPStoryElement deleteElement(HAPIdElement eleId) {   return this.deleteElement(eleId.getCategary(), eleId.getId());  }
+
 	public HAPStoryElement deleteNode(String id) {	return this.m_nodes.remove(id);	}
 	public HAPStoryElement deleteConnection(String id) {	return this.m_connections.remove(id);	}
 	public HAPStoryElement deleteElementGroup(String id) {	return this.m_elementGroups.remove(id);	}
@@ -299,4 +301,5 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(this.m_elementGroups, HAPSerializationFormat.JSON));
 		jsonMap.put(ALIAS, HAPJsonUtility.buildJson(this.m_aliases, HAPSerializationFormat.JSON));
 	}
+
 }

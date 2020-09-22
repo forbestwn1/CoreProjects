@@ -33,7 +33,7 @@ public class HAPAliasElement extends HAPSerializableImp implements HAPReferenceE
 		this.m_isTemp = isTemp;
 	}
 
-	public String getAlias() {		return this.m_name;	}
+	public String getName() {		return this.m_name;	}
 	public boolean isTemporary() {   return this.m_isTemp;    }
 
 	@Override
@@ -42,8 +42,8 @@ public class HAPAliasElement extends HAPSerializableImp implements HAPReferenceE
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_name = jsonObj.getString(NAME);
-		this.m_isTemp = jsonObj.getBoolean(TEMPORARY);
+		this.m_name = (String)jsonObj.opt(NAME);
+		this.m_isTemp = (Boolean)jsonObj.opt(TEMPORARY);
 		return true;  
 	}
 

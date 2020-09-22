@@ -699,7 +699,10 @@ public class HAPConstant {
 
 		public static final String STORY_EVENT_CHANGE = "change";
 
+
+
 		public static final String REFERENCE = "reference";
-		public static final String ENTITY = "reference";
+		public static final String ENTITY = "entity";
+
 
 }

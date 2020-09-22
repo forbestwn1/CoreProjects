@@ -425,11 +425,14 @@ var COMMONCONSTANT=
   "STORYDESIGN_CHANGETYPE_DELETE": "delete",
   "STORYDESIGN_CHANGETYPE_PATCH": "patch",
   "STORYDESIGN_CHANGETYPE_PUT": "put",
+  "STORYDESIGN_CHANGETYPE_ALIAS": "alias",
   "STORYDESIGN_QUESTIONTYPE_GROUP": "group",
   "STORYDESIGN_QUESTIONTYPE_ITEM": "item",
   "STORYDESIGN_INFO_STAGES": "stages",
   "STORYDESIGN_CHANGE_INFO_STAGE": "stage",
-  "STORY_EVENT_CHANGE": "change"
+  "STORY_EVENT_CHANGE": "change",
+  "REFERENCE": "reference",
+  "ENTITY": "entity"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

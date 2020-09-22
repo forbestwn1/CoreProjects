@@ -9,9 +9,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPWithAlias;
 
 @HAPEntityWithAttribute
-public abstract class HAPQuestion extends HAPEntityInfoImp{
+public abstract class HAPQuestion extends HAPEntityInfoImp implements HAPWithAlias{
 
 	@HAPAttribute
 	public static final String QUESTION = "question";

@@ -12,7 +12,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPParserChange;
 
@@ -29,8 +28,6 @@ public class HAPAnswer extends HAPSerializableImp{
 	
 	private String m_questionId;
 	
-	private HAPStory m_story;
-
 	public HAPAnswer() {
 		this.m_changes = new ArrayList<HAPChangeItem>();
 	}
@@ -41,16 +38,8 @@ public class HAPAnswer extends HAPSerializableImp{
 	
 	public void addChanges(HAPChangeItem change) {    
 		this.m_changes.add(change);
-		change.setStory(this.m_story);
 	}
 
-	public void setStory(HAPStory story) {   
-		this.m_story = story;
-		for(HAPChangeItem change : this.m_changes) {
-			change.setStory(story);
-		}
-	}
-	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;

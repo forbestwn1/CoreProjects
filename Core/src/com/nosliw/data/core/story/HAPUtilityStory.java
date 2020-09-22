@@ -133,7 +133,7 @@ public class HAPUtilityStory {
 	
 	public static HAPIdElement getElementIdByReference(HAPReferenceElement eleRef, HAPStory story) {
 		if(eleRef instanceof HAPIdElement)  return (HAPIdElement)eleRef;
-		else if(eleRef instanceof HAPAliasElement)  return story.getElementId(((HAPAliasElement)eleRef).getAlias());
+		else if(eleRef instanceof HAPAliasElement)  return story.getElementId(((HAPAliasElement)eleRef).getName());
 		return null;
 	}
 	

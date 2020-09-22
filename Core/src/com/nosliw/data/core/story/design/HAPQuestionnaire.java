@@ -12,7 +12,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.story.HAPStory;
 
 @HAPEntityWithAttribute
 public class HAPQuestionnaire extends HAPSerializableImp{
@@ -27,8 +26,6 @@ public class HAPQuestionnaire extends HAPSerializableImp{
 	
 	private Map<String, HAPAnswer> m_answers;
 	
-	private HAPStory m_story;
-
 	public HAPQuestionnaire() {
 		this.m_answers = new LinkedHashMap<String, HAPAnswer>();
 	}
@@ -40,19 +37,11 @@ public class HAPQuestionnaire extends HAPSerializableImp{
 	
 	public void addAnswer(HAPAnswer answer) {
 		this.m_answers.put(answer.getQuestionId(), answer);
-		answer.setStory(m_story);
 	}
 
 	public Set<HAPAnswer> getAnswers(){   return new HashSet<HAPAnswer>(this.m_answers.values());     }
 	
 	public void clearAnswer() {   this.m_answers.clear();    }
-	
-	public void setStory(HAPStory story) {
-		this.m_story = story;
-		for(HAPAnswer answer : this.m_answers.values()) {
-			answer.setStory(story);
-		}
-	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -79,5 +68,4 @@ public class HAPQuestionnaire extends HAPSerializableImp{
 		jsonMap.put(QUESTIONS, HAPJsonUtility.buildJson(this.m_questions, HAPSerializationFormat.JSON));
 		jsonMap.put(ANSWERS, HAPJsonUtility.buildJson(this.m_answers, HAPSerializationFormat.JSON));
 	}
-
 }

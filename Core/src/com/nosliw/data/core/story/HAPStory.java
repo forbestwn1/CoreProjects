@@ -48,6 +48,7 @@ public interface HAPStory extends HAPEntityInfo{
 	
 	HAPStoryElement deleteElement(HAPStoryElement element);
 	HAPStoryElement deleteElement(String categary, String id);
+	HAPStoryElement deleteElement(HAPIdElement eleId);
 	
 	Set<HAPStoryNode> getNodes();
 	HAPStoryNode getNode(String id);

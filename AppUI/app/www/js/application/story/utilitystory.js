@@ -33,6 +33,18 @@ var node_utility = function(){
 				story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
 			}
 		},
+		
+		getStoryElementByRef : function(story, ref){
+			if(ref[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY]!=null){
+				//id
+				return this.getStoryElement(story, ref[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], ref[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
+			}
+			else{
+				//alias
+				var elementId = ref[node_COMMONATRIBUTECONSTANT.STORY_ALIAS][ref[node_COMMONATRIBUTECONSTANT.ALIASELEMENT_NAME]];
+				return getStoryElement(story, elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
+			}
+		},
 
 		getStoryElement : function(story, elementCategary, elementId){
 			var out;

@@ -67,6 +67,7 @@ public class HAPUtilityChange {
 		String changeType = changeItem.getChangeType();
 		if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_PATCH)) {
 			HAPChangeItemPatch changePatch = (HAPChangeItemPatch)changeItem;
+			changePatch.processAlias(story);
 			out = story.getElement(changePatch.getTargetElementId());
 			Object patchObj = changePatch.getValue();
 			if(patchObj instanceof HAPCalculateObject) {
@@ -80,16 +81,17 @@ public class HAPUtilityChange {
 		}
 		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_NEW)) {
 			HAPChangeItemNew changeNew = (HAPChangeItemNew)changeItem;
-			HAPStoryElement element = (HAPStoryElement)changeNew.getEntityOrReference();
+			HAPStoryElement element = changeNew.getElement();
 			HAPAliasElement alias = changeNew.getAlias();
-			HAPIdElement oldAliasEleId = story.getElementId(alias.getAlias());
+			HAPIdElement oldAliasEleId = null;
+			if(alias!=null)   oldAliasEleId = story.getElementId(alias.getName());
 			out = story.addElement(element, alias);
-			changeNew.setEntityOrReference(out.getElementId());
+			changeNew.setElement(out.cloneStoryElement());
 			//revert changes info
 			if(saveRevert) {
 				List<HAPChangeItem> revertChanges = new ArrayList<HAPChangeItem>();
 				revertChanges.add(new HAPChangeItemDelete(out.getElementId()));
-				if(!alias.isTemporary()) {
+				if(alias!=null && !alias.isTemporary()) {
 					if(oldAliasEleId!=null) revertChanges.add(new HAPChangeItemAlias(alias, oldAliasEleId));
 				}
 				changeItem.setRevertChanges(revertChanges);
@@ -97,8 +99,9 @@ public class HAPUtilityChange {
 		}		
 		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_DELETE)) {
 			HAPChangeItemDelete changeDelete = (HAPChangeItemDelete)changeItem;
+			changeDelete.processAlias(story);
 			HAPAliasElement alias = story.getAlias(changeDelete.getTargetElementId());
-			HAPStoryElement element = story.deleteElement(changeDelete.getTargetCategary(), changeDelete.getTargetId());
+			HAPStoryElement element = story.deleteElement(changeDelete.getTargetElementId());
 			//revert changes info
 			if(saveRevert) {
 				List<HAPChangeItem> revertChanges = new ArrayList<HAPChangeItem>();
@@ -158,7 +161,7 @@ public class HAPUtilityChange {
 	
 	public static HAPIdElement getChangeTargetElementId(HAPChangeItem change) {
 		String type = change.getChangeType();
-		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_NEW))  return (HAPIdElement)((HAPChangeItemNew)change).getEntityOrReference();
+		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_NEW))  return ((HAPChangeItemNew)change).getElement().getElementId();
 		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_PATCH))  return ((HAPChangeItemPatch)change).getTargetElementId();
 		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_DELETE))  return ((HAPChangeItemDelete)change).getTargetElementId();
 		return null;

@@ -31,15 +31,15 @@ public class HAPDesignStep extends HAPEntityInfoImp{
 
 	private HAPQuestionnaire m_questionaire;
 
-	public HAPDesignStep() {
+	HAPDesignStep(HAPStory story) {
 		this.m_changes = new ArrayList<HAPChangeItem>();
 		this.m_questionaire = new HAPQuestionnaire();
+		this.m_story = story;
 	}
 	
 	public List<HAPChangeItem> getChanges(){    return this.m_changes;    }
 	
 	public void addChange(HAPChangeItem changeItem) {
-		changeItem.setStory(m_story);
 		this.m_changes.add(changeItem);	
 	}
 	
@@ -60,17 +60,14 @@ public class HAPDesignStep extends HAPEntityInfoImp{
 	}
 	
 	public void setQuestion(HAPQuestionGroup question) {
+		//solidate ref
+		question.processAlias(this.m_story);
+		
 		question.setId("0");
 		this.m_questionaire.setQuestionGroup(question); 
 	}
-	
+		
 	public HAPQuestionnaire getQuestionair() {   return this.m_questionaire;   }
-	
-	public void setStory(HAPStory story) {    
-		this.m_story = story;
-		this.m_questionaire.setStory(m_story);
-		for(HAPChangeItem change : this.m_changes)  change.setStory(m_story);
-	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

@@ -10,20 +10,25 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPParserElementReference;
 import com.nosliw.data.core.story.HAPReferenceElement;
+import com.nosliw.data.core.story.HAPReferenceElementWrapper;
+import com.nosliw.data.core.story.HAPStory;
 
 public class HAPQuestionItem extends HAPQuestion{
 
 	@HAPAttribute
 	public static final String TARGETREF = "targetRef";
 
-	private HAPReferenceElement m_targetRef;
+	private HAPReferenceElementWrapper m_targetRef;
 	
 	public HAPQuestionItem() {}
 	
 	public HAPQuestionItem(String question, HAPReferenceElement targetRef) {
 		super(question);
-		this.m_targetRef = targetRef;
+		this.m_targetRef = new HAPReferenceElementWrapper(targetRef);
 	}
+	
+	@Override
+	public void processAlias(HAPStory story) {  this.m_targetRef.processAlias(story);  }
 
 	@Override
 	public String getType() {	return HAPConstant.STORYDESIGN_QUESTIONTYPE_ITEM;	}
@@ -41,5 +46,4 @@ public class HAPQuestionItem extends HAPQuestion{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TARGETREF, HAPJsonUtility.buildJson(this.m_targetRef, HAPSerializationFormat.JSON));
 	}
-
 }

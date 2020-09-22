@@ -17,7 +17,7 @@ public class HAPCalculateObjectElementId implements HAPCalculateObject{
 	
 	@Override
 	public Object calculate() {
-		return this.m_story.getElementId(this.m_alias.getAlias());
+		return this.m_story.getElementId(this.m_alias.getName());
 	}
 
 }

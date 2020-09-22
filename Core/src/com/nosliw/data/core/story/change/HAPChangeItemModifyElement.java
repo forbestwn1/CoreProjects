@@ -7,52 +7,46 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPReferenceElement;
+import com.nosliw.data.core.story.HAPReferenceElementWrapper;
+import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.HAPWithAlias;
 
-public class HAPChangeItemModifyElement extends HAPChangeItem{
+public class HAPChangeItemModifyElement extends HAPChangeItem implements HAPWithAlias{
 
 	@HAPAttribute
 	public static final String TARGETELEMENTID = "targetElementId";
 
-	private HAPIdElement m_targetElementId;
+	private HAPReferenceElementWrapper m_targetElementRef;
 	
-	private HAPAliasElement m_targetElementAlias;
-
 	public HAPChangeItemModifyElement(String type) {
 		super(type);
 	}
 	
 	public HAPChangeItemModifyElement(String type, HAPReferenceElement targetElementRef) {
 		this(type);
-		if(targetElementRef instanceof HAPIdElement)   this.m_targetElementId = (HAPIdElement)targetElementRef;
-		else if(targetElementRef instanceof HAPAliasElement)   this.m_targetElementAlias = (HAPAliasElement)targetElementRef;
+		this.m_targetElementRef = new HAPReferenceElementWrapper(targetElementRef);
 	}
 	
-	public HAPIdElement getTargetElementId() {
-		if(this.m_targetElementId==null) {
-			this.m_targetElementId = this.getStory().getElementId(this.m_targetElementAlias.getAlias());
-		}
-		return this.m_targetElementId;   
-	}
-	
-	public String getTargetCategary() {   return this.getTargetElementId().getCategary();   }
-	
-	public String getTargetId() {   return this.getTargetElementId().getId();    }
+	public HAPIdElement getTargetElementId() {  return this.m_targetElementRef.getElementId(); } 
+
+	@Override
+	public void processAlias(HAPStory story) {	this.m_targetElementRef.processAlias(story);	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		this.m_targetElementId = new HAPIdElement();
-		this.m_targetElementId.buildObject(jsonObj.getJSONObject(TARGETELEMENTID), HAPSerializationFormat.JSON);
+		this.m_targetElementRef = new HAPReferenceElementWrapper();
+		this.m_targetElementRef.buildObject(jsonObj.getJSONObject(TARGETELEMENTID), HAPSerializationFormat.JSON);
 		return true;  
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TARGETELEMENTID, HAPJsonUtility.buildJson(this.m_targetElementId, HAPSerializationFormat.JSON));
+		jsonMap.put(TARGETELEMENTID, HAPJsonUtility.buildJson(this.m_targetElementRef, HAPSerializationFormat.JSON));
 	}
+
 }

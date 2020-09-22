@@ -12,12 +12,16 @@ import com.nosliw.data.core.HAPDataType;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPManagerExpression;
+import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 import com.nosliw.data.core.service.provide.HAPManagerService;
+import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPReferenceElement;
@@ -30,7 +34,6 @@ import com.nosliw.data.core.story.change.HAPChangeItemNew;
 import com.nosliw.data.core.story.change.HAPRequestChange;
 import com.nosliw.data.core.story.change.HAPRequestChangeWrapper;
 import com.nosliw.data.core.story.change.HAPResultTransaction;
-import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.data.core.story.design.HAPAnswer;
 import com.nosliw.data.core.story.design.HAPBuilderStory;
 import com.nosliw.data.core.story.design.HAPDesignStep;
@@ -48,6 +51,7 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
+import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
 import com.nosliw.uiresource.page.story.model.HAPUIDataInfo;
@@ -74,10 +78,17 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 	private List<HAPStageInfo> m_stages;
 	
-	public HAPStoryBuilderPageSimple(HAPManagerService serviceManager, HAPUITagManager uiTagMan, HAPRequirementContextProcessor contextProcessRequirement) {
+	public HAPStoryBuilderPageSimple(
+			HAPManagerService serviceManager, 
+			HAPUITagManager uiTagMan, 
+			HAPManagerResourceDefinition resourceDefMan,
+			HAPDataTypeHelper dataTypeHelper, 
+			HAPRuntime runtime, 
+			HAPManagerExpression expressionMan,
+			HAPManagerServiceDefinition serviceDefinitionManager) {
 		this.m_serviceManager = serviceManager;
 		this.m_uiTagManager = uiTagMan;
-		this.m_contextProcessRequirement = contextProcessRequirement;
+		this.m_contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(resourceDefMan, dataTypeHelper, runtime, expressionMan, serviceDefinitionManager);
 		this.m_stages = new ArrayList<HAPStageInfo>();
 		this.m_stages.add(new HAPStageInfo(STAGE_SERVICE, STAGE_SERVICE));
 		this.m_stages.add(new HAPStageInfo(STAGE_UI, STAGE_UI));
@@ -93,17 +104,17 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		
 		story.startTransaction();
 		HAPRequestChange changeRequest = new HAPRequestChange();
-		changeRequest.addChange(new HAPChangeItemNew(HAPUtility.buildPageStoryNode(story), null));
+		changeRequest.addChange(new HAPChangeItemNew(HAPUtility.buildPageStoryNode(story)));
 		changeRequest.addChange(new HAPChangeItemNew(new HAPStoryNodeService(), ELEMENT_SERVICE));
 		story.change(changeRequest);
 		HAPResultTransaction transactionResult = story.commitTransaction();
 		
-		HAPDesignStep step = new HAPDesignStep();
+		HAPDesignStep step = design.newStep();
 		step.addChanges(transactionResult.getChanges());
 		
 		//extra info
 		HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Please select service.");
-		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("select service", story.getElementId(ELEMENT_SERVICE.getAlias()));
+		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("select service", ELEMENT_SERVICE);
 		rootQuestionGroup.addChild(serviceItemExtraInfo);
 		step.setQuestion(rootQuestionGroup);
 		
@@ -168,7 +179,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			HAPRequestChangeWrapper changeRequest = new HAPRequestChangeWrapper(story);
 
 			//new step
-			HAPDesignStep step = new HAPDesignStep();
+			HAPDesignStep step = design.newStep();
 
 			//question
 			HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Please select ui.");
@@ -380,10 +391,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		for(HAPAnswer answer : answerRequest.getAnswers()){		answerChanges.addAll(answer.getChanges());	}
 
 		//apply answer to story
-		HAPUtilityChange.applyChange(story, answerChanges);
+//		HAPUtilityChange.applyChange(story, answerChanges);
 				
 		//new step
-		HAPDesignStep step = new HAPDesignStep();
+		HAPDesignStep step = design.newStep();
 
 		//question
 		HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Finish.");

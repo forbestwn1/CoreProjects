@@ -44,7 +44,7 @@ public class HAPParserElement {
 	public static void registerStoryNode(String nodeType, Class<? extends HAPStoryNode> node) {	m_storyNodeClass.put(nodeType, node);	}
 	public static void registerStoryConnection(String nodeType, Class<HAPConnection> connection) {	m_storyConnectionClass.put(nodeType, connection);	}
 	
-	public static HAPStoryElement parseElement(JSONObject jsonObj, HAPStory story) {
+	public static HAPStoryElement parseElement(JSONObject jsonObj) {
 		HAPStoryElement out = null;
 		String categary = jsonObj.getString(HAPStoryElement.CATEGARY);
 		if(categary.equals(HAPConstant.STORYELEMENT_CATEGARY_NODE))   out = parseNode(jsonObj);

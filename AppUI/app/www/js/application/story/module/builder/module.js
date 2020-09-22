@@ -87,9 +87,8 @@ var node_createModuleStoryBuilder = function(parm){
 			});
 		}
 		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
-			var targetCategary = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY];
-			var targetId = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID];
-			var element = node_storyUtility.getStoryElement(loc_componentData.story, targetCategary, targetId);
+			var targetRef = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETREF];
+			var element = node_storyUtility.getStoryElementByRef(loc_componentData.story, targetRef);
 			question.element = element;
 			var answerInfo = answers[question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]];
 			if(answerInfo!=undefined)  question.answer = answerInfo[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES];

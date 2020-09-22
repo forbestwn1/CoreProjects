@@ -33,5 +33,6 @@ public interface HAPStoryElement extends HAPEntityInfo, HAPEntityOrReference{
 	HAPStatus getStatus();
 
 	boolean isEnable();
-	
+
+	HAPStoryElement cloneStoryElement();
 }

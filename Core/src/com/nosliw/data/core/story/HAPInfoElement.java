@@ -30,7 +30,7 @@ public class HAPInfoElement extends HAPEntityInfoImp{
 		HAPIdElement out = null;
 		if(this.m_eleRef instanceof HAPAliasElement) {
 			HAPAliasElement alias = (HAPAliasElement)this.m_eleRef;
-			out = this.m_story.getElementId(alias.getAlias());
+			out = this.m_story.getElementId(alias.getName());
 			this.setElementId(out);
 		}
 		else {
