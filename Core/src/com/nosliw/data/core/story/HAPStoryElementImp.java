@@ -21,6 +21,8 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 	
 	private boolean m_enable;
 
+	private HAPStory m_story;
+	
 	public HAPStoryElementImp() {
 		this.m_status = new HAPStatus();
 		this.m_enable = true;
@@ -36,6 +38,10 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 		this.m_type = type;
 	}
 	
+	public void appendToStory(HAPStory story) {   
+		this.m_story = story;     
+	}
+
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstant.ENTITY;    }
 
@@ -65,6 +71,17 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 		return null;
 	}
 
+	protected HAPStory getStory() {    return this.m_story;    }
+
+	protected void cloneTo(HAPStoryElementImp storyEle) {
+		this.cloneToEntityInfo(storyEle);
+		storyEle.m_story = this.m_story;
+		storyEle.m_categary = this.m_categary;
+		storyEle.m_type = this.m_type;
+		storyEle.m_status = this.m_status.cloneStatus();
+		storyEle.m_enable = this.m_enable;
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
@@ -87,5 +104,4 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 		jsonMap.put(ENABLE, this.m_enable+"");
 		typeJsonMap.put(ENABLE, Boolean.class);
 	}
-	
 }

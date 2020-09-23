@@ -12,6 +12,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
@@ -59,6 +60,15 @@ public class HAPStoryNodeConstant extends HAPStoryNodeImp{
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public HAPStoryElement cloneStoryElement() {
+		HAPStoryNodeConstant out = new HAPStoryNodeConstant();
+		super.cloneTo(out);
+		if(this.m_dataType!=null) out.m_dataType = HAPCriteriaUtility.cloneDataTypeCriteria(this.m_dataType);
+		if(this.m_data!=null)  this.m_data.cloneData();
+		return out;
 	}
 
 	@Override

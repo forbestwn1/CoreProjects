@@ -52,15 +52,12 @@ public interface HAPStory extends HAPEntityInfo{
 	
 	Set<HAPStoryNode> getNodes();
 	HAPStoryNode getNode(String id);
-	HAPStoryNode addNode(HAPStoryNode node);
 	
 	Set<HAPConnection> getConnections();
 	HAPConnection getConnection(String id);
-	HAPConnection addConnection(HAPConnection connection);
 	
 	Set<HAPElementGroup> getElementGroups();
 	HAPElementGroup getElementGroup(String id);
-	HAPElementGroup addElementGroup(HAPElementGroup connectionGroup);
 	
 	void startTransaction();
 	HAPResultTransaction commitTransaction();

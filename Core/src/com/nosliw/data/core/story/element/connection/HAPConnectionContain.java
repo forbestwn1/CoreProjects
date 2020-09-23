@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPConnectionImp;
+import com.nosliw.data.core.story.HAPStoryElement;
 
 @HAPEntityWithAttribute
 public class HAPConnectionContain extends HAPConnectionImp{
@@ -27,6 +28,14 @@ public class HAPConnectionContain extends HAPConnectionImp{
 	public void setChildId(String childId) {   this.m_childId = childId;   }
 	
 	@Override
+	public HAPStoryElement cloneStoryElement() {
+		HAPConnectionContain out = new HAPConnectionContain();
+		super.cloneTo(out);
+		out.m_childId = this.m_childId;
+		return out;
+	}
+
+	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
@@ -39,5 +48,4 @@ public class HAPConnectionContain extends HAPConnectionImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CHILDID, this.m_childId);
 	}
-
 }

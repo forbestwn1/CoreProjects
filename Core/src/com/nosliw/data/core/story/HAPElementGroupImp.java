@@ -15,27 +15,31 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 
 	private List<HAPInfoElement> m_elements;
 
-	private HAPStory m_story;
-	
-	public HAPElementGroupImp(HAPStory story) {
+	public HAPElementGroupImp() {
 		super(HAPConstant.STORYELEMENT_CATEGARY_GROUP);  
 		this.m_elements = new ArrayList<HAPInfoElement>();
-		this.m_story = story;
 	}
 	
-	public HAPElementGroupImp(String type, HAPStory story) {
+	public HAPElementGroupImp(String type) {
 		super(HAPConstant.STORYELEMENT_CATEGARY_GROUP, type);
 		this.m_elements = new ArrayList<HAPInfoElement>();
-		this.m_story = story;
 	}
 
 	@Override
 	public List<HAPInfoElement> getElements() {  return this.m_elements;  }
 
 	@Override
-	public void addElement(HAPInfoElement eleId) {    
-		eleId.setStory(this.m_story);
+	public void addElement(HAPInfoElement eleId) {  
 		this.m_elements.add(eleId);
+		if(this.getStory()!=null)  eleId.processAlias(this.getStory());
+	}
+	
+	@Override
+	public void appendToStory(HAPStory story) {   
+		super.appendToStory(story);
+		for(HAPInfoElement ele : this.m_elements) {
+			ele.processAlias(story);
+		}
 	}
 	
 	protected HAPInfoElement getElement(String id) {
@@ -47,7 +51,12 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 		return null;
 	}
 	
-	protected HAPStory getStory() {    return this.m_story;    }
+	protected void cloneTo(HAPElementGroupImp groupEle) {
+		super.cloneTo(groupEle);
+		for(HAPInfoElement ele : this.m_elements) {
+			groupEle.m_elements.add(ele.cloneElementInfo());
+		}
+	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -69,5 +78,4 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}
-
 }

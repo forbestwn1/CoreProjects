@@ -222,7 +222,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 //					HAPChangeInfo constantProviderGroupNewChange = HAPUtilityChange.applyNew(story, constantBatchGroup, step.getChanges());
 
 					//constant path and group
-					HAPElementGroupBatch constantBatchGroup = new HAPElementGroupBatch(story);
+					HAPElementGroupBatch constantBatchGroup = new HAPElementGroupBatch();
 					constantBatchGroup.addElement(new HAPInfoElement(constantNodeName));
 					constantBatchGroup.addElement(new HAPInfoElement(constantConnectionNodeName));
 					HAPAliasElement constantGroupName = changeRequest.addNewChange(constantBatchGroup);
@@ -236,7 +236,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPAliasElement variableConnectionNodeName = changeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(variableNodeName, parmNodeName, null, null));
 //					HAPChangeInfo parmVariableProviderConnectionNewChange = HAPUtilityChange.applyNew(story, HAPUtilityConnection.newConnectionOnewayDataIO(parmVariableProviderNewChange.getStoryElement().getId(), parmNewChange.getStoryElement().getId(), null, null), step.getChanges(), variableBatchGroup);
 
-					HAPElementGroupBatch variableBatchGroup = new HAPElementGroupBatch(story);
+					HAPElementGroupBatch variableBatchGroup = new HAPElementGroupBatch();
 					variableBatchGroup.addElement(new HAPInfoElement(variableNodeName));
 					variableBatchGroup.addElement(new HAPInfoElement(variableConnectionNodeName));
 					HAPAliasElement variableGroupName = changeRequest.addNewChange(variableBatchGroup);
@@ -250,7 +250,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 //					HAPChangeInfo variableProviderGroupNewChange = HAPUtilityChange.applyNew(story, variableBatchGroup, step.getChanges());
 
 					//switch group
-					HAPElementGroupSwitch group = new HAPElementGroupSwitch(story);
+					HAPElementGroupSwitch group = new HAPElementGroupSwitch();
 					//add constant to group
 					HAPInfoElement constantGroupEle = new HAPInfoElement(constantGroupName);
 					constantGroupEle.setName("Constant");

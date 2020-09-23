@@ -5,4 +5,6 @@ import com.nosliw.common.serialization.HAPSerializable;
 
 public interface HAPReferenceElement extends HAPEntityOrReference, HAPSerializable{
 
+	HAPReferenceElement cloneElementReference();
+	
 }

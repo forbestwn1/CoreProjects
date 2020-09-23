@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 
 @HAPEntityWithAttribute
@@ -23,6 +24,13 @@ public class HAPStoryNodePage extends HAPStoryNodeUI{
 	}
 
 	@Override
+	public HAPStoryElement cloneStoryElement() {
+		HAPStoryNodePage out = new HAPStoryNodePage();
+		super.cloneTo(out);
+		return out;
+	}
+	
+	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
@@ -33,5 +41,4 @@ public class HAPStoryNodePage extends HAPStoryNodeUI{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
-
 }

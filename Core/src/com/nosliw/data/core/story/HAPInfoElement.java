@@ -11,48 +11,38 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPInfoElement extends HAPEntityInfoImp{
+public class HAPInfoElement extends HAPEntityInfoImp implements HAPWithAlias{
 
 	@HAPAttribute
 	public static final String ELEMENTID = "elementId";
 
-	private HAPReferenceElement m_eleRef;
-	
-	private HAPStory m_story;
+	private HAPReferenceElementWrapper m_eleRef;
 	
 	public HAPInfoElement() {}
 	
 	public HAPInfoElement(HAPReferenceElement eleRef) {
-		this.m_eleRef = eleRef;
+		this.m_eleRef = new HAPReferenceElementWrapper(eleRef);
 	}
 	
-	public HAPIdElement getElementId() {
-		HAPIdElement out = null;
-		if(this.m_eleRef instanceof HAPAliasElement) {
-			HAPAliasElement alias = (HAPAliasElement)this.m_eleRef;
-			out = this.m_story.getElementId(alias.getName());
-			this.setElementId(out);
-		}
-		else {
-			out = (HAPIdElement)this.m_eleRef;
-		}
-		return out;     
+	public HAPIdElement getElementId() {  return this.m_eleRef.getElementId(); }
+	
+	@Override
+	public void processAlias(HAPStory story) {
+		this.m_eleRef.processAlias(story);
 	}
-	
-	public void setStory(HAPStory story) {  this.m_story = story;    }
-	
-	private void setElementId(HAPIdElement eleId) {
-		this.m_eleRef = eleId;
-		this.setId(eleId.toStringValue(HAPSerializationFormat.LITERATE));
+
+	public HAPInfoElement cloneElementInfo() {
+		HAPInfoElement out = new HAPInfoElement();
+		out.m_eleRef = this.m_eleRef.cloneElementReferenceWrapper();
+		return out;
 	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		HAPIdElement eleId = new HAPIdElement();
-		eleId.buildObject(jsonObj.getJSONObject(ELEMENTID), HAPSerializationFormat.JSON);
-		this.setElementId(eleId);
+		this.m_eleRef = new HAPReferenceElementWrapper();
+		this.m_eleRef.buildObject(jsonObj.getJSONObject(ELEMENTID), HAPSerializationFormat.JSON);
 		return true;  
 	}
 

@@ -45,6 +45,15 @@ public class HAPConnectionEnd extends HAPSerializableImp{
 	public String getProfile() {    return this.m_profile;  }
 	public void setProfile(String profile) {    this.m_profile = profile;    }
 	
+	public HAPConnectionEnd cloneConnectionEnd() {
+		HAPConnectionEnd out = new HAPConnectionEnd();
+		out.m_connectionId = this.m_connectionId;
+		out.m_profile = this.m_profile;
+		out.m_ifDeleteNode = this.m_ifDeleteNode;
+		if(this.m_nodeRef!=null)   out.m_nodeRef = this.m_nodeRef.cloneElementReference();
+		return out;
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;

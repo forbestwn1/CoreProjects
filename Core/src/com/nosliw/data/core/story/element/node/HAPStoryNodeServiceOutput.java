@@ -1,6 +1,7 @@
 package com.nosliw.data.core.story.element.node;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 
@@ -15,5 +16,12 @@ public class HAPStoryNodeServiceOutput extends HAPStoryNodeImp{
 	@Override
 	public HAPChangeResult patch(String path, Object value) {
 		return super.patch(path, value);
+	}
+
+	@Override
+	public HAPStoryElement cloneStoryElement() {
+		HAPStoryNodeServiceOutput out = new HAPStoryNodeServiceOutput();
+		super.cloneTo(out);
+		return null;
 	}
 }

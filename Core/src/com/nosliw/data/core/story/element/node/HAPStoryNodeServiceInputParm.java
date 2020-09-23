@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
+import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 
@@ -35,6 +36,14 @@ public class HAPStoryNodeServiceInputParm extends HAPStoryNodeImp{
 	}
 
 	@Override
+	public HAPStoryElement cloneStoryElement() {
+		HAPStoryNodeServiceInputParm out = new HAPStoryNodeServiceInputParm();
+		super.cloneTo(out);
+		out.m_parmDefinition = this.m_parmDefinition.cloneServiceParm();
+		return out;
+	}
+
+	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
@@ -51,5 +60,4 @@ public class HAPStoryNodeServiceInputParm extends HAPStoryNodeImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_parmDefinition!=null)	jsonMap.put(PARMDEFINITION, this.m_parmDefinition.toStringValue(HAPSerializationFormat.JSON));
 	}
-
 }

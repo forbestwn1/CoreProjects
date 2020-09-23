@@ -32,6 +32,13 @@ public class HAPReferenceElementWrapper extends HAPSerializableImp implements HA
 		}
 	}
 	
+	public HAPReferenceElementWrapper cloneElementReferenceWrapper() {
+		HAPReferenceElementWrapper out = new HAPReferenceElementWrapper();
+		if(this.m_alias!=null)   out.m_alias = (HAPAliasElement)this.m_alias.cloneElementReference();
+		if(this.m_elementId!=null)   out.m_elementId = (HAPIdElement)this.m_elementId.cloneElementReference();
+		return out;
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;

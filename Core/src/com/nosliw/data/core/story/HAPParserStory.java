@@ -19,7 +19,7 @@ public class HAPParserStory {
 			for(int i=0; i<nodeJsonArray.length(); i++) {
 				JSONObject nodeJsonObj = nodeJsonArray.getJSONObject(i);
 				HAPStoryNode storyNode = HAPParserElement.parseNode(nodeJsonObj);
-				out.addNode(storyNode);
+				out.addElement(storyNode, null);
 			}
 		}
 		
@@ -28,7 +28,7 @@ public class HAPParserStory {
 			for(int i=0; i<connectionJsonArray.length(); i++) {
 				JSONObject connectionJsonObj = connectionJsonArray.getJSONObject(i);
 				HAPConnection connection = HAPParserElement.parseConnection(connectionJsonObj);
-				out.addConnection(connection);
+				out.addElement(connection, null);
 			}
 		}
 		
@@ -36,8 +36,8 @@ public class HAPParserStory {
 		if(connectionGroupJsonArray!=null) {
 			for(int i=0; i<connectionGroupJsonArray.length(); i++) {
 				JSONObject connectionGroupJsonObj = connectionGroupJsonArray.getJSONObject(i);
-				HAPElementGroup connectionGroup = HAPParserElement.parseElementGroup(connectionGroupJsonObj, out);
-				out.addElementGroup(connectionGroup);
+				HAPElementGroup connectionGroup = HAPParserElement.parseElementGroup(connectionGroupJsonObj);
+				out.addElement(connectionGroup, null);
 			}
 		}
 

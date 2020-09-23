@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPConnectionImp;
+import com.nosliw.data.core.story.HAPStoryElement;
 
 @HAPEntityWithAttribute
 public class HAPConnectionDataIO extends HAPConnectionImp{
@@ -33,6 +34,15 @@ public class HAPConnectionDataIO extends HAPConnectionImp{
 	public String getPath2() {    return this.m_path2;    }
 	public void setPath2(String path) {    this.m_path2 = path;    }
 	
+	@Override
+	public HAPStoryElement cloneStoryElement() {
+		HAPConnectionDataIO out = new HAPConnectionDataIO();
+		super.cloneTo(out);
+		out.m_path1 = this.m_path1;
+		out.m_path2 = this.m_path2;
+		return out;
+	}
+
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;

@@ -12,7 +12,6 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPElementGroupImp;
 import com.nosliw.data.core.story.HAPInfoElement;
-import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.change.HAPChangeItemPatch;
 import com.nosliw.data.core.story.change.HAPChangeResult;
@@ -28,12 +27,21 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 
 	private String m_choice;
 
-	public HAPElementGroupSwitch(HAPStory story) {
-		super(GROUP_TYPE, story);
+	public HAPElementGroupSwitch() {
+		super(GROUP_TYPE);
 	}
 	
 	public String getChoice() {    return this.m_choice;     }
 	public void setChoice(String choice) {     this.m_choice = choice;     }
+	
+
+	@Override
+	public HAPStoryElement cloneStoryElement() {
+		HAPElementGroupSwitch out = new HAPElementGroupSwitch();
+		super.cloneTo(out);
+		out.m_choice = this.m_choice;
+		return out;
+	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -80,5 +88,4 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 		}
 		return null;
 	}
-	
 }

@@ -10,6 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
@@ -63,6 +64,15 @@ public class HAPStoryNodeVariable extends HAPStoryNodeImp{
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public HAPStoryElement cloneStoryElement() {
+		HAPStoryNodeVariable out = new HAPStoryNodeVariable();
+		super.cloneTo(out);
+		if(this.m_dataType!=null)  out.m_dataType = HAPCriteriaUtility.cloneDataTypeCriteria(this.m_dataType);
+		if(this.m_variableName!=null)  out.m_variableName = this.m_variableName;
+		return out;
 	}
 
 	@Override

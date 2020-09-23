@@ -30,6 +30,11 @@ public abstract class HAPStoryNodeImp extends HAPStoryElementImp implements HAPS
 	@Override
 	public void addConnection(String connectionId) {  this.m_connections.add(connectionId);   }
 	
+	protected void cloneTo(HAPStoryNodeImp storyNode) {
+		super.cloneTo(storyNode);
+		storyNode.m_connections.addAll(this.m_connections);
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
@@ -42,5 +47,4 @@ public abstract class HAPStoryNodeImp extends HAPStoryElementImp implements HAPS
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CONNECTIONS, HAPJsonUtility.buildJson(this.m_connections, HAPSerializationFormat.JSON));
 	}
-
 }

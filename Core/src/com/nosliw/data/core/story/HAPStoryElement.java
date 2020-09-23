@@ -34,5 +34,7 @@ public interface HAPStoryElement extends HAPEntityInfo, HAPEntityOrReference{
 
 	boolean isEnable();
 
+	void appendToStory(HAPStory story);   
+
 	HAPStoryElement cloneStoryElement();
 }

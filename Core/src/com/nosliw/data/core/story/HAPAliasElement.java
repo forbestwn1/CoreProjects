@@ -38,6 +38,14 @@ public class HAPAliasElement extends HAPSerializableImp implements HAPReferenceE
 
 	@Override
 	public String getEntityOrReferenceType() {  return HAPConstant.REFERENCE;  }
+
+	@Override
+	public HAPReferenceElement cloneElementReference() {
+		HAPAliasElement out = new HAPAliasElement();
+		out.m_isTemp = this.m_isTemp;
+		out.m_name = this.m_name;
+		return out;
+	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

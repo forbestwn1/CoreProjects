@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute
@@ -26,6 +27,13 @@ public class HAPServiceOutput extends HAPEntityInfoWritableImp{
 	public HAPServiceOutput(){
 	}
 
+	public HAPServiceOutput cloneServiceOutput() {
+		HAPServiceOutput out = new HAPServiceOutput();
+		this.cloneToEntityInfo(out);
+		if(this.m_criteria!=null)  out.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(this.m_criteria);
+		return out;
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{

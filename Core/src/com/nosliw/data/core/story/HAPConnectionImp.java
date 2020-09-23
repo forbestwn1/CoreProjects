@@ -37,6 +37,12 @@ public abstract class HAPConnectionImp extends HAPStoryElementImp implements HAP
 	@Override
 	public HAPConnectionEnd getEnd2() {  return this.m_end2;  }
 
+	public void cloneTo(HAPConnectionImp connection) {
+		super.cloneTo(connection);
+		if(this.m_end1!=null)  connection.m_end1 = this.m_end1.cloneConnectionEnd();
+		if(this.m_end2!=null)  connection.m_end2 = this.m_end2.cloneConnectionEnd();
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;

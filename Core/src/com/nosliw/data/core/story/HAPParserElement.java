@@ -49,7 +49,7 @@ public class HAPParserElement {
 		String categary = jsonObj.getString(HAPStoryElement.CATEGARY);
 		if(categary.equals(HAPConstant.STORYELEMENT_CATEGARY_NODE))   out = parseNode(jsonObj);
 		else if(categary.equals(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION))   out = parseConnection(jsonObj);
-		else if(categary.equals(HAPConstant.STORYELEMENT_CATEGARY_GROUP))   out = parseElementGroup(jsonObj, story);
+		else if(categary.equals(HAPConstant.STORYELEMENT_CATEGARY_GROUP))   out = parseElementGroup(jsonObj);
 		return out;
 	}
 	
@@ -79,11 +79,11 @@ public class HAPParserElement {
 		return out;
 	}
 
-	public static HAPElementGroup parseElementGroup(JSONObject jsonObj, HAPStory story) {
+	public static HAPElementGroup parseElementGroup(JSONObject jsonObj) {
 		HAPElementGroup out = null;
 		try {
 			String type = jsonObj.getString(HAPStoryElement.TYPE);
-			out = m_storyGroupClass.get(type).getConstructor(HAPStory.class).newInstance(story);
+			out = m_storyGroupClass.get(type).getConstructor(HAPStory.class).newInstance();
 			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		}
 		catch(Exception e) {

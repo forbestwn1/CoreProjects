@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPUtilityData;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute
@@ -35,6 +36,14 @@ public class HAPServiceParm extends HAPEntityInfoWritableImp{
 	public void setCriteria(HAPDataTypeCriteria criteria) {  this.m_criteria = criteria;   }
 	
 	public void setDefault(HAPData data) { this.m_default = data;   }
+	
+	public HAPServiceParm cloneServiceParm() {
+		HAPServiceParm out = new HAPServiceParm();
+		this.cloneToEntityInfo(out);
+		if(this.m_criteria!=null)   out.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(this.m_criteria);
+		if(this.m_default!=null)  out.m_default = this.m_default.cloneData();
+		return out;
+	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

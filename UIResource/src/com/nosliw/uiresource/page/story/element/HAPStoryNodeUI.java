@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
@@ -16,12 +17,14 @@ public class HAPStoryNodeUI extends HAPStoryNodeImp{
 	public static final String DATASTRUCTURE = "dataStructure";
 
 	private HAPUIDataStructureInfo m_dataStructureInfo;
-	
+
+	public HAPStoryNodeUI() {}
+
 	public HAPStoryNodeUI(String type) {
 		super(type);
 		this.m_dataStructureInfo = new HAPUIDataStructureInfo();
 	}
-	
+
 	public HAPUIDataStructureInfo getDataStructureInfo() {		return this.m_dataStructureInfo;	}
 	public void setDataStructureInfo(HAPUIDataStructureInfo dataStructureInfo) {     this.m_dataStructureInfo = dataStructureInfo;       }
 	
@@ -39,6 +42,18 @@ public class HAPStoryNodeUI extends HAPStoryNodeImp{
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public HAPStoryElement cloneStoryElement() {
+		HAPStoryNodeUI out = new HAPStoryNodeUI();
+		this.cloneTo(out);
+		return out;
+	}
+	
+	protected void cloneTo(HAPStoryNodeUI uiStoryNode) {
+		super.cloneTo(uiStoryNode);
+		if(this.m_dataStructureInfo!=null)  uiStoryNode.m_dataStructureInfo = this.m_dataStructureInfo.cloneUIDataStructureInfo();
 	}
 
 	@Override

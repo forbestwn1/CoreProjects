@@ -39,6 +39,14 @@ public class HAPIdElement extends HAPSerializableImp implements HAPReferenceElem
 	public String getId() {    return this.m_id;    }
 
 	@Override
+	public HAPReferenceElement cloneElementReference() {
+		HAPIdElement out = new HAPIdElement();
+		out.m_categary = this.m_categary;
+		out.m_id = this.m_id;
+		return out;
+	}
+
+	@Override
 	protected String buildLiterate(){
 		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getCategary(), this.getId()});
 	}
