@@ -16,15 +16,30 @@ var node_utility = function(){
 
 	var loc_out = {
 		
+		getNextIdForStory : function(story){
+			
+		},
+			
+		getElementIdByReference : function(story, reference){
+			if(reference[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY]!=null)  return reference;
+			else return story[node_COMMONATRIBUTECONSTANT.STORY_ALIAS][ref[node_COMMONATRIBUTECONSTANT.ALIASELEMENT_NAME]];
+		},	
+			
 		getQuestionTargetElement : function(story, question){
-			return this.getStoryElement(story, question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY], question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID]);
+			return this.getStoryElementByRef(story, question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETREF]);
 		},
 			
 		getAllNodes : function(story){  return story[node_COMMONATRIBUTECONSTANT.STORY_NODE];   },
 		
-		addStoryElement : function(story, elementCategary, element){
+		addStoryElement : function(story, element, aliasObj){
+			var elementCategary = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY];
+			var elementId = element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+			if(elementId==undefined){
+				elementId = this.getNextIdForStory(story);
+				element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID] = elementId;
+			}
 			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){
-				story[node_COMMONATRIBUTECONSTANT.STORY_NODE][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
+				story[node_COMMONATRIBUTECONSTANT.STORY_NODE][] = element;
 			}
 			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
 				story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
@@ -32,18 +47,16 @@ var node_utility = function(){
 			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){
 				story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
 			}
+			//process alias
+			if(aliasObj!=undefined){
+				story[node_COMMONATRIBUTECONSTANT.STORY_ALIAS][aliasObj[node_COMMONATRIBUTECONSTANT.ALIASELEMENT_NAME]] = new node_ElementId(elementCategary, elementId); 
+			}
+			return element;
 		},
 		
 		getStoryElementByRef : function(story, ref){
-			if(ref[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY]!=null){
-				//id
-				return this.getStoryElement(story, ref[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], ref[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
-			}
-			else{
-				//alias
-				var elementId = ref[node_COMMONATRIBUTECONSTANT.STORY_ALIAS][ref[node_COMMONATRIBUTECONSTANT.ALIASELEMENT_NAME]];
-				return getStoryElement(story, elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
-			}
+			var elementId = this.getElementIdByReference(story, ref);
+			return this.getStoryElement(story, elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
 		},
 
 		getStoryElement : function(story, elementCategary, elementId){
@@ -58,6 +71,11 @@ var node_utility = function(){
 				out = this.getGroupById(story, elementId);
 			}
 			return out;
+		},
+		
+		deleteStoryElementByRef : function(story, ref){
+			var elementId = node_storyUtility.getElementIdByReference(story, ref);
+			return this.deleteStoryElement(elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
 		},
 		
 		deleteStoryElement : function(story, elementCategary, elementId){
@@ -104,7 +122,7 @@ var node_utility = function(){
 				var connectionId = connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID];
 				var childId = that.getConnectionById(story, connectionId)[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID];
 				out.push({
-					node: that.getNodeById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]),
+					node: that.getStoryElementByRef(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF]),
 					connectionId : connectionId,
 					childId : childId
 				});
@@ -117,7 +135,7 @@ var node_utility = function(){
 			var childConnectionEnds = this.getNodeConnectionEnd(parent, node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
 			_.each(childConnectionEnds, function(connectionEnd, i){
 				var id = that.getConnectionById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID])[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID];
-				if(id==childId)   return that.getNodeById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]);
+				if(id==childId)   return that.getStoryElementByRef(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF]);
 			});
 			return;
 		},
@@ -132,11 +150,11 @@ var node_utility = function(){
 			_.each(node[node_COMMONATRIBUTECONSTANT.STORYNODE_CONNECTIONS], function(connectionId, i){
 				var connection = that.getConnectionById(story, connectionId);
 				if(connectionType==undefined || connection[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]==connectionType){
-					var node1End = that.getConnectionEnd(connection, node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
+					var node1End = that.getConnectionEnd(story, connection, node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
 					if(profile1==undefined || node1End[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_PROFILE]==profile1){
-						var node2End = that.getOtherConnectionEnd(connection, node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
+						var node2End = that.getOtherConnectionEnd(story, connection, node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
 						if(profile2==undefined || node2End[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_PROFILE]==profile2){
-							if(node2Type==undefined || that.getNodeById(node2End[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID])[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]){
+							if(node2Type==undefined || that.getStoryElementByRef(node2End[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]){
 								out.push(node2End);
 							}
 						}
@@ -146,17 +164,17 @@ var node_utility = function(){
 			return out;
 		},
 		
-		getOtherConnectionEnd : function(connection, nodeId) {
+		getOtherConnectionEnd : function(story, connection, nodeId) {
 			var end1 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END1];
 			var end2 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END2];
-			if(end1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]==nodeId)  return end2;
+			if(this.getElementIdByReference(end1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]==nodeId)  return end2;
 			else return end1;
 		},
 		
-		getConnectionEnd : function(connection, nodeId) {
+		getConnectionEnd : function(story, connection, nodeId) {
 			var end1 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END1];
 			var end2 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END2];
-			if(end1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID]==nodeId)  return end1;
+			if(this.getElementIdByReference(end1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]==nodeId)  return end1;
 			else return end2;
 		},
 		

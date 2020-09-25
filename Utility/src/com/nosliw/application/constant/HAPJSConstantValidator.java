@@ -18,6 +18,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPJSConstantValidator {
 
+	private static String PATH_APPUI = "C:/Users/ewaniwa/Desktop/Mywork/CoreProjects/AppUI/app/www/js";
 	private static String PATH_JS = "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/Application/WebContent/libresources/nosliw";
 	private static String PATH_JS_CONSTANT = PATH_JS+"/constant";
 	private static String FILE_CONSTANTS = PATH_JS_CONSTANT+"/constant.js";
@@ -33,7 +34,12 @@ public class HAPJSConstantValidator {
 		readConstantValues(FILE_COMMONCONSTANTS, m_commonConstants);
 		readConstantValues(FILE_COMMONATRIBUTECONSTANT, m_commonAttribute);
 		
-		List<File> files = (List<File>) FileUtils.listFiles(new File(PATH_JS), new String[] {"js"}, true);
+		processByDir(PATH_JS);
+		processByDir(PATH_APPUI);
+	}
+	
+	private static void processByDir(String dir) {
+		List<File> files = (List<File>) FileUtils.listFiles(new File(dir), new String[] {"js"}, true);
 		for(File file : files) {
 			try {
 				FileReader inputFile = new FileReader(file);
@@ -52,8 +58,8 @@ public class HAPJSConstantValidator {
 				e.printStackTrace();
 			}
 		}
+		
 	}
-	
 	
 	private static void readConstantValues(String file, Map<String, String> output) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();

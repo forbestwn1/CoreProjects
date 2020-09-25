@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 public class HAPInfoElement extends HAPEntityInfoImp implements HAPWithAlias{
 
 	@HAPAttribute
-	public static final String ELEMENTID = "elementId";
+	public static final String ELEMENTREF = "elementRef";
 
 	private HAPReferenceElementWrapper m_eleRef;
 	
@@ -42,13 +42,13 @@ public class HAPInfoElement extends HAPEntityInfoImp implements HAPWithAlias{
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
 		this.m_eleRef = new HAPReferenceElementWrapper();
-		this.m_eleRef.buildObject(jsonObj.getJSONObject(ELEMENTID), HAPSerializationFormat.JSON);
+		this.m_eleRef.buildObject(jsonObj.getJSONObject(ELEMENTREF), HAPSerializationFormat.JSON);
 		return true;  
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ELEMENTID, HAPJsonUtility.buildJson(this.m_eleRef, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTREF, HAPJsonUtility.buildJson(this.m_eleRef, HAPSerializationFormat.JSON));
 	}
 }

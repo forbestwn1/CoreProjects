@@ -53,37 +53,53 @@ var node_utility = function(){
 	var loc_createChangeItemDelete = function(targetCategary, targetId){
 		var out = {};
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY] = targetCategary;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID] = targetId;
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF] = {};
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF][node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY] = targetCategary;
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF][node_COMMONATRIBUTECONSTANT.IDELEMENT_ID] = targetId;
 		return out;
 	};
 	
-	var loc_createChangeItemNew = function(element){             
+	var loc_createChangeItemNew = function(element, aliasObj){           
 		var out = {};
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY] = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY];
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID] = element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT] = element;
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ALIAS] = aliasObj;
 		return out;
 	};
 	
-	var loc_createChangeItemPatch = function(targetCategary, targetId, path, value){
+	var loc_createChangeItemPatch = function(targetRef, path, value){
 		var out = {};
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_PATCH;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY] = targetCategary;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID] = targetId;
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_PATH] = path;
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_VALUE] = value;
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF] = targetRef;
+		return out;
+	};
+	
+	var loc_createChangeItemAlias = function(aliasName, elementId){
+		var out = {};
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_ALIAS;
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ALIAS] = aliasName;
+		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENTID] = elementId;
 		return out;
 	};
 	
 	var loc_createChangeItemDeleteForElement = function(element){  return loc_createChangeItemDelete(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);   };
-	var loc_createChangeItemPatchForElement = function(element, path, value){	return loc_createChangeItemPatch(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], path, value);	};
-	var loc_createChangeItemNewForElement = function(element){  return loc_createChangeItemNew(element);   };
+	var loc_createChangeItemPatchForElement = function(element, path, value){	return loc_createChangeItemPatch(new node_ElementId(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]), path, value);	};
+	var loc_createChangeItemNewForElement = function(element, aliasObj){  return loc_createChangeItemNew(element, aliasObj);   };
 
 	var loc_applyChangeNew = function(story, changeItem, prepareRevert){
-		changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemDelete(changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID])];
-		if(prepareRevert!=false)  node_storyUtility.addStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT]);
+		var aliasObj = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ALIAS];
+		if(aliasObj!=undefined){
+			var oldAliasEleId = node_storyUtility.getElementIdByReference(story, aliasObj);
+		}
+		var element = node_storyUtility.addStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT], aliasObj);
+		if(prepareRevert!=false){
+			var revertChanges = [];
+			revertChanges.push(loc_createChangeItemDelete(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]));
+			if(aliasObj!=undefined)  revertChanges.push(loc_createChangeItemAlias(aliasObj[node_COMMONATRIBUTECONSTANT.ALIASELEMENT_NAME], oldAliasEleId));
+			changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = revertChanges;
+		}
 	};
 	
 	var loc_applyChangePatch = function(story, changeItem, extend, allChanges, prepareRevert){
@@ -95,7 +111,7 @@ var node_utility = function(){
 	};
 	
 	var loc_applyChangeDelete = function(story, changeItem, prepareRevert){
-		var element = node_storyUtility.deleteStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID]);
+		var element = node_storyUtility.deleteStoryElementByRef(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF]);
 		if(prepareRevert!=false)  changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemNew(element)];
 	};
 	
@@ -103,7 +119,7 @@ var node_utility = function(){
 	var loc_applyChangePatchSingle = function(story, changeItem, extend, prepareRevert){
 		var path = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_PATH];
 		var value = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_VALUE];
-		var element = node_storyUtility.getStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETCATEGARY], changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETID]);
+		var element = node_storyUtility.getStoryElementByRef(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF]);
 		var eleCategary = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY];
 		var eleType = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE];
 
@@ -117,7 +133,7 @@ var node_utility = function(){
 						if(currentChoice!=value){
 							_.each(children, function(child, i){
 								var childId = child[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
-								var childEleId = child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTID];
+								var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]);
 								var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID])
 								if(childId==value){
 									if(childEle[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE]==false){
@@ -136,7 +152,7 @@ var node_utility = function(){
 				else if(eleType==node_COMMONCONSTANT.STORYGROUP_TYPE_BATCH){
 					if(path==node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE){
 						_.each(children, function(child, i){
-							var childEleId = child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTID];
+							var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]);
 							var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID])
 							out.push(loc_createChangeItemPatchForElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, value));
 						});
@@ -183,11 +199,11 @@ var node_utility = function(){
 		},
 		
 		applyPatchFromQuestion : function(story, question, path, value, changesResult){
-			var changeItem = this.createChangeItemPatch(question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETCATEGARY], question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETID], path, value);
+			var changeItem = this.createChangeItemPatch(question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETREF], path, value);
 			loc_applyChangePatch(story, changeItem, true, changesResult);
 		},
 
-		createChangeItemPatch : function(targetCategary, targetId, path, value){  return loc_createChangeItemPatch(targetCategary, targetId, path, value);		},
+		createChangeItemPatch : function(targetRef, path, value){  return loc_createChangeItemPatch(targetRef, path, value);		},
 		
 		discoverAllQuestionAnswers : function(question){
 			var out = [];

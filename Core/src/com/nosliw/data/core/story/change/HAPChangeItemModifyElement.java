@@ -16,7 +16,7 @@ import com.nosliw.data.core.story.HAPWithAlias;
 public class HAPChangeItemModifyElement extends HAPChangeItem implements HAPWithAlias{
 
 	@HAPAttribute
-	public static final String TARGETELEMENTID = "targetElementId";
+	public static final String TARGETELEMENTREF = "targetElementRef";
 
 	private HAPReferenceElementWrapper m_targetElementRef;
 	
@@ -39,14 +39,13 @@ public class HAPChangeItemModifyElement extends HAPChangeItem implements HAPWith
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
 		this.m_targetElementRef = new HAPReferenceElementWrapper();
-		this.m_targetElementRef.buildObject(jsonObj.getJSONObject(TARGETELEMENTID), HAPSerializationFormat.JSON);
+		this.m_targetElementRef.buildObject(jsonObj.getJSONObject(TARGETELEMENTREF), HAPSerializationFormat.JSON);
 		return true;  
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TARGETELEMENTID, HAPJsonUtility.buildJson(this.m_targetElementRef, HAPSerializationFormat.JSON));
+		jsonMap.put(TARGETELEMENTREF, HAPJsonUtility.buildJson(this.m_targetElementRef, HAPSerializationFormat.JSON));
 	}
-
 }
