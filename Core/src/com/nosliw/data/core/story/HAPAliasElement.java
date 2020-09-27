@@ -50,8 +50,10 @@ public class HAPAliasElement extends HAPSerializableImp implements HAPReferenceE
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_name = (String)jsonObj.opt(NAME);
-		this.m_isTemp = (Boolean)jsonObj.opt(TEMPORARY);
+		Object nameObj = jsonObj.opt(NAME);
+		if(nameObj!=null)  this.m_name = (String)nameObj;
+		Object tempObj = jsonObj.opt(TEMPORARY);
+		if(tempObj!=null)  this.m_isTemp = (Boolean)tempObj;
 		return true;  
 	}
 

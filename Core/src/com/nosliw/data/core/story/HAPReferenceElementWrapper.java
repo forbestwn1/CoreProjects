@@ -21,14 +21,16 @@ public class HAPReferenceElementWrapper extends HAPSerializableImp implements HA
 	}
 
 	public HAPIdElement getElementId() {
-		if(m_elementId==null)  throw new RuntimeException();
+		if(m_elementId==null) {
+			throw new RuntimeException();
+		}
 		return this.m_elementId;
 	}
 	
 	@Override
 	public void processAlias(HAPStory story) {
-		if(this.m_elementId!=null) {
-			story.getElementId(this.m_alias.getName());
+		if(this.m_elementId==null) {
+			this.m_elementId = story.getElementId(this.m_alias.getName());
 		}
 	}
 	

@@ -16,6 +16,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.data.core.story.HAPParserElement;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
@@ -31,6 +32,9 @@ import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.definition.HAPUtilityPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.processor.HAPProcessorUIPage;
+import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
+import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
+import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPUIResourceManager {
@@ -82,6 +86,10 @@ public class HAPUIResourceManager {
 		this.m_miniAppParser = new HAPParseMiniApp();
 		this.m_serviceDefinitionManager = serviceDefinitionManager;
 		this.m_resourceDefManager = resourceDefManager;
+
+		HAPParserElement.registerStoryNode(HAPStoryNodePage.STORYNODE_TYPE, HAPStoryNodePage.class);
+		HAPParserElement.registerStoryNode(HAPStoryNodeUIData.STORYNODE_TYPE, HAPStoryNodeUIData.class);
+		HAPParserElement.registerStoryNode(HAPStoryNodeUIHtml.STORYNODE_TYPE, HAPStoryNodeUIHtml.class);
 	}
 
 	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId, HAPAttachmentContainer parentAttachment) {

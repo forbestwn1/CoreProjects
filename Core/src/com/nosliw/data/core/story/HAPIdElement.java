@@ -62,8 +62,10 @@ public class HAPIdElement extends HAPSerializableImp implements HAPReferenceElem
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_categary = jsonObj.getString(CATEGARY);
-		this.m_id = jsonObj.getString(ID);
+		Object categaryObj = jsonObj.opt(CATEGARY);
+		if(categaryObj!=null)  this.m_categary = (String)categaryObj;
+		Object idObj = jsonObj.opt(ID);
+		if(idObj!=null)  this.m_id = (String)idObj;
 		return true;  
 	}
 

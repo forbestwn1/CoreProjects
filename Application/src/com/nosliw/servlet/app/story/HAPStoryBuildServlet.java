@@ -11,6 +11,8 @@ import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrows
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.change.HAPChangeItem;
+import com.nosliw.data.core.story.change.HAPParserChange;
 import com.nosliw.data.core.story.design.HAPAnswer;
 import com.nosliw.data.core.story.design.HAPDesignStory;
 import com.nosliw.data.core.story.design.HAPRequestDesign;
@@ -36,6 +38,8 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 	public static final String COMMAND_DESIGN_DESIGNID = "designId";
 	@HAPAttribute
 	public static final String COMMAND_DESIGN_ANSWER = "answer";
+	@HAPAttribute
+	public static final String COMMAND_DESIGN_EXTRACHANGES = "extraChanges";
 	@HAPAttribute
 	public static final String COMMAND_DESIGN_STEPCUSOR = "stepCursor";
 
@@ -82,6 +86,15 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 				HAPAnswer answer = new HAPAnswer();
 				answer.buildObject(answerObj, HAPSerializationFormat.JSON);
 				changeRequest.addAnswer(answer);
+			}
+			
+			JSONArray extraChangesArray = parms.optJSONArray(COMMAND_DESIGN_EXTRACHANGES);
+			if(extraChangesArray!=null) {
+				for(int i=0; i<extraChangesArray.length(); i++) {
+					JSONObject changeObj = extraChangesArray.getJSONObject(i);
+					HAPChangeItem changeItem = HAPParserChange.parseChangeItem(changeObj);
+					changeRequest.addExtraChange(changeItem);
+				}
 			}
 			
 			int stepCursor = parms.optInt(COMMAND_DESIGN_STEPCUSOR, -1);

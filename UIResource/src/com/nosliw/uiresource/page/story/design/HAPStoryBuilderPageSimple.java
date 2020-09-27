@@ -34,6 +34,7 @@ import com.nosliw.data.core.story.change.HAPChangeItemNew;
 import com.nosliw.data.core.story.change.HAPRequestChange;
 import com.nosliw.data.core.story.change.HAPRequestChangeWrapper;
 import com.nosliw.data.core.story.change.HAPResultTransaction;
+import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.data.core.story.design.HAPAnswer;
 import com.nosliw.data.core.story.design.HAPBuilderStory;
 import com.nosliw.data.core.story.design.HAPDesignStep;
@@ -146,6 +147,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 		HAPRequestChange changeRequest = new HAPRequestChange(false);
 		for(HAPAnswer answer : answerRequest.getAnswers()){		changeRequest.addChanges(answer.getChanges());	}
+		for(HAPChangeItem change : answerRequest.getExtraChanges()) {   changeRequest.addChange(change);    }
 		story.change(changeRequest);
 		
 		HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_SERVICE).iterator().next();
@@ -331,7 +333,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			
 			HAPResultTransaction transactionResult = story.commitTransaction();
 			step.getChanges().addAll(transactionResult.getChanges());
-
+			step.getChanges().add(HAPUtilityChange.newStoryIndexChange(story));
+			
 			design.addStep(step);
 
 			//stage

@@ -3,6 +3,7 @@ package com.nosliw.data.core.story.change;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.interfac.HAPCalculateObject;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.HAPAliasElement;
@@ -77,7 +78,9 @@ public class HAPUtilityChange {
 			//extra changes info
 			if(extraChanges!=null) 	extraChanges.addAll(changeResult.getExtraChanges());
 			//revert changes info
-			if(saveRevert && changeItem.getRevertChanges()==null) 	changeItem.setRevertChanges(changeResult.getRevertChanges());
+			if(ifRevertable(saveRevert, changeItem)) {
+				changeItem.setRevertChanges(changeResult.getRevertChanges());
+			}
 		}
 		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_NEW)) {
 			HAPChangeItemNew changeNew = (HAPChangeItemNew)changeItem;
@@ -88,7 +91,7 @@ public class HAPUtilityChange {
 			out = story.addElement(element, alias);
 			changeNew.setElement(out.cloneStoryElement());
 			//revert changes info
-			if(saveRevert) {
+			if(ifRevertable(saveRevert, changeItem)) {
 				List<HAPChangeItem> revertChanges = new ArrayList<HAPChangeItem>();
 				revertChanges.add(new HAPChangeItemDelete(out.getElementId()));
 				if(alias!=null && !alias.isTemporary()) {
@@ -103,7 +106,7 @@ public class HAPUtilityChange {
 			HAPAliasElement alias = story.getAlias(changeDelete.getTargetElementId());
 			HAPStoryElement element = story.deleteElement(changeDelete.getTargetElementId());
 			//revert changes info
-			if(saveRevert) {
+			if(ifRevertable(saveRevert, changeItem)) {
 				List<HAPChangeItem> revertChanges = new ArrayList<HAPChangeItem>();
 				revertChanges.add(new HAPChangeItemNew(element, alias));
 				changeItem.setRevertChanges(revertChanges);
@@ -113,9 +116,23 @@ public class HAPUtilityChange {
 			HAPChangeItemAlias changeAlias = (HAPChangeItemAlias)changeItem;
 			HAPIdElement oldElementId = story.setAlias(changeAlias.getAlias(), changeAlias.getElementId());
 			//revert changes info
-			if(saveRevert) {
+			if(ifRevertable(saveRevert, changeItem)) {
 				List<HAPChangeItem> revertChanges = new ArrayList<HAPChangeItem>();
 				revertChanges.add(new HAPChangeItemAlias(changeAlias.getAlias(), oldElementId));
+				changeItem.setRevertChanges(revertChanges);
+			}
+		}
+		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_STORYINFO)) {
+			HAPChangeItemStoryInfo changeStoryIndex = (HAPChangeItemStoryInfo)changeItem;
+			String infoName = changeStoryIndex.getInfoName();
+			Object infoValue = changeStoryIndex.getInfoValue();
+			HAPInfo storyInfo = story.getInfo();
+			Object oldValue = storyInfo.getValue(infoName);
+			storyInfo.setValue(infoName, infoValue);
+			//revert changes info
+			if(ifRevertable(saveRevert, changeItem)) {
+				List<HAPChangeItem> revertChanges = new ArrayList<HAPChangeItem>();
+				revertChanges.add(new HAPChangeItemStoryInfo(infoName, oldValue));
 				changeItem.setRevertChanges(revertChanges);
 			}
 		}
@@ -165,5 +182,16 @@ public class HAPUtilityChange {
 		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_PATCH))  return ((HAPChangeItemPatch)change).getTargetElementId();
 		if(type.equals(HAPConstant.STORYDESIGN_CHANGETYPE_DELETE))  return ((HAPChangeItemDelete)change).getTargetElementId();
 		return null;
+	}
+	
+	public static HAPChangeItemStoryInfo newStoryIndexChange(HAPStory story) {
+		HAPChangeItemStoryInfo out = new HAPChangeItemStoryInfo(HAPConstant.STORY_INFO_IDINDEX, story.getInfo().getValue(HAPConstant.STORY_INFO_IDINDEX));
+		out.setRevertable(false);
+		return out;
+	}
+	
+	private static boolean ifRevertable(boolean saveRevert, HAPChangeItem changeItem) {
+		if(!saveRevert)  return false;
+		return changeItem.isRevertable();
 	}
 }

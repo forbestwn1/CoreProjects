@@ -684,6 +684,7 @@ public class HAPConstant {
 		public static final String STORYDESIGN_CHANGETYPE_PATCH = "patch";
 		public static final String STORYDESIGN_CHANGETYPE_PUT = "put";
 		public static final String STORYDESIGN_CHANGETYPE_ALIAS = "alias";
+		public static final String STORYDESIGN_CHANGETYPE_STORYINFO = "storyInfo";
 
 
 
@@ -698,6 +699,10 @@ public class HAPConstant {
 
 
 		public static final String STORY_EVENT_CHANGE = "change";
+
+
+
+		public static final String STORY_INFO_IDINDEX = "story_idindex";
 
 
 

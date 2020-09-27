@@ -20,8 +20,6 @@ import com.nosliw.data.core.story.change.HAPUtilityChange;
 
 public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	
-	private static final String INFO_IDINDEX = "story_idindex";
-
 	private String m_showType;
 	
 	private Map<String, HAPStoryNode> m_nodes;
@@ -265,12 +263,12 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	}
 
 	private String getNextId(HAPStoryElement ele) {
-		Integer index = (Integer)this.getInfoValue(INFO_IDINDEX);
+		Integer index = (Integer)this.getInfoValue(HAPConstant.STORY_INFO_IDINDEX);
 		if(index==null) {
 			index = Integer.valueOf(0);
 		}
 		index++;
-		this.getInfo().setValue(INFO_IDINDEX, index);
+		this.getInfo().setValue(HAPConstant.STORY_INFO_IDINDEX, index);
 		return HAPUtilityStory.buildStoryElementId(ele, index + "");	
 	}
 
@@ -299,5 +297,4 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(this.m_elementGroups, HAPSerializationFormat.JSON));
 		jsonMap.put(ALIAS, HAPJsonUtility.buildJson(this.m_aliases, HAPSerializationFormat.JSON));
 	}
-
 }

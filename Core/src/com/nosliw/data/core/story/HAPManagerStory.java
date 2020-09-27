@@ -60,7 +60,6 @@ public class HAPManagerStory {
 		HAPQuestionnaire currentQuestionair = changeHistory.get(stepIndex).getQuestionair();
 		HAPUtilityDesign.reverseQuestionAnswer(story, currentQuestionair);
 		
-		
 		HAPServiceData out = this.getDesignDirector(directorId).buildStory(design, changeRequest);
 		if(out.isSuccess()) {
 			this.saveStoryDesign(design);

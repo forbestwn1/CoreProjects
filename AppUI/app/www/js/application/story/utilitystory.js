@@ -17,12 +17,24 @@ var node_utility = function(){
 	var loc_out = {
 		
 		getNextIdForStory : function(story){
-			
+			var index = this.getIdIndex(story);
+			index = index + 1;
+			this.setIdIndex(index);
+		},
+		
+		getIdIndex : function(story){
+			var info = story[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
+			return info[node_COMMONCONSTANT.STORY_INFO_IDINDEX];
+		},
+		
+		setIdIndex : function(story, index){
+			var info = story[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
+			info[node_COMMONCONSTANT.STORY_INFO_IDINDEX] = index;
 		},
 			
 		getElementIdByReference : function(story, reference){
 			if(reference[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY]!=null)  return reference;
-			else return story[node_COMMONATRIBUTECONSTANT.STORY_ALIAS][ref[node_COMMONATRIBUTECONSTANT.ALIASELEMENT_NAME]];
+			else return story[node_COMMONATRIBUTECONSTANT.STORY_ALIAS][reference[node_COMMONATRIBUTECONSTANT.ALIASELEMENT_NAME]];
 		},	
 			
 		getQuestionTargetElement : function(story, question){
@@ -39,13 +51,13 @@ var node_utility = function(){
 				element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID] = elementId;
 			}
 			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){
-				story[node_COMMONATRIBUTECONSTANT.STORY_NODE][] = element;
+				story[node_COMMONATRIBUTECONSTANT.STORY_NODE][elementId] = element;
 			}
 			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
-				story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
+				story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][elementId] = element;
 			}
 			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){
-				story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]] = element;
+				story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][elementId] = element;
 			}
 			//process alias
 			if(aliasObj!=undefined){

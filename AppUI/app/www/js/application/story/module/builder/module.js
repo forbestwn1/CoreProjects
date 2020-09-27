@@ -111,9 +111,6 @@ var node_createModuleStoryBuilder = function(parm){
 		}
 	};
 	
-	
-	
-	
 	var loc_onPrevious = function(){
 		loc_componentData.stepCursor--;
 	};
