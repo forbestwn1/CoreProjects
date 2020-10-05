@@ -11,27 +11,52 @@ public class HAPRequestChangeWrapper {
 	
 	private HAPRequestChange m_changeRequest;
 	
+	private boolean m_isAutoApply = false;
+	
 	public HAPRequestChangeWrapper(HAPStory story) {
-		this.m_story = story;
-		m_changeRequest = new HAPRequestChange();
+		this(story, false);
 	}
 	
+	public HAPRequestChangeWrapper(HAPStory story, boolean isAutoApply) {
+		this.m_story = story;
+		this.m_isAutoApply = isAutoApply;
+		if(!this.m_isAutoApply) {
+			m_changeRequest = new HAPRequestChange();
+		}
+	}
+
 	public HAPAliasElement addNewChange(HAPStoryElement storyElement) {
 		HAPAliasElement out = this.m_story.generateTemporaryAlias();
-		m_changeRequest.addChange(new HAPChangeItemNew(storyElement, out));
+		this.processRequest(new HAPChangeItemNew(storyElement, out));
 		return out;
 	}
 	
 	public HAPAliasElement addNewChange(HAPStoryElement storyElement, String alias) {
 		HAPAliasElement out = new HAPAliasElement(alias, false);
-		m_changeRequest.addChange(new HAPChangeItemNew(storyElement, out));
+		this.processRequest(new HAPChangeItemNew(storyElement, out));
 		return out;
 	}
 	
 	public void addPatchChange(HAPReferenceElement targetRef, String path, Object value){
 		HAPChangeItemPatch change = new HAPChangeItemPatch(targetRef, path, value);
-		this.m_changeRequest.addChange(change);
+		this.processRequest(change);
 	}
 	
-	public HAPRequestChange getChangeRequest() {    return this.m_changeRequest;     }
+	private void processRequest(HAPChangeItem changeItem) {
+		if(this.m_isAutoApply) {
+			HAPRequestChange changeRequest = new HAPRequestChange();
+			changeRequest.addChange(changeItem);
+			this.m_story.change(changeRequest);
+		}
+		else {
+			this.m_changeRequest.addChange(changeItem);
+		}
+	}
+	
+	public void close() {
+		if(this.m_changeRequest!=null) {
+			this.m_story.change(m_changeRequest);
+			this.m_changeRequest = null;
+		}
+	}
 }

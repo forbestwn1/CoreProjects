@@ -41,6 +41,7 @@ public class HAPUtility {
 		}
 		else {
 			childContext = HAPProcessorContext.processStatic(new HAPContextGroup(), HAPParentContext.createDefault(parentContext), contextProcessorConfig, contextProcessRequirement);
+			HAPProcessorContext.processRelative(childContext, HAPParentContext.createDefault(parentContext), contextProcessorConfig, contextProcessRequirement);
 			out.setContext(childContext);
 		}
 		return out;
@@ -51,7 +52,7 @@ public class HAPUtility {
 		Set<HAPStoryNode> varNodes = HAPUtilityStory.getStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
-			out.getContext().addPublicElement(varNode.getName(), new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(varNode.getDataType()))));
+			out.getContext().addPublicElement(varNode.getVariableName(), new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(varNode.getDataType()))));
 		}
 		return out;
 	}

@@ -38,7 +38,8 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 		this.m_type = type;
 	}
 	
-	public void appendToStory(HAPStory story) {   
+	@Override
+	public void appendToStory(HAPStory story) {
 		this.m_story = story;     
 	}
 
@@ -61,8 +62,17 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 	public boolean isEnable() {   return this.m_enable;   }
 
 	@Override
+	public Object getValueByPath(String path) {
+		Object out = null;
+		if(ENABLE.equals(path)) {
+			return this.m_enable;
+		}
+		return out;
+	}
+	
+	@Override
 	public HAPChangeResult patch(String path, Object value) {
-		HAPChangeResult out = new HAPChangeResult();
+		HAPChangeResult out = new HAPChangeResult(HAPStoryElement.class);
 		if(ENABLE.equals(path)) {
 			out.addRevertChange(HAPUtilityChange.buildChangePatch(this, path, this.m_enable));
 			this.m_enable = (Boolean)value;

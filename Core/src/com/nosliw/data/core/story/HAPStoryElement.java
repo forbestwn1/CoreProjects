@@ -21,6 +21,10 @@ public interface HAPStoryElement extends HAPEntityInfo, HAPEntityOrReference{
 	@HAPAttribute
 	public static final String STATUS = "status";
 
+	public static String[] getRootAttribute() {
+		return new String[] {ENABLE};
+	}
+	
 	HAPIdElement getElementId();
 	
 	String getCategary();
@@ -28,6 +32,7 @@ public interface HAPStoryElement extends HAPEntityInfo, HAPEntityOrReference{
 	String getType();
 
 	HAPChangeResult patch(String path, Object value);
+	Object getValueByPath(String path);
 	
 	//configuration for element, for ui purpose
 	HAPStatus getStatus();

@@ -9,9 +9,15 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 public interface HAPElementGroup extends HAPStoryElement{
 
 	@HAPAttribute
+	public static final String IDINDEX = "idIndex";
+
+	@HAPAttribute
 	public static final String ELEMENTS = "elements";
+	
+	@HAPAttribute
+	public static final String ELEMENT = "element";
 	
 	List<HAPInfoElement> getElements();
 	
-	void addElement(HAPInfoElement eleId);
+	HAPInfoElement addElement(HAPInfoElement eleId);
 }

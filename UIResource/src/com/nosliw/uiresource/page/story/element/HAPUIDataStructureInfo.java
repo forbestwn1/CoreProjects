@@ -19,7 +19,10 @@ public class HAPUIDataStructureInfo extends HAPSerializableImp{
 
 	private HAPContextGroup m_context;
 	
-
+	public HAPUIDataStructureInfo() {
+		this.m_context = new HAPContextGroup();
+	}
+	
 	public HAPContextGroup getContext() {	return this.m_context;	}
 	
 	public void setContext(HAPContextGroup context) {   this.m_context = context;      }

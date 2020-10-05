@@ -5,6 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPElementGroup;
 import com.nosliw.data.core.story.HAPElementGroupImp;
 import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStoryElement;
@@ -43,8 +44,20 @@ public class HAPElementGroupBatch extends HAPElementGroupImp{
 		HAPChangeResult out = super.patch(path, value);
 		if(out==null)  return out;
 		else {
-			for(HAPInfoElement ele : this.getElements()) {
-				out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), path, value));
+			if(out.getProcessor().equals(HAPStoryElement.class)) {
+				//only for attribute defined in story element, apply to children 
+				for(HAPInfoElement ele : this.getElements()) {
+					out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), path, value));
+				}
+			}
+			else if(HAPElementGroup.ELEMENT.equals(path)) {
+				if(value instanceof HAPInfoElement) {
+					//for new element
+					HAPInfoElement eleInfo = (HAPInfoElement)value;
+					for(String rootAttr : HAPStoryElement.getRootAttribute()) {
+						out.addExtraChange(new HAPChangeItemPatch(eleInfo.getElementId(), rootAttr, this.getValueByPath(rootAttr)));
+					}
+				}
 			}
 		}
 		return out;
