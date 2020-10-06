@@ -4,10 +4,12 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
+import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
 import com.nosliw.data.core.process.HAPManagerProcess;
@@ -61,6 +63,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 	public HAPRuntimeEnvironmentImpBrowser(HAPModuleRuntimeJS runtimeJSModule) {
 		this.m_runtimeJSModule = runtimeJSModule;
 		
+		HAPDataTypeManager dataTypeManager = new HAPDataTypeManagerImp(runtimeJSModule.getDataTypeDataAccess());
 		HAPDataTypeHelper dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
 		HAPResourceManagerJSImp resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
@@ -75,6 +78,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerStory storyManager = new HAPManagerStory(resourceDefManager); 
 		
 		init(
+			dataTypeManager,
 			dataTypeHelper,
 			resourceMan,
 			processMan,
@@ -114,7 +118,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginAppEntry(this.getResourceDefinitionManager()));
 
 		//story builder
-		this.getStoryManager().registerDesignDirector(HAPStoryBuilderPageSimple.BUILDERID, new HAPStoryBuilderPageSimple(this.getServiceManager(), this.m_uiResourceManager.getUITagManager(), this.getResourceDefinitionManager(), dataTypeHelper, this.getRuntime(), this.getExpressionManager(), this.getServiceManager().getServiceDefinitionManager()));
+		this.getStoryManager().registerDesignDirector(HAPStoryBuilderPageSimple.BUILDERID, new HAPStoryBuilderPageSimple(this.getServiceManager(), this.m_uiResourceManager.getUITagManager(), this.getResourceDefinitionManager(), dataTypeHelper, this.getRuntime(), this.getExpressionManager(), this.getServiceManager().getServiceDefinitionManager(), this.getDataTypeManager()));
 		
 		//dynamic resource builder
 		this.getStoryManager().registerShowBuilder(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPBuilderPageSimple(this.getServiceManager().getServiceDefinitionManager(), this.getUIResourceManager().getUITagManager(), this.getUIResourceManager().getUIResourceParser()));

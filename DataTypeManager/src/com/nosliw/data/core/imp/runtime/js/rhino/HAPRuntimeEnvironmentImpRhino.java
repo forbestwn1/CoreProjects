@@ -3,10 +3,12 @@ package com.nosliw.data.core.imp.runtime.js.rhino;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
+import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
 import com.nosliw.data.core.process.HAPManagerProcess;
@@ -38,6 +40,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 	public HAPRuntimeEnvironmentImpRhino(HAPModuleRuntimeJS runtimeJSModule) {
 		this.m_runtimeJSModule = runtimeJSModule;
 		
+		HAPDataTypeManager dataTypeManager = new HAPDataTypeManagerImp(runtimeJSModule.getDataTypeDataAccess());
 		HAPDataTypeHelper dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
 		HAPResourceManagerJSImp resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
@@ -52,6 +55,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPManagerStory storyManager = new HAPManagerStory(resourceDefManager); 
 
 		init(
+				dataTypeManager,
 				dataTypeHelper,
 				resourceMan,
 				processMan,

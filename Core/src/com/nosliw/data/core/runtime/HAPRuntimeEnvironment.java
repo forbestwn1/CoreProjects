@@ -1,5 +1,6 @@
 package com.nosliw.data.core.runtime;
 
+import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.expression.HAPManagerExpression;
@@ -22,6 +23,8 @@ import com.nosliw.data.core.story.HAPManagerStory;
 public interface HAPRuntimeEnvironment {
 
 	public static final String id = System.currentTimeMillis()+"";
+	
+	HAPDataTypeManager getDataTypeManager();
 	
 	HAPManagerExpression getExpressionManager();
 
@@ -46,5 +49,5 @@ public interface HAPRuntimeEnvironment {
 	HAPManagerStory getStoryManager();
 	
 	HAPRuntime getRuntime();
-	
+
 }

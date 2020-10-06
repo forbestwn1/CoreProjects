@@ -14,6 +14,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 @HAPEntityWithAttribute
@@ -200,16 +201,18 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 			else {
 				HAPContextDefinitionElement outEle = contextRoot.getDefinition().getSolidContextDefinitionElement();
 				String remainingPath = null;
-				String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
-				for(String pathSeg : pathSegs){
-					if(remainingPath==null) {
-						HAPContextDefinitionElement ele = null;
-						if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(outEle.getType())) 	ele = ((HAPContextDefinitionNode)outEle).getChildren().get(pathSeg);
-						if(ele==null) 		remainingPath = pathSeg;
-						else 	outEle = ele;
-					}
-					else {
-						remainingPath = HAPNamingConversionUtility.cascadePath(remainingPath, pathSeg);
+				if(HAPBasicUtility.isStringNotEmpty(path)) {
+					String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
+					for(String pathSeg : pathSegs){
+						if(remainingPath==null) {
+							HAPContextDefinitionElement ele = null;
+							if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(outEle.getType())) 	ele = ((HAPContextDefinitionNode)outEle).getChildren().get(pathSeg);
+							if(ele==null) 		remainingPath = pathSeg;
+							else 	outEle = ele;
+						}
+						else {
+							remainingPath = HAPNamingConversionUtility.cascadePath(remainingPath, pathSeg);
+						}
 					}
 				}
 				resolved.referedNode = outEle;

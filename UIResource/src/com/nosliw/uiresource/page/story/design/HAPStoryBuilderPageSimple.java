@@ -77,6 +77,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	private HAPManagerService m_serviceManager;
 	private HAPUITagManager m_uiTagManager;
 	private HAPRequirementContextProcessor m_contextProcessRequirement;
+	private HAPDataTypeManager m_dataTypeMan = null;
 
 	private List<HAPStageInfo> m_stages;
 	
@@ -87,9 +88,11 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
 			HAPManagerExpression expressionMan,
-			HAPManagerServiceDefinition serviceDefinitionManager) {
+			HAPManagerServiceDefinition serviceDefinitionManager,
+			HAPDataTypeManager dataTypeMan) {
 		this.m_serviceManager = serviceManager;
 		this.m_uiTagManager = uiTagMan;
+		this.m_dataTypeMan = dataTypeMan;
 		this.m_contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(resourceDefMan, dataTypeHelper, runtime, expressionMan, serviceDefinitionManager);
 		this.m_stages = new ArrayList<HAPStageInfo>();
 		this.m_stages.add(new HAPStageInfo(STAGE_SERVICE, STAGE_SERVICE));
@@ -312,8 +315,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		HAPDataTypeHelper dataTypeHelper = null;
 		Set<HAPDataTypeId> dataTypeIds = dataTypeCriteria.getValidDataTypeId(dataTypeHelper);
 		HAPDataTypeId dataTypeId = dataTypeIds.iterator().next();
-		HAPDataTypeManager dataTypeMan = null;
-		HAPDataType dataType = dataTypeMan.getDataType(dataTypeId);
+		HAPDataType dataType = m_dataTypeMan.getDataType(dataTypeId);
 		boolean isComplex = dataType.getIsComplex();
 		if(isComplex) {
 			if(dataTypeId.getFullName().contains("array")){

@@ -41,7 +41,7 @@ public class HAPUtility {
 		}
 		else {
 			childContext = HAPProcessorContext.processStatic(new HAPContextGroup(), HAPParentContext.createDefault(parentContext), contextProcessorConfig, contextProcessRequirement);
-			HAPProcessorContext.processRelative(childContext, HAPParentContext.createDefault(parentContext), contextProcessorConfig, contextProcessRequirement);
+			childContext = HAPProcessorContext.processRelative(childContext, HAPParentContext.createDefault(parentContext), contextProcessorConfig, contextProcessRequirement);
 			out.setContext(childContext);
 		}
 		return out;
