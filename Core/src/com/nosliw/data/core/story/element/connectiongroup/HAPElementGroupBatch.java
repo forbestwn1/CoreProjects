@@ -44,7 +44,7 @@ public class HAPElementGroupBatch extends HAPElementGroupImp{
 		HAPChangeResult out = super.patch(path, value);
 		if(out==null)  return out;
 		else {
-			if(out.getProcessor().equals(HAPStoryElement.class)) {
+			if(HAPStoryElement.class.equals(out.getProcessor())) {
 				//only for attribute defined in story element, apply to children 
 				for(HAPInfoElement ele : this.getElements()) {
 					out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), path, value));

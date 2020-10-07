@@ -7,6 +7,7 @@ var packageObj = library.getChildPackage();
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_storyUtility;
+	var node_ElementId;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -140,10 +141,10 @@ var node_utility = function(){
 						var currentChoice = element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE];
 						if(currentChoice!=value){
 							_.each(children, function(child, i){
-								var childId = child[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+								var childName = child[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
 								var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]);
 								var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID])
-								if(childId==value){
+								if(childName==value){
 									if(childEle[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE]==false){
 										out.push(loc_createChangeItemPatchForElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, true));
 									}
@@ -169,8 +170,8 @@ var node_utility = function(){
 			}
 		}
 		
+		var oldValue = node_objectOperationUtility.operateObject(element, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);
 		if(loc_isRevertable(saveRevert, changeItem)){
-			var oldValue = node_objectOperationUtility.operateObject(element, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);
 			changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForElement(element, path, oldValue)];
 		}
 		
@@ -277,6 +278,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.builder.ElementId", function(){node_ElementId = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("storyChangeUtility", node_utility); 

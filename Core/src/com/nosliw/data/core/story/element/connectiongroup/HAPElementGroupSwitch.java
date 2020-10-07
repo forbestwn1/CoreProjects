@@ -69,7 +69,7 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 					out.addRevertChange(HAPUtilityChange.buildChangePatch(this, CHOICE, this.m_choice));
 					for(HAPInfoElement eleInfo : this.getElements()) {
 						HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());
-						if(eleInfo.getElementId().toString().equals(value)) {
+						if(eleInfo.getName().equals(value)) {
 							if(!ele.isEnable()) {
 								out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, true));
 							}

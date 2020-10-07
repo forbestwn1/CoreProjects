@@ -35,15 +35,15 @@ var node_createComponentQuestionItemSwitch = function(){
 					return this.question.element.choice;
 				},
 				
-				set : function(choiceId){
-					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE, choiceId, this.question.answer);
+				set : function(choiceName){
+					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE, choiceName, this.question.answer);
 					this.$emit("answerChange");
 				}
 			}
 		},
 		template : `
 			<select style="display:inline;" v-model="choiceId">
-			  <option v-for="choice in choices" v-bind:value="choice.id">
+			  <option v-for="choice in choices" v-bind:value="choice.name">
 			    {{ choice.name }}
 			  </option>
 			</select>			

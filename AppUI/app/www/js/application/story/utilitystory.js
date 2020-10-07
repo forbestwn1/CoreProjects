@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage();
 
 (function(packageObj){
 	//get used node
+	var node_ElementId;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
@@ -225,6 +226,7 @@ var node_utility = function(){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.builder.ElementId", function(){node_ElementId = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("storyUtility", node_utility); 

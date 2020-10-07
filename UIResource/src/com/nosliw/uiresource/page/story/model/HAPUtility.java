@@ -49,7 +49,7 @@ public class HAPUtility {
 	
 	public static HAPUIDataStructureInfo buildDataStructureInfoForPageNode(HAPStory story) {
 		HAPUIDataStructureInfo out = new HAPUIDataStructureInfo();
-		Set<HAPStoryNode> varNodes = HAPUtilityStory.getStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_VARIABLE);
+		Set<HAPStoryNode> varNodes = HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
 			out.getContext().addPublicElement(varNode.getVariableName(), new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(varNode.getDataType()))));

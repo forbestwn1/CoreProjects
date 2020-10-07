@@ -33,6 +33,7 @@ public class HAPInfoElement extends HAPEntityInfoImp implements HAPWithAlias{
 
 	public HAPInfoElement cloneElementInfo() {
 		HAPInfoElement out = new HAPInfoElement();
+		this.cloneToEntityInfo(out);
 		out.m_eleRef = this.m_eleRef.cloneElementReferenceWrapper();
 		return out;
 	}

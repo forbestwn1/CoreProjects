@@ -29,7 +29,6 @@ import com.nosliw.data.core.story.HAPReferenceElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityConnection;
 import com.nosliw.data.core.story.HAPUtilityStory;
-import com.nosliw.data.core.story.change.HAPCalculateObjectElementId;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPChangeItemNew;
 import com.nosliw.data.core.story.change.HAPRequestChange;
@@ -187,7 +186,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			step.setQuestion(rootQuestionGroup);
 
 			//data related layer
-			HAPRequestChangeWrapper dataLayerChangeRequest = new HAPRequestChangeWrapper(story);
+			HAPRequestChangeWrapper dataLayerChangeRequest = new HAPRequestChangeWrapper(story, true);
 
 			//get service node
 			HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_SERVICE).iterator().next();
@@ -244,7 +243,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					parmBranchInfo.switchAlias = dataLayerChangeRequest.addNewChange(group);
 
 					//set switch group choice
-					dataLayerChangeRequest.addPatchChange(parmBranchInfo.switchAlias, HAPElementGroupSwitch.CHOICE, new HAPCalculateObjectElementId(parmBranchInfo.varGroupAlias, story));
+					dataLayerChangeRequest.addPatchChange(parmBranchInfo.switchAlias, HAPElementGroupSwitch.CHOICE, constantGroupEle.getName());
 
 					parmBranchInfos.add(parmBranchInfo);
 				}
