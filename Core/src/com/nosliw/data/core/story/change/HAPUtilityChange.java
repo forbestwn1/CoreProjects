@@ -139,34 +139,8 @@ public class HAPUtilityChange {
 		return out;
 	}
 	
-//	public static HAPChangeInfo applyNew(HAPStory story, HAPStoryElement ele, String alias, List<HAPChangeItem> changes, HAPElementGroup group) {
-//		HAPChangeInfo out = applyNew(story, ele, alias, changes);
-//		group.addElement(new HAPInfoElement(out.getStoryElement().getElementId()));
-//		return out;
-//	}
-//
-//	public static HAPChangeInfo applyNew(HAPStory story, HAPStoryElement ele, String alias, List<HAPChangeItem> changes) {
-//		HAPChangeItemNew change = new HAPChangeItemNew(ele, alias);
-//		HAPStoryElement element = applyChange(story, change, changes);
-//		return new HAPChangeInfo(change, element);
-//	}
-//	
-//	public static HAPChangeInfo applyDelete(HAPStory story, HAPIdElement elementId, List<HAPChangeItem> changes) {
-//		HAPChangeItemDelete change = new HAPChangeItemDelete(elementId);
-//		HAPStoryElement element = applyChange(story, change, changes);
-//		return new HAPChangeInfo(change, element);
-//	}
-//	
-//	public static HAPChangeInfo applyPatch(HAPStory story, HAPIdElement targetEleId, String path, Object value, List<HAPChangeItem> changes) {
-//		HAPChangeItemPatch change = new HAPChangeItemPatch(targetEleId, path, value);
-//		HAPStoryElement element = applyChange(story, change, changes);
-//		return new HAPChangeInfo(change, element);
-//	}
-	
 	public static HAPChangeItem buildChangePatch(HAPStoryElement element, String path, Object value) {	return new HAPChangeItemPatch(element.getElementId(), path, value);	}
 	public static HAPChangeItem buildChangePatch(HAPReferenceElement elementRef, String path, Object value) {	return new HAPChangeItemPatch(elementRef, path, value);	}
-	
-//	public static HAPChangeItem buildChangeNew(String itemCategary, String itemId, String alias) { return new HAPChangeItemNew(new HAPIdElement(itemCategary, itemId), alias); }
 	
 	public static boolean isElementChange(HAPChangeItem change) {
 		String type = change.getChangeType();

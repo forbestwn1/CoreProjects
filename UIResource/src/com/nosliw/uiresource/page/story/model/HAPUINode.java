@@ -61,8 +61,8 @@ public class HAPUINode {
 		HAPUIDataStructureInfo dataStructureInfo = HAPUtility.buildDataStructureInfoForUIStoryNode(childStoryNode, this.getStoryNode().getDataStructureInfo().getContext(), contextProcessRequirement, uiTagMan);
 		childStoryNode.setDataStructureInfo(dataStructureInfo);
 		
-		HAPAliasElement nodeName = changeRequest.addNewChange(childStoryNode);
-		HAPAliasElement connectionName = changeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(m_nodeRef, nodeName, (String)childId));
+		HAPAliasElement nodeName = changeRequest.addNewChange(childStoryNode).getAlias();
+		HAPAliasElement connectionName = changeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(m_nodeRef, nodeName, (String)childId)).getAlias();
 		
 		HAPUIChild childNode = new HAPUIChild(childStoryNode, nodeName, childId, connectionName, this.m_story);
 		this.m_children.add(childNode);

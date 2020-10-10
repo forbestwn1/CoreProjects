@@ -113,7 +113,9 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	@Override
 	public HAPStoryElement addElement(HAPStoryElement element, HAPAliasElement alias) {
 		HAPStoryElement out = null;
+		if(HAPBasicUtility.isStringEmpty(element.getId())) 	element.setId(HAPUtilityStory.buildStoryElementId(element, this.getNextId()));
 		element.appendToStory(this);
+		
 		String categary = element.getCategary();
 		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.addNode((HAPStoryNode)element);
 		else if(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.addConnection((HAPConnection)element);
@@ -207,7 +209,6 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public HAPStoryNode getNode(String id) {  return this.m_nodes.get(id);  }
 
 	private HAPStoryNode addNode(HAPStoryNode node) {
-		if(HAPBasicUtility.isStringEmpty(node.getId())) 	node.setId(this.getNextId(node));
 		this.m_nodes.put(node.getId(), node);
 		return node;
 	}
@@ -219,9 +220,6 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public HAPConnection getConnection(String id) {  return this.m_connections.get(id);  }
 	 
 	private HAPConnection addConnection(HAPConnection connection) {
-		//assign id
-		if(HAPBasicUtility.isStringEmpty(connection.getId())) 	connection.setId(this.getNextId(connection));
-
 		//solidate end ref
 		HAPReferenceElement endRef1 = connection.getEnd1().getNodeRef();
 		if(endRef1!=null) {
@@ -252,24 +250,24 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	@Override
 	public HAPElementGroup getElementGroup(String id) {   return this.m_elementGroups.get(id);  }
 
-	private HAPElementGroup addElementGroup(HAPElementGroup connectionGroup) {
-		if(HAPBasicUtility.isStringEmpty(connectionGroup.getId())) 	connectionGroup.setId(this.getNextId(connectionGroup));
-		//build solid element ref
-		for(HAPInfoElement ele : connectionGroup.getElements()) {
-			ele.getElementId();
-		}
-		this.m_elementGroups.put(connectionGroup.getId(), connectionGroup);  
-		return connectionGroup;
-	}
-
-	private String getNextId(HAPStoryElement ele) {
+	@Override
+	public String getNextId() {
 		Integer index = (Integer)this.getInfoValue(HAPConstant.STORY_INFO_IDINDEX);
 		if(index==null) {
 			index = Integer.valueOf(0);
 		}
 		index++;
 		this.getInfo().setValue(HAPConstant.STORY_INFO_IDINDEX, index);
-		return HAPUtilityStory.buildStoryElementId(ele, index + "");	
+		return index + "";
+	}
+
+	private HAPElementGroup addElementGroup(HAPElementGroup connectionGroup) {
+		//build solid element ref
+		for(HAPInfoElement ele : connectionGroup.getElements()) {
+			ele.getElementId();
+		}
+		this.m_elementGroups.put(connectionGroup.getId(), connectionGroup);  
+		return connectionGroup;
 	}
 
 	private void removeTemporaryAlias() {

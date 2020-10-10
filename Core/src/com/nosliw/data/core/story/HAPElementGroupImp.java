@@ -17,12 +17,9 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 
 	private List<HAPInfoElement> m_elements;
 
-	private int m_idIndex;
-	
 	public HAPElementGroupImp() {
 		super(HAPConstant.STORYELEMENT_CATEGARY_GROUP);  
 		this.m_elements = new ArrayList<HAPInfoElement>();
-		this.m_idIndex = 0;
 	}
 	
 	public HAPElementGroupImp(String type) {
@@ -35,7 +32,6 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 
 	@Override
 	public HAPInfoElement addElement(HAPInfoElement eleId) {
-		eleId.setId(this.m_idIndex+++"");
 		this.m_elements.add(eleId);
 		if(this.getStory()!=null)  eleId.processAlias(this.getStory());
 		return eleId;
@@ -105,7 +101,6 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 				this.m_elements.add(eleInfo);
 			}
 		}
-		this.m_idIndex = jsonObj.getInt(IDINDEX);
 		return true;  
 	}
 
@@ -113,7 +108,5 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
-		jsonMap.put(IDINDEX, this.m_idIndex+"");
-		typeJsonMap.put(IDINDEX, Integer.class);
 	}
 }

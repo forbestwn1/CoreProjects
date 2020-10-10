@@ -9,6 +9,7 @@ var packageObj = library.getChildPackage();
 	var node_COMMONATRIBUTECONSTANT;
 	var node_storyChangeUtility;
 	var node_storyUtility;
+	var node_designUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createComponentQuestionItemService = function(availableService){
@@ -49,8 +50,8 @@ var node_createComponentQuestionItemService = function(availableService){
 				},
 				
 				set : function(serviceId){
-					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, serviceId, this.question.answer);
-					node_storyChangeUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME, serviceId, this.question.answer);
+					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, serviceId, this.question.answer);
+					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME, serviceId, this.question.answer);
 					this.$emit("answerChange");
 				}
 			}
@@ -73,6 +74,7 @@ var node_createComponentQuestionItemService = function(availableService){
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.designUtility", function(){node_designUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentQuestionItemService", node_createComponentQuestionItemService); 

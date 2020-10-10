@@ -83,7 +83,7 @@ public class HAPParserElement {
 		HAPElementGroup out = null;
 		try {
 			String type = jsonObj.getString(HAPStoryElement.TYPE);
-			out = m_storyGroupClass.get(type).getConstructor(HAPStory.class).newInstance();
+			out = m_storyGroupClass.get(type).getConstructor().newInstance();
 			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		}
 		catch(Exception e) {

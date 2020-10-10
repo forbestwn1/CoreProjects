@@ -9,9 +9,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 public interface HAPElementGroup extends HAPStoryElement{
 
 	@HAPAttribute
-	public static final String IDINDEX = "idIndex";
-
-	@HAPAttribute
 	public static final String ELEMENTS = "elements";
 	
 	@HAPAttribute

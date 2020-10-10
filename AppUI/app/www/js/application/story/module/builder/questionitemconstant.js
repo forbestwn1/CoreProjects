@@ -15,6 +15,7 @@ var packageObj = library.getChildPackage();
 	var node_requestServiceProcessor;
 	var node_storyUtility;
 	var node_storyUIUtility;
+	var node_designUtility;
 	var node_CONSTANT;
 	var node_createData;
 	var node_createContextElementInfo;
@@ -57,7 +58,7 @@ var node_createComponentQuestionItemConstant = function(){
 					that.context = node_createContext("id", elementInfosArray, request);
 					
 					that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
-						node_storyChangeUtility.applyPatchFromQuestion(that.story, that.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, eventData.value, that.question.answer);
+						node_designUtility.applyPatchFromQuestion(that.story, that.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, eventData.value, that.question.answer);
 						that.$emit("answerChange");
 					}, this);
 
@@ -95,6 +96,7 @@ nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryS
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUIUtility", function(){node_storyUIUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.designUtility", function(){node_designUtility = this.getData();});
 
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.entity.createData", function(){node_createData = this.getData();});

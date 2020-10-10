@@ -16,41 +16,6 @@ var packageObj = library.getChildPackage();
  */
 var node_utility = function(){
 
-	var loc_discoverAllQuestionChanges = function(question, changes){
-		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
-		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
-			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
-			_.each(children, function(child, i){
-				loc_discoverAllQuestionChanges(child, changes);
-			});
-		}
-		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
-			_.each(question.answer, function(change, i){
-				changes.push(change);
-			});
-		}
-	};
-
-	var loc_discoverAllQuestionAnswers = function(question, answers){
-		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
-		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
-			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
-			_.each(children, function(child, i){
-				loc_discoverAllQuestionAnswers(child, answers);
-			});
-		}
-		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
-			var answer = {};
-			var changes = [];
-			_.each(question.answer, function(change, i){
-				changes.push(change);
-			});
-			answer[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES] = changes;
-			answer[node_COMMONATRIBUTECONSTANT.ANSWER_QUESTIONID] = question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
-			answers.push(answer);
-		}
-	};
-
 	var loc_createChangeItemDelete = function(targetCategary, targetId){
 		var out = {};
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE;
@@ -60,10 +25,19 @@ var node_utility = function(){
 		return out;
 	};
 	
-	var loc_createChangeItemNew = function(element, aliasObj){           
+	var loc_createChangeItemNew = function(element, aliasObj, story){           
 		var out = {};
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW;
+		
+		var eleId = element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+		if(eleId==undefined){
+			var eleCategary = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY];
+			var eleType = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE];
+			eleId = eleCategary+node_COMMONCONSTANT.SEPERATOR_LEVEL1+eleType+node_COMMONCONSTANT.SEPERATOR_LEVEL1+node_storyUtility.getNextIdForStory(story);
+			element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID] = eleId;
+		}
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT] = element;
+
 		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ALIAS] = aliasObj;
 		return out;
 	};
@@ -93,9 +67,9 @@ var node_utility = function(){
 		return out;
 	};
 	
-	var loc_createChangeItemDeleteForElement = function(element){  return loc_createChangeItemDelete(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);   };
-	var loc_createChangeItemPatchForElement = function(element, path, value){	return loc_createChangeItemPatch(new node_ElementId(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]), path, value);	};
-	var loc_createChangeItemNewForElement = function(element, aliasObj){  return loc_createChangeItemNew(element, aliasObj);   };
+	var loc_createChangeItemDeleteForStoryElement = function(element){  return loc_createChangeItemDelete(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);   };
+	var loc_createChangeItemPatchForStoryElement = function(element, path, value){	return loc_createChangeItemPatch(new node_ElementId(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]), path, value);	};
+	var loc_createChangeItemNewForStoryElement = function(element, aliasObj, story){  return loc_createChangeItemNew(element, aliasObj, story);   };
 
 	var loc_applyChangeNew = function(story, changeItem, saveRevert){
 		var aliasObj = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ALIAS];
@@ -121,7 +95,7 @@ var node_utility = function(){
 	
 	var loc_applyChangeDelete = function(story, changeItem, saveRevert){
 		var element = node_storyUtility.deleteStoryElementByRef(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF]);
-		if(loc_isRevertable(saveRevert, changeItem))  changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemNew(element)];
+		if(loc_isRevertable(saveRevert, changeItem))  changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemNew(element, undefined, story)];
 	};
 	
 	//output: a array of new change item
@@ -146,12 +120,12 @@ var node_utility = function(){
 								var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID])
 								if(childName==value){
 									if(childEle[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE]==false){
-										out.push(loc_createChangeItemPatchForElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, true));
+										out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, true));
 									}
 								}
 								else{
 									if(childEle[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE]==true){
-										out.push(loc_createChangeItemPatchForElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, false));
+										out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, false));
 									}
 								}
 							});
@@ -163,16 +137,46 @@ var node_utility = function(){
 						_.each(children, function(child, i){
 							var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]);
 							var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID])
-							out.push(loc_createChangeItemPatchForElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, value));
+							out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, value));
 						});
 					}
 				}
 			}
 		}
 		
-		var oldValue = node_objectOperationUtility.operateObject(element, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);
-		if(loc_isRevertable(saveRevert, changeItem)){
-			changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForElement(element, path, oldValue)];
+		if(eleCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP && path==node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENT){
+			//group element patch
+			if(value[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]!=undefined){
+				//append element
+				var id = value[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+				if(id==undefined){
+					value[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID] = element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_IDINDEX];
+					element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_IDINDEX]++;
+				}
+				element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS].push(value);
+				if(loc_isRevertable(saveRevert, changeItem)){
+					changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, id)];
+				}
+			}
+			else if(typeof value === 'string'){
+				//delete element
+				for(var i in element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS]){
+					if(element[i][node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==value){
+						var oldValue = element[i];
+						array.splice(i, 1);
+						if(loc_isRevertable(saveRevert, changeItem)){
+							changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, oldValue)];
+						}
+						break;
+					}
+				}
+			}
+		}
+		else{
+			var oldValue = node_objectOperationUtility.operateObject(element, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);
+			if(loc_isRevertable(saveRevert, changeItem)){
+				changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, oldValue)];
+			}
 		}
 		
 		return out;
@@ -224,33 +228,6 @@ var node_utility = function(){
 			}
 		},
 		
-		applyPatchFromQuestion : function(story, question, path, value, changesResult){
-			var changeItem = this.createChangeItemPatch(question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETREF], path, value);
-			loc_applyChangePatch(story, changeItem, true, changesResult);
-		},
-
-		createChangeItemPatch : function(targetRef, path, value){  return loc_createChangeItemPatch(targetRef, path, value);		},
-		
-		discoverAllQuestionAnswers : function(question){
-			var out = [];
-			loc_discoverAllQuestionAnswers(question, out);
-			return out;
-		},
-		
-		reverseStep : function(story, step){
-			var that = this;
-			var changes = step.changes;
-			for(var i=changes.length-1; i>=0; i--){
-				this.reverseChange(story, changes[i]);
-			}
-			
-			var answerChanges = [];
-			loc_discoverAllQuestionChanges(step.question, answerChanges);
-			for(var i=answerChanges.length-1; i>=0; i--){
-				this.reverseChange(story, answerChanges[i]);
-			}
-		},
-		
 		reverseChange : function(story, changeItem){
 			var that  = this;
 			var reverseChanges = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES];
@@ -261,8 +238,10 @@ var node_utility = function(){
 			}
 		},
 		
-		newStoryIndexChange : function(story){
-			var out = loc_createChangeItemStoryInfo(node_COMMONCONSTANT.STORY_INFO_IDINDEX, node_storyUtility.getIdIndex());
+		createChangeItemPatch : function(targetRef, path, value){  return loc_createChangeItemPatch(targetRef, path, value);		},
+		
+		createChangeItemStoryIdIndex : function(story){
+			var out = loc_createChangeItemStoryInfo(node_COMMONCONSTANT.STORY_INFO_IDINDEX, node_storyUtility.getIdIndex(story));
 			out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTABLE] = false;
 			return out;
 		},

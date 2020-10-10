@@ -9,6 +9,8 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPChangeItemStoryInfo extends HAPChangeItem{
 
+	public static final String MYCHANGETYPE = HAPConstant.STORYDESIGN_CHANGETYPE_STORYINFO;
+
 	@HAPAttribute
 	public static final String INFONAME = "infoName";
 
@@ -37,7 +39,7 @@ public class HAPChangeItemStoryInfo extends HAPChangeItem{
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
 		this.m_infoName = jsonObj.getString(INFONAME);
-		this.m_infoValue = jsonObj.getString(INFOVALUE);
+		this.m_infoValue = jsonObj.get(INFOVALUE);
 		return true;  
 	}
 	

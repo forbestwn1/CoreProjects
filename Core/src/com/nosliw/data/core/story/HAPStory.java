@@ -66,4 +66,6 @@ public interface HAPStory extends HAPEntityInfo{
 	void registerChangeHandler(HAPHandlerChange handler);
 	void unregisterChangeHandler(HAPHandlerChange handler);
 	List<HAPChangeItem> change(HAPRequestChange changeRequest);
+	
+	String getNextId();
 }

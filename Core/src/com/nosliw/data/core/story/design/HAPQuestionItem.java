@@ -8,7 +8,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.story.HAPParserElementReference;
 import com.nosliw.data.core.story.HAPReferenceElement;
 import com.nosliw.data.core.story.HAPReferenceElementWrapper;
 import com.nosliw.data.core.story.HAPStory;
@@ -37,7 +36,9 @@ public class HAPQuestionItem extends HAPQuestion{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		HAPParserElementReference.parse(jsonObj.getJSONObject(TARGETREF));
+		
+		this.m_targetRef = new HAPReferenceElementWrapper();
+		this.m_targetRef.buildObject(jsonObj.getJSONObject(TARGETREF), HAPSerializationFormat.JSON);
 		return true;  
 	}
 	

@@ -78,9 +78,11 @@ public class HAPStoryNodeUIData extends HAPStoryNodeUI{
 		}
 		
 		JSONObject attrMap = jsonObj.optJSONObject(ATTRIBUTES);
-		for(Object key : attrMap.keySet()) {
-			String name = (String)key;
-			this.m_attributes.put(name, attrMap.getString(name));
+		if(attrMap!=null) {
+			for(Object key : attrMap.keySet()) {
+				String name = (String)key;
+				this.m_attributes.put(name, attrMap.getString(name));
+			}
 		}
 		return true;  
 	}

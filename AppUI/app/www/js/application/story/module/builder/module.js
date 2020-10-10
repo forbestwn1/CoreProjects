@@ -118,7 +118,8 @@ var node_createModuleStoryBuilder = function(parm){
 	var loc_onNext = function(){
 		if(loc_isAtLastStep()){
 			var step = loc_getCurrentStep();
-			var answers = node_storyChangeUtility.discoverAllQuestionAnswers(step.question);
+			var answers = node_designUtility.discoverAllQuestionAnswers(step.question);
+			answers.push(node_storyChangeUtility.createChangeItemStoryIdIndex(loc_componentData.story));
 			loc_storyService.executeDoDesignRequest(undefined, loc_componentData.designId, answers, loc_componentData.stepCursor, {
 				success : function(request, serviceData){
 					if(node_errorUtility.isSuccess(serviceData)){
