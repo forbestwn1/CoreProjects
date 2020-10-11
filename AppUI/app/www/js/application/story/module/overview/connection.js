@@ -36,10 +36,10 @@ var node_createConnectionLink = function(storyConnectionId, module){
 		var storyConnection = node_storyUtility.getConnectionById(story, loc_storyConnectionId);
 		var storyEnd1 = storyConnection[node_COMMONATRIBUTECONSTANT.CONNECTION_END1];
 		var storyEnd2 = storyConnection[node_COMMONATRIBUTECONSTANT.CONNECTION_END2];
-		var storyNode1 = storyEnd1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID];
-		var storyNode2 = storyEnd2[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEID];
-		var nodeElement1 = loc_module.getNodeElementById(storyNode1);
-		var nodeElement2 = loc_module.getNodeElementById(storyNode2);
+		var storyNodeId1 = node_storyUtility.getElementIdByReference(story, storyEnd1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF]);
+		var storyNodeId2 = node_storyUtility.getElementIdByReference(story, storyEnd2[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF]);
+		var nodeElement1 = loc_module.getNodeElementById(storyNodeId1[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
+		var nodeElement2 = loc_module.getNodeElementById(storyNodeId2[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
 		loc_link.source(nodeElement1.getElement());
 		loc_link.target(nodeElement2.getElement());
 		

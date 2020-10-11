@@ -180,14 +180,14 @@ var node_utility = function(){
 		getOtherConnectionEnd : function(story, connection, nodeId) {
 			var end1 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END1];
 			var end2 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END2];
-			if(this.getElementIdByReference(end1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]==nodeId)  return end2;
+			if(this.getElementIdByReference(story, end1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]==nodeId)  return end2;
 			else return end1;
 		},
 		
 		getConnectionEnd : function(story, connection, nodeId) {
 			var end1 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END1];
 			var end2 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END2];
-			if(this.getElementIdByReference(end1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]==nodeId)  return end1;
+			if(this.getElementIdByReference(story, end1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]==nodeId)  return end1;
 			else return end2;
 		},
 		

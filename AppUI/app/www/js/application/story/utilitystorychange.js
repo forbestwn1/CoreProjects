@@ -148,14 +148,9 @@ var node_utility = function(){
 			//group element patch
 			if(value[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]!=undefined){
 				//append element
-				var id = value[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
-				if(id==undefined){
-					value[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID] = element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_IDINDEX];
-					element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_IDINDEX]++;
-				}
 				element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS].push(value);
 				if(loc_isRevertable(saveRevert, changeItem)){
-					changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, id)];
+					changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, value[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID])];
 				}
 			}
 			else if(typeof value === 'string'){

@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.uiresource.page.story.model.HAPUIDataInfo;
@@ -66,6 +67,16 @@ public class HAPStoryNodeUIData extends HAPStoryNodeUI{
 	}
 
 	@Override
+	public HAPStoryElement cloneStoryElement() {
+		HAPStoryNodeUIData out = new HAPStoryNodeUIData();
+		this.cloneTo(out);
+		out.m_tagName = this.m_tagName;
+		out.m_uiDataInfo = this.m_uiDataInfo.cloneUIDataInfo();
+		out.m_attributes.putAll(this.m_attributes);
+		return out;
+	}
+	
+	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
@@ -74,7 +85,7 @@ public class HAPStoryNodeUIData extends HAPStoryNodeUI{
 		JSONObject dataInfoObj = jsonObj.optJSONObject(DATAINFO);
 		if(dataInfoObj!=null) {
 			this.m_uiDataInfo = new HAPUIDataInfo();
-			this.m_uiDataInfo.buildObject(jsonObj, HAPSerializationFormat.JSON);
+			this.m_uiDataInfo.buildObject(dataInfoObj, HAPSerializationFormat.JSON);
 		}
 		
 		JSONObject attrMap = jsonObj.optJSONObject(ATTRIBUTES);
