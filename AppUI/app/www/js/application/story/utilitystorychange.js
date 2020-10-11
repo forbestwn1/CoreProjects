@@ -155,10 +155,11 @@ var node_utility = function(){
 			}
 			else if(typeof value === 'string'){
 				//delete element
-				for(var i in element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS]){
-					if(element[i][node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==value){
-						var oldValue = element[i];
-						array.splice(i, 1);
+				var children = element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS];
+				for(var i in children){
+					if(children[i][node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==value){
+						var oldValue = children[i];
+						children.splice(i, 1);
 						if(loc_isRevertable(saveRevert, changeItem)){
 							changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, oldValue)];
 						}

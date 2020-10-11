@@ -78,13 +78,13 @@ var node_utility = function(){
 			var that = this;
 			var changes = step.changes;
 			for(var i=changes.length-1; i>=0; i--){
-				this.reverseChange(story, changes[i]);
+				node_storyChangeUtility.reverseChange(story, changes[i]);
 			}
 			
 			var answerChanges = [];
 			loc_discoverAllQuestionChanges(step.question, answerChanges);
 			for(var i=answerChanges.length-1; i>=0; i--){
-				this.reverseChange(story, answerChanges[i]);
+				node_storyChangeUtility.reverseChange(story, answerChanges[i]);
 			}
 		},
 

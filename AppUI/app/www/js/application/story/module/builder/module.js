@@ -222,7 +222,7 @@ var node_createModuleStoryBuilder = function(parm){
 					if(!loc_isAtLastStep()){
 						//reverse steps behind
 						for(var i=this.steps.length-1; i>this.stepCursor; i--){
-							node_storyChangeUtility.reverseStep(this.story, this.steps[i]);
+							node_designUtility.reverseStep(this.story, this.steps[i]);
 							this.steps.pop();
 						}
 					}	

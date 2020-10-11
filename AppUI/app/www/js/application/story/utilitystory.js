@@ -87,7 +87,7 @@ var node_utility = function(){
 		},
 		
 		deleteStoryElementByRef : function(story, ref){
-			var elementId = node_storyUtility.getElementIdByReference(story, ref);
+			var elementId = this.getElementIdByReference(story, ref);
 			return this.deleteStoryElement(elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
 		},
 		

@@ -202,15 +202,15 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPAliasElement parmNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceInputParm(parmDef)).getAlias();
 					dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceInputNodeName, parmNodeName, parmName));
 
-					HAPAliasElement constantNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeConstant(parmDef.getCriteria())).getAlias();
+					parmBranchInfo.constantAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeConstant(parmDef.getCriteria())).getAlias();
 					
-					HAPAliasElement constantConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(constantNodeName, parmNodeName, null, null)).getAlias();
+					HAPAliasElement constantConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.constantAlias, parmNodeName, null, null)).getAlias();
 
 					//constant path and group
 					HAPElementGroupBatch constantBatchGroup = new HAPElementGroupBatch();
-					constantBatchGroup.addElement(new HAPInfoElement(constantNodeName));
+					constantBatchGroup.addElement(new HAPInfoElement(parmBranchInfo.constantAlias));
 					constantBatchGroup.addElement(new HAPInfoElement(constantConnectionNodeName));
-					parmBranchInfo.constantAlias = dataLayerChangeRequest.addNewChange(constantBatchGroup).getAlias();
+					parmBranchInfo.constantGroupAlias = dataLayerChangeRequest.addNewChange(constantBatchGroup).getAlias();
 					
 					//variable path and group
 					String variableName = parmName;
@@ -226,7 +226,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					//switch group
 					HAPElementGroupSwitch group = new HAPElementGroupSwitch();
 					//add constant to group
-					HAPInfoElement constantGroupEle = new HAPInfoElement(parmBranchInfo.constantAlias);
+					HAPInfoElement constantGroupEle = new HAPInfoElement(parmBranchInfo.constantGroupAlias);
 					constantGroupEle.setName("Constant");
 					group.addElement(constantGroupEle);
 					//add variable to group
@@ -379,6 +379,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		public HAPAliasElement variableAlias;
 		public HAPAliasElement constantAlias;
 		public HAPAliasElement varGroupAlias;
+		public HAPAliasElement constantGroupAlias;
 		public HAPAliasElement switchAlias;
 		public HAPUINode dataUINode; 
 	}
