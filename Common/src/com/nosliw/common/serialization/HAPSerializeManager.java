@@ -63,10 +63,13 @@ public class HAPSerializeManager {
 		try {
 			Class cs = this.m_classMaps.get(className);
 			if(cs==null)	cs = Class.forName(className);
-			out = ((HAPSerializable)cs.newInstance());
-			if(!out.buildObject(value, format)){
-				//build failed
-				out = null;
+			if(value.getClass()==cs)  out = (HAPSerializable)value;
+			else {
+				out = ((HAPSerializable)cs.newInstance());
+				if(!out.buildObject(value, format)){
+					//build failed
+					out = null;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

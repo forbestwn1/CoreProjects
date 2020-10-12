@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
@@ -214,7 +216,8 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
-		throw new RuntimeException();
+		HAPParserContext.parseContextGroup((JSONObject)json, this);
+		return true;
 	}
 	
 	@Override

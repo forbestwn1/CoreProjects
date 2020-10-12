@@ -52,6 +52,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	@Override
 	public void startTransaction() {
 		this.m_changeResult = new HAPResultTransaction();
+		this.m_changeResult.setOldIdIndex(this.getIdIndex());
 	}
 	
 	@Override
@@ -65,6 +66,9 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 			handler.onChanges(changes);
 		}
 		
+		//add id index change first
+		out.addChange(HAPUtilityChange.newStoryIndexChange(this));
+
 		//add all changes
 		out.addChanges(this.m_changeResult.getChanges());
 
@@ -78,6 +82,8 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public void rollbackTransaction() {		
 		HAPUtilityChange.revertChange(this, this.m_changeResult.getChanges());	
 		this.removeTemporaryAlias();
+		this.setIdIndex(this.m_changeResult.getOldIdIndex());
+		this.m_changeResult = null;
 	}
 	
 	@Override
@@ -252,15 +258,24 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 
 	@Override
 	public String getNextId() {
+		int index = this.getIdIndex();
+		int out = index+1;
+		this.setIdIndex(out);
+		return out + "";
+	}
+
+	private int getIdIndex() {
 		Integer index = (Integer)this.getInfoValue(HAPConstant.STORY_INFO_IDINDEX);
 		if(index==null) {
 			index = Integer.valueOf(0);
 		}
-		index++;
-		this.getInfo().setValue(HAPConstant.STORY_INFO_IDINDEX, index);
-		return index + "";
+		return index;
 	}
-
+	
+	private void setIdIndex(int index) {
+		this.getInfo().setValue(HAPConstant.STORY_INFO_IDINDEX, index);
+	}
+	
 	private HAPElementGroup addElementGroup(HAPElementGroup connectionGroup) {
 		//build solid element ref
 		for(HAPInfoElement ele : connectionGroup.getElements()) {
