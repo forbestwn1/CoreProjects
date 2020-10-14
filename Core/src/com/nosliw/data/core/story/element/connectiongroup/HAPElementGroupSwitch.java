@@ -63,7 +63,7 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 		if(out!=null)  return out; 
 		else {
 			if(CHOICE.equals(path)) {
-				value = value.toString();
+				if(value!=null)  value = value.toString();
 				out = new HAPChangeResult();
 				if(!HAPBasicUtility.isEquals(value, this.m_choice)) {
 					out.addRevertChange(HAPUtilityChange.buildChangePatch(this, CHOICE, this.m_choice));

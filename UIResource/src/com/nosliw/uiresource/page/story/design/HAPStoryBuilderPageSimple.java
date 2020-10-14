@@ -206,10 +206,9 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPAliasElement constantConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.constantAlias, parmNodeName, null, null)).getAlias();
 
 					//constant path and group
-					HAPElementGroupBatch constantBatchGroup = new HAPElementGroupBatch();
-					constantBatchGroup.addElement(new HAPInfoElement(parmBranchInfo.constantAlias));
-					constantBatchGroup.addElement(new HAPInfoElement(constantConnectionNodeName));
-					parmBranchInfo.constantGroupAlias = dataLayerChangeRequest.addNewChange(constantBatchGroup).getAlias();
+					parmBranchInfo.constantGroupAlias = dataLayerChangeRequest.addNewChange(new HAPElementGroupBatch()).getAlias();
+					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.constantGroupAlias, new HAPInfoElement(parmBranchInfo.constantAlias));
+					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.constantGroupAlias, new HAPInfoElement(constantConnectionNodeName));
 					
 					//variable path and group
 					String variableName = parmName;
@@ -217,22 +216,21 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 					HAPAliasElement variableConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.variableAlias, parmNodeName, null, null)).getAlias();
 
-					HAPElementGroupBatch variableBatchGroup = new HAPElementGroupBatch();
-					variableBatchGroup.addElement(new HAPInfoElement(parmBranchInfo.variableAlias));
-					variableBatchGroup.addElement(new HAPInfoElement(variableConnectionNodeName));
-					parmBranchInfo.varGroupAlias = dataLayerChangeRequest.addNewChange(variableBatchGroup).getAlias();
+					parmBranchInfo.varGroupAlias = dataLayerChangeRequest.addNewChange(new HAPElementGroupBatch()).getAlias();
+					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(parmBranchInfo.variableAlias));
+					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(variableConnectionNodeName));
 
 					//switch group
-					HAPElementGroupSwitch group = new HAPElementGroupSwitch();
+					parmBranchInfo.switchAlias = dataLayerChangeRequest.addNewChange(new HAPElementGroupSwitch()).getAlias();
 					//add constant to group
 					HAPInfoElement constantGroupEle = new HAPInfoElement(parmBranchInfo.constantGroupAlias);
 					constantGroupEle.setName("Constant");
-					group.addElement(constantGroupEle);
+					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.switchAlias, constantGroupEle);
+
 					//add variable to group
 					HAPInfoElement varGroupEle = new HAPInfoElement(parmBranchInfo.varGroupAlias);
 					varGroupEle.setName("Variable");
-					group.addElement(varGroupEle);
-					parmBranchInfo.switchAlias = dataLayerChangeRequest.addNewChange(group).getAlias();
+					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.switchAlias, varGroupEle);
 
 					//set switch group choice
 					dataLayerChangeRequest.addPatchChange(parmBranchInfo.switchAlias, HAPElementGroupSwitch.CHOICE, constantGroupEle.getName());
