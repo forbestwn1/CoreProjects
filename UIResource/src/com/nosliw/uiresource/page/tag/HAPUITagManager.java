@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Set;
 
-import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPDataTypeHelper;
+import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUITagManager {

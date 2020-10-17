@@ -9,11 +9,11 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPDataTypeConverter;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPRelationship;
-import com.nosliw.data.core.HAPRelationshipImp;
-import com.nosliw.data.core.HAPRelationshipPathSegment;
+import com.nosliw.data.core.data.HAPDataTypeConverter;
+import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPRelationship;
+import com.nosliw.data.core.data.HAPRelationshipImp;
+import com.nosliw.data.core.data.HAPRelationshipPathSegment;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 

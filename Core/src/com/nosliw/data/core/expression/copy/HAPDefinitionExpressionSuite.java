@@ -3,10 +3,10 @@ package com.nosliw.data.core.expression.copy;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
-import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 
 public class HAPDefinitionExpressionSuite extends HAPResourceDefinitionContainer{
 

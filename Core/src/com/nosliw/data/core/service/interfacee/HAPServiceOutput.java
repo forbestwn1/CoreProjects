@@ -8,9 +8,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.criteria.HAPCriteriaParser;
-import com.nosliw.data.core.criteria.HAPCriteriaUtility;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute
 public class HAPServiceOutput extends HAPEntityInfoWritableImp{

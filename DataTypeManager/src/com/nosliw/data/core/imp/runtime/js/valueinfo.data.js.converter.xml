@@ -16,7 +16,7 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="dataTypeName" dataType="object" subDataType="com.nosliw.data.core.HAPDataTypeId" description="">
+	<property name="dataTypeName" dataType="object" subDataType="com.nosliw.data.core.data.HAPDataTypeId" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(500) NOT NULL"/>
 		</dbColumnInfos>

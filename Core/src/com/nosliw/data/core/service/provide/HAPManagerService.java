@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 //service manager, it is used for runtime purpose

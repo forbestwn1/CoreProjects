@@ -7,9 +7,8 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.data.core.HAPData;
-
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 

@@ -2,14 +2,16 @@ package com.nosliw.uiresource.page.tag;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -77,6 +79,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	public void addEventDefinition(HAPDefinitionUIEvent eventDef) {   this.m_eventsDefinition.add(eventDef);    }
 	
 	public void addAttributeDefinition(HAPUITagDefinitionAttribute attrDef) {   this.m_attributes.put(attrDef.getName(), attrDef);   }
+	public Set<HAPUITagDefinitionAttribute> getAllAttributeDef(){    return new HashSet<HAPUITagDefinitionAttribute>(this.m_attributes.values());  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

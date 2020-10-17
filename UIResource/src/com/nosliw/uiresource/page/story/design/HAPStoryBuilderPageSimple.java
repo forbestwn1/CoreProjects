@@ -2,24 +2,27 @@ package com.nosliw.uiresource.page.story.design;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.HAPDataType;
-import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
-import com.nosliw.data.core.criteria.HAPCriteriaUtility;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.HAPDataType;
+import com.nosliw.data.core.data.HAPDataTypeHelper;
+import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPDataTypeManager;
+import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
+import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
+import com.nosliw.data.core.service.interfacee.HAPServiceResult;
 import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.story.HAPAliasElement;
@@ -49,6 +52,8 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeConstant;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
+import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutput;
+import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutputItem;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
@@ -178,6 +183,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 			//service parm
 			List<HAPParmBranchInfo> parmBranchInfos = new ArrayList<HAPParmBranchInfo>();
+			List<HAPOutputBranchInfo> outputBranchInfos = new ArrayList<HAPOutputBranchInfo>();
+			
 			{
 				//data related layer
 				HAPRequestChangeWrapper dataLayerChangeRequest = new HAPRequestChangeWrapper(story, true, true);
@@ -213,7 +220,6 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					//variable path and group
 					String variableName = parmName;
 					parmBranchInfo.variableAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeVariable(variableName, parmDef.getCriteria())).getAlias();
-
 					HAPAliasElement variableConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.variableAlias, parmNodeName, null, null)).getAlias();
 
 					parmBranchInfo.varGroupAlias = dataLayerChangeRequest.addNewChange(new HAPElementGroupBatch()).getAlias();
@@ -239,6 +245,63 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				}
 				
 				//output
+				HAPAliasElement serviceOutputNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceOutput()).getAlias();
+				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceOutputNodeName, HAPConstant.SERVICE_CHILD_RESULT));
+				HAPServiceResult successResult = serviceInterface.getResult("success");
+				Map<String, HAPServiceOutput> output = successResult.getOutput(); 
+				for(String parmName : output.keySet()) {
+					HAPOutputBranchInfo parmBranchInfo = new HAPOutputBranchInfo();
+					parmBranchInfo.parmName = parmName;
+
+					//parm and connection to input
+					HAPServiceOutput parmDef = output.get(parmName);
+					
+					HAPAliasElement parmNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceOutputItem(parmDef)).getAlias();
+					dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceInputNodeName, parmNodeName, parmName));
+
+					//variable path and group
+					String variableName = parmName;
+					parmBranchInfo.variableAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeVariable(variableName, parmDef.getCriteria())).getAlias();
+					HAPAliasElement variableConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.variableAlias, parmNodeName, null, null)).getAlias();
+
+					//group
+					parmBranchInfo.varGroupAlias = dataLayerChangeRequest.addNewChange(new HAPElementGroupBatch()).getAlias();
+					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(parmBranchInfo.variableAlias));
+					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(variableConnectionNodeName));
+
+					outputBranchInfos.add(parmBranchInfo);
+
+//					
+//					//ui container
+//					HAPChangeInfo parmParmUIContainerNewChange = HAPUtilityChange.applyNew(story, new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple1.class, "uiData.tmp")), step.getChanges());
+//					HAPChangeInfo layoutToUIContainerConnectionNewChange = HAPUtilityChange.applyNew(story, HAPUtilityConnection.newConnectionContain(pageLayoutNewChange.getStoryElement().getId(), parmParmUIContainerNewChange.getStoryElement().getId(), "output"), step.getChanges());
+//					HAPChangeInfo parmParmUILabelNewChange = HAPUtilityChange.applyNew(story, new HAPStoryNodeUIHtml(parmName), step.getChanges());
+//					HAPChangeInfo uiContainerToUILabelConnectionNewChange = HAPUtilityChange.applyNew(story, HAPUtilityConnection.newConnectionContain(parmParmUIContainerNewChange.getStoryElement().getId(), parmParmUILabelNewChange.getStoryElement().getId(), "label"), step.getChanges());
+//
+//					//ui for variable, add to page, connect with variable
+//					HAPUITagQueryResult uiTagInfo = this.m_uiTagManager.getDefaultUITag(new HAPUITageQuery(parmDef.getCriteria()));
+//					HAPChangeInfo parmParmUINewChange = HAPUtilityChange.applyNew(story, new HAPStoryNodeUIData(uiTagInfo.getTag(), parmDef.getCriteria()), step.getChanges());
+//					HAPChangeInfo parmParmUIConnectionNewChange = HAPUtilityChange.applyNew(story, HAPUtilityConnection.newConnectionOnewayDataIO(parmVariableNewChange.getStoryElement().getId(), parmParmUINewChange.getStoryElement().getId(), null, null), step.getChanges());
+//					
+////					HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionContain(pageStoryNode.getId(), parmParmUINewChange.getStoryElement().getId(), parmName), step.getChanges());
+//					HAPChangeInfo uiContainerToUIDataTagConnectionNewChange = HAPUtilityChange.applyNew(story, HAPUtilityConnection.newConnectionContain(parmParmUIContainerNewChange.getStoryElement().getId(), parmParmUINewChange.getStoryElement().getId(), "uiData"), step.getChanges());
+//					
+//					//variable group
+//					HAPElementGroupBatch variableBatchGroup = new HAPElementGroupBatch(story);
+//					variableBatchGroup.addElement(new HAPInfoElement(parmVariableNewChange.getStoryElement().getElementId()));
+//					variableBatchGroup.addElement(new HAPInfoElement(parmVariableConnectionNewChange.getStoryElement().getElementId()));
+//					variableBatchGroup.addElement(new HAPInfoElement(parmParmUINewChange.getStoryElement().getElementId()));
+//					variableBatchGroup.addElement(new HAPInfoElement(parmParmUIConnectionNewChange.getStoryElement().getElementId()));
+//
+//					variableBatchGroup.addElement(new HAPInfoElement(parmParmUIContainerNewChange.getStoryElement().getElementId()));
+//					variableBatchGroup.addElement(new HAPInfoElement(layoutToUIContainerConnectionNewChange.getStoryElement().getElementId()));
+//					variableBatchGroup.addElement(new HAPInfoElement(parmParmUILabelNewChange.getStoryElement().getElementId()));
+//					variableBatchGroup.addElement(new HAPInfoElement(uiContainerToUILabelConnectionNewChange.getStoryElement().getElementId()));
+//					variableBatchGroup.addElement(new HAPInfoElement(uiContainerToUIDataTagConnectionNewChange.getStoryElement().getElementId()));
+//
+//					HAPChangeInfo variableGroupNewChange = HAPUtilityChange.applyNew(story, variableBatchGroup, step.getChanges());
+					
+				}
 
 				dataLayerChangeRequest.close();
 			}
@@ -265,6 +328,19 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 						uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(eleRef));
 					}
 				}
+				
+				for(HAPOutputBranchInfo parmBranchInfo : outputBranchInfos) {
+					//ui
+					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
+					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "output", varNode.getVariableName(), parmBranchInfo.parmName, uiLayerChangeRequest);
+					parmBranchInfo.dataUINode = dataUINode; 
+					
+					//variable group
+					for(HAPReferenceElement eleRef : dataUINode.getAllStoryElements()) {
+						uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(eleRef));
+					}
+				}
+				
 				uiLayerChangeRequest.close();
 			}
 			
@@ -287,6 +363,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPQuestionItem uiDataQuestion = new HAPQuestionItem("select ui tag", parmBranchInfo.dataUINode.getStoryNodeRef());
 					parmQuestionGroup.addChild(uiDataQuestion);
 				}
+				
+				
 			}
 			
 			HAPResultTransaction transactionResult = story.commitTransaction();
@@ -368,6 +446,13 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		for(HAPAnswer answer : answerRequest.getAnswers()){		changeRequest.addChanges(answer.getChanges());	}
 		for(HAPChangeItem change : answerRequest.getExtraChanges()) {   changeRequest.addChange(change);    }
 		changeRequest.close();
+	}
+	
+	class HAPOutputBranchInfo{
+		public String parmName;
+		public HAPAliasElement variableAlias;
+		public HAPAliasElement varGroupAlias;
+		public HAPUINode dataUINode; 
 	}
 	
 	class HAPParmBranchInfo{

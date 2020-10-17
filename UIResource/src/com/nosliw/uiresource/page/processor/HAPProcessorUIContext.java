@@ -63,7 +63,7 @@ public class HAPProcessorUIContext {
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
 			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
 			//for custom tag, build context for tag first : merge parent context with context definition in tag definition first
-			parentContext = HAPUtilityProcess.buildUITagContext(uiTagExe.getUIUnitTagDefinition().getTagName(), parentContext, uiTagExe.getAttributes(), contextProcessorConfig, uiTagMan, contextProcessRequirement);
+			parentContext = HAPUtilityProcess.buildUITagContext(uiTagMan.getUITagDefinition(new HAPUITagId(uiTagExe.getUIUnitTagDefinition().getTagName())), parentContext, uiTagExe.getAttributes(), contextProcessorConfig, contextProcessRequirement);
 			uiTagExe.setTagContext(parentContext);
 		}
 		

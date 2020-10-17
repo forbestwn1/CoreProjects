@@ -2,9 +2,9 @@ package com.nosliw.uiresource.page.processor;
 
 import java.util.Set;
 
-import com.nosliw.data.core.HAPUtilityDataComponent;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.data.HAPUtilityDataComponent;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;

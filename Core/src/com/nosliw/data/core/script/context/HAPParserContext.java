@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 
 public class HAPParserContext {
 

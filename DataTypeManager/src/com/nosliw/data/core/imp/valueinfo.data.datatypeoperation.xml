@@ -11,13 +11,13 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="source" dataType="object" subDataType="com.nosliw.data.core.HAPDataTypeId" description="">
+	<property name="source" dataType="object" subDataType="com.nosliw.data.core.data.HAPDataTypeId" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(100)"/>
 		</dbColumnInfos>
 	</property>
 
-	<property name="target" dataType="object" subDataType="com.nosliw.data.core.HAPDataTypeId" description="">
+	<property name="target" dataType="object" subDataType="com.nosliw.data.core.data.HAPDataTypeId" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(100)"/>
 		</dbColumnInfos>

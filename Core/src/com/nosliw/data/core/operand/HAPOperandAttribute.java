@@ -8,9 +8,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.data.HAPDataTypeHelper;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandAttribute extends HAPOperandImp{

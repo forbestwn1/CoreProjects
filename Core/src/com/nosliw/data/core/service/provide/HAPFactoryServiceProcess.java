@@ -7,8 +7,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;

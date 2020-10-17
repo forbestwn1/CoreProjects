@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPOperationParm;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPOperationParm;
 
 @HAPEntityWithAttribute
 public abstract class HAPRuntimeTaskExecuteDataOperation extends HAPRuntimeTask{

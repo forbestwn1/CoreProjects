@@ -10,8 +10,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPUtilityData;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.HAPUtilityData;
 
 @HAPEntityWithAttribute
 public class HAPResultService extends HAPSerializableImp{

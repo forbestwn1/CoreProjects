@@ -10,11 +10,11 @@
 	</property>
 
 	<property name="constants" type="map" key="name" description="">
-		<child dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapper"></child>
+		<child dataType="object" subDataType="com.nosliw.data.core.data.HAPDataWrapper"></child>
 	</property>
 
 	<property name="variableCriterias" type="map" key="name" description="">
-		<child dataType="object" subDataType="com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate"></child>
+		<child dataType="object" subDataType="com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaWrapperLiterate"></child>
 	</property>
 
 	<property name="references" type="map" key="reference" description="">

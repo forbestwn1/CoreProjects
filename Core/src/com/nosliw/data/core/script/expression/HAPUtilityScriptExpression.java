@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.script.expression.literate.HAPUtilityScriptLiterate;
 
 public class HAPUtilityScriptExpression {

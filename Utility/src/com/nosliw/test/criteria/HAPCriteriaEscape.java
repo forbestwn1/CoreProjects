@@ -3,7 +3,7 @@ package com.nosliw.test.criteria;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import com.nosliw.data.core.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 
 public class HAPCriteriaEscape {
 

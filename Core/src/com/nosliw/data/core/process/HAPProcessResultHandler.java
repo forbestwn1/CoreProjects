@@ -3,7 +3,7 @@ package com.nosliw.data.core.process;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.data.HAPData;
 
 public interface HAPProcessResultHandler {
 

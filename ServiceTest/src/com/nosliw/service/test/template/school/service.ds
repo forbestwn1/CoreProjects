@@ -1,0 +1,28 @@
+[{
+	"id": "TestTemplateServiceSchool",
+	"name": "TestTemplateServiceSchool",
+    "implementation" : "com.nosliw.service.test.template.school.HAPServiceImp",
+	"description" : "all element school rank in ontario",
+	"interface" : {
+		"result" : [
+			{
+				"name" : "success",
+				"output" : {
+					"outputInService": {
+						"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
+					}
+				},			
+			}
+		],
+		"parm" : [ 
+			{
+				name : "schoolRatingInService",
+				criteria : "test.string;1.0.0",
+				default :{
+					dataTypeId: "test.string;1.0.0",
+					value: "8"
+				},
+			}
+		]
+	},
+}]

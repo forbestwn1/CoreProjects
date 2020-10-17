@@ -1,7 +1,7 @@
 package com.nosliw.data.core.imp.runtime.js.resource;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
-import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSOperation;
 
 public class HAPResourceDataJSOperationImp extends HAPStringableValueEntityWithID implements HAPResourceDataJSOperation{

@@ -12,14 +12,14 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPDataTypeOperation;
-import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.HAPOperationParmInfo;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.HAPDataTypeHelper;
+import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPDataTypeOperation;
+import com.nosliw.data.core.data.HAPDataWrapper;
+import com.nosliw.data.core.data.HAPOperationParmInfo;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandUtility {

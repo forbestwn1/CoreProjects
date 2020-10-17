@@ -22,6 +22,6 @@ public class HAPStoryNodeServiceOutput extends HAPStoryNodeImp{
 	public HAPStoryElement cloneStoryElement() {
 		HAPStoryNodeServiceOutput out = new HAPStoryNodeServiceOutput();
 		super.cloneTo(out);
-		return null;
+		return out;
 	}
 }

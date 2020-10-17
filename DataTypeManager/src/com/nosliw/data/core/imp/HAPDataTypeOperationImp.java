@@ -5,12 +5,12 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPDataTypeOperation;
-import com.nosliw.data.core.HAPOperation;
-import com.nosliw.data.core.HAPRelationship;
-import com.nosliw.data.core.HAPRelationshipPath;
-import com.nosliw.data.core.HAPRelationshipPathSegment;
+import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPDataTypeOperation;
+import com.nosliw.data.core.data.HAPOperation;
+import com.nosliw.data.core.data.HAPRelationship;
+import com.nosliw.data.core.data.HAPRelationshipPath;
+import com.nosliw.data.core.data.HAPRelationshipPathSegment;
 
 public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelationship, HAPDataTypeOperation{
 

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
@@ -23,6 +23,7 @@ import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUI;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPUIDataStructureInfo;
+import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPUtility {
@@ -36,7 +37,8 @@ public class HAPUtility {
 		HAPContextGroup childContext = null;
 		if(HAPConstant.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
 			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
-			childContext = HAPUtilityProcess.buildUITagContext(uiDataStoryNode.getTagName(), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, uiTagMan, contextProcessRequirement);
+			childContext = HAPUtilityProcess.buildUITagContext(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, contextProcessRequirement);
+			childContext = HAPProcessorContext.processRelative(childContext, HAPParentContext.createDefault(parentContext), contextProcessorConfig, contextProcessRequirement);
 			out.setContext(childContext);
 		}
 		else {

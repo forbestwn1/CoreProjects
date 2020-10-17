@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.data.HAPData;
 
 @HAPEntityWithAttribute
 public class HAPResultProcess extends HAPSerializableImp{

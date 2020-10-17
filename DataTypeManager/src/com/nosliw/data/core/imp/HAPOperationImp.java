@@ -14,12 +14,12 @@ import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPOperation;
-import com.nosliw.data.core.HAPOperationOutInfo;
-import com.nosliw.data.core.HAPOperationParmInfo;
+import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPOperation;
+import com.nosliw.data.core.data.HAPOperationOutInfo;
+import com.nosliw.data.core.data.HAPOperationParmInfo;
 
-@HAPEntityWithAttribute(parent="com.nosliw.data.core.HAPOperation")
+@HAPEntityWithAttribute(parent="com.nosliw.data.core.data.HAPOperation")
 public class HAPOperationImp extends HAPStringableValueEntityWithID implements HAPOperation{
 
 	public static String _VALUEINFO_NAME;
@@ -47,7 +47,7 @@ public class HAPOperationImp extends HAPStringableValueEntityWithID implements H
 	@Override
 	public List<HAPOperationParmInfo> getParmsInfo() {
 		HAPStringableValueList list = this.getListAncestorByPath(PAMRS);
-		return (List<HAPOperationParmInfo>)list.getListValue();
+		return list.getListValue();
 	}
 	
 	public void addParmsInfo(HAPOperationParmInfo parmInfo){

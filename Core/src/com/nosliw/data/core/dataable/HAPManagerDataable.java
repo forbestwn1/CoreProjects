@@ -1,7 +1,7 @@
 package com.nosliw.data.core.dataable;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.data.HAPData;
 
 public class HAPManagerDataable {
 

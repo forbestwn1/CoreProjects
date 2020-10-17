@@ -1,7 +1,7 @@
 package com.nosliw.test.uisource;
 
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.data.core.data.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;

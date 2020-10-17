@@ -1,7 +1,7 @@
 package com.nosliw.data.core.expression.copy;
 
-import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.data.HAPDataTypeHelper;
+import com.nosliw.data.core.data.criteria.HAPCriteriaParser;
 
 public class HAPExpressionManager {
 

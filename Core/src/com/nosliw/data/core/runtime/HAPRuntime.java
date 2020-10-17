@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPOperationParm;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPOperationParm;
 
 public interface HAPRuntime {
 

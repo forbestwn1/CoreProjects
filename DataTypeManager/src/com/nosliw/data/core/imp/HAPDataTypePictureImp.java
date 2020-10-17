@@ -9,10 +9,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.HAPDataType;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPDataTypePicture;
-import com.nosliw.data.core.HAPRelationship;
+import com.nosliw.data.core.data.HAPDataType;
+import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPDataTypePicture;
+import com.nosliw.data.core.data.HAPRelationship;
 
 public class HAPDataTypePictureImp extends HAPSerializableImp implements HAPDataTypePicture{
 

@@ -3,8 +3,8 @@ package com.nosliw.test.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPUtilityData;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.service.provide.HAPQueryService;
 import com.nosliw.data.core.service.provide.HAPResultService;

@@ -4,8 +4,8 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPUtilityData;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.HAPUtilityData;
 
 public class HAPContextDataFactory {
 

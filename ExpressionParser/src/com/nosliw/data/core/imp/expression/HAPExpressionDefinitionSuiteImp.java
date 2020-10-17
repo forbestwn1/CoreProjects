@@ -6,8 +6,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataWrapper;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.HAPDataWrapper;
 
 public class HAPExpressionDefinitionSuiteImp{ 
 /*

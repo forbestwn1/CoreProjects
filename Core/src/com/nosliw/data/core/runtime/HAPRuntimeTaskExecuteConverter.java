@@ -2,7 +2,7 @@ package com.nosliw.data.core.runtime;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 @HAPEntityWithAttribute

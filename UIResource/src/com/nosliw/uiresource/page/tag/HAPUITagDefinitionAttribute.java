@@ -16,6 +16,8 @@ public class HAPUITagDefinitionAttribute extends HAPEntityInfoImp{
 
 	private String m_defaultValue;
 	
+	public String getDefaultValue() {    return this.m_defaultValue;     }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

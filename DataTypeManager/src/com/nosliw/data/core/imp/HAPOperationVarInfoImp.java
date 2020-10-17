@@ -2,10 +2,10 @@ package com.nosliw.data.core.imp;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
-import com.nosliw.data.core.HAPOperationOutInfo;
-import com.nosliw.data.core.HAPOperationParmInfo;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
+import com.nosliw.data.core.data.HAPOperationOutInfo;
+import com.nosliw.data.core.data.HAPOperationParmInfo;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaWrapperLiterate;
 
 public class HAPOperationVarInfoImp extends HAPStringableValueEntityWithID implements HAPOperationParmInfo, HAPOperationOutInfo{
 

@@ -2,7 +2,7 @@ package com.nosliw.test.runtimerhino;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.HAPDataWrapper;
+import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 
 public class HAPRuntimeRhinoMain {

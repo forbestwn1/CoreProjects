@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.data.HAPData;
 
 public class HAPContextDataFlat extends HAPSerializableImp implements HAPContextData{
 

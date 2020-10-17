@@ -11,9 +11,9 @@ import com.nosliw.common.strvalue.valueinfo.HAPDBUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPOperationParmInfo;
-import com.nosliw.data.core.HAPRelationship;
+import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPOperationParmInfo;
+import com.nosliw.data.core.data.HAPRelationship;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.imp.io.HAPDataAccess;
 

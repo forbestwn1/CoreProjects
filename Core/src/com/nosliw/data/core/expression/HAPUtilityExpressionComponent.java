@@ -5,12 +5,12 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPUtilityDataComponent;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPDefinitionComplex;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.data.HAPUtilityDataComponent;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 
 public class HAPUtilityExpressionComponent {

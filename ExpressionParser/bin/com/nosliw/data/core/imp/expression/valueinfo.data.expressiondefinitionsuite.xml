@@ -9,14 +9,14 @@
 	</property>
 
 	<property name="constants" type="map" key="name" description="">
-		<child dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapper"></child>
+		<child dataType="object" subDataType="com.nosliw.data.core.data.HAPDataWrapper"></child>
 	</property>
 
 	<property name="variablesData" type="map" key="name" description="">
-		<child dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapper"></child>
+		<child dataType="object" subDataType="com.nosliw.data.core.data.HAPDataWrapper"></child>
 	</property>
 
-	<property name="result" dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapper" description=""/>
+	<property name="result" dataType="object" subDataType="com.nosliw.data.core.data.HAPDataWrapper" description=""/>
 
 	<property name="errorCode" dataType="string" description=""/>
 

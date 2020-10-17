@@ -26,6 +26,10 @@ var node_createComponentQuestionItemService = function(availableService){
 			name : 'TestTemplateService2'
 		},
 		{
+			id : 'TestTemplateServiceSchool',
+			name : 'TestTemplateServiceSchool'
+		},
+		{
 			id : 'schoolService',
 			name : 'schoolService'
 		}

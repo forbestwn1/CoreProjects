@@ -3,7 +3,7 @@ package com.nosliw.data.core.runtime.js.rhino;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.HAPUtilityData;
+import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPProcessResultHandler;
 import com.nosliw.data.core.process.HAPRuntimeProcess;

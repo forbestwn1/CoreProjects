@@ -12,9 +12,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPRelationship;
-import com.nosliw.data.core.HAPRelationshipImp;
+import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPRelationship;
+import com.nosliw.data.core.data.HAPRelationshipImp;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 /**
