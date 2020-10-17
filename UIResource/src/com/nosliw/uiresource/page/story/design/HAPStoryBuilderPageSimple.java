@@ -257,12 +257,12 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPServiceOutput parmDef = output.get(parmName);
 					
 					HAPAliasElement parmNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceOutputItem(parmDef)).getAlias();
-					dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceInputNodeName, parmNodeName, parmName));
+					dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceOutputNodeName, parmNodeName, parmName));
 
 					//variable path and group
 					String variableName = parmName;
 					parmBranchInfo.variableAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeVariable(variableName, parmDef.getCriteria())).getAlias();
-					HAPAliasElement variableConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.variableAlias, parmNodeName, null, null)).getAlias();
+					HAPAliasElement variableConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmNodeName, parmBranchInfo.variableAlias, null, null)).getAlias();
 
 					//group
 					parmBranchInfo.varGroupAlias = dataLayerChangeRequest.addNewChange(new HAPElementGroupBatch()).getAlias();
@@ -270,37 +270,6 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(variableConnectionNodeName));
 
 					outputBranchInfos.add(parmBranchInfo);
-
-//					
-//					//ui container
-//					HAPChangeInfo parmParmUIContainerNewChange = HAPUtilityChange.applyNew(story, new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple1.class, "uiData.tmp")), step.getChanges());
-//					HAPChangeInfo layoutToUIContainerConnectionNewChange = HAPUtilityChange.applyNew(story, HAPUtilityConnection.newConnectionContain(pageLayoutNewChange.getStoryElement().getId(), parmParmUIContainerNewChange.getStoryElement().getId(), "output"), step.getChanges());
-//					HAPChangeInfo parmParmUILabelNewChange = HAPUtilityChange.applyNew(story, new HAPStoryNodeUIHtml(parmName), step.getChanges());
-//					HAPChangeInfo uiContainerToUILabelConnectionNewChange = HAPUtilityChange.applyNew(story, HAPUtilityConnection.newConnectionContain(parmParmUIContainerNewChange.getStoryElement().getId(), parmParmUILabelNewChange.getStoryElement().getId(), "label"), step.getChanges());
-//
-//					//ui for variable, add to page, connect with variable
-//					HAPUITagQueryResult uiTagInfo = this.m_uiTagManager.getDefaultUITag(new HAPUITageQuery(parmDef.getCriteria()));
-//					HAPChangeInfo parmParmUINewChange = HAPUtilityChange.applyNew(story, new HAPStoryNodeUIData(uiTagInfo.getTag(), parmDef.getCriteria()), step.getChanges());
-//					HAPChangeInfo parmParmUIConnectionNewChange = HAPUtilityChange.applyNew(story, HAPUtilityConnection.newConnectionOnewayDataIO(parmVariableNewChange.getStoryElement().getId(), parmParmUINewChange.getStoryElement().getId(), null, null), step.getChanges());
-//					
-////					HAPUtilityChange.buildChangeNewAndApply(story, HAPUtilityConnection.newConnectionContain(pageStoryNode.getId(), parmParmUINewChange.getStoryElement().getId(), parmName), step.getChanges());
-//					HAPChangeInfo uiContainerToUIDataTagConnectionNewChange = HAPUtilityChange.applyNew(story, HAPUtilityConnection.newConnectionContain(parmParmUIContainerNewChange.getStoryElement().getId(), parmParmUINewChange.getStoryElement().getId(), "uiData"), step.getChanges());
-//					
-//					//variable group
-//					HAPElementGroupBatch variableBatchGroup = new HAPElementGroupBatch(story);
-//					variableBatchGroup.addElement(new HAPInfoElement(parmVariableNewChange.getStoryElement().getElementId()));
-//					variableBatchGroup.addElement(new HAPInfoElement(parmVariableConnectionNewChange.getStoryElement().getElementId()));
-//					variableBatchGroup.addElement(new HAPInfoElement(parmParmUINewChange.getStoryElement().getElementId()));
-//					variableBatchGroup.addElement(new HAPInfoElement(parmParmUIConnectionNewChange.getStoryElement().getElementId()));
-//
-//					variableBatchGroup.addElement(new HAPInfoElement(parmParmUIContainerNewChange.getStoryElement().getElementId()));
-//					variableBatchGroup.addElement(new HAPInfoElement(layoutToUIContainerConnectionNewChange.getStoryElement().getElementId()));
-//					variableBatchGroup.addElement(new HAPInfoElement(parmParmUILabelNewChange.getStoryElement().getElementId()));
-//					variableBatchGroup.addElement(new HAPInfoElement(uiContainerToUILabelConnectionNewChange.getStoryElement().getElementId()));
-//					variableBatchGroup.addElement(new HAPInfoElement(uiContainerToUIDataTagConnectionNewChange.getStoryElement().getElementId()));
-//
-//					HAPChangeInfo variableGroupNewChange = HAPUtilityChange.applyNew(story, variableBatchGroup, step.getChanges());
-					
 				}
 
 				dataLayerChangeRequest.close();
@@ -347,7 +316,6 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			{
 				//question
 				HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Please select ui.");
-				step.setQuestion(rootQuestionGroup);
 				
 				for(HAPParmBranchInfo parmBranchInfo : parmBranchInfos) {
 					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup("Configure Input Parm " + parmBranchInfo.parmName);
@@ -364,7 +332,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					parmQuestionGroup.addChild(uiDataQuestion);
 				}
 				
-				
+				step.setQuestion(rootQuestionGroup);
 			}
 			
 			HAPResultTransaction transactionResult = story.commitTransaction();
@@ -424,6 +392,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	private HAPServiceData processUIChangeStage(HAPDesignStory design, HAPRequestDesign answerRequest) {
 		HAPStory story = design.getStory();
 
+		story.startTransaction();
+
 		this.applyAnswer(story, answerRequest);
 		
 		//new step
@@ -432,6 +402,9 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		//question
 		HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Finish.");
 		step.setQuestion(rootQuestionGroup);
+
+		HAPResultTransaction transactionResult = story.commitTransaction();
+		step.getChanges().addAll(transactionResult.getChanges());
 
 		design.addStep(step);
 

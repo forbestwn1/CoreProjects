@@ -160,7 +160,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 						HAPStoryNode parmNode = parmNodeInfo.getChildNode();
 						List<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, HAPConstant.STORYNODE_PROFILE_DATAIN, null, HAPConstant.STORYNODE_PROFILE_DATAOUT, this.m_story);
 						for(HAPConnectionEnd varEnd : varsEnd) {
-							HAPStoryNode parmInputNode = this.m_story.getNode(varEnd.getNodeId());
+							HAPStoryNode parmInputNode = (HAPStoryNode)this.m_story.getElement(varEnd.getNodeRef());
 							if(parmInputNode.isEnable()) {
 								String inputNodeType = parmInputNode.getType();
 								if(HAPConstant.STORYNODE_TYPE_CONSTANT.equals(inputNodeType)) {
@@ -193,7 +193,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 						HAPStoryNode parmNode = parmNodeInfo.getChildNode();
 						List<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, HAPConstant.STORYNODE_PROFILE_DATAOUT, HAPConstant.STORYNODE_TYPE_VARIABLE, HAPConstant.STORYNODE_PROFILE_DATAIN, this.m_story);
 						for(HAPConnectionEnd varEnd : varsEnd) {
-							HAPStoryNode parmInputNode = this.m_story.getNode(varEnd.getNodeId());
+							HAPStoryNode parmInputNode = (HAPStoryNode)this.m_story.getElement(varEnd.getNodeRef());
 							String inputNodeType = parmInputNode.getType();
 							if(HAPConstant.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
 								HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
@@ -239,12 +239,14 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			if(HAPConstant.STORYNODE_TYPE_UIDATA.equals(uiNodeType)) {
 				HAPStoryNodeUIData uiDataNode = (HAPStoryNodeUIData)uiNode;
 				HAPHtmlTag tag = new HAPHtmlTag(uiDataNode.getTagName());
-				List<HAPConnectionEnd> varEnds = HAPUtilityStory.getConnectionEnd(uiNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, null, HAPConstant.STORYNODE_TYPE_VARIABLE, null, this.m_story);
-				for(HAPConnectionEnd varEnd : varEnds) {
-					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)this.m_story.getNode(varEnd.getNodeId());
-					tag.addAttribute(new HAPTagAttribute("data", varNode.getVariableName()));
+				
+				//attributes
+				Map<String, String> attrs =  uiDataNode.getAttributes();
+				for(String attrName : attrs.keySet()) {
+					tag.addAttribute(new HAPTagAttribute(attrName, attrs.get(attrName)));
 				}
-
+				
+				//child node
 				List<HAPInfoNodeChild> childrenNodesInfo =  HAPUtilityStory.getChildNode(uiNode, this.m_story);
 				for(HAPInfoNodeChild childNodeInfo : childrenNodesInfo) {
 					HAPHtml html = this.buildUI(childNodeInfo.getChildNode());
