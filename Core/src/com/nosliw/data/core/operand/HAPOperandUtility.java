@@ -19,7 +19,7 @@ import com.nosliw.data.core.data.HAPDataTypeOperation;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandUtility {
@@ -55,7 +55,7 @@ public class HAPOperandUtility {
 	//			replace attribute operation with one variable operation
 	//  for attribute operation a.b.c.d which have responding definition a.b.c in context, 
 	//			replace attribute operation with one variable operation(a.b.c) and getChild operation
-	public static void processAttributeOperandInExpressionOperand(HAPOperandWrapper orgOperand, final Map<String, HAPVariableInfo> varCriterias){
+	public static void processAttributeOperandInExpressionOperand(HAPOperandWrapper orgOperand, final Map<String, HAPInfoCriteria> varCriterias){
 		List<HAPAttributeOperandChainInfo> data = new ArrayList<HAPAttributeOperandChainInfo>();
 		HAPOperandUtility.processAllOperand(orgOperand, data, new HAPOperandTask(){
 			@Override
@@ -111,7 +111,7 @@ public class HAPOperandUtility {
 		});
 	}
 	
-	private static void processAttributeChain(HAPAttributeOperandChainInfo attrInfo, Map<String, HAPVariableInfo> contextVars){
+	private static void processAttributeChain(HAPAttributeOperandChainInfo attrInfo, Map<String, HAPInfoCriteria> contextVars){
 		String startOpType = attrInfo.startOperand.getOperand().getType();
 		if(startOpType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
 			//attribute start with variable
@@ -302,20 +302,20 @@ public class HAPOperandUtility {
 	static public void discover(
 			List<HAPOperand> operands, 
 			List<HAPDataTypeCriteria> expectOutputs,
-			Map<String, HAPVariableInfo> inVariablesInfo, 
-			Map<String, HAPVariableInfo> outVariablesInfo,
+			Map<String, HAPInfoCriteria> inVariablesInfo, 
+			Map<String, HAPInfoCriteria> outVariablesInfo,
 			List<HAPMatchers> matchers,
 			HAPDataTypeHelper dataTypeHelper,
 			HAPProcessTracker processTracker) {
 		//do discovery on operand
-		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		Map<String, HAPInfoCriteria> varsInfo = new LinkedHashMap<String, HAPInfoCriteria>();
 		varsInfo.putAll(inVariablesInfo);
 		
-		Map<String, HAPVariableInfo> oldVarsInfo;
+		Map<String, HAPInfoCriteria> oldVarsInfo;
 		//Do discovery until local vars definition not change or fail 
 		do{
 			matchers.clear();
-			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+			oldVarsInfo = new LinkedHashMap<String, HAPInfoCriteria>();
 			oldVarsInfo.putAll(varsInfo);
 			processTracker.clear();
 			for(int i=0; i<operands.size(); i++) {

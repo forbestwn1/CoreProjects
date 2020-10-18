@@ -8,34 +8,32 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPCriteriaUtility {
 
 	public static final String CHILD_ELEMENT = "element";
-	
-	
-	public static HAPMatchers mergeVariableInfo(HAPVariableInfo variableInfo, HAPDataTypeCriteria expectCriteria, HAPDataTypeHelper dataTypeHelper) {
-		if(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN.equals(variableInfo.getStatus())){
+
+	public static HAPMatchers mergeVariableInfo(HAPInfoCriteria criteriaInfo, HAPDataTypeCriteria expectCriteria, HAPDataTypeHelper dataTypeHelper) {
+		if(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN.equals(criteriaInfo.getStatus())){
 			//if variable info is open, calculate new criteria for this variable
 			if(expectCriteria!=null){
-				if(variableInfo.getCriteria()==null){
-					variableInfo.setCriteria(expectCriteria);
+				if(criteriaInfo.getCriteria()==null){
+					criteriaInfo.setCriteria(expectCriteria);
 				}
 				else{
-					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(variableInfo.getCriteria(), expectCriteria);
+					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(criteriaInfo.getCriteria(), expectCriteria);
 					if(adjustedCriteria==null){
 						HAPErrorUtility.invalid("cannot merge!!!");
 						return null;
 					}
 					else{
-						variableInfo.setCriteria(adjustedCriteria);
+						criteriaInfo.setCriteria(adjustedCriteria);
 					}
 				}
 			}
 		}
-		return isMatchable(variableInfo.getCriteria(), expectCriteria, dataTypeHelper);
+		return isMatchable(criteriaInfo.getCriteria(), expectCriteria, dataTypeHelper);
 	}
 	
 	/**

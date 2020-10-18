@@ -3,7 +3,7 @@ package com.nosliw.data.core.data.variable;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.data.HAPData;
 
-public class HAPDataRuleMandortary implements HAPDataRule{
+public class HAPDataRuleMandatory implements HAPDataRule{
 
 	@Override
 	public HAPServiceData verify(HAPData data) {

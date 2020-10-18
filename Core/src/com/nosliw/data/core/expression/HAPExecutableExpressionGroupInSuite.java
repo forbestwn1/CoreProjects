@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -28,14 +28,14 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	
 	private HAPContext m_context;
 	
-	private Map<String, HAPVariableInfo> m_localVarsInfo;
+	private Map<String, HAPInfoCriteria> m_localVarsInfo;
 
 	private Map<String, HAPExecutableExpression> m_expressionItem;
 	 
 	public HAPExecutableExpressionGroupInSuite(String id) {
 		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpression>();
 		this.m_id = id;
-		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		this.m_localVarsInfo = new LinkedHashMap<String, HAPInfoCriteria>();
 	}
 	
 	@Override
@@ -60,12 +60,12 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public void setContext(HAPContext context) {   this.m_context = context;  }
 	
 	@Override
-	public Map<String, HAPVariableInfo> getVarsInfo() {  return this.m_localVarsInfo;  }
-	public void setVarsInfo(Map<String, HAPVariableInfo> varsInfo) {   this.m_localVarsInfo = varsInfo;  }
+	public Map<String, HAPInfoCriteria> getVarsInfo() {  return this.m_localVarsInfo;  }
+	public void setVarsInfo(Map<String, HAPInfoCriteria> varsInfo) {   this.m_localVarsInfo = varsInfo;  }
 
 	@Override
 	public void updateVariableName(HAPUpdateName nameUpdate) {
-		Map<String, HAPVariableInfo> localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		Map<String, HAPInfoCriteria> localVarsInfo = new LinkedHashMap<String, HAPInfoCriteria>();
 		for(String name : this.m_localVarsInfo.keySet()) {
 			localVarsInfo.put(nameUpdate.getUpdatedName(name), this.m_localVarsInfo.get(name));
 		}
@@ -84,7 +84,7 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	
 	@Override
 	public void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker) {
-		Map<String, HAPVariableInfo> discoveredVarsInf = new LinkedHashMap<String, HAPVariableInfo>();
+		Map<String, HAPInfoCriteria> discoveredVarsInf = new LinkedHashMap<String, HAPInfoCriteria>();
 		List<String> names = new ArrayList<String>();
 		List<HAPOperand> operands = new ArrayList<HAPOperand>();
 		List<HAPDataTypeCriteria> outPutCriteria = new ArrayList<HAPDataTypeCriteria>();

@@ -1,6 +1,5 @@
 package com.nosliw.data.core.script.expression;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -81,7 +80,7 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 	@Override
 	public List<HAPExecutableScript> getSegments(){    return this.m_script.getSegments();     }
 	@Override
-	public Set<HAPVariableInfo> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {return this.m_script.discoverVariablesInfo(expressionGroup);}
+	public Map<String, HAPInfoCriteria> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {return this.m_script.discoverVariablesInfo(expressionGroup);}
 	@Override
 	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup) {	return this.m_script.discoverConstantsDefinition(expressionGroup);	}
 	@Override
@@ -118,10 +117,8 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 
 		jsonMap.put(EXPRESSIONREF, HAPJsonUtility.buildJson(this.discoverExpressionReference(null), HAPSerializationFormat.JSON));
 		
-		Set<HAPVariableInfo> varInfos = this.discoverVariablesInfo(null);
-		Set<String> varNames = new HashSet<String>();
-		for(HAPVariableInfo varInfo : varInfos) {   varNames.add(varInfo.getId());  }
-		jsonMap.put(VARIABLESINFO, HAPJsonUtility.buildJson(varNames, HAPSerializationFormat.JSON));
+		Map<String, HAPInfoCriteria> varInfos = this.discoverVariablesInfo(null);
+		jsonMap.put(VARIABLESINFO, HAPJsonUtility.buildJson(varInfos.keySet(), HAPSerializationFormat.JSON));
 	}
 
 	@Override

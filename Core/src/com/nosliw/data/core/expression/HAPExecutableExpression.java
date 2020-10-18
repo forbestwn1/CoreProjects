@@ -16,7 +16,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandConstant;
 import com.nosliw.data.core.operand.HAPOperandReference;
@@ -49,11 +49,11 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 
 	private HAPMatchers m_outputMatchers;
 	
-	private Map<String, HAPVariableInfo> m_varInfos;
+	private Map<String, HAPInfoCriteria> m_varInfos;
 	
 	public HAPExecutableExpression(HAPOperandWrapper operand) {
 		this.m_operand = operand;
-		this.m_varInfos = new LinkedHashMap<String, HAPVariableInfo>();
+		this.m_varInfos = new LinkedHashMap<String, HAPInfoCriteria>();
 	}
 	
 	public HAPOperandWrapper getOperand() {		return this.m_operand;	}
@@ -63,8 +63,8 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 	public HAPMatchers getOutputMatchers() {		return this.m_outputMatchers;	}
 	public void setOutputMatchers(HAPMatchers matchers) {    this.m_outputMatchers = matchers;    }
 
-	public Map<String, HAPVariableInfo> getVariablesInfo(){   return this.m_varInfos;    }
-	public void setVariablesInfo(Map<String, HAPVariableInfo> varsInfo) {   this.m_varInfos.putAll(varsInfo);     }
+	public Map<String, HAPInfoCriteria> getVariablesInfo(){   return this.m_varInfos;    }
+	public void setVariablesInfo(Map<String, HAPInfoCriteria> varsInfo) {   this.m_varInfos.putAll(varsInfo);     }
 
 	public void updateConstant(Map<String, Object> value) {
 		HAPOperandUtility.processAllOperand(this.m_operand, value, new HAPOperandTask(){

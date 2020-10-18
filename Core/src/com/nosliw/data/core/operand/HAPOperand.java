@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -51,10 +51,11 @@ public interface HAPOperand extends HAPSerializable{
 	 * @param expectCriteria expected output criteria for this operand
 	 * @return  matchers from output criteria to expect criteria
 	 */
-	HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo,
-							HAPDataTypeCriteria expectCriteria,
-							HAPProcessTracker processTracker, 
-							HAPDataTypeHelper dataTypeHelper);
+	HAPMatchers discover(Map<String, HAPInfoCriteria> variablesInfo,
+			HAPDataTypeCriteria expectCriteria,
+			HAPProcessTracker processTracker, 
+			HAPDataTypeHelper dataTypeHelper);
+
 
 	//operand output data type criteria
 	HAPDataTypeCriteria getOutputCriteria();

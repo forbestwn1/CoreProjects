@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandVariable extends HAPOperandImp{
@@ -36,15 +36,15 @@ public class HAPOperandVariable extends HAPOperandImp{
 
 	@Override
 	public HAPMatchers discover(
-			Map<String, HAPVariableInfo> variablesInfo,
+			Map<String, HAPInfoCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
 		
-		HAPVariableInfo variableInfo = variablesInfo.get(this.getVariableName());
+		HAPInfoCriteria variableInfo = variablesInfo.get(this.getVariableName());
 		if(variableInfo==null){
 			//found a new variable
-			variableInfo = HAPVariableInfo.buildUndefinedVariableInfo();
+			variableInfo = HAPInfoCriteria.buildUndefinedCriteriaInfo();
 			variablesInfo.put(this.getVariableName(), variableInfo);
 		}
 		

@@ -16,7 +16,7 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
@@ -57,17 +57,17 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 	public List<Object> getElements(){	return this.m_elements;	}
 	
 	@Override
-	public Set<HAPVariableInfo> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {
-		Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>();
+	public Map<String, HAPInfoCriteria> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {
+		Map<String, HAPInfoCriteria> out = new LinkedHashMap<String, HAPInfoCriteria>();
 		for(Object ele : this.m_elements) {
 			if(ele instanceof HAPVariableInScript) {
 				HAPVariableInScript varInScript = (HAPVariableInScript)ele;
-				HAPVariableInfo varInfo = HAPVariableInfo.buildUndefinedVariableInfo();
-				varInfo.setId(varInScript.getVariableName());
-				HAPUtilityScriptExpression.addVariableInfo(out, varInfo);
+				HAPInfoCriteria varInfo = HAPInfoCriteria.buildUndefinedCriteriaInfo();
+//				varInfo.setId(varInScript.getVariableName());
+				HAPUtilityScriptExpression.addVariableInfo(out, varInfo, varInScript.getVariableName());
 			}
 		}
-		return new HashSet<HAPVariableInfo>(out.values());  
+		return out;  
 	}
 
 	@Override

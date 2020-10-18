@@ -15,7 +15,7 @@ import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -115,7 +115,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	@Override
 	public HAPMatchers discover(
-			Map<String, HAPVariableInfo> variablesInfo,
+			Map<String, HAPInfoCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
@@ -126,11 +126,11 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_expression.discover(cs, dataTypeHelper, processTracker);
 
 		//variable
-		Map<String, HAPVariableInfo> internalVariablesInfo = this.m_expression.getVarsInfo();
+		Map<String, HAPInfoCriteria> internalVariablesInfo = this.m_expression.getVarsInfo();
 		for(String inVarName : internalVariablesInfo.keySet()) {
 			String exVarName = getExternalVariable(inVarName);
-			HAPVariableInfo inVar = internalVariablesInfo.get(inVarName);
-			HAPVariableInfo exVar = variablesInfo.get(exVarName);
+			HAPInfoCriteria inVar = internalVariablesInfo.get(inVarName);
+			HAPInfoCriteria exVar = variablesInfo.get(exVarName);
 			HAPMatchers matchers = HAPCriteriaUtility.mergeVariableInfo(exVar, inVar.getCriteria(), dataTypeHelper);
 			this.m_matchers.put(inVarName, matchers);
 		}

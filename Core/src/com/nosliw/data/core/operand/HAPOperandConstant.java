@@ -12,7 +12,7 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandConstant extends HAPOperandImp{
@@ -62,7 +62,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 
 	@Override
 	public HAPMatchers discover(
-			Map<String, HAPVariableInfo> variablesInfo,
+			Map<String, HAPInfoCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {

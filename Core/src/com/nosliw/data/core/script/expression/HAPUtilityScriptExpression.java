@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.script.expression.literate.HAPUtilityScriptLiterate;
 
 public class HAPUtilityScriptExpression {
@@ -45,9 +45,9 @@ public class HAPUtilityScriptExpression {
 		if(existing==null)  constantDefinitions.put(constantDefinition.getId(), constantDefinition);
 	}
 
-	public static void addVariableInfo(Map<String, HAPVariableInfo> variableInfos, HAPVariableInfo variableInfo) {
-		HAPVariableInfo existing = variableInfos.get(variableInfo.getId());
-		if(existing==null)   variableInfos.put(variableInfo.getId(), variableInfo);
+	public static void addVariableInfo(Map<String, HAPInfoCriteria> variableInfos, HAPInfoCriteria variableInfo, String varName) {
+		HAPInfoCriteria existing = variableInfos.get(varName);
+		if(existing==null)   variableInfos.put(varName, variableInfo);
 		else {
 			if(existing.getCriteria()==null && variableInfo.getCriteria()!=null) {
 				existing.setCriteria(variableInfo.getCriteria());

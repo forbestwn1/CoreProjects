@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -57,11 +57,11 @@ public class HAPProcessorExpression {
 	}
 
 	private static void discoverExpressionItemVariable(HAPExecutableExpressionGroup expression) {
-		Map<String, HAPVariableInfo> expressionVarsInfo = expression.getVarsInfo();
+		Map<String, HAPInfoCriteria> expressionVarsInfo = expression.getVarsInfo();
 		Map<String, HAPExecutableExpression> items = expression.getExpressionItems();
 		for(String name : items.keySet()) {
 			HAPExecutableExpression item = items.get(name);
-			Map<String, HAPVariableInfo> itemVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+			Map<String, HAPInfoCriteria> itemVarsInfo = new LinkedHashMap<String, HAPInfoCriteria>();
 			Set<String> varNames = HAPOperandUtility.discoverVariables(item.getOperand());
 			for(String varName : varNames) {
 				itemVarsInfo.put(varName, expressionVarsInfo.get(varName));
@@ -97,7 +97,7 @@ public class HAPProcessorExpression {
 			out.addExpression(expressionDef.getId(), new HAPOperandWrapper(expressionMan.getExpressionParser().parseExpression(expressionDef.getExpression())));
 		}
 
-		Map<String, HAPVariableInfo> varsInfo = out.getVarsInfo();
+		Map<String, HAPInfoCriteria> varsInfo = out.getVarsInfo();
 
 		Map<String, HAPExecutableExpression> expressionItems = out.getExpressionItems();
 		for(String id : expressionItems.keySet()) {
@@ -113,7 +113,7 @@ public class HAPProcessorExpression {
 			Set<String> varNames = HAPOperandUtility.discoverVariables(operand);
 			for(String varName : varNames) {
 				if(varsInfo.get(varName)==null) {
-					varsInfo.put(varName, HAPVariableInfo.buildUndefinedVariableInfo());
+					varsInfo.put(varName, HAPInfoCriteria.buildUndefinedCriteriaInfo());
 				}
 			}
 
@@ -184,8 +184,8 @@ public class HAPProcessorExpression {
 						
 						//variable mapping
 						HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
-						Map<String, HAPVariableInfo> parentVarsInfo = expressionExe.getVarsInfo();
-						Map<String, HAPVariableInfo> referedVarsInfo = referenceOperand.getReferedExpression().getVarsInfo();
+						Map<String, HAPInfoCriteria> parentVarsInfo = expressionExe.getVarsInfo();
+						Map<String, HAPInfoCriteria> referedVarsInfo = referenceOperand.getReferedExpression().getVarsInfo();
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
@@ -198,7 +198,7 @@ public class HAPProcessorExpression {
 							}
 							for(String varName : referedVarsInfo.keySet()) {
 								if(mappingPath.get(varName)==null) {
-									parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneVariableInfo());
+									parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneCriteriaInfo());
 									HAPContextDefinitionLeafRelative relativeEle = new HAPContextDefinitionLeafRelative();
 									relativeEle.setPath(varName);
 									da.addElement(varName, relativeEle);
@@ -208,7 +208,7 @@ public class HAPProcessorExpression {
 						else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MIRROR)) {
 							for(String varName : referedVarsInfo.keySet()) {
 								if(parentVarsInfo.get(varName)==null) {
-									parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneVariableInfo());
+									parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneCriteriaInfo());
 								}
 							}
 						}
@@ -270,8 +270,8 @@ public class HAPProcessorExpression {
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						HAPExecutableExpressionGroup refExpressionExe = referenceOperand.getReferedExpression();
 						
-						Map<String, HAPVariableInfo> parentVarsInfo = expressionExe.getVarsInfo();
-						Map<String, HAPVariableInfo> referedVarsInfo = referenceOperand.getReferedExpression().getVarsInfo();
+						Map<String, HAPInfoCriteria> parentVarsInfo = expressionExe.getVarsInfo();
+						Map<String, HAPInfoCriteria> referedVarsInfo = referenceOperand.getReferedExpression().getVarsInfo();
 
 						Map<String, String> nameMapping = new LinkedHashMap<String, String>();
 						HAPDefinitionDataAssociation inputMapping =	referenceOperand.getInputMapping();
@@ -291,7 +291,7 @@ public class HAPProcessorExpression {
 						}
 						else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_NONE)) {
 							for(String varName : referedVarsInfo.keySet()) {
-								parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneVariableInfo());
+								parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneCriteriaInfo());
 								nameMapping.put(varName, HAPUtilityExpression.getBeforeUpdateName(refExpressionExe, varName));
 							}
 						}

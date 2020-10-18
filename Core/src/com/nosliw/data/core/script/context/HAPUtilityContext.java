@@ -18,6 +18,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
@@ -239,8 +240,8 @@ public class HAPUtilityContext {
 	}
 
 	//find all data variables in context 
-	public static Map<String, HAPVariableInfo> discoverDataVariablesInContext(HAPContext context){
-		Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>();
+	public static Map<String, HAPInfoCriteria> discoverDataVariablesInContext(HAPContext context){
+		Map<String, HAPInfoCriteria> out = new LinkedHashMap<String, HAPInfoCriteria>();
 		for(String rootName : context.getElements().keySet()){
 			HAPContextDefinitionRoot node = context.getElement(rootName);
 			if(!node.isConstant()){
@@ -253,7 +254,7 @@ public class HAPUtilityContext {
 	//discover data type criteria defined in context node
 	//the purpose is to find variables related with data type criteria
 	//the data type criteria name is full name in path, for instance, a.b.c.d
-	private static void discoverCriteriaInContextNode(String path, HAPContextDefinitionElement contextDefEle, Map<String, HAPVariableInfo> criterias){
+	private static void discoverCriteriaInContextNode(String path, HAPContextDefinitionElement contextDefEle, Map<String, HAPInfoCriteria> criterias){
 		switch(contextDefEle.getType()) {
 		case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
 			HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)contextDefEle;
@@ -261,8 +262,8 @@ public class HAPUtilityContext {
 			break;
 		case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
 			HAPContextDefinitionLeafData dataEle = (HAPContextDefinitionLeafData)contextDefEle;
-			HAPVariableInfo varInfo = dataEle.getCriteria().cloneVariableInfo();
-			varInfo.setId(path);
+			HAPInfoCriteria varInfo = HAPInfoCriteria.buildCriteriaInfo(dataEle.getCriteria().getCriteria());
+//			varInfo.setId(path);
 			criterias.put(path, varInfo);
 			break;
 		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
@@ -404,7 +405,7 @@ public class HAPUtilityContext {
 				HAPContextDefinitionLeafConstant dataOrigin = (HAPContextDefinitionLeafConstant)originDef.getSolidContextDefinitionElement();
 				HAPContextDefinitionLeafData dataExpect = (HAPContextDefinitionLeafData)expectDef;
 				//cal matchers
-				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPVariableInfo.buildVariableInfo(new HAPDataTypeCriteriaId(dataOrigin.getDataValue().getDataTypeId(), null)), dataExpect.getCriteria().getCriteria(), contextProcessRequirement.dataTypeHelper); 
+				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(new HAPDataTypeCriteriaId(dataOrigin.getDataValue().getDataTypeId(), null)), dataExpect.getCriteria().getCriteria(), contextProcessRequirement.dataTypeHelper); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}
@@ -417,7 +418,7 @@ public class HAPUtilityContext {
 				HAPContextDefinitionLeafData dataOrigin = (HAPContextDefinitionLeafData)originDef;
 				 HAPContextDefinitionLeafConstant dataExpect = (HAPContextDefinitionLeafConstant)expectDef.getSolidContextDefinitionElement();
 				//cal matchers
-				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPVariableInfo.buildVariableInfo(dataOrigin.getCriteria().getCriteria()), new HAPDataTypeCriteriaId(dataExpect.getDataValue().getDataTypeId(), null), contextProcessRequirement.dataTypeHelper); 
+				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria().getCriteria()), new HAPDataTypeCriteriaId(dataExpect.getDataValue().getDataTypeId(), null), contextProcessRequirement.dataTypeHelper); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}
@@ -431,7 +432,7 @@ public class HAPUtilityContext {
 				HAPContextDefinitionLeafData dataOrigin = (HAPContextDefinitionLeafData)originDef.getSolidContextDefinitionElement();
 				HAPContextDefinitionLeafData dataExpect = (HAPContextDefinitionLeafData)expectDef;
 				//cal matchers
-				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(dataOrigin.getCriteria(), dataExpect.getCriteria().getCriteria(), contextProcessRequirement.dataTypeHelper); 
+				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria().getCriteria()), dataExpect.getCriteria().getCriteria(), contextProcessRequirement.dataTypeHelper); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}

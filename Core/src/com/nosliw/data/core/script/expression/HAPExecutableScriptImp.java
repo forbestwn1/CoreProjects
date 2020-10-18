@@ -1,11 +1,12 @@
 package com.nosliw.data.core.script.expression;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
@@ -21,7 +22,7 @@ public abstract class HAPExecutableScriptImp extends HAPExecutableImp implements
 	public String getId() {   return this.m_id;  }
 
 	@Override
-	public Set<HAPVariableInfo> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {  return new HashSet<HAPVariableInfo>();  }
+	public Map<String, HAPInfoCriteria> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {  return new LinkedHashMap<String, HAPInfoCriteria>();  }
 
 	@Override
 	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup) {  return new HashSet<HAPDefinitionConstant>(); }
