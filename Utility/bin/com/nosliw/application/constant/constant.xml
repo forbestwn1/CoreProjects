@@ -760,6 +760,11 @@
 			<definition name="REFERENCE" value="reference"/>
 			<definition name="ENTITY" value="entity"/>
 
+			<definition type="space"/>
+			<definition name="DATARULE_TYPE_ENUM" value="enum"/>
+			<definition name="DATARULE_TYPE_EXPRESSION" value="expression"/>
+			<definition name="DATARULE_TYPE_MANDATORY" value="mandatory"/>
+
 		</definitions>
 	</constants>
 </root>

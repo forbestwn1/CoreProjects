@@ -434,7 +434,10 @@ var COMMONCONSTANT=
   "STORY_EVENT_CHANGE": "change",
   "STORY_INFO_IDINDEX": "story_idindex",
   "REFERENCE": "reference",
-  "ENTITY": "entity"
+  "ENTITY": "entity",
+  "DATARULE_TYPE_ENUM": "enum",
+  "DATARULE_TYPE_EXPRESSION": "expression",
+  "DATARULE_TYPE_MANDATORY": "mandatory"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

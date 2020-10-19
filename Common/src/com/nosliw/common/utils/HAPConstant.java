@@ -710,4 +710,10 @@ public class HAPConstant {
 		public static final String ENTITY = "entity";
 
 
+
+		public static final String DATARULE_TYPE_ENUM = "enum";
+		public static final String DATARULE_TYPE_EXPRESSION = "expression";
+		public static final String DATARULE_TYPE_MANDATORY = "mandatory";
+
+
 }
