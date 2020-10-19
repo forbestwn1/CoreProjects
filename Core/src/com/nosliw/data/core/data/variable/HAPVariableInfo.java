@@ -42,12 +42,17 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 	}
 
 	public static HAPVariableInfo buildVariableInfo(HAPDataTypeCriteria criteria) {
-		HAPVariableInfo out = new HAPVariableInfo();
-		if(criteria!=null)		out.m_dataInfo = new HAPVariableDataInfo(criteria);
-		return out;
+		return buildVariableInfo(null, criteria);
 	}
 
-	private HAPVariableInfo() {
+	public static HAPVariableInfo buildVariableInfo(String name, HAPDataTypeCriteria criteria) {
+		HAPVariableInfo out = new HAPVariableInfo();
+		if(criteria!=null)		out.m_dataInfo = new HAPVariableDataInfo(criteria);
+		if(name!=null)  out.setName(name);
+		return out;
+	}
+	
+	protected HAPVariableInfo() {
 		this.m_dataInfo = new HAPVariableDataInfo();
 	}
 	
@@ -98,9 +103,13 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 	public HAPVariableInfo cloneVariableInfo() {
 		HAPVariableInfo out = new HAPVariableInfo();
 		this.cloneToEntityInfo(out);
-		out.m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
-		if(this.m_defaultValue!=null)   out.m_defaultValue = this.m_defaultValue.cloneData();
+		this.cloneToVariableInfo(out);
 		return out;
+	}
+	
+	public void cloneToVariableInfo(HAPVariableInfo varInfo) {
+		varInfo.m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
+		if(this.m_defaultValue!=null)   varInfo.m_defaultValue = this.m_defaultValue.cloneData();
 	}
 	
 	@Override

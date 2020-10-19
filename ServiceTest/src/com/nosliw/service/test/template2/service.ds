@@ -17,19 +17,19 @@
 		"parm" : [
 			{
 				name : "serviceParm1",
-				criteria : "test.string;1.0.0",
-				default :{
+				dataInfo : "test.string;1.0.0",
+				defaultValue :{
 					dataTypeId: "test.string;1.0.0",
 					value: "hello"
 				},
 			},
 			{
 				name : "serviceParm2",
-				criteria : "test.string;1.0.0",
+				dataInfo : "test.string;1.0.0",
 			},
 			{
 				name : "serviceParm3",
-				criteria : "test.string;1.0.0",
+				dataInfo : "test.string;1.0.0",
 			}
 			
 		]

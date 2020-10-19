@@ -67,7 +67,7 @@ public class HAPManagerService {
 			for(String parmName : serviceInterface.getParmNames()) {
 				HAPData parmData = null;
 				if(parms!=null)  parmData = parms.get(parmName);
-				if(parmData==null) parmData = serviceInterface.getParm(parmName).getDefault();   //not provide, use default 
+				if(parmData==null) parmData = serviceInterface.getParm(parmName).getDefaultValue();   //not provide, use default 
 				serviceParms.put(parmName, parmData);
 			}
 			out = serviceInstance.getExecutable().execute(serviceParms);

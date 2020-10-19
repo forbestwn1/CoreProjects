@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
@@ -54,7 +53,7 @@ public class HAPUtility {
 		Set<HAPStoryNode> varNodes = HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
-			out.getContext().addPublicElement(varNode.getVariableName(), new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(varNode.getDataType()))));
+			out.getContext().addPublicElement(varNode.getVariableInfo().getName(), new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(varNode.getVariableInfo())));
 		}
 		return out;
 	}

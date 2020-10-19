@@ -1,24 +1,5 @@
 package com.nosliw.uiresource.page.processor;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import com.nosliw.common.updatename.HAPEntityWithName;
-import com.nosliw.common.updatename.HAPUpdateNameMap;
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPContextPath;
-import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
-import com.nosliw.data.core.script.expression.expression.HAPScriptExpression111;
-import com.nosliw.data.core.script.expression.literate.HAPEmbededScriptExpression111;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
-import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
-import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
-
 public class HAPPorcessorResolveName {
 /*
 	//resolve the name 

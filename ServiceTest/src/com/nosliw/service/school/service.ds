@@ -17,8 +17,8 @@
 		"parm" : [ 
 			{
 				name : "schoolTypeInService",
-				criteria : "test.options;1.0.0",
-				default :{
+				dataInfo : "test.options;1.0.0",
+				defaultValue :{
 					dataTypeId: "test.options;1.0.0",
 					value: {
 						value : "public",
@@ -28,8 +28,8 @@
 			},
 			{
 				name : "schoolRatingInService",
-				criteria : "test.float;1.0.0",
-				default :{
+				dataInfo : "test.float;1.0.0",
+				defaultValue :{
 					dataTypeId: "test.float;1.0.0",
 					value: "8"
 				},

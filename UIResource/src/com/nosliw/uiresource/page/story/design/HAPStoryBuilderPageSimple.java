@@ -16,6 +16,7 @@ import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -219,7 +220,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					
 					//variable path and group
 					String variableName = parmName;
-					parmBranchInfo.variableAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeVariable(variableName, parmDef.getCriteria())).getAlias();
+					parmBranchInfo.variableAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeVariable(parmDef)).getAlias();
 					HAPAliasElement variableConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.variableAlias, parmNodeName, null, null)).getAlias();
 
 					parmBranchInfo.varGroupAlias = dataLayerChangeRequest.addNewChange(new HAPElementGroupBatch()).getAlias();
@@ -261,7 +262,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 					//variable path and group
 					String variableName = parmName;
-					parmBranchInfo.variableAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeVariable(variableName, parmDef.getCriteria())).getAlias();
+					parmBranchInfo.variableAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeVariable(HAPVariableInfo.buildVariableInfo(variableName, parmDef.getCriteria()))).getAlias();
 					HAPAliasElement variableConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmNodeName, parmBranchInfo.variableAlias, null, null)).getAlias();
 
 					//group
@@ -289,7 +290,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				for(HAPParmBranchInfo parmBranchInfo : parmBranchInfos) {
 					//ui
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
-					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "input", varNode.getVariableName(), parmBranchInfo.parmName, uiLayerChangeRequest);
+					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "input", varNode.getVariableInfo().getName(), parmBranchInfo.parmName, uiLayerChangeRequest);
 					parmBranchInfo.dataUINode = dataUINode; 
 					
 					//variable group
@@ -301,7 +302,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				for(HAPOutputBranchInfo parmBranchInfo : outputBranchInfos) {
 					//ui
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
-					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "output", varNode.getVariableName(), parmBranchInfo.parmName, uiLayerChangeRequest);
+					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "output", varNode.getVariableInfo().getName(), parmBranchInfo.parmName, uiLayerChangeRequest);
 					parmBranchInfo.dataUINode = dataUINode; 
 					
 					//variable group
