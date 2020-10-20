@@ -10,20 +10,28 @@ public class HAPUtilityConfiguration {
 
 	public static HAPConfigureContextProcessor getContextProcessConfigurationForUIUit(String type) {
 		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
+		populateCommonConfigure(out);
 		if(type.equals(HAPConstant.UIRESOURCE_TYPE_TAG)) 	out.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;  //for tag, child keeps same
 		else out.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT;   //for resource, parent overwrite child
 		return out;
 	}
 
 	public static HAPConfigureContextProcessor getContextProcessConfigurationForTagDefinition(HAPUITagDefinitionContext tagDefinitionContext, HAPConfigureContextProcessor parentConfigure) {
-		HAPConfigureContextProcessor configure = parentConfigure.cloneConfigure();
-		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefinitionContext.getInfo());
-		return configure;
+		HAPConfigureContextProcessor out = parentConfigure.cloneConfigure();
+		populateCommonConfigure(out);
+		out.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefinitionContext.getInfo());
+		return out;
 	}
 
 	public static HAPConfigureContextProcessor getContextProcessConfigurationForInternal(HAPConfigureContextProcessor parentConfigure) {
 		HAPConfigureContextProcessor out = parentConfigure.cloneConfigure();
+		populateCommonConfigure(out);
 		out.parentCategary = HAPContextGroup.getAllContextTypes();
 		return out;
+	}
+	
+	private static void populateCommonConfigure(HAPConfigureContextProcessor configure) {
+		configure.relativeInheritRule = true;
+		configure.relativeTrackingToSolid = true;
 	}
 }

@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPProcessorContextRelative {
@@ -68,7 +70,7 @@ public class HAPProcessorContextRelative {
 					if(relativeContextElement.getParentCategary()!=null) categaryes.add(relativeContextElement.getParentCategary());
 					else if(configure.parentCategary==null)   categaryes.addAll(Arrays.asList(HAPContextGroup.getVisibleContextTypes()));
 					else   categaryes.addAll(Arrays.asList(configure.parentCategary));
-					out = processRelativeContextDefinitionElement(relativeContextElement, parentContext, isParentFlat, categaryes.toArray(new String[0]), configure.relativeResolveMode, contextProcessRequirement);
+					out = processRelativeContextDefinitionElement(relativeContextElement, parentContext, isParentFlat, categaryes.toArray(new String[0]), configure, contextProcessRequirement);
 				}
 			}
 			break;
@@ -83,11 +85,11 @@ public class HAPProcessorContextRelative {
 		return out;
 	}
 	
-	private static HAPContextDefinitionElement processRelativeContextDefinitionElement(HAPContextDefinitionLeafRelative defContextElementRelative, HAPContextGroup parentContext, boolean isParentFlat, String[] categaryes, String mode, HAPRequirementContextProcessor contextProcessRequirement){
+	private static HAPContextDefinitionElement processRelativeContextDefinitionElement(HAPContextDefinitionLeafRelative defContextElementRelative, HAPContextGroup parentContext, boolean isParentFlat, String[] categaryes, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement){
 		HAPContextDefinitionElement out = defContextElementRelative;
 		
 		HAPContextPath path = defContextElementRelative.getPath(); 
-		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(path, parentContext, categaryes, mode);
+		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(path, parentContext, categaryes, configure.relativeResolveMode);
 		
 		if(resolveInfo==null || resolveInfo.rootNode==null)
 			//cannot find referred root node
@@ -110,6 +112,22 @@ public class HAPProcessorContextRelative {
 			
 			HAPContextDefinitionElement parentContextEle = resolveInfo.resolvedNode; 
 			if(parentContextEle!=null){
+				//refer to solid
+				if(configure.relativeTrackingToSolid) {
+					String refRootId = null;
+					String refPath = null;
+					if(parentContextEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+						HAPReferenceContextNode parentSolidNodeRef = ((HAPContextDefinitionLeafRelative)parentContextEle).getSolidNodeReference();
+						refRootId = parentSolidNodeRef.getRootNodeId();
+						refPath = HAPNamingConversionUtility.cascadePath(parentSolidNodeRef.getPath(), resolveInfo.remainPath);
+					}
+					else {
+						refRootId = resolveInfo.rootNode.getId();
+						refPath = HAPNamingConversionUtility.cascadePath(resolveInfo.path.getSubPath(), resolveInfo.remainPath);
+					}
+					defContextElementRelative.setSolidNodeReference(new HAPReferenceContextNode(refRootId, refPath));
+				}
+				
 				HAPContextDefinitionElement relativeContextEle = defContextElementRelative.getDefinition();
 				if(relativeContextEle==null) {
 					defContextElementRelative.setDefinition(parentContextEle.cloneContextDefinitionElement());
@@ -127,6 +145,16 @@ public class HAPProcessorContextRelative {
 						}
 					}
 					defContextElementRelative.setMatchers(noVoidMatchers);
+					
+					//inherit rule from parent
+					if(configure.relativeInheritRule) {
+						HAPContextDefinitionElement solidParent = parentContextEle.getSolidContextDefinitionElement();
+						if(solidParent.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+							for(HAPDataRule rule : ((HAPContextDefinitionLeafData)solidParent).getCriteria().getDataInfo().getRules()) {
+								((HAPContextDefinitionLeafData)relativeContextEle).getCriteria().getDataInfo().addRule(rule);
+							}
+						}
+					}
 				}
 			}
 			else{

@@ -124,6 +124,12 @@ public class HAPParserContext {
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionLeafRelative.DEFINITION);
 			if(definitionJsonObj!=null) 	relativeLeaf.setDefinition(parseContextDefinitionElement(definitionJsonObj));
 			
+			JSONObject solidNodeRefJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionLeafRelative.SOLIDNODEREF);
+			if(solidNodeRefJsonObj!=null) {
+				HAPReferenceContextNode solidNodeRef = new HAPReferenceContextNode();
+				solidNodeRef.buildObject(solidNodeRefJsonObj, HAPSerializationFormat.JSON);
+				relativeLeaf.setSolidNodeReference(solidNodeRef);
+			}
 		}
 		else if(criteriaDef!=null) {
 			//data

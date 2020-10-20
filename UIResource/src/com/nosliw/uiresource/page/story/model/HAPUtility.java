@@ -53,7 +53,9 @@ public class HAPUtility {
 		Set<HAPStoryNode> varNodes = HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
-			out.getContext().addPublicElement(varNode.getVariableInfo().getName(), new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(varNode.getVariableInfo())));
+			HAPContextDefinitionRoot varRoot = new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(varNode.getVariableInfo()));
+			varRoot.setId(varNode.getId());
+			out.getContext().addPublicElement(varNode.getVariableInfo().getName(), varRoot);
 		}
 		return out;
 	}

@@ -69,6 +69,6 @@ public class HAPStoryNodeVariable extends HAPStoryNodeImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VARAIBLEINFO, this.m_variableInfo.toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(VARAIBLEINFO, this.m_variableInfo.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

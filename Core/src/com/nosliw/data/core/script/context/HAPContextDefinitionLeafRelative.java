@@ -24,7 +24,10 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 
 	@HAPAttribute
 	public static final String DEFINITION = "definition";
-	
+
+	@HAPAttribute
+	public static final String SOLIDNODEREF = "solidNodeRef";
+
 	@HAPAttribute
 	public static final String MATCHERS = "matchers";
 
@@ -38,6 +41,8 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 	private String m_parent;
 	
 	private HAPContextDefinitionElement m_definition;
+	
+	private HAPReferenceContextNode m_solidNodeRef;
 	
 	//context node full name --- matchers
 	//used to convert data from parent to data within uiTag
@@ -66,12 +71,13 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		return HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
 	}
 	
-	public void setParent(String parent) {
-		this.m_parent = parent;  
-	}
+	public void setParent(String parent) {		this.m_parent = parent;	}
 	
 	public HAPContextDefinitionElement getDefinition() {   return this.m_definition;   }
 	public void setDefinition(HAPContextDefinitionElement definition) {   this.m_definition = definition.getSolidContextDefinitionElement();   }
+	
+	public HAPReferenceContextNode getSolidNodeReference() {    return this.m_solidNodeRef;    }
+	public void setSolidNodeReference(HAPReferenceContextNode solidNodeRef) {    this.m_solidNodeRef = solidNodeRef;    }
 	
 	public void setPath(HAPContextPath path){	
 		this.m_path = path;
@@ -131,6 +137,8 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		
 		for(String name : this.m_matchers.keySet()) 	that.m_matchers.put(name, this.m_matchers.get(name).cloneMatchers());
 		for(String name : this.m_reverseMatchers.keySet())   that.m_reverseMatchers.put(name, this.m_reverseMatchers.get(name).cloneMatchers());
+		
+		if(this.m_solidNodeRef!=null)   that.m_solidNodeRef = this.m_solidNodeRef.cloneContextNodeReference();
 	}
 	
 	@Override
@@ -161,6 +169,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 			jsonMap.put(MATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 			jsonMap.put(REVERSEMATCHERS, HAPJsonUtility.buildJson(this.m_reverseMatchers, HAPSerializationFormat.JSON));
 		}
+		jsonMap.put(SOLIDNODEREF, HAPJsonUtility.buildJson(this.m_solidNodeRef, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -177,6 +186,5 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 			out = true;
 		}
 		return out;
-	}
-	
+	}	
 }
