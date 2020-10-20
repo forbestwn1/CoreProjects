@@ -157,6 +157,11 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 			return this.getCreateUIViewWithIdRequest(loc_id, loc_createContextForTagBody(), handlers, requestInfo);
 		},
 		
+		//---------------------------------context definition
+		getTagContextDefinition : function(){
+			return loc_tagConfigure.contextDef;
+		},
+		
 		//---------------------------------build context
 		createContextElementInfo : function(name, data1, data2, adapterInfo, info){
 			var out = [];
@@ -259,18 +264,21 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		
 		//overridden method to create init view
 		if(loc_uiTagObj.initViews!=undefined){
-			var views = loc_uiTagObj.initViews(requestInfo);
-			//attach view to resourve view
-			if(views!=undefined)  loc_getStartElement().after(views);	
+			uiTagInitRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+				var views = loc_uiTagObj.initViews(requestInfo);
+				//attach view to resourve view
+				if(views!=undefined)  loc_getStartElement().after(views);	
+
+				//overridden method to do sth after view is attatched to dom
+				if(loc_uiTagObj.postInit!=undefined){
+					var postInitObj = loc_uiTagObj.postInit(requestInfo);
+					if(postInitObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(postInitObj)){
+						return postInitObj;
+					}
+				}
+			}));
 		}
 
-		//overridden method to do sth after view is attatched to dom
-		if(loc_uiTagObj.postInit!=undefined){
-			var postInitObj = loc_uiTagObj.postInit(requestInfo);
-			if(postInitObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(postInitObj)){
-				uiTagInitRequest.addRequest(postInitObj);
-			}
-		}
 		return uiTagInitRequest;
 	};
 	

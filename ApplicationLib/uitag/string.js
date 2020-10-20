@@ -49,10 +49,15 @@
 		},
 	},
 	script : function(env){
+		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 
 		var loc_env = env;
 		var loc_dataVariable;
 		var loc_view;
+		
+		var loc_enum;
 		
 		var loc_revertChange = function(){
 			
@@ -88,10 +93,51 @@
 		{
 			preInit : function(requestInfo){
 				loc_dataVariable = loc_env.createVariable("internal_data");
+
+				//emum rule
+				var dataVarDef = loc_env.getTagContextDefinition().internal_data;
+				var rules = dataVarDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
+						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
+						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]
+						[node_COMMONATRIBUTECONSTANT.VARIABLEINFO_DATAINFO]
+						[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
+				var enumRule;
+				for(var i in rules){
+					if(rules[i][node_COMMONATRIBUTECONSTANT.DATARULE_RULETYPE]==node_COMMONCONSTANT.DATARULE_TYPE_ENUM){
+						enumRule = rules[i];
+						break;
+					} 
+				}
+				if(enumRule!=null){
+					var enumCode = enumRule[node_COMMONATRIBUTECONSTANT.DATARULE_ENUMCODE];
+					if(enumCode!=undefined){
+						var gatewayParms = {
+							"id" : enumCode,
+						};
+						return nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest("options", "getValues", gatewayParms, {
+							success : function(requestInfo, optionsValues){
+								loc_enum = optionsValues;
+							}
+						});
+					}
+				}
+				
 			},
 				
 			initViews : function(requestInfo){	
-				loc_view = $('<input type="text" style="background:#e6dedc"/>');	
+				if(loc_enum==undefined){
+					loc_view = $('<input type="text" style="background:#e6dedc"/>');	
+				}
+				else{
+					loc_view = $('<select style="background:#e6dedc;border:solid red"/>');	
+					for(var i in loc_enum){
+						loc_view.append($('<option>', {
+							value: loc_enum[i],
+							text: loc_enum[i]
+						}));
+					}
+				}
+				
 				return loc_view;
 			},
 				
@@ -110,7 +156,6 @@
 			},
 			
 			createContextForDemo : function(id, parentContext, request) {
-				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
 				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
 				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
