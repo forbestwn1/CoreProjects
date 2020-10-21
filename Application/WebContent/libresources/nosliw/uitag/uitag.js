@@ -158,8 +158,13 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		},
 		
 		//---------------------------------context definition
-		getTagContextDefinition : function(){
-			return loc_tagConfigure.contextDef;
+		getTagContextElementDefinition : function(name){
+			if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
+				return loc_tagConfigure.contextDef[name];
+			}			
+			else if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
+				return node_contextUtility.getContextElementDefinitionFromFlatContext(uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], name);
+			}
 		},
 		
 		//---------------------------------build context

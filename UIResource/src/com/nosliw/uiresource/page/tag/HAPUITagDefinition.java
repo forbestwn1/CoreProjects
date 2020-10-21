@@ -15,6 +15,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 @HAPEntityWithAttribute
@@ -28,6 +29,8 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	public static final String ATTRIBUTES = "attributes";
 	@HAPAttribute
 	public static final String CONTEXT = "context";
+	@HAPAttribute
+	public static final String FLATCONTEXT = "flatContext";
 	@HAPAttribute
 	public static final String REQUIRES = "requires";
 	@HAPAttribute
@@ -85,6 +88,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(NAME, this.m_name.toStringValue(HAPSerializationFormat.LITERATE));
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(FLATCONTEXT, HAPUtilityContext.buildFlatContextFromContextGroup(this.m_context, null).getVariableContext().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
 	}

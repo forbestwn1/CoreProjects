@@ -21,6 +21,13 @@ var node_dataUtility;
 var node_utility = function(){
 		
 	var loc_out = {
+			
+		getContextElementDefinitionFromFlatContext : function(flatContext, name){
+			var globalName = flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL][name];
+			if(globalName==undefined)   globalName = name;
+			return flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT][globalName];
+		},
+			
 		parseContextElementName : function(name){
 			var segs = name.split(node_COMMONCONSTANT.SEPERATOR_CONTEXT_CATEGARY_NAME);
 			var out = {};

@@ -95,8 +95,8 @@
 				loc_dataVariable = loc_env.createVariable("internal_data");
 
 				//emum rule
-				var dataVarDef = loc_env.getTagContextDefinition().internal_data;
-				var rules = dataVarDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
+				var dataEleDef = loc_env.getTagContextElementDefinition("internal_data");
+				var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
 						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
 						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]
 						[node_COMMONATRIBUTECONSTANT.VARIABLEINFO_DATAINFO]
