@@ -195,27 +195,41 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 		resolved.rootNode = contextRoot;
 		if(contextRoot!=null) {
 			if(contextRoot.isConstant()) {
-				resolved.referedNode = null;
+				resolved.referedSolidNode = null;
 				resolved.remainPath = path;
 			}
 			else {
-				HAPContextDefinitionElement outEle = contextRoot.getDefinition().getSolidContextDefinitionElement();
+				HAPContextDefinitionElement outSolidNodeEle = contextRoot.getDefinition().getSolidContextDefinitionElement();
+				HAPContextDefinitionElement outRefNodeEle = contextRoot.getDefinition();
 				String remainingPath = null;
 				if(HAPBasicUtility.isStringNotEmpty(path)) {
 					String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
 					for(String pathSeg : pathSegs){
 						if(remainingPath==null) {
-							HAPContextDefinitionElement ele = null;
-							if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(outEle.getType())) 	ele = ((HAPContextDefinitionNode)outEle).getChildren().get(pathSeg);
-							if(ele==null) 		remainingPath = pathSeg;
-							else 	outEle = ele;
+							//solid node
+							HAPContextDefinitionElement solidEle = null;
+							if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(outSolidNodeEle.getType())) {
+								solidEle = ((HAPContextDefinitionNode)outSolidNodeEle).getChildren().get(pathSeg);
+							}
+							if(solidEle==null) 		remainingPath = pathSeg;
+							else{
+								outSolidNodeEle = solidEle;
+							}
+
+							//real node
+							HAPContextDefinitionElement refEle = null;
+							if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(outRefNodeEle.getType())) {
+								refEle = ((HAPContextDefinitionNode)outRefNodeEle).getChildren().get(pathSeg);
+							}
+							if(refEle!=null)  outRefNodeEle = refEle;
 						}
 						else {
 							remainingPath = HAPNamingConversionUtility.cascadePath(remainingPath, pathSeg);
 						}
 					}
 				}
-				resolved.referedNode = outEle;
+				resolved.referedNode = outRefNodeEle;
+				resolved.referedSolidNode = outSolidNodeEle;
 				resolved.remainPath = remainingPath;
 			}
 		}

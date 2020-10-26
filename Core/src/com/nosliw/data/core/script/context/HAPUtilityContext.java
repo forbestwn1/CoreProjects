@@ -354,11 +354,11 @@ public class HAPUtilityContext {
 		if(out!=null && !out.rootNode.isConstant()) {
 			if(HAPBasicUtility.isStringEmpty(out.remainPath)) {
 				//exactly match with path
-				out.resolvedNode = out.referedNode;
+				out.resolvedNode = out.referedSolidNode;
 			}
 			else {
 				//nof exactly match with path
-				HAPContextDefinitionElement candidateNode = out.referedNode.getSolidContextDefinitionElement();
+				HAPContextDefinitionElement candidateNode = out.referedSolidNode.getSolidContextDefinitionElement();
 				if(HAPConstant.CONTEXT_ELEMENTTYPE_DATA.equals(candidateNode.getType())) {
 					//data type node
 					HAPContextDefinitionLeafData dataLeafEle = (HAPContextDefinitionLeafData)candidateNode;

@@ -110,12 +110,13 @@ public class HAPProcessorContextRelative {
 			else path.getRootElementId().setCategary(resolveInfo.path.getRootElementId().getCategary());
 			defContextElementRelative.setPath(path);
 			
-			HAPContextDefinitionElement parentContextEle = resolveInfo.resolvedNode; 
-			if(parentContextEle!=null){
+			HAPContextDefinitionElement solvedContextEle = resolveInfo.resolvedNode; 
+			if(solvedContextEle!=null){
 				//refer to solid
 				if(configure.relativeTrackingToSolid) {
 					String refRootId = null;
 					String refPath = null;
+					HAPContextDefinitionElement parentContextEle = resolveInfo.referedNode; 
 					if(parentContextEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 						HAPReferenceContextNode parentSolidNodeRef = ((HAPContextDefinitionLeafRelative)parentContextEle).getSolidNodeReference();
 						refRootId = parentSolidNodeRef.getRootNodeId();
@@ -130,12 +131,12 @@ public class HAPProcessorContextRelative {
 				
 				HAPContextDefinitionElement relativeContextEle = defContextElementRelative.getDefinition();
 				if(relativeContextEle==null) {
-					defContextElementRelative.setDefinition(parentContextEle.cloneContextDefinitionElement());
+					defContextElementRelative.setDefinition(solvedContextEle.cloneContextDefinitionElement());
 				}
 				else {
 					//figure out matchers
 					Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
-					HAPUtilityContext.mergeContextDefitionElement(parentContextEle, relativeContextEle, false, matchers, null, contextProcessRequirement);
+					HAPUtilityContext.mergeContextDefitionElement(solvedContextEle, relativeContextEle, false, matchers, null, contextProcessRequirement);
 					//remove all the void matchers
 					Map<String, HAPMatchers> noVoidMatchers = new LinkedHashMap<String, HAPMatchers>();
 					for(String p : matchers.keySet()){
@@ -148,7 +149,7 @@ public class HAPProcessorContextRelative {
 					
 					//inherit rule from parent
 					if(configure.relativeInheritRule) {
-						HAPContextDefinitionElement solidParent = parentContextEle.getSolidContextDefinitionElement();
+						HAPContextDefinitionElement solidParent = solvedContextEle.getSolidContextDefinitionElement();
 						if(solidParent.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
 							for(HAPDataRule rule : ((HAPContextDefinitionLeafData)solidParent).getCriteria().getDataInfo().getRules()) {
 								((HAPContextDefinitionLeafData)relativeContextEle).getCriteria().getDataInfo().addRule(rule);

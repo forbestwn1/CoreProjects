@@ -8,6 +8,8 @@ public class HAPInfoRelativeContextResolve{
 	public HAPContextDefinitionRoot rootNode;
 	//original refered node
 	public HAPContextDefinitionElement referedNode;
+	//refered solid node
+	public HAPContextDefinitionElement referedSolidNode;
 	//unmatched path part
 	public String remainPath;
 	//apply unmatched path,
