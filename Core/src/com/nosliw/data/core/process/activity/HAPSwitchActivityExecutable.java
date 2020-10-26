@@ -18,7 +18,6 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.script.expression.HAPContextProcessScriptExpression;
-import com.nosliw.data.core.script.expression.expression.HAPScriptExpression111;
 
 public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 
@@ -30,7 +29,7 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 
 	private HAPContextProcessScriptExpression m_expressionProcessContext;
 
-	private HAPScriptExpression111 m_scriptExpression;
+//	private HAPScriptExpression m_scriptExpression;
 
 	public HAPSwitchActivityExecutable(String id, HAPSwitchActivityDefinition activityDef) {
 		super(id, activityDef);
@@ -41,8 +40,8 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 		return this.m_expressionProcessContext;
 	}
 	
-	public void setScriptExpression(HAPScriptExpression111 scriptExpression) {    this.m_scriptExpression = scriptExpression;    }
-	public HAPScriptExpression111 getScriptExpression() {   return this.m_scriptExpression;  }
+	public void setScriptExpression(HAPScriptExpression scriptExpression) {    this.m_scriptExpression = scriptExpression;    }
+	public HAPScriptExpression getScriptExpression() {   return this.m_scriptExpression;  }
 	
 //	public HAPSwitchActivityDefinition getSwitchActivityDefinition() {   return (HAPSwitchActivityDefinition)this.getActivityDefinition();   }
 
@@ -51,7 +50,7 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		
-		this.m_scriptExpression = new HAPScriptExpression111();
+		this.m_scriptExpression = new HAPScriptExpression();
 		this.m_scriptExpression.buildObject(jsonObj.getJSONObject(SCRIPTEXPRESSION), HAPSerializationFormat.JSON);
 		return true;  
 	}

@@ -22,6 +22,13 @@ public class HAPContextPath extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String PATH  = "path";
+
+	@HAPAttribute
+	public static final String CONTEXTCATEGARY  = "contextCategary";
+
+	@HAPAttribute
+	public static final String CONTEXTNAME  = "contextName";
+
 	
 	private HAPContextDefinitionRootId m_rootNodeId;
 	
@@ -106,5 +113,7 @@ public class HAPContextPath extends HAPSerializableImp{
 		jsonMap.put(ROOTNAME, this.m_rootNodeId.getFullName());
 		jsonMap.put(ROOTPATH, this.m_rootNodeId.getPath());
 		jsonMap.put(PATH, this.m_path);
+		jsonMap.put(CONTEXTCATEGARY, this.m_rootNodeId.getCategary());
+		jsonMap.put(CONTEXTNAME, this.m_rootNodeId.getName());
 	}
 }

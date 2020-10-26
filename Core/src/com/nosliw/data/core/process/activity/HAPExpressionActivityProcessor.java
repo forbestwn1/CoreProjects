@@ -29,7 +29,6 @@ import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
-import com.nosliw.data.core.script.expression.expression.HAPScriptExpression111;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
 public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
@@ -59,7 +58,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());
-		HAPScriptExpression111 scriptExpression = HAPProcessorScript.processScriptExpression(definition.getScript(), out.getScriptExpressionProcessContext(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
+		HAPScriptExpression scriptExpression = HAPProcessorScript.processScriptExpression(definition.getScript(), out.getScriptExpressionProcessContext(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 		out.setScriptExpression(scriptExpression);
 
 		//merge discovered variable in activity back to process variable
@@ -82,7 +81,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				String outputVar = HAPConstant.ACTIVITY_OUTPUTVARIABLE_OUTPUT;
 				HAPExpressionActivityExecutable expressionActExt = (HAPExpressionActivityExecutable)activity;
-				HAPScriptExpression111 scriptExpression = expressionActExt.getScriptExpression();
+				HAPScriptExpression scriptExpression = expressionActExt.getScriptExpression();
 				if(scriptExpression.isDataExpression()) {
 					//if script expression is data expression only, then affect result
 					HAPExecutableExpressionGroup expExe = scriptExpression.getExpressions().values().iterator().next();

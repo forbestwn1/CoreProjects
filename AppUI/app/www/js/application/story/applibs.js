@@ -33,6 +33,7 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 				"0_package.js",
 				"module.js",
 				"connection.js",
+				"uidataconnection.js",
 				"storynode.js",
 				"grouplayer.js",
 				"layoutbasic.js",

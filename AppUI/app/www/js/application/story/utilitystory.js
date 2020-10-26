@@ -105,6 +105,15 @@ var node_utility = function(){
 			return out;
 		},
 		
+		getStoryNodeByTypes : function(story, nodeTypes){
+			var out = [];
+			_.each(story[node_COMMONATRIBUTECONSTANT.STORY_NODE], function(node, id){
+				if(nodeTypes.includes(node[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE])){
+					out.push(node);
+				}
+			});
+			return out;
+		},
 		
 		getStoryNodeByType : function(story, nodeType) {
 			var out = [];

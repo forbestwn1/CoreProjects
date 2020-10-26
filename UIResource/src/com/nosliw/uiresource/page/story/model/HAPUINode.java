@@ -77,6 +77,7 @@ public class HAPUINode {
 		if(nodeType.equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
 			HAPContextDefinitionLeafData dataNode = (HAPContextDefinitionLeafData)resolvedNode;
 			out.setDataTypeCriteria(dataNode.getCriteria().getCriteria());
+			out.setContextPath(resolve.path);
 		}
 		return out;
 	}

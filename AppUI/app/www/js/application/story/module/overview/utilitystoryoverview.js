@@ -15,6 +15,26 @@ var packageObj = library.getChildPackage();
  */
 var node_utility = function(){
 
+	var loc_nodeTypeLayer = {
+		"service" : ["service", "serviceInput", "serviceOutput", "serviceInputParm", "serviceOutputItem"],
+		"data" : ["constant", "variable"],
+		"UI" : ["UI_page", "UI_data", "UI_html"]
+	};
+	
+	var loc_layerByNodeType;
+	
+	var loc_getLayerByNodeType = function(){
+		if(loc_layerByNodeType==undefined){
+			loc_layerByNodeType = {};
+			_.each(loc_nodeTypeLayer, function(nodeArray, layer){
+				_.each(nodeArray, function(nodeType){
+					loc_layerByNodeType[nodeType] = layer; 
+				});
+			});
+		}
+		return loc_layerByNodeType;
+	};
+	
 	var loc_processStoryNode = function(storyNode, overViewTree, processed, module){
 		var out;
 		var storyNodeId = storyNode[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
@@ -53,9 +73,14 @@ var node_utility = function(){
 				"UI_data" : "UI",
 				"UI_html" : "UI",
 			};
-			return layers[nodeType];
+			return loc_getLayerByNodeType()[nodeType];
 		},
 		
+		getUIStoryNode : function(story){
+			return node_storyUtility.getStoryNodeByTypes(story, loc_nodeTypeLayer["UI"]);
+		},
+		
+		//
 		buildOverviewLayerTree : function(module){
 			var that = this;
 			var layerTree = {};
@@ -71,7 +96,8 @@ var node_utility = function(){
 			});
 			return layerTree;
 		},
-			
+		
+		//
 		buildOverviewNodeTree : function(module){
 			var overViewTree = {};
 			var processed = {};
