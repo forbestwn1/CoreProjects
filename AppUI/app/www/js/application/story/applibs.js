@@ -48,6 +48,7 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 			libs : [
 				"0_package.js",
 				"module.js",
+				"uinode.js",
 			]
 		});
 	}

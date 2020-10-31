@@ -182,6 +182,11 @@ var node_createModuleStoryBuilder = function(parm){
 						return "http://localhost:8080/AppUI/story.html?env=local&configure=overviewtest&app=story&version=2&designId="+this.designId;
 					}
 				},
+				pageViewUrl : {
+					get : function(){
+						return "http://localhost:8080/AppUI/story.html?env=local&configure=ui&app=story&version=2&designId="+this.designId;
+					}
+				},
 				resourceUrl : {
 					get : function(){
 						if(this.resourceId.id!=undefined){
@@ -236,6 +241,8 @@ var node_createModuleStoryBuilder = function(parm){
 						<br>
 						<br>
 						<a :href="overviewUrl"  target="_blank">overview</a>
+						<br>
+						<a :href="pageViewUrl"  target="_blank">pageView</a>
 						<br>
 						<a v-on:click.prevent="onStory">story</a>
 						<br>

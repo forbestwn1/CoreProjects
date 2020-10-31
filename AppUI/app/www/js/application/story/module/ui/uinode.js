@@ -32,27 +32,29 @@ var node_createUINode = function(parm){
 		},
 		computed: {
 			nodeName : function(){
-				return "aaaa";
+				return this.data.getStoryNodeId();
+			},
+			childrenInfo : function(){
+				return this.data.getChildrenInfo();
 			}
 		},
 		methods : {
 			onSelectNode : function(nodeInfo){
+				this.$emit("showUIView");
 			},
-			onDeleteMiniApp : function(miniAppId){
-			}
 		},
 		template :
 			`
 		    <li class="accordion-item-opened"><a href="#" class="item-content item-link">
 				<div class="item-inner">
-					<div class="item-title">{{data.storyNodeId}}</div>
+					<div class="item-title">{{nodeName}}</div>
 				</div></a>
 				<div class="accordion-item-content">
 				    <div class="block">
 						<story-uinode 
-							v-for="childNode in data.children"
-							v-bind:key="childNode.storyNodeId"
-							v-bind:data="childNode"
+							v-for="childNodeInfo in childrenInfo"
+							v-bind:key="childNodeInfo.childId"
+							v-bind:data="childNodeInfo.childNode"
 						></story-uinode>
 				    </div>
 				</div>

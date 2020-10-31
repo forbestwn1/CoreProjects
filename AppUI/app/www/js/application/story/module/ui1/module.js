@@ -17,76 +17,36 @@ var packageObj = library.getChildPackage();
 	var node_getLifecycleInterface;
 	var node_createEventObject;
 	var node_createUINode;
+	var node_storyUtility;
+	var node_uiNodeViewFactory;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "userApps";
 
-var node_createModulePage = function(parm){
+var node_createModuleUI = function(parm){
 
 	var loc_root = parm;
 
-	var loc_eventSource = node_createEventObject();
-	var loc_eventListener = node_createEventObject();
-
-	var loc_componentData = {
-		page : {}
-	};
-	
-	var loc_vue;
-
-	var loc_triggerEvent = function(eventName, eventData, request){
-		if(request==undefined)  request = node_createServiceRequestInfoCommon();
-		loc_eventSource.triggerEvent(eventName, eventData, request);
-	};
-	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
-		Vue.component('story-uinode', node_createUINode());
-		loc_vue = new Vue({
-			el: loc_root,
-			data: loc_componentData,
-			components : {
-			},
-			computed : {
-				user : function(){
-					return this.userInfo.user;
-				},
-			},
-			methods : {
-				onSelectNode : function(miniApp) {
-					loc_triggerEvent("select", node_createMiniAppInfo(miniApp));
-				},
-			},
-			template :
-				`
-				    <div class="block">
-						<story-uinode 
-							v-bind:data="page"
-						></story-uinode>
-				    </div>
-				`
-		});
-		
 	};
 
 	var loc_out = {
 		
-		refreshRequest : function(pageTree, handlers, requestInfo){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshPageModule", {}), handlers, requestInfo);
-			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshPageModule", {}), 
+		refreshRequest : function(uiNodeId, story, handlers, requestInfo){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshUIModule", {}), handlers, requestInfo);
+			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUIModule", {}), 
 				function(requestInfo){
-					loc_componentData.page = pageTree;
-				})); 
+					var uiNode = node_storyUtility.buildUINodeFromStoryNode(uiNodeId, story);
+					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], uiNodeId, undefined, {
+						success : function(request, uiNodeViewGroup){
+							uiNodeViewGroup.appendTo(loc_root);
+						}
+					});
+			})); 
 			return out;
 		},
 
-		getMiniApp : function(appId){
-			var app = _.find(loc_vue.group.miniApp, function(app, i){
-				return app.id==appId;
-			});
-			return app;
-		},
-		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
@@ -113,9 +73,11 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.page.createUINode", function(){node_createUINode = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.utility", function(){node_storyUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uinode.uiNodeViewFactory", function(){node_uiNodeViewFactory = this.getData();});
 
 
 //Register Node by Name
-packageObj.createChildNode("createModulePage", node_createModulePage); 
+packageObj.createChildNode("createModuleUI", node_createModuleUI); 
 
 })(packageObj);

@@ -12,7 +12,7 @@ import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 
 @HAPEntityWithAttribute
-public class HAPStoryNodeUITag extends HAPStoryNodeUI{
+public abstract class HAPStoryNodeUITag extends HAPStoryNodeUI{
 
 	@HAPAttribute
 	public static final String TAGNAME = "tagName";

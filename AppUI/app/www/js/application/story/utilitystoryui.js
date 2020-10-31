@@ -8,6 +8,7 @@ var packageObj = library.getChildPackage();
 	var node_createUINodeFromStoryNode;
 	var node_createUINodeByTag;
 	var node_storyUtility;
+	var node_ChildUINodeInfo;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -20,8 +21,8 @@ var node_utility = function(){
 		var uiNode = node_createUINodeFromStoryNode(storyNode[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], story);
 		var childStoryNodesInfo = node_storyUtility.getAllChildNodesInfo(storyNode, story);
 		_.each(childStoryNodesInfo, function(childStroyNodeInfo, i){
-			var childUINode = loc_buildUINodeFromStoryNode(childStroyNodeInfo.node, story);
-			uiNode.addChild(childUINode, childStroyNodeInfo.childId);
+			var childUINode = loc_buildUINodeFromStoryNode(childStroyNodeInfo.childNode, story);
+			uiNode.addChildInfo(new node_ChildUINodeInfo(childUINode, childStroyNodeInfo.connectionId, childStroyNodeInfo.childId));
 		});
 		return uiNode;
 	};
@@ -29,7 +30,7 @@ var node_utility = function(){
 	var loc_out = {
 		
 		buildPageTree : function(story){
-			var pageNode = this.getStoryNodeByType(story, node_COMMONCONSTANT.STORYNODE_TYPE_PAGE)[0];
+			var pageNode = node_storyUtility.getStoryNodeByType(story, node_COMMONCONSTANT.STORYNODE_TYPE_PAGE)[0];
 			return loc_buildUINodeFromStoryNode(pageNode, story);
 		},	
 		
@@ -55,6 +56,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("application.instance.story.entity.createUINodeFromStoryNode", function(){node_createUINodeFromStoryNode = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.entity.createUINodeByTag", function(){node_createUINodeByTag = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.entity.ChildUINodeInfo", function(){node_ChildUINodeInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("storyUIUtility", node_utility); 

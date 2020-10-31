@@ -4,31 +4,41 @@ var packageObj = library.getChildPackage("entity");
 (function(packageObj){
 	//get used node
 	var node_CONSTANT;
+	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_storyUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_ChildNodeInfo = function(childNode, connectionId, childId){
+var node_ChildStoryNodeInfo = function(childNode, connectionId, childId){
 	this.childNode = childNode;
 	this.connectionId = connectionId;
 	this.childId = childId;
 	return this;
 };
 
+var node_ChildUINodeInfo = function(childNode, connectionId, childId){
+	this.childNode = childNode;
+	this.connectionId = connectionId;
+	this.childId = childId;
+	return this;
+};
+
+
 var node_createUINodeFromStoryNode = function(nodeId, story){
 	
-	var loc_story = story;
-	var loc_nodeId = nodeId;
-	var loc_childrenInfo = [];
-	var loc_storyNode;
-	
 	var loc_out = {
-
+		prv_story : story,
+		prv_nodeId : nodeId,
+		prv_childrenInfo : [],
+		prv_storyNode : undefined,
+			
+		getStoryNodeId : function(){   return this.prv_nodeId;   },
+			
 		getStoryNode : function(){
-			if(loc_storyNode==undefined){
-				loc_storyNode = node_storyUtility.getNodeById(story, loc_nodeId);  
+			if(this.prv_storyNode==undefined){
+				this.prv_storyNode = node_storyUtility.getNodeById(this.prv_story, this.prv_nodeId);  
 			}
-			return loc_storyNode;
+			return this.prv_storyNode;
 		},	
 		
 		getNodeType : function(){
@@ -41,11 +51,11 @@ var node_createUINodeFromStoryNode = function(nodeId, story){
 //			return nodeEntity.tag;
 //		},
 			
-		addChild : function(childInfo){
-			loc_childrenInfo.push(childInfo);
+		addChildInfo : function(childInfo){
+			this.prv_childrenInfo.push(childInfo);
 		},
 		
-		getChildrenInfo : function(){   return loc_childrenInfo;    },
+		getChildrenInfo : function(){   return this.prv_childrenInfo;    },
 		
 		getBody : function(){
 			return loc_out;
@@ -62,6 +72,8 @@ var node_createUINodeByTag = function(tagId){
 	
 	var loc_out = {
 		
+		getNodeType : function(){  return node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA;	},
+			
 		getTagId : function(){  return loc_tagId; },
 			
 		addChild : function(uiNode, index){
@@ -82,12 +94,14 @@ var node_createUINodeByTag = function(tagId){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.utility", function(){node_storyUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUINodeFromStoryNode", node_createUINodeFromStoryNode); 
 packageObj.createChildNode("createUINodeByTag", node_createUINodeByTag); 
-packageObj.createChildNode("ChildNodeInfo", node_ChildNodeInfo); 
+packageObj.createChildNode("ChildStoryNodeInfo", node_ChildStoryNodeInfo); 
+packageObj.createChildNode("ChildUINodeInfo", node_ChildUINodeInfo); 
 
 })(packageObj);

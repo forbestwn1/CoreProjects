@@ -90,11 +90,10 @@ var node_createApplication = function(){
 			var storyBuilderModule = loc_modules["builder"];
 			var parms = nosliwApplication.info.application.inputData;
 			if(pageModule!=undefined){
-				var pageTree = node_storyUtility.buildPageTree(story);
-				return pageModule.refreshRequest(pageTree);
+				return pageModule.refreshRequest(parms.designId);
 			}
 			if(uiModule!=undefined){
-				return uiModule.refreshRequest("23", story);
+				return uiModule.refreshRequest(parms.designId);
 			}
 			if(overviewModule!=undefined){
 				return overviewModule.refreshRequest(parms.designId);
