@@ -26,9 +26,6 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 	//all java script blocks within this unit
 	private HAPJsonTypeScript m_script;
 
-	//expression definition within this unit
-//	private Map<String, String> m_expressionDefinitions;
-
 	//html content after compilation
 	private String m_content; 
 	

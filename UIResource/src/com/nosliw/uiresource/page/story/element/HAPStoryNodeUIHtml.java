@@ -6,10 +6,12 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 
+@HAPEntityWithAttribute
 public class HAPStoryNodeUIHtml extends HAPStoryNodeUI{
 
 	public final static String STORYNODE_TYPE = HAPConstant.STORYNODE_TYPE_HTML; 

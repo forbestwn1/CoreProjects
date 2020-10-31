@@ -16,7 +16,6 @@ import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPReferenceElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityConnection;
-import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPRequestChange;
 import com.nosliw.data.core.story.change.HAPRequestChangeWrapper;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
@@ -33,8 +32,6 @@ public class HAPUINode {
 	private HAPReferenceElement m_nodeRef;
 	
 	private List<HAPUIChild> m_children;
-	
-	private List<HAPChangeItem> m_changes;
 	
 	private HAPStoryNodeUI m_storyNode;
 	

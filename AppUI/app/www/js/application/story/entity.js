@@ -8,33 +8,44 @@ var packageObj = library.getChildPackage("entity");
 	var node_storyUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_ChildNodeInfo = function(childNode, connectionId, childId){
+	this.childNode = childNode;
+	this.connectionId = connectionId;
+	this.childId = childId;
+	return this;
+};
+
 var node_createUINodeFromStoryNode = function(nodeId, story){
 	
 	var loc_story = story;
 	var loc_nodeId = nodeId;
-	var loc_children = [];
+	var loc_childrenInfo = [];
 	var loc_storyNode;
 	
-	var loc_getStoryNode = function(storyNodeId){
-		if(loc_storyNode==undefined){
-			loc_storyNode = node_storyUtility.getNodeById(story, loc_nodeId);  
-		}
-		return loc_storyNode;
-	};
-	
 	var loc_out = {
+
+		getStoryNode : function(){
+			if(loc_storyNode==undefined){
+				loc_storyNode = node_storyUtility.getNodeById(story, loc_nodeId);  
+			}
+			return loc_storyNode;
+		},	
 		
-		getTagId : function(){
-			var storyNode = loc_getStoryNode();
-			var nodeEntity = storyNode[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENTITY];
-			return nodeEntity.tag;
+		getNodeType : function(){
+			return this.getStoryNode()[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE];
 		},
 			
-		addChild : function(uiNode, index){
-			loc_children[index] = uiNode;
+//		getTagId : function(){
+//			var storyNode = loc_getStoryNode();
+//			var nodeEntity = storyNode[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENTITY];
+//			return nodeEntity.tag;
+//		},
+			
+		addChild : function(childInfo){
+			loc_childrenInfo.push(childInfo);
 		},
 		
-		getChildren : function(){   return loc_children;    },
+		getChildrenInfo : function(){   return loc_childrenInfo;    },
 		
 		getBody : function(){
 			return loc_out;
@@ -77,5 +88,6 @@ nosliw.registerSetNodeDataEvent("application.instance.story.utility", function()
 //Register Node by Name
 packageObj.createChildNode("createUINodeFromStoryNode", node_createUINodeFromStoryNode); 
 packageObj.createChildNode("createUINodeByTag", node_createUINodeByTag); 
+packageObj.createChildNode("ChildNodeInfo", node_ChildNodeInfo); 
 
 })(packageObj);

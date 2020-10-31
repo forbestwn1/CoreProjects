@@ -26,7 +26,7 @@ public class HAPStoryNodePage extends HAPStoryNodeUI{
 	@Override
 	public HAPStoryElement cloneStoryElement() {
 		HAPStoryNodePage out = new HAPStoryNodePage();
-		super.cloneTo(out);
+		super.cloneToUIStoryNode(out);
 		return out;
 	}
 	

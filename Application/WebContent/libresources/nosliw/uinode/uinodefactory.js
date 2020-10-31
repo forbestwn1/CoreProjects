@@ -43,11 +43,15 @@ var node_uiNodeViewFactory = function(){
 			
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUINodeViewRequest", {}), handlers, requestInfo);
 			_.each(uiNodeGroupView.getChildren(), function(uiNodeView, i){
-				out.addRequest(loc_createUITagRequest(uiNodeView.getId(), uiNodeView.getUINode(), parentContext, uiNodeView.getStartElement(), uiNodeView.getEndElement(), {
-					success : function(request, uiTag){
-						uiNodeView.setUITag(uiTag);
-					}
-				}));
+				var uiNodeType = uiNodeView.getUINodeType();
+				if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA){
+					//for tag related ui node
+					out.addRequest(loc_processUITagViewRequest(uiNodeView, parentContext));
+				}
+				else if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_HTML){
+					//for html related ui node
+					out.addRequest(loc_processUIHtmlRequest(uiNodeView, parentContext));
+				}
 			});
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
@@ -61,9 +65,26 @@ var node_uiNodeViewFactory = function(){
 	return loc_out;
 }();	
 	
+var loc_processUIHtmlRequest = function(uiHtmlNodeView, parentContext, handlers, requestInfo){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIHtmlNode", {}), handlers, requestInfo);
+
+	var id = uiHtmlNodeView.getId();
+	//create children tag view
+	var createChildrenTagRequest = node_createServiceRequestInfoSet(undefined);
+	var tagViewsByChild = uiHtmlNodeView.getTagViewsByChild();
+	_.each(tagViewsByChild, function(tagViews, childId){
+		_.each(tagViews, function(tagView, i){
+			createChildrenTagRequest.addRequest(childId, loc_processUITagViewRequest(tagView, parentContext));
+		});
+	});
+	out.addRequest(createChildrenTagRequest);
 	
-var loc_createUITagRequest = function(id, uiNode, parentContext, startElement, endElement, handlers, requestInfo){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUINode", {}), handlers, requestInfo);
+	return out;
+};
+
+var loc_processUITagViewRequest = function(uiNodeTagView, parentContext, handlers, requestInfo){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUITagNode", {}), handlers, requestInfo);
+	var uiNode = uiNodeTagView.getUINode();
 	var tagId = uiNode.getTagId();
 	out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
 		success : function(requestInfo, resources){
@@ -71,26 +92,26 @@ var loc_createUITagRequest = function(id, uiNode, parentContext, startElement, e
 
 			var uiTag = node_createUITag(
 					uiTagResourceObj, 
-					id, 
+					uiNodeTagView.getId(), 
 					uiNode.attributes, 
 					parentContext,
 					{
 						mode : node_CONSTANT.TAG_RUNTIME_MODE_DEMO,
-						startElement : startElement,
-						endElement : endElement
+						startElement : uiNodeTagView.getStartElement(),
+						endElement : uiNodeTagView.getEndElement()
 					}, 
 					uiNode.getBody());
 			var initRequest = node_getLifecycleInterface(uiTag).initRequest({
 				success : function(requestInfo){
-					return uiTag;
+					return uiNodeTagView.setUITag(uiTag);
 				}
 			}, requestInfo);
 			return initRequest;
 		}
 	}));
 	return out;
-};	
-	
+};
+
 
 //*******************************************   End Node Definition  ************************************** 	
 

@@ -7,6 +7,7 @@ var packageObj = library.getChildPackage();
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
+	var node_ChildNodeInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -143,11 +144,7 @@ var node_utility = function(){
 			_.each(childConnectionEnds, function(connectionEnd, i){
 				var connectionId = connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID];
 				var childId = that.getConnectionById(story, connectionId)[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID];
-				out.push({
-					node: that.getStoryElementByRef(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF]),
-					connectionId : connectionId,
-					childId : childId
-				});
+				out.push(new node_ChildNodeInfo(that.getStoryElementByRef(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF]), connectionId, childId));
 			});
 			return out;
 		},
@@ -236,6 +233,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.builder.ElementId", function(){node_ElementId = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.ChildNodeInfo", function(){node_ChildNodeInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("storyUtility", node_utility); 

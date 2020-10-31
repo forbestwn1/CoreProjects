@@ -50,11 +50,11 @@ public class HAPStoryNodeUI extends HAPStoryNodeImp{
 	@Override
 	public HAPStoryElement cloneStoryElement() {
 		HAPStoryNodeUI out = new HAPStoryNodeUI();
-		this.cloneTo(out);
+		this.cloneToUIStoryNode(out);
 		return out;
 	}
 	
-	protected void cloneTo(HAPStoryNodeUI uiStoryNode) {
+	protected void cloneToUIStoryNode(HAPStoryNodeUI uiStoryNode) {
 		super.cloneTo(uiStoryNode);
 		if(this.m_dataStructureInfo!=null)  uiStoryNode.m_dataStructureInfo = this.m_dataStructureInfo.cloneUIDataStructureInfo();
 	}
