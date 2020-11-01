@@ -84,6 +84,7 @@ var node_createUINodeHtmlView = function(uiNode, id, parentContext){
 			var placeHolder = "<nosliw_start_"+loc_id+"_"+childId+"></nosliw>"+"<nosliw_end_"+loc_id+"_"+childId+"></nosliw>";
 			html = html.substring(0, startIndex) + placeHolder + html.substring(endIndex+2);
 			loc_tagByChild[childId] = [];
+			startIndex = html.indexOf("{{");
 		}
 		loc_html = html;
 		
@@ -110,7 +111,8 @@ var node_createUINodeHtmlView = function(uiNode, id, parentContext){
 	};
 
 	var loc_out = {
-		
+		getUINodeType : function(){   loc_uiNode[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE];    }, 	
+			
 		getTagViewsByChild : function(){	return loc_tagByChild;	},
 		
 		getStartElement : function(){  return loc_viewContainer.getStartElement();   },
@@ -131,7 +133,7 @@ var node_createUINodeHtmlView = function(uiNode, id, parentContext){
 	};
 	
 	loc_init();
-	return lot_out;
+	return loc_out;
 };
 
 var node_createUINodeTagView = function(uiNode, id, parentContext){

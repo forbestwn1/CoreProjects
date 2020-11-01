@@ -20,6 +20,7 @@ var packageObj = library.getChildPackage();
 	var node_createStoryService;
 	var node_storyUtility;
 	var node_storyUIUtility;
+	var node_uiNodeViewFactory;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_mduleName = "userApps";
@@ -100,6 +101,17 @@ var node_createModuleUI = function(parm){
 					var story = loc_design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
 					var pageTree = node_storyUIUtility.buildPageTree(story);
 					loc_componentData.page = pageTree;
+
+					var pageChildrenNode = [];
+					_.each(pageTree.getChildrenInfo(), function(childInfo, i){
+						pageChildrenNode.push(childInfo.childNode);
+					});
+					
+					return node_uiNodeViewFactory.getCreateUINodeViewRequest(pageChildrenNode, pageTree.getStoryNodeId(), undefined, {
+						success : function(request, uiNodeViewGroup){
+							uiNodeViewGroup.appendTo($("#uiDiv"));
+						}
+					});
 				}
 			}));
 			
@@ -134,6 +146,7 @@ nosliw.registerSetNodeDataEvent("application.story.module.ui.createUINode", func
 nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryService", function(){node_createStoryService = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUIUtility", function(){node_storyUIUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uinode.uiNodeViewFactory", function(){node_uiNodeViewFactory = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleUI", node_createModuleUI); 

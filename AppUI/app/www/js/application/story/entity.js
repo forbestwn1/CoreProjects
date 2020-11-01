@@ -51,15 +51,10 @@ var node_createUINodeFromStoryNode = function(nodeId, story){
 //			return nodeEntity.tag;
 //		},
 			
-		addChildInfo : function(childInfo){
-			this.prv_childrenInfo.push(childInfo);
-		},
-		
+		addChildInfo : function(childInfo){		this.prv_childrenInfo.push(childInfo);	},
 		getChildrenInfo : function(){   return this.prv_childrenInfo;    },
 		
-		getBody : function(){
-			return loc_out;
-		}
+		getBody : function(){	return loc_out;	}
 	
 	};
 	return loc_out;
@@ -96,7 +91,7 @@ var node_createUINodeByTag = function(tagId){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("application.instance.story.utility", function(){node_storyUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUINodeFromStoryNode", node_createUINodeFromStoryNode); 
