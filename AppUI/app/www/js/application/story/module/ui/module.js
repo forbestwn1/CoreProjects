@@ -71,14 +71,14 @@ var node_createModuleUI = function(parm){
 			template :
 				`
 				    <div class="block">
-				    	<div>
+<!--				    	<div>
 							<story-uinode
 								v-if="isPageAvailable"
 								v-bind:data="page"
 						  		v-on:showUIView="showUIView"
 							></story-uinode>
 						</div>
-
+-->
 					    <div>
 					    	
 					    </div>

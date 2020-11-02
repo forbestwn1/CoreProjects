@@ -43,15 +43,7 @@ var node_uiNodeViewFactory = function(){
 			
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUINodeViewRequest", {}), handlers, requestInfo);
 			_.each(uiNodeGroupView.getChildren(), function(uiNodeView, i){
-				var uiNodeType = uiNodeView.getUINodeType();
-				if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA){
-					//for tag related ui node
-					out.addRequest(loc_processUITagViewRequest(uiNodeView, parentContext));
-				}
-				else if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_HTML){
-					//for html related ui node
-					out.addRequest(loc_processUIHtmlRequest(uiNodeView, parentContext));
-				}
+				out.addRequest(loc_processUINodeViewRequest(uiNodeView, parentContext));
 			});
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
@@ -64,8 +56,20 @@ var node_uiNodeViewFactory = function(){
 	
 	return loc_out;
 }();	
-	
-var loc_processUIHtmlRequest = function(uiHtmlNodeView, parentContext, handlers, requestInfo){
+
+var loc_processUINodeViewRequest = function(uiNodeView, parentContext, handlers, requestInfo){
+	var uiNodeType = uiNodeView.getUINodeType();
+	if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_HTML){
+		//for html related ui node
+		return loc_processUIHtmlViewRequest(uiNodeView, parentContext, handlers, requestInfo);
+	}
+	else if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA){
+		//for tag related ui node
+		return loc_processUITagViewRequest(uiNodeView, parentContext, handlers, requestInfo);
+	}
+};
+
+var loc_processUIHtmlViewRequest = function(uiHtmlNodeView, parentContext, handlers, requestInfo){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIHtmlNode", {}), handlers, requestInfo);
 
 	var id = uiHtmlNodeView.getId();
@@ -74,7 +78,7 @@ var loc_processUIHtmlRequest = function(uiHtmlNodeView, parentContext, handlers,
 	var tagViewsByChild = uiHtmlNodeView.getTagViewsByChild();
 	_.each(tagViewsByChild, function(tagViews, childId){
 		_.each(tagViews, function(tagView, i){
-			createChildrenTagRequest.addRequest(childId, loc_processUITagViewRequest(tagView, parentContext));
+			createChildrenTagRequest.addRequest(childId, loc_processUINodeViewRequest(tagView, parentContext));
 		});
 	});
 	out.addRequest(createChildrenTagRequest);
@@ -85,7 +89,7 @@ var loc_processUIHtmlRequest = function(uiHtmlNodeView, parentContext, handlers,
 var loc_processUITagViewRequest = function(uiNodeTagView, parentContext, handlers, requestInfo){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUITagNode", {}), handlers, requestInfo);
 	var uiNode = uiNodeTagView.getUINode();
-	var tagId = uiNode.getTagId();
+	var tagId = uiNodeTagView.getTagId();
 	out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
 		success : function(requestInfo, resources){
 			var uiTagResourceObj = resources[tagId];

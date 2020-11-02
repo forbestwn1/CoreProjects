@@ -24,33 +24,25 @@ var node_ChildUINodeInfo = function(childNode, connectionId, childId){
 };
 
 
-var node_createUINodeFromStoryNode = function(nodeId, story){
+var node_createUINodeFromStoryNode = function(storyNodeId, story){
 	
 	var loc_out = {
 		prv_story : story,
-		prv_nodeId : nodeId,
+		prv_storyNodeId : storyNodeId,
 		prv_childrenInfo : [],
 		prv_storyNode : undefined,
+
+		getId : function(){   return this.prv_storyNodeId;   },
+		getNodeType : function(){	return this.getStoryNode()[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE];	},
 			
-		getStoryNodeId : function(){   return this.prv_nodeId;   },
-			
+		getStoryNodeId : function(){   return this.prv_storyNodeId;   },
 		getStoryNode : function(){
 			if(this.prv_storyNode==undefined){
-				this.prv_storyNode = node_storyUtility.getNodeById(this.prv_story, this.prv_nodeId);  
+				this.prv_storyNode = node_storyUtility.getNodeById(this.prv_story, this.prv_storyNodeId);  
 			}
 			return this.prv_storyNode;
 		},	
 		
-		getNodeType : function(){
-			return this.getStoryNode()[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE];
-		},
-			
-//		getTagId : function(){
-//			var storyNode = loc_getStoryNode();
-//			var nodeEntity = storyNode[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENTITY];
-//			return nodeEntity.tag;
-//		},
-			
 		addChildInfo : function(childInfo){		this.prv_childrenInfo.push(childInfo);	},
 		getChildrenInfo : function(){   return this.prv_childrenInfo;    },
 		
@@ -68,7 +60,7 @@ var node_createUINodeByTag = function(tagId){
 	var loc_out = {
 		
 		getNodeType : function(){  return node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA;	},
-			
+		
 		getTagId : function(){  return loc_tagId; },
 			
 		addChild : function(uiNode, index){
