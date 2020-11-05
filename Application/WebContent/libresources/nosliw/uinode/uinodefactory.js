@@ -75,11 +75,9 @@ var loc_processUIHtmlViewRequest = function(uiHtmlNodeView, parentContext, handl
 	var id = uiHtmlNodeView.getId();
 	//create children tag view
 	var createChildrenTagRequest = node_createServiceRequestInfoSequence(undefined);
-	var tagViewsByChild = uiHtmlNodeView.getTagViewsByChild();
-	_.each(tagViewsByChild, function(tagViews, childId){
-		_.each(tagViews, function(tagView, i){
-			createChildrenTagRequest.addRequest(loc_processUINodeViewRequest(tagView, parentContext));
-		});
+	var childrenViews = uiHtmlNodeView.getChildrenView();
+	_.each(childrenViews, function(childView, id){
+		createChildrenTagRequest.addRequest(loc_processUINodeViewRequest(childView, parentContext));
 	});
 	out.addRequest(createChildrenTagRequest);
 	

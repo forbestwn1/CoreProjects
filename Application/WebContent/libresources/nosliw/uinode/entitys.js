@@ -72,33 +72,79 @@ var node_createUINodeHtmlView = function(uiNode, id, parentContext){
 	var loc_uiNode = uiNode;
 	
 	var loc_html;
-	var loc_tagByChild = {};
-	
+
+	var loc_childrenViewById = {};
+
 	var loc_viewContainer = loc_createViewContainer(loc_id);
 	
 	var loc_view;
 	
 	var loc_init = function(){
 		var htmlStoryNode = loc_uiNode.getStoryNode();
-		
+
+		//organize child by childId
+		var childrenInfoByChildId = {};
+		var childrenNodeInfo = loc_uiNode.getChildrenInfo();
+		_.each(childrenNodeInfo, function(childNodeInfo, i){
+			var childId = childNodeInfo.childId;
+			var childrenInfo = childrenInfoByChildId[childId];
+			if(childrenInfo==undefined){
+				childrenInfo = [];
+				childrenInfoByChildId[childId] = childrenInfo;
+			}
+			childrenInfo.push(childNodeInfo);
+		});
+
 		//parse html
 		var html = htmlStoryNode[node_COMMONATRIBUTECONSTANT.STORYNODEUIHTML_HTML];
 		var startIndex = html.indexOf("{{");
 		while(startIndex!=-1){
 			var endIndex = html.indexOf("}}");
 			var childId = html.substring(startIndex+2, endIndex);
-			var placeHolder = "<nosliw_start id='start_"+loc_getPlaceHolderElementId(childId)+"'></nosliw_start>"+"<nosliw_end id='"+loc_getPlaceHolderElementId(childId)+"'></nosliw_end>";
-			html = html.substring(0, startIndex) + placeHolder + html.substring(endIndex+2);
-			loc_tagByChild[childId] = [];
+			var replace = "";
+			
+			var childrenInfo = childrenInfoByChildId[childId];
+			_.each(childrenInfo, function(childInfo, index){
+				var childElementId = loc_getChildElementId(childInfo, index);
+				var uiNode = childInfo.childNode;
+				var uiNodeType = uiNode.getNodeType();
+				if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA){
+					replace = replace + "<nosliw_start id='start_"+childElementId+"'></nosliw_start>"+"<nosliw_end id='"+childElementId+"'></nosliw_end>";
+					loc_childrenViewById[childElementId] = node_createUINodeView(uiNode, childElementId, loc_parentContext);
+				}
+				else if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_HTML){
+					//merge html with parent html
+					var childHtmlNodeView = node_createUINodeHtmlView(uiNode, childElementId, parentContext);
+					replace = replace + childHtmlNodeView.getHtml();
+					_.each(childHtmlNodeView.getChildrenView(), function(childView, id){
+						loc_childrenViewById[id] = childView;
+					});
+				}
+			});
+			
+			html = html.substring(0, startIndex) + replace + html.substring(endIndex+2);
+
 			startIndex = html.indexOf("{{");
 		}
 		loc_html = html;
 		
-		//process children
-		var childrenNodeInfo = loc_uiNode.getChildrenInfo();
-		_.each(childrenNodeInfo, function(childNodeInfo, i){
-			loc_tagByChild[childNodeInfo.childId].push(node_createUINodeView(childNodeInfo.childNode, loc_id+"_"+i, loc_parentContext));
-		});
+	};
+	
+	var loc_getChildElementId = function(childInfo, index){
+		var id = "child_"+childInfo.childNode.getId()+"_"+childInfo.childId+"_"+index;
+		return id;
+	};
+
+	var loc_prepareChildrenView = function(){
+		if(loc_childrenProcessed==false){
+			loc_view = $(loc_html);
+			_.each(loc_childrenViewById, function(tagView, viewId){
+				var childEle = loc_view.find("#start_"+$.escapeSelector(viewId));
+				tagView.insertAfter(childEle);
+			});
+			loc_viewContainer.append(loc_view);
+			loc_childrenProcessed = true;
+		}
 	};
 	
 	var loc_getPlaceHolderElementId = function(childId){
@@ -108,27 +154,15 @@ var node_createUINodeHtmlView = function(uiNode, id, parentContext){
 	
 	var loc_childrenProcessed = false;
 	
-	var loc_prepareChildrenView = function(){
-		if(loc_childrenProcessed==false){
-			loc_view = $(loc_html);
-			_.each(loc_tagByChild, function(tagViews, childId){
-				_.each(tagViews, function(tagView, i){
-					var childEle = loc_view.find("#start_"+$.escapeSelector(loc_getPlaceHolderElementId(childId)));
-					tagView.insertAfter(childEle);
-				});
-			});
-			loc_viewContainer.append(loc_view);
-			loc_childrenProcessed = true;
-		}
-	};
-
 	var loc_out = {
 		getId : function(){   return loc_id;     },
 		getUINodeType : function(){   return loc_uiNode.getNodeType();    }, 	
 			
 		getUINode : function(){   return loc_uiNode;  },
 		
-		getTagViewsByChild : function(){	return loc_tagByChild;	},
+		getHtml : function(){    return loc_html;    },
+		
+		getChildrenView : function(){	return loc_childrenViewById;	},
 		
 		getStartElement : function(){  return loc_viewContainer.getStartElement();   },
 		getEndElement : function(){  return loc_viewContainer.getEndElement();   },
