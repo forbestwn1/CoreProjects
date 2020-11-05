@@ -79,7 +79,7 @@ var node_createModuleOverview = function(parm){
 		
 		var childrenInfo = node_storyUtility.getAllChildNodesInfo(node, story);
 		_.each(childrenInfo, function(childInfo, i){
-			loc_buildUIDataConnectionLink(childInfo.node, node, uiDataConnectionLinks);
+			loc_buildUIDataConnectionLink(childInfo.childNode, node, uiDataConnectionLinks);
 		});
 	};
 	

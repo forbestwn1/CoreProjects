@@ -45,7 +45,7 @@ var node_utility = function(){
 			module.addStoryNodeElement(out);
 			var childStoryNodesInfo = node_storyUtility.getAllChildNodesInfo(storyNodeId, story);
 			_.each(childStoryNodesInfo, function(childStroyNodeInfo, i){
-				var childNode = loc_processStoryNode(childStroyNodeInfo.node, overViewTree, processed, module);
+				var childNode = loc_processStoryNode(childStroyNodeInfo.childNode, overViewTree, processed, module);
 				if(childNode==undefined){
 					var childStoryNodeId = childStroyNodeInfo.node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
 					childNode = overViewTree[childStoryNodeId];
