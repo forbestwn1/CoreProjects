@@ -244,7 +244,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 					parmBranchInfos.add(parmBranchInfo);
 				}
-				
+
 				//output
 				HAPAliasElement serviceOutputNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceOutput()).getAlias();
 				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceOutputNodeName, HAPConstant.SERVICE_CHILD_RESULT));
@@ -298,7 +298,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 						uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(eleRef));
 					}
 				}
-				
+
 				for(HAPOutputBranchInfo parmBranchInfo : outputBranchInfos) {
 					//ui
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
@@ -310,7 +310,6 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 						uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(eleRef));
 					}
 				}
-				
 				uiLayerChangeRequest.close();
 			}
 			

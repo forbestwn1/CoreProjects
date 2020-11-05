@@ -39,8 +39,8 @@ var node_utility = function(){
 			return loc_buildUINodeFromStoryNode(storyNode, story);
 		},
 		
-		buildUINodeFromUITag : function(uiTag){
-			return node_createUINodeByTag(uiTag);
+		buildUINodeFromUITag : function(uiTag, nodeId){
+			return node_createUINodeByTag(uiTag, nodeId);
 		},
 			
 	};		

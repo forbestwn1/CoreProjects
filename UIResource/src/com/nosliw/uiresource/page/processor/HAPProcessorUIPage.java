@@ -73,6 +73,8 @@ public class HAPProcessorUIPage {
 
 //		HAPProcessorUIServiceEscalate.process(out, uiTagMan);
 		
+		HAPProcessorStyle.process(out);
+		
 		return out;
 	}
 

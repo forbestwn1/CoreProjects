@@ -40,6 +40,8 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 	//for resource, they are the attribute of body
 	private Map<String, String> m_attributes;
 	
+	private HAPDefinitionStyle m_style;
+	
 	//all the expressions within content under this domain
 	private Set<HAPDefinitionUIEmbededScriptExpressionInContent> m_scriptExpressionsInContent;
 	//all the attribute expressions in regular tag under this domain 
@@ -84,6 +86,8 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_eventsDefinition;    }
 	public Map<String, HAPDefinitionUICommand> getCommandDefinition() {   return this.m_commandsDefinition;  }
 //	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
+	public HAPDefinitionStyle getStyle() {    return this.m_style;    }
+	public void setStyle(HAPDefinitionStyle style) {   this.m_style = style;   }
 	
 	public void setParent(HAPDefinitionUIUnit parent) {	this.m_parent = parent;	}
 	public void setJSBlock(HAPJsonTypeScript jsBlock){this.m_script = jsBlock;}

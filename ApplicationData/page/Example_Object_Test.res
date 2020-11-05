@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <body>
+		<nosliw-style>
+			body {
+			  background-color: linen;
+			}
+		</nosliw-style>
+
 <!--		<nosliw-varviewer/>  -->
 
 		<br>

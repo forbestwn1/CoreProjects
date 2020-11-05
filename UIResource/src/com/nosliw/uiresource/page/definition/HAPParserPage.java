@@ -162,13 +162,18 @@ public class HAPParserPage {
 	 * 		  false : this element should not be removed after processiong
 	 */
 	private boolean parseTag(Element ele, HAPDefinitionUIUnit parentUnit){
-		String customTag = HAPUtilityUIResourceParser.isCustomTag(ele);
-		if(customTag!=null){
+		String customTagName = HAPUtilityUIResourceParser.isCustomTag(ele);
+		if(customTagName!=null){
 			//process custome tag
-			String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
-			HAPDefinitionUITag uiTag = new HAPDefinitionUITag(customTag, uiId);
-			parseUIDefinitionUnit(uiTag, ele, parentUnit);
-			parentUnit.addUITag(uiTag);
+			String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele);
+			if(customTagName.equals("style")) {
+				parseStyle(ele, uiId, parentUnit);
+			}
+			else {
+				HAPDefinitionUITag uiTag = new HAPDefinitionUITag(customTagName, uiId);
+				parseUIDefinitionUnit(uiTag, ele, parentUnit);
+				parentUnit.addUITag(uiTag);
+			}
 			return false;
 		}
 		else{
@@ -184,6 +189,18 @@ public class HAPParserPage {
 		}
 	}
 
+	//parse style 
+	private void parseStyle(Element ele, String uiId, HAPDefinitionUIUnit parentUnit) {
+		HAPDefinitionStyle style = new HAPDefinitionStyle(uiId);
+		List<TextNode> textNodes = ele.textNodes();
+		for(TextNode textNode : textNodes){
+			String text = textNode.text();
+			style.setDefinition(text);
+			break;
+		}
+		ele.remove();
+		parentUnit.setStyle(style);
+	}
 	
 	private void parseUnitEventBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EVENT);

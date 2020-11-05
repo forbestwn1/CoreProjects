@@ -52,13 +52,14 @@ var node_createUINodeFromStoryNode = function(storyNodeId, story){
 	return loc_out;
 };
 	
-var node_createUINodeByTag = function(tagId){
-	
+var node_createUINodeByTag = function(tagId, nodeId){
+	var loc_nodeId = nodeId;
 	var loc_tagId = tagId;
 	var loc_children = [];
 	
 	var loc_out = {
 		
+		getId : function(){   return loc_nodeId;   },
 		getNodeType : function(){  return node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA;	},
 		
 		getTagId : function(){  return loc_tagId; },

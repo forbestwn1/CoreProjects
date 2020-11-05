@@ -49,7 +49,6 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	public static final String SCRIPT = "script";
 	@HAPAttribute
 	public static final String HTML = "html";
-
 	
 	@HAPAttribute
 	public static final String ELEMENTEVENTS = "elementEvents";
@@ -109,14 +108,14 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	private HAPJsonTypeScript m_script;
 	
 	private String m_html;
-
+	
 	public HAPExecutableUIBody(HAPDefinitionUIUnit uiUnitDefinition, HAPExecutableUIUnit uiUnit) {
 		this.m_elementEvents = uiUnitDefinition.getNormalTagEvents();
 		this.m_tagEvents = uiUnitDefinition.getCustomTagEvents();
 		this.m_script = uiUnitDefinition.getScriptBlock();
 		
 		this.m_html = StringEscapeUtils.escapeHtml(uiUnitDefinition.getContent()).replaceAll("(\\r|\\n)", "");
-
+		
 		this.m_scriptExpressionsInContent = new HashSet<HAPUIEmbededScriptExpressionInContent>();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();

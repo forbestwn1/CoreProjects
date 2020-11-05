@@ -169,8 +169,9 @@ var node_createUINodeTagView = function(uiNode, id, parentContext){
 		getUINode : function(){   return loc_uiNode;  },
 		
 		getTagId : function(){
-			var out = loc_uiNode.getTagId(); 
-			if(out!=undefined){
+			var out;
+			if(loc_uiNode.getTagId!=undefined)  out = loc_uiNode.getTagId(); 
+			else{
 				var uiTagStoryNode = loc_uiNode.getStoryNode();
 				out = uiTagStoryNode[node_COMMONATRIBUTECONSTANT.STORYNODEUITAG_TAGNAME];
 			}
