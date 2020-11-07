@@ -173,6 +173,9 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 	//temporary object for ui resource view container
 	var	loc_fragmentDocument = undefined;
 	var loc_parentView = undefined;
+
+	var loc_viewContainer = node_createViewContainer(loc_id);
+	
 	
 	//the ui resource view created 
 	var loc_out = undefined;

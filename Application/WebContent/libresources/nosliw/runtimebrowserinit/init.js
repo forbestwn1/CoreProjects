@@ -22,6 +22,7 @@ nosliw.init = function(configure){
 		"nosliw.runtime",
 		"nosliw.runtimebrowser",
 		"nosliw.uiexpression",
+		"nosliw.uicommon",
 		"nosliw.uitag",
 		"nosliw.uinode",
 		"nosliw.uipage",
