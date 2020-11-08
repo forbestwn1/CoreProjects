@@ -30,6 +30,8 @@ var packageObj = library;
 	var node_contextUtility;
 	var node_IOTaskResult;
 	var node_createDynamicIOData;
+	var node_createViewContainer;
+	var node_UICommonUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_uiResourceViewFactory = function(){
@@ -166,16 +168,8 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 	//all the attributes on this ui resource
 	var loc_attributes = {};
 	
-	//ui resource view wraper element
-	var loc_startEle = undefined;
-	var loc_endEle = undefined;
-
-	//temporary object for ui resource view container
-	var	loc_fragmentDocument = undefined;
-	var loc_parentView = undefined;
-
+	//view container
 	var loc_viewContainer = node_createViewContainer(loc_id);
-	
 	
 	//the ui resource view created 
 	var loc_out = undefined;
@@ -244,8 +238,7 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 	/*
 	 * find matched elements according to selection
 	 */
-	var loc_findLocalElement = function(select){return loc_startEle.nextUntil(loc_endEle.next()).find(select).addBack(select);};
-	
+	var loc_findLocalElement = function(select){return loc_viewContainer.findElement(select);};
 	
 	/*
 	 * update everything again
@@ -253,11 +246,6 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 	var loc_refresh = function(){
 		loc_setContext(loc_context);
 	};
-
-	/*
-	 * get all views for this resource view
-	 */
-	var loc_getViews = function(){	return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle);  };
 
 	//io between module context and page context
 	var loc_viewIO = node_createDynamicIOData(
@@ -291,25 +279,7 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 			loc_context = node_contextUtility.buildContext("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
 		}
 
-		//wrap html by start and end element
-		var resourceStartId = "-resource-start";
-		var resourceEndId = "-resource-end";
-		var html = node_uiResourceUtility.createPlaceHolderWithId(resourceStartId) + _.unescape(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HTML]) + node_uiResourceUtility.createPlaceHolderWithId(resourceEndId);
-		
-		//update all uiid within html by adding space name to uiid
-		html = node_uiResourceUtility.updateHtmlUIId(html, loc_idNameSpace);
-		
-		//render html to temporary document fragment
-		loc_fragmentDocument = $(document.createDocumentFragment());
-		loc_parentView = $("<div></div>");
-		loc_fragmentDocument.append(loc_parentView);
-		var views = $($.parseHTML(html));
-		loc_parentView.append(views);
-		
-		//get wraper dom element (start and end element)
-		loc_startEle = loc_parentView.find("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceStartId)+"']");
-		loc_endEle = loc_parentView.find("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceEndId)+"']");
-		
+		loc_viewContainer = node_createViewContainer(loc_idNameSpace, node_uiResourceUtility.updateHtmlUIId(_.unescape(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HTML]), loc_idNameSpace));
 
 		//init expression content
 		_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPTEXPRESSIONSINCONTENT], function(expressionContent, key, list){
@@ -358,21 +328,13 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 		
 		loc_tagEvents = undefined;
 
-		loc_startEle = undefined;
-		loc_endEle = undefined;
-		
 		loc_parentResourveView = undefined;
 		loc_resource = undefined;
 		loc_idNameSpace = undefined;
 		
-		loc_fragmentDocument = undefined;
-		loc_parentView = undefined;
-
 		loc_context = undefined;
 	};
 
-	
-	
 	loc_out = {
 		ovr_getResourceLifecycleObject : function(){	return loc_resourceLifecycleObj;	},
 		
@@ -491,20 +453,19 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 		getUpdateContextRequest : function(values, handlers, requestInfo){	return loc_context.getUpdateContextRequest(values, handlers, requestInfo);		},
 		getContextElements : function(){  return this.getContext().prv_elements; },
 
-		getStartElement : function(){  return loc_startEle;   },
-		getEndElement : function(){  return loc_endEle; },
+		getStartElement : function(){  return loc_viewContainer.getStartElement();   },
+		getEndElement : function(){  return loc_viewContainer.getEndElement(); },
 		
 		//get all elements of this ui resourve view
-		getViews : function(){	return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle).get();	},
+		getViews : function(){	return loc_viewContainer.getViews();	},
 
 		//append this views to some element as child
-		appendTo : function(ele){  loc_getViews().appendTo(ele);   },
+		appendTo : function(ele){  loc_viewContainer.appendTo(ele);   },
 		//insert this resource view after some element
-		insertAfter : function(ele){	loc_getViews().insertAfter(ele);		},
+		insertAfter : function(ele){	loc_viewContainer.insertAfter(ele);		},
 
 		//remove all elements from outsiders parents and put them back under parentView
-		detachViews : function(){	loc_parentView.append(loc_getViews());		},
-
+		detachViews : function(){	 loc_viewContainer.detachViews();		},
 		
 		//return dom element
 		getElementByUIId : function(uiId){return this.prv_getLocalElementByUIId(uiId)[0];},
@@ -579,10 +540,8 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 		
 		command : function(command, data, requestInfo){			return this.prv_callScriptFunctionDown("command_"+command, data, requestInfo);		},
 		findFunctionDown : function(funName){  return this.prv_findFunctionDown(funName);  },
-		
 	};
 
-	
 	//append resource and object life cycle method to out obj
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIVIEW);
@@ -622,6 +581,8 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", functi
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
+nosliw.registerSetNodeDataEvent("uicommon.createViewContainer", function(){node_createViewContainer = this.getData();});
+nosliw.registerSetNodeDataEvent("uicommon.utility", function(){node_UICommonUtility = this.getData();});
 
 
 //Register Node by Name

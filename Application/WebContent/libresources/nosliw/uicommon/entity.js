@@ -61,6 +61,11 @@ var node_createViewContainer = function(id, html){
 		},
 
 		append : function(views){  views.insertBefore(this.getEndElement());   },
+		
+		findElement : function(select){    
+			loc_prepareView();
+			return loc_startEle.nextUntil(loc_endEle.next()).find(select).addBack(select);   
+		},
 	};
 	
 	return loc_out;
