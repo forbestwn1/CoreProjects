@@ -8,6 +8,13 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = {
+		createWrapperWithId : function(id, html){
+			return "<nosliw_wrapper nosliwid=\"" + id + "\">"+ html +"</nosliw_wrapper>";
+		},
+		findWrapperView : function(parentView, id){
+			return parentView.find("nosliw_wrapper"+"["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+$.escapeSelector(id)+"']");
+		},
+
 		
 		/*
 		 * create place holder html with special ui id 

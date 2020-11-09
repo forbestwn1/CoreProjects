@@ -15,7 +15,8 @@ var node_createViewContainer = function(id, html){
 	//render html to temporary document fragment
 	var loc_fragmentDocument;
 	var loc_parentView;
-
+	
+	var loc_wrapperView;
 	var loc_startEle;
 	var loc_endEle;
 
@@ -24,9 +25,10 @@ var node_createViewContainer = function(id, html){
 	var loc_prepareView = function(){
 		if(loc_viewReady==false){
 			loc_fragmentDocument = $(document.createDocumentFragment());
-			loc_parentView = $("<div>" + node_UICommonUtility.createStartPlaceHolderWithId(loc_id) + (loc_html==undefined?"":loc_html) + node_UICommonUtility.createEndPlaceHolderWithId(loc_id) + "</div>");
+			loc_parentView = $("<div>" + node_UICommonUtility.createWrapperWithId(loc_id, node_UICommonUtility.createStartPlaceHolderWithId(loc_id) + (loc_html==undefined?"":loc_html) + node_UICommonUtility.createEndPlaceHolderWithId(loc_id)) + "</div>");
 			loc_fragmentDocument.append(loc_parentView);
 			
+			loc_wrapperView = node_UICommonUtility.findWrapperView(loc_parentView, loc_id); 
 			loc_startEle = node_UICommonUtility.findStartPlaceHolderView(loc_parentView, loc_id); 
 			loc_endEle = node_UICommonUtility.findEndPlaceHolderView(loc_parentView, loc_id); 
 			
@@ -38,7 +40,8 @@ var node_createViewContainer = function(id, html){
 
 		getViews : function(){	
 			loc_prepareView();
-			return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle); 
+//			return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle); 
+			return loc_wrapperView; 
 		},
 		
 		getStartElement : function(){  
@@ -51,7 +54,9 @@ var node_createViewContainer = function(id, html){
 		},
 		
 		//append this views to some element as child
-		appendTo : function(ele){  this.getViews().appendTo(ele);   },
+		appendTo : function(ele){  
+			this.getViews().appendTo(ele);   
+		},
 		//insert this resource view after some element
 		insertAfter : function(ele){	this.getViews().insertAfter(ele);		},
 
