@@ -8,9 +8,10 @@ var packageObj = library;
 	var node_UICommonUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createViewContainer = function(id, html){
+var node_createViewContainer = function(id, attrs, html){
 	var loc_id = id;
 	var loc_html = html;
+	var loc_attrs = attrs;
 	
 	//render html to temporary document fragment
 	var loc_fragmentDocument;
@@ -25,10 +26,13 @@ var node_createViewContainer = function(id, html){
 	var loc_prepareView = function(){
 		if(loc_viewReady==false){
 			loc_fragmentDocument = $(document.createDocumentFragment());
-			loc_parentView = $("<div>" + node_UICommonUtility.createWrapperWithId(loc_id, node_UICommonUtility.createStartPlaceHolderWithId(loc_id) + (loc_html==undefined?"":loc_html) + node_UICommonUtility.createEndPlaceHolderWithId(loc_id)) + "</div>");
+			
+			if(loc_attrs==undefined)  loc_attrs = {};
+			loc_attrs[node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID] = loc_id;
+			loc_parentView = $("<div>" + node_UICommonUtility.createPlaceHolderHtml("nosliw_wrapper", loc_attrs, node_UICommonUtility.createStartPlaceHolderWithId(loc_id) + (loc_html==undefined?"":loc_html) + node_UICommonUtility.createEndPlaceHolderWithId(loc_id)) + "</div>");
 			loc_fragmentDocument.append(loc_parentView);
 			
-			loc_wrapperView = node_UICommonUtility.findWrapperView(loc_parentView, loc_id); 
+			loc_wrapperView = loc_parentView.find("nosliw_wrapper"+"["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+$.escapeSelector(loc_id)+"']"); 
 			loc_startEle = node_UICommonUtility.findStartPlaceHolderView(loc_parentView, loc_id); 
 			loc_endEle = node_UICommonUtility.findEndPlaceHolderView(loc_parentView, loc_id); 
 			
@@ -71,41 +75,6 @@ var node_createViewContainer = function(id, html){
 			loc_prepareView();
 			return loc_startEle.nextUntil(loc_endEle.next()).find(select).addBack(select);   
 		},
-	};
-	
-	return loc_out;
-};
-
-var node_createViewContainer1 = function(id){
-	var loc_id = id;
-	
-	//render html to temporary document fragment
-	var loc_fragmentDocument = $(document.createDocumentFragment());
-	var loc_parentView = $("<div></div>");
-	loc_fragmentDocument.append(loc_parentView);
-
-	var loc_startEle = $("<nosliw_start id='"+loc_id+"'>"+"</nosliw_start>");
-	var loc_endEle = $("<nosliw_end id='"+loc_id+"'>"+"</nosliw_end>");
-
-	loc_parentView.append(loc_startEle);
-	loc_parentView.append(loc_endEle);
-	
-	var loc_out = {
-
-		getViews : function(){	return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle); },
-		
-		getStartElement : function(){  return loc_startEle;   },
-		getEndElement : function(){    return loc_endEle;    },
-		
-		//append this views to some element as child
-		appendTo : function(ele){  this.getViews().appendTo(ele);   },
-		//insert this resource view after some element
-		insertAfter : function(ele){	this.getViews().insertAfter(ele);		},
-
-		//remove all elements from outsiders parents and put them back under parentView
-		detachViews : function(){	loc_parentView.append(this.getViews());		},
-
-		append : function(views){  views.insertBefore(this.getEndElement());   },
 	};
 	
 	return loc_out;

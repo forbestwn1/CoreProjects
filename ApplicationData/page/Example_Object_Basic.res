@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html>
 <body>
+		<nosliw-style>
+			.red1 {
+			  color: red;
+			}
+			.intag {
+			  color: red;
+			}
+			
+		</nosliw-style>
+
+		<span class="red1">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
 
 		<nosliw-include source="Example_Include_simple" context="" event="changeInputTextIncludeBasic=changeInputTextIncludeBasicMapped"/> 
 
@@ -27,6 +38,14 @@
 
 		
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
+
+		<nosliw-style>
+			.intag {
+			  color: blue;
+			}
+		</nosliw-style>
+
+		<span class="intag">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</span>
 
 <!--				<nosliw-include source="Example_Object_Basic_Include" context="element=ele" />   -->
 		

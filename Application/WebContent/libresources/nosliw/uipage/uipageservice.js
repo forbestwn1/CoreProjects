@@ -24,6 +24,10 @@ var node_createUIPageService = function(){
 	
 	var loc_getResourceViewId = function(){	return nosliw.generateId();	};
 	
+	var loc_getStyleScript = function(uiResource){
+		return _.unescape(uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_STYLE][node_COMMONATRIBUTECONSTANT.EXECUTABLESTYLE_DEFINITION]);
+	};
+	
 	var loc_out = {
 
 			getCreateUIPageRequest : function(pageId, context, handlers, requester_parent){
@@ -36,7 +40,7 @@ var node_createUIPageService = function(){
 						var uiResource = uiResources[pageId];
 						return loc_uiResourceViewFactory.getCreateUIViewRequest(uiResource, loc_getResourceViewId(), undefined, context, {
 							success : function(requestInfo, uiView){
-								return node_createUIPage(uiView);
+								return node_createUIPage(uiView, loc_getStyleScript(uiResource));
 							}
 						});
 					}
@@ -54,7 +58,7 @@ var node_createUIPageService = function(){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo);
 				out.addRequest(loc_uiResourceViewFactory.getCreateUIViewRequest(uiResource, loc_getResourceViewId(), undefined, context, {
 					success : function(requestInfo, uiView){
-						return node_createUIPage(uiView);
+						return node_createUIPage(uiView, loc_getStyleScript(uiResource));
 					}
 				}));
 				return out;

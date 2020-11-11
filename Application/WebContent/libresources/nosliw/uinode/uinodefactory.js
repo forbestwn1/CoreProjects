@@ -90,10 +90,10 @@ var loc_processUITagViewRequest = function(uiNodeTagView, parentContext, handler
 	var tagId = uiNodeTagView.getTagId();
 	out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
 		success : function(requestInfo, resources){
-			var uiTagResourceObj = resources[tagId];
+			var uiTagDefResourceObj = resources[tagId];
 
 			var uiTag = node_createUITag(
-					uiTagResourceObj, 
+					uiTagDefResourceObj, 
 					uiNodeTagView.getId(), 
 					uiNode.attributes, 
 					parentContext,

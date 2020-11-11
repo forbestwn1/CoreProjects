@@ -132,7 +132,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		
 		//build tag trees according to definition
 		for(HAPDefinitionUITag tag : uiUnitDefinition.getUITags()) {
-			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag, uiUnitDefinition.getId());
+			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag, tag.getId());
 			this.m_uiTags.put(tag.getId(), exeTag);
 			exeTag.setParent(uiUnit);
 		}

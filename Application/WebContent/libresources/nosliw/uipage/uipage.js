@@ -13,13 +13,17 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_contextUtility;
 	var node_basicUtility;
+	var node_UICommonUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //a page consist of layers of view, at the bottom is core view, on top of core view are decoration layer
 //now, data and event in core view and decoration layer contribute are treated equally
-var node_createUIPage = function(uiView){
+var node_createUIPage = function(uiView, style){
+	var loc_style = style;
 	
 	var loc_layers = [];
+	
+	var loc_id;
 	
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
@@ -39,7 +43,8 @@ var node_createUIPage = function(uiView){
 	};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiView){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiView, style){
+		loc_id = uiView.getId();
 		loc_addLayer(uiView);
 	};	
 	
@@ -74,11 +79,27 @@ var node_createUIPage = function(uiView){
 		return loc_layers[loc_layers.length-1];	
 	};
 	
+	var loc_attachStyle = function(){
+		_.each(loc_layers, function(layer, i){
+			if(i==0)  node_UICommonUtility.attachStyle(loc_style, loc_id);
+			else   layer.attachStyle();
+		});
+	};
+	
+	var loc_detachStyle = function(){
+		_.each(loc_layers, function(layer, i){
+			if(i==0)  node_UICommonUtility.detachStyle(loc_style, loc_id);
+			else   layer.detachStyle();
+		});
+	};
+	
 	var loc_out = {
 		//name is for debug purpose
 		prv_name : undefined,
 		getName : function(){   return loc_out.prv_name;   },
 		setName : function(name){  loc_out.prv_name = name;  },
+		
+		getId : function(){  return loc_id;  },
 		
 		addDecoration : function(decoration){
 			if(Array.isArray(decoration)){
@@ -90,16 +111,28 @@ var node_createUIPage = function(uiView){
 				loc_addLayer(decoration);
 			}
 		},	
-			
+
+//---------------  view
+		getStyle : function(){   return loc_style;   },
+		
 //---------------  view
 		getUIView :function(){ return loc_layers[0];  },  
 		
 		//append this views to some element as child
-		appendTo : function(ele){  loc_getCurrent().appendTo(ele);   },
+		appendTo : function(ele){  
+			loc_getCurrent().appendTo(ele);
+			loc_attachStyle();
+		},
 		//insert this resource view after some element
-		insertAfter : function(ele){	loc_getCurrent().insertAfter(ele);		},
+		insertAfter : function(ele){	
+			loc_getCurrent().insertAfter(ele);		
+			loc_attachStyle();
+		},
 		//remove all elements from outsiders parents and put them back under parentView
-		detachViews : function(){	loc_getCurrent().detachViews();		},
+		detachViews : function(){	
+			loc_getCurrent().detachViews();	
+			loc_detachStyle();
+		},
 
 //--------------- context value		
 		//update context value
@@ -147,7 +180,7 @@ var node_createUIPage = function(uiView){
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIRESOURCEVIEW);
 
-	node_getLifecycleInterface(loc_out).init(uiView);
+	node_getLifecycleInterface(loc_out).init(uiView, style);
 	
 	return loc_out;
 };
@@ -165,6 +198,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uicommon.utility", function(){node_UICommonUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIPage", node_createUIPage); 

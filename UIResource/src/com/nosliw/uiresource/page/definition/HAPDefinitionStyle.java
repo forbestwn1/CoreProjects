@@ -1,5 +1,7 @@
 package com.nosliw.uiresource.page.definition;
 
+import com.nosliw.common.utils.HAPBasicUtility;
+
 public class HAPDefinitionStyle {
 
 	private String m_id;
@@ -13,5 +15,8 @@ public class HAPDefinitionStyle {
 	
 	public String getDefinition() {   return this.m_definition;   }
 	public void setDefinition(String def) {    this.m_definition = def;     }
-	
+
+	public boolean isEmpty() {
+		return HAPBasicUtility.isStringEmpty(m_definition);
+	}
 }

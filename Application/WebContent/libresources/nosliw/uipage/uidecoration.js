@@ -15,13 +15,14 @@ var packageObj = library;
 	var node_createServiceRequestInfoSequence;
 	var node_contextUtility;
 	var node_getObjectType;
+	var node_UICommonUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIDecorationRequest = function(decorationId, configureValue, handlers, request){
 	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 	out.addRequest(nosliw.runtime.getUIPageService().getCreateUIPageRequest(decorationId, undefined, {
 		success :function(requestInfo, page){
-			var decoration = loc_createDecoration(page.getUIView());
+			var decoration = loc_createDecoration(page.getUIView(), page.getStyle());
 			if(configureValue==undefined)  return decoration; 
 			//update decoration with configure
 			return decoration.getUpdateContextRequest(configureValue, {
@@ -34,7 +35,6 @@ var node_createUIDecorationRequest = function(decorationId, configureValue, hand
 	return out;
 };
 
-
 var node_createUIDecorationsRequest = function(decorationIds, handlers, request){
 	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 	var decs = [];
@@ -43,7 +43,7 @@ var node_createUIDecorationsRequest = function(decorationIds, handlers, request)
 		_.each(decorationIds, function(decorationId, index){
 			decsRequest.addRequest(nosliw.runtime.getUIPageService().getCreateUIPageRequest(decorationId, undefined, {
 				success :function(requestInfo, page){
-					var decoration = loc_createDecoration(page.getUIView());
+					var decoration = loc_createDecoration(page.getUIView(), page.getStyle());
 					decs.push(decoration);
 				}
 			}));
@@ -57,7 +57,7 @@ var node_createUIDecorationsRequest = function(decorationIds, handlers, request)
 	return out;
 };
 
-var loc_createDecoration = function(uiView){
+var loc_createDecoration = function(uiView, style){
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListenerForDec = node_createEventObject();
 	var loc_eventListenerForParent = node_createEventObject();
@@ -70,6 +70,8 @@ var loc_createDecoration = function(uiView){
 	var loc_childView;
 	
 	var loc_uiView = uiView;
+	var loc_style = style;
+	var loc_id = loc_uiView.getId();
 
 	//regular event
 	loc_uiView.registerEventListener(loc_eventListenerForDec, function(event, eventData, requestInfo){
@@ -89,6 +91,8 @@ var loc_createDecoration = function(uiView){
 	
 	var loc_out = {
 		
+		getId : function(){   return loc_id;   },
+			
 		setChild : function(child){
 			
 			var childDataType = node_getObjectType(child);
@@ -121,6 +125,9 @@ var loc_createDecoration = function(uiView){
 		insertAfter : function(ele){	loc_uiView.insertAfter(ele);	},
 		detachViews : function(){	loc_uiView.detachViews();  },
 		getPlaceHolderView : function(){    return loc_getPlaceHolderView();  },
+		
+		attachStyle : function(){  node_UICommonUtility.attachStyle(loc_style, loc_id);      },
+		detachStyle : function(){    node_UICommonUtility.detachStyle(loc_id);     },
 		
 		getContextElements : function(){
 			var out = {};
@@ -187,6 +194,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){node_createServiceRequestInfoSequence = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("uicommon.utility", function(){node_UICommonUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIDecorationsRequest", node_createUIDecorationsRequest); 

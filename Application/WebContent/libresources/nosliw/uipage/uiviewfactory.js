@@ -40,14 +40,14 @@ var loc_uiResourceViewFactory = function(){
 		getCreateUIViewRequest : function(uiResource, id, parent, context, handlers, requestInfo){
 			var uiBody = uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT];
 			var attributes = uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_ATTRIBUTES];
-			return this.getCreateUIBodyViewRequest(uiBody, attributes, id, parent, context, handlers, requestInfo);
+			return this.getCreateUIBodyViewRequest(uiResource, uiBody, attributes, id, parent, context, handlers, requestInfo);
 		},
 		
-		getCreateUIBodyViewRequest : function(uiBody, attributes, id, parent, context, handlers, requestInfo){
+		getCreateUIBodyViewRequest : function(uiResource, uiBody, attributes, id, parent, context, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIView", {}), handlers, requestInfo);
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-				var uiView = loc_createUIView(uiBody, attributes, id, parent, context, requestInfo);
+				var uiView = loc_createUIView(uiResource, uiBody, attributes, id, parent, context, requestInfo);
 				
 				var createUITagRequest = node_createServiceRequestInfoSet(undefined, {
 					success: function(requestInfo, tagResults){
@@ -71,7 +71,7 @@ var loc_uiResourceViewFactory = function(){
 				return createUITagRequest;
 			}));
 			return out;
-		}
+		},
 		
 	};
 	
@@ -84,10 +84,10 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 	var tagId = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGNAME];
 	out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
 		success : function(requestInfo, resources){
-			var uiTagResourceObj = resources[tagId];
+			var uiTagDefResourceObj = resources[tagId];
 
 			var uiTag = node_createUITag(
-					uiTagResourceObj, 
+					uiTagDefResourceObj, 
 					id, 
 					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_ATTRIBUTES], 
 					parentUIResourceView!=undefined?parentUIResourceView.getContext():undefined,
@@ -98,7 +98,8 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 						eventNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_EVENTMAPPING],
 						varNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL],
 						startElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX),
-						endElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX)
+						endElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX),
+						resource : uiTagResource
 					}, 
 					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT]);
 
@@ -120,7 +121,7 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
  * 	 	name space id
  * 		parent uiresource
  */
-var loc_createUIView = function(uiBody, attributes, id, parent, context, requestInfo){
+var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, context, requestInfo){
 
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
@@ -132,6 +133,7 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 	
 	//temporately store uiResource
 	var loc_uiBody = uiBody;
+	var loc_uiResource = uiResource;
 
 	//parent ui resource view
 	var loc_parentResourveView = parent;
@@ -169,7 +171,7 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 	var loc_attributes = {};
 	
 	//view container
-	var loc_viewContainer = node_createViewContainer(loc_id);
+	var loc_viewContainer;
 	
 	//the ui resource view created 
 	var loc_out = undefined;
@@ -279,7 +281,10 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 			loc_context = node_contextUtility.buildContext("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
 		}
 
-		loc_viewContainer = node_createViewContainer(loc_idNameSpace, node_uiResourceUtility.updateHtmlUIId(_.unescape(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HTML]), loc_idNameSpace));
+		var viewAttrs = {
+			nosliwdefid : uiResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID],
+		};
+		loc_viewContainer = node_createViewContainer(loc_idNameSpace, viewAttrs, node_uiResourceUtility.updateHtmlUIId(_.unescape(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HTML]), loc_idNameSpace));
 
 		//init expression content
 		_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPTEXPRESSIONSINCONTENT], function(expressionContent, key, list){
@@ -448,6 +453,8 @@ var loc_createUIView = function(uiBody, attributes, id, parent, context, request
 				return loc_parentResourveView.prv_findFunctionUp(funName);
 			}
 		},
+		
+		getId : function(){   return loc_idNameSpace;  },
 		
 		getContext : function(){return loc_context;},
 		getUpdateContextRequest : function(values, handlers, requestInfo){	return loc_context.getUpdateContextRequest(values, handlers, requestInfo);		},
