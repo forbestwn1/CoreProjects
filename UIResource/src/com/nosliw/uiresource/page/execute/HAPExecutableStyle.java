@@ -67,6 +67,7 @@ public class HAPExecutableStyle extends HAPSerializableImp{
 	protected String buildStyleScript(List<String> parentIds) {
 		StringBuffer out = new StringBuffer();
 		try {
+	         if(parentIds==null)  parentIds = new ArrayList<String>();
 			if(HAPBasicUtility.isStringNotEmpty(this.m_definition)) {
 				 InputSource source = new InputSource(new StringReader(this.m_definition));
 		         CSSOMParser parser = new CSSOMParser();
@@ -74,7 +75,6 @@ public class HAPExecutableStyle extends HAPSerializableImp{
 		         CSSStyleSheet stylesheet = parser.parseStyleSheet(source, null, null);
 				
 		         StringBuffer parentSelectors = new StringBuffer();
-		         if(parentIds==null)  parentIds = new ArrayList<String>();
 		         for(String parentId : parentIds) {
 		        	 parentSelectors.append(this.buildSelector(parentId)+" ");
 		         }

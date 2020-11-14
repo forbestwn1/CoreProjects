@@ -68,7 +68,7 @@
 		var loc_updateView = function(request){
 			env.executeDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
-					if(data==undefined)  loc_view.val("");
+					if(data==undefined || data.value==undefined)   loc_view.val("");
 					else loc_view.val(data.value.value);
 				}
 			}, request);

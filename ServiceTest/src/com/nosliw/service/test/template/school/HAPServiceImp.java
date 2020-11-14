@@ -54,7 +54,7 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 
 					String schoolType = jsonSchoolData.getString(INDEX_TYPE);
 					Double schoolScore = jsonSchoolData.getDouble(INDEX_SCORE);
-					if(!(((JSONObject)parms.get("schoolTypeInService").getValue()).getString("value")).equalsIgnoreCase(schoolType))  continue;
+					if(!((String)parms.get("schoolTypeInService").getValue()).equalsIgnoreCase(schoolType))  continue;
 					if(schoolScore < Double.valueOf(parms.get("schoolRatingInService").getValue()+""))  continue;
 					
 					JSONObject schoolTypeOptionJson = new JSONObject();

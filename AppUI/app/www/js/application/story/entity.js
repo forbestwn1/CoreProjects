@@ -45,6 +45,13 @@ var node_createUINodeFromStoryNode = function(storyNodeId, story){
 		
 		addChildInfo : function(childInfo){		this.prv_childrenInfo.push(childInfo);	},
 		getChildrenInfo : function(){   return this.prv_childrenInfo;    },
+		getChildren : function(){ 
+			var out = [];
+			_.each(this.prv_childrenInfo, function(childInfo, i){
+				out.push(childInfo.childNode);
+			});
+			return out;
+		},
 		
 		getBody : function(){	return loc_out;	}
 	
