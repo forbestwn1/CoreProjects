@@ -126,7 +126,7 @@
 			out.addRequest(loc_env.getCreateUIViewWithIdRequest(loc_env.getId()+"."+loc_generateId(), eleContext, {
 				success : function(requestInfo, resourceView){
 					if(index==0)	resourceView.insertAfter(loc_env.getStartElement());
-					else	resourceView.insertAfter(loc_childResourceViews[index-1].getEndElement());
+					else	resourceView.insertAfter(loc_childResourceViews[index-1].getViews());
 						
 					loc_childResourceViews.splice(index, 0, resourceView);
 					loc_childVaraibles.splice(index, 0, eleVar);
@@ -163,7 +163,7 @@
 						node_requestServiceProcessor.processRequest(loc_getUpdateViewRequest(undefined, requestInfo));
 					}
 					else if(event=="EACHELEMENTCONTAINER_EVENT_NEWELEMENT"){
-						var req = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+						var req = node_createServiceRequestInfoSequence(undefined, {}, requestInfo);
 						req.addRequest(eventData.indexVar.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
 							success : function(request, data){
 								return loc_getAddEleRequest(eventData.elementVar, eventData.indexVar, data.value.getValue());

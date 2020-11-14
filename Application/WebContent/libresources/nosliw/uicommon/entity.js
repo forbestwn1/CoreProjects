@@ -58,15 +58,15 @@ var node_createViewContainer = function(id, attrs, html){
 		},
 		
 		//append this views to some element as child
-		appendTo : function(ele){  
-			this.getViews().appendTo(ele);   
+		appendTo : function(ele){
+			this.getViews().appendTo($(ele).last());   
 		},
 		//insert this resource view after some element
-		insertAfter : function(ele){	this.getViews().insertAfter(ele);		},
+		insertAfter : function(ele){	this.getViews().insertAfter($(ele).last());		},
 
 		//remove all elements from outsiders parents and put them back under parentView
 		detachViews : function(){	
-			loc_parentView.append(this.getViews());		
+			loc_parentView.append(this.getViews());
 		},
 
 		append : function(views){  views.insertBefore(this.getEndElement());   },
