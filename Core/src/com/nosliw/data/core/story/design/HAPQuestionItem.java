@@ -17,7 +17,12 @@ public class HAPQuestionItem extends HAPQuestion{
 	@HAPAttribute
 	public static final String TARGETREF = "targetRef";
 
+	@HAPAttribute
+	public static final String ISMANDATORY = "isMandatory";
+
 	private HAPReferenceElementWrapper m_targetRef;
+	
+	private boolean m_isMandatory = false;
 	
 	public HAPQuestionItem() {}
 	
@@ -25,7 +30,12 @@ public class HAPQuestionItem extends HAPQuestion{
 		super(question);
 		this.m_targetRef = new HAPReferenceElementWrapper(targetRef);
 	}
-	
+
+	public HAPQuestionItem(String question, HAPReferenceElement targetRef, boolean isMandatory) {
+		this(question, targetRef);
+		this.m_isMandatory = isMandatory;
+	}
+
 	@Override
 	public void processAlias(HAPStory story) {  this.m_targetRef.processAlias(story);  }
 
@@ -39,6 +49,8 @@ public class HAPQuestionItem extends HAPQuestion{
 		
 		this.m_targetRef = new HAPReferenceElementWrapper();
 		this.m_targetRef.buildObject(jsonObj.getJSONObject(TARGETREF), HAPSerializationFormat.JSON);
+		
+		this.m_isMandatory = jsonObj.getBoolean(ISMANDATORY);
 		return true;  
 	}
 	
@@ -46,5 +58,7 @@ public class HAPQuestionItem extends HAPQuestion{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TARGETREF, HAPJsonUtility.buildJson(this.m_targetRef, HAPSerializationFormat.JSON));
+		jsonMap.put(ISMANDATORY, this.m_isMandatory+"");
+		typeJsonMap.put(ISMANDATORY, Boolean.class);
 	}
 }

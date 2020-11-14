@@ -26,6 +26,7 @@ var packageObj = library.getChildPackage();
 	var node_errorUtility;
 	var node_designUtility;
 	var node_DesignStep;
+	var node_requestServiceProcessor;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -74,7 +75,9 @@ var node_createModuleStoryBuilder = function(parm){
 		var answers = questionair[node_COMMONATRIBUTECONSTANT.QUESTIONNAIRE_ANSWERS];
 		loc_processQuestion(question, answers);
 		
-		loc_componentData.steps.push(new node_DesignStep(changes, question, step[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO]));
+		var out = new node_DesignStep(changes, question, step[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO]);
+		loc_componentData.steps.push(out);
+		return out;
 
 	};
 	
@@ -120,22 +123,35 @@ var node_createModuleStoryBuilder = function(parm){
 			var step = loc_getCurrentStep();
 			var answers = node_designUtility.discoverAllQuestionAnswers(step.question);
 			answers.unshift(node_storyChangeUtility.createChangeItemStoryIdIndex(loc_componentData.story));
-			loc_storyService.executeDoDesignRequest(undefined, loc_componentData.designId, answers, loc_componentData.stepCursor, {
+			
+			var nextRequest = node_createServiceRequestInfoSequence();
+			nextRequest.addRequest(loc_storyService.getDoDesignRequest(undefined, loc_componentData.designId, answers, loc_componentData.stepCursor, {
 				success : function(request, serviceData){
 					if(node_errorUtility.isSuccess(serviceData)){
 						var response = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
-						var step = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_STEP];
-						var answers = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_ANSWER];
-						loc_updateQuestion(loc_getCurrentStep().question, answers);
-						loc_processNewStep(step);
+						var stepRes = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_STEP];
+						var answersRes = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_ANSWER];
+						loc_updateQuestion(loc_getCurrentStep().question, answersRes);
+						var step = loc_processNewStep(stepRes);
 						loc_componentData.errorMessages = [];
 						loc_componentData.stepCursor++;
+						
+						var stageName = node_designUtility.getStepStage(step)
+						if(stageName==node_COMMONCONSTANT.DESIGNSTAGE_NAME_END){
+							//end stage, convert to show
+							return loc_storyService.getConvertDesignRequest(loc_componentData.designId, {
+								success : function(request, resourceId){
+									loc_componentData.resourceId = resourceId;
+								}
+							});
+						}
 					}
 					else{
 						loc_componentData.errorMessages = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
 					}
 				}
-			});
+			}));
+			node_requestServiceProcessor.processRequest(nextRequest);
 		}
 		else{
 			loc_componentData.stepCursor++;
@@ -326,6 +342,7 @@ nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility",
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.designUtility", function(){node_designUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.builder.DesignStep", function(){node_DesignStep = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleStoryBuilder", node_createModuleStoryBuilder); 

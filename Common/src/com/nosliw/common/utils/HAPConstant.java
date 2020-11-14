@@ -716,4 +716,8 @@ public class HAPConstant {
 		public static final String DATARULE_TYPE_MANDATORY = "mandatory";
 
 
+
+		public static final String DESIGNSTAGE_NAME_END = "DESIGNSTAGE_NAME_END";
+
+
 }

@@ -765,6 +765,8 @@
 			<definition name="DATARULE_TYPE_EXPRESSION" value="expression"/>
 			<definition name="DATARULE_TYPE_MANDATORY" value="mandatory"/>
 
+			<definition type="space"/>
+			<definition name="DESIGNSTAGE_NAME_END" value="DESIGNSTAGE_NAME_END"/>
 		</definitions>
 	</constants>
 </root>

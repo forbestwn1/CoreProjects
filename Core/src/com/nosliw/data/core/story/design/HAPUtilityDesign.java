@@ -17,9 +17,9 @@ public class HAPUtilityDesign {
 	public static void setDesignAllStages(HAPDesignStory design, List<HAPStageInfo> stages) {    design.getInfo().setValue(HAPConstant.STORYDESIGN_INFO_STAGES, stages);      }
 	public static List<HAPStageInfo> getDesignAllStages(HAPDesignStory design){    return (List<HAPStageInfo>)design.getInfoValue(HAPConstant.STORYDESIGN_INFO_STAGES);       }
 	
-	public static String getChangeStage(HAPDesignStep change) {	return (String)change.getInfoValue(HAPConstant.STORYDESIGN_CHANGE_INFO_STAGE); 	}
+	public static String getChangeStage(HAPDesignStep step) {	return (String)step.getInfoValue(HAPConstant.STORYDESIGN_CHANGE_INFO_STAGE); 	}
 	
-	public static void setChangeStage(HAPDesignStep change, String stage) {    change.getInfo().setValue(HAPConstant.STORYDESIGN_CHANGE_INFO_STAGE, stage);	}
+	public static void setChangeStage(HAPDesignStep step, String stage) {    step.getInfo().setValue(HAPConstant.STORYDESIGN_CHANGE_INFO_STAGE, stage);	}
 	
 	public static String getDesignStage(HAPDesignStory design) {
 		List<HAPDesignStep> changes = design.getChangeHistory();

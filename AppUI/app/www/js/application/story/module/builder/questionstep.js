@@ -65,9 +65,9 @@ var node_createComponentQuestionStep = function(){
 				</question-group>
 
 				<br>
-				<span v-if="stageIndex>=1"><a v-on:click.prevent="onPrevious">Previous</a>&nbsp;&nbsp;</span>
+				<span v-if="stageIndex>=1&&stageIndex<=stages.length-2"><a v-on:click.prevent="onPrevious">Previous</a>&nbsp;&nbsp;</span>
 				<span v-if="stageIndex<stages.length-2"><a v-on:click.prevent="onNext">Next</a>&nbsp;&nbsp;</span>
-				<span v-if="stageIndex>=stages.length-2"><a v-on:click.prevent="onFinish">Finish</a>&nbsp;&nbsp;</span>
+				<span v-if="stageIndex==stages.length-2"><a v-on:click.prevent="onFinish">Finish</a>&nbsp;&nbsp;</span>
 				<br>
 				
 			</div>

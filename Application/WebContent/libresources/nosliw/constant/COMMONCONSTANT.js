@@ -437,7 +437,8 @@ var COMMONCONSTANT=
   "ENTITY": "entity",
   "DATARULE_TYPE_ENUM": "enum",
   "DATARULE_TYPE_EXPRESSION": "expression",
-  "DATARULE_TYPE_MANDATORY": "mandatory"
+  "DATARULE_TYPE_MANDATORY": "mandatory",
+  "DESIGNSTAGE_NAME_END": "DESIGNSTAGE_NAME_END"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -30,6 +30,7 @@ import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPReferenceElement;
 import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityConnection;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
@@ -141,8 +142,13 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		else if(stage.equals(STAGE_UI)) {
 			out = this.processUIChangeStage(storyDesign, answer);
 		}
-		else if(stage.equals(STAGE_END)) {
-			
+		else if(stage.equals(HAPConstant.DESIGNSTAGE_NAME_END)){
+			String[] errorMsg = {"The wizard has finished"};
+			out = HAPServiceData.createFailureData(errorMsg, "Invalid flow!!!");
+		}
+		else {
+			String[] errorMsg = {"Unrecognize step"};
+			out = HAPServiceData.createFailureData(errorMsg, "Invalid flow!!!");
 		}
 		
 		return out;
@@ -393,27 +399,61 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		HAPStory story = design.getStory();
 
 		story.startTransaction();
+		
+		HAPServiceData validateResult = validateUIAnswer(design, answerRequest);
+		if(validateResult.isFail())   return validateResult;
+		else {
+			this.applyAnswer(story, answerRequest);
+			
+			//new step
+			HAPDesignStep step = design.newStep();
+
+			//question
+			HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Finish.");
+			step.setQuestion(rootQuestionGroup);
+
+			HAPResultTransaction transactionResult = story.commitTransaction();
+			step.getChanges().addAll(transactionResult.getChanges());
+
+			design.addStep(step);
+
+			//stage
+			HAPUtilityDesign.setChangeStage(step, HAPConstant.DESIGNSTAGE_NAME_END);
+
+			return HAPServiceData.createSuccessData(new HAPResponseDesign(answerRequest.getAnswers(), step));
+		}
+	}
+
+	private HAPServiceData validateUIAnswer(HAPDesignStory design, HAPRequestDesign answerRequest) {
+		HAPStory story = design.getStory();
 
 		this.applyAnswer(story, answerRequest);
 		
-		//new step
-		HAPDesignStep step = design.newStep();
-
-		//question
-		HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Finish.");
-		step.setQuestion(rootQuestionGroup);
-
-		HAPResultTransaction transactionResult = story.commitTransaction();
-		step.getChanges().addAll(transactionResult.getChanges());
-
-		design.addStep(step);
-
-		//stage
-		HAPUtilityDesign.setChangeStage(step, STAGE_END);
-
-		return HAPServiceData.createSuccessData(new HAPResponseDesign(answerRequest.getAnswers(), step));
+		List<String> errorMsgs = new ArrayList<String>();
+		Set<HAPStoryNode> constantStoryNodes = HAPUtilityStory.getStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_CONSTANT);
+		for(HAPStoryNode storyNode : constantStoryNodes) {
+			HAPStoryNodeConstant constantStoryNode = (HAPStoryNodeConstant)storyNode;
+			if(constantStoryNode.getData()==null) {
+				errorMsgs.add("Constant " + constantStoryNode.getName() + " should not be empty!!!!");
+			}
+		}
+		
+		if(errorMsgs.isEmpty()) {
+			//valid
+			//add answer to step
+			HAPDesignStep latestStep = design.getLatestStep();
+			latestStep.addAnswers(answerRequest.getAnswers());
+			return HAPServiceData.createSuccessData();
+		}
+		else {
+			//failure
+			//revert answer changes
+			story.rollbackTransaction();
+			//
+			return HAPServiceData.createFailureData(errorMsgs.toArray(new String[0]), "Validation Fail!!");
+		}
 	}
-
+	
 	private void applyAnswer(HAPStory story, HAPRequestDesign answerRequest) {
 		HAPRequestChangeWrapper changeRequest = new HAPRequestChangeWrapper(story, true, false);
 		for(HAPAnswer answer : answerRequest.getAnswers()){		changeRequest.addChanges(answer.getChanges());	}
