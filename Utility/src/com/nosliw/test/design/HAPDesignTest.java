@@ -10,7 +10,7 @@ import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.data.core.story.design.HAPDesignStory;
 import com.nosliw.data.core.story.design.HAPRequestDesign;
-import com.nosliw.uiresource.page.story.design.HAPStoryBuilderPageSimple;
+import com.nosliw.uiresource.page.story.design.builder.service.HAPStoryBuilderPageSimple;
 
 public class HAPDesignTest {
 

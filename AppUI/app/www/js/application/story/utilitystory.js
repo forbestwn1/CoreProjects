@@ -232,7 +232,7 @@ var node_utility = function(){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("application.story.module.builder.ElementId", function(){node_ElementId = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.entity.ElementId", function(){node_ElementId = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.entity.ChildStoryNodeInfo", function(){node_ChildStoryNodeInfo = this.getData();});
 
 //Register Node by Name

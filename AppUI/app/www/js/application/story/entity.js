@@ -9,6 +9,18 @@ var packageObj = library.getChildPackage("entity");
 	var node_storyUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_DesignStep = function(changes, question, info){
+	this.changes = changes;
+	this.question = question;
+	this.info = info;
+	return this;
+};
+
+var node_ElementId = function(categary, id){
+	this[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY] = categary;
+	this[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID] = id;
+};
+	
 var node_ChildStoryNodeInfo = function(childNode, connectionId, childId){
 	this.childNode = childNode;
 	this.connectionId = connectionId;
@@ -94,6 +106,8 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 
 //Register Node by Name
+packageObj.createChildNode("DesignStep", node_DesignStep); 
+packageObj.createChildNode("ElementId", node_ElementId); 
 packageObj.createChildNode("createUINodeFromStoryNode", node_createUINodeFromStoryNode); 
 packageObj.createChildNode("createUINodeByTag", node_createUINodeByTag); 
 packageObj.createChildNode("ChildStoryNodeInfo", node_ChildStoryNodeInfo); 

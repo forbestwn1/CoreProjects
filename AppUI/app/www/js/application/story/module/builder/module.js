@@ -341,7 +341,7 @@ nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", funct
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.designUtility", function(){node_designUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("application.story.module.builder.DesignStep", function(){node_DesignStep = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.entity.DesignStep", function(){node_DesignStep = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name

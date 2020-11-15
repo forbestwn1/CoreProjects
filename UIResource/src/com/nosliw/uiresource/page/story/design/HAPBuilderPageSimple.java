@@ -18,6 +18,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -114,10 +115,13 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		Set<HAPStoryNode> constantNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstant.STORYNODE_TYPE_CONSTANT);
 		for(HAPStoryNode node : constantNodes) {
 			HAPStoryNodeConstant constantNode = (HAPStoryNodeConstant)node;
-			//build service attachment
-			HAPAttachmentEntity atta = new HAPAttachmentEntity(HAPConstant.RUNTIME_RESOURCE_TYPE_DATA);
-			atta.setEntity(new JSONObject(constantNode.getData().toStringValue(HAPSerializationFormat.JSON)));
-			attachs.add(atta);
+			HAPData constantData = constantNode.getData();
+			if(constantData!=null) {
+				//build service attachment
+				HAPAttachmentEntity atta = new HAPAttachmentEntity(HAPConstant.RUNTIME_RESOURCE_TYPE_DATA);
+				atta.setEntity(new JSONObject(constantData.toStringValue(HAPSerializationFormat.JSON)));
+				attachs.add(atta);
+			}
 		}
 		return attachs;
 	}
@@ -164,7 +168,10 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 								String inputNodeType = parmInputNode.getType();
 								if(HAPConstant.STORYNODE_TYPE_CONSTANT.equals(inputNodeType)) {
 									HAPStoryNodeConstant constantInputNode = (HAPStoryNodeConstant)parmInputNode;
-									serviceParmMapping.addElement(parmNodeInfo.getConnection().getChildId(), new HAPContextDefinitionLeafConstant(constantInputNode.getData()));
+									HAPData constantData = constantInputNode.getData();
+									if(constantData!=null) {
+										serviceParmMapping.addElement(parmNodeInfo.getConnection().getChildId(), new HAPContextDefinitionLeafConstant(constantData));
+									}
 								}
 								else if(HAPConstant.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
 									HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;

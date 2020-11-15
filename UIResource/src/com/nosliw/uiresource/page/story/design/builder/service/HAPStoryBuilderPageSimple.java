@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page.story.design;
+package com.nosliw.uiresource.page.story.design.builder.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -215,7 +215,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPAliasElement parmNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceInputParm(parmDef)).getAlias();
 					dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceInputNodeName, parmNodeName, parmName));
 
-					parmBranchInfo.constantAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeConstant(parmDef.getCriteria())).getAlias();
+					parmBranchInfo.constantAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeConstant(parmDef.getCriteria(), parmDef.getDefaultValue()==null)).getAlias();
 					
 					HAPAliasElement constantConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.constantAlias, parmNodeName, null, null)).getAlias();
 
@@ -331,7 +331,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPQuestionItem groupQuestion = new HAPQuestionItem("select import for parm", parmBranchInfo.switchAlias);
 					parmQuestionGroup.addChild(groupQuestion);
 					
-					HAPQuestionItem constantQuestion = new HAPQuestionItem("select constant", parmBranchInfo.constantAlias);
+					HAPStoryNodeConstant constantStoryNode = (HAPStoryNodeConstant)story.getElement(parmBranchInfo.constantAlias);
+					HAPQuestionItem constantQuestion = new HAPQuestionItem("select constant", parmBranchInfo.constantAlias, constantStoryNode.isMandatory());
 					parmQuestionGroup.addChild(constantQuestion);
 					
 					HAPQuestionItem uiDataQuestion = new HAPQuestionItem("select ui tag", parmBranchInfo.dataUINode.getStoryNodeRef());
@@ -433,7 +434,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		Set<HAPStoryNode> constantStoryNodes = HAPUtilityStory.getStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_CONSTANT);
 		for(HAPStoryNode storyNode : constantStoryNodes) {
 			HAPStoryNodeConstant constantStoryNode = (HAPStoryNodeConstant)storyNode;
-			if(constantStoryNode.getData()==null) {
+			if(constantStoryNode.isMandatory() && constantStoryNode.getData()==null) {
 				errorMsgs.add("Constant " + constantStoryNode.getName() + " should not be empty!!!!");
 			}
 		}

@@ -28,17 +28,27 @@ public class HAPStoryNodeConstant extends HAPStoryNodeImp{
 	@HAPAttribute
 	public static final String DATATYPE = "dataType";
 	
+	@HAPAttribute
+	public static final String ISMANDATORY = "isMandatory";
+
 	private HAPData m_data;
 	
 	private HAPDataTypeCriteria m_dataType;
 
+	private boolean m_isMandatory = true;
+	
 	public HAPStoryNodeConstant() {
 		super(STORYNODE_TYPE);
 	}
 
 	public HAPStoryNodeConstant(HAPDataTypeCriteria dataType) {
+		this(dataType, true);
+	}
+
+	public HAPStoryNodeConstant(HAPDataTypeCriteria dataType, boolean isMandatory) {
 		this();
 		this.m_dataType = dataType;
+		this.m_isMandatory = isMandatory;
 	}
 
 	public HAPData getData() {   return this.m_data;   }
@@ -47,6 +57,8 @@ public class HAPStoryNodeConstant extends HAPStoryNodeImp{
 	public HAPDataTypeCriteria getDataType() {   return this.m_dataType;   }
 	public void setDataType(HAPDataTypeCriteria dataType) {    this.m_dataType = dataType;    }
 
+	public boolean isMandatory() {    return this.m_isMandatory;   }
+	
 	@Override
 	public HAPChangeResult patch(String path, Object value) {
 		HAPChangeResult out = super.patch(path, value);
@@ -77,6 +89,7 @@ public class HAPStoryNodeConstant extends HAPStoryNodeImp{
 		super.buildObjectByJson(jsonObj);
 		this.m_data = HAPUtilityData.buildDataWrapperFromObject(jsonObj.opt(DATA));
 		this.m_dataType = HAPCriteriaUtility.parseCriteria(jsonObj.getString(DATATYPE));
+		this.m_isMandatory = jsonObj.getBoolean(ISMANDATORY);
 		return true;  
 	}
 
@@ -85,6 +98,8 @@ public class HAPStoryNodeConstant extends HAPStoryNodeImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_data!=null)	jsonMap.put(DATA, this.m_data.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_dataType!=null)	jsonMap.put(DATATYPE, this.m_dataType.toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(ISMANDATORY, this.m_isMandatory+"");
+		typeJsonMap.put(ISMANDATORY, Boolean.class);
 	}
 
 }

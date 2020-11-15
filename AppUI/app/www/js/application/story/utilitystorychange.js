@@ -253,7 +253,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("application.story.module.builder.ElementId", function(){node_ElementId = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.entity.ElementId", function(){node_ElementId = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("storyChangeUtility", node_utility); 
