@@ -17,7 +17,7 @@ var node_createComponentQuestionGroup = function(){
 		},
 		props : ['question', 'story'],
 		methods : {
-			onAnswerChange : function(event) {
+			onAnswerChange : function(event,) {
 				this.$emit("answerChange");
 			},
 		},

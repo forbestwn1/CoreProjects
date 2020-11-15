@@ -122,7 +122,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		
 		//extra info
 		HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Please select service.");
-		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("select service", ELEMENT_SERVICE);
+		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("select service", ELEMENT_SERVICE, true);
 		rootQuestionGroup.addChild(serviceItemExtraInfo);
 		step.setQuestion(rootQuestionGroup);
 		

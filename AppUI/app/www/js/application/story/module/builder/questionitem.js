@@ -27,13 +27,15 @@ var node_createComponentQuestionItem = function(){
 			'question-item-uidata': node_createComponentQuestionItemUIData(),
 		},
 		methods : {
-			onAnswerChange : function(event) {
+			onAnswerChange : function(answerData) {
 				this.$emit("answerChange");
+				if(answerData==undefined)	this.question.answered = false;
+				else  this.question.answered = true;
 			},
 		},
 		template : `
 			<div v-if="question.element.enable==true">
-				{{question.question}}:
+				{{question.question}}<span v-if="question.isMandatory==true">*</span> :
 				<span>
 				<question-item-service v-if="question.element.type=='service'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
 				<question-item-switch v-if="question.element.type=='switch'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>

@@ -90,12 +90,21 @@ var node_createModuleStoryBuilder = function(parm){
 			});
 		}
 		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
+			//find target element
 			var targetRef = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETREF];
 			var element = node_storyUtility.getStoryElementByRef(loc_componentData.story, targetRef);
 			question.element = element;
+			
+			//assign answer to question
 			var answerInfo = answers[question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]];
 			if(answerInfo!=undefined)  question.answer = answerInfo[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES];
-			if(question.answer==undefined)  question.answer = [];
+			if(question.answer==undefined || question.answer.length()==0){
+				question.answer = [];
+				question.answered = false;
+			}
+			else{
+				question.answered = true;
+			}
 		}
 	};
 	
@@ -121,37 +130,45 @@ var node_createModuleStoryBuilder = function(parm){
 	var loc_onNext = function(){
 		if(loc_isAtLastStep()){
 			var step = loc_getCurrentStep();
-			var answers = node_designUtility.discoverAllQuestionAnswers(step.question);
-			answers.unshift(node_storyChangeUtility.createChangeItemStoryIdIndex(loc_componentData.story));
 			
-			var nextRequest = node_createServiceRequestInfoSequence();
-			nextRequest.addRequest(loc_storyService.getDoDesignRequest(undefined, loc_componentData.designId, answers, loc_componentData.stepCursor, {
-				success : function(request, serviceData){
-					if(node_errorUtility.isSuccess(serviceData)){
-						var response = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
-						var stepRes = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_STEP];
-						var answersRes = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_ANSWER];
-						loc_updateQuestion(loc_getCurrentStep().question, answersRes);
-						var step = loc_processNewStep(stepRes);
-						loc_componentData.errorMessages = [];
-						loc_componentData.stepCursor++;
-						
-						var stageName = node_designUtility.getStepStage(step)
-						if(stageName==node_COMMONCONSTANT.DESIGNSTAGE_NAME_END){
-							//end stage, convert to show
-							return loc_storyService.getConvertDesignRequest(loc_componentData.designId, {
-								success : function(request, resourceId){
-									loc_componentData.resourceId = resourceId;
-								}
-							});
+			var errors = node_designUtility.validateQuestionAnswers(step.question);
+			if(errors!=undefined){
+				//failed validation
+				loc_componentData.errorMessages = errors;
+			}
+			else{
+				var answers = node_designUtility.discoverAllQuestionAnswers(step.question);
+				answers.unshift(node_storyChangeUtility.createChangeItemStoryIdIndex(loc_componentData.story));
+				
+				var nextRequest = node_createServiceRequestInfoSequence();
+				nextRequest.addRequest(loc_storyService.getDoDesignRequest(undefined, loc_componentData.designId, answers, loc_componentData.stepCursor, {
+					success : function(request, serviceData){
+						if(node_errorUtility.isSuccess(serviceData)){
+							var response = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
+							var stepRes = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_STEP];
+							var answersRes = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_ANSWER];
+							loc_updateQuestion(loc_getCurrentStep().question, answersRes);
+							var step = loc_processNewStep(stepRes);
+							loc_componentData.errorMessages = [];
+							loc_componentData.stepCursor++;
+							
+							var stageName = node_designUtility.getStepStage(step)
+							if(stageName==node_COMMONCONSTANT.DESIGNSTAGE_NAME_END){
+								//end stage, convert to show
+								return loc_storyService.getConvertDesignRequest(loc_componentData.designId, {
+									success : function(request, resourceId){
+										loc_componentData.resourceId = resourceId;
+									}
+								});
+							}
+						}
+						else{
+							loc_componentData.errorMessages = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
 						}
 					}
-					else{
-						loc_componentData.errorMessages = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
-					}
-				}
-			}));
-			node_requestServiceProcessor.processRequest(nextRequest);
+				}));
+				node_requestServiceProcessor.processRequest(nextRequest);
+			}
 		}
 		else{
 			loc_componentData.stepCursor++;
