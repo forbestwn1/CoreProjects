@@ -19,7 +19,7 @@ var node_utility = function(){
 
 	var loc_buildUINodeFromStoryNode = function(storyNode, story){
 		var uiNode = node_createUINodeFromStoryNode(storyNode[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], story);
-		var childStoryNodesInfo = node_storyUtility.getAllChildNodesInfo(storyNode, story);
+		var childStoryNodesInfo = node_storyUtility.getChildNodesInfo(storyNode, story);
 		_.each(childStoryNodesInfo, function(childStroyNodeInfo, i){
 			var childUINode = loc_buildUINodeFromStoryNode(childStroyNodeInfo.childNode, story);
 			uiNode.addChildInfo(new node_ChildUINodeInfo(childUINode, childStroyNodeInfo.connectionId, childStroyNodeInfo.childId));
