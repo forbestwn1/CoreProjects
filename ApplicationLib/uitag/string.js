@@ -73,22 +73,38 @@
 		var loc_updateView = function(request){
 			loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
-					if(data==undefined || data.value==undefined)  loc_view.val("");
-					else loc_view.val(data.value.value);
+					var flowDataType = loc_getDataFlowType();
+					if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
+						if(data==undefined || data.value==undefined)  loc_view.val("");
+						else loc_view.val(data.value.value);
+					}
+					else{
+						if(data==undefined || data.value==undefined)  loc_view.text("");
+						else loc_view.text(data.value.value);
+					}
 				}
 			}, request);
 		};
 
 		var loc_setupUIEvent = function(){
-			loc_view.bind('change', function(){
-				var data = loc_getViewData();
-				loc_env.executeBatchDataOperationRequest([
-					loc_env.getDataOperationSet(loc_dataVariable, "", data)
-				]);
-				loc_env.trigueEvent("valueChanged", data);
-			});
+			var flowDataType = loc_getDataFlowType();
+			if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
+				loc_view.bind('change', function(){
+					var data = loc_getViewData();
+					loc_env.executeBatchDataOperationRequest([
+						loc_env.getDataOperationSet(loc_dataVariable, "", data)
+					]);
+					loc_env.trigueEvent("valueChanged", data);
+				});
+			}
 		};
 
+		var loc_getDataFlowType = function(){
+			var out = loc_env.getAttributeValue(node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_ATTRIBUTE_DATAFLOW);
+			if(out==undefined)	out = node_COMMONCONSTANT.DATAFLOW_IO; 
+			return out;
+		};
+		
 		var loc_out = 
 		{
 			preInit : function(requestInfo){
@@ -124,20 +140,25 @@
 				
 			},
 				
-			initViews : function(requestInfo){	
-				if(loc_enum==undefined){
-					loc_view = $('<input type="text" style="background:#e6dedc"/>');	
-				}
-				else{
-					loc_view = $('<select style="background:#e6dedc;border:solid red"/>');	
-					for(var i in loc_enum){
-						loc_view.append($('<option>', {
-							value: loc_enum[i],
-							text: loc_enum[i]
-						}));
+			initViews : function(requestInfo){
+				var flowDataType = loc_getDataFlowType();
+				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
+					if(loc_enum==undefined){
+						loc_view = $('<input type="text" style="background:#e6dedc"/>');	
+					}
+					else{
+						loc_view = $('<select style="background:#e6dedc;border:solid red"/>');	
+						for(var i in loc_enum){
+							loc_view.append($('<option>', {
+								value: loc_enum[i],
+								text: loc_enum[i]
+							}));
+						}
 					}
 				}
-				
+				else{
+					loc_view = $('<span/>');	
+				}
 				return loc_view;
 			},
 				

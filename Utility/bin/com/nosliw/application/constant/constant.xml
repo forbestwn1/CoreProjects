@@ -767,6 +767,12 @@
 
 			<definition type="space"/>
 			<definition name="DESIGNSTAGE_NAME_END" value="DESIGNSTAGE_NAME_END"/>
+			
+			<definition type="space"/>
+			<definition name="DATAFLOW_IN" value="IN"/>
+			<definition name="DATAFLOW_OUT" value="OUT"/>
+			<definition name="DATAFLOW_IO" value="IO"/>
+			
 		</definitions>
 	</constants>
 </root>

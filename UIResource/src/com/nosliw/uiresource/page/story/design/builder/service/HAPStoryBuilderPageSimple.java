@@ -293,10 +293,11 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				//page layout node
 				HAPUINode pageLayoutUINode = uiTree.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "page_html.tmp")), null, uiLayerChangeRequest, m_contextProcessRequirement, m_uiTagManager);
 			
+				//input parm ui
 				for(HAPParmBranchInfo parmBranchInfo : parmBranchInfos) {
 					//ui
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
-					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "input", varNode.getVariableInfo().getName(), parmBranchInfo.parmName, uiLayerChangeRequest);
+					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "input", varNode.getVariableInfo().getName(), parmBranchInfo.parmName, HAPConstant.DATAFLOW_OUT, uiLayerChangeRequest);
 					parmBranchInfo.dataUINode = dataUINode; 
 					
 					//variable group
@@ -305,10 +306,11 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					}
 				}
 
+				//output ui
 				for(HAPOutputBranchInfo parmBranchInfo : outputBranchInfos) {
 					//ui
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
-					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "output", varNode.getVariableInfo().getName(), parmBranchInfo.parmName, uiLayerChangeRequest);
+					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "output", varNode.getVariableInfo().getName(), parmBranchInfo.parmName, HAPConstant.DATAFLOW_IN, uiLayerChangeRequest);
 					parmBranchInfo.dataUINode = dataUINode; 
 					
 					//variable group
@@ -355,7 +357,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	}
 
 	
-	private HAPUINode buildDataUINode(HAPUINode parent, Object childId, String varName, String label, HAPRequestChangeWrapper changeRequest) {
+	private HAPUINode buildDataUINode(HAPUINode parent, Object childId, String varName, String label, String dataFlow, HAPRequestChangeWrapper changeRequest) {
 		
 		HAPUINode layoutUINode = parent.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "uiData.tmp")), childId, changeRequest, m_contextProcessRequirement, m_uiTagManager);
 
@@ -373,23 +375,23 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		if(isComplex) {
 			if(dataTypeId.getFullName().contains("array")){
 				//array
-				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData("loop", uiDataInfo);
+				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData("loop", uiDataInfo, dataFlow);
 				uiDataStoryNode.addAttribute("data", varName);
 				dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, m_contextProcessRequirement, m_uiTagManager);
-				HAPUINode elementUINode = buildDataUINode(dataUINode, null, "element", null, changeRequest);
+				HAPUINode elementUINode = buildDataUINode(dataUINode, null, "element", null, dataFlow, changeRequest);
 			}
 			else if(dataTypeId.getFullName().contains("map")) {
 				//map
 				List<String> names = HAPCriteriaUtility.getCriteriaChildrenNames(dataTypeCriteria);
 				for(String name : names) {
-					buildDataUINode(parent, name, varName+"."+name, name, changeRequest);
+					buildDataUINode(parent, name, varName+"."+name, name, dataFlow, changeRequest);
 				}
 			}
 		}
 		else {
 			//simple
 			HAPUITagQueryResult uiTagInfo = this.m_uiTagManager.getDefaultUITag(new HAPUITageQuery(dataTypeCriteria));
-			HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getTag(), uiDataInfo);
+			HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getTag(), uiDataInfo, dataFlow);
 			uiDataStoryNode.addAttribute("data", varName);
 			dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, m_contextProcessRequirement, m_uiTagManager);
 		}

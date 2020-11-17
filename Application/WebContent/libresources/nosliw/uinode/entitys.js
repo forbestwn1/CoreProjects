@@ -227,6 +227,16 @@ var node_createUINodeTagView = function(uiNode, id, parentContext){
 		
 		setUITag : function(uiTag){  loc_uiTag = uiTag;   },
 		
+		getAttributes : function(){
+			var out;
+			if(loc_uiNode.getAttributes!=undefined)  out = loc_uiNode.getAttributes(); 
+			else{
+				var uiTagStoryNode = loc_uiNode.getStoryNode();
+				out = uiTagStoryNode[node_COMMONATRIBUTECONSTANT.STORYNODEUITAG_ATTRIBUTES];
+			}
+			return out;
+		},
+		
 		getViews : function(){     return loc_viewContainer.getViews();     },
 		getStartElement : function(){  return loc_viewContainer.getStartElement();   },
 		getEndElement : function(){  return loc_viewContainer.getEndElement();   },

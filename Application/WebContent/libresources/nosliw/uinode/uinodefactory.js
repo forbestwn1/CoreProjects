@@ -95,7 +95,7 @@ var loc_processUITagViewRequest = function(uiNodeTagView, parentContext, handler
 			var uiTag = node_createUITag(
 					uiTagDefResourceObj, 
 					uiNodeTagView.getId(), 
-					uiNode.attributes, 
+					uiNodeTagView.getAttributes(), 
 					parentContext,
 					{
 						mode : node_CONSTANT.TAG_RUNTIME_MODE_DEMO,

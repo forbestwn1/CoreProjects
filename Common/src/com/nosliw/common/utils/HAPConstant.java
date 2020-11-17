@@ -720,4 +720,10 @@ public class HAPConstant {
 		public static final String DESIGNSTAGE_NAME_END = "DESIGNSTAGE_NAME_END";
 
 
+
+		public static final String DATAFLOW_IN = "IN";
+		public static final String DATAFLOW_OUT = "OUT";
+		public static final String DATAFLOW_IO = "IO";
+
+
 }

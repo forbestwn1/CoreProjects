@@ -29,6 +29,7 @@ var node_createViewContainer = function(id, attrs, html){
 			
 			if(loc_attrs==undefined)  loc_attrs = {};
 			loc_attrs[node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID] = loc_id;
+//			loc_attrs.style = 'display:contents;';
 			loc_parentView = $("<div>" + node_UICommonUtility.createPlaceHolderHtml("nosliw_wrapper", loc_attrs, node_UICommonUtility.createStartPlaceHolderWithId(loc_id) + (loc_html==undefined?"":loc_html) + node_UICommonUtility.createEndPlaceHolderWithId(loc_id)) + "</div>");
 			loc_fragmentDocument.append(loc_parentView);
 			

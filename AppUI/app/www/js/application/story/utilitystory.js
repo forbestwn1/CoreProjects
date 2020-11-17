@@ -151,9 +151,7 @@ var node_utility = function(){
 			return element;
 		},
 		
-		getStoryElementByRef : function(story, ref){
-			loc_getStoryElementByRef(story, ref);
-		},
+		getStoryElementByRef : function(story, ref){	return loc_getStoryElementByRef(story, ref);	},
 
 		getStoryElement : function(story, elementCategary, elementId){		return loc_getStoryElement(story, elementCategary, elementId);		},
 		

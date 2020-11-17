@@ -19,19 +19,23 @@ public class HAPStoryNodeUIData extends HAPStoryNodeUITag{
 	@HAPAttribute
 	public static final String DATAINFO = "dataInfo";
 	
+	@HAPAttribute
+	public static final String ATTRIBUTE_DATAFLOW = "dataflow";
+	
 	private HAPUIDataInfo m_uiDataInfo;
 	
 	public HAPStoryNodeUIData() {}
 
-	public HAPStoryNodeUIData(String tagName, HAPUIDataInfo uiDataInfo) {
+	public HAPStoryNodeUIData(String tagName, HAPUIDataInfo uiDataInfo, String dataFlow) {
 		super(STORYNODE_TYPE, tagName);
 		this.m_uiDataInfo = uiDataInfo;
+		this.addAttribute(ATTRIBUTE_DATAFLOW, dataFlow);
 	}
 
 	@Override
 	public HAPStoryElement cloneStoryElement() {
 		HAPStoryNodeUIData out = new HAPStoryNodeUIData();
-		this.cloneToUIStoryNode(out);
+		this.cloneToUITagStoryNode(out);
 		out.m_uiDataInfo = this.m_uiDataInfo.cloneUIDataInfo();
 		return out;
 	}
@@ -46,6 +50,7 @@ public class HAPStoryNodeUIData extends HAPStoryNodeUITag{
 			this.m_uiDataInfo = new HAPUIDataInfo();
 			this.m_uiDataInfo.buildObject(dataInfoObj, HAPSerializationFormat.JSON);
 		}
+		
 		return true;  
 	}
 

@@ -71,10 +71,11 @@ var node_createUINodeFromStoryNode = function(storyNodeId, story){
 	return loc_out;
 };
 	
-var node_createUINodeByTag = function(tagId, nodeId){
+var node_createUINodeByTag = function(tagId, nodeId, attributes){
 	var loc_nodeId = nodeId;
 	var loc_tagId = tagId;
 	var loc_children = [];
+	var loc_attributes = attributes==undefined?{}:attributes;
 	
 	var loc_out = {
 		
@@ -89,9 +90,9 @@ var node_createUINodeByTag = function(tagId, nodeId){
 		
 		getChildren : function(){   return loc_children;    },
 		
-		getBody : function(){
-			return loc_out;
-		}
+		getBody : function(){	return loc_out;	},
+		
+		getAttributes : function(){    return loc_attributes;     },
 	
 	};
 	return loc_out;
