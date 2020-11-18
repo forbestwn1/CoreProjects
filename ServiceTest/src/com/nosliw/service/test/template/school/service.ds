@@ -3,6 +3,7 @@
 	"name": "TestTemplateServiceSchool",
     "implementation" : "com.nosliw.service.test.template.school.HAPServiceImp",
 	"description" : "all element school rank in ontario",
+	"tag" : ["public"],
 	"interface" : {
 		"result" : [
 			{

@@ -1,7 +1,7 @@
 package com.nosliw.data.core.expression;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPIdExpressionGroup extends HAPSerializableImp{
 

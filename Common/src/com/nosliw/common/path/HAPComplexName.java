@@ -1,8 +1,8 @@
 package com.nosliw.common.path;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 //for name like java class: a.b.c.d.Abcd
 public class HAPComplexName {

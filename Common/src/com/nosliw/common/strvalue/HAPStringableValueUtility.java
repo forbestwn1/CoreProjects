@@ -8,7 +8,6 @@ import java.util.Set;
 import org.w3c.dom.Element;
 
 import com.nosliw.common.constant.HAPConstantUtility;
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.resolve.HAPResolvableString;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoAtomic;
@@ -16,6 +15,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPXMLUtility;
 
 public class HAPStringableValueUtility {

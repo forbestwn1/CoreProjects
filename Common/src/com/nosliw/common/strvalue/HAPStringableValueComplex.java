@@ -7,9 +7,9 @@ import java.util.Map;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public abstract class HAPStringableValueComplex<T extends HAPStringableValue> extends HAPStringableValue{
 

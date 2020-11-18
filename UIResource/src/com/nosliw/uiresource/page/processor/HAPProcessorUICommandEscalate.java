@@ -3,8 +3,8 @@ package com.nosliw.uiresource.page.processor;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;

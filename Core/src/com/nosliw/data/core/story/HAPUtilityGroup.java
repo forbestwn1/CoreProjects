@@ -1,6 +1,6 @@
 package com.nosliw.data.core.story;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPUtilityGroup {
 

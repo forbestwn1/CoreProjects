@@ -1,8 +1,8 @@
 package com.nosliw.common.strvalue.valueinfo;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntityBasic;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 

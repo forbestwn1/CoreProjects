@@ -9,11 +9,11 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 
@@ -42,7 +42,12 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 	}
 
 	@Override
-	public void setValue(String name, Object value) {		this.m_values.put(name, value);	}
+	public Object setValue(String name, Object value) {
+		Object out = this.m_values.get(name);
+		if(value!=null)		this.m_values.put(name, value);
+		else this.m_values.remove(name);
+		return out;
+	}
 
 	@Override
 	public Set<String> getNames() {   return this.m_values.keySet();  }

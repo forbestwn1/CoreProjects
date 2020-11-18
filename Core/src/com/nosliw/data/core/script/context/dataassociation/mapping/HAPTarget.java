@@ -1,8 +1,8 @@
 package com.nosliw.data.core.script.context.dataassociation.mapping;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 
 public class HAPTarget {

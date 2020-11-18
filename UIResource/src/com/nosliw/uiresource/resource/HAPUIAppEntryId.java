@@ -1,7 +1,7 @@
 package com.nosliw.uiresource.resource;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPUIAppEntryId extends HAPSerializableImp{
 

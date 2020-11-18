@@ -1,5 +1,6 @@
 package com.nosliw.data.core.service.provide;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,4 +26,17 @@ public class HAPManagerServiceDefinition {
 		return this.m_definitions.get(id);
 	}
 	
+	public List<HAPDefinitionService> queryDefinition(HAPQueryServiceDefinition query){
+		List<HAPDefinitionService> out = new ArrayList<HAPDefinitionService>();
+		for(String id : this.m_definitions.keySet()) {
+			boolean found = true;
+			HAPDefinitionService def = this.m_definitions.get(id);
+			List<String> tags = def.getStaticInfo().getTags();
+			for(String keyword : query.getKeywords()) {
+				if(!tags.contains(keyword))  found = false;
+			}
+			if(found)  out.add(def);
+		}
+		return out;
+	}
 }

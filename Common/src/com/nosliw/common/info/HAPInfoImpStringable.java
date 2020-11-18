@@ -16,7 +16,10 @@ public class HAPInfoImpStringable extends HAPStringableValueEntity implements HA
 	}
 
 	@Override
-	public void setValue(String name, Object value) {  this.updateAtomicChildObjectValue(name, value);  }
+	public Object setValue(String name, Object value) {  
+		this.updateAtomicChildObjectValue(name, value);
+		return null;
+	}
 
 	@Override
 	public Set<String> getNames() {  return this.getProperties(); }

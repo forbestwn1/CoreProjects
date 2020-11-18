@@ -1,13 +1,9 @@
-package com.nosliw.common.pattern;
+package com.nosliw.common.utils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPSegmentParser;
 
 public class HAPNamingConversionUtility {
 

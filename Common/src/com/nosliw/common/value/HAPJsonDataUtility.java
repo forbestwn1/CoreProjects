@@ -3,7 +3,7 @@ package com.nosliw.common.value;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPJsonDataUtility {
 

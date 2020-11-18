@@ -1,5 +1,6 @@
 package com.nosliw.data.core.service.provide;
 
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -24,6 +25,12 @@ public class HAPGatewayService extends HAPGatewayImp{
 
 	@HAPAttribute
 	final public static String COMMAND_REQUEST_PARMS = "parms";
+
+	@HAPAttribute
+	final public static String COMMAND_SEARCHDEFINITION = "searchDefinition";
+
+	@HAPAttribute
+	final public static String COMMAND_SEARCHDEFINITION_QUERY = "query";
 	
 	private HAPManagerService m_serviceManager;
 
@@ -45,8 +52,15 @@ public class HAPGatewayService extends HAPGatewayImp{
 			out = this.createSuccessWithObject(serviceResult);
 			break;
 		}
+		case COMMAND_SEARCHDEFINITION:
+		{
+			HAPQueryServiceDefinition defQuery = new HAPQueryServiceDefinition();
+			defQuery.buildObject(parms.optJSONObject(COMMAND_SEARCHDEFINITION_QUERY), HAPSerializationFormat.JSON);
+			List<HAPDefinitionService> serviceDefs = this.m_serviceManager.getServiceDefinitionManager().queryDefinition(defQuery);
+			out = this.createSuccessWithObject(serviceDefs);
+			return out;
+		}
 		}
 		return out;
 	}
-
 }

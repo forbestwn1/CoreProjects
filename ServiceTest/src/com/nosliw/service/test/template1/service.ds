@@ -3,6 +3,7 @@
 	"name": "TestTemplateService1",
     "implementation" : "com.nosliw.service.test.template1.HAPServiceImp",
 	"description" : "test service implemented by process",
+	"tag" : ["public"],
 	"interface" : {
 		"result" : [
 			{

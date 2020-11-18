@@ -1,8 +1,8 @@
 package com.nosliw.data.core.data;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPOperationId extends HAPDataTypeId{
 

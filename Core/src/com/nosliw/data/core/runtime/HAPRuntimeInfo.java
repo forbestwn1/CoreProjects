@@ -4,9 +4,9 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 /*
  * This entity represent a runtime env

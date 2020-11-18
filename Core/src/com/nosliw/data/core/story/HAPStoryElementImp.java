@@ -4,10 +4,12 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 
@@ -72,11 +74,29 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 	
 	@Override
 	public HAPChangeResult patch(String path, Object value) {
+		String[] pathSegs = HAPNamingConversionUtility.parsePaths(path);
 		HAPChangeResult out = new HAPChangeResult(HAPStoryElement.class);
 		if(ENABLE.equals(path)) {
 			out.addRevertChange(HAPUtilityChange.buildChangePatch(this, path, this.m_enable));
 			this.m_enable = (Boolean)value;
 			return out;
+		}
+		else if(NAME.equals(path)) {
+			out.addRevertChange(HAPUtilityChange.buildChangePatch(this, path, this.getName()));
+			this.setName((String)value);
+			return out;
+		}
+		else if(DESCRIPTION.equals(path)) {
+			out.addRevertChange(HAPUtilityChange.buildChangePatch(this, path, this.getDescription()));
+			this.setDescription((String)value);
+			return out;
+		}
+		else if(pathSegs.length>1) {
+			if(pathSegs[0].equals(HAPEntityInfo.INFO)) {
+				Object oldValue = this.getInfo().setValue(pathSegs[1], value);
+				out.addRevertChange(HAPUtilityChange.buildChangePatch(this, path, oldValue));
+				return out;
+			}
 		}
 		return null;
 	}
