@@ -75,7 +75,7 @@ var node_createComponentQuestionItemConstant = function(){
 		},	
 		template : `
 			<div ref="uiTag">
-				Constant Question: 
+				{{question.question}}: 
 			</div>
 		`
 	};

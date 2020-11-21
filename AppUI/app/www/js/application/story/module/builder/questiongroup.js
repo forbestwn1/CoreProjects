@@ -33,22 +33,6 @@ var node_createComponentQuestionGroup = function(){
 				</div>
 			</div>
 			</div>
-<!--
-			<div>
-				<br>
-				Group Start: {{question.question}}
-				<br>
-				<div 
-					v-for="question in question.children"
-				>
-					<question-group v-if="question.type=='group'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
-					<question-item v-if="question.type=='item'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
-				</div>
-				<br>
-				Group End: {{question.question}}
-				<br>
-			</div>
--->			
 		`
 	};
 	return loc_vueComponent;

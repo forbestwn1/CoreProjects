@@ -14,6 +14,9 @@ public interface HAPEntityInfo extends HAPSerializable{
 	public static String NAME = "name";
 	
 	@HAPAttribute
+	public static String DISPLAYNAME = "displayName";
+	
+	@HAPAttribute
 	public static String DESCRIPTION = "description";
 	
 	@HAPAttribute
@@ -25,6 +28,9 @@ public interface HAPEntityInfo extends HAPSerializable{
 	String getName();
 	void setName(String name);
 
+	String getDisplayName();
+	void setDisplayName(String name);
+	
 	String getDescription();
 	void setDescription(String description);
 

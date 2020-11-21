@@ -52,6 +52,7 @@ var node_createComponentQuestionItemService = function(availableService){
 					var service = {
 						id : serviceDef[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICE_STATIC][node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], 
 						name : serviceDef[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICE_STATIC][node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME], 
+						displayName : serviceDef[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICE_STATIC][node_COMMONATRIBUTECONSTANT.ENTITYINFO_DISPLAYNAME], 
 						description : serviceDef[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICE_STATIC][node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION], 
 					};
 					services.push(service);
@@ -91,15 +92,20 @@ var node_createComponentQuestionItemService = function(availableService){
 					var out = {
 						id : element[node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID],
 						name : element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME],
+						displayName : element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DISPLAYNAME],
 						description : element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION],
 					};
-					if(out.id==undefined)   out.name = undefined;
+					if(out.id==undefined){
+						out.name = undefined;
+						out.displayName = undefined;
+					}
 					return out;
 				},
 				
 				set : function(service){
 					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODESERVICE_REFERENCEID, service.id, this.question.answer);
 					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME, service.name, this.question.answer);
+					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ENTITYINFO_DISPLAYNAME, service.displayName, this.question.answer);
 					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION, service.description, this.question.answer);
 					this.$emit("answerChange", service);
 				}
@@ -107,14 +113,15 @@ var node_createComponentQuestionItemService = function(availableService){
 		},
 		template : `
 			<div>
-				{{currentService.name}}
 				<br>
-				{{currentService.description}}
+				DataSource : {{currentService.displayName}}
+				<br>
+				Description : {{currentService.description}}
 				<br>
 				
-				<select style="display:inline;" v-model="currentService" placeholder="Select service...">
+				{{question.question}}:<select style="display:inline;" v-model="currentService" placeholder="Select service...">
 				  <option v-for="service in data" v-bind:value="service">
-				    {{ service.name }}
+				    {{ service.displayName }}
 				  </option>
 				</select>	
 			</div>

@@ -23,6 +23,9 @@ public class HAPEntityInfoImpWrapper extends HAPSerializableImp implements HAPEn
 	public String getName() {  return this.m_entityInfo.getName();  }
 
 	@Override
+	public String getDisplayName() {  return this.m_entityInfo.getDisplayName();  }
+
+	@Override
 	public String getDescription() {   return this.m_entityInfo.getDescription();  }
 
 	@Override
@@ -32,11 +35,13 @@ public class HAPEntityInfoImpWrapper extends HAPSerializableImp implements HAPEn
 	public void setName(String name) {  this.m_entityInfo.setName(name);  }
 
 	@Override
+	public void setDisplayName(String name) {  this.m_entityInfo.setDisplayName(name);  }
+
+	@Override
 	public void setDescription(String description) {  this.m_entityInfo.setDescription(description);  }
 
 	@Override
 	public void setInfo(HAPInfo info) {  this.m_entityInfo.setInfo(info);  }
-
 
 	@Override
 	public HAPEntityInfoImpWrapper cloneEntityInfo() {
@@ -57,5 +62,4 @@ public class HAPEntityInfoImpWrapper extends HAPSerializableImp implements HAPEn
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
 	}
-
 }

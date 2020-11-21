@@ -21,6 +21,7 @@ var packageObj = library.getChildPackage();
 	var node_createComponentQuestionStep;
 	var node_createComponentQuestionGroup;
 	var node_createComponentQuestionItem;
+	var node_builderUtility;
 	var node_storyUtility;
 	var node_storyChangeUtility;
 	var node_errorUtility;
@@ -105,6 +106,9 @@ var node_createModuleStoryBuilder = function(parm){
 			else{
 				question.answered = true;
 			}
+			
+			//question label
+			node_builderUtility.processQuestionLabel(question);
 		}
 	};
 	
@@ -194,6 +198,11 @@ var node_createModuleStoryBuilder = function(parm){
 			components : {
 			},
 			computed : {
+				envName : {
+					get : function(){
+						return nosliwApplication.info.envName;
+					}
+				},
 				question : {
 					get : function(){
 						if(this.stepCursor!=-1){
@@ -212,18 +221,18 @@ var node_createModuleStoryBuilder = function(parm){
 				},
 				overviewUrl : {
 					get : function(){
-						return "http://localhost:8080/AppUI/story.html?env=local&configure=overviewtest&app=story&version=2&designId="+this.designId;
+						return "story.html?env=local&configure=overviewtest&app=story&version=2&designId="+this.designId;
 					}
 				},
 				pageViewUrl : {
 					get : function(){
-						return "http://localhost:8080/AppUI/story.html?env=local&configure=ui&app=story&version=2&designId="+this.designId;
+						return "story.html?env=local&configure=ui&app=story&version=2&designId="+this.designId;
 					}
 				},
 				resourceUrl : {
 					get : function(){
 						if(this.resourceId.id!=undefined){
-							return "http://localhost:8082/nosliw/page.html?name="+this.resourceId.id.id;
+							return nosliwApplication.info.baseServer + "page.html?name="+this.resourceId.id.id;
 						}
 						else return undefined;
 					}
@@ -270,23 +279,31 @@ var node_createModuleStoryBuilder = function(parm){
 				`
 				    <div class="block">
 						<br>
+						
+						<span v-if="envName!='product'">
 						{{designId}}
 						<br>
-						<br>
-						<a :href="overviewUrl"  target="_blank">overview</a>
-						<br>
-						<a :href="pageViewUrl"  target="_blank">pageView</a>
-						<br>
 						<a v-on:click.prevent="onStory">story</a>
+						<br>
+						<a v-on:click.prevent="onShowDefinition">showDefinition</a>
 						<br>
 						<a v-on:click.prevent="onConvertToShow">convertToShow</a>
 						<br>
 						Page Id : {{resourceId}}
 						<br>
-						<a v-on:click.prevent="onShowDefinition">showDefinition</a>
+						</span>
+			
+						<a :href="overviewUrl"  target="_blank">Diagram</a>
 						<br>
-						<a :href="resourceUrl"  target="_blank">show</a>
+						
+						<a :href="pageViewUrl"  target="_blank">UIView</a>
 						<br>
+
+						<span v-if="resourceId!=undefined">
+						<a :href="resourceUrl"  target="_blank">Product</a>
+						<br>
+						</span>
+						
 						<question-step 
 							v-bind:question="question"
 							v-bind:story="story"
@@ -354,6 +371,7 @@ nosliw.registerSetNodeDataEvent("application.instance.story.service.createStoryS
 nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionStep", function(){node_createComponentQuestionStep = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionGroup", function(){node_createComponentQuestionGroup = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionItem", function(){node_createComponentQuestionItem = this.getData();});
+nosliw.registerSetNodeDataEvent("application.story.module.builder.builderUtility", function(){node_builderUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});

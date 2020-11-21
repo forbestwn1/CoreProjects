@@ -86,6 +86,11 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 			this.setName((String)value);
 			return out;
 		}
+		else if(DISPLAYNAME.equals(path)) {
+			out.addRevertChange(HAPUtilityChange.buildChangePatch(this, path, this.getName()));
+			this.setDisplayName((String)value);
+			return out;
+		}
 		else if(DESCRIPTION.equals(path)) {
 			out.addRevertChange(HAPUtilityChange.buildChangePatch(this, path, this.getDescription()));
 			this.setDescription((String)value);

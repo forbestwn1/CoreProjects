@@ -121,8 +121,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		step.addChanges(transactionResult.getChanges());
 		
 		//extra info
-		HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Please select service.");
-		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("select service", ELEMENT_SERVICE, true);
+		HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup();
+		HAPQuestionItem serviceItemExtraInfo = new HAPQuestionItem("Please select data source", ELEMENT_SERVICE, true);
 		rootQuestionGroup.addChild(serviceItemExtraInfo);
 		step.setQuestion(rootQuestionGroup);
 		
@@ -207,7 +207,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				//parms
 				for(String parmName : serviceInterface.getParmNames()) {
 					HAPParmBranchInfo parmBranchInfo = new HAPParmBranchInfo();
-					parmBranchInfo.parmName = parmName;
+					parmBranchInfo.parmDef = serviceInterface.getParm(parmName);
 
 					//parm and connection to input
 					HAPServiceParm parmDef = serviceInterface.getParm(parmName);
@@ -238,11 +238,13 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					//add constant to group
 					HAPInfoElement constantGroupEle = new HAPInfoElement(parmBranchInfo.constantGroupAlias);
 					constantGroupEle.setName("Constant");
+					constantGroupEle.setDisplayName("I set value now");
 					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.switchAlias, constantGroupEle);
 
 					//add variable to group
 					HAPInfoElement varGroupEle = new HAPInfoElement(parmBranchInfo.varGroupAlias);
 					varGroupEle.setName("Variable");
+					varGroupEle.setDisplayName("User input when they use the app");
 					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.switchAlias, varGroupEle);
 
 					//set switch group choice
@@ -297,7 +299,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				for(HAPParmBranchInfo parmBranchInfo : parmBranchInfos) {
 					//ui
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
-					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "input", varNode.getVariableInfo().getName(), parmBranchInfo.parmName, HAPConstant.DATAFLOW_OUT, uiLayerChangeRequest);
+					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "input", varNode.getVariableInfo().getName(), parmBranchInfo.parmDef.getName(), HAPConstant.DATAFLOW_OUT, uiLayerChangeRequest);
 					parmBranchInfo.dataUINode = dataUINode; 
 					
 					//variable group
@@ -326,18 +328,18 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Please select ui.");
 				
 				for(HAPParmBranchInfo parmBranchInfo : parmBranchInfos) {
-					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup("Configure Input Parm " + parmBranchInfo.parmName);
+					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup("Configure Input Parm " + parmBranchInfo.parmDef.getDisplayName());
 					rootQuestionGroup.addChild(parmQuestionGroup);
 					
 					//question item
-					HAPQuestionItem groupQuestion = new HAPQuestionItem("select import for parm", parmBranchInfo.switchAlias);
+					HAPQuestionItem groupQuestion = new HAPQuestionItem("For "+ parmBranchInfo.parmDef.getDisplayName() +" please choose", parmBranchInfo.switchAlias);
 					parmQuestionGroup.addChild(groupQuestion);
 					
 					HAPStoryNodeConstant constantStoryNode = (HAPStoryNodeConstant)story.getElement(parmBranchInfo.constantAlias);
-					HAPQuestionItem constantQuestion = new HAPQuestionItem("select constant", parmBranchInfo.constantAlias, constantStoryNode.isMandatory());
+					HAPQuestionItem constantQuestion = new HAPQuestionItem("Please select value for " + parmBranchInfo.parmDef.getDisplayName(), parmBranchInfo.constantAlias, constantStoryNode.isMandatory());
 					parmQuestionGroup.addChild(constantQuestion);
 					
-					HAPQuestionItem uiDataQuestion = new HAPQuestionItem("select ui tag", parmBranchInfo.dataUINode.getStoryNodeRef());
+					HAPQuestionItem uiDataQuestion = new HAPQuestionItem("Please select UI for " + parmBranchInfo.parmDef.getDisplayName(), parmBranchInfo.dataUINode.getStoryNodeRef());
 					parmQuestionGroup.addChild(uiDataQuestion);
 				}
 				
@@ -472,7 +474,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	}
 	
 	class HAPParmBranchInfo{
-		public String parmName;
+		public HAPServiceParm parmDef;
 		public HAPAliasElement variableAlias;
 		public HAPAliasElement constantAlias;
 		public HAPAliasElement varGroupAlias;

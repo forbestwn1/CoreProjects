@@ -35,7 +35,7 @@ var node_createComponentQuestionItem = function(){
 		},
 		template : `
 			<div v-if="question.element.enable==true">
-				{{question.question}}<span v-if="question.isMandatory==true">*</span> :
+<!--				{{question.question}}<span v-if="question.isMandatory==true">*</span> :  -->
 				<span>
 				<question-item-service v-if="question.element.type=='service'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
 				<question-item-switch v-if="question.element.type=='switch'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>

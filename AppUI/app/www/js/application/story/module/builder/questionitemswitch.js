@@ -43,9 +43,9 @@ var node_createComponentQuestionItemSwitch = function(){
 			}
 		},
 		template : `
-			<select style="display:inline;" v-model="choiceId">
+			{{question.question}}:<select style="display:inline;" v-model="choiceId">
 			  <option v-for="choice in choices" v-bind:value="choice.name">
-			    {{ choice.name }}
+			    {{ choice.displayName }}
 			  </option>
 			</select>			
 		`

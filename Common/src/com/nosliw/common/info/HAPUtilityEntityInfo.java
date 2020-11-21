@@ -20,6 +20,7 @@ public class HAPUtilityEntityInfo {
 	public static void cloneTo(HAPEntityInfo from, HAPEntityInfo to) {
 		to.setId(from.getId());
 		to.setName(from.getName());
+		to.setDisplayName(from.getDisplayName());
 		to.setDescription(from.getDescription());
 		to.setInfo(from.getInfo().cloneInfo());
 	}
@@ -27,6 +28,7 @@ public class HAPUtilityEntityInfo {
 	public static void buildJsonMap(Map<String, String> jsonMap, HAPEntityInfo entityInfo){
 		jsonMap.put(HAPEntityInfo.ID, entityInfo.getId());
 		jsonMap.put(HAPEntityInfo.NAME, entityInfo.getName());
+		jsonMap.put(HAPEntityInfo.DISPLAYNAME, entityInfo.getDisplayName());
 		jsonMap.put(HAPEntityInfo.DESCRIPTION, entityInfo.getDescription());
 		jsonMap.put(HAPEntityInfo.INFO, HAPJsonUtility.buildJson(entityInfo.getInfo(), HAPSerializationFormat.JSON));
 	}

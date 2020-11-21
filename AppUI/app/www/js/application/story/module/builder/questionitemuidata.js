@@ -24,14 +24,7 @@ var node_createComponentQuestionItemUIData = function(){
 		},
 		template : `
 			<div>
-				UI data question:
-<!--
-				<select v-model="serviceId">
-				  <option v-for="service in allService" v-bind:value="service.id">
-				    {{ service.name }}
-				  </option>
-				</select>
--->							
+				{{question.question}}:
 			</div>
 		`
 	};

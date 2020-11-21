@@ -12,8 +12,11 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 
 	private String m_id;
 	
-	//name, for display
+	//name
 	private String m_name;
+
+	//name
+	private String m_displayName;
 
 	//description
 	private String m_description;
@@ -47,6 +50,16 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 		this.m_name = name;
 		if(this.m_id==null)   this.m_id = name;
 	}
+
+	@Override
+	public String getDisplayName() {  
+		if(this.m_displayName!=null) return this.m_displayName;
+		if(this.m_name!=null)   return this.m_name;
+		return this.m_id;
+	}
+
+	@Override
+	public void setDisplayName(String name) {  this.m_displayName = name;  }
 
 	@Override
 	public String getDescription() {   return this.m_description;   }
@@ -93,6 +106,7 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 		JSONObject jsonObj = (JSONObject)json;
 		this.setId((String)jsonObj.opt(ID));
 		this.setName((String)jsonObj.opt(NAME));
+		this.setDisplayName((String)jsonObj.opt(DISPLAYNAME));
 		this.setDescription(jsonObj.optString(DESCRIPTION));
 		this.m_info = new HAPInfoImpSimple();
 		this.m_info.buildObject(jsonObj.optJSONObject(INFO), HAPSerializationFormat.JSON);
@@ -104,6 +118,7 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 			HAPEntityInfoImp infoEntity = (HAPEntityInfoImp)obj;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_id, this.m_id))   return false;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_name, this.m_name))   return false;
+			if(!HAPBasicUtility.isEquals(infoEntity.m_displayName, this.m_displayName))   return false;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_description, this.m_description))   return false;;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_info, this.m_info))  return false;
 			return true;

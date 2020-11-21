@@ -130,18 +130,13 @@ var node_createModuleOverview = function(parm){
 					});
 					
 					//ui data connection link 
-					loc_buildUIDataConnectionLink(node_storyUtility.getStoryNodeByType(story, "UI_page")[0], undefined, loc_uiDataConnectionLink);
-					
-					_.each(loc_uiDataConnectionLink, function(link, id){
-						link.addToPaper(loc_graph);
-					});
-					
-//					_.each(node_storyOverviewUtility.getUIStoryNode(story), function(uiStoryNode){
-//						var uiStoryNodeId = uiStoryNode[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID];
-//						var uiDataConnection = node_createUIDataConnectionLink(uiStoryNodeId, that);
-//						loc_uiDataConnectionLink[uiStoryNodeId] = uiDataConnection;
-//						uiDataConnection.addToPaper(loc_graph);
-//					});
+					var pageNodes = node_storyUtility.getStoryNodeByType(story, "UI_page");
+					if(pageNodes.length>0){
+						loc_buildUIDataConnectionLink(pageNodes[0], undefined, loc_uiDataConnectionLink);
+						_.each(loc_uiDataConnectionLink, function(link, id){
+							link.addToPaper(loc_graph);
+						});
+					}					
 				}
 			}));
 			return out;

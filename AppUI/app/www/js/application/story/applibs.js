@@ -66,6 +66,7 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 				"questionitemswitch.js",
 				"questionitemconstant.js",
 				"questionitemuidata.js",
+				"utility.js",
 			]
 		});
 	}

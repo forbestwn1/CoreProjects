@@ -16,8 +16,11 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	
 	protected String m_id;
 	
-	//name, for display
+	//name
 	protected String m_name;
+
+	//name
+	protected String m_displayName;
 
 	//description
 	protected String m_description;
@@ -28,6 +31,7 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	
 	public HAPExecutableImpEntityInfo(HAPEntityInfo entityInfo) {
 		this.m_name = entityInfo.getName();
+		this.m_displayName = entityInfo.getDisplayName();
 		this.m_description = entityInfo.getDescription();
 		this.m_info = entityInfo.getInfo();
 	}
@@ -47,6 +51,11 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	@Override
 	public void setName(String name) {   this.m_name = name;    }
 
+	@Override
+	public String getDisplayName() {  return this.m_displayName;  }
+	@Override
+	public void setDisplayName(String name) {   this.m_displayName = name;    }
+	
 	@Override
 	public String getDescription() {   return this.m_description;  }
 	@Override
@@ -80,6 +89,7 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	public void buildEntityInfoByJson(Object json) {
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_name = jsonObj.optString(NAME);
+		this.m_displayName = jsonObj.optString(DISPLAYNAME);
 		this.m_description = jsonObj.optString(DESCRIPTION);
 		this.m_info = new HAPInfoImpSimple();
 		this.m_info.buildObject(jsonObj.optJSONObject(INFO), HAPSerializationFormat.JSON);

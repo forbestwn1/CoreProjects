@@ -40,11 +40,6 @@ public class HAPStoryNodeService extends HAPStoryNodeImp{
 				this.m_referenceId = (String)value;
 				return out;
 			}
-			else if(NAME.equals(path)) {
-				out.addRevertChange(HAPUtilityChange.buildChangePatch(this, NAME, this.getName()));
-				this.setName((String)value);
-				return out;
-			}
 		}
 		return null;
 	}

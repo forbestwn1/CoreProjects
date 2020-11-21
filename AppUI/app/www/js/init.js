@@ -96,7 +96,9 @@ nosliwApplication.utility = {
 			//environment information (address, port, context, library)
 			getEnvironment : function(){
 				var envName =  loc_getParm("env", "product");
-				return nosliwApplication.environments[envName];
+				var out = nosliwApplication.environments[envName];
+				out.name = envName;
+				return out;
 			},
 			
 			getVersion : function(){ return loc_getParm("version", "0.0.0");     },
@@ -115,6 +117,8 @@ nosliwApplication.lifecycle = {
 		var appFolder = "js/application/"+ appName +"/";
 		nosliwApplication.info = {
 			baseServer : env.nosliw_address+':'+env.nosliw_port+'/'+env.nosliw_context+'/',
+//			envName : env.name,
+			envName : "product",
 			application : {
 				name : appName,
 				appFolder : appFolder,

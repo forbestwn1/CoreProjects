@@ -1,6 +1,7 @@
 [{
 	"id": "TestTemplateServiceSchool",
 	"name": "TestTemplateServiceSchool",
+	"displayName": "Element school ranking list",
     "implementation" : "com.nosliw.service.test.template.school.HAPServiceImp",
 	"description" : "all element school rank in ontario",
 	"tag" : ["public"],
@@ -18,6 +19,8 @@
 		"parm" : [ 
 			{
 				name : "schoolTypeInService",
+				"displayName" : "School Type",
+				description : "The type of school, public, private, ...",
 				dataInfo : {
 					criteria: "test.string;1.0.0",
 					rule : [
@@ -34,6 +37,8 @@
 			},
 			{
 				name : "schoolRatingInService",
+				displayName : "School Rating",
+				description : "The rating of school, 0--10",
 				dataInfo : {
 					criteria: "test.float;1.0.0",
 				},
