@@ -6,13 +6,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 //contains all information related with service definition
 @HAPEntityWithAttribute
-public class HAPDefinitionService extends HAPEntityInfoImp{
+public class HAPDefinitionService extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String STATIC = "static";
@@ -37,12 +37,12 @@ public class HAPDefinitionService extends HAPEntityInfoImp{
 	protected boolean buildObjectByJson(Object json){
 		try{
 			JSONObject objJson = (JSONObject)json;
+			
 			this.m_staticInfo = new HAPInfoServiceStatic();
-			this.m_staticInfo.buildObjectByJson(objJson);
+			this.m_staticInfo.buildObjectByJson(objJson.getJSONObject(STATIC));
 			
 			this.m_runtimeInfo = new HAPInfoServiceRuntime();
-			this.m_runtimeInfo.buildObjectByJson(objJson);
-
+			this.m_runtimeInfo.buildObjectByJson(objJson.getJSONObject(RUNTIME));
 		}
 		catch(Exception e){
 			e.printStackTrace();

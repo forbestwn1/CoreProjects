@@ -46,7 +46,7 @@ var node_createModuleStoryBuilder = function(parm){
 
 	var loc_componentData = {
 		designId : "",
-		resourceId : "",
+		resourceId : undefined,
 		story : {},
 
 		steps : [],
@@ -296,11 +296,11 @@ var node_createModuleStoryBuilder = function(parm){
 						<a :href="overviewUrl"  target="_blank">Diagram</a>
 						<br>
 						
-						<a :href="pageViewUrl"  target="_blank">UIView</a>
+						<a :href="pageViewUrl"  target="_blank">UI Preview</a>
 						<br>
 
 						<span v-if="resourceId!=undefined">
-						<a :href="resourceUrl"  target="_blank">Product</a>
+						<a :href="resourceUrl"  target="_blank">Application</a>
 						<br>
 						</span>
 						

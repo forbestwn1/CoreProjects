@@ -12,13 +12,13 @@ import com.nosliw.common.utils.HAPFileUtility;
 public class HAPImporterDataSourceDefinition {
 
 	private static String[] serviceClasses = {
-			"com.nosliw.service.school.HAPServiceImp",
-			"com.nosliw.service.realtor.HAPServiceImp",
-			"com.nosliw.service.soccer.HAPServiceGetLineup",
-			"com.nosliw.service.soccer.HAPServiceUpdateLineup",
-			"com.nosliw.service.test.process.HAPServiceProviderImp",
-			"com.nosliw.service.pearsonflight.HAPServiceImp",
-			"com.nosliw.service.email.HAPServiceImp",
+//			"com.nosliw.service.school.HAPServiceImp",
+//			"com.nosliw.service.realtor.HAPServiceImp",
+//			"com.nosliw.service.soccer.HAPServiceGetLineup",
+//			"com.nosliw.service.soccer.HAPServiceUpdateLineup",
+//			"com.nosliw.service.test.process.HAPServiceProviderImp",
+//			"com.nosliw.service.pearsonflight.HAPServiceImp",
+//			"com.nosliw.service.email.HAPServiceImp",
 			"com.nosliw.service.test.template1.HAPServiceImp",
 			"com.nosliw.service.test.template2.HAPServiceImp",
 			"com.nosliw.service.test.template.school.HAPServiceImp",

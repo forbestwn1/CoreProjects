@@ -1,33 +1,56 @@
 [{
-	"id": "TestTemplateService1",
-	"name": "TestTemplateService1",
-    "implementation" : "com.nosliw.service.test.template1.HAPServiceImp",
-	"description" : "test service implemented by process",
-	"tag" : ["public"],
-	"interface" : {
-		"result" : [
-			{
-				"name" : "success",
-				"output" : {
-					"outputInService": {
-						"criteria" : "test.string;1.0.0"
-					}
-				},			
-			}
-		],
-		"parm" : [
-			{
-				name : "serviceParm1",
-				dataInfo : "test.string;1.0.0",
-				defaultValue :{
-					dataTypeId: "test.string;1.0.0",
-					value: "hello"
+	"static": {
+		"id": "TestTemplateService1",
+		"name": "TestTemplateService1",
+		"displayName": "Test Template Service1",
+		"description" : "test service implemented by process",
+		"tag" : ["public"],
+		"interface" : {
+			"parm" : {
+				"serviceParm1": {
+					dataInfo : "test.string;1.0.0",
+					defaultValue :{
+						dataTypeId: "test.string;1.0.0",
+						value: "hello"
+					},
 				},
+				"serviceParm2": {
+					dataInfo : "test.string;1.0.0",
+				}
 			},
-			{
-				name : "serviceParm2",
-				dataInfo : "test.string;1.0.0",
+			"result" : {
+				"success": {
+					"outputInService": {
+						name : "outputInService",
+						displayName: "Output",
+						dataInfo : "test.string;1.0.0",
+					}
+				}
+			},
+		},
+		"display" : {
+			"displayName" : "Test Template Service1 English",
+			"description" : "test service implemented by process",
+			"interface" : {
+				"parm" : {
+					"serviceParm1" : {
+						"displayName" : "serviceParm1 English"
+					},
+					"serviceParm2" : {
+						"displayName" : "serviceParm2 English"
+					},
+				},
+				"result" : {
+					"success" : {
+						"outputInService" : {
+							"displayName" : "outputInService English"
+						}
+					}
+				}
 			}
-		]
+		}
+	},
+	"runtime": {
+	    "implementation" : "com.nosliw.service.test.template1.HAPServiceImp",
 	}
 }]

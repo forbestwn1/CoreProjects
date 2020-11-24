@@ -43,11 +43,13 @@ var node_createComponentQuestionItemSwitch = function(){
 			}
 		},
 		template : `
-			{{question.question}}:<select style="display:inline;" v-model="choiceId">
-			  <option v-for="choice in choices" v-bind:value="choice.name">
-			    {{ choice.displayName }}
-			  </option>
-			</select>			
+			<div>
+				{{question.question}}:<select style="display:inline;" v-model="choiceId">
+				  <option v-for="choice in choices" v-bind:value="choice.name">
+				    {{ choice.displayName }}
+				  </option>
+				</select>			
+			</div>
 		`
 	};
 	return loc_vueComponent;

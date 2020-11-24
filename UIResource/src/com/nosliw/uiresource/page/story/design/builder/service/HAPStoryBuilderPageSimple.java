@@ -72,9 +72,9 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 	public final static String BUILDERID = "pageSimple";
 	
-	public final static String STAGE_SERVICE = "service";
-	public final static String STAGE_UI = "ui";
-	public final static String STAGE_END = "end";
+	public final static String STAGE_SERVICE = "Service";
+	public final static String STAGE_UI = "UI";
+	public final static String STAGE_END = "Finish";
 
 	private final static HAPAliasElement ELEMENT_SERVICE = new HAPAliasElement("service", false);
 	
@@ -248,7 +248,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.switchAlias, varGroupEle);
 
 					//set switch group choice
-					dataLayerChangeRequest.addPatchChange(parmBranchInfo.switchAlias, HAPElementGroupSwitch.CHOICE, constantGroupEle.getName());
+					dataLayerChangeRequest.addPatchChange(parmBranchInfo.switchAlias, HAPElementGroupSwitch.CHOICE, varGroupEle.getName());
 
 					parmBranchInfos.add(parmBranchInfo);
 				}
@@ -260,7 +260,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				Map<String, HAPServiceOutput> output = successResult.getOutput(); 
 				for(String parmName : output.keySet()) {
 					HAPOutputBranchInfo parmBranchInfo = new HAPOutputBranchInfo();
-					parmBranchInfo.parmName = parmName;
+					parmBranchInfo.outputDef = output.get(parmName);
 
 					//parm and connection to input
 					HAPServiceOutput parmDef = output.get(parmName);
@@ -299,7 +299,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				for(HAPParmBranchInfo parmBranchInfo : parmBranchInfos) {
 					//ui
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
-					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "input", varNode.getVariableInfo().getName(), parmBranchInfo.parmDef.getName(), HAPConstant.DATAFLOW_OUT, uiLayerChangeRequest);
+					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "input", varNode.getVariableInfo().getName(), parmBranchInfo.parmDef.getDisplayName(), HAPConstant.DATAFLOW_OUT, uiLayerChangeRequest);
 					parmBranchInfo.dataUINode = dataUINode; 
 					
 					//variable group
@@ -312,7 +312,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				for(HAPOutputBranchInfo parmBranchInfo : outputBranchInfos) {
 					//ui
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
-					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "output", varNode.getVariableInfo().getName(), parmBranchInfo.parmName, HAPConstant.DATAFLOW_IN, uiLayerChangeRequest);
+					HAPUINode dataUINode = buildDataUINode(pageLayoutUINode, "output", varNode.getVariableInfo().getName(), parmBranchInfo.outputDef.getDisplayName(), HAPConstant.DATAFLOW_IN, uiLayerChangeRequest);
 					parmBranchInfo.dataUINode = dataUINode; 
 					
 					//variable group
@@ -326,13 +326,15 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			{
 				//question
 				HAPQuestionGroup rootQuestionGroup = new HAPQuestionGroup("Please select ui.");
+				HAPQuestionGroup parmsQuestionGroup = new HAPQuestionGroup("Application Input:");
+				rootQuestionGroup.addChild(parmsQuestionGroup);
 				
 				for(HAPParmBranchInfo parmBranchInfo : parmBranchInfos) {
-					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup("Configure Input Parm " + parmBranchInfo.parmDef.getDisplayName());
-					rootQuestionGroup.addChild(parmQuestionGroup);
+					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup(parmBranchInfo.parmDef.getDisplayName());
+					parmsQuestionGroup.addChild(parmQuestionGroup);
 					
 					//question item
-					HAPQuestionItem groupQuestion = new HAPQuestionItem("For "+ parmBranchInfo.parmDef.getDisplayName() +" please choose", parmBranchInfo.switchAlias);
+					HAPQuestionItem groupQuestion = new HAPQuestionItem("Please choose", parmBranchInfo.switchAlias);
 					parmQuestionGroup.addChild(groupQuestion);
 					
 					HAPStoryNodeConstant constantStoryNode = (HAPStoryNodeConstant)story.getElement(parmBranchInfo.constantAlias);
@@ -342,6 +344,25 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					HAPQuestionItem uiDataQuestion = new HAPQuestionItem("Please select UI for " + parmBranchInfo.parmDef.getDisplayName(), parmBranchInfo.dataUINode.getStoryNodeRef());
 					parmQuestionGroup.addChild(uiDataQuestion);
 				}
+				
+				HAPQuestionGroup outputsQuestionGroup = new HAPQuestionGroup("Application Output:");
+				rootQuestionGroup.addChild(outputsQuestionGroup);
+				for(HAPOutputBranchInfo outputBranchInfo : outputBranchInfos) {
+//					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup(outputBranchInfo.parmDef.getDisplayName());
+//					parmsQuestionGroup.addChild(parmQuestionGroup);
+//					
+//					//question item
+//					HAPQuestionItem groupQuestion = new HAPQuestionItem("Please choose", parmBranchInfo.switchAlias);
+//					parmQuestionGroup.addChild(groupQuestion);
+//					
+//					HAPStoryNodeConstant constantStoryNode = (HAPStoryNodeConstant)story.getElement(parmBranchInfo.constantAlias);
+//					HAPQuestionItem constantQuestion = new HAPQuestionItem("Please select value for " + parmBranchInfo.parmDef.getDisplayName(), parmBranchInfo.constantAlias, constantStoryNode.isMandatory());
+//					parmQuestionGroup.addChild(constantQuestion);
+//					
+//					HAPQuestionItem uiDataQuestion = new HAPQuestionItem("Please select UI for " + parmBranchInfo.parmDef.getDisplayName(), parmBranchInfo.dataUINode.getStoryNodeRef());
+//					parmQuestionGroup.addChild(uiDataQuestion);
+				}
+
 				
 				step.setQuestion(rootQuestionGroup);
 			}
@@ -360,11 +381,13 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 	
 	private HAPUINode buildDataUINode(HAPUINode parent, Object childId, String varName, String label, String dataFlow, HAPRequestChangeWrapper changeRequest) {
+		String layoutTemplate = null;
+		if(HAPBasicUtility.isStringNotEmpty(label)) layoutTemplate = "uiDataWithTitle.tmp";
+		else layoutTemplate = "uiDataWithoutTitle.tmp";
 		
-		HAPUINode layoutUINode = parent.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "uiData.tmp")), childId, changeRequest, m_contextProcessRequirement, m_uiTagManager);
+		HAPUINode layoutUINode = parent.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, layoutTemplate)), childId, changeRequest, m_contextProcessRequirement, m_uiTagManager);
+		if(HAPBasicUtility.isStringNotEmpty(label)) layoutUINode.newChildNode(new HAPStoryNodeUIHtml(label), "label", changeRequest, m_contextProcessRequirement, m_uiTagManager);
 
-		HAPUINode labelUINode = layoutUINode.newChildNode(new HAPStoryNodeUIHtml(label), "label", changeRequest, m_contextProcessRequirement, m_uiTagManager);
-		
 		//data tag
 		HAPUINode dataUINode = null;
 		HAPUIDataInfo uiDataInfo = layoutUINode.getDataInfo(varName);
@@ -382,11 +405,11 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, m_contextProcessRequirement, m_uiTagManager);
 				HAPUINode elementUINode = buildDataUINode(dataUINode, null, "element", null, dataFlow, changeRequest);
 			}
-			else if(dataTypeId.getFullName().contains("map")) {
+			else if(dataTypeId.getFullName().contains("map")){
 				//map
 				List<String> names = HAPCriteriaUtility.getCriteriaChildrenNames(dataTypeCriteria);
 				for(String name : names) {
-					buildDataUINode(parent, name, varName+"."+name, name, dataFlow, changeRequest);
+					buildDataUINode(layoutUINode, "uiData", varName+"."+name, name, dataFlow, changeRequest);
 				}
 			}
 		}
@@ -467,7 +490,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	}
 	
 	class HAPOutputBranchInfo{
-		public String parmName;
+		public HAPServiceOutput outputDef;
+//		public String parmName;
 		public HAPAliasElement variableAlias;
 		public HAPAliasElement varGroupAlias;
 		public HAPUINode dataUINode; 

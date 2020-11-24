@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.displayresource.HAPDisplayResource;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -24,10 +25,15 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String INTERFACE = "interface";
-	
+
+	@HAPAttribute
+	public static String DISPLAY = "display";
+
 	private List<String> m_tags;
 	
 	private HAPServiceInterface m_serviceInterface;
+	
+	private HAPDisplayResource m_displayResource;
 	
 	public HAPInfoServiceStatic() {
 		this.m_tags = new ArrayList<String>();
@@ -52,7 +58,11 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 					this.m_tags.add(tagArray.getString(i));
 				}
 			}
-//			this.m_tags.addAll(Arrays.asList(HAPNamingConversionUtility.parseElements(objJson.optString(TAG))));   
+			JSONObject displayResourceObj = objJson.optJSONObject(DISPLAY);
+			if(displayResourceObj!=null) {
+				this.m_displayResource = new HAPDisplayResource();
+				this.m_displayResource.buildObject(displayResourceObj, HAPSerializationFormat.JSON);
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -66,5 +76,6 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(INTERFACE, HAPJsonUtility.buildJson(this.m_serviceInterface, HAPSerializationFormat.JSON));
 		jsonMap.put(TAG, HAPJsonUtility.buildJson(this.m_tags, HAPSerializationFormat.JSON));
+		jsonMap.put(DISPLAYNAME, HAPJsonUtility.buildJson(this.m_displayResource, HAPSerializationFormat.JSON));
 	}
 }

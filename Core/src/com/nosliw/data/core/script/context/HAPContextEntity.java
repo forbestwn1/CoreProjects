@@ -28,6 +28,9 @@ public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 	public String getName() {  return this.m_entityInfo.getName();  }
 
 	@Override
+	public String getDisplayName() {   return this.m_entityInfo.getDisplayName();  }
+
+	@Override
 	public String getDescription() {  return this.m_entityInfo.getDescription();  }
 
 	@Override
@@ -38,6 +41,9 @@ public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 
 	@Override
 	public void setName(String name) {  this.m_entityInfo.setName(name);  }
+
+	@Override
+	public void setDisplayName(String name) {  this.m_entityInfo.setDisplayName(name);  }
 
 	@Override
 	public void setDescription(String description) {  this.m_entityInfo.setDescription(description);  }

@@ -1,52 +1,60 @@
 [{
-	"id": "TestTemplateServiceSchool",
-	"name": "TestTemplateServiceSchool",
-	"displayName": "Element school ranking list",
-    "implementation" : "com.nosliw.service.test.template.school.HAPServiceImp",
-	"description" : "all element school rank in ontario",
-	"tag" : ["public"],
-	"interface" : {
-		"result" : [
-			{
-				"name" : "success",
-				"output" : {
-					"outputInService": {
-						"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
-					}
-				},			
-			}
-		],
-		"parm" : [ 
-			{
-				name : "schoolTypeInService",
-				"displayName" : "School Type",
-				description : "The type of school, public, private, ...",
-				dataInfo : {
-					criteria: "test.string;1.0.0",
-					rule : [
+	"static": {
+		"id": "TestTemplateServiceSchool",
+		"name": "TestTemplateServiceSchool",
+		"displayName": "Element school ranking list",
+		"description" : "all element school rank in ontario",
+		"tag" : ["public"],
+		"interface" : {
+			"result" : [
+				{
+					"name" : "success",
+					"output" : [
 						{
-							ruleType : "enum",
-							enumCode : "schoolType"
+							name : "outputInService",
+							displayName: "All Schools",
+							dataInfo : {
+								"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+							},
 						}
-					]
+					] 
+				}
+			],
+			"parm" : [ 
+				{
+					name : "schoolTypeInService",
+					"displayName" : "School Type",
+					description : "The type of school, public, private, ...",
+					dataInfo : {
+						criteria: "test.string;1.0.0",
+						rule : [
+							{
+								ruleType : "enum",
+								enumCode : "schoolType"
+							}
+						]
+					},
+					defaultValue :{
+						dataTypeId: "test.string;1.0.0",
+						value: "public"
+					},
 				},
-				defaultValue :{
-					dataTypeId: "test.string;1.0.0",
-					value: "public"
-				},
-			},
-			{
-				name : "schoolRatingInService",
-				displayName : "School Rating",
-				description : "The rating of school, 0--10",
-				dataInfo : {
-					criteria: "test.float;1.0.0",
-				},
-				defaultValue :{
-					dataTypeId: "test.float;1.0.0",
-					value: "8"
-				},
-			}
-		]
+				{
+					name : "schoolRatingInService",
+					displayName : "School Rating",
+					description : "The rating of school, 0--10",
+					dataInfo : {
+						criteria: "test.float;1.0.0",
+					},
+					defaultValue :{
+						dataTypeId: "test.float;1.0.0",
+						value: "8"
+					},
+				}
+			]
+		},
 	},
+	"runtime" : {
+	    "implementation" : "com.nosliw.service.test.template.school.HAPServiceImp",
+	}
 }]
