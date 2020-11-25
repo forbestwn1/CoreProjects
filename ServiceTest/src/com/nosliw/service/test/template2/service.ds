@@ -5,39 +5,33 @@
 		"description" : "test service implemented by process",
 		"tag" : ["public"],
 		"interface" : {
-			"result" : [
-				{
-					"name" : "success",
-					"output" : [
-						{
-							name : "outputInService",
-							displayName: "Output",
-							dataInfo : "test.string;1.0.0",
-						}
-					] 
-				}
-			],
-			"parm" : [
-				{
-					name : "serviceParm1",
+			"parm" : {
+				"serviceParm1" : {
 					dataInfo : "test.string;1.0.0",
 					defaultValue :{
 						dataTypeId: "test.string;1.0.0",
 						value: "hello"
 					},
 				},
-				{
-					name : "serviceParm2",
+				"serviceParm2" : {
 					dataInfo : "test.string;1.0.0",
 				},
-				{
-					name : "serviceParm3",
+				"serviceParm3" : {
 					dataInfo : "test.string;1.0.0",
 				}
-				
-			]
+			},
+			"result" : {
+				"success" : {
+					"output" : {
+						"outputInService" : {
+							displayName: "Output",
+							dataInfo : "test.string;1.0.0",
+						}
+					}
+				}
+			},
 		}
-	}
+	},
 	"runtime": {
 	    "implementation" : "com.nosliw.service.test.template2.HAPServiceImp",
 	}

@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -49,17 +48,21 @@ public class HAPServiceInterface extends HAPSerializableImp{
 		try{
 			JSONObject objJson = (JSONObject)json;
 			
-			JSONArray resultArray = objJson.getJSONArray(RESULT);
-			for(int i = 0; i<resultArray.length(); i++){
+			JSONObject resultObject = objJson.getJSONObject(RESULT);
+			for(Object key : resultObject.keySet()) {
+				String name = (String)key;
 				HAPServiceResult resultEle = new HAPServiceResult();
-				resultEle.buildObject(resultArray.get(i), HAPSerializationFormat.JSON);
+				resultEle.buildObject(resultObject.get(name), HAPSerializationFormat.JSON);
+				resultEle.setName(name);
 				this.m_results.put(resultEle.getName(), resultEle);
 			}
 			
-			JSONArray parmsArray = objJson.getJSONArray(PARM);
-			for(int i = 0; i<parmsArray.length(); i++){
+			JSONObject parmsObject = objJson.getJSONObject(PARM);
+			for(Object key : parmsObject.keySet()) {
+				String name = (String)key;
 				HAPServiceParm parm = new HAPServiceParm();
-				parm.buildObject(parmsArray.get(i), HAPSerializationFormat.JSON);
+				parm.buildObject(parmsObject.get(name), HAPSerializationFormat.JSON);
+				parm.setName(name);
 				this.addParm(parm);
 			}
 		}

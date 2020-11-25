@@ -2,7 +2,6 @@
 	"static": {
 		"id": "TestTemplateService1",
 		"name": "TestTemplateService1",
-		"displayName": "Test Template Service1",
 		"description" : "test service implemented by process",
 		"tag" : ["public"],
 		"interface" : {
@@ -20,10 +19,10 @@
 			},
 			"result" : {
 				"success": {
-					"outputInService": {
-						name : "outputInService",
-						displayName: "Output",
-						dataInfo : "test.string;1.0.0",
+					"output": {
+						"outputInService": {
+							dataInfo : "test.string;1.0.0",
+						}
 					}
 				}
 			},
@@ -42,8 +41,10 @@
 				},
 				"result" : {
 					"success" : {
-						"outputInService" : {
-							"displayName" : "outputInService English"
+						"output": {
+							"outputInService" : {
+								"displayName" : "outputInService English"
+							}
 						}
 					}
 				}

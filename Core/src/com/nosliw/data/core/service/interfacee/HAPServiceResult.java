@@ -3,7 +3,6 @@ package com.nosliw.data.core.service.interfacee;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -33,10 +32,12 @@ public class HAPServiceResult extends HAPEntityInfoWritableImp{
 			JSONObject objJson = (JSONObject)json;
 			super.buildObjectByJson(objJson);
 			
-			JSONArray outputArray = objJson.getJSONArray(OUTPUT);
-			for(int i = 0; i<outputArray.length(); i++){
+			JSONObject outputObj = objJson.getJSONObject(OUTPUT);
+			for(Object key : outputObj.keySet()) {
+				String name = (String)key;
 				HAPServiceOutput output = new HAPServiceOutput();
-				output.buildObject(outputArray.get(i), HAPSerializationFormat.JSON);
+				output.buildObject(outputObj.get(name), HAPSerializationFormat.JSON);
+				output.setName(name);
 				this.addOutput(output);
 			}
 		}

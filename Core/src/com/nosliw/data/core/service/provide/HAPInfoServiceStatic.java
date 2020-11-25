@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.displayresource.HAPDisplayResource;
+import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -33,16 +33,19 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 	
 	private HAPServiceInterface m_serviceInterface;
 	
-	private HAPDisplayResource m_displayResource;
+	private HAPDisplayResourceNode m_displayResource;
 	
 	public HAPInfoServiceStatic() {
 		this.m_tags = new ArrayList<String>();
 		this.m_serviceInterface = new HAPServiceInterface();
+		this.m_displayResource = new HAPDisplayResourceNode();
 	}
 
 	public HAPServiceInterface getInterface() {  return this.m_serviceInterface;  } 
 	
 	public List<String> getTags(){   return this.m_tags;    }
+	
+	public HAPDisplayResourceNode getDisplayResource() {   return this.m_displayResource;     }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -60,7 +63,6 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 			}
 			JSONObject displayResourceObj = objJson.optJSONObject(DISPLAY);
 			if(displayResourceObj!=null) {
-				this.m_displayResource = new HAPDisplayResource();
 				this.m_displayResource.buildObject(displayResourceObj, HAPSerializationFormat.JSON);
 			}
 		}
@@ -76,6 +78,6 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(INTERFACE, HAPJsonUtility.buildJson(this.m_serviceInterface, HAPSerializationFormat.JSON));
 		jsonMap.put(TAG, HAPJsonUtility.buildJson(this.m_tags, HAPSerializationFormat.JSON));
-		jsonMap.put(DISPLAYNAME, HAPJsonUtility.buildJson(this.m_displayResource, HAPSerializationFormat.JSON));
+		jsonMap.put(DISPLAY, HAPJsonUtility.buildJson(this.m_displayResource, HAPSerializationFormat.JSON));
 	}
 }
