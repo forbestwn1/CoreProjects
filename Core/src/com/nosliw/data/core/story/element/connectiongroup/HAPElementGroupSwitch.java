@@ -25,15 +25,60 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 	@HAPAttribute
 	public static final String CHOICE = "choice";
 
-	private String m_choice;
+	private Object m_choice;
 
 	public HAPElementGroupSwitch() {
 		super(GROUP_TYPE);
 	}
 	
-	public String getChoice() {    return this.m_choice;     }
-	public void setChoice(String choice) {     this.m_choice = choice;     }
+	public Object getChoice() {    return this.m_choice;     }
+	public void setChoice(Object choice) {     this.m_choice = choice;     }
 	
+	@Override
+	public HAPChangeResult patch(String path, Object value) {
+		HAPChangeResult out = super.patch(path, value); 
+		if(out!=null)  return out; 
+		else {
+			if(CHOICE.equals(path)) {
+//				if(value!=null)  value = value.toString();
+				out = new HAPChangeResult();
+				if(!HAPBasicUtility.isEquals(value, this.m_choice)) {
+					out.addRevertChange(HAPUtilityChange.buildChangePatch(this, CHOICE, this.m_choice));
+					if(this.getElements().size()>=2) {
+						//multiple choice
+						for(HAPInfoElement eleInfo : this.getElements()) {
+							HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());
+							if(eleInfo.getName().equals(value)) {
+								if(!ele.isEnable()) {
+									out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, true));
+								}
+							}
+							else {
+								if(ele.isEnable()) {
+									out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, false));
+								}
+							}
+						}
+					}
+					else {
+						//single choice
+						HAPInfoElement eleInfo = this.getElements().get(0);
+						HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());
+						if(HAPBasicUtility.isEquals(value, true)) {
+							out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, true));
+						}
+						else {
+							out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, false));
+						}
+					}
+					this.m_choice = value;
+				}
+				
+				return out;
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public HAPStoryElement cloneStoryElement() {
@@ -47,7 +92,7 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		this.m_choice = (String)jsonObj.opt(CHOICE);
+		this.m_choice = jsonObj.opt(CHOICE);
 		return true;  
 	}
 
@@ -55,37 +100,7 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CHOICE, HAPJsonUtility.buildJson(this.m_choice+"", HAPSerializationFormat.JSON));
+		typeJsonMap.put(CHOICE, this.m_choice.getClass());
 	}
 	
-	@Override
-	public HAPChangeResult patch(String path, Object value) {
-		HAPChangeResult out = super.patch(path, value); 
-		if(out!=null)  return out; 
-		else {
-			if(CHOICE.equals(path)) {
-				if(value!=null)  value = value.toString();
-				out = new HAPChangeResult();
-				if(!HAPBasicUtility.isEquals(value, this.m_choice)) {
-					out.addRevertChange(HAPUtilityChange.buildChangePatch(this, CHOICE, this.m_choice));
-					for(HAPInfoElement eleInfo : this.getElements()) {
-						HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());
-						if(eleInfo.getName().equals(value)) {
-							if(!ele.isEnable()) {
-								out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, true));
-							}
-						}
-						else {
-							if(ele.isEnable()) {
-								out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, false));
-							}
-						}
-					}
-					this.m_choice = (String)value;
-				}
-				
-				return out;
-			}
-		}
-		return null;
-	}
 }

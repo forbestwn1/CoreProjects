@@ -44,11 +44,22 @@ var node_createComponentQuestionItemSwitch = function(){
 		},
 		template : `
 			<div>
-				{{question.question}}:<select style="display:inline;" v-model="choiceId">
-				  <option v-for="choice in choices" v-bind:value="choice.name">
-				    {{ choice.displayName }}
-				  </option>
-				</select>			
+				<span v-if="choices.length>=2">
+					{{question.question}}:<select style="display:inline;" v-model="choiceId">
+					  <option v-for="choice in choices" v-bind:value="choice.name">
+					    {{ choice.displayName }}
+					  </option>
+					</select>
+				</span>			
+				<span v-if="choices.length==1">
+				    <input type="checkbox" id="coding" name="interest" value="coding">
+					<label for="coding">Coding</label>
+					{{question.question}}:<select style="display:inline;" v-model="choiceId">
+					  <option v-for="choice in choices" v-bind:value="choice.name">
+					    {{ choice.displayName }}
+					  </option>
+					</select>
+				</span>			
 			</div>
 		`
 	};

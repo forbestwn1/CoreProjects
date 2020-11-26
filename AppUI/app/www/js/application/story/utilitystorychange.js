@@ -114,21 +114,34 @@ var node_utility = function(){
 					if(path==node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE){
 						var currentChoice = element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE];
 						if(currentChoice!=value){
-							_.each(children, function(child, i){
-								var childName = child[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
+							if(children.length>=2){
+								_.each(children, function(child, i){
+									var childName = child[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
+									var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]);
+									var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID])
+									if(childName==value){
+										if(childEle[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE]==false){
+											out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, true));
+										}
+									}
+									else{
+										if(childEle[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE]==true){
+											out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, false));
+										}
+									}
+								});
+							}
+							else{
+								var child = children[0];
 								var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]);
 								var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID])
-								if(childName==value){
-									if(childEle[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE]==false){
-										out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, true));
-									}
+								if(value==true){
+									out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, true));
 								}
 								else{
-									if(childEle[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE]==true){
-										out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, false));
-									}
+									out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, false));
 								}
-							});
+							}
 						}
 					}
 				}
