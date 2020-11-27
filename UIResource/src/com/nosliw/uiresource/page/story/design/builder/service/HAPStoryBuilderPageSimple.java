@@ -44,6 +44,7 @@ import com.nosliw.data.core.story.design.HAPAnswer;
 import com.nosliw.data.core.story.design.HAPBuilderStory;
 import com.nosliw.data.core.story.design.HAPDesignStep;
 import com.nosliw.data.core.story.design.HAPDesignStory;
+import com.nosliw.data.core.story.design.HAPQuestion;
 import com.nosliw.data.core.story.design.HAPQuestionGroup;
 import com.nosliw.data.core.story.design.HAPQuestionItem;
 import com.nosliw.data.core.story.design.HAPRequestDesign;
@@ -352,14 +353,16 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				HAPQuestionGroup outputsQuestionGroup = new HAPQuestionGroup("Application Output:");
 				rootQuestionGroup.addChild(outputsQuestionGroup);
 				for(HAPOutputBranchInfo outputBranchInfo : outputBranchInfos) {
-					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup(outputBranchInfo.dataUIInfo.displayLabel);
-					outputsQuestionGroup.addChild(parmQuestionGroup);
 					
-					//question item
-					HAPQuestionItem groupQuestion = new HAPQuestionItem("Display ", outputBranchInfo.switchAlias);
-					parmQuestionGroup.addChild(groupQuestion);
+					outputsQuestionGroup.addChild(createOutputQuestion(outputBranchInfo.dataUIInfo));
+					
+//					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup(outputBranchInfo.dataUIInfo.displayLabel);
+//					outputsQuestionGroup.addChild(parmQuestionGroup);
+//					
+//					//question item
+//					HAPQuestionItem groupQuestion = new HAPQuestionItem("Display on UI", outputBranchInfo.switchAlias);
+//					parmQuestionGroup.addChild(groupQuestion);
 				}
-
 				
 				step.setQuestion(rootQuestionGroup);
 			}
@@ -376,6 +379,20 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		}
 	}
 
+	private HAPQuestion createOutputQuestion(HAPDataUIInfo dataUIInfo) {
+		HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup(dataUIInfo.displayLabel);
+		
+		//question item
+		HAPQuestionItem groupQuestion = new HAPQuestionItem("Display on UI", dataUIInfo.switchAlias);
+		parmQuestionGroup.addChild(groupQuestion);
+		
+		for(HAPDataUIInfo child : dataUIInfo.children) {
+			HAPQuestion childQuestion = createOutputQuestion(child);
+			parmQuestionGroup.addChild(childQuestion);
+		}
+		return parmQuestionGroup;
+	}
+	
 	private HAPDataUIInfo buildDataUINode(HAPUINode parent, Object childId, String varName, HAPDisplayValueInfo lableInfo, String dataFlow, HAPRequestChangeWrapper changeRequest) {
 		HAPDataUIInfo out = new HAPDataUIInfo();
 		
@@ -438,7 +455,11 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		}
 		
 		out.rootEleRef = dataUIGroupAlias;
-
+		
+		out.switchAlias = changeRequest.addNewChange(new HAPElementGroupSwitch()).getAlias();
+		changeRequest.addPatchChangeGroupAppendElement(out.switchAlias, new HAPInfoElement(out.rootEleRef));					
+		changeRequest.addPatchChange(out.switchAlias, HAPElementGroupSwitch.CHOICE, true);
+		
 		return out;
 	}
 	
@@ -546,6 +567,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		public String displayLabel;
 		public String displayDiscription;
 		public HAPAliasElement rootEleRef;
+		public HAPAliasElement switchAlias;
 		public List<HAPDataUIInfo> children = new ArrayList<HAPDataUIInfo>();
 	}
 }
