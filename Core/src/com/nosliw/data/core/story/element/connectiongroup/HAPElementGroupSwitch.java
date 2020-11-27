@@ -99,8 +99,10 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(CHOICE, HAPJsonUtility.buildJson(this.m_choice+"", HAPSerializationFormat.JSON));
-		typeJsonMap.put(CHOICE, this.m_choice.getClass());
+		if(this.m_choice!=null) {
+			jsonMap.put(CHOICE, HAPJsonUtility.buildJson(this.m_choice+"", HAPSerializationFormat.JSON));
+			typeJsonMap.put(CHOICE, this.m_choice.getClass());
+		}
 	}
 	
 }

@@ -31,7 +31,6 @@ import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPInfoElement;
-import com.nosliw.data.core.story.HAPReferenceElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityConnection;
@@ -323,9 +322,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					parmBranchInfo.dataUIInfo = buildDataUINode(pageLayoutUINode, "output", varNode.getVariableInfo().getName(), new HAPDisplayValueInfo("displayName", parmBranchInfo.displayResource, parmBranchInfo.outputDef.getDisplayName()), HAPConstant.DATAFLOW_IN, uiLayerChangeRequest);
 					
 					//variable group
-					for(HAPReferenceElement eleRef : parmBranchInfo.dataUIInfo.dataUINode.getAllStoryElements()) {
-						uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(eleRef));
-					}
+					uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(parmBranchInfo.dataUIInfo.rootEleRef));					
 				}
 				uiLayerChangeRequest.close();
 			}
@@ -355,19 +352,12 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				HAPQuestionGroup outputsQuestionGroup = new HAPQuestionGroup("Application Output:");
 				rootQuestionGroup.addChild(outputsQuestionGroup);
 				for(HAPOutputBranchInfo outputBranchInfo : outputBranchInfos) {
-//					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup(outputBranchInfo.parmDef.getDisplayName());
-//					parmsQuestionGroup.addChild(parmQuestionGroup);
-//					
-//					//question item
-//					HAPQuestionItem groupQuestion = new HAPQuestionItem("Please choose", parmBranchInfo.switchAlias);
-//					parmQuestionGroup.addChild(groupQuestion);
-//					
-//					HAPStoryNodeConstant constantStoryNode = (HAPStoryNodeConstant)story.getElement(parmBranchInfo.constantAlias);
-//					HAPQuestionItem constantQuestion = new HAPQuestionItem("Please select value for " + parmBranchInfo.parmDef.getDisplayName(), parmBranchInfo.constantAlias, constantStoryNode.isMandatory());
-//					parmQuestionGroup.addChild(constantQuestion);
-//					
-//					HAPQuestionItem uiDataQuestion = new HAPQuestionItem("Please select UI for " + parmBranchInfo.parmDef.getDisplayName(), parmBranchInfo.dataUINode.getStoryNodeRef());
-//					parmQuestionGroup.addChild(uiDataQuestion);
+					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup(outputBranchInfo.dataUIInfo.displayLabel);
+					outputsQuestionGroup.addChild(parmQuestionGroup);
+					
+					//question item
+					HAPQuestionItem groupQuestion = new HAPQuestionItem("Display ", outputBranchInfo.switchAlias);
+					parmQuestionGroup.addChild(groupQuestion);
 				}
 
 				
@@ -447,17 +437,6 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			out.dataUINode = dataUINode;
 		}
 		
-//		//switch group
-//		HAPAliasElement switchAlias = changeRequest.addNewChange(new HAPElementGroupSwitch()).getAlias();
-//		//add 
-//		HAPInfoElement groupEle = new HAPInfoElement(dataUIGroupAlias);
-//		groupEle.setName("Constant");
-//		groupEle.setDisplayName("I set value now");
-//		changeRequest.addPatchChangeGroupAppendElement(switchAlias, groupEle);
-//
-//		//set switch group choice
-//		changeRequest.addPatchChange(switchAlias, HAPElementGroupSwitch.CHOICE, groupEle.getName());
-
 		out.rootEleRef = dataUIGroupAlias;
 
 		return out;

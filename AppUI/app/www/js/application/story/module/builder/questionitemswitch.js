@@ -40,6 +40,16 @@ var node_createComponentQuestionItemSwitch = function(){
 					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE, choiceName, this.question.answer);
 					this.$emit("answerChange");
 				}
+			},
+			ifChoose : {
+				get : function(){
+					return this.question.element.choice;
+				},
+				
+				set : function(ifChoose){
+					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE, ifChoose, this.question.answer);
+					this.$emit("answerChange");
+				}
 			}
 		},
 		template : `
@@ -52,13 +62,7 @@ var node_createComponentQuestionItemSwitch = function(){
 					</select>
 				</span>			
 				<span v-if="choices.length==1">
-				    <input type="checkbox" id="coding" name="interest" value="coding">
-					<label for="coding">Coding</label>
-					{{question.question}}:<select style="display:inline;" v-model="choiceId">
-					  <option v-for="choice in choices" v-bind:value="choice.name">
-					    {{ choice.displayName }}
-					  </option>
-					</select>
+					<label><input type="checkbox" v-model="ifChoose">{{question.question}}</label>
 				</span>			
 			</div>
 		`

@@ -20,7 +20,10 @@
 			"result" : {
 				"success": {
 					"output": {
-						"outputInService": {
+						"outputInService1": {
+							dataInfo : "test.string;1.0.0",
+						},
+						"outputInService2": {
 							dataInfo : "test.string;1.0.0",
 						}
 					}
@@ -42,9 +45,12 @@
 				"result" : {
 					"success" : {
 						"output": {
-							"outputInService" : {
-								"displayName" : "outputInService English"
-							}
+							"outputInService1" : {
+								"displayName" : "outputInService1 English"
+							},
+							"outputInService2" : {
+								"displayName" : "outputInService2 English"
+							},
 						}
 					}
 				}
