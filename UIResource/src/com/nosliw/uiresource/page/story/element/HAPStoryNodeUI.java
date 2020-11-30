@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
 import com.nosliw.data.core.story.change.HAPChangeResult;
@@ -32,8 +33,8 @@ public class HAPStoryNodeUI extends HAPStoryNodeImp{
 	public void setDataStructureInfo(HAPUIDataStructureInfo dataStructureInfo) {     this.m_dataStructureInfo = dataStructureInfo;       }
 	
 	@Override
-	public HAPChangeResult patch(String path, Object value) {
-		HAPChangeResult out = super.patch(path, value);
+	public HAPChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv) {
+		HAPChangeResult out = super.patch(path, value, runtimeEnv);
 		if(out!=null)  return out; 
 		else {
 			out = new HAPChangeResult();

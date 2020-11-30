@@ -71,7 +71,7 @@ var node_utility = function(){
 	var loc_createChangeItemPatchForStoryElement = function(element, path, value){	return loc_createChangeItemPatch(new node_ElementId(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]), path, value);	};
 	var loc_createChangeItemNewForStoryElement = function(element, aliasObj, story){  return loc_createChangeItemNew(element, aliasObj, story);   };
 
-	var loc_applyChangeNew = function(story, changeItem, saveRevert){
+	var loc_applySingleChangeNew = function(story, changeItem, saveRevert){
 		var aliasObj = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ALIAS];
 		if(aliasObj!=undefined){
 			var oldAliasEleId = node_storyUtility.getElementIdByReference(story, aliasObj);
@@ -85,21 +85,13 @@ var node_utility = function(){
 		}
 	};
 	
-	var loc_applyChangePatch = function(story, changeItem, extend, allChanges, saveRevert){
-		if(allChanges!=undefined)	allChanges.push(changeItem);
-		var changes = loc_applyChangePatchSingle(story, changeItem, extend, saveRevert);
-		_.each(changes, function(change, i){
-			loc_applyChangePatch(story, change, extend, allChanges, saveRevert);
-		});
-	};
-	
-	var loc_applyChangeDelete = function(story, changeItem, saveRevert){
+	var loc_applySingleChangeDelete = function(story, changeItem, saveRevert){
 		var element = node_storyUtility.deleteStoryElementByRef(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF]);
 		if(loc_isRevertable(saveRevert, changeItem))  changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemNew(element, undefined, story)];
 	};
 	
 	//output: a array of new change item
-	var loc_applyChangePatchSingle = function(story, changeItem, extend, saveRevert){
+	var loc_applySingleChangePatch = function(story, changeItem, saveRevert, extend){
 		var path = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_PATH];
 		var value = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_VALUE];
 		var element = node_storyUtility.getStoryElementByRef(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF]);
@@ -191,7 +183,7 @@ var node_utility = function(){
 		return out;
 	};
 	
-	var loc_applyChangeStoryInfo = function(story, changeItem, saveRevert){
+	var loc_applySingleChangeStoryInfo = function(story, changeItem, saveRevert){
 		var info = story[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
 		var infoName = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_INFONAME];
 		var infoValue = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_INFOVALUE];
@@ -204,37 +196,63 @@ var node_utility = function(){
 		if(saveRevert==false)  return false;
 		return changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTABLE];
 	};
+
+	var loc_applySingleChange = function(story, changeItem, saveRevert, extend){
+		//set change item id
+		var itemId = changeItem[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+		if(itemId==undefined){
+			itemId = node_storyUtility.getNextIdForStory(story);
+			changeItem[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID] = itemId;
+		}
+
+		//if a change has extended, then don't extend it again
+		if(changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_EXTENDED]==true)  extend = false;
+		
+		var extendedChanges;
+		var changeType = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE];
+		if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW){
+			loc_applySingleChangeNew(story, changeItem, saveRevert);
+		}
+		else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_PATCH){
+			extendedChanges = loc_applySingleChangePatch(story, changeItem, saveRevert, extend);
+		}
+		else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE){
+			loc_applySingleChangeDelete(story, changeItem, saveRevert);
+		}
+		else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_STORYINFO){
+			loc_applySingleChangeStoryInfo(story, changeItem, saveRevert);
+		}
+		
+		if(extendedChanges!=undefined && extendedChanges.length()>0){
+			_.each(extendedChanges, function(extendedChange, i){
+				//extended from
+				extendedChange[node_COMMONATRIBUTECONSTANT.CHANGEITEM_EXTENDFROM] = changeItem[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+			});
+			//mark change as extended
+			if(changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_EXTENDED]!=true)   changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_EXTENDED] = true;   
+		}
+		return extendedChanges;
+	};
+	
+	var loc_applyChange = function(story, changeItem, saveRevert, allChanges, extend){
+		if(allChanges!=undefined)	allChanges.push(changeItem);
+		var extendChanges = loc_applySingleChange(story, changeItem, saveRevert, extend);
+		if(extendChanges!=undefined){
+			_.each(extendChanges, function(extendChange, i){
+				loc_applyChange(story, extendChange, saveRevert, allChanges, extend);
+			});
+		}
+	};
 	
 	var loc_out = {
 		
 		applyChange : function(story, changeItem, saveRevert){
-			var changeType = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE];
-			if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW){
-				loc_applyChangeNew(story, changeItem, saveRevert);
-			}
-			else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_PATCH){
-				loc_applyChangePatch(story, changeItem, false, undefined, saveRevert);
-			}
-			else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE){
-				loc_applyChangeDelete(story, changeItem, saveRevert);
-			}
-			else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_STORYINFO){
-				loc_applyChangeStoryInfo(story, changeItem, saveRevert);
-			}
+			loc_applyChange(story, changeItem, saveRevert, undefined, false);
 		},
 		
 		//return an array of all changes
 		applyChangeAll : function(story, changeItem, allChanges){
-			var changeType = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE];
-			if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_PATCH){
-				loc_applyChangePatch(story, changeItem, true, allChanges);
-			}
-			else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW){
-				loc_applyChangeNew(story, changeItem);
-			}
-			else if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE){
-				loc_applyChangeDelete(story, changeItem);
-			}
+			loc_applyChange(story, changeItem, true, allChanges, true);
 		},
 		
 		reverseChange : function(story, changeItem){
@@ -242,7 +260,7 @@ var node_utility = function(){
 			var reverseChanges = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES];
 			if(reverseChanges!=undefined){
 				_.each(reverseChanges, function(reverseChange, i){
-					that.applyChange(story, reverseChange, false);
+					loc_applyChange(story, reverseChange, false, undefined, false);
 				});
 			}
 		},

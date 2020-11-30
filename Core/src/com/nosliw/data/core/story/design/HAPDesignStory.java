@@ -15,6 +15,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.story.HAPParserStory;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryImp;
+import com.nosliw.data.core.story.change.HAPManagerChange;
 
 @HAPEntityWithAttribute
 public class HAPDesignStory extends HAPEntityInfoImp{
@@ -30,19 +31,22 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 
 	private static final String INFO_IDINDEX = "design_idindex";
 	
+	private HAPManagerChange m_changeMan;
+	
 	private String m_directorId;
 	
 	private HAPStory m_story;
 	
 	private List<HAPDesignStep> m_changeHistory;
 	
-	public HAPDesignStory() {
-		this.m_story = new HAPStoryImp();
+	public HAPDesignStory(HAPManagerChange changeMan) {
+		this.m_changeMan = changeMan;
+		this.m_story = new HAPStoryImp(changeMan);
 		this.m_changeHistory = new ArrayList<HAPDesignStep>();
 	}
 	
-	public HAPDesignStory(String designId, String directorId) {
-		this();
+	public HAPDesignStory(String designId, String directorId, HAPManagerChange changeMan) {
+		this(changeMan);
 		this.setId(designId);
 		this.m_directorId = directorId;
 	}
@@ -76,7 +80,7 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 		this.buildEntityInfoByJson(jsonObj);
 		this.m_directorId = (String)jsonObj.opt(DIRECTORID);
 		JSONObject storyJsonObj = jsonObj.getJSONObject(STORY);
-		this.m_story = HAPParserStory.parseStory(storyJsonObj);
+		this.m_story = HAPParserStory.parseStory(storyJsonObj, this.m_changeMan);
 		
 		JSONArray changeHistoryArray = jsonObj.optJSONArray(CHANGEHISTORY);
 		for(int i=0; i<changeHistoryArray.length(); i++) {

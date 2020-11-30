@@ -8,7 +8,6 @@ import java.util.Set;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.displayresource.HAPDisplayValueInfo;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -31,13 +30,13 @@ import com.nosliw.data.core.service.provide.HAPManagerService;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPInfoElement;
+import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityConnection;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPChangeItemNew;
-import com.nosliw.data.core.story.change.HAPRequestChange;
 import com.nosliw.data.core.story.change.HAPRequestChangeWrapper;
 import com.nosliw.data.core.story.change.HAPResultTransaction;
 import com.nosliw.data.core.story.design.HAPAnswer;
@@ -85,10 +84,12 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	private HAPUITagManager m_uiTagManager;
 	private HAPRequirementContextProcessor m_contextProcessRequirement;
 	private HAPDataTypeManager m_dataTypeMan = null;
-
+	private HAPManagerStory m_storyManager;
+	
 	private List<HAPStageInfo> m_stages;
 	
 	public HAPStoryBuilderPageSimple(
+			HAPManagerStory storyManager,
 			HAPManagerService serviceManager, 
 			HAPUITagManager uiTagMan, 
 			HAPManagerResourceDefinition resourceDefMan,
@@ -97,6 +98,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			HAPManagerExpression expressionMan,
 			HAPManagerServiceDefinition serviceDefinitionManager,
 			HAPDataTypeManager dataTypeMan) {
+		this.m_storyManager = storyManager;
 		this.m_serviceManager = serviceManager;
 		this.m_uiTagManager = uiTagMan;
 		this.m_dataTypeMan = dataTypeMan;
@@ -115,9 +117,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		HAPUtilityDesign.setDesignAllStages(design, m_stages);
 		
 		story.startTransaction();
-		HAPRequestChange changeRequest = new HAPRequestChange();
+		HAPRequestChangeWrapper changeRequest = new HAPRequestChangeWrapper(story);
+
 		changeRequest.addChange(new HAPChangeItemNew(new HAPStoryNodeService(), ELEMENT_SERVICE));
-		story.change(changeRequest);
+		changeRequest.close();
 		HAPResultTransaction transactionResult = story.commitTransaction();
 		
 		HAPDesignStep step = design.newStep();
@@ -301,7 +304,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 				//page node and tree
 				uiLayerChangeRequest.addNewChange(HAPUtility.buildPageStoryNode(story));
-				HAPUITree uiTree = HAPUtility.buildUITree(story, this.m_contextProcessRequirement, this.m_uiTagManager);
+				HAPUITree uiTree = HAPUtility.buildUITree(story, this.m_contextProcessRequirement, this.m_uiTagManager, this.m_storyManager.getChangeManager());
 
 				//page layout node
 				HAPUINode pageLayoutUINode = uiTree.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "page_html.tmp")), null, uiLayerChangeRequest, m_contextProcessRequirement, m_uiTagManager);
@@ -355,13 +358,6 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				for(HAPOutputBranchInfo outputBranchInfo : outputBranchInfos) {
 					
 					outputsQuestionGroup.addChild(createOutputQuestion(outputBranchInfo.dataUIInfo));
-					
-//					HAPQuestionGroup parmQuestionGroup = new HAPQuestionGroup(outputBranchInfo.dataUIInfo.displayLabel);
-//					outputsQuestionGroup.addChild(parmQuestionGroup);
-//					
-//					//question item
-//					HAPQuestionItem groupQuestion = new HAPQuestionItem("Display on UI", outputBranchInfo.switchAlias);
-//					parmQuestionGroup.addChild(groupQuestion);
 				}
 				
 				step.setQuestion(rootQuestionGroup);
@@ -528,17 +524,20 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	}
 	
 	private void applyAnswer(HAPStory story, HAPRequestDesign answerRequest) {
-		HAPRequestChangeWrapper changeRequest = new HAPRequestChangeWrapper(story, true, false);
-		for(HAPAnswer answer : answerRequest.getAnswers()){		changeRequest.addChanges(answer.getChanges());	}
-		for(HAPChangeItem change : answerRequest.getExtraChanges()) {   changeRequest.addChange(change);    }
-		changeRequest.close();
-	}
-	
-	private String getDisplayName(HAPDisplayResourceNode displayResource, HAPEntityInfo entityInfo) {
-		String out = null;
-		out = displayResource.getValue(HAPEntityInfo.DISPLAYNAME);
-		if(out==null)  out = entityInfo.getDisplayName();
-		return out;
+		{
+			HAPRequestChangeWrapper changeRequest = new HAPRequestChangeWrapper(story, true, true);
+			for(HAPChangeItem change : answerRequest.getExtraChanges()) {   
+				changeRequest.addChange(change);
+			}
+			List<HAPChangeItem> allChanges = changeRequest.close();
+		}
+
+		for(HAPAnswer answer : answerRequest.getAnswers()){
+			HAPRequestChangeWrapper changeRequest = new HAPRequestChangeWrapper(story, true, true);
+			changeRequest.addChanges(answer.getChanges());
+			List<HAPChangeItem> allChanges = changeRequest.close();
+			answer.setChanges(allChanges);
+		}
 	}
 	
 	class HAPOutputBranchInfo{

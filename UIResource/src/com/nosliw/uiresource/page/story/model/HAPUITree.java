@@ -12,6 +12,7 @@ import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPHandlerChange;
+import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
@@ -20,11 +21,13 @@ public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 
 	private HAPRequirementContextProcessor m_contextProcessRequirement;
 	private HAPUITagManager m_uiTagMan;
+	private HAPManagerChange m_changeMan;
 	
-	public HAPUITree(HAPReferenceElement nodeRef, HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
+	public HAPUITree(HAPReferenceElement nodeRef, HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
 		super(nodeRef, story);
 		this.m_contextProcessRequirement = contextProcessRequirement;
 		this.m_uiTagMan = uiTagMan;
+		this.m_changeMan = changeMan;
 		init();
 	}
 
@@ -42,7 +45,7 @@ public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 	@Override
 	public void onChanges(List<HAPChangeItem> changes) {
 		if(this.isDataRelatedChange(changes)) {
-			this.updateUIDataStructureInfo(null, m_contextProcessRequirement, m_uiTagMan);
+			this.updateUIDataStructureInfo(null, m_contextProcessRequirement, m_uiTagMan, this.m_changeMan);
 		}
 	}
 

@@ -6,15 +6,16 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.story.change.HAPManagerChange;
 
 public class HAPParserStoryDesign {
 
-	public static HAPDesignStory parseFile(String fileName){
+	public static HAPDesignStory parseFile(String fileName, HAPManagerChange changeMan){
 		HAPDesignStory out = null;
 		try{
 			File input = new File(fileName);
 			String source = HAPFileUtility.readFile(input);
-			out = parseContent(source);
+			out = parseContent(source, changeMan);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -22,14 +23,14 @@ public class HAPParserStoryDesign {
 		return out;
 	}
 
-	private static HAPDesignStory parseContent(String content) {
+	private static HAPDesignStory parseContent(String content, HAPManagerChange changeMan) {
 		JSONObject jsonObj = new JSONObject(content);
-		HAPDesignStory out = parseStoryDefinition(jsonObj);
+		HAPDesignStory out = parseStoryDefinition(jsonObj, changeMan);
 		return out;
 	}
 
-	public static HAPDesignStory parseStoryDefinition(JSONObject jsonObj) {
-		HAPDesignStory out = new HAPDesignStory();
+	public static HAPDesignStory parseStoryDefinition(JSONObject jsonObj, HAPManagerChange changeMan) {
+		HAPDesignStory out = new HAPDesignStory(changeMan);
 		out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		return out;
 	}

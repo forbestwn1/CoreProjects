@@ -4,11 +4,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.story.change.HAPManagerChange;
 
 public class HAPParserStory {
 
-	public static HAPStoryImp parseStory(JSONObject jsonObj) {
-		HAPStoryImp out = new HAPStoryImp();
+	public static HAPStoryImp parseStory(JSONObject jsonObj, HAPManagerChange changeMan) {
+		HAPStoryImp out = new HAPStoryImp(changeMan);
 		
 		out.buildEntityInfoByJson(jsonObj);
 		

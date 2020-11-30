@@ -15,6 +15,7 @@ import com.nosliw.data.core.story.HAPInfoNodeChild;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityStory;
+import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
 import com.nosliw.uiresource.page.processor.HAPUtilityProcess;
@@ -67,18 +68,18 @@ public class HAPUtility {
 		return out;
 	}
 	
-	public static HAPUITree buildUITree(HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
+	public static HAPUITree buildUITree(HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
 		HAPStoryNodePage pageStoryNode = (HAPStoryNodePage)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_PAGE).iterator().next();
-		return (HAPUITree)buildUINode(pageStoryNode, story, contextProcessRequirement, uiTagMan);
+		return (HAPUITree)buildUINode(pageStoryNode, story, contextProcessRequirement, uiTagMan, changeMan);
 	}
 
-	private static HAPUINode buildUINode(HAPStoryNodeUI storyNode, HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
+	private static HAPUINode buildUINode(HAPStoryNodeUI storyNode, HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
 		HAPUINode out = null;
 
 		String nodeType = storyNode.getType();
 		switch(nodeType) {
 		case HAPConstant.STORYNODE_TYPE_PAGE:
-			out = new HAPUITree(storyNode.getElementId(), story, contextProcessRequirement, uiTagMan); 
+			out = new HAPUITree(storyNode.getElementId(), story, contextProcessRequirement, uiTagMan, changeMan); 
 			break;
 		default:
 			out = new HAPUINode(storyNode.getElementId(), story); 

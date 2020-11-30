@@ -27,6 +27,17 @@ var node_utility = function(){
 		return uiNode;
 	};
 	
+	var loc_getDisplayValue = function(entity, attributeName, displayResource){
+		var out;
+		if(displayResource!=undefined)	out = displayResource[attributeName];
+		if(out==undefined)  out = entity[attributeName];
+		return out;
+	};
+	
+	var loc_getStoryElementDisplayValue = function(storyElement, attributeName){
+		return loc_getDisplayValue(storyElement, attributeName, storyElement[node_COMMONATRIBUTECONSTANT.STORYELEMENT_DISPLAYRESOURCE]);
+	};
+	
 	var loc_out = {
 		
 		buildPageTree : function(story){
@@ -42,7 +53,11 @@ var node_utility = function(){
 		buildUINodeFromUITag : function(uiTag, nodeId){
 			return node_createUINodeByTag(uiTag, nodeId);
 		},
-			
+		
+		getStoryElementDisplayName : function(storyElement){
+			return loc_getStoryElementDisplayValue(storyElement, "displayName");
+		}
+		
 	};		
 			
 	return loc_out;

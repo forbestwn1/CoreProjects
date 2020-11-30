@@ -20,7 +20,14 @@ public class HAPDisplayResourceLeaf extends HAPDisplayResource{
 	public HAPDisplayResourceLeaf() {}
 	
 	public String getValue() {   return this.m_value;   }
-	
+
+	@Override
+	public HAPDisplayResource cloneDisplayResource() {
+		HAPDisplayResourceLeaf out = new HAPDisplayResourceLeaf();
+		out.m_value = this.m_value;
+		return out;
+	}
+
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format){
 		if(value instanceof String)   this.m_value = (String)value;

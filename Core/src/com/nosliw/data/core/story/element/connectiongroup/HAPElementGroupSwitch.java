@@ -10,6 +10,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPElementGroupImp;
 import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStoryElement;
@@ -35,8 +36,8 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 	public void setChoice(Object choice) {     this.m_choice = choice;     }
 	
 	@Override
-	public HAPChangeResult patch(String path, Object value) {
-		HAPChangeResult out = super.patch(path, value); 
+	public HAPChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv) {
+		HAPChangeResult out = super.patch(path, value, runtimeEnv); 
 		if(out!=null)  return out; 
 		else {
 			if(CHOICE.equals(path)) {
@@ -50,12 +51,12 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 							HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());
 							if(eleInfo.getName().equals(value)) {
 								if(!ele.isEnable()) {
-									out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, true));
+									out.addExtendChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, true));
 								}
 							}
 							else {
 								if(ele.isEnable()) {
-									out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, false));
+									out.addExtendChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, false));
 								}
 							}
 						}
@@ -65,10 +66,10 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 						HAPInfoElement eleInfo = this.getElements().get(0);
 						HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());
 						if(HAPBasicUtility.isEquals(value, true)) {
-							out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, true));
+							out.addExtendChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, true));
 						}
 						else {
-							out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, false));
+							out.addExtendChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, false));
 						}
 					}
 					this.m_choice = value;

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPElementGroup;
 import com.nosliw.data.core.story.HAPElementGroupImp;
 import com.nosliw.data.core.story.HAPInfoElement;
@@ -40,14 +41,14 @@ public class HAPElementGroupBatch extends HAPElementGroupImp{
 	}
 	
 	@Override
-	public HAPChangeResult patch(String path, Object value) {
-		HAPChangeResult out = super.patch(path, value);
+	public HAPChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv) {
+		HAPChangeResult out = super.patch(path, value, runtimeEnv);
 		if(out==null)  return out;
 		else {
 			if(HAPStoryElement.class.equals(out.getProcessor())) {
 				//only for attribute defined in story element, apply to children 
 				for(HAPInfoElement ele : this.getElements()) {
-					out.addExtraChange(new HAPChangeItemPatch(ele.getElementId(), path, value));
+					out.addExtendChange(new HAPChangeItemPatch(ele.getElementId(), path, value));
 				}
 			}
 			else if(HAPElementGroup.ELEMENT.equals(path)) {
@@ -55,7 +56,7 @@ public class HAPElementGroupBatch extends HAPElementGroupImp{
 					//for new element
 					HAPInfoElement eleInfo = (HAPInfoElement)value;
 					for(String rootAttr : HAPStoryElement.getRootAttribute()) {
-						out.addExtraChange(new HAPChangeItemPatch(eleInfo.getElementId(), rootAttr, this.getValueByPath(rootAttr)));
+						out.addExtendChange(new HAPChangeItemPatch(eleInfo.getElementId(), rootAttr, this.getValueByPath(rootAttr)));
 					}
 				}
 			}

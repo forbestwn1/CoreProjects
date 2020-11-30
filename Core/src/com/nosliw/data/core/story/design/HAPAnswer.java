@@ -33,13 +33,15 @@ public class HAPAnswer extends HAPSerializableImp{
 	}
 	
 	public List<HAPChangeItem> getChanges(){    return this.m_changes;    }
+	public void setChanges(List<HAPChangeItem> changes) {  
+		this.m_changes.clear();
+		this.m_changes.addAll(changes);
+	}
 	
+	public void addChange(HAPChangeItem change) {		this.m_changes.add(change);	}
+
 	public String getQuestionId() {   return this.m_questionId;    }
 	
-	public void addChanges(HAPChangeItem change) {    
-		this.m_changes.add(change);
-	}
-
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;

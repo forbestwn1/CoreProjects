@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
-import com.nosliw.data.core.story.change.HAPUtilityChange;
+import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityDesign {
@@ -27,9 +27,9 @@ public class HAPUtilityDesign {
 		return getChangeStage(latest);
 	}
 	
-	public static HAPDesignStory readStoryDesign(String id) {
+	public static HAPDesignStory readStoryDesign(String id, HAPManagerChange changeMan) {
 		//parse content
-		HAPDesignStory out = HAPParserStoryDesign.parseFile(getStoryDesignFile(id));
+		HAPDesignStory out = HAPParserStoryDesign.parseFile(getStoryDesignFile(id), changeMan);
 		return out;
 	}
 	
@@ -43,19 +43,17 @@ public class HAPUtilityDesign {
 		return file;
 	}
 	
-	public static void reverseChangeStep(HAPStory story, HAPDesignStep step) {
+	public static void reverseChangeStep(HAPStory story, HAPDesignStep step, HAPManagerChange changeMan) {
 		List<HAPChangeItem> changes = step.getChanges();
-		HAPUtilityChange.revertChange(story, changes);
-		reverseQuestionAnswer(story, step.getQuestionair());
+		changeMan.revertChange(story, changes);
+		reverseQuestionAnswer(story, step.getQuestionair(), changeMan);
 	}
 	
-	public static void reverseQuestionAnswer(HAPStory story, HAPQuestionnaire questionair) {
+	public static void reverseQuestionAnswer(HAPStory story, HAPQuestionnaire questionair, HAPManagerChange changeMan) {
 		Set<HAPAnswer> answers = questionair.getAnswers();
 		for(HAPAnswer answer : answers) {
-			HAPUtilityChange.revertChange(story, answer.getChanges());
+			changeMan.revertChange(story, answer.getChanges());
 		}
 		questionair.clearAnswer();
 	}
-	
-
 }

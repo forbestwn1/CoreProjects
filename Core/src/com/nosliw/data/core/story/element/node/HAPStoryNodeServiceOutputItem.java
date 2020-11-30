@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
 import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
@@ -31,8 +32,8 @@ public class HAPStoryNodeServiceOutputItem extends HAPStoryNodeImp{
 	}
 
 	@Override
-	public HAPChangeResult patch(String path, Object value) {
-		return super.patch(path, value);
+	public HAPChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv) {
+		return super.patch(path, value, runtimeEnv);
 	}
 
 	@Override

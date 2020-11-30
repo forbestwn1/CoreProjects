@@ -7,8 +7,11 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.service.provide.HAPInfoServiceStatic;
 import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
+import com.nosliw.data.core.story.change.HAPChangeItemPatch;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 
@@ -30,14 +33,21 @@ public class HAPStoryNodeService extends HAPStoryNodeImp{
 	public void setReferenceId(String refId) {    this.m_referenceId = refId;    }
 
 	@Override
-	public HAPChangeResult patch(String path, Object value) {
-		HAPChangeResult out = super.patch(path, value);
+	public HAPChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv) {
+		HAPChangeResult out = super.patch(path, value, runtimeEnv);
 		if(out!=null)  return out; 
 		else {
 			out = new HAPChangeResult();
 			if(REFERENCEID.equals(path)) {
 				out.addRevertChange(HAPUtilityChange.buildChangePatch(this, REFERENCEID, this.m_referenceId));
 				this.m_referenceId = (String)value;
+				
+				if(this.m_referenceId!=null) {
+					HAPInfoServiceStatic serviceDef = runtimeEnv.getServiceManager().getServiceDefinitionManager().getDefinition(this.m_referenceId).getStaticInfo();
+					out.addExtendChange(new HAPChangeItemPatch(this.getElementId(), EXTRA, serviceDef));
+					out.addExtendChange(new HAPChangeItemPatch(this.getElementId(), DISPLAYRESOURCE, serviceDef.getDisplayResource()));
+				}
+				
 				return out;
 			}
 		}

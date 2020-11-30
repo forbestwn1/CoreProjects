@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 
@@ -32,8 +33,8 @@ public class HAPStoryNodeUIHtml extends HAPStoryNodeUI{
 	public void setHtml(String html) {    this.m_html = html;     }
 	
 	@Override
-	public HAPChangeResult patch(String path, Object value) {
-		HAPChangeResult out = super.patch(path, value);
+	public HAPChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv) {
+		HAPChangeResult out = super.patch(path, value, runtimeEnv);
 		if(out!=null)  return out; 
 		else {
 			out = new HAPChangeResult();

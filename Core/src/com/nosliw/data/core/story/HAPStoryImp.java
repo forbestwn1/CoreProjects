@@ -14,11 +14,14 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPHandlerChange;
+import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.change.HAPRequestChange;
 import com.nosliw.data.core.story.change.HAPResultTransaction;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 
 public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
+	
+	private HAPManagerChange m_changeMan;
 	
 	private String m_showType;
 	
@@ -40,7 +43,8 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 
 	private Set<String> m_temporyAlias;
 	
-	public HAPStoryImp() {
+	public HAPStoryImp(HAPManagerChange changeMan) {
+		this.m_changeMan = changeMan;
 		this.m_nodes = new LinkedHashMap<String, HAPStoryNode>();
 		this.m_connections = new LinkedHashMap<String, HAPConnection>();
 		this.m_elementGroups = new LinkedHashMap<String, HAPElementGroup>();
@@ -48,7 +52,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		this.m_aliases = new LinkedHashMap<String, HAPIdElement>();
 		this.m_temporyAlias = new HashSet<String>();
 	}
-	
+
 	@Override
 	public void startTransaction() {
 		this.m_changeResult = new HAPResultTransaction();
@@ -79,8 +83,8 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	}
 	
 	@Override
-	public void rollbackTransaction() {		
-		HAPUtilityChange.revertChange(this, this.m_changeResult.getChanges());	
+	public void rollbackTransaction() {	
+		this.m_changeMan.revertChange(this, this.m_changeResult.getChanges());	
 		this.removeTemporaryAlias();
 		this.setIdIndex(this.m_changeResult.getOldIdIndex());
 		this.m_changeResult = null;
@@ -99,16 +103,19 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public List<HAPChangeItem> change(HAPRequestChange changeRequest) {
 		List<HAPChangeItem> out = new ArrayList<HAPChangeItem>();
 		if(changeRequest.isExtend()) {
-			HAPUtilityChange.applyChanges(this, changeRequest.getChanges(), out);
+			this.m_changeMan.applyChanges(this, changeRequest.getChanges(), out);
 		}
 		else {
-			HAPUtilityChange.applyChanges(this, changeRequest.getChanges());
+			this.m_changeMan.applyChanges(this, changeRequest.getChanges());
 			out.addAll(changeRequest.getChanges());
 		}
 		this.m_changeResult.getChanges().addAll(out);
 		return out;
 	}
 	
+	@Override
+	public HAPRequestChange newRequestChange(Boolean extend) {   return new HAPRequestChange(extend, this);  }
+
 	@Override
 	public String getShowType() {   return this.m_showType;  }
 	@Override
@@ -310,4 +317,5 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(this.m_elementGroups, HAPSerializationFormat.JSON));
 		jsonMap.put(ALIAS, HAPJsonUtility.buildJson(this.m_aliases, HAPSerializationFormat.JSON));
 	}
+
 }

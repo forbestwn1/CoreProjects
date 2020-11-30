@@ -25,15 +25,26 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String REVERTABLE = "revertable";
 
+	@HAPAttribute
+	public static final String EXTENDFROM = "extendFrom";
+
+	@HAPAttribute
+	public static final String EXTENDED = "extended";
+
 	private String m_changeType;
 	
 	private List<HAPChangeItem> m_revertChanges;
 
 	private boolean m_revertable;
+
+	private String m_extendedFrom;
+	
+	private boolean m_extended;
 	
 	public HAPChangeItem(String changeType) {
 		this.m_changeType = changeType;
 		this.m_revertable = true;
+		this.m_extended = false;
 	}
 
 	public String getChangeType() {    return this.m_changeType;    }
@@ -44,6 +55,12 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 	public boolean isRevertable() {    return this.m_revertable;     }
 	public void setRevertable(boolean revertable) {     this.m_revertable = revertable;      }
 	
+	public String getExtendFrom() {    return this.m_extendedFrom;      }
+	public void setExtendFrom(String extendFrom) {     this.m_extendedFrom = extendFrom;       }
+	
+	public boolean isExtended() {   return this.m_extended;     }
+	public void setExtended() {    this.m_extended = true;     }
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
@@ -51,6 +68,8 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 		this.m_changeType = jsonObj.getString(CHANGETYPE);
 		Object revertableObj = jsonObj.opt(REVERTABLE);
 		if(revertableObj!=null)  this.m_revertable = (Boolean)revertableObj; 
+		this.m_extendedFrom = (String)jsonObj.opt(EXTENDFROM);
+		this.m_extended = jsonObj.getBoolean(EXTENDED);
 		
 		JSONArray revertChangesArray = jsonObj.optJSONArray(REVERTCHANGES);
 		if(revertChangesArray!=null) {
@@ -69,5 +88,8 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 		if(this.m_revertChanges!=null)   jsonMap.put(REVERTCHANGES, HAPJsonUtility.buildJson(this.m_revertChanges, HAPSerializationFormat.JSON));
 		jsonMap.put(REVERTABLE, this.m_revertable+"");
 		typeJsonMap.put(REVERTABLE, Boolean.class);
+		jsonMap.put(EXTENDFROM, this.m_extendedFrom);
+		jsonMap.put(EXTENDED, this.m_extended+"");
+		typeJsonMap.put(EXTENDED, Boolean.class);
 	}
 }

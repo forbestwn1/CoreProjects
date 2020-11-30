@@ -19,18 +19,18 @@ public class HAPRequestChangeWrapper {
 	
 	private boolean m_isAutoApply = false;
 	
-	private boolean m_extend;
+	private Boolean m_extend;
 	
 	public HAPRequestChangeWrapper(HAPStory story) {
-		this(story, false, true);
+		this(story, false, null);
 	}
 	
-	public HAPRequestChangeWrapper(HAPStory story, boolean isAutoApply, boolean extend) {
+	public HAPRequestChangeWrapper(HAPStory story, boolean isAutoApply, Boolean extend) {
 		this.m_story = story;
 		this.m_isAutoApply = isAutoApply;
 		this.m_extend = extend;
 		if(!this.m_isAutoApply) {
-			m_changeRequest = new HAPRequestChange(this.m_extend);
+			m_changeRequest = newChangeRequest();
 		}
 	}
 	
@@ -69,7 +69,7 @@ public class HAPRequestChangeWrapper {
 	
 	private void processRequest(HAPChangeItem changeItem) {
 		if(this.m_isAutoApply) {
-			HAPRequestChange changeRequest = new HAPRequestChange(this.m_extend);
+			HAPRequestChange changeRequest = newChangeRequest(); 
 			changeRequest.addChange(changeItem);
 			this.m_story.change(changeRequest);
 		}
@@ -78,10 +78,14 @@ public class HAPRequestChangeWrapper {
 		}
 	}
 	
-	public void close() {
+	private HAPRequestChange newChangeRequest() {	return this.m_story.newRequestChange(this.m_extend);	}
+	
+	public List<HAPChangeItem> close() {
+		List<HAPChangeItem> out = null;
 		if(this.m_changeRequest!=null) {
-			this.m_story.change(m_changeRequest);
+			out = this.m_story.change(m_changeRequest);
 			this.m_changeRequest = null;
 		}
+		return out;
 	}
 }

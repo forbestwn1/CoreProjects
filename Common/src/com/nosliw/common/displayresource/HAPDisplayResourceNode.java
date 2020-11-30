@@ -43,6 +43,15 @@ public class HAPDisplayResourceNode extends HAPDisplayResource{
 		else return null;
 	}
 	
+	@Override
+	public HAPDisplayResource cloneDisplayResource() {
+		HAPDisplayResourceNode out = new HAPDisplayResourceNode();
+		for(String name : this.m_children.keySet()) {
+			out.m_children.put(name, this.m_children.get(name).cloneDisplayResource());
+		}
+		return out;
+	}
+	
 	private HAPDisplayResource getChild(String[] segs, int index) {
 		HAPDisplayResource childResource = this.m_children.get(segs[index]);
 		if(childResource==null)  return null;

@@ -19,6 +19,7 @@ var packageObj = library.getChildPackage();
 	var node_createBasicLayout;
 	var node_storyOverviewUtility;
 	var node_storyUtility;
+	var node_storyUIUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createStoryNodeElementChildInfo = function(nodeElement, connectionId){
@@ -53,7 +54,9 @@ var node_createStoryNodeElement = function(storyNodeId, module){
 	
 	var loc_getElementTitle = function(){
 		var storyNode = node_storyUtility.getNodeById(loc_module.getStory(), loc_storyNodeId);
-		return storyNode.type + "_" + storyNode.name + "_" + storyNode.id; 
+		return node_storyUIUtility.getStoryElementDisplayName(storyNode);
+//		return storyNode.displayName;
+//		return storyNode.type + "_" + storyNode.name + "_" + storyNode.id; 
 	};
 	
 	var loc_getLayerColor = function(){
@@ -137,6 +140,7 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("application.story.module.overview.createBasicLayout", function(){ node_createBasicLayout = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.overview.storyOverviewUtility", function(){ node_storyOverviewUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.storyUIUtility", function(){node_storyUIUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createStoryNodeElement", node_createStoryNodeElement); 

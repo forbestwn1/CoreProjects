@@ -18,14 +18,20 @@ public class HAPResponseDesign extends HAPSerializableImp{
 	public static final String ANSWER = "answer";
 
 	@HAPAttribute
+	public static final String ANSWEREXTEND = "answerExtend";
+
+	@HAPAttribute
 	public static final String STEP = "step";
 
 	private List<HAPAnswer> m_answer;
+
+	private List<HAPAnswer> m_answerExtend;
 
 	private HAPDesignStep m_step;
 	
 	public HAPResponseDesign(List<HAPAnswer> answer, HAPDesignStep step) {
 		this.m_answer = new ArrayList<HAPAnswer>();
+		this.m_answerExtend = new ArrayList<HAPAnswer>();
 		this.m_answer.addAll(answer);
 		this.m_step = step;
 	}
@@ -38,6 +44,7 @@ public class HAPResponseDesign extends HAPSerializableImp{
 			answerMap.put(answer.getQuestionId(), answer);
 		}
 		jsonMap.put(ANSWER, HAPJsonUtility.buildJson(answerMap, HAPSerializationFormat.JSON));
+		jsonMap.put(ANSWEREXTEND, HAPJsonUtility.buildJson(m_answerExtend, HAPSerializationFormat.JSON));
 		jsonMap.put(STEP, HAPJsonUtility.buildJson(this.m_step, HAPSerializationFormat.JSON));
 	}
 }

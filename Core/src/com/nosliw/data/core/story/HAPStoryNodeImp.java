@@ -23,7 +23,7 @@ public abstract class HAPStoryNodeImp extends HAPStoryElementImp implements HAPS
 		super(HAPConstant.STORYELEMENT_CATEGARY_NODE, type);
 		this.m_connections = new ArrayList<String>();
 	}
-	
+
 	@Override
 	public List<String> getConnections() {  return this.m_connections;  }
  

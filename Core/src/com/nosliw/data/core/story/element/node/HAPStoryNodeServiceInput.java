@@ -1,6 +1,7 @@
 package com.nosliw.data.core.story.element.node;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
 import com.nosliw.data.core.story.change.HAPChangeResult;
@@ -21,7 +22,7 @@ public class HAPStoryNodeServiceInput extends HAPStoryNodeImp{
 	}
 
 	@Override
-	public HAPChangeResult patch(String path, Object value) {
-		return super.patch(path, value);
+	public HAPChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv) {
+		return super.patch(path, value, runtimeEnv);
 	}
 }

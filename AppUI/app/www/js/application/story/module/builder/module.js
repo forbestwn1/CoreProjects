@@ -118,12 +118,26 @@ var node_createModuleStoryBuilder = function(parm){
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
 			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
 			_.each(children, function(child, i){
-				loc_updateQuestion(child, loc_componentData.story);
+				loc_updateQuestion(child, answers);
 			});
 		}
 		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
-			var answerInfo = answers[question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]];
-			if(answerInfo!=undefined)  question.answer = answerInfo[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES];
+			var answer = answers[question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]];
+			if(answer!=undefined){
+				var existingAnswersById = {};
+				_.each(question.answer, function(change, i){
+					existingAnswersById[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID] = change;
+				});
+				
+				var newChanges = answer[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES];
+				//find extend change and apply
+				_.each(newChanges, function(change, i){
+					if(existingAnswersById[change[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]]==undefined){
+						loc_processChangeItem(change);
+					}
+				});
+				question.answer = newChanges;
+			}
 		}
 	};
 	

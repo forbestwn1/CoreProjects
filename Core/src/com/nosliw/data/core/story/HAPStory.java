@@ -65,6 +65,7 @@ public interface HAPStory extends HAPEntityInfo{
 	HAPAliasElement generateTemporaryAlias();
 	void registerChangeHandler(HAPHandlerChange handler);
 	void unregisterChangeHandler(HAPHandlerChange handler);
+	HAPRequestChange newRequestChange(Boolean extend);
 	List<HAPChangeItem> change(HAPRequestChange changeRequest);
 	
 	String getNextId();

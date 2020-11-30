@@ -16,6 +16,7 @@ import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPReferenceElement;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPUtilityConnection;
+import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.change.HAPRequestChange;
 import com.nosliw.data.core.story.change.HAPRequestChangeWrapper;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
@@ -109,17 +110,16 @@ public class HAPUINode {
 		return out;
 	}
 	
-	public void updateUIDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
-		HAPRequestChange changeRequest = new HAPRequestChange();
+	public void updateUIDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
+		HAPRequestChange changeRequest = this.m_story.newRequestChange(true);
 		//update data structure
 		HAPUIDataStructureInfo dataStructureInfo = buildDataStructureInfo(parentDataStructureInfo, contextProcessRequirement, uiTagMan);
 		changeRequest.addChange(HAPUtilityChange.buildChangePatch(this.getStoryNodeRef(), HAPStoryNodeUI.DATASTRUCTURE, dataStructureInfo));
 		this.getStory().change(changeRequest);
 		
 		for(HAPUIChild child : this.getChildren()) {
-			child.getUINode().updateUIDataStructureInfo(dataStructureInfo, contextProcessRequirement, uiTagMan);
+			child.getUINode().updateUIDataStructureInfo(dataStructureInfo, contextProcessRequirement, uiTagMan, changeMan);
 		}
-		
 	}
 	
 	protected HAPUIDataStructureInfo buildDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
