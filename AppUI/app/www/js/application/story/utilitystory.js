@@ -107,7 +107,8 @@ var node_utility = function(){
 		getNextIdForStory : function(story){
 			var index = this.getIdIndex(story);
 			index = index + 1;
-			this.setIdIndex(index);
+			this.setIdIndex(story, index);
+			return index+"";
 		},
 		
 		getIdIndex : function(story){

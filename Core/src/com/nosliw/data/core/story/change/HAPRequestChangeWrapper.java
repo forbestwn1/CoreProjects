@@ -1,5 +1,6 @@
 package com.nosliw.data.core.story.change;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -21,11 +22,15 @@ public class HAPRequestChangeWrapper {
 	
 	private Boolean m_extend;
 	
+	//store all changes
+	private List<HAPChangeItem> m_allChanages;
+	
 	public HAPRequestChangeWrapper(HAPStory story) {
 		this(story, false, null);
 	}
 	
 	public HAPRequestChangeWrapper(HAPStory story, boolean isAutoApply, Boolean extend) {
+		this.m_allChanages = new ArrayList<HAPChangeItem>();
 		this.m_story = story;
 		this.m_isAutoApply = isAutoApply;
 		this.m_extend = extend;
@@ -71,7 +76,7 @@ public class HAPRequestChangeWrapper {
 		if(this.m_isAutoApply) {
 			HAPRequestChange changeRequest = newChangeRequest(); 
 			changeRequest.addChange(changeItem);
-			this.m_story.change(changeRequest);
+			this.applyChangeRequest(changeRequest);
 		}
 		else {
 			this.m_changeRequest.addChange(changeItem);
@@ -80,12 +85,16 @@ public class HAPRequestChangeWrapper {
 	
 	private HAPRequestChange newChangeRequest() {	return this.m_story.newRequestChange(this.m_extend);	}
 	
+	private void applyChangeRequest(HAPRequestChange changeRequest) {
+		List<HAPChangeItem> allChanges = this.m_story.change(changeRequest);
+		if(allChanges!=null)  this.m_allChanages.addAll(allChanges);
+	}
+	
 	public List<HAPChangeItem> close() {
-		List<HAPChangeItem> out = null;
 		if(this.m_changeRequest!=null) {
-			out = this.m_story.change(m_changeRequest);
+			this.applyChangeRequest(this.m_changeRequest);
 			this.m_changeRequest = null;
 		}
-		return out;
+		return this.m_allChanages;
 	}
 }

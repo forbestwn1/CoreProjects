@@ -156,10 +156,10 @@ var node_createModuleStoryBuilder = function(parm){
 			}
 			else{
 				var answers = node_designUtility.discoverAllQuestionAnswers(step.question);
-				answers.unshift(node_storyChangeUtility.createChangeItemStoryIdIndex(loc_componentData.story));
+				var extraChanges = [node_storyChangeUtility.createChangeItemStoryIdIndex(loc_componentData.story)];
 				
 				var nextRequest = node_createServiceRequestInfoSequence();
-				nextRequest.addRequest(loc_storyService.getDoDesignRequest(undefined, loc_componentData.designId, answers, loc_componentData.stepCursor, {
+				nextRequest.addRequest(loc_storyService.getDoDesignRequest(undefined, loc_componentData.designId, answers, extraChanges, loc_componentData.stepCursor, {
 					success : function(request, serviceData){
 						if(node_errorUtility.isSuccess(serviceData)){
 							var response = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];

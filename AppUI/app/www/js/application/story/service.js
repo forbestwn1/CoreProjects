@@ -98,13 +98,14 @@ var node_createStoryService = function(){
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
-		getDoDesignRequest : function(userInfo, designId, answers, stepIndex, handlers, requester_parent){
+		getDoDesignRequest : function(userInfo, designId, answers, extraChanges, stepIndex, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("design", {}), handlers, requestInfo);
 			
 			var parms = {};
 			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_DESIGNID] = designId;
 			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_ANSWER] = answers;
+			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_EXTRACHANGES] = extraChanges;
 			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_STEPCUSOR] = stepIndex;
 			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN, parms), undefined, {
 				success : function(requestInfo, serviceData){

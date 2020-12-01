@@ -69,7 +69,7 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 		Object revertableObj = jsonObj.opt(REVERTABLE);
 		if(revertableObj!=null)  this.m_revertable = (Boolean)revertableObj; 
 		this.m_extendedFrom = (String)jsonObj.opt(EXTENDFROM);
-		this.m_extended = jsonObj.getBoolean(EXTENDED);
+		if(jsonObj.opt(EXTENDED)!=null) this.m_extended = jsonObj.getBoolean(EXTENDED);
 		
 		JSONArray revertChangesArray = jsonObj.optJSONArray(REVERTCHANGES);
 		if(revertChangesArray!=null) {

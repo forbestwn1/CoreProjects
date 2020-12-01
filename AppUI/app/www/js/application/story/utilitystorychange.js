@@ -223,7 +223,7 @@ var node_utility = function(){
 			loc_applySingleChangeStoryInfo(story, changeItem, saveRevert);
 		}
 		
-		if(extendedChanges!=undefined && extendedChanges.length()>0){
+		if(extendedChanges!=undefined && extendedChanges.length>0){
 			_.each(extendedChanges, function(extendedChange, i){
 				//extended from
 				extendedChange[node_COMMONATRIBUTECONSTANT.CHANGEITEM_EXTENDFROM] = changeItem[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
