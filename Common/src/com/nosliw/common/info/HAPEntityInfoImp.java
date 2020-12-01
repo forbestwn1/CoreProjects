@@ -61,6 +61,8 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	@Override
 	public void setDisplayName(String name) {  this.m_displayName = name;  }
 
+	public void setEmptyDisplayName() {  this.setDisplayName("");    }
+	
 	@Override
 	public String getDescription() {   return this.m_description;   }
 	

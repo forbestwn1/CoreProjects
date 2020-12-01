@@ -39,16 +39,61 @@ var node_createUIDataConnectionLink = function(uiNodeId, parentContextDef, modul
 			var varStoryNodeId = nodeDataDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION][node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_SOLIDNODEREF][node_COMMONATRIBUTECONSTANT.REFERENCECONTEXTNODE_ROOTNODEID];
 			var varStoryNode = node_storyUtility.getNodeById(story, varStoryNodeId);
 
-			var link = new joint.shapes.standard.Link({
+			var link1 = new joint.shapes.standard.Link({
 				  attrs: {
-				      '.connection': { 'stroke-dasharray': '2,5' }
+				      '.connection': { 'stroke-dasharray': '2,5' },
+		            line: {
+		                stroke: 'blue',
+		                strokeWidth: 1,
+		            }
 				  }
 			});
 
-			var nodeElement1 = loc_module.getNodeElementById(varStoryNodeId);
-			var nodeElement2 = loc_module.getNodeElementById(loc_uiNodeId);
-			link.source(nodeElement1.getElement());
-			link.target(nodeElement2.getElement());
+			var link2 = new joint.shapes.standard.Link({
+				  attrs: {
+				      '.connection': { 'stroke-dasharray': '2,5' },
+			            line: {
+			                stroke: 'blue',
+			                strokeWidth: 1,
+			                sourceMarker: {
+			                    'type': 'path',
+			                    'stroke': 'black',
+			                    'fill': 'red',
+			                    'd': 'M 10 -5 0 0 10 5 Z'
+			                },
+			                targetMarker: {
+			                    'type': 'path',
+			                    'stroke': 'black',
+			                    'fill': 'yellow',
+			                    'd': 'M 10 -5 0 0 10 5 Z'
+			                }
+			            }
+				  }
+			});
+
+			var varNodeElement = loc_module.getNodeElementById(varStoryNodeId);
+			var uiNodeElement = loc_module.getNodeElementById(loc_uiNodeId);
+
+			var link;
+			var uiStoryNode = uiNodeElement.getStoryNode();
+			var uiDataFlow = uiStoryNode[node_COMMONATRIBUTECONSTANT.STORYNODEUITAG_ATTRIBUTES][node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_ATTRIBUTE_DATAFLOW];
+			if(uiDataFlow==undefined)  uiDataFlow = node_COMMONCONSTANT.DATAFLOW_IO;
+			if(uiDataFlow == node_COMMONCONSTANT.DATAFLOW_IN){
+				link1.source(varNodeElement.getElement());
+				link1.target(uiNodeElement.getElement());
+				link = link1;
+			}
+			else if(uiDataFlow == node_COMMONCONSTANT.DATAFLOW_OUT){
+				link1.target(varNodeElement.getElement());
+				link1.source(uiNodeElement.getElement());
+				link = link1;
+			}
+			else if(uiDataFlow == node_COMMONCONSTANT.DATAFLOW_IO){
+				link2.target(varNodeElement.getElement());
+				link2.source(uiNodeElement.getElement());
+				link = link2;
+			}
+			
 			loc_links[varStoryNodeId] = link; 
 		}
 		

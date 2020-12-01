@@ -32,6 +32,7 @@ import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityConnection;
 import com.nosliw.data.core.story.HAPUtilityStory;
@@ -222,10 +223,12 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 					//parm and connection to input
 					HAPAliasElement parmNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceInputParm(parmBranchInfo.parmDef)).getAlias();
+					dataLayerChangeRequest.addPatchChange(parmNodeName, HAPStoryElement.DISPLAYRESOURCE, inputDisplayResource.getResourceNode(parmName));
 					dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceInputNodeName, parmNodeName, parmName));
 
 					//constant path and group
 					parmBranchInfo.constantAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeConstant(parmBranchInfo.parmDef.getCriteria(), parmBranchInfo.parmDef.getDefaultValue()==null)).getAlias();
+					dataLayerChangeRequest.addPatchChange(parmBranchInfo.constantAlias, HAPStoryElement.DISPLAYRESOURCE, inputDisplayResource.getResourceNode(parmName));
 					HAPAliasElement constantConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.constantAlias, parmNodeName, null, null)).getAlias();
 
 					parmBranchInfo.constantGroupAlias = dataLayerChangeRequest.addNewChange(new HAPElementGroupBatch()).getAlias();
@@ -234,6 +237,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					
 					//variable path and group
 					parmBranchInfo.variableAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeVariable(parmBranchInfo.parmDef)).getAlias();
+					dataLayerChangeRequest.addPatchChange(parmBranchInfo.variableAlias, HAPStoryElement.DISPLAYRESOURCE, inputDisplayResource.getResourceNode(parmName));
 					HAPAliasElement variableConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.variableAlias, parmNodeName, null, null)).getAlias();
 
 					parmBranchInfo.varGroupAlias = dataLayerChangeRequest.addNewChange(new HAPElementGroupBatch()).getAlias();
@@ -273,10 +277,12 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 					//parm and connection to input
 					HAPAliasElement parmNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceOutputItem(parmBranchInfo.outputDef)).getAlias();
+					dataLayerChangeRequest.addPatchChange(parmNodeName, HAPStoryElement.DISPLAYRESOURCE, outputDisplayResource.getResourceNode(parmName));
 					dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceOutputNodeName, parmNodeName, parmName));
 
 					//variable path and group
 					parmBranchInfo.variableAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeVariable(parmBranchInfo.outputDef)).getAlias();
+					dataLayerChangeRequest.addPatchChange(parmBranchInfo.variableAlias, HAPStoryElement.DISPLAYRESOURCE, outputDisplayResource.getResourceNode(parmName));
 					HAPAliasElement variableConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmNodeName, parmBranchInfo.variableAlias, null, null)).getAlias();
 
 					//group
@@ -406,6 +412,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(layoutUINode.getStoryNodeRef()));
 		if(HAPBasicUtility.isStringNotEmpty(out.displayLabel)) {
 			out.labelUINode = layoutUINode.newChildNode(new HAPStoryNodeUIHtml(out.displayLabel), "label", changeRequest, m_contextProcessRequirement, m_uiTagManager);
+			changeRequest.addPatchChange(out.labelUINode.getStoryNodeRef(), HAPStoryElement.DISPLAYRESOURCE, lableInfo.getDisplayResource());
 			changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(out.labelUINode.getStoryNodeRef()));
 		}
 

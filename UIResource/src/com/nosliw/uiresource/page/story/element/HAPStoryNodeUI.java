@@ -22,10 +22,13 @@ public class HAPStoryNodeUI extends HAPStoryNodeImp{
 
 	private HAPUIDataStructureInfo m_dataStructureInfo;
 
-	public HAPStoryNodeUI() {}
+	public HAPStoryNodeUI() {
+		this.setEmptyDisplayName();
+	}
 
 	public HAPStoryNodeUI(String type) {
 		super(type);
+		this.setEmptyDisplayName();
 		this.m_dataStructureInfo = new HAPUIDataStructureInfo();
 	}
 

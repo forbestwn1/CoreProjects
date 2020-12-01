@@ -12,6 +12,7 @@ public class HAPStoryNodeServiceInput extends HAPStoryNodeImp{
 	
 	public HAPStoryNodeServiceInput() {
 		super(STORYNODE_TYPE);
+		this.setEmptyDisplayName();
 	}
 	
 	@Override

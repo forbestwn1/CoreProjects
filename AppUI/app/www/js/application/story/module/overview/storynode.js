@@ -52,15 +52,19 @@ var node_createStoryNodeElement = function(storyNodeId, module){
 	
 	var loc_layout = node_createBasicLayout(); 
 	
+	var loc_getStoryNode = function(){
+		return node_storyUtility.getNodeById(loc_module.getStory(), loc_storyNodeId);
+	};
+	
 	var loc_getElementTitle = function(){
-		var storyNode = node_storyUtility.getNodeById(loc_module.getStory(), loc_storyNodeId);
-		return node_storyUIUtility.getStoryElementDisplayName(storyNode);
+		var storyNode = loc_getStoryNode();
+		return storyNode.type + ":" +node_storyUIUtility.getStoryElementDisplayName(storyNode);
 //		return storyNode.displayName;
 //		return storyNode.type + "_" + storyNode.name + "_" + storyNode.id; 
 	};
 	
 	var loc_getLayerColor = function(){
-		var storyNode = node_storyUtility.getNodeById(loc_module.getStory(), loc_storyNodeId);
+		var storyNode = loc_getStoryNode();
 		var enable = storyNode[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE];
 		if(enable==false){
 			return "grey";
@@ -92,6 +96,7 @@ var node_createStoryNodeElement = function(storyNodeId, module){
 		getElement : function(){  return loc_graphElement;  },
 			
 		getStoryNodeId : function(){	return loc_storyNodeId;	},
+		getStoryNode : function(){   return loc_getStoryNode();    },
 	
 		addChild : function(nodeElement, connectionId){
 			var childInfo = node_createStoryNodeElementChildInfo(nodeElement, connectionId);

@@ -12,6 +12,7 @@ public class HAPStoryNodeServiceOutput extends HAPStoryNodeImp{
 	
 	public HAPStoryNodeServiceOutput() {
 		super(STORYNODE_TYPE);
+		this.setEmptyDisplayName();
 	}
 
 	@Override
