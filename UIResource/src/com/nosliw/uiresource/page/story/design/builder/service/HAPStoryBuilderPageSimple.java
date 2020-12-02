@@ -325,6 +325,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(parmBranchInfo.dataUIInfo.rootEleRef));					
 				}
 
+				HAPUINode submitUINode = pageLayoutUINode.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "submit.tmp")), "submit", uiLayerChangeRequest, m_contextProcessRequirement, m_uiTagManager);
+
 				//output ui
 				for(HAPOutputBranchInfo parmBranchInfo : outputBranchInfos) {
 					//ui
