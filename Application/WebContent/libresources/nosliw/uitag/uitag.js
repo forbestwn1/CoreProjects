@@ -55,6 +55,8 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 	var loc_parentContext = parentContext;
 	var loc_attributeDefinition = {};
 	
+	var loc_viewContainer = loc_tagConfigure.viewContainer;
+	
 	var loc_uiTagObj;
 	
 	var loc_tagEventObject = node_createEventObject();
@@ -104,8 +106,10 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		loc_eventObject.triggerEvent(en, eventData, requestInfo);
 	};
 	
-	var loc_getStartElement = function(){   return loc_tagConfigure.startElement;     };
-	var loc_getEndElement = function(){   return loc_tagConfigure.endElement;     };
+//	var loc_getStartElement = function(){   return loc_tagConfigure.startElement;     };
+//	var loc_getEndElement = function(){   return loc_tagConfigure.endElement;     };
+	var loc_getStartElement = function(){   return loc_viewContainer.getStartElement();     };
+	var loc_getEndElement = function(){   return loc_viewContainer.getEndElement();     };
 	
 	//runtime env for uiTagObj
 	//include : basic info, utility method
@@ -272,7 +276,10 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 			uiTagInitRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
 				var views = loc_uiTagObj.initViews(requestInfo);
 				//attach view to resourve view
-				if(views!=undefined)  loc_getStartElement().after(views);	
+				if(views!=undefined){
+//					loc_getStartElement().after(views);
+					loc_viewContainer.setContentView(views);
+				}
 
 				//overridden method to do sth after view is attatched to dom
 				if(loc_uiTagObj.postInit!=undefined){
@@ -295,12 +302,14 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 	var loc_out = {
 		prv_getEnvObj : function(){  return loc_envObj;  },
 		prv_setUITagObj : function(uiTagObj){  loc_uiTagObj = uiTagObj;   },
-		prv_getStartElement : function(){  return loc_startEle;  },
+//		prv_getStartElement : function(){  return loc_startEle;  },
 
 		getId : function(){  return loc_id;   },
 		
 		getTagName : function(){ return loc_tagName;   },
 	
+		getViewContainer : function(){   return loc_viewContainer;     },
+		
 		getTagObject : function(){ return loc_uiTagObj;  },
 		
 		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},

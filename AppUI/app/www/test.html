@@ -10,8 +10,8 @@
     <!-- Your app title -->
     <title>My App</title>
     <!-- Path to Framework7 Library Bundle CSS -->
-   	<link rel="stylesheet" href="libs/framework7/4.4.0/css/framework7.bundle.css">
-	<script src="libs/framework7/4.4.0/js/framework7.bundle.js"></script>
+<!--   	<link rel="stylesheet" href="libs/framework7/4.4.0/css/framework7.bundle.css">  -->
+ 	<script src="libs/framework7/4.4.0/js/framework7.bundle.js"></script> 
 	<script src="libs/vue/vue.js"></script>
     <script src="libs/jQuery/3.4.1/jquery.js"></script>
     <script type="text/javascript" src="js/init1.js"></script>
@@ -25,15 +25,5 @@
 	<span>BBBBBBBBBBBBBBBBBBBBBB</span>
 	<input type="text"></input>
 </div>
-
-<script>
-
-var searchParams = new URLSearchParams(window.location.search);
-var parms = {};
-for (let p of searchParams) parms[p[0]] = p[1];
-
-var appConfigure = buildApplicationConfigure(parms);
-init(document.getElementById("appDiv"), appConfigure.getEnvironment(), appConfigure.getApplicationConfigureName(), appConfigure.getVersion(), appConfigure.getParms(), undefined); 
-</script>
 
 </html>

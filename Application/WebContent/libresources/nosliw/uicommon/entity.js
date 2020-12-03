@@ -81,8 +81,9 @@ var node_createViewContainer1 = function(id, attrs, html){
 	return loc_out;
 };
 
-var node_createViewContainer = function(id, attrs, html){
+var node_createViewContainer = function(id, styleId, attrs, html){
 	var loc_id = id;
+	var loc_styleId = styleId;
 	var loc_html = html;
 	var loc_attrs = attrs;
 	
@@ -102,23 +103,39 @@ var node_createViewContainer = function(id, attrs, html){
 			
 			if(loc_attrs==undefined)  loc_attrs = {};
 			loc_attrs[node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID] = loc_id;
-			loc_parentView = $("<div>" + node_UICommonUtility.createPlaceHolderHtml("nosliw_wrapper", loc_attrs, node_UICommonUtility.createStartPlaceHolderWithId(loc_id) + (loc_html==undefined?"":loc_html) + node_UICommonUtility.createEndPlaceHolderWithId(loc_id)) + "</div>");
+//			loc_parentView = $("<div>" + node_UICommonUtility.createPlaceHolderHtml("nosliw_wrapper", loc_attrs, node_UICommonUtility.createStartPlaceHolderWithId(loc_id) + (loc_html==undefined?"":loc_html) + node_UICommonUtility.createEndPlaceHolderWithId(loc_id)) + "</div>");
+			loc_parentView = $("<div>" + node_UICommonUtility.createStartPlaceHolderWithId(loc_id) + (loc_html==undefined?"":loc_html) + node_UICommonUtility.createEndPlaceHolderWithId(loc_id) + "</div>");
 			loc_fragmentDocument.append(loc_parentView);
 			
 //			loc_wrapperView = loc_parentView.find("nosliw_wrapper"+"["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+$.escapeSelector(loc_id)+"']"); 
 			loc_startEle = node_UICommonUtility.findStartPlaceHolderView(loc_parentView, loc_id); 
 			loc_endEle = node_UICommonUtility.findEndPlaceHolderView(loc_parentView, loc_id); 
+		
+			loc_updateStyleId();
 			
 			loc_viewReady = true; 
 		}
+	};
+	
+	var loc_getViews = function(){
+		return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle);
+	};
+	
+	var loc_updateStyleId = function(){
+		$(loc_getViews()).attr(node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_STYLEID,loc_styleId);
+		
 	};
 	
 	var loc_out = {
 
 		getViews : function(){	
 			loc_prepareView();
-//			return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle); 
-			return loc_wrapperView; 
+			return loc_getViews(); 
+		},
+		
+		setContentView : function(view){
+			loc_prepareView();
+			loc_startEle.after(view);
 		},
 		
 		getStartElement : function(){  

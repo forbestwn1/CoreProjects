@@ -97,14 +97,16 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 						bodyContextDef : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT][node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT],
 						eventNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_EVENTMAPPING],
 						varNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL],
-						startElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX),
-						endElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX),
-						resource : uiTagResource
+//						startElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX),
+//						endElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX),
+						viewContainer : node_createViewContainer(id, uiTagResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]),
+						resource : uiTagResource,
 					}, 
 					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT]);
 
 			var initRequest = node_getLifecycleInterface(uiTag).initRequest({
 				success : function(requestInfo){
+					uiTag.getViewContainer().insertAfter(parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX));
 					return uiTag;
 				}
 			}, requestInfo);
@@ -284,7 +286,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		var viewAttrs = {
 			nosliwdefid : uiResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID],
 		};
-		loc_viewContainer = node_createViewContainer(loc_idNameSpace, viewAttrs, node_uiResourceUtility.updateHtmlUIId(_.unescape(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HTML]), loc_idNameSpace));
+		loc_viewContainer = node_createViewContainer(loc_idNameSpace, uiResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], viewAttrs, node_uiResourceUtility.updateHtmlUIId(_.unescape(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HTML]), loc_idNameSpace));
 
 		//init expression content
 		_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPTEXPRESSIONSINCONTENT], function(expressionContent, key, list){

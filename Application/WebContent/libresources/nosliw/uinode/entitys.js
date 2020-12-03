@@ -36,6 +36,7 @@ var node_createUINodeGroupView = function(uiNodes, id, parentContext){
 	loc_out = {
 		getChildren : function(){   return loc_uiNodeViews;  },
 		
+		getViewContainer : function(){   return loc_viewContainer;   },
 		getViews : function(){     return loc_viewContainer.getViews();     },
 		getStartElement : function(){  return loc_viewContainer.getStartElement();   },
 		getEndElement : function(){  return loc_viewContainer.getEndElement();   },
@@ -167,6 +168,8 @@ var node_createUINodeHtmlView = function(uiNode, id, parentContext){
 		
 		getChildrenView : function(){	return loc_childrenViewById;	},
 		
+		getViewContainer : function(){   return loc_viewContainer;   },
+
 		getViews : function(){     
 			loc_prepareChildrenView();
 			return loc_viewContainer.getViews();     
@@ -237,6 +240,8 @@ var node_createUINodeTagView = function(uiNode, id, parentContext){
 			return out;
 		},
 		
+		getViewContainer : function(){   return loc_viewContainer;   },
+
 		getViews : function(){     return loc_viewContainer.getViews();     },
 		getStartElement : function(){  return loc_viewContainer.getStartElement();   },
 		getEndElement : function(){  return loc_viewContainer.getEndElement();   },

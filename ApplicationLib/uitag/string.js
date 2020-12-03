@@ -144,10 +144,10 @@
 				var flowDataType = loc_getDataFlowType();
 				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
 					if(loc_enum==undefined){
-						loc_view = $('<input type="text" style="background:#e6dedc"/>');	
+						loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
 					}
 					else{
-						loc_view = $('<select style="background:#e6dedc;border:solid red"/>');	
+						loc_view = $('<select style="display:inline;background:#e6dedc;border:solid red"/>');	
 						for(var i in loc_enum){
 							loc_view.append($('<option>', {
 								value: loc_enum[i],

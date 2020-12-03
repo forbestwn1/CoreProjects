@@ -89,7 +89,7 @@
 			},
 				
 			initViews : function(requestInfo){	
-				loc_view = $('<input type="text"/>');	
+				loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
 				return loc_view;
 			},
 				

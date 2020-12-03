@@ -285,6 +285,7 @@ public class HAPConstant {
 
 		public static final String UIRESOURCE_ATTRIBUTE_CONTEXT = "context";
 		public static final String UIRESOURCE_ATTRIBUTE_UIID = "nosliwid";
+		public static final String UIRESOURCE_ATTRIBUTE_STYLEID = "nosliwstyleid";
 		public static final String UIRESOURCE_ATTRIBUTE_EVENT = "event";
 		public static final String UIRESOURCE_ATTRIBUTE_DATABINDING = "data";
 		public static final String UIRESOURCE_TAG_PLACEHOLDER = "nosliw";

@@ -99,8 +99,9 @@ var loc_processUITagViewRequest = function(uiNodeTagView, parentContext, handler
 					parentContext,
 					{
 						mode : node_CONSTANT.TAG_RUNTIME_MODE_DEMO,
-						startElement : uiNodeTagView.getStartElement(),
-						endElement : uiNodeTagView.getEndElement()
+//						startElement : uiNodeTagView.getStartElement(),
+//						endElement : uiNodeTagView.getEndElement(),
+						viewContainer : uiNodeTagView.getViewContainer()
 					}, 
 					uiNode.getBody());
 			var initRequest = node_getLifecycleInterface(uiTag).initRequest({
