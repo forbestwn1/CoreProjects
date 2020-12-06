@@ -1,5 +1,6 @@
 {
 	name : "loop",
+	type : "data",
 	description : "",
 	attributes : [
 		{
@@ -20,8 +21,11 @@
 				element : {
 					"internal_data": {
 						definition : {
-							path : "<%=&(nosliwattribute_data)&%>"
-						}
+							path : "<%=&(nosliwattribute_data)&%>",
+							definition : {
+								criteria : "test.array;1.0.0"
+							}
+						},
 					}
 				},
 			},

@@ -774,6 +774,12 @@
 			<definition name="DATAFLOW_OUT" value="OUT"/>
 			<definition name="DATAFLOW_IO" value="IO"/>
 			
+			<definition type="space"/>
+			<definition name="UITAG_TYPE_DATA" value="data"/>
+			<definition name="UITAG_TYPE_LAYOUT" value="layout"/>
+			<definition name="UITAG_TYPE_CONTROL" value="control"/>
+
+			
 		</definitions>
 	</constants>
 </root>

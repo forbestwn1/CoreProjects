@@ -727,4 +727,10 @@ public class HAPConstant {
 		public static final String DATAFLOW_IO = "IO";
 
 
+
+		public static final String UITAG_TYPE_DATA = "data";
+		public static final String UITAG_TYPE_LAYOUT = "layout";
+		public static final String UITAG_TYPE_CONTROL = "control";
+
+
 }

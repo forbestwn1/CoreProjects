@@ -10,19 +10,19 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 @HAPEntityWithAttribute
-public class HAPUITagDefinition extends HAPSerializableImp{
+public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 
 	@HAPAttribute
-	public static final String NAME = "name";
+	public static final String TYPE = "type";
 	@HAPAttribute
 	public static final String SCRIPT = "script";
 	@HAPAttribute
@@ -36,9 +36,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String EVENT = "event";
 	
-	
-	//tag id
-	private HAPUITagId m_name;
+	private String m_type;
 	
 	//javascript
 	private HAPJsonTypeScript m_script;
@@ -57,18 +55,18 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	//file name for tag definition, it is mainly used for uploading resource file
 	private File m_sourceFile;
 	
-	public HAPUITagDefinition(HAPUITagId name, String script){
-		this.m_name = name;
-		this.m_script = new HAPJsonTypeScript(script);
+	public HAPUITagDefinition(String type){
+		this.m_type = type;
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
 		this.m_context = new HAPUITagDefinitionContext();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependency>();
 		this.m_eventsDefinition = new ArrayList<HAPDefinitionUIEvent>();
 	}
 	
-	public HAPUITagId getName(){return this.m_name;}
+	public String getType() {    return this.m_type;    }
 	
 	public HAPJsonTypeScript getScript(){return this.m_script;}
+	public void setScript(String script) {  this.m_script = new HAPJsonTypeScript(script);    }
 	
 	public HAPUITagDefinitionContext getContext(){  return this.m_context;   }
 
@@ -86,7 +84,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(NAME, this.m_name.toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(TYPE, this.m_type);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(FLATCONTEXT, HAPUtilityContext.buildFlatContextFromContextGroup(this.m_context, null).getVariableContext().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));

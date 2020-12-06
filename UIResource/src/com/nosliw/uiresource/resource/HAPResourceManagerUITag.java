@@ -17,7 +17,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 public class HAPResourceManagerUITag extends HAPResourceManagerImp{
 
 	private HAPUITagManager m_uiTagMan;
-	
+
 	public HAPResourceManagerUITag(HAPUITagManager uiTagMan, HAPResourceManagerRoot rootResourceMan){
 		super(rootResourceMan);
 		this.m_uiTagMan = uiTagMan;

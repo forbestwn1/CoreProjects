@@ -35,15 +35,15 @@ public class HAPGatewayUITag extends HAPGatewayImp{
 			switch(command){
 			case COMMAND_GETDEFAULTTAG:
 			{
-				HAPUITageQuery query = new HAPUITageQuery(HAPCriteriaUtility.parseCriteria(parms.getString(COMMAND_GETDEFAULTTAG_CRITERIA)));
+				HAPUITageQueryData query = new HAPUITageQueryData(HAPCriteriaUtility.parseCriteria(parms.getString(COMMAND_GETDEFAULTTAG_CRITERIA)));
 				HAPUITagQueryResult result = this.m_uiTagMan.getDefaultUITag(query);
 				out = this.createSuccessWithObject(result);
 				break;
 			}
 			case COMMAND_QUERYTAG:
 			{
-				HAPUITageQuery query = new HAPUITageQuery(HAPCriteriaUtility.parseCriteria(parms.getString(COMMAND_QUERYTAG_CRITERIA)));
-				HAPUITagQueryResultSet result = this.m_uiTagMan.queryUITag(query);
+				HAPUITageQueryData query = new HAPUITageQueryData(HAPCriteriaUtility.parseCriteria(parms.getString(COMMAND_QUERYTAG_CRITERIA)));
+				HAPUITagQueryResultSet result = this.m_uiTagMan.queryUITagData(query);
 				out = this.createSuccessWithObject(result);
 				break;
 			}

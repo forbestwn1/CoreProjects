@@ -58,6 +58,16 @@ public class HAPMatcher extends HAPExecutableImp{
 		this.m_reverse = reverse;
 	}
 	
+	public double getScore() {
+		if(this.isVoid())   return 1;
+		else {
+			int maxSize = 10;
+			int pathSize = this.m_relationship.getPath().getSegments().size();
+			if(pathSize>=maxSize)  pathSize = maxSize-1;
+			return (maxSize-pathSize)/maxSize;
+		}
+	}
+	
 	public boolean isVoid(){
 		return this.m_relationship.getSource().equals(this.m_relationship.getTarget());
 	}

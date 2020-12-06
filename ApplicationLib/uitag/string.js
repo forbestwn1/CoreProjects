@@ -1,5 +1,6 @@
 {
 	name : "string",
+	type : "data",
 	description : "",
 	attributes : [
 		{

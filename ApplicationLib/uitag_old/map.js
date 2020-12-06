@@ -1,5 +1,6 @@
 {
 	name : "map",
+	type : "data",
 	description : "",
 	attributes : [
 		{

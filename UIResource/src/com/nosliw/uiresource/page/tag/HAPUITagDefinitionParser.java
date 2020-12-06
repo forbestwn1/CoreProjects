@@ -9,11 +9,15 @@ import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
@@ -28,53 +32,15 @@ public class HAPUITagDefinitionParser {
 			String content = "var out="+HAPFileUtility.readFile(file) + "; out;";
 			NativeObject defObjJS = (NativeObject)cx.evaluateString(scope, content, file.getName(), 1, null);
 
-			String name = (String)defObjJS.get(HAPUITagDefinition.NAME);
-	    	String script = Context.toString(defObjJS.get(HAPUITagDefinition.SCRIPT));
-			out = new HAPUITagDefinition(new HAPUITagId(name), script);
+			String type = (String)defObjJS.get(HAPUITagDefinition.TYPE);
+			if(HAPBasicUtility.isStringEmpty(type))  type = HAPConstant.UITAG_TYPE_DATA;
 
-			//parse context
-			HAPUITagDefinitionContext context = out.getContext();
-			NativeObject contextObj = (NativeObject)defObjJS.get(HAPUITagDefinition.CONTEXT);
-			JSONObject contextJson = (JSONObject)HAPRhinoDataUtility.toJson(contextObj);
-			HAPUITagDefinitionParser.parseContextInTagDefinition(contextJson, context);
-			
-			//parse dependency
-			NativeObject requiresObj = (NativeObject)defObjJS.get(HAPUITagDefinition.REQUIRES);
-			if(requiresObj!=null){
-				JSONObject requiresJson = (JSONObject)HAPRhinoDataUtility.toJson(requiresObj);
-				Iterator<String> typeIt = requiresJson.keys();
-				while(typeIt.hasNext()){
-					String resourceType = typeIt.next();
-					JSONObject requiresForTypeJson = requiresJson.optJSONObject(resourceType);
-					Iterator<String> aliasIt = requiresForTypeJson.keys();
-					while(aliasIt.hasNext()){
-						String alias = aliasIt.next();
-						String resourceIdLiterate = requiresForTypeJson.optString(alias);
-						out.addResourceDependency(new HAPResourceDependency(HAPResourceIdFactory.newInstance(resourceType, resourceIdLiterate), alias));
-					}
-				}
-			}
+	    	if(HAPConstant.UITAG_TYPE_DATA.equals(type)) out = new HAPUITagDefinitionData();
 
-			//attribute definition
-			NativeArray attributesArrayObj = (NativeArray)defObjJS.get(HAPUITagDefinition.ATTRIBUTES);
-			for(int i=0; i<attributesArrayObj.size(); i++) {
-				JSONObject attrDefJson = (JSONObject)HAPRhinoDataUtility.toJson(attributesArrayObj.get(i));
-				HAPUITagDefinitionAttribute attrDef = new HAPUITagDefinitionAttribute();
-				attrDef.buildObject(attrDefJson, HAPSerializationFormat.JSON);
-				out.addAttributeDefinition(attrDef);
-			}
-			
-			//event definition
-			NativeArray eventDefObjs = (NativeArray)defObjJS.get(HAPUITagDefinition.EVENT);
-			if(eventDefObjs!=null) {
-				for(int i=0; i<eventDefObjs.size(); i++) {
-					JSONObject eventDefJson = (JSONObject)HAPRhinoDataUtility.toJson(eventDefObjs.get(i));
-					HAPDefinitionUIEvent eventDef = new HAPDefinitionUIEvent();
-					eventDef.buildObject(eventDefJson, HAPSerializationFormat.JSON);
-					out.addEventDefinition(eventDef);
-				}
-			}
-			
+	    	parseUITagDefinition(out, defObjJS);
+	    	
+	    	if(HAPConstant.UITAG_TYPE_DATA.equals(type)) parseUITagDefinitionData((HAPUITagDefinitionData)out, defObjJS);
+	    	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -82,8 +48,62 @@ public class HAPUITagDefinitionParser {
             // Exit from the context.
             Context.exit();
         }	
-
 		return out;
+	}
+	
+	private static void parseUITagDefinitionData(HAPUITagDefinitionData definition, NativeObject defObjJS) {
+		HAPContextDefinitionLeafData eleDef = (HAPContextDefinitionLeafData)definition.getContext().getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED).getElement("internal_data").getDefinition();
+		definition.setDataTypeCriteria(eleDef.getCriteria().getCriteria());
+	}
+	
+	private static void parseUITagDefinition(HAPUITagDefinition definition, NativeObject defObjJS) throws Exception {
+		definition.setId((String)defObjJS.get(HAPEntityInfo.ID));
+		definition.setName((String)defObjJS.get(HAPEntityInfo.NAME));
+    	definition.setScript(Context.toString(defObjJS.get(HAPUITagDefinition.SCRIPT)));
+    	definition.setScript(Context.toString(defObjJS.get(HAPEntityInfo.DESCRIPTION)));
+
+		//parse context
+		HAPUITagDefinitionContext context = definition.getContext();
+		NativeObject contextObj = (NativeObject)defObjJS.get(HAPUITagDefinition.CONTEXT);
+		JSONObject contextJson = (JSONObject)HAPRhinoDataUtility.toJson(contextObj);
+		HAPUITagDefinitionParser.parseContextInTagDefinition(contextJson, context);
+		
+		//parse dependency
+		NativeObject requiresObj = (NativeObject)defObjJS.get(HAPUITagDefinition.REQUIRES);
+		if(requiresObj!=null){
+			JSONObject requiresJson = (JSONObject)HAPRhinoDataUtility.toJson(requiresObj);
+			Iterator<String> typeIt = requiresJson.keys();
+			while(typeIt.hasNext()){
+				String resourceType = typeIt.next();
+				JSONObject requiresForTypeJson = requiresJson.optJSONObject(resourceType);
+				Iterator<String> aliasIt = requiresForTypeJson.keys();
+				while(aliasIt.hasNext()){
+					String alias = aliasIt.next();
+					String resourceIdLiterate = requiresForTypeJson.optString(alias);
+					definition.addResourceDependency(new HAPResourceDependency(HAPResourceIdFactory.newInstance(resourceType, resourceIdLiterate), alias));
+				}
+			}
+		}
+
+		//attribute definition
+		NativeArray attributesArrayObj = (NativeArray)defObjJS.get(HAPUITagDefinition.ATTRIBUTES);
+		for(int i=0; i<attributesArrayObj.size(); i++) {
+			JSONObject attrDefJson = (JSONObject)HAPRhinoDataUtility.toJson(attributesArrayObj.get(i));
+			HAPUITagDefinitionAttribute attrDef = new HAPUITagDefinitionAttribute();
+			attrDef.buildObject(attrDefJson, HAPSerializationFormat.JSON);
+			definition.addAttributeDefinition(attrDef);
+		}
+		
+		//event definition
+		NativeArray eventDefObjs = (NativeArray)defObjJS.get(HAPUITagDefinition.EVENT);
+		if(eventDefObjs!=null) {
+			for(int i=0; i<eventDefObjs.size(); i++) {
+				JSONObject eventDefJson = (JSONObject)HAPRhinoDataUtility.toJson(eventDefObjs.get(i));
+				HAPDefinitionUIEvent eventDef = new HAPDefinitionUIEvent();
+				eventDef.buildObject(eventDefJson, HAPSerializationFormat.JSON);
+				definition.addEventDefinition(eventDef);
+			}
+		}
 	}
 	
 	//parse 

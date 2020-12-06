@@ -1,5 +1,6 @@
 {
 	name : "include",
+	type : "control",
 	description : "",
 	attributes : [
 		{

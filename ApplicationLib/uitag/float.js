@@ -1,5 +1,6 @@
 {
 	name : "float",
+	type : "data",
 	description : "",
 	attributes : [
 		{

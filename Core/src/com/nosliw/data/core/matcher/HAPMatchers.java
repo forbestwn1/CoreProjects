@@ -36,6 +36,15 @@ public class HAPMatchers extends HAPExecutableImp{
 		return this.m_matchers;
 	}
 	
+	public double getScore() {
+		if(this.m_matchers.isEmpty())  return 0;
+		double sum = 0;
+		for(HAPMatcher matcher : this.m_matchers.values()) {
+			sum = sum + matcher.getScore();
+		}
+		return sum / this.m_matchers.size();
+	}
+	
 	public boolean isVoid(){
 		boolean out = true;
 		Iterator<HAPMatcher> it = this.m_matchers.values().iterator();

@@ -442,7 +442,10 @@ var COMMONCONSTANT=
   "DESIGNSTAGE_NAME_END": "DESIGNSTAGE_NAME_END",
   "DATAFLOW_IN": "IN",
   "DATAFLOW_OUT": "OUT",
-  "DATAFLOW_IO": "IO"
+  "DATAFLOW_IO": "IO",
+  "UITAG_TYPE_DATA": "data",
+  "UITAG_TYPE_LAYOUT": "layout",
+  "UITAG_TYPE_CONTROL": "control"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

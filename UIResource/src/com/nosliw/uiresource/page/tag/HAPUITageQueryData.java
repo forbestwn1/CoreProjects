@@ -12,14 +12,14 @@ import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute
-public class HAPUITageQuery extends HAPSerializableImp{
+public class HAPUITageQueryData extends HAPSerializableImp{
 
 	@HAPAttribute
 	final public static String DATATYPECRITERIA = "dataTypeCriteria";
 
 	private HAPDataTypeCriteria m_dataTypeCriteria;
 	
-	public HAPUITageQuery(HAPDataTypeCriteria dataTypeCriteria) {
+	public HAPUITageQueryData(HAPDataTypeCriteria dataTypeCriteria) {
 		this.m_dataTypeCriteria = dataTypeCriteria;
 	}
 	

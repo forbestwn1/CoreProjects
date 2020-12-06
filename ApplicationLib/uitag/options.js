@@ -1,5 +1,6 @@
 {
 	name : "options",
+	type : "data",
 	description : "",
 	attributes : [
 		{
