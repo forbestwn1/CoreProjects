@@ -18,6 +18,7 @@ import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
@@ -36,8 +37,11 @@ public class HAPUITagDefinitionParser {
 			if(HAPBasicUtility.isStringEmpty(type))  type = HAPConstant.UITAG_TYPE_DATA;
 
 	    	if(HAPConstant.UITAG_TYPE_DATA.equals(type)) out = new HAPUITagDefinitionData();
+	    	else if(HAPConstant.UITAG_TYPE_CONTROL.equals(type)) out = new HAPUITagDefinitionControl();
 
-	    	parseUITagDefinition(out, defObjJS);
+	    	if(out!=null) {
+		    	parseUITagDefinition(out, defObjJS);
+	    	}
 	    	
 	    	if(HAPConstant.UITAG_TYPE_DATA.equals(type)) parseUITagDefinitionData((HAPUITagDefinitionData)out, defObjJS);
 	    	
@@ -52,15 +56,15 @@ public class HAPUITagDefinitionParser {
 	}
 	
 	private static void parseUITagDefinitionData(HAPUITagDefinitionData definition, NativeObject defObjJS) {
-		HAPContextDefinitionLeafData eleDef = (HAPContextDefinitionLeafData)definition.getContext().getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED).getElement("internal_data").getDefinition();
-		definition.setDataTypeCriteria(eleDef.getCriteria().getCriteria());
+		HAPContextDefinitionLeafRelative eleDef = (HAPContextDefinitionLeafRelative)definition.getContext().getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE).getElement("internal_data").getDefinition();
+		definition.setDataTypeCriteria(((HAPContextDefinitionLeafData)eleDef.getDefinition()).getCriteria().getCriteria());
 	}
 	
 	private static void parseUITagDefinition(HAPUITagDefinition definition, NativeObject defObjJS) throws Exception {
 		definition.setId((String)defObjJS.get(HAPEntityInfo.ID));
 		definition.setName((String)defObjJS.get(HAPEntityInfo.NAME));
     	definition.setScript(Context.toString(defObjJS.get(HAPUITagDefinition.SCRIPT)));
-    	definition.setScript(Context.toString(defObjJS.get(HAPEntityInfo.DESCRIPTION)));
+    	definition.setDescription(Context.toString(defObjJS.get(HAPEntityInfo.DESCRIPTION)));
 
 		//parse context
 		HAPUITagDefinitionContext context = definition.getContext();

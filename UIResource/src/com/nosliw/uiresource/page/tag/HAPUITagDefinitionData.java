@@ -23,6 +23,7 @@ public class HAPUITagDefinitionData extends HAPUITagDefinition{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(CONTEXT, this.m_dataTypeCriteria.toStringValue(HAPSerializationFormat.LITERATE));
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(DATATYPECRITERIA, this.m_dataTypeCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 	}
 }

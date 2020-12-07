@@ -32,6 +32,7 @@ public class HAPUITagManager {
 		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getTagDefinitionFolder());
 		for(File file : files) {
 			HAPUITagDefinition uiTagDef = HAPUITagDefinitionParser.parseFromFile(file);
+			uiTagDef.setSourceFile(file);
 			String type = uiTagDef.getType();
 			if(HAPConstant.UITAG_TYPE_DATA.equals(type)) {
 				this.m_dataTagDefs.put(uiTagDef.getName(), (HAPUITagDefinitionData)uiTagDef);
@@ -82,11 +83,14 @@ public class HAPUITagManager {
 	}
 	
 	public HAPUITagDefinition getUITagDefinition(HAPUITagId id){
-		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + id.getId() + ".js";
-		File file = new File(fileName);
-		
-		HAPUITagDefinition out = HAPUITagDefinitionParser.parseFromFile(file);
-		out.setSourceFile(file);
+		HAPUITagDefinition out = this.m_dataTagDefs.get(id.getId());
+//		out.setSourceFile(file);
+//		
+//		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + id.getId() + ".js";
+//		File file = new File(fileName);
+//		
+//		HAPUITagDefinition out = HAPUITagDefinitionParser.parseFromFile(file);
+//		out.setSourceFile(file);
 		
 		return out;
 	}	
