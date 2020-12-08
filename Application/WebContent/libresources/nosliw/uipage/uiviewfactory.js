@@ -286,7 +286,8 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		var viewAttrs = {
 			nosliwdefid : uiResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID],
 		};
-		loc_viewContainer = node_createViewContainer(loc_idNameSpace, uiResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], viewAttrs, node_uiResourceUtility.updateHtmlUIId(_.unescape(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HTML]), loc_idNameSpace));
+		loc_viewContainer = node_createViewContainer(loc_idNameSpace, uiResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], viewAttrs);
+		loc_viewContainer.setContentView(node_uiResourceUtility.updateHtmlUIId(_.unescape(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HTML]), loc_idNameSpace));
 
 		//init expression content
 		_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPTEXPRESSIONSINCONTENT], function(expressionContent, key, list){
