@@ -71,30 +71,53 @@ public class HAPExecutableStyle extends HAPSerializableImp{
 		try {
 	         if(parentIds==null)  parentIds = new ArrayList<String>();
 			if(HAPBasicUtility.isStringNotEmpty(this.m_definition)) {
-				 InputSource source = new InputSource(new StringReader(this.m_definition));
-		         CSSOMParser parser = new CSSOMParser();
-		         // parse and create a stylesheet composition
-		         CSSStyleSheet stylesheet = parser.parseStyleSheet(source, null, null);
 				
 		         StringBuffer parentSelectors = new StringBuffer();
-		         for(String parentId : parentIds) {
-		        	 parentSelectors.append(this.buildSelector(parentId)+" ");
-		         }
+//		         for(String parentId : parentIds) {
+//		        	 parentSelectors.append(this.buildSelector(parentId)+" ");
+//		         }
 		         
-		         CSSRuleList ruleList = stylesheet.getCssRules();
-		         for (int i = 0; i < ruleList.getLength(); i++) 
 		         {
-		           CSSRule rule = ruleList.item(i);
-		           if (rule instanceof CSSStyleRule) 
-		           {
-		               CSSStyleRule styleRule=(CSSStyleRule)rule;
-		               String selectorText = styleRule.getSelectorText();
-		               styleRule.setSelectorText(parentSelectors.toString() + this.buildSelector(this.m_id) + " " + selectorText);
-		            }
-		          }
-		         
-		          out.append(stylesheet.toString());
-//		          out.append("\n");
+		        	 //children version
+			         // parse and create a stylesheet composition
+					 InputSource source = new InputSource(new StringReader(this.m_definition));
+			         CSSOMParser parser = new CSSOMParser();
+			         CSSStyleSheet stylesheet = parser.parseStyleSheet(source, null, null);
+			         CSSRuleList ruleList = stylesheet.getCssRules();
+			         for (int i = 0; i < ruleList.getLength(); i++) 
+			         {
+			           CSSRule rule = ruleList.item(i);
+			           if (rule instanceof CSSStyleRule) 
+			           {
+			               CSSStyleRule styleRule=(CSSStyleRule)rule;
+			               String selectorText = styleRule.getSelectorText();
+			               styleRule.setSelectorText(parentSelectors.toString() + this.buildSelector(this.m_id) + " " + selectorText);
+			            }
+			          }
+			          out.append(stylesheet.toString());
+//			          out.append("\n");
+		         }
+
+		         {
+		        	 //root version
+			         // parse and create a stylesheet composition
+					 InputSource source = new InputSource(new StringReader(this.m_definition));
+			         CSSOMParser parser = new CSSOMParser();
+			         CSSStyleSheet stylesheet = parser.parseStyleSheet(source, null, null);
+			         CSSRuleList ruleList = stylesheet.getCssRules();
+			         for (int i = 0; i < ruleList.getLength(); i++) 
+			         {
+			           CSSRule rule = ruleList.item(i);
+			           if (rule instanceof CSSStyleRule) 
+			           {
+			               CSSStyleRule styleRule=(CSSStyleRule)rule;
+			               String selectorText = styleRule.getSelectorText();
+			               styleRule.setSelectorText(parentSelectors.toString() + this.buildSelector(this.m_id) + "" + selectorText);
+			            }
+			          }
+			          out.append(stylesheet.toString());
+//			          out.append("\n");
+		         }
 			}
 
 	          List<String> ids = new ArrayList<String>(parentIds);

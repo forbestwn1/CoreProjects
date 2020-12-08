@@ -97,6 +97,11 @@ var node_createViewContainer = function(id, styleId, attrs, html){
 
 	var loc_viewReady = false;
 	
+//	var loc_setRootView = function(rootView){
+//		if (typeof value === 'string') 	rootView = $(rootView);
+//		
+//	};
+	
 	var loc_prepareView = function(){
 		if(loc_viewReady==false){
 			loc_fragmentDocument = $(document.createDocumentFragment());

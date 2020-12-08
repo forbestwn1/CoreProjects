@@ -397,6 +397,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		return parmQuestionGroup;
 	}
 	
+	private String wrappWithContainer(String html, String containerTag) {
+		return "<" + containerTag + ">" + html + "</" + containerTag + ">"; 
+	}
+	
 	private HAPDataUIInfo buildDataUINode(HAPUINode parent, Object childId, String varName, HAPDisplayValueInfo lableInfo, String dataFlow, HAPRequestChangeWrapper changeRequest) {
 		HAPDataUIInfo out = new HAPDataUIInfo();
 		
@@ -413,7 +417,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		HAPUINode layoutUINode = parent.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, layoutTemplate)), childId, changeRequest, m_contextProcessRequirement, m_uiTagManager);
 		changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(layoutUINode.getStoryNodeRef()));
 		if(HAPBasicUtility.isStringNotEmpty(out.displayLabel)) {
-			out.labelUINode = layoutUINode.newChildNode(new HAPStoryNodeUIHtml(out.displayLabel), "label", changeRequest, m_contextProcessRequirement, m_uiTagManager);
+			out.labelUINode = layoutUINode.newChildNode(new HAPStoryNodeUIHtml(this.wrappWithContainer(out.displayLabel, "span")), "label", changeRequest, m_contextProcessRequirement, m_uiTagManager);
 			changeRequest.addPatchChange(out.labelUINode.getStoryNodeRef(), HAPStoryElement.DISPLAYRESOURCE, lableInfo.getDisplayResource());
 			changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(out.labelUINode.getStoryNodeRef()));
 		}

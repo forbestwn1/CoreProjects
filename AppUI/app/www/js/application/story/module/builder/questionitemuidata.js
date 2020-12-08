@@ -21,10 +21,26 @@ var node_createComponentQuestionItemUIData = function(){
 		components : {
 		},
 		methods : {
+			selectUI : function(event){
+				
+			}
+			
 		},
 		template : `
 			<div>
 				{{question.question}}:
+				<a v-on:click="selectUI">Select</a>
+				<a class="button popup-open" href="#" data-popup=".popup-about">Open About Popup</a>
+
+				<div class="popup popup-about">
+				    <div class="block">
+				      <p>About</p>
+				      <!-- Close Popup -->
+				      <p><a class="link popup-close" href="#">Close popup</a></p>
+				      <p>Lorem ipsum dolor sit amet...</p>
+				    </div>
+				  </div>
+			
 			</div>
 		`
 	};
