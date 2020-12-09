@@ -31,13 +31,28 @@ var node_createComponentQuestionItemConstant = function(){
 		data : function(){
 			return {
 				uiNodeView : {},
-				context : {}
+				context : {},
+				tagInfo : {},
+				data : {},
 			};
 		},
 		props : ['question', 'story'],
 		components : {
 		},
 		methods : {
+			
+		},
+		computed: {
+			myData : {
+				get : function(){
+					return this.data;
+				},
+				
+				set : function(data){
+					this.data = data;
+				}
+				
+			}
 		},
 		mounted: function () {
 			var that = this;
@@ -48,8 +63,9 @@ var node_createComponentQuestionItemConstant = function(){
 			});
 			var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
 			request.addRequest(loc_storyService.getDefaultUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE], {
-				success : function(request, tagResult){
-					var tagId = tagResult[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_TAG];
+				success : function(request, tagInfo){
+					that.tagInfo = tagInfo;
+					var tagId = tagInfo[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_TAG];
 					var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
 					
 					var data = node_createData(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA], node_CONSTANT.WRAPPER_TYPE_APPDATA);
@@ -60,6 +76,7 @@ var node_createComponentQuestionItemConstant = function(){
 					that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
 						node_designUtility.applyPatchFromQuestion(that.story, that.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, eventData.value, that.question.answer);
 						that.$emit("answerChange", eventData.value);
+						that.myData = eventData.value;
 					}, this);
 
 					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, {
@@ -76,6 +93,9 @@ var node_createComponentQuestionItemConstant = function(){
 		template : `
 			<div ref="uiTag">
 				{{question.question}}: 
+				<div>
+				<uitag_data v-bind:uitaginfo="tagInfo" v-model:data="myData" />
+				</div>
 			</div>
 		`
 	};

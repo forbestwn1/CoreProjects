@@ -177,7 +177,7 @@
 				loc_view.remove();
 			},
 			
-			createContextForDemo : function(id, parentContext, request) {
+			createContextForDemo : function(id, parentContext, matchersByName request) {
 				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
 				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
 				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
@@ -186,7 +186,12 @@
 				if(parentContext!=undefined)	dataVarPar = parentContext.getContextElement("data");
 				var dataVarEleInfo = undefined;
 				if(dataVarPar!=undefined){
-					dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar);
+					var matchersCombo = matchersByName==undefined?{}:matchersByName["internal_data"];
+					var info = {
+						matchers : matchersCombo[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS],
+						reverseMatchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_REVERSEMATCHERS]
+					};
+					dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar, undefined, undefined, info);
 				}
 				else{
 					var data = node_createData({value:"Hello World", dataTypeId:"test.string;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);

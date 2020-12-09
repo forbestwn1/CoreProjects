@@ -23,9 +23,42 @@ var packageObj = library.getChildPackage();
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createComponentQuestionItemConstant = function(){
+var node_createComponentUITagData = function(){
 
 	var loc_storyService = node_createStoryService();
+	
+	var loc_updateTagUI = function(that){
+		var uiTagInfo = that.uitaginfo;
+		var tagId = uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_TAG];
+		var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
+		
+		var data = node_createData(that.data, node_CONSTANT.WRAPPER_TYPE_APPDATA);
+		var dataVarEleInfo = node_createContextElementInfo("data", data);
+		var elementInfosArray = [dataVarEleInfo];
+		that.context = node_createContext("id", elementInfosArray, request);
+		
+		that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
+			that.data = eventData.value;
+			loc_dataUpdated(that);
+//			that.$emit("dataChange", eventData.value);
+		}, this);
+
+		var request = node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS], {
+			success : function(request, uiNodeViewGroup){
+				that.uiNodeView = uiNodeViewGroup;
+				uiNodeViewGroup.appendTo(that.$refs.uiTag);
+			}
+		});
+
+		node_requestServiceProcessor.processRequest(request);
+	};
+	
+	var loc_dataUpdated = function(that){
+		var request = that.context.getUpdateContextRequest({
+			"data":that.data
+		}, handlers, requestInfo);
+		node_requestServiceProcessor.processRequest(request);
+	};
 	
 	var loc_vueComponent = {
 		data : function(){
@@ -34,45 +67,16 @@ var node_createComponentQuestionItemConstant = function(){
 				context : {}
 			};
 		},
-		props : ['uitagname', 'attribute'],
+		props : ['uitaginfo', 'data'],
 		components : {
 		},
 		methods : {
 		},
-		mounted: function () {
-			var that = this;
-			var request = node_createServiceRequestInfoSequence(undefined, {
-				success : function(request, uiTag){
-					
-				}
-			});
-			var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
-			request.addRequest(loc_storyService.getDefaultUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE], {
-				success : function(request, tagResult){
-					var tagId = tagResult[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_TAG];
-					var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
-					
-					var data = node_createData(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA], node_CONSTANT.WRAPPER_TYPE_APPDATA);
-					var dataVarEleInfo = node_createContextElementInfo("data", data);
-					var elementInfosArray = [dataVarEleInfo];
-					that.context = node_createContext("id", elementInfosArray, request);
-					
-					that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
-						node_designUtility.applyPatchFromQuestion(that.story, that.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, eventData.value, that.question.answer);
-						that.$emit("answerChange", eventData.value);
-					}, this);
-
-					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, {
-						success : function(request, uiNodeViewGroup){
-							that.uiNodeView = uiNodeViewGroup;
-							uiNodeViewGroup.appendTo(that.$refs.uiTag);
-						}
-					});
-
-				}
-			}));
-			node_requestServiceProcessor.processRequest(request);
-		},	
+		watch : {
+			uitaginfo : function(){
+				loc_updateTagUI();
+			}
+		},
 		template : `
 			<div ref="uiTag">
 			</div>
@@ -103,6 +107,6 @@ nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", funct
 nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createComponentQuestionItemConstant", node_createComponentQuestionItemConstant); 
+packageObj.createChildNode("createComponentUITagData", node_createComponentUITagData); 
 
 })(packageObj);

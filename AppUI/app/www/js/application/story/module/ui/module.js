@@ -107,7 +107,7 @@ var node_createModuleUI = function(parm){
 						pageChildrenNode.push(childInfo.childNode);
 					});
 					
-					return node_uiNodeViewFactory.getCreateUINodeViewRequest(pageChildrenNode, pageTree.getStoryNodeId(), undefined, {
+					return node_uiNodeViewFactory.getCreateUINodeViewRequest(pageChildrenNode, pageTree.getStoryNodeId(), undefined, undefined, {
 						success : function(request, uiNodeViewGroup){
 							uiNodeViewGroup.appendTo($("#uiDiv"));
 						}

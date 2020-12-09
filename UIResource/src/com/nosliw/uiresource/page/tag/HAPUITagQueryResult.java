@@ -1,9 +1,6 @@
 package com.nosliw.uiresource.page.tag;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -12,47 +9,32 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPUITagQueryResult extends HAPSerializableImp{
+public class HAPUITagQueryResult  extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static final String TAG = "tag";
+	public static final String RESULT = "result";
 
 	@HAPAttribute
-	public static final String ATTRIBUTES = "attributes";
+	public static final String SCORE = "weight";
 
-	private String m_tag;
+	private HAPUITagInfo m_result;
 	
-	private Map<String, String> m_attributes;
-
-	public HAPUITagQueryResult() {
-		this.m_attributes = new LinkedHashMap<String, String>();
-	}
-
-	public HAPUITagQueryResult(String tag) {
-		this();
-		this.m_tag = tag;
+	private double m_score;
+	
+	public HAPUITagQueryResult(HAPUITagInfo result, double score) {
+		this.m_result = result;
+		this.m_score = score;
 	}
 	
-	public String getTag() {    return this.m_tag;    }
+	public HAPUITagInfo getResult() {    return this.m_result;    }
 	
-	public Map<String, String> getAttributes(){   return this.m_attributes;    }
-
+	public double getScore() {    return this.m_score;    }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(TAG, this.m_tag);
-		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
+		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_result, HAPSerializationFormat.JSON));
+		jsonMap.put(SCORE, this.m_score+"");
+		typeJsonMap.put(SCORE, Double.class);
 	}
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		this.m_tag = jsonObj.getString(TAG);
-		JSONObject attrsObj = jsonObj.optJSONObject(ATTRIBUTES);
-		if(attrsObj!=null) {
-			for(Object key : attrsObj.keySet()) {
-				this.m_attributes.put((String)key, attrsObj.getString((String)key));
-			}
-		}
-		return true;  
-	}	
 }

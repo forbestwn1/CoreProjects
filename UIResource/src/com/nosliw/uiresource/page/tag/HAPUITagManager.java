@@ -40,10 +40,10 @@ public class HAPUITagManager {
 		}
 	}
 	
-	public HAPUITagQueryResult getDefaultUITag(HAPUITageQueryData query) {
-		HAPUITagQueryResult result = null;
+	public HAPUITagInfo getDefaultUITag(HAPUITageQueryData query) {
+		HAPUITagInfo result = null;
 		HAPUITagQueryResultSet resultSet = this.queryUITagData(query);
-		List<HAPUITagQueryResultInfo> items = resultSet.getItems();
+		List<HAPUITagQueryResult> items = resultSet.getItems();
 		if(items!=null && items.size()>=1) {
 			result = items.get(0).getResult();
 		}
@@ -59,7 +59,7 @@ public class HAPUITagManager {
 			HAPMatchers matchers = this.m_dataTypeHelper.convertable(queryDataTypeCriteria, tagDataTypeCriteria);
 			if(matchers!=null) {
 				double score = matchers.getScore();
-				if(score>0) candidates.add(new HAPUITagCandidate(uiTagDef, score));
+				if(score>0) candidates.add(new HAPUITagCandidate(uiTagDef, score, matchers));
 			}
 		}
 		HAPUITagCandidate[] candiateArray = candidates.toArray(new HAPUITagCandidate[0]);
@@ -74,8 +74,9 @@ public class HAPUITagManager {
 
 		HAPUITagQueryResultSet out = new HAPUITagQueryResultSet();
 		for(HAPUITagCandidate candidate : candiateArray) {
-			HAPUITagQueryResult result = new HAPUITagQueryResult(candidate.getUITagDef().getName());
-			HAPUITagQueryResultInfo resultInfo = new HAPUITagQueryResultInfo(result, candidate.getScore());
+			HAPUITagInfo result = new HAPUITagInfo(candidate.getUITagDef().getName());
+			result.addMatchers("internal_data", candidate.getMatchers());
+			HAPUITagQueryResult resultInfo = new HAPUITagQueryResult(result, candidate.getScore());
 			out.addItem(resultInfo);
 		}
 		
@@ -100,13 +101,16 @@ public class HAPUITagManager {
 		
 		private double m_score;
 		
-		public HAPUITagCandidate(HAPUITagDefinition uiTagDef, double score) {
+		private HAPMatchers m_matchers;
+		
+		public HAPUITagCandidate(HAPUITagDefinition uiTagDef, double score, HAPMatchers matchers) {
 			this.m_uiTagDef = uiTagDef;
 			this.m_score = score;
+			this.m_matchers = matchers;
 		}
 		
 		public HAPUITagDefinition getUITagDef() {		return this.m_uiTagDef;		}
-		
 		public double getScore() {   return this.m_score;    }
+		public HAPMatchers getMatchers() {    return this.m_matchers;    }
 	}
 }

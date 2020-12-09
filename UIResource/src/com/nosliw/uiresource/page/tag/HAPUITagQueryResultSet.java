@@ -19,15 +19,15 @@ public class HAPUITagQueryResultSet extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ITEMS = "items";
 
-	private List<HAPUITagQueryResultInfo> m_item;
+	private List<HAPUITagQueryResult> m_item;
 	
 	public HAPUITagQueryResultSet() {
-		this.m_item = new ArrayList<HAPUITagQueryResultInfo>();
+		this.m_item = new ArrayList<HAPUITagQueryResult>();
 	}
 
-	public void addItem(HAPUITagQueryResultInfo item) {   this.m_item.add(item);   }
+	public void addItem(HAPUITagQueryResult item) {   this.m_item.add(item);   }
 	
-	public List<HAPUITagQueryResultInfo> getItems(){    return this.m_item;    }
+	public List<HAPUITagQueryResult> getItems(){    return this.m_item;    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -40,7 +40,7 @@ public class HAPUITagQueryResultSet extends HAPSerializableImp{
 		JSONArray itemArray = jsonObj.optJSONArray(ITEMS);
 		if(itemArray!=null) {
 			for(int i=0; i<itemArray.length(); i++) {
-				HAPUITagQueryResult item = new HAPUITagQueryResult();
+				HAPUITagInfo item = new HAPUITagInfo();
 				item.buildObject(itemArray.get(i), HAPSerializationFormat.JSON);
 			}
 		}

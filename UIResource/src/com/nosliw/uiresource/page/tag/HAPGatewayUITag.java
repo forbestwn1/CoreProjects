@@ -36,7 +36,7 @@ public class HAPGatewayUITag extends HAPGatewayImp{
 			case COMMAND_GETDEFAULTTAG:
 			{
 				HAPUITageQueryData query = new HAPUITageQueryData(HAPCriteriaUtility.parseCriteria(parms.getString(COMMAND_GETDEFAULTTAG_CRITERIA)));
-				HAPUITagQueryResult result = this.m_uiTagMan.getDefaultUITag(query);
+				HAPUITagInfo result = this.m_uiTagMan.getDefaultUITag(query);
 				out = this.createSuccessWithObject(result);
 				break;
 			}

@@ -38,12 +38,12 @@ var node_uiNodeViewFactory = function(){
 	
 	var loc_out = {
 			
-		getCreateUINodeViewRequest : function(uiNodes, id, parentContext, handlers, requestInfo){
+		getCreateUINodeViewRequest : function(uiNodes, id, parentContext, matchers, handlers, requestInfo){
 			var uiNodeGroupView = node_createUINodeGroupView(uiNodes, id, parentContext);
 			
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUINodeViewRequest", {}), handlers, requestInfo);
 			_.each(uiNodeGroupView.getChildren(), function(uiNodeView, i){
-				out.addRequest(loc_processUINodeViewRequest(uiNodeView, parentContext));
+				out.addRequest(loc_processUINodeViewRequest(uiNodeView, parentContext, matchers));
 			});
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
@@ -57,19 +57,19 @@ var node_uiNodeViewFactory = function(){
 	return loc_out;
 }();	
 
-var loc_processUINodeViewRequest = function(uiNodeView, parentContext, handlers, requestInfo){
+var loc_processUINodeViewRequest = function(uiNodeView, parentContext, matchers, handlers, requestInfo){
 	var uiNodeType = uiNodeView.getUINodeType();
 	if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_HTML){
 		//for html related ui node
-		return loc_processUIHtmlViewRequest(uiNodeView, parentContext, handlers, requestInfo);
+		return loc_processUIHtmlViewRequest(uiNodeView, parentContext, matchers, handlers, requestInfo);
 	}
 	else if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA){
 		//for tag related ui node
-		return loc_processUITagViewRequest(uiNodeView, parentContext, handlers, requestInfo);
+		return loc_processUITagViewRequest(uiNodeView, parentContext, matchers, handlers, requestInfo);
 	}
 };
 
-var loc_processUIHtmlViewRequest = function(uiHtmlNodeView, parentContext, handlers, requestInfo){
+var loc_processUIHtmlViewRequest = function(uiHtmlNodeView, parentContext, matchers, handlers, requestInfo){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIHtmlNode", {}), handlers, requestInfo);
 
 	var id = uiHtmlNodeView.getId();
@@ -84,7 +84,7 @@ var loc_processUIHtmlViewRequest = function(uiHtmlNodeView, parentContext, handl
 	return out;
 };
 
-var loc_processUITagViewRequest = function(uiNodeTagView, parentContext, handlers, requestInfo){
+var loc_processUITagViewRequest = function(uiNodeTagView, parentContext, matchers, handlers, requestInfo){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUITagNode", {}), handlers, requestInfo);
 	var uiNode = uiNodeTagView.getUINode();
 	var tagId = uiNodeTagView.getTagId();
@@ -101,7 +101,8 @@ var loc_processUITagViewRequest = function(uiNodeTagView, parentContext, handler
 						mode : node_CONSTANT.TAG_RUNTIME_MODE_DEMO,
 //						startElement : uiNodeTagView.getStartElement(),
 //						endElement : uiNodeTagView.getEndElement(),
-						viewContainer : uiNodeTagView.getViewContainer()
+						viewContainer : uiNodeTagView.getViewContainer(),
+						matchers : matchers
 					}, 
 					uiNode.getBody());
 			var initRequest = node_getLifecycleInterface(uiTag).initRequest({

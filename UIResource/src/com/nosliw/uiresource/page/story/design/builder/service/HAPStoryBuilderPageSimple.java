@@ -68,7 +68,7 @@ import com.nosliw.uiresource.page.story.model.HAPUINode;
 import com.nosliw.uiresource.page.story.model.HAPUITree;
 import com.nosliw.uiresource.page.story.model.HAPUtility;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
-import com.nosliw.uiresource.page.tag.HAPUITagQueryResult;
+import com.nosliw.uiresource.page.tag.HAPUITagInfo;
 import com.nosliw.uiresource.page.tag.HAPUITageQueryData;
 
 public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
@@ -455,7 +455,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		}
 		else {
 			//simple
-			HAPUITagQueryResult uiTagInfo = this.m_uiTagManager.getDefaultUITag(new HAPUITageQueryData(dataTypeCriteria));
+			HAPUITagInfo uiTagInfo = this.m_uiTagManager.getDefaultUITag(new HAPUITageQueryData(dataTypeCriteria));
 			HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getTag(), uiDataInfo, dataFlow);
 			uiDataStoryNode.addAttribute("data", varName);
 			dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, m_contextProcessRequirement, m_uiTagManager);
