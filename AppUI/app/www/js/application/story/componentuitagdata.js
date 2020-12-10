@@ -32,19 +32,21 @@ var node_createComponentUITagData = function(){
 		var tagId = uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_TAG];
 		var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
 		
-		var data = node_createData(that.data, node_CONSTANT.WRAPPER_TYPE_APPDATA);
+		var data = node_createData(that.tagData, node_CONSTANT.WRAPPER_TYPE_APPDATA);
 		var dataVarEleInfo = node_createContextElementInfo("data", data);
 		var elementInfosArray = [dataVarEleInfo];
 		that.context = node_createContext("id", elementInfosArray, request);
 		
 		that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
-			that.data = eventData.value;
-			loc_dataUpdated(that);
-//			that.$emit("dataChange", eventData.value);
+			if(that.requestFromDataUpdate[request.getId()]==undefined){
+				that.tagData = eventData.value;
+				that.$emit("dataChange", eventData.value);
+			}
 		}, this);
 
 		var request = node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS], {
 			success : function(request, uiNodeViewGroup){
+				$(that.$refs.uiTag).empty();
 				that.uiNodeView = uiNodeViewGroup;
 				uiNodeViewGroup.appendTo(that.$refs.uiTag);
 			}
@@ -53,18 +55,13 @@ var node_createComponentUITagData = function(){
 		node_requestServiceProcessor.processRequest(request);
 	};
 	
-	var loc_dataUpdated = function(that){
-		var request = that.context.getUpdateContextRequest({
-			"data":that.data
-		}, handlers, requestInfo);
-		node_requestServiceProcessor.processRequest(request);
-	};
-	
 	var loc_vueComponent = {
 		data : function(){
 			return {
+				tagData : {},
 				uiNodeView : {},
-				context : {}
+				context : {},
+				requestFromDataUpdate : {}
 			};
 		},
 		props : ['uitaginfo', 'data'],
@@ -74,7 +71,15 @@ var node_createComponentUITagData = function(){
 		},
 		watch : {
 			uitaginfo : function(){
-				loc_updateTagUI();
+				loc_updateTagUI(this);
+			},
+			data : function(){
+				this.tagData = this.data;
+				var request = this.context.getUpdateContextRequest({
+					"data":this.tagData
+				});
+				this.requestFromDataUpdate[request.getId()] = request;
+				node_requestServiceProcessor.processRequest(request);
 			}
 		},
 		template : `

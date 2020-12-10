@@ -65,7 +65,7 @@ var node_createComponentQuestionItemConstant = function(){
 			request.addRequest(loc_storyService.getDefaultUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE], {
 				success : function(request, tagInfo){
 					that.tagInfo = tagInfo;
-					var tagId = tagInfo[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_TAG];
+					var tagId = tagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_TAG];
 					var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
 					
 					var data = node_createData(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA], node_CONSTANT.WRAPPER_TYPE_APPDATA);
@@ -79,7 +79,7 @@ var node_createComponentQuestionItemConstant = function(){
 						that.myData = eventData.value;
 					}, this);
 
-					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, {
+					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, undefined, {
 						success : function(request, uiNodeViewGroup){
 							that.uiNodeView = uiNodeViewGroup;
 							uiNodeViewGroup.appendTo(that.$refs.uiTag);
@@ -91,10 +91,11 @@ var node_createComponentQuestionItemConstant = function(){
 			node_requestServiceProcessor.processRequest(request);
 		},	
 		template : `
-			<div ref="uiTag">
+			<div>
+				constant : <div ref="uiTag"></div>
 				{{question.question}}: 
 				<div>
-				<uitag_data v-bind:uitaginfo="tagInfo" v-model:data="myData" />
+				dataTag: <uitag_data v-bind:uitaginfo="tagInfo" v-bind:data="myData" />
 				</div>
 			</div>
 		`

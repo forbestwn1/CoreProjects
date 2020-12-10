@@ -177,7 +177,7 @@
 				loc_view.remove();
 			},
 			
-			createContextForDemo : function(id, parentContext, matchersByName request) {
+			createContextForDemo : function(id, parentContext, matchersByName, request) {
 				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
 				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
 				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
@@ -187,10 +187,13 @@
 				var dataVarEleInfo = undefined;
 				if(dataVarPar!=undefined){
 					var matchersCombo = matchersByName==undefined?{}:matchersByName["internal_data"];
-					var info = {
-						matchers : matchersCombo[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS],
-						reverseMatchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_REVERSEMATCHERS]
-					};
+					var info;
+					if(matchersCombo!=undefined){
+						info = {
+								matchers : matchersCombo[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS],
+								reverseMatchers : matchersCombo[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_REVERSEMATCHERS]
+						};
+					}
 					dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar, undefined, undefined, info);
 				}
 				else{
