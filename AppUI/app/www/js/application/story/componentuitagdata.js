@@ -29,30 +29,35 @@ var node_createComponentUITagData = function(){
 	
 	var loc_updateTagUI = function(that){
 		var uiTagInfo = that.uitaginfo;
-		var tagId = uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_TAG];
-		var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
-		
-		var data = node_createData(that.tagData, node_CONSTANT.WRAPPER_TYPE_APPDATA);
-		var dataVarEleInfo = node_createContextElementInfo("data", data);
-		var elementInfosArray = [dataVarEleInfo];
-		that.context = node_createContext("id", elementInfosArray, request);
-		
-		that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
-			if(that.requestFromDataUpdate[request.getId()]==undefined){
-				that.tagData = eventData.value;
-				that.$emit("dataChange", eventData.value);
-			}
-		}, this);
+		var tagId = uiTagInfo==undefined?undefined:uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_TAG];
+		if(tagId==undefined){
+			$(that.$refs.uiTag).empty();
+			that.uiNodeView = {};
+		}
+		else{
+			var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
+			var data = node_createData(that.tagData, node_CONSTANT.WRAPPER_TYPE_APPDATA);
+			var dataVarEleInfo = node_createContextElementInfo("data", data);
+			var elementInfosArray = [dataVarEleInfo];
+			that.context = node_createContext("id", elementInfosArray, request);
+			
+			that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
+				if(that.requestFromDataUpdate[request.getId()]==undefined){
+					that.tagData = eventData.value;
+					that.$emit("dataChange", eventData.value);
+				}
+			}, this);
 
-		var request = node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS], {
-			success : function(request, uiNodeViewGroup){
-				$(that.$refs.uiTag).empty();
-				that.uiNodeView = uiNodeViewGroup;
-				uiNodeViewGroup.appendTo(that.$refs.uiTag);
-			}
-		});
+			var request = node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS], {
+				success : function(request, uiNodeViewGroup){
+					$(that.$refs.uiTag).empty();
+					that.uiNodeView = uiNodeViewGroup;
+					that.uiNodeView.appendTo(that.$refs.uiTag);
+				}
+			});
 
-		node_requestServiceProcessor.processRequest(request);
+			node_requestServiceProcessor.processRequest(request);
+		}
 	};
 	
 	var loc_vueComponent = {

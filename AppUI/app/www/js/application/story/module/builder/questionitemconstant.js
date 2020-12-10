@@ -34,25 +34,20 @@ var node_createComponentQuestionItemConstant = function(){
 				context : {},
 				tagInfo : {},
 				data : {},
+				tagData : {},
 			};
 		},
 		props : ['question', 'story'],
 		components : {
 		},
 		methods : {
-			
+			onDataChange : function(data){
+				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, data, this.question.answer);
+				that.$emit("answerChange", data);
+				that.data = eventData.value;
+			},
 		},
 		computed: {
-			myData : {
-				get : function(){
-					return this.data;
-				},
-				
-				set : function(data){
-					this.data = data;
-				}
-				
-			}
 		},
 		mounted: function () {
 			var that = this;
@@ -65,37 +60,15 @@ var node_createComponentQuestionItemConstant = function(){
 			request.addRequest(loc_storyService.getDefaultUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE], {
 				success : function(request, tagInfo){
 					that.tagInfo = tagInfo;
-					var tagId = tagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_TAG];
-					var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
-					
-					var data = node_createData(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA], node_CONSTANT.WRAPPER_TYPE_APPDATA);
-					var dataVarEleInfo = node_createContextElementInfo("data", data);
-					var elementInfosArray = [dataVarEleInfo];
-					that.context = node_createContext("id", elementInfosArray, request);
-					
-					that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
-						node_designUtility.applyPatchFromQuestion(that.story, that.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, eventData.value, that.question.answer);
-						that.$emit("answerChange", eventData.value);
-						that.myData = eventData.value;
-					}, this);
-
-					return node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, undefined, {
-						success : function(request, uiNodeViewGroup){
-							that.uiNodeView = uiNodeViewGroup;
-							uiNodeViewGroup.appendTo(that.$refs.uiTag);
-						}
-					});
-
 				}
 			}));
 			node_requestServiceProcessor.processRequest(request);
 		},	
 		template : `
 			<div>
-				constant : <div ref="uiTag"></div>
 				{{question.question}}: 
 				<div>
-				dataTag: <uitag_data v-bind:uitaginfo="tagInfo" v-bind:data="myData" />
+				dataTag: <uitag_data v-bind:uitaginfo="tagInfo" v-bind:data="tagData"  v-on:dataChange="onDataChange"/>
 				</div>
 			</div>
 		`
