@@ -45,7 +45,7 @@ public class HAPUITagManager {
 		HAPUITagQueryResultSet resultSet = this.queryUITagData(query);
 		List<HAPUITagQueryResult> items = resultSet.getItems();
 		if(items!=null && items.size()>=1) {
-			result = items.get(0).getResult();
+			result = items.get(0).getUITagInfo();
 		}
 		return result;
 	}
