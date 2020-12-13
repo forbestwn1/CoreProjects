@@ -207,6 +207,7 @@ var node_createModuleStoryBuilder = function(parm){
 		Vue.component('question-group', node_createComponentQuestionGroup());
 		Vue.component('question-item', node_createComponentQuestionItem());
 		Vue.component('uitag_data', node_createComponentUITagData());
+		Vue.component('uitag_select', node_createComponentUITagSelect());
 		
 		loc_vue = new Vue({
 			el: loc_root,
@@ -389,6 +390,7 @@ nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponen
 nosliw.registerSetNodeDataEvent("application.story.module.builder.createComponentQuestionItem", function(){node_createComponentQuestionItem = this.getData();});
 nosliw.registerSetNodeDataEvent("application.story.module.builder.builderUtility", function(){node_builderUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.createComponentUITagData", function(){node_createComponentUITagData = this.getData();});
+nosliw.registerSetNodeDataEvent("application.instance.story.createComponentUITagSelect", function(){node_createComponentUITagSelect = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});

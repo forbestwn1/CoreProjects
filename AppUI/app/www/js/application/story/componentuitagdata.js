@@ -29,7 +29,7 @@ var node_createComponentUITagData = function(){
 	
 	var loc_updateTagUI = function(that){
 		var uiTagInfo = that.uitaginfo;
-		var tagId = uiTagInfo==undefined?undefined:uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_TAG];
+		var tagId = uiTagInfo==undefined?undefined:uiTagInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
 		if(tagId==undefined){
 			$(that.$refs.uiTag).empty();
 			that.uiNodeView = {};

@@ -74,7 +74,7 @@ public class HAPUITagManager {
 
 		HAPUITagQueryResultSet out = new HAPUITagQueryResultSet();
 		for(HAPUITagCandidate candidate : candiateArray) {
-			HAPUITagInfo result = new HAPUITagInfo(candidate.getUITagDef().getName());
+			HAPUITagInfo result = new HAPUITagInfo(candidate.getUITagDef());
 			result.addMatchers("internal_data", candidate.getMatchers());
 			HAPUITagQueryResult resultInfo = new HAPUITagQueryResult(result, candidate.getScore());
 			out.addItem(resultInfo);

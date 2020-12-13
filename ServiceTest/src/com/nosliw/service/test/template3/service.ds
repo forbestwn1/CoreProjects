@@ -1,0 +1,59 @@
+[{
+	"static": {
+		"id": "TestTemplateService3",
+		"name": "TestTemplateService3",
+		"description" : "test service implemented by process",
+		"tag" : ["public"],
+		"interface" : {
+			"parm" : {
+				"serviceParm1": {
+					dataInfo : "test.options;1.0.0",
+				},
+				"serviceParm2": {
+					dataInfo : "test.string;1.0.0",
+				}
+			},
+			"result" : {
+				"success": {
+					"output": {
+						"outputInService1": {
+							dataInfo : "test.string;1.0.0",
+						},
+						"outputInService2": {
+							dataInfo : "test.string;1.0.0",
+						}
+					}
+				}
+			},
+		},
+		"display" : {
+			"displayName" : "Test Template Service3 English",
+			"description" : "test service implemented by process",
+			"interface" : {
+				"parm" : {
+					"serviceParm1" : {
+						"displayName" : "serviceParm1 English"
+					},
+					"serviceParm2" : {
+						"displayName" : "serviceParm2 English"
+					},
+				},
+				"result" : {
+					"success" : {
+						"output": {
+							"outputInService1" : {
+								"displayName" : "outputInService1 English"
+							},
+							"outputInService2" : {
+								"displayName" : "outputInService2 English"
+							},
+						}
+					}
+				}
+			}
+		}
+	},
+	"runtime": {
+	    "implementation" : "com.nosliw.service.test.template3.HAPServiceImp",
+	}
+}]

@@ -26,12 +26,25 @@ var node_createComponentQuestionItemUIData = function(){
 
 	var loc_storyService = node_createStoryService();
 
+	var loc_setCurrentByIndex = function(that, index){
+		that.current = index;
+		var initSelect = undefined;
+		var currentTagInfo = that.tagInfos[that.current];
+		if(currentTagInfo!=null)    initSelect = currentTagInfo.id;
+		that.initSelect = initSelect;
+	};
+	
+	var loc_setCurrentByTagId = function(that, index){
+		
+	};
+	
 	var loc_vueComponent = {
 		data : function(){
 			return {
 				tagInfos : [],
 				current : -1,
-				
+				initSelect : undefined,
+				popSelected : undefined
 			};
 		},
 		props : ['question', 'story'],
@@ -40,7 +53,16 @@ var node_createComponentQuestionItemUIData = function(){
 		methods : {
 			selectUI : function(event){
 				
-			}
+			},
+			onSelectChange : function(selected){
+				this.popSelected = selected;
+			},
+			onSelectTag : function(){
+				loc_setCurrentByTagId(this, this.popSelected);
+			},
+			onCancelSelectTag : function(){
+				this.popSelected = undefined;
+			},
 			
 		},
 		computed: {
@@ -65,7 +87,7 @@ var node_createComponentQuestionItemUIData = function(){
 					_.each(queryResultSet[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULTSET_ITEMS], function(item, i){
 						that.tagInfos.push(item[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_UITAGINFO]);
 					});
-					that.current = 0;
+					loc_setCurrentByIndex(that, 0);
 				}
 			}));
 			node_requestServiceProcessor.processRequest(request);
@@ -79,9 +101,11 @@ var node_createComponentQuestionItemUIData = function(){
 
 				<div class="popup popup-about">
 				    <div class="block">
+				    	<uitag_select v-bind:uitaginfolist='this.tagInfos' v-bind:initselect='this.initSelect' v-selectChange="onSelectChange"/>
 				      <p>About</p>
 				      <!-- Close Popup -->
-				      <p><a class="link popup-close" href="#">Close popup</a></p>
+				      <p><a class="link popup-close" href="#" v-on:click.prevent="onSelectTag">Ok</a></p>
+				      <p><a class="link popup-close" href="#" v-on:click.prevent="onCancelSelectTag">Close</a></p>
 				      <p>Lorem ipsum dolor sit amet...</p>
 				    </div>
 				  </div>

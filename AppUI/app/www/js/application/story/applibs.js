@@ -13,7 +13,8 @@ for(var i in nosliwApplication.info.application.modulesConfigure){
 			"utilitystoryui.js",
 			"utilitydesign.js",
 			"utilitystorychange.js",
-			"componentuitagdata.js"
+			"componentuitagdata.js",
+			"componentuitagselect.js",
 		]
 	});
 	
