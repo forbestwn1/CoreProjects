@@ -34,8 +34,15 @@ var node_createComponentQuestionItemUIData = function(){
 		that.initSelect = initSelect;
 	};
 	
-	var loc_setCurrentByTagId = function(that, index){
-		
+	var loc_setCurrentByTagId = function(that, tagId){
+		var index = -1;
+		for(var i in that.tagInfos){
+			if(that.tagInfos[i].id==tagId){
+				index = i;
+				break;
+			}
+		}
+		loc_setCurrentByIndex(that, index);
 	};
 	
 	var loc_vueComponent = {
@@ -59,6 +66,7 @@ var node_createComponentQuestionItemUIData = function(){
 			},
 			onSelectTag : function(){
 				loc_setCurrentByTagId(this, this.popSelected);
+				this.popSelected = undefined;
 			},
 			onCancelSelectTag : function(){
 				this.popSelected = undefined;
@@ -96,17 +104,15 @@ var node_createComponentQuestionItemUIData = function(){
 			<div>
 				{{question.question}}:
 				dataTag: <uitag_data v-bind:uitaginfo="currentTagInfo"/>
-				<a v-on:click="selectUI">Select</a>
-				<a class="button popup-open" href="#" data-popup=".popup-about">Open About Popup</a>
+				<a class="popup-open" href="#" data-popup=".popup-about">Change UI</a>
 
 				<div class="popup popup-about">
 				    <div class="block">
+				      <p>Please select control: </p>
 				    	<uitag_select v-bind:uitaginfolist='this.tagInfos' v-bind:initselect='this.initSelect' v-on:selectChange="onSelectChange"/>
-				      <p>About</p>
 				      <!-- Close Popup -->
 				      <p><a class="link popup-close" href="#" v-on:click.prevent="onSelectTag">Ok</a></p>
 				      <p><a class="link popup-close" href="#" v-on:click.prevent="onCancelSelectTag">Close</a></p>
-				      <p>Lorem ipsum dolor sit amet...</p>
 				    </div>
 				  </div>
 			
