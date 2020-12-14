@@ -8,9 +8,6 @@
 			"parm" : {
 				"serviceParm1": {
 					dataInfo : "test.options;1.0.0",
-				},
-				"serviceParm2": {
-					dataInfo : "test.string;1.0.0",
 				}
 			},
 			"result" : {

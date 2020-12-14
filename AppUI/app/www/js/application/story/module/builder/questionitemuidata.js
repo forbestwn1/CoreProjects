@@ -101,7 +101,7 @@ var node_createComponentQuestionItemUIData = function(){
 
 				<div class="popup popup-about">
 				    <div class="block">
-				    	<uitag_select v-bind:uitaginfolist='this.tagInfos' v-bind:initselect='this.initSelect' v-selectChange="onSelectChange"/>
+				    	<uitag_select v-bind:uitaginfolist='this.tagInfos' v-bind:initselect='this.initSelect' v-on:selectChange="onSelectChange"/>
 				      <p>About</p>
 				      <!-- Close Popup -->
 				      <p><a class="link popup-close" href="#" v-on:click.prevent="onSelectTag">Ok</a></p>

@@ -65,7 +65,7 @@
 			loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
 					if(data==undefined)  loc_view.val();
-					else loc_view.val(data.value.value.value);
+					else loc_view.val(data.value.value);
 				}
 			}, request);
 		};
@@ -87,10 +87,12 @@
 			initViews : function(requestInfo){	
 				loc_view = $('<select style="background:#e6dedc;border:solid red"/>');	
 				var operationParms = [];
+				var optionId = loc_env.getAttributeValue("id");
+				if(optionId==undefined)  optionId = "schoolType";
 				operationParms.push(new node_OperationParm(
 					{
 						dataTypeId: "test.string;1.0.0",
-						value: loc_env.getAttributeValue("id")
+						value: optionId
 					}, "optionsId"));
 				
 				loc_env.executeExecuteOperationRequest("test.options;1.0.0", "all", operationParms, {

@@ -66,8 +66,8 @@ public class HAPUITagManager {
 		Arrays.sort(candiateArray, new Comparator<HAPUITagCandidate>() {
 			@Override
 			public int compare(HAPUITagCandidate arg0, HAPUITagCandidate arg1) {
-				if(arg0.getScore()>arg1.getScore()) return 1;
-				if(arg0.getScore()<arg1.getScore()) return -1;
+				if(arg0.getScore()>arg1.getScore()) return -1;
+				if(arg0.getScore()<arg1.getScore()) return 1;
 				return 0;
 			}
 		});

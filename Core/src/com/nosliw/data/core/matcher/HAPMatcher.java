@@ -61,8 +61,8 @@ public class HAPMatcher extends HAPExecutableImp{
 	public double getScore() {
 		if(this.isVoid())   return 1;
 		else {
-			int maxSize = 10;
-			int pathSize = this.m_relationship.getPath().getSegments().size();
+			double maxSize = 10;
+			double pathSize = this.m_relationship.getPath().getSegments().size();
 			if(pathSize>=maxSize)  pathSize = maxSize-1;
 			return (maxSize-pathSize)/maxSize;
 		}
