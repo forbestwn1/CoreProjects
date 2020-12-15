@@ -14,11 +14,11 @@
 				"success": {
 					"output": {
 						"outputInService1": {
-							dataInfo : "test.string;1.0.0",
+							dataInfo : "test.options;1.0.0",
 						},
 						"outputInService2": {
 							dataInfo : "test.string;1.0.0",
-						}
+						},
 					}
 				}
 			},
@@ -30,9 +30,6 @@
 				"parm" : {
 					"serviceParm1" : {
 						"displayName" : "serviceParm1 English"
-					},
-					"serviceParm2" : {
-						"displayName" : "serviceParm2 English"
 					},
 				},
 				"result" : {

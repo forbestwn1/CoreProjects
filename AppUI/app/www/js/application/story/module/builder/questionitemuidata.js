@@ -66,6 +66,7 @@ var node_createComponentQuestionItemUIData = function(){
 			},
 			onSelectTag : function(){
 				loc_setCurrentByTagId(this, this.popSelected);
+				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODEUITAG_TAGNAME, this.popSelected, this.question.answer);
 				this.popSelected = undefined;
 			},
 			onCancelSelectTag : function(){
