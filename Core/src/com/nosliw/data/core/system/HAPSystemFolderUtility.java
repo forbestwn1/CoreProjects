@@ -24,6 +24,7 @@ public class HAPSystemFolderUtility {
 	public static String getTemplateFolder(){  return getApplicationDataFolder() + "template/";  }
 	public static String getExpressionFolder(){  return getApplicationDataFolder() + "expression/";  }
 	public static String getScriptGroupFolder(){  return getApplicationDataFolder() + "script/";  }
+	public static String getCodeTableFolder(){  return getApplicationDataFolder() + "codetable/";  }
 
 	public static String getResourceTempFileFolder(){  return HAPSystemUtility.getJSTempFolder() + "resources/";  }
 	public static String getJSLibrayrTempFolder() {    return  HAPSystemUtility.getJSTempFolder() + "libs/";  }

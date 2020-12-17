@@ -10,6 +10,9 @@ public abstract class HAPDataRuleImp extends HAPSerializableImp implements HAPDa
 
 	private String m_ruleType;
 	
+	public HAPDataRuleImp() {
+	}
+	
 	public HAPDataRuleImp(String type) {
 		this.m_ruleType = type;
 	}

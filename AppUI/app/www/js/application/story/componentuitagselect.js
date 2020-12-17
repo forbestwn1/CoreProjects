@@ -13,6 +13,12 @@ var packageObj = library.getChildPackage();
 
 var node_createComponentUITagSelect = function(){
 
+	var loc_getUITagInfoById = function(that, tagId){
+		for(var i in that.uitaginfolist){
+			if(that.uitaginfolist[i].id==tagId)   return that.uitaginfolist[i]; 
+		}
+	};
+	
 	var loc_vueComponent = {
 		data : function(){
 			return {
@@ -25,17 +31,15 @@ var node_createComponentUITagSelect = function(){
 		methods : {
 		},
 		computed: {
-			selected : {
+			currentTagInfo : {
 				get : function(){
-					return 
-				},
-				set : function(){
+					return loc_getUITagInfoById(this, this.selectedId);
 				},
 			}
 		},
 		watch : {
 			initselect : function(){
-				selectedId = this.initselect;
+				this.selectedId = this.initselect;
 			},
 			selectedId : function(){
 				this.$emit("selectChange", this.selectedId);
@@ -43,10 +47,14 @@ var node_createComponentUITagSelect = function(){
 		},
 		template : `
 			<div>
-			  <div v-for="uitaginfo in uitaginfolist" >
-				  <input type="radio" id="uitaginfo.id" v-bind:value="uitaginfo.id" v-model="selectedId">
-				  <label for="uitaginfo.id">{{ uitaginfo.name }}</label><br>
-			  </div>
+				<div>
+					<uitag_data v-bind:uitaginfo="currentTagInfo"/>
+				</div>
+				
+				  <div v-for="uitaginfo in uitaginfolist" >
+					  <input type="radio" id="uitaginfo.id" v-bind:value="uitaginfo.id" v-model="selectedId">
+					  <label for="uitaginfo.id">{{ uitaginfo.name }}</label><br>
+				  </div>
 			</div>
 		`
 	};

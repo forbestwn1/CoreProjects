@@ -3,6 +3,7 @@ package com.nosliw.data.core.runtime.js;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
@@ -55,6 +56,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	private HAPDataTypeManager m_dataTypeManager;
 	
+	private HAPManagerCodeTable m_codeTableManager;
+	
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
 	private HAPResourceManagerRoot m_resourceManager;
@@ -86,6 +89,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPRuntimeEnvironmentJS(
 			HAPDataTypeManager dataTypeManager,
 			HAPDataTypeHelper dataTypeHelper,
+			HAPManagerCodeTable codeTableManager,
 			HAPResourceManagerRoot resourceMan,
 			HAPManagerProcess processManager,
 			HAPRuntimeProcess processRuntime,
@@ -99,12 +103,13 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, resourceMan, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
 				HAPDataTypeManager dataTypeManager,
 				HAPDataTypeHelper dataTypeHelper,
+				HAPManagerCodeTable codeTableManager,
 				HAPResourceManagerRoot resourceMan,
 				HAPManagerProcess processManager,
 				HAPRuntimeProcess processRuntime,
@@ -167,6 +172,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	@Override
 	public HAPDataTypeManager getDataTypeManager() {  return this.m_dataTypeManager;   }
+
+	@Override
+	public HAPManagerCodeTable getCodeTableManager() {   return this.m_codeTableManager;      }
 
 	@Override
 	public HAPResourceManagerRoot getResourceManager() {		return this.m_resourceManager;	}

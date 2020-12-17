@@ -2,6 +2,7 @@ package com.nosliw.data.core.imp.runtime.js.rhino;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -42,6 +43,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		
 		HAPDataTypeManager dataTypeManager = new HAPDataTypeManagerImp(runtimeJSModule.getDataTypeDataAccess());
 		HAPDataTypeHelper dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
+		HAPManagerCodeTable codeTableManager = new HAPManagerCodeTable();
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
 		HAPResourceManagerJSImp resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
 		HAPManagerDynamicResource dynamicResourceManager = new HAPManagerDynamicResource();
@@ -57,6 +59,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		init(
 				dataTypeManager,
 				dataTypeHelper,
+				codeTableManager,
 				resourceMan,
 				processMan,
 				processRuntimeMan,

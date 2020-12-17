@@ -3,6 +3,7 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -65,6 +66,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		
 		HAPDataTypeManager dataTypeManager = new HAPDataTypeManagerImp(runtimeJSModule.getDataTypeDataAccess());
 		HAPDataTypeHelper dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
+		HAPManagerCodeTable codeTableManager = new HAPManagerCodeTable();
 		HAPResourceManagerJSImp resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
 		HAPManagerDynamicResource dynamicResourceManager = new HAPManagerDynamicResource();
@@ -80,6 +82,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		init(
 			dataTypeManager,
 			dataTypeHelper,
+			codeTableManager,
 			resourceMan,
 			processMan,
 			processRuntimeMan,
