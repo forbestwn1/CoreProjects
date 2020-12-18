@@ -32,6 +32,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_getObjectType;
 	var node_resourceUtility;
+	var node_createUITagOnBaseSimple;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -241,6 +242,16 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 			loc_attributeDefinition[attDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]] = attDef;
 		});
 		
+		var uiTagCore;
+		var uiTagBase = loc_uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_BASE];
+		if(uiTagBase==undefined){
+			uiTagCore = loc_uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_envObj);
+		}
+		else if(uiTagBase=="simpleData"){
+			uiTagCore = node_createUITagOnBaseSimple(loc_envObj, loc_uiTagResourceObj);
+		}
+		
+		
 		loc_uiTagObj = _.extend({
 			findFunctionDown : function(name){},	
 			initViews : function(request){},
@@ -248,7 +259,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 			preInit : function(request){},
 			destroy : function(request){},
 			createContextForDemo : function(id, parentContext){},
-		}, loc_uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_envObj));
+		}, uiTagCore);
 
 		//create context
 		if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
@@ -366,6 +377,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uitag.createUITagOnBaseSimple", function(){node_createUITagOnBaseSimple = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITag", node_createUITag); 

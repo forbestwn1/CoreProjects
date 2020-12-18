@@ -65,7 +65,8 @@ public class HAPUITagDefinitionParser {
 		definition.setName((String)defObjJS.get(HAPEntityInfo.NAME));
     	definition.setScript(Context.toString(defObjJS.get(HAPUITagDefinition.SCRIPT)));
     	definition.setDescription(Context.toString(defObjJS.get(HAPEntityInfo.DESCRIPTION)));
-
+		definition.setBase((String)defObjJS.get(HAPUITagDefinition.BASE));
+    	
 		//parse context
 		HAPUITagDefinitionContext context = definition.getContext();
 		NativeObject contextObj = (NativeObject)defObjJS.get(HAPUITagDefinition.CONTEXT);

@@ -24,6 +24,8 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String TYPE = "type";
 	@HAPAttribute
+	public static final String BASE = "base";
+	@HAPAttribute
 	public static final String SCRIPT = "script";
 	@HAPAttribute
 	public static final String ATTRIBUTES = "attributes";
@@ -37,6 +39,8 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	public static final String EVENT = "event";
 	
 	private String m_type;
+
+	private String m_base;
 	
 	//javascript
 	private HAPJsonTypeScript m_script;
@@ -65,6 +69,9 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	
 	public String getType() {    return this.m_type;    }
 	
+	public String getBase() {    return this.m_base;     }
+	public void setBase(String base) {     this.m_base = base;      }
+	
 	public HAPJsonTypeScript getScript(){return this.m_script;}
 	public void setScript(String script) {  this.m_script = new HAPJsonTypeScript(script);    }
 	
@@ -85,6 +92,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, this.m_type);
+		jsonMap.put(BASE, this.m_base);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(FLATCONTEXT, HAPUtilityContext.buildFlatContextFromContextGroup(this.m_context, null).getVariableContext().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));

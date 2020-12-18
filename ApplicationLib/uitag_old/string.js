@@ -1,6 +1,7 @@
 {
 	name : "string",
 	type : "data",
+	base : "simpleData",
 	description : "",
 	attributes : [
 		{

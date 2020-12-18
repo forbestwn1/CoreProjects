@@ -2,7 +2,7 @@
 <html>
 <body>
 	<br>
-	TextInput:<nosliw-string data="business"/>  
+	TextInput:<nosliw-string1 data="business"/>  
 	<br>
 
 	Content:<%=?(business)?.value%>
