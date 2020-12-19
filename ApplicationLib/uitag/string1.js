@@ -89,11 +89,18 @@
 				else{
 					loc_view = $('<span/>');	
 				}
+
+				//ui event
+				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
+					loc_view.bind('change', function(){
+						loc_base.trigueEvent("dataChanged", loc_getViewData());
+					});
+				}
 				return loc_view;
 			},
 			
 			updateView : function(data, request){
-				var flowDataType = loc_getDataFlowType();
+				var flowDataType = loc_base.getDataFlowType();
 				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
 					if(data==undefined || data.value==undefined)  loc_view.val("");
 					else loc_view.val(data.value);
@@ -109,12 +116,6 @@
 			},
 			
 			registerEvent : function(){
-				var flowDataType = base.getDataFlowType();
-				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
-					loc_view.bind('change', function(){
-						loc_base.trigueEvent("dataChanged", loc_getViewData());
-					});
-				}
 			},
 			
 			getDataForDemo : function(){

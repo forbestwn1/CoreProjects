@@ -6,6 +6,8 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
+	var node_makeObjectWithLifecycle;
+	var node_getLifecycleInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUITagOnBaseSimple = function(env, uiTagDef){
@@ -71,7 +73,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		},
 
 		getEnumDataSet : function(){
-			
+			return loc_enumDataSet;
 		},
 		
 		trigueEvent : function(eventName, eventData){
@@ -89,7 +91,16 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(env, uiTagDef, handlers, requestInfo){
 		loc_env = env;
 		loc_uiTagDef = uiTagDef;
-		loc_coreObj = loc_uiTagDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_out);
+		
+		loc_coreObj = _.extend({
+			initViews : function(requestInfo){},
+			updateView : function(data, request){},
+			getViewData : function(){},
+			registerEvent : function(){},
+			getDataForDemo : function(){},
+			destroy : function(request){},
+		}, loc_uiTagDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_baseObj));
+
 	};
 	
 	var loc_out = {
@@ -104,9 +115,8 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			return loc_coreObj.initViews(request);
 		},
 		postInit : function(request){
-			loc_updateView(requestInfo);
-			loc_coreObj.registerEvent();
-
+			loc_updateView(request);
+			
 			loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, request){
 				loc_updateView(request);
 			}, this);
@@ -145,7 +155,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	};
 	
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-	loc_out.init(env, uiTagDef);
+	node_getLifecycleInterface(loc_out).init(env, uiTagDef);
 	
 	return loc_out;
 };
@@ -156,6 +166,8 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagOnBaseSimple", node_createUITagOnBaseSimple); 
