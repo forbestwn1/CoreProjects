@@ -96,7 +96,6 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			initViews : function(requestInfo){},
 			updateView : function(data, request){},
 			getViewData : function(){},
-			registerEvent : function(){},
 			getDataForDemo : function(){},
 			destroy : function(request){},
 		}, loc_uiTagDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_baseObj));
