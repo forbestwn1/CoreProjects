@@ -1,7 +1,7 @@
 {
 	"name" : "schooltype",
 	"id" : "schooltype",
-	"data" : [
+	"dataSet" : [
 		{
 			dataTypeId: "test.string;1.0.0",
 			value: "Public"

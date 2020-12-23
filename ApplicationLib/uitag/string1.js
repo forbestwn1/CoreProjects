@@ -58,8 +58,6 @@
 		var loc_base = base;
 		var loc_view;
 		
-		var loc_enum;
-		
 		var loc_getViewData = function(){
 			return {
 				dataTypeId: "test.string;1.0.0",
@@ -73,15 +71,16 @@
 			initViews : function(requestInfo){
 				var flowDataType = loc_base.getDataFlowType();
 				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
-					if(loc_enum==undefined){
+					var enumDataSet = loc_base.getEnumDataSet();
+					if(enumDataSet==undefined){
 						loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
 					}
 					else{
 						loc_view = $('<select style="display:inline;background:#e6dedc;border:solid red"/>');	
-						for(var i in loc_enum){
+						for(var i in enumDataSet){
 							loc_view.append($('<option>', {
-								value: loc_enum[i],
-								text: loc_enum[i]
+								value: enumDataSet[i].value,
+								text: enumDataSet[i].value
 							}));
 						}
 					}

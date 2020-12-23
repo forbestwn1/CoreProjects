@@ -24,6 +24,32 @@
 						value: "public"
 					},
 				},
+				"schoolTypeInService1" : {
+					"displayName" : "School Type1",
+					description : "The type of school, public, private, ...",
+					dataInfo : {
+						criteria: "test.string;1.0.0",
+						rule : [
+							{
+								ruleType : "enum",
+								dataSet : [
+									{
+										dataTypeId: "test.string;1.0.0",
+										value: "Public"
+									},
+									{
+										dataTypeId: "test.string;1.0.0",
+										value: "Private"
+									},
+								]
+							}
+						]
+					},
+					defaultValue :{
+						dataTypeId: "test.string;1.0.0",
+						value: "public"
+					},
+				},
 				"schoolRatingInService" : {
 					displayName : "School Rating",
 					description : "The rating of school, 0--10",

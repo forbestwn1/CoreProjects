@@ -2,13 +2,18 @@ package com.nosliw.data.core.codetable;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
+@HAPEntityWithAttribute
 public class HAPGatewayCodeTable  extends HAPGatewayImp{
 
+	@HAPAttribute
 	static public final String COMMAND_GETCODETABLE = "getCodeTable";
+	@HAPAttribute
 	static public final String PARMS_GETCODETABLE_ID = "id";
 	
 	private HAPManagerCodeTable m_codeTableManager;

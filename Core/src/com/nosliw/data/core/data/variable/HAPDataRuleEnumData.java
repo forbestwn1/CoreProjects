@@ -47,7 +47,7 @@ public class HAPDataRuleEnumData extends HAPDataRuleEnum {
 		JSONArray dataArray = valueObj.optJSONArray(DATASET);
 		if(dataArray!=null) {
 			for(int i=0; i<dataArray.length(); i++) {
-				HAPUtilityData.buildDataWrapperFromObject(dataArray.get(i));
+				this.m_data.add(HAPUtilityData.buildDataWrapperFromObject(dataArray.get(i)));
 			}
 		}
 		return true;

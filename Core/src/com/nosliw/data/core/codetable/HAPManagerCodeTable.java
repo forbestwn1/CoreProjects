@@ -10,7 +10,7 @@ public class HAPManagerCodeTable {
 
 	public HAPCodeTable getCodeTable(String codeId){
 		//read content
-		String file = HAPSystemFolderUtility.getStoryFolder()+codeId+".res";
+		String file = HAPSystemFolderUtility.getCodeTableFolder()+codeId+".res";
 		//parse content
 		return parseCodeTable(new JSONObject(HAPFileUtility.readFile(file)));
 	}

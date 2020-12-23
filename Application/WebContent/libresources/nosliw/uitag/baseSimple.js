@@ -8,19 +8,21 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
+	var node_createServiceRequestInfoSequence;
+	var node_ServiceInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	
-	var loc_env;
-	var loc_uiTagDef;
+	var loc_env = env;
+	var loc_uiTagDef = uiTagDef;
 	var loc_coreObj;
 	
 	var loc_dataVariable;
 	
 	var loc_enumDataSet;
 	
-	var loc_processDataRule = function(){
+	var loc_processDataRuleRequest = function(request){
 		//emum rule
 		var dataEleDef = loc_env.getTagContextElementDefinition("internal_data");
 		var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
@@ -47,6 +49,9 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 					}
 				});
 			}
+			else{
+				loc_enumDataSet = enumRule[node_COMMONATRIBUTECONSTANT.DATARULE_DATASET];
+			}
 		}
 	};
 	
@@ -63,7 +68,16 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		
 	};
 
-
+	var loc_createCoreObj = function(){
+		loc_coreObj = _.extend({
+			initViews : function(requestInfo){},
+			updateView : function(data, request){},
+			getViewData : function(){},
+			getDataForDemo : function(){},
+			destroy : function(request){},
+		}, loc_uiTagDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_baseObj));
+	};
+	
 	var loc_baseObj = {
 			
 		getDataFlowType : function(){
@@ -89,17 +103,6 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(env, uiTagDef, handlers, requestInfo){
-		loc_env = env;
-		loc_uiTagDef = uiTagDef;
-		
-		loc_coreObj = _.extend({
-			initViews : function(requestInfo){},
-			updateView : function(data, request){},
-			getViewData : function(){},
-			getDataForDemo : function(){},
-			destroy : function(request){},
-		}, loc_uiTagDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_baseObj));
-
 	};
 	
 	var loc_out = {
@@ -107,8 +110,11 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			
 		},	
 		preInit : function(request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("uiTagPreInitRequest", {}), undefined, request);
 			loc_dataVariable = loc_env.createVariable("internal_data");
-			loc_processDataRule();
+			out.addRequest(loc_processDataRuleRequest());
+			loc_createCoreObj();
+			return out;
 		},
 		initViews : function(request){
 			return loc_coreObj.initViews(request);
@@ -124,7 +130,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			loc_dataVariable.release();	
 			loc_coreObj.destroy();
 		},
-		createContextForDemo : function(id, parentContext){
+		createContextForDemo : function(id, parentContext, matchersByName, request){
 			var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
 			var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
 			var node_createContext = nosliw.getNodeData("uidata.context.createContext");
@@ -167,6 +173,8 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagOnBaseSimple", node_createUITagOnBaseSimple); 
