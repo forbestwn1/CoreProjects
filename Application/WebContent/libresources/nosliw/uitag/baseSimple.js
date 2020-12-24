@@ -40,12 +40,10 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		if(enumRule!=null){
 			var enumCode = enumRule[node_COMMONATRIBUTECONSTANT.DATARULE_ENUMCODE];
 			if(enumCode!=undefined){
-				var gatewayParms = {
-					"id" : enumCode,
-				};
-				return nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_CODETABLE, node_COMMONATRIBUTECONSTANT.GATEWAYCODETABLE_COMMAND_GETCODETABLE, gatewayParms, {
-					success : function(requestInfo, codeTable){
-						loc_enumDataSet = codeTable[node_COMMONATRIBUTECONSTANT.CODETABLE_DATASET];
+				return nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([enumCode], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CODETABLE, {
+					success : function(requestInfo, resources){
+						var codeTableResource = resources[enumCode];
+						loc_enumDataSet = codeTableResource[node_COMMONATRIBUTECONSTANT.CODETABLE_DATASET];
 					}
 				});
 			}

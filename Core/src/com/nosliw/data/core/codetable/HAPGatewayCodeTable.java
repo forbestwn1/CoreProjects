@@ -26,7 +26,7 @@ public class HAPGatewayCodeTable  extends HAPGatewayImp{
 	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception {
 		if(COMMAND_GETCODETABLE.equals(command)) {
 			String id = parms.getString(PARMS_GETCODETABLE_ID);
-			HAPCodeTable codeTable = this.m_codeTableManager.getCodeTable(id);
+			HAPCodeTable codeTable = this.m_codeTableManager.getCodeTable(new HAPCodeTableId(id));
 			return this.createSuccessWithObject(codeTable);
 		}
 		return null;

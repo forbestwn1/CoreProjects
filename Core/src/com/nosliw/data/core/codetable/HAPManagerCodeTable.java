@@ -8,9 +8,9 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPManagerCodeTable {
 
-	public HAPCodeTable getCodeTable(String codeId){
+	public HAPCodeTable getCodeTable(HAPCodeTableId codeId){
 		//read content
-		String file = HAPSystemFolderUtility.getCodeTableFolder()+codeId+".res";
+		String file = HAPSystemFolderUtility.getCodeTableFolder()+codeId.getId()+".res";
 		//parse content
 		return parseCodeTable(new JSONObject(HAPFileUtility.readFile(file)));
 	}

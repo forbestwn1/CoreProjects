@@ -563,6 +563,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_TESTDATA" value="testData"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_STORY" value="story"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEMPLATE" value="template"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_CODETABLE" value="codeTable"/>
 
 			<definition name="RUNTIME_RESOURCE_TYPE_MATCHER" value="matcher"/>
 
@@ -765,6 +766,7 @@
 			<definition name="DATARULE_TYPE_ENUM" value="enum"/>
 			<definition name="DATARULE_TYPE_EXPRESSION" value="expression"/>
 			<definition name="DATARULE_TYPE_MANDATORY" value="mandatory"/>
+			<definition name="DATARULE_TYPE_JSSCRIPT" value="jsscript"/>
 
 			<definition type="space"/>
 			<definition name="DESIGNSTAGE_NAME_END" value="DESIGNSTAGE_NAME_END"/>

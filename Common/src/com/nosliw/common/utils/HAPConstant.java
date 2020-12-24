@@ -474,6 +474,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_TESTDATA = "testData";
 		public static final String RUNTIME_RESOURCE_TYPE_STORY = "story";
 		public static final String RUNTIME_RESOURCE_TYPE_TEMPLATE = "template";
+		public static final String RUNTIME_RESOURCE_TYPE_CODETABLE = "codeTable";
 		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";
 
 
@@ -715,6 +716,7 @@ public class HAPConstant {
 		public static final String DATARULE_TYPE_ENUM = "enum";
 		public static final String DATARULE_TYPE_EXPRESSION = "expression";
 		public static final String DATARULE_TYPE_MANDATORY = "mandatory";
+		public static final String DATARULE_TYPE_JSSCRIPT = "jsscript";
 
 
 
