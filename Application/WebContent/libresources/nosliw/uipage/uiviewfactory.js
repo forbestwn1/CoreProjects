@@ -407,7 +407,17 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 					},
 					getServiceRequest : function(serviceName, handlers, request){
 						return loc_getServiceRequest(serviceName, handlers, request);
-					}
+					},
+					getTagsByAttribute : function(attributeName, attributeValue){
+						return loc_out.getTags({
+							attribute : [
+								{
+									name : attributeName,
+									value : attributeValue,
+								}
+							]
+						}, true);
+					},
 			};
 			var args = Array.prototype.slice.call(arguments, 1);
 			args.push(env);
@@ -457,6 +467,35 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 			}
 		},
 		
+		prv_getTags : function(query, cascade, output){
+			_.each(loc_uiTags, function(uiTag, tagId, list){
+				var ok = true;
+				//check name
+				if(ok && query.name!=undefined){
+					var tagName = uiTag.getTagName();
+					if(tagName!=name)  ok = false;
+				}
+
+				//check attributes
+				if(ok && query.attribute!=undefined){
+					_.each(query.attribute, function(attr, i){
+						if(uiTag.getAttribute(attr.name)!=attr.value)	ok = false;
+					});
+				}
+
+				if(ok)  output.push(uiTag);
+				
+				//process child
+				if(cascade==true){
+					var childUITags = uiTag.getChildUITags();
+					_.each(childUITags, function(child, i){
+						child.prv_getTags(query, cascade, output);
+					});
+				}
+			});
+		},
+
+
 		getId : function(){   return loc_idNameSpace;  },
 		
 		getContext : function(){return loc_context;},
@@ -488,41 +527,39 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 
 		//find tag object according to tag name
 		getTagsByName : function(name){
-			var tagsOut = [];
-			_.each(loc_uiTags, function(uiTag, tagId, list){
-				var tagName = uiTag.getTagName();
-				if(tagName==name){
-					tagsOut.push(uiTag);
-				}
-			});
-			return tagsOut;
+			return this.getTags({
+				name : name
+			}, false);
 		},
 
 		//find tag object that have tag name and particular attribute/value
 		getTagsByNameAttribute : function(name, attr, value){
-			var tagsOut = [];
-			_.each(loc_uiTags, function(uiTag, tagId, list){
-				var tagName = uiTag.getTagName();
-				if(tagName==name){
-					if(uiTag.getAttribute(attr)==value){
-						tagsOut.push(uiTag);
-					}
-				}
-			});
-			return tagsOut;
+			return this.getTags({
+				name : name,
+				attribute : [{
+					name : attr,
+					value : value
+				}],
+			}, false);
 		},
 		
-		//return map containing value/tag pair for particular tag name and its attribute
-		getTagsAttrMapByName : function(name, attr){
-			var tagsOut = {};
-			_.each(loc_uiTags, function(uiTag, tagId, list){
-				var tagName = uiTag.getTagName();
-				if(tagName==name){
-					tagsOut[uiTag.getAttribute(attr)] = uiTag;
-				}
-			});
-			return tagsOut;
+		getTags : function(query, cascade){
+			var output = [];
+			this.prv_getTags(query, cascade, output);
+			return output;
 		},
+		
+//		//return map containing value/tag pair for particular tag name and its attribute
+//		getTagsAttrMapByName : function(name, attr){
+//			var tagsOut = {};
+//			_.each(loc_uiTags, function(uiTag, tagId, list){
+//				var tagName = uiTag.getTagName();
+//				if(tagName==name){
+//					tagsOut[uiTag.getAttribute(attr)] = uiTag;
+//				}
+//			});
+//			return tagsOut;
+//		},
 		
 		getConstants : function(){   return loc_constants;  },
 		

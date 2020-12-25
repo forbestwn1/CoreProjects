@@ -258,6 +258,8 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 			postInit : function(request){},
 			preInit : function(request){},
 			destroy : function(request){},
+			getChildUITags : function(){},
+			getValidateDataRequest : function(handlers, request){},
 			createContextForDemo : function(id, parentContext){},
 		}, uiTagCore);
 
@@ -322,6 +324,14 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		getViewContainer : function(){   return loc_viewContainer;     },
 		
 		getTagObject : function(){ return loc_uiTagObj;  },
+		
+		getChildUITags : function(){  
+			var out = loc_uiTagObj.getChildUITags();
+			if(out!=undefined)  return out;
+			else return [];
+		},
+		
+		getValidateDataRequest : function(handlers, request){  return loc_uiTagObj.getValidateDataRequest(handlers, request);     },
 		
 		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		

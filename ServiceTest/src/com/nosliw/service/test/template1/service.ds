@@ -15,6 +15,11 @@
 				},
 				"serviceParm2": {
 					dataInfo : "test.string;1.0.0",
+					rule : [
+						{
+							ruleType : "mandatory",
+						}
+					]
 				}
 			},
 			"result" : {

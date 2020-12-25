@@ -436,6 +436,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				//array
 				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData("loop", uiDataInfo, dataFlow);
 				uiDataStoryNode.addAttribute("data", varName);
+				uiDataStoryNode.addAttribute("group", "valueValdation");
 				dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, m_contextProcessRequirement, m_uiTagManager);
 				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUINode.getStoryNodeRef()));
 				
@@ -458,6 +459,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			HAPUITagInfo uiTagInfo = this.m_uiTagManager.getDefaultUITag(new HAPUITageQueryData(dataTypeCriteria));
 			HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), uiDataInfo, dataFlow);
 			uiDataStoryNode.addAttribute("data", varName);
+			uiDataStoryNode.addAttribute("group", "valueValdation");
 			dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, m_contextProcessRequirement, m_uiTagManager);
 			changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUINode.getStoryNodeRef()));
 			out.dataUINode = dataUINode;

@@ -21,6 +21,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	var loc_dataVariable;
 	
 	var loc_enumDataSet;
+	var loc_isMandatory = false;
 	
 	var loc_processDataRuleRequest = function(request){
 		//emum rule
@@ -32,10 +33,13 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 				[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
 		var enumRule;
 		for(var i in rules){
-			if(rules[i][node_COMMONATRIBUTECONSTANT.DATARULE_RULETYPE]==node_COMMONCONSTANT.DATARULE_TYPE_ENUM){
+			var ruleType = rules[i][node_COMMONATRIBUTECONSTANT.DATARULE_RULETYPE];
+			if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_ENUM){
 				enumRule = rules[i];
-				break;
-			} 
+			}
+			else if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_MANDATORY){
+				loc_isMandatory = true;
+			}
 		}
 		if(enumRule!=null){
 			var enumCode = enumRule[node_COMMONATRIBUTECONSTANT.DATARULE_ENUMCODE];
@@ -155,6 +159,22 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			var elementInfosArray = [dataVarEleInfo];
 			return node_createContext(id, elementInfosArray, request);
 		},
+		
+		getValidateDataRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_env.getDataOperationRequestGet(loc_dataVariable, "", {
+				success : function(requestInfo, data){
+					
+					if(loc_isMandatory==true){
+						if(data==undefined){
+							
+						}
+					}
+				}
+			}));
+			return out;
+		},
+
 	};
 	
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
