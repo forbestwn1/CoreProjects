@@ -50,7 +50,7 @@ var node_createViewContainer = function(id, styleId, attrs){
 	};
 	
 	var loc_updateStyleId = function(){
-		$(loc_getViews()).attr(node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_STYLEID,loc_styleId);
+		$(loc_getViews()).attr(node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_STATICID,loc_styleId);
 		
 	};
 	

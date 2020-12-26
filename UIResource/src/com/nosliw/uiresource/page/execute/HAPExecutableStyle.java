@@ -63,7 +63,7 @@ public class HAPExecutableStyle extends HAPSerializableImp{
 	
 	private String buildSelector(String id) {
 		
-		return "["+HAPConstant.UIRESOURCE_ATTRIBUTE_STYLEID+"='"+id+"']";
+		return "["+HAPConstant.UIRESOURCE_ATTRIBUTE_STATICID+"='"+id+"']";
 	}
 
 	protected String buildStyleScript(List<String> parentIds) {

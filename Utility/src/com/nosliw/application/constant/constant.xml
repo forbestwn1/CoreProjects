@@ -399,7 +399,7 @@
 			<definition type="space"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_CONTEXT" value="context"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_UIID" value="nosliwid"/>
-			<definition name="UIRESOURCE_ATTRIBUTE_STYLEID" value="nosliwstyleid"/>
+			<definition name="UIRESOURCE_ATTRIBUTE_STATICID" value="nosliwstaticid"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_EVENT" value="event"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_DATABINDING" value="data"/>
 			<definition name="UIRESOURCE_TAG_PLACEHOLDER" value="nosliw"/>
