@@ -13,18 +13,23 @@
 			event.preventDefault();
 
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+			var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
-			var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
+			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.createServiceRequestInfoSequence");
 			
-			var tags = env.getTagsByAttribute("group", "valueValdation");
-			
-			
-			var requestInfo = env.getServiceRequest("service", {
-				success : function(request){
+			var out = node_createServiceRequestInfoSequence(undefined);
+			out.addRequest(env.getUIValidationRequest(env.getTagsByAttribute(node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_GROUP, node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION), {
+				success : function(request, errorMessages){
+					if(errorMessages==null){
+						return env.getServiceRequest("service", {
+							success : function(request){
+							}
+						});
+					}
 				}
-			});
-			node_requestServiceProcessor.processRequest(requestInfo, false);
+			}));
+			
+			node_requestServiceProcessor.processRequest(out, false);
 		},
 	}
 	</scripts>

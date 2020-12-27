@@ -207,6 +207,8 @@ var COMMONCONSTANT=
   "UIRESOURCE_ATTRIBUTE_CONTEXT": "context",
   "UIRESOURCE_ATTRIBUTE_UIID": "nosliwid",
   "UIRESOURCE_ATTRIBUTE_STATICID": "nosliwstaticid",
+  "UIRESOURCE_ATTRIBUTE_GROUP": "group",
+  "UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION": "valueValidation",
   "UIRESOURCE_ATTRIBUTE_EVENT": "event",
   "UIRESOURCE_ATTRIBUTE_DATABINDING": "data",
   "UIRESOURCE_TAG_PLACEHOLDER": "nosliw",
@@ -411,6 +413,7 @@ var COMMONCONSTANT=
   "STORYNODE_TYPE_CONSTANT": "constant",
   "STORYNODE_TYPE_VARIABLE": "variable",
   "STORYNODE_TYPE_PAGE": "UI_page",
+  "STORYNODE_TYPE_UITAGOTHER": "UI_tagOther",
   "STORYNODE_TYPE_UIDATA": "UI_data",
   "STORYNODE_TYPE_HTML": "UI_html",
   "STORYNODE_PROFILE_CONTAINER": "container",
@@ -447,7 +450,8 @@ var COMMONCONSTANT=
   "DATAFLOW_IO": "IO",
   "UITAG_TYPE_DATA": "data",
   "UITAG_TYPE_LAYOUT": "layout",
-  "UITAG_TYPE_CONTROL": "control"
+  "UITAG_TYPE_CONTROL": "control",
+  "UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR": "nosliw_validationError"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

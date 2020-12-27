@@ -42,34 +42,47 @@ var loc_uiResourceViewFactory = function(){
 			var attributes = uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_ATTRIBUTES];
 			return this.getCreateUIBodyViewRequest(uiResource, uiBody, attributes, id, parent, context, handlers, requestInfo);
 		},
-		
+
 		getCreateUIBodyViewRequest : function(uiResource, uiBody, attributes, id, parent, context, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIView", {}), handlers, requestInfo);
 
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-				var uiView = loc_createUIView(uiResource, uiBody, attributes, id, parent, context, requestInfo);
-				
-				var createUITagRequest = node_createServiceRequestInfoSet(undefined, {
-					success: function(requestInfo, tagResults){
-						_.each(tagResults.getResults(), function(uiTag, uiTagId){
-							uiView.prv_addUITag(uiTagId, uiTag);
-						});
-						uiView.prv_initCustomTagEvent();
-						uiView.prv_initCustomTagExpressionAttribute();
-						return uiView;
-				}});
-				
-				//init customer tags
-				_.each(uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_UITAGS], function(uiTagResource, tagUiId, list){
-					var uiTagId = uiView.prv_getUpdateUIId(tagUiId);
-					createUITagRequest.addRequest(uiTagId, node_createUITagRequest(uiTagId, uiTagResource, uiView, {
-						success : function(requestInfo, uiTag){
-							return uiTag;
+			var uiView = loc_createUIView(uiResource, uiBody, attributes, id, parent, context, requestInfo);
+
+			//create tags
+			var createUITagRequest = node_createServiceRequestInfoSet(undefined, {
+				success: function(requestInfo, tagResults){
+					_.each(tagResults.getResults(), function(uiTag, uiTagId){
+						uiView.prv_addUITag(uiTagId, uiTag);
+					});
+					
+					//init customer tags
+					var initUITagRequest = node_createServiceRequestInfoSequence(undefined, {
+						success : function(){
+							//others
+							uiView.prv_initCustomTagEvent();
+							uiView.prv_initCustomTagExpressionAttribute();
+							return uiView;
 						}
-					}));
-				});
-				return createUITagRequest;
-			}));
+					}, requestInfo);
+					_.each(uiView.prv_getUITags(), function(uiTag, tagUiId, list){
+						initUITagRequest.addRequest(node_getLifecycleInterface(uiTag).initRequest({
+							success : function(requestInfo){
+								uiTag.getViewContainer().insertAfter(uiView.get$EleByUIId(tagUiId+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX));
+							}
+						}));
+					});
+					return initUITagRequest;
+			}});
+			
+			_.each(uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_UITAGS], function(uiTagResource, tagUiId, list){
+				var uiTagId = uiView.prv_getUpdateUIId(tagUiId);
+				createUITagRequest.addRequest(uiTagId, node_createUITagRequest(uiTagId, uiTagResource, uiView, {
+					success : function(requestInfo, uiTag){
+						return uiTag;
+					}
+				}));
+			});
+			out.addRequest(createUITagRequest);
 			return out;
 		},
 		
@@ -93,24 +106,19 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 					parentUIResourceView!=undefined?parentUIResourceView.getContext():undefined,
 					{
 						mode : node_CONSTANT.TAG_RUNTIME_MODE_PAGE,
+						viewContainer : node_createViewContainer(id, uiTagResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]),
+						rootView : parentUIResourceView,
 						contextDef : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT],
 						bodyContextDef : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT][node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT],
 						eventNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_EVENTMAPPING],
 						varNameMapping : uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_LOCAL2GLOBAL],
 //						startElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX),
 //						endElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX),
-						viewContainer : node_createViewContainer(id, uiTagResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]),
 						resource : uiTagResource,
 					}, 
 					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT]);
 
-			var initRequest = node_getLifecycleInterface(uiTag).initRequest({
-				success : function(requestInfo){
-					uiTag.getViewContainer().insertAfter(parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX));
-					return uiTag;
-				}
-			}, requestInfo);
-			return initRequest;
+			return uiTag;
 		}
 	}));
 	return out;
@@ -283,6 +291,9 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 			loc_context = node_contextUtility.buildContext("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
 		}
 
+		//build in context
+		loc_context.addContextElement(node_createContextElementInfo(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, {}));
+
 		var viewAttrs = {
 			nosliwdefid : uiResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID],
 		};
@@ -377,6 +388,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		prv_trigueEvent : function(eventName, data, requestInfo){loc_eventSource.triggerEvent(eventName, data, requestInfo); },
 
 		prv_getTagByUIId : function(uiId){ return loc_uiTags[uiId];  },
+		prv_getUITags : function(uiId){ return loc_uiTags;  },
 		prv_addUITag : function(uiId, uiTag){  
 			loc_uiTags[uiId] = uiTag;  
 			uiTag.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
@@ -417,6 +429,29 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 								}
 							]
 						}, true);
+					},
+					getUIValidationRequest : function(uiTags, handlers, request){
+						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
+						var allSetRequest = node_createServiceRequestInfoSet(undefined, {
+							success : function(requestInfo, validationsResult){
+								var results = validationsResult.getResults();
+								var opsRequest = node_createBatchUIDataOperationRequest(loc_context, {
+									success : function(request){
+										return results;
+									}
+								}, requestInfo);
+								_.each(results, function(message, uiTagId){
+									var path = node_namingConvensionUtility.cascadePath(node_CONSTANT.CONTEXTELEMENT_NAME_UIVALIDATIONERROR, uiTagId);
+									opsRequest.addUIDataOperation(node_uiDataOperationServiceUtility.createSetOperationData(path, message));
+								});
+								if(!opsRequest.isEmpty())	return opsRequest;
+							},
+						});
+						_.each(uiTags, function(uiTag, i){
+							allSetRequest.addRquest(uiTag.getId(), uiTag.getValidateDataRequest());
+						});
+						out.addRequest(allSetRequest);
+						return out;
 					},
 			};
 			var args = Array.prototype.slice.call(arguments, 1);

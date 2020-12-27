@@ -400,6 +400,8 @@
 			<definition name="UIRESOURCE_ATTRIBUTE_CONTEXT" value="context"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_UIID" value="nosliwid"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_STATICID" value="nosliwstaticid"/>
+			<definition name="UIRESOURCE_ATTRIBUTE_GROUP" value="group"/>
+			<definition name="UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION" value="valueValidation"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_EVENT" value="event"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_DATABINDING" value="data"/>
 			<definition name="UIRESOURCE_TAG_PLACEHOLDER" value="nosliw"/>
@@ -715,6 +717,7 @@
 			<definition name="STORYNODE_TYPE_CONSTANT" value="constant"/>
 			<definition name="STORYNODE_TYPE_VARIABLE" value="variable"/>
 			<definition name="STORYNODE_TYPE_PAGE" value="UI_page"/>
+			<definition name="STORYNODE_TYPE_UITAGOTHER" value="UI_tagOther"/>
 			<definition name="STORYNODE_TYPE_UIDATA" value="UI_data"/>
 			<definition name="STORYNODE_TYPE_HTML" value="UI_html"/>
 			
@@ -781,6 +784,8 @@
 			<definition name="UITAG_TYPE_LAYOUT" value="layout"/>
 			<definition name="UITAG_TYPE_CONTROL" value="control"/>
 
+			<definition type="space"/>
+			<definition name="UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR" value="nosliw_validationError"/>
 			
 		</definitions>
 	</constants>

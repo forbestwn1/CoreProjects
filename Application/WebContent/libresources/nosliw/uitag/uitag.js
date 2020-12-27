@@ -52,6 +52,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 	var loc_tagName = uiTagResourceObj.name;    //tag name
 	var loc_tagConfigure = tagConfigure;     //
 	var loc_mode = loc_tagConfigure.mode;
+	var loc_rootView = tagConfigure.rootView;
 	var loc_tagBody = tagBody;               //
 	var loc_parentContext = parentContext;
 	var loc_attributeDefinition = {};
@@ -127,6 +128,8 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		},
 		getAttributes : function(){   return loc_attributes;   },
 		getTagBody : function(){  return  loc_tagBody; },
+		
+		getTags : function(query){   return loc_rootView.getTags(query);  },
 
 		getStartElement : function(){  return loc_getStartElement();  },
 		getEndElement : function(){  return loc_getEndElement();  },

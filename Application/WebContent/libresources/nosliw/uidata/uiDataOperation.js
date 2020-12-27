@@ -66,6 +66,10 @@ var node_createBatchUIDataOperationRequest = function(context, handlers, request
 		//for debugging purpose
 		loc_uiDataOperations.push(uiDataOperation);
 	};
+	loc_out.isEmpty = function(){
+		return loc_uiDataOperations.length()==0;
+	};
+	
 	return loc_out;
 };
 

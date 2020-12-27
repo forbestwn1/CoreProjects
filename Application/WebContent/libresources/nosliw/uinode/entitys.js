@@ -33,7 +33,7 @@ var node_createUINodeGroupView = function(uiNodes, id, parentContext){
 		}
 	};
 	
-	loc_out = {
+	var loc_out = {
 		getChildren : function(){   return loc_uiNodeViews;  },
 		
 		getViewContainer : function(){   return loc_viewContainer;   },

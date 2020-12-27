@@ -286,6 +286,8 @@ public class HAPConstant {
 		public static final String UIRESOURCE_ATTRIBUTE_CONTEXT = "context";
 		public static final String UIRESOURCE_ATTRIBUTE_UIID = "nosliwid";
 		public static final String UIRESOURCE_ATTRIBUTE_STATICID = "nosliwstaticid";
+		public static final String UIRESOURCE_ATTRIBUTE_GROUP = "group";
+		public static final String UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION = "valueValidation";
 		public static final String UIRESOURCE_ATTRIBUTE_EVENT = "event";
 		public static final String UIRESOURCE_ATTRIBUTE_DATABINDING = "data";
 		public static final String UIRESOURCE_TAG_PLACEHOLDER = "nosliw";
@@ -654,6 +656,7 @@ public class HAPConstant {
 		public static final String STORYNODE_TYPE_CONSTANT = "constant";
 		public static final String STORYNODE_TYPE_VARIABLE = "variable";
 		public static final String STORYNODE_TYPE_PAGE = "UI_page";
+		public static final String STORYNODE_TYPE_UITAGOTHER = "UI_tagOther";
 		public static final String STORYNODE_TYPE_UIDATA = "UI_data";
 		public static final String STORYNODE_TYPE_HTML = "UI_html";
 
@@ -733,6 +736,10 @@ public class HAPConstant {
 		public static final String UITAG_TYPE_DATA = "data";
 		public static final String UITAG_TYPE_LAYOUT = "layout";
 		public static final String UITAG_TYPE_CONTROL = "control";
+
+
+
+		public static final String UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR = "nosliw_validationError";
 
 
 }

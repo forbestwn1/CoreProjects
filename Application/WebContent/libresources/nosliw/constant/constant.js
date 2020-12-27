@@ -268,6 +268,7 @@ var node_CONSTANT=
 	  
 	  "TAG_RUNTIME_MODE_PAGE" : "page",
 	  "TAG_RUNTIME_MODE_DEMO" : "demo",
+	  
 };
 
 //*******************************************   End Node Definition  ************************************** 	

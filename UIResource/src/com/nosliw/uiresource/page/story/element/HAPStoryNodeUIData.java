@@ -26,8 +26,8 @@ public class HAPStoryNodeUIData extends HAPStoryNodeUITag{
 	
 	public HAPStoryNodeUIData() {}
 
-	public HAPStoryNodeUIData(String tagName, HAPUIDataInfo uiDataInfo, String dataFlow) {
-		super(STORYNODE_TYPE, tagName);
+	public HAPStoryNodeUIData(String tagName, String id, HAPUIDataInfo uiDataInfo, String dataFlow) {
+		super(STORYNODE_TYPE, tagName, id);
 		this.m_uiDataInfo = uiDataInfo;
 		this.addAttribute(ATTRIBUTE_DATAFLOW, dataFlow);
 	}
