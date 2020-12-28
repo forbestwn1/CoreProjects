@@ -11,7 +11,7 @@ import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
-import com.nosliw.uiresource.page.tag.HAPUITagDefinitionContext;
+import com.nosliw.uiresource.page.tag.HAPContextUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUtilityUITag;
 
 public class HAPUtilityProcess {
@@ -19,7 +19,7 @@ public class HAPUtilityProcess {
 	//build context for ui Tag
 	public static HAPContextGroup buildUITagContext(HAPUITagDefinition tagDef, HAPContextGroup parentContext, Map<String, String> attributes, HAPConfigureContextProcessor contextProcessorConfig, HAPRequirementContextProcessor contextProcessRequirement){
 		//get contextDef 
-		HAPUITagDefinitionContext tagDefinitionContext = tagDef.getContext();
+		HAPContextUITagDefinition tagDefinitionContext = tagDef.getContext();
 
 		//add attribute constant as part of tagContext
 		Map<String, String> tagAttrs = HAPUtilityUITag.getTagAttributeValue(tagDef, attributes);

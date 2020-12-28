@@ -457,7 +457,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		}
 		else {
 			//simple
-			HAPUITagInfo uiTagInfo = this.m_uiTagManager.getDefaultUITag(new HAPUITageQueryData(dataTypeCriteria));
+			HAPUITagInfo uiTagInfo = this.m_uiTagManager.getDefaultUITagData(new HAPUITageQueryData(dataTypeCriteria));
 			HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow);
 			uiDataStoryNode.addAttribute("data", varName);
 			uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);

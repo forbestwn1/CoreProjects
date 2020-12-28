@@ -25,6 +25,7 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
 import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -39,8 +40,8 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
-import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
+import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilderShow{
@@ -107,6 +108,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
 			context.addElement(varNode.getVariableInfo().getName(), new HAPContextDefinitionLeafData(varNode.getVariableInfo()));
 		}
+		context.addElement(HAPConstant.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, new HAPContextDefinitionLeafValue());
 		return context;
 	}
 
@@ -243,7 +245,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		if(uiNode.isEnable()) {
 			String uiNodeType = uiNode.getType();
 			if(HAPConstant.STORYNODE_TYPE_UIDATA.equals(uiNodeType)||HAPConstant.STORYNODE_TYPE_UITAGOTHER.equals(uiNodeType)) {
-				HAPStoryNodeUIData uiDataNode = (HAPStoryNodeUIData)uiNode;
+				HAPStoryNodeUITag uiDataNode = (HAPStoryNodeUITag)uiNode;
 				HAPHtmlTag tag = new HAPHtmlTag(uiDataNode.getTagName());
 				
 				//attributes

@@ -1,6 +1,5 @@
 {
 	name : "uierror",
-	type : "data",
 	description : "",
 	attributes : [
 		{

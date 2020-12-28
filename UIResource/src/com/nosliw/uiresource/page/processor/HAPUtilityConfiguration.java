@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.uiresource.page.tag.HAPUITagDefinitionContext;
+import com.nosliw.uiresource.page.tag.HAPContextUITagDefinition;
 
 public class HAPUtilityConfiguration {
 
@@ -16,7 +16,7 @@ public class HAPUtilityConfiguration {
 		return out;
 	}
 
-	public static HAPConfigureContextProcessor getContextProcessConfigurationForTagDefinition(HAPUITagDefinitionContext tagDefinitionContext, HAPConfigureContextProcessor parentConfigure) {
+	public static HAPConfigureContextProcessor getContextProcessConfigurationForTagDefinition(HAPContextUITagDefinition tagDefinitionContext, HAPConfigureContextProcessor parentConfigure) {
 		HAPConfigureContextProcessor out = parentConfigure.cloneConfigure();
 		populateCommonConfigure(out);
 		out.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefinitionContext.getInfo());

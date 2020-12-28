@@ -21,10 +21,12 @@ public class HAPUITagManager {
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
 	private Map<String, HAPUITagDefinitionData> m_dataTagDefs;
+	private Map<String, HAPUITagDefinition> m_otherTagDefs;
 	
 	public HAPUITagManager(HAPDataTypeHelper dataTypeHelper) {
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_dataTagDefs = new LinkedHashMap<String, HAPUITagDefinitionData>();
+		this.m_otherTagDefs = new LinkedHashMap<String, HAPUITagDefinition>();
 		this.readAllTags();
 	}
 	
@@ -37,10 +39,13 @@ public class HAPUITagManager {
 			if(HAPConstant.UITAG_TYPE_DATA.equals(type)) {
 				this.m_dataTagDefs.put(uiTagDef.getName(), (HAPUITagDefinitionData)uiTagDef);
 			}
+			else {
+				this.m_otherTagDefs.put(uiTagDef.getName(), uiTagDef);
+			}
 		}
 	}
 	
-	public HAPUITagInfo getDefaultUITag(HAPUITageQueryData query) {
+	public HAPUITagInfo getDefaultUITagData(HAPUITageQueryData query) {
 		HAPUITagInfo result = null;
 		HAPUITagQueryResultSet resultSet = this.queryUITagData(query);
 		List<HAPUITagQueryResult> items = resultSet.getItems();
@@ -85,6 +90,7 @@ public class HAPUITagManager {
 	
 	public HAPUITagDefinition getUITagDefinition(HAPUITagId id){
 		HAPUITagDefinition out = this.m_dataTagDefs.get(id.getId());
+		if(out==null)  out = this.m_otherTagDefs.get(id.getId());
 //		out.setSourceFile(file);
 //		
 //		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + id.getId() + ".js";

@@ -11,7 +11,6 @@ import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
@@ -34,10 +33,10 @@ public class HAPUITagDefinitionParser {
 			NativeObject defObjJS = (NativeObject)cx.evaluateString(scope, content, file.getName(), 1, null);
 
 			String type = (String)defObjJS.get(HAPUITagDefinition.TYPE);
-			if(HAPBasicUtility.isStringEmpty(type))  type = HAPConstant.UITAG_TYPE_DATA;
 
 	    	if(HAPConstant.UITAG_TYPE_DATA.equals(type)) out = new HAPUITagDefinitionData();
 	    	else if(HAPConstant.UITAG_TYPE_CONTROL.equals(type)) out = new HAPUITagDefinitionControl();
+	    	else out = new HAPUITagDefinitionOther();
 
 	    	if(out!=null) {
 		    	parseUITagDefinition(out, defObjJS);
@@ -68,7 +67,7 @@ public class HAPUITagDefinitionParser {
 		definition.setBase((String)defObjJS.get(HAPUITagDefinition.BASE));
     	
 		//parse context
-		HAPUITagDefinitionContext context = definition.getContext();
+		HAPContextUITagDefinition context = definition.getContext();
 		NativeObject contextObj = (NativeObject)defObjJS.get(HAPUITagDefinition.CONTEXT);
 		JSONObject contextJson = (JSONObject)HAPRhinoDataUtility.toJson(contextObj);
 		HAPUITagDefinitionParser.parseContextInTagDefinition(contextJson, context);
@@ -112,7 +111,7 @@ public class HAPUITagDefinitionParser {
 	}
 	
 	//parse 
-	public static void parseContextInTagDefinition(JSONObject contextJson, HAPUITagDefinitionContext contextOut){
+	public static void parseContextInTagDefinition(JSONObject contextJson, HAPContextUITagDefinition contextOut){
 		HAPParserContext.parseContextGroup(contextJson, contextOut);
 	}
 }

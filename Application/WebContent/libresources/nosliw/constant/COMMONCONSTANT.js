@@ -451,6 +451,7 @@ var COMMONCONSTANT=
   "UITAG_TYPE_DATA": "data",
   "UITAG_TYPE_LAYOUT": "layout",
   "UITAG_TYPE_CONTROL": "control",
+  "UITAG_TYPE_OTHER": "other",
   "UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR": "nosliw_validationError"
 };
 

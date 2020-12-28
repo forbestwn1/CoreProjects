@@ -49,7 +49,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
 	
 	//context definition
-	private HAPUITagDefinitionContext m_context;
+	private HAPContextUITagDefinition m_context;
 
 	//dependency resources
 	private List<HAPResourceDependency> m_resourceDependency;
@@ -62,7 +62,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	public HAPUITagDefinition(String type){
 		this.m_type = type;
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
-		this.m_context = new HAPUITagDefinitionContext();
+		this.m_context = new HAPContextUITagDefinition();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependency>();
 		this.m_eventsDefinition = new ArrayList<HAPDefinitionUIEvent>();
 	}
@@ -75,7 +75,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	public HAPJsonTypeScript getScript(){return this.m_script;}
 	public void setScript(String script) {  this.m_script = new HAPJsonTypeScript(script);    }
 	
-	public HAPUITagDefinitionContext getContext(){  return this.m_context;   }
+	public HAPContextUITagDefinition getContext(){  return this.m_context;   }
 
 	public List<HAPResourceDependency> getResourceDependency(){   return this.m_resourceDependency;    }
 	public void addResourceDependency(HAPResourceDependency dep){  this.m_resourceDependency.add(dep);  }

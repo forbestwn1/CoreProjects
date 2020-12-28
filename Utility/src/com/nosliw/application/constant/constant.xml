@@ -783,6 +783,7 @@
 			<definition name="UITAG_TYPE_DATA" value="data"/>
 			<definition name="UITAG_TYPE_LAYOUT" value="layout"/>
 			<definition name="UITAG_TYPE_CONTROL" value="control"/>
+			<definition name="UITAG_TYPE_OTHER" value="other"/>
 
 			<definition type="space"/>
 			<definition name="UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR" value="nosliw_validationError"/>

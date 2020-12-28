@@ -35,6 +35,7 @@ import com.nosliw.uiresource.page.processor.HAPProcessorUIPage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
+import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITagOther;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPUIResourceManager {
@@ -90,6 +91,7 @@ public class HAPUIResourceManager {
 		HAPParserElement.registerStoryNode(HAPStoryNodePage.STORYNODE_TYPE, HAPStoryNodePage.class);
 		HAPParserElement.registerStoryNode(HAPStoryNodeUIData.STORYNODE_TYPE, HAPStoryNodeUIData.class);
 		HAPParserElement.registerStoryNode(HAPStoryNodeUIHtml.STORYNODE_TYPE, HAPStoryNodeUIHtml.class);
+		HAPParserElement.registerStoryNode(HAPStoryNodeUITagOther.STORYNODE_TYPE, HAPStoryNodeUITagOther.class);
 	}
 
 	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId, HAPAttachmentContainer parentAttachment) {
