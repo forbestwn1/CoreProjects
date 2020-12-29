@@ -437,7 +437,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				//array
 				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData("loop", story.getNextId(), uiDataInfo, dataFlow);
 				uiDataStoryNode.addAttribute("data", varName);
-				uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
+				if(!HAPConstant.DATAFLOW_IN.equals(dataFlow)) uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
 				dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, m_contextProcessRequirement, m_uiTagManager);
 				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUINode.getStoryNodeRef()));
 				
@@ -460,7 +460,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			HAPUITagInfo uiTagInfo = this.m_uiTagManager.getDefaultUITagData(new HAPUITageQueryData(dataTypeCriteria));
 			HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow);
 			uiDataStoryNode.addAttribute("data", varName);
-			uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
+			if(!HAPConstant.DATAFLOW_IN.equals(dataFlow)) uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
 			dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, m_contextProcessRequirement, m_uiTagManager);
 			changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUINode.getStoryNodeRef()));
 

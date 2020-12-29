@@ -112,20 +112,22 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 //	var loc_getEndElement = function(){   return loc_tagConfigure.endElement;     };
 	var loc_getStartElement = function(){   return loc_viewContainer.getStartElement();     };
 	var loc_getEndElement = function(){   return loc_viewContainer.getEndElement();     };
-	
+
+	var loc_getAttributeValue = function(name){  
+		var out = loc_attributes[name];
+		if(out==undefined){
+			var attrDef = loc_attributeDefinition[name];
+			if(attrDef!=undefined)	out = attrDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITIONATTRIBUTE_DEFAULTVALUE];
+		}
+		return out;
+	};
+
 	//runtime env for uiTagObj
 	//include : basic info, utility method
 	var loc_envObj = {
 		getId : function(){  return loc_id;  },
 		getContext : function(){   return loc_context;  },
-		getAttributeValue : function(name){  
-			var out = loc_attributes[name];
-			if(out==undefined){
-				var attrDef = loc_attributeDefinition[name];
-				if(attrDef!=undefined)	out = attrDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITIONATTRIBUTE_DEFAULTVALUE];
-			}
-			return out;
-		},
+		getAttributeValue : function(name){  return loc_getAttributeValue(name); },
 		getAttributes : function(){   return loc_attributes;   },
 		getTagBody : function(){  return  loc_tagBody; },
 		
@@ -338,6 +340,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		
 		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		
+		getAttributeValue : function(name){   return loc_getAttributeValue(name);      },
 		setAttribute : function(name, value){
 			if(loc_uiTagObj.processAttribute!=undefined)  loc_uiTagObj.processAttribute(name, value);  
 		},

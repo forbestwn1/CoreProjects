@@ -32,6 +32,8 @@ var packageObj = library;
 	var node_createDynamicIOData;
 	var node_createViewContainer;
 	var node_UICommonUtility;
+	var node_createBatchUIDataOperationRequest;
+	var node_namingConvensionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_uiResourceViewFactory = function(){
@@ -435,20 +437,25 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 						var allSetRequest = node_createServiceRequestInfoSet(undefined, {
 							success : function(requestInfo, validationsResult){
 								var results = validationsResult.getResults();
+								var allMessages = {};
 								var opsRequest = node_createBatchUIDataOperationRequest(loc_context, {
 									success : function(request){
-										return results;
+										return allMessages;
 									}
 								}, requestInfo);
 								_.each(results, function(message, uiTagId){
-									var path = node_namingConvensionUtility.cascadePath(node_CONSTANT.CONTEXTELEMENT_NAME_UIVALIDATIONERROR, uiTagId);
-									opsRequest.addUIDataOperation(node_uiDataOperationServiceUtility.createSetOperationData(path, message));
+									if(message!=undefined){
+										allMessages[uiTagId] = message;
+										opsRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTagId, message)));
+									}
 								});
 								if(!opsRequest.isEmpty())	return opsRequest;
+								else return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
+
 							},
 						});
 						_.each(uiTags, function(uiTag, i){
-							allSetRequest.addRquest(uiTag.getId(), uiTag.getValidateDataRequest());
+							allSetRequest.addRequest(uiTag.getId(), uiTag.getValidateDataRequest());
 						});
 						out.addRequest(allSetRequest);
 						return out;
@@ -514,7 +521,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 				//check attributes
 				if(ok && query.attribute!=undefined){
 					_.each(query.attribute, function(attr, i){
-						if(uiTag.getAttribute(attr.name)!=attr.value)	ok = false;
+						if(uiTag.getAttributeValue(attr.name)!=attr.value)	ok = false;
 					});
 				}
 
@@ -665,7 +672,8 @@ nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IO
 nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("uicommon.createViewContainer", function(){node_createViewContainer = this.getData();});
 nosliw.registerSetNodeDataEvent("uicommon.utility", function(){node_UICommonUtility = this.getData();});
-
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createBatchUIDataOperationRequest", function(){node_createBatchUIDataOperationRequest  = this.getData();});
+nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("uiResourceViewFactory", loc_uiResourceViewFactory); 

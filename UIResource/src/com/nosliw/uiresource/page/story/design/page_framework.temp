@@ -15,7 +15,7 @@
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.createServiceRequestInfoSequence");
+			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 			
 			var out = node_createServiceRequestInfoSequence(undefined);
 			out.addRequest(env.getUIValidationRequest(env.getTagsByAttribute(node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_GROUP, node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION), {

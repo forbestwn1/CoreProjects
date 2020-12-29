@@ -164,10 +164,9 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_env.getDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
-					
 					if(loc_isMandatory==true){
 						if(data==undefined){
-							
+							return "Cannot be blank!!";
 						}
 					}
 				}
