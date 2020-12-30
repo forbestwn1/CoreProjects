@@ -9,6 +9,7 @@ var packageObj = library;
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
 	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSimple;
 	var node_ServiceInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -164,11 +165,10 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_env.getDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
-					if(loc_isMandatory==true){
-						if(data==undefined){
-							return "Cannot be blank!!";
-						}
+					if(loc_isMandatory==true&&data==undefined){
+						return "Cannot be blank!!";
 					}
+					return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
 				}
 			}));
 			return out;
@@ -191,6 +191,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 
 //Register Node by Name

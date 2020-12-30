@@ -4,6 +4,10 @@
 
 	||htmlContent||
 
+	<nosliw-contextvalue/>
+	
+	Content:<%=JSON.stringify(?(nosliw_validationError)?) + '   6666 ' %>
+
 </body>
 
 	<scripts>

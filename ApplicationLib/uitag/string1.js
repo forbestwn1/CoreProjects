@@ -59,6 +59,8 @@
 		var loc_view;
 		
 		var loc_getViewData = function(){
+			var value = loc_view.val();
+			if(value==undefined || value=="")  return;
 			return {
 				dataTypeId: "test.string;1.0.0",
 				value: loc_view.val()

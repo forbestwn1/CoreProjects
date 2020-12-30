@@ -25,7 +25,6 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
 import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -108,7 +107,6 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
 			context.addElement(varNode.getVariableInfo().getName(), new HAPContextDefinitionLeafData(varNode.getVariableInfo()));
 		}
-		context.addElement(HAPConstant.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, new HAPContextDefinitionLeafValue());
 		return context;
 	}
 

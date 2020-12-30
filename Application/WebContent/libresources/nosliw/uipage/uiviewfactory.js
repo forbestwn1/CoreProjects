@@ -434,6 +434,11 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 					},
 					getUIValidationRequest : function(uiTags, handlers, request){
 						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
+
+						var clearErrorRequest = node_createBatchUIDataOperationRequest(loc_context);
+						clearErrorRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService("", {})));
+						out.addRequest(clearErrorRequest);
+
 						var allSetRequest = node_createServiceRequestInfoSet(undefined, {
 							success : function(requestInfo, validationsResult){
 								var results = validationsResult.getResults();

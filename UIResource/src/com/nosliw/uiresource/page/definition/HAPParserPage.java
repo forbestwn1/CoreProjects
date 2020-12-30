@@ -274,8 +274,6 @@ public class HAPParserPage {
 	private void parseUnitContextBlocks(Element ele, HAPDefinitionUIUnit resourceUnit){
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, CONTEXT);
 		
-		HAPContextGroup contextGroup = new HAPContextGroup();
-		resourceUnit.setContextStructure(contextGroup);
 		for(Element childEle : childEles){
 			try {
 				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), (HAPContextGroup)resourceUnit.getContextStructure());
