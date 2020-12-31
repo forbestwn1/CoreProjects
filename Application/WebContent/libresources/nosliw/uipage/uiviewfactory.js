@@ -293,9 +293,6 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 			loc_context = node_contextUtility.buildContext("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
 		}
 
-		//build in context
-		loc_context.addContextElement(node_createContextElementInfo(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, {}));
-
 		var viewAttrs = {
 			nosliwdefid : uiResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID],
 		};

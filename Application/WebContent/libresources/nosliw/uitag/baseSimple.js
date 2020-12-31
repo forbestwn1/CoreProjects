@@ -22,7 +22,10 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	var loc_dataVariable;
 	
 	var loc_enumDataSet;
+	
+	//mandatory rule
 	var loc_isMandatory = false;
+	var loc_mandatoryRuleDescription;
 	
 	var loc_processDataRuleRequest = function(request){
 		//emum rule
@@ -34,12 +37,14 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 				[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
 		var enumRule;
 		for(var i in rules){
-			var ruleType = rules[i][node_COMMONATRIBUTECONSTANT.DATARULE_RULETYPE];
+			var rule = rules[i];
+			var ruleType = rule[node_COMMONATRIBUTECONSTANT.DATARULE_RULETYPE];
 			if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_ENUM){
-				enumRule = rules[i];
+				enumRule = rule;
 			}
 			else if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_MANDATORY){
 				loc_isMandatory = true;
+				loc_mandatoryRuleDescription = rule[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION];
 			}
 		}
 		if(enumRule!=null){
@@ -165,9 +170,11 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_env.getDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
+					//mandatory rule
 					if(loc_isMandatory==true&&data==undefined){
-						return "Cannot be blank!!";
+						return loc_mandatoryRuleDescription || "Cannot be blank";
 					}
+					//valid value, return empty
 					return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
 				}
 			}));

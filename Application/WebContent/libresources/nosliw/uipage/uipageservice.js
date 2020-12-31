@@ -42,7 +42,7 @@ var node_createUIPageService = function(){
 							success : function(requestInfo, uiView){
 								return node_createUIPage(uiView, loc_getStyleScript(uiResource));
 							}
-						});
+						}, requestInfo);
 					}
 				}));
 				

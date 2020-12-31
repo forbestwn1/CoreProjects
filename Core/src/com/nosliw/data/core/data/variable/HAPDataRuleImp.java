@@ -4,9 +4,9 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.info.HAPEntityInfoImp;
 
-public abstract class HAPDataRuleImp extends HAPSerializableImp implements HAPDataRule{
+public abstract class HAPDataRuleImp extends HAPEntityInfoImp implements HAPDataRule{
 
 	private String m_ruleType;
 	

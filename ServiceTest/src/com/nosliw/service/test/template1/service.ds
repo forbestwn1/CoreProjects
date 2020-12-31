@@ -6,18 +6,12 @@
 		"tag" : ["public"],
 		"interface" : {
 			"parm" : {
-				"serviceParm1": {
-					dataInfo : "test.string;1.0.0",
-					defaultValue :{
-						dataTypeId: "test.string;1.0.0",
-						value: "hello"
-					},
-				},
 				"serviceParm2": {
 					dataInfo : {
 						criteria: "test.string;1.0.0",
 						rule : [
 							{
+								description : "Cannot be blank!!!",
 								ruleType : "mandatory",
 							}
 						]
@@ -27,12 +21,6 @@
 			"result" : {
 				"success": {
 					"output": {
-						"outputInService1": {
-							dataInfo : "test.string;1.0.0",
-						},
-						"outputInService2": {
-							dataInfo : "test.string;1.0.0",
-						}
 					}
 				}
 			},

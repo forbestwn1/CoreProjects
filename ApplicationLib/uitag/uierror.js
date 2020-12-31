@@ -50,8 +50,14 @@
 		var loc_updateView = function(request){
 			loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
-					if(data==undefined || data.value==undefined)  loc_view.val("");
-					else loc_view.val(data.value);
+					if(data==undefined || data.value==undefined){
+						loc_view.text("");
+						loc_view.hide();
+					}
+					else{
+						loc_view.text(data.value);
+						loc_view.show();
+					}
 				}
 			}, request);
 		};
@@ -59,7 +65,6 @@
 		var loc_out = 
 		{
 			preInit : function(request){
-				loc_dataVariable = loc_env.createVariable("internal_errorroot."+loc_targetId);
 				var query = {
 					"attribute" : [
 						{
@@ -70,10 +75,12 @@
 				};
 				var targetTag = loc_env.getTags(query)[0];
 				loc_targetId = targetTag.getId();
+				loc_dataVariable = loc_env.createVariable("internal_errorroot."+loc_targetId);
 			},
 
 			initViews : function(request){
-				loc_view = $('<sppan style="display:inline;background:#e6dedc"/></span>');
+				loc_view = $('<sppan style="color:red"/></span>');
+				loc_view.hide();
 				return loc_view;
 			},
 			
