@@ -19,12 +19,14 @@ import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
+import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -105,7 +107,10 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		Set<HAPStoryNode> varNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstant.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
-			context.addElement(varNode.getVariableInfo().getName(), new HAPContextDefinitionLeafData(varNode.getVariableInfo()));
+			HAPVariableInfo varInfo = varNode.getVariableInfo();
+			HAPContextDefinitionRoot contextEle = new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(varInfo));
+			contextEle.setDefaultValue(varInfo.getDefaultValue());
+			context.addElement(varNode.getVariableInfo().getName(), contextEle);
 		}
 		return context;
 	}

@@ -117,11 +117,13 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		findFunctionDown : function(name){
 			
 		},	
+		created : function(){
+			loc_createCoreObj();
+		},
 		preInit : function(request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("uiTagPreInitRequest", {}), undefined, request);
 			loc_dataVariable = loc_env.createVariable("internal_data");
 			out.addRequest(loc_processDataRuleRequest());
-			loc_createCoreObj();
 			return out;
 		},
 		initViews : function(request){

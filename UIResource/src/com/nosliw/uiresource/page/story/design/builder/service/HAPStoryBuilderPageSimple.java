@@ -467,7 +467,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			//validation
 			HAPStoryNodeUITagOther uiErrorStoryNode = new HAPStoryNodeUITagOther("uierror", story.getNextId());
 			uiErrorStoryNode.addAttribute("target", uiDataStoryNode.getId());
-			uiErrorStoryNode.addAttribute("errorroot", HAPConstant.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
+			uiErrorStoryNode.addAttribute("data", HAPConstant.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
 			HAPUINode uiErrorNode = layoutUINode.newChildNode(uiErrorStoryNode, "uiError", changeRequest, m_contextProcessRequirement, m_uiTagManager);
 			changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(uiErrorNode.getStoryNodeRef()));
 

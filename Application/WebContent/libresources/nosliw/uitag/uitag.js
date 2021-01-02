@@ -259,14 +259,17 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		
 		loc_uiTagObj = _.extend({
 			findFunctionDown : function(name){},	
+			created : function(){},
+			preInit : function(request){},
 			initViews : function(request){},
 			postInit : function(request){},
-			preInit : function(request){},
 			destroy : function(request){},
 			getChildUITags : function(){},
 			getValidateDataRequest : function(handlers, request){},
 			createContextForDemo : function(id, parentContext){},
 		}, uiTagCore);
+
+		loc_uiTagObj.created();
 
 		//create context
 		if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){

@@ -117,9 +117,10 @@
 			},
 			
 			getDataForDemo : function(){
-				var data = node_createData({value:"Hello World", dataTypeId:"test.string;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);
-				dataVarEleInfo = node_createContextElementInfo("internal_data", data);
-
+				return {
+					value:"Hello World", 
+					dataTypeId:"test.string;1.0.0"
+				};
 			},
 			
 			destroy : function(){
