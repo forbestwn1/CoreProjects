@@ -20,8 +20,8 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceUtility;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 public class HAPUtilityExpression {
@@ -47,10 +47,10 @@ public class HAPUtilityExpression {
 		return out;
 	}
 
-	public static HAPContext getContext(HAPDefinitionExpressionGroup expressionGroupDef, HAPContext extraContext, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static HAPContext getContext(HAPDefinitionExpressionGroup expressionGroupDef, HAPContext extraContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContext out = null;
 		if(expressionGroupDef instanceof HAPComponentContainerElement) {
-			out = (HAPContext)HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)expressionGroupDef, extraContext, contextProcessRequirement, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression());
+			out = (HAPContext)HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)expressionGroupDef, extraContext, runtimeEnv, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression());
 		}
 		else {
 			out = (HAPContext)HAPUtilityContext.hardMerge(((HAPWithDataContext)expressionGroupDef).getContextStructure(), extraContext); 

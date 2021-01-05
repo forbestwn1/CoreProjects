@@ -12,9 +12,9 @@ import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
@@ -30,7 +30,7 @@ public class HAPDebugActivityProcessor implements HAPProcessorActivity{
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
-			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {
 		 
@@ -38,10 +38,10 @@ public class HAPDebugActivityProcessor implements HAPProcessorActivity{
 		HAPDebugActivityExecutable out = new HAPDebugActivityExecutable(id, debugActivityDef);
 		
 		//input
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, debugActivityDef, processDataContext, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, debugActivityDef, processDataContext, runtimeEnv);
 		
 		//process success result
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, debugActivityDef, HAPConstant.ACTIVITY_RESULT_SUCCESS, null, null, contextProcessRequirement);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, debugActivityDef, HAPConstant.ACTIVITY_RESULT_SUCCESS, null, null, runtimeEnv);
 		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

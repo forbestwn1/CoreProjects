@@ -17,8 +17,8 @@ import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.expression.HAPProcessorExpression;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.expression.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.literate.HAPProcessorScriptLiterate;
 import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScriptGroup;
@@ -31,7 +31,7 @@ public class HAPProcessorScript {
 			Map<String, Object> constants,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure, 
-			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		HAPContextProcessScript processScriptContext = new HAPContextProcessScript(); 
 		processScriptContext.setContextStructure(new HAPContext());
@@ -44,7 +44,7 @@ public class HAPProcessorScript {
 		HAPDefinitionScriptGroup group = new HAPDefinitionScriptGroupImp();
 		group.addEntityElement(new HAPDefinitionScriptEntity(HAPScript.newScript(script, scriptType)));
 		
-		HAPExecutableScriptGroup groupExe = processScript(null, group, processScriptContext, expressionMan, configure, contextProcessRequirement, processTracker);
+		HAPExecutableScriptGroup groupExe = processScript(null, group, processScriptContext, expressionMan, configure, runtimeEnv, processTracker);
 		return groupExe;
 	}
 	
@@ -53,7 +53,7 @@ public class HAPProcessorScript {
 			HAPContext extraContext, 
 			HAPManagerExpression expressionMan, 
 			Map<String, String> configure, 
-			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 
 		HAPContextProcessScript contextProcessScript = new HAPContextProcessScript();
@@ -76,7 +76,7 @@ public class HAPProcessorScript {
 				contextProcessScript,
 				expressionMan, 
 				configure, 
-				contextProcessRequirement,
+				runtimeEnv,
 				processTracker);
 		return out;
 	}
@@ -87,7 +87,7 @@ public class HAPProcessorScript {
 			HAPContextProcessScript processScriptContext,
 			HAPManagerExpression expressionMan, 
 			Map<String, String> configure, 
-			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 		
@@ -131,8 +131,8 @@ public class HAPProcessorScript {
 			i++;
 		}
 		
-		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionGroupDef, HAPContextResourceExpressionGroup.createContext(expressionSuite, contextProcessRequirement.resourceDefMan));
-		HAPExecutableExpressionGroup expressionExe = HAPProcessorExpression.process(id, resourceWithContext, null, null, expressionMan, configure, contextProcessRequirement, processTracker);
+		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionGroupDef, HAPContextResourceExpressionGroup.createContext(expressionSuite, runtimeEnv.getResourceDefinitionManager()));
+		HAPExecutableExpressionGroup expressionExe = HAPProcessorExpression.process(id, resourceWithContext, null, null, expressionMan, configure, runtimeEnv, processTracker);
 		out.setExpression(expressionExe);
 		
 		for(HAPExecutableScriptEntity script : out.getScripts()) {

@@ -49,9 +49,9 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPManagerDynamicResource dynamicResourceManager = new HAPManagerDynamicResource();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(dynamicResourceManager);
 		HAPManagerService serviceManager = new HAPManagerService();
-		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), resourceDefManager, dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
-		HAPManagerScript scriptMan = new HAPManagerScript(expressionMan, resourceDefManager, dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
-		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), resourceDefManager, dataTypeHelper, runtime, expressionMan, serviceManager.getServiceDefinitionManager());
+		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), this);
+		HAPManagerScript scriptMan = new HAPManagerScript(this);
+		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), this);
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 

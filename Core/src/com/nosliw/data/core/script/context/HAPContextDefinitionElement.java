@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
 public abstract class HAPContextDefinitionElement extends HAPSerializableImp{
@@ -23,7 +24,7 @@ public abstract class HAPContextDefinitionElement extends HAPSerializableImp{
 	
 	abstract public HAPContextDefinitionElement cloneContextDefinitionElement();
 
-	abstract public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement);
+	abstract public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv);
 
 	public HAPContextDefinitionElement getSolidContextDefinitionElement() {  return this;  }
 	

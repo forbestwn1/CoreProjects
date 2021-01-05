@@ -3,21 +3,21 @@ package com.nosliw.uiresource.page.processor;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPContextUITagDefinition;
+import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUtilityUITag;
 
 public class HAPUtilityProcess {
 
 	//build context for ui Tag
-	public static HAPContextGroup buildUITagContext(HAPUITagDefinition tagDef, HAPContextGroup parentContext, Map<String, String> attributes, HAPConfigureContextProcessor contextProcessorConfig, HAPRequirementContextProcessor contextProcessRequirement){
+	public static HAPContextGroup buildUITagContext(HAPUITagDefinition tagDef, HAPContextGroup parentContext, Map<String, String> attributes, HAPConfigureContextProcessor contextProcessorConfig, HAPRuntimeEnvironment runtimeEnv){
 		//get contextDef 
 		HAPContextUITagDefinition tagDefinitionContext = tagDef.getContext();
 
@@ -28,6 +28,6 @@ public class HAPUtilityProcess {
 			HAPContextDefinitionLeafConstant cstRootNode = new HAPContextDefinitionLeafConstant(tagAttrs.get(name));
 			tagContext.addElement(HAPConstant.NOSLIW_RESERVE_ATTRIBUTE + name, new HAPContextDefinitionRoot(cstRootNode), HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);
 		}
-		return HAPProcessorContext.processStatic(tagContext, HAPParentContext.createDefault(parentContext), HAPUtilityConfiguration.getContextProcessConfigurationForTagDefinition(tagDefinitionContext, contextProcessorConfig), contextProcessRequirement);
+		return HAPProcessorContext.processStatic(tagContext, HAPParentContext.createDefault(parentContext), HAPUtilityConfiguration.getContextProcessConfigurationForTagDefinition(tagDefinitionContext, contextProcessorConfig), runtimeEnv);
 	}
 }

@@ -17,6 +17,7 @@ import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
@@ -25,7 +26,6 @@ import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
@@ -43,7 +43,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
-			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {
 		 
@@ -51,7 +51,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		HAPLoopActivityExecutable out = new HAPLoopActivityExecutable(id, loopActivityDef);
 		
 		//input
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, loopActivityDef, processDataContext, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, loopActivityDef, processDataContext, runtimeEnv);
 
 		//build data context for step process (context from process + element data)
 		HAPContextGroup stepDataContext = processDataContext.cloneContextGroup();
@@ -78,7 +78,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		
 		//process success result
 		for(String resultName : loopActivityDef.getResults().keySet()) {
-			HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, loopActivityDef, resultName, processDataContext, new HAPBuilderResultContext1(processExe), contextProcessRequirement);
+			HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, loopActivityDef, resultName, processDataContext, new HAPBuilderResultContext1(processExe), runtimeEnv);
 			out.addResult(resultName, successResultExe);
 		}
 		return out;

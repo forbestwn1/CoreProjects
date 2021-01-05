@@ -2,20 +2,14 @@ package com.nosliw.uiresource;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
-import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.expression.HAPManagerExpression;
-import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.story.HAPParserElement;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
@@ -40,23 +34,11 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPUIResourceManager {
 
+	private HAPRuntimeEnvironment m_runtimeEnv;
+	
 	private HAPResourceCache m_resourceCache;
 	
-	private HAPManagerExpression m_expressionMan; 
-	
-	private HAPResourceManagerRoot m_resourceMan;
-
 	private HAPUITagManager m_uiTagMan;
-	
-	private HAPRuntime m_runtime;
-
-	private HAPDataTypeHelper m_dataTypeHelper;
-	
-	private HAPManagerProcess m_processMan;
-	
-	private HAPManagerServiceDefinition m_serviceDefinitionManager;
-	
-	private HAPManagerResourceDefinition m_resourceDefManager;
 	
 	private HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
 
@@ -67,26 +49,15 @@ public class HAPUIResourceManager {
 	private HAPParseMiniApp m_miniAppParser;
 	
 	public HAPUIResourceManager(
-			HAPUITagManager uiTagMan,
-			HAPManagerExpression expressionMan, 
-			HAPResourceManagerRoot resourceMan,
-			HAPManagerProcess processMan,
-			HAPRuntime runtime, 
-			HAPDataTypeHelper dataTypeHelper,
-			HAPManagerServiceDefinition serviceDefinitionManager,
-			HAPManagerResourceDefinition resourceDefManager){
+			HAPRuntimeEnvironment runtimeEnv,
+			HAPUITagManager uiTagMan
+			){
+		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagMan = uiTagMan;
-		this.m_expressionMan = expressionMan;
-		this.m_resourceMan = resourceMan;
-		this.m_processMan = processMan;
-		this.m_runtime = runtime;
 		this.m_resourceCache = new HAPResourceCache();
-		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_uiResourceParser = new HAPParserPage(null, m_idGengerator);
 		this.m_moduleParser = new HAPParserModule();
 		this.m_miniAppParser = new HAPParseMiniApp();
-		this.m_serviceDefinitionManager = serviceDefinitionManager;
-		this.m_resourceDefManager = resourceDefManager;
 
 		HAPParserElement.registerStoryNode(HAPStoryNodePage.STORYNODE_TYPE, HAPStoryNodePage.class);
 		HAPParserElement.registerStoryNode(HAPStoryNodeUIData.STORYNODE_TYPE, HAPStoryNodeUIData.class);
@@ -96,12 +67,12 @@ public class HAPUIResourceManager {
 
 	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
-		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(appId, parentAttachment);
+		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(appId, parentAttachment);
 		return appDef;
 	}
 	
 	public HAPDefinitionAppEntry getMiniAppEntryDefinition(HAPResourceId appEntryId, HAPAttachmentContainer parentAttachment) {
-		HAPDefinitionAppEntry appEntryDef = (HAPDefinitionAppEntry)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(appEntryId, parentAttachment);
+		HAPDefinitionAppEntry appEntryDef = (HAPDefinitionAppEntry)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(appEntryId, parentAttachment);
 		return appEntryDef;
 	}
 
@@ -113,13 +84,13 @@ public class HAPUIResourceManager {
 		HAPAttachmentContainer attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
 		HAPDefinitionAppEntry appEntryDef = this.getMiniAppEntryDefinition(appEntryId, attachmentEx);
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(appEntryDef, null, this.m_resourceDefManager, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
+		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(appEntryDef, null, this.m_runtimeEnv, this, processTracker);
 		return out;
 	}
 	
 	public HAPDefinitionModule getModuleDefinition(HAPResourceId moduleId, HAPAttachmentContainer parentAttachment) {
 		//get definition itself
-		HAPDefinitionModule moduleDef = (HAPDefinitionModule)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(moduleId, parentAttachment);
+		HAPDefinitionModule moduleDef = (HAPDefinitionModule)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(moduleId, parentAttachment);
 		return moduleDef;
 	}
 
@@ -144,7 +115,7 @@ public class HAPUIResourceManager {
 			moduleDef = (HAPDefinitionModule)defOrRef;
 			HAPUtilityComponent.mergeWithParentAttachment(moduleDef, attachmentEx);
 		}
-		return HAPProcessorModule.process(moduleDef, id, null, this.m_resourceDefManager, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager);
+		return HAPProcessorModule.process(moduleDef, id, null, this.m_runtimeEnv, this);
 	}
 
 	
@@ -158,16 +129,16 @@ public class HAPUIResourceManager {
 	
 	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId, HAPAttachmentContainer parentAttachment) {
 		
-		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(pageResourceId, parentAttachment);
+		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(pageResourceId, parentAttachment);
 
 		//process include tag
-		pageDefinition = HAPUtilityPage.processInclude(pageDefinition, this.m_uiResourceParser, this, this.m_resourceDefManager);
+		pageDefinition = HAPUtilityPage.processInclude(pageDefinition, this.m_uiResourceParser, this, this.m_runtimeEnv.getResourceDefinitionManager());
 
 		//resolve attachment
 		HAPUtilityPage.solveAttachment(pageDefinition, null, this.m_uiTagMan);
 
 		//resolve service provider
-		HAPUtilityPage.solveServiceProvider(pageDefinition, null, m_serviceDefinitionManager);
+		HAPUtilityPage.solveServiceProvider(pageDefinition, null, this.m_runtimeEnv.getServiceManager().getServiceDefinitionManager());
 		return pageDefinition;
 	}
 
@@ -181,7 +152,7 @@ public class HAPUIResourceManager {
 		}
 		
 		//compile it
-		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, context, parentContext, null, this.m_resourceDefManager, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
+		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, context, parentContext, null, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
 		return out;
 	}
 

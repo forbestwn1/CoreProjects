@@ -1,5 +1,7 @@
 package com.nosliw.data.core.script.context;
 
+import java.util.Set;
+
 public class HAPConfigureContextProcessor {
 
 	//resolve reference node mode 
@@ -31,6 +33,8 @@ public class HAPConfigureContextProcessor {
 	//
 	public String inheritMode = VALUE_INHERITMODE_CHILD;
 	
+	public Set<String> inheritanceExcludedInfo;
+	
 	public HAPConfigureContextProcessor cloneConfigure() {
 		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
 		out.relativeResolveMode = this.relativeResolveMode;
@@ -38,6 +42,7 @@ public class HAPConfigureContextProcessor {
 		out.relativeTrackingToSolid = this.relativeTrackingToSolid;
 		out.inheritMode = this.inheritMode;
 		out.parentCategary = this.parentCategary;
+		out.inheritanceExcludedInfo = this.inheritanceExcludedInfo;
 		return out;
 	}
 }

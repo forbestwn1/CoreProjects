@@ -7,6 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPContextDefinitionNode extends HAPContextDefinitionLeafVariable{
 
@@ -71,13 +72,13 @@ public class HAPContextDefinitionNode extends HAPContextDefinitionLeafVariable{
 	}
 	
 	@Override
-	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement) {
+	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextDefinitionNode solid = new HAPContextDefinitionNode();
 		super.toContextDefinitionElement(solid);
 		for(String name : this.getChildren().keySet()){
-			String solidName = HAPProcessorContextSolidate.getSolidName(name, constants, contextProcessRequirement);
+			String solidName = HAPProcessorContextSolidate.getSolidName(name, constants, runtimeEnv);
 			HAPContextDefinitionElement child = this.getChildren().get(name);
-			HAPContextDefinitionElement solidChild = child.toSolidContextDefinitionElement(constants, contextProcessRequirement);
+			HAPContextDefinitionElement solidChild = child.toSolidContextDefinitionElement(constants, runtimeEnv);
 			solid.addChild(solidName, solidChild);
 		}
 		return solid;

@@ -10,12 +10,12 @@ import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -27,18 +27,18 @@ public class HAPUtilityComponent {
 	public static void processComponentExecutable(
 			HAPExecutableImpComponent componentExe,
 			HAPContextGroup parentContext,
-			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureContextProcessor contextProcessConfg,
 			HAPManagerActivityPlugin activityPluginMan
 			) {
 		HAPComponent component = componentExe.getDefinition();
 		
 		//service providers
-		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(component.getAttachmentContainer(), null, contextProcessRequirement.serviceDefinitionManager); 
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(component.getAttachmentContainer(), null, runtimeEnv.getServiceManager().getServiceDefinitionManager()); 
 		componentExe.setServiceProviders(allServiceProviders);
 		
 		//process context 
-		componentExe.setContextStructure(HAPProcessorContext.process(component.getContextStructure(), HAPParentContext.createDefault(parentContext==null?new HAPContextGroup():parentContext), contextProcessConfg, contextProcessRequirement));
+		componentExe.setContextStructure(HAPProcessorContext.process(component.getContextStructure(), HAPParentContext.createDefault(parentContext==null?new HAPContextGroup():parentContext), contextProcessConfg, runtimeEnv));
 		
 		//process process suite
 		HAPDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(component, activityPluginMan).cloneProcessSuiteDefinition(); 
@@ -68,9 +68,9 @@ public class HAPUtilityComponent {
 //		return out;
 //	}
 	
-	public static HAPContextStructure processElementComponentContext(HAPComponentContainerElement component, HAPContextStructure extraContext, HAPRequirementContextProcessor contextProcessRequirement, HAPConfigureContextProcessor processConfigure) {
+	public static HAPContextStructure processElementComponentContext(HAPComponentContainerElement component, HAPContextStructure extraContext, HAPRuntimeEnvironment runtimeEnv, HAPConfigureContextProcessor processConfigure) {
 		HAPContextStructure parentContext = HAPUtilityContext.hardMerge(component.getResourceContainer().getContextStructure(), extraContext); 
-		HAPContextStructure processedEleContext = HAPProcessorContext.process(component.getComponentEntity().getContextStructure(), HAPParentContext.createDefault(parentContext), processConfigure, contextProcessRequirement);
+		HAPContextStructure processedEleContext = HAPProcessorContext.process(component.getComponentEntity().getContextStructure(), HAPParentContext.createDefault(parentContext), processConfigure, runtimeEnv);
 		return HAPUtilityContext.hardMerge(parentContext, processedEleContext);
 	}
 

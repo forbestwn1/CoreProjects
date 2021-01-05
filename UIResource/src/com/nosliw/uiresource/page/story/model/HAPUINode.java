@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPReferenceElement;
@@ -54,9 +54,9 @@ public class HAPUINode {
 		return child.getUINode();
 	}
 	
-	public HAPUINode newChildNode(HAPStoryNodeUI childStoryNode, Object childId, HAPRequestChangeWrapper changeRequest, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
+	public HAPUINode newChildNode(HAPStoryNodeUI childStoryNode, Object childId, HAPRequestChangeWrapper changeRequest, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan) {
 		//build data info in ui node
-		HAPUIDataStructureInfo dataStructureInfo = HAPUtility.buildDataStructureInfoForUIStoryNode(childStoryNode, this.getStoryNode().getDataStructureInfo().getContext(), contextProcessRequirement, uiTagMan);
+		HAPUIDataStructureInfo dataStructureInfo = HAPUtility.buildDataStructureInfoForUIStoryNode(childStoryNode, this.getStoryNode().getDataStructureInfo().getContext(), runtimeEnv, uiTagMan);
 		childStoryNode.setDataStructureInfo(dataStructureInfo);
 		
 		HAPAliasElement nodeName = changeRequest.addNewChange(childStoryNode).getAlias();
@@ -110,19 +110,19 @@ public class HAPUINode {
 		return out;
 	}
 	
-	public void updateUIDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
+	public void updateUIDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
 		HAPRequestChange changeRequest = this.m_story.newRequestChange(true);
 		//update data structure
-		HAPUIDataStructureInfo dataStructureInfo = buildDataStructureInfo(parentDataStructureInfo, contextProcessRequirement, uiTagMan);
+		HAPUIDataStructureInfo dataStructureInfo = buildDataStructureInfo(parentDataStructureInfo, runtimeEnv, uiTagMan);
 		changeRequest.addChange(HAPUtilityChange.buildChangePatch(this.getStoryNodeRef(), HAPStoryNodeUI.DATASTRUCTURE, dataStructureInfo));
 		this.getStory().change(changeRequest);
 		
 		for(HAPUIChild child : this.getChildren()) {
-			child.getUINode().updateUIDataStructureInfo(dataStructureInfo, contextProcessRequirement, uiTagMan, changeMan);
+			child.getUINode().updateUIDataStructureInfo(dataStructureInfo, runtimeEnv, uiTagMan, changeMan);
 		}
 	}
 	
-	protected HAPUIDataStructureInfo buildDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
+	protected HAPUIDataStructureInfo buildDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan) {
 		HAPUIDataStructureInfo out;
 		if(parentDataStructureInfo==null) {
 			//for page node
@@ -130,7 +130,7 @@ public class HAPUINode {
 		}
 		else {
 			//for ui node
-			out = HAPUtility.buildDataStructureInfoForUIStoryNode(this.getStoryNode(), parentDataStructureInfo.getContext(), contextProcessRequirement, uiTagMan);
+			out = HAPUtility.buildDataStructureInfoForUIStoryNode(this.getStoryNode(), parentDataStructureInfo.getContext(), runtimeEnv, uiTagMan);
 		}
 		return out;
 	}

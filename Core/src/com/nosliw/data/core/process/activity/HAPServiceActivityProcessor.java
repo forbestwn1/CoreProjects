@@ -14,10 +14,10 @@ import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPOutputStructure;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -37,14 +37,14 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
-			HAPRequirementContextProcessor contextProcessRequirement, 
+			HAPRuntimeEnvironment runtimeEnv, 
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {
 		HAPServiceActivityDefinition serviceActDef = (HAPServiceActivityDefinition)activityDefinition;
 		HAPServiceActivityExecutable out = new HAPServiceActivityExecutable(id, serviceActDef);
 
 		//input
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, serviceActDef, processDataContext, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, serviceActDef, processDataContext, runtimeEnv);
 
 		//provider
 		HAPDefinitionServiceProvider provider = serviceProviders.get(serviceActDef.getProvider());
@@ -56,12 +56,12 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		serviceUseDef.setServiceMapping(serviceActDef.getTaskMapping());
 		
 		//process service use def
-		HAPExecutableServiceUse serviceUseExe = HAPProcessorServiceUse.process(serviceUseDef, provider.getServiceInterface(), processDataContext, configure, contextProcessRequirement);
+		HAPExecutableServiceUse serviceUseExe = HAPProcessorServiceUse.process(serviceUseDef, provider.getServiceInterface(), processDataContext, configure, runtimeEnv);
 		out.setService(serviceUseExe);
 
 		//process success result
 		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(processDataContext); 
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, serviceActDef, HAPConstant.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, contextProcessRequirement);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, serviceActDef, HAPConstant.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, runtimeEnv);
 		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

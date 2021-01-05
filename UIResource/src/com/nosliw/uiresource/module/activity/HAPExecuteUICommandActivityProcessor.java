@@ -12,9 +12,9 @@ import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
@@ -30,16 +30,16 @@ public class HAPExecuteUICommandActivityProcessor implements HAPProcessorActivit
 			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
-			HAPRequirementContextProcessor contextProcessRequirement, 
+			HAPRuntimeEnvironment runtimeEnv, 
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {
 		HAPExecuteUICommandActivityDefinition definition = (HAPExecuteUICommandActivityDefinition)activityDefinition;
 		HAPExecuteUICommandActivityExecutable out = new HAPExecuteUICommandActivityExecutable(id, definition);
 		//process input and create flat input context for activity
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, definition, context, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, definition, context, runtimeEnv);
 
 		//process success result
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, definition, HAPConstant.ACTIVITY_RESULT_SUCCESS, null, null, contextProcessRequirement);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, definition, HAPConstant.ACTIVITY_RESULT_SUCCESS, null, null, runtimeEnv);
 		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

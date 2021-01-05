@@ -10,6 +10,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVariable{
 
@@ -150,12 +151,12 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 
 	@Override
 	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants,
-			HAPRequirementContextProcessor contextProcessRequirement) {
+			HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextDefinitionLeafRelative out = (HAPContextDefinitionLeafRelative)this.cloneContextDefinitionElement();
-		out.m_pathStr = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, contextProcessRequirement);
+		out.m_pathStr = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, runtimeEnv);
 		out.m_path = null;
 		out.m_parent = this.m_parent;
-		if(this.m_definition!=null) 	out.m_definition = this.m_definition.toSolidContextDefinitionElement(constants, contextProcessRequirement);
+		if(this.m_definition!=null) 	out.m_definition = this.m_definition.toSolidContextDefinitionElement(constants, runtimeEnv);
 		return out;
 	}
 	

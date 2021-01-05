@@ -128,6 +128,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			    HAPManagerStory storyManager,
 			    HAPRuntime runtime){ 
 		this.m_dataTypeManager = dataTypeManager;
+		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_resourceManager = resourceMan;
 		this.m_processManager = processManager;
 		this.m_processRuntime = processRuntime;
@@ -219,5 +220,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	@Override
 	public HAPRuntime getRuntime() {		return this.m_runtime;	}
+	
+	@Override
+	public HAPDataTypeHelper getDataTypeHelper() {   return this.m_dataTypeHelper;   }
+
 
 }

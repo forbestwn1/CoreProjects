@@ -13,11 +13,11 @@ import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -34,7 +34,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
-			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {
 		 
@@ -42,7 +42,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 		HAPProcessActivityExecutable out = new HAPProcessActivityExecutable(id, processActivityDef);
 		
 		//input
-		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processActivityDef, processDataContext, contextProcessRequirement);
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processActivityDef, processDataContext, runtimeEnv);
 
 		HAPExecutableWrapperTask<HAPExecutableProcess> emProcessExe = processManager.getEmbededProcess(
 				processActivityDef.getProcess(),
@@ -58,7 +58,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(processExe); 
 		
 		for(String resultName : emProcessExe.getTask().getResultNames()) {
-			HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, processActivityDef, resultName, processDataContext, m_resultContextBuilder, contextProcessRequirement);
+			HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, processActivityDef, resultName, processDataContext, m_resultContextBuilder, runtimeEnv);
 			out.addResult(resultName, successResultExe);
 		}
 		return out;

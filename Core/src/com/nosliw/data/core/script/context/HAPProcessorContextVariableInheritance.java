@@ -2,19 +2,22 @@ package com.nosliw.data.core.script.context;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Set;
+
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorContextVariableInheritance {
 
 	//merge with parent through inheritance
-	public static HAPContextGroup process(HAPContextGroup orgContext, HAPParentContext parent, String inheritMode, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static HAPContextGroup process(HAPContextGroup orgContext, HAPParentContext parent, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextGroup out = processConstant(orgContext);
 		for(String parentName : parent.getNames()) {
-			out = process(out, (HAPContextGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedContext(parentName, parent, orgContext), false), inheritMode, contextProcessRequirement);
+			out = process(out, (HAPContextGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedContext(parentName, parent, orgContext), false), inheritMode, inheritanceExcludedInfo, runtimeEnv);
 		}
 		return out;
 	}
 
-	public static HAPContextGroup process(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, String inheritMode, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static HAPContextGroup process(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextGroup out = orgContext.cloneContextGroup();
 		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(inheritMode)) {
 			for(String categary : HAPContextGroup.getAllContextTypes()){
@@ -23,7 +26,7 @@ public class HAPProcessorContextVariableInheritance {
 					Map<String, HAPContextDefinitionRoot> parentEles = parentContext.getElements();
 					for(String eleName : parentEles.keySet()) {
 						if(isInheritable(out, parentContextGroup, categary, eleName, inheritMode)) {
-							out.addElement(eleName, HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, categary, eleName, contextProcessRequirement.inheritanceExcludedInfo), categary);
+							out.addElement(eleName, HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, categary, eleName, inheritanceExcludedInfo), categary);
 						}
 					}
 				}

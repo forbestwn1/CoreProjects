@@ -11,26 +11,19 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPManagerExpression;
-import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 import com.nosliw.data.core.service.interfacee.HAPServiceResult;
 import com.nosliw.data.core.service.provide.HAPInfoServiceStatic;
-import com.nosliw.data.core.service.provide.HAPManagerService;
-import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPInfoElement;
-import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNode;
@@ -60,7 +53,6 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutputItem;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
-import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITagOther;
@@ -82,29 +74,14 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 	private final static HAPAliasElement ELEMENT_SERVICE = new HAPAliasElement("service", false);
 	
-	private HAPManagerService m_serviceManager;
+	private HAPRuntimeEnvironment m_runtimeEnv;
+	
 	private HAPUITagManager m_uiTagManager;
-	private HAPRequirementContextProcessor m_contextProcessRequirement;
-	private HAPDataTypeManager m_dataTypeMan = null;
-	private HAPManagerStory m_storyManager;
 	
 	private List<HAPStageInfo> m_stages;
 	
-	public HAPStoryBuilderPageSimple(
-			HAPManagerStory storyManager,
-			HAPManagerService serviceManager, 
-			HAPUITagManager uiTagMan, 
-			HAPManagerResourceDefinition resourceDefMan,
-			HAPDataTypeHelper dataTypeHelper, 
-			HAPRuntime runtime, 
-			HAPManagerExpression expressionMan,
-			HAPManagerServiceDefinition serviceDefinitionManager,
-			HAPDataTypeManager dataTypeMan) {
-		this.m_storyManager = storyManager;
-		this.m_serviceManager = serviceManager;
+	public HAPStoryBuilderPageSimple(HAPUITagManager uiTagMan, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_uiTagManager = uiTagMan;
-		this.m_dataTypeMan = dataTypeMan;
-		this.m_contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(resourceDefMan, dataTypeHelper, runtime, expressionMan, serviceDefinitionManager);
 		this.m_stages = new ArrayList<HAPStageInfo>();
 		this.m_stages.add(new HAPStageInfo(STAGE_SERVICE, STAGE_SERVICE));
 		this.m_stages.add(new HAPStageInfo(STAGE_UI, STAGE_UI));
@@ -206,7 +183,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	
 				//get service node
 				HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_SERVICE).iterator().next();
-				HAPInfoServiceStatic staticServiceInfo = this.m_serviceManager.getServiceDefinitionManager().getDefinition(serviceStoryNode.getReferenceId()).getStaticInfo();
+				HAPInfoServiceStatic staticServiceInfo = this.m_runtimeEnv.getServiceManager().getServiceDefinitionManager().getDefinition(serviceStoryNode.getReferenceId()).getStaticInfo();
 				HAPServiceInterface serviceInterface = staticServiceInfo.getInterface();
 				HAPDisplayResourceNode serviceDisplayResource = staticServiceInfo.getDisplayResource();
 				HAPDisplayResourceNode interfaceDisplayResource = serviceDisplayResource.getResourceNode(HAPInfoServiceStatic.INTERFACE);
@@ -311,10 +288,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 				//page node and tree
 				uiLayerChangeRequest.addNewChange(HAPUtility.buildPageStoryNode(story));
-				HAPUITree uiTree = HAPUtility.buildUITree(story, this.m_contextProcessRequirement, this.m_uiTagManager, this.m_storyManager.getChangeManager());
+				HAPUITree uiTree = HAPUtility.buildUITree(story, this.m_runtimeEnv, this.m_uiTagManager, this.m_runtimeEnv.getStoryManager().getChangeManager());
 
 				//page layout node
-				HAPUINode pageLayoutUINode = uiTree.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "page_html.tmp")), null, uiLayerChangeRequest, m_contextProcessRequirement, m_uiTagManager);
+				HAPUINode pageLayoutUINode = uiTree.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "page_html.tmp")), null, uiLayerChangeRequest, this.m_runtimeEnv, m_uiTagManager);
 			
 				//input parm ui
 				for(HAPParmBranchInfo parmBranchInfo : parmBranchInfos) {
@@ -326,7 +303,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(parmBranchInfo.dataUIInfo.rootEleRef));					
 				}
 
-				HAPUINode submitUINode = pageLayoutUINode.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "submit.tmp")), "submit", uiLayerChangeRequest, m_contextProcessRequirement, m_uiTagManager);
+				HAPUINode submitUINode = pageLayoutUINode.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "submit.tmp")), "submit", uiLayerChangeRequest, this.m_runtimeEnv, m_uiTagManager);
 
 				//output ui
 				for(HAPOutputBranchInfo parmBranchInfo : outputBranchInfos) {
@@ -415,10 +392,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		if(HAPBasicUtility.isStringNotEmpty(out.displayLabel)) layoutTemplate = "uiDataWithTitle.tmp";
 		else layoutTemplate = "uiDataWithoutTitle.tmp";
 		
-		HAPUINode layoutUINode = parent.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, layoutTemplate)), childId, changeRequest, m_contextProcessRequirement, m_uiTagManager);
+		HAPUINode layoutUINode = parent.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, layoutTemplate)), childId, changeRequest, this.m_runtimeEnv, m_uiTagManager);
 		changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(layoutUINode.getStoryNodeRef()));
 		if(HAPBasicUtility.isStringNotEmpty(out.displayLabel)) {
-			out.labelUINode = layoutUINode.newChildNode(new HAPStoryNodeUIHtml(this.wrappWithContainer(out.displayLabel, "span")), "label", changeRequest, m_contextProcessRequirement, m_uiTagManager);
+			out.labelUINode = layoutUINode.newChildNode(new HAPStoryNodeUIHtml(this.wrappWithContainer(out.displayLabel, "span")), "label", changeRequest, this.m_runtimeEnv, m_uiTagManager);
 			changeRequest.addPatchChange(out.labelUINode.getStoryNodeRef(), HAPStoryElement.DISPLAYRESOURCE, lableInfo.getDisplayResource());
 			changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(out.labelUINode.getStoryNodeRef()));
 		}
@@ -430,7 +407,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		HAPDataTypeHelper dataTypeHelper = null;
 		Set<HAPDataTypeId> dataTypeIds = dataTypeCriteria.getValidDataTypeId(dataTypeHelper);
 		HAPDataTypeId dataTypeId = dataTypeIds.iterator().next();
-		HAPDataType dataType = m_dataTypeMan.getDataType(dataTypeId);
+		HAPDataType dataType = this.m_runtimeEnv.getDataTypeManager().getDataType(dataTypeId);
 		boolean isComplex = dataType.getIsComplex();
 		if(isComplex) {
 			if(dataTypeId.getFullName().contains("array")){
@@ -438,7 +415,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData("loop", story.getNextId(), uiDataInfo, dataFlow);
 				uiDataStoryNode.addAttribute("data", varName);
 				if(!HAPConstant.DATAFLOW_IN.equals(dataFlow)) uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
-				dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, m_contextProcessRequirement, m_uiTagManager);
+				dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, this.m_runtimeEnv, m_uiTagManager);
 				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUINode.getStoryNodeRef()));
 				
 				HAPDataUIInfo dataUIInfo = buildDataUINode(story, dataUINode, null, "element", createChildDisplayLabelInfo("element", lableInfo.getDisplayResource()), dataFlow, changeRequest);
@@ -461,14 +438,14 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow);
 			uiDataStoryNode.addAttribute("data", varName);
 			if(!HAPConstant.DATAFLOW_IN.equals(dataFlow)) uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
-			dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, m_contextProcessRequirement, m_uiTagManager);
+			dataUINode = layoutUINode.newChildNode(uiDataStoryNode, "uiData", changeRequest, this.m_runtimeEnv, m_uiTagManager);
 			changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUINode.getStoryNodeRef()));
 
 			//validation
 			HAPStoryNodeUITagOther uiErrorStoryNode = new HAPStoryNodeUITagOther("uierror", story.getNextId());
 			uiErrorStoryNode.addAttribute("target", uiDataStoryNode.getId());
 			uiErrorStoryNode.addAttribute("data", HAPConstant.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
-			HAPUINode uiErrorNode = layoutUINode.newChildNode(uiErrorStoryNode, "uiError", changeRequest, m_contextProcessRequirement, m_uiTagManager);
+			HAPUINode uiErrorNode = layoutUINode.newChildNode(uiErrorStoryNode, "uiError", changeRequest, this.m_runtimeEnv, m_uiTagManager);
 			changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(uiErrorNode.getStoryNodeRef()));
 
 			out.dataUINode = dataUINode;

@@ -6,39 +6,21 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
-import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScriptGroup;
-import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 
 
 public class HAPManagerScript {
 	
-	private HAPManagerExpression m_expressionManager;
-	
-	private HAPManagerResourceDefinition m_resourceDefManager;
+	private HAPRuntimeEnvironment m_runtimeEnv;
 
-	private HAPRequirementContextProcessor m_contextProcessRequirement;
-
-	private HAPManagerExpression m_expressionMan;
-	
-	public HAPManagerScript(
-			HAPManagerExpression expressionMan,
-			HAPManagerResourceDefinition resourceDefManager,
-			HAPDataTypeHelper dataTypeHelper,
-			HAPRuntime runtime,
-			HAPManagerServiceDefinition serviceDefinitionManager
-			) {
-		this.m_expressionMan = expressionMan;
-		this.m_resourceDefManager = resourceDefManager;
-		this.m_contextProcessRequirement = new HAPRequirementContextProcessor(this.m_resourceDefManager, dataTypeHelper, runtime, m_expressionManager, serviceDefinitionManager, null);
+	public HAPManagerScript(HAPRuntimeEnvironment runtimeEnv) {
+		this.m_runtimeEnv = runtimeEnv;
 	}
 	
 	public HAPResourceDefinitionScriptGroup getScriptDefinition(HAPResourceId resourceId, HAPAttachmentContainer parentAttachment) {
-		return (HAPResourceDefinitionScriptGroup)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(resourceId, parentAttachment);
+		return (HAPResourceDefinitionScriptGroup)this.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(resourceId, parentAttachment);
 	}
 
 	public HAPExecutableScriptGroup getScript(HAPResourceId resourceId, Map<String, String> configure) {
@@ -52,7 +34,10 @@ public class HAPManagerScript {
 			}
 		}
 		
-		HAPExecutableScriptGroup out = HAPProcessorScript.processScript(scriptGroupDef, null, m_expressionMan, configure, m_contextProcessRequirement, new HAPProcessTracker());
+		HAPExecutableScriptGroup out = HAPProcessorScript.processScript(scriptGroupDef, null, this.m_runtimeEnv.getExpressionManager(), configure, this.m_runtimeEnv, new HAPProcessTracker());
 		return out;
 	}
+	
+	private HAPManagerResourceDefinition getResourceDefinitionManager() {     return this.m_runtimeEnv.getResourceDefinitionManager();   }
+	
 }

@@ -13,6 +13,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
@@ -24,7 +25,7 @@ public class HAPProcessorContextConstant {
 			HAPContextGroup originalContextGroup,
 			HAPParentContext parent,
 			String inheritMode,
-			HAPRequirementContextProcessor contextProcessRequirement){
+			HAPRuntimeEnvironment runtimeEnv){
 
 		//merge with parent
 		HAPContextGroup merged = originalContextGroup;
@@ -33,7 +34,7 @@ public class HAPProcessorContextConstant {
 		}
 		
 		//figure out constant value (some constant may use another constant)
-		HAPContextGroup out =  solidateConstantDefs(merged, contextProcessRequirement);
+		HAPContextGroup out =  solidateConstantDefs(merged, runtimeEnv);
 		
 		//figure out root that ture out to be constant value, then convert to constant root
 		out = discoverConstantContextRoot(out);
@@ -111,7 +112,7 @@ public class HAPProcessorContextConstant {
 	 */
 	static private HAPContextGroup solidateConstantDefs(
 			HAPContextGroup contextGroup,
-			HAPRequirementContextProcessor contextProcessRequirement){
+			HAPRuntimeEnvironment runtimeEnv){
 		HAPContextGroup out = contextGroup.cloneContextGroup();
 		for(String categary : HAPContextGroup.getAllContextTypes()) {
 			Map<String, HAPContextDefinitionRoot> cotextDefRoots = out.getElements(categary);
@@ -121,7 +122,7 @@ public class HAPProcessorContextConstant {
 					@Override
 					public boolean process(HAPContextDefinitionElement ele, Object value) {
 						if(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType())) {
-							solidateConstantDefEle((HAPContextDefinitionLeafConstant)ele, contextGroup, contextProcessRequirement);
+							solidateConstantDefEle((HAPContextDefinitionLeafConstant)ele, contextGroup, runtimeEnv);
 						}
 						return true;
 					}
@@ -139,10 +140,10 @@ public class HAPProcessorContextConstant {
 	static private void solidateConstantDefEle(
 			HAPContextDefinitionLeafConstant contextDefConstant, 
 			HAPContextGroup contextGroup,
-			HAPRequirementContextProcessor contextProcessRequirement) {
+			HAPRuntimeEnvironment runtimeEnv) {
 
 		if(!contextDefConstant.isProcessed()) {
-			Object data = processConstantDefJsonNode(contextDefConstant.getValue(), contextGroup, contextProcessRequirement);
+			Object data = processConstantDefJsonNode(contextDefConstant.getValue(), contextGroup, runtimeEnv);
 			if(data==null)   data = contextDefConstant.getValue();
 			contextDefConstant.setValue(data);
 		}
@@ -161,7 +162,7 @@ public class HAPProcessorContextConstant {
 	static private Object processConstantDefJsonNode(
 			Object nodeValue,
 			HAPContextGroup contextGroup,
-			HAPRequirementContextProcessor contextProcessRequirement) {
+			HAPRuntimeEnvironment runtimeEnv) {
 		Object out = null;
 		try{
 			if(nodeValue instanceof JSONObject){
@@ -171,7 +172,7 @@ public class HAPProcessorContextConstant {
 				while(keys.hasNext()){
 					String key = keys.next();
 					Object childValue = jsonObj.get(key);
-					Object data = processConstantDefJsonNode(childValue, contextGroup, contextProcessRequirement);
+					Object data = processConstantDefJsonNode(childValue, contextGroup, runtimeEnv);
 					if(data!=null)  outJsonObj.put(key, data);   
 				}
 				out = outJsonObj;
@@ -181,13 +182,13 @@ public class HAPProcessorContextConstant {
 				JSONArray jsonArray = (JSONArray)nodeValue;
 				for(int i=0; i<jsonArray.length(); i++){
 					Object childNode = jsonArray.get(i);
-					Object data = processConstantDefJsonNode(childNode, contextGroup, contextProcessRequirement);
+					Object data = processConstantDefJsonNode(childNode, contextGroup, runtimeEnv);
 					if(data!=null)   outJsonArray.put(i, data);
 				}
 				out = outJsonArray;
 			}
 			else{
-				out = processConstantDefLeaf(nodeValue, contextGroup, contextProcessRequirement);
+				out = processConstantDefLeaf(nodeValue, contextGroup, runtimeEnv);
 			}
 		}
 		catch(Exception e){
@@ -213,10 +214,10 @@ public class HAPProcessorContextConstant {
 	static private Object processConstantDefLeaf(
 			Object leafData,
 			HAPContextGroup contextGroup,
-			HAPRequirementContextProcessor contextProcessRequirement) {
+			HAPRuntimeEnvironment runtimeEnv) {
 
 		//simply process script
-		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, null, contextProcessRequirement.expressionManager, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), contextProcessRequirement, new HAPProcessTracker());
+		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, null, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), runtimeEnv, new HAPProcessTracker());
 		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
 		
 		String scriptType = scriptExe.getScriptType();
@@ -231,16 +232,16 @@ public class HAPProcessorContextConstant {
 			String constantId = constantDef.getId();
 			HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(constantId), contextGroup);
 			HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());
-			solidateConstantDefEle(refContextDefEle, contextGroup, contextProcessRequirement);
+			solidateConstantDefEle(refContextDefEle, contextGroup, runtimeEnv);
 			constantsValue.put(constantId, refContextDefEle.getValue());
 		}
 
 		//process script again with constant and discovery
-		groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, constantsValue, contextProcessRequirement.expressionManager, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement, new HAPProcessTracker());		
+		groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, constantsValue, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());		
 
 		//execute script expression
 		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(groupExe, null, null, null);
-		HAPServiceData out = contextProcessRequirement.runtime.executeTaskSync(task);
+		HAPServiceData out = runtimeEnv.getRuntime().executeTaskSync(task);
 		return out.getData();
 	}
 	

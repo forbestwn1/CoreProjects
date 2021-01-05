@@ -3,7 +3,7 @@ package com.nosliw.uiresource.page.story.model;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
 import com.nosliw.data.core.story.HAPIdElementInfo;
@@ -19,21 +19,21 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 
-	private HAPRequirementContextProcessor m_contextProcessRequirement;
+	private HAPRuntimeEnvironment m_runtimeEnv;
 	private HAPUITagManager m_uiTagMan;
 	private HAPManagerChange m_changeMan;
 	
-	public HAPUITree(HAPReferenceElement nodeRef, HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
+	public HAPUITree(HAPReferenceElement nodeRef, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
 		super(nodeRef, story);
-		this.m_contextProcessRequirement = contextProcessRequirement;
+		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagMan = uiTagMan;
 		this.m_changeMan = changeMan;
 		init();
 	}
 
-	public HAPUITree(HAPStoryNodePage storyNode, HAPAliasElement alias, HAPStory story, HAPRequirementContextProcessor contextProcessRequirement, HAPUITagManager uiTagMan) {
+	public HAPUITree(HAPStoryNodePage storyNode, HAPAliasElement alias, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan) {
 		super(storyNode, alias, story);
-		this.m_contextProcessRequirement = contextProcessRequirement;
+		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagMan = uiTagMan;
 		init();
 	}
@@ -45,7 +45,7 @@ public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 	@Override
 	public void onChanges(List<HAPChangeItem> changes) {
 		if(this.isDataRelatedChange(changes)) {
-			this.updateUIDataStructureInfo(null, m_contextProcessRequirement, m_uiTagMan, this.m_changeMan);
+			this.updateUIDataStructureInfo(null, this.m_runtimeEnv, m_uiTagMan, this.m_changeMan);
 		}
 	}
 

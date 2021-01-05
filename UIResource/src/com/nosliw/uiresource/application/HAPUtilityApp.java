@@ -1,6 +1,7 @@
 package com.nosliw.uiresource.application;
 
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.uiresource.common.HAPUtilityCommon;
 
 public class HAPUtilityApp {
 
@@ -14,6 +15,7 @@ public class HAPUtilityApp {
 	
 	public static HAPConfigureContextProcessor getContextProcessConfigurationForApp() {
 		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
+		out.inheritanceExcludedInfo = HAPUtilityCommon.getDefaultInheritanceExcludedInfo();
 		return out;
 	}
 

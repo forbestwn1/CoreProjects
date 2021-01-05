@@ -1,14 +1,14 @@
 package com.nosliw.data.core.script.context.dataassociation.mirror;
 
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContextStructure;
 
 public class HAPProcessorDataAssociationMirror {
 
-	public static HAPExecutableDataAssociationMirror processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociationMirror dataAssociation, HAPParentContext output, HAPInfo daProcessConfigure, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static HAPExecutableDataAssociationMirror processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociationMirror dataAssociation, HAPParentContext output, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociationMirror out = new HAPExecutableDataAssociationMirror(dataAssociation, input);
 		out.setInput(input);
 	

@@ -25,4 +25,12 @@ public class HAPUtilityCommon {
 		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(resourceDefMan, dataTypeHelper, runtime, expressionMan, serviceDefinitionManager, inheritanceExcludedInfo);
 		return contextProcessRequirement;
 	}
+	
+	public static Set<String> getDefaultInheritanceExcludedInfo(){
+		Set<String> inheritanceExcludedInfo = new HashSet<String>();
+		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_INSTANTIATE);
+		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION);
+		return  inheritanceExcludedInfo;
+	}
+	
 }

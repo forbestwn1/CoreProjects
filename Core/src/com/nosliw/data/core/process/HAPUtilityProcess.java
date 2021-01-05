@@ -19,6 +19,7 @@ import com.nosliw.data.core.process.resource.HAPProcessId;
 import com.nosliw.data.core.process.resource.HAPResourceIdProcess;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
@@ -28,7 +29,6 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
@@ -73,23 +73,23 @@ public class HAPUtilityProcess {
 //		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(context));
 	}
 
-	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPDefinitionActivityNormal activityDefinition, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPDefinitionActivityNormal activityDefinition, HAPContextGroup processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
 				HAPParentContext.createDefault(processContext), 
 				activityDefinition.getInputMapping(), 
 				HAPParentContext.createDefault(activityDefinition.getInputContextStructure(processContext)), 
 				null, 
-				contextProcessRequirement);
+				runtimeEnv);
 		activity.setInputDataAssociation(da);
 	}
 	
-	public static void processBranchActivityInputDataAssocation(HAPExecutableActivityBranch activity, HAPDefinitionActivityBranch activityDefinition, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static void processBranchActivityInputDataAssocation(HAPExecutableActivityBranch activity, HAPDefinitionActivityBranch activityDefinition, HAPContextGroup processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
 				HAPParentContext.createDefault(processContext), 
 				activityDefinition.getInputMapping(), 
 				HAPParentContext.createDefault(activityDefinition.getInputContextStructure(processContext)), 
 				null, 
-				contextProcessRequirement);
+				runtimeEnv);
 		activity.setInputDataAssociation(da);
 	}
 	
@@ -141,14 +141,14 @@ public class HAPUtilityProcess {
 			String resultName, 
 			HAPContextGroup parentContext,
 			HAPBuilderResultContext resultContextBuilder, 
-			HAPRequirementContextProcessor contextProcessRequirement) {
+			HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionResultActivityNormal resultDef = activityDefinition.getResult(resultName);
 		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef);
 		if(resultContextBuilder!=null) {
 			//data association input context
 			HAPContextStructure dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
 			//process data association
-			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(dataAssociationInputContext), resultDef.getOutputDataAssociation(), HAPParentContext.createDefault(parentContext), null, contextProcessRequirement);
+			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(dataAssociationInputContext), resultDef.getOutputDataAssociation(), HAPParentContext.createDefault(parentContext), null, runtimeEnv);
 			resultExe.setDataAssociation(outputDataAssociation);
 		}
 		return resultExe;

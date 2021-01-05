@@ -8,6 +8,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariable{
 
@@ -59,7 +60,7 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	}
 
 	@Override
-	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement) {	return this;}
+	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {	return this;}
 
 	@Override
 	public boolean equals(Object obj) {

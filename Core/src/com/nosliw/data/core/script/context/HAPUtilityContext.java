@@ -21,6 +21,7 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityContext {
 
@@ -378,21 +379,21 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
-	public static Map<String, HAPMatchers> mergeContextRoot(HAPContextDefinitionRoot origin, HAPContextDefinitionRoot expect, boolean modifyStructure, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static Map<String, HAPMatchers> mergeContextRoot(HAPContextDefinitionRoot origin, HAPContextDefinitionRoot expect, boolean modifyStructure, HAPRuntimeEnvironment runtimeEnv) {
 		Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
-		mergeContextDefitionElement(origin.getDefinition(), expect.getDefinition(), modifyStructure, matchers, null, contextProcessRequirement);
+		mergeContextDefitionElement(origin.getDefinition(), expect.getDefinition(), modifyStructure, matchers, null, runtimeEnv);
 		return matchers;
 	}
 
-	public static Map<String, HAPMatchers> mergeContextDefitionElement(HAPContextDefinitionElement originDef, HAPContextDefinitionElement expectDef, boolean modifyStructure, String path, HAPRequirementContextProcessor contextProcessRequirement){
+	public static Map<String, HAPMatchers> mergeContextDefitionElement(HAPContextDefinitionElement originDef, HAPContextDefinitionElement expectDef, boolean modifyStructure, String path, HAPRuntimeEnvironment runtimeEnv){
 		Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
-		mergeContextDefitionElement(originDef, expectDef, modifyStructure, matchers, null, contextProcessRequirement);
+		mergeContextDefitionElement(originDef, expectDef, modifyStructure, matchers, null, runtimeEnv);
 		return matchers;
 	}
 	
 	//merge origin context def with child context def to expect context out
 	//also generate matchers from origin to expect
-	public static void mergeContextDefitionElement(HAPContextDefinitionElement originDef, HAPContextDefinitionElement expectDef, boolean modifyStructure, Map<String, HAPMatchers> matchers, String path, HAPRequirementContextProcessor contextProcessRequirement){
+	public static void mergeContextDefitionElement(HAPContextDefinitionElement originDef, HAPContextDefinitionElement expectDef, boolean modifyStructure, Map<String, HAPMatchers> matchers, String path, HAPRuntimeEnvironment runtimeEnv){
 		//merge is about solid
 		originDef = originDef.getSolidContextDefinitionElement();
 		expectDef = expectDef.getSolidContextDefinitionElement();
@@ -405,7 +406,7 @@ public class HAPUtilityContext {
 				HAPContextDefinitionLeafConstant dataOrigin = (HAPContextDefinitionLeafConstant)originDef.getSolidContextDefinitionElement();
 				HAPContextDefinitionLeafData dataExpect = (HAPContextDefinitionLeafData)expectDef;
 				//cal matchers
-				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(new HAPDataTypeCriteriaId(dataOrigin.getDataValue().getDataTypeId(), null)), dataExpect.getCriteria(), contextProcessRequirement.dataTypeHelper); 
+				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(new HAPDataTypeCriteriaId(dataOrigin.getDataValue().getDataTypeId(), null)), dataExpect.getCriteria(), runtimeEnv.getDataTypeHelper()); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}
@@ -418,7 +419,7 @@ public class HAPUtilityContext {
 				HAPContextDefinitionLeafData dataOrigin = (HAPContextDefinitionLeafData)originDef;
 				 HAPContextDefinitionLeafConstant dataExpect = (HAPContextDefinitionLeafConstant)expectDef.getSolidContextDefinitionElement();
 				//cal matchers
-				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), new HAPDataTypeCriteriaId(dataExpect.getDataValue().getDataTypeId(), null), contextProcessRequirement.dataTypeHelper); 
+				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), new HAPDataTypeCriteriaId(dataExpect.getDataValue().getDataTypeId(), null), runtimeEnv.getDataTypeHelper()); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}
@@ -432,7 +433,7 @@ public class HAPUtilityContext {
 				HAPContextDefinitionLeafData dataOrigin = (HAPContextDefinitionLeafData)originDef.getSolidContextDefinitionElement();
 				HAPContextDefinitionLeafData dataExpect = (HAPContextDefinitionLeafData)expectDef;
 				//cal matchers
-				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), dataExpect.getCriteria(), contextProcessRequirement.dataTypeHelper); 
+				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), dataExpect.getCriteria(), runtimeEnv.getDataTypeHelper()); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}
@@ -451,7 +452,7 @@ public class HAPUtilityContext {
 								childNodeOrigin = new HAPContextDefinitionLeafData();
 								nodeOrigin.addChild(nodeName, childNodeOrigin);
 							}
-							mergeContextDefitionElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), contextProcessRequirement);
+							mergeContextDefitionElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), runtimeEnv);
 							break;
 						}
 						case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
@@ -460,7 +461,7 @@ public class HAPUtilityContext {
 								childNodeOrigin = new HAPContextDefinitionNode();
 								nodeOrigin.addChild(nodeName, childNodeOrigin);
 							}
-							mergeContextDefitionElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), contextProcessRequirement);
+							mergeContextDefitionElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), runtimeEnv);
 							break;
 						}
 						default :

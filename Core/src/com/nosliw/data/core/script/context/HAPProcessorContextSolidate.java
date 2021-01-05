@@ -7,6 +7,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
@@ -16,7 +17,7 @@ public class HAPProcessorContextSolidate {
 
 	static public HAPContextGroup process(
 			HAPContextGroup originalContextGroup,
-			HAPRequirementContextProcessor contextProcessRequirement){
+			HAPRuntimeEnvironment runtimeEnv){
 		//find all constants
 		Map<String, Object> constantsData = buildConstants(originalContextGroup);
 
@@ -26,8 +27,8 @@ public class HAPProcessorContextSolidate {
 			for(String name : contextDefRoots.keySet()) {
 				HAPContextDefinitionRoot contextDefRoot = contextDefRoots.get(name);
 				if(!contextDefRoot.isConstant()) {
-					String solidName = getSolidName(name, constantsData, contextProcessRequirement);
-					contextDefRoot.setDefinition(contextDefRoot.getDefinition().toSolidContextDefinitionElement(constantsData, contextProcessRequirement));
+					String solidName = getSolidName(name, constantsData, runtimeEnv);
+					contextDefRoot.setDefinition(contextDefRoot.getDefinition().toSolidContextDefinitionElement(constantsData, runtimeEnv));
 					out.addElement(solidName, contextDefRoot, categary);
 				}
 				else {
@@ -75,8 +76,8 @@ public class HAPProcessorContextSolidate {
 //		}
 //	}
 
-	public static String getSolidName(String name, Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement){
-		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(name, null, constants, contextProcessRequirement.expressionManager, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), contextProcessRequirement, new HAPProcessTracker());
+	public static String getSolidName(String name, Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv){
+		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(name, null, constants, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());
 		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
 		
 		String scriptType = scriptExe.getScriptType();
@@ -85,7 +86,7 @@ public class HAPProcessorContextSolidate {
 		
 		//execute script expression
 		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(groupExe, null, null, null);
-		HAPServiceData out = contextProcessRequirement.runtime.executeTaskSync(task);
+		HAPServiceData out = runtimeEnv.getRuntime().executeTaskSync(task);
 		return (String)out.getData();
 	}
 

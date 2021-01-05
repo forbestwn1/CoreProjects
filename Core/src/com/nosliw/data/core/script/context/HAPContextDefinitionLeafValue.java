@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.context;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPContextDefinitionLeafValue extends HAPContextDefinitionLeafVariable{
 
@@ -17,7 +18,7 @@ public class HAPContextDefinitionLeafValue extends HAPContextDefinitionLeafVaria
 	}
 
 	@Override
-	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement) { return this; }
+	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) { return this; }
 
 	@Override
 	public void toContextDefinitionElement(HAPContextDefinitionElement out) {

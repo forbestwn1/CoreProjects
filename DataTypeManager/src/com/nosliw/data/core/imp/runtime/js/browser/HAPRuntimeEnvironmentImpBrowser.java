@@ -72,9 +72,9 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerDynamicResource dynamicResourceManager = new HAPManagerDynamicResource();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(dynamicResourceManager);
 		HAPManagerService serviceManager = new HAPManagerService();
-		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), resourceDefManager, dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
-		HAPManagerScript scriptMan = new HAPManagerScript(expressionMan, resourceDefManager, dataTypeHelper, runtime, serviceManager.getServiceDefinitionManager());
-		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), resourceDefManager, dataTypeHelper, runtime, expressionMan, serviceManager.getServiceDefinitionManager());
+		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), this);
+		HAPManagerScript scriptMan = new HAPManagerScript(this);
+		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), this);
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
@@ -97,15 +97,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			runtime
 		);
 
-		this.m_uiResourceManager = new HAPUIResourceManager(
-				new HAPUITagManager(dataTypeHelper),
-				this.getExpressionManager(),
-				this.getResourceManager(),
-				this.getProcessManager(),
-				this.getRuntime(),
-				dataTypeHelper,
-				this.getServiceManager().getServiceDefinitionManager(),
-				this.getResourceDefinitionManager());
+		this.m_uiResourceManager = new HAPUIResourceManager(this, new HAPUITagManager(dataTypeHelper));
 
 		//gateway
 		this.getGatewayManager().registerGateway(GATEWAY_SERVICE, new HAPGatewayService(this.getServiceManager()));
@@ -121,7 +113,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginAppEntry(this.getResourceDefinitionManager()));
 
 		//story builder
-		this.getStoryManager().registerDesignDirector(HAPStoryBuilderPageSimple.BUILDERID, new HAPStoryBuilderPageSimple(this.getStoryManager(), this.getServiceManager(), this.m_uiResourceManager.getUITagManager(), this.getResourceDefinitionManager(), dataTypeHelper, this.getRuntime(), this.getExpressionManager(), this.getServiceManager().getServiceDefinitionManager(), this.getDataTypeManager()));
+		this.getStoryManager().registerDesignDirector(HAPStoryBuilderPageSimple.BUILDERID, new HAPStoryBuilderPageSimple(this.m_uiResourceManager.getUITagManager(), this));
 		
 		//dynamic resource builder
 		this.getStoryManager().registerShowBuilder(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPBuilderPageSimple(this.getServiceManager().getServiceDefinitionManager(), this.getUIResourceManager().getUITagManager(), this.getUIResourceManager().getUIResourceParser()));

@@ -8,6 +8,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataWrapper;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
 public class HAPContextDefinitionLeafConstant extends HAPContextDefinitionElement{
@@ -50,7 +51,7 @@ public class HAPContextDefinitionLeafConstant extends HAPContextDefinitionElemen
 	}
 
 	@Override
-	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement) {  return this; }
+	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this; }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

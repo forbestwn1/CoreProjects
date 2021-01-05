@@ -11,10 +11,10 @@ import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
@@ -25,6 +25,7 @@ public class HAPProcessorCronJob {
 			HAPDefinitionCronJob cronJobDefinition,
 			String id,
 			HAPContextGroup parentContext, 
+			HAPRuntimeEnvironment runtimeEnv,
 			HAPManagerProcess processMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
@@ -36,16 +37,15 @@ public class HAPProcessorCronJob {
 
 		HAPExecutableCronJob out = new HAPExecutableCronJob(cronJobDefinition, id);
 
-		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(resourceDefMan, dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, null);
 		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForCronJob();
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
 
-		HAPUtilityComponent.processComponentExecutable(out, parentContext, contextProcessRequirement, contextProcessConfg, processMan.getPluginManager());
+		HAPUtilityComponent.processComponentExecutable(out, parentContext, runtimeEnv, contextProcessConfg, processMan.getPluginManager());
 
 		//process task
 		HAPDefinitionProcess processDef = out.getProcessDefinition(cronJobDefinition.getTask().getProcess());
-		HAPExecutableProcess processExe = HAPProcessorProcess.process(processDef, null, out.getServiceProviders(), processMan, contextProcessRequirement, processTracker);
-		HAPExecutableWrapperTask<HAPExecutableProcess> processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(cronJobDefinition.getTask().getTask(), processExe, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
+		HAPExecutableProcess processExe = HAPProcessorProcess.process(processDef, null, out.getServiceProviders(), processMan, runtimeEnv, processTracker);
+		HAPExecutableWrapperTask<HAPExecutableProcess> processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(cronJobDefinition.getTask().getTask(), processExe, HAPParentContext.createDefault(out.getContext()), null, runtimeEnv);			
 		out.setTask(processExeWrapper);
  
 		//process end
