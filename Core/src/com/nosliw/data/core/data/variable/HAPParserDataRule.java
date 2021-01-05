@@ -21,6 +21,10 @@ public class HAPParserDataRule {
 			out = new HAPDataRuleExpression();
 			out.buildObject(ruleObj, HAPSerializationFormat.JSON);
 		}
+		else if(ruleType.equals(HAPConstant.DATARULE_TYPE_JSSCRIPT)) {
+			out = new HAPDataRuleJsScript();
+			out.buildObject(ruleObj, HAPSerializationFormat.JSON);
+		}
 		else if(ruleType.equals(HAPConstant.DATARULE_TYPE_MANDATORY)) {
 			out = new HAPDataRuleMandatory();
 			out.buildObject(ruleObj, HAPSerializationFormat.JSON);

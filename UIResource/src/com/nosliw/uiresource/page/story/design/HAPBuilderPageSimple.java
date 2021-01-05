@@ -108,7 +108,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
 			HAPVariableInfo varInfo = varNode.getVariableInfo();
-			HAPContextDefinitionRoot contextEle = new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(varInfo));
+			HAPContextDefinitionRoot contextEle = new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(varInfo.getDataInfo()));
 			contextEle.setDefaultValue(varInfo.getDefaultValue());
 			context.addElement(varNode.getVariableInfo().getName(), contextEle);
 		}

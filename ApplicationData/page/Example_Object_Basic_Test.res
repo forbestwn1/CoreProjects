@@ -25,15 +25,13 @@
 					business : {
 						definition: {
 							criteria : {
-								dataInfo : {
-									criteria: "test.string;1.0.0",
-									rule : [
-										{
-											ruleType : "enum",
-											enumCode : "schoolType"
-										}
-									]
-								},
+								criteria: "test.string;1.0.0",
+								rule : [
+									{
+										ruleType : "enum",
+										enumCode : "schoolType"
+									}
+								]
 							}
 						},
 						defaultValue :{

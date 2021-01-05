@@ -5,6 +5,8 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPDataRuleImp extends HAPEntityInfoImp implements HAPDataRule{
 
@@ -20,6 +22,9 @@ public abstract class HAPDataRuleImp extends HAPEntityInfoImp implements HAPData
 	@Override
 	public String getRuleType() {   return this.m_ruleType;    }
 
+	@Override
+	public void process(HAPDataTypeCriteria criteria, HAPRuntimeEnvironment runtimeEnv) {}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

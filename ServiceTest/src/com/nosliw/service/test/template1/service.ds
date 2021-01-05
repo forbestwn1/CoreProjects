@@ -11,9 +11,19 @@
 						criteria: "test.string;1.0.0",
 						rule : [
 							{
-								description : "Cannot be blank!!!",
 								ruleType : "mandatory",
-							}
+								description : "Cannot be blank!!!",
+							},
+							{
+								ruleType : "jsscript",
+								description : "Cannot longer than 5!!!",
+								script : "return that.value.length<=5"
+							},
+							{
+								ruleType : "expression",
+								description : "Cannot longer than 5!!!",
+								expression : "?(data)?.length()"
+							},
 						]
 					},
 				}

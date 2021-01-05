@@ -129,7 +129,7 @@ public class HAPUtilityProcess {
 		//affect parent context
 		for(String basePath : expectedVariablesInfo.keySet()) {
 			HAPContextPath cpath = new HAPContextPath(basePath);
-			HAPContextDefinitionLeafData affectedEle = new HAPContextDefinitionLeafData(expectedVariablesInfo.get(basePath));
+			HAPContextDefinitionLeafData affectedEle = new HAPContextDefinitionLeafData(expectedVariablesInfo.get(basePath).getDataInfo());
 			HAPUtilityContext.updateDataDescendant(processContext, cpath.getRootElementId().getCategary(), cpath.getPath(), affectedEle);
 		}
 	}

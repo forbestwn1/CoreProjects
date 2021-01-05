@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
@@ -20,7 +20,7 @@ public class HAPUtilityServiceUse {
 	public static HAPContext buildContextFromServiceParms(HAPServiceInterface serviceInterface) {
 		HAPContext out = new HAPContext();
 		for(String parm : serviceInterface.getParmNames()) {
-			out.addElement(parm, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(serviceInterface.getParm(parm).getCriteria())));
+			out.addElement(parm, new HAPContextDefinitionLeafData(new HAPVariableDataInfo(serviceInterface.getParm(parm).getCriteria())));
 		}
 		return out;
 	}
@@ -28,7 +28,7 @@ public class HAPUtilityServiceUse {
 	public static HAPContext buildContextFromServiceParms(Map<String, HAPServiceParm> parms) {
 		HAPContext out = new HAPContext();
 		for(String parm : parms.keySet()) {
-			out.addElement(parm, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(parms.get(parm).getCriteria())));
+			out.addElement(parm, new HAPContextDefinitionLeafData(new HAPVariableDataInfo(parms.get(parm).getCriteria())));
 		}
 		return out;
 	}
@@ -48,7 +48,7 @@ public class HAPUtilityServiceUse {
 	public static HAPContext buildContextFromServiceOutputs(Map<String, HAPServiceOutput> serviceOutput) {
 		HAPContext out = new HAPContext();
 		for(String outParm : serviceOutput.keySet()) {
-			out.addElement(outParm, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(serviceOutput.get(outParm).getCriteria())));
+			out.addElement(outParm, new HAPContextDefinitionLeafData(new HAPVariableDataInfo(serviceOutput.get(outParm).getCriteria())));
 		}
 		return out;
 	}

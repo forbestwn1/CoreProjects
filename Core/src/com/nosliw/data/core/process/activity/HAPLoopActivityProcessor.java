@@ -6,7 +6,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.process.HAPBuilderResultContext;
 import com.nosliw.data.core.process.HAPContextProcessor;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
@@ -59,11 +59,11 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		//find container data criteria 
 		HAPInfoRelativeContextResolve containerResolve = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(loopActivityDef.getContainerName()), processDataContext, null, null);
 		out.setContainerDataPath(containerResolve.path);
-		HAPDataTypeCriteria containerCriteria = ((HAPContextDefinitionLeafData)containerResolve.resolvedNode.getSolidContextDefinitionElement()).getCriteria().getCriteria();
+		HAPDataTypeCriteria containerCriteria = ((HAPContextDefinitionLeafData)containerResolve.resolvedNode.getSolidContextDefinitionElement()).getCriteria();
 		//find element data criteria from coontainer data criteria
 		HAPDataTypeCriteria elementCriteria = HAPCriteriaUtility.getChildCriteriaByPath(containerCriteria, "element");
 		//build element data context 
-		stepDataContext.addElement(loopActivityDef.getElementName(), new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(elementCriteria))), HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+		stepDataContext.addElement(loopActivityDef.getElementName(), new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(new HAPVariableDataInfo(elementCriteria))), HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 		
 		//index data definition
 		HAPExecutableWrapperTask<HAPExecutableProcess> stepProcessExe = processManager.getEmbededProcess(

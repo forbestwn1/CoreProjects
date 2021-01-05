@@ -17,6 +17,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.data.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
 public class HAPVariableDataInfo extends HAPSerializableImp{
@@ -47,6 +48,12 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 	
 	public Set<HAPDataRule> getRules(){   return this.m_rules;   }
 	public void addRule(HAPDataRule rule) {   this.m_rules.add(rule);    }
+	
+	public void process(HAPRuntimeEnvironment runtimeEnv) {
+		for(HAPDataRule rule : this.m_rules) {
+			rule.process(this.m_criteria, runtimeEnv);
+		}
+	}
 	
 	@Override
 	public boolean equals(Object obj){

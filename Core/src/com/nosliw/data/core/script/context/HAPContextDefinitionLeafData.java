@@ -6,7 +6,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 
 public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariable{
 
@@ -14,25 +15,34 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	public static final String CRITERIA  = "criteria";
 
 	//context definition of that node (criteria)
-	private HAPVariableInfo m_criteria;
+	private HAPVariableDataInfo m_dataInfo;
 	
-	private HAPContextDefinitionLeafData() {}
+	public HAPContextDefinitionLeafData() {}
 	
-	public HAPContextDefinitionLeafData(HAPVariableInfo criteria){
-		this.m_criteria = criteria;
+//	public HAPContextDefinitionLeafData(HAPVariableInfo criteria){
+//		this.m_dataInfo = criteria;
+//	}
+	
+	public HAPContextDefinitionLeafData(HAPDataTypeCriteria dataTypeCriteria){
+		this.m_dataInfo = new HAPVariableDataInfo(dataTypeCriteria);
 	}
-	
+
+	public HAPContextDefinitionLeafData(HAPVariableDataInfo dataInfo){
+		this.m_dataInfo = dataInfo;
+	}
+
 	@Override
 	public String getType() {	return HAPConstant.CONTEXT_ELEMENTTYPE_DATA;	}
 
-	public void setCriteria(HAPVariableInfo criteria){	this.m_criteria = criteria;	}
+	public void setDataInfo(HAPVariableDataInfo criteria){	this.m_dataInfo = criteria;	}
+	public HAPVariableDataInfo getDataInfo() {  return this.m_dataInfo;    } 
 	
-	public HAPVariableInfo getCriteria(){   return this.m_criteria;  }
+	public HAPDataTypeCriteria getCriteria(){   return this.m_dataInfo.getCriteria();  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_criteria!=null)  	jsonMap.put(CRITERIA, this.m_criteria.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_dataInfo!=null)  	jsonMap.put(CRITERIA, this.m_dataInfo.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -45,7 +55,7 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	@Override
 	public void toContextDefinitionElement(HAPContextDefinitionElement out) {
 		super.toContextDefinitionElement(out);
-		((HAPContextDefinitionLeafData)out).m_criteria = this.m_criteria.cloneVariableInfo();
+		((HAPContextDefinitionLeafData)out).m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
 	}
 
 	@Override
@@ -58,7 +68,7 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 		boolean out = false;
 		if(obj instanceof HAPContextDefinitionLeafData) {
 			HAPContextDefinitionLeafData ele = (HAPContextDefinitionLeafData)obj;
-			if(!HAPBasicUtility.isEquals(this.m_criteria, ele.m_criteria))  return false;
+			if(!HAPBasicUtility.isEquals(this.m_dataInfo, ele.m_dataInfo))  return false;
 			out = true;
 		}
 		return out;

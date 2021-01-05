@@ -7,6 +7,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
@@ -86,7 +87,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 					//if script expression is data expression only, then affect result
 					HAPExecutableExpressionGroup expExe = scriptExpression.getExpressions().values().iterator().next();
 					HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
-					out.addElement(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(outputCriteria)));
+					out.addElement(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPContextDefinitionLeafData(new HAPVariableDataInfo(outputCriteria)));
 				}
 				else {
 					out.addElement(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPContextDefinitionLeafValue());

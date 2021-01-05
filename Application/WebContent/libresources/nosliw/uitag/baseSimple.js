@@ -27,13 +27,15 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	var loc_isMandatory = false;
 	var loc_mandatoryRuleDescription;
 	
+	var loc_validationScriptFunction;
+	var loc_jsScriptRuleDescription;
+	
 	var loc_processDataRuleRequest = function(request){
 		//emum rule
 		var dataEleDef = loc_env.getTagContextElementDefinition("internal_data");
 		var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
 				[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
 				[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]
-				[node_COMMONATRIBUTECONSTANT.VARIABLEINFO_DATAINFO]
 				[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
 		var enumRule;
 		for(var i in rules){
@@ -46,9 +48,14 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 				loc_isMandatory = true;
 				loc_mandatoryRuleDescription = rule[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION];
 			}
+			else if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_JSSCRIPT){
+				var script = "loc_validationScriptFunction = function(that){" + rule[node_COMMONATRIBUTECONSTANT.DATARULEJSSCRIPT_SCRIPT] + "};";
+				eval(script);
+				loc_jsScriptRuleDescription = rule[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION];
+			}
 		}
 		if(enumRule!=null){
-			var enumCode = enumRule[node_COMMONATRIBUTECONSTANT.DATARULE_ENUMCODE];
+			var enumCode = enumRule[node_COMMONATRIBUTECONSTANT.DATARULEENUMCODE_ENUMCODE];
 			if(enumCode!=undefined){
 				return nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([enumCode], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CODETABLE, {
 					success : function(requestInfo, resources){
@@ -58,7 +65,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 				});
 			}
 			else{
-				loc_enumDataSet = enumRule[node_COMMONATRIBUTECONSTANT.DATARULE_DATASET];
+				loc_enumDataSet = enumRule[node_COMMONATRIBUTECONSTANT.DATARULEENUMDATA_DATASET];
 			}
 		}
 	};
@@ -176,6 +183,12 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 					if(loc_isMandatory==true&&data==undefined){
 						return loc_mandatoryRuleDescription || "Cannot be blank";
 					}
+					
+					//js script validation
+					if(loc_validationScriptFunction!=undefined){
+						if(!loc_validationScriptFunction(data))  return loc_jsScriptRuleDescription || "Value validation fail";
+					}
+					
 					//valid value, return empty
 					return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
 				}

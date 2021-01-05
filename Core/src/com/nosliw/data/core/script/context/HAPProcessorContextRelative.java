@@ -151,8 +151,8 @@ public class HAPProcessorContextRelative {
 					if(configure.relativeInheritRule) {
 						HAPContextDefinitionElement solidParent = solvedContextEle.getSolidContextDefinitionElement();
 						if(solidParent.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-							for(HAPDataRule rule : ((HAPContextDefinitionLeafData)solidParent).getCriteria().getDataInfo().getRules()) {
-								((HAPContextDefinitionLeafData)relativeContextEle).getCriteria().getDataInfo().addRule(rule);
+							for(HAPDataRule rule : ((HAPContextDefinitionLeafData)solidParent).getDataInfo().getRules()) {
+								((HAPContextDefinitionLeafData)relativeContextEle).getDataInfo().addRule(rule);
 							}
 						}
 					}

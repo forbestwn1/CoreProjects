@@ -8,12 +8,14 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 
@@ -80,7 +82,25 @@ public class HAPManagerExpression {
 				new HAPProcessTracker());
 		return out;
 	}
-	
+
+	public HAPExecutableExpressionGroup getExpression(String expression, Map<String, HAPDataTypeCriteria> varCriteria) {
+		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
+		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
+		HAPContext context = new HAPContext();
+		if(varCriteria!=null) {
+			for(String varName : varCriteria.keySet()) {
+				context.addElement(varName, new HAPContextDefinitionLeafData(varCriteria.get(varName)));
+			}
+		}
+		expressionGroupDef.setContextStructure(context);
+		expressionGroupDef.addExpression(expressionDef);
+		
+		HAPProcessTracker processTracker = new HAPProcessTracker();
+		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionGroupDef, HAPContextResourceExpressionGroup.createContext(null, m_contextProcessRequirement.resourceDefMan));
+		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, resourceWithContext, null, null, this, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), m_contextProcessRequirement, processTracker);
+		return out;
+	}
+
 	public HAPExecutableExpressionGroup getExpression(String expression) {
 		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
 		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();

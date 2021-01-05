@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
@@ -76,7 +76,7 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		HAPServiceInterface serviceInterface = staticInfo.getInterface();
 		for(String parmName : serviceInterface.getParmNames()){
 			HAPServiceParm parmDef = serviceInterface.getParm(parmName);
-			inputExternalContext.addElement(parmName, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo((parmDef.getCriteria()))));
+			inputExternalContext.addElement(parmName, new HAPContextDefinitionLeafData(new HAPVariableDataInfo((parmDef.getCriteria()))));
 		}
 
 		Map<String, HAPParentContext> outputExternalContexts = new LinkedHashMap<String, HAPParentContext>();
@@ -85,7 +85,7 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 			Map<String, HAPServiceOutput> output = serviceResult.get(resultName).getOutput();
 			HAPContext outputContext = new HAPContext();
 			for(String name : output.keySet()) {
-				outputContext.addElement(name, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo((output.get(name).getCriteria()))));
+				outputContext.addElement(name, new HAPContextDefinitionLeafData(new HAPVariableDataInfo((output.get(name).getCriteria()))));
 			}
 			outputExternalContexts.put(resultName, HAPParentContext.createDefault(outputContext));
 		}
