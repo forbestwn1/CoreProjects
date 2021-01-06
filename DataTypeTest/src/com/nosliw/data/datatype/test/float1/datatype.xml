@@ -3,6 +3,30 @@
 	<info description="Data type for float."/>
 
 	<operations>
+		
+		<operation name="largerThan" >
+			<parms>
+				<parm name="base" criteria="test.float" isBase="true"/>
+				<parm name="data" criteria="test.float"/>
+			</parms>
+			<output criteria="test.boolean"/>
+		</operation>
+	
+		<operation name="noLessThan" >
+			<parms>
+				<parm name="base" criteria="test.float" isBase="true"/>
+				<parm name="data" criteria="test.float"/>
+			</parms>
+			<output criteria="test.boolean"/>
+		</operation>
+	
+		<operation name="equals" >
+			<parms>
+				<parm name="base" criteria="test.float" isBase="true"/>
+				<parm name="data" criteria="test.float"/>
+			</parms>
+			<output criteria="test.boolean"/>
+		</operation>
 	
 
 	</operations>

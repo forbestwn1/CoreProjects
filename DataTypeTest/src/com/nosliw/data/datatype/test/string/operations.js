@@ -59,6 +59,26 @@ dataTypeDefition.operations['isEmpty'] = {
 		},
 };
 
+dataTypeDefition.operations['equals'] = {
+		operation : function(parms, context){
+			var str1 = this.value;
+			var str2 = parms.getParm("data2").value;
+			
+			if(str1==str2){
+				return {
+					dataTypeId : "test.boolean;1.0.0",
+					value : true
+				};
+			}
+			else{
+				return {
+					dataTypeId : "test.boolean;1.0.0",
+					value : false
+				};
+			}
+		},
+};
+
 //define operation
 dataTypeDefition.operations['subString'] = {
 		//defined operation
@@ -69,7 +89,7 @@ dataTypeDefition.operations['subString'] = {
 			var from = parms.getParm("from").value;
 			var to = parms.getParm("to").value;
 			var outStr = this.value.substring(from, to);
-			outStr = context.getResourceDataByName("globalHelper").d(outStr);
+//			outStr = context.getResourceDataByName("globalHelper").d(outStr);
 			return {
 				dataTypeId : "test.string;1.0.0",
 				value : outStr,
@@ -95,16 +115,21 @@ dataTypeDefition.operations['length'] = {
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
 			
-			var baseData = parms[base];
+//			var baseData = parms[base];
 //			var out = context.buildFromLiterate("test.integer", baseData.data.length);
-			return out;
+//			return out;
+			return {
+				dataTypeId : "test.integer;1.0.0",
+				value : this.value.length,
+			}
+			
 		}, 
 
 //define required resources for operation
 	requires:{
-		"operation" : { 
-			op1: "test.integer;new",
-		},
+//		"operation1" : { 
+//			op1: "test.integer;new",
+//		},
 //		"datatype1" : {
 //			integer : "test.integer"
 //		},

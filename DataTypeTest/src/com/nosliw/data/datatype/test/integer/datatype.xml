@@ -6,10 +6,34 @@
 	
 		<operation name="add" >
 			<parms>
-				<parm name="parm1" criteria="test.integer"/>
-				<parm name="parm2" criteria="test.integer"/>
+				<parm name="data1" criteria="test.integer" isBase="true"/>
+				<parm name="data2" criteria="test.integer"/>
 			</parms>
 			<output criteria="test.integer"/>
+		</operation>
+
+		<operation name="largerThan" >
+			<parms>
+				<parm name="base" criteria="test.integer" isBase="true"/>
+				<parm name="data" criteria="test.integer"/>
+			</parms>
+			<output criteria="test.boolean"/>
+		</operation>
+	
+		<operation name="noLessThan" >
+			<parms>
+				<parm name="base" criteria="test.integer" isBase="true"/>
+				<parm name="data" criteria="test.integer"/>
+			</parms>
+			<output criteria="test.boolean"/>
+		</operation>
+	
+		<operation name="equals" >
+			<parms>
+				<parm name="base" criteria="test.integer" isBase="true"/>
+				<parm name="data" criteria="test.integer"/>
+			</parms>
+			<output criteria="test.boolean"/>
 		</operation>
 
 	</operations>

@@ -1,0 +1,9 @@
+<definition name="test.money;1.0.0" parentsInfo="test.float;1.0.0">
+	
+	<info description="Data type for money"/>
+
+	<operations>
+
+	</operations>
+
+</definition>

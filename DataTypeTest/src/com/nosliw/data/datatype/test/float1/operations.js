@@ -11,3 +11,63 @@ dataTypeDefition.requires = {
 
 //define operation
 nosliw.addDataTypeDefinition(dataTypeDefition);
+
+dataTypeDefition.operations['largerThan'] = {
+		operation : function(parms, context){
+			var base = this.value;
+			var data = parms.getParm("data").value;
+
+			if(base>data){
+				return {
+					dataTypeId : "test.boolean;1.0.0",
+					value : true
+				};
+			}
+			else{
+				return {
+					dataTypeId : "test.boolean;1.0.0",
+					value : false
+				};
+			}
+		},
+};
+
+dataTypeDefition.operations['noLessThan'] = {
+		operation : function(parms, context){
+			var base = this.value;
+			var data = parms.getParm("data").value;
+
+			if(base>data){
+				return {
+					dataTypeId : "test.boolean;1.0.0",
+					value : false
+				};
+			}
+			else{
+				return {
+					dataTypeId : "test.boolean;1.0.0",
+					value : true
+				};
+			}
+		},
+};
+
+dataTypeDefition.operations['equals'] = {
+		operation : function(parms, context){
+			var base = this.value;
+			var data = parms.getParm("data").value;
+
+			if(base==data){
+				return {
+					dataTypeId : "test.boolean;1.0.0",
+					value : true
+				};
+			}
+			else{
+				return {
+					dataTypeId : "test.boolean;1.0.0",
+					value : false
+				};
+			}
+		},
+};

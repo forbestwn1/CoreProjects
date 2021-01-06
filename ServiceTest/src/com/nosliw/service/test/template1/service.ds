@@ -22,7 +22,7 @@
 							{
 								ruleType : "expression",
 								description : "Cannot start with 123!!!",
-								expression : "?(data)?.subString(from:&(#test##integer___0)&,to:&(#test##integer___3)&)"
+								expression : "?(data)?.subString(from:&(#test##integer___0)&,to:&(#test##integer___3)&).equals(data2:&(#test##string___123)&).opposite()"
 							},
 						]
 					},

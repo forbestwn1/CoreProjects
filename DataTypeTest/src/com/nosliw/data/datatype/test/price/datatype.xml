@@ -1,9 +1,0 @@
-<definition name="test.price;1.0.0">
-	
-	<info description="Data type for price."/>
-
-	<operations>
-
-	</operations>
-
-</definition>

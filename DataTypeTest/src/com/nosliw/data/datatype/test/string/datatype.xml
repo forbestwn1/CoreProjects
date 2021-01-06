@@ -17,6 +17,14 @@
 			<output criteria="test.boolean;1.0.0"/>
 		</operation>
 	
+		<operation name="equals" >
+			<parms>
+				<parm name="data1" criteria="test.string" isBase="true"/>
+				<parm name="data2" criteria="test.string"/>
+			</parms>
+			<output criteria="test.boolean;1.0.0"/>
+		</operation>
+
 		<operation name="subString" >
 			<parms>
 				<parm name="base" criteria="test.string" isBase="true"/>

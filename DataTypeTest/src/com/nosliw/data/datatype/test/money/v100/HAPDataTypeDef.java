@@ -1,4 +1,4 @@
-package com.nosliw.data.datatype.test.price;
+package com.nosliw.data.datatype.test.money.v100;
 
 import com.nosliw.data.core.data.HAPDataTypeProvider;
 

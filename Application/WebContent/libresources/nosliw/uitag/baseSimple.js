@@ -207,7 +207,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 						variableValue[node_COMMONATRIBUTECONSTANT.DATARULEEXPRESSION_VARIABLENAME] = dataValue;
 						return nosliw.runtime.getExpressionService().getExecuteExpressionRequest(loc_validationExpression, undefined, variableValue, undefined, undefined, {
 							success : function(request, expressionResult){
-								if(expressionResult.value.startsWith("123")){
+								if(expressionResult.value==false){
 									return loc_expressionRuleDescription || "Expression validation fail";
 								}
 								else{
