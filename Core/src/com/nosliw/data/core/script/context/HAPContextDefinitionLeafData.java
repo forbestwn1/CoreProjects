@@ -20,10 +20,6 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	
 	public HAPContextDefinitionLeafData() {}
 	
-//	public HAPContextDefinitionLeafData(HAPVariableInfo criteria){
-//		this.m_dataInfo = criteria;
-//	}
-	
 	public HAPContextDefinitionLeafData(HAPDataTypeCriteria dataTypeCriteria){
 		this.m_dataInfo = new HAPVariableDataInfo(dataTypeCriteria);
 	}

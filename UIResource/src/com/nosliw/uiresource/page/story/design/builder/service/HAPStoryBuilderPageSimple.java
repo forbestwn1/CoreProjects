@@ -81,6 +81,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	private List<HAPStageInfo> m_stages;
 	
 	public HAPStoryBuilderPageSimple(HAPUITagManager uiTagMan, HAPRuntimeEnvironment runtimeEnv) {
+		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagManager = uiTagMan;
 		this.m_stages = new ArrayList<HAPStageInfo>();
 		this.m_stages.add(new HAPStageInfo(STAGE_SERVICE, STAGE_SERVICE));

@@ -64,7 +64,7 @@ public class HAPDataRuleExpression extends HAPDataRuleImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSION, HAPJsonUtility.buildJson(this.getExpressionDefinition(), HAPSerializationFormat.JSON));
-		jsonMap.put(EXPRESSIONEXECUTE, HAPJsonUtility.buildJson(this.getExpressionDefinition(), HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONEXECUTE, HAPJsonUtility.buildJson(this.getExpressionExecutable(), HAPSerializationFormat.JSON));
 	}
 	
 	@Override

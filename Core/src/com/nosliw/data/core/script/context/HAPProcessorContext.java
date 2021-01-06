@@ -52,6 +52,9 @@ public class HAPProcessorContext {
 		//solidate name in context  
 		contextGroup = HAPProcessorContextSolidate.process(contextGroup, runtimeEnv);
 		
+		//process data rule
+		HAPProcessorContextRule.process(contextGroup, runtimeEnv);
+		
 		//process inheritance
 		contextGroup = HAPProcessorContextVariableInheritance.process(contextGroup, parent, configure.inheritMode, configure.inheritanceExcludedInfo, runtimeEnv);
 		

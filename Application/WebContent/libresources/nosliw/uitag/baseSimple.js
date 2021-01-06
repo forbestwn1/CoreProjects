@@ -27,8 +27,13 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	var loc_isMandatory = false;
 	var loc_mandatoryRuleDescription;
 	
+	//script rule
 	var loc_validationScriptFunction;
 	var loc_jsScriptRuleDescription;
+	
+	//expression rule
+	var loc_validationExpression;
+	var loc_expressionRuleDescription;
 	
 	var loc_processDataRuleRequest = function(request){
 		//emum rule
@@ -52,6 +57,10 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 				var script = "loc_validationScriptFunction = function(that){" + rule[node_COMMONATRIBUTECONSTANT.DATARULEJSSCRIPT_SCRIPT] + "};";
 				eval(script);
 				loc_jsScriptRuleDescription = rule[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION];
+			}
+			else if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_EXPRESSION){
+				loc_validationExpression = rule[node_COMMONATRIBUTECONSTANT.DATARULEEXPRESSION_EXPRESSIONEXECUTE];
+				loc_expressionRuleDescription = rule[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION];
 			}
 		}
 		if(enumRule!=null){
@@ -179,14 +188,33 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_env.getDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
+					var dataValue;
+					if(data!=undefined)  dataValue = data.value;
+					
 					//mandatory rule
-					if(loc_isMandatory==true&&data==undefined){
+					if(loc_isMandatory==true&&dataValue==undefined){
 						return loc_mandatoryRuleDescription || "Cannot be blank";
 					}
 					
 					//js script validation
 					if(loc_validationScriptFunction!=undefined){
-						if(!loc_validationScriptFunction(data))  return loc_jsScriptRuleDescription || "Value validation fail";
+						if(!loc_validationScriptFunction(dataValue))  return loc_jsScriptRuleDescription || "Value validation fail";
+					}
+					
+					//expression validation
+					if(loc_validationExpression!=undefined){
+						var variableValue = {};
+						variableValue[node_COMMONATRIBUTECONSTANT.DATARULEEXPRESSION_VARIABLENAME] = dataValue;
+						return nosliw.runtime.getExpressionService().getExecuteExpressionRequest(loc_validationExpression, undefined, variableValue, undefined, undefined, {
+							success : function(request, expressionResult){
+								if(expressionResult.value.startsWith("123")){
+									return loc_expressionRuleDescription || "Expression validation fail";
+								}
+								else{
+									return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
+								}
+							}
+						});
 					}
 					
 					//valid value, return empty

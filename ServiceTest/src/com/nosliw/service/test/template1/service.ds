@@ -21,8 +21,8 @@
 							},
 							{
 								ruleType : "expression",
-								description : "Cannot longer than 5!!!",
-								expression : "?(data)?.length()"
+								description : "Cannot start with 123!!!",
+								expression : "?(data)?.subString(from:&(#test##integer___0)&,to:&(#test##integer___3)&)"
 							},
 						]
 					},
