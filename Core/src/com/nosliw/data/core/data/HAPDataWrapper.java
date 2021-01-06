@@ -6,6 +6,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPInfoImpSimple;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -33,16 +36,21 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 	//any object that can represent data value (json, literate)
 	protected Object m_value;
 
+	protected HAPInfo m_info;
+	
 	private HAPSerializationFormat m_valueFormat;
 	
 	public HAPDataWrapper(){
+		this.m_info = new HAPInfoImpSimple();
 	}
 	
 	public HAPDataWrapper(String strValue){
+		this();
 		this.buildObjectByLiterate(strValue);
 	}
 
 	public HAPDataWrapper(HAPDataTypeId dataTypeId, Object value){
+		this();
 		this.m_dataTypeId = dataTypeId;
 		this.m_value = value;
 	}
@@ -54,6 +62,9 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 	@Override
 	public Object getValue() {		return this.m_value;	}
 	
+	@Override
+	public HAPInfo getInfo() {  return this.m_info;  }
+
 	public String getValueFormat(){
 		if(this.m_valueFormat==null){
 			this.m_valueFormat = HAPSerializationFormat.JSON;
@@ -120,6 +131,13 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 
 		//value
 		this.m_value = jsonObj.opt(VALUE);
+		
+		//info
+		JSONObject infoObj = jsonObj.optJSONObject(INFO);
+		if(infoObj!=null) {
+			this.m_info.buildObject(infoObj, HAPSerializationFormat.JSON);
+		}
+		
 		return true;
 	}
 
@@ -132,13 +150,18 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(DATATYPEID, this.m_dataTypeId.toStringValue(HAPSerializationFormat.LITERATE));
 		jsonMap.put(VALUEFORMAT, this.getValueFormat());
-		if(this.m_value instanceof String || this.m_value instanceof Boolean || this.m_value instanceof Integer || this.m_value instanceof Double){
-			jsonMap.put(VALUE, this.m_value+"");
-			typeJsonMap.put(VALUE, this.m_value.getClass());
-		}
-		else{
-			jsonMap.put(VALUE, this.m_value+"");
-		}
+		
+		HAPJsonUtility.buildJsonMap(VALUE, this.m_value, jsonMap, typeJsonMap, HAPSerializationFormat.JSON);
+		
+//		if(this.m_value instanceof String || this.m_value instanceof Boolean || this.m_value instanceof Integer || this.m_value instanceof Double){
+//			jsonMap.put(VALUE, this.m_value+"");
+//			typeJsonMap.put(VALUE, this.m_value.getClass());
+//		}
+//		else{
+//			jsonMap.put(VALUE, this.m_value+"");
+//		}
+
+		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -167,6 +190,8 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 		out.m_dataTypeId = this.m_dataTypeId.clone();
 		out.m_value = this.m_value;
 		out.m_valueFormat = this.m_valueFormat;
+		out.m_info = this.m_info.cloneInfo();
 		return out;
 	}
+
 }

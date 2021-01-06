@@ -2,6 +2,7 @@ package com.nosliw.data.core.data;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPSerializable;
 
 /**
@@ -12,10 +13,13 @@ import com.nosliw.common.serialization.HAPSerializable;
 public interface HAPData extends HAPSerializable{
 	
 	@HAPAttribute
+	public static String DATATYPEID = "dataTypeId";
+
+	@HAPAttribute
 	public static String VALUE = "value";
 
 	@HAPAttribute
-	public static String DATATYPEID = "dataTypeId";
+	public static String INFO = "info";
 	
 	/**
 	 * get data type object
@@ -26,6 +30,9 @@ public interface HAPData extends HAPSerializable{
 	 * get value within data
 	 */
 	Object getValue();
+	
+	// extra info related with data
+	HAPInfo getInfo();
 	
 	HAPData cloneData();
 }

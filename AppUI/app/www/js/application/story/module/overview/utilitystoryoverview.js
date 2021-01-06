@@ -47,7 +47,7 @@ var node_utility = function(){
 			_.each(childStoryNodesInfo, function(childStroyNodeInfo, i){
 				var childNode = loc_processStoryNode(childStroyNodeInfo.childNode, overViewTree, processed, module);
 				if(childNode==undefined){
-					var childStoryNodeId = childStroyNodeInfo.node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+					var childStoryNodeId = childStroyNodeInfo.childNode[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
 					childNode = overViewTree[childStoryNodeId];
 					delete overViewTree[childStoryNodeId];
 				}

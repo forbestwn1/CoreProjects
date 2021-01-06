@@ -21,6 +21,13 @@ public class HAPJsonUtility {
 	final private static String TOKEN_UNCHANGED_START = "AAAAAAAA";
 	final private static String TOKEN_UNCHANGED_END = "EEEEEEEE";
 
+	public static void buildJsonMap(String key, Object value, Map<String, String> jsonMap, Map<String, Class<?>> typeMap, HAPSerializationFormat format) {
+		jsonMap.put(key, buildJson(value, format));
+		if(value instanceof Integer)   typeMap.put(key, Integer.class);
+		else if(value instanceof Boolean)   typeMap.put(key, Boolean.class);
+		else if(value instanceof Double)   typeMap.put(key, Double.class);
+	}
+	
 	public static String buildJson(Object o, HAPSerializationFormat format) {
 		if (o == null)
 			return null;
@@ -47,11 +54,13 @@ public class HAPJsonUtility {
 			Map<String, Class<?>> typeMap = new LinkedHashMap<String, Class<?>>();
 			Map<String, ?> mapValue = (Map) o;
 			for (String key : mapValue.keySet()) {
-				Object value = mapValue.get(key);
-				mapJson.put(key, buildJson(value, format));
-				if(value instanceof Integer)   typeMap.put(key, Integer.class);
-				else if(value instanceof Boolean)   typeMap.put(key, Boolean.class);
-				else if(value instanceof Double)   typeMap.put(key, Double.class);
+				buildJsonMap(key, mapValue.get(key), mapJson, typeMap, format);
+				
+//				Object value = mapValue.get(key);
+//				mapJson.put(key, buildJson(value, format));
+//				if(value instanceof Integer)   typeMap.put(key, Integer.class);
+//				else if(value instanceof Boolean)   typeMap.put(key, Boolean.class);
+//				else if(value instanceof Double)   typeMap.put(key, Double.class);
 			}
 			out = buildMapJson(mapJson, typeMap);
 		} else {
