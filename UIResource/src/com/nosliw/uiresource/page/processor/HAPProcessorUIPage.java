@@ -46,7 +46,7 @@ public class HAPProcessorUIPage {
 		}
 			
 		if(serviceProviders==null)  serviceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
-		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, HAPUtilityCommon.getDefaultInheritanceExcludedInfo(), runtimeEnv);
+		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, runtimeEnv);
 
 		//compile definition to executable
 		HAPProcessorCompile.process(out, null);

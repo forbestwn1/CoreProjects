@@ -1,0 +1,39 @@
+[{
+	"static": {
+		"id": "CurrencyExchangeRate",
+		"name": "Currency Exchange Rate",
+		"description" : "Get currency exchange rate between different currency",
+		"tag" : ["public"],
+		"interface" : {
+			"parm" : {
+				"fromCurrency": {
+					"displayName" : "Source Currency",
+					"dataInfo" : {
+						"criteria": "test.money;1.0.0",
+						"rule" : [
+						]
+					},
+				},
+				"toCurrency": {
+					"displayName" : "Target Currency",
+					"dataInfo" : {
+						"criteria": "test.money;1.0.0",
+						"rule" : [
+						]
+					},
+				}
+			},
+			"result" : {
+				"success": {
+					"output": {
+					}
+				}
+			},
+		},
+		"display" : {
+		}
+	},
+	"runtime": {
+	    "implementation" : "com.nosliw.service.test.template.currency",
+	}
+}]

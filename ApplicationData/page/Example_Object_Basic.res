@@ -12,11 +12,11 @@
 		</nosliw-style>
 
 		<span class="red1">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
-
+<!--
 		<nosliw-include source="Example_Include_simple" context="" event="changeInputTextIncludeBasic=changeInputTextIncludeBasicMapped"/> 
 
 		<nosliw-include source="Example_Object_Basic_Include" context="element=business.a.aa" /> 
-
+-->
 		
 	<br>
 	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
@@ -26,9 +26,9 @@
 	Attribute:<span  style="color:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value=='s isfff'?'red':'blue'%>">Phone Number : </span> 
 	<br>
 	<br>
-	TextInput:<nosliw-textinput data="business.a.aa"/>  
+	TextInput:<nosliw-string1 data="business.a.aa"/>  
 	<br>
-	TextInput: <nosliw-textinput data="business.a.aa" nosliw-event="valueChanged:textInputValueChanged:"/>  
+	TextInput: <nosliw-string1 data="business.a.aa" nosliw-event="valueChanged:textInputValueChanged:"/>  
 
 	
 		<br>
@@ -55,7 +55,7 @@
 			<br>
 			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
 			<br>
-			TextInput:<nosliw-textinput data="ele"/> 
+			TextInput:<nosliw-string1 data="ele"/> 
 			<br>
 			<scripts>
 			{

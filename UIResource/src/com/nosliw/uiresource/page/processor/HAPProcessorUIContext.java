@@ -30,17 +30,17 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPProcessorUIContext {
 
-	public static void process(HAPExecutableUIUnit uiExe, HAPContextGroup contextDef, HAPContextGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPUITagManager uiTagMan, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv){
+	public static void process(HAPExecutableUIUnit uiExe, HAPContextGroup contextDef, HAPContextGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPUITagManager uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		HAPExecutableUIBody body = uiExe.getBody();
 		HAPConfigureContextProcessor contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
 
 		HAPConfigureContextProcessor privateConfigure = contextProcessorConfig.cloneConfigure();
 		privateConfigure.parentCategary = HAPContextGroup.getAllContextTypes();
 		
-		processVerticalStructure(uiExe, contextDef, parentContext, contextProcessorConfig, inheritanceExcludedInfo, uiTagMan, runtimeEnv);		
+		processVerticalStructure(uiExe, contextDef, parentContext, contextProcessorConfig, uiTagMan, runtimeEnv);		
 		processRelativeElement(uiExe, parentContext, privateConfigure, uiTagMan, runtimeEnv);
 		markProcessed(uiExe);
-		discoverVariable(uiExe, inheritanceExcludedInfo);
+		discoverVariable(uiExe, privateConfigure.inheritanceExcludedInfo);
 		processInteractionElement(uiExe, parentContext, serviceProviders, privateConfigure, uiTagMan, runtimeEnv);
 	}
 	
@@ -59,7 +59,7 @@ public class HAPProcessorUIContext {
 	}
 	
 	//process context information
-	private static void processVerticalStructure(HAPExecutableUIUnit uiExe, HAPContextGroup contextDef, HAPContextGroup parentContext, HAPConfigureContextProcessor contextProcessorConfig, Set<String> inheritanceExcludedInfo, HAPUITagManager uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+	private static void processVerticalStructure(HAPExecutableUIUnit uiExe, HAPContextGroup contextDef, HAPContextGroup parentContext, HAPConfigureContextProcessor contextProcessorConfig, HAPUITagManager uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
 			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
 			//for custom tag, build context for tag first : merge parent context with context definition in tag definition first
@@ -72,12 +72,12 @@ public class HAPProcessorUIContext {
 		uiExe.getBody().setContext(extContextGroup);
 
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
-			processEscalate((HAPExecutableUIUnitTag)uiExe, uiTagMan, inheritanceExcludedInfo);
+			processEscalate((HAPExecutableUIUnitTag)uiExe, uiTagMan, contextProcessorConfig.inheritanceExcludedInfo);
 		}
 		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
-			processVerticalStructure(childTag, childTag.getUIUnitDefinition().getContextNotFlat(), uiExe.getBody().getContext(), contextProcessorConfig, inheritanceExcludedInfo, uiTagMan, runtimeEnv);			
+			processVerticalStructure(childTag, childTag.getUIUnitDefinition().getContextNotFlat(), uiExe.getBody().getContext(), contextProcessorConfig, uiTagMan, runtimeEnv);			
 		}
 	}
 	

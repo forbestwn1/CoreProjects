@@ -4,6 +4,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.tag.HAPContextUITagDefinition;
 
 public class HAPUtilityConfiguration {
@@ -13,6 +14,7 @@ public class HAPUtilityConfiguration {
 		populateCommonConfigure(out);
 		if(type.equals(HAPConstant.UIRESOURCE_TYPE_TAG)) 	out.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;  //for tag, child keeps same
 		else out.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT;   //for resource, parent overwrite child
+		out.inheritanceExcludedInfo = HAPUtilityCommon.getDefaultInheritanceExcludedInfo();
 		return out;
 	}
 
@@ -20,6 +22,7 @@ public class HAPUtilityConfiguration {
 		HAPConfigureContextProcessor out = parentConfigure.cloneConfigure();
 		populateCommonConfigure(out);
 		out.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefinitionContext.getInfo());
+		out.inheritanceExcludedInfo = HAPUtilityCommon.getDefaultInheritanceExcludedInfo();
 		return out;
 	}
 
@@ -27,6 +30,7 @@ public class HAPUtilityConfiguration {
 		HAPConfigureContextProcessor out = parentConfigure.cloneConfigure();
 		populateCommonConfigure(out);
 		out.parentCategary = HAPContextGroup.getAllContextTypes();
+		out.inheritanceExcludedInfo = HAPUtilityCommon.getDefaultInheritanceExcludedInfo();
 		return out;
 	}
 	

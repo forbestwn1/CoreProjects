@@ -35,6 +35,11 @@ public class HAPConfigureContextProcessor {
 	
 	public Set<String> inheritanceExcludedInfo;
 	
+	public HAPConfigureContextProcessor() {
+		int kkk = 555;
+		kkk++;
+	}
+	
 	public HAPConfigureContextProcessor cloneConfigure() {
 		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
 		out.relativeResolveMode = this.relativeResolveMode;
