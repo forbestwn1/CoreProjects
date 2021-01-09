@@ -299,20 +299,32 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		//overridden method to create init view
 		if(loc_uiTagObj.initViews!=undefined){
 			uiTagInitRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-				var views = loc_uiTagObj.initViews(requestInfo);
-				//attach view to resourve view
-				if(views!=undefined){
-//					loc_getStartElement().after(views);
-					loc_viewContainer.setContentView(views);
+				var initRequest = node_createServiceRequestInfoSequence(undefined);
+				var initViewsResult = loc_uiTagObj.initViews({
+					success : function(request, view){
+						loc_viewContainer.setContentView(view);
+					}
+				}, requestInfo);
+
+				if(initViewsResult!=undefined){
+					if( node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(initViewsResult)){
+						initRequest.addRequest(initViewsResult);
+					}
+					else{
+//						loc_getStartElement().after(initViewsResult);
+						loc_viewContainer.setContentView(initViewsResult);
+					}
 				}
 
 				//overridden method to do sth after view is attatched to dom
 				if(loc_uiTagObj.postInit!=undefined){
 					var postInitObj = loc_uiTagObj.postInit(requestInfo);
 					if(postInitObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(postInitObj)){
-						return postInitObj;
+						initRequest.addRequest(postInitObj);
 					}
 				}
+
+				return initRequest;
 			}));
 		}
 

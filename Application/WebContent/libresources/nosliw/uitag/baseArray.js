@@ -130,8 +130,8 @@ var node_createUITagOnBaseArray = function(env, uiTagDef){
 //				out.addRequest(loc_processDataRuleRequest());
 				return out;
 			},
-			initViews : function(request){
-				return loc_coreObj.initViews(request);
+			initViews : function(handlers, request){
+				return loc_coreObj.initViews(handlers, request);
 			},
 			postInit : function(requestInfo){
 				loc_handleEachElementProcessor = node_createHandleEachElementProcessor(loc_containerVariable, ""); 

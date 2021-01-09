@@ -142,8 +142,8 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			out.addRequest(loc_processDataRuleRequest());
 			return out;
 		},
-		initViews : function(request){
-			return loc_coreObj.initViews(request);
+		initViews : function(handlers, request){
+			return loc_coreObj.initViews(handlers, request);
 		},
 		postInit : function(request){
 			loc_updateView(request);

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <body>
-		<nosliw-map data="business.a.cc" element="ele" index="index">  
+		<nosliw-map data="arraylist" element="ele" index="index">  
 		<span class="intag">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</span>
 			<br>
 			Index: <%=?(index)?%>
 			<br>
-<!--
-			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
+
+			<%=?(ele.schoolName)?.value + '   7777 ' %>
 			<br>
-			TextInput:<nosliw-string data="ele"/> 
+			TextInput:<nosliw-string data="ele.schoolName"/> 
 			<br>
--->			
+
 		</nosliw-map>
   
 
@@ -31,6 +31,48 @@
 		group : {
 			public : {
 				element : {
+					arraylist : {
+						definition: {
+							criteria:"test.array;1.0.0%%||element:test.map;1.0.0%%||schoolName:test.string;1.0.0,schoolLocation:test.geo;1.0.0||%%||%%",
+						},
+						defaultValue : {
+							dataTypeId: "test.array;1.0.0",
+							value: [
+								{
+									dataTypeId: "test.map;1.0.0",
+									value : {
+										schoolName : {
+											dataTypeId: "test.string;1.0.0",
+											value : "School1"
+										},
+										geo : {
+											dataTypeId: "test.geo;1.0.0",
+											value : {
+												latitude : 43.8100763,
+												longitude : -79.3558245,
+											}
+										}
+									}
+								},
+								{
+									dataTypeId: "test.map;1.0.0",
+									value : {
+										schoolName : {
+											dataTypeId: "test.string;1.0.0",
+											value : "School2"
+										},
+										geo : {
+											dataTypeId: "test.geo;1.0.0",
+											value : {
+												latitude : 43.7541051,
+												longitude : -79.3089712,
+											}
+										}
+									}
+								},
+							]							
+						}
+					},
 					business : {
 						definition: {
 							child : {

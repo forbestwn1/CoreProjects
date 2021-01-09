@@ -62,6 +62,8 @@
 
 		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
+		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 
 		var loc_base = base;
 		var loc_contentView;
@@ -70,15 +72,16 @@
 		var loc_infowindow;
 		var loc_elements = [];
 
-		var loc_getBuildContentView = function(){
+		var loc_getBuildContentViewRequest = function(handlers, request){
 
 			var extendeContextInfo = [];
 			extendeContextInfo.push(loc_base.getEnv().createContextElementInfo(loc_base.getElementVariableName(), undefined));
+			extendeContextInfo.push(loc_base.getEnv().createContextElementInfo(loc_base.getIndexVariableName(), undefined));
 
-			var eleContext = loc_base.getEnv().createExtendedContext(extendeContextInfo, requestInfo);
+			var eleContext = loc_base.getEnv().createExtendedContext(extendeContextInfo, request);
 
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
-			out.addRequest(loc_base.getEnv().getCreateUIViewWithIdRequest(id, eleContext, {
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_base.getEnv().getCreateUIViewWithIdRequest("", eleContext, {
 				success : function(requestInfo, resourceView){
 					loc_contentView = resourceView;
 					loc_contentView.appendTo(loc_infowindow.getContent());
@@ -110,13 +113,30 @@
 
 					var ele = {};
 					ele.marker = marker;
+					ele.vars = variables;
 					ele.elementVar = variables[loc_base.getElementVariableName()];
 					ele.indexVar = variables[loc_base.getIndexVariableName()];
 					
 					loc_elements.splice(index, 0, ele);
 
-					marker.addListener('click', function() {
-						loc_infowindow.open(loc_map, marker);
+					marker.addListener('click', function(request) {
+						var showConentRequest = node_createServiceRequestInfoSequence(undefined, {
+							success : function(request){
+								loc_infowindow.open(loc_map, marker);
+							}
+						}, request);
+						
+						var getDataRequest = node_createServiceRequestInfoSet(undefined, {
+							success : function(request, resultSet){
+								return loc_contentView.getUpdateContextRequest(resultSet.getResults());
+							}
+						});
+						
+						getDataRequest.addRequest(loc_base.getElementVariableName(), loc_base.getEnv().getDataOperationRequestGet(ele.vars[loc_base.getElementVariableName()]));
+						getDataRequest.addRequest(loc_base.getIndexVariableName(), loc_base.getEnv().getDataOperationRequestGet(ele.vars[loc_base.getIndexVariableName()]));
+						
+						showConentRequest.addRequest(getDataRequest);
+						node_requestServiceProcessor.processRequest(showConentRequest);
 					});
 					
 				}
@@ -139,10 +159,17 @@
 
 		var loc_out = 
 		{
-			initViews : function(requestInfo){	
+			initViews : function(handlers, requestInfo){	
 				loc_view = $('<div id="map" style="height:600px;width:100%;"></div>');	
 				loc_initMap();
-				return loc_view;
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+				out.addRequest(loc_getBuildContentViewRequest({
+					success : function(request, view){
+						return loc_view;;
+					}
+				}));
+				
+				return out;
 			},
 	
 			getCreateElementViewRequest : function(id, index, variables, handlers, requestInfo){
