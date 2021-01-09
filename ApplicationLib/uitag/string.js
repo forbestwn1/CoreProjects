@@ -1,5 +1,5 @@
 {
-	name : "string1",
+	name : "string",
 	type : "data",
 	base : "simpleData",
 	description : "",

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <body>
-		<nosliw-loop data="business.a.cc" element="ele" index="index">  
+		<nosliw-map data="business.a.cc" element="ele" index="index">  
 		<span class="intag">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</span>
 			<br>
 			Index: <%=?(index)?%>
 			<br>
+<!--
 			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
 			<br>
-			TextInput:<nosliw-string1 data="ele"/> 
+			TextInput:<nosliw-string data="ele"/> 
 			<br>
-		</nosliw-loop>
+-->			
+		</nosliw-map>
   
 
 </body>
@@ -35,7 +37,7 @@
 								a : {
 									child : {
 										aa : {criteria:"test.string;1.0.0"},
-										cc : {criteria:"test.array;1.0.0%||element:test.string;1.0.0||%"},
+										cc : {criteria:"test.array;1.0.0%%||element:test.map;1.0.0%%||schoolName:test.string;1.0.0,schoolLocation:test.geo;1.0.0||%%||%%",},
 									}
 								}
 							}
@@ -46,29 +48,43 @@
 									dataTypeId: "test.string;1.0.0",
 									value: "This is my world!"
 								},
-								cc : [
-									{
-										dataTypeId: "test.string;1.0.0",
-										value: "This is my world 1111!"
-									},
-									{
-										dataTypeId: "test.string;1.0.0",
-										value: "This is my world 2222!"
-									}
-								],
-								ee : {
+								cc : {
 									dataTypeId: "test.array;1.0.0",
 									value: [
 										{
-											dataTypeId: "test.string;1.0.0",
-											value: "This is my world 1111!"
+											dataTypeId: "test.map;1.0.0",
+											value : {
+												schoolName : {
+													dataTypeId: "test.string;1.0.0",
+													value : "School1"
+												},
+												geo : {
+													dataTypeId: "test.geo;1.0.0",
+													value : {
+														latitude : 43.8100763,
+														longitude : -79.3558245,
+													}
+												}
+											}
 										},
 										{
-											dataTypeId: "test.string;1.0.0",
-											value: "This is my world 2222!"
-										}
+											dataTypeId: "test.map;1.0.0",
+											value : {
+												schoolName : {
+													dataTypeId: "test.string;1.0.0",
+													value : "School2"
+												},
+												geo : {
+													dataTypeId: "test.geo;1.0.0",
+													value : {
+														latitude : 43.7541051,
+														longitude : -79.3089712,
+													}
+												}
+											}
+										},
 									]
-								}
+								},
 							}
 						}
 					},

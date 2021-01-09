@@ -33,6 +33,7 @@ var packageObj = library;
 	var node_getObjectType;
 	var node_resourceUtility;
 	var node_createUITagOnBaseSimple;
+	var node_createUITagOnBaseArray;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -255,6 +256,9 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		else if(uiTagBase=="simpleData"){
 			uiTagCore = node_createUITagOnBaseSimple(loc_envObj, loc_uiTagResourceObj);
 		}
+		else if(uiTagBase=="arrayData"){
+			uiTagCore = node_createUITagOnBaseArray(loc_envObj, loc_uiTagResourceObj);
+		}
 		
 		
 		loc_uiTagObj = _.extend({
@@ -397,6 +401,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uitag.createUITagOnBaseSimple", function(){node_createUITagOnBaseSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("uitag.createUITagOnBaseArray", function(){node_createUITagOnBaseArray = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITag", node_createUITag); 

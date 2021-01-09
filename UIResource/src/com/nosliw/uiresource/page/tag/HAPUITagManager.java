@@ -89,15 +89,15 @@ public class HAPUITagManager {
 	}
 	
 	public HAPUITagDefinition getUITagDefinition(HAPUITagId id){
-		HAPUITagDefinition out = this.m_dataTagDefs.get(id.getId());
-		if(out==null)  out = this.m_otherTagDefs.get(id.getId());
+//		HAPUITagDefinition out = this.m_dataTagDefs.get(id.getId());
+//		if(out==null)  out = this.m_otherTagDefs.get(id.getId());
 //		out.setSourceFile(file);
 //		
-//		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + id.getId() + ".js";
-//		File file = new File(fileName);
-//		
-//		HAPUITagDefinition out = HAPUITagDefinitionParser.parseFromFile(file);
-//		out.setSourceFile(file);
+		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + id.getId() + ".js";
+		File file = new File(fileName);
+		
+		HAPUITagDefinition out = HAPUITagDefinitionParser.parseFromFile(file);
+		out.setSourceFile(file);
 		
 		return out;
 	}	
