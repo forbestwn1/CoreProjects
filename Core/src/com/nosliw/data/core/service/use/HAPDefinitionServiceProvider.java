@@ -10,7 +10,6 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
-import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionServiceProvider extends HAPEntityInfoWritableImp{
@@ -32,7 +31,6 @@ public class HAPDefinitionServiceProvider extends HAPEntityInfoWritableImp{
 	
 	public HAPServiceInterface getServiceInterface() {  return this.m_serviceInterface;  }
 	public void setServiceInterface(HAPServiceInterface serviceInterface) {   this.m_serviceInterface = serviceInterface;   }
-	public HAPServiceParm getProviderServiceParm(String parmName) {  return this.m_serviceInterface.getParm(parmName); }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

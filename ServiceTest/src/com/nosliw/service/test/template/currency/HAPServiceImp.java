@@ -35,7 +35,9 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 
 		String toCurrency = (String)toCurrencyData.getValue();
 		
-		double toAmount = fromAmount * (this.getCurrencyIndex(codeTable, fromCurrency)+0.1*this.getCurrencyIndex(codeTable, toCurrency));
+		double fromCurrencyIndex = this.getCurrencyIndex(codeTable, fromCurrency);
+		double toCurrencyIndex = this.getCurrencyIndex(codeTable, toCurrency);
+		double toAmount = fromAmount * (fromCurrencyIndex+0.1*toCurrencyIndex);
 		
 		JSONObject toMoneyObj = new JSONObject();
 		toMoneyObj.put("amount", toAmount);
@@ -47,8 +49,8 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 		return HAPUtilityService.generateSuccessResult(output);
 	}
 
-	private int getCurrencyIndex(HAPCodeTable codeTable, String currency) {
-		int i = 0;
+	private double getCurrencyIndex(HAPCodeTable codeTable, String currency) {
+		double i = 1;
 		for(HAPData data : codeTable.getDataSet()) {
 			if(data.getValue().equals(currency))   return i;
 			i++;

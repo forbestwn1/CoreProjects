@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
+import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 
 //service manager, it is used for runtime purpose
 @HAPEntityWithAttribute
@@ -64,10 +65,11 @@ public class HAPManagerService {
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
 			HAPServiceInterface serviceInterface = serviceInstance.getDefinition().getStaticInfo().getInterface();
-			for(String parmName : serviceInterface.getParmNames()) {
+			for(HAPServiceParm parm : serviceInterface.getParms()) {
+				String parmName = parm.getId();
 				HAPData parmData = null;
 				if(parms!=null)  parmData = parms.get(parmName);
-				if(parmData==null) parmData = serviceInterface.getParm(parmName).getDefaultValue();   //not provide, use default 
+				if(parmData==null) parmData = parm.getDefaultValue();   //not provide, use default 
 				serviceParms.put(parmName, parmData);
 			}
 			out = serviceInstance.getExecutable().execute(serviceParms);

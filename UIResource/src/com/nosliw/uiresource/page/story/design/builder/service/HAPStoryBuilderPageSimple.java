@@ -2,7 +2,6 @@ package com.nosliw.uiresource.page.story.design.builder.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
@@ -60,8 +59,8 @@ import com.nosliw.uiresource.page.story.model.HAPUIDataInfo;
 import com.nosliw.uiresource.page.story.model.HAPUINode;
 import com.nosliw.uiresource.page.story.model.HAPUITree;
 import com.nosliw.uiresource.page.story.model.HAPUtility;
-import com.nosliw.uiresource.page.tag.HAPUITagInfo;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
+import com.nosliw.uiresource.page.tag.HAPUITagInfo;
 import com.nosliw.uiresource.page.tag.HAPUITageQueryData;
 
 public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
@@ -195,9 +194,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				HAPDisplayResourceNode inputDisplayResource = interfaceDisplayResource.getResourceNode(HAPServiceInterface.PARM);
 				
 				//parms
-				for(String parmName : serviceInterface.getParmNames()) {
+				for(HAPServiceParm parm : serviceInterface.getParms()) {
+					String parmName = parm.getName();
 					HAPParmBranchInfo parmBranchInfo = new HAPParmBranchInfo();
-					parmBranchInfo.parmDef = serviceInterface.getParm(parmName);
+					parmBranchInfo.parmDef = parm;
 					parmBranchInfo.displayResource = inputDisplayResource.getResourceNode(parmName);
 
 					//parm and connection to input
@@ -248,10 +248,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceOutputNodeName, HAPConstant.SERVICE_CHILD_RESULT));
 				HAPServiceResult successResult = serviceInterface.getResult("success");
 				HAPDisplayResourceNode outputDisplayResource = interfaceDisplayResource.getResourceNode(HAPServiceInterface.RESULT);
-				Map<String, HAPServiceOutput> output = successResult.getOutput(); 
-				for(String parmName : output.keySet()) {
+				for(HAPServiceOutput parm : successResult.getOutput()) {
+					String parmName = parm.getName();
 					HAPOutputBranchInfo parmBranchInfo = new HAPOutputBranchInfo();
-					parmBranchInfo.outputDef = output.get(parmName);
+					parmBranchInfo.outputDef = parm;
 					parmBranchInfo.displayResource = outputDisplayResource.getResourceNode("success").getResourceNode("output").getResourceNode(parmName);
 
 					//parm and connection to input

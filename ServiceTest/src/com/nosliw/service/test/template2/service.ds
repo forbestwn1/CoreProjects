@@ -5,29 +5,33 @@
 		"description" : "test service implemented by process",
 		"tag" : ["public"],
 		"interface" : {
-			"parm" : {
-				"serviceParm1" : {
+			"parm" : [
+				 {
+				 	"name" : "serviceParm1",
 					dataInfo : "test.string;1.0.0",
 					defaultValue :{
 						dataTypeId: "test.string;1.0.0",
 						value: "hello"
 					},
 				},
-				"serviceParm2" : {
+				{
+					"name" : "serviceParm2",
 					dataInfo : "test.string;1.0.0",
 				},
-				"serviceParm3" : {
+				{
+					"name" : "serviceParm3",
 					dataInfo : "test.string;1.0.0",
 				}
-			},
+			],
 			"result" : {
 				"success" : {
-					"output" : {
-						"outputInService" : {
+					"output" : [
+						{
+							"name" : "outputInService",
 							displayName: "Output",
 							dataInfo : "test.string;1.0.0",
 						}
-					}
+					]
 				}
 			},
 		}

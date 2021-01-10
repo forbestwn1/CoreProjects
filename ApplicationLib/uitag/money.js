@@ -62,7 +62,7 @@
 			var amountStr = loc_amountView.val();
 			var amount = 0; 
 			if(amountStr!=undefined && amountStr!=""){
-				amount = parseFloat(amoutStr);
+				amount = parseFloat(amountStr);
 			}
 			return {
 				dataTypeId: "test.money;1.0.0",

@@ -5,8 +5,9 @@
 		"description" : "Get currency exchange rate between different currency",
 		"tag" : ["public"],
 		"interface" : {
-			"parm" : {
-				"fromMoney": {
+			"parm" : [
+				{
+					"name" : "fromMoney",
 					"displayName" : "Source Money",
 					"dataInfo" : {
 						"criteria": "test.money;1.0.0",
@@ -29,7 +30,8 @@
 						}
 					},
 				},
-				"toCurrency": {
+				{
+					"name" : "toCurrency",
 					"displayName" : "Target Currency",
 					"dataInfo" : {
 						"criteria": "test.currency;1.0.0",
@@ -41,11 +43,12 @@
 						]
 					},
 				}
-			},
+			],
 			"result" : {
 				"success": {
-					"output": {
-						"toMoney": {
+					"output": [
+						{
+							"name": "toMoney",
 							"displayName" : "Target Money",
 							"dataInfo" : {
 								"criteria": "test.money;1.0.0",
@@ -53,7 +56,7 @@
 								]
 							},
 						}
-					}
+					]
 				}
 			},
 		},

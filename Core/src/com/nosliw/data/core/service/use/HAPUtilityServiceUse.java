@@ -1,6 +1,7 @@
 package com.nosliw.data.core.service.use;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
@@ -19,8 +20,8 @@ public class HAPUtilityServiceUse {
 
 	public static HAPContext buildContextFromServiceParms(HAPServiceInterface serviceInterface) {
 		HAPContext out = new HAPContext();
-		for(String parm : serviceInterface.getParmNames()) {
-			out.addElement(parm, new HAPContextDefinitionLeafData(new HAPVariableDataInfo(serviceInterface.getParm(parm).getCriteria())));
+		for(HAPServiceParm parm : serviceInterface.getParms()) {
+			out.addElement(parm.getName(), new HAPContextDefinitionLeafData(new HAPVariableDataInfo(parm.getCriteria())));
 		}
 		return out;
 	}
@@ -45,10 +46,10 @@ public class HAPUtilityServiceUse {
 		return buildContextFromServiceOutputs(serviceInterface.getResultOutput(result));
 	}
 	
-	public static HAPContext buildContextFromServiceOutputs(Map<String, HAPServiceOutput> serviceOutput) {
+	public static HAPContext buildContextFromServiceOutputs(List<HAPServiceOutput> serviceOutput) {
 		HAPContext out = new HAPContext();
-		for(String outParm : serviceOutput.keySet()) {
-			out.addElement(outParm, new HAPContextDefinitionLeafData(new HAPVariableDataInfo(serviceOutput.get(outParm).getCriteria())));
+		for(HAPServiceOutput outParm : serviceOutput) {
+			out.addElement(outParm.getName(), new HAPContextDefinitionLeafData(new HAPVariableDataInfo(outParm.getCriteria())));
 		}
 		return out;
 	}

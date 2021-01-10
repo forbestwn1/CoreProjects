@@ -1,8 +1,10 @@
 package com.nosliw.data.core.service.interfacee;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -17,14 +19,14 @@ public class HAPServiceResult extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String OUTPUT = "output";
 	
-	private Map<String, HAPServiceOutput> m_output;
+	private List<HAPServiceOutput> m_output;
 	
 	public HAPServiceResult(){
-		this.m_output = new LinkedHashMap<String, HAPServiceOutput>();
+		this.m_output = new ArrayList<HAPServiceOutput>();
 	}
 
-	public void addOutput(HAPServiceOutput output) {   this.m_output.put(output.getId(), output);   }
-	public Map<String, HAPServiceOutput> getOutput(){   return this.m_output;  }
+	public void addOutput(HAPServiceOutput output) {   this.m_output.add(output);   }
+	public List<HAPServiceOutput> getOutput(){   return this.m_output;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -32,12 +34,10 @@ public class HAPServiceResult extends HAPEntityInfoWritableImp{
 			JSONObject objJson = (JSONObject)json;
 			super.buildObjectByJson(objJson);
 			
-			JSONObject outputObj = objJson.getJSONObject(OUTPUT);
-			for(Object key : outputObj.keySet()) {
-				String name = (String)key;
+			JSONArray outputArray = objJson.getJSONArray(OUTPUT);
+			for(int i=0; i<outputArray.length(); i++) {
 				HAPServiceOutput output = new HAPServiceOutput();
-				output.buildObject(outputObj.get(name), HAPSerializationFormat.JSON);
-				output.setName(name);
+				output.buildObject(outputArray.get(i), HAPSerializationFormat.JSON);
 				this.addOutput(output);
 			}
 		}

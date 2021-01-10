@@ -1,6 +1,7 @@
 package com.nosliw.data.core.service.provide;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -74,18 +75,17 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		//external context from parameter of service
 		HAPContext inputExternalContext = new HAPContext();
 		HAPServiceInterface serviceInterface = staticInfo.getInterface();
-		for(String parmName : serviceInterface.getParmNames()){
-			HAPServiceParm parmDef = serviceInterface.getParm(parmName);
-			inputExternalContext.addElement(parmName, new HAPContextDefinitionLeafData(new HAPVariableDataInfo((parmDef.getCriteria()))));
+		for(HAPServiceParm parmDef : serviceInterface.getParms()){
+			inputExternalContext.addElement(parmDef.getName(), new HAPContextDefinitionLeafData(new HAPVariableDataInfo((parmDef.getCriteria()))));
 		}
 
 		Map<String, HAPParentContext> outputExternalContexts = new LinkedHashMap<String, HAPParentContext>();
 		Map<String, HAPServiceResult> serviceResult = serviceInterface.getResults();
 		for(String resultName : serviceResult.keySet()) {
-			Map<String, HAPServiceOutput> output = serviceResult.get(resultName).getOutput();
+			List<HAPServiceOutput> output = serviceResult.get(resultName).getOutput();
 			HAPContext outputContext = new HAPContext();
-			for(String name : output.keySet()) {
-				outputContext.addElement(name, new HAPContextDefinitionLeafData(new HAPVariableDataInfo((output.get(name).getCriteria()))));
+			for(HAPServiceOutput parm : output) {
+				outputContext.addElement(parm.getName(), new HAPContextDefinitionLeafData(new HAPVariableDataInfo((parm.getCriteria()))));
 			}
 			outputExternalContexts.put(resultName, HAPParentContext.createDefault(outputContext));
 		}

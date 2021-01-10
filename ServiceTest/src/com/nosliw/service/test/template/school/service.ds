@@ -6,8 +6,9 @@
 		"description" : "all element school rank in ontario",
 		"tag" : ["public"],
 		"interface" : {
-			"parm" : {
-				"schoolTypeInService" : {
+			"parm" : [
+				{
+					"name" : "schoolTypeInService",
 					"displayName" : "School Type",
 					description : "The type of school, public, private, ...",
 					dataInfo : {
@@ -24,7 +25,8 @@
 						value: "public"
 					},
 				},
-				"schoolTypeInService1" : {
+				{
+					"name" : "schoolTypeInService1",
 					"displayName" : "School Type1",
 					description : "The type of school, public, private, ...",
 					dataInfo : {
@@ -50,7 +52,8 @@
 						value: "public"
 					},
 				},
-				"schoolRatingInService" : {
+				{
+					"name" : "schoolRatingInService",
 					displayName : "School Rating",
 					description : "The rating of school, 0--10",
 					dataInfo : {
@@ -61,17 +64,18 @@
 						value: "8"
 					},
 				}
-			},
+			],
 			"result" : {
 				"success" : {
-					"output" : {
-						"outputInService": {
+					"output" : [
+						{
+							"name" : "outputInService",
 							displayName: "All Schools",
 							dataInfo : {
 								"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
 							},
 						}
-					} 
+					]
 				}
 			},
 		},

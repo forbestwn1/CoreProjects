@@ -5,8 +5,9 @@
 		"description" : "test service implemented by process",
 		"tag" : ["public"],
 		"interface" : {
-			"parm" : {
-				"serviceParm2": {
+			"parm" : [
+				{
+					"name" : "serviceParm2",
 					dataInfo : {
 						criteria: "test.string;1.0.0",
 						rule : [
@@ -27,11 +28,11 @@
 						]
 					},
 				}
-			},
+			],
 			"result" : {
 				"success": {
-					"output": {
-					}
+					"output": [
+					]
 				}
 			},
 		},
