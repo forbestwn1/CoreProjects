@@ -23,6 +23,7 @@ public class HAPImporterDataSourceDefinition {
 			"com.nosliw.service.test.template2.HAPServiceImp",
 			"com.nosliw.service.test.template3.HAPServiceImp",
 			"com.nosliw.service.test.template.school.HAPServiceImp",
+			"com.nosliw.service.test.template.currency.HAPServiceImp",
 	};
 	
 	public static List<HAPDefinitionService> loadDataSourceDefinition() {

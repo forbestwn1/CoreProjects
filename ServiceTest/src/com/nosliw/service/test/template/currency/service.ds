@@ -6,19 +6,38 @@
 		"tag" : ["public"],
 		"interface" : {
 			"parm" : {
-				"fromCurrency": {
-					"displayName" : "Source Currency",
+				"fromMoney": {
+					"displayName" : "Source Money",
 					"dataInfo" : {
 						"criteria": "test.money;1.0.0",
 						"rule" : [
+							{
+								path : "currency",
+								ruleType : "enum",
+								enumCode : "currencytype"
+							}
 						]
+					},
+					defaultValue :{
+						dataTypeId: "test.money;1.0.0",
+						value: {
+							currency : {
+								dataTypeId : "test.currency;1.0.0",
+								value : "United States Dollar"
+							},
+							amount : 100
+						}
 					},
 				},
 				"toCurrency": {
 					"displayName" : "Target Currency",
 					"dataInfo" : {
-						"criteria": "test.money;1.0.0",
-						"rule" : [
+						"criteria": "test.currency;1.0.0",
+						rule : [
+							{
+								ruleType : "enum",
+								enumCode : "currencytype"
+							}
 						]
 					},
 				}
@@ -26,6 +45,14 @@
 			"result" : {
 				"success": {
 					"output": {
+						"toMoney": {
+							"displayName" : "Target Money",
+							"dataInfo" : {
+								"criteria": "test.money;1.0.0",
+								"rule" : [
+								]
+							},
+						}
 					}
 				}
 			},
@@ -34,6 +61,6 @@
 		}
 	},
 	"runtime": {
-	    "implementation" : "com.nosliw.service.test.template.currency",
+	    "implementation" : "com.nosliw.service.test.template.currency.HAPServiceImp",
 	}
 }]

@@ -24,7 +24,7 @@ import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUI;
 import com.nosliw.uiresource.page.story.element.HAPUIDataStructureInfo;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPUINode {
 
@@ -54,7 +54,7 @@ public class HAPUINode {
 		return child.getUINode();
 	}
 	
-	public HAPUINode newChildNode(HAPStoryNodeUI childStoryNode, Object childId, HAPRequestChangeWrapper changeRequest, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan) {
+	public HAPUINode newChildNode(HAPStoryNodeUI childStoryNode, Object childId, HAPRequestChangeWrapper changeRequest, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		//build data info in ui node
 		HAPUIDataStructureInfo dataStructureInfo = HAPUtility.buildDataStructureInfoForUIStoryNode(childStoryNode, this.getStoryNode().getDataStructureInfo().getContext(), runtimeEnv, uiTagMan);
 		childStoryNode.setDataStructureInfo(dataStructureInfo);
@@ -110,7 +110,7 @@ public class HAPUINode {
 		return out;
 	}
 	
-	public void updateUIDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
+	public void updateUIDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPManagerChange changeMan) {
 		HAPRequestChange changeRequest = this.m_story.newRequestChange(true);
 		//update data structure
 		HAPUIDataStructureInfo dataStructureInfo = buildDataStructureInfo(parentDataStructureInfo, runtimeEnv, uiTagMan);
@@ -122,7 +122,7 @@ public class HAPUINode {
 		}
 	}
 	
-	protected HAPUIDataStructureInfo buildDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan) {
+	protected HAPUIDataStructureInfo buildDataStructureInfo(HAPUIDataStructureInfo parentDataStructureInfo, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		HAPUIDataStructureInfo out;
 		if(parentDataStructureInfo==null) {
 			//for page node

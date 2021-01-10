@@ -14,7 +14,7 @@ import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPProcessorUIPage {
 
@@ -26,7 +26,7 @@ public class HAPProcessorUIPage {
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,
-			HAPUITagManager uiTagMan,  
+			HAPManagerUITag uiTagMan,  
 			HAPParserPage uiResourceParser,
 			HAPIdGenerator idGengerator) {
 		

@@ -16,14 +16,14 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
-public class HAPUITagManager {
+public class HAPManagerUITag {
 
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
 	private Map<String, HAPUITagDefinitionData> m_dataTagDefs;
 	private Map<String, HAPUITagDefinition> m_otherTagDefs;
 	
-	public HAPUITagManager(HAPDataTypeHelper dataTypeHelper) {
+	public HAPManagerUITag(HAPDataTypeHelper dataTypeHelper) {
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_dataTagDefs = new LinkedHashMap<String, HAPUITagDefinitionData>();
 		this.m_otherTagDefs = new LinkedHashMap<String, HAPUITagDefinition>();

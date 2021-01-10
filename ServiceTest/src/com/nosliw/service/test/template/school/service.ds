@@ -15,7 +15,7 @@
 						rule : [
 							{
 								ruleType : "enum",
-								enumCode : "schoolType"
+								enumCode : "schooltype"
 							}
 						]
 					},

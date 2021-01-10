@@ -14,7 +14,12 @@ public interface HAPDataRule extends HAPEntityInfo{
 	@HAPAttribute
 	public static String RULETYPE = "ruleType";
 
+	@HAPAttribute
+	public static String PATH = "path";
+
 	String getRuleType();
+	
+	String getPath();
 	
 	//apply the rule and verify if the data is valid
 	HAPServiceData verify(HAPData data, HAPRuntimeEnvironment runtimeEnv);

@@ -61,7 +61,7 @@ import com.nosliw.uiresource.page.story.model.HAPUINode;
 import com.nosliw.uiresource.page.story.model.HAPUITree;
 import com.nosliw.uiresource.page.story.model.HAPUtility;
 import com.nosliw.uiresource.page.tag.HAPUITagInfo;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITageQueryData;
 
 public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
@@ -76,11 +76,11 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
-	private HAPUITagManager m_uiTagManager;
+	private HAPManagerUITag m_uiTagManager;
 	
 	private List<HAPStageInfo> m_stages;
 	
-	public HAPStoryBuilderPageSimple(HAPUITagManager uiTagMan, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPStoryBuilderPageSimple(HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagManager = uiTagMan;
 		this.m_stages = new ArrayList<HAPStageInfo>();

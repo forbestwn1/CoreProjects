@@ -11,11 +11,11 @@ import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPProcessorUIEventEscalate {
 
-	public static void process(HAPExecutableUIUnit exeUnit, HAPUITagManager uiTagMan) {
+	public static void process(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {

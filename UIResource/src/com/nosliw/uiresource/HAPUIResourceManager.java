@@ -30,7 +30,7 @@ import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITagOther;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPUIResourceManager {
 
@@ -38,7 +38,7 @@ public class HAPUIResourceManager {
 	
 	private HAPResourceCache m_resourceCache;
 	
-	private HAPUITagManager m_uiTagMan;
+	private HAPManagerUITag m_uiTagMan;
 	
 	private HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
 
@@ -50,7 +50,7 @@ public class HAPUIResourceManager {
 	
 	public HAPUIResourceManager(
 			HAPRuntimeEnvironment runtimeEnv,
-			HAPUITagManager uiTagMan
+			HAPManagerUITag uiTagMan
 			){
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagMan = uiTagMan;
@@ -159,5 +159,5 @@ public class HAPUIResourceManager {
 	public HAPParserModule getModuleParser() {    return this.m_moduleParser;   }
 	public HAPParserPage getUIResourceParser() {    return this.m_uiResourceParser;  }
 	public HAPParseMiniApp getMinitAppParser() {    return this.m_miniAppParser;     }
-	public HAPUITagManager getUITagManager() {   return this.m_uiTagMan;   }
+	public HAPManagerUITag getUITagManager() {   return this.m_uiTagMan;   }
 }

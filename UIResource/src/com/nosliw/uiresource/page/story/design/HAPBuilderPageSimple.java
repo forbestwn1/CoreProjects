@@ -43,7 +43,7 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITag;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilderShow{
 
@@ -51,13 +51,13 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	
 	private HAPParserPage m_pageParser;
 	
-	private HAPUITagManager m_tagManager;
+	private HAPManagerUITag m_tagManager;
 	
 	private HAPStory m_story;
 	
 	private HAPContext m_context;
 	
-	public HAPBuilderPageSimple(HAPManagerServiceDefinition serviceDefMan, HAPUITagManager tagManager, HAPParserPage pageParser) {
+	public HAPBuilderPageSimple(HAPManagerServiceDefinition serviceDefMan, HAPManagerUITag tagManager, HAPParserPage pageParser) {
 		this.m_serviceDefMan = serviceDefMan;
 		this.m_tagManager = tagManager;
 		this.m_pageParser = pageParser;

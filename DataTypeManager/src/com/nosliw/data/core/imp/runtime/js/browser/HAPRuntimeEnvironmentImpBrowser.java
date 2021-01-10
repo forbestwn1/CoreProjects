@@ -33,7 +33,7 @@ import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.story.design.HAPBuilderPageSimple;
 import com.nosliw.uiresource.page.story.design.builder.service.HAPStoryBuilderPageSimple;
 import com.nosliw.uiresource.page.tag.HAPGatewayUITag;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginApp;
 import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginAppEntry;
 import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginModule;
@@ -97,7 +97,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			runtime
 		);
 
-		this.m_uiResourceManager = new HAPUIResourceManager(this, new HAPUITagManager(dataTypeHelper));
+		this.m_uiResourceManager = new HAPUIResourceManager(this, new HAPManagerUITag(dataTypeHelper));
 
 		//gateway
 		this.getGatewayManager().registerGateway(GATEWAY_SERVICE, new HAPGatewayService(this.getServiceManager()));

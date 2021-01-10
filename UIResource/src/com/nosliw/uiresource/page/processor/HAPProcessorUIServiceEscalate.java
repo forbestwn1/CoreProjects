@@ -11,11 +11,11 @@ import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPProcessorUIServiceEscalate {
 
-	public static void process(HAPExecutableUIUnit exeUnit, HAPUITagManager uiTagMan) {
+	public static void process(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
 			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
@@ -40,7 +40,7 @@ public class HAPProcessorUIServiceEscalate {
 		}
 	}
 	
-	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPExecutableServiceUse> servicesDef, HAPUITagManager uiTagMan) {
+	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPExecutableServiceUse> servicesDef, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 		if(HAPConstant.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
 			for(String serviceName : servicesDef.keySet()) {

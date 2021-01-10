@@ -33,39 +33,4 @@ dataTypeDefinition.localRequires = {
 	}
 };
 
-dataTypeDefinition.convert = {
-		//defined operation
-		//in operation can access all the required resources by name through context
-		operation : function(data, toDataType, reverse, context){
-			var info = data.info;
-			if(reverse){
-				//from float
-				var currency;
-				if(info!=undefined){
-					currency = info.fromMoney;
-					delete info.fromMondy;
-				}
-				return {
-					dataTypeId : "test.money;1.0.0",
-					value : {
-						amount : data.value,
-						currency : currency
-					}
-				};
-			}
-			else{
-				//to float
-				if(info==undefined)  info = {};
-				info.fromMoney = data.value.currency;
-				
-				var out = {
-					dataTypeId : "test.float;1.0.0",
-					value : data.value.amount,
-					info : info
-				};
-			}
-		} 
-};
-
-
 nosliw.addDataTypeDefinition(dataTypeDefinition);

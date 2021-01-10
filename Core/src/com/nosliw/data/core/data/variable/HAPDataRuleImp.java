@@ -12,6 +12,8 @@ public abstract class HAPDataRuleImp extends HAPEntityInfoImp implements HAPData
 
 	private String m_ruleType;
 	
+	private String m_path;
+	
 	public HAPDataRuleImp() {
 	}
 	
@@ -21,6 +23,9 @@ public abstract class HAPDataRuleImp extends HAPEntityInfoImp implements HAPData
 	
 	@Override
 	public String getRuleType() {   return this.m_ruleType;    }
+	
+	@Override
+	public String getPath() {    return this.m_path;     }
 
 	@Override
 	public void process(HAPDataTypeCriteria criteria, HAPRuntimeEnvironment runtimeEnv) {}
@@ -29,6 +34,7 @@ public abstract class HAPDataRuleImp extends HAPEntityInfoImp implements HAPData
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(RULETYPE, this.getRuleType());
+		jsonMap.put(PATH, this.getPath());
 	}
 	
 	@Override
@@ -36,6 +42,7 @@ public abstract class HAPDataRuleImp extends HAPEntityInfoImp implements HAPData
 		JSONObject valueObj = (JSONObject)value;
 		super.buildObjectByJson(valueObj);
 		this.m_ruleType = valueObj.getString(RULETYPE);
+		this.m_path = (String)valueObj.opt(PATH);
 		return true;
 	}
 

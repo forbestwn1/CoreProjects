@@ -12,13 +12,13 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPResourceManagerUITag extends HAPResourceManagerImp{
 
-	private HAPUITagManager m_uiTagMan;
+	private HAPManagerUITag m_uiTagMan;
 
-	public HAPResourceManagerUITag(HAPUITagManager uiTagMan, HAPResourceManagerRoot rootResourceMan){
+	public HAPResourceManagerUITag(HAPManagerUITag uiTagMan, HAPResourceManagerRoot rootResourceMan){
 		super(rootResourceMan);
 		this.m_uiTagMan = uiTagMan;
 	}

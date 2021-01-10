@@ -14,7 +14,7 @@ import com.nosliw.data.core.service.provide.HAPUtilityService;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.resource.HAPResourceIdUIResource;
 
 public class HAPUtilityPage {
@@ -37,7 +37,7 @@ public class HAPUtilityPage {
 		uiUnitDef.setNameMapping(HAPNameMapping.newNamingMapping(uiUnitDef.getAttributes().get(HAPConstant.UITAG_PARM_MAPPING)));
 	}
 	
-	public static void solveAttachment(HAPDefinitionUIUnit uiUnitDef, HAPAttachmentContainer parentAttachment, HAPUITagManager uiTagMan) {
+	public static void solveAttachment(HAPDefinitionUIUnit uiUnitDef, HAPAttachmentContainer parentAttachment, HAPManagerUITag uiTagMan) {
 		buildUIUnitNameMapping(uiUnitDef);
 		
 		//if attribute has mapping, then do mapping first
@@ -56,7 +56,7 @@ public class HAPUtilityPage {
 		}
 	}
 	
-	private static String getTagInheritableMode(String tagName, HAPUITagManager uiTagMan) {
+	private static String getTagInheritableMode(String tagName, HAPManagerUITag uiTagMan) {
 		return HAPUtilityContext.getContextGroupInheritMode(uiTagMan.getUITagDefinition(new HAPUITagId(tagName)).getContext().getInfo());
 	}
 	

@@ -22,9 +22,9 @@ public class HAPGatewayUITag extends HAPGatewayImp{
 	@HAPAttribute
 	final public static String COMMAND_QUERYTAG_CRITERIA = "criteria";
 
-	private HAPUITagManager m_uiTagMan;
+	private HAPManagerUITag m_uiTagMan;
 	
-	public HAPGatewayUITag(HAPUITagManager uiTagMan) {
+	public HAPGatewayUITag(HAPManagerUITag uiTagMan) {
 		this.m_uiTagMan = uiTagMan;
 	}
 	

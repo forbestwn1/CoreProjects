@@ -24,12 +24,12 @@ import com.nosliw.uiresource.page.story.element.HAPStoryNodeUI;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPUIDataStructureInfo;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPUtility {
 
 	//build data info in ui story node
-	public static HAPUIDataStructureInfo buildDataStructureInfoForUIStoryNode(HAPStoryNodeUI uiStoryNode, HAPContextGroup parentContext, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan) {
+	public static HAPUIDataStructureInfo buildDataStructureInfoForUIStoryNode(HAPStoryNodeUI uiStoryNode, HAPContextGroup parentContext, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		HAPUIDataStructureInfo out = new HAPUIDataStructureInfo();
 
 		String nodeType = uiStoryNode.getType();
@@ -68,12 +68,12 @@ public class HAPUtility {
 		return out;
 	}
 	
-	public static HAPUITree buildUITree(HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
+	public static HAPUITree buildUITree(HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPManagerChange changeMan) {
 		HAPStoryNodePage pageStoryNode = (HAPStoryNodePage)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_PAGE).iterator().next();
 		return (HAPUITree)buildUINode(pageStoryNode, story, runtimeEnv, uiTagMan, changeMan);
 	}
 
-	private static HAPUINode buildUINode(HAPStoryNodeUI storyNode, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
+	private static HAPUINode buildUINode(HAPStoryNodeUI storyNode, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPManagerChange changeMan) {
 		HAPUINode out = null;
 
 		String nodeType = storyNode.getType();

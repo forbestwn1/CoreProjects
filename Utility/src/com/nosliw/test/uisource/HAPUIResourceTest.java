@@ -5,7 +5,7 @@ import com.nosliw.data.core.data.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPUIResourceTest {
 

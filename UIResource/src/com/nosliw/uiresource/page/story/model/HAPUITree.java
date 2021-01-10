@@ -15,15 +15,15 @@ import com.nosliw.data.core.story.change.HAPHandlerChange;
 import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
-import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 
 	private HAPRuntimeEnvironment m_runtimeEnv;
-	private HAPUITagManager m_uiTagMan;
+	private HAPManagerUITag m_uiTagMan;
 	private HAPManagerChange m_changeMan;
 	
-	public HAPUITree(HAPReferenceElement nodeRef, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan, HAPManagerChange changeMan) {
+	public HAPUITree(HAPReferenceElement nodeRef, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPManagerChange changeMan) {
 		super(nodeRef, story);
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagMan = uiTagMan;
@@ -31,7 +31,7 @@ public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 		init();
 	}
 
-	public HAPUITree(HAPStoryNodePage storyNode, HAPAliasElement alias, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPUITagManager uiTagMan) {
+	public HAPUITree(HAPStoryNodePage storyNode, HAPAliasElement alias, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		super(storyNode, alias, story);
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagMan = uiTagMan;
