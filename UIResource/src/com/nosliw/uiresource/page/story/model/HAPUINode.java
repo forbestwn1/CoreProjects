@@ -48,18 +48,29 @@ public class HAPUINode {
 		this.m_storyNode = storyNode;
 	}
 
+	public HAPUINode getUINodeByStoryElementId(String storyEleId) {
+		
+		if(this.getStoryNode()!=null && this.getStoryNode().getElementId().getId().equals(storyEleId))  return this;
+
+		for(HAPUIChild child : this.m_children) {
+			HAPUINode out = child.getUINode().getUINodeByStoryElementId(storyEleId);
+			if(out!=null)  return out;
+		}
+		return null;
+	}
+
 	public HAPUINode addChildNode(HAPStoryNodeUI childStoryNode, HAPConnectionContain connection) {
 		HAPUIChild child = new HAPUIChild(new HAPUINode(childStoryNode.getElementId(), m_story), connection.getChildId(), connection.getElementId(), m_story);
 		this.m_children.add(child);
 		return child.getUINode();
 	}
 	
-	public HAPUINode newChildNode(HAPStoryNodeUI childStoryNode, Object childId, HAPRequestChangeWrapper changeRequest, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
+	public HAPUINode newChildNode(HAPStoryNodeUI childStoryNode, String alias, Object childId, HAPRequestChangeWrapper changeRequest, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		//build data info in ui node
 		HAPUIDataStructureInfo dataStructureInfo = HAPUtility.buildDataStructureInfoForUIStoryNode(childStoryNode, this.getStoryNode().getDataStructureInfo().getContext(), runtimeEnv, uiTagMan);
 		childStoryNode.setDataStructureInfo(dataStructureInfo);
 		
-		HAPAliasElement nodeName = changeRequest.addNewChange(childStoryNode).getAlias();
+		HAPAliasElement nodeName = changeRequest.addNewChange(childStoryNode, alias).getAlias();
 		HAPAliasElement connectionName = changeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(m_nodeRef, nodeName, (String)childId)).getAlias();
 		
 		HAPUIChild childNode = new HAPUIChild(childStoryNode, nodeName, childId, connectionName, this.m_story);

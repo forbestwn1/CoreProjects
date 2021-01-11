@@ -1,5 +1,5 @@
 {
-	name : "float1",
+	name : "float",
 	type : "data",
 	base : "simpleData",
 	description : "",

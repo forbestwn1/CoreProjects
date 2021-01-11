@@ -61,7 +61,7 @@
 			var currency = loc_currencyView.val();
 			var amountStr = loc_amountView.val();
 			var amount = 0; 
-			if((amountStr==undefined||amountStr!="")&&(currency==undefined||currency!=""))  return;
+			if((amountStr==undefined||amountStr=="")||(currency==undefined||currency==""))  return;
 			amount = parseFloat(amountStr);
 			return {
 				dataTypeId: "test.money;1.0.0",

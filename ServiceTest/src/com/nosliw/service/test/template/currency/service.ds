@@ -42,6 +42,10 @@
 							}
 						]
 					},
+					defaultValue :{
+						dataTypeId : "test.currency;1.0.0",
+						value : "Canadian Dollar"
+					},
 				}
 			],
 			"result" : {
