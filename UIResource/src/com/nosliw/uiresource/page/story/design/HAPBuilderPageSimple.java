@@ -285,6 +285,15 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 					html = html.replace("{{"+key+"}}", placeHolders.get(key).toString());
 				}
 				
+				//remove idle place holder
+				int startI = html.indexOf("{{");
+				while(startI!=-1) {
+					int endI = html.indexOf("}}");
+					String placeHolderStr = html.substring(startI, endI+2);
+					html = html.replace(placeHolderStr, "");
+					startI = html.indexOf("{{");
+				}
+				
 				HAPHtmlText textHtml = new HAPHtmlText(html);
 				out = textHtml;
 			}

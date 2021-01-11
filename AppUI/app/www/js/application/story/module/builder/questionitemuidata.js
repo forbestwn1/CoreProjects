@@ -61,6 +61,9 @@ var node_createComponentQuestionItemUIData = function(){
 			selectUI : function(event){
 				
 			},
+			onOpenPopup : function(){
+				nosliwApplication.info.framework7.popup.open(this.$refs.popup);
+			},
 			onSelectChange : function(selected){
 				this.popSelected = selected;
 			},
@@ -105,9 +108,10 @@ var node_createComponentQuestionItemUIData = function(){
 			<div>
 				{{question.question}}:
 				dataTag: <uitag_data v-bind:uitaginfo="currentTagInfo"/>
-				<a class="popup-open" href="#" data-popup=".popup-about">Change UI</a>
+<!--				<a class="popup-open" href="#" data-popup=".popup-about">Change UI</a>  -->
+				<a href="#" v-on:click.prevent="onOpenPopup">Change UI</a>
 
-				<div class="popup popup-about">
+				<div class="popup popup-about" ref="popup">
 				    <div class="block">
 				      <p>Please select control: </p>
 				    	<uitag_select v-bind:uitaginfolist='this.tagInfos' v-bind:initselect='this.initSelect' v-on:selectChange="onSelectChange"/>
@@ -115,7 +119,7 @@ var node_createComponentQuestionItemUIData = function(){
 				      <p><a class="link popup-close" href="#" v-on:click.prevent="onSelectTag">Ok</a></p>
 				      <p><a class="link popup-close" href="#" v-on:click.prevent="onCancelSelectTag">Close</a></p>
 				    </div>
-				  </div>
+				</div>
 			
 			</div>
 		`

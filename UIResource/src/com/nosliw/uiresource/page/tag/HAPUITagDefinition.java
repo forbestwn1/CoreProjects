@@ -91,6 +91,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.m_type);
 		jsonMap.put(BASE, this.m_base);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));

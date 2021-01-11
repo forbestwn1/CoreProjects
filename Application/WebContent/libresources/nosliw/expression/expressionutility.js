@@ -25,6 +25,37 @@ var packageObj = library;
 
 var node_utility = function() 
 {
+	
+	//execute conterter
+	var loc_getExecuteConverterToRequest = function(data, targetDataTypeId, reverse, handlers, requestInfo){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteConverter", {"data":data, "targetDataTypeId":targetDataTypeId}), handlers, requestInfo);
+
+		var dataTypeId;
+		if(reverse){
+			dataTypeId = targetDataTypeId;
+		}
+		else{
+			dataTypeId = data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID];
+		}
+		
+		var converterResourceId = node_resourceUtility.createConverterResourceId(dataTypeId);
+		var getResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([converterResourceId], {
+			success : function(requestInfo, resourcesTree){
+				var dataTypeId;
+				if(reverse){
+					dataTypeId = data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID];
+				}
+				else{
+					dataTypeId = targetDataTypeId;
+				}
+				return loc_out.executeConvertResource(converterResourceId, data, dataTypeId, reverse, resourcesTree);
+			}
+		});
+		out.addRequest(getResourceRequest);
+		return out;
+	};
+	
+
 	//execute data operation
 	var loc_getExecuteOperationRequest = function(dataTypeId, operation, parmArray, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperation", {"dataType":dataTypeId, "operation":operation, "parms":parmArray}), handlers, requestInfo);

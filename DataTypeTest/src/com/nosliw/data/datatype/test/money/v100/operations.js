@@ -58,7 +58,7 @@ dataTypeDefinition.convert = {
 				if(info==undefined)  info = {};
 				info.fromMoney = data.value.currency;
 				
-				var out = {
+				return {
 					dataTypeId : "test.float;1.0.0",
 					value : data.value.amount,
 					info : info
