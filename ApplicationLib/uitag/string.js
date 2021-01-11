@@ -94,8 +94,8 @@
 				//ui event
 				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
 					loc_view.bind('change', function(){
-						loc_base.trigueEvent("dataChanged", loc_getViewData());
-					});
+						loc_base.onDataChange(loc_getViewData());
+					});					
 				}
 				return loc_view;
 			},

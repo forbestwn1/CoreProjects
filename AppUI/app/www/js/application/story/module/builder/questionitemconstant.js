@@ -43,8 +43,8 @@ var node_createComponentQuestionItemConstant = function(){
 		methods : {
 			onDataChange : function(data){
 				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, data, this.question.answer);
-				that.$emit("answerChange", data);
-				that.data = eventData.value;
+				this.$emit("answerChange", data);
+				this.data = data;
 			},
 		},
 		computed: {

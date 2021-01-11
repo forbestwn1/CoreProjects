@@ -20,6 +20,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	var loc_coreObj;
 	
 	var loc_dataVariable;
+	var loc_currentData;
 	
 	var loc_enumDataSet;
 	
@@ -82,8 +83,13 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	var loc_updateView = function(request){
 		loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {
 			success : function(requestInfo, data){
-				if(data==undefined)			loc_coreObj.updateView();
-				else loc_coreObj.updateView(data.value);
+				if(data==undefined){
+					loc_currentData = undefined;
+				}
+				else{
+					loc_currentData = data.value;
+				}
+				loc_coreObj.updateView(loc_currentData);
 			}
 		}, request);
 	};
@@ -114,12 +120,29 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			return loc_enumDataSet;
 		},
 		
+		onDataChange : function(data){
+			if(data==undefined){
+				loc_currentData = data;
+			}
+			else{
+				if(loc_currentData==undefined){
+					loc_currentData = data;
+				}
+				else{
+					loc_currentData[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID] = data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID]; 
+					loc_currentData[node_COMMONATRIBUTECONSTANT.DATA_VALUE] = data[node_COMMONATRIBUTECONSTANT.DATA_VALUE]; 
+				}
+			}
+			
+			loc_env.executeBatchDataOperationRequest([
+				loc_env.getDataOperationSet(loc_dataVariable, "", loc_currentData)
+			]);
+			loc_env.trigueEvent("valueChanged", loc_currentData);
+		},
+		
 		trigueEvent : function(eventName, eventData){
 			if(eventName=='dataChanged'){
-				loc_env.executeBatchDataOperationRequest([
-					loc_env.getDataOperationSet(loc_dataVariable, "", eventData)
-				]);
-				loc_env.trigueEvent("valueChanged", eventData);
+				this.onDataChange(eventData);
 			}
 		},
 		

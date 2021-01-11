@@ -1,6 +1,7 @@
 {
-	name : "float",
+	name : "float1",
 	type : "data",
+	base : "simpleData",
 	description : "",
 	attributes : [
 		{
@@ -45,98 +46,85 @@
 		}
 	],
 	requires:{
-		"operation" : { 
-			op1: "test.integer;1.0.0;add",
-		},
 	},
-	script : function(env){
+	script : function(base){
+		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 
-		var loc_env = env;
-		var loc_dataVariable;
+		var loc_base = base;
 		var loc_view;
 		
-		var loc_revertChange = function(){
-			
-		};
-
 		var loc_getViewData = function(){
+			var value = loc_view.val();
+			if(value==undefined || value=="")  return;
 			return {
 				dataTypeId: "test.float;1.0.0",
-				value: parseFloat(loc_view.val())
+				value: parseFloat(loc_view.val()),
 			};
 		};
 
-		var loc_updateView = function(request){
-			env.executeDataOperationRequestGet(loc_dataVariable, "", {
-				success : function(requestInfo, data){
-					if(data==undefined || data.value==undefined)   loc_view.val("");
-					else loc_view.val(data.value.value);
-				}
-			}, request);
-		};
-
-		var loc_setupUIEvent = function(){
-			loc_view.bind('change', function(){
-				env.executeBatchDataOperationRequest([
-					env.getDataOperationSet(loc_dataVariable, "", loc_getViewData())
-				]);
-			});
-		};
-
+		
 		var loc_out = 
 		{
-			preInit : function(){	
-				loc_dataVariable = loc_env.createVariable("internal_data");
-			},
-				
-			initViews : function(requestInfo){	
-				loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
-				return loc_view;
-			},
-				
-			postInit : function(request){
-				loc_updateView(request);
-				loc_setupUIEvent();
-
-				loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, request){
-					loc_updateView(request);
-				}, this);
-			},
-
-			destroy : function(){
-				loc_dataVariable.release();	
-				loc_view.remove();
-			},
-
-			processAttribute : function(name, value){},
-
-			destroy : function(){	
-				loc_dataVariable.release();	
-				loc_view.remove();
-			},
-			
-			createContextForDemo : function(id, parentContext, request) {
-				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
-				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
-				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
-				
-				var dataVarPar;
-				if(parentContext!=undefined)	dataVarPar = parentContext.getContextElement("data");
-				var dataVarEleInfo = undefined;
-				if(dataVarPar!=undefined){
-					dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar);
+			initViews : function(requestInfo){
+				var flowDataType = loc_base.getDataFlowType();
+				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
+					loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
+//					var enumDataSet = loc_base.getEnumDataSet();
+//					if(enumDataSet==undefined){
+//						loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
+//					}
+//					else{
+//						loc_view = $('<select style="display:inline;background:#e6dedc;border:solid red"/>');	
+//						for(var i in enumDataSet){
+//							loc_view.append($('<option>', {
+//								value: enumDataSet[i].value,
+//								text: enumDataSet[i].value
+//							}));
+//						}
+//					}
 				}
 				else{
-					var data = node_createData({value:100, dataTypeId:"test.float;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);
-					dataVarEleInfo = node_createContextElementInfo("internal_data", data);
+					loc_view = $('<span/>');	
 				}
-				
-				var elementInfosArray = [dataVarEleInfo];
-				return node_createContext(id, elementInfosArray, request);
-			}
+
+				//ui event
+				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
+					loc_view.bind('change', function(){
+						loc_base.onDataChange(loc_getViewData());
+					});									}
+				return loc_view;
+			},
 			
-		};
+			updateView : function(data, request){
+				var flowDataType = loc_base.getDataFlowType();
+				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
+					if(data==undefined || data.value==undefined)  loc_view.val("");
+					else loc_view.val(data.value);
+				}
+				else{
+					if(data==undefined || data.value==undefined)  loc_view.text("");
+					else loc_view.text(data.value);
+				}
+			},
+			
+			getViewData : function(){
+				return loc_getViewData();
+			},
+			
+			getDataForDemo : function(){
+				return {
+					value:"Hello World", 
+					dataTypeId:"test.string;1.0.0"
+				};
+			},
+			
+			destroy : function(){
+				loc_view.remove();
+			}
+		};	
+			
 		return loc_out;
 	}
 }

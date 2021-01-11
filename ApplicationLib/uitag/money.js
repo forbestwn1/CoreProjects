@@ -61,9 +61,8 @@
 			var currency = loc_currencyView.val();
 			var amountStr = loc_amountView.val();
 			var amount = 0; 
-			if(amountStr!=undefined && amountStr!=""){
-				amount = parseFloat(amountStr);
-			}
+			if((amountStr==undefined||amountStr!="")&&(currency==undefined||currency!=""))  return;
+			amount = parseFloat(amountStr);
 			return {
 				dataTypeId: "test.money;1.0.0",
 				value: {
@@ -107,8 +106,11 @@
 					
 				//ui event
 				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
-					loc_view.bind('change', function(){
-						loc_base.trigueEvent("dataChanged", loc_getViewData());
+					loc_currencyView.bind('change', function(){
+						loc_base.onDataChange(loc_getViewData());
+					});
+					loc_amountView.bind('change', function(){
+						loc_base.onDataChange(loc_getViewData());
 					});
 				}
 				return loc_view;
