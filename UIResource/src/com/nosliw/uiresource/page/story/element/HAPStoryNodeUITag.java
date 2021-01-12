@@ -42,6 +42,7 @@ public abstract class HAPStoryNodeUITag extends HAPStoryNodeUI{
 	
 	public void addAttribute(String name, String value) {     this.m_attributes.put(name, value);      }
 	public Map<String, String> getAttributes(){   return this.m_attributes;     }
+	public String getAttributeValue(String name) {  return this.m_attributes.get(name);   }
 	
 	@Override
 	public HAPChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv) {

@@ -23,8 +23,8 @@ import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUI;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPUIDataStructureInfo;
-import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
+import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPUtility {
 
@@ -70,10 +70,12 @@ public class HAPUtility {
 	
 	public static HAPUITree buildUITree(HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPManagerChange changeMan) {
 		HAPStoryNodePage pageStoryNode = (HAPStoryNodePage)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_PAGE).iterator().next();
-		return (HAPUITree)buildUINode(pageStoryNode, story, runtimeEnv, uiTagMan, changeMan);
+		HAPUINode uiNode = createUINodeByStoryNode(pageStoryNode, story, runtimeEnv, uiTagMan, changeMan);
+		buildChildUINode(uiNode, story, runtimeEnv, uiTagMan, changeMan);
+		return (HAPUITree)uiNode;
 	}
 
-	private static HAPUINode buildUINode(HAPStoryNodeUI storyNode, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPManagerChange changeMan) {
+	private static HAPUINode createUINodeByStoryNode(HAPStoryNodeUI storyNode, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPManagerChange changeMan) {
 		HAPUINode out = null;
 
 		String nodeType = storyNode.getType();
@@ -85,13 +87,16 @@ public class HAPUtility {
 			out = new HAPUINode(storyNode.getElementId(), story); 
 			break;
 		}
-		
-		List<HAPInfoNodeChild> childrenNodeInfo = HAPUtilityStory.getAllChildNode(storyNode, story);
+		return out;
+	}
+	
+	private static void buildChildUINode(HAPUINode uiNode, HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPManagerChange changeMan) {
+		List<HAPInfoNodeChild> childrenNodeInfo = HAPUtilityStory.getAllChildNode(uiNode.getStoryNode(), story);
 		for(HAPInfoNodeChild childNodeInfo : childrenNodeInfo) {
 			if(childNodeInfo.getChildNode() instanceof HAPStoryNodeUI) {
-				out.addChildNode((HAPStoryNodeUI)childNodeInfo.getChildNode(), childNodeInfo.getConnection());
+				HAPUINode childUINode = uiNode.addChildNode((HAPStoryNodeUI)childNodeInfo.getChildNode(), childNodeInfo.getConnection());
+				buildChildUINode(childUINode, story, runtimeEnv, uiTagMan, changeMan);
 			}
 		}
-		return out;
 	}
 }

@@ -52,6 +52,7 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutputItem;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
+import com.nosliw.uiresource.page.story.element.HAPStoryNodeUI;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITagOther;
@@ -306,8 +307,6 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(parmBranchInfo.dataUIInfo.rootEleRef));					
 				}
 
-//				HAPUINode submitUINode = pageLayoutUINode.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "submit.tmp")), null, "submit", uiLayerChangeRequest, this.m_runtimeEnv, m_uiTagManager);
-
 				//output ui
 				for(HAPOutputBranchInfo parmBranchInfo : outputBranchInfos) {
 					//ui
@@ -487,10 +486,25 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			HAPRequestChangeWrapper changeRequest = new HAPRequestChangeWrapper(story, true, true);
 
 			HAPUITree uiTree = HAPUtility.buildUITree(story, this.m_runtimeEnv, this.m_uiTagManager, this.m_runtimeEnv.getStoryManager().getChangeManager());
-			HAPUINode pageLayoutUINode = uiTree.getUINodeByStoryElementId(story.getElement(ALIAS_LAYOUTNODE).getElementId().getId());
 			
 			//add submit button
-			pageLayoutUINode.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "submit.tmp")), null, "submit", changeRequest, this.m_runtimeEnv, m_uiTagManager);
+			boolean hasOutUI = false;
+			List<HAPUINode> allUINodes = uiTree.getAllUINodes();
+			for(HAPUINode uiNode : allUINodes) {
+				HAPStoryNodeUI uiStoryNode = uiNode.getStoryNode();
+				if(HAPConstant.STORYNODE_TYPE_UIDATA.equals(uiStoryNode.getType())) {
+					HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
+					if(uiDataStoryNode.isEnable()) {
+						if(HAPConstant.DATAFLOW_OUT.equals(uiDataStoryNode.getAttributeValue(HAPStoryNodeUIData.ATTRIBUTE_DATAFLOW))) {
+							hasOutUI = true;
+						}
+					}
+				}
+			}
+			if(hasOutUI==true) {
+				HAPUINode pageLayoutUINode = uiTree.getUINodeByStoryElementId(story.getElement(ALIAS_LAYOUTNODE).getElementId().getId());
+				pageLayoutUINode.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "submit.tmp")), null, "submit", changeRequest, this.m_runtimeEnv, m_uiTagManager);
+			}
 			
 			changeRequest.close();
 			

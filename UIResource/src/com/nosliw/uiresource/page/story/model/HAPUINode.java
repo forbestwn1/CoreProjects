@@ -146,7 +146,7 @@ public class HAPUINode {
 		return out;
 	}
 	
-	private HAPStoryNodeUI getStoryNode() {
+	public HAPStoryNodeUI getStoryNode() {
 		if(this.m_storyNode==null) {
 			this.m_storyNode = (HAPStoryNodeUI)this.m_story.getElement(this.m_nodeRef);
 		}
