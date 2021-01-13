@@ -68,7 +68,7 @@ var node_createComponentQuestionItemConstant = function(){
 			<div>
 				{{question.question}}: 
 				<div>
-				dataTag: <uitag_data v-bind:uitaginfo="tagInfo" v-bind:data="tagData"  v-on:dataChange="onDataChange"/>
+				dataTag: <uitag_data v-bind:uitaginfo="tagInfo" dynamicdata="true" v-bind:data="tagData"  v-on:dataChange="onDataChange"/>
 				</div>
 			</div>
 		`

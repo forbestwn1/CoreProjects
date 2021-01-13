@@ -648,6 +648,7 @@ public class HAPConstant {
 
 
 
+		public static final String STORYNODE_TYPE_SCRIPT = "script";
 		public static final String STORYNODE_TYPE_SERVICE = "service";
 		public static final String STORYNODE_TYPE_SERVICEINPUT = "serviceInput";
 		public static final String STORYNODE_TYPE_SERVICEOUTPUT = "serviceOutput";

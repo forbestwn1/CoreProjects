@@ -12,6 +12,7 @@ import com.nosliw.data.core.story.element.connection.HAPConnectionDataIO;
 import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupBatch;
 import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupSwitch;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeConstant;
+import com.nosliw.data.core.story.element.node.HAPStoryNodeScript;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
@@ -26,6 +27,7 @@ public class HAPParserElement {
 	private static final Map<String, Class<? extends HAPElementGroup>> m_storyGroupClass = new LinkedHashMap<String, Class<? extends HAPElementGroup>>();
 	
 	static {
+		m_storyNodeClass.put(HAPStoryNodeScript.STORYNODE_TYPE, HAPStoryNodeScript.class);
 		m_storyNodeClass.put(HAPStoryNodeService.STORYNODE_TYPE, HAPStoryNodeService.class);
 		m_storyNodeClass.put(HAPStoryNodeServiceInput.STORYNODE_TYPE, HAPStoryNodeServiceInput.class);
 		m_storyNodeClass.put(HAPStoryNodeServiceInputParm.STORYNODE_TYPE, HAPStoryNodeServiceInputParm.class);

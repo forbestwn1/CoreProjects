@@ -36,18 +36,22 @@ var node_createComponentUITagData = function(){
 		}
 		else{
 			var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
-			var data = node_createData(that.tagData, node_CONSTANT.WRAPPER_TYPE_APPDATA);
-			var dataVarEleInfo = node_createContextElementInfo("data", data);
-			var elementInfosArray = [dataVarEleInfo];
-			that.context = node_createContext("id", elementInfosArray, request);
-			
-			that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
-				if(that.requestFromDataUpdate[request.getId()]==undefined){
-					that.tagData = eventData.value;
-					that.$emit("dataChange", eventData.value);
-				}
-			}, this);
 
+			that.context = undefined;
+			if(that.dynamicdata=='true'){
+				var data = node_createData(that.tagData, node_CONSTANT.WRAPPER_TYPE_APPDATA);
+				var dataVarEleInfo = node_createContextElementInfo("data", data);
+				var elementInfosArray = [dataVarEleInfo];
+				that.context = node_createContext("id", elementInfosArray, request);
+				
+				that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
+					if(that.requestFromDataUpdate[request.getId()]==undefined){
+						that.tagData = eventData.value;
+						that.$emit("dataChange", eventData.value);
+					}
+				}, this);
+			}
+			
 			var request = node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS], {
 				success : function(request, uiNodeViewGroup){
 					$(that.$refs.uiTag).empty();
@@ -69,7 +73,7 @@ var node_createComponentUITagData = function(){
 				requestFromDataUpdate : {}
 			};
 		},
-		props : ['uitaginfo', 'data'],
+		props : ['uitaginfo', 'dynamicdata', 'data'],
 		components : {
 		},
 		methods : {
@@ -79,12 +83,14 @@ var node_createComponentUITagData = function(){
 				loc_updateTagUI(this);
 			},
 			data : function(){
-				this.tagData = this.data;
-				var request = this.context.getUpdateContextRequest({
-					"data":this.tagData
-				});
-				this.requestFromDataUpdate[request.getId()] = request;
-				node_requestServiceProcessor.processRequest(request);
+				if(that.dynamicdata=='true'){
+					this.tagData = this.data;
+					var request = this.context.getUpdateContextRequest({
+						"data":this.tagData
+					});
+					this.requestFromDataUpdate[request.getId()] = request;
+					node_requestServiceProcessor.processRequest(request);
+				}				
 			}
 		},
 		template : `

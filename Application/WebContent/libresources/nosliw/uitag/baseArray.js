@@ -164,6 +164,34 @@ var node_createUITagOnBaseArray = function(env, uiTagDef){
 				loc_coreObj.destroy();
 				loc_handleEachElementProcessor.destroy(request);
 			},
+			createContextForDemo : function(id, parentContext, matchersByName, request){
+				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
+				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
+				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
+				
+				var dataVarPar;
+				if(parentContext!=undefined)	dataVarPar = parentContext.getContextElement("data");
+				var dataVarEleInfo = undefined;
+				if(dataVarPar!=undefined){
+					var matchersCombo = matchersByName==undefined?{}:matchersByName["internal_data"];
+					var info;
+					if(matchersCombo!=undefined){
+						info = {
+								matchers : matchersCombo[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS],
+								reverseMatchers : matchersCombo[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_REVERSEMATCHERS]
+						};
+					}
+					dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar, undefined, undefined, info);
+				}
+				else{
+					var data = node_createData(loc_coreObj.getDataForDemo(), node_CONSTANT.WRAPPER_TYPE_APPDATA);
+					dataVarEleInfo = node_createContextElementInfo("internal_data", data);
+				}
+				
+				var elementInfosArray = [dataVarEleInfo];
+				return node_createContext(id, elementInfosArray, request);
+			},
+
 			
 	};
 	

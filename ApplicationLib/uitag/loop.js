@@ -108,6 +108,21 @@
 			destroy : function(request){
 			},
 			
+			getDataForDemo : function(){
+				return {
+					dataTypeId:"test.array;1.0.0",
+					value:[
+						{
+							value:"Hello World1", 
+							dataTypeId:"test.string;1.0.0"
+						},
+						{
+							value:"Hello World2", 
+							dataTypeId:"test.string;1.0.0"
+						},
+					], 
+				};
+			},
 		};
 		return loc_out;
 	}

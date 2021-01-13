@@ -37,6 +37,7 @@ import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeConstant;
+import com.nosliw.data.core.story.element.node.HAPStoryNodeScript;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
@@ -88,6 +89,10 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		HAPHtmlSegment htmlContent = this.buildPage();
 		templateParms.put("htmlContent", htmlContent.toString());
 		
+		//script
+		String script = this.buildScript();
+		templateParms.put("script", script);
+		
 		InputStream pageTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPBuilderPageSimple.class, "page_framework.temp");
 		String pageContent = HAPStringTemplateUtil.getStringValue(pageTemplateStream, templateParms);
 
@@ -100,6 +105,18 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			e.printStackTrace();
 		}
 		return pageDef;
+	}
+	
+	private String buildScript() {
+		StringBuffer out = new StringBuffer();
+		Set<HAPStoryNode> scriptNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstant.STORYNODE_TYPE_SCRIPT);
+		for(HAPStoryNode node : scriptNodes) {
+			HAPStoryNodeScript scriptNode = (HAPStoryNodeScript)node;
+			out.append("\n");
+			out.append(scriptNode.getScript());
+			out.append("\n");
+		}
+		return out.toString();
 	}
 	
 	private HAPContext buildContext() {

@@ -138,7 +138,9 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		getEndElement : function(){  return loc_getEndElement();  },
 		
 		//utility methods
-		createVariable : function(fullPath){  return loc_context.createVariable(node_createContextVariableInfo(fullPath));  },
+		createVariable : function(fullPath){  
+			return loc_context.createVariable(node_createContextVariableInfo(fullPath));  
+		},
 		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo);  },
 		
 		//---------------------------------ui resource view
