@@ -6,6 +6,10 @@
 
 	<nosliw-contextvalue/>
 	
+	<nosliw-contexttree/>
+	
+	<nosliw-varviewer/>
+	
 </body>
 
 	<scripts>

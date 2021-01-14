@@ -140,8 +140,11 @@
 				return {
 					dataTypeId:"test.money;1.0.0",
 					value:{
-						dataTypeId:"test.currency;1.0.0",
-						value:"United States Dollar", 
+						currency : {
+							dataTypeId:"test.currency;1.0.0",
+							value:"United States Dollar", 
+						},
+						amount : 100
 					}
 				};
 			},

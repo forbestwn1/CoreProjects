@@ -240,6 +240,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 									loc_setValue(value);
 									eventData.value = value;
 									events.dataOperation.push(new node_EventInfo(event, eventData));
+									loc_dataOperationEventProcessorPost(event, eventData, pathPosition, events, requestInfo);
 								}
 							}, requestInfo);
 							node_requestServiceProcessor.processRequest(r);
@@ -269,17 +270,22 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 				}
 			}
 			
-			var trigueEvent = true;
-			if(loc_out.prv_eventAdapter!=undefined){
-				//apply trigue
-				trigueEvent = loc_out.prv_eventAdapter(event, eventData, pathPosition, requestInfo);
-			}
-			//trigue event
-			if(trigueEvent==true){
-				loc_trigueEvents(events, requestInfo);
-			}
+			loc_dataOperationEventProcessorPost(event, eventData, pathPosition, events, requestInfo);
 		}
 
+	};
+
+	//post process for data operation event processor
+	var loc_dataOperationEventProcessorPost = function(event, eventData, pathPosition, events, requestInfo){
+		var trigueEvent = true;
+		if(loc_out.prv_eventAdapter!=undefined){
+			//apply trigue
+			trigueEvent = loc_out.prv_eventAdapter(event, eventData, pathPosition, requestInfo);
+		}
+		//trigue event
+		if(trigueEvent==true){
+			loc_trigueEvents(events, requestInfo);
+		}
 	};
 	
 	//trigue events collection

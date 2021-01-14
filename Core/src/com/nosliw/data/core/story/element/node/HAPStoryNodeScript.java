@@ -31,8 +31,14 @@ public class HAPStoryNodeScript extends HAPStoryNodeImp{
 		this.setScript(script);
 	}
 	
-	public String getScript() {    return StringEscapeUtils.unescapeEcmaScript(this.m_script);    }
-	public void setScript(String script) {	this.m_script = StringEscapeUtils.escapeEcmaScript(script);	}
+	public String getScript() {
+		return StringEscapeUtils.unescapeEcmaScript(this.m_script);
+//		return this.m_script;
+	}
+	public void setScript(String script) {	
+		this.m_script = StringEscapeUtils.escapeEcmaScript(script);
+//		this.m_script = script;
+	}
 
 	@Override
 	public HAPChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv) {
@@ -61,7 +67,7 @@ public class HAPStoryNodeScript extends HAPStoryNodeImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		this.m_script = (String)jsonObj.opt(SCRIPT);
+		this.setScript(jsonObj.getString(SCRIPT));
 		return true;  
 	}
 

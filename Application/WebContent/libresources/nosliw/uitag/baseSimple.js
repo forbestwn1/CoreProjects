@@ -171,9 +171,13 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		postInit : function(request){
 			loc_updateView(request);
 			
-			loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, request){
+			loc_dataVariable.registerDataChangeEventListener(undefined, function(event, eventData, request){
 				loc_updateView(request);
 			}, this);
+			
+//			loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, request){
+//				loc_updateView(request);
+//			}, this);
 		},
 		destroy : function(request){
 			loc_dataVariable.release();	

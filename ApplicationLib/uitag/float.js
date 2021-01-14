@@ -115,8 +115,8 @@
 			
 			getDataForDemo : function(){
 				return {
-					value:"Hello World", 
-					dataTypeId:"test.string;1.0.0"
+					value:"100", 
+					dataTypeId:"test.float;1.0.0"
 				};
 			},
 			
