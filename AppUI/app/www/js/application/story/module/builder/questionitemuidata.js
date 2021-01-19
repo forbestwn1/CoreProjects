@@ -93,11 +93,13 @@ var node_createComponentQuestionItemUIData = function(){
 				}
 			});
 			var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
-			request.addRequest(loc_storyService.getQueryUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_DATAINFO][node_COMMONATRIBUTECONSTANT.UIDATAINFO_DATATYPE], {
+			request.addRequest(loc_storyService.getQueryUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_DATAINFO][node_COMMONATRIBUTECONSTANT.UIDATAINFO_DATATYPE][node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_CRITERIA], {
 				success : function(request, queryResultSet){
 					that.tagInfos.splice(0, that.tagInfos.length);
 					_.each(queryResultSet[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULTSET_ITEMS], function(item, i){
-						that.tagInfos.push(item[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_UITAGINFO]);
+						var tagInfo = item[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_UITAGINFO];
+						tagInfo.externalDataTypeInfo = element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE];
+						that.tagInfos.push(tagInfo);
 					});
 					loc_setCurrentByIndex(that, 0);
 				}

@@ -2,6 +2,7 @@ package com.nosliw.data.core.data;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -10,6 +11,21 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPUtilityData {
+
+	public static HAPRelationship cascadeRelationship(HAPRelationship r1, HAPRelationship r2) {
+		return new HAPRelationshipImp(r1.getSource(), r2.getTarget(), cascadeRelationshipPath(r1.getPath(), r2.getPath()));
+	}
+
+	public static HAPRelationshipPath cascadeRelationshipPath(HAPRelationshipPath p1, HAPRelationshipPath p2) {
+		HAPRelationshipPath out = new HAPRelationshipPath();
+		
+		List<HAPRelationshipPathSegment> segs1 = p1.getSegments();
+		for(int i=0; i<segs1.size()-1; i++) 	out.addSegment(segs1.get(i));
+		
+		for(HAPRelationshipPathSegment seg2 : p2.getSegments())  out.addSegment(seg2);
+		
+		return out;
+	}
 
 	public static HAPDataWrapper buildDataWrapperFromObject(Object obj){
 		if(obj==null)   return null;

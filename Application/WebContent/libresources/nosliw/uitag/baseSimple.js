@@ -11,6 +11,8 @@ var packageObj = library;
 	var node_createServiceRequestInfoSequence;
 	var node_createServiceRequestInfoSimple;
 	var node_ServiceInfo;
+	var node_expressionUtility;
+	var node_dataRuleUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUITagOnBaseSimple = function(env, uiTagDef){
@@ -37,6 +39,69 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	var loc_expressionRuleDescription;
 	
 	var loc_processDataRuleRequest = function(request){
+		var out = node_createServiceRequestInfoSequence(undefined, undefined, request);
+
+		//emum rule
+		var dataEleDef = loc_env.getTagContextElementDefinition("internal_data");
+		var dataInfo = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
+			[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
+			[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA];
+		var rules = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
+		var	ruleMatchers = [node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
+
+		var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
+				[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
+				[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]
+				[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
+		var enumRule;
+		for(var i in rules){
+			var rule = rules[i];
+			var ruleType = rule[node_COMMONATRIBUTECONSTANT.DATARULE_RULETYPE];
+			if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_ENUM){
+				enumRule = rule;
+			}
+		}
+		if(enumRule!=null){
+			var enumCode = enumRule[node_COMMONATRIBUTECONSTANT.DATARULEENUMCODE_ENUMCODE];
+			if(enumCode!=undefined){
+				return nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([enumCode], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CODETABLE, {
+					success : function(requestInfo, resources){
+						var codeTableResource = resources[enumCode];
+						loc_enumDataSet = codeTableResource[node_COMMONATRIBUTECONSTANT.CODETABLE_DATASET];
+						return loc_getProcessEnumDataSetRequest(ruleMatchers);
+					}
+				});
+			}
+			else{
+				loc_enumDataSet = enumRule[node_COMMONATRIBUTECONSTANT.DATARULEENUMDATA_DATASET];
+				out.addRequest(loc_getProcessEnumDataSetRequest(ruleMatchers));
+			}
+		}
+		return out;
+	};
+	
+	var loc_getProcessEnumDataSetRequest = function(ruleMatchers){
+		var reverseMatchers = ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_REVERSEMATCHERS];
+		if(reverseMatchers==undefined)  return;
+		
+		var out = node_createServiceRequestInfoSequence(undefined, undefined, request);
+		var enumMatcherRequest = node_createServiceRequestInfoSet(undefined, {
+			success : function(requestInfo, subDatasResult){
+				_.each(subDatasResult.getResults(), function(data, i){
+					loc_enumDataSet[i] = data;
+				});
+			}
+		});
+		out.addRequest(enumMatcherRequest);
+		
+		_.each(loc_enumDataSet, function(enumData, i){
+			//get each sub data request
+			enumMatcherRequest.addRequest(i, node_expressionUtility.getMatchDataTaskRequest(dataValue, ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS]));
+		});
+		return out;
+	};
+
+	var loc_processDataRuleRequest1 = function(request){
 		//emum rule
 		var dataEleDef = loc_env.getTagContextElementDefinition("internal_data");
 		var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
@@ -215,6 +280,31 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_env.getDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
+
+					var dataValue;
+					if(data!=undefined)  dataValue = data.value;
+
+					var dataEleDef = loc_env.getTagContextElementDefinition("internal_data");
+					var dataInfo = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
+						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
+						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA];
+					var rules = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
+					var	ruleMatchers = [node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
+					return node_expressionUtility.getMatchDataTaskRequest(dataValue, ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS], {
+						success : function(request, matcheredData){
+							return node_dataRuleUtility.getRulesValidationRequest(matcheredData, rules);
+						}
+					});
+				}
+			}));
+
+			return out;
+		},
+
+		getValidateDataRequest1 : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_env.getDataOperationRequestGet(loc_dataVariable, "", {
+				success : function(requestInfo, data){
 					var dataValue;
 					if(data!=undefined)  dataValue = data.value;
 					
@@ -248,6 +338,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 					return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
 				}
 			}));
+
 			return out;
 		},
 
@@ -270,6 +361,8 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("data.dataRuleUtility", function(){node_dataRuleUtility = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagOnBaseSimple", node_createUITagOnBaseSimple); 

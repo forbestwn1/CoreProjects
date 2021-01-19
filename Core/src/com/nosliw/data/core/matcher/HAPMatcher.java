@@ -90,7 +90,7 @@ public class HAPMatcher extends HAPExecutableImp{
 	}
 	
 	public void addSubMatchers(String name, HAPMatchers matcher){
-		this.m_subMatchers.put(name, matcher);
+		if(matcher!=null)	this.m_subMatchers.put(name, matcher);
 	}
 
 	@Override

@@ -71,11 +71,12 @@ var node_createUINodeFromStoryNode = function(storyNodeId, story){
 	return loc_out;
 };
 	
-var node_createUINodeByTag = function(tagId, nodeId, attributes){
+var node_createUINodeByTag = function(tagId, nodeId, attributes, matchers){
 	var loc_nodeId = nodeId;
 	var loc_tagId = tagId;
 	var loc_children = [];
 	var loc_attributes = attributes==undefined?{}:attributes;
+	var loc_matchers = matchers;
 	
 	var loc_out = {
 		
@@ -94,6 +95,7 @@ var node_createUINodeByTag = function(tagId, nodeId, attributes){
 		
 		getAttributes : function(){    return loc_attributes;     },
 	
+		getMatchers : function(){   return loc_matchers;    }
 	};
 	return loc_out;
 };

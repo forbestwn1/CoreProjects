@@ -186,6 +186,39 @@
 				view.destroy(requestInfo);
 				loc_childViews.splice(index, 1);
 			}, 
+			
+			getDataForDemo : function(){
+				return {
+					dataTypeId:"test.array;1.0.0",
+					value:[
+						{
+							dataTypeId:"test.map;1.0.0",
+							value:{
+								geo : {
+									dataTypeId: "test.geo;1.0.0",
+									value : {
+										latitude : 43.7541051,
+										longitude : -79.3089712,
+									}
+								}
+							}, 
+						},
+						{
+							dataTypeId:"test.map;1.0.0",
+							value:{
+								geo : {
+									dataTypeId: "test.geo;1.0.0",
+									value : {
+										latitude : 43.7541051,
+										longitude : -79.3089712,
+									}
+								}
+							}, 
+						},
+					], 
+				};
+			},
+
 
 			destroy : function(request){
 			},

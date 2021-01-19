@@ -9,7 +9,7 @@ var packageObj = library.getChildPackage("utility");
 
 var node_basicUtility = 
 {
-		isDataEqual : function(data1, data2){
+		isValueEqual : function(data1, data2){
 			if(data1==undefined && data2==undefined)   return true;
 			if(data1==undefined || data2==undefined)   return false;
 			return JSON.stringify(data1)==JSON.stringify(data2);

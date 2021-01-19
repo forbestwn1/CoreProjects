@@ -17,7 +17,7 @@ public class HAPRelationshipPathSegment extends HAPSerializableImp{
 	//target data type Id
 	private String m_id;
 	
-	public HAPRelationshipPathSegment(){}
+	public HAPRelationshipPathSegment(){} 
 	
 	public HAPRelationshipPathSegment(HAPDataTypeId dataTypeId){
 		this.m_type = HAPConstant.DATATYPE_PATHSEGMENT_PARENT;

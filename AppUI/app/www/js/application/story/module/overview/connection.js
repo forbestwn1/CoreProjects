@@ -27,11 +27,6 @@ var node_createConnectionLink = function(storyConnectionId, module){
 	var loc_link;
 	
 	var loc_init = function(){
-		loc_link = new joint.shapes.standard.Link({
-			  attrs: {
-			      '.connection': { 'stroke-dasharray': '2,5' }
-			  }
-		});
 		var story = loc_module.getStory();
 		var storyConnection = node_storyUtility.getConnectionById(story, loc_storyConnectionId);
 		var storyEnd1 = storyConnection[node_COMMONATRIBUTECONSTANT.CONNECTION_END1];
@@ -40,6 +35,21 @@ var node_createConnectionLink = function(storyConnectionId, module){
 		var storyNodeId2 = node_storyUtility.getElementIdByReference(story, storyEnd2[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF]);
 		var nodeElement1 = loc_module.getNodeElementById(storyNodeId1[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
 		var nodeElement2 = loc_module.getNodeElementById(storyNodeId2[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
+		
+		loc_link = new joint.shapes.standard.Link({
+			  attrs: {
+			      '.connection': { 'stroke-dasharray': '2,5' },
+			  }
+		});
+		
+		loc_link.labels([{
+		    attrs: {
+		        text: {
+		            text: node_storyUtility.getElementIdWithoutNodeType(loc_storyConnectionId)
+		        }
+		    }
+		}]);
+		
 		loc_link.source(nodeElement1.getElement());
 		loc_link.target(nodeElement2.getElement());
 		

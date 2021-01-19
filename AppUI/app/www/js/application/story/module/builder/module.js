@@ -68,8 +68,10 @@ var node_createModuleStoryBuilder = function(parm){
 
 		//apply step changes
 		if(processChange!=false){
+			var i = 0;
 			_.each(changes, function(changeItem){
 				loc_processChangeItem(changeItem);
+				i++;
 			});
 		}
 

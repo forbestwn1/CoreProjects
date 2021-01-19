@@ -100,6 +100,12 @@ var node_utility = function()
 	var loc_getMatchDataTaskRequest = function(data, matchers, handlers, requestInfo){
 		var service = new node_ServiceInfo("MatchData", {"data":data, "matcher":matchers});
 		
+		if(matchers==undefined){
+			return  node_createServiceRequestInfoSimple(service, function(requestInfo){
+				return data;
+			}, handlers, requestInfo);
+		}
+		
 		var dataTypeId = data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID];
 		var matcher;
 		if(matchers!=undefined){

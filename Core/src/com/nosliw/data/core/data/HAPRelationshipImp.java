@@ -40,7 +40,7 @@ public class HAPRelationshipImp extends HAPSerializableImp implements HAPRelatio
 		this.m_taget = new HAPDataTypeId();
 		this.m_taget.buildObject(jsonObj.getString(TARGET), HAPSerializationFormat.LITERATE);
 		this.m_path = new HAPRelationshipPath();
-		this.m_path.buildObject(jsonObj.getString(PATH), HAPSerializationFormat.LITERATE);
+		this.m_path.buildObject(jsonObj.getJSONArray(PATH)+"", HAPSerializationFormat.LITERATE);
 		return true;
 	}
 	

@@ -6,10 +6,15 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_eventUtility;
 	var node_getObjectType;
+	var node_createServiceRequestInfoSimple;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
 	var loc_out = {
+			
+			getEmptyRequest : function(){
+				return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
+			},
 			
 			getAllHandlerNames : function(){
 				return [
@@ -172,6 +177,7 @@ var node_utility = function(){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

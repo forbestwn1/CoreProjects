@@ -39,15 +39,26 @@ var node_createUIDataConnectionLink = function(uiNodeId, parentContextDef, modul
 			var varStoryNodeId = nodeDataDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION][node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_SOLIDNODEREF][node_COMMONATRIBUTECONSTANT.REFERENCECONTEXTNODE_ROOTNODEID];
 			var varStoryNode = node_storyUtility.getNodeById(story, varStoryNodeId);
 
+			var varNodeElement = loc_module.getNodeElementById(varStoryNodeId);
+			var uiNodeElement = loc_module.getNodeElementById(loc_uiNodeId);
+
+
 			var link1 = new joint.shapes.standard.Link({
 				  attrs: {
 				      '.connection': { 'stroke-dasharray': '2,5' },
 		            line: {
 		                stroke: 'blue',
 		                strokeWidth: 1,
-		            }
+		            },
 				  }
 			});
+			link1.labels([{
+			    attrs: {
+			        text: {
+			            text: node_storyUtility.getElementIdWithoutNodeType(uiNodeElement.getStoryNode().id)
+			        }
+			    }
+			}]);
 
 			var link2 = new joint.shapes.standard.Link({
 				  attrs: {
@@ -66,13 +77,17 @@ var node_createUIDataConnectionLink = function(uiNodeId, parentContextDef, modul
 			                    'stroke': 'black',
 			                    'fill': 'yellow',
 			                    'd': 'M 10 -5 0 0 10 5 Z'
-			                }
-			            }
+			                },
+			            },
 				  }
 			});
-
-			var varNodeElement = loc_module.getNodeElementById(varStoryNodeId);
-			var uiNodeElement = loc_module.getNodeElementById(loc_uiNodeId);
+			link2.labels([{
+			    attrs: {
+			        text: {
+			            text: node_storyUtility.getElementIdWithoutNodeType(uiNodeElement.getStoryNode().id)
+			        }
+			    }
+			}]);
 
 			var link;
 			var uiStoryNode = uiNodeElement.getStoryNode();

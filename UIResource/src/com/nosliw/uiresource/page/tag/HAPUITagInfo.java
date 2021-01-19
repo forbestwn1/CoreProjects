@@ -20,15 +20,13 @@ public class HAPUITagInfo extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String MATCHERS = "matchers";
 	
-	private String m_tag;
-	
 	private Map<String, String> m_attributes;
 
-	private HAPMatchersCombo m_matchers;
+	private Map<String, HAPMatchersCombo> m_matchers;
 
 	public HAPUITagInfo() {
 		this.m_attributes = new LinkedHashMap<String, String>();
-		this.m_matchers = new HAPMatchersCombo();
+		this.m_matchers = new LinkedHashMap<String, HAPMatchersCombo>();
 	}
 
 	public HAPUITagInfo(HAPUITagDefinition tagDef) {
@@ -38,9 +36,11 @@ public class HAPUITagInfo extends HAPEntityInfoImp{
 	
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 
-	public void addMatchers(String name, HAPMatchers matchers) {   
-		this.m_matchers.addMatchers(name, matchers);    
+	public void addMatchers(String name, HAPMatchers matchers) { 
+		this.m_matchers.put(name, new HAPMatchersCombo(matchers));    
 	}
+	
+	public Map<String, HAPMatchersCombo> getMatchers(){    return this.m_matchers;    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

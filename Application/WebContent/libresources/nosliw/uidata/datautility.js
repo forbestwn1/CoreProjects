@@ -17,6 +17,17 @@ var node_utility = function(){
 	
 	return {
 
+		isDataEqual : function(data1, data2){
+			if(data1==undefined && data2==undefined)   return true;
+			if(data1==undefined || data2==undefined)   return false;
+			if(node_basicUtility.isValueEqual(data1.dataTypeInfo, data2.dataTypeInfo)){
+				if(node_basicUtility.isValueEqual(data1.value, data2.value)){
+					return true;
+				}
+			}
+			return false;
+		},
+		
 		isCyclic : function(original) {
 			  var seenObjects = [];
 			  var seenPaths = [];

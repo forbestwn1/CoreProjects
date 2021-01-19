@@ -50,8 +50,8 @@ var node_utility = function(){
 			return loc_buildUINodeFromStoryNode(storyNode, story);
 		},
 		
-		buildUINodeFromUITag : function(uiTag, nodeId){
-			return node_createUINodeByTag(uiTag, nodeId);
+		buildUINodeFromUITag : function(uiTag, nodeId, attributes, matchers){
+			return node_createUINodeByTag(uiTag, nodeId, attributes, matchers);
 		},
 		
 		getStoryElementDisplayName : function(storyElement){

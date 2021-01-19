@@ -11,6 +11,8 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.data.variable.HAPDataRule;
+import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -152,8 +154,12 @@ public class HAPProcessorContextRelative {
 					if(configure.relativeInheritRule) {
 						HAPContextDefinitionElement solidParent = solvedContextEle.getSolidContextDefinitionElement();
 						if(solidParent.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-							for(HAPDataRule rule : ((HAPContextDefinitionLeafData)solidParent).getDataInfo().getRules()) {
-								((HAPContextDefinitionLeafData)relativeContextEle).getDataInfo().addRule(rule);
+							HAPVariableDataInfo solidParentDataInfo = ((HAPContextDefinitionLeafData)solidParent).getDataInfo();
+							HAPMatchers ruleMatchers = HAPMatcherUtility.reversMatchers(HAPMatcherUtility.cascadeMatchers(solidParentDataInfo.getRuleMatchers()==null?null:solidParentDataInfo.getRuleMatchers().getReverseMatchers(), noVoidMatchers.get("")));
+							for(HAPDataRule rule : solidParentDataInfo.getRules()) {
+								HAPVariableDataInfo relativeDataInfo = ((HAPContextDefinitionLeafData)relativeContextEle).getDataInfo();
+								relativeDataInfo.addRule(rule);
+								relativeDataInfo.setRuleMatchers(ruleMatchers, solidParentDataInfo.getRuleCriteria());
 							}
 						}
 					}

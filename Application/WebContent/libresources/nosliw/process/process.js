@@ -165,7 +165,7 @@ var node_createProcess = function(processDef, envObj){
 								for(var i in branches){
 									var flow = branches[i][node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYBRANCH_FLOW];
 									var branchValue = branches[i][node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYBRANCH_DATA];
-									if(node_basicUtility.isDataEqual(branchValue, value))  break;
+									if(node_basicUtility.isValueEqual(branchValue, value))  break;
 								}
 								return new loc_NormalActivityOutput(flow[node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET]);
 							}

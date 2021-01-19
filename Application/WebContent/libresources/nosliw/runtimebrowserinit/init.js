@@ -11,6 +11,7 @@ nosliw.init = function(configure){
 		"nosliw.constant",
 		"nosliw.logging",
 		"nosliw.common",
+		"nosliw.data",
 		"nosliw.expression",
 		"nosliw.process",
 		"nosliw.request",

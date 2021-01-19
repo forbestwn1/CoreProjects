@@ -35,7 +35,7 @@ var node_createComponentUITagData = function(){
 			that.uiNodeView = {};
 		}
 		else{
-			var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId);
+			var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId, undefined, uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_ATTRIBUTES], uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS]);
 
 			that.context = undefined;
 			if(that.dynamicdata=='true'){
@@ -52,7 +52,7 @@ var node_createComponentUITagData = function(){
 				}, this);
 			}
 			
-			var request = node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS], {
+			var request = node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, {
 				success : function(request, uiNodeViewGroup){
 					$(that.$refs.uiTag).empty();
 					that.uiNodeView = uiNodeViewGroup;

@@ -34,6 +34,8 @@ var packageObj = library;
 	var node_UICommonUtility;
 	var node_createBatchUIDataOperationRequest;
 	var node_namingConvensionUtility;
+	var node_dataRuleUtility;
+	var node_requestUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_uiResourceViewFactory = function(){
@@ -429,7 +431,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 							]
 						}, true);
 					},
-					getUIValidationRequest : function(uiTags, handlers, request){
+					getUIValidationRequest1 : function(uiTags, handlers, request){
 						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
 
 						var clearErrorRequest = node_createBatchUIDataOperationRequest(loc_context);
@@ -452,7 +454,57 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 									}
 								});
 								if(!opsRequest.isEmpty())	return opsRequest;
-								else return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
+								else return node_requestUtility.getEmptyRequest();
+
+							},
+						});
+						_.each(uiTags, function(uiTag, i){
+							var uiTagDataValidationRequest = node_createServiceRequestInfoSequence();
+							var varName = uiTag.getAttribute("data");
+							uiTagDataValidationRequest.addRequest(node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(varName, ""), {
+								success : function(request, uiData){
+									var dataEleDef = node_contextUtility.getContextElementDefinitionFromFlatContext(loc_uiResource[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], varName);
+									var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
+															[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
+															[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]
+															[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
+									var data;
+									if(uiData!=undefined)  data = uiData.value;
+									return node_dataRuleUtility.getRulesValidationRequest(data, rules);
+								}
+							}));
+
+							allSetRequest.addRequest(uiTag.getId(), uiTagDataValidationRequest);
+						});
+						out.addRequest(allSetRequest);
+						return out;
+					},
+					
+					
+					getUIValidationRequest : function(uiTags, handlers, request){
+						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
+
+						var clearErrorRequest = node_createBatchUIDataOperationRequest(loc_context);
+						clearErrorRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService("", {})));
+						out.addRequest(clearErrorRequest);
+
+						var allSetRequest = node_createServiceRequestInfoSet(undefined, {
+							success : function(requestInfo, validationsResult){
+								var results = validationsResult.getResults();
+								var allMessages = {};
+								var opsRequest = node_createBatchUIDataOperationRequest(loc_context, {
+									success : function(request){
+										return allMessages;
+									}
+								}, requestInfo);
+								_.each(results, function(message, uiTagId){
+									if(message!=undefined&&message.length!=0){
+										allMessages[uiTagId] = message;
+										opsRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTagId, message)));
+									}
+								});
+								if(!opsRequest.isEmpty())	return opsRequest;
+								else return node_requestUtility.getEmptyRequest();
 
 							},
 						});
@@ -676,6 +728,8 @@ nosliw.registerSetNodeDataEvent("uicommon.createViewContainer", function(){node_
 nosliw.registerSetNodeDataEvent("uicommon.utility", function(){node_UICommonUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createBatchUIDataOperationRequest", function(){node_createBatchUIDataOperationRequest  = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("data.dataRuleUtility", function(){node_dataRuleUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("uiResourceViewFactory", loc_uiResourceViewFactory); 

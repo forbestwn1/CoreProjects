@@ -104,6 +104,12 @@ var node_utility = function(){
 
 	var loc_out = {
 		
+		getElementIdWithoutNodeType : function(fullId){
+			var i = fullId.indexOf(";");
+			var out = fullId.substring(i+1);
+			return out;
+		},
+			
 		getNextIdForStory : function(story){
 			var index = this.getIdIndex(story);
 			index = index + 1;

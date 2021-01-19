@@ -12,19 +12,10 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPRelationshipPath extends HAPSerializableImp{
 
-	private HAPDataTypeId m_source;
-	private HAPDataTypeId m_target;
-	
 	protected List<HAPRelationshipPathSegment> m_segments = null;
 
 	public HAPRelationshipPath(){
 		this.m_segments = new ArrayList<HAPRelationshipPathSegment>();
-	}
-
-	public HAPRelationshipPath(HAPDataTypeId source, HAPDataTypeId target){
-		this.m_segments = new ArrayList<HAPRelationshipPathSegment>();
-		this.m_source = source;
-		this.m_target = target;
 	}
 
 	public HAPRelationshipPath reverse(HAPDataTypeId source, HAPDataTypeId target) {
@@ -68,6 +59,7 @@ public class HAPRelationshipPath extends HAPSerializableImp{
 		return true;
 	} 
 
+	@Override
 	public HAPRelationshipPath clone(){
 		HAPRelationshipPath out = new HAPRelationshipPath();
 		out.m_segments.addAll(this.m_segments);
@@ -79,12 +71,15 @@ public class HAPRelationshipPath extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPRelationshipPath) {
 			HAPRelationshipPath path = (HAPRelationshipPath)obj;
-			if(!HAPBasicUtility.isEquals(this.m_source, path.m_source))  return false;
-			if(!HAPBasicUtility.isEquals(this.m_target, path.m_target))  return false;
 			if(!HAPBasicUtility.isEqualLists(this.m_segments, path.m_segments))  return false;
 			out = true;
 		}
 		return out;
 	}
 	
+	@Override
+	public String toString(){
+		return this.toStringValue(HAPSerializationFormat.LITERATE);
+	}
+
 }

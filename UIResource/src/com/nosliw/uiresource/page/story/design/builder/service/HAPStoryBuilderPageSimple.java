@@ -14,6 +14,7 @@ import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
@@ -55,6 +56,7 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUI;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
+import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITagOther;
 import com.nosliw.uiresource.page.story.model.HAPUIDataInfo;
 import com.nosliw.uiresource.page.story.model.HAPUINode;
 import com.nosliw.uiresource.page.story.model.HAPUITree;
@@ -144,6 +146,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	private HAPServiceData validateServiceAnswer(HAPDesignStory design, HAPRequestDesign answerRequest) {
 		HAPStory story = design.getStory();
 
+		story.startTransaction();
+		
 		this.applyAnswer(story, answerRequest);
 		
 		HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_SERVICE).iterator().next();
@@ -152,6 +156,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			//add answer to step
 			HAPDesignStep latestStep = design.getLatestStep();
 			latestStep.addAnswers(answerRequest.getAnswers());
+			story.commitTransaction();
 			return HAPServiceData.createSuccessData();
 		}
 		else {
@@ -167,11 +172,11 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	private HAPServiceData processServiceStage(HAPDesignStory design, HAPRequestDesign answer) {
 		HAPStory story = design.getStory();
 		
-		story.startTransaction();
-		
 		HAPServiceData validateResult = validateServiceAnswer(design, answer);
 		if(validateResult.isFail())   return validateResult;
 		else {
+			story.startTransaction();
+			
 			//new step
 			HAPDesignStep step = design.newStep();
 
@@ -208,7 +213,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceInputNodeName, parmNodeName, parmName));
 
 					//constant path and group
-					parmBranchInfo.constantAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeConstant(parmBranchInfo.parmDef.getCriteria(), parmBranchInfo.parmDef.getDefaultValue()==null)).getAlias();
+					parmBranchInfo.constantAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeConstant(parmBranchInfo.parmDef.getDataInfo(), parmBranchInfo.parmDef.getDefaultValue()==null)).getAlias();
 					dataLayerChangeRequest.addPatchChange(parmBranchInfo.constantAlias, HAPStoryElement.DISPLAYRESOURCE, inputDisplayResource.getResourceNode(parmName));
 					HAPAliasElement constantConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.constantAlias, parmNodeName, null, null)).getAlias();
 
@@ -409,7 +414,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		//data tag
 		HAPUINode dataUINode = null;
 		HAPUIDataInfo uiDataInfo = layoutUINode.getDataInfo(varName);
-		HAPDataTypeCriteria dataTypeCriteria = uiDataInfo.getDataTypeCriteria();
+		HAPVariableDataInfo dataTypeInfo = uiDataInfo.getDataType();
+		HAPDataTypeCriteria dataTypeCriteria = dataTypeInfo.getCriteria();
 		Set<HAPDataTypeId> dataTypeIds = dataTypeCriteria.getValidDataTypeId(this.m_runtimeEnv.getDataTypeHelper());
 		HAPDataTypeId dataTypeId = dataTypeIds.iterator().next();
 		HAPDataType dataType = this.m_runtimeEnv.getDataTypeManager().getDataType(dataTypeId);
@@ -420,7 +426,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 //				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData("loop", story.getNextId(), uiDataInfo, dataFlow);
 				
 				HAPUITagInfo uiTagInfo = this.m_uiTagManager.getDefaultUITagData(new HAPUITageQueryData(dataTypeCriteria));
-				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow);
+				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow, uiTagInfo.getMatchers());
 
 				uiDataStoryNode.addAttribute("data", varName);
 				if(!HAPConstant.DATAFLOW_IN.equals(dataFlow)) uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
@@ -447,18 +453,18 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			//simple
 			HAPUITagInfo uiTagInfo = this.m_uiTagManager.getDefaultUITagData(new HAPUITageQueryData(dataTypeCriteria));
 			if(uiTagInfo!=null) {
-				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow);
+				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow, uiTagInfo.getMatchers());
 				uiDataStoryNode.addAttribute("data", varName);
 				if(!HAPConstant.DATAFLOW_IN.equals(dataFlow)) uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
 				dataUINode = layoutUINode.newChildNode(uiDataStoryNode, null, "uiData", changeRequest, this.m_runtimeEnv, m_uiTagManager);
 				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUINode.getStoryNodeRef()));
 
 				//validation
-//				HAPStoryNodeUITagOther uiErrorStoryNode = new HAPStoryNodeUITagOther("uierror", story.getNextId());
-//				uiErrorStoryNode.addAttribute("target", uiDataStoryNode.getId());
-//				uiErrorStoryNode.addAttribute("data", HAPConstant.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
-//				HAPUINode uiErrorNode = layoutUINode.newChildNode(uiErrorStoryNode, null, "uiError", changeRequest, this.m_runtimeEnv, m_uiTagManager);
-//				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(uiErrorNode.getStoryNodeRef()));
+				HAPStoryNodeUITagOther uiErrorStoryNode = new HAPStoryNodeUITagOther("uierror", story.getNextId());
+				uiErrorStoryNode.addAttribute("target", uiDataStoryNode.getId());
+				uiErrorStoryNode.addAttribute("data", HAPConstant.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
+				HAPUINode uiErrorNode = layoutUINode.newChildNode(uiErrorStoryNode, null, "uiError", changeRequest, this.m_runtimeEnv, m_uiTagManager);
+				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(uiErrorNode.getStoryNodeRef()));
 
 				out.dataUINode = dataUINode;
 			}
@@ -481,12 +487,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	private HAPServiceData processUIChangeStage(HAPDesignStory design, HAPRequestDesign answerRequest) {
 		HAPStory story = design.getStory();
 
-		story.startTransaction();
-		
 		HAPServiceData validateResult = validateUIAnswer(design, answerRequest);
 		if(validateResult.isFail())   return validateResult;
 		else {
-			this.applyAnswer(story, answerRequest);
+			story.startTransaction();
 			
 			//new step
 			HAPDesignStep step = design.newStep();
@@ -541,6 +545,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	private HAPServiceData validateUIAnswer(HAPDesignStory design, HAPRequestDesign answerRequest) {
 		HAPStory story = design.getStory();
 
+		story.startTransaction();
+		
 		this.applyAnswer(story, answerRequest);
 		
 		List<String> errorMsgs = new ArrayList<String>();
@@ -557,6 +563,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			//add answer to step
 			HAPDesignStep latestStep = design.getLatestStep();
 			latestStep.addAnswers(answerRequest.getAnswers());
+			story.commitTransaction();
 			return HAPServiceData.createSuccessData();
 		}
 		else {

@@ -57,9 +57,10 @@ var node_createComponentQuestionItemConstant = function(){
 				}
 			});
 			var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
-			request.addRequest(loc_storyService.getDefaultUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE], {
+			request.addRequest(loc_storyService.getDefaultUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE][node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_CRITERIA], {
 				success : function(request, tagInfo){
 					that.tagInfo = tagInfo;
+					that.tagInfo.externalDataTypeInfo = element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE];
 				}
 			}));
 			node_requestServiceProcessor.processRequest(request);
