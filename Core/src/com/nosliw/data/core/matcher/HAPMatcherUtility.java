@@ -61,7 +61,7 @@ public class HAPMatcherUtility {
 			
 			HAPRelationshipImp relationship = new HAPRelationshipImp(originalMatcher.getRelationship().getTarget(), originalMatcher.getRelationship().getSource(), originalMatcher.getRelationship().getPath().reverse(originalMatcher.getRelationship().getSource(), originalMatcher.getRelationship().getTarget()));
 			
-			HAPMatcher matcher = new HAPMatcher(matcherDataTypeId, relationship, true);
+			HAPMatcher matcher = new HAPMatcher(matcherDataTypeId, relationship, !originalMatcher.isReverse());
 			
 			Map<String, HAPMatchers> subMatchers = originalMatcher.getSubMatchers();
 			for(String name : subMatchers.keySet()) {

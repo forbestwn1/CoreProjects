@@ -9,6 +9,7 @@ var packageObj = library;
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
 	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSet;
 	var node_createServiceRequestInfoSimple;
 	var node_ServiceInfo;
 	var node_expressionUtility;
@@ -47,7 +48,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
 			[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA];
 		var rules = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
-		var	ruleMatchers = [node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
+		var	ruleMatchers = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
 
 		var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
 				[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
@@ -84,7 +85,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		var reverseMatchers = ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_REVERSEMATCHERS];
 		if(reverseMatchers==undefined)  return;
 		
-		var out = node_createServiceRequestInfoSequence(undefined, undefined, request);
+		var out = node_createServiceRequestInfoSequence(undefined, undefined, undefined);
 		var enumMatcherRequest = node_createServiceRequestInfoSet(undefined, {
 			success : function(requestInfo, subDatasResult){
 				_.each(subDatasResult.getResults(), function(data, i){
@@ -96,7 +97,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		
 		_.each(loc_enumDataSet, function(enumData, i){
 			//get each sub data request
-			enumMatcherRequest.addRequest(i, node_expressionUtility.getMatchDataTaskRequest(dataValue, ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS]));
+			enumMatcherRequest.addRequest(i, node_expressionUtility.getMatchDataTaskRequest(enumData, ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_REVERSEMATCHERS]));
 		});
 		return out;
 	};
@@ -289,7 +290,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
 						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA];
 					var rules = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
-					var	ruleMatchers = [node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
+					var	ruleMatchers = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
 					return node_expressionUtility.getMatchDataTaskRequest(dataValue, ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS], {
 						success : function(request, matcheredData){
 							return node_dataRuleUtility.getRulesValidationRequest(matcheredData, rules);
@@ -359,6 +360,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();	});

@@ -27,7 +27,25 @@
 							},
 						]
 					},
-				}
+				},
+				{
+					"name" : "schoolTypeInService",
+					"displayName" : "School Type",
+					description : "The type of school, public, private, ...",
+					dataInfo : {
+						criteria: "test.string;1.0.0",
+						rule : [
+							{
+								ruleType : "enum",
+								enumCode : "schooltype"
+							}
+						]
+					},
+					defaultValue :{
+						dataTypeId: "test.string;1.0.0",
+						value: "public"
+					},
+				},
 			],
 			"result" : {
 				"success": {

@@ -1,4 +1,4 @@
-<definition name="test.currency;1.0.0">
+<definition name="test.currency;1.0.0" parentsInfo="test.string;1.0.0">
 	
 	<info description="Currency type for money"/>
 

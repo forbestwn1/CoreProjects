@@ -68,6 +68,8 @@ public class HAPMatcher extends HAPExecutableImp{
 		}
 	}
 	
+	public boolean isReverse() {   return this.m_reverse;   }
+	
 	public boolean isVoid(){
 		return this.m_relationship.getSource().equals(this.m_relationship.getTarget());
 	}
