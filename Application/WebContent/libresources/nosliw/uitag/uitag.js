@@ -176,7 +176,18 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 				return loc_tagConfigure.contextDef[name];
 			}			
 			else if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
-				return node_contextUtility.getContextElementDefinitionFromFlatContext(uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], name);
+				var eleDef =  node_contextUtility.getContextElementDefinitionFromFlatContext(uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], name);
+				if(name=="internal_data"){
+					eleDef = node_basicUtility.clone(eleDef);
+					var eleDataInfo = eleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
+											[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
+											[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA];
+					var dataInfo = loc_tagConfigure.dataInfos[name];
+					eleDataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE] = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
+					eleDataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS] = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
+					eleDataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULECRITERIA] = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULECRITERIA];
+				}
+				return eleDef;
 			}
 		},
 		

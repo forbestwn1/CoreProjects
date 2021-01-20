@@ -50,10 +50,20 @@ var node_utility = function(){
 			return loc_buildUINodeFromStoryNode(storyNode, story);
 		},
 		
-		buildUINodeFromUITag : function(uiTag, nodeId, attributes, matchers){
-			return node_createUINodeByTag(uiTag, nodeId, attributes, matchers);
+//		buildUINodeFromUITag1 : function(uiTag, nodeId, attributes, matchers){
+//			return node_createUINodeByTag(uiTag, nodeId, attributes, matchers);
+//		},
+
+		buildUINodeFromUITag : function(uiTagInfo, nodeId, attrs, dataInfos){
+			var tagId = uiTagInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+			var matchers = uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS];
+			var attributes = uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_ATTRIBUTES];
+			_.each(attrs, function(value, name){
+				attributes[name] = value;
+			});
+			return node_createUINodeByTag(tagId, nodeId, attributes, matchers, dataInfos);
 		},
-		
+
 		getStoryElementDisplayName : function(storyElement){
 			return loc_getStoryElementDisplayValue(storyElement, "displayName");
 		}

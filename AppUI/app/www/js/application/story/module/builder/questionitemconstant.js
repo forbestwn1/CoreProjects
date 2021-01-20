@@ -33,6 +33,7 @@ var node_createComponentQuestionItemConstant = function(){
 				uiNodeView : {},
 				context : {},
 				tagInfo : {},
+				dataInfo : {},
 				data : {},
 				tagData : {},
 			};
@@ -49,6 +50,10 @@ var node_createComponentQuestionItemConstant = function(){
 		},
 		computed: {
 		},
+		created : function(){
+			var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
+			this.dataInfo = element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE];
+		},
 		mounted: function () {
 			var that = this;
 			var request = node_createServiceRequestInfoSequence(undefined, {
@@ -60,7 +65,6 @@ var node_createComponentQuestionItemConstant = function(){
 			request.addRequest(loc_storyService.getDefaultUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE][node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_CRITERIA], {
 				success : function(request, tagInfo){
 					that.tagInfo = tagInfo;
-					that.tagInfo.externalDataTypeInfo = element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE];
 				}
 			}));
 			node_requestServiceProcessor.processRequest(request);
@@ -69,7 +73,7 @@ var node_createComponentQuestionItemConstant = function(){
 			<div>
 				{{question.question}}: 
 				<div>
-				dataTag: <uitag_data v-bind:uitaginfo="tagInfo" dynamicdata="true" v-bind:data="tagData"  v-on:dataChange="onDataChange"/>
+				dataTag: <uitag_data v-bind:uitaginfo="tagInfo" dynamicdata="true" v-bind:data="tagData"  v-bind:datainfo="dataInfo" v-on:dataChange="onDataChange"/>
 				</div>
 			</div>
 		`

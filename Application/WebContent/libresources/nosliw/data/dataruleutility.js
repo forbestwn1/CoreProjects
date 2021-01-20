@@ -59,7 +59,7 @@ var node_utility = function(){
 					success : function(requestInfo, resources){
 						var codeTableResource = resources[enumCode];
 						var enumDataSet = codeTableResource[node_COMMONATRIBUTECONSTANT.CODETABLE_DATASET];
-						if(loc_isValidForEnumDataSet(targetData, enumDataSet)==false)		return loc_getCreateErrorMessageRequest(rule, "Cannot be blank");
+						if(loc_isValidForEnumDataSet(targetData, enumDataSet)==false)		return loc_getCreateErrorMessageRequest(rule, "Not valid value");
 						else		return node_requestUtility.getEmptyRequest();
 					}
 				}));
@@ -67,7 +67,7 @@ var node_utility = function(){
 			else{
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 					var enumDataSet = rule[node_COMMONATRIBUTECONSTANT.DATARULEENUMDATA_DATASET];
-					if(loc_isValidForEnumDataSet()==false)		return loc_getCreateErrorMessageRequest(rule, "Cannot be blank");
+					if(loc_isValidForEnumDataSet()==false)		return loc_getCreateErrorMessageRequest(rule, "Not valid value");
 					else		return node_requestUtility.getEmptyRequest();
 				}));
 			}

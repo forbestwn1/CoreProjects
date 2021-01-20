@@ -71,12 +71,14 @@ var node_createUINodeFromStoryNode = function(storyNodeId, story){
 	return loc_out;
 };
 	
-var node_createUINodeByTag = function(tagId, nodeId, attributes, matchers){
+//
+var node_createUINodeByTag = function(tagId, nodeId, attributes, matchers, dataInfos){
 	var loc_nodeId = nodeId;
 	var loc_tagId = tagId;
 	var loc_children = [];
 	var loc_attributes = attributes==undefined?{}:attributes;
-	var loc_matchers = matchers;
+	var loc_matchers = matchers;       //matchers for internal data
+	var loc_dataInfos = dataInfos;     //internal data infos with related external data
 	
 	var loc_out = {
 		
@@ -95,7 +97,9 @@ var node_createUINodeByTag = function(tagId, nodeId, attributes, matchers){
 		
 		getAttributes : function(){    return loc_attributes;     },
 	
-		getMatchers : function(){   return loc_matchers;    }
+		getMatchers : function(){   return loc_matchers;    },
+		
+		getDataInfos : function(){  return loc_dataInfos;   },
 	};
 	return loc_out;
 };

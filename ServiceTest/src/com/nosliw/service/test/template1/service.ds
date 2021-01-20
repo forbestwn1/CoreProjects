@@ -43,7 +43,7 @@
 					},
 					defaultValue :{
 						dataTypeId: "test.string;1.0.0",
-						value: "public"
+						value: "Public"
 					},
 				},
 			],

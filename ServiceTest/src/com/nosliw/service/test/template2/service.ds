@@ -8,29 +8,26 @@
 			"parm" : [
 				 {
 				 	"name" : "serviceParm1",
-					dataInfo : "test.string;1.0.0",
+					"displayName" : "School Type",
+					description : "The type of school, public, private, ...",
+					dataInfo : {
+						criteria: "test.string;1.0.0",
+						rule : [
+							{
+								ruleType : "enum",
+								enumCode : "schooltype"
+							}
+						]
+					},
 					defaultValue :{
 						dataTypeId: "test.string;1.0.0",
-						value: "hello"
+						value: "public"
 					},
 				},
-				{
-					"name" : "serviceParm2",
-					dataInfo : "test.string;1.0.0",
-				},
-				{
-					"name" : "serviceParm3",
-					dataInfo : "test.string;1.0.0",
-				}
 			],
 			"result" : {
 				"success" : {
 					"output" : [
-						{
-							"name" : "outputInService",
-							displayName: "Output",
-							dataInfo : "test.string;1.0.0",
-						}
 					]
 				}
 			},

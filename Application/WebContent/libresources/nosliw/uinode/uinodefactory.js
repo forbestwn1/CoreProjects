@@ -103,6 +103,7 @@ var loc_processUITagViewRequest = function(uiNodeTagView, parentContext, handler
 //						endElement : uiNodeTagView.getEndElement(),
 						viewContainer : uiNodeTagView.getViewContainer(),
 						matchers : uiNodeTagView.getUINode().getMatchers(),
+						dataInfos : uiNodeTagView.getUINode().getDataInfos(),
 					}, 
 					uiNode.getBody());
 			var initRequest = node_getLifecycleInterface(uiTag).initRequest({

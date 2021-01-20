@@ -35,7 +35,7 @@ var node_createComponentUITagData = function(){
 			that.uiNodeView = {};
 		}
 		else{
-			var uiNode = node_storyUIUtility.buildUINodeFromUITag(tagId, undefined, uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_ATTRIBUTES], uiTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS]);
+			var uiNode = node_storyUIUtility.buildUINodeFromUITag(uiTagInfo, undefined, undefined, {internal_data:that.datainfo});
 
 			that.context = undefined;
 			if(that.dynamicdata=='true'){
@@ -73,10 +73,14 @@ var node_createComponentUITagData = function(){
 				requestFromDataUpdate : {}
 			};
 		},
-		props : ['uitaginfo', 'dynamicdata', 'data'],
+		props : ['uitaginfo', 'datainfo', 'dynamicdata', 'data'],
 		components : {
 		},
 		methods : {
+		},
+		created : function(){
+			var kkk = 555;
+			kkk++;
 		},
 		watch : {
 			uitaginfo : function(){

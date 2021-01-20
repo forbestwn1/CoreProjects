@@ -14,6 +14,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_expressionUtility;
 	var node_dataRuleUtility;
+	var node_uiTagUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUITagOnBaseSimple = function(env, uiTagDef){
@@ -50,10 +51,6 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		var rules = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
 		var	ruleMatchers = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
 
-		var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
-				[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
-				[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]
-				[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
 		var enumRule;
 		for(var i in rules){
 			var rule = rules[i];
@@ -102,50 +99,6 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		return out;
 	};
 
-	var loc_processDataRuleRequest1 = function(request){
-		//emum rule
-		var dataEleDef = loc_env.getTagContextElementDefinition("internal_data");
-		var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
-				[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
-				[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]
-				[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
-		var enumRule;
-		for(var i in rules){
-			var rule = rules[i];
-			var ruleType = rule[node_COMMONATRIBUTECONSTANT.DATARULE_RULETYPE];
-			if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_ENUM){
-				enumRule = rule;
-			}
-			else if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_MANDATORY){
-				loc_isMandatory = true;
-				loc_mandatoryRuleDescription = rule[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION];
-			}
-			else if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_JSSCRIPT){
-				var script = "loc_validationScriptFunction = function(that){" + rule[node_COMMONATRIBUTECONSTANT.DATARULEJSSCRIPT_SCRIPT] + "};";
-				eval(script);
-				loc_jsScriptRuleDescription = rule[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION];
-			}
-			else if(ruleType==node_COMMONCONSTANT.DATARULE_TYPE_EXPRESSION){
-				loc_validationExpression = rule[node_COMMONATRIBUTECONSTANT.DATARULEEXPRESSION_EXPRESSIONEXECUTE];
-				loc_expressionRuleDescription = rule[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION];
-			}
-		}
-		if(enumRule!=null){
-			var enumCode = enumRule[node_COMMONATRIBUTECONSTANT.DATARULEENUMCODE_ENUMCODE];
-			if(enumCode!=undefined){
-				return nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([enumCode], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CODETABLE, {
-					success : function(requestInfo, resources){
-						var codeTableResource = resources[enumCode];
-						loc_enumDataSet = codeTableResource[node_COMMONATRIBUTECONSTANT.CODETABLE_DATASET];
-					}
-				});
-			}
-			else{
-				loc_enumDataSet = enumRule[node_COMMONATRIBUTECONSTANT.DATARULEENUMDATA_DATASET];
-			}
-		}
-	};
-	
 	var loc_updateView = function(request){
 		loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {
 			success : function(requestInfo, data){
@@ -278,69 +231,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		},
 		
 		getValidateDataRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_env.getDataOperationRequestGet(loc_dataVariable, "", {
-				success : function(requestInfo, data){
-
-					var dataValue;
-					if(data!=undefined)  dataValue = data.value;
-
-					var dataEleDef = loc_env.getTagContextElementDefinition("internal_data");
-					var dataInfo = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
-						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
-						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA];
-					var rules = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
-					var	ruleMatchers = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
-					return node_expressionUtility.getMatchDataTaskRequest(dataValue, ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS], {
-						success : function(request, matcheredData){
-							return node_dataRuleUtility.getRulesValidationRequest(matcheredData, rules);
-						}
-					});
-				}
-			}));
-
-			return out;
-		},
-
-		getValidateDataRequest1 : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_env.getDataOperationRequestGet(loc_dataVariable, "", {
-				success : function(requestInfo, data){
-					var dataValue;
-					if(data!=undefined)  dataValue = data.value;
-					
-					//mandatory rule
-					if(loc_isMandatory==true&&dataValue==undefined){
-						return loc_mandatoryRuleDescription || "Cannot be blank";
-					}
-					
-					//js script validation
-					if(loc_validationScriptFunction!=undefined){
-						if(!loc_validationScriptFunction(dataValue))  return loc_jsScriptRuleDescription || "Value validation fail";
-					}
-					
-					//expression validation
-					if(loc_validationExpression!=undefined){
-						var variableValue = {};
-						variableValue[node_COMMONATRIBUTECONSTANT.DATARULEEXPRESSION_VARIABLENAME] = dataValue;
-						return nosliw.runtime.getExpressionService().getExecuteExpressionRequest(loc_validationExpression, undefined, variableValue, undefined, undefined, {
-							success : function(request, expressionResult){
-								if(expressionResult.value==false){
-									return loc_expressionRuleDescription || "Expression validation fail";
-								}
-								else{
-									return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
-								}
-							}
-						});
-					}
-					
-					//valid value, return empty
-					return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
-				}
-			}));
-
-			return out;
+			return node_uiTagUtility.getValidateDataRequest("internal_data", loc_env, handlers, request);
 		},
 
 	};
@@ -365,6 +256,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("data.dataRuleUtility", function(){node_dataRuleUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("uitag.uiTagUtility", function(){node_uiTagUtility = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagOnBaseSimple", node_createUITagOnBaseSimple); 

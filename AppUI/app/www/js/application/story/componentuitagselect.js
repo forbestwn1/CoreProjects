@@ -25,7 +25,7 @@ var node_createComponentUITagSelect = function(){
 				selectedId : undefined,
 			};
 		},
-		props : ['uitaginfolist', 'initselect'],
+		props : ['uitaginfolist', 'initselect', 'datainfo'],
 		components : {
 		},
 		methods : {
@@ -48,7 +48,7 @@ var node_createComponentUITagSelect = function(){
 		template : `
 			<div>
 				<div>
-					<uitag_data v-bind:uitaginfo="currentTagInfo"/>
+					<uitag_data v-bind:uitaginfo="currentTagInfo" v-bind:datainfo="datainfo"/>
 				</div>
 				
 				  <div v-for="uitaginfo in uitaginfolist" >

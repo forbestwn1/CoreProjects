@@ -49,6 +49,7 @@ var node_createComponentQuestionItemUIData = function(){
 		data : function(){
 			return {
 				tagInfos : [],
+				dataInfo : {},
 				current : -1,
 				initSelect : undefined,
 				popSelected : undefined
@@ -85,6 +86,10 @@ var node_createComponentQuestionItemUIData = function(){
 				}
 			}
 		},
+		created : function(){
+			var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
+			this.dataInfo = element[node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_DATAINFO][node_COMMONATRIBUTECONSTANT.UIDATAINFO_DATATYPE];
+		},
 		mounted: function () {
 			var that = this;
 			var request = node_createServiceRequestInfoSequence(undefined, {
@@ -98,7 +103,6 @@ var node_createComponentQuestionItemUIData = function(){
 					that.tagInfos.splice(0, that.tagInfos.length);
 					_.each(queryResultSet[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULTSET_ITEMS], function(item, i){
 						var tagInfo = item[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULT_UITAGINFO];
-						tagInfo.externalDataTypeInfo = element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE];
 						that.tagInfos.push(tagInfo);
 					});
 					loc_setCurrentByIndex(that, 0);
@@ -109,20 +113,19 @@ var node_createComponentQuestionItemUIData = function(){
 		template : `
 			<div>
 				{{question.question}}:
-				dataTag: <uitag_data v-bind:uitaginfo="currentTagInfo"/>
+				dataTag: <uitag_data v-bind:uitaginfo="currentTagInfo" v-bind:datainfo="dataInfo"/>
 <!--				<a class="popup-open" href="#" data-popup=".popup-about">Change UI</a>  -->
 				<a href="#" v-on:click.prevent="onOpenPopup">Change UI</a>
 
 				<div class="popup popup-about" ref="popup">
 				    <div class="block">
 				      <p>Please select control: </p>
-				    	<uitag_select v-bind:uitaginfolist='this.tagInfos' v-bind:initselect='this.initSelect' v-on:selectChange="onSelectChange"/>
+				    	<uitag_select v-bind:uitaginfolist='this.tagInfos' v-bind:initselect='this.initSelect' v-bind:datainfo="dataInfo" v-on:selectChange="onSelectChange" />
 				      <!-- Close Popup -->
 				      <p><a class="link popup-close" href="#" v-on:click.prevent="onSelectTag">Ok</a></p>
 				      <p><a class="link popup-close" href="#" v-on:click.prevent="onCancelSelectTag">Close</a></p>
 				    </div>
 				</div>
-			
 			</div>
 		`
 	};
