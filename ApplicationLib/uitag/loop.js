@@ -62,15 +62,24 @@
 
 		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 
 		var loc_base = base;
+		var loc_view;
 		var loc_childViews = [];
 
 		var loc_out = 
 		{
-//			initViews : function(handlers, requestInfo){
-//				loc_view = $('<div id="map" style="height:600px;width:100%;"></div>');	
-//			},
+			initViews : function(handlers, requestInfo){
+				var mode = loc_base.getEnv().getMode();
+				if(mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
+					loc_view = $('<div></div>');				}
+				else if(mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
+					loc_view = $('<div>List of content<br>Item1<br>Item2</div>');
+				}
+
+				return loc_view;
+			},
 			
 			createContextForDemo : function(id, parentContext, request) {
 				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
@@ -92,7 +101,7 @@
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 				out.addRequest(loc_base.getEnv().getCreateUIViewWithIdRequest(id, eleContext, {
 					success : function(requestInfo, resourceView){
-						if(index==0)	resourceView.insertAfter(loc_base.getEnv().getStartElement());
+						if(index==0)	resourceView.appendTo(loc_view);
 						else	resourceView.insertAfter(loc_childViews[index-1].getViews());
 						loc_childViews.splice(index, 0, resourceView);
 						return resourceView;

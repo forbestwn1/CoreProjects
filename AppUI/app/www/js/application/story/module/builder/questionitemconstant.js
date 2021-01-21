@@ -92,7 +92,7 @@ var node_createComponentQuestionItemConstant = function(){
 					<div>
 						dataTag: <uitag_data v-bind:uitaginfo="tagInfo" dynamicdata="true" v-bind:data="tagData"  v-bind:datainfo="dataInfo" v-on:dataChange="onDataChange"/>
 					</div>
-					<div v-if="hasError">{{errorMsg}}</div>
+					<div v-if="hasError" style="color:red">{{errorMsg}}</div>
 				</div>
 			</div>
 		`

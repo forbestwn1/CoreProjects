@@ -165,7 +165,7 @@
 				if(mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
 					loc_view = $('<div id="map" style="height:600px;width:100%;"></div>');	
 				}
-				else{
+				else if(mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
 					loc_view = $('<div id="map" style="height:100px;width:200px;"></div>');	
 				}
 				loc_initMap();
