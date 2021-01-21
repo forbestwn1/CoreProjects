@@ -68,6 +68,9 @@
 
 		var loc_out = 
 		{
+//			initViews : function(handlers, requestInfo){
+//				loc_view = $('<div id="map" style="height:600px;width:100%;"></div>');	
+//			},
 			
 			createContextForDemo : function(id, parentContext, request) {
 				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");

@@ -64,6 +64,7 @@
 		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
 		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 
 		var loc_base = base;
 		var loc_contentView;
@@ -159,8 +160,14 @@
 
 		var loc_out = 
 		{
-			initViews : function(handlers, requestInfo){	
-				loc_view = $('<div id="map" style="height:600px;width:100%;"></div>');	
+			initViews : function(handlers, requestInfo){
+				var mode = loc_base.getEnv().getMode();
+				if(mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
+					loc_view = $('<div id="map" style="height:600px;width:100%;"></div>');	
+				}
+				else{
+					loc_view = $('<div id="map" style="height:100px;width:200px;"></div>');	
+				}
 				loc_initMap();
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 				out.addRequest(loc_getBuildContentViewRequest({

@@ -18,6 +18,7 @@ var node_createServiceRequestInfoSet;
 var node_uiDataOperationServiceUtility;
 var node_dataUtility;
 var node_requestUtility;
+var node_expressionUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 var node_utility = function(){
@@ -114,7 +115,19 @@ var node_utility = function(){
 	
 	var loc_out = {
 		
-		getRulesValidationRequest : function(data, rules, handlers, request){
+		getDataValidationByDataTypeInfoRequest : function(data, dataTypeInfo, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var rules = dataTypeInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
+			var	ruleMatchers = dataTypeInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
+			out.addRequest(node_expressionUtility.getMatchDataTaskRequest(data, ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS], {
+				success : function(request, matcheredData){
+					return loc_out.getDataValidationByRulesRequest(matcheredData, rules);
+				}
+			}));
+			return out;
+		},
+			
+		getDataValidationByRulesRequest : function(data, rules, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var rulesRequest = node_createServiceRequestInfoSequence();
 			var errorMsgs = [];
@@ -143,7 +156,8 @@ var node_utility = function(){
 
 			var lastRequest = node_createServiceRequestInfoSimple(undefined, function(request){
 				var errorMsgs = request.getData("errorMsgs");
-				return errorMsgs;
+				if(errorMsgs!=undefined&&errorMsgs.length>0)  return errorMsgs;
+				return undefined;
 			});
 			lastRequest.setData(errorMsgs, "errorMsgs");
 			rulesRequest.addRequest(lastRequest);
@@ -152,31 +166,6 @@ var node_utility = function(){
 			
 			return out;
 		},
-			
-		getRulesValidationRequest1 : function(data, rules, handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var rulesRequest = node_createServiceRequestInfoSet(undefined, {
-				success : function(request, resultSet){
-					var errorMsgs = [];
-					var results = resultSet.getResults();
-					_.each(results, function(msg){
-						if(!node_basicUtility.isStringEmpty(msg)){
-							errorMsgs.push(msg);
-						}
-					});
-					return errorMsgs;
-				}
-			});
-			_.each(rules, function(rule, i){
-				rulesRequest.addRequest(i, loc_getRuleValidationRequest(data, rule));
-			})
-			
-			out.addRequest(rulesRequest);
-			
-			return out;
-		},
-
-	
 	};
 	return loc_out;
 }();
@@ -199,6 +188,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("dataRuleUtility", node_utility); 

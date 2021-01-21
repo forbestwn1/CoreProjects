@@ -16,6 +16,8 @@ var packageObj = library.getChildPackage();
 	var node_storyUtility;
 	var node_storyUIUtility;
 	var node_designUtility;
+	var node_requestServiceProcessor;
+	var node_dataRuleUtility;
 	var node_CONSTANT;
 	var node_createData;
 	var node_createContextElementInfo;
@@ -36,6 +38,8 @@ var node_createComponentQuestionItemConstant = function(){
 				dataInfo : {},
 				data : {},
 				tagData : {},
+				hasError : false,
+				errorMsg : ""
 			};
 		},
 		props : ['question', 'story'],
@@ -43,9 +47,21 @@ var node_createComponentQuestionItemConstant = function(){
 		},
 		methods : {
 			onDataChange : function(data){
-				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, data, this.question.answer);
-				this.$emit("answerChange", data);
-				this.data = data;
+				var that = this;
+				var request = node_dataRuleUtility.getDataValidationByDataTypeInfoRequest(data, this.dataInfo, {
+					success : function(request, errorMsgs){
+						if(errorMsgs==undefined){
+							node_designUtility.applyPatchFromQuestion(that.story, that.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, data, that.question.answer);
+							that.$emit("answerChange", data);
+							that.data = data;
+						}
+						else{
+							that.hasError = true;
+							that.errorMsg = errorMsgs[0];
+						}
+					}
+				});
+				node_requestServiceProcessor.processRequest(request);
 			},
 		},
 		computed: {
@@ -73,7 +89,10 @@ var node_createComponentQuestionItemConstant = function(){
 			<div>
 				{{question.question}}: 
 				<div>
-				dataTag: <uitag_data v-bind:uitaginfo="tagInfo" dynamicdata="true" v-bind:data="tagData"  v-bind:datainfo="dataInfo" v-on:dataChange="onDataChange"/>
+					<div>
+						dataTag: <uitag_data v-bind:uitaginfo="tagInfo" dynamicdata="true" v-bind:data="tagData"  v-bind:datainfo="dataInfo" v-on:dataChange="onDataChange"/>
+					</div>
+					<div v-if="hasError">{{errorMsg}}</div>
 				</div>
 			</div>
 		`
@@ -96,6 +115,8 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUIUtility", function(){node_storyUIUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.designUtility", function(){node_designUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("data.dataRuleUtility", function(){node_dataRuleUtility = this.getData();	});
 
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.entity.createData", function(){node_createData = this.getData();});

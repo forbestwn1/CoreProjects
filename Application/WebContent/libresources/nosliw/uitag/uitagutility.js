@@ -30,20 +30,13 @@ var node_uiTagUtility = function(env, uiTagDef){
 					var dataInfo = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
 						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
 						[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA];
-					var rules = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
-					var	ruleMatchers = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
-					return node_expressionUtility.getMatchDataTaskRequest(dataValue, ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_MATCHERS], {
-						success : function(request, matcheredData){
-							return node_dataRuleUtility.getRulesValidationRequest(matcheredData, rules);
-						}
-					});
+					return node_dataRuleUtility.getDataValidationByDataTypeInfoRequest(dataValue, dataInfo);
 				}
 			}));
 
 			return out;
 		},
 	};
-	
 	
 	return loc_out;
 }();

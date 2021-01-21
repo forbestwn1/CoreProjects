@@ -470,7 +470,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 															[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
 									var data;
 									if(uiData!=undefined)  data = uiData.value;
-									return node_dataRuleUtility.getRulesValidationRequest(data, rules);
+									return node_dataRuleUtility.getDataValidationByRulesRequest(data, rules);
 								}
 							}));
 

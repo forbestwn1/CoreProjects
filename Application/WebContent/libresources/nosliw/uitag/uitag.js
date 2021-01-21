@@ -137,6 +137,8 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		getStartElement : function(){  return loc_getStartElement();  },
 		getEndElement : function(){  return loc_getEndElement();  },
 		
+		getMode : function(){   return loc_mode;   },
+		
 		//utility methods
 		createVariable : function(fullPath){  
 			return loc_context.createVariable(node_createContextVariableInfo(fullPath));  
