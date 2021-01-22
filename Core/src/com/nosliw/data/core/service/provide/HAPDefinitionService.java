@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //contains all information related with service definition
 @HAPEntityWithAttribute
@@ -23,6 +24,8 @@ public class HAPDefinitionService extends HAPSerializableImp{
 	//information used for configuration, management purpose
 	private HAPInfoServiceStatic m_staticInfo;
 	
+	private boolean m_isProcessed = false;
+	
 	//information for how two create runtime executor 
 	private HAPInfoServiceRuntime m_runtimeInfo;
 
@@ -33,6 +36,14 @@ public class HAPDefinitionService extends HAPSerializableImp{
 	
 	public HAPInfoServiceRuntime getRuntimeInfo() {  return this.m_runtimeInfo;  }
 	
+	public void process(HAPRuntimeEnvironment runtimeEnv) {
+		this.m_staticInfo.process(runtimeEnv);
+		this.m_isProcessed = true;
+	}
+	
+	public boolean isProcessed() {   return this.m_isProcessed;   }
+	
+
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{

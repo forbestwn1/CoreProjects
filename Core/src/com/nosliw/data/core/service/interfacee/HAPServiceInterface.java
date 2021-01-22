@@ -13,6 +13,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
 public class HAPServiceInterface extends HAPSerializableImp{
@@ -41,6 +42,15 @@ public class HAPServiceInterface extends HAPSerializableImp{
 	public HAPServiceResult getResult(String result) {   return this.m_results.get(result);  }
 	public List<HAPServiceOutput> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
 	public void addResult(String name, HAPServiceResult result) {  this.m_results.put(name, result);  }
+	
+	public void process(HAPRuntimeEnvironment runtimeEnv) {
+		for(HAPServiceParm parm : this.m_parms) 	parm.getDataInfo().process(runtimeEnv);
+		for(HAPServiceResult result : this.m_results.values()) {
+			for(HAPServiceOutput output : result.getOutput()) {
+				output.getDataInfo().process(runtimeEnv);
+			}
+		}
+	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

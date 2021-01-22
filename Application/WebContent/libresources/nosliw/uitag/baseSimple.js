@@ -123,6 +123,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			updateView : function(data, request){},
 			getViewData : function(){},
 			getDataForDemo : function(){},
+			getValidationRequest : function(request){},
 			destroy : function(request){},
 		}, loc_uiTagDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_baseObj));
 	};
@@ -231,7 +232,17 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		},
 		
 		getValidateDataRequest : function(handlers, request){
-			return node_uiTagUtility.getValidateDataRequest("internal_data", loc_env, handlers, request);
+			var out = node_createServiceRequestInfoSequence(handlers, request);
+			var ruleValidationRequest = node_uiTagUtility.getValidateDataRequest("internal_data", loc_env);
+			var coreValidationRequest = loc_coreObj.getValidationRequest({
+				success: function(request, errMsg){
+					if(errMsg==undefined)	return ruleValidationRequest;
+					else  return node_createServiceRequestInfoSimple(undefined, function(request){return [errMsg];});
+				}
+			});
+			if(coreValidationRequest!=undefined)   out.addRequest(coreValidationRequest);
+			else out.addRequest(ruleValidationRequest);
+			return out;
 		},
 
 	};

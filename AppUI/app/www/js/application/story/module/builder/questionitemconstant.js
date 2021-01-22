@@ -46,22 +46,26 @@ var node_createComponentQuestionItemConstant = function(){
 		components : {
 		},
 		methods : {
-			onDataChange : function(data){
+			onDataChange : function(eventData){
+				var data = eventData.data;
+				var request = eventData.request;
 				var that = this;
-				var request = node_dataRuleUtility.getDataValidationByDataTypeInfoRequest(data, this.dataInfo, {
+				var out = node_dataRuleUtility.getDataValidationByDataTypeInfoRequest(data, this.dataInfo, {
 					success : function(request, errorMsgs){
 						if(errorMsgs==undefined){
 							node_designUtility.applyPatchFromQuestion(that.story, that.question, node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA, data, that.question.answer);
 							that.$emit("answerChange", data);
 							that.data = data;
+							that.hasError = false;
+							that.errorMsg = "";
 						}
 						else{
 							that.hasError = true;
 							that.errorMsg = errorMsgs[0];
 						}
 					}
-				});
-				node_requestServiceProcessor.processRequest(request);
+				}, request);
+				node_requestServiceProcessor.processRequest(out);
 			},
 		},
 		computed: {

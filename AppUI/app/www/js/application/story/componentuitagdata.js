@@ -20,7 +20,10 @@ var packageObj = library.getChildPackage();
 	var node_createData;
 	var node_createContextElementInfo;
 	var node_createContext;
-	
+	var node_createUIDataOperationRequest;
+	var node_UIDataOperation;
+	var node_uiDataOperationServiceUtility;
+
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createComponentUITagData = function(){
@@ -44,12 +47,25 @@ var node_createComponentUITagData = function(){
 				var elementInfosArray = [dataVarEleInfo];
 				that.context = node_createContext("id", elementInfosArray, request);
 				
-				that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
+//				that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
+//					if(that.requestFromDataUpdate[request.getId()]==undefined){
+//						that.tagData = eventData.value;
+//						that.$emit("dataChange", {data:eventData.value,request:request});
+//					}
+//				}, this);
+				
+				that.context.getContextElement("data").registerDataChangeEventListener(undefined, function(event, eventData, request){
 					if(that.requestFromDataUpdate[request.getId()]==undefined){
-						that.tagData = eventData.value;
-						that.$emit("dataChange", eventData.value);
+						var getDataRequest = node_createUIDataOperationRequest(that.context, new node_UIDataOperation("data", node_uiDataOperationServiceUtility.createGetOperationService("")), {
+							success : function(request, uiData){
+								that.tagData = uiData.value;
+								that.$emit("dataChange", {data:uiData.value,request:request});
+							}
+						}, request);
+						node_requestServiceProcessor.processRequest(getDataRequest);
 					}
 				}, this);
+				
 			}
 			
 			var request = node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, {
@@ -125,6 +141,10 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("uidata.data.entity.createData", function(){node_createData = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
+
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentUITagData", node_createComponentUITagData); 

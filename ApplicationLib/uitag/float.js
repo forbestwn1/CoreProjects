@@ -51,19 +51,26 @@
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-
+		var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+		
 		var loc_base = base;
 		var loc_view;
 		
 		var loc_getViewData = function(){
-			var value = loc_view.val();
+			var value = loc_getRawValue();
 			if(value==undefined || value=="")  return;
 			return {
 				dataTypeId: "test.float;1.0.0",
-				value: parseFloat(loc_view.val()),
+				value: parseFloat(value),
 			};
 		};
 
+		var loc_getRawValue = function(){	return loc_view.val();	};
+		
+		var loc_validateValue = function(){
+			if(!node_basicUtility.isNumeric(loc_getRawValue()))  return "The value should be numeric!!!";
+		};
 		
 		var loc_out = 
 		{
@@ -92,8 +99,11 @@
 				//ui event
 				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
 					loc_view.bind('change', function(){
-						loc_base.onDataChange(loc_getViewData());
-					});									}
+						if(loc_validateValue()==undefined){
+							loc_base.onDataChange(loc_getViewData());
+						}
+					});									
+				}
 				return loc_view;
 			},
 			
@@ -111,6 +121,12 @@
 			
 			getViewData : function(){
 				return loc_getViewData();
+			},
+			
+			getValidationRequest : function(handlers, request){
+				return node_createServiceRequestInfoSimple(undefined, function(request){
+					return loc_validateValue();
+				}, handlers, request);
 			},
 			
 			getDataForDemo : function(){

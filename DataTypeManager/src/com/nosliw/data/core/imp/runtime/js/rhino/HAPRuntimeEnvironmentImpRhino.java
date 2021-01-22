@@ -48,7 +48,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPResourceManagerJSImp resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
 		HAPManagerDynamicResource dynamicResourceManager = new HAPManagerDynamicResource();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(dynamicResourceManager);
-		HAPManagerService serviceManager = new HAPManagerService();
+		HAPManagerService serviceManager = new HAPManagerService(this);
 		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), this);
 		HAPManagerScript scriptMan = new HAPManagerScript(this);
 		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), this);

@@ -71,7 +71,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
 		HAPManagerDynamicResource dynamicResourceManager = new HAPManagerDynamicResource();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(dynamicResourceManager);
-		HAPManagerService serviceManager = new HAPManagerService();
+		HAPManagerService serviceManager = new HAPManagerService(this);
 		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), this);
 		HAPManagerScript scriptMan = new HAPManagerScript(this);
 		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), this);

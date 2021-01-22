@@ -1,7 +1,6 @@
 package com.nosliw.data.core.script.context;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorContextRule {
@@ -17,9 +16,11 @@ public class HAPProcessorContextRule {
 					public boolean process(HAPContextDefinitionElement ele, Object obj) {
 						if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
 							HAPContextDefinitionLeafData dataEle = (HAPContextDefinitionLeafData)ele;
-							for(HAPDataRule rule : dataEle.getDataInfo().getRules()) {
-								rule.process(dataEle.getCriteria(), runtimeEnv);
-							}
+							dataEle.getDataInfo().process(runtimeEnv);  
+//data info process rather than rule process							
+//							for(HAPDataRule rule : dataEle.getDataInfo().getRules()) {
+//								rule.process(dataEle.getCriteria(), runtimeEnv);
+//							}
 						}
 						return true;
 					}

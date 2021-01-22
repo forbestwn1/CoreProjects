@@ -13,6 +13,7 @@ import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 //static information for a service. readable, query for service
@@ -46,6 +47,8 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 	public List<String> getTags(){   return this.m_tags;    }
 	
 	public HAPDisplayResourceNode getDisplayResource() {   return this.m_displayResource;     }
+	
+	public void process(HAPRuntimeEnvironment runtimeEnv) {  this.m_serviceInterface.process(runtimeEnv);	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 
@@ -12,14 +13,17 @@ import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 @HAPEntityWithAttribute
 public class HAPManagerService {
 
+	private HAPRuntimeEnvironment m_runtimeEnv;
+	
 	private Map<String, HAPFactoryService> m_serviceFactorys;
 	
 	private HAPManagerServiceDefinition m_serviceDefinitionManager;
 	
 	private Map<String, HAPInstanceService> m_serviceInstances;
 	
-	public HAPManagerService(){
-		this.m_serviceDefinitionManager = new HAPManagerServiceDefinition();
+	public HAPManagerService(HAPRuntimeEnvironment runtimeEnv){
+		this.m_runtimeEnv = runtimeEnv;
+		this.m_serviceDefinitionManager = new HAPManagerServiceDefinition(this.m_runtimeEnv);
 		this.m_serviceInstances = new LinkedHashMap<String, HAPInstanceService>();
 		this.m_serviceFactorys = new LinkedHashMap<String, HAPFactoryService>();
 	}

@@ -5,12 +5,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+
 //manage all service definition
 public class HAPManagerServiceDefinition {
 
+	private HAPRuntimeEnvironment m_runtimeEnv;
+	
 	private Map<String, HAPDefinitionService> m_definitions;
 	
-	public HAPManagerServiceDefinition(){
+	public HAPManagerServiceDefinition(HAPRuntimeEnvironment runtimeEnv){
+		this.m_runtimeEnv = runtimeEnv;
 		this.m_definitions = new LinkedHashMap<String, HAPDefinitionService>();
 		List<HAPDefinitionService> defs = HAPImporterDataSourceDefinition.loadDataSourceDefinition();
 		for(HAPDefinitionService def : defs) {
@@ -23,7 +28,9 @@ public class HAPManagerServiceDefinition {
 	}
 	
 	public HAPDefinitionService getDefinition(String id){
-		return this.m_definitions.get(id);
+		HAPDefinitionService out = this.m_definitions.get(id);
+		if(!out.isProcessed())   out.process(this.m_runtimeEnv);
+		return out;
 	}
 	
 	public List<HAPDefinitionService> queryDefinition(HAPQueryServiceDefinition query){
