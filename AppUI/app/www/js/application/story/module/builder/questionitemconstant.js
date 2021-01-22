@@ -73,6 +73,7 @@ var node_createComponentQuestionItemConstant = function(){
 		created : function(){
 			var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
 			this.dataInfo = element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATATYPE];
+			this.tagData = element[node_COMMONATRIBUTECONSTANT.STORYNODECONSTANT_DATA];
 		},
 		mounted: function () {
 			var that = this;
@@ -94,7 +95,7 @@ var node_createComponentQuestionItemConstant = function(){
 				{{question.question}}: 
 				<div>
 					<div>
-						dataTag: <uitag_data v-bind:uitaginfo="tagInfo" dynamicdata="true" v-bind:data="tagData"  v-bind:datainfo="dataInfo" v-on:dataChange="onDataChange"/>
+						dataTag: <uitag_data v-bind:uitaginfo="tagInfo" dynamicdata="true" v-bind:initdata="tagData"  v-bind:datainfo="dataInfo" v-on:dataChange="onDataChange"/>
 					</div>
 					<div v-if="hasError" style="color:red">{{errorMsg}}</div>
 				</div>

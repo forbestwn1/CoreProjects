@@ -42,12 +42,13 @@ public class HAPStoryNodeConstant extends HAPStoryNodeImp{
 	}
 
 	public HAPStoryNodeConstant(HAPVariableDataInfo dataType) {
-		this(dataType, true);
+		this(dataType, null, true);
 	}
 
-	public HAPStoryNodeConstant(HAPVariableDataInfo dataType, boolean isMandatory) {
+	public HAPStoryNodeConstant(HAPVariableDataInfo dataType, HAPData data, boolean isMandatory) {
 		this();
 		this.m_dataType = dataType;
+		this.m_data = data;
 		this.m_isMandatory = isMandatory;
 	}
 

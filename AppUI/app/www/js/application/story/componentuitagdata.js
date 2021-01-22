@@ -56,6 +56,7 @@ var node_createComponentUITagData = function(){
 				
 				that.context.getContextElement("data").registerDataChangeEventListener(undefined, function(event, eventData, request){
 					if(that.requestFromDataUpdate[request.getId()]==undefined){
+						//data change from tag ui
 						var getDataRequest = node_createUIDataOperationRequest(that.context, new node_UIDataOperation("data", node_uiDataOperationServiceUtility.createGetOperationService("")), {
 							success : function(request, uiData){
 								that.tagData = uiData.value;
@@ -89,29 +90,18 @@ var node_createComponentUITagData = function(){
 				requestFromDataUpdate : {}
 			};
 		},
-		props : ['uitaginfo', 'datainfo', 'dynamicdata', 'data'],
+		props : ['uitaginfo', 'datainfo', 'dynamicdata', 'initdata'],
 		components : {
 		},
 		methods : {
 		},
 		created : function(){
-			var kkk = 555;
-			kkk++;
+			this.tagData = this.initdata;
 		},
 		watch : {
 			uitaginfo : function(){
 				loc_updateTagUI(this);
 			},
-			data : function(){
-				if(that.dynamicdata=='true'){
-					this.tagData = this.data;
-					var request = this.context.getUpdateContextRequest({
-						"data":this.tagData
-					});
-					this.requestFromDataUpdate[request.getId()] = request;
-					node_requestServiceProcessor.processRequest(request);
-				}				
-			}
 		},
 		template : `
 			<div ref="uiTag">
