@@ -282,6 +282,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 							function(requestInfo){  
 								loc_setWrapper(undefined, requestInfo);
 								if(parm2!=undefined)   loc_out.prv_wrapperType = parm2;
+								loc_out.prv_dataChangeEventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_REFRESH, undefined, requestInfo);
 							}, 
 							handlers, requestInfo);
 				}

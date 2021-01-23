@@ -47,26 +47,18 @@ var node_createComponentUITagData = function(){
 				var elementInfosArray = [dataVarEleInfo];
 				that.context = node_createContext("id", elementInfosArray, request);
 				
-//				that.context.getContextElement("data").registerDataOperationEventListener(undefined, function(event, eventData, request){
-//					if(that.requestFromDataUpdate[request.getId()]==undefined){
-//						that.tagData = eventData.value;
-//						that.$emit("dataChange", {data:eventData.value,request:request});
-//					}
-//				}, this);
-				
 				that.context.getContextElement("data").registerDataChangeEventListener(undefined, function(event, eventData, request){
 					if(that.requestFromDataUpdate[request.getId()]==undefined){
 						//data change from tag ui
 						var getDataRequest = node_createUIDataOperationRequest(that.context, new node_UIDataOperation("data", node_uiDataOperationServiceUtility.createGetOperationService("")), {
 							success : function(request, uiData){
-								that.tagData = uiData.value;
-								that.$emit("dataChange", {data:uiData.value,request:request});
+								that.tagData = uiData==undefined?undefined:uiData.value;
+								that.$emit("dataChange", {data:that.tagData,request:request});
 							}
 						}, request);
 						node_requestServiceProcessor.processRequest(getDataRequest);
 					}
 				}, this);
-				
 			}
 			
 			var request = node_uiNodeViewFactory.getCreateUINodeViewRequest([uiNode], "", that.context, {

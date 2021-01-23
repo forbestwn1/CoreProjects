@@ -71,6 +71,7 @@ var node_createComponentQuestionItemUIData = function(){
 			onSelectTag : function(){
 				loc_setCurrentByTagId(this, this.popSelected);
 				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODEUITAG_TAGNAME, this.popSelected, this.question.answer);
+				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_MATCHERS, this.currentTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFOO_MATCHERS], this.question.answer);
 				this.popSelected = undefined;
 			},
 			onCancelSelectTag : function(){
@@ -121,7 +122,7 @@ var node_createComponentQuestionItemUIData = function(){
 		template : `
 			<div>
 				{{question.question}}:
-				dataTag: <uitag_data v-bind:uitaginfo="currentTagInfo" v-bind:datainfo="dataInfo"/>
+				<uitag_data v-bind:uitaginfo="currentTagInfo" v-bind:datainfo="dataInfo"/>
 <!--				<a class="popup-open" href="#" data-popup=".popup-about">Change UI</a>  -->
 				<a href="#" v-on:click.prevent="onOpenPopup">Change UI</a>
 

@@ -65,8 +65,15 @@ var node_createUINodeFromStoryNode = function(storyNodeId, story){
 			return out;
 		},
 		
-		getBody : function(){	return loc_out;	}
-	
+		getBody : function(){	return loc_out;	},
+		
+		getMatchers : function(){   return this.getStoryNode()[node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_MATCHERS];    },
+		
+		getDataInfos : function(){
+			return {
+				internal_data : this.getStoryNode()[node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_DATAINFO], 
+			};
+		},
 	};
 	return loc_out;
 };

@@ -247,7 +247,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.switchAlias, varGroupEle);
 
 					//set switch group choice
-					dataLayerChangeRequest.addPatchChange(parmBranchInfo.switchAlias, HAPElementGroupSwitch.CHOICE, varGroupEle.getName());
+//					dataLayerChangeRequest.addPatchChange(parmBranchInfo.switchAlias, HAPElementGroupSwitch.CHOICE, varGroupEle.getName());
+					dataLayerChangeRequest.addPatchChange(parmBranchInfo.switchAlias, HAPElementGroupSwitch.CHOICE, constantGroupEle.getName());
 
 					parmBranchInfos.add(parmBranchInfo);
 				}
@@ -436,8 +437,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUINode.getStoryNodeRef()));
 				
 				HAPDataUIInfo dataUIInfo = buildDataUINode(story, dataUINode, null, "element", createChildDisplayLabelInfo("element", lableInfo.getDisplayResource()), dataFlow, changeRequest);
-				out.children.add(dataUIInfo);
-				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUIInfo.rootEleRef));
+				if(dataUIInfo!=null) {
+					out.children.add(dataUIInfo);
+					changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUIInfo.rootEleRef));
+				}
 
 				out.dataUINode = dataUINode;
 			}
@@ -446,8 +449,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				List<String> names = HAPCriteriaUtility.getCriteriaChildrenNames(dataTypeCriteria);
 				for(String name : names) {
 					HAPDataUIInfo dataUIInfo = buildDataUINode(story, layoutUINode, "uiData", varName+"."+name, createChildDisplayLabelInfo(name, lableInfo.getDisplayResource()), dataFlow, changeRequest);
-					out.children.add(dataUIInfo);
-					changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUIInfo.rootEleRef));
+					if(dataUIInfo!=null) {
+						out.children.add(dataUIInfo);
+						changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUIInfo.rootEleRef));
+					}
 				}
 			}
 		}
@@ -470,6 +475,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 				out.dataUINode = dataUINode;
 			}
+			else  return null;
 		}
 		
 		out.rootEleRef = dataUIGroupAlias;
