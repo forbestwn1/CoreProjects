@@ -77,20 +77,20 @@
 			initViews : function(requestInfo){
 				var flowDataType = loc_base.getDataFlowType();
 				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
-					loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
-//					var enumDataSet = loc_base.getEnumDataSet();
-//					if(enumDataSet==undefined){
-//						loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
-//					}
-//					else{
-//						loc_view = $('<select style="display:inline;background:#e6dedc;border:solid red"/>');	
-//						for(var i in enumDataSet){
-//							loc_view.append($('<option>', {
-//								value: enumDataSet[i].value,
-//								text: enumDataSet[i].value
-//							}));
-//						}
-//					}
+//					loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
+					var enumDataSet = loc_base.getEnumDataSet();
+					if(enumDataSet==undefined){
+						loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
+					}
+					else{
+						loc_view = $('<select style="display:inline;background:#e6dedc;border:solid red"/>');	
+						for(var i in enumDataSet){
+							loc_view.append($('<option>', {
+								value: enumDataSet[i].value,
+								text: enumDataSet[i].value
+							}));
+						}
+					}
 				}
 				else{
 					loc_view = $('<span/>');	

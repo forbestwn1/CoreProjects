@@ -68,7 +68,7 @@ var node_utility = function(){
 			else{
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 					var enumDataSet = rule[node_COMMONATRIBUTECONSTANT.DATARULEENUMDATA_DATASET];
-					if(loc_isValidForEnumDataSet()==false)		return loc_getCreateErrorMessageRequest(rule, "Not valid value");
+					if(loc_isValidForEnumDataSet(targetData, enumDataSet)==false)		return loc_getCreateErrorMessageRequest(rule, "Not valid value");
 					else		return node_requestUtility.getEmptyRequest();
 				}));
 			}

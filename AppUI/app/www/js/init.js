@@ -117,8 +117,8 @@ nosliwApplication.lifecycle = {
 		var appFolder = "js/application/"+ appName +"/";
 		nosliwApplication.info = {
 			baseServer : env.nosliw_address+':'+env.nosliw_port+'/'+env.nosliw_context+'/',
-//			envName : env.name,
-			envName : "product",
+			envName : env.name,
+//			envName : "product",
 			application : {
 				name : appName,
 				appFolder : appFolder,

@@ -55,7 +55,7 @@ var node_createUITagOnBaseArray = function(env, uiTagDef){
 
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
 			for(var i in loc_childVaraibles){
-				resourceView.deleteElement(0, requestInfo);
+				loc_out.prv_deleteEle(0, requestInfo);
 			}
 		}));
 
@@ -86,7 +86,7 @@ var node_createUITagOnBaseArray = function(env, uiTagDef){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 		out.addRequest(loc_coreObj.getCreateElementViewRequest(loc_env.getId()+"."+loc_generateId(), index, variables, {
 			success : function(requestInfo, view){
-				loc_childVaraibles.splice(index, 0, eleVar);
+				loc_childVaraibles.splice(index, 0, variables);
 			}
 		}));
 		return out;
@@ -118,6 +118,9 @@ var node_createUITagOnBaseArray = function(env, uiTagDef){
 	var loc_out = {
 			prv_deleteEle : function(index, requestInfo){
 				loc_coreObj.deleteElement(index, requestInfo);
+				var variables = loc_childVaraibles[index];
+				variables[loc_getElementVariableName()].release(requestInfo);
+				variables[loc_getIndexVariableName()].release(requestInfo);
 				loc_childVaraibles.splice(index, 1);
 			},
 			

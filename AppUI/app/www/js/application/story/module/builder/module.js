@@ -251,7 +251,8 @@ var node_createModuleStoryBuilder = function(parm){
 				resourceUrl : {
 					get : function(){
 						if(this.resourceId.id!=undefined){
-							return nosliwApplication.info.baseServer + "page.html?name="+this.resourceId.id.id;
+							var appInfo = nosliwApplication.info;
+							return appInfo.baseServer + "page_"+appInfo.envName+".html?name="+this.resourceId.id.id;
 						}
 						else return undefined;
 					}

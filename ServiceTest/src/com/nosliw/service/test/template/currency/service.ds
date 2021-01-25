@@ -3,7 +3,7 @@
 		"id": "CurrencyExchangeRate",
 		"name": "Currency Exchange Rate",
 		"description" : "Get currency exchange rate between different currency",
-		"tag" : ["public"],
+		"tag" : ["demo", "public"],
 		"interface" : {
 			"parm" : [
 				{
@@ -16,7 +16,12 @@
 								path : "currency",
 								ruleType : "enum",
 								enumCode : "currencytype"
-							}
+							},
+							{
+								ruleType : "expression",
+								description : "Cannot bigger than 5000!!!",
+								expression : "?(data)?.largerThan(data:&(#test##float___5000)&).opposite()"
+							},
 						]
 					},
 					defaultValue :{

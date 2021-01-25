@@ -188,10 +188,9 @@
 			},
 
 			deleteElement : function(index, requestInfo){
-				var view = loc_childViews[index];
-				view.detachViews();
-				view.destroy(requestInfo);
-				loc_childViews.splice(index, 1);
+				var ele = loc_elements[index];
+				ele.marker.setMap(null);
+				loc_elements.splice(index, 1);
 			}, 
 			
 			getDataForDemo : function(){

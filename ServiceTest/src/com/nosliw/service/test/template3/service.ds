@@ -3,7 +3,7 @@
 		"id": "TestTemplateService3",
 		"name": "TestTemplateService3",
 		"description" : "test service implemented by process",
-		"tag" : ["public"],
+		"tag" : ["test", "public"],
 		"interface" : {
 			"parm" : [
 				{

@@ -9,9 +9,6 @@ var dataTypeDefition = nosliw.getDataTypeDefinition("test.float");
 dataTypeDefition.requires = {
 };
 
-//define operation
-nosliw.addDataTypeDefinition(dataTypeDefition);
-
 dataTypeDefition.operations['largerThan'] = {
 		operation : function(parms, context){
 			var base = this.value;
@@ -71,3 +68,7 @@ dataTypeDefition.operations['equals'] = {
 			}
 		},
 };
+
+//define operation
+nosliw.addDataTypeDefinition(dataTypeDefition);
+
