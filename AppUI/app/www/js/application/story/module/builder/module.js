@@ -240,12 +240,12 @@ var node_createModuleStoryBuilder = function(parm){
 				},
 				overviewUrl : {
 					get : function(){
-						return "story.html?env=local&configure=overviewtest&app=story&version=2&designId="+this.designId;
+						return "story.html?env="+nosliwApplication.info.envName+"&configure=overviewtest&app=story&version=2&designId="+this.designId;
 					}
 				},
 				pageViewUrl : {
 					get : function(){
-						return "story.html?env=local&configure=ui&app=story&version=2&designId="+this.designId;
+						return "story.html?env="+nosliwApplication.info.envName+"&configure=ui&app=story&version=2&designId="+this.designId;
 					}
 				},
 				resourceUrl : {
