@@ -1,12 +1,12 @@
 nosliwApplication.environments = {
-	product : {
+	product_remote : {
 		nosliw_address : 'http://www.lastkilometer.ca',
 		nosliw_port : 8082,
 		nosliw_context : 'nosliw',
 		library : [],
 	},
-	local : {
-		nosliw_address : 'http://localhost',
+	test : {
+		nosliw_address : 'http://www.lastkilometer.ca',
 		nosliw_port : 8082,
 		nosliw_context : 'nosliw',
 		library : [
@@ -16,8 +16,18 @@ nosliwApplication.environments = {
 			module : ["process", "requestInfo", "requestManager"],
 		}
 	},
-	test : {
-		nosliw_address : 'http://www.lastkilometer.ca',
+	product_local : {
+		nosliw_address : 'http://localhost',
+		nosliw_port : 8082,
+		nosliw_context : 'nosliw',
+		library : [
+		],
+		logging : {
+			module : ["process", "requestInfo", "requestManager"],
+		}
+	},
+	local : {
+		nosliw_address : 'http://localhost',
 		nosliw_port : 8082,
 		nosliw_context : 'nosliw',
 		library : [

@@ -82,7 +82,7 @@
 				loc_view = $('<span/>');
 				var flowDataType = loc_base.getDataFlowType();
 				if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
-					var enumDataSet = loc_base.getEnumDataSet();
+					var enumDataSet = loc_base.getEnumDataSet("currency");
 					loc_amountView = $('<input type="text" style="display:inline;background:#e6ded0"/>');	
 					if(enumDataSet==undefined){
 						loc_currencyView = $('<input type="text" style="display:inline;background:#e6dedc"/>');	

@@ -8,6 +8,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
+	var node_basicUtility;
 	var node_createServiceRequestInfoSequence;
 	var node_createServiceRequestInfoSet;
 	var node_createServiceRequestInfoSimple;
@@ -26,7 +27,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	var loc_dataVariable;
 	var loc_currentData;
 	
-	var loc_enumDataSet;
+	var loc_enumDataSet = {};
 	
 	//mandatory rule
 	var loc_isMandatory = false;
@@ -39,6 +40,8 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 	//expression rule
 	var loc_validationExpression;
 	var loc_expressionRuleDescription;
+	
+	var loc_DEFAULTPATH = "AAAAAAAAAAAAAAAAAAAAA";
 	
 	var loc_processDataRuleRequest = function(request){
 		var out = node_createServiceRequestInfoSequence(undefined, undefined, request);
@@ -60,25 +63,32 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			}
 		}
 		if(enumRule!=null){
-			var enumCode = enumRule[node_COMMONATRIBUTECONSTANT.DATARULEENUMCODE_ENUMCODE];
-			if(enumCode!=undefined){
-				return nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([enumCode], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CODETABLE, {
-					success : function(requestInfo, resources){
-						var codeTableResource = resources[enumCode];
-						loc_enumDataSet = codeTableResource[node_COMMONATRIBUTECONSTANT.CODETABLE_DATASET];
-						return loc_getProcessEnumDataSetRequest(ruleMatchers);
-					}
-				});
-			}
-			else{
-				loc_enumDataSet = enumRule[node_COMMONATRIBUTECONSTANT.DATARULEENUMDATA_DATASET];
-				out.addRequest(loc_getProcessEnumDataSetRequest(ruleMatchers));
+			var ruleTargetPath = enumRule[node_COMMONATRIBUTECONSTANT.DATARULE_PATH];
+			if(!(ruleMatchers!=null && !node_basicUtility.isStringEmpty(ruleTargetPath))){
+				var path = ruleTargetPath;
+				if(node_basicUtility.isStringEmpty(path))  path = loc_DEFAULTPATH;
+				var enumCode = enumRule[node_COMMONATRIBUTECONSTANT.DATARULEENUMCODE_ENUMCODE];
+				if(enumCode!=undefined){
+					return nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([enumCode], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CODETABLE, {
+						success : function(requestInfo, resources){
+							var codeTableResource = resources[enumCode];
+							var enumDataSet = codeTableResource[node_COMMONATRIBUTECONSTANT.CODETABLE_DATASET];
+							loc_enumDataSet[path] = enumDataSet;
+							return loc_getProcessEnumDataSetMatchersRequest(enumDataSet, ruleMatchers);
+						}
+					});
+				}
+				else{
+					var enumDataSet = enumRule[node_COMMONATRIBUTECONSTANT.DATARULEENUMDATA_DATASET];
+					loc_enumDataSet[path] = enumDataSet;
+					out.addRequest(loc_getProcessEnumDataSetMatchersRequest(enumDataSet, ruleMatchers));
+				}
 			}
 		}
 		return out;
 	};
 	
-	var loc_getProcessEnumDataSetRequest = function(ruleMatchers){
+	var loc_getProcessEnumDataSetMatchersRequest = function(enumDataSet, ruleMatchers){
 		var reverseMatchers = ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_REVERSEMATCHERS];
 		if(reverseMatchers==undefined)  return;
 		
@@ -86,13 +96,13 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		var enumMatcherRequest = node_createServiceRequestInfoSet(undefined, {
 			success : function(requestInfo, subDatasResult){
 				_.each(subDatasResult.getResults(), function(data, i){
-					loc_enumDataSet[i] = data;
+					enumDataSet[i] = data;
 				});
 			}
 		});
 		out.addRequest(enumMatcherRequest);
 		
-		_.each(loc_enumDataSet, function(enumData, i){
+		_.each(enumDataSet, function(enumData, i){
 			//get each sub data request
 			enumMatcherRequest.addRequest(i, node_expressionUtility.getMatchDataTaskRequest(enumData, ruleMatchers==undefined?undefined:ruleMatchers[node_COMMONATRIBUTECONSTANT.MATCHERSCOMBO_REVERSEMATCHERS]));
 		});
@@ -136,8 +146,9 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			return out;
 		},
 
-		getEnumDataSet : function(){
-			return loc_enumDataSet;
+		getEnumDataSet : function(path){
+			if(node_basicUtility.isStringEmpty(path))  path = loc_DEFAULTPATH;
+			return loc_enumDataSet[path];
 		},
 		
 		onDataChange : function(data){
@@ -257,6 +268,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});

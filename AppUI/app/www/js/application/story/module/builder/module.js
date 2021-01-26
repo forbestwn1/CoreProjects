@@ -217,9 +217,9 @@ var node_createModuleStoryBuilder = function(parm){
 			components : {
 			},
 			computed : {
-				envName : {
+				isProduct : {
 					get : function(){
-						return nosliwApplication.info.envName;
+						return nosliwApplication.info.envName.startsWith("product");
 					}
 				},
 				question : {
@@ -300,7 +300,7 @@ var node_createModuleStoryBuilder = function(parm){
 				    <div class="block">
 						<br>
 						
-						<span v-if="envName!='product'">
+						<span v-if="!isProduct">
 						{{designId}}
 						<br>
 						<a v-on:click.prevent="onStory">story</a>
