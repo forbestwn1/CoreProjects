@@ -7,7 +7,7 @@
 			<br>
 			<%=?(element111)?.value + '   7777 ' %>   
 			<br>
-			TextInput:<nosliw-textinput data="element111" nosliw-event="valueChanged:textInputValueChanged:"/>
+			TextInput:<nosliw-string data="element111" nosliw-event="valueChanged:textInputValueChanged:"/>
 			<br>
 			*************************************
 

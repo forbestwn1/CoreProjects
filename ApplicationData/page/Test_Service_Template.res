@@ -11,10 +11,10 @@
 	
 	<br>
 	<br>
-	serviceParm1:<nosliw-textinput data="service1_parm_serviceParm1"/>  
+	serviceParm1:<nosliw-string data="service1_parm_serviceParm1"/>  
 	<br>
 	<br>
-	outputInService:<nosliw-textinput data="service1_result_success_outputInService"/>  
+	outputInService:<nosliw-string data="service1_result_success_outputInService"/>  
 	<br>
 	<br>
 

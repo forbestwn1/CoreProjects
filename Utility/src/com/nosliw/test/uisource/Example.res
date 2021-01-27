@@ -47,7 +47,7 @@
 		nosliw-data is used to define the binded variable (two way)<br>
 		for regular attribute, the value can be expression and can only readable <br>
 		nosliw-event is used to define the event response
-		<nosliw-textinput nosliw-data="key.a.aa" nosliw-event="change:testTextInputChangeEvent:"/>
+		<nosliw-string nosliw-data="key.a.aa" nosliw-event="change:testTextInputChangeEvent:"/>
 
 		<br><br>
 		Customer tag : loop:<br>

@@ -10,14 +10,9 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
-import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPProcessId;
 import com.nosliw.data.core.process.resource.HAPResourceIdProcess;
-import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -48,16 +43,16 @@ public class HAPUtilityProcess {
 		return new HAPResourceIdProcess(new HAPProcessId(suiteId, processId));
 	}
 	
-	public static HAPDefinitionProcessSuite buildProcessSuiteFromAttachment(HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
-		Map<String, HAPAttachment> attachments = attachmentContainer.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
-		for(String id : attachments.keySet()) {
-			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachments.get(id);
-			HAPDefinitionProcessSuiteElementEntity processDef = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntityJsonObj(), activityPluginMan);
-			out.addContainerElement(processDef);
-		}
-		return out;
-	}
+//	public static HAPDefinitionProcessSuite buildProcessSuiteFromAttachment(HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
+//		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
+//		Map<String, HAPAttachment> attachments = attachmentContainer.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);
+//		for(String id : attachments.keySet()) {
+//			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachments.get(id);
+//			HAPDefinitionProcessSuiteElementEntity processDef = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntityJsonObj(), activityPluginMan);
+//			out.addContainerElement(processDef);
+//		}
+//		return out;
+//	}
 
 	public static void buildScriptExpressionProcessContext(HAPContext context, HAPContextProcessScript expProcessContext) {
 		//prepare constant value 

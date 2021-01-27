@@ -12,9 +12,9 @@
 			<br>
 			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
 			<br>
-			TextInput:<nosliw-textinput data="ele"/>  
+			TextInput:<nosliw-string data="ele"/>  
 			<br>
-			TextInput:<nosliw-textinput data="ele"/>  
+			TextInput:<nosliw-string data="ele"/>  
 			<br>
 			<script>
 			{
@@ -118,9 +118,9 @@
 	<br>
 	Content:<%=?(bus.a.aa)?.value + '   6666 ' %>
 	<br>
-	TextInput_converter:<nosliw-textinput data="bus.a.aa"/>  
+	TextInput_converter:<nosliw-string data="bus.a.aa"/>  
 	<br>
-	TextInput_converter<nosliw-textinput data="bus.a.aa"/>  
+	TextInput_converter<nosliw-string data="bus.a.aa"/>  
 
 	<br>
 	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
@@ -129,9 +129,9 @@
 	<br>
 	Attribute:<span  style="color:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value=='s isfff'?'red':'blue'%>">Phone Number : </span> 
 	<br>
-	TextInput:<nosliw-textinput data="business.a.aa"/>  
+	TextInput:<nosliw-string data="business.a.aa"/>  
 	<br>
-	TextInput: <nosliw-textinput data="business.a.aa"/>  
+	TextInput: <nosliw-string data="business.a.aa"/>  
 
 	<br>
 	Switch/case

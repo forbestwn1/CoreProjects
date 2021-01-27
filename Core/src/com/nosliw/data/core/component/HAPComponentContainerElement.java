@@ -225,5 +225,17 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		return null;
 	}
 
+	@Override
+	public String getDisplayName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setDisplayName(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<br>
-	TextInput:<nosliw-textinput data="business.a.aa"/>  
+	TextInput:<nosliw-string data="business.a.aa"/>  
 	<br>
-	TextInput:<nosliw-textinput data="business.a.aa"/>  
+	TextInput:<nosliw-string data="business.a.aa"/>  
 	<br>
 		
 		

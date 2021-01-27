@@ -9,11 +9,10 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.service.provide.HAPExecutableService;
-import com.nosliw.data.core.service.provide.HAPProviderService;
 import com.nosliw.data.core.service.provide.HAPResultService;
 import com.nosliw.data.core.service.provide.HAPUtilityService;
 
-public class HAPServiceGetLineup implements HAPExecutableService, HAPProviderService{
+public class HAPServiceGetLineup implements HAPExecutableService{
 
 	@Override
 	public HAPResultService execute(Map<String, HAPData> parms){

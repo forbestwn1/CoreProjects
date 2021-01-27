@@ -2,10 +2,10 @@
 <html>
 <body>
 	<br>
-	FlightNumber:<nosliw-text data="flightNumber"/>  
+	FlightNumber:<nosliw-string data="flightNumber"/>  
 	<br>
 	<br>
-	Date:<nosliw-date data="date"/>
+<!--	Date:<nosliw-date data="date"/> -->
 	<br>
 	<br>
 </body>

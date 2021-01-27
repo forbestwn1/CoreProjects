@@ -7,7 +7,7 @@
 			<br>
 			Index: <%=?(index)?.value%>  
 			<br>
-			TextInput:<nosliw-textinput data="element"/> 
+			TextInput:<nosliw-string data="element"/> 
 			<br>
 			<%=?(element)?.value + '   7777 ' %>   
 			<br>
@@ -16,7 +16,7 @@
 </body>
 
 <!--
-			TextInput:<nosliw-textinput data="element"/> 
+			TextInput:<nosliw-string data="element"/> 
 			<br>
 
 			Index: <%=?(index)?%>  

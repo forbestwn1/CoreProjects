@@ -5,7 +5,7 @@
 ************************************   Query  **************************************
 
 	<br>
-	SchoolType:<nosliw-textinput data="criteria.schoolType"/>  
+	SchoolType:<nosliw-string data="criteria.schoolType"/>  
 	<br>
 
 	<br>
@@ -13,7 +13,7 @@
 	<br>
 
 	<br>
-	BuildingType:<nosliw-multioptions id="buildingType" data="criteria.buildingType"/>
+	<!--BuildingType:<nosliw-multioptions id="buildingType" data="criteria.buildingType"/>-->
 	<br>
 
 	<br>

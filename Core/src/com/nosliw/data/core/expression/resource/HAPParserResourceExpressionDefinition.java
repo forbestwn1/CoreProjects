@@ -14,13 +14,13 @@ public class HAPParserResourceExpressionDefinition {
 
 		HAPUtilityComponentParse.parseComplextResourceDefinition(out, expressionSuiteJson);
 		
-		JSONArray processesArray = expressionSuiteJson.getJSONArray(HAPResourceDefinitionContainer.ELEMENT);
-		for(int i=0; i<processesArray.length(); i++){
-			JSONObject processObjJson = processesArray.getJSONObject(i);
-			Object expressionObj = processObjJson.opt(HAPDefinitionResourceDefinitionExpressionSuiteElementEntity.ELEMENT);
+		JSONArray expressionsArray = expressionSuiteJson.getJSONArray(HAPResourceDefinitionContainer.ELEMENT);
+		for(int i=0; i<expressionsArray.length(); i++){
+			JSONObject expressionObjJson = expressionsArray.getJSONObject(i);
+			Object expressionObj = expressionObjJson.opt(HAPDefinitionResourceDefinitionExpressionSuiteElementEntity.ELEMENT);
 			if(expressionObj!=null) {
 				//expression entity
-				out.addContainerElement(parseExpressionSuiteElement(processObjJson));
+				out.addContainerElement(parseExpressionSuiteElement(expressionObjJson));
 			}
 			else {
 				//reference

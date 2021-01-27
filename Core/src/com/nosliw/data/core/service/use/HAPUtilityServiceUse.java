@@ -66,7 +66,8 @@ public class HAPUtilityServiceUse {
 		if(eleByName!=null) {
 			for(String name : eleByName.keySet()) {
 				HAPDefinitionServiceProvider provider = null;
-				HAPAttachmentReference ele = (HAPAttachmentReference)eleByName.get(name);
+				Object eleObj = eleByName.get(name);
+				HAPAttachmentReference ele = (HAPAttachmentReference)eleObj;
 				//build from ele
 				provider = buildServiceProviderFromAttachment(ele, serviceDefinitionMan);
 //				if(HAPAttachmentUtility.isOverridenByParent(ele)) {

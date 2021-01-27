@@ -5,7 +5,7 @@
 ************************************   Query  **************************************
 
 	<br>
-	SchoolType:<nosliw-textinput id="schoolType" data="schoolType"/>
+	SchoolType:<nosliw-string id="schoolType" data="schoolType"/>
 	<br>
 
 	<br>
@@ -17,12 +17,12 @@
 	<br>
 
 	<br>
-	From:<nosliw-price data="fromPrice"/>
+<!--	From:<nosliw-price data="fromPrice"/>  -->
 	<br>
-	To:<nosliw-price data="toPrice"/>
+<!--	To:<nosliw-price data="toPrice"/>  -->
 	
 	<br>
-	BuildingType:<nosliw-multioptions id="buildingType" data="buildingType"/>
+<!--	BuildingType:<nosliw-multioptions id="buildingType" data="buildingType"/>-->
 	<br>
 	
 </body>

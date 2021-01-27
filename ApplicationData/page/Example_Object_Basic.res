@@ -12,11 +12,9 @@
 		</nosliw-style>
 
 		<span class="red1">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
-<!--
 		<nosliw-include source="Example_Include_simple" context="" event="changeInputTextIncludeBasic=changeInputTextIncludeBasicMapped"/> 
 
 		<nosliw-include source="Example_Object_Basic_Include" context="element=business.a.aa" /> 
--->
 		
 	<br>
 	Content:<%=?(business.a.aa)?.value + '   6666 ' %>

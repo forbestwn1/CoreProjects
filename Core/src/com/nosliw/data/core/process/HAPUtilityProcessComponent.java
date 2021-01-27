@@ -43,6 +43,7 @@ public class HAPUtilityProcessComponent {
 			HAPAttachmentReference referenceAttachment = (HAPAttachmentReference)attachment;
 			out = new HAPDefinitionProcessSuiteElementReference(referenceAttachment.getReferenceId());
 		}
+		out.setName(attachment.getName());
 		return out;
 	}
 	

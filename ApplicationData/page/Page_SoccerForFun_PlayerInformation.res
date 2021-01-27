@@ -5,19 +5,19 @@
 	<br>
 	<br>
 	如果你是最初注册的球员，请勾选：
-	<nosliw-boolean id="players2019Summer" data="player.registered"/>
+<!--	<nosliw-boolean id="players2019Summer" data="player.registered"/>-->
 	
 	<br>
 	<nosliw-switch value="<%=?(player.registered)?.value%>">
 		<nosliw-case value="true">
 			<br>
-			注册球员列表，请选择你的名字:<nosliw-string-options id="players2019Summer" data="player.name"/>
+<!--			注册球员列表，请选择你的名字:<nosliw-string-options id="players2019Summer" data="player.name"/>  -->
 			<br>
 		</nosliw-case>
 
 		<nosliw-case value="false">
 			<br>
-			请输入你的名字:<nosliw-textinput data="player.name"/>  
+			请输入你的名字:<nosliw-string data="player.name"/>  
 			<br>
 		</nosliw-case>
 	</nosliw-switch>
@@ -25,7 +25,7 @@
 	<br>
 	电子邮件用来通知各种事件(比方说你接到坑，或者有人接你的坑):
 	<br>
-	<nosliw-textinput data="player.email"/>  
+	<nosliw-string data="player.email"/>  
 	<br>
 	
 	<br>

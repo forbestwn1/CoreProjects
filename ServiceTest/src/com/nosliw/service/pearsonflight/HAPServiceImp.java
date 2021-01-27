@@ -6,11 +6,10 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.service.provide.HAPExecutableService;
-import com.nosliw.data.core.service.provide.HAPProviderService;
 import com.nosliw.data.core.service.provide.HAPResultService;
 import com.nosliw.data.core.service.provide.HAPUtilityService;
 
-public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
+public class HAPServiceImp implements HAPExecutableService{
 
 	@Override
 	public HAPResultService execute(Map<String, HAPData> parms) {

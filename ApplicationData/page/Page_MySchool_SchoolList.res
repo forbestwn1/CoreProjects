@@ -6,7 +6,7 @@
 	SchoolRating:<nosliw-float data="schoolRating"/>  
 	<br>
 	<br>
-	SchoolType:<nosliw-options id="schoolType" data="schoolType"/>
+	SchoolType:<nosliw-string data="schoolType"/>
 	<br>
 	<br>
 		<br>
@@ -136,14 +136,11 @@
 					},
 					"schoolType" : {
 						"definition" : {
-							"criteria" : "test.options;1.0.0"
+							"criteria" : "test.string;1.0.0"
 						},
 						"defaultValue" : {
-							"dataTypeId": "test.options;1.0.0",
-							"value": {
-								"value" : "Public",
-								"optionsId" : "schoolType"
-							}
+							"dataTypeId": "test.string;1.0.0",
+							"value": "Public",
 						}
 					},
 					"schoolRating" : {
@@ -158,11 +155,8 @@
 					schoolType1: {
 						definition : {
 							value : {
-								"dataTypeId": "test.options;1.0.0",
-								"value": {
-									"value" : "Public",
-									"optionsId" : "schoolType"
-								}
+								"dataTypeId": "test.string;1.0.0",
+								"value": "Public",
 							}
 						}
 					},

@@ -14,20 +14,20 @@
 		</nosliw-loop>
 
 		<br>
-		<nosliw-textinput data="company.name"/>  
+		<nosliw-string data="company.name"/>  
 		<br>
 		<br>
-		<nosliw-textinput data="company.name"/>  
+		<nosliw-string data="company.name"/>  
 		<br>
 
 	<%=?(company.name)?.value + '   6666 ' %>  tttttttttt222  
 		
 <!--	
 		<br>
-		<nosliw-textinput data="company.name"/>  
+		<nosliw-string data="company.name"/>  
 		<br>
 		<br>
-		<nosliw-textinput data="company.name"/>  
+		<nosliw-string data="company.name"/>  
 		<br>
 
 	<%=?(company.name)?.value + '   6666 ' %>  tttttttttt222  

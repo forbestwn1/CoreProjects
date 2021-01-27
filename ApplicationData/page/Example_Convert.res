@@ -5,9 +5,9 @@
 	<br>
 	Content:<%=?(bus.a.aa)?.value + '   6666 ' %>
 	<br>
-	TextInput_converter:<nosliw-textinput data="bus.a.aa"/>  
+	TextInput_converter:<nosliw-string data="bus.a.aa"/>  
 	<br>
-	TextInput_converter<nosliw-textinput data="bus.a.aa"/>  
+	TextInput_converter<nosliw-string data="bus.a.aa"/>  
 
 </body>
 

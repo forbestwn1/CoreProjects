@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 
+import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 
@@ -29,6 +30,7 @@ public class HAPImporterDataSourceDefinition {
 	public static List<HAPDefinitionService> loadDataSourceDefinition() {
 		List<HAPDefinitionService> out = new ArrayList<HAPDefinitionService>();
 
+		/*
 		for(String serviceClasse : serviceClasses) {
 			Class cls;
 			try {
@@ -41,13 +43,13 @@ public class HAPImporterDataSourceDefinition {
 				e.printStackTrace();
 			}
 		}
+		*/
 		
-/*		
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class cls, Object data) {
-				HAPDefinitionService dataSourceDef = loadDataSourceDefinition(cls);
-				if(dataSourceDef!=null)		out.add(dataSourceDef);
+				List<HAPDefinitionService> dataSourceDefs = loadDataSourceDefinition(cls);
+				out.addAll(dataSourceDefs);
 			}
 
 			@Override
@@ -61,7 +63,7 @@ public class HAPImporterDataSourceDefinition {
 				return false;
 			}
 		}.process(null);
-*/		
+	
 		return out;
 	}
 	
@@ -79,7 +81,7 @@ public class HAPImporterDataSourceDefinition {
 				}
 			}
 		}
-		catch(Exception e){
+		catch(Throwable e){
 			e.printStackTrace();
 		}
 		return out;

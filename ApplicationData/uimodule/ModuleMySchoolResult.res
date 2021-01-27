@@ -10,14 +10,11 @@
 				"element": {
 					"schoolTypeInModule": {
 						"definition": {
-							"criteria": "test.options;1.0.0"
+							"criteria": "test.string;1.0.0"
 						},
 						"defaultValue": {
-							"dataTypeId": "test.options;1.0.0",
-							"value": {
-								"value": "Public",
-								"optionsId": "schoolType"
-							}
+							"dataTypeId": "test.string;1.0.0",
+							"value": "Public",
 						}
 					},
 					"schoolRatingInModule": {
@@ -171,17 +168,17 @@
 		"uiResource" : [
 			{
 				"name": "schoolListPage",
-				"id": "Page_MySchool_SchoolList"
+				"referenceId": "Page_MySchool_SchoolList"
 			},
 			{
 				"name": "schoolInfoPage",
-				"id": "Page_MySchool_SchoolData"
+				"referenceId": "Page_MySchool_SchoolData"
 			}
 		],
 		"service" : [
 			{	
 				"name" : "getSchoolDataService",
-				"id" : "schoolService"
+				"referenceId" : "schoolService"
 			}		
 		],
 		"process": [
