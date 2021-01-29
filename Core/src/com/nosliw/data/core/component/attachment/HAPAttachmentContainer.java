@@ -9,7 +9,9 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPLocalReferenceBase;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdLocal;
 import com.nosliw.data.core.resource.HAPResourceIdSupplement;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
@@ -20,7 +22,12 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
+	@HAPAttribute
+	public static final String LOCALREFBASE = "localRefBase";
+
 	private Map<String, Map<String, HAPAttachment>> m_element;
+
+	private HAPLocalReferenceBase m_localReferenceBase;
 	
 	public HAPAttachmentContainer() {
 		this.m_element = new LinkedHashMap<>();
@@ -42,6 +49,32 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 		}
 	}
 	
+	public HAPLocalReferenceBase getLocalReferenceBase() {    return this.m_localReferenceBase;    }
+	
+	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {   
+		this.m_localReferenceBase = localRefBase;
+		if(this.m_localReferenceBase!=null) {
+			for(Map<String, HAPAttachment> subEles : this.m_element.values()) {
+				for(HAPAttachment ele : subEles.values()) {
+					this.setLocalReferenceBase(ele, this.m_localReferenceBase);
+				}
+			}
+		}
+	}
+
+	private void setLocalReferenceBase(HAPAttachment att, HAPLocalReferenceBase localRefBase) {
+		if(att.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)){
+			HAPAttachmentReference refAttr = (HAPAttachmentReference)att;
+			HAPResourceId resourceId = refAttr.getReferenceId();
+			if(resourceId.getType().equals(HAPConstant.RESOURCEID_TYPE_LOCAL)) {
+				HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
+				if(localResourceId.getBasePath()==null) {
+					localResourceId.setBasePath(localRefBase);
+				}
+			}
+		}
+	}
+	
 	public boolean isEmpty() {     return this.m_element.isEmpty();   }
 	
 	public Map<String, HAPAttachment> getAttachmentByType(String type){
@@ -57,6 +90,7 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 			this.m_element.put(type, byId);
 		}
 		byId.put(attachment.getId(), attachment);
+		if(this.m_localReferenceBase!=null)   this.setLocalReferenceBase(attachment, this.m_localReferenceBase);
 	}
 
 	//merge with parent
@@ -120,6 +154,7 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 				out.addAttachment(type, byId.get(id));
 			}
 		}
+		if(this.m_localReferenceBase!=null)   out.m_localReferenceBase = this.m_localReferenceBase.cloneLocalReferenceBase();
 		return out;
 	}
 	
@@ -127,6 +162,7 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_element, HAPSerializationFormat.JSON));
+		jsonMap.put(LOCALREFBASE, HAPJsonUtility.buildJson(this.m_localReferenceBase, HAPSerializationFormat.LITERATE));
 	}
 
 }

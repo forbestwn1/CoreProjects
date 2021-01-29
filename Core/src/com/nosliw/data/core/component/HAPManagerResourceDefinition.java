@@ -4,10 +4,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdDynamic;
+import com.nosliw.data.core.resource.HAPResourceIdLocal;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
@@ -33,6 +35,14 @@ public class HAPManagerResourceDefinition {
 		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_DYNAMIC)) {
 			HAPResourceIdDynamic dynamicResourceId = (HAPResourceIdDynamic)resourceId;
 			out = this.m_dynamicResourceManager.buildResource(dynamicResourceId.getBuilderId(), dynamicResourceId.getParms());
+		}
+		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_LOCAL)) {
+			HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
+			String path = localResourceId.getBasePath() + localResourceId.getType() + "/" + localResourceId.getName() + ".res";
+			out = this.parseResourceDefinition(localResourceId.getType(), HAPFileUtility.readFile(path));
+			if(out instanceof HAPWithAttachment) {
+				((HAPWithAttachment)out).setLocalReferenceBase(localResourceId.getBasePath());
+			}
 		}
 		
 		if(out instanceof HAPWithAttachment) {

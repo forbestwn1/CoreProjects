@@ -23,11 +23,16 @@ public class HAPWithAttachmentImp extends HAPEntityInfoWritableImp implements HA
 	public Map<String, HAPAttachment> getAttachmentsByType(String type) {	return this.m_attachmentContainer.getAttachmentByType(type);	}
 
 	@Override
+	public HAPLocalReferenceBase getLocalReferenceBase() {    return this.m_attachmentContainer.getLocalReferenceBase(); 	}
+
+	@Override
+	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {   this.m_attachmentContainer.setLocalReferenceBase(localRefBase); }
+
+	@Override
 	public void mergeBy(HAPWithAttachment parent, String mode) {	this.m_attachmentContainer.merge(parent.getAttachmentContainer(), mode);	}
 
 	@Override
 	public void cloneToAttachment(HAPWithAttachment withAttachment) {
 		withAttachment.setAttachmentContainer(this.m_attachmentContainer.cloneAttachmentContainer());
 	}
-
 }

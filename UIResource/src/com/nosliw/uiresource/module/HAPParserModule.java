@@ -17,13 +17,14 @@ public class HAPParserModule {
 	public HAPParserModule() {
 	}
 	
-	public HAPDefinitionModule parseFile(String fileName){
+	public HAPDefinitionModule parseFile(String fileName){		return parseFile(new File(fileName));	}
+	
+	public HAPDefinitionModule parseFile(File file){
 		HAPDefinitionModule out = null;
 		try{
-			File input = new File(fileName);
 			//use file name as ui resource id
-			String resourceId = HAPFileUtility.getFileName(input);
-			String source = HAPFileUtility.readFile(input);
+			String resourceId = HAPFileUtility.getFileName(file);
+			String source = HAPFileUtility.readFile(file);
 			out = this.parseContent(source, resourceId);
 		}
 		catch(Exception e){

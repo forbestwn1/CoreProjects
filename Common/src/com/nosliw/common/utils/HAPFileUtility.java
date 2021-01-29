@@ -24,7 +24,6 @@ import org.apache.commons.io.FileUtils;
 
 public class HAPFileUtility {
 	
-	
 	public static List<File> sortFiles(Set<File> files){
 		List<File> sortedList = new ArrayList<File>(files);
 		Collections.sort(sortedList, new Comparator<File>() {

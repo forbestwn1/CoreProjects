@@ -1,8 +1,12 @@
 package com.nosliw.uiresource.resource;
 
+import java.io.File;
+
 import org.json.JSONObject;
 
+import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.component.HAPLocalReferenceBase;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -23,8 +27,21 @@ public class HAPResourceDefinitionPluginModule implements HAPPluginResourceDefin
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
-		String file = HAPSystemFolderUtility.getUIModuleFolder()+resourceId.getId()+".res";
+		String basePath = null;
+		File file;
+		//check single file first
+		basePath = HAPSystemFolderUtility.getUIModuleFolder();
+		file = new File(basePath+resourceId.getId()+".res");
+		if(!file.exists()) {
+			basePath = HAPSystemFolderUtility.getUIModuleFolder()+resourceId.getId()+"/";
+			file = new File(basePath+"/main.res");
+			if(!file.exists()) {
+				HAPErrorUtility.invalid("Cannot find module resource " + resourceId.getId());
+			}
+		}
+		
 		HAPDefinitionModule moduleDef = m_moduleParser.parseFile(file);
+		moduleDef.setLocalReferenceBase(new HAPLocalReferenceBase(basePath));
 		return moduleDef;
 	}
 

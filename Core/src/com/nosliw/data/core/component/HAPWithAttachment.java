@@ -13,7 +13,11 @@ public interface HAPWithAttachment {
 	void setAttachmentContainer(HAPAttachmentContainer attachmentContainer);
 	
 	Map<String, HAPAttachment> getAttachmentsByType(String type);
-	
+
+	HAPLocalReferenceBase getLocalReferenceBase();
+
+	void setLocalReferenceBase(HAPLocalReferenceBase localRefBase);
+
 	void mergeBy(HAPWithAttachment parent, String mode);
 
 	void cloneToAttachment(HAPWithAttachment withAttachment);

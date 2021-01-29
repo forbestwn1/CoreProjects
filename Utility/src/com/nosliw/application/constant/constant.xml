@@ -682,6 +682,7 @@
 			<definition name="RESOURCEID_TYPE_SIMPLE" value="simple"/>
 			<definition name="RESOURCEID_TYPE_EMBEDED" value="embeded"/>
 			<definition name="RESOURCEID_TYPE_DYNAMIC" value="dynamic"/>
+			<definition name="RESOURCEID_TYPE_LOCAL" value="local"/>
 
 			<definition type="space"/>
 			<definition name="PROCESSSUITE_ELEMENTTYPE_ENTITY" value="entity"/>

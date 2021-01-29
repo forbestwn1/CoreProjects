@@ -615,6 +615,7 @@ public class HAPConstant {
 		public static final String RESOURCEID_TYPE_SIMPLE = "simple";
 		public static final String RESOURCEID_TYPE_EMBEDED = "embeded";
 		public static final String RESOURCEID_TYPE_DYNAMIC = "dynamic";
+		public static final String RESOURCEID_TYPE_LOCAL = "local";
 
 
 

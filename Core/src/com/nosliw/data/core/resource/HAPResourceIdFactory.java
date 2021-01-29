@@ -6,13 +6,13 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPResourceIdFactory {
 
 	private static HAPResourceId newInstanceByType(String resourceType, String structure) {
 		HAPResourceId out = null;
+		if(structure==null)   structure = HAPResourceUtility.getDefaultResourceStructure();
 		if(structure.equals(HAPConstant.RESOURCEID_TYPE_SIMPLE)) {
 			out = new HAPResourceIdSimple(resourceType);
 		}
@@ -22,6 +22,9 @@ public class HAPResourceIdFactory {
 		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_DYNAMIC)) {
 			out = new HAPResourceIdDynamic(resourceType);
 		}
+		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_LOCAL)) {
+			out = new HAPResourceIdLocal(resourceType);
+		}
 		return out;
 	}
 	
@@ -30,19 +33,25 @@ public class HAPResourceIdFactory {
 		String structure = null;
 		if(obj instanceof JSONObject) {
 			Object typeObj = ((JSONObject) obj).opt(HAPResourceId.TYPE);
-			if(typeObj!=null) {
-				type = (String)typeObj;
+			structure = (String)((JSONObject) obj).opt(HAPResourceId.STRUCUTRE);
+			if(typeObj!=null) type = (String)typeObj;
+			
+			if(structure!=null || typeObj!=null) {
 				coreIdObj = ((JSONObject) obj).opt(HAPResourceId.ID);
-				structure = ((JSONObject) obj).optString(HAPResourceId.STRUCUTRE);
-				if(HAPBasicUtility.isStringEmpty(structure))  structure = HAPResourceUtility.getDefaultResourceStructure();
 			}
 		}
 		
 		HAPResourceId out = null;
 		if(coreIdObj instanceof String) {
-			String[] segs = HAPResourceUtility.parseResourceCoreIdLiterate((String)coreIdObj);
-			out = HAPResourceIdFactory.newInstanceByType(type, segs[0]);
-			out.buildCoreIdByLiterate(segs[1]);
+			if(structure!=null) {
+				out = HAPResourceIdFactory.newInstanceByType(type, structure);
+				out.buildCoreIdByLiterate((String)coreIdObj);
+			}
+			else {
+				String[] segs = HAPResourceUtility.parseResourceCoreIdLiterate((String)coreIdObj);
+				out = HAPResourceIdFactory.newInstanceByType(type, segs[0]);
+				out.buildCoreIdByLiterate(segs[1]);
+			}
 		}
 		else if(coreIdObj instanceof JSONObject) {
 			JSONObject coreIdJson = (JSONObject)coreIdObj;
