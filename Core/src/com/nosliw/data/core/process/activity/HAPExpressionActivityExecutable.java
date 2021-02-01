@@ -16,7 +16,6 @@ import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.script.expression.HAPContextProcessScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 
@@ -72,7 +71,7 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		jsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPUtilityRuntimeJSScript.buildScriptExpressionJSFunction(this.m_scriptExpression));
+		jsonMap.put(SCRIPTEXPRESSIONSCRIPT, this.m_scriptExpression.toResourceData(runtimeInfo).toString());
 		typeJsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPJsonTypeScript.class);
 	}	
 	

@@ -77,7 +77,7 @@ public class HAPProcessorContextSolidate {
 //	}
 
 	public static String getSolidName(String name, Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv){
-		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(name, null, constants, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());
+		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(name, null, null, constants, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());
 		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
 		
 		String scriptType = scriptExe.getScriptType();

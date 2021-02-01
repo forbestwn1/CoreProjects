@@ -44,7 +44,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	protected void buildCoreIdByLiterate(String idLiterate) {
 		String[] segs = HAPNamingConversionUtility.splitTextByElements(idLiterate, HAPConstant.SEPERATOR_LEVEL1);
 		this.m_name = segs[0];
-		if(segs.length>0) {
+		if(segs.length>=2) {
 			this.m_basePath = new HAPLocalReferenceBase(segs[1]);
 		}
 	}
@@ -67,8 +67,14 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	@Override
 	public HAPResourceId clone() {
 		HAPResourceIdLocal out = new HAPResourceIdLocal(this.getType());
-		out.m_basePath = this.m_basePath;
-		out.m_name = this.m_name;
-		return null;
+		out.cloneFrom(this);
+		return out;
 	}
+	
+	protected void cloneFrom(HAPResourceIdLocal resourceId){
+		super.cloneFrom(resourceId);
+		this.m_basePath = resourceId.m_basePath;
+		this.m_name = resourceId.m_name;
+	}
+
 }

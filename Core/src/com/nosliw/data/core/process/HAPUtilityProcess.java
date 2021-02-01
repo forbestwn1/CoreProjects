@@ -2,6 +2,7 @@ package com.nosliw.data.core.process;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -89,11 +90,10 @@ public class HAPUtilityProcess {
 	}
 	
 	//data variables infor in activity merge back to process context
-	public static void mergeDataVariableInActivityToProcessContext(Map<String, HAPVariableInfo> activityVariablesInfo, HAPContext activityContext, HAPContextGroup processContext) {
+	public static void mergeDataVariableInActivityToProcessContext(Set<HAPVariableInfo> activityVariablesInfo, HAPContext activityContext, HAPContextGroup processContext) {
 		Map<String, HAPVariableInfo> expectedVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		for(String varName : expectedVariablesInfo.keySet()) {
-			HAPVariableInfo expectedVarInfo = activityVariablesInfo.get(varName);
-			HAPContextPath varPath = new HAPContextPath(varName);
+		for(HAPVariableInfo expectedVarInfo : activityVariablesInfo) {
+			HAPContextPath varPath = new HAPContextPath(expectedVarInfo.getName());
 			//affect global variable 
 			HAPContextDefinitionRoot affectedRoot = activityContext.getElement(varPath.getRootElementId().getFullName());
 			if(affectedRoot!=null) {

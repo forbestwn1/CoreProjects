@@ -1,3 +1,0 @@
-function(||functions||, ||expressionsData||, ||constantsData||, ||variablesData||){
-	return ||functionScript||;
-} 

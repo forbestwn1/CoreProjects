@@ -28,13 +28,14 @@ public class HAPProcessorScript {
 	public static HAPExecutableScriptGroup processSimpleScript(
 			String script,
 			String scriptType, 
+			HAPContext context, 
 			Map<String, Object> constants,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure, 
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		HAPContextProcessScript processScriptContext = new HAPContextProcessScript(); 
-		processScriptContext.setContextStructure(new HAPContext());
+		processScriptContext.setContextStructure(context==null?new HAPContext():context);
 		if(constants!=null) {
 			for(String id : constants.keySet()) {
 				processScriptContext.addConstantDefinition(new HAPDefinitionConstant(id, constants.get(id)));

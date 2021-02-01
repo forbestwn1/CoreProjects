@@ -217,7 +217,7 @@ public class HAPProcessorContextConstant {
 			HAPRuntimeEnvironment runtimeEnv) {
 
 		//simply process script
-		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, null, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), runtimeEnv, new HAPProcessTracker());
+		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, null, null, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), runtimeEnv, new HAPProcessTracker());
 		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
 		
 		String scriptType = scriptExe.getScriptType();
@@ -237,7 +237,7 @@ public class HAPProcessorContextConstant {
 		}
 
 		//process script again with constant and discovery
-		groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, constantsValue, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());		
+		groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, null, constantsValue, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());		
 
 		//execute script expression
 		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(groupExe, null, null, null);

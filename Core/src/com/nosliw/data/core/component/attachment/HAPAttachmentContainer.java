@@ -66,7 +66,7 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 		if(att.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)){
 			HAPAttachmentReference refAttr = (HAPAttachmentReference)att;
 			HAPResourceId resourceId = refAttr.getReferenceId();
-			if(resourceId.getType().equals(HAPConstant.RESOURCEID_TYPE_LOCAL)) {
+			if(resourceId.getStructure().equals(HAPConstant.RESOURCEID_TYPE_LOCAL)) {
 				HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
 				if(localResourceId.getBasePath()==null) {
 					localResourceId.setBasePath(localRefBase);

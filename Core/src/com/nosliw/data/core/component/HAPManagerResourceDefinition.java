@@ -38,7 +38,7 @@ public class HAPManagerResourceDefinition {
 		}
 		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_LOCAL)) {
 			HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
-			String path = localResourceId.getBasePath() + localResourceId.getType() + "/" + localResourceId.getName() + ".res";
+			String path = localResourceId.getBasePath().getPath() + localResourceId.getType() + "/" + localResourceId.getName() + ".res";
 			out = this.parseResourceDefinition(localResourceId.getType(), HAPFileUtility.readFile(path));
 			if(out instanceof HAPWithAttachment) {
 				((HAPWithAttachment)out).setLocalReferenceBase(localResourceId.getBasePath());

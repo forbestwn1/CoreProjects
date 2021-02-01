@@ -103,6 +103,22 @@
 						"info": {
 							"relativeConnection": "physical"
 						}
+					},
+					"schoolType": {
+						"definition": {
+							"path": "schoolTypeInModule"
+						},
+						"info": {
+							"relativeConnection": "physical"
+						}
+					},
+					"schoolRating": {
+						"definition": {
+							"path": "schoolRatingInModule"
+						},
+						"info": {
+							"relativeConnection": "physical"
+						}
 					}
 				}
 			},
@@ -115,7 +131,23 @@
 						"info": {
 							"relativeConnection": "physical"
 						}
-					}
+					},
+					"schoolTypeInModule": {
+						"definition": {
+							"path": "schoolType"
+						},
+						"info": {
+							"relativeConnection": "physical"
+						}
+					},
+					"schoolRatingInModule": {
+						"definition": {
+							"path": "schoolRating"
+						},
+						"info": {
+							"relativeConnection": "physical"
+						}
+					},
 				}
 			},
 			"eventHandler": [
@@ -164,13 +196,48 @@
 			}
 		}
 	],
+	
+	"services":
+	[
+		{
+			"name" : "getSchoolData",
+			"provider" : "getSchoolDataService",
+			"serviceMapping" :{
+				"inputMapping" : {
+					"element" : {
+						"schoolTypeInService" : {
+							"definition" : {
+								"path" : "schoolType"
+							}
+						},
+						"schoolRatingInService" : {
+							"definition" : {
+								"path" : "schoolRating"
+							}
+						}
+					}
+				},
+				"outputMapping" : {
+					"success" : {
+						"element" : {
+							"schoolList" : {
+								"definition" : {
+									"path" : "outputInService"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	],
 	"attachment": {
 		"uiResource" : [
 			{
 				"name": "schoolListPage",
 				"referenceId": {
 					"structure" : "local",
-					"id" : "Page_MySchool_SchoolList"
+					"id" : "MySchool_SchoolList"
 				}
 			},
 			{
@@ -182,7 +249,8 @@
 			{	
 				"name" : "getSchoolDataService",
 				"referenceId" : "schoolService"
-			}		
+			},
+			
 		],
 		"process": [
 			{

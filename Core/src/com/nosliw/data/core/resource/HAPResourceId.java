@@ -25,7 +25,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPEnt
 	public static String ID = "id";
 
 	@HAPAttribute
-	public static String STRUCUTRE = "strucutre";
+	public static String STRUCUTRE = "structure";
 
 	@HAPAttribute
 	public static String SUP = "supliment";
