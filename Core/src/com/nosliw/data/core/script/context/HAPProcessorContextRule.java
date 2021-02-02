@@ -16,11 +16,7 @@ public class HAPProcessorContextRule {
 					public boolean process(HAPContextDefinitionElement ele, Object obj) {
 						if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
 							HAPContextDefinitionLeafData dataEle = (HAPContextDefinitionLeafData)ele;
-							dataEle.getDataInfo().process(runtimeEnv);  
-//data info process rather than rule process							
-//							for(HAPDataRule rule : dataEle.getDataInfo().getRules()) {
-//								rule.process(dataEle.getCriteria(), runtimeEnv);
-//							}
+							if(dataEle.getDataInfo()!=null)    dataEle.getDataInfo().process(runtimeEnv);  
 						}
 						return true;
 					}

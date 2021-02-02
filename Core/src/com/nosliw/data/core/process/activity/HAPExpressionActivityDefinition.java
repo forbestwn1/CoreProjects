@@ -30,7 +30,7 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 		JSONObject jsonObj = (JSONObject)json;
 
 		this.m_script = new HAPDefinitionScriptEntity();
-		this.m_script.buildEntityInfoByJson(jsonObj);
+		this.m_script.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		this.m_script.setId(null);
 		return true;  
 	}

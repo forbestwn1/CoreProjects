@@ -113,7 +113,7 @@
 					"id": "expressionActivityId",
 					"name": "expressionActivity",
 					"type": "expression",
-					"expression": "#|!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)|#",
+					"script": "#|!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)|#",
 					"inputMapping": {
 						"element": {
 							"inputA.b.c" : {

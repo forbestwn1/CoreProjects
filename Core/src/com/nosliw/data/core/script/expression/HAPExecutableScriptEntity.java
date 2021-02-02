@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
@@ -54,6 +55,16 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 			public String getScriptType() { return null; }};
 		
 		this.setId(id);
+	}
+	
+	public boolean isDataExpression() {
+		List<HAPExecutableScript> segs = this.m_script.getSegments();
+		if(segs.size()>=2)  return false;
+		if(segs.size()==1) {
+			HAPExecutableScript seg = segs.get(0);
+			if(seg.getScriptType().equals(HAPConstant.SCRIPT_TYPE_SEG_EXPRESSION))  return true;
+		}
+		return false;
 	}
 
 	public boolean isConstant() {

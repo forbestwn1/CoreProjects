@@ -100,15 +100,17 @@ public class HAPUtilityProcess {
 				//ele mapped from context variable
 				HAPContextDefinitionElement currentEle = affectedRoot.getDefinition();
 				String[] pathSegs = new HAPPath(varPath.getSubPath()).getPathSegs();
-				int i = 0;
-				while(!HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE.equals(currentEle.getType())&&currentEle!=null) {
-					currentEle = currentEle.getChild(pathSegs[i]);
-					i++;
+				if(pathSegs.length>0) {
+					int i = 0;
+					while(!HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE.equals(currentEle.getType())&&currentEle!=null) {
+						currentEle = currentEle.getChild(pathSegs[i]);
+						i++;
+					}
 				}
 				HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)currentEle;
 				HAPContextPath relativeElePath = relativeEle.getPath();
 				String fullName = relativeElePath.getFullPath();
-				for(;i<pathSegs.length; i++) {
+				for(int i=0;i<pathSegs.length; i++) {
 					fullName = HAPNamingConversionUtility.buildPath(fullName, pathSegs[i]);
 				}
 				expectedVariablesInfo.put(fullName, expectedVarInfo);

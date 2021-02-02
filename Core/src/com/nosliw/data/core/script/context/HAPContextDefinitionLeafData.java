@@ -34,7 +34,7 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	public void setDataInfo(HAPVariableDataInfo criteria){	this.m_dataInfo = criteria;	}
 	public HAPVariableDataInfo getDataInfo() {  return this.m_dataInfo;    } 
 	
-	public HAPDataTypeCriteria getCriteria(){   return this.m_dataInfo.getCriteria();  }
+	public HAPDataTypeCriteria getCriteria(){   return this.m_dataInfo==null?null:this.m_dataInfo.getCriteria();  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -52,7 +52,7 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	@Override
 	public void toContextDefinitionElement(HAPContextDefinitionElement out) {
 		super.toContextDefinitionElement(out);
-		((HAPContextDefinitionLeafData)out).m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
+		if(this.m_dataInfo!=null)		((HAPContextDefinitionLeafData)out).m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
 	}
 
 	@Override

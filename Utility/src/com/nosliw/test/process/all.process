@@ -59,7 +59,7 @@
 					"id": "expressionActivityId",
 					"name": "expressionActivity",
 					"type": "expression",
-					"expression": "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
+					"script": "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
 					"input": {
 						"element": {},
 						"info": {}

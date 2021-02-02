@@ -72,6 +72,26 @@ var node_createExpressionService = function(){
 		return out;
 	};
 
+	var loc_getExecuteScriptObjectRequest = function(scriptGroupObj, id, input, constants, handlers, requester_parent){
+		if(id==undefined)  id = node_COMMONCONSTANT.NAME_DEFAULT;
+		var scriptObj = scriptGroupObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTGROUP_ELEMENT][id];
+		
+		var expressions = {};
+		_.each(scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_EXPRESSIONREF], function(expressionId, i){
+			expressions[expressionId] = scriptGroupObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTGROUP_EXPRESSIONGROUP][node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS][expressionId]; 
+		});
+		
+		var varNames = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_VARIABLESINFO];
+		var scriptFun = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SCRIPTFUNCTION];
+		var supportFuns = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SUPPORTFUNCTION];
+		
+		var varInputs = {};
+		_.each(varNames, function(varName, index){
+			varInputs[varName] = node_objectOperationUtility.getObjectAttributeByPath(input, varName);
+		});
+
+		return loc_getExecuteScriptRequest(scriptFun, supportFuns, expressions, varInputs, constants, handlers, requester_parent);
+	};
 
 	
 	var loc_out = {
@@ -116,6 +136,15 @@ var node_createExpressionService = function(){
 	
 		executeExecuteScriptExpressionRequest : function(script, functions, expressionsItems, variables, constants, handlers, requester_parent){
 			var requestInfo = this.getExecuteScriptRequest(script, functions, expressionsItems, variables, constants, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+		
+		getExecuteScriptObjectRequest : function(scriptGroupObj, id, variables, constants, handlers, requester_parent){
+			return loc_getExecuteScriptObjectRequest(scriptGroupObj, id, variables, constants, handlers, requester_parent);
+		},
+	
+		executeExecuteScriptObjectRequest : function(scriptGroupObj, id, variables, constants, handlers, requester_parent){
+			var requestInfo = this.getExecuteScriptObjectRequest(scriptGroupObj, id, variables, constants, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 

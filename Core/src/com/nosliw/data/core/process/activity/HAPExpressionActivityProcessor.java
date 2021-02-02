@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.process.HAPBuilderResultContext;
 import com.nosliw.data.core.process.HAPContextProcessor;
@@ -28,6 +28,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
@@ -66,7 +67,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
 		//merge discovered variable in activity back to process variable
 		Set<HAPVariableInfo> affectedActivityVariablesInfo = HAPUtilityScriptExpression.getDataVariables(out.getScriptExpression(), null); 
-		HAPUtilityProcess.mergeDataVariableInActivityToProcessContext(affectedActivityVariablesInfo, activityContext, processDataContext);
+//		HAPUtilityProcess.mergeDataVariableInActivityToProcessContext(affectedActivityVariablesInfo, activityContext, processDataContext);
 
 		//process success result
 		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, definition, HAPConstant.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, runtimeEnv);
@@ -82,10 +83,11 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				String outputVar = HAPConstant.ACTIVITY_OUTPUTVARIABLE_OUTPUT;
 				HAPExpressionActivityExecutable expressionActExt = (HAPExpressionActivityExecutable)activity;
-				HAPExecutableScriptGroup scriptExpression = expressionActExt.getScriptExpression();
+				HAPExecutableScriptGroup scriptExpressionGroup = expressionActExt.getScriptExpression();
+				HAPExecutableScriptEntity scriptExpression = scriptExpressionGroup.getScript(null);
 				if(scriptExpression.isDataExpression()) {
 					//if script expression is data expression only, then affect result
-					HAPExecutableExpressionGroup expExe = scriptExpression.getExpressions().values().iterator().next();
+					HAPExecutableExpression expExe = scriptExpressionGroup.getExpression().getExpressionItems().values().iterator().next();
 					HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
 					out.addElement(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPContextDefinitionLeafData(new HAPVariableDataInfo(outputCriteria)));
 				}

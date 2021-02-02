@@ -45,6 +45,7 @@ public class HAPDefinitionScriptEntity extends HAPEntityInfoWritableImp{
 
 	public HAPDefinitionScriptEntity cloneScriptEntityDefinition() {
 		HAPDefinitionScriptEntity out = new HAPDefinitionScriptEntity();
+		this.cloneToEntityInfo(out);
 		out.m_script = this.m_script.cloneScript();
 		for(String key : this.m_references.keySet()) {
 			out.m_references.put(key, this.m_references.get(key).cloneReferenceDefinition());

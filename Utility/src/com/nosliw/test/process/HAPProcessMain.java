@@ -3,7 +3,7 @@ package com.nosliw.test.process;
 import java.io.FileNotFoundException;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPUtilityProcess;
@@ -21,9 +21,9 @@ public class HAPProcessMain {
 
 		HAPExecutableProcess processExe = runtimeEnvironment.getProcessManager().getProcess(HAPUtilityProcess.buildResourceId(suite, id), null);
 		
-		HAPContextDataFlat input = HAPUtilityComponent.getTestDataFromAttachment(processExe.getDefinition(), testData);
+		HAPContextDataFlat input = HAPAttachmentUtility.getTestDataFromAttachment(processExe.getDefinition(), testData);
 		
-		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(processExe, input);
+		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(processExe, input, runtimeEnvironment.getResourceManager());
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 		
 		System.out.println(out);
