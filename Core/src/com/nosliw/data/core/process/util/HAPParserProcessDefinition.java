@@ -39,8 +39,7 @@ public class HAPParserProcessDefinition {
 		HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity> out = new HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity>();
 		HAPDefinitionProcessSuiteElementEntity process = new HAPDefinitionProcessSuiteElementEntity();
 		parseProcess(process, processJson, activityPluginMan);
-		out.setTaskDefinition(process);
-		out.buildMapping(processJson);
+		out.buildObj(processJson, process);
 		return out;
 	}
 	

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
+import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
@@ -51,7 +52,7 @@ public class HAPUtilityComponentParse {
 		JSONArray eventHandlersArray = jsonObj.optJSONArray(HAPWithEventHanlder.EVENTHANDLER);
 		if(eventHandlersArray!=null) {
 			for(int i=0; i<eventHandlersArray.length(); i++) {
-				HAPHandlerEvent eventHandlerTask = new HAPHandlerEvent();
+				HAPHandler eventHandlerTask = new HAPHandler();
 				eventHandlerTask.buildObject(eventHandlersArray.getJSONObject(i), HAPSerializationFormat.JSON);
 				withEventHandler.addEventHandler(eventHandlerTask);
 			}

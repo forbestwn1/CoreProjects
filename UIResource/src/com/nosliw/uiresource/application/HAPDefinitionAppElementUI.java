@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
@@ -15,7 +16,6 @@ import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionAppElementUI  extends HAPDefinitionAppElement{
@@ -45,7 +45,7 @@ public class HAPDefinitionAppElementUI  extends HAPDefinitionAppElement{
 
 		//module part
 		for(HAPDefinitionAppModule module : this.getModules()) {
-			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(module.getStatus())) {
+			if(HAPUtilityEntityInfo.isEnabled(module)) {
 				HAPAttachmentContainer mappedParentAttachment = HAPUtilityComponent.buildNameMappedAttachment(this.getAttachmentContainer(), module);
 				HAPAttachmentReference moduleAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getModule());
 				out.addChildCompoentId(new HAPChildrenComponentId(module.getName(), moduleAttachment.getReferenceId(), module.getInfo()), mappedParentAttachment);

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
@@ -34,7 +35,6 @@ import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
-import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 
 public class HAPProcessMiniAppEntry {
@@ -81,7 +81,7 @@ public class HAPProcessMiniAppEntry {
 		
 		//module
 		for(HAPDefinitionAppModule moduleDef : entryDefinition.getModules()) {
-			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(moduleDef.getStatus())) {
+			if(HAPUtilityEntityInfo.isEnabled(moduleDef)) {
 				HAPExecutableAppModule module = processModule(moduleDef, out, entryDefinition.getAttachmentContainer(), extraContext, entryServiceProviders, runtimeEnv, uiResourceMan, processTracker);
 				out.addUIModule(moduleDef.getName(), module);
 			}

@@ -28,6 +28,12 @@ public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 	public String getName() {  return this.m_entityInfo.getName();  }
 
 	@Override
+	public String getStatus() {   return this.m_entityInfo.getStatus();  }
+
+	@Override
+	public void setStatus(String status) {  this.m_entityInfo.setStatus(status);  }
+
+	@Override
 	public String getDisplayName() {   return this.m_entityInfo.getDisplayName();  }
 
 	@Override

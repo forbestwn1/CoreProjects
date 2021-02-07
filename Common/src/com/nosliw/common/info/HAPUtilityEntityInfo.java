@@ -20,6 +20,7 @@ public class HAPUtilityEntityInfo {
 	public static void cloneTo(HAPEntityInfo from, HAPEntityInfo to) {
 		to.setId(from.getId());
 		to.setName(from.getName());
+		to.setStatus(from.getStatus());
 		to.setDisplayName(from.getDisplayName());
 		to.setDescription(from.getDescription());
 		to.setInfo(from.getInfo().cloneInfo());
@@ -28,6 +29,7 @@ public class HAPUtilityEntityInfo {
 	public static void buildJsonMap(Map<String, String> jsonMap, HAPEntityInfo entityInfo){
 		jsonMap.put(HAPEntityInfo.ID, entityInfo.getId());
 		jsonMap.put(HAPEntityInfo.NAME, entityInfo.getName());
+		jsonMap.put(HAPEntityInfo.STATUS, entityInfo.getStatus());
 		jsonMap.put(HAPEntityInfo.DISPLAYNAME, entityInfo.getDisplayName());
 		jsonMap.put(HAPEntityInfo.DESCRIPTION, entityInfo.getDescription());
 		jsonMap.put(HAPEntityInfo.INFO, HAPJsonUtility.buildJson(entityInfo.getInfo(), HAPSerializationFormat.JSON));
@@ -40,9 +42,7 @@ public class HAPUtilityEntityInfo {
 	}
 	
 	public static boolean isEnabled(HAPEntityInfo entityInfo) {
-		String value = (String)entityInfo.getInfo().getValue(HAPConstant.ENTITYINFO_INFONAME_DISABLE);
-		if(value!=null)   return false;
-		else  return true;
+		return !HAPConstant.ENTITYINFO_STATUS_DISABLED.equals(entityInfo.getStatus());
 	}
 	
 	public static void processEntityId(HAPEntityInfo entityInfo) {

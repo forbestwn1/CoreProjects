@@ -1,8 +1,8 @@
 package com.nosliw.data.core.event;
 
-import com.nosliw.data.core.process.HAPEmbededProcessTaskImp;
+import com.nosliw.data.core.process.HAPEmbededProcessTask;
 
 //event process definition
-public class HAPDefinitionEventHandle extends HAPEmbededProcessTaskImp{
+public class HAPDefinitionEventHandle extends HAPEmbededProcessTask{
 
 }

@@ -15,7 +15,10 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	//name
 	private String m_name;
 
-	//name
+	//status
+	private String m_status;
+
+	//display name
 	private String m_displayName;
 
 	//description
@@ -50,6 +53,12 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 		this.m_name = name;
 		if(this.m_id==null)   this.m_id = name;
 	}
+
+	@Override
+	public String getStatus() {   return this.m_status;  }
+
+	@Override
+	public void setStatus(String status) {   this.m_status = status;  }
 
 	@Override
 	public String getDisplayName() {  
@@ -108,6 +117,7 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 		JSONObject jsonObj = (JSONObject)json;
 		this.setId((String)jsonObj.opt(ID));
 		this.setName((String)jsonObj.opt(NAME));
+		this.setStatus((String)jsonObj.opt(STATUS));
 		this.setDisplayName((String)jsonObj.opt(DISPLAYNAME));
 		this.setDescription(jsonObj.optString(DESCRIPTION));
 		this.m_info = new HAPInfoImpSimple();
@@ -121,10 +131,12 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 			if(!HAPBasicUtility.isEquals(infoEntity.m_id, this.m_id))   return false;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_name, this.m_name))   return false;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_displayName, this.m_displayName))   return false;
+			if(!HAPBasicUtility.isEquals(infoEntity.m_status, this.m_status))   return false;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_description, this.m_description))   return false;;
 			if(!HAPBasicUtility.isEquals(infoEntity.m_info, this.m_info))  return false;
 			return true;
 		}
 		return false;
 	}
+
 }

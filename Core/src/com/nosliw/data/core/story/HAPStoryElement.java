@@ -21,7 +21,7 @@ public interface HAPStoryElement extends HAPEntityInfo, HAPEntityOrReference{
 	public static final String ENABLE = "enable";
 
 	@HAPAttribute
-	public static final String STATUS = "status";
+	public static final String ELEMENTSTATUS = "eleStatus";
 
 	@HAPAttribute
 	public static final String DISPLAYRESOURCE = "displayResource";
@@ -47,7 +47,7 @@ public interface HAPStoryElement extends HAPEntityInfo, HAPEntityOrReference{
 	Object getValueByPath(String path);
 	
 	//configuration for element, for ui purpose
-	HAPStatus getStatus();
+	HAPStatus getElementStatus();
 
 	boolean isEnable();
 

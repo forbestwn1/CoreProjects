@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
@@ -62,7 +63,7 @@ public class HAPDefinitionModule extends HAPComponentImp{
 		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
 		//ui part
 		for(HAPDefinitionModuleUI ui : this.getUIs()) {
-			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(ui.getStatus())) {
+			if(!HAPUtilityEntityInfo.isEnabled(ui)) {
 				HAPAttachmentContainer mappedParentAttachment = HAPUtilityComponent.buildNameMappedAttachment(this.getAttachmentContainer(), ui);
 				HAPAttachmentReference pageAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, ui.getPage());
 				out.addChildCompoentId(new HAPChildrenComponentId(ui.getName(), pageAttachment.getReferenceId(), ui.getInfo()), mappedParentAttachment);

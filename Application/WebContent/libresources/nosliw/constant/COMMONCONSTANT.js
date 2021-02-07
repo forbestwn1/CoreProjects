@@ -396,6 +396,8 @@ var COMMONCONSTANT=
   "SEPERATOR_RESOURCEID_START": "___",
   "SEPERATOR_RESOURCEID_STRUCTURE": "_",
   "ENTITYINFO_INFONAME_DISABLE": "disable",
+  "ENTITYINFO_STATUS_DISABLED": "disabled",
+  "ENTITYINFO_STATUS_ENABLED": "enabled",
   "SCRIPT_TYPE_TEXT": "text",
   "SCRIPT_TYPE_EXPRESSION": "expression",
   "SCRIPT_TYPE_LITERATE": "literate",
@@ -454,7 +456,10 @@ var COMMONCONSTANT=
   "UITAG_TYPE_LAYOUT": "layout",
   "UITAG_TYPE_CONTROL": "control",
   "UITAG_TYPE_OTHER": "other",
-  "UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR": "nosliw_validationError"
+  "UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR": "nosliw_validationError",
+  "HANDLERSTEP_TYPE_DATAASSOCIATION": "dataAssociation",
+  "HANDLERSTEP_TYPE_PROCESS": "process",
+  "HANDLERSTEP_TYPE_ACTIVITY": "activity"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

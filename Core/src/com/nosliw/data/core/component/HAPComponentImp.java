@@ -7,6 +7,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.handler.HAPHandler;
 
 abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp implements HAPComponent{
 
@@ -14,11 +15,11 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	private Set<HAPHandlerLifecycle> m_lifecycleAction;
 	
 	//event handlers
-	private Set<HAPHandlerEvent> m_eventHandlers;
+	private Set<HAPHandler> m_eventHandlers;
 
 	public HAPComponentImp() {
 		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
-		this.m_eventHandlers = new HashSet<HAPHandlerEvent>();
+		this.m_eventHandlers = new HashSet<HAPHandler>();
 	}
 
 	public HAPComponentImp(String id) {
@@ -35,9 +36,9 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	public void addLifecycleAction(HAPHandlerLifecycle lifecycleAction) {    this.m_lifecycleAction.add(lifecycleAction);    }
  	
 	@Override
-	public Set<HAPHandlerEvent> getEventHandlers(){   return this.m_eventHandlers;   }
+	public Set<HAPHandler> getEventHandlers(){   return this.m_eventHandlers;   }
 	@Override
-	public void addEventHandler(HAPHandlerEvent eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
+	public void addEventHandler(HAPHandler eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
 
 	protected void cloneToComponent(HAPComponent component) {
 		component.setId(this.getId());
@@ -45,8 +46,8 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 		for(HAPHandlerLifecycle handler : this.m_lifecycleAction) {
 			component.addLifecycleAction(handler.cloneLifecycleHander());
 		}
-		for(HAPHandlerEvent handler : this.m_eventHandlers) {
-			component.addEventHandler(handler.cloneEventHandler());
+		for(HAPHandler handler : this.m_eventHandlers) {
+			component.addEventHandler(handler.cloneHandler());
 		}
 	}
 	

@@ -14,6 +14,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.common.HAPWithDataContext;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextStructure;
@@ -129,13 +130,13 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 
 	@Override
-	public Set<HAPHandlerEvent> getEventHandlers() {
+	public Set<HAPHandler> getEventHandlers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addEventHandler(HAPHandlerEvent eventHandler) {
+	public void addEventHandler(HAPHandler eventHandler) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -170,6 +171,19 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		
 	}
 
+	@Override
+	public String getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setStatus(String status) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	@Override
 	public void setDescription(String description) {
 		// TODO Auto-generated method stub

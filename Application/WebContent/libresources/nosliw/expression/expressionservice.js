@@ -21,32 +21,10 @@ var packageObj = library.getChildPackage("service");
 	var node_expressionUtility;
 	var node_dataUtility;
 	var node_namingConvensionUtility;
+	var node_objectOperationUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createExpressionService = function(){
-//	var loc_getExecuteScriptRequest = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
-//		var requestInfo = loc_out.getRequestInfo(requester_parent);
-//		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExpressionService_ExecuteScript", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
-//
-//		//calculate multiple expression
-//		var executeMultipleExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressions, "variables":variables}), {
-//			success : function(requestInfo, expressionsResult){
-//				var expressionsData = expressionsResult.getResults();
-//				return script.call(undefined, expressionsData, scriptConstants, variables);
-//			}
-//		});
-//		_.each(expressions, function(expression, name){
-//			//find variable value only for this expression
-//			var expVariables = {};
-//			_.each(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS], function(varInfo, name){
-//				expVariables[name] = variables[name];
-//			});
-//			executeMultipleExpressionRequest.addRequest(name, node_expressionUtility.getExecuteExpressionRequest(expression, expVariables, {}, {}));
-//		});
-//		
-//		out.addRequest(executeMultipleExpressionRequest);
-//		return out;
-//	};
 
 	var loc_getExecuteScriptRequest = function(script, functions, expressionItems, variables, constants, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
@@ -177,6 +155,7 @@ nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestI
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.dataUtility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createExpressionService", node_createExpressionService); 

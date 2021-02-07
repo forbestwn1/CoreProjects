@@ -1,0 +1,49 @@
+{
+	"id": "navigation",
+	"name": "navigation",
+	"description": "navigate to another page",
+	"element": [
+		{
+			"id": "default",
+			"name": "default",
+			"description": "navigate to another page",
+			"context": {
+				"group": {
+					"public": {
+						"element": {
+							"toPageName": {
+								"definition" : {}
+							},
+						}
+					}
+				}
+			},
+			"activity": [{
+					"id": "startActivityId",
+					"name": "startActivity",
+					"type": "start",
+					"flow": {
+						"target": "navigation"
+					}
+				},
+				{
+					"id": "navigation",
+					"name": "navigation",
+					"type": "UI_presentUI",
+					"ui": "$$toPageName",
+					"result": [{
+						"name": "success",
+						"flow": {
+							"target": "successEndId"
+						}
+					}]
+				},
+				{
+					"id": "successEndId",
+					"name": "successEnd",
+					"type": "end"
+				}
+			]
+		}	
+	]
+}

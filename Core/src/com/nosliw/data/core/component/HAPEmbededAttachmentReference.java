@@ -22,8 +22,7 @@ public class HAPEmbededAttachmentReference extends HAPEntityInfoWritableImp{
 		this.buildEntityInfoByJson(jsonObj);
 		
 		this.m_embeded = new HAPDefinitionWrapperTask<HAPReferenceAttachment>();
-		this.m_embeded.setTaskDefinition(HAPReferenceAttachment.newInstance(jsonObj.getJSONObject(REFERENCE), type));
-		this.m_embeded.buildMapping(jsonObj);
+		this.m_embeded.buildObj(jsonObj, HAPReferenceAttachment.newInstance(jsonObj.getJSONObject(REFERENCE), type));
 	}
 	
 	@Override

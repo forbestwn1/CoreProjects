@@ -10,9 +10,11 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionGroupDataAssociation;
 
+//a component reference embeded
 public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAPWithNameMapping, HAPWithEventHanlder{
 
 	@HAPAttribute
@@ -36,11 +38,11 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 	private HAPDefinitionGroupDataAssociation m_inputMapping;
 	
 	//event handlers
-	private Set<HAPHandlerEvent> m_eventHandlers;
+	private Set<HAPHandler> m_eventHandlers;
 	
 	public HAPEmbededComponent() {
 		this.m_nameMapping = new HAPNameMapping();
-		this.m_eventHandlers = new HashSet<HAPHandlerEvent>();
+		this.m_eventHandlers = new HashSet<HAPHandler>();
 		this.m_outputMapping = new HAPDefinitionGroupDataAssociation();
 		this.m_inputMapping = new HAPDefinitionGroupDataAssociation();
 	}
@@ -50,9 +52,9 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 	public HAPNameMapping getNameMapping() {    return this.m_nameMapping;   }
 
 	@Override
-	public Set<HAPHandlerEvent> getEventHandlers(){   return this.m_eventHandlers;   }
+	public Set<HAPHandler> getEventHandlers(){   return this.m_eventHandlers;   }
 	@Override
-	public void addEventHandler(HAPHandlerEvent eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
+	public void addEventHandler(HAPHandler eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
 
 	public HAPDefinitionGroupDataAssociation getInputMapping() {   return this.m_inputMapping;   }
 	public void setInputMapping(HAPDefinitionGroupDataAssociation contextMapping) {   this.m_inputMapping = contextMapping;   }
@@ -81,8 +83,8 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 
 	protected void cloneToEmbededComponent(HAPEmbededComponent embededComponent) {
 		this.cloneToEntityInfo(embededComponent);
-		for(HAPHandlerEvent eventHandler : this.m_eventHandlers) {
-			embededComponent.addEventHandler(eventHandler.cloneEventHandler());
+		for(HAPHandler eventHandler : this.m_eventHandlers) {
+			embededComponent.addEventHandler(eventHandler.cloneHandler());
 		}
 		if(this.m_nameMapping==null)   embededComponent.m_nameMapping = null;
 		else   embededComponent.m_nameMapping = this.m_nameMapping.cloneNameMapping();

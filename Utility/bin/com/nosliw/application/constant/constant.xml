@@ -696,6 +696,10 @@
 			<definition name="ENTITYINFO_INFONAME_DISABLE" value="disable"/>
 
 			<definition type="space"/>
+			<definition name="ENTITYINFO_STATUS_DISABLED" value="disabled"/>
+			<definition name="ENTITYINFO_STATUS_ENABLED" value="enabled"/>
+
+			<definition type="space"/>
 			<definition name="SCRIPT_TYPE_TEXT" value="text"/>
 			<definition name="SCRIPT_TYPE_EXPRESSION" value="expression"/>
 			<definition name="SCRIPT_TYPE_LITERATE" value="literate"/>
@@ -790,6 +794,10 @@
 			<definition type="space"/>
 			<definition name="UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR" value="nosliw_validationError"/>
 			
+			<definition type="space"/>
+			<definition name="HANDLERSTEP_TYPE_DATAASSOCIATION" value="dataAssociation"/>
+			<definition name="HANDLERSTEP_TYPE_PROCESS" value="process"/>
+			<definition name="HANDLERSTEP_TYPE_ACTIVITY" value="activity"/>
 		</definitions>
 	</constants>
 </root>

@@ -1,14 +1,27 @@
 package com.nosliw.data.core.component;
 
-import com.nosliw.data.core.process.HAPEmbededProcessTaskImp;
+import java.util.ArrayList;
+import java.util.List;
 
-public class HAPHandlerEvent extends HAPEmbededProcessTaskImp{
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.data.core.handler.HAPHandlerStep;
 
-	public HAPHandlerEvent cloneEventHandler() {
-		HAPHandlerEvent out = new HAPHandlerEvent();
-		this.cloneToEmbededProcessTask(out);
-		return out;
+@HAPEntityWithAttribute
+public class HAPHandlerEvent{
+
+	private String m_eventName;
+	
+	private List<HAPHandlerStep> m_handers;
+	
+	public HAPHandlerEvent(String eventName) {
+		this.m_eventName = eventName;
+		this.m_handers = new ArrayList<HAPHandlerStep>();
 	}
+	
+	public void addHandler(HAPHandlerStep handler) {    this.m_handers.add(handler);     }
+	public List<HAPHandlerStep> getHandlers(){   return this.m_handers;  	}
+	
+	public String getEventName() {   return this.m_eventName;    }
 	
 	
 }

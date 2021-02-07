@@ -1,5 +1,5 @@
 {
-	"name": "ModuleMySchoolResult",
+	"name": "MySchoolResult",
 	"description": "",
 	"info": {
 		"setting": "application"
@@ -14,7 +14,7 @@
 						},
 						"defaultValue": {
 							"dataTypeId": "test.string;1.0.0",
-							"value": "Public",
+							"value": "Public"
 						}
 					},
 					"schoolRatingInModule": {
@@ -78,7 +78,13 @@
 				}
 			},
 			"protect": {
-				"element": {}
+				"element": {
+					"selectSchoolInfoInModule" : {
+						"definition": {
+							"path": "schoolListInModule.element"
+						}
+					}
+				}
 			}
 		}
 	},
@@ -94,106 +100,24 @@
 			"type": "list",
 			"page": "schoolListPage",
 			"status" : "disabled111",
-			"inputMapping": {
-				"element": {
-					"schoolList": {
-						"definition": {
-							"path": "schoolListInModule"
-						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					},
-					"schoolType": {
-						"definition": {
-							"path": "schoolTypeInModule"
-						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					},
-					"schoolRating": {
-						"definition": {
-							"path": "schoolRatingInModule"
-						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					}
-				}
-			},
-			"outputMapping": {
-				"element": {
-					"schoolListInModule": {
-						"definition": {
-							"path": "schoolList"
-						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					},
-					"schoolTypeInModule": {
-						"definition": {
-							"path": "schoolType"
-						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					},
-					"schoolRatingInModule": {
-						"definition": {
-							"path": "schoolRating"
-						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					},
-				}
-			},
 			"eventHandler": [
 				{
-					"name" : "selectSchool",
-					"process" : "selectSchool"
+					"eventName" : "selectItem",
+					"eventDataVariable" : "selectSchoolInfoInModule",
+					"steps" : [
+						{
+							"stepType" : "process",
+							"process" : "selectSchool"
+						}
+					]
 				}
-			],
+			]
 		},
 		{
 			"name": "schoolInfoUI",
 			"type": "info",
 			"page": "schoolInfoPage",
-			"status" : "disabled111",
-			"inputMapping": {
-				"element": {
-					"schoolData": {
-						"definition": {
-							"path": "schoolListInModule.element"
-						},
-						"defaultValue": {
-							"dataTypeId": "test.map;1.0.0",
-							"value": {
-								"schoolName": {
-									"dataTypeId": "test.string;1.0.0",
-									"value": "School5"
-								},
-								"schoolRating": {
-									"dataTypeId": "test.float;1.0.0",
-									"value": 6.0
-								},
-								"geo": {
-									"dataTypeId": "test.geo;1.0.0",
-									"value": {
-										"latitude": 43.651299,
-										"longitude": -79.579473
-									}
-								}
-							}
-						},
-						"info": {
-							"relativeConnection": "logical"
-						}
-					}
-				}
-			}
+			"status" : "disabled111"
 		}
 	],
 	
@@ -201,8 +125,41 @@
 	[
 		{
 			"name" : "getSchoolData",
+			"interface" : {
+				"parm" : [
+					{
+						"name" : "schoolTypeInService",
+						"displayName" : "School Type",
+						"description" : "The type of school, public, private, ...",
+						"dataInfo" : {
+							"criteria": "test.string;1.0.0"
+						}
+					},
+					{
+						"name" : "schoolRatingInService",
+						"displayName" : "School Rating",
+						"description" : "The rating of school, 0--10",
+						"dataInfo" : {
+							"criteria": "test.float;1.0.0"
+						}
+					}
+				],
+				"result" : {
+					"success" : {
+						"output" : [
+							{
+								"name" : "outputInService",
+								"displayName": "All Schools",
+								"dataInfo" : {
+									"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0,geo:test.geo;1.0.0||%%||%%"
+								}
+							}
+						]
+					}
+				}
+			},
 			"provider" : "getSchoolDataService",
-			"serviceMapping" :{
+			"dataMapping" :{
 				"inputMapping" : {
 					"element" : {
 						"schoolTypeInService" : {
@@ -238,188 +195,145 @@
 				"referenceId": {
 					"structure" : "local",
 					"id" : "MySchool_SchoolList"
+				},
+				"adapter" : {
+					"inputMapping": {
+						"element": {
+							"schoolList": {
+								"definition": {
+									"path": "schoolListInModule"
+								},
+								"info": {
+									"relativeConnection": "physical"
+								}
+							},
+							"schoolType": {
+								"definition": {
+									"path": "schoolTypeInModule"
+								},
+								"info": {
+									"relativeConnection": "physical"
+								}
+							},
+							"schoolRating": {
+								"definition": {
+									"path": "schoolRatingInModule"
+								},
+								"info": {
+									"relativeConnection": "physical"
+								}
+							}
+						}
+					},
+					"outputMapping": {
+						"element": {
+							"schoolListInModule": {
+								"definition": {
+									"path": "schoolList"
+								},
+								"info": {
+									"relativeConnection": "physical"
+								}
+							},
+							"schoolTypeInModule": {
+								"definition": {
+									"path": "schoolType"
+								},
+								"info": {
+									"relativeConnection": "physical"
+								}
+							},
+							"schoolRatingInModule": {
+								"definition": {
+									"path": "schoolRating"
+								},
+								"info": {
+									"relativeConnection": "physical"
+								}
+							}
+						}
+					},
+					"event" : {
+						"fromName" : "selectSchool",
+						"toName" : "selectItem",
+						"dataMapping" : {
+							"selectSchoolInfoInModule" : "EVENT.data"
+						}
+					}
 				}
 			},
 			{
 				"name": "schoolInfoPage",
-				"referenceId": "Page_MySchool_SchoolData"
+				"referenceId": "Page_MySchool_SchoolData",
+				"inputMapping": {
+					"element": {
+						"schoolData": {
+							"definition": {
+								"path": "selectSchoolInfoInModule"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.map;1.0.0",
+								"value": {
+									"schoolName": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "School5"
+									},
+									"schoolRating": {
+										"dataTypeId": "test.float;1.0.0",
+										"value": 6.0
+									},
+									"geo": {
+										"dataTypeId": "test.geo;1.0.0",
+										"value": {
+											"latitude": 43.651299,
+											"longitude": -79.579473
+										}
+									}
+								}
+							},
+							"info": {
+								"relativeConnection": "physical"
+							}
+						}
+					}
+				}				
 			}
 		],
 		"service" : [
-			{	
+			{
 				"name" : "getSchoolDataService",
 				"referenceId" : "schoolService"
-			},
+			}
 			
 		],
 		"process": [
 			{
 				"name" : "selectSchool",
-				"entity" : {
-					"activity": [{
-							"id": "startActivityId",
-							"name": "startActivity",
-							"type": "start",
-							"flow": {
-								"target": "debugId"
+				"referenceId": {
+					"id" : "navigation"
+				},
+				"dataMapping" : {
+					"inputMapping" : {
+						"element": {
+							"toPageName": {
+								"definition": {
+									"value" : "schoolInfoUI"
+								},
+								"info": {
+									"relativeConnection": "physical"
+								}
 							}
-						},
-						{
-							"id": "debugId",
-							"name": "debug",
-							"type": "debug",
-							"result": [{
-								"name": "success",
-								"flow": {
-									"target": "presentSchoolDataUI"
-								}
-							}]
-						},
-						{
-							"id": "presentSchoolDataUI",
-							"name": "presentSchoolDataUI",
-							"type": "UI_presentUI",
-							"ui": "schoolInfoUI",
-							"result": [{
-								"name": "success",
-								"flow": {
-									"target": "refreshSchoolInfo"
-								}
-							}]
-						},
-						{
-							"id": "refreshSchoolInfo",
-							"name": "refreshSchoolInfo",
-							"type": "UI_executeCommand",
-							"partId": "ui.schoolInfoUI",
-							"ui11": "schoolInfoUI",
-							"command": "nosliw_update_data",
-							"inputMapping": {
-								"element": {
-									"schoolData": {
-										"definition": { 
-											"path": "nosliw_EVENT.data"
-										}
-									}
-								}
-							},
-							"result": [{
-								"name": "success",
-								"flow": {
-									"target": "successEndId"
-								}
-							}]
-						},
-						{
-							"id": "successEndId",
-							"name": "successEnd",
-							"type": "end"
 						}
-					]
-				}			
+					}
+				}
 			},
 			{
 				"name" : "nosliw_INIT_ACTIVE",
-				"entity" : {
-					"activity": [{
-							"id": "startActivityId",
-							"name": "startActivity",
-							"type": "start",
-							"flow": {
-								"target": "retrieveSchoolData"
-							}
-						},
-						{
-							"id": "retrieveSchoolData",
-							"name": "retrieveSchoolData",
-							"type": "Service_request",
-							"provider": "getSchoolDataService",
-							"inputMapping" : {
-								"element" : {
-									"schoolTypeInService" : {
-										"definition" : {
-											"path" : "schoolTypeInModule"
-										}
-									},
-									"schoolRatingInService" : {
-										"definition" : {
-											"path" : "schoolRatingInModule"
-										}
-									}
-								}
-							},
-							"result": [{
-								"name": "success",
-								"flow": {
-									"target": "presentSchoolListUI"
-								},
-								"output": {
-									"element": {
-										"schoolListInModule": {
-											"definition": {
-												"path": "outputInService"
-											}
-										}
-									}
-								}
-							}]
-						},
-						{
-							"id": "presentSchoolListUI",
-							"name": "presentSchoolListUI",
-							"type": "UI_presentUI",
-							"setting" : {
-								"updateData" : false
-							},
-							"ui": "schoolListUI",
-							"result": [{
-								"name": "success",
-								"flow": {
-									"target": "debug"
-								}
-							}]
-						},
-						{
-							"id": "debug",
-							"name": "debug",
-							"type": "debug",
-							"result": [{
-								"name": "success",
-								"flow": {
-									"target": "refreshSchoolList"
-								}
-							}]
-						},
-						{
-							"id": "refreshSchoolList",
-							"name": "refreshSchoolList",
-							"type": "UI_executeCommand",
-							"partId": "ui.schoolListUI",
-							"command": "nosliw_update_data",
-							"inputMapping": {
-								"element": {
-									"schoolList": {
-										"definition": { 
-											"path": "schoolListInModule"
-										}
-									}
-								}
-							},
-							"result": [{
-								"name": "success",
-								"flow": {
-									"target": "successEndId"
-								}
-							}]
-						},
-						{
-							"id": "successEndId",
-							"name": "successEnd",
-							"type": "end"
-						}
-					]
-				},
+				"referenceId": {
+					"structure" : "local",
+					"id" : "init"
+				}
 			}
-		],
-	},
+		]
+	}
 }

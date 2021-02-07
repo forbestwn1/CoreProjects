@@ -633,6 +633,11 @@ public class HAPConstant {
 
 
 
+		public static final String ENTITYINFO_STATUS_DISABLED = "disabled";
+		public static final String ENTITYINFO_STATUS_ENABLED = "enabled";
+
+
+
 		public static final String SCRIPT_TYPE_TEXT = "text";
 		public static final String SCRIPT_TYPE_EXPRESSION = "expression";
 		public static final String SCRIPT_TYPE_LITERATE = "literate";
@@ -743,6 +748,12 @@ public class HAPConstant {
 
 
 		public static final String UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR = "nosliw_validationError";
+
+
+
+		public static final String HANDLERSTEP_TYPE_DATAASSOCIATION = "dataAssociation";
+		public static final String HANDLERSTEP_TYPE_PROCESS = "process";
+		public static final String HANDLERSTEP_TYPE_ACTIVITY = "activity";
 
 
 }

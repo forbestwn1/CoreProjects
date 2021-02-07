@@ -19,6 +19,8 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	//name
 	protected String m_name;
 
+	protected String m_status;
+	
 	//name
 	protected String m_displayName;
 
@@ -50,6 +52,11 @@ abstract public class HAPExecutableImpEntityInfo extends HAPExecutableImp  imple
 	public String getName() {  return this.m_name;  }
 	@Override
 	public void setName(String name) {   this.m_name = name;    }
+
+	@Override
+	public String getStatus() {  return this.m_status;  }
+	@Override
+	public void setStatus(String status) {   this.m_status = status;    }
 
 	@Override
 	public String getDisplayName() {  return this.m_displayName;  }

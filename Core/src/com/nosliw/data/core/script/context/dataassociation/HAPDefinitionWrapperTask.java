@@ -46,7 +46,12 @@ public class HAPDefinitionWrapperTask<T> extends HAPSerializableImp{
 	public void setOutputMapping(Map<String, HAPDefinitionDataAssociation> outputMapping) {  if(outputMapping!=null) this.m_outputMapping.putAll(outputMapping);   }
 	public void addOutputMapping(String name, HAPDefinitionDataAssociation mapping) {  this.m_outputMapping.put(name, mapping);   }
 	
-	public void buildMapping(JSONObject jsonObj) {
+	public void buildObj(JSONObject jsonObj, T taskObj) {
+		this.buildMapping(jsonObj);
+		if(taskObj!=null)	this.m_taskDefinition = taskObj;
+	}
+	
+	private void buildMapping(JSONObject jsonObj) {
 		JSONObject outputMappingJson = jsonObj.optJSONObject(OUTPUTMAPPING);
 		if(outputMappingJson!=null) {
 			for(Object key : outputMappingJson.keySet()) {
@@ -60,10 +65,8 @@ public class HAPDefinitionWrapperTask<T> extends HAPSerializableImp{
 		}
 	}
 	
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_taskDefinition, HAPSerializationFormat.JSON));
+	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, String taskAttName) {
+		jsonMap.put(taskAttName, HAPJsonUtility.buildJson(this.m_taskDefinition, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
 	}

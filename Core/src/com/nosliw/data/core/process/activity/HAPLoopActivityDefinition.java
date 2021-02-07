@@ -64,8 +64,8 @@ public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 		
 		JSONObject stepObj = jsonObj.optJSONObject(STEP);
 		HAPResourceId process = HAPResourceIdFactory.newInstance(stepObj.opt(PROCESS));
-		this.m_step = new HAPDefinitionWrapperTask(process);
-		this.m_step.buildMapping(stepObj);
+		this.m_step = new HAPDefinitionWrapperTask();
+		this.m_step.buildObj(stepObj, process);
 		
 		return true;  
 	}

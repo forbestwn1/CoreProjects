@@ -73,7 +73,7 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 	public String getType() {  return this.m_type; }
 
 	@Override
-	public HAPStatus getStatus() {  return this.m_status;  }
+	public HAPStatus getElementStatus() {  return this.m_status;  }
 
 	@Override
 	public boolean isEnable() {   return this.m_enable;   }
@@ -167,7 +167,7 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 		Object categaryObj = jsonObj.opt(CATEGARY);
 		if(categaryObj!=null)  this.m_categary = (String)categaryObj;
 		this.m_type = jsonObj.getString(TYPE);
-		this.m_status.buildObject(jsonObj.optJSONObject(STATUS), HAPSerializationFormat.JSON);
+		this.m_status.buildObject(jsonObj.optJSONObject(ELEMENTSTATUS), HAPSerializationFormat.JSON);
 		Object enableValue = jsonObj.opt(ENABLE);
 		if(enableValue!=null)	this.m_enable = (Boolean)enableValue;
 		this.m_extra = jsonObj.opt(EXTRA);
@@ -181,7 +181,7 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CATEGARY, this.m_categary);
 		jsonMap.put(TYPE, this.m_type);
-		jsonMap.put(STATUS, HAPJsonUtility.buildJson(this.m_status, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTSTATUS, HAPJsonUtility.buildJson(this.m_status, HAPSerializationFormat.JSON));
 		jsonMap.put(ENABLE, this.m_enable+"");
 		typeJsonMap.put(ENABLE, Boolean.class);
 		jsonMap.put(EXTRA, HAPJsonUtility.buildJson(this.m_extra, HAPSerializationFormat.JSON));

@@ -5,12 +5,13 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPNosliwUtility;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPExecutableProcess;
@@ -87,7 +88,7 @@ public class HAPProcessorModule {
 		
 		//process ui
 		for(HAPDefinitionModuleUI ui : moduleDefinition.getUIs()) {
-			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(ui.getStatus())) {
+			if(!HAPUtilityEntityInfo.isEnabled(ui)) {
 				HAPExecutableModuleUI uiExe = processModuleUI(ui, ui.getName(), out, allServiceProviders, runtimeEnv.getProcessManager(), uiResourceMan, runtimeEnv, processTracker);
 				out.addModuleUI(uiExe);
 			}
@@ -141,8 +142,8 @@ public class HAPProcessorModule {
 		out.setOutputMapping(outputDataAssocation);
 		
 		//event handler
-		Set<HAPHandlerEvent> eventHandlerDefs = moduleUIDefinition.getEventHandlers();
-		for(HAPHandlerEvent eventHandlerDef : eventHandlerDefs) {
+		Set<HAPHandler> eventHandlerDefs = moduleUIDefinition.getEventHandlers();
+		for(HAPHandler eventHandlerDef : eventHandlerDefs) {
 			String eventName = eventHandlerDef.getName();
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getBody().getEventDefinition(eventName));
 			HAPContextGroup eventContext = new HAPContextGroup();
