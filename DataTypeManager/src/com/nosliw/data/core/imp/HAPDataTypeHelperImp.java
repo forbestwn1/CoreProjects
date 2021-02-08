@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import com.google.common.collect.Sets;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeFamily;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -354,7 +354,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	
 	@Override
 	public Set<HAPRelationship> getRootDataTypeRelationship(HAPDataTypeId dataTypeId){
-		List<HAPRelationshipImp> rootRelationships = this.m_dataAccess.getRelationships(dataTypeId, HAPConstant.DATATYPE_RELATIONSHIPTYPE_ROOT);
+		List<HAPRelationshipImp> rootRelationships = this.m_dataAccess.getRelationships(dataTypeId, HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_ROOT);
 		return new HashSet<HAPRelationship>(rootRelationships);
 	}
 	
@@ -452,7 +452,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		if(hasChild){
 			List<HAPOperationParm> parmsDataGetChildrenNames = new ArrayList<HAPOperationParm>();
 			parmsDataGetChildrenNames.add(new HAPOperationParm(data));
-			HAPServiceData serviceDataChildNames = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPConstant.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, parmsDataGetChildrenNames);
+			HAPServiceData serviceDataChildNames = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, parmsDataGetChildrenNames);
 			HAPData getChildrenNamesResultData = (HAPData)serviceDataChildNames.getData();
 			try {
 				JSONArray getChildrenNamesResultJsonArray = new JSONArray(getChildrenNamesResultData.getValue().toString());
@@ -463,7 +463,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 					List<HAPOperationParm> parmsDataGetChildData = new ArrayList<HAPOperationParm>();
 					parmsDataGetChildData.add(new HAPOperationParm(data));
 					parmsDataGetChildData.add(new HAPOperationParm("name", HAPUtilityData.buildDataWrapperFromJson(childNameDataJson)));
-					HAPServiceData serviceDataChildData = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA, parmsDataGetChildData);
+					HAPServiceData serviceDataChildData = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDDATA, parmsDataGetChildData);
 					HAPData getChildDataResultData = (HAPData)serviceDataChildData.getData();
 					group.addSubCriteria(childName, this.getDataTypeCriteriaByData(getChildDataResultData));
 				}
@@ -489,7 +489,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	}
 
 	private void discoverExpressionCriteria(HAPDataTypeCriteria criteria, Set<HAPDataTypeCriteriaExpression> expCriterias){
-		if(criteria.getType().equals(HAPConstant.DATATYPECRITERIA_TYPE_EXPRESSION)){
+		if(criteria.getType().equals(HAPConstantShared.DATATYPECRITERIA_TYPE_EXPRESSION)){
 			expCriterias.add((HAPDataTypeCriteriaExpression)criteria);
 		}
 		else{

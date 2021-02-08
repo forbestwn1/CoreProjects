@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
@@ -28,7 +28,7 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 	public HAPExecutableActivityNormal() {}
 
 	public HAPExecutableActivityNormal(String id, HAPDefinitionActivityNormal activityDef) {
-		super(HAPConstant.ACTIVITY_CATEGARY_NORMAL, id, activityDef);
+		super(HAPConstantShared.ACTIVITY_CATEGARY_NORMAL, id, activityDef);
 		this.m_results = new LinkedHashMap<String, HAPExecutableResultActivityNormal>();
 	}
 	

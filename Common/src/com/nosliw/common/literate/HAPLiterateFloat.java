@@ -4,12 +4,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPLiterateFloat implements HAPLiterateDef{
 
 	@Override
-	public String getName() {	return HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT;	}
+	public String getName() {	return HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_FLOAT;	}
 
 	@Override
 	public Object stringToValue(String strValue, String subType) {  return Float.valueOf(strValue);  }

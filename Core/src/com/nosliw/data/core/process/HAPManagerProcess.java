@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -29,17 +29,17 @@ public class HAPManagerProcess {
 		this.m_runtimeEnv = runtimeEnv;
 	}
 
-	public HAPDefinitionProcessSuite getProcessSuiteDefinition(HAPResourceId suiteId, HAPAttachmentContainer parentAttachment) {
+	public HAPDefinitionProcessSuite getProcessSuiteDefinition(HAPResourceId suiteId, HAPContainerAttachment parentAttachment) {
 		HAPDefinitionProcessSuite suiteDef = (HAPDefinitionProcessSuite)this.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(suiteId, parentAttachment);
 		return suiteDef;
 	}
 	
-	public HAPDefinitionProcess getProcessDefinition(HAPResourceId processId, HAPAttachmentContainer parentAttachment) {
+	public HAPDefinitionProcess getProcessDefinition(HAPResourceId processId, HAPContainerAttachment parentAttachment) {
 		HAPDefinitionProcess processDef = (HAPDefinitionProcess)this.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(processId, parentAttachment);
 		return processDef;
 	}
 	
-	public HAPEntityWithResourceContext getProcessDefinitionWithContext(HAPResourceId processId, HAPAttachmentContainer parentAttachment) {
+	public HAPEntityWithResourceContext getProcessDefinitionWithContext(HAPResourceId processId, HAPContainerAttachment parentAttachment) {
 		HAPDefinitionProcess processDef = this.getProcessDefinition(processId, parentAttachment);
 		HAPEntityWithResourceContext out = new HAPEntityWithResourceContext(processDef, HAPContextProcessor.createContext(processDef.getSuite(), this.getResourceDefinitionManager()));
 		return out;

@@ -1,6 +1,6 @@
 package com.nosliw.data.core.data.criteria;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 /**
  * Criteria that reference to another criteria
@@ -14,7 +14,7 @@ public class HAPDataTypeCriteriaReference extends HAPDataTypeCriteriaAbstract{
 	}
 	
 	@Override
-	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_REFERENCE;	}
+	public String getType() {		return HAPConstantShared.DATATYPECRITERIA_TYPE_REFERENCE;	}
 
 	@Override
 	protected String buildLiterate(){

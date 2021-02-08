@@ -1,6 +1,6 @@
 package com.nosliw.data.core.data.criteria;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 /**
  * The criteria that is the result of a expression
@@ -19,7 +19,7 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 	}
 	
 	@Override
-	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_EXPRESSION;	}
+	public String getType() {		return HAPConstantShared.DATATYPECRITERIA_TYPE_EXPRESSION;	}
 
 	@Override
 	protected String buildLiterate(){

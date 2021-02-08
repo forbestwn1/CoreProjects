@@ -6,23 +6,23 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPResourceIdFactory {
 
 	private static HAPResourceId newInstanceByType(String resourceType, String structure) {
 		HAPResourceId out = null;
 		if(structure==null)   structure = HAPResourceUtility.getDefaultResourceStructure();
-		if(structure.equals(HAPConstant.RESOURCEID_TYPE_SIMPLE)) {
+		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
 			out = new HAPResourceIdSimple(resourceType);
 		}
-		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_EMBEDED)) {
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
 			out = new HAPResourceIdEmbeded(resourceType);
 		}
-		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_DYNAMIC)) {
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
 			out = new HAPResourceIdDynamic(resourceType);
 		}
-		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_LOCAL)) {
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
 			out = new HAPResourceIdLocal(resourceType);
 		}
 		return out;

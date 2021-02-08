@@ -1,6 +1,6 @@
 package com.nosliw.common.test;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 /*
  * test item is child of test case, 
@@ -18,5 +18,5 @@ public class HAPResultTestItem extends HAPResult{
 	}
 		
 	@Override
-	public String getType() {		return HAPConstant.TESTRESULT_TYPE_ITEM;	}
+	public String getType() {		return HAPConstantShared.TESTRESULT_TYPE_ITEM;	}
 }

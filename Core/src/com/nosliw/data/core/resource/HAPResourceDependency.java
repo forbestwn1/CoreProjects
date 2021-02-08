@@ -17,7 +17,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 /**
@@ -56,7 +56,7 @@ public class HAPResourceDependency extends HAPSerializableImp{
 	
 	public Set<String> getAlias(){  return this.m_alias;  }
 	public void addAlias(String alias){		this.m_alias.add(alias);	}
-	private void setAlias(String aliasLiterate){		this.m_alias = new HashSet<String>((List<String>)HAPLiterateManager.getInstance().stringToValue(aliasLiterate, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING));	}
+	private void setAlias(String aliasLiterate){		this.m_alias = new HashSet<String>((List<String>)HAPLiterateManager.getInstance().stringToValue(aliasLiterate, HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_STRING));	}
 	
 	public void addAlias(Collection alias){		this.m_alias.addAll(alias);	}
 	

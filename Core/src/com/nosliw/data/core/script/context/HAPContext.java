@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 @HAPEntityWithAttribute
@@ -30,7 +30,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	}
 
 	@Override
-	public String getType() {	return HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT;	}
+	public String getType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT;	}
 
 	@Override
 	public boolean isFlat() {	return true;	}
@@ -44,7 +44,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	@Override
 	public void hardMergeWith(HAPContextStructure parent){
 		if(parent!=null) {
-			if(parent.getType().equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+			if(parent.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
 				HAPContext context  = (HAPContext)parent;
 				Map<String, HAPContextDefinitionRoot> eles = context.getElements();
 				for(String rootName : eles.keySet()){
@@ -83,7 +83,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 				public boolean process(HAPContextDefinitionElement ele, Object value) {
 					if(ele instanceof HAPContextDefinitionLeafRelative) {
 						HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)ele;
-						if(HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(relative.getParent())) {
+						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(relative.getParent())) {
 							//update local relative path
 							HAPContextPath path = relative.getPath();
 							relative.setPath(new HAPContextPath(new HAPContextDefinitionRootId(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));
@@ -111,7 +111,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 				public boolean process(HAPContextDefinitionElement ele, Object value) {
 					if(ele instanceof HAPContextDefinitionLeafRelative) {
 						HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)ele;
-						if(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT.equals(relative.getParent())) {
+						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT.equals(relative.getParent())) {
 							//update local relative path
 							HAPContextPath path = relative.getPath();
 							relative.setPath(new HAPContextPath(new HAPContextDefinitionRootId(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));
@@ -144,7 +144,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 			HAPUtilityContext.processContextDefElementWithPathInfo(contextRoot.getDefinition(), new HAPContextDefEleProcessor() {
 				@Override
 				public boolean process(HAPContextDefinitionElement ele, Object path) {
-					if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+					if(ele.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
 						HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)ele;
 						Object value = constantEle.getDataValue();
 						if(value==null)   value = constantEle.getValue();
@@ -208,7 +208,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 						if(remainingPath==null) {
 							//solid node
 							HAPContextDefinitionElement solidEle = null;
-							if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(outSolidNodeEle.getType())) {
+							if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(outSolidNodeEle.getType())) {
 								solidEle = ((HAPContextDefinitionNode)outSolidNodeEle).getChildren().get(pathSeg);
 							}
 							if(solidEle==null) 		remainingPath = pathSeg;
@@ -218,7 +218,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 
 							//real node
 							HAPContextDefinitionElement refEle = null;
-							if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(outRefNodeEle.getType())) {
+							if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(outRefNodeEle.getType())) {
 								refEle = ((HAPContextDefinitionNode)outRefNodeEle).getChildren().get(pathSeg);
 							}
 							if(refEle!=null)  outRefNodeEle = refEle;

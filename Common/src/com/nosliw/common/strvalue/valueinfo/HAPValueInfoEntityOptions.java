@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPValueInfoEntityOptions extends HAPValueInfo implements HAPValueInfoEntityable{
 
@@ -23,7 +23,7 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo implements HAPValueI
 	@Override
 	public void init(){
 		super.init();
-		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstantShared.STRINGALBE_VALUEINFO_ENTITYOPTIONS);
 	}
 	
 	public Set<String> getOptionsKey(){

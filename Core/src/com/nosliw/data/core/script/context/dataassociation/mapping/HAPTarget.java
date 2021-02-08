@@ -1,7 +1,7 @@
 package com.nosliw.data.core.script.context.dataassociation.mapping;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 
@@ -26,7 +26,7 @@ public class HAPTarget {
 
 	private void init() {
 		if(HAPBasicUtility.isStringEmpty(this.m_targetName)) {
-			this.m_targetName = HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+			this.m_targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		}
 	}
 	

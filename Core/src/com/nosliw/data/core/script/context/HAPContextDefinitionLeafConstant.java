@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -25,7 +25,7 @@ public class HAPContextDefinitionLeafConstant extends HAPContextDefinitionElemen
 	}
 	
 	@Override
-	public String getType() {		return HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT;	}
+	public String getType() {		return HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT;	}
 
 	public void setValue(Object value){		this.m_value = value;	}
 

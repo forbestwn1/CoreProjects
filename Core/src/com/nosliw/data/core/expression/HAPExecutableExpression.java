@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -71,7 +71,7 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 					Map<String, Object> value = (Map<String, Object>)data; 
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
 					if(constantOperand.getName()!=null) {
@@ -89,7 +89,7 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 					Map<String, HAPDefinitionConstant> out = (Map<String, HAPDefinitionConstant>)data; 
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
 					if(constantOperand.getName()!=null) {
@@ -108,19 +108,19 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 					HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
 					
 					String inputMappingType = inputMapping.getType();
-					if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
+					if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
 						HAPContext da = mappingDa.getAssociation();
 						da.updateReferenceName(nameUpdate);
 					}
-					else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MIRROR)) {
+					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {
 					}
-					else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_NONE)) {
+					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_NONE)) {
 					}
 				}
 				return true;

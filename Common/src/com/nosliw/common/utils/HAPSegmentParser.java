@@ -21,7 +21,7 @@ public class HAPSegmentParser {
 	}
 
 	public HAPSegmentParser(String path){
-		this(path, HAPConstant.SEPERATOR_PATH);
+		this(path, HAPConstantShared.SEPERATOR_PATH);
 	}
 
 	public boolean isEmpty(){return this.m_isEmpty;}

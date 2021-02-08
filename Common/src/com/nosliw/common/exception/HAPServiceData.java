@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 /*
  * class to store information for operation result,
@@ -36,7 +36,7 @@ public class HAPServiceData extends HAPSerializableImp{
 	public static final String SERVICEDATA_METADATA = "metaData";
 	
 	//result code
-	private int m_code = HAPConstant.SERVICECODE_SUCCESS;
+	private int m_code = HAPConstantShared.SERVICECODE_SUCCESS;
 	//result message
 	private String m_message = null;
 	//result data
@@ -60,23 +60,23 @@ public class HAPServiceData extends HAPSerializableImp{
 	public void setMetaData(String name, String value){this.m_metaDatas.put(name, value);}
 	public String getMetaData(String name){return this.m_metaDatas.get(name);}
 	
-	public boolean isSuccess(){return this.m_code<=HAPConstant.SERVICECODE_SUCCESS;}
-	public boolean isFail(){return this.m_code>=HAPConstant.SERVICECODE_ERROR;}
+	public boolean isSuccess(){return this.m_code<=HAPConstantShared.SERVICECODE_SUCCESS;}
+	public boolean isFail(){return this.m_code>=HAPConstantShared.SERVICECODE_ERROR;}
 	
 	public static HAPServiceData createSuccessData(){return HAPServiceData.createSuccessData(null);}
 	
 	public static HAPServiceData createSuccessData(Object data){
 		HAPServiceData out = new HAPServiceData();
-		out.m_code = HAPConstant.SERVICECODE_SUCCESS;
+		out.m_code = HAPConstantShared.SERVICECODE_SUCCESS;
 		out.m_data = data;
 		return out;
 	}
 
 	public static HAPServiceData createFailureData(){
-		return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_ERROR, null, "");
+		return HAPServiceData.createServiceData(HAPConstantShared.SERVICECODE_ERROR, null, "");
 	}
 	public static HAPServiceData createFailureData(Object data, String message){
-		return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_ERROR, data, message);
+		return HAPServiceData.createServiceData(HAPConstantShared.SERVICECODE_ERROR, data, message);
 	}
 	
 	public static HAPServiceData createServiceData(int code, Object data, String message){

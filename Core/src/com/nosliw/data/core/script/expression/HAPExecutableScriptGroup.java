@@ -11,7 +11,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
@@ -72,7 +72,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	public List<HAPExecutableScriptEntity> getScripts(){    return this.m_elements;    }
 	public HAPExecutableScriptEntity getScript(Object id) {
 		HAPExecutableScriptEntity out = null;
-		if(id==null)  id = HAPConstant.NAME_DEFAULT;
+		if(id==null)  id = HAPConstantShared.NAME_DEFAULT;
 		if(id instanceof String) {
 			for(HAPExecutableScriptEntity script : this.m_elements) {
 				if(id.equals(script.getId())) {

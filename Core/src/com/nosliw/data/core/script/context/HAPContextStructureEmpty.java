@@ -3,7 +3,7 @@ package com.nosliw.data.core.script.context;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPContextStructureEmpty extends HAPSerializableImp implements HAPContextStructure{
 
@@ -19,7 +19,7 @@ public class HAPContextStructureEmpty extends HAPSerializableImp implements HAPC
 	public HAPContextStructureEmpty oppositeFlatStructure() {return new HAPContextStructureEmpty(!this.m_isFlat);  }
 	
 	@Override
-	public String getType() {	return HAPConstant.CONTEXTSTRUCTURE_TYPE_EMPTY;	}
+	public String getType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY;	}
 
 	@Override
 	public boolean isFlat() {  return this.m_isFlat;  }

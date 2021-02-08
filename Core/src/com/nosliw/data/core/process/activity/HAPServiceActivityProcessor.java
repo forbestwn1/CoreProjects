@@ -2,7 +2,7 @@ package com.nosliw.data.core.process.activity;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.process.HAPBuilderResultContext;
 import com.nosliw.data.core.process.HAPContextProcessor;
@@ -61,8 +61,8 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 
 		//process success result
 		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(processDataContext); 
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, serviceActDef, HAPConstant.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, runtimeEnv);
-		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, serviceActDef, HAPConstantShared.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, runtimeEnv);
+		out.addResult(HAPConstantShared.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;
 	}
@@ -78,7 +78,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		@Override
 		public HAPContextStructure buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPContextGroup out = new HAPContextGroup();
-			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
+			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;
 				HAPExecutableDataAssociation outputMapping = serviceActivity.getService().getServiceMapping().getOutputMapping(resultName);
 				HAPOutputStructure outputStructure = outputMapping.getOutput();

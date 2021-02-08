@@ -3,11 +3,11 @@ package com.nosliw.common.utils;
 public class HAPNosliwUtility {
 
 	public static String buildNosliwFullName(String name){
-		return HAPConstant.NOSLIW_NAME_PREFIX+name;
+		return HAPConstantShared.NOSLIW_NAME_PREFIX+name;
 	}
 	
 	public static String getNosliwCoreName(String name){
-		int index = name.indexOf(HAPConstant.NOSLIW_NAME_PREFIX);
+		int index = name.indexOf(HAPConstantShared.NOSLIW_NAME_PREFIX);
 		if(index==-1)  return null;
 		return name.substring(index);
 	}

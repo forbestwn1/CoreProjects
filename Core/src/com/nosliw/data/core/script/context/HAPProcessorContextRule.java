@@ -1,6 +1,6 @@
 package com.nosliw.data.core.script.context;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorContextRule {
@@ -14,7 +14,7 @@ public class HAPProcessorContextRule {
 				HAPUtilityContext.processContextDefElement(context.getElement(eleName).getDefinition(), new HAPContextDefEleProcessor() {
 					@Override
 					public boolean process(HAPContextDefinitionElement ele, Object obj) {
-						if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+						if(ele.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 							HAPContextDefinitionLeafData dataEle = (HAPContextDefinitionLeafData)ele;
 							if(dataEle.getDataInfo()!=null)    dataEle.getDataInfo().process(runtimeEnv);  
 						}

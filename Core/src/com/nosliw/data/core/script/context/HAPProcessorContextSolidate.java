@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -82,7 +82,7 @@ public class HAPProcessorContextSolidate {
 		
 		String scriptType = scriptExe.getScriptType();
 		//if pure data
-		if(HAPConstant.SCRIPT_TYPE_TEXT.equals(scriptType))  return name;
+		if(HAPConstantShared.SCRIPT_TYPE_TEXT.equals(scriptType))  return name;
 		
 		//execute script expression
 		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(groupExe, null, null, null);

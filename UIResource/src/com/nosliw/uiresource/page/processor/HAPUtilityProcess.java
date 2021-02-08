@@ -2,7 +2,7 @@ package com.nosliw.uiresource.page.processor;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
@@ -26,7 +26,7 @@ public class HAPUtilityProcess {
 		HAPContextGroup tagContext = tagDefinitionContext.cloneContextGroup();
 		for(String name : tagAttrs.keySet()) {
 			HAPContextDefinitionLeafConstant cstRootNode = new HAPContextDefinitionLeafConstant(tagAttrs.get(name));
-			tagContext.addElement(HAPConstant.NOSLIW_RESERVE_ATTRIBUTE + name, new HAPContextDefinitionRoot(cstRootNode), HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);
+			tagContext.addElement(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + name, new HAPContextDefinitionRoot(cstRootNode), HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE);
 		}
 		return HAPProcessorContext.processStatic(tagContext, HAPParentContext.createDefault(parentContext), HAPUtilityConfiguration.getContextProcessConfigurationForTagDefinition(tagDefinitionContext, contextProcessorConfig), runtimeEnv);
 	}

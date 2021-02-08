@@ -9,7 +9,7 @@ import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueInfoEntityable{
 	//class name for entity
@@ -42,7 +42,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	@Override
 	public String getValueInfoType(){	
 		String out = super.getValueInfoType();
-		if(out==null)  out = HAPConstant.STRINGALBE_VALUEINFO_ENTITY;
+		if(out==null)  out = HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY;
 		return out;
 	}
 
@@ -106,7 +106,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	public void init(){
 		super.init();
 		this.updateAtomicChildObjectValue(MANDATORY, true);
-		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ENTITY);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY);
 	}
 	
 	@Override
@@ -131,7 +131,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	public String getClassName(){  return this.getAtomicAncestorValueString(CLASSNAME); }
 	public void setClassName(String name){  this.updateAtomicChildStrValue(CLASSNAME, name); }
 	public String getTable(){  return this.getAtomicAncestorValueString(TABLE);  }
-	public List<String> getPrimaryKeys(){  return this.getAtomicAncestorValueArray(PRIMARYKEYS, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);   }
+	public List<String> getPrimaryKeys(){  return this.getAtomicAncestorValueArray(PRIMARYKEYS, HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_STRING);   }
 	
 	private HAPValueInfoEntity getParentEntityValueInfo(){
 		HAPValueInfoEntity out = null;
@@ -159,10 +159,10 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 			Set<String> optionsAttr = new HashSet<String>();
 			for(String property : this.getEntityProperties()){
 				HAPValueInfo propertyValueInfo = this.getPropertyInfo(property);
-				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyValueInfo.getValueInfoType()))  optionsAttr.add(property);
+				if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyValueInfo.getValueInfoType()))  optionsAttr.add(property);
 				else{
 					HAPStringableValue propertyValue = propertyValueInfo.newValue();
-					if(propertyValueInfo.getValueInfoType().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+					if(propertyValueInfo.getValueInfoType().equals(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
 						if(!propertyValue.isEmpty())  out.updateChild(property, propertyValue);
 					}
 					else{

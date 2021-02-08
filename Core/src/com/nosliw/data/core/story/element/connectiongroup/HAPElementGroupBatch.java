@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPElementGroup;
 import com.nosliw.data.core.story.HAPElementGroupImp;
@@ -15,7 +15,7 @@ import com.nosliw.data.core.story.change.HAPChangeResult;
 
 public class HAPElementGroupBatch extends HAPElementGroupImp{
 
-	public final static String GROUP_TYPE = HAPConstant.STORYGROUP_TYPE_BATCH; 
+	public final static String GROUP_TYPE = HAPConstantShared.STORYGROUP_TYPE_BATCH; 
 
 	public HAPElementGroupBatch() {
 		super(GROUP_TYPE);

@@ -3,7 +3,7 @@ package com.nosliw.common.test;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPTestCaseInfo extends HAPTestInfo{
 	//information for executing the test case: class, before method, test case method, after method
@@ -49,7 +49,7 @@ public class HAPTestCaseInfo extends HAPTestInfo{
 	}
 
 	@Override
-	public String getType(){ return HAPConstant.TEST_TYPE_CASE; }
+	public String getType(){ return HAPConstantShared.TEST_TYPE_CASE; }
 
 	public HAPTestCaseRuntime getTestCaseRuntime(){
 		return this.m_testCaseRuntime;

@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -56,13 +56,13 @@ public class HAPUtilityServiceUse {
 	
 	//build service provider from attachment
 	public static Map<String, HAPDefinitionServiceProvider> buildServiceProvider(
-			HAPAttachmentContainer attachment,
+			HAPContainerAttachment attachment,
 			Map<String, HAPDefinitionServiceProvider> parent, 
 			HAPManagerServiceDefinition serviceDefinitionMan) {
 		Map<String, HAPDefinitionServiceProvider> out = new LinkedHashMap<>();
 		if(parent!=null)   out.putAll(parent);
 		
-		Map<String, HAPAttachment> eleByName = attachment.getAttachmentByType(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE);
+		Map<String, HAPAttachment> eleByName = attachment.getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE);
 		if(eleByName!=null) {
 			for(String name : eleByName.keySet()) {
 				HAPDefinitionServiceProvider provider = null;

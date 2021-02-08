@@ -12,7 +12,7 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataTypePicture;
 import com.nosliw.data.core.data.HAPDataTypeProvider;
@@ -166,7 +166,7 @@ public class HAPDataTypeImporter {
 				HAPOperationVarInfoImp parmInfo = (HAPOperationVarInfoImp)p;
 				//set default name for base parm if no name is provided
 				if(parmInfo.getIsBase() && HAPBasicUtility.isStringEmpty(parmInfo.getName())){
-					parmInfo.setName(HAPConstant.DATAOPERATION_PARM_BASENAME);
+					parmInfo.setName(HAPConstantShared.DATAOPERATION_PARM_BASENAME);
 				}
 				
 				//set default criteria as current data type
@@ -187,7 +187,7 @@ public class HAPDataTypeImporter {
 		HAPRelationshipImp self = new HAPRelationshipImp();
 		self.setSourceDataType(dataType);
 		self.setTargetDataType(dataType);
-		self.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_SELF);
+		self.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_SELF);
 		out.addRelationship(self);
 		
 		this.buildDataTypePictureFromParentsDataType(dataType, out);
@@ -207,8 +207,8 @@ public class HAPDataTypeImporter {
 			boolean isRoot = connectRelationships.size()==1;
 			for(HAPRelationship connectRelationship : connectRelationships){
 				HAPRelationshipImp relationship = ((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(linkedDataTypeId.getVersion()), dataType);
-				if(isRoot)   relationship.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_ROOT);
-				else relationship.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_INTERMEDIA);
+				if(isRoot)   relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_ROOT);
+				else relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_INTERMEDIA);
 				out.addRelationship(relationship);
 			}
 		}
@@ -227,8 +227,8 @@ public class HAPDataTypeImporter {
 				boolean isRoot = connectRelationships.size()==1;
 				for(HAPRelationship connectRelationship : connectRelationships){
 					HAPRelationshipImp relationship = ((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(parentDataTypeId), dataType);
-					if(isRoot)   relationship.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_ROOT);
-					else relationship.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_INTERMEDIA);
+					if(isRoot)   relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_ROOT);
+					else relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_INTERMEDIA);
 					out.addRelationship(relationship);
 				}
 			}

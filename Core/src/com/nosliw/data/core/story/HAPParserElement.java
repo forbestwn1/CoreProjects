@@ -6,7 +6,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
 import com.nosliw.data.core.story.element.connection.HAPConnectionDataIO;
 import com.nosliw.data.core.story.element.connectiongroup.HAPElementGroupBatch;
@@ -49,9 +49,9 @@ public class HAPParserElement {
 	public static HAPStoryElement parseElement(JSONObject jsonObj) {
 		HAPStoryElement out = null;
 		String categary = jsonObj.getString(HAPStoryElement.CATEGARY);
-		if(categary.equals(HAPConstant.STORYELEMENT_CATEGARY_NODE))   out = parseNode(jsonObj);
-		else if(categary.equals(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION))   out = parseConnection(jsonObj);
-		else if(categary.equals(HAPConstant.STORYELEMENT_CATEGARY_GROUP))   out = parseElementGroup(jsonObj);
+		if(categary.equals(HAPConstantShared.STORYELEMENT_CATEGARY_NODE))   out = parseNode(jsonObj);
+		else if(categary.equals(HAPConstantShared.STORYELEMENT_CATEGARY_CONNECTION))   out = parseConnection(jsonObj);
+		else if(categary.equals(HAPConstantShared.STORYELEMENT_CATEGARY_GROUP))   out = parseElementGroup(jsonObj);
 		return out;
 	}
 	

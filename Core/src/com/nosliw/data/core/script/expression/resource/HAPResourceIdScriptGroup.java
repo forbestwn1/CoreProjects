@@ -2,7 +2,7 @@ package com.nosliw.data.core.script.expression.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.script.expression.HAPIdScriptGroup;
 
@@ -10,7 +10,7 @@ public class HAPResourceIdScriptGroup  extends HAPResourceIdSimple{
 
 	private HAPIdScriptGroup m_scriptId; 
 	
-	public HAPResourceIdScriptGroup(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_SCRIPTGROUP);    }
+	public HAPResourceIdScriptGroup(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTGROUP);    }
 
 	public HAPResourceIdScriptGroup(HAPResourceIdSimple resourceId){
 		this();

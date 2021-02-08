@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPResultTestSuite extends HAPResult{
 	//results for suites
@@ -31,10 +31,10 @@ public class HAPResultTestSuite extends HAPResult{
 	
 	public void addTestResult(HAPResult result){
 		switch(result.getType()){
-		case HAPConstant.TESTRESULT_TYPE_CASE:
+		case HAPConstantShared.TESTRESULT_TYPE_CASE:
 			this.m_testCaseResults.add(result);
 			break;
-		case HAPConstant.TESTRESULT_TYPE_SUITE:
+		case HAPConstantShared.TESTRESULT_TYPE_SUITE:
 			this.m_testSuiteResults.add(result);
 			break;
 		}
@@ -52,7 +52,7 @@ public class HAPResultTestSuite extends HAPResult{
 	
 	@Override
 	public String getType() {
-		return HAPConstant.TESTRESULT_TYPE_SUITE;
+		return HAPConstantShared.TESTRESULT_TYPE_SUITE;
 	}
 
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> jsonTypeMap){

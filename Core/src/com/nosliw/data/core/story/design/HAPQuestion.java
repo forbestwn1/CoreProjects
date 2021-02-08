@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.HAPWithAlias;
 
 @HAPEntityWithAttribute
@@ -48,11 +48,11 @@ public abstract class HAPQuestion extends HAPEntityInfoImp implements HAPWithAli
 	public static HAPQuestion parseQuestion(JSONObject jsonObj) {
 		HAPQuestion out = null;
 		String type = jsonObj.getString(TYPE);
-		if(HAPConstant.STORYDESIGN_QUESTIONTYPE_GROUP.equals(type)) {
+		if(HAPConstantShared.STORYDESIGN_QUESTIONTYPE_GROUP.equals(type)) {
 			out = new HAPQuestionGroup();
 			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		}
-		else if(HAPConstant.STORYDESIGN_QUESTIONTYPE_ITEM.equals(type)) {
+		else if(HAPConstantShared.STORYDESIGN_QUESTIONTYPE_ITEM.equals(type)) {
 			out = new HAPQuestionItem();
 			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		}

@@ -2,19 +2,17 @@ package com.nosliw.data.core.component.attachment;
 
 import java.util.Map;
 
-import org.json.JSONObject;
-
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPAttachmentPlaceHolder extends HAPAttachmentImp{
 
 	public HAPAttachmentPlaceHolder(String resourceType) {
-		this.setResourceType(resourceType);
+		super(resourceType);
 	}
 	
 	@Override
 	public String getType() {
-		return HAPConstant.ATTACHMENT_TYPE_PLACEHOLDER;
+		return HAPConstantShared.ATTACHMENT_TYPE_PLACEHOLDER;
 	}
 
 	@Override
@@ -24,7 +22,6 @@ public class HAPAttachmentPlaceHolder extends HAPAttachmentImp{
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(json);
 		return true;  
 	}

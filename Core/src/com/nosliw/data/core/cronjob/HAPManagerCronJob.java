@@ -4,7 +4,7 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
@@ -50,7 +50,7 @@ public class HAPManagerCronJob {
 		this.m_scheduleDefManager = new HAPManagerScheduleDefinition();
 	}
 	
-	public HAPDefinitionCronJob getCronJobDefinition(HAPResourceId cronJobId, HAPAttachmentContainer parentAttachment) {
+	public HAPDefinitionCronJob getCronJobDefinition(HAPResourceId cronJobId, HAPContainerAttachment parentAttachment) {
 		//get definition itself
 		HAPDefinitionCronJob cronJobDef = (HAPDefinitionCronJob)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(cronJobId, parentAttachment);
 		return cronJobDef;
@@ -60,10 +60,10 @@ public class HAPManagerCronJob {
 		return this.getEmbededCronJob(cronJobId, null, null);
 	}
 	
-	public HAPExecutableCronJob getEmbededCronJob(HAPEntityOrReference defOrRef, HAPAttachmentContainer parentAttachment, HAPWithNameMapping withNameMapping) {
+	public HAPExecutableCronJob getEmbededCronJob(HAPEntityOrReference defOrRef, HAPContainerAttachment parentAttachment, HAPWithNameMapping withNameMapping) {
 		HAPDefinitionCronJob cronJobDef = null;
 		String id = null;
-		HAPAttachmentContainer attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
+		HAPContainerAttachment attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
 		if(defOrRef instanceof HAPResourceId) {
 			HAPResourceId cronJobId = (HAPResourceId)defOrRef;
 			cronJobDef = getCronJobDefinition(cronJobId, attachmentEx);

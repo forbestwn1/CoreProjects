@@ -15,6 +15,12 @@ public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implemen
 	
 	private String m_resourceType;
 
+	public HAPAttachmentImp() {}
+
+	public HAPAttachmentImp(String resourceType) {
+		this.m_resourceType  = resourceType;
+	}
+	
 	@Override
 	public String getResourceType() {   return this.m_resourceType;   }
 	public void setResourceType(String resourceType) {    this.m_resourceType = resourceType;    }
@@ -47,14 +53,8 @@ public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implemen
 		return out;
 	}
 
-	public void cloneToObject(HAPAttachmentImp obj) {
+	public void cloneToAttachment(HAPAttachmentImp obj) {
 		this.cloneToEntityInfo(obj);
 		this.setResourceType(obj.getResourceType());
 	}
-	
-	@Override
-	public HAPAttachmentImp clone() {
-		return null;
-	}
-
 }

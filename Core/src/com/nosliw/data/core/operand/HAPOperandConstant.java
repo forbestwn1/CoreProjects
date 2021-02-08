@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -30,7 +30,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 	private HAPOperandConstant(){}
 	
 	public HAPOperandConstant(String constantStr){
-		super(HAPConstant.EXPRESSION_OPERAND_CONSTANT);
+		super(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT);
 		HAPData data = HAPUtilityData.buildDataWrapper(constantStr);
 		if(data==null){
 			//not a valid data literate, then it is a constant name
@@ -42,7 +42,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 	}
 
 	public HAPOperandConstant(HAPData constantData){
-		super(HAPConstant.EXPRESSION_OPERAND_CONSTANT);
+		super(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT);
 		this.m_data = constantData;
 	}
 

@@ -19,7 +19,7 @@ import org.mozilla.javascript.Scriptable;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
@@ -52,8 +52,8 @@ public class HAPJSImporter {
 	
 	static Map<String,String> titleToResourceType = new LinkedHashMap<String, String>();
 	static {
-		titleToResourceType.put("library", HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY);
-		titleToResourceType.put("helper", HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER);
+		titleToResourceType.put("library", HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY);
+		titleToResourceType.put("helper", HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSHELPER);
 	}
 	
 	public HAPJSImporter(HAPDataAccessRuntimeJS runtimeDataAccess, HAPDataAccessDataType dataTypeDataAccess){
@@ -135,14 +135,14 @@ public class HAPJSImporter {
 				//get resources for operation
 				String operationName = (String)operationNameKey;
 				NativeObject operationObjJS = (NativeObject)operationsObjJS.get(operationName);
-				HAPJSResourceDependency dep = this.processOperationObject(operationObjJS, dataTypeId, operationName, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION);
+				HAPJSResourceDependency dep = this.processOperationObject(operationObjJS, dataTypeId, operationName, dataTypeResources, HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION);
 				this.m_jsRuntimeDataAccess.saveEntity(dep);
 			}
 			
 			//convert to
-			NativeObject convertObjJS = (NativeObject)dataTypeObjJS.get(HAPConstant.DATAOPERATION_TYPE_CONVERT);
+			NativeObject convertObjJS = (NativeObject)dataTypeObjJS.get(HAPConstantShared.DATAOPERATION_TYPE_CONVERT);
 			if(convertObjJS!=null){
-				HAPJSResourceDependency convertDep = this.processOperationObject(convertObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERT, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
+				HAPJSResourceDependency convertDep = this.processOperationObject(convertObjJS, dataTypeId, HAPConstantShared.DATAOPERATION_TYPE_CONVERT, dataTypeResources, HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER);
 				this.m_jsRuntimeDataAccess.saveEntity(convertDep);
 			}
         }
@@ -155,11 +155,11 @@ public class HAPJSImporter {
     	String script = Context.toString(operationFunJS);
     	
     	switch(resourceType){
-    	case HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION:
+    	case HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION:
         	String operationId = this.getOperationId(dataTypeId, operationName);
     		this.m_jsRuntimeDataAccess.saveEntity(new HAPResourceDataJSOperationImp(script, operationId, dataTypeId, operationName));
     		break;
-    	case HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER:
+    	case HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER:
     		this.m_jsRuntimeDataAccess.saveEntity(new HAPResourceDataJSConverterImp(script, dataTypeId));
     		break;
     	}
@@ -187,10 +187,10 @@ public class HAPJSImporter {
 
     	HAPResourceIdSimple baseResourceId = null;
     	switch(resourceType){
-    	case HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION:
+    	case HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION:
     		baseResourceId = HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPOperationId(dataTypeId, operationName));
     		break;
-    	case HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER:
+    	case HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER:
     		baseResourceId = HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPDataTypeConverter(dataTypeId));
     		break;
     	}
@@ -224,19 +224,19 @@ public class HAPJSImporter {
 		String resourceType = getResourceTypeByResourceTitle(type);
 		HAPResourceIdSimple resourceId = null;
 		switch(resourceType){
-		case HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION:
+		case HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION:
 			String operationIdLiterate = (String)resourceObjJS;
 			resourceId = new HAPResourceIdOperation(operationIdLiterate);
 			break;
-		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY:
+		case HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY:
 			String libraryIdLiterate = (String)resourceObjJS;
 			resourceId = new HAPResourceIdJSLibrary(libraryIdLiterate);
 			break;
-		case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPE:
+		case HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATATYPE:
 			String dataTypeIdLiterate = (String)resourceObjJS;
 			resourceId = new HAPResourceIdDataType(dataTypeIdLiterate);
 			break;
-		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER:
+		case HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSHELPER:
 			try {
 				String helperScript = new HAPRhinoDataUtility().toJson(resourceObjJS)+""; 
 				helperScript = HAPJsonUtility.unescape(helperScript);
@@ -248,7 +248,7 @@ public class HAPJSImporter {
 				e.printStackTrace();
 			}
 			break;
-		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSGATEWAY:
+		case HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSGATEWAY:
 			String gatewayIdLiterate = (String)resourceObjJS;
 			resourceId = new HAPResourceIdJSGateway(gatewayIdLiterate);
 			break;

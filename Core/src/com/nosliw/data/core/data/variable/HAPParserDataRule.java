@@ -3,7 +3,7 @@ package com.nosliw.data.core.data.variable;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPParserDataRule {
 
@@ -11,21 +11,21 @@ public class HAPParserDataRule {
 		HAPDataRule out = null;
 		JSONObject ruleJsonObj = (JSONObject)ruleObj;
 		String ruleType = ruleJsonObj.getString(HAPDataRule.RULETYPE);
-		if(ruleType.equals(HAPConstant.DATARULE_TYPE_ENUM)) {
+		if(ruleType.equals(HAPConstantShared.DATARULE_TYPE_ENUM)) {
 			String enumCode = (String)ruleJsonObj.opt(HAPDataRuleEnumCode.ENUMCODE);
 			if(enumCode!=null) 	out = new HAPDataRuleEnumCode();
 			else out = new HAPDataRuleEnumData();
 			out.buildObject(ruleObj, HAPSerializationFormat.JSON);
 		}
-		else if(ruleType.equals(HAPConstant.DATARULE_TYPE_EXPRESSION)) {
+		else if(ruleType.equals(HAPConstantShared.DATARULE_TYPE_EXPRESSION)) {
 			out = new HAPDataRuleExpression();
 			out.buildObject(ruleObj, HAPSerializationFormat.JSON);
 		}
-		else if(ruleType.equals(HAPConstant.DATARULE_TYPE_JSSCRIPT)) {
+		else if(ruleType.equals(HAPConstantShared.DATARULE_TYPE_JSSCRIPT)) {
 			out = new HAPDataRuleJsScript();
 			out.buildObject(ruleObj, HAPSerializationFormat.JSON);
 		}
-		else if(ruleType.equals(HAPConstant.DATARULE_TYPE_MANDATORY)) {
+		else if(ruleType.equals(HAPConstantShared.DATARULE_TYPE_MANDATORY)) {
 			out = new HAPDataRuleMandatory();
 			out.buildObject(ruleObj, HAPSerializationFormat.JSON);
 		}

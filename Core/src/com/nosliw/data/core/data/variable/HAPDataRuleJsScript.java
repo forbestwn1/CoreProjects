@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -20,7 +20,7 @@ public class HAPDataRuleJsScript extends HAPDataRuleImp{
 	private String m_script;
 	
 	public HAPDataRuleJsScript() {
-		super(HAPConstant.DATARULE_TYPE_JSSCRIPT);
+		super(HAPConstantShared.DATARULE_TYPE_JSSCRIPT);
 	}
 
 	public HAPDataRuleJsScript(String script) {

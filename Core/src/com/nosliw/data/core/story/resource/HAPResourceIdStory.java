@@ -2,14 +2,14 @@ package com.nosliw.data.core.story.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdStory  extends HAPResourceIdSimple{
 
 	private HAPStoryId m_storyId; 
 	
-	public HAPResourceIdStory(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_STORY);    }
+	public HAPResourceIdStory(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_STORY);    }
 
 	public HAPResourceIdStory(HAPResourceIdSimple resourceId){
 		this();

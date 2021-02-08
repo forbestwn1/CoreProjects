@@ -20,7 +20,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -73,7 +73,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	}
 
 	@Override
-	public HAPRuntimeInfo getRuntimeInfo() {		return new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_RHINO);	}
+	public HAPRuntimeInfo getRuntimeInfo() {		return new HAPRuntimeInfo(HAPConstantShared.RUNTIME_LANGUAGE_JS, HAPConstantShared.RUNTIME_ENVIRONMENT_RHINO);	}
 
 	/**
 	 * embed gateway point into rhino env which provide different gateway by name. 
@@ -291,7 +291,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			//for file
 			this.m_sciprtTracker.addFile(file);
 		}
-		HAPRhinoRuntimeUtility.loadScript(scriptInfo.getScript(), scope, scriptInfo.getName(), !HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY.equals(scriptInfo.getType()));
+		HAPRhinoRuntimeUtility.loadScript(scriptInfo.getScript(), scope, scriptInfo.getName(), !HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY.equals(scriptInfo.getType()));
 	}
 	
 	public void loadScriptFromFile(String fileName, Class cs, Scriptable scope){

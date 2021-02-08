@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 
 public class HAPDefinitionDataAssociationMirror extends HAPEntityInfoWritableImp implements HAPDefinitionDataAssociation{
@@ -15,7 +15,7 @@ public class HAPDefinitionDataAssociationMirror extends HAPEntityInfoWritableImp
 	}
  
 	@Override
-	public String getType() {  return HAPConstant.DATAASSOCIATION_TYPE_MIRROR;  }
+	public String getType() {  return HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR;  }
 
 	@Override
 	public void updateInputVarName(HAPUpdateName updateName) {}

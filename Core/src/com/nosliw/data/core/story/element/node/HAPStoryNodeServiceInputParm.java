@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 import com.nosliw.data.core.story.HAPStoryElement;
@@ -17,7 +17,7 @@ import com.nosliw.data.core.story.change.HAPChangeResult;
 @HAPEntityWithAttribute
 public class HAPStoryNodeServiceInputParm extends HAPStoryNodeImp{
 
-	public final static String STORYNODE_TYPE = HAPConstant.STORYNODE_TYPE_SERVICEINPUTPARM; 
+	public final static String STORYNODE_TYPE = HAPConstantShared.STORYNODE_TYPE_SERVICEINPUTPARM; 
 
 	@HAPAttribute
 	public static final String PARMDEFINITION = "parmDefinition";

@@ -6,14 +6,14 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.HAPConnectionImp;
 import com.nosliw.data.core.story.HAPStoryElement;
 
 @HAPEntityWithAttribute
 public class HAPConnectionContain extends HAPConnectionImp{
 	
-	public final static String CONNECTION_TYPE = HAPConstant.STORYCONNECTION_TYPE_CONTAIN; 
+	public final static String CONNECTION_TYPE = HAPConstantShared.STORYCONNECTION_TYPE_CONTAIN; 
 	
 	@HAPAttribute
 	public static final String CHILDID = "childId";

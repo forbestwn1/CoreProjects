@@ -6,7 +6,7 @@ import java.util.List;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
@@ -15,7 +15,7 @@ public class HAPCriteriaUtility {
 	public static final String CHILD_ELEMENT = "element";
 
 	public static HAPMatchers mergeVariableInfo(HAPInfoCriteria criteriaInfo, HAPDataTypeCriteria expectCriteria, HAPDataTypeHelper dataTypeHelper) {
-		if(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN.equals(criteriaInfo.getStatus())){
+		if(HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN.equals(criteriaInfo.getStatus())){
 			//if variable info is open, calculate new criteria for this variable
 			if(expectCriteria!=null){
 				if(criteriaInfo.getCriteria()==null){

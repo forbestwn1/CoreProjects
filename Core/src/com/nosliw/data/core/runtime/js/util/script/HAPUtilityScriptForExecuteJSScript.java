@@ -9,7 +9,7 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
@@ -28,9 +28,9 @@ public class HAPUtilityScriptForExecuteJSScript {
 	private static String functionsParmName = "functions"; 
 	
 	static {
-		m_processors.put(HAPConstant.SCRIPT_TYPE_EXPRESSION, new HAPScriptProcessorExpression());
-		m_processors.put(HAPConstant.SCRIPT_TYPE_LITERATE, new HAPScriptProcessorLiterate());
-		m_processors.put(HAPConstant.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT, new HAPScriptProcessorExpression());
+		m_processors.put(HAPConstantShared.SCRIPT_TYPE_EXPRESSION, new HAPScriptProcessorExpression());
+		m_processors.put(HAPConstantShared.SCRIPT_TYPE_LITERATE, new HAPScriptProcessorLiterate());
+		m_processors.put(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT, new HAPScriptProcessorExpression());
 	}
 	
 	public static HAPScriptFunctionInfo buildFunctionInfo(HAPExecutableScript scriptExe) {

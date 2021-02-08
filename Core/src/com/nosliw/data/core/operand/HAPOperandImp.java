@@ -9,7 +9,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -57,7 +57,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	@Override
 	public String getStatus(){		return this.m_status;	}
 	public void setStatus(String status){  this.m_status = status; }
-	public void setStatusInvalid(){  this.setStatus(HAPConstant.EXPRESSION_OPERAND_STATUS_INVALID); }
+	public void setStatusInvalid(){  this.setStatus(HAPConstantShared.EXPRESSION_OPERAND_STATUS_INVALID); }
 	
 	@Override
 	public List<HAPOperandWrapper> getChildren(){		return new ArrayList<HAPOperandWrapper>();	}

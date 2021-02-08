@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
 public class HAPAliasElement extends HAPSerializableImp implements HAPReferenceElement{
@@ -37,7 +37,7 @@ public class HAPAliasElement extends HAPSerializableImp implements HAPReferenceE
 	public boolean isTemporary() {   return this.m_isTemp;    }
 
 	@Override
-	public String getEntityOrReferenceType() {  return HAPConstant.REFERENCE;  }
+	public String getEntityOrReferenceType() {  return HAPConstantShared.REFERENCE;  }
 
 	@Override
 	public HAPReferenceElement cloneElementReference() {

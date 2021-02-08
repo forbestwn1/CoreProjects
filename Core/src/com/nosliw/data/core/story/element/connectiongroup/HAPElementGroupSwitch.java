@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPElementGroupImp;
 import com.nosliw.data.core.story.HAPInfoElement;
@@ -21,7 +21,7 @@ import com.nosliw.data.core.story.change.HAPUtilityChange;
 @HAPEntityWithAttribute
 public class HAPElementGroupSwitch extends HAPElementGroupImp{
 
-	public final static String GROUP_TYPE = HAPConstant.STORYGROUP_TYPE_SWITCH; 
+	public final static String GROUP_TYPE = HAPConstantShared.STORYGROUP_TYPE_SWITCH; 
 
 	@HAPAttribute
 	public static final String CHOICE = "choice";

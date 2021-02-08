@@ -2,7 +2,7 @@ package com.nosliw.common.strvalue.valueinfo;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 /**
  *  Describe attribute values for child value info 
@@ -17,7 +17,7 @@ public class HAPAttributeValues extends HAPStringableValueEntity{
 
 	public HAPAttributeValues(String path){
 		this.updateAtomicChildStrValue(PATH, path);
-		this.updateComplexChild(ATTRIBUTES, HAPConstant.STRINGABLE_VALUESTRUCTURE_LIST);
+		this.updateComplexChild(ATTRIBUTES, HAPConstantShared.STRINGABLE_VALUESTRUCTURE_LIST);
 	}
 	
 	public void addAttributeValue(HAPAttributeValue attrValue){

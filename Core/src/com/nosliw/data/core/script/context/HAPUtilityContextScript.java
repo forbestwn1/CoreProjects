@@ -10,7 +10,7 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPUtilityContextScript {
@@ -50,7 +50,7 @@ public class HAPUtilityContextScript {
 	public static JSONObject buildSkeletonJsonObject(HAPContext context, boolean isFlatRootName) {
 		JSONObject output = new JSONObject();
 		for(String rootName : context.getElementNames()) {
-			if(HAPConstant.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(context.getElement(rootName).getInfo()))) {
+			if(HAPConstantShared.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(context.getElement(rootName).getInfo()))) {
 				HAPContextDefinitionElement contextDefEle = context.getElement(rootName).getDefinition();
 				Object contextEleJson = buildJsonValue(contextDefEle);
 
@@ -82,12 +82,12 @@ public class HAPUtilityContextScript {
 	
 	private static Object buildJsonValue(HAPContextDefinitionElement contextDefEle) {
 		switch(contextDefEle.getType()) {
-		case HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT:
 		{
 			HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)contextDefEle;
 			return constantEle.getValue();
 		}
-		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 		{
 			HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
 			JSONObject out = new JSONObject();
@@ -99,7 +99,7 @@ public class HAPUtilityContextScript {
 			}
 			return out;
 		}
-		case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE:
 		{
 			HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)contextDefEle;
 			return new JSONObject();

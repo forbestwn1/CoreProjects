@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 
@@ -53,7 +53,7 @@ public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 		return true;
 	}
 	
-	private String getDefaultName() {  return HAPConstant.GLOBAL_VALUE_DEFAULT;   }
+	private String getDefaultName() {  return HAPConstantShared.GLOBAL_VALUE_DEFAULT;   }
 	
 	public HAPDefinitionGroupDataAssociation cloneGroupDataAssociation() {
 		HAPDefinitionGroupDataAssociation out = new HAPDefinitionGroupDataAssociation();

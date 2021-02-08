@@ -1,7 +1,7 @@
 package com.nosliw.data.core.imp.runtime.js;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPOperationId;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
@@ -32,11 +32,11 @@ public class HAPModuleRuntimeJS {
 
 		//register resource type
 		HAPResourceHelper resourceHelper = HAPResourceHelper.getInstance();
-		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, HAPResourceIdOperation.class, HAPOperationId.class);
-		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, HAPResourceIdConverter.class, HAPDataTypeConverter.class);
-		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, HAPResourceIdJSHelper.class, HAPJSHelperId.class);
-		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, HAPResourceIdJSLibrary.class, HAPJSLibraryId.class);
-		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_JSGATEWAY, HAPResourceIdJSGateway.class, HAPJSGatewayId.class);
+		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION, HAPResourceIdOperation.class, HAPOperationId.class);
+		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER, HAPResourceIdConverter.class, HAPDataTypeConverter.class);
+		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSHELPER, HAPResourceIdJSHelper.class, HAPJSHelperId.class);
+		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY, HAPResourceIdJSLibrary.class, HAPJSLibraryId.class);
+		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSGATEWAY, HAPResourceIdJSGateway.class, HAPJSGatewayId.class);
 		
 		//data access
 		this.m_runtimeJSDataAccess = new HAPDataAccessRuntimeJS(valueInfoManager, this.m_dataTypeModule.getDataAccess().getDBSource());

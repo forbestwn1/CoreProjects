@@ -2,13 +2,13 @@ package com.nosliw.data.core.script.context;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPContextDefinitionLeafValue extends HAPContextDefinitionLeafVariable{
 
 	@Override
-	public String getType() {	return HAPConstant.CONTEXT_ELEMENTTYPE_VALUE;	}
+	public String getType() {	return HAPConstantShared.CONTEXT_ELEMENTTYPE_VALUE;	}
 
 	@Override
 	public HAPContextDefinitionElement cloneContextDefinitionElement() {

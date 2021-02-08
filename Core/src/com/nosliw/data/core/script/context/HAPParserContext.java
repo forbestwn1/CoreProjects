@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 
 public class HAPParserContext {
@@ -17,16 +17,16 @@ public class HAPParserContext {
 		String type = jsonObj.optString(HAPContextStructure.TYPE);
 		if(HAPBasicUtility.isStringEmpty(type)) {
 			if(jsonObj.optJSONObject(HAPContextGroup.GROUP)!=null) {
-				type = HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT;
+				type = HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT;
 			}
 			else if(jsonObj.optJSONObject(HAPContext.ELEMENT)!=null) {
-				type = HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT;
+				type = HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT;
 			}
 		}
-		if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+		if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			out = parseContextGroup(jsonObj);
 		}
-		else if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+		else if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
 			out = parseContext(jsonObj);
 		}
 		return out;

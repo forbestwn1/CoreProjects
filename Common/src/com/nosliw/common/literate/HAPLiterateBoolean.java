@@ -4,12 +4,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPLiterateBoolean implements HAPLiterateDef{
 
 	@Override
-	public String getName() {	return HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN;	}
+	public String getName() {	return HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_BOOLEAN;	}
 
 	@Override
 	public Object stringToValue(String strValue, String subType) {  return Boolean.valueOf(strValue);  }

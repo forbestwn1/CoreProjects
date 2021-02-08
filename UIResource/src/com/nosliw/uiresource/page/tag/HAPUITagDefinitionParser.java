@@ -11,7 +11,7 @@ import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -34,15 +34,15 @@ public class HAPUITagDefinitionParser {
 
 			String type = (String)defObjJS.get(HAPUITagDefinition.TYPE);
 
-	    	if(HAPConstant.UITAG_TYPE_DATA.equals(type)) out = new HAPUITagDefinitionData();
-	    	else if(HAPConstant.UITAG_TYPE_CONTROL.equals(type)) out = new HAPUITagDefinitionControl();
+	    	if(HAPConstantShared.UITAG_TYPE_DATA.equals(type)) out = new HAPUITagDefinitionData();
+	    	else if(HAPConstantShared.UITAG_TYPE_CONTROL.equals(type)) out = new HAPUITagDefinitionControl();
 	    	else out = new HAPUITagDefinitionOther();
 
 	    	if(out!=null) {
 		    	parseUITagDefinition(out, defObjJS);
 	    	}
 	    	
-	    	if(HAPConstant.UITAG_TYPE_DATA.equals(type)) parseUITagDefinitionData((HAPUITagDefinitionData)out, defObjJS);
+	    	if(HAPConstantShared.UITAG_TYPE_DATA.equals(type)) parseUITagDefinitionData((HAPUITagDefinitionData)out, defObjJS);
 	    	
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,7 +55,7 @@ public class HAPUITagDefinitionParser {
 	}
 	
 	private static void parseUITagDefinitionData(HAPUITagDefinitionData definition, NativeObject defObjJS) {
-		HAPContextDefinitionLeafRelative eleDef = (HAPContextDefinitionLeafRelative)definition.getContext().getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE).getElement("internal_data").getDefinition();
+		HAPContextDefinitionLeafRelative eleDef = (HAPContextDefinitionLeafRelative)definition.getContext().getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE).getElement("internal_data").getDefinition();
 		definition.setDataTypeCriteria(((HAPContextDefinitionLeafData)eleDef.getDefinition()).getCriteria());
 	}
 	

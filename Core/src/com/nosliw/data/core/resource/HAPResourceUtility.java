@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
@@ -50,15 +50,15 @@ public class HAPResourceUtility {
 	//build literate for id part
 	public static String buildResourceCoreIdLiterate(HAPResourceId resourceId) {
 		StringBuffer out = new StringBuffer();
-		out.append(HAPConstant.SEPERATOR_RESOURCEID_START).append(resourceId.getStructure()).append(HAPConstant.SEPERATOR_RESOURCEID_STRUCTURE).append(resourceId.getIdLiterate());
+		out.append(HAPConstantShared.SEPERATOR_RESOURCEID_START).append(resourceId.getStructure()).append(HAPConstantShared.SEPERATOR_RESOURCEID_STRUCTURE).append(resourceId.getIdLiterate());
 		return out.toString();
 	}
 	
 	public static String[] parseResourceCoreIdLiterate(String coreIdLiterate) {
 		String[] out = new String[2];
-		if(coreIdLiterate.startsWith(HAPConstant.SEPERATOR_RESOURCEID_START)) {
-			int index = coreIdLiterate.indexOf(HAPConstant.SEPERATOR_RESOURCEID_STRUCTURE, HAPConstant.SEPERATOR_RESOURCEID_START.length());
-			out[0] = coreIdLiterate.substring(HAPConstant.SEPERATOR_RESOURCEID_START.length(), index);
+		if(coreIdLiterate.startsWith(HAPConstantShared.SEPERATOR_RESOURCEID_START)) {
+			int index = coreIdLiterate.indexOf(HAPConstantShared.SEPERATOR_RESOURCEID_STRUCTURE, HAPConstantShared.SEPERATOR_RESOURCEID_START.length());
+			out[0] = coreIdLiterate.substring(HAPConstantShared.SEPERATOR_RESOURCEID_START.length(), index);
 			out[1] = coreIdLiterate.substring(index+1);
 		}
 		else {
@@ -75,7 +75,7 @@ public class HAPResourceUtility {
 
 	public static Object getImpliedEntity(HAPResourceId resourceId, Object container, HAPManagerResourceDefinition resourceDefMan) {
 		Object out = null;
-		if(resourceId.getStructure().equals(HAPConstant.RESOURCEID_TYPE_SIMPLE) && isLocalReference(resourceId)) {
+		if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE) && isLocalReference(resourceId)) {
 			//for reference local, get it from container
 			String id = ((HAPResourceIdSimple)resourceId).getId();
 			if(container instanceof HAPResourceDefinitionContainer) {
@@ -96,7 +96,7 @@ public class HAPResourceUtility {
 
 	public static HAPResourceDefinition getImpliedResourceDefinition(HAPResourceId resourceId, HAPResourceDefinitionContainer container, HAPManagerResourceDefinition resourceDefMan) {
 		HAPResourceDefinition resourceDef = null;
-		if(resourceId.getStructure().equals(HAPConstant.RESOURCEID_TYPE_SIMPLE) && isLocalReference(resourceId)) {
+		if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE) && isLocalReference(resourceId)) {
 			//for reference local, get it from container
 			resourceDef = container.getElementResourceDefinition(((HAPResourceIdSimple)resourceId).getId());
 		}
@@ -118,7 +118,7 @@ public class HAPResourceUtility {
 		return out;
 	}
 	
-	public static String getDefaultResourceStructure() {    return HAPConstant.RESOURCEID_TYPE_SIMPLE;     }
+	public static String getDefaultResourceStructure() {    return HAPConstantShared.RESOURCEID_TYPE_SIMPLE;     }
 	
 	private static final String FILEBASERESOURCE_STARTER = "file_";
 	public static HAPResourceIdSimple createFileBaseResourceId(String resourceType, String fileName) {

@@ -3,7 +3,7 @@ package com.nosliw.data.core.process;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
@@ -17,7 +17,7 @@ public class HAPDefinitionProcessSuite extends HAPResourceDefinitionContainer<HA
 	}
 
 	@Override
-	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
+	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
 
 	@Override
 	public HAPResourceDefinition getElementResourceDefinition(String eleName) {	return new HAPDefinitionProcess(this, eleName);	}

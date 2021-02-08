@@ -5,7 +5,7 @@ import java.util.List;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataTypeVersion;
@@ -25,15 +25,15 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 
 	public void init(String Id, String name, String version, String description, String parent, String linked){
 		this.updateAtomicChildStrValue(NAME, Id);
-		this.updateAtomicChildStrValue(NAME, HAPDataTypeId.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeId.class.getName());
+		this.updateAtomicChildStrValue(NAME, HAPDataTypeId.buildStringValue(name, version), HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeId.class.getName());
 		this.updateAtomicChildStrValue(INFO, description);
-		this.updateAtomicChildStrValue(PARENTSINFO, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPDataTypeId.class.getName());
-		this.updateAtomicChildStrValue(LINKEDVERSION, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersion.class.getName());
+		this.updateAtomicChildStrValue(PARENTSINFO, parent, HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPDataTypeId.class.getName());
+		this.updateAtomicChildStrValue(LINKEDVERSION, parent, HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersion.class.getName());
 	}
 	
 	@Override
 	public HAPDataTypeId getName() {		return (HAPDataTypeId)this.getAtomicValueAncestorByPath(NAME);	}
-	public void setId(String id){		this.updateAtomicChildStrValue(NAME, id, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);	}
+	public void setId(String id){		this.updateAtomicChildStrValue(NAME, id, HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_STRING);	}
 
 	@Override
 	public boolean getIsComplex() { return this.getAtomicAncestorValueBoolean(ISCOMPLEX); }

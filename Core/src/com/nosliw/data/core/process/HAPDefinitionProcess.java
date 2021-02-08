@@ -1,6 +1,6 @@
 package com.nosliw.data.core.process;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
 
@@ -16,7 +16,7 @@ public class HAPDefinitionProcess extends HAPComponentContainerElement{
 	public HAPDefinitionProcessSuite getSuite() {   return (HAPDefinitionProcessSuite)this.getResourceContainer();  }
 
 	@Override
-	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS;  }
+	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS;  }
 
 	@Override
 	public HAPComponent cloneComponent() {

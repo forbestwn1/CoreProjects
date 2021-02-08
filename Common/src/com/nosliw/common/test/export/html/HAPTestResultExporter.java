@@ -12,7 +12,7 @@ import com.nosliw.common.test.HAPResultTestCase;
 import com.nosliw.common.test.HAPResultTestSuite;
 import com.nosliw.common.test.HAPTestDescription;
 import com.nosliw.common.test.HAPResultTestItem;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPTestResultExporter {
@@ -30,10 +30,10 @@ public class HAPTestResultExporter {
 	private static String export(HAPResult result){
 		String out = null;
 		switch(result.getType()){
-		case HAPConstant.TESTRESULT_TYPE_CASE:
+		case HAPConstantShared.TESTRESULT_TYPE_CASE:
 			out = exportTestCaseResult((HAPResultTestCase)result);
 			break;
-		case HAPConstant.TESTRESULT_TYPE_SUITE:
+		case HAPConstantShared.TESTRESULT_TYPE_SUITE:
 			out = exportTestSuiteResult((HAPResultTestSuite)result);
 			break;
 		}

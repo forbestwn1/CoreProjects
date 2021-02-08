@@ -1,6 +1,6 @@
 package com.nosliw.uiresource.resource;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -31,7 +31,7 @@ public class HAPResourceDefinitionPluginPage implements HAPPluginResourceDefinit
 	}
 
 	@Override
-	public String getResourceType() {		return HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE;	}
+	public String getResourceType() {		return HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE;	}
 
 	@Override
 	public HAPResourceDefinition parseResourceDefinition(Object content) {

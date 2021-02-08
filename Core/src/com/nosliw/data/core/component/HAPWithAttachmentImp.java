@@ -4,20 +4,20 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 
 public class HAPWithAttachmentImp extends HAPEntityInfoWritableImp implements HAPWithAttachment{
 	
-	private HAPAttachmentContainer m_attachmentContainer;
+	private HAPContainerAttachment m_attachmentContainer;
 
 	public HAPWithAttachmentImp() {
-		this.m_attachmentContainer = new HAPAttachmentContainer();
+		this.m_attachmentContainer = new HAPContainerAttachment();
 	}
 
 	@Override
-	public HAPAttachmentContainer getAttachmentContainer() {		return this.m_attachmentContainer;	}
+	public HAPContainerAttachment getAttachmentContainer() {		return this.m_attachmentContainer;	}
 	@Override
-	public void setAttachmentContainer(HAPAttachmentContainer attachmentContainer) {  this.m_attachmentContainer = attachmentContainer;}  
+	public void setAttachmentContainer(HAPContainerAttachment attachmentContainer) {  this.m_attachmentContainer = attachmentContainer;}  
 
 	@Override
 	public Map<String, HAPAttachment> getAttachmentsByType(String type) {	return this.m_attachmentContainer.getAttachmentByType(type);	}

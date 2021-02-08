@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.data.HAPOperationParm;
 import com.nosliw.data.core.resource.HAPResource;
@@ -33,7 +33,7 @@ public class HAPUtilityRuntimeJSScript {
 	public static List<HAPJSScriptInfo> buildScriptForResource(HAPResourceInfo resourceInfo, HAPResource resource){
 		List<HAPJSScriptInfo> out = new ArrayList<HAPJSScriptInfo>();
 		//build library script info first
-		if(resource.getId().getType().equals(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY)){
+		if(resource.getId().getType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY)){
 			out.addAll(buildScriptInfoForLibrary(resourceInfo, resource));
 		}
 		

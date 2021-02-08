@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUtilityEntityInfo {
 
@@ -42,12 +42,12 @@ public class HAPUtilityEntityInfo {
 	}
 	
 	public static boolean isEnabled(HAPEntityInfo entityInfo) {
-		return !HAPConstant.ENTITYINFO_STATUS_DISABLED.equals(entityInfo.getStatus());
+		return !HAPConstantShared.ENTITYINFO_STATUS_DISABLED.equals(entityInfo.getStatus());
 	}
 	
 	public static void processEntityId(HAPEntityInfo entityInfo) {
 		String id = entityInfo.getId();
-		if(HAPBasicUtility.isStringEmpty(id)) id = HAPConstant.NAME_DEFAULT;
+		if(HAPBasicUtility.isStringEmpty(id)) id = HAPConstantShared.NAME_DEFAULT;
 		entityInfo.setId(id);
 	}
 

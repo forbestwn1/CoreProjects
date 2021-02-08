@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -62,14 +62,14 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 	}
 	
 	@Override
-	public String getType() {		return HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE;	}
+	public String getType() {		return HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE;	}
 
 	@Override
 	public HAPContextDefinitionElement getSolidContextDefinitionElement() {	return this.m_definition;	}
 
 	public String getParent() {
 		if(HAPBasicUtility.isStringNotEmpty(this.m_parent))   return this.m_parent;
-		return HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
+		return HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
 	}
 	
 	public void setParent(String parent) {		this.m_parent = parent;	}

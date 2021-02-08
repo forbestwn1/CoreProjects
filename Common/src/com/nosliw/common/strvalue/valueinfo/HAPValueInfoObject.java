@@ -3,7 +3,7 @@ package com.nosliw.common.strvalue.valueinfo;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueObject;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPValueInfoObject extends HAPValueInfo{
 
@@ -18,7 +18,7 @@ public class HAPValueInfoObject extends HAPValueInfo{
 	@Override
 	public void init(){
 		super.init();
-		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_OBJECT);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstantShared.STRINGALBE_VALUEINFO_OBJECT);
 	}
 	
 	@Override

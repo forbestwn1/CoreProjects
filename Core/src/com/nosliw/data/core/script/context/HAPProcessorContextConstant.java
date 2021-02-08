@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
@@ -49,7 +50,7 @@ public class HAPProcessorContextConstant {
 			HAPContextGroup parentContextGroup,
 			String inheritMode){
 		HAPContextGroup out = contextGroup.cloneContextGroup();
-		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(inheritMode)) {
+		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			if(parentContextGroup!=null) {
 				//merge constants with parent
 				for(String contextCategary : HAPContextGroup.getInheritableContextTypes()) {
@@ -61,7 +62,7 @@ public class HAPProcessorContextConstant {
 						}
 					}
 				}
-			}
+			} 
 		}
 		return out;
 	}
@@ -73,7 +74,7 @@ public class HAPProcessorContextConstant {
 			for(String eleName : context.getElementNames()) {
 				HAPContextDefinitionRoot contextRoot = context.getElement(eleName);
 				HAPContextDefinitionElement ele = contextRoot.getDefinition();
-				if (HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(ele.getType())) {
+				if (HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(ele.getType())) {
 					Object value = discoverConstantValue(ele);
 					if(value!=null) {
 						HAPContextDefinitionLeafConstant constantEle = new HAPContextDefinitionLeafConstant();
@@ -88,11 +89,11 @@ public class HAPProcessorContextConstant {
 	
 	static private Object discoverConstantValue(HAPContextDefinitionElement contextDefEle) {
 		String type = contextDefEle.getType();
-		if(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(type)) {
+		if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(type)) {
 			HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)contextDefEle;
 			return constantEle.getValue();
 		}
-		else if (HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(type)) {
+		else if (HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(type)) {
 			HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
 			JSONObject out = new JSONObject();
 			for(String nodeName : nodeEle.getChildren().keySet()) {
@@ -121,7 +122,7 @@ public class HAPProcessorContextConstant {
 				HAPUtilityContext.processContextDefElement(contextDefRoot.getDefinition(), new HAPContextDefEleProcessor() {
 					@Override
 					public boolean process(HAPContextDefinitionElement ele, Object value) {
-						if(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType())) {
+						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType())) {
 							solidateConstantDefEle((HAPContextDefinitionLeafConstant)ele, contextGroup, runtimeEnv);
 						}
 						return true;
@@ -222,7 +223,7 @@ public class HAPProcessorContextConstant {
 		
 		String scriptType = scriptExe.getScriptType();
 		//if pure data
-		if(HAPConstant.SCRIPT_TYPE_TEXT.equals(scriptType))  return leafData;
+		if(HAPConstantShared.SCRIPT_TYPE_TEXT.equals(scriptType))  return leafData;
 		
 		///if contain script
 		//discover all constant
@@ -331,7 +332,7 @@ public class HAPProcessorContextConstant {
 		if(nodeId.getCategary()!=null)   return nodeId;
 		for(String categary : HAPContextGroup.getVisibleContextTypes()) {
 			HAPContextDefinitionElement refContextEle = HAPUtilityContext.getDescendant(candidateGroup, categary, nodeId.getName());
-			if(refContextEle!=null && HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(refContextEle.getType())) {
+			if(refContextEle!=null && HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(refContextEle.getType())) {
 				return new HAPContextDefinitionRootId(categary, nodeId.getName());
 			}
 		}

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
@@ -33,17 +33,17 @@ public class HAPManagerExpression {
 	
 	public HAPParserExpression getExpressionParser() {   return this.m_expressionParser;    }
 	
-	public HAPResourceDefinitionExpressionSuite getExpressionSuiteDefinition(HAPResourceId suiteId, HAPAttachmentContainer parentAttachment) {
+	public HAPResourceDefinitionExpressionSuite getExpressionSuiteDefinition(HAPResourceId suiteId, HAPContainerAttachment parentAttachment) {
 		HAPResourceDefinitionExpressionSuite suiteDef = (HAPResourceDefinitionExpressionSuite)getResourceDefinitionManager().getAdjustedComplextResourceDefinition(suiteId, parentAttachment);
 		return suiteDef;
 	}
 
-	public HAPResourceDefinitionExpressionGroup getExpressionDefinition(HAPResourceId expressionId, HAPAttachmentContainer parentAttachment) {
+	public HAPResourceDefinitionExpressionGroup getExpressionDefinition(HAPResourceId expressionId, HAPContainerAttachment parentAttachment) {
 		HAPResourceDefinitionExpressionGroup expressionDef = (HAPResourceDefinitionExpressionGroup)getResourceDefinitionManager().getAdjustedComplextResourceDefinition(expressionId, parentAttachment);
 		return expressionDef;
 	}
 	
-	public HAPEntityWithResourceContext getExpressionDefinitionWithContext(HAPResourceId processId, HAPAttachmentContainer parentAttachment) {
+	public HAPEntityWithResourceContext getExpressionDefinitionWithContext(HAPResourceId processId, HAPContainerAttachment parentAttachment) {
 		HAPResourceDefinitionExpressionGroup expressionDef = this.getExpressionDefinition(processId, parentAttachment);
 		HAPEntityWithResourceContext out = new HAPEntityWithResourceContext(expressionDef, HAPContextResourceExpressionGroup.createContext(expressionDef.getSuite(), this.getResourceDefinitionManager()));
 		return out;

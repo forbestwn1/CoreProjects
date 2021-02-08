@@ -3,7 +3,7 @@ package com.nosliw.data.core.script.context.dataassociation;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
@@ -51,7 +51,7 @@ public class HAPProcessorDataAssociation {
 			HAPParentContext inContext = taskExe.getOutResultContext().get(resultName);
 			out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(inContext, resultOutputMapping.get(resultName), outputContext, configure, runtimeEnv));
 		}
-		String defaultResultName = HAPConstant.NAME_DEFAULT;
+		String defaultResultName = HAPConstantShared.NAME_DEFAULT;
 		if(out.getOutputMapping(defaultResultName)==null) {
 			//if no default output mapping defined, then create default output with mirror data association
 			HAPParentContext inContext = taskExe.getOutResultContext().get(defaultResultName);
@@ -89,13 +89,13 @@ public class HAPProcessorDataAssociation {
 		String type = dataAssociation.getType();
 		
 		switch(type) {
-		case HAPConstant.DATAASSOCIATION_TYPE_MAPPING:
+		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
 			return HAPProcessorDataAssociationMapping.processDataAssociation(input, (HAPDefinitionDataAssociationMapping)dataAssociation, output, configure, runtimeEnv);
 		
-		case HAPConstant.DATAASSOCIATION_TYPE_MIRROR:
+		case HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR:
 			return HAPProcessorDataAssociationMirror.processDataAssociation(input, (HAPDefinitionDataAssociationMirror)dataAssociation, output, configure, runtimeEnv);
 
-		case HAPConstant.DATAASSOCIATION_TYPE_NONE:
+		case HAPConstantShared.DATAASSOCIATION_TYPE_NONE:
 			return HAPProcessorDataAssociationNone.processDataAssociation(input, (HAPDefinitionDataAssociationNone)dataAssociation, output, configure, runtimeEnv);
 		}
 		

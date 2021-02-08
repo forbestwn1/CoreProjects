@@ -2,14 +2,14 @@ package com.nosliw.data.core.process.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdProcess  extends HAPResourceIdSimple{
 
 	private HAPProcessId m_processId; 
 	
-	public HAPResourceIdProcess(){    super(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS);     }
+	public HAPResourceIdProcess(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS);     }
 
 	public HAPResourceIdProcess(HAPResourceIdSimple resourceId){
 		this();

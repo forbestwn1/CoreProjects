@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPScript extends HAPSerializableImp{
 
@@ -21,8 +21,8 @@ public class HAPScript extends HAPSerializableImp{
 	
 	private String m_script;
 
-	public static HAPScript newScriptExpression(String script) {	return new HAPScript(script, HAPConstant.SCRIPT_TYPE_EXPRESSION);	}
-	public static HAPScript newScriptLiterate(String script) {	return new HAPScript(script, HAPConstant.SCRIPT_TYPE_LITERATE);	}
+	public static HAPScript newScriptExpression(String script) {	return new HAPScript(script, HAPConstantShared.SCRIPT_TYPE_EXPRESSION);	}
+	public static HAPScript newScriptLiterate(String script) {	return new HAPScript(script, HAPConstantShared.SCRIPT_TYPE_LITERATE);	}
 	public static HAPScript newScript(String script, String type) {    return new HAPScript(script, type);     }
 	public static HAPScript newScript(JSONObject jsonObject) {
 		HAPScript out = new HAPScript();

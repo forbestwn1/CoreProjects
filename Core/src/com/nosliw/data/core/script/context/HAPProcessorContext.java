@@ -3,7 +3,7 @@ package com.nosliw.data.core.script.context;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorContext {
@@ -12,10 +12,10 @@ public class HAPProcessorContext {
 		HAPContextStructure out = null;
 		if(context!=null) {
 			String type = context.getType();
-			if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+			if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
 				out = process((HAPContext)context, parent, new HashSet<String>(), configure, runtimeEnv);
 			}
-			else if(type.equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+			else if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 				out = process((HAPContextGroup)context, parent, new HashSet<String>(), configure, runtimeEnv);
 			}
 		}
@@ -29,9 +29,9 @@ public class HAPProcessorContext {
 	public static HAPContext process(HAPContext context, HAPParentContext parent, Set<String>  dependency, HAPConfigureContextProcessor configure, HAPRuntimeEnvironment runtimeEnv) {
 		if(configure==null)  configure = new HAPConfigureContextProcessor();
 		HAPContextGroup contextGroup = new HAPContextGroup();
-		contextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, context);
+		contextGroup.setContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, context);
 		HAPContextGroup processed = process(contextGroup, parent, dependency, configure, runtimeEnv);
-		return processed.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+		return processed.getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 	}
 	
 	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPParentContext parent, Set<String>  dependency, HAPConfigureContextProcessor configure, HAPRuntimeEnvironment runtimeEnv) {

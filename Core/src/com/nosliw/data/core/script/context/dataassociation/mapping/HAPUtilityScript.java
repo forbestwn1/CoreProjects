@@ -10,12 +10,12 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPUtilityContextScript;
@@ -40,8 +40,8 @@ public class HAPUtilityScript {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("isFlatOutput", association.isFlatOutput()+"");
 		templateParms.put("isFlatInput", association.isFlatInput()+"");
-		templateParms.put("rootIdSeperator", HAPConstant.SEPERATOR_CONTEXT_CATEGARY_NAME);
-		templateParms.put("isInherit", (!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(HAPUtilityDataAssociation.getContextProcessConfigurationForProcess().inheritMode))+"");
+		templateParms.put("rootIdSeperator", HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);
+		templateParms.put("isInherit", (!HAPConstant.INHERITMODE_NONE.equals(HAPUtilityDataAssociation.getContextProcessConfigurationForProcess().inheritMode))+"");
 		
 		//build init output object for mapped root
 		HAPContext context = new HAPContext();
@@ -66,7 +66,7 @@ public class HAPUtilityScript {
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
 		return new HAPJsonTypeScript(script);
 	}
-
+ 
 	private static String buildJSArrayFromContextPath(String path) {
 		List<String> pathSegs = new ArrayList<String>();
 		HAPContextPath contextPath = new HAPContextPath(path);

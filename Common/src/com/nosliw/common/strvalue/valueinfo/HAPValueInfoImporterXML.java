@@ -14,7 +14,7 @@ import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.common.strvalue.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPXMLUtility;
@@ -52,7 +52,7 @@ public class HAPValueInfoImporterXML {
 	private static HAPValueInfo readRootValueInfoFromElement(Element valueInfoEle){
 		//by default, root value info type is entity
 		String valueInfoType = HAPXMLUtility.getAttributeValue(valueInfoEle, HAPValueInfo.TYPE);
-		if(valueInfoType==null)      valueInfoType = HAPConstant.STRINGALBE_VALUEINFO_ENTITY;
+		if(valueInfoType==null)      valueInfoType = HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY;
 
 		HAPValueInfo out = readValueInfoFromElement(valueInfoEle, valueInfoType);
 		String name = out.getName();
@@ -72,7 +72,7 @@ public class HAPValueInfoImporterXML {
 			valueInfo = HAPValueInfoReference.build(); 
 			HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 			//read override properties
-			HAPStringableValueList overrideList = (HAPStringableValueList)valueInfo.updateComplexChild(HAPValueInfoReference.OVERRIDE, HAPConstant.STRINGABLE_VALUESTRUCTURE_LIST);
+			HAPStringableValueList overrideList = (HAPStringableValueList)valueInfo.updateComplexChild(HAPValueInfoReference.OVERRIDE, HAPConstantShared.STRINGABLE_VALUESTRUCTURE_LIST);
 			Element[] overrideEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfoEntity.OVERRIDE);
 			for(Element overrideEle : overrideEles){
 				overrideList.addChild(readAttributeValues(overrideEle));
@@ -82,48 +82,48 @@ public class HAPValueInfoImporterXML {
 			String valueInfoType = valueInfoType1;
 			if(valueInfoType==null)  valueInfoType = HAPXMLUtility.getAttributeValue(valueInfoEle, HAPValueInfo.TYPE);
 			
-			if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(valueInfoType)){
+			if(HAPConstantShared.STRINGALBE_VALUEINFO_LIST.equals(valueInfoType)){
 				valueInfo = HAPValueInfoList.build(); 
 				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 				readContainerChildValueInfo(valueInfoEle, valueInfo);
 			}
-			else if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(valueInfoType)){
+			else if(HAPConstantShared.STRINGALBE_VALUEINFO_MAP.equals(valueInfoType)){
 				valueInfo = HAPValueInfoMap.build();
 				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 				readContainerChildValueInfo(valueInfoEle, valueInfo);
 			}
-			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(valueInfoType)){
+			else if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY.equals(valueInfoType)){
 				valueInfo = readEntityValueInfo(valueInfoEle);
 			}
-			else if(HAPConstant.STRINGALBE_VALUEINFO_OBJECT.equals(valueInfoType)){
+			else if(HAPConstantShared.STRINGALBE_VALUEINFO_OBJECT.equals(valueInfoType)){
 				valueInfo = HAPValueInfoObject.build();
 				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 			}
-			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(valueInfoType)){
+			else if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(valueInfoType)){
 				valueInfo = HAPValueInfoEntityOptions.build();
 				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
-				HAPStringableValueMap optionsInfoMap = (HAPStringableValueMap)valueInfo.updateComplexChild(HAPValueInfoEntityOptions.OPTIONS, HAPConstant.STRINGABLE_VALUESTRUCTURE_MAP);
+				HAPStringableValueMap optionsInfoMap = (HAPStringableValueMap)valueInfo.updateComplexChild(HAPValueInfoEntityOptions.OPTIONS, HAPConstantShared.STRINGABLE_VALUESTRUCTURE_MAP);
 				Element[] optionEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfoEntityOptions.OPTIONS);
 				for(Element optionEle : optionEles){
 					HAPValueInfo optionPropertyInfo = readValueInfoFromElement(optionEle, null);
 					optionsInfoMap.updateChild(optionPropertyInfo.getAtomicAncestorValueString(HAPValueInfoEntityOptions.VALUE), optionPropertyInfo);
 				}
 			}
-			else if(HAPConstant.STRINGALBE_VALUEINFO_MODE.equals(valueInfoType)){
+			else if(HAPConstantShared.STRINGALBE_VALUEINFO_MODE.equals(valueInfoType)){
 				valueInfo = HAPValueInfoMode.build();
 				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
-				HAPStringableValueEntity elesAttrs = (HAPStringableValueEntity)valueInfo.updateComplexChild(HAPValueInfoEntity.PROPERTIES, HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY);
+				HAPStringableValueEntity elesAttrs = (HAPStringableValueEntity)valueInfo.updateComplexChild(HAPValueInfoEntity.PROPERTIES, HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ENTITY);
 				String[] eleTypes = {
-									HAPConstant.STRINGALBE_VALUEINFO_ATOMIC, 
-									HAPConstant.STRINGALBE_VALUEINFO_ENTITY, 
-									HAPConstant.STRINGALBE_VALUEINFO_MAP,
-									HAPConstant.STRINGALBE_VALUEINFO_LIST,
-									HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS,
+									HAPConstantShared.STRINGALBE_VALUEINFO_ATOMIC, 
+									HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY, 
+									HAPConstantShared.STRINGALBE_VALUEINFO_MAP,
+									HAPConstantShared.STRINGALBE_VALUEINFO_LIST,
+									HAPConstantShared.STRINGALBE_VALUEINFO_ENTITYOPTIONS,
 				}; 
 				for(String eleType : eleTypes){
 					Element dataTypeEle = HAPXMLUtility.getFirstChildElementByName(valueInfoEle, eleType);
 					if(dataTypeEle!=null){
-						HAPValueInfoEntity eleValueInfoEntity = (HAPValueInfoEntity)readValueInfoFromElement(dataTypeEle, HAPConstant.STRINGALBE_VALUEINFO_ENTITY);
+						HAPValueInfoEntity eleValueInfoEntity = (HAPValueInfoEntity)readValueInfoFromElement(dataTypeEle, HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY);
 						elesAttrs.updateChild(eleType, eleValueInfoEntity);
 					}
 				}
@@ -158,7 +158,7 @@ public class HAPValueInfoImporterXML {
 	private static HAPValueInfoEntity readEntityValueInfo(Element entityEle){
 		HAPValueInfoEntity valueInfo = HAPValueInfoEntity.build();
 		HAPStringableValueUtility.updateBasicProperty(entityEle, valueInfo);
-		HAPStringableValueEntity propertyInfoEntity = (HAPStringableValueEntity)valueInfo.updateComplexChild(HAPValueInfoEntity.PROPERTIES, HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY);
+		HAPStringableValueEntity propertyInfoEntity = (HAPStringableValueEntity)valueInfo.updateComplexChild(HAPValueInfoEntity.PROPERTIES, HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ENTITY);
 		Element[] childPropertyEles = HAPXMLUtility.getMultiChildElementByName(entityEle, HAPValueInfoEntity.PROPERTIES);
 		for(Element childPropertyEle : childPropertyEles){
 			HAPValueInfo childPropertyInfo = readValueInfoFromElement(childPropertyEle, null);
@@ -166,7 +166,7 @@ public class HAPValueInfoImporterXML {
 		}
 		
 		//read override properties
-		HAPStringableValueList overrideList = (HAPStringableValueList)valueInfo.updateComplexChild(HAPValueInfoEntity.OVERRIDE, HAPConstant.STRINGABLE_VALUESTRUCTURE_LIST);
+		HAPStringableValueList overrideList = (HAPStringableValueList)valueInfo.updateComplexChild(HAPValueInfoEntity.OVERRIDE, HAPConstantShared.STRINGABLE_VALUESTRUCTURE_LIST);
 		Element[] overrideEles = HAPXMLUtility.getMultiChildElementByName(entityEle, HAPValueInfoEntity.OVERRIDE);
 		for(Element overrideEle : overrideEles){
 			overrideList.addChild(readAttributeValues(overrideEle));

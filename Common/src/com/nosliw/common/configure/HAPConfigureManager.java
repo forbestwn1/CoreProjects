@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPConfigureManager {
 
@@ -43,7 +43,7 @@ public class HAPConfigureManager {
 	}
 
 	private HAPConfigureImp getDefaultBaseConfigure(){
-		return this.getBaseConfigure(HAPConstant.CONFIGURATION_DEFAULTBASE);
+		return this.getBaseConfigure(HAPConstantShared.CONFIGURATION_DEFAULTBASE);
 	}
 	
 	private HAPConfigureImp getBaseConfigure(String name){
@@ -56,17 +56,17 @@ public class HAPConfigureManager {
 		HAPConfigureUtility.importFromProperty(baseConfigure, "global.properties", this.getClass());
 		
 		//import from constant
-		Field[] declaredFields = HAPConstant.class.getDeclaredFields();
+		Field[] declaredFields = HAPConstantShared.class.getDeclaredFields();
 		for (Field field : declaredFields) {
 		    if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
 		    	try {
-		    		baseConfigure.addVariableValue(field.getName(), field.get(HAPConstant.class).toString());
+		    		baseConfigure.addVariableValue(field.getName(), field.get(HAPConstantShared.class).toString());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 		    }
 		}
 
-		this.registerConfigureBase(HAPConstant.CONFIGURATION_DEFAULTBASE, baseConfigure);
+		this.registerConfigureBase(HAPConstantShared.CONFIGURATION_DEFAULTBASE, baseConfigure);
 	}
 }

@@ -161,7 +161,7 @@
 
 	<constants filepath="{{projectsPath}}/Common/src/com/nosliw/common/utils" 
 				packagename="com.nosliw.common.utils" 
-				classname="HAPConstant" >
+				classname="HAPConstantShared" >
 		<definitions>
 			<definition name="SERVICECODE_SUCCESS" value="200" type="int"/>
 			<definition name="SERVICECODE_ERROR" value="400" type="int"/>
@@ -561,6 +561,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESSSUITE" value="processSuite"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICE" value="service"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE" value="serviceInterface"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATA" value="data"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TESTDATA" value="testData"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_STORY" value="story"/>
@@ -674,7 +675,8 @@
 			<definition name="NAME_DEFAULT" value="default"/>
 
 			<definition type="space"/>
-			<definition name="ATTACHMENT_TYPE_REFERENCE" value="reference"/>
+			<definition name="ATTACHMENT_TYPE_REFERENCEEXTERNAL" value="referenceExternal"/>
+			<definition name="ATTACHMENT_TYPE_REFERENCELOCAL" value="referenceLocal"/>
 			<definition name="ATTACHMENT_TYPE_ENTITY" value="entity"/>
 			<definition name="ATTACHMENT_TYPE_PLACEHOLDER" value="placeHolder"/>
 
@@ -798,6 +800,12 @@
 			<definition name="HANDLERSTEP_TYPE_DATAASSOCIATION" value="dataAssociation"/>
 			<definition name="HANDLERSTEP_TYPE_PROCESS" value="process"/>
 			<definition name="HANDLERSTEP_TYPE_ACTIVITY" value="activity"/>
+			
+			<definition type="space"/>
+			<definition name="INHERITMODE_PARENT" value="parent" description="when child define the same context node name as parent inheritable, but parent override child for same name"/>
+			<definition name="INHERITMODE_CHILD" value="child" description="inheritable, but child unaffected for same name"/>
+			<definition name="INHERITMODE_NONE" value="none" description="UNheritable"/>
+			
 		</definitions>
 	</constants>
 </root>

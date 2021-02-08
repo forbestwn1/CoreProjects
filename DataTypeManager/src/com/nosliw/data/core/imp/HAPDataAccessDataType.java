@@ -10,7 +10,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPDBUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.HAPRelationship;
@@ -37,7 +37,7 @@ public class HAPDataAccessDataType extends HAPDataAccess{
 		List<HAPOperationParmInfo> parms = operation.getParmsInfo();
 		for(HAPOperationParmInfo p : parms){
 			HAPOperationVarInfoImp parm = (HAPOperationVarInfoImp)p;
-			parm.setType(HAPConstant.DATAOPERATION_VAR_TYPE_IN);
+			parm.setType(HAPConstantShared.DATAOPERATION_VAR_TYPE_IN);
 			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.OPERATIONID, operation.getId());
 			parm.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getName());
 			this.saveEntity(parm, this.getConnection());
@@ -45,7 +45,7 @@ public class HAPDataAccessDataType extends HAPDataAccess{
 		
 		HAPOperationVarInfoImp output = (HAPOperationVarInfoImp)operation.getOutputInfo();
 		if(output!=null){
-			output.setType(HAPConstant.DATAOPERATION_VAR_TYPE_OUT);
+			output.setType(HAPConstantShared.DATAOPERATION_VAR_TYPE_OUT);
 			output.updateAtomicChildStrValue(HAPOperationVarInfoImp.OPERATIONID, operation.getId());
 			output.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getName());
 			this.saveEntity(output, this.getConnection());
@@ -70,10 +70,10 @@ public class HAPDataAccessDataType extends HAPDataAccess{
 		if(out!=null) {
 			List<HAPOperationVarInfoImp> parms = (List<HAPOperationVarInfoImp>)this.queryEntitysFromDB(HAPOperationVarInfoImp._VALUEINFO_NAME, "operationId=?", new Object[]{out.getOperationId()}, this.getConnection());
 			for(HAPOperationVarInfoImp parm : parms){
-				if(HAPConstant.DATAOPERATION_VAR_TYPE_IN.equals(parm.getType())){
+				if(HAPConstantShared.DATAOPERATION_VAR_TYPE_IN.equals(parm.getType())){
 					out.addParmsInfo(parm);
 				}
-				else if(HAPConstant.DATAOPERATION_VAR_TYPE_OUT.equals(parm.getType())){
+				else if(HAPConstantShared.DATAOPERATION_VAR_TYPE_OUT.equals(parm.getType())){
 					out.setOutputInfo(parm);
 				}
 			}
@@ -90,7 +90,7 @@ public class HAPDataAccessDataType extends HAPDataAccess{
 	}
 	
 	public List<HAPDataTypeOperationImp> getNormalDataTypeOperations(HAPDataTypeId dataTypeId){
-		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "type='"+HAPConstant.DATAOPERATION_TYPE_NORMAL+"' AND source=?", new Object[]{dataTypeId.getName()}, this.getConnection());
+		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "type='"+HAPConstantShared.DATAOPERATION_TYPE_NORMAL+"' AND source=?", new Object[]{dataTypeId.getName()}, this.getConnection());
 	}
 	
 	public HAPDataTypeFamilyImp getDataTypeFamily(HAPDataTypeId dataTypeId){
@@ -153,10 +153,10 @@ public class HAPDataAccessDataType extends HAPDataAccess{
 
 		List<HAPOperationVarInfoImp> parms = (List<HAPOperationVarInfoImp>)this.queryEntitysFromDB(HAPOperationVarInfoImp._VALUEINFO_NAME, "operationId=?", new Object[]{operationInfo.getId()}, this.getConnection());
 		for(HAPOperationVarInfoImp parm : parms){
-			if(HAPConstant.DATAOPERATION_VAR_TYPE_IN.equals(parm.getType())){
+			if(HAPConstantShared.DATAOPERATION_VAR_TYPE_IN.equals(parm.getType())){
 				operationInfo.addParmsInfo(parm);
 			}
-			else if(HAPConstant.DATAOPERATION_VAR_TYPE_OUT.equals(parm.getType())){
+			else if(HAPConstantShared.DATAOPERATION_VAR_TYPE_OUT.equals(parm.getType())){
 				operationInfo.setOutputInfo(parm);
 			}
 		}

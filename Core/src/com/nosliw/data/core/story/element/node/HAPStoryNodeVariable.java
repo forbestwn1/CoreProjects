@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
@@ -20,7 +20,7 @@ import com.nosliw.data.core.story.change.HAPUtilityChange;
 @HAPEntityWithAttribute
 public class HAPStoryNodeVariable extends HAPStoryNodeImp{
 	
-	public final static String STORYNODE_TYPE = HAPConstant.STORYNODE_TYPE_VARIABLE; 
+	public final static String STORYNODE_TYPE = HAPConstantShared.STORYNODE_TYPE_VARIABLE; 
 	
 	@HAPAttribute
 	public static final String VARAIBLEINFO = "variableInfo";

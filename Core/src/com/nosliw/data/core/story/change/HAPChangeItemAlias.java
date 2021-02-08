@@ -7,13 +7,13 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
 
 public class HAPChangeItemAlias extends HAPChangeItem{
 
-	public static final String MYCHANGETYPE = HAPConstant.STORYDESIGN_CHANGETYPE_ALIAS;
+	public static final String MYCHANGETYPE = HAPConstantShared.STORYDESIGN_CHANGETYPE_ALIAS;
 
 	@HAPAttribute
 	public static final String ALIAS = "alias";

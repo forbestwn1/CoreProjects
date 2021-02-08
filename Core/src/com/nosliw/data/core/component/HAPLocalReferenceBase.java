@@ -2,6 +2,7 @@ package com.nosliw.data.core.component;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 
+//this object store information for path base for local resource id reference defined in component
 public class HAPLocalReferenceBase extends HAPSerializableImp{
 
 	private String m_path;

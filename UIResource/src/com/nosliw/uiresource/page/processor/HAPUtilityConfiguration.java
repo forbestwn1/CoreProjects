@@ -1,6 +1,7 @@
 package com.nosliw.uiresource.page.processor;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
@@ -12,8 +13,8 @@ public class HAPUtilityConfiguration {
 	public static HAPConfigureContextProcessor getContextProcessConfigurationForUIUit(String type) {
 		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
 		populateCommonConfigure(out);
-		if(type.equals(HAPConstant.UIRESOURCE_TYPE_TAG)) 	out.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;  //for tag, child keeps same
-		else out.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT;   //for resource, parent overwrite child
+		if(type.equals(HAPConstantShared.UIRESOURCE_TYPE_TAG)) 	out.inheritMode = HAPConstant.INHERITMODE_CHILD;  //for tag, child keeps same
+		else out.inheritMode = HAPConstant.INHERITMODE_PARENT;   //for resource, parent overwrite child
 		out.inheritanceExcludedInfo = HAPUtilityCommon.getDefaultInheritanceExcludedInfo();
 		return out;
 	}
@@ -25,7 +26,7 @@ public class HAPUtilityConfiguration {
 		out.inheritanceExcludedInfo = HAPUtilityCommon.getDefaultInheritanceExcludedInfo();
 		return out;
 	}
-
+ 
 	public static HAPConfigureContextProcessor getContextProcessConfigurationForInternal(HAPConfigureContextProcessor parentConfigure) {
 		HAPConfigureContextProcessor out = parentConfigure.cloneConfigure();
 		populateCommonConfigure(out);

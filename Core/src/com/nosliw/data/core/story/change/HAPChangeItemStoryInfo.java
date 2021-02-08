@@ -5,11 +5,11 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPChangeItemStoryInfo extends HAPChangeItem{
 
-	public static final String MYCHANGETYPE = HAPConstant.STORYDESIGN_CHANGETYPE_STORYINFO;
+	public static final String MYCHANGETYPE = HAPConstantShared.STORYDESIGN_CHANGETYPE_STORYINFO;
 
 	@HAPAttribute
 	public static final String INFONAME = "infoName";
@@ -22,7 +22,7 @@ public class HAPChangeItemStoryInfo extends HAPChangeItem{
 	private Object m_infoValue;
 	
 	public HAPChangeItemStoryInfo() {
-		super(HAPConstant.STORYDESIGN_CHANGETYPE_STORYINFO);
+		super(HAPConstantShared.STORYDESIGN_CHANGETYPE_STORYINFO);
 	}
 	
 	public HAPChangeItemStoryInfo(String infoName, Object infoValue) {

@@ -9,7 +9,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPValueInfoReference extends HAPValueInfo{
@@ -35,7 +35,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	public void init(){
 		super.init();
 		this.m_defaultValues = new LinkedHashMap<String, Object>();
-		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_REFERENCE);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstantShared.STRINGALBE_VALUEINFO_REFERENCE);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	@Override
 	public String getValueInfoType(){	
 		String out = super.getValueInfoType();
-		if(out==null)  out = HAPConstant.STRINGALBE_VALUEINFO_REFERENCE;
+		if(out==null)  out = HAPConstantShared.STRINGALBE_VALUEINFO_REFERENCE;
 		return out;
 	}
 	
@@ -62,7 +62,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 			this.m_solidValueInfo = this.getValueInfoManager().getValueInfo(this.getReferencedName()).getSolidValueInfo().clone();
 
 			//columns
-			if(this.m_solidValueInfo.getValueInfoType().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY)){
+			if(this.m_solidValueInfo.getValueInfoType().equals(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ENTITY)){
 				HAPValueInfoEntity solidValueInfoEntity = (HAPValueInfoEntity)m_solidValueInfo;
 				if(this.getDBColumnsInfo()!=null){
 					solidValueInfoEntity.setDBColumnsInfo(this.getDBColumnsInfo().clone(HAPDBColumnsInfo.class));
@@ -106,12 +106,12 @@ public class HAPValueInfoReference extends HAPValueInfo{
 					HAPDBColumnInfo column = columns.getValue(i);
 					
 					switch(columnsInfo.getPathType()){
-					case HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE:
-						columnsInfo.setPathType(HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY);
+					case HAPConstantShared.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE:
+						columnsInfo.setPathType(HAPConstantShared.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY);
 						break;
-					case HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY:
+					case HAPConstantShared.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY:
 						break;
-					case HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTYASPATH:
+					case HAPConstantShared.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTYASPATH:
 						break;
 					}
 					
@@ -122,7 +122,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 				}
 				
 				String propertyValueInfoType = propertyValueInfo.getValueInfoType();
-				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
+				if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
 					processSolidEntityValueInfo((HAPValueInfoEntity)propertyValueInfo);
 				}
 			}
@@ -139,7 +139,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 			}
 
 			String propertyValueInfoType = propertyValueInfo.getValueInfoType();
-			if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
+			if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
 				removeColumnInfo((HAPValueInfoEntity)propertyValueInfo);
 			}
 		}
@@ -150,10 +150,10 @@ public class HAPValueInfoReference extends HAPValueInfo{
 		if(defaultValue==null)  return;
 		
 		String categary = valueInfo.getValueInfoType();
-		if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(categary)){
+		if(HAPConstantShared.STRINGALBE_VALUEINFO_ATOMIC.equals(categary)){
 			valueInfo.updateAtomicChildStrValue(HAPValueInfoAtomic.DEFAULTVALUE, (String)defaultValue);
 		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(categary)){
+		else if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY.equals(categary)){
 			HAPValueInfoEntity valueInfoEntity = (HAPValueInfoEntity)valueInfo;
 			for(String property : valueInfoEntity.getProperties()){
 				Object propDefaultValue = ((Map<String, Object>)defaultValue).get(property);
@@ -162,15 +162,15 @@ public class HAPValueInfoReference extends HAPValueInfo{
 				}
 			}
 		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(categary)){
+		else if(HAPConstantShared.STRINGALBE_VALUEINFO_LIST.equals(categary)){
 			HAPValueInfoList valueInfoList = (HAPValueInfoList)valueInfo;
 			this.buildDefaultValue(valueInfoList.getChildValueInfo(), defaultValue);
 		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(categary)){
+		else if(HAPConstantShared.STRINGALBE_VALUEINFO_MAP.equals(categary)){
 			HAPValueInfoMap valueInfoMap = (HAPValueInfoMap)valueInfo;
 			this.buildDefaultValue(valueInfoMap.getChildValueInfo(), defaultValue);
 		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(categary)){
+		else if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(categary)){
 			HAPValueInfoEntityOptions valueInfoEntityOptions = (HAPValueInfoEntityOptions)valueInfo;
 			for(String key : valueInfoEntityOptions.getOptionsKey()){
 				Object keyDefaultValue = ((Map<String, Object>)defaultValue).get(key);

@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -47,7 +47,7 @@ public class HAPExecutableGroupDataAssociation extends HAPSerializableImp implem
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildMapJson(jsonEleMap)); 
 	}
 	
-	private String getDefaultName() {  return HAPConstant.GLOBAL_VALUE_DEFAULT;   }
+	private String getDefaultName() {  return HAPConstantShared.GLOBAL_VALUE_DEFAULT;   }
 
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {

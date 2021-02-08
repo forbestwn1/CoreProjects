@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
@@ -34,7 +34,7 @@ public class HAPDataRuleExpression extends HAPDataRuleImp{
 	private HAPExecutableExpressionGroup m_expressionExe;
 	
 	public HAPDataRuleExpression() {
-		super(HAPConstant.DATARULE_TYPE_EXPRESSION);
+		super(HAPConstantShared.DATARULE_TYPE_EXPRESSION);
 	}
 
 	public HAPDataRuleExpression(String expression) {

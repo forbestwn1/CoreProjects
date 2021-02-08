@@ -21,7 +21,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
@@ -107,19 +107,19 @@ public class HAPParserPage {
 		parseAttachmentBlocks(unitEle, uiUnit);
 		
 		//process key attribute
-		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType()))   parseKeyAttributeOnTag(unitEle, parentUIUnit, true);
+		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType()))   parseKeyAttributeOnTag(unitEle, parentUIUnit, true);
 
 		//process unit element's attribute that have expression value 
-		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType()))	parseScriptExpressionInTagAttribute(unitEle, parentUIUnit, true);
+		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType()))	parseScriptExpressionInTagAttribute(unitEle, parentUIUnit, true);
 		
 		//process element's normal attribute
 		parseUIUnitAttribute(unitEle, uiUnit);
 		
-		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType())) {
+		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType())) {
 			//add placeholder element to the customer tag's postion and then remove the original tag from html structure 
 			String uiId = uiUnit.getId();
-			unitEle.after("<"+HAPConstant.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstant.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX+"></"+HAPConstant.UIRESOURCE_TAG_PLACEHOLDER+">");
-			unitEle.after("<"+HAPConstant.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstant.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX+"></"+HAPConstant.UIRESOURCE_TAG_PLACEHOLDER+">");
+			unitEle.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
+			unitEle.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
 			unitEle.remove();
 		}
 		
@@ -144,7 +144,7 @@ public class HAPParserPage {
 			if(HAPBasicUtility.isStringEmpty(HAPUtilityUIResourceParser.getUIIdInElement(e))){
 				//if tag have no ui id, then create ui id for it
 				String id = this.m_idGenerator.createId();
-				e.attr(HAPConstant.UIRESOURCE_ATTRIBUTE_UIID, id);
+				e.attr(HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID, id);
 			}
 			
 			boolean ifRemove = parseTag(e, parentUnit);
@@ -336,15 +336,15 @@ public class HAPParserPage {
 			StringBuffer newText = new StringBuffer();
 			for(HAPScript scriptSeg : scriptSegs){
 				String scriptType = scriptSeg.getType();
-				if(HAPConstant.SCRIPT_TYPE_SEG_TEXT.equals(scriptType)){
+				if(HAPConstantShared.SCRIPT_TYPE_SEG_TEXT.equals(scriptType)){
 					newText.append(scriptSeg.getScript());
 				}
-				else if(HAPConstant.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT.equals(scriptType)) {
+				else if(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT.equals(scriptType)) {
 					List<HAPScript> s = new ArrayList<HAPScript>(); 
 					s.add(scriptSeg);
 					String sStr = HAPUtilityScriptLiterate.buildScriptLiterate(s);
 					HAPDefinitionUIEmbededScriptExpressionInContent expressionContent = new HAPDefinitionUIEmbededScriptExpressionInContent(this.m_idGenerator.createId(), sStr);
-					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
+					newText.append("<span "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
 					resource.addScriptExpressionInContent(expressionContent);
 				}
 			}
@@ -400,9 +400,9 @@ public class HAPParserPage {
 			String keyAttrName = HAPUtilityUIResourceParser.isKeyAttribute(eleAttrName);
 			
 			if(keyAttrName!=null){
-				if(keyAttrName.contains(HAPConstant.UIRESOURCE_ATTRIBUTE_EVENT)){
+				if(keyAttrName.contains(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT)){
 					//process event key attribute
-					HAPSegmentParser events = new HAPSegmentParser(eleAttrValue, HAPConstant.SEPERATOR_ELEMENT);
+					HAPSegmentParser events = new HAPSegmentParser(eleAttrValue, HAPConstantShared.SEPERATOR_ELEMENT);
 					while(events.hasNext()){
 						String event = events.next();
 						if(isCustomerTag){

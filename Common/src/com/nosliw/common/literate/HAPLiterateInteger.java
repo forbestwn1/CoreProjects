@@ -4,12 +4,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPLiterateInteger implements HAPLiterateDef{
 
 	@Override
-	public String getName() {	return HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER;	}
+	public String getName() {	return HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_INTEGER;	}
 
 	@Override
 	public Object stringToValue(String strValue, String subType) {  return Integer.valueOf(strValue);  }

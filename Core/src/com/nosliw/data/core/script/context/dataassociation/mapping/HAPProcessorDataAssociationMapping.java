@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -64,8 +64,8 @@ public class HAPProcessorDataAssociationMapping {
 
 		//matchers to output
 		switch(outputStructure.getType()) {
-		case HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT:
-		case HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT:
+		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT:
+		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT:
 			HAPContext mapping = out.getMapping();
 			for(String rootName : mapping.getElementNames()) {
 				//merge back to context variable
@@ -89,7 +89,7 @@ public class HAPProcessorDataAssociationMapping {
 		for(String eleName : dataAssociationExe.getMapping().getElementNames()) {
 			HAPContextDefinitionRoot root = dataAssociationExe.getMapping().getElement(eleName);
 			//only physical root do mapping
-			if(HAPConstant.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(root.getInfo()))) {
+			if(HAPConstantShared.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(root.getInfo()))) {
 				pathMapping.putAll(HAPUtilityDataAssociation.buildRelativePathMapping(root, buildRootNameAccordingToFlat(eleName, dataAssociationExe.isFlatOutput()), dataAssociationExe.isFlatInput()));
 			}
 		}

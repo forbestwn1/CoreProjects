@@ -2,14 +2,14 @@ package com.nosliw.data.core.codetable;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdCodeTable extends HAPResourceIdSimple{
 
 	private HAPCodeTableId m_codeTableId; 
 	
-	public HAPResourceIdCodeTable(){	super(HAPConstant.RUNTIME_RESOURCE_TYPE_CODETABLE);	}
+	public HAPResourceIdCodeTable(){	super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CODETABLE);	}
 
 	public HAPResourceIdCodeTable(HAPResourceIdSimple resourceId){
 		this();

@@ -4,6 +4,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.data.core.resource.HAPResourceId;
 
+
 public class HAPChildrenComponentId extends HAPEntityInfoWritableImp{
 
 	private HAPResourceId m_resourceId;

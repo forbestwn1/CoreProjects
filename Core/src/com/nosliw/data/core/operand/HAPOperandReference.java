@@ -9,7 +9,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -53,7 +53,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	private Map<String, HAPMatchers> m_matchers;
 	
 	private HAPOperandReference(){
-		super(HAPConstant.EXPRESSION_OPERAND_REFERENCE);
+		super(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE);
 		this.m_variableMapping = new LinkedHashMap<String, String>();
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 	}

@@ -1,6 +1,6 @@
 package com.nosliw.data.core.expression.resource;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.expression.HAPResourceIdExpression;
@@ -16,7 +16,7 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 	}
 	
 	@Override
-	public String getResourceType() {	return HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION;	}
+	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSION;	}
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {

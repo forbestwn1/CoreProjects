@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParserContext;
 
@@ -31,11 +31,11 @@ public class HAPOutputStructure extends HAPSerializableImp{
 	
 	public HAPContextStructure getOutputStructure(String name) {   return this.m_contextStructrue.get(name);   }
 
-	public HAPContextStructure getOutputStructure() {	return this.m_contextStructrue.get(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
+	public HAPContextStructure getOutputStructure() {	return this.m_contextStructrue.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
 	
 	public void addOutputStructure(String name, HAPContextStructure structure) {   this.m_contextStructrue.put(name, structure);   }
 
-	public void addOutputStructure(HAPContextStructure structure) {   this.m_contextStructrue.put(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT, structure);   }
+	public void addOutputStructure(HAPContextStructure structure) {   this.m_contextStructrue.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT, structure);   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){  

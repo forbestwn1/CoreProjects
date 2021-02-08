@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
@@ -18,7 +19,7 @@ public class HAPUtilityDataAssociation {
 
 	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, HAPContextStructure context){
 		Map<String, Boolean> isFlatInput = new LinkedHashMap<String, Boolean>();
-		isFlatInput.put(HAPConstant.NAME_DEFAULT, context.isFlat());
+		isFlatInput.put(HAPConstantShared.NAME_DEFAULT, context.isFlat());
 		Map<String, String> mapping = buildRelativePathMapping(contextRoot.getDefinition(), rootName, isFlatInput);
 		Map<String, String> out = new LinkedHashMap<String, String>();
 		for(String name : mapping.keySet()) {
@@ -42,7 +43,7 @@ public class HAPUtilityDataAssociation {
 			@Override
 			public boolean process(HAPContextDefinitionElement ele, Object value) {
 				String path = (String)value;
-				if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+				if(ele.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
 					HAPContextPath contextPath = relativeEle.getPath();
 					String parent = relativeEle.getParent();
@@ -63,8 +64,8 @@ public class HAPUtilityDataAssociation {
 	
 	public static HAPConfigureContextProcessor getContextProcessConfigurationForProcess() {
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
-		configure.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
+		configure.inheritMode = HAPConstant.INHERITMODE_NONE;
 		return configure;
-	}
+	} 
 
 }

@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPLiterateObject implements HAPLiterateDef{
 
-	public String getName() {	return HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT;	}
+	public String getName() {	return HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT;	}
 
 	@Override
 	public Object stringToValue(String strValue, String subType) {

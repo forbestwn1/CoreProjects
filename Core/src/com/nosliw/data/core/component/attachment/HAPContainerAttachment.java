@@ -9,15 +9,13 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
-import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
-import com.nosliw.data.core.resource.HAPResourceIdSupplement;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
-//define attachment, the entity that component need
+//store all attachment by type and by name
 @HAPEntityWithAttribute
-public class HAPAttachmentContainer extends HAPSerializableImp{
+public class HAPContainerAttachment extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ELEMENT = "element";
@@ -25,30 +23,16 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String LOCALREFBASE = "localRefBase";
 
+	//all attachment by type and by name
 	private Map<String, Map<String, HAPAttachment>> m_element;
 
+	//dir path that is used as base for local resource id reference attachment within this container
 	private HAPLocalReferenceBase m_localReferenceBase;
 	
-	public HAPAttachmentContainer() {
+	public HAPContainerAttachment() {
 		this.m_element = new LinkedHashMap<>();
 	}
 
-	public HAPAttachmentContainer(HAPResourceIdSupplement resourceIdSupplement) {
-		this();
-		if(resourceIdSupplement!=null) {
-			Map<String, Map<String, HAPResourceId>> resourceIds = resourceIdSupplement.getAllSupplymentResourceId();
-			for(String type : resourceIds.keySet()) {
-				Map<String, HAPResourceId> byId = resourceIds.get(type);
-				for(String id : byId.keySet()) {
-					HAPAttachmentReference ele = new HAPAttachmentReference(type);
-					ele.setId(id);
-					ele.setResourceId(byId.get(id));
-					this.addAttachment(type, ele);
-				}
-			}
-		}
-	}
-	
 	public HAPLocalReferenceBase getLocalReferenceBase() {    return this.m_localReferenceBase;    }
 	
 	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {   
@@ -63,19 +47,18 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 	}
 
 	private void setLocalReferenceBase(HAPAttachment att, HAPLocalReferenceBase localRefBase) {
-		if(att.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)){
-			HAPAttachmentReference refAttr = (HAPAttachmentReference)att;
-			HAPResourceId resourceId = refAttr.getReferenceId();
-			if(resourceId.getStructure().equals(HAPConstant.RESOURCEID_TYPE_LOCAL)) {
-				HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
-				if(localResourceId.getBasePath()==null) {
-					localResourceId.setBasePath(localRefBase);
-				}
+		if(att.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL)){
+			HAPAttachmentReferenceLocal refAttr = (HAPAttachmentReferenceLocal)att;
+			HAPResourceIdLocal localResourceId = refAttr.getLocalReferenceId();
+			if(localResourceId.getBasePath()==null) {
+				localResourceId.setBasePath(localRefBase);
 			}
 		}
 	}
 	
 	public boolean isEmpty() {     return this.m_element.isEmpty();   }
+	
+	public Map<String, Map<String, HAPAttachment>> getAllAttachment(){   return this.m_element;    }
 	
 	public Map<String, HAPAttachment> getAttachmentByType(String type){
 		Map<String, HAPAttachment> out = this.m_element.get(type);
@@ -94,26 +77,27 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 	}
 
 	//merge with parent
-	public void merge(HAPAttachmentContainer parent, String mode) {
+	public void merge(HAPContainerAttachment parent, String mode) {
 		if(parent==null)  return;
-		if(mode==null)   mode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;
-		if(mode.equals(HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE))  return;
+		if(mode==null)   mode = HAPConstant.INHERITMODE_CHILD;
+		if(mode.equals(HAPConstant.INHERITMODE_NONE))  return;
 		
 		for(String type : parent.m_element.keySet()) {
 			Map<String, HAPAttachment> byId = parent.m_element.get(type);
 			for(String id : byId.keySet()) {
 				HAPAttachment parentEle = byId.get(id);
 				HAPAttachment thisEle = this.getElement(type, id);
-				if(thisEle==null || thisEle.getType().equals(HAPConstant.ATTACHMENT_TYPE_PLACEHOLDER)) {
+				if(thisEle==null || thisEle.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_PLACEHOLDER)) {
 					//element not exist, or empty, borrow from parent
 					HAPAttachment newEle = parentEle.cloneAttachment();
 					HAPAttachmentUtility.setOverridenByParent(newEle);
 					this.addAttachment(type, newEle);
 				}
 				else {
-					if(mode.equals(HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT)&&HAPAttachmentUtility.isOverridenByParentMode(thisEle)) {
+					if(mode.equals(HAPConstant.INHERITMODE_PARENT)&&HAPAttachmentUtility.isOverridenByParentMode(thisEle)) {
 						//if configurable, then parent override child
 						HAPAttachment newEle = parentEle.cloneAttachment();
+						HAPAttachmentUtility.setOverridenByParent(newEle);
 						this.addAttachment(type, newEle);
 					}
 				}
@@ -121,22 +105,6 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 		}
 	}
 
-	public HAPResourceIdSupplement toResourceIdSupplement(){
-		Map<String, Map<String, HAPResourceId>> resourceIds = new LinkedHashMap<String, Map<String, HAPResourceId>>();
-		for(String type : this.m_element.keySet()) {
-			Map<String, HAPAttachment> byId = this.m_element.get(type);
-			Map<String, HAPResourceId> byIdOut = new LinkedHashMap<>();
-			for(String id : byId.keySet()) {
-				HAPAttachment attachment = byId.get(id);
-				if(attachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
-					byIdOut.put(id, ((HAPAttachmentReference)attachment).getReferenceId());
-				}
-			}
-			resourceIds.put(type, byIdOut);
-		}
-		return HAPResourceIdSupplement.newInstance(resourceIds);
-	}
-	
 	public HAPAttachment getElement(String type, String id) {
 		HAPAttachment out = null;
 		Map<String, HAPAttachment> byId = this.m_element.get(type);
@@ -146,8 +114,8 @@ public class HAPAttachmentContainer extends HAPSerializableImp{
 		return out;
 	}
 	
-	public HAPAttachmentContainer cloneAttachmentContainer() {
-		HAPAttachmentContainer out = new HAPAttachmentContainer();
+	public HAPContainerAttachment cloneAttachmentContainer() {
+		HAPContainerAttachment out = new HAPContainerAttachment();
 		for(String type : this.m_element.keySet()) {
 			Map<String, HAPAttachment> byId = this.m_element.get(type);
 			for(String id : byId.keySet()) {

@@ -13,7 +13,7 @@ import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 //a group of context
 //normally contexts are grouped according to type : public, private, ...
@@ -56,7 +56,7 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	}
 	
 	@Override
-	public String getType() {	return HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT;	}
+	public String getType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT;	}
 
 	@Override
 	public boolean isFlat() {	return false;	}
@@ -75,7 +75,7 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	@Override
 	public void hardMergeWith(HAPContextStructure context){
 		if(context!=null) {
-			if(context.getType().equals(HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+			if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 				HAPContextGroup contextGroup = (HAPContextGroup)context;
 				for(String type : contextGroup.getContextTypes()){
 					this.getChildContext(type).hardMergeWith(contextGroup.getContext(type));
@@ -87,20 +87,20 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 
 	public static String[] getAllContextTypes(){
 		String[] contextTypes = {
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE,
 		};
 		return contextTypes;
 	}
 
 	public static String[] getContextTypesWithPriority(){
 		String[] contextTypes = {
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 		};
 		return contextTypes;
 	}
@@ -108,8 +108,8 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	//context type that can be inherited by child
 	public static String[] getInheritableContextTypes(){
 		String[] contextTypes = {
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
 		};
 		return contextTypes;
 	}
@@ -117,9 +117,9 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	//visible to child
 	public static String[] getVisibleContextTypes(){
 		String[] contextTypes = {
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 		};
 		return contextTypes;
 	}
@@ -138,15 +138,15 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	public HAPContextGroup getParent() {   return this.m_parent;   }
 	public void setParent(HAPContextGroup parent) {  this.m_parent = parent;   }
 	
-	public HAPContext getPublicContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
-	public HAPContext getProtectedContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED);  }
-	public HAPContext getInternalContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
-	public HAPContext getPrivateContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
+	public HAPContext getPublicContext(){  return this.getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
+	public HAPContext getProtectedContext(){  return this.getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED);  }
+	public HAPContext getInternalContext(){  return this.getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
+	public HAPContext getPrivateContext(){  return this.getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
 
-	public void addPublicElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
-	public void addProtectedElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED);  }
-	public void addInternalElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
-	public void addPrivateElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
+	public void addPublicElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
+	public void addProtectedElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED);  }
+	public void addInternalElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
+	public void addPrivateElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
 
 	public Map<String, HAPContextDefinitionRoot> getElements(String contextType){  return this.getContext(contextType).getElements();  }
 	

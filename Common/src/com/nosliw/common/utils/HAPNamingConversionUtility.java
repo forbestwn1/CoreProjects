@@ -74,47 +74,47 @@ public class HAPNamingConversionUtility {
 	}
 	
 	
-	public static String cascadeLevel1(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_LEVEL1);	}
-	public static String cascadeLevel1(String[] segs){	return cascadeComponents(segs, HAPConstant.SEPERATOR_LEVEL1);	}
-	public static String[] parseLevel1(String eles){		return splitTextByComponents(eles, HAPConstant.SEPERATOR_LEVEL1);	}
+	public static String cascadeLevel1(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstantShared.SEPERATOR_LEVEL1);	}
+	public static String cascadeLevel1(String[] segs){	return cascadeComponents(segs, HAPConstantShared.SEPERATOR_LEVEL1);	}
+	public static String[] parseLevel1(String eles){		return splitTextByComponents(eles, HAPConstantShared.SEPERATOR_LEVEL1);	}
 
-	public static String cascadeLevel2(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_LEVEL2);	}
-	public static String cascadeLevel2(String[] segs){	return cascadeComponents(segs, HAPConstant.SEPERATOR_LEVEL2);	}
-	public static String[] parseLevel2(String eles){		return splitTextByComponents(eles, "\\"+HAPConstant.SEPERATOR_LEVEL2);	}
+	public static String cascadeLevel2(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstantShared.SEPERATOR_LEVEL2);	}
+	public static String cascadeLevel2(String[] segs){	return cascadeComponents(segs, HAPConstantShared.SEPERATOR_LEVEL2);	}
+	public static String[] parseLevel2(String eles){		return splitTextByComponents(eles, "\\"+HAPConstantShared.SEPERATOR_LEVEL2);	}
 
-	public static String cascadeLevel3(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_LEVEL3);	}
-	public static String cascadeLevel3(String[] segs){	return cascadeComponents(segs, HAPConstant.SEPERATOR_LEVEL3);	}
-	public static String[] parseLevel3(String eles){		return splitTextByComponents(eles, "\\"+HAPConstant.SEPERATOR_LEVEL3);	}
+	public static String cascadeLevel3(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstantShared.SEPERATOR_LEVEL3);	}
+	public static String cascadeLevel3(String[] segs){	return cascadeComponents(segs, HAPConstantShared.SEPERATOR_LEVEL3);	}
+	public static String[] parseLevel3(String eles){		return splitTextByComponents(eles, "\\"+HAPConstantShared.SEPERATOR_LEVEL3);	}
 
-	public static String cascadeSegments1(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_SEGMENT);	}
-	public static String[] parseSegments1(String eles){		return splitTextByComponents(eles, HAPConstant.SEPERATOR_SEGMENT);	}
+	public static String cascadeSegments1(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstantShared.SEPERATOR_SEGMENT);	}
+	public static String[] parseSegments1(String eles){		return splitTextByComponents(eles, HAPConstantShared.SEPERATOR_SEGMENT);	}
 	
-	public static String cascadePath(String path1, String path2){		return cascadeElements(path1, path2, HAPConstant.SEPERATOR_PATH);	}
-	public static String cascadePath(String[] paths){		return cascadeElements(paths, HAPConstant.SEPERATOR_PATH);	}
-	public static String[] parsePaths(String paths){		return splitTextByElements(paths, "\\"+HAPConstant.SEPERATOR_PATH);	}
+	public static String cascadePath(String path1, String path2){		return cascadeElements(path1, path2, HAPConstantShared.SEPERATOR_PATH);	}
+	public static String cascadePath(String[] paths){		return cascadeElements(paths, HAPConstantShared.SEPERATOR_PATH);	}
+	public static String[] parsePaths(String paths){		return splitTextByElements(paths, "\\"+HAPConstantShared.SEPERATOR_PATH);	}
 
-	public static String cascadeComponentPath(String path1, String path2){		return cascadeComponents(path1, path2, HAPConstant.SEPERATOR_PATH);	}
-	public static String cascadeComponentPath(String[] paths){		return cascadeComponents(paths, HAPConstant.SEPERATOR_PATH);	}
-	public static String[] parseComponentPaths(String paths){		return splitTextByComponents(paths, "\\"+HAPConstant.SEPERATOR_PATH);	}
+	public static String cascadeComponentPath(String path1, String path2){		return cascadeComponents(path1, path2, HAPConstantShared.SEPERATOR_PATH);	}
+	public static String cascadeComponentPath(String[] paths){		return cascadeComponents(paths, HAPConstantShared.SEPERATOR_PATH);	}
+	public static String[] parseComponentPaths(String paths){		return splitTextByComponents(paths, "\\"+HAPConstantShared.SEPERATOR_PATH);	}
 	
-	public static String cascadePart(String part1, String part2){		return cascadeComponents(part1, part2, HAPConstant.SEPERATOR_PART);	}
-	public static String[] parseParts(String parts){		return splitTextByComponents(parts, HAPConstant.SEPERATOR_PART);	}
+	public static String cascadePart(String part1, String part2){		return cascadeComponents(part1, part2, HAPConstantShared.SEPERATOR_PART);	}
+	public static String[] parseParts(String parts){		return splitTextByComponents(parts, HAPConstantShared.SEPERATOR_PART);	}
 
-	public static String cascadeNameValuePair(String name, String value){		return cascadeComponents(name, value, HAPConstant.SEPERATOR_NAMEVALUE);	}
-	public static String[] parseNameValuePair(String nameValueStr){		return splitTextByComponents(nameValueStr, HAPConstant.SEPERATOR_NAMEVALUE);	}
+	public static String cascadeNameValuePair(String name, String value){		return cascadeComponents(name, value, HAPConstantShared.SEPERATOR_NAMEVALUE);	}
+	public static String[] parseNameValuePair(String nameValueStr){		return splitTextByComponents(nameValueStr, HAPConstantShared.SEPERATOR_NAMEVALUE);	}
 	
-	public static String cascadeDetail(String detail1, String detail2){	return cascadeComponents(detail1, detail2, HAPConstant.SEPERATOR_DETAIL);	}
-	public static String cascadeDetail(String[] details){	return cascadeComponents(details, HAPConstant.SEPERATOR_DETAIL);	}
-	public static String[] parseDetails(String details){		return splitTextByComponents(details, "\\"+HAPConstant.SEPERATOR_DETAIL);	}
+	public static String cascadeDetail(String detail1, String detail2){	return cascadeComponents(detail1, detail2, HAPConstantShared.SEPERATOR_DETAIL);	}
+	public static String cascadeDetail(String[] details){	return cascadeComponents(details, HAPConstantShared.SEPERATOR_DETAIL);	}
+	public static String[] parseDetails(String details){		return splitTextByComponents(details, "\\"+HAPConstantShared.SEPERATOR_DETAIL);	}
 	
-	public static String cascadeNameSegment(String part1, String part2){		return cascadeComponents(part1, part2, HAPConstant.SEPERATOR_PREFIX);	}
-	public static String[] parseNameSegments(String nameSegs){		return splitTextByComponents(nameSegs, HAPConstant.SEPERATOR_PREFIX);	}
+	public static String cascadeNameSegment(String part1, String part2){		return cascadeComponents(part1, part2, HAPConstantShared.SEPERATOR_PREFIX);	}
+	public static String[] parseNameSegments(String nameSegs){		return splitTextByComponents(nameSegs, HAPConstantShared.SEPERATOR_PREFIX);	}
 
-	public static String cascadeElement(String ele1, String ele2){		return cascadeComponents(ele1, ele2, HAPConstant.SEPERATOR_ELEMENT);	}
-	public static String[] parseElements(String eles){		return splitTextByElements(eles, HAPConstant.SEPERATOR_ELEMENT);	}
+	public static String cascadeElement(String ele1, String ele2){		return cascadeComponents(ele1, ele2, HAPConstantShared.SEPERATOR_ELEMENT);	}
+	public static String[] parseElements(String eles){		return splitTextByElements(eles, HAPConstantShared.SEPERATOR_ELEMENT);	}
 
-	public static String cascadeProperty(String name, String value){	return cascadeComponents(name, value, HAPConstant.SEPERATOR_DETAIL);	}
-	public static String[] parseProperty(String propertyDef){	return splitTextByComponents(propertyDef, HAPConstant.SEPERATOR_NAMEVALUE);	}
+	public static String cascadeProperty(String name, String value){	return cascadeComponents(name, value, HAPConstantShared.SEPERATOR_DETAIL);	}
+	public static String[] parseProperty(String propertyDef){	return splitTextByComponents(propertyDef, HAPConstantShared.SEPERATOR_NAMEVALUE);	}
 
 	
 	public static Map<String, String> parsePropertyValuePairs(String value){
@@ -129,12 +129,12 @@ public class HAPNamingConversionUtility {
 	
 	public static String cascadeElementArray(String[] eles){
 		StringBuffer listStr = new StringBuffer();
-		listStr.append(HAPConstant.SEPERATOR_ARRAYSTART);
+		listStr.append(HAPConstantShared.SEPERATOR_ARRAYSTART);
 		for(int i=0; i<eles.length; i++){
 			listStr.append(eles[i]);
-			if(i<eles.length-1)   listStr.append(HAPConstant.SEPERATOR_ELEMENT);  
+			if(i<eles.length-1)   listStr.append(HAPConstantShared.SEPERATOR_ELEMENT);  
 		}
-		listStr.append(HAPConstant.SEPERATOR_ARRAYEND);
+		listStr.append(HAPConstantShared.SEPERATOR_ARRAYEND);
 		return listStr.toString();
 	}
 	
@@ -146,7 +146,7 @@ public class HAPNamingConversionUtility {
 			return path1;
 		}
 		else{
-			return path1 + HAPConstant.SEPERATOR_PATH + path2;
+			return path1 + HAPConstantShared.SEPERATOR_PATH + path2;
 		}
 	}
 	
@@ -158,22 +158,22 @@ public class HAPNamingConversionUtility {
 	 * if not, then reutnr null;
 	 */
 	static public HAPSegmentParser isKeywordPhrase(String name, String seperator){
-		if(name.subSequence(0, 1).equals(HAPConstant.SYMBOL_KEYWORD)){
+		if(name.subSequence(0, 1).equals(HAPConstantShared.SYMBOL_KEYWORD)){
 			return new HAPSegmentParser(name.substring(1), seperator);
 		}
 		else  return null;
 	}
 
 	static public HAPSegmentParser isKeywordPhrase(String name){
-		return isKeywordPhrase(name, HAPConstant.SEPERATOR_DETAIL);
+		return isKeywordPhrase(name, HAPConstantShared.SEPERATOR_DETAIL);
 	}
 
 	static public String getKeyword(String keyword){
-		return getKeyword(keyword, HAPConstant.SYMBOL_KEYWORD);
+		return getKeyword(keyword, HAPConstantShared.SYMBOL_KEYWORD);
 	}
 	
 	static public String createKeyword(String key){
-		return createKeyword(key, HAPConstant.SYMBOL_KEYWORD);
+		return createKeyword(key, HAPConstantShared.SYMBOL_KEYWORD);
 	}
 
 	/*

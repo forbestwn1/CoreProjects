@@ -8,10 +8,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPResourceIdSupplement;
 import com.nosliw.data.core.script.context.data.HAPContextDataFactory;
 import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
 
@@ -23,11 +26,63 @@ public class HAPAttachmentUtility {
 
 	public static final String ATTRIBUTE_FLAG_OVERRIDE = "flagOveride"; 
 
-	public static HAPContextDataFlat getTestDataFromAttachment(HAPWithAttachment withAttachment, String name) {
-		return HAPAttachmentUtility.getContextDataFromAttachment(withAttachment.getAttachmentContainer(), HAPConstant.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
+	public static void mergeContainerToResourceIdSupplement(HAPResourceId resourceId, HAPContainerAttachment sourceContainer) {
+		//resource Id to attachment container
+		HAPContainerAttachment merged = new HAPContainerAttachment();
+		{
+			Map<String, Map<String, HAPResourceId>> resourceIds = resourceId.getSupplement().getAllSupplymentResourceId();
+			for(String type : resourceIds.keySet()) {
+				Map<String, HAPResourceId> byId = resourceIds.get(type);
+				for(String id : byId.keySet()) {
+					HAPAttachmentReference ele = new HAPAttachmentReferenceExternal(byId.get(id));
+					merged.addAttachment(type, ele);
+				}
+			}
+		}
+
+		//container merged to container from resource suppliment
+		merged.merge(sourceContainer, HAPConstant.INHERITMODE_CHILD);
+		
+		//container from resource supplment to supplement
+		Map<String, Map<String, HAPResourceId>> resourceIds = new LinkedHashMap<String, Map<String, HAPResourceId>>();
+		Map<String, Map<String, HAPAttachment>> mergedAtts = merged.getAllAttachment();
+		for(String type : mergedAtts.keySet()) {
+			Map<String, HAPAttachment> byId = mergedAtts.get(type);
+			Map<String, HAPResourceId> byIdOut = new LinkedHashMap<>();
+			for(String id : byId.keySet()) {
+				HAPAttachment attachment = byId.get(id);
+				if(attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)) {
+					byIdOut.put(id, ((HAPAttachmentReference)attachment).getReferenceId());
+				}
+			}
+			resourceIds.put(type, byIdOut);
+		}
+		HAPResourceIdSupplement mergedSupplement = HAPResourceIdSupplement.newInstance(resourceIds);
+		resourceId.setSupplement(mergedSupplement);
 	}
 	
-	public static HAPContextDataFlat getContextDataFromAttachment(HAPAttachmentContainer attContainer, String type, String name) {
+	public static void mergeAttachmentInResourceIdSupplementToContainer(HAPResourceId resourceId, HAPContainerAttachment targetContainer, String mode) {
+		if(resourceId==null)  return;
+		HAPResourceIdSupplement resourceIdSupplement = resourceId.getSupplement();
+		if(resourceIdSupplement!=null) {
+			HAPContainerAttachment tempContainer = new HAPContainerAttachment();
+			Map<String, Map<String, HAPResourceId>> resourceIds = resourceIdSupplement.getAllSupplymentResourceId();
+			for(String type : resourceIds.keySet()) {
+				Map<String, HAPResourceId> byId = resourceIds.get(type);
+				for(String id : byId.keySet()) {
+					HAPAttachmentReference ele = new HAPAttachmentReferenceExternal(byId.get(id));
+					tempContainer.addAttachment(type, ele);
+				}
+			}
+			targetContainer.merge(tempContainer, mode);
+		}
+	}
+	
+	public static HAPContextDataFlat getTestDataFromAttachment(HAPWithAttachment withAttachment, String name) {
+		return HAPAttachmentUtility.getContextDataFromAttachment(withAttachment.getAttachmentContainer(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
+	}
+	
+	public static HAPContextDataFlat getContextDataFromAttachment(HAPContainerAttachment attContainer, String type, String name) {
 		HAPContextDataFlat out = new HAPContextDataFlat();
 		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
 		if(attachment!=null) {
@@ -38,10 +93,10 @@ public class HAPAttachmentUtility {
 	}
 	
 	public static Map<String, Object> getTestValueFromAttachment(HAPWithAttachment withAttachment, String name) {
-		return HAPAttachmentUtility.getContextValueFromAttachment(withAttachment.getAttachmentContainer(), HAPConstant.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
+		return HAPAttachmentUtility.getContextValueFromAttachment(withAttachment.getAttachmentContainer(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
 	}
 	
-	public static Map<String, Object> getContextValueFromAttachment(HAPAttachmentContainer attContainer, String type, String name) {
+	public static Map<String, Object> getContextValueFromAttachment(HAPContainerAttachment attContainer, String type, String name) {
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
 		if(attachment!=null) {
@@ -54,38 +109,43 @@ public class HAPAttachmentUtility {
 		return out;
 	}
 	
-	public static HAPResourceDefinition getResourceDefinition(HAPAttachmentContainer attContainer, String type, String name, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPResourceDefinition getResourceDefinition(HAPContainerAttachment attContainer, String type, String name, HAPManagerResourceDefinition resourceDefMan) {
 		HAPResourceDefinition out = null;
 		HAPAttachment attachment = attContainer.getElement(type, name);
-		if(attachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
+		if(attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)||attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL)) {
 			HAPResourceId resourceId = ((HAPAttachmentReference)attachment).getReferenceId();
 			out = resourceDefMan.getResourceDefinition(resourceId);
 		}
-		else if(attachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_ENTITY)){
+		else if(attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)){
 			out = resourceDefMan.parseResourceDefinition(type, ((HAPAttachmentEntity)attachment).getEntityJsonObj());
 		}
 		return out;
 	}
 	
-	public static void parseDefinition(JSONObject attachmentDefJson, HAPAttachmentContainer attachmentContainer) {
+	public static void parseDefinition(JSONObject attachmentDefJson, HAPContainerAttachment attachmentContainer) {
 		for(Object key : attachmentDefJson.keySet()) {
 			String type = (String)key;
 			JSONArray byNameArray = attachmentDefJson.getJSONArray(type);
 			for(int i=0; i<byNameArray.length(); i++) {
 				JSONObject attachmentJson = byNameArray.getJSONObject(i);
 				HAPAttachment attachment = null;
-				if(attachmentJson.opt(HAPAttachmentReference.REFERENCEID)!=null) {
-					attachment = new HAPAttachmentReference(type);
-					attachment.buildObject(attachmentJson, HAPSerializationFormat.JSON);
+				Object referenceIdObj = attachmentJson.opt(HAPAttachmentReference.REFERENCEID);
+				if(referenceIdObj!=null) {
+					HAPResourceId resourceId = HAPResourceIdFactory.newInstance(type, referenceIdObj);
+					if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
+						attachment = new HAPAttachmentReferenceLocal();
+					}
+					else {
+						attachment = new HAPAttachmentReferenceExternal();
+					}
 				}
 				else if(attachmentJson.opt(HAPAttachmentEntity.ENTITY)!=null){
 					attachment = new HAPAttachmentEntity(type);
-					attachment.buildObject(attachmentJson, HAPSerializationFormat.JSON);
 				}
 				else {
 					attachment = new HAPAttachmentPlaceHolder(type);
-					attachment.buildObject(attachmentJson, HAPSerializationFormat.JSON);
 				}
+				attachment.buildObject(attachmentJson, HAPSerializationFormat.JSON);
 				attachmentContainer.addAttachment(type, attachment);
 			}
 		}

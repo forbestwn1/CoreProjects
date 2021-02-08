@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -36,7 +36,7 @@ public class HAPManagerUITag {
 			HAPUITagDefinition uiTagDef = HAPUITagDefinitionParser.parseFromFile(file);
 			uiTagDef.setSourceFile(file);
 			String type = uiTagDef.getType();
-			if(HAPConstant.UITAG_TYPE_DATA.equals(type)) {
+			if(HAPConstantShared.UITAG_TYPE_DATA.equals(type)) {
 				this.m_dataTagDefs.put(uiTagDef.getName(), (HAPUITagDefinitionData)uiTagDef);
 			}
 			else {

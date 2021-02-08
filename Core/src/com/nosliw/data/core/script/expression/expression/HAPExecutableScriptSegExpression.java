@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
@@ -23,7 +23,7 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 	public String getExpressionId() {    return this.m_expressionId;    }
 
 	@Override
-	public String getScriptType() {  return HAPConstant.SCRIPT_TYPE_SEG_EXPRESSION;  }
+	public String getScriptType() {  return HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSION;  }
 
 	@Override
 	public Map<String, HAPInfoCriteria> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {

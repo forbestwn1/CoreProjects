@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
@@ -15,7 +15,7 @@ import com.nosliw.data.core.story.change.HAPUtilityChange;
 @HAPEntityWithAttribute
 public class HAPStoryNodeUIHtml extends HAPStoryNodeUI{
 
-	public final static String STORYNODE_TYPE = HAPConstant.STORYNODE_TYPE_HTML; 
+	public final static String STORYNODE_TYPE = HAPConstantShared.STORYNODE_TYPE_HTML; 
 	
 	@HAPAttribute
 	public static final String HTML = "html";

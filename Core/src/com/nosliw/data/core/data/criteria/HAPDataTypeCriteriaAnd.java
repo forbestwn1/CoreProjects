@@ -7,7 +7,7 @@ import java.util.Set;
 import com.google.common.collect.Sets;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
 
@@ -18,7 +18,7 @@ public class HAPDataTypeCriteriaAnd extends HAPDataTypeCriteriaComplex{
 	}
 
 	@Override
-	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_AND;	}
+	public String getType() {		return HAPConstantShared.DATATYPECRITERIA_TYPE_AND;	}
 
 	@Override
 	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper) {

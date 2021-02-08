@@ -8,7 +8,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUtilityData {
 
@@ -85,7 +85,7 @@ public class HAPUtilityData {
 	
 	public static boolean isNormalDataOpration(HAPOperation operation){
 		String type = operation.getType();
-		return type==null || HAPConstant.DATAOPERATION_TYPE_NORMAL.equals(type);
+		return type==null || HAPConstantShared.DATAOPERATION_TYPE_NORMAL.equals(type);
 	}
 	
 }

@@ -13,7 +13,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
@@ -109,7 +109,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	
 	private String buildScript() {
 		StringBuffer out = new StringBuffer();
-		Set<HAPStoryNode> scriptNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstant.STORYNODE_TYPE_SCRIPT);
+		Set<HAPStoryNode> scriptNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstantShared.STORYNODE_TYPE_SCRIPT);
 		for(HAPStoryNode node : scriptNodes) {
 			HAPStoryNodeScript scriptNode = (HAPStoryNodeScript)node;
 			out.append("\n");
@@ -121,7 +121,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	
 	private HAPContext buildContext() {
 		HAPContext context = new HAPContext();
-		Set<HAPStoryNode> varNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstant.STORYNODE_TYPE_VARIABLE);
+		Set<HAPStoryNode> varNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstantShared.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
 			HAPVariableInfo varInfo = varNode.getVariableInfo();
@@ -134,13 +134,13 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 
 	private List<HAPAttachment> buildConstant() {
 		List<HAPAttachment> attachs = new ArrayList<HAPAttachment>();
-		Set<HAPStoryNode> constantNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstant.STORYNODE_TYPE_CONSTANT);
+		Set<HAPStoryNode> constantNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstantShared.STORYNODE_TYPE_CONSTANT);
 		for(HAPStoryNode node : constantNodes) {
 			HAPStoryNodeConstant constantNode = (HAPStoryNodeConstant)node;
 			HAPData constantData = constantNode.getData();
 			if(constantData!=null) {
 				//build service attachment
-				HAPAttachmentEntity atta = new HAPAttachmentEntity(HAPConstant.RUNTIME_RESOURCE_TYPE_DATA);
+				HAPAttachmentEntity atta = new HAPAttachmentEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATA);
 				atta.setEntity(new JSONObject(constantData.toStringValue(HAPSerializationFormat.JSON)));
 				attachs.add(atta);
 			}
@@ -151,11 +151,11 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	
 	private List<HAPAttachment> buildService() {
 		List<HAPAttachment> attachs = new ArrayList<HAPAttachment>();
-		Set<HAPStoryNode> serviceNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstant.STORYNODE_TYPE_SERVICE);
+		Set<HAPStoryNode> serviceNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstantShared.STORYNODE_TYPE_SERVICE);
 		for(HAPStoryNode node : serviceNodes) {
 			HAPStoryNodeService serviceNode = (HAPStoryNodeService)node;
 			//build service attachment
-			HAPAttachmentReference refAttr = new HAPAttachmentReference(new HAPResourceIdSimple(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE, serviceNode.getReferenceId()));
+			HAPAttachmentReference refAttr = new HAPAttachmentReference(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE, serviceNode.getReferenceId()));
 			refAttr.setName(serviceNode.getName());
 			attachs.add(refAttr);
 		}
@@ -165,7 +165,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	private List<HAPDefinitionServiceUse> buildServiceUse() {
 		List<HAPDefinitionServiceUse> out = new ArrayList<HAPDefinitionServiceUse>();
 		
-		Set<HAPStoryNode> serviceNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstant.STORYNODE_TYPE_SERVICE);
+		Set<HAPStoryNode> serviceNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstantShared.STORYNODE_TYPE_SERVICE);
 		for(HAPStoryNode node : serviceNodes) {
 			HAPStoryNodeService serviceNode = (HAPStoryNodeService)node;
 			HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
@@ -177,25 +177,25 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			{
 				//input
 				HAPContext serviceParmMapping = new HAPContext();
-				List<HAPStoryNode> serviceInputNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstant.SERVICE_CHILD_INPUT, this.m_story);
+				List<HAPStoryNode> serviceInputNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstantShared.SERVICE_CHILD_INPUT, this.m_story);
 				if(!serviceInputNodes.isEmpty()) {
 					HAPStoryNode serviceInputNode = serviceInputNodes.get(0); 
 					List<HAPInfoNodeChild> parmNodeInfos = HAPUtilityStory.getChildNode(serviceInputNode, this.m_story);
 					for(HAPInfoNodeChild parmNodeInfo : parmNodeInfos) {
 						HAPStoryNode parmNode = parmNodeInfo.getChildNode();
-						List<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, HAPConstant.STORYNODE_PROFILE_DATAIN, null, HAPConstant.STORYNODE_PROFILE_DATAOUT, this.m_story);
+						List<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstantShared.STORYCONNECTION_TYPE_DATAIO, HAPConstantShared.STORYNODE_PROFILE_DATAIN, null, HAPConstantShared.STORYNODE_PROFILE_DATAOUT, this.m_story);
 						for(HAPConnectionEnd varEnd : varsEnd) {
 							HAPStoryNode parmInputNode = (HAPStoryNode)this.m_story.getElement(varEnd.getNodeRef());
 							if(parmInputNode.isEnable()) {
 								String inputNodeType = parmInputNode.getType();
-								if(HAPConstant.STORYNODE_TYPE_CONSTANT.equals(inputNodeType)) {
+								if(HAPConstantShared.STORYNODE_TYPE_CONSTANT.equals(inputNodeType)) {
 									HAPStoryNodeConstant constantInputNode = (HAPStoryNodeConstant)parmInputNode;
 									HAPData constantData = constantInputNode.getData();
 									if(constantData!=null) {
 										serviceParmMapping.addElement(parmNodeInfo.getConnection().getChildId(), new HAPContextDefinitionLeafConstant(constantData));
 									}
 								}
-								else if(HAPConstant.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
+								else if(HAPConstantShared.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
 									HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
 									serviceParmMapping.addElement(parmNodeInfo.getConnection().getChildId(), new HAPContextDefinitionLeafRelative(varInputNode.getVariableInfo().getName()));
 								}
@@ -213,17 +213,17 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			{
 				//output
 				HAPContext serviceParmMapping = new HAPContext();
-				List<HAPStoryNode> serviceResultNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstant.SERVICE_CHILD_RESULT, this.m_story);
+				List<HAPStoryNode> serviceResultNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstantShared.SERVICE_CHILD_RESULT, this.m_story);
 				if(!serviceResultNodes.isEmpty()) {
 					HAPStoryNode serviceResultNode = serviceResultNodes.get(0);
 					List<HAPInfoNodeChild> parmNodeInfos = HAPUtilityStory.getChildNode(serviceResultNode, this.m_story);
 					for(HAPInfoNodeChild parmNodeInfo : parmNodeInfos) {
 						HAPStoryNode parmNode = parmNodeInfo.getChildNode();
-						List<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstant.STORYCONNECTION_TYPE_DATAIO, HAPConstant.STORYNODE_PROFILE_DATAOUT, HAPConstant.STORYNODE_TYPE_VARIABLE, HAPConstant.STORYNODE_PROFILE_DATAIN, this.m_story);
+						List<HAPConnectionEnd> varsEnd =  HAPUtilityStory.getConnectionEnd(parmNode, HAPConstantShared.STORYCONNECTION_TYPE_DATAIO, HAPConstantShared.STORYNODE_PROFILE_DATAOUT, HAPConstantShared.STORYNODE_TYPE_VARIABLE, HAPConstantShared.STORYNODE_PROFILE_DATAIN, this.m_story);
 						for(HAPConnectionEnd varEnd : varsEnd) {
 							HAPStoryNode parmInputNode = (HAPStoryNode)this.m_story.getElement(varEnd.getNodeRef());
 							String inputNodeType = parmInputNode.getType();
-							if(HAPConstant.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
+							if(HAPConstantShared.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
 								HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
 								serviceParmMapping.addElement(varInputNode.getVariableInfo().getName(), new HAPContextDefinitionLeafRelative(parmNodeInfo.getConnection().getChildId()));
 							}
@@ -246,7 +246,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	private HAPHtmlSegment buildPage() {
 		HAPHtmlSegment out = new HAPHtmlSegment();
 		HAPStoryNode pageNode = null;
-		for(HAPStoryNode node : HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstant.STORYNODE_TYPE_PAGE)) {
+		for(HAPStoryNode node : HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstantShared.STORYNODE_TYPE_PAGE)) {
 			pageNode = node;
 			break;
 		}
@@ -264,7 +264,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		
 		if(uiNode.isEnable()) {
 			String uiNodeType = uiNode.getType();
-			if(HAPConstant.STORYNODE_TYPE_UIDATA.equals(uiNodeType)||HAPConstant.STORYNODE_TYPE_UITAGOTHER.equals(uiNodeType)) {
+			if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(uiNodeType)||HAPConstantShared.STORYNODE_TYPE_UITAGOTHER.equals(uiNodeType)) {
 				HAPStoryNodeUITag uiDataNode = (HAPStoryNodeUITag)uiNode;
 				HAPHtmlTag tag = new HAPHtmlTag(uiDataNode.getTagName());
 				
@@ -282,7 +282,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 				}
 				out = tag;
 			}
-			else if(HAPConstant.STORYNODE_TYPE_HTML.equals(uiNodeType)) {
+			else if(HAPConstantShared.STORYNODE_TYPE_HTML.equals(uiNodeType)) {
 				HAPStoryNodeUIHtml uiHtmlNode = (HAPStoryNodeUIHtml)uiNode;
 				String html = uiHtmlNode.getHtml();
 				

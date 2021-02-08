@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 /**
@@ -43,7 +43,7 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	protected void setId(String id) {  this.m_id = id;   }
 
 	@Override
-	public String getStructure() {  return HAPConstant.RESOURCEID_TYPE_SIMPLE;	}
+	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_SIMPLE;	}
 
 	protected void init(String id, HAPResourceIdSupplement supplement){
 		if(id!=null)		this.setId(id);

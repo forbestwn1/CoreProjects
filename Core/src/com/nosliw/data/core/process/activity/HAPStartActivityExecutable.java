@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionSequenceFlow;
@@ -26,7 +26,7 @@ public class HAPStartActivityExecutable extends HAPExecutableActivity{
 	private HAPDefinitionSequenceFlow m_flow;
 	
 	public HAPStartActivityExecutable(String id, HAPDefinitionActivity activityDef) {
-		super(HAPConstant.ACTIVITY_CATEGARY_START, id, activityDef);
+		super(HAPConstantShared.ACTIVITY_CATEGARY_START, id, activityDef);
 	}
 
 	public void setFlow(HAPDefinitionSequenceFlow flow) { this.m_flow = flow;  }
@@ -49,7 +49,7 @@ public class HAPStartActivityExecutable extends HAPExecutableActivity{
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_START))));
+		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstantShared.ACTIVITY_TYPE_START))));
 		return out;
 	}
 	

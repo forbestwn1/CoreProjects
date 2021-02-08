@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -96,11 +96,11 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	public HAPContextStructure getOutputContext() {
 		HAPContextStructure out = null;
 		switch(this.m_output.getType()) {
-		case HAPConstant.CONTEXTSTRUCTURE_TYPE_EMPTY:
+		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY:
 			out = this.m_mapping.toSolidContext();
 			break;
-		case HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT:
-		case HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT:
+		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT:
+		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT:
 			out = this.m_output;
 			break;
 		}

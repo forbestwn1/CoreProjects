@@ -7,7 +7,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPExecutableActivity;
@@ -24,14 +24,14 @@ public class HAPEndActivityExecutable extends HAPExecutableActivity{
 	private String m_resultName;
 	
 	public HAPEndActivityExecutable(String id, HAPDefinitionActivity activityDef) {
-		super(HAPConstant.ACTIVITY_CATEGARY_END, id, activityDef);
+		super(HAPConstantShared.ACTIVITY_CATEGARY_END, id, activityDef);
 		this.m_resultName = ((HAPEndActivityDefinition)activityDef).getName();
 	}
 
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_END))));
+		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstantShared.ACTIVITY_TYPE_END))));
 		return out;
 	}
 

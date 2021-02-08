@@ -2,14 +2,14 @@ package com.nosliw.data.core.event;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdEventTask   extends HAPResourceIdSimple{
 
 	private HAPEventTaskId m_eventTaskId; 
 	
-	public HAPResourceIdEventTask(){   super(HAPConstant.RUNTIME_RESOURCE_TYPE_EVENTTASK);     }
+	public HAPResourceIdEventTask(){   super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_EVENTTASK);     }
 
 	public HAPResourceIdEventTask(HAPResourceIdSimple resourceId){
 		this();

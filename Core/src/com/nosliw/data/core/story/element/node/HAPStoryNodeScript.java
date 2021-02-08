@@ -6,7 +6,7 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
@@ -15,7 +15,7 @@ import com.nosliw.data.core.story.change.HAPUtilityChange;
 
 public class HAPStoryNodeScript extends HAPStoryNodeImp{
 
-	public final static String STORYNODE_TYPE = HAPConstant.STORYNODE_TYPE_SCRIPT; 
+	public final static String STORYNODE_TYPE = HAPConstantShared.STORYNODE_TYPE_SCRIPT; 
 	
 	@HAPAttribute
 	public static final String SCRIPT = "script";

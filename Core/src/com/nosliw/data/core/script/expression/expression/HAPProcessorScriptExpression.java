@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.HAPDefinitionReference;
@@ -44,14 +44,14 @@ public class HAPProcessorScriptExpression {
 			HAPScript scriptSeg = scriptSegs.get(j);
 			String scriptType = scriptSeg.getType();
 			String scriptId = id+"_"+j;
-			if(HAPConstant.SCRIPT_TYPE_SEG_EXPRESSION.equals(scriptType)) {
+			if(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSION.equals(scriptType)) {
 				HAPDefinitionExpression expressionItem = new HAPDefinitionExpression(scriptSeg.getScript());
 				for(String ref : references.keySet())   expressionItem.addReference(references.get(ref));
 				expressionItem.setName(scriptId);
 				expressionGroup.addEntityElement(expressionItem);
 				out.add(new HAPExecutableScriptSegExpression(scriptId, scriptId));
 			}
-			else if(HAPConstant.SCRIPT_TYPE_SEG_SCRIPT.equals(scriptType)) {
+			else if(HAPConstantShared.SCRIPT_TYPE_SEG_SCRIPT.equals(scriptType)) {
 				HAPExecutableScriptSegScript scriptSegExe = new HAPExecutableScriptSegScript(scriptId, scriptSeg.getScript());
 				//update with constant value
 				scriptSegExe.updateConstantValue(constantValues);
@@ -97,12 +97,12 @@ public class HAPProcessorScriptExpression {
 			int index = content.indexOf(EXPRESSION_TOKEN_OPEN);
 			if(index==-1){
 				//no expression
-				out.add(HAPScript.newScript(content, HAPConstant.SCRIPT_TYPE_SEG_SCRIPT));
+				out.add(HAPScript.newScript(content, HAPConstantShared.SCRIPT_TYPE_SEG_SCRIPT));
 				content = null;
 			}
 			else if(index!=0){
 				//start with text
-				out.add(HAPScript.newScript(content.substring(0, index), HAPConstant.SCRIPT_TYPE_SEG_SCRIPT));
+				out.add(HAPScript.newScript(content.substring(0, index), HAPConstantShared.SCRIPT_TYPE_SEG_SCRIPT));
 				content = content.substring(index);
 			}
 			else{
@@ -113,7 +113,7 @@ public class HAPProcessorScriptExpression {
 				String expressionStr = content.substring(expStart, expEnd);
 				content = content.substring(expEnd + EXPRESSION_TOKEN_CLOSE.length());
 				//build expression definition
-				out.add(HAPScript.newScript(expressionStr, HAPConstant.SCRIPT_TYPE_SEG_EXPRESSION));
+				out.add(HAPScript.newScript(expressionStr, HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSION));
 			}
 			i++;
 		}

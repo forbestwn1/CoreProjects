@@ -1,11 +1,11 @@
 package com.nosliw.uiresource.resource;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdUIAppConfigure  extends HAPResourceIdSimple{
 
-	public HAPResourceIdUIAppConfigure(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE);    }
+	public HAPResourceIdUIAppConfigure(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE);    }
 
 	public HAPResourceIdUIAppConfigure(HAPResourceIdSimple resourceId){
 		this();

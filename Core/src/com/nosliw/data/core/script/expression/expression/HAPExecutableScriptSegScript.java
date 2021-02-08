@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPEntityWithName;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
@@ -52,7 +52,7 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 	}
 
 	@Override
-	public String getScriptType() {  return HAPConstant.SCRIPT_TYPE_SEG_SCRIPT;  }
+	public String getScriptType() {  return HAPConstantShared.SCRIPT_TYPE_SEG_SCRIPT;  }
 
 	public List<Object> getElements(){	return this.m_elements;	}
 	

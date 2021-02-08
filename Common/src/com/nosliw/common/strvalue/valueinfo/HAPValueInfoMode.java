@@ -4,7 +4,7 @@ import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.mode.HAPStringableValueModeEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPValueInfoMode extends HAPValueInfo{
 
@@ -35,7 +35,7 @@ public class HAPValueInfoMode extends HAPValueInfo{
 	@Override
 	public void init(){
 		super.init();
-		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_MODE);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstantShared.STRINGALBE_VALUEINFO_MODE);
 	}
 	
 	@Override
@@ -61,15 +61,15 @@ public class HAPValueInfoMode extends HAPValueInfo{
 		if(categaryValueInfoEntity!=null){
 			modeValueInfo = getModeValueInfo(templateCategary); 
 			modeValueInfo.updateEntityProperty(SOLID_ATTRIBUTE_MODE, categaryValueInfoEntity.clone());
-			if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(templateCategary)){
+			if(HAPConstantShared.STRINGALBE_VALUEINFO_ATOMIC.equals(templateCategary)){
 			}
-			else if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(templateCategary)){
+			else if(HAPConstantShared.STRINGALBE_VALUEINFO_LIST.equals(templateCategary)){
 				HAPValueInfoList modeListValueInfo = (HAPValueInfoList)modeValueInfo.getPropertyInfo(SOLID_ATTRIBUTE_CHILD);
 				HAPValueInfo templateChildValueInfo = ((HAPValueInfoList)templateValueInfo).getChildValueInfo();
 				HAPValueInfoEntity modeChildValueInfo = this.buildModeValueInfo(templateChildValueInfo);
 				modeListValueInfo.setChildValueInfo(modeChildValueInfo);
 			}
-			else if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(templateCategary)){
+			else if(HAPConstantShared.STRINGALBE_VALUEINFO_MAP.equals(templateCategary)){
 				HAPValueInfoMap modeMapValueInfo = (HAPValueInfoMap)modeValueInfo.getPropertyInfo(SOLID_ATTRIBUTE_CHILD);
 				HAPValueInfo templateChildValueInfo = ((HAPValueInfoMap)templateValueInfo).getChildValueInfo();
 				String key = ((HAPValueInfoMap)templateValueInfo).getKey();
@@ -77,7 +77,7 @@ public class HAPValueInfoMode extends HAPValueInfo{
 				HAPValueInfoEntity modeChildValueInfo = this.buildModeValueInfo(templateChildValueInfo);
 				modeMapValueInfo.setChildValueInfo(modeChildValueInfo);
 			}
-			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(templateCategary)){
+			else if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY.equals(templateCategary)){
 				HAPValueInfoEntity modeAttrsValueInfo = (HAPValueInfoEntity)modeValueInfo.getPropertyInfo(SOLID_ATTRIBUTE_CHILD);
 				HAPValueInfoEntity templateValueInfoEntity = (HAPValueInfoEntity)templateValueInfo;
 				for(String property : templateValueInfoEntity.getEntityProperties()){
@@ -88,7 +88,7 @@ public class HAPValueInfoMode extends HAPValueInfo{
 					}
 				}
 			}
-			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(templateCategary)){
+			else if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(templateCategary)){
 				HAPValueInfoEntityOptions modeOptionsValueInfo = (HAPValueInfoEntityOptions)modeValueInfo.getPropertyInfo(SOLID_ATTRIBUTE_OPTIONS);
 				HAPValueInfoEntityOptions templateValueInfoEntityOptions = (HAPValueInfoEntityOptions)templateValueInfo;
 				modeOptionsValueInfo.setKeyName(templateValueInfoEntityOptions.getKeyName());

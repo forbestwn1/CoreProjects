@@ -3,7 +3,9 @@ package com.nosliw.data.core.component;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
@@ -44,7 +46,7 @@ public class HAPUtilityComponent {
 		HAPDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(component, activityPluginMan).cloneProcessSuiteDefinition(); 
 		processSuite.setContextStructure(componentExe.getContextStructure());   //kkk
 		componentExe.setProcessSuite(processSuite);
-	}
+	} 
 	
 //	public static HAPDefinitionProcessSuite getProcessSuite(HAPComponent component, HAPManagerActivityPlugin activityPluginMan) {
 //		HAPDefinitionProcessSuite out = component.getProcessSuite();
@@ -75,40 +77,38 @@ public class HAPUtilityComponent {
 	}
 
 	
-	public static void mergeWithParentAttachment(HAPWithAttachment withAttachment, HAPAttachmentContainer parentAttachment) {
-		withAttachment.getAttachmentContainer().merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
+	public static void mergeWithParentAttachment(HAPWithAttachment withAttachment, HAPContainerAttachment parentAttachment) {
+		withAttachment.getAttachmentContainer().merge(parentAttachment, HAPConstant.INHERITMODE_CHILD);
 	}
 
-	public static HAPAttachmentContainer mergeWithParentAttachment(HAPAttachmentContainer attachment, HAPAttachmentContainer parentAttachment) {
-		HAPAttachmentContainer out = attachment.cloneAttachmentContainer();
-		out.merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
+	public static HAPContainerAttachment mergeWithParentAttachment(HAPContainerAttachment attachment, HAPContainerAttachment parentAttachment) {
+		HAPContainerAttachment out = attachment.cloneAttachmentContainer();
+		out.merge(parentAttachment, HAPConstant.INHERITMODE_CHILD);
 		return out;
 	}
 
-	public static HAPAttachmentContainer buildNameMappedAttachment(HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
-		HAPAttachmentContainer out = null;
+	public static HAPContainerAttachment buildNameMappedAttachment(HAPContainerAttachment attachment, HAPWithNameMapping withNameMapping) {
+		HAPContainerAttachment out = null;
 		if(withNameMapping==null)   out = attachment;
 		else out = withNameMapping.getNameMapping().mapAttachment(attachment);
-		if(out==null)  out = new HAPAttachmentContainer();
+		if(out==null)  out = new HAPContainerAttachment();
 		return out;
 	}
 
 	//build attachment mapping for internal component
-	public static HAPAttachmentContainer buildInternalAttachment(HAPResourceId resourceId, HAPAttachmentContainer attachment, HAPWithNameMapping withNameMapping) {
-		HAPAttachmentContainer out = buildNameMappedAttachment(attachment, withNameMapping); 
-		if(resourceId!=null) {
-			out.merge(new HAPAttachmentContainer(resourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
-		}
+	public static HAPContainerAttachment buildInternalAttachment(HAPResourceId resourceId, HAPContainerAttachment attachment, HAPWithNameMapping withNameMapping) {
+		HAPContainerAttachment out = buildNameMappedAttachment(attachment, withNameMapping); 
+		HAPAttachmentUtility.mergeAttachmentInResourceIdSupplementToContainer(resourceId, out, HAPConstant.INHERITMODE_PARENT);
 		return out;
 	}
 	
-	public static void buildServiceChildrenComponent(HAPChildrenComponentIdContainer out, HAPWithServiceUse withServiceProvider, HAPAttachmentContainer attachment) {
+	public static void buildServiceChildrenComponent(HAPChildrenComponentIdContainer out, HAPWithServiceUse withServiceProvider, HAPContainerAttachment attachment) {
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = withServiceProvider.getServiceProviderDefinitions(); 
 		Map<String, HAPDefinitionServiceUse> serviceUseDefs = withServiceProvider.getServiceUseDefinitions();
 		for(String serviceName : serviceUseDefs.keySet()) {
 			HAPDefinitionServiceUse serviceUseDef = serviceUseDefs.get(serviceName);
 			HAPDefinitionServiceProvider serviceProvider = allServiceProviders.get(serviceUseDef.getProvider());
-			out.addChildCompoentId(new HAPChildrenComponentId(serviceName, HAPResourceIdFactory.newInstance(HAPConstant.RUNTIME_RESOURCE_TYPE_SERVICE, serviceProvider.getServiceId()), null), attachment);
+			out.addChildCompoentId(new HAPChildrenComponentId(serviceName, HAPResourceIdFactory.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE, serviceProvider.getServiceId()), null), attachment);
 		}
 	}
 }

@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
 public class HAPContextDefinitionRoot extends HAPEntityInfoWritableImp{
@@ -49,7 +49,7 @@ public class HAPContextDefinitionRoot extends HAPEntityInfoWritableImp{
 
 	public void setDefaultValue(Object defaultValue){		this.m_defaultValue = defaultValue;	}
 
-	public boolean isConstant() {		return HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(this.m_definition.getType());	}
+	public boolean isConstant() {		return HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(this.m_definition.getType());	}
 	
 	public Map<String, HAPContextDefinitionLeafRelative> getRelativeInfo() {
 		if(this.isConstant())  return null;

@@ -8,8 +8,8 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
 public abstract class HAPResourceDefinitionContainer <T extends HAPResourceDefinitionContainerElement> extends HAPResourceDefinitionComplexImp {
  
@@ -27,10 +27,10 @@ public abstract class HAPResourceDefinitionContainer <T extends HAPResourceDefin
 	public Set<T> getContainerElements(){    return new HashSet<T>(this.m_elements.values());    }
 	
 	public void addContainerElement(T ele) {
-		String type = ele.getType();
+		String type = ele.getType(); 
 		if(type.equals(HAPResourceDefinitionContainerElement.TYPE_ENTITY)) {
 			HAPResourceDefinitionContainerElementEntity entityEle = (HAPResourceDefinitionContainerElementEntity)ele;
-			entityEle.getAttachmentContainer().merge(this.getAttachmentContainer(), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+			entityEle.getAttachmentContainer().merge(this.getAttachmentContainer(), HAPConstant.INHERITMODE_PARENT);
 		}
 		this.m_elements.put(ele.getId(), ele);  
 	}
@@ -38,7 +38,7 @@ public abstract class HAPResourceDefinitionContainer <T extends HAPResourceDefin
 	public abstract HAPResourceDefinition getElementResourceDefinition(String eleId);
 	
 	public abstract HAPResourceDefinitionContainer<T> cloneResourceDefinitionContainer();
-	
+	 
 	public void cloneToResourceDefinitionContainer(HAPResourceDefinitionContainer<T> to) {
 		this.cloneToComplexResourceDefinition(to);
 		for(String id : this.m_elements.keySet()) {

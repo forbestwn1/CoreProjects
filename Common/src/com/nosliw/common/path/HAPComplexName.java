@@ -1,7 +1,7 @@
 package com.nosliw.common.path;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 //for name like java class: a.b.c.d.Abcd
@@ -23,7 +23,7 @@ public class HAPComplexName {
 		if(HAPBasicUtility.isStringNotEmpty(fullName)){
 			this.m_fullName = fullName;
 			
-			int index = this.m_fullName.lastIndexOf(HAPConstant.SEPERATOR_PATH);
+			int index = this.m_fullName.lastIndexOf(HAPConstantShared.SEPERATOR_PATH);
 			if(index==-1){
 				//name only
 				this.m_simpleName = this.m_fullName;

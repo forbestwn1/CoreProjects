@@ -1,6 +1,6 @@
 package com.nosliw.uiresource.page.definition;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPComponent;
 
 public class HAPDefinitionUITag extends HAPDefinitionUIUnit{
@@ -17,7 +17,7 @@ public class HAPDefinitionUITag extends HAPDefinitionUIUnit{
 	
 	@Override
 	public String getType() {
-		return HAPConstant.UIRESOURCE_TYPE_TAG;
+		return HAPConstantShared.UIRESOURCE_TYPE_TAG;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package com.nosliw.data.core.process.resource;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
@@ -17,7 +17,7 @@ public class HAPResourceDefinitionPluginProcess implements HAPPluginResourceDefi
 	}
 	
 	@Override
-	public String getResourceType() {	return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS;	}
+	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS;	}
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {

@@ -11,7 +11,7 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPUtilityUIResourceParser {
@@ -22,7 +22,7 @@ public class HAPUtilityUIResourceParser {
 	 * build expression function name based on id
 	 */
 	public static String buildExpressionFunctionName(String id){
-		return HAPConstant.UIRESOURCE_UIEXPRESSIONFUNCTION_PREFIX+id;
+		return HAPConstantShared.UIRESOURCE_UIEXPRESSIONFUNCTION_PREFIX+id;
 	}
 
 	/*
@@ -43,11 +43,11 @@ public class HAPUtilityUIResourceParser {
 	}
 	
 	public static boolean isDataKeyAttribute(String attribute){
-		return attribute.startsWith(CUSTOMTAG_PREFIX+HAPConstant.UIRESOURCE_ATTRIBUTE_DATABINDING);
+		return attribute.startsWith(CUSTOMTAG_PREFIX+HAPConstantShared.UIRESOURCE_ATTRIBUTE_DATABINDING);
 	}
 	
 	public static String makeKeyAttribute(String attribute){
-		return HAPConstant.UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX+attribute;
+		return HAPConstantShared.UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX+attribute;
 	}
 	
 	/*
@@ -56,13 +56,13 @@ public class HAPUtilityUIResourceParser {
 	 * if no, return null
 	 */
 	public static String isKeyAttribute(String attribute){
-		return HAPNamingConversionUtility.getKeyword(attribute, HAPConstant.UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX);
+		return HAPNamingConversionUtility.getKeyword(attribute, HAPConstantShared.UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX);
 	}
 	
 	/*
 	 * try to get UI id of this element
 	 */
-	public static String getUIIdInElement(Element ele){	return ele.attr(HAPConstant.UIRESOURCE_ATTRIBUTE_UIID);	}
+	public static String getUIIdInElement(Element ele){	return ele.attr(HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID);	}
 	
 	public static String spanText(String text){
 		return "<span>"+text+"</span>";

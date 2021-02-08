@@ -7,12 +7,12 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.HAPReferenceElement;
 
 public class HAPChangeItemPatch extends HAPChangeItemModifyElement{
 
-	public static final String MYCHANGETYPE = HAPConstant.STORYDESIGN_CHANGETYPE_PATCH;
+	public static final String MYCHANGETYPE = HAPConstantShared.STORYDESIGN_CHANGETYPE_PATCH;
 	
 	@HAPAttribute
 	public static final String PATH = "path";

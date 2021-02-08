@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.matcher.HAPMatchersCombo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPStoryElement;
@@ -20,7 +20,7 @@ import com.nosliw.uiresource.page.story.model.HAPUIDataInfo;
 @HAPEntityWithAttribute
 public class HAPStoryNodeUIData extends HAPStoryNodeUITag{
 	
-	public final static String STORYNODE_TYPE = HAPConstant.STORYNODE_TYPE_UIDATA; 
+	public final static String STORYNODE_TYPE = HAPConstantShared.STORYNODE_TYPE_UIDATA; 
 	
 	@HAPAttribute
 	public static final String DATAINFO = "dataInfo";

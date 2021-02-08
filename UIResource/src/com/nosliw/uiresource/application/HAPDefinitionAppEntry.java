@@ -1,6 +1,6 @@
 package com.nosliw.uiresource.application;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
 
@@ -13,7 +13,7 @@ public class HAPDefinitionAppEntry extends HAPComponentContainerElement{
 	}
 	
 	@Override
-	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY;  }
+	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPPENTRY;  }
 	
 	public HAPDefinitionApp getAppDefinition() {   return (HAPDefinitionApp)this.getResourceContainer();   }
 	

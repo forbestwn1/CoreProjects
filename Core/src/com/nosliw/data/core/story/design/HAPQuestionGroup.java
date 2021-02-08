@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.HAPStory;
 
 public class HAPQuestionGroup extends HAPQuestion{
@@ -30,7 +30,7 @@ public class HAPQuestionGroup extends HAPQuestion{
 	}
 
 	@Override
-	public String getType() {	return HAPConstant.STORYDESIGN_QUESTIONTYPE_GROUP;	}
+	public String getType() {	return HAPConstantShared.STORYDESIGN_QUESTIONTYPE_GROUP;	}
 
 	@Override
 	public void setId(String id) {

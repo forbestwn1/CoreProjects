@@ -3,7 +3,7 @@ package com.nosliw.data.core.operand;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
@@ -21,7 +21,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	private HAPOperandVariable(){}
 	
 	public HAPOperandVariable(String name){
-		super(HAPConstant.EXPRESSION_OPERAND_VARIABLE);
+		super(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE);
 		this.m_variableName = name;
 	}
 	

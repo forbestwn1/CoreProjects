@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 
@@ -35,7 +35,7 @@ public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
 	public HAPRuntimeTaskExecuteExpression(HAPExecutableExpressionGroup expression, String itemName, Map<String, Object> variablesValue, Map<String, HAPData> referencesValue){
 		this.m_expression = expression;
 		this.m_itemName = itemName;
-		if(HAPBasicUtility.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstant.NAME_DEFAULT;
+		if(HAPBasicUtility.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstantShared.NAME_DEFAULT;
 		this.m_variablesValue = variablesValue; 
 		this.m_referencesValue = referencesValue;
 	}

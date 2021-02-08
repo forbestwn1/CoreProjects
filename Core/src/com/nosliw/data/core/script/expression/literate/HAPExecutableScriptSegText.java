@@ -3,7 +3,7 @@ package com.nosliw.data.core.script.expression.literate;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 
 public class HAPExecutableScriptSegText extends HAPExecutableScriptImp{
@@ -19,7 +19,7 @@ public class HAPExecutableScriptSegText extends HAPExecutableScriptImp{
 	}
 
 	@Override
-	public String getScriptType() {   return HAPConstant.SCRIPT_TYPE_SEG_TEXT;  }
+	public String getScriptType() {   return HAPConstantShared.SCRIPT_TYPE_SEG_TEXT;  }
 	
 	public String getText() {    return this.m_text;   }
 	

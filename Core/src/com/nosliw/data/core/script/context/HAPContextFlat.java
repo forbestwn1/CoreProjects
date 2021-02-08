@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 //flat context represent result of flat a context group to context
 //one root in context group named Abc will generate two element in context: local Abc and global Abc___categary
@@ -57,7 +57,7 @@ public class HAPContextFlat extends HAPSerializableImp{
 		this.m_context.addElement(globalName, globalNameRoot);
 		
 		//build local name element
-		HAPContextDefinitionRoot localNameRoot = HAPUtilityContext.createRelativeContextDefinitionRoot(globalNameRoot, HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF, null, globalName, this.m_excludedInfo);
+		HAPContextDefinitionRoot localNameRoot = HAPUtilityContext.createRelativeContextDefinitionRoot(globalNameRoot, HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF, null, globalName, this.m_excludedInfo);
 //		((HAPContextDefinitionLeafRelative)localNameRoot.getDefinition()).setDefinition(globalNameRoot.getDefinition());
 		localNameRoot.setDefaultValue(globalNameRoot.getDefaultValue());
 		m_context.addElement(localName, localNameRoot);

@@ -2,7 +2,7 @@ package com.nosliw.data.core.process.activity;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -63,7 +63,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		//find element data criteria from coontainer data criteria
 		HAPDataTypeCriteria elementCriteria = HAPCriteriaUtility.getChildCriteriaByPath(containerCriteria, "element");
 		//build element data context 
-		stepDataContext.addElement(loopActivityDef.getElementName(), new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(new HAPVariableDataInfo(elementCriteria))), HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+		stepDataContext.addElement(loopActivityDef.getElementName(), new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(new HAPVariableDataInfo(elementCriteria))), HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 		
 		//index data definition
 		HAPExecutableWrapperTask<HAPExecutableProcess> stepProcessExe = processManager.getEmbededProcess(

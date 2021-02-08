@@ -5,14 +5,14 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process.HAPEmbededProcessTask;
 
 @HAPEntityWithAttribute
 public class HAPHandlerStepProcess extends HAPEmbededProcessTask implements HAPHandlerStep{
 
 	@Override
-	public String getHandlerStepType() {  return HAPConstant.HANDLERSTEP_TYPE_PROCESS;  }
+	public String getHandlerStepType() {  return HAPConstantShared.HANDLERSTEP_TYPE_PROCESS;  }
 	
 	@Override
 	public HAPHandlerStep cloneHandlerStep() {

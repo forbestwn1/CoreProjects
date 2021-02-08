@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoList;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPStringableValueList<T> extends HAPStringableValueComplex{
 
@@ -63,7 +63,7 @@ public class HAPStringableValueList<T> extends HAPStringableValueComplex{
 	public Iterator<HAPStringableValue> iterate(){		return this.m_elements.iterator();	}
 	
 	@Override
-	public String getStringableStructure(){		return HAPConstant.STRINGABLE_VALUESTRUCTURE_LIST;	}
+	public String getStringableStructure(){		return HAPConstantShared.STRINGABLE_VALUESTRUCTURE_LIST;	}
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

@@ -9,13 +9,13 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPChildrenComponentId;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
@@ -64,8 +64,8 @@ public class HAPDefinitionModule extends HAPComponentImp{
 		//ui part
 		for(HAPDefinitionModuleUI ui : this.getUIs()) {
 			if(!HAPUtilityEntityInfo.isEnabled(ui)) {
-				HAPAttachmentContainer mappedParentAttachment = HAPUtilityComponent.buildNameMappedAttachment(this.getAttachmentContainer(), ui);
-				HAPAttachmentReference pageAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, ui.getPage());
+				HAPContainerAttachment mappedParentAttachment = HAPUtilityComponent.buildNameMappedAttachment(this.getAttachmentContainer(), ui);
+				HAPAttachmentReference pageAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, ui.getPage());
 				out.addChildCompoentId(new HAPChildrenComponentId(ui.getName(), pageAttachment.getReferenceId(), ui.getInfo()), mappedParentAttachment);
 			}
 		}

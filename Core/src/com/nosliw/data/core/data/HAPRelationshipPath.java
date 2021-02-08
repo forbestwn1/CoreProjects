@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPRelationshipPath extends HAPSerializableImp{
 
@@ -55,7 +55,7 @@ public class HAPRelationshipPath extends HAPSerializableImp{
 	
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
-		this.m_segments = (List<HAPRelationshipPathSegment>)HAPLiterateManager.getInstance().stringToValue((String)value, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPRelationshipPathSegment.class.getName());
+		this.m_segments = (List<HAPRelationshipPathSegment>)HAPLiterateManager.getInstance().stringToValue((String)value, HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPRelationshipPathSegment.class.getName());
 		return true;
 	} 
 

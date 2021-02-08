@@ -10,7 +10,7 @@ import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.resolve.HAPResolvableString;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 /*
  * stringable value which can be interpreted as differnt type (boolean, integer, array, map, object)
@@ -161,14 +161,14 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	}
 	
 	public String getStringValue() {	return this.getStringContent();	}
-	public Boolean getBooleanValue() {		return (Boolean)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN, null);	}
-	public Integer getIntegerValue() {		return (Integer)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);	}
-	public Float getFloatValue() {		return (Float)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT, null);	}
+	public Boolean getBooleanValue() {		return (Boolean)this.getValue(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_BOOLEAN, null);	}
+	public Integer getIntegerValue() {		return (Integer)this.getValue(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);	}
+	public Float getFloatValue() {		return (Float)this.getValue(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_FLOAT, null);	}
 	public <T> List<T> getListValue(String subTypeName){
-		return (List<T>)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, subTypeName);	
+		return (List<T>)this.getValue(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_ARRAY, subTypeName);	
 	}
 	public <T> T getObjectValue(Class<T> cs){
-		return (T)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, cs.getName());
+		return (T)this.getValue(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT, cs.getName());
 	}
 	
 	@Override
@@ -220,7 +220,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	}
 	
 	@Override
-	public String getStringableStructure(){		return HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC;	}
+	public String getStringableStructure(){		return HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ATOMIC;	}
 	
 	@Override
 	public String toString(){		return this.buildLiterate();	}

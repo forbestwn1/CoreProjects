@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementReference;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -24,7 +24,7 @@ public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWrit
 	}
 
 	@Override
-	public String getType() {	return HAPConstant.PROCESSSUITE_ELEMENTTYPE_REFERENCE;	}
+	public String getType() {	return HAPConstantShared.PROCESSSUITE_ELEMENTTYPE_REFERENCE;	}
 
 	@Override
 	public HAPResourceId getResourceId() {	return this.m_resourceId;	}
@@ -33,7 +33,7 @@ public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWrit
 	protected boolean buildObjectByJson(Object obj){
 		JSONObject jsonObj = (JSONObject)obj;
 		this.buildEntityInfoByJson(jsonObj);
-		this.m_resourceId = HAPResourceIdFactory.newInstance(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, jsonObj.get(REFERENCE));
+		this.m_resourceId = HAPResourceIdFactory.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS, jsonObj.get(REFERENCE));
 		return true;  
 	}
 

@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPResourceIdEmbeded  extends HAPResourceId{
 
@@ -27,7 +27,7 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 	}
 	
 	@Override
-	public String getStructure() {  return HAPConstant.RESOURCEID_TYPE_EMBEDED;  }
+	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_EMBEDED;  }
 
 	@Override
 	public String getIdLiterate() {

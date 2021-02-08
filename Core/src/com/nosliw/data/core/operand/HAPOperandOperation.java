@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
@@ -65,7 +65,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	private HAPOperandOperation(){this.resetMatchers();}
 	
 	public HAPOperandOperation(HAPOperand base, String operation, List<HAPParmInOperationOperand> parms){
-		super(HAPConstant.EXPRESSION_OPERAND_OPERATION);
+		super(HAPConstantShared.EXPRESSION_OPERAND_OPERATION);
 		if(base!=null)		this.m_base = this.createOperandWrapper(base);
 		this.m_operation = operation;
 
@@ -75,7 +75,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	}
 	
 	public HAPOperandOperation(String dataTypeIdLiterate, String operation, List<HAPParmInOperationOperand> parms){
-		super(HAPConstant.EXPRESSION_OPERAND_OPERATION);
+		super(HAPConstantShared.EXPRESSION_OPERAND_OPERATION);
 		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 		this.m_operation = operation;
 		

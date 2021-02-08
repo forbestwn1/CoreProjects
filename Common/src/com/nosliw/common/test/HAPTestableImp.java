@@ -1,6 +1,6 @@
 package com.nosliw.common.test;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPTestableImp implements HAPTestable{
 

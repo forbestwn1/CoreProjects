@@ -9,7 +9,7 @@ import java.util.Set;
 
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPData;
@@ -30,7 +30,7 @@ public class HAPOperandUtility {
 			@Override
 			public void postPross(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
 					attrOperands.add(operand);
 				}
 			}
@@ -44,8 +44,8 @@ public class HAPOperandUtility {
 			HAPOperandAttribute attrOp = (HAPOperandAttribute)attrOpWrapper.getOperand();
 			
 			List<HAPParmInOperationOperand> parms = new ArrayList<HAPParmInOperationOperand>();
-			parms.add(new HAPParmInOperationOperand(HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA_NAME, new HAPOperandConstant(new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), attrOp.getAttribute()))));
-			HAPOperandOperation opOperand = new HAPOperandOperation(attrOp.getBase().getOperand(), HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA, parms);
+			parms.add(new HAPParmInOperationOperand(HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDDATA_NAME, new HAPOperandConstant(new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), attrOp.getAttribute()))));
+			HAPOperandOperation opOperand = new HAPOperandOperation(attrOp.getBase().getOperand(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDDATA, parms);
 			attrOpWrapper.setOperand(opOperand);
 		}
 	}
@@ -62,7 +62,7 @@ public class HAPOperandUtility {
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				List<HAPAttributeOperandChainInfo> stack = (List<HAPAttributeOperandChainInfo>)data;
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
 					HAPOperandAttribute attrOperand = (HAPOperandAttribute)operand.getOperand();
 					HAPAttributeOperandChainInfo attrInfo = null;
 					if(stack.size()==0 || !stack.get(stack.size()-1).open){
@@ -91,7 +91,7 @@ public class HAPOperandUtility {
 			public void postPross(HAPOperandWrapper operand, Object data){
 				List<HAPAttributeOperandChainInfo> stack = (List<HAPAttributeOperandChainInfo>)data;
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
 					HAPOperandAttribute attrOperand = (HAPOperandAttribute)operand.getOperand();
 					HAPAttributeOperandChainInfo attrInfo = stack.get(stack.size()-1);
 					attrInfo.veryPath.add(attrOperand.getAttribute());
@@ -113,7 +113,7 @@ public class HAPOperandUtility {
 	
 	private static void processAttributeChain(HAPAttributeOperandChainInfo attrInfo, Map<String, HAPInfoCriteria> contextVars){
 		String startOpType = attrInfo.startOperand.getOperand().getType();
-		if(startOpType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
+		if(startOpType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 			//attribute start with variable
 			HAPOperandVariable varOperand = (HAPOperandVariable)attrInfo.startOperand.getOperand();
 			attrInfo.path.add(0, varOperand.getVariableName());
@@ -130,8 +130,8 @@ public class HAPOperandUtility {
 					String[] pathSegs = HAPNamingConversionUtility.parsePaths(path.substring(name.length()+1));
 					for(String pathSeg : pathSegs){
 						List<HAPParmInOperationOperand> parms = new ArrayList<HAPParmInOperationOperand>();
-						parms.add(new HAPParmInOperationOperand(HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA_NAME, new HAPOperandConstant("#string:simple:"+pathSeg)));
-						operand = new HAPOperandOperation(operand, HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA, parms);
+						parms.add(new HAPParmInOperationOperand(HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDDATA_NAME, new HAPOperandConstant("#string:simple:"+pathSeg)));
+						operand = new HAPOperandOperation(operand, HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDDATA, parms);
 					}
 					attrInfo.lastAttrOperand.setOperand(operand);
 					break;
@@ -161,12 +161,12 @@ public class HAPOperandUtility {
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 					HAPOperandVariable variableChild = (HAPOperandVariable)operand.getOperand();
 					String newName = updateVar.getUpdatedName(variableChild.getVariableName()); 
 					if(newName!=null)	variableChild.setVariableName(newName);
 				}
-				else if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+				else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceChild = (HAPOperandReference)operand.getOperand();
 					
 				}
@@ -181,7 +181,7 @@ public class HAPOperandUtility {
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 					HAPOperandConstant constantChild = (HAPOperandConstant)operand.getOperand();
 					if(HAPBasicUtility.isStringNotEmpty(constantChild.getName())){
 						String newName = updateVar.getUpdatedName(constantChild.getName()); 
@@ -199,7 +199,7 @@ public class HAPOperandUtility {
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 					out.add(referenceOperand.getReferenceName());
 				}
@@ -217,11 +217,11 @@ public class HAPOperandUtility {
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				Set<String> vars = (Set<String>)data;
 				switch(operand.getOperand().getType()){
-				case HAPConstant.EXPRESSION_OPERAND_VARIABLE:
+				case HAPConstantShared.EXPRESSION_OPERAND_VARIABLE:
 					HAPOperandVariable varOperand = (HAPOperandVariable)operand.getOperand();
 					vars.add(varOperand.getVariableName());
 					break;
-				case HAPConstant.EXPRESSION_OPERAND_REFERENCE:
+				case HAPConstantShared.EXPRESSION_OPERAND_REFERENCE:
 					HAPOperandReference refOperand = (HAPOperandReference)operand.getOperand();
 					Map<String, String> refVarMapping = refOperand.getVariableMapping();
 					for(String n : refVarMapping.keySet()) {
@@ -247,7 +247,7 @@ public class HAPOperandUtility {
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				Set<String> vars = (Set<String>)data;
 				switch(operand.getOperand().getType()){
-				case HAPConstant.EXPRESSION_OPERAND_CONSTANT:
+				case HAPConstantShared.EXPRESSION_OPERAND_CONSTANT:
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
 					if(constantOperand.getData()==null){
 						vars.add(constantOperand.getName());
@@ -276,7 +276,7 @@ public class HAPOperandUtility {
 				@Override
 				public boolean processOperand(HAPOperandWrapper operand, Object data) {
 					String opType = operand.getOperand().getType();
-					if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 						HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
 						if(constantOperand.getData()==null){
 							String constantName = constantOperand.getName();
@@ -284,7 +284,7 @@ public class HAPOperandUtility {
 							constantOperand.setData(constantData);
 						}
 					}
-					else if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
+					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 						HAPOperandVariable varOperand = (HAPOperandVariable)operand.getOperand();
 						HAPData cstData = contextConstants.get(varOperand.getVariableName());
 						if(cstData!=null) {
@@ -337,7 +337,7 @@ public class HAPOperandUtility {
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_OPERATION)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_OPERATION)){
 					HAPOperandOperation operationOperand = (HAPOperandOperation)operand.getOperand();
 					HAPDataTypeId dataTypeId = operationOperand.getDataTypeId();
 					if(dataTypeId!=null){

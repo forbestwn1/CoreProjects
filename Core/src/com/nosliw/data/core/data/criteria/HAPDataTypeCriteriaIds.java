@@ -9,7 +9,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
 
@@ -29,7 +29,7 @@ public class HAPDataTypeCriteriaIds extends HAPDataTypeCriteriaImp{
 	}
 	
 	@Override
-	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_DATATYPEIDS;	}
+	public String getType() {		return HAPConstantShared.DATATYPECRITERIA_TYPE_DATATYPEIDS;	}
 
 	@Override
 	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper) {		return this.m_ids;	}

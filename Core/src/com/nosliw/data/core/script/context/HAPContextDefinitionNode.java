@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPContextDefinitionNode extends HAPContextDefinitionLeafVariable{
@@ -22,7 +22,7 @@ public class HAPContextDefinitionNode extends HAPContextDefinitionLeafVariable{
 	}
 	
 	@Override
-	public String getType() {	return HAPConstant.CONTEXT_ELEMENTTYPE_NODE;	}
+	public String getType() {	return HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE;	}
 
 	public Map<String, HAPContextDefinitionElement> getChildren(){	return this.m_children;	}
 	

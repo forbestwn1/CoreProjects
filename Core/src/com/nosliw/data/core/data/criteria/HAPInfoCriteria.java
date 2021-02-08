@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPInfoCriteria extends HAPSerializableImp{
 
@@ -61,8 +61,8 @@ public class HAPInfoCriteria extends HAPSerializableImp{
 	
 	private void initWithDefault() {
 		if(this.m_status==null) {
-			if(this.m_criteria==null)   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN;
-			else   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_CLOSE;
+			if(this.m_criteria==null)   this.m_status = HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN;
+			else   this.m_status = HAPConstantShared.EXPRESSION_VARIABLE_STATUS_CLOSE;
 		}
 	}
 

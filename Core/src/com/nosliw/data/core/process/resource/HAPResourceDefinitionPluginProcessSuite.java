@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
@@ -27,7 +27,7 @@ public class HAPResourceDefinitionPluginProcessSuite implements HAPPluginResourc
 	}
 	
 	@Override
-	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
+	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {

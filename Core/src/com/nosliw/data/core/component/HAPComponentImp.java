@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.handler.HAPHandler;
 
 abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp implements HAPComponent{
@@ -28,7 +28,7 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	}
 	
 	@Override
-	public String getEntityOrReferenceType() {   return HAPConstant.ENTITY;    }
+	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
 
 	@Override
 	public Set<HAPHandlerLifecycle> getLifecycleAction(){    return this.m_lifecycleAction;    }

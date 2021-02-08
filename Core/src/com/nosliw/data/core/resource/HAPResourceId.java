@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 @HAPEntityWithAttribute
@@ -41,7 +41,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPEnt
 	}
 	
 	@Override
-	public String getEntityOrReferenceType() {   return HAPConstant.REFERENCE;    }
+	public String getEntityOrReferenceType() {   return HAPConstantShared.REFERENCE;    }
 
 	public String getType() {  return this.m_type;  }
 	protected void setType(String type) {    this.m_type = type;    }

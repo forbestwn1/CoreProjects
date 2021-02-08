@@ -17,7 +17,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
@@ -38,9 +38,9 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 				"constant.xml","group.xml","group_attribute.xml","group_constant.xml"});
 	}
 	
-	public void setJsPath(String path){	this.m_jsPath = new HAPStringableValueAtomic(path, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);	}
-	public void setJsAttributeFile(String file){	this.m_jsAttributeFile = new HAPStringableValueAtomic(file, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);	}
-	public void setJsConstantFile(String file){	this.m_jsConstantFile = new HAPStringableValueAtomic(file, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);	}
+	public void setJsPath(String path){	this.m_jsPath = new HAPStringableValueAtomic(path, HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_STRING, null);	}
+	public void setJsAttributeFile(String file){	this.m_jsAttributeFile = new HAPStringableValueAtomic(file, HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_STRING, null);	}
+	public void setJsConstantFile(String file){	this.m_jsConstantFile = new HAPStringableValueAtomic(file, HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_STRING, null);	}
 	
 	public void addConstantGroup(HAPConstantGroup group){		this.m_groups.add(group);	}
 	

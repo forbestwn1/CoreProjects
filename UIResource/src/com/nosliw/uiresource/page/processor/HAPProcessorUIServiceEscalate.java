@@ -3,7 +3,7 @@ package com.nosliw.uiresource.page.processor;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
@@ -17,12 +17,12 @@ public class HAPProcessorUIServiceEscalate {
 
 	public static void process(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();
-		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
+		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
 			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getContext().getInfo())) {
 				Map<String, HAPExecutableServiceUse> mappedServiceDefs = new LinkedHashMap<String, HAPExecutableServiceUse>();
 				
-				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstant.UITAG_PARM_SERVICE));
+				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstantShared.UITAG_PARM_SERVICE));
 				exeTag.setServiceMapping(nameMapping);
 				Map<String, HAPExecutableServiceUse> exeServiceDefs = body.getServiceDefinitions();
 				for(String serviceName : exeServiceDefs.keySet()) {
@@ -42,7 +42,7 @@ public class HAPProcessorUIServiceEscalate {
 	
 	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPExecutableServiceUse> servicesDef, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();
-		if(HAPConstant.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
+		if(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
 			for(String serviceName : servicesDef.keySet()) {
 				if(body.getServiceDefinition(serviceName)==null) {
 					body.addServiceDefinition(serviceName, servicesDef.get(serviceName));

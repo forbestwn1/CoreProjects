@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
@@ -30,17 +30,17 @@ public class HAPUtilityScriptExpression {
 		String type = null;
 		String script = null;
 		if(HAPUtilityScriptLiterate.isText(content)) {
-			type = HAPConstant.SCRIPT_TYPE_TEXT;
+			type = HAPConstantShared.SCRIPT_TYPE_TEXT;
 			script = content;
 		}
 		else {
 			List<HAPScript> iterateSegs = HAPUtilityScriptLiterate.parseScriptLiterate(content);
 			if(iterateSegs.size()==1) {
-				type = HAPConstant.SCRIPT_TYPE_EXPRESSION;
+				type = HAPConstantShared.SCRIPT_TYPE_EXPRESSION;
 				script = iterateSegs.get(0).getScript();
 			}
 			else {
-				type = HAPConstant.SCRIPT_TYPE_LITERATE;
+				type = HAPConstantShared.SCRIPT_TYPE_LITERATE;
 				script = content;
 			}
 		}

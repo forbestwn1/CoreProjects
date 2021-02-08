@@ -2,7 +2,7 @@ package com.nosliw.common.strvalue.valueinfo;
 
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueList;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPValueInfoList extends HAPValueInfoContainer{
 
@@ -17,7 +17,7 @@ public class HAPValueInfoList extends HAPValueInfoContainer{
 	@Override
 	public void init(){
 		super.init();
-		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_LIST);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstantShared.STRINGALBE_VALUEINFO_LIST);
 	}
 	
 	@Override

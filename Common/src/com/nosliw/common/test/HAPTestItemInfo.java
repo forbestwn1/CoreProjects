@@ -1,6 +1,6 @@
 package com.nosliw.common.test;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 /*
  * information about test item : 
@@ -38,7 +38,7 @@ public abstract class HAPTestItemInfo extends HAPTestInfo{
 	abstract public void doTest(HAPResultTestCase testResult);
 
 	@Override
-	public String getType(){ return HAPConstant.TEST_TYPE_ITEM; }
+	public String getType(){ return HAPConstantShared.TEST_TYPE_ITEM; }
 
 	//run the test for test item
 	public HAPResult run(HAPResult parentResult){

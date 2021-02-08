@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
@@ -28,9 +28,9 @@ public class HAPProcessorContextRelative {
 	
 	public static HAPContext process(HAPContext context, HAPParentContext parent, Set<String>  dependency, HAPConfigureContextProcessor configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextGroup contextGroup = new HAPContextGroup();
-		contextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, context);
+		contextGroup.setContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, context);
 		contextGroup = process(contextGroup, parent, dependency, configure, runtimeEnv);
-		return contextGroup.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+		return contextGroup.getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 	}
 	
 	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPParentContext parent, Set<String>  dependency, HAPConfigureContextProcessor configure, HAPRuntimeEnvironment runtimeEnv) {
@@ -45,7 +45,7 @@ public class HAPProcessorContextRelative {
 	private static List<String> allParentName(HAPParentContext parent){
 		List<String> out = new ArrayList<String>();
 		out.addAll(parent.getNames());
-		out.add(HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF);
+		out.add(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF);
 		return out;
 	}
 	
@@ -64,7 +64,7 @@ public class HAPProcessorContextRelative {
 	private static HAPContextDefinitionElement processRelativeInContextDefinitionElement(HAPContextDefinitionElement defContextElement, String parentName, HAPContextGroup parentContext, Set<String>  dependency, boolean isParentFlat, HAPConfigureContextProcessor configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextDefinitionElement out = defContextElement;
 		switch(defContextElement.getType()) {
-		case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE:
 			HAPContextDefinitionLeafRelative relativeContextElement = (HAPContextDefinitionLeafRelative)defContextElement;
 			if(parentName.equals(relativeContextElement.getParent())) {
 				dependency.add(parentName);
@@ -77,7 +77,7 @@ public class HAPProcessorContextRelative {
 				}
 			}
 			break;
-		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 			Map<String, HAPContextDefinitionElement> processedChildren = new LinkedHashMap<String, HAPContextDefinitionElement>();
 			HAPContextDefinitionNode nodeContextElement = (HAPContextDefinitionNode)defContextElement;
 			for(String childName : nodeContextElement.getChildren().keySet()) { 	
@@ -99,7 +99,7 @@ public class HAPProcessorContextRelative {
 			throw new RuntimeException();
 
 		switch(resolveInfo.rootNode.getDefinition().getType()) {
-		case HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT:
 		{
 			//if refer to a constant element
 			out = new HAPContextDefinitionLeafConstant();
@@ -120,7 +120,7 @@ public class HAPProcessorContextRelative {
 					String refRootId = null;
 					String refPath = null;
 					HAPContextDefinitionElement parentContextEle = resolveInfo.referedNode; 
-					if(parentContextEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+					if(parentContextEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 						HAPReferenceContextNode parentSolidNodeRef = ((HAPContextDefinitionLeafRelative)parentContextEle).getSolidNodeReference();
 						refRootId = parentSolidNodeRef.getRootNodeId();
 						refPath = HAPNamingConversionUtility.cascadePath(parentSolidNodeRef.getPath(), resolveInfo.remainPath);
@@ -153,7 +153,7 @@ public class HAPProcessorContextRelative {
 					//inherit rule from parent
 					if(configure.relativeInheritRule) {
 						HAPContextDefinitionElement solidParent = solvedContextEle.getSolidContextDefinitionElement();
-						if(solidParent.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+						if(solidParent.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 							HAPVariableDataInfo solidParentDataInfo = ((HAPContextDefinitionLeafData)solidParent).getDataInfo();
 							HAPMatchers ruleMatchers = HAPMatcherUtility.reversMatchers(HAPMatcherUtility.cascadeMatchers(solidParentDataInfo.getRuleMatchers()==null?null:solidParentDataInfo.getRuleMatchers().getReverseMatchers(), noVoidMatchers.get("")));
 							for(HAPDataRule rule : solidParentDataInfo.getRules()) {

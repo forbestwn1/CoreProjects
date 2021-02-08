@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -23,7 +23,7 @@ public class HAPPluginResourceDefinitionScriptGroup implements HAPPluginResource
 	}
 	
 	@Override
-	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_SCRIPTGROUP;  }
+	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTGROUP;  }
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {

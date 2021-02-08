@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
@@ -28,7 +28,7 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 	}
 	
 	@Override
-	public String getType() {		return HAPConstant.ACTIVITY_TYPE_END;	}
+	public String getType() {		return HAPConstantShared.ACTIVITY_TYPE_END;	}
 	
 	public HAPDefinitionDataAssociation getOutput() {    return this.m_output;   }
 	

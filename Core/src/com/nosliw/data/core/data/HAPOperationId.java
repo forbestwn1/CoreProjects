@@ -1,7 +1,7 @@
 package com.nosliw.data.core.data;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPOperationId extends HAPDataTypeId{
@@ -45,7 +45,7 @@ public class HAPOperationId extends HAPDataTypeId{
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
-		int index = literateValue.lastIndexOf(HAPConstant.SEPERATOR_LEVEL1);
+		int index = literateValue.lastIndexOf(HAPConstantShared.SEPERATOR_LEVEL1);
 		this.setOperation(literateValue.substring(index+1));
 		super.buildObjectByLiterate(literateValue.substring(0, index));
 		

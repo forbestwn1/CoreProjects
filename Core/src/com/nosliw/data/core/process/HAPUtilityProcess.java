@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
@@ -102,7 +102,7 @@ public class HAPUtilityProcess {
 				String[] pathSegs = new HAPPath(varPath.getSubPath()).getPathSegs();
 				if(pathSegs.length>0) {
 					int i = 0;
-					while(!HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE.equals(currentEle.getType())&&currentEle!=null) {
+					while(!HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE.equals(currentEle.getType())&&currentEle!=null) {
 						currentEle = currentEle.getChild(pathSegs[i]);
 						i++;
 					}

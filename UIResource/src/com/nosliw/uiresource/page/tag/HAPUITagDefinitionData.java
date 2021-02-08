@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 
 public class HAPUITagDefinitionData extends HAPUITagDefinition{
@@ -15,7 +15,7 @@ public class HAPUITagDefinitionData extends HAPUITagDefinition{
 	private HAPDataTypeCriteria m_dataTypeCriteria;
 	
 	public HAPUITagDefinitionData() {
-		super(HAPConstant.UITAG_TYPE_DATA);
+		super(HAPConstantShared.UITAG_TYPE_DATA);
 	}
 	
 	public HAPDataTypeCriteria getDataTypeCriteria() {	return this.m_dataTypeCriteria;	}

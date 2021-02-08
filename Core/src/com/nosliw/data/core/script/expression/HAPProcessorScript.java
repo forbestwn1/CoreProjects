@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityDataComponent;
@@ -119,13 +119,13 @@ public class HAPProcessorScript {
 			String type = script.getType();
 			String scriptId = scriptDef.getId();
 			if(HAPBasicUtility.isStringEmpty(scriptId))  scriptId = i+"";
-			if(HAPConstant.SCRIPT_TYPE_EXPRESSION.equals(type)) {
+			if(HAPConstantShared.SCRIPT_TYPE_EXPRESSION.equals(type)) {
 				scriptExe = HAPProcessorScriptExpression.process(scriptId, scriptDef, scriptDef.getReference(), constantsValue, expressionGroupDef);
 			}
-			else if(HAPConstant.SCRIPT_TYPE_LITERATE.equals(type)) {
+			else if(HAPConstantShared.SCRIPT_TYPE_LITERATE.equals(type)) {
 				scriptExe = HAPProcessorScriptLiterate.process(scriptId, scriptDef, scriptDef.getReference(), constantsValue, expressionGroupDef);
 			}
-			else if(HAPConstant.SCRIPT_TYPE_TEXT.equals(type)) {
+			else if(HAPConstantShared.SCRIPT_TYPE_TEXT.equals(type)) {
 				scriptExe = new HAPExecutableScriptText(scriptId, script.getScript());
 			}
 			out.addScript(scriptExe);

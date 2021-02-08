@@ -10,10 +10,10 @@ import com.nosliw.common.info.HAPInfoUtility;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithDataContext;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -49,7 +49,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 
 	@Override
-	public String getEntityOrReferenceType() {   return HAPConstant.ENTITY;    }
+	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
 
 	public HAPResourceDefinitionContainer getResourceContainer() {   return this.m_componentContainer;    }
 	public void setResourceContainer(HAPResourceDefinitionContainer container) {   this.m_componentContainer = container;     }
@@ -71,7 +71,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public HAPInfo getInfo() {		return this.m_componentEntity.getInfo();	}
 	
 	@Override
-	public HAPAttachmentContainer getAttachmentContainer() {  return this.getComponentEntity().getAttachmentContainer(); }
+	public HAPContainerAttachment getAttachmentContainer() {  return this.getComponentEntity().getAttachmentContainer(); }
 
 	@Override
 	public HAPLocalReferenceBase getLocalReferenceBase() {  return this.getAttachmentContainer().getLocalReferenceBase(); }
@@ -216,7 +216,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 
 	@Override
-	public void setAttachmentContainer(HAPAttachmentContainer attachmentContainer) {
+	public void setAttachmentContainer(HAPContainerAttachment attachmentContainer) {
 		// TODO Auto-generated method stub
 		
 	}

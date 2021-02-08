@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPErrorUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
@@ -66,7 +66,7 @@ public class HAPProcessorProcess{
 			HAPDefinitionActivity activity = out.getDefinition().getProcess().getActivityById(activityId);
 			
 			//start activity
-			if(activity.getType().equals(HAPConstant.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    
+			if(activity.getType().equals(HAPConstantShared.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    
 			
 			//process activity
 			HAPExecutableActivity activityExe = processMan.getPluginManager().getPlugin(activity.getType()).process(activity, activityId, processContext, out, context, results, allServiceProviders, processMan, runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForActivity(), processTracker);

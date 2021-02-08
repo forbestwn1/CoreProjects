@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
 public class HAPMiniApp extends HAPEntityInfoWritableImp{
@@ -24,7 +24,7 @@ public class HAPMiniApp extends HAPEntityInfoWritableImp{
 	
 	public HAPMiniApp(String id, String name, String categary) {
 		this.setId(id);
-		if(HAPBasicUtility.isStringEmpty(categary))  this.m_categary = HAPConstant.MINIAPP_DATAOWNER_APP;
+		if(HAPBasicUtility.isStringEmpty(categary))  this.m_categary = HAPConstantShared.MINIAPP_DATAOWNER_APP;
 		else this.m_categary = categary;
 		this.setName(name);
 	}

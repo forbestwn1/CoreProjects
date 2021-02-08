@@ -5,7 +5,7 @@ import java.io.File;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPErrorUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -23,7 +23,7 @@ public class HAPResourceDefinitionPluginModule implements HAPPluginResourceDefin
 	}
 	
 	@Override
-	public String getResourceType() {	return HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE;	}
+	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIMODULE;	}
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {

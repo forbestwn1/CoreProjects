@@ -26,7 +26,7 @@ import java.util.Set;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.strvalue.mode.HAPValueInfoModeUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
@@ -157,15 +157,15 @@ public class HAPValueInfoManager {
 	private void registerEntityValueInfoByClass(HAPValueInfo vf){
 		HAPValueInfo valueInfo = vf.getSolidValueInfo();
 		String valueInfoType = valueInfo.getValueInfoType();
-		if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(valueInfoType)){
+		if(HAPConstantShared.STRINGALBE_VALUEINFO_MAP.equals(valueInfoType)){
 			HAPValueInfo childValueInfo = ((HAPValueInfoMap)valueInfo).getChildValueInfo();
 			this.registerEntityValueInfoByClass(childValueInfo);
 		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(valueInfoType)){
+		else if(HAPConstantShared.STRINGALBE_VALUEINFO_LIST.equals(valueInfoType)){
 			HAPValueInfo childValueInfo = ((HAPValueInfoList)valueInfo).getChildValueInfo();
 			this.registerEntityValueInfoByClass(childValueInfo);
 		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(valueInfoType)){
+		else if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY.equals(valueInfoType)){
 			HAPEntityValueInfo entityValueInfo = new HAPEntityValueInfo((HAPValueInfoEntity)valueInfo, this);
 			String className = entityValueInfo.getEntityClassName(); 
 			if(className!=null){
@@ -186,7 +186,7 @@ public class HAPValueInfoManager {
 				}
 			}
 		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(valueInfoType)){
+		else if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(valueInfoType)){
 			HAPValueInfoEntityOptions entityOptionsValueInfo = (HAPValueInfoEntityOptions)valueInfo;
 			Set<String> keys = entityOptionsValueInfo.getOptionsKey();
 			for(String key : keys){
@@ -199,7 +199,7 @@ public class HAPValueInfoManager {
 		for(String name : this.m_valueInfos.keySet()){
 			HAPValueInfo vf = this.m_valueInfos.get(name);
 			String valueInfoType = vf.getValueInfoType();
-			if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(valueInfoType)){
+			if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY.equals(valueInfoType)){
 				HAPValueInfoEntity valueInfo = (HAPValueInfoEntity)vf.getSolidValueInfo();
 				String table = valueInfo.getTable();
 				
@@ -226,7 +226,7 @@ public class HAPValueInfoManager {
 				}
 				
 				String propertyValueInfoType = propertyValueInfo.getValueInfoType();
-				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
+				if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
 					readColumnInfoFromEntity(tableInfo, (HAPValueInfoEntity)propertyValueInfo, HAPNamingConversionUtility.cascadePath(path, property));
 				}
 			}

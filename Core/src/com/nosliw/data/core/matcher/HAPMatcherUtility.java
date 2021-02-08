@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPRelationship;
@@ -92,10 +92,10 @@ public class HAPMatcherUtility {
 				
 				String segmentType = segment.getType();
 				switch(segmentType){
-				case HAPConstant.DATATYPE_PATHSEGMENT_PARENT:
+				case HAPConstantShared.DATATYPE_PATHSEGMENT_PARENT:
 					baseDataType = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), segment.getId(), HAPSerializationFormat.LITERATE);
 					break;
-				case HAPConstant.DATATYPE_PATHSEGMENT_LINKED:
+				case HAPConstantShared.DATATYPE_PATHSEGMENT_LINKED:
 					baseDataType = new HAPDataTypeId(baseDataType.getName(), segment.getId());
 					break;
 				}

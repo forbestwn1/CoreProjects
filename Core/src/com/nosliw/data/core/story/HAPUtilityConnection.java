@@ -1,6 +1,6 @@
 package com.nosliw.data.core.story;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
 import com.nosliw.data.core.story.element.connection.HAPConnectionDataIO;
 
@@ -10,7 +10,7 @@ public class HAPUtilityConnection {
 		HAPConnectionContain out = new HAPConnectionContain();
 		HAPConnectionEnd containerEnd = out.getEnd1();
 		containerEnd.setNodeRef(containerNodeRef);
-		containerEnd.setProfile(HAPConstant.STORYNODE_PROFILE_CONTAINER);
+		containerEnd.setProfile(HAPConstantShared.STORYNODE_PROFILE_CONTAINER);
 		
 		HAPConnectionEnd childEnd = out.getEnd2();
 		childEnd.setNodeRef(childNodeRef);
@@ -23,11 +23,11 @@ public class HAPUtilityConnection {
 		HAPConnectionDataIO out = new HAPConnectionDataIO();
 		HAPConnectionEnd fromEnd = out.getEnd1();
 		fromEnd.setNodeRef(fromNodeRef);
-		fromEnd.setProfile(HAPConstant.STORYNODE_PROFILE_DATAOUT);
+		fromEnd.setProfile(HAPConstantShared.STORYNODE_PROFILE_DATAOUT);
 		
 		HAPConnectionEnd toEnd = out.getEnd2();
 		toEnd.setNodeRef(toNodeRef);
-		toEnd.setProfile(HAPConstant.STORYNODE_PROFILE_DATAIN);
+		toEnd.setProfile(HAPConstantShared.STORYNODE_PROFILE_DATAIN);
 		
 		out.setPath1(fromPath);
 		out.setPath2(toPath);

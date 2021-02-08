@@ -9,8 +9,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
+//attachment that have real entity
 public class HAPAttachmentEntity extends HAPAttachmentImp{
 
 	@HAPAttribute
@@ -26,7 +27,7 @@ public class HAPAttachmentEntity extends HAPAttachmentImp{
 	
 	@Override
 	public String getType() {
-		return HAPConstant.ATTACHMENT_TYPE_ENTITY;
+		return HAPConstantShared.ATTACHMENT_TYPE_ENTITY;
 	}
 
 	public Object getEntity() {    return this.m_entity;    }
@@ -69,7 +70,7 @@ public class HAPAttachmentEntity extends HAPAttachmentImp{
 	@Override
 	public HAPAttachmentEntity cloneAttachment() {
 		HAPAttachmentEntity out = new HAPAttachmentEntity();
-		this.cloneToObject(out);
+		this.cloneToAttachment(out);
 		out.m_entity = this.m_entity;
 		return out;
 	}

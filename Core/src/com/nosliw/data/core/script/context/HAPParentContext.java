@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPParentContext extends HAPSerializableImp{
 
@@ -37,7 +37,7 @@ public class HAPParentContext extends HAPSerializableImp{
 		if(context==null)  return this;
 		if(this.isSelf(name))  return this;   //ignore self parent
 		
-		if(HAPBasicUtility.isStringEmpty(name))  name = HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+		if(HAPBasicUtility.isStringEmpty(name))  name = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		this.m_elements.put(name, context);
 		this.m_eleNames.add(name);
 		return this;
@@ -47,11 +47,11 @@ public class HAPParentContext extends HAPSerializableImp{
 	
 	public HAPContextStructure getContext(String name) {	return this.m_elements.get(name);	}
 
-	public HAPContextStructure getContext() {	return this.m_elements.get(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
+	public HAPContextStructure getContext() {	return this.m_elements.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
 
 	public List<String> getNames(){  return this.m_eleNames;  }	
 
-	private boolean isSelf(String name) {	return HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name);  }
+	private boolean isSelf(String name) {	return HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name);  }
 	
 	public HAPParentContext cloneParentContext() {
 		HAPParentContext out = new HAPParentContext();

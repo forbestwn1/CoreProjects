@@ -9,21 +9,21 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPLiterateArray  implements HAPLiterateDef{
 
 	@Override
-	public String getName() {	return HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY;	}
+	public String getName() {	return HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_ARRAY;	}
 
 	@Override
 	public Object stringToValue(String strValue, String subType) {
 		List<Object> out = new ArrayList<Object>();
 		if(strValue==null)   return out;
 		
-		int startIndex = strValue.indexOf(HAPConstant.SEPERATOR_ARRAYSTART);
-		int endIndex = strValue.lastIndexOf(HAPConstant.SEPERATOR_ARRAYEND);
+		int startIndex = strValue.indexOf(HAPConstantShared.SEPERATOR_ARRAYSTART);
+		int endIndex = strValue.lastIndexOf(HAPConstantShared.SEPERATOR_ARRAYEND);
 		
 		String arrayStr = strValue;
 		if(startIndex!=-1 && endIndex!=-1){
@@ -36,7 +36,7 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 			type = subType;
 		}
 		else{
-			type = HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT;
+			type = HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT;
 			type1 = subType;
 		}
 		

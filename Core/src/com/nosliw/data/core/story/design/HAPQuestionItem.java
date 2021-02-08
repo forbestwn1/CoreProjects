@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.HAPReferenceElement;
 import com.nosliw.data.core.story.HAPReferenceElementWrapper;
 import com.nosliw.data.core.story.HAPStory;
@@ -40,7 +40,7 @@ public class HAPQuestionItem extends HAPQuestion{
 	public void processAlias(HAPStory story) {  this.m_targetRef.processAlias(story);  }
 
 	@Override
-	public String getType() {	return HAPConstant.STORYDESIGN_QUESTIONTYPE_ITEM;	}
+	public String getType() {	return HAPConstantShared.STORYDESIGN_QUESTIONTYPE_ITEM;	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

@@ -2,14 +2,14 @@ package com.nosliw.uiresource.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdUIModule  extends HAPResourceIdSimple{
 
 	private HAPUIModuleId m_uiModuleId; 
 	
-	public HAPResourceIdUIModule(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE);    }
+	public HAPResourceIdUIModule(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIMODULE);    }
 
 	public HAPResourceIdUIModule(HAPResourceIdSimple resourceId){
 		this();

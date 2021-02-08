@@ -2,7 +2,7 @@ package com.nosliw.common.strvalue.valueinfo;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPDBColumnsInfo  extends HAPStringableValueEntity{
 
@@ -18,9 +18,9 @@ public class HAPDBColumnsInfo  extends HAPStringableValueEntity{
 	public static final String COLUMNS = "columns";
 	
 	public HAPDBColumnsInfo(){
-		this.updateComplexChild(COLUMNS, HAPConstant.STRINGALBE_VALUEINFO_LIST);
-		this.updateAtomicChildStrValue(PATHTYPE, HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE);
-		this.updateAtomicChildStrValue(INCLUDECOLUMN, "no", HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN);
+		this.updateComplexChild(COLUMNS, HAPConstantShared.STRINGALBE_VALUEINFO_LIST);
+		this.updateAtomicChildStrValue(PATHTYPE, HAPConstantShared.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE);
+		this.updateAtomicChildStrValue(INCLUDECOLUMN, "no", HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_BOOLEAN);
 	}
 	
 	public String getPathType(){  return this.getAtomicAncestorValueString(PATHTYPE);  }

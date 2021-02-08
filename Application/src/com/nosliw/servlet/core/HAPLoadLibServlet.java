@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -43,7 +43,7 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 					HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, 
 					HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, 
 					parmsJson, 
-					new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_BROWSER));
+					new HAPRuntimeInfo(HAPConstantShared.RUNTIME_LANGUAGE_JS, HAPConstantShared.RUNTIME_ENVIRONMENT_BROWSER));
 
 			if(HAPSystemUtility.getConsolidateLib()) {
 				if(this.m_libraryTempFile==null) {

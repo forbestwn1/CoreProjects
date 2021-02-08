@@ -2,14 +2,14 @@ package com.nosliw.data.core.expression;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdExpression  extends HAPResourceIdSimple{
 
 	private HAPIdExpressionGroup m_expressionId; 
 	
-	public HAPResourceIdExpression(){    super(HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION);     }
+	public HAPResourceIdExpression(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSION);     }
 
 	public HAPResourceIdExpression(HAPResourceIdSimple resourceId){
 		this();

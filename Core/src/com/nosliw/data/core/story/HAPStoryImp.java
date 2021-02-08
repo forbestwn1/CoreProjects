@@ -11,7 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPHandlerChange;
 import com.nosliw.data.core.story.change.HAPManagerChange;
@@ -130,9 +130,9 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 		element.appendToStory(this);
 		
 		String categary = element.getCategary();
-		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.addNode((HAPStoryNode)element);
-		else if(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.addConnection((HAPConnection)element);
-		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.addElementGroup((HAPElementGroup)element);
+		if(HAPConstantShared.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.addNode((HAPStoryNode)element);
+		else if(HAPConstantShared.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.addConnection((HAPConnection)element);
+		else if(HAPConstantShared.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.addElementGroup((HAPElementGroup)element);
 		//set alias
 		if(alias!=null) {
 			this.m_aliases.put(alias.getName(), out.getElementId());
@@ -187,9 +187,9 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	@Override
 	public HAPStoryElement getElement(String categary, String id) {
 		HAPStoryElement out = null;
-		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.getNode(id);
-		else if(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.getConnection(id);
-		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.getElementGroup(id);
+		if(HAPConstantShared.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.getNode(id);
+		else if(HAPConstantShared.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.getConnection(id);
+		else if(HAPConstantShared.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.getElementGroup(id);
 		return out;
 	}
 
@@ -202,9 +202,9 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	@Override
 	public HAPStoryElement deleteElement(String categary, String id) {
 		HAPStoryElement out = null;
-		if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.deleteNode(id);
-		else if(HAPConstant.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.deleteConnection(id);
-		else if(HAPConstant.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.deleteElementGroup(id);
+		if(HAPConstantShared.STORYELEMENT_CATEGARY_NODE.equals(categary)) out = this.deleteNode(id);
+		else if(HAPConstantShared.STORYELEMENT_CATEGARY_CONNECTION.equals(categary)) out = this.deleteConnection(id);
+		else if(HAPConstantShared.STORYELEMENT_CATEGARY_GROUP.equals(categary)) out = this.deleteElementGroup(id);
 		return out;
 	}
 
@@ -272,7 +272,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	}
 
 	private int getIdIndex() {
-		Integer index = (Integer)this.getInfoValue(HAPConstant.STORY_INFO_IDINDEX);
+		Integer index = (Integer)this.getInfoValue(HAPConstantShared.STORY_INFO_IDINDEX);
 		if(index==null) {
 			index = Integer.valueOf(0);
 		}
@@ -280,7 +280,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	}
 	
 	private void setIdIndex(int index) {
-		this.getInfo().setValue(HAPConstant.STORY_INFO_IDINDEX, index);
+		this.getInfo().setValue(HAPConstantShared.STORY_INFO_IDINDEX, index);
 	}
 	
 	private HAPElementGroup addElementGroup(HAPElementGroup connectionGroup) {

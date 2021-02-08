@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
@@ -48,7 +48,7 @@ public class HAPParserTemplate {
 		out.setBuilderId(jsonObj.getString(HAPResourceDefinitionTemplate.BUILDERID));
 		
 		//parms
-		Map<String, HAPAttachment> attachments = out.getAttachmentsByType(HAPConstant.RUNTIME_RESOURCE_TYPE_TESTDATA);
+		Map<String, HAPAttachment> attachments = out.getAttachmentsByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA);
 		for(String setName : attachments.keySet()) {
 			HAPAttachmentEntity att = (HAPAttachmentEntity)attachments.get(setName);
 			JSONArray parmJsonArray = att.getEntityJsonArray();

@@ -2,7 +2,7 @@ package com.nosliw.uiresource.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 
@@ -10,7 +10,7 @@ public class HAPResourceIdUITag  extends HAPResourceIdSimple{
 
 	private HAPUITagId m_uiTagId; 
 	
-	public HAPResourceIdUITag(){	super(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG);	}
+	public HAPResourceIdUITag(){	super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG);	}
 
 	public HAPResourceIdUITag(HAPResourceIdSimple resourceId){
 		this();

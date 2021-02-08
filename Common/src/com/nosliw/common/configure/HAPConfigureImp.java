@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPSegmentParser;
 
 /*
@@ -71,7 +71,7 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 	HAPConfigureItem getConfigureItemByPath(String path, String type){
 		HAPConfigureItem out = this;
 		if(HAPBasicUtility.isStringNotEmpty(path)){
-			int index = path.indexOf(HAPConstant.SEPERATOR_PATH);
+			int index = path.indexOf(HAPConstantShared.SEPERATOR_PATH);
 			if(index==-1){
 				//single
 				switch(type){

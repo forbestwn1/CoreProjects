@@ -14,7 +14,7 @@ import java.util.Properties;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
@@ -23,7 +23,7 @@ public class HAPConfigureUtility {
 	private static String KEY_VARIABLE_GLOBAL = "global";
 
 	//the interpolate processor
-	private static HAPInterpolateProcessor m_interpolateProcessor = new HAPInterpolateProcessor(HAPConstant.SEPERATOR_VARSTART, HAPConstant.SEPERATOR_VAREND){
+	private static HAPInterpolateProcessor m_interpolateProcessor = new HAPInterpolateProcessor(HAPConstantShared.SEPERATOR_VARSTART, HAPConstantShared.SEPERATOR_VAREND){
 		@Override
 		public String processIterpolate(String expression, Object object) {
 			Object[] arrayObj = (Object[]) object;

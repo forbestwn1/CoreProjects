@@ -1,6 +1,6 @@
 package com.nosliw.uiresource.page.execute;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
 public class HAPContextGroupInUIBody extends HAPContextGroup{
@@ -26,9 +26,9 @@ public class HAPContextGroupInUIBody extends HAPContextGroup{
 		HAPContextGroup out = null;
 		String unitType = this.m_uiUnit.getType();
 		switch(unitType) {
-		case HAPConstant.UIRESOURCE_TYPE_RESOURCE:
+		case HAPConstantShared.UIRESOURCE_TYPE_RESOURCE:
 			break;
-		case HAPConstant.UIRESOURCE_TYPE_TAG:
+		case HAPConstantShared.UIRESOURCE_TYPE_TAG:
 			out = ((HAPExecutableUIUnitTag)this.m_uiUnit).getTagContext();
 			break;
 		}

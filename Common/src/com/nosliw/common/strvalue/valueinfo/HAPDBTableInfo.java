@@ -10,7 +10,7 @@ import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.path.HAPComplexName;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPDBTableInfo {
@@ -110,12 +110,12 @@ public class HAPDBTableInfo {
 			}
 
 			switch(pathType){
-			case HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE:
+			case HAPConstantShared.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE:
 				break;
-			case HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY:
+			case HAPConstantShared.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY:
 				methodPath = attrPath;
 				break;
-			case HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTYASPATH:
+			case HAPConstantShared.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTYASPATH:
 				methodPath = HAPNamingConversionUtility.cascadePath(new String[]{attrPath, attr, methodPath});
 				break;
 			}

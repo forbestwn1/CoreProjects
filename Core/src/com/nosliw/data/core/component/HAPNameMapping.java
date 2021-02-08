@@ -10,7 +10,7 @@ import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 
 //mapping from external name to internal name of component 
 public class HAPNameMapping {
@@ -50,11 +50,11 @@ public class HAPNameMapping {
 		return out;
 	}	
 
-	public HAPAttachmentContainer mapAttachment(HAPAttachmentContainer original) {
-		HAPAttachmentContainer mapped;
+	public HAPContainerAttachment mapAttachment(HAPContainerAttachment original) {
+		HAPContainerAttachment mapped;
 		if(m_nameMapping==null || m_nameMapping.isEmpty())  mapped = original;
 		else {
-			mapped = new HAPAttachmentContainer();
+			mapped = new HAPContainerAttachment();
 			for(String type : m_nameMapping.keySet()) {
 				Map<String, String> byParentName = m_nameMapping.get(type);
 				for(String parentName : byParentName.keySet()) {

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPLiterateManager {
 
@@ -55,7 +55,7 @@ public class HAPLiterateManager {
 	
 	public Class getClassByLiterateType(HAPLiterateType literateType){
 		Class out = null;
-		if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(literateType.getType())){
+		if(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(literateType.getType())){
 			try {
 				out = Class.forName(literateType.getSubType());
 			} catch (ClassNotFoundException e) {

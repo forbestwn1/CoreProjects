@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
@@ -19,12 +19,12 @@ public abstract class HAPElementGroupImp extends HAPStoryElementImp implements H
 	private List<HAPInfoElement> m_elements;
 
 	public HAPElementGroupImp() {
-		super(HAPConstant.STORYELEMENT_CATEGARY_GROUP);  
+		super(HAPConstantShared.STORYELEMENT_CATEGARY_GROUP);  
 		this.m_elements = new ArrayList<HAPInfoElement>();
 	}
 	
 	public HAPElementGroupImp(String type) {
-		super(HAPConstant.STORYELEMENT_CATEGARY_GROUP, type);
+		super(HAPConstantShared.STORYELEMENT_CATEGARY_GROUP, type);
 		this.m_elements = new ArrayList<HAPInfoElement>();
 	}
 

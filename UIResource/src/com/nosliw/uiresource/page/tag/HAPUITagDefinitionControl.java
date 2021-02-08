@@ -2,12 +2,12 @@ package com.nosliw.uiresource.page.tag;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUITagDefinitionControl extends HAPUITagDefinition{
 
 	public HAPUITagDefinitionControl() {
-		super(HAPConstant.UITAG_TYPE_CONTROL);
+		super(HAPConstantShared.UITAG_TYPE_CONTROL);
 	}
 	
 	@Override

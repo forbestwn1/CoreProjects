@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPManagerResourceDefinition;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScriptGroup;
@@ -19,7 +19,7 @@ public class HAPManagerScript {
 		this.m_runtimeEnv = runtimeEnv;
 	}
 	
-	public HAPResourceDefinitionScriptGroup getScriptDefinition(HAPResourceId resourceId, HAPAttachmentContainer parentAttachment) {
+	public HAPResourceDefinitionScriptGroup getScriptDefinition(HAPResourceId resourceId, HAPContainerAttachment parentAttachment) {
 		return (HAPResourceDefinitionScriptGroup)this.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(resourceId, parentAttachment);
 	}
 

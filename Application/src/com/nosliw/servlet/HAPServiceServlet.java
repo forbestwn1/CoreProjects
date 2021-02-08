@@ -18,7 +18,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
 public abstract class HAPServiceServlet extends HAPBaseServlet{
@@ -38,7 +38,7 @@ public abstract class HAPServiceServlet extends HAPBaseServlet{
 	public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HAPServiceData out = null;
 		HAPRequestInfo requestInfo = new HAPRequestInfo(request);
-		if(HAPConstant.SERVICECOMMAND_GROUPREQUEST.equals(requestInfo.getCommand())){
+		if(HAPConstantShared.SERVICECOMMAND_GROUPREQUEST.equals(requestInfo.getCommand())){
 			JSONArray jsonGroupReqs = new JSONArray(requestInfo.getParms());
 
 			List<String> requestsResult = new ArrayList<String>();
@@ -59,13 +59,13 @@ public abstract class HAPServiceServlet extends HAPBaseServlet{
 	private HAPServiceData processRequest(JSONObject req){
 		HAPServiceData out = null;
 		String reqType = req.getString(REQUEST_TYPE);
-		if(HAPConstant.REMOTESERVICE_TASKTYPE_NORMAL.equals(reqType)){
+		if(HAPConstantShared.REMOTESERVICE_TASKTYPE_NORMAL.equals(reqType)){
 			//for normal request
 			JSONObject serviceJson = req.getJSONObject(REQUEST_SERVICE);
 			HAPServiceInfo serviceInfo = new HAPServiceInfo(serviceJson);
 			out = this.processRequest(serviceInfo); 
 		}
-		else if(HAPConstant.REMOTESERVICE_TASKTYPE_GROUP.equals(reqType)){
+		else if(HAPConstantShared.REMOTESERVICE_TASKTYPE_GROUP.equals(reqType)){
 			//for group task, 
 			boolean success = true;
 			String mode = req.getString(REQUEST_MODE);
@@ -82,7 +82,7 @@ public abstract class HAPServiceServlet extends HAPBaseServlet{
 			}
 			
 			if(success==false){
-				if(HAPConstant.REMOTESERVICE_GROUPTASK_MODE_ALWAYS.equals(mode)){
+				if(HAPConstantShared.REMOTESERVICE_GROUPTASK_MODE_ALWAYS.equals(mode)){
 					//if group task mode is always, group task end with success 
 					success = true;
 				}

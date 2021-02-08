@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityTask;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -30,7 +30,7 @@ public class HAPProcessActivityDefinition extends HAPDefinitionActivityTask{
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_process = HAPResourceIdFactory.newInstance(HAPConstant.RUNTIME_RESOURCE_TYPE_PROCESS, jsonObj.opt(PROCESS));
+		this.m_process = HAPResourceIdFactory.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS, jsonObj.opt(PROCESS));
 		return true;  
 	}
 

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 
 public class HAPProcessorEscalate {
 
@@ -45,7 +46,7 @@ public class HAPProcessorEscalate {
 	private static Triple<Boolean, HAPContextDefinitionRoot, String> escalate(HAPComplexPath path, String categaryType, HAPContextGroup parentContextGroup, HAPContextDefinitionRoot original, Set<String> inheritanceExcludedInfo) {
 		
 		Triple<Boolean, HAPContextDefinitionRoot, String> out = null;
-		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(path.getFullName()), parentContextGroup, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST);
+		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(path.getFullName()), parentContextGroup, null, HAPConstant.RESOLVEPARENTMODE_FIRST);
 		if(resolveInfo!=null) {
 			//find matched one
 			out = Triple.of(true, HAPUtilityContext.createRelativeContextDefinitionRoot(resolveInfo.rootNode, resolveInfo.path.getRootElementId().getCategary(), resolveInfo.path.getPath(), inheritanceExcludedInfo), categaryType);

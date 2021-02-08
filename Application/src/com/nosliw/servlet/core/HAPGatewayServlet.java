@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.resource.HAPResourceUtility;
@@ -39,7 +39,7 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 		String gatewayId = segs[0];
 		String command = segs[1];
 		
-		out = this.getRuntimeEnvironment().getGatewayManager().executeGateway(gatewayId, command, parms, new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_BROWSER));
+		out = this.getRuntimeEnvironment().getGatewayManager().executeGateway(gatewayId, command, parms, new HAPRuntimeInfo(HAPConstantShared.RUNTIME_LANGUAGE_JS, HAPConstantShared.RUNTIME_ENVIRONMENT_BROWSER));
 		if(out.isSuccess()){
 			HAPGatewayOutput output = (HAPGatewayOutput)out.getData();
 			for(HAPJSScriptInfo scriptInfo : output.getScripts()){

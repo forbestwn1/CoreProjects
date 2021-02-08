@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
@@ -35,7 +35,7 @@ public class HAPDefinitionReference extends HAPEntityInfoWritableImp{
 	public String getElementName() {   return this.m_groupElementName;    }
 	public void setElementName(String name) {    
 		this.m_groupElementName = name;    
-		if(HAPBasicUtility.isStringEmpty(this.m_groupElementName))   this.m_groupElementName = HAPConstant.NAME_DEFAULT;
+		if(HAPBasicUtility.isStringEmpty(this.m_groupElementName))   this.m_groupElementName = HAPConstantShared.NAME_DEFAULT;
 	}
 	
 	public HAPDefinitionDataAssociation getInputMapping() {   return this.m_inputMapping;    }

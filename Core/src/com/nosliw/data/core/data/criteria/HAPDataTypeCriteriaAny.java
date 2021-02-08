@@ -2,7 +2,7 @@ package com.nosliw.data.core.data.criteria;
 
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
 
@@ -20,7 +20,7 @@ public class HAPDataTypeCriteriaAny extends HAPDataTypeCriteriaImp{
 	}
 	
 	@Override
-	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_ANY;	}
+	public String getType() {		return HAPConstantShared.DATATYPECRITERIA_TYPE_ANY;	}
 
 	@Override
 	public boolean validate(HAPDataTypeCriteria criteria, HAPDataTypeHelper dataTypeHelper) {	return true; }

@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -29,7 +29,7 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	}
 
 	@Override
-	public String getType() {	return HAPConstant.CONTEXT_ELEMENTTYPE_DATA;	}
+	public String getType() {	return HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA;	}
 
 	public void setDataInfo(HAPVariableDataInfo criteria){	this.m_dataInfo = criteria;	}
 	public HAPVariableDataInfo getDataInfo() {  return this.m_dataInfo;    } 

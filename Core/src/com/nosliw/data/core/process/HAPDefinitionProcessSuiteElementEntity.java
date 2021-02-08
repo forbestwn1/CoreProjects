@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
@@ -39,7 +39,7 @@ public class HAPDefinitionProcessSuiteElementEntity extends HAPResourceDefinitio
 	}
  
 	@Override
-	public String getType() {	return HAPConstant.PROCESSSUITE_ELEMENTTYPE_ENTITY;	}
+	public String getType() {	return HAPConstantShared.PROCESSSUITE_ELEMENTTYPE_ENTITY;	}
 
 	//steps within task
 	public Map<String, HAPDefinitionActivity> getActivities(){  return this.m_activities;  }

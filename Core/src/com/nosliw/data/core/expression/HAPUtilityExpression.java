@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.updatename.HAPUpdateNamePrefix;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithDataContext;
@@ -127,7 +127,7 @@ public class HAPUtilityExpression {
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 					String refName = referenceOperand.getReferenceName();
 					HAPDefinitionReference refDef = referenceDef.get(refName);

@@ -7,11 +7,11 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
@@ -93,7 +93,7 @@ public class HAPProcessMiniAppEntry {
 	private static HAPExecutableAppModule processModule(
 			HAPDefinitionAppModule module,
 			HAPExecutableAppEntry entryExe,
-			HAPAttachmentContainer parentAttachment,
+			HAPContainerAttachment parentAttachment,
 			Map<String, HAPContextStructure> extraContexts,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPRuntimeEnvironment runtimeEnv,
@@ -101,13 +101,13 @@ public class HAPProcessMiniAppEntry {
 			HAPProcessTracker processTracker) {
 		HAPExecutableAppModule out = new HAPExecutableAppModule(module);
 		
-		HAPAttachment moduleAttachment = parentAttachment.getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getModule());
+		HAPAttachment moduleAttachment = parentAttachment.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getModule());
 		HAPEntityOrReference defOrRef = null;
-		if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_REFERENCE)) {
+		if(moduleAttachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCE)) {
 			defOrRef = ((HAPAttachmentReference)moduleAttachment).getReferenceId();
 
 		}
-		else if(moduleAttachment.getType().equals(HAPConstant.ATTACHMENT_TYPE_ENTITY)){
+		else if(moduleAttachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)){
 			
 		}
 		//module
@@ -125,7 +125,7 @@ public class HAPProcessMiniAppEntry {
 		//input data association
 		Map<String, HAPDefinitionDataAssociation> inputDas = module.getInputMapping().getDataAssociations();
 		for(String inputDaName : inputDas.keySet()) {
-			HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(parentContext, inputDas.get(inputDaName), HAPParentContext.createDefault(moduleDef.getContextNotFlat().getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC)), daConfigure, runtimeEnv);
+			HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(parentContext, inputDas.get(inputDaName), HAPParentContext.createDefault(moduleDef.getContextNotFlat().getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC)), daConfigure, runtimeEnv);
 			out.addInputDataAssociation(inputDaName, inputMapping);
 		}
 		

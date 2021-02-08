@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 
@@ -27,7 +27,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	}
  
 	@Override
-	public String getType() {  return HAPConstant.DATAASSOCIATION_TYPE_MAPPING;  }
+	public String getType() {  return HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;  }
 
 	@Override
 	public void updateInputVarName(HAPUpdateName updateName) {
@@ -46,14 +46,14 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	}
 
 	public void addAssociation(String targetName, HAPContext association) {	
-		if(HAPBasicUtility.isStringEmpty(targetName))  targetName = HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+		if(HAPBasicUtility.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		this.m_assocations.put(targetName, association);
 	}
 	
 	public Map<String, HAPContext> getAssociations(){   return this.m_assocations;  }
 	
 	public HAPContext getAssociation(String targetName) {   return this.m_assocations.get(targetName);    }
-	public HAPContext getAssociation() {   return this.m_assocations.get(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT);    }
+	public HAPContext getAssociation() {   return this.m_assocations.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);    }
  
 	@Override
 	public HAPDefinitionDataAssociationMapping cloneDataAssocation() {

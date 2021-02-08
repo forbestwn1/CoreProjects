@@ -8,7 +8,7 @@ import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.displayresource.HAPDisplayValueInfo;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataType;
@@ -97,7 +97,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	public void initDesign(HAPDesignStory design) {
 		HAPStory story = design.getStory();
 
-		story.setShowType(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
+		story.setShowType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
 		HAPUtilityDesign.setDesignAllStages(design, m_stages);
 		
 		story.startTransaction();
@@ -132,7 +132,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		else if(stage.equals(STAGE_UI)) {
 			out = this.processUIChangeStage(storyDesign, answer);
 		}
-		else if(stage.equals(HAPConstant.DESIGNSTAGE_NAME_END)){
+		else if(stage.equals(HAPConstantShared.DESIGNSTAGE_NAME_END)){
 			String[] errorMsg = {"The wizard has finished"};
 			out = HAPServiceData.createFailureData(errorMsg, "Invalid flow!!!");
 		}
@@ -151,7 +151,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		
 		this.applyAnswer(story, answerRequest);
 		
-		HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_SERVICE).iterator().next();
+		HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_SERVICE).iterator().next();
 		if(!HAPBasicUtility.isStringEmpty(serviceStoryNode.getReferenceId())){
 			//valid
 			//add answer to step
@@ -190,7 +190,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				HAPRequestChangeWrapper dataLayerChangeRequest = new HAPRequestChangeWrapper(story, true, true);
 	
 				//get service node
-				HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_SERVICE).iterator().next();
+				HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_SERVICE).iterator().next();
 				HAPInfoServiceStatic staticServiceInfo = this.m_runtimeEnv.getServiceManager().getServiceDefinitionManager().getDefinition(serviceStoryNode.getReferenceId()).getStaticInfo();
 				HAPServiceInterface serviceInterface = staticServiceInfo.getInterface();
 				HAPDisplayResourceNode serviceDisplayResource = staticServiceInfo.getDisplayResource();
@@ -198,7 +198,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				
 				//service input
 				HAPAliasElement serviceInputNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceInput()).getAlias();
-				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceInputNodeName, HAPConstant.SERVICE_CHILD_INPUT));
+				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceInputNodeName, HAPConstantShared.SERVICE_CHILD_INPUT));
 				HAPDisplayResourceNode inputDisplayResource = interfaceDisplayResource.getResourceNode(HAPServiceInterface.PARM);
 				
 				//parms
@@ -255,7 +255,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 
 				//output
 				HAPAliasElement serviceOutputNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceOutput()).getAlias();
-				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceOutputNodeName, HAPConstant.SERVICE_CHILD_RESULT));
+				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceOutputNodeName, HAPConstantShared.SERVICE_CHILD_RESULT));
 				HAPServiceResult successResult = serviceInterface.getResult("success");
 				HAPDisplayResourceNode outputDisplayResource = interfaceDisplayResource.getResourceNode(HAPServiceInterface.RESULT);
 				for(HAPServiceOutput parm : successResult.getOutput()) {
@@ -308,7 +308,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				for(HAPParmBranchInfo parmBranchInfo : parmBranchInfos) {
 					//build ui for variable
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
-					parmBranchInfo.dataUIInfo = buildDataUINode(story, pageLayoutUINode, "input", varNode.getVariableInfo().getName(), new HAPDisplayValueInfo("displayName", parmBranchInfo.displayResource, parmBranchInfo.parmDef.getDisplayName()), HAPConstant.DATAFLOW_OUT, uiLayerChangeRequest);
+					parmBranchInfo.dataUIInfo = buildDataUINode(story, pageLayoutUINode, "input", varNode.getVariableInfo().getName(), new HAPDisplayValueInfo("displayName", parmBranchInfo.displayResource, parmBranchInfo.parmDef.getDisplayName()), HAPConstantShared.DATAFLOW_OUT, uiLayerChangeRequest);
 					
 					//variable group
 					uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(parmBranchInfo.dataUIInfo.rootEleRef));					
@@ -318,7 +318,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				for(HAPOutputBranchInfo parmBranchInfo : outputBranchInfos) {
 					//ui
 					HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)story.getElement(parmBranchInfo.variableAlias);
-					parmBranchInfo.dataUIInfo = buildDataUINode(story, pageLayoutUINode, "output", varNode.getVariableInfo().getName(), new HAPDisplayValueInfo("displayName", parmBranchInfo.displayResource, parmBranchInfo.outputDef.getDisplayName()), HAPConstant.DATAFLOW_IN, uiLayerChangeRequest);
+					parmBranchInfo.dataUIInfo = buildDataUINode(story, pageLayoutUINode, "output", varNode.getVariableInfo().getName(), new HAPDisplayValueInfo("displayName", parmBranchInfo.displayResource, parmBranchInfo.outputDef.getDisplayName()), HAPConstantShared.DATAFLOW_IN, uiLayerChangeRequest);
 					
 					//variable group
 					uiLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPInfoElement(parmBranchInfo.dataUIInfo.rootEleRef));					
@@ -432,7 +432,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow, uiTagInfo.getMatchers());
 
 				uiDataStoryNode.addAttribute("data", varName);
-				if(!HAPConstant.DATAFLOW_IN.equals(dataFlow)) uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
+				if(!HAPConstantShared.DATAFLOW_IN.equals(dataFlow)) uiDataStoryNode.addAttribute(HAPConstantShared.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstantShared.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
 				dataUINode = layoutUINode.newChildNode(uiDataStoryNode, null, "uiData", changeRequest, this.m_runtimeEnv, m_uiTagManager);
 				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUINode.getStoryNodeRef()));
 				
@@ -462,14 +462,14 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			if(uiTagInfo!=null) {
 				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow, uiTagInfo.getMatchers());
 				uiDataStoryNode.addAttribute("data", varName);
-				if(!HAPConstant.DATAFLOW_IN.equals(dataFlow)) uiDataStoryNode.addAttribute(HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstant.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
+				if(!HAPConstantShared.DATAFLOW_IN.equals(dataFlow)) uiDataStoryNode.addAttribute(HAPConstantShared.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstantShared.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
 				dataUINode = layoutUINode.newChildNode(uiDataStoryNode, null, "uiData", changeRequest, this.m_runtimeEnv, m_uiTagManager);
 				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(dataUINode.getStoryNodeRef()));
 
 				//validation
 				HAPStoryNodeUITagOther uiErrorStoryNode = new HAPStoryNodeUITagOther("uierror", story.getNextId());
 				uiErrorStoryNode.addAttribute("target", uiDataStoryNode.getId());
-				uiErrorStoryNode.addAttribute("data", HAPConstant.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
+				uiErrorStoryNode.addAttribute("data", HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
 				HAPUINode uiErrorNode = layoutUINode.newChildNode(uiErrorStoryNode, null, "uiError", changeRequest, this.m_runtimeEnv, m_uiTagManager);
 				changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(uiErrorNode.getStoryNodeRef()));
 
@@ -512,10 +512,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			List<HAPUINode> allUINodes = uiTree.getAllUINodes();
 			for(HAPUINode uiNode : allUINodes) {
 				HAPStoryNodeUI uiStoryNode = uiNode.getStoryNode();
-				if(HAPConstant.STORYNODE_TYPE_UIDATA.equals(uiStoryNode.getType())) {
+				if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(uiStoryNode.getType())) {
 					HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
 					if(uiDataStoryNode.isEnable()) {
-						if(HAPConstant.DATAFLOW_OUT.equals(uiDataStoryNode.getAttributeValue(HAPStoryNodeUIData.ATTRIBUTE_DATAFLOW))) {
+						if(HAPConstantShared.DATAFLOW_OUT.equals(uiDataStoryNode.getAttributeValue(HAPStoryNodeUIData.ATTRIBUTE_DATAFLOW))) {
 							hasOutUI = true;
 						}
 					}
@@ -544,7 +544,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			design.addStep(step);
 
 			//stage
-			HAPUtilityDesign.setChangeStage(step, HAPConstant.DESIGNSTAGE_NAME_END);
+			HAPUtilityDesign.setChangeStage(step, HAPConstantShared.DESIGNSTAGE_NAME_END);
 
 			return HAPServiceData.createSuccessData(new HAPResponseDesign(answerRequest.getAnswers(), step));
 		}
@@ -558,7 +558,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		this.applyAnswer(story, answerRequest);
 		
 		List<String> errorMsgs = new ArrayList<String>();
-		Set<HAPStoryNode> constantStoryNodes = HAPUtilityStory.getStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_CONSTANT);
+		Set<HAPStoryNode> constantStoryNodes = HAPUtilityStory.getStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_CONSTANT);
 		for(HAPStoryNode storyNode : constantStoryNodes) {
 			HAPStoryNodeConstant constantStoryNode = (HAPStoryNodeConstant)storyNode;
 			if(constantStoryNode.isMandatory() && constantStoryNode.getData()==null) {

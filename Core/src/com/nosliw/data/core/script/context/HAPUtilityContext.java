@@ -14,6 +14,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -45,7 +46,7 @@ public class HAPUtilityContext {
 	//traverse through all the context definition element, and process it
 	public static void processContextDefElement(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, Object value) {
 		if(processor.process(contextDefEle, value)) {
-			if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
+			if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
 				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
 				for(String childNodeName : nodeEle.getChildren().keySet()) {
 					processContextDefElement(nodeEle.getChild(childNodeName), processor, value);
@@ -57,7 +58,7 @@ public class HAPUtilityContext {
 
 	public static void processContextDefElementWithPathInfo(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, String path) {
 		if(processor.process(contextDefEle, path)) {
-			if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
+			if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
 				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
 				for(String childNodeName : nodeEle.getChildren().keySet()) {
 					processContextDefElementWithPathInfo(nodeEle.getChild(childNodeName), processor, HAPNamingConversionUtility.buildPath(path, childNodeName));
@@ -70,7 +71,7 @@ public class HAPUtilityContext {
 	public static void processExpandedContextDefElementWithPathInfo(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, String path) {
 		HAPContextDefinitionElement solidated = contextDefEle.getSolidContextDefinitionElement();
 		if(processor.process(solidated, path)) {
-			if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(solidated.getType())) {
+			if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(solidated.getType())) {
 				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)solidated;
 				for(String childNodeName : nodeEle.getChildren().keySet()) {
 					processContextDefElementWithPathInfo(nodeEle.getChild(childNodeName), processor, HAPNamingConversionUtility.buildPath(path, childNodeName));
@@ -81,7 +82,7 @@ public class HAPUtilityContext {
 	}
 	
 	public static HAPContextStructure getReferedContext(String name, HAPParentContext parentContext, HAPContextStructure self) {
-		if(HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name))  return self;
+		if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name))  return self;
 		else return parentContext.getContext(name);
 	}
 	
@@ -174,7 +175,7 @@ public class HAPUtilityContext {
 		}
 	}
 	
-	public static boolean isContextDefinitionElementConstant(HAPContextDefinitionElement ele) {   return HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType());   }
+	public static boolean isContextDefinitionElementConstant(HAPContextDefinitionElement ele) {   return HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType());   }
 	
 	//discover all the relative elements in context def element
 	public static Map<String, HAPContextDefinitionLeafRelative> isContextDefinitionElementRelative(HAPContextDefinitionElement ele) {
@@ -185,10 +186,10 @@ public class HAPUtilityContext {
 	
 	private static void discoverRelative(HAPContextDefinitionElement ele, Map<String, HAPContextDefinitionLeafRelative> out, String path) {
 		switch(ele.getType()) {
-		case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE:
 			out.put(path+"", (HAPContextDefinitionLeafRelative)ele);
 			break;
-		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 			HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)ele;
 			for(String subPath : nodeEle.getChildren().keySet()) {
 				discoverRelative(nodeEle.getChildren().get(subPath), out, HAPNamingConversionUtility.buildPath(path, subPath));
@@ -210,8 +211,8 @@ public class HAPUtilityContext {
 	}
 	
 	public static String getContextGroupInheritMode(HAPInfo info) {  
-		String out = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;
-		if("false".equals(info.getValue(HAPContextGroup.INFO_INHERIT)))  out = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
+		String out = HAPConstant.INHERITMODE_CHILD;
+		if("false".equals(info.getValue(HAPContextGroup.INFO_INHERIT)))  out = HAPConstant.INHERITMODE_NONE;
 		return out;				
 	}
  
@@ -223,7 +224,7 @@ public class HAPUtilityContext {
 		if("false".equals(info.getValue(HAPContextGroup.INFO_POPUP)))  out = false;
 		return out;				
 	} 
-
+ 
 	public static boolean getContextGroupEscalateMode(HAPInfo info) {  
 		boolean out = false;
 		if("true".equals(info.getValue(HAPContextGroup.INFO_ESCALATE)))  out = true;
@@ -257,17 +258,17 @@ public class HAPUtilityContext {
 	//the data type criteria name is full name in path, for instance, a.b.c.d
 	private static void discoverCriteriaInContextNode(String path, HAPContextDefinitionElement contextDefEle, Map<String, HAPInfoCriteria> criterias){
 		switch(contextDefEle.getType()) {
-		case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE:
 			HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)contextDefEle;
 			if(relativeEle.getDefinition()!=null)		discoverCriteriaInContextNode(path, relativeEle.getSolidContextDefinitionElement(), criterias);
 			break;
-		case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 			HAPContextDefinitionLeafData dataEle = (HAPContextDefinitionLeafData)contextDefEle;
 			HAPInfoCriteria varInfo = HAPInfoCriteria.buildCriteriaInfo(dataEle.getCriteria());
 //			varInfo.setId(path);
 			criterias.put(path, varInfo);
 			break;
-		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 			HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
 			for(String childName : nodeEle.getChildren().keySet()) {
 				String childPath = HAPNamingConversionUtility.cascadeComponentPath(path, childName);
@@ -330,7 +331,7 @@ public class HAPUtilityContext {
 			if(resolved.rootNode!=null) {
 				resolved.path = new HAPContextPath(contextType, refNodeId.getName(), refPath);
 				candidates.add(resolved);
-				if(HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST.equals(mode))   break;
+				if(HAPConstant.RESOLVEPARENTMODE_FIRST.equals(mode))   break;
 			}
 		}
 
@@ -360,7 +361,7 @@ public class HAPUtilityContext {
 			else {
 				//nof exactly match with path
 				HAPContextDefinitionElement candidateNode = out.referedSolidNode.getSolidContextDefinitionElement();
-				if(HAPConstant.CONTEXT_ELEMENTTYPE_DATA.equals(candidateNode.getType())) {
+				if(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA.equals(candidateNode.getType())) {
 					//data type node
 					HAPContextDefinitionLeafData dataLeafEle = (HAPContextDefinitionLeafData)candidateNode;
 					HAPDataTypeCriteria childCriteria = HAPCriteriaUtility.getChildCriteriaByPath(dataLeafEle.getCriteria(), out.remainPath);
@@ -371,7 +372,7 @@ public class HAPUtilityContext {
 						out.resolvedNode = new HAPContextDefinitionLeafValue();
 					}
 				}
-				else if(HAPConstant.CONTEXT_ELEMENTTYPE_VALUE.equals(candidateNode.getType())){
+				else if(HAPConstantShared.CONTEXT_ELEMENTTYPE_VALUE.equals(candidateNode.getType())){
 					out.resolvedNode = candidateNode;
 				}
 			}
@@ -400,9 +401,9 @@ public class HAPUtilityContext {
 		expectDef = expectDef.getSolidContextDefinitionElement();
 		String type = expectDef.getType();
 		
-		if(originDef.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+		if(originDef.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
 			switch(type) {
-			case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 			{
 				HAPContextDefinitionLeafConstant dataOrigin = (HAPContextDefinitionLeafConstant)originDef.getSolidContextDefinitionElement();
 				HAPContextDefinitionLeafData dataExpect = (HAPContextDefinitionLeafData)expectDef;
@@ -413,9 +414,9 @@ public class HAPUtilityContext {
 			}
 			}
 		}
-		else if(expectDef.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT)) {  //kkkkk
+		else if(expectDef.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {  //kkkkk
 			switch(originDef.getType()) {
-			case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 			{
 				HAPContextDefinitionLeafData dataOrigin = (HAPContextDefinitionLeafData)originDef;
 				 HAPContextDefinitionLeafConstant dataExpect = (HAPContextDefinitionLeafConstant)expectDef.getSolidContextDefinitionElement();
@@ -429,7 +430,7 @@ public class HAPUtilityContext {
 		else {
 			if(!originDef.getType().equals(type))   HAPErrorUtility.invalid("");   //not same type, error
 			switch(type) {
-			case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 			{
 				HAPContextDefinitionLeafData dataOrigin = (HAPContextDefinitionLeafData)originDef.getSolidContextDefinitionElement();
 				HAPContextDefinitionLeafData dataExpect = (HAPContextDefinitionLeafData)expectDef;
@@ -438,7 +439,7 @@ public class HAPUtilityContext {
 				if(!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}
-			case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
+			case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 			{
 				HAPContextDefinitionNode nodeOrigin = (HAPContextDefinitionNode)originDef;
 				HAPContextDefinitionNode nodeExpect = (HAPContextDefinitionNode)expectDef;
@@ -447,7 +448,7 @@ public class HAPUtilityContext {
 					HAPContextDefinitionElement childNodeOrigin = nodeOrigin.getChildren().get(nodeName);
 					if(childNodeOrigin!=null || modifyStructure) {
 						switch(childNodeExpect.getType()) {
-						case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+						case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 						{
 							if(childNodeOrigin==null) {
 								childNodeOrigin = new HAPContextDefinitionLeafData();
@@ -456,7 +457,7 @@ public class HAPUtilityContext {
 							mergeContextDefitionElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), runtimeEnv);
 							break;
 						}
-						case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
+						case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 						{
 							if(childNodeOrigin==null) {
 								childNodeOrigin = new HAPContextDefinitionNode();

@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationImp;
@@ -58,7 +58,7 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 
 	public void addAssociation(String name, HAPExecutableAssociation association) {   this.m_associations.put(name, association);  }
 	public HAPExecutableAssociation getAssociation(String name) {return this.m_associations.get(name);  }
-	public HAPExecutableAssociation getAssociation() {return this.m_associations.get(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT);  }
+	public HAPExecutableAssociation getAssociation() {return this.m_associations.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);  }
 	public Map<String, HAPExecutableAssociation> getAssociations(){ return m_associations;  }
 	
 	public boolean isEmpty() {   return this.m_associations==null || this.m_associations.isEmpty();   }

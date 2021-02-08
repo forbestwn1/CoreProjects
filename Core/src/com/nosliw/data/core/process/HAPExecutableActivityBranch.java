@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
@@ -27,7 +27,7 @@ public abstract class HAPExecutableActivityBranch extends HAPExecutableActivity{
 	private List<HAPExecutableResultActivityBranch> m_branchs;
 	
 	public HAPExecutableActivityBranch(String id, HAPDefinitionActivity activityDef) {
-		super(HAPConstant.ACTIVITY_CATEGARY_BRANCH, id, activityDef);
+		super(HAPConstantShared.ACTIVITY_CATEGARY_BRANCH, id, activityDef);
 		this.m_branchs = new ArrayList<HAPExecutableResultActivityBranch>();
 	}
 

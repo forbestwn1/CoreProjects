@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
@@ -14,12 +14,12 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityDesign {
 
-	public static void setDesignAllStages(HAPDesignStory design, List<HAPStageInfo> stages) {    design.getInfo().setValue(HAPConstant.STORYDESIGN_INFO_STAGES, stages);      }
-	public static List<HAPStageInfo> getDesignAllStages(HAPDesignStory design){    return (List<HAPStageInfo>)design.getInfoValue(HAPConstant.STORYDESIGN_INFO_STAGES);       }
+	public static void setDesignAllStages(HAPDesignStory design, List<HAPStageInfo> stages) {    design.getInfo().setValue(HAPConstantShared.STORYDESIGN_INFO_STAGES, stages);      }
+	public static List<HAPStageInfo> getDesignAllStages(HAPDesignStory design){    return (List<HAPStageInfo>)design.getInfoValue(HAPConstantShared.STORYDESIGN_INFO_STAGES);       }
 	
-	public static String getChangeStage(HAPDesignStep step) {	return (String)step.getInfoValue(HAPConstant.STORYDESIGN_CHANGE_INFO_STAGE); 	}
+	public static String getChangeStage(HAPDesignStep step) {	return (String)step.getInfoValue(HAPConstantShared.STORYDESIGN_CHANGE_INFO_STAGE); 	}
 	
-	public static void setChangeStage(HAPDesignStep step, String stage) {    step.getInfo().setValue(HAPConstant.STORYDESIGN_CHANGE_INFO_STAGE, stage);	}
+	public static void setChangeStage(HAPDesignStep step, String stage) {    step.getInfo().setValue(HAPConstantShared.STORYDESIGN_CHANGE_INFO_STAGE, stage);	}
 	
 	public static String getDesignStage(HAPDesignStory design) {
 		List<HAPDesignStep> changes = design.getChangeHistory();

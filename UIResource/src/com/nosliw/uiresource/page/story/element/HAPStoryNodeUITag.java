@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
@@ -35,7 +35,7 @@ public abstract class HAPStoryNodeUITag extends HAPStoryNodeUI{
 		this.m_tagName = tagName;
 		this.setId(id);
 		this.m_attributes = new LinkedHashMap<String, String>();
-		this.m_attributes.put(HAPConstant.UIRESOURCE_ATTRIBUTE_STATICID, this.getId());
+		this.m_attributes.put(HAPConstantShared.UIRESOURCE_ATTRIBUTE_STATICID, this.getId());
 	}
 	
 	public String getTagName() {     return this.m_tagName;     }

@@ -6,7 +6,7 @@ import java.util.Set;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNosliwUtility;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
@@ -110,7 +110,7 @@ public class HAPProcessorModule {
 		
 		//process page, use context in module override context in page
 		//find pape resource id from attachment mapping
-		HAPAttachmentReference pageAttachment = (HAPAttachmentReference)moduleExe.getDefinition().getAttachmentContainer().getElement(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, moduleUIDefinition.getPage());
+		HAPAttachmentReference pageAttachment = (HAPAttachmentReference)moduleExe.getDefinition().getAttachmentContainer().getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, moduleUIDefinition.getPage());
 		HAPResourceId pageResourceId = pageAttachment.getReferenceId();
 
 		//attachment
@@ -127,7 +127,7 @@ public class HAPProcessorModule {
 		//context
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
 		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, runtimeEnv);
-		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPContext)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk
+		mappingContextGroup.setContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPContext)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk
 
 		HAPExecutableUIUnitPage page = uiResourceMan.getEmbededUIPage(pageResourceId, id, mappingContextGroup, null, moduleExe.getDefinition().getAttachmentContainer(), moduleUIDefinition);
 		out.setPage(page);
@@ -147,7 +147,7 @@ public class HAPProcessorModule {
 			String eventName = eventHandlerDef.getName();
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getBody().getEventDefinition(eventName));
 			HAPContextGroup eventContext = new HAPContextGroup();
-			eventContext.addElement(HAPNosliwUtility.buildNosliwFullName("EVENT"), eventRootNode, HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+			eventContext.addElement(HAPNosliwUtility.buildNosliwFullName("EVENT"), eventRootNode, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 			HAPDefinitionProcess processDef = moduleExe.getProcessDefinition(eventHandlerDef.getTask().getTaskDefinition());
 			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(processDef, eventContext, serviceProviders, processMan, runtimeEnv, processTracker);
 			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getTask(), eventProcessor, HAPParentContext.createDefault(moduleExe.getContext()), null, runtimeEnv);			

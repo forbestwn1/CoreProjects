@@ -21,7 +21,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.steadystate.css.parser.CSSOMParser;
 
@@ -63,7 +63,7 @@ public class HAPExecutableStyle extends HAPSerializableImp{
 	
 	private String buildSelector(String id) {
 		
-		return "["+HAPConstant.UIRESOURCE_ATTRIBUTE_STATICID+"='"+id+"']";
+		return "["+HAPConstantShared.UIRESOURCE_ATTRIBUTE_STATICID+"='"+id+"']";
 	}
 
 	protected String buildStyleScript(List<String> parentIds) {

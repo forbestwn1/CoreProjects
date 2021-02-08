@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorContextVariableInheritance {
@@ -19,7 +20,7 @@ public class HAPProcessorContextVariableInheritance {
 
 	public static HAPContextGroup process(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextGroup out = orgContext.cloneContextGroup();
-		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(inheritMode)) {
+		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			for(String categary : HAPContextGroup.getAllContextTypes()){
 				if(parentContextGroup!=null && Arrays.asList(HAPContextGroup.getInheritableContextTypes()).contains(categary)) {
 					HAPContext parentContext = parentContextGroup.getContext(categary);
@@ -33,7 +34,7 @@ public class HAPProcessorContextVariableInheritance {
 			}
 		}
 		return out;
-	}
+	} 
 
 	//add FINAL to all constant root node, means constant cannot be override by parent 
 	private static HAPContextGroup processConstant(HAPContextGroup contextGroup) {
@@ -55,7 +56,7 @@ public class HAPProcessorContextVariableInheritance {
 		HAPContextDefinitionRoot childNode = childContextGroup.getElement(categary, eleName);
 		if(childNode==null) 		out = true;
 		else {
-			if(HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT.equals(inheritMode)) {
+			if(HAPConstant.INHERITMODE_PARENT.equals(inheritMode)) {
 				if(!HAPContextDefinitionRoot.INHERIT_MODE_FINAL.equals(childNode.getInfo().getValue(HAPContextDefinitionRoot.INHERIT_MODE_FINAL))) {
 					out = true;
 				}

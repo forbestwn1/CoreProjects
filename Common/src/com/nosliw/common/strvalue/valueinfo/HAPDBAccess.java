@@ -22,7 +22,7 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.strvalue.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPDBAccess {
@@ -194,10 +194,10 @@ public class HAPDBAccess {
 					columnValue = columnObj.getClass().getMethod(getterMethod).invoke(columnObj);
 				}
 				String dataType = columnInfo.getDataType();
-				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING.equals(dataType)){
+				if(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_STRING.equals(dataType)){
 					statement.setString(i+1, (String)columnValue);
 				}
-				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER.equals(dataType)){
+				else if(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_INTEGER.equals(dataType)){
 					if(statement==null || columnValue==null){
 						statement.setObject(i+1, null);
 					}
@@ -205,16 +205,16 @@ public class HAPDBAccess {
 						statement.setInt(i+1, (Integer)columnValue);
 					}
 				}
-				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN.equals(dataType)){
+				else if(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_BOOLEAN.equals(dataType)){
 					statement.setString(i+1, columnValue+"");
 				}
-				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT.equals(dataType)){
+				else if(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_FLOAT.equals(dataType)){
 					statement.setFloat(i+1, (Float)columnValue);
 				}
-				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(dataType)){
+				else if(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(dataType)){
 					statement.setString(i+1, HAPSerializeManager.getInstance().toStringValue(columnValue, HAPSerializationFormat.LITERATE));
 				}
-				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY.equals(dataType)){
+				else if(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_ARRAY.equals(dataType)){
 					statement.setString(i+1, HAPSerializeManager.getInstance().toStringValue(columnValue, HAPSerializationFormat.LITERATE));
 				}
 			}
@@ -266,10 +266,10 @@ public class HAPDBAccess {
 										//if literateType is not a valid one, then use the type info from property
 										HAPValueInfo propertyValueInfo = valueInfo.getChildByPath(column.getProperty()).getSolidValueInfo();
 										String propertyValueInfoType = propertyValueInfo.getValueInfoType();
-										if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(propertyValueInfoType)){
-											literateType = new HAPLiterateType(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, ((HAPValueInfoEntity)propertyValueInfo).getClassName());
+										if(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(propertyValueInfoType)){
+											literateType = new HAPLiterateType(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT, ((HAPValueInfoEntity)propertyValueInfo).getClassName());
 										}
-										else if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC.equals(propertyValueInfoType)){
+										else if(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ATOMIC.equals(propertyValueInfoType)){
 											literateType = ((HAPValueInfoAtomic)propertyValueInfo).getLiterateType();
 										}
 									}
@@ -284,10 +284,10 @@ public class HAPDBAccess {
 							if(obj instanceof HAPStringableValueEntity){
 								HAPValueInfo propertyValueInfo = valueInfo.getChildByPath(column.getProperty()).getSolidValueInfo();
 								String propertyValueInfoType = propertyValueInfo.getValueInfoType();
-								if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(propertyValueInfoType)){
+								if(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(propertyValueInfoType)){
 									((HAPStringableValueEntity)obj).updateChild(column.getColumnName(), (HAPStringableValue)columnObject);
 								}
-								else if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC.equals(propertyValueInfoType)){
+								else if(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ATOMIC.equals(propertyValueInfoType)){
 									((HAPStringableValueEntity)obj).updateAtomicChildStrValue(column.getColumnName(), HAPLiterateManager.getInstance().valueToString(columnObject), literateType.getType(), literateType.getSubType());
 								}
 							}

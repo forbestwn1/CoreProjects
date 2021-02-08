@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.interfac.HAPCalculateObject;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
@@ -72,7 +72,7 @@ public class HAPManagerChange {
 	private HAPStoryElement applySingleChange(HAPStory story, HAPChangeItem changeItem, List<HAPChangeItem> extendChanges, boolean saveRevert) {
 		HAPStoryElement out = null;
 		String changeType = changeItem.getChangeType();
-		if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_PATCH)) {
+		if(changeType.equals(HAPConstantShared.STORYDESIGN_CHANGETYPE_PATCH)) {
 			HAPChangeItemPatch changePatch = (HAPChangeItemPatch)changeItem;
 			changePatch.processAlias(story);
 			out = story.getElement(changePatch.getTargetElementId());
@@ -94,7 +94,7 @@ public class HAPManagerChange {
 				changeItem.setRevertChanges(changeResult.getRevertChanges());
 			}
 		}
-		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_NEW)) {
+		else if(changeType.equals(HAPConstantShared.STORYDESIGN_CHANGETYPE_NEW)) {
 			HAPChangeItemNew changeNew = (HAPChangeItemNew)changeItem;
 			HAPStoryElement element = changeNew.getElement();
 			HAPAliasElement alias = changeNew.getAlias();
@@ -112,7 +112,7 @@ public class HAPManagerChange {
 				changeItem.setRevertChanges(revertChanges);
 			}
 		}		
-		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_DELETE)) {
+		else if(changeType.equals(HAPConstantShared.STORYDESIGN_CHANGETYPE_DELETE)) {
 			HAPChangeItemDelete changeDelete = (HAPChangeItemDelete)changeItem;
 			changeDelete.processAlias(story);
 			HAPAliasElement alias = story.getAlias(changeDelete.getTargetElementId());
@@ -124,7 +124,7 @@ public class HAPManagerChange {
 				changeItem.setRevertChanges(revertChanges);
 			}
 		}
-		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_ALIAS)) {
+		else if(changeType.equals(HAPConstantShared.STORYDESIGN_CHANGETYPE_ALIAS)) {
 			HAPChangeItemAlias changeAlias = (HAPChangeItemAlias)changeItem;
 			HAPIdElement oldElementId = story.setAlias(changeAlias.getAlias(), changeAlias.getElementId());
 			//revert changes info
@@ -134,7 +134,7 @@ public class HAPManagerChange {
 				changeItem.setRevertChanges(revertChanges);
 			}
 		}
-		else if(changeType.equals(HAPConstant.STORYDESIGN_CHANGETYPE_STORYINFO)) {
+		else if(changeType.equals(HAPConstantShared.STORYDESIGN_CHANGETYPE_STORYINFO)) {
 			HAPChangeItemStoryInfo changeStoryIndex = (HAPChangeItemStoryInfo)changeItem;
 			String infoName = changeStoryIndex.getInfoName();
 			Object infoValue = changeStoryIndex.getInfoValue();

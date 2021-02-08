@@ -2,7 +2,7 @@ package com.nosliw.uiresource.page.story.model;
 
 import java.util.List;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPIdElement;
@@ -54,11 +54,11 @@ public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 		for(HAPChangeItem change : changes) {
 			if(HAPUtilityChange.isElementChange(change)) {
 				HAPIdElement targetEleId = HAPUtilityChange.getChangeTargetElementId(change);
-				if(HAPConstant.STORYELEMENT_CATEGARY_NODE.equals(targetEleId.getCategary())){
+				if(HAPConstantShared.STORYELEMENT_CATEGARY_NODE.equals(targetEleId.getCategary())){
 					String nodeId = targetEleId.getId();
 					HAPIdElementInfo idInfo = HAPUtilityStory.parseStoryElementId(nodeId);
 					String nodeType = idInfo.getType();
-					if(nodeType.equals(HAPConstant.STORYNODE_TYPE_VARIABLE)) {
+					if(nodeType.equals(HAPConstantShared.STORYNODE_TYPE_VARIABLE)) {
 						return true;
 					}
 				}

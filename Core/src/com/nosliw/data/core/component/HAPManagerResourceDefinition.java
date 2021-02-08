@@ -4,15 +4,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdDynamic;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
 public class HAPManagerResourceDefinition {
 
@@ -27,16 +28,16 @@ public class HAPManagerResourceDefinition {
 	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId) {
 		HAPResourceDefinition out = null;
 		String structure = resourceId.getStructure();
-		if(structure.equals(HAPConstant.RESOURCEID_TYPE_SIMPLE)) {
+		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
 			HAPResourceIdSimple simpleId = (HAPResourceIdSimple)resourceId;
 			String type = simpleId.getType();
 			out = this.m_plugins.get(type).getResource(simpleId);
 		}
-		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_DYNAMIC)) {
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
 			HAPResourceIdDynamic dynamicResourceId = (HAPResourceIdDynamic)resourceId;
 			out = this.m_dynamicResourceManager.buildResource(dynamicResourceId.getBuilderId(), dynamicResourceId.getParms());
-		}
-		else if(structure.equals(HAPConstant.RESOURCEID_TYPE_LOCAL)) {
+		} 
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
 			HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
 			String path = localResourceId.getBasePath().getPath() + localResourceId.getType() + "/" + localResourceId.getName() + ".res";
 			out = this.parseResourceDefinition(localResourceId.getType(), HAPFileUtility.readFile(path));
@@ -44,10 +45,13 @@ public class HAPManagerResourceDefinition {
 				((HAPWithAttachment)out).setLocalReferenceBase(localResourceId.getBasePath());
 			}
 		}
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
+			
+		}
 		
 		if(out instanceof HAPWithAttachment) {
 			//merge attachment with supplment in resource id
-			((HAPWithAttachment)out).getAttachmentContainer().merge(new HAPAttachmentContainer(resourceId.getSupplement()), HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT);
+			HAPAttachmentUtility.mergeAttachmentInResourceIdSupplementToContainer(resourceId, ((HAPWithAttachment)out).getAttachmentContainer(), HAPConstant.INHERITMODE_PARENT);
 		}
 		
 		//set resource id
@@ -55,7 +59,7 @@ public class HAPManagerResourceDefinition {
 		return out;
 	}
 
-	public HAPResourceDefinitionComplex getAdjustedComplextResourceDefinition(HAPResourceId resourceId, HAPAttachmentContainer parentAttachment) {
+	public HAPResourceDefinitionComplex getAdjustedComplextResourceDefinition(HAPResourceId resourceId, HAPContainerAttachment parentAttachment) {
 		HAPResourceDefinitionComplex out = (HAPResourceDefinitionComplex)this.getResourceDefinition(resourceId);
 		HAPUtilityComponent.mergeWithParentAttachment(out, parentAttachment);
 		return out;

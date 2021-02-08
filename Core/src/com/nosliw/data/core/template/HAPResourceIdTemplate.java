@@ -2,14 +2,14 @@ package com.nosliw.data.core.template;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdTemplate  extends HAPResourceIdSimple{
 
 	private HAPTemplateId m_templateId; 
 	
-	public HAPResourceIdTemplate(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_TEMPLATE);    }
+	public HAPResourceIdTemplate(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEMPLATE);    }
 
 	public HAPResourceIdTemplate(HAPResourceIdSimple resourceId){
 		this();

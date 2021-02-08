@@ -8,37 +8,26 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
 
 //
 @HAPEntityWithAttribute
-public class HAPAttachmentReference extends HAPAttachmentImp{
+public abstract class HAPAttachmentReference extends HAPAttachmentImp{
 
 	@HAPAttribute
 	public static String REFERENCEID = "referenceId";
 	
 	private HAPResourceId m_referenceId;
 
-	private HAPAttachmentReference() {	}
+	public HAPAttachmentReference() {	}
 	
-	public HAPAttachmentReference(String resourceType) {
-		this.setResourceType(resourceType);
-	}
-
 	public HAPAttachmentReference(HAPResourceId resourceId) {
+		super(resourceId.getType());
 		this.m_referenceId = resourceId;
 	}
 
-	@Override
-	public String getType() {  return HAPConstant.ATTACHMENT_TYPE_REFERENCE;  }
-	
 	public HAPResourceId getReferenceId() {	return this.m_referenceId;  }
-	public void setResourceId(HAPResourceId referenceId) {    
-		this.m_referenceId = referenceId;
-		this.setResourceType(this.m_referenceId.getType());
-	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -71,11 +60,8 @@ public class HAPAttachmentReference extends HAPAttachmentImp{
 		return out;
 	}
 	
-	@Override
-	public HAPAttachmentReference cloneAttachment() {
-		HAPAttachmentReference out = new HAPAttachmentReference();
-		super.cloneToObject(out);
+	protected void cloneToReferenceAttachment(HAPAttachmentReference out) {
+		super.cloneToAttachment(out);
 		out.m_referenceId = this.m_referenceId.clone();
-		return out;
 	}
 }

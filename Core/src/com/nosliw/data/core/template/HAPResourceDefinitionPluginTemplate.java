@@ -2,7 +2,7 @@ package com.nosliw.data.core.template;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -24,7 +24,7 @@ public class HAPResourceDefinitionPluginTemplate implements HAPPluginResourceDef
 	}
 
 	@Override
-	public String getResourceType() {		return HAPConstant.RUNTIME_RESOURCE_TYPE_TEMPLATE;	}
+	public String getResourceType() {		return HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEMPLATE;	}
 
 	@Override
 	public HAPResourceDefinition parseResourceDefinition(Object content) {

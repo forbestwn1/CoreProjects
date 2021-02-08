@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.strvalue.HAPStringableValueList;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPOperation;
 import com.nosliw.data.core.data.HAPOperationOutInfo;
@@ -32,7 +32,7 @@ public class HAPOperationImp extends HAPStringableValueEntityWithID implements H
 	public static String DATATYPNAME = "dataTypeName";
 	
 	public HAPOperationImp(){
-		this.updateAtomicChildStrValue(TYPE, HAPConstant.DATAOPERATION_TYPE_NORMAL);
+		this.updateAtomicChildStrValue(TYPE, HAPConstantShared.DATAOPERATION_TYPE_NORMAL);
 	}
 	
 	@Override

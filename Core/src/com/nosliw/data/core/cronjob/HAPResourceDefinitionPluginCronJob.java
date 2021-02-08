@@ -2,7 +2,7 @@ package com.nosliw.data.core.cronjob;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -16,7 +16,7 @@ public class HAPResourceDefinitionPluginCronJob implements HAPPluginResourceDefi
 	}
 	
 	@Override
-	public String getResourceType() {	return HAPConstant.RUNTIME_RESOURCE_TYPE_CRONJOB;	}
+	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_CRONJOB;	}
 
 	@Override
 	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {

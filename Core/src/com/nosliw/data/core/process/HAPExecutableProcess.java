@@ -13,7 +13,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -84,7 +84,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	}
  
 	@Override
-	public HAPParentContext getInContext() {	return HAPParentContext.createDefault(this.m_context.getChildContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC));	}
+	public HAPParentContext getInContext() {	return HAPParentContext.createDefault(this.m_context.getChildContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC));	}
 
 	@Override
 	public Map<String, HAPParentContext> getOutResultContext() {
@@ -93,7 +93,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 //			out.put(resultName, HAPParentContext.createDefault(this.m_context));     //kkkkkk
 			out.put(resultName, HAPParentContext.createDefault(this.m_results.get(resultName).getOutput().getOutputStructure()));
 		}
-		String defaultResultName = HAPConstant.NAME_DEFAULT;
+		String defaultResultName = HAPConstantShared.NAME_DEFAULT;
 		if(out.get(defaultResultName)==null) {
 			out.put(defaultResultName, HAPParentContext.createDefault(this.m_context));
 		}

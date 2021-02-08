@@ -2,14 +2,14 @@ package com.nosliw.data.core.runtime.js.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdJSGateway extends HAPResourceIdSimple{
 
 	private HAPJSGatewayId m_gatewayId; 
 	
-	public HAPResourceIdJSGateway(){    super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSGATEWAY);     }
+	public HAPResourceIdJSGateway(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSGATEWAY);     }
 
 	public HAPResourceIdJSGateway(HAPResourceIdSimple resourceId){
 		this();

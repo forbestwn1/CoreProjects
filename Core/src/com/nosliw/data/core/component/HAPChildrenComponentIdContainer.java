@@ -5,10 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.data.core.component.attachment.HAPAttachmentContainer;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 
 public class HAPChildrenComponentIdContainer {
 
@@ -18,17 +17,15 @@ public class HAPChildrenComponentIdContainer {
 		this.m_children = new LinkedHashMap<String, List<HAPChildrenComponentId>>();
 	}
 	
-	public void addChildCompoentId(HAPChildrenComponentId childComponentId, HAPAttachmentContainer parentAttachment) {
+	public void addChildCompoentId(HAPChildrenComponentId childComponentId, HAPContainerAttachment parentAttachment) {
 		HAPResourceId resourceId = childComponentId.getResourceId();
-		HAPAttachmentContainer merged = new HAPAttachmentContainer(resourceId.getSupplement());
-		merged.merge(parentAttachment, HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD);
-		HAPResourceId mergedResourceId = HAPResourceIdFactory.newInstance(resourceId, merged.toResourceIdSupplement());
-		childComponentId.setResourceId(mergedResourceId);
 		
-		List<HAPChildrenComponentId> byName = this.m_children.get(mergedResourceId.getType());
+		HAPAttachmentUtility.mergeContainerToResourceIdSupplement(resourceId, parentAttachment);
+		
+		List<HAPChildrenComponentId> byName = this.m_children.get(resourceId.getType());
 		if(byName==null) {
 			byName = new ArrayList<HAPChildrenComponentId>();
-			this.m_children.put(mergedResourceId.getType(), byName);
+			this.m_children.put(resourceId.getType(), byName);
 		}
 		byName.add(childComponentId);
 	}

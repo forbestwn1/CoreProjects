@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPSegmentParser;
 
 /*
@@ -37,7 +37,7 @@ public class HAPElementEvent extends HAPSerializableImp{
 	public HAPElementEvent(String uiId, String eventInfos){
 		this.m_uiId = uiId;
 		
-		HAPSegmentParser events = new HAPSegmentParser(eventInfos, HAPConstant.SEPERATOR_PART);
+		HAPSegmentParser events = new HAPSegmentParser(eventInfos, HAPConstantShared.SEPERATOR_PART);
 		this.m_event = events.next();
 		this.m_function = events.next();
 		this.m_selection = events.next();

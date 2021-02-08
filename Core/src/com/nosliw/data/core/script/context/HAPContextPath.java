@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 @HAPEntityWithAttribute
@@ -42,7 +42,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	}
 	
 	public HAPContextPath(String fullPath){
-		int index = fullPath.indexOf(HAPConstant.SEPERATOR_PATH);
+		int index = fullPath.indexOf(HAPConstantShared.SEPERATOR_PATH);
 		if(index==-1){
 			this.m_rootNodeId = new HAPContextDefinitionRootId(fullPath);
 		}
@@ -53,7 +53,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	}
 	
 	public HAPContextPath(String categary, String path){
-		int index = path.indexOf(HAPConstant.SEPERATOR_PATH);
+		int index = path.indexOf(HAPConstantShared.SEPERATOR_PATH);
 		if(index==-1){
 			this.m_rootNodeId = new HAPContextDefinitionRootId(categary, path);
 		}

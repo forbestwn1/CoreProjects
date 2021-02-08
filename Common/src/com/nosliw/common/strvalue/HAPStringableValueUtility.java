@@ -14,7 +14,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoAtomic;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPXMLUtility;
 
@@ -39,13 +39,13 @@ public class HAPStringableValueUtility {
 	
 	public static HAPStringableValueComplex newStringableValueComplex(String type){
 		HAPStringableValueComplex out = null;
-		if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(type)){
+		if(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(type)){
 			out = new HAPStringableValueEntity();
 		}
-		else if(HAPConstant.STRINGABLE_VALUESTRUCTURE_LIST.equals(type)){
+		else if(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_LIST.equals(type)){
 			out = new HAPStringableValueList();
 		}
-		else if(HAPConstant.STRINGABLE_VALUESTRUCTURE_MAP.equals(type)){
+		else if(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_MAP.equals(type)){
 			out = new HAPStringableValueMap();
 		}
 		return out;
@@ -71,14 +71,14 @@ public class HAPStringableValueUtility {
 					childValueInfo = parentValueInfo.getChildByPath(pathSeg);
 					if(out==null){
 						String childVaueInfoType = childValueInfo.getValueInfoType();
-						if(childVaueInfoType.equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY)){
+						if(childVaueInfoType.equals(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ENTITY)){
 							parentValueInfo = (HAPValueInfoEntity)childValueInfo;
 							out = ((HAPValueInfoEntity)childValueInfo).newValue();
 							parent.updateChild(pathSeg, out);
 						}
-						else if(childVaueInfoType.equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+						else if(childVaueInfoType.equals(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
 							HAPValueInfoAtomic atomicValueInfo = (HAPValueInfoAtomic)childValueInfo;
-							if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(atomicValueInfo.getDataType())){
+							if(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(atomicValueInfo.getDataType())){
 								Object obj = Class.forName(atomicValueInfo.getSubDataType()).newInstance();
 								out = HAPStringableValueAtomic.buildFromObject(obj);
 								parent.updateChild(pathSeg, out);

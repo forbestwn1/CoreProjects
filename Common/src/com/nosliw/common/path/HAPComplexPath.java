@@ -1,7 +1,7 @@
 package com.nosliw.common.path;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPComplexPath {
@@ -22,7 +22,7 @@ public class HAPComplexPath {
 		if(HAPBasicUtility.isStringNotEmpty(fullName)){
 			this.m_fullName = fullName;
 			
-			int index = this.m_fullName.indexOf(HAPConstant.SEPERATOR_PATH);
+			int index = this.m_fullName.indexOf(HAPConstantShared.SEPERATOR_PATH);
 			if(index==-1){
 				//name only
 				this.m_rootName = this.m_fullName;

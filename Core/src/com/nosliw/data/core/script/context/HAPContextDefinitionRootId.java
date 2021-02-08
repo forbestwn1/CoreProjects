@@ -1,6 +1,6 @@
 package com.nosliw.data.core.script.context;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPContextDefinitionRootId {
@@ -15,7 +15,7 @@ public class HAPContextDefinitionRootId {
 	}
 	
 	public HAPContextDefinitionRootId(String name) {
-		String[] segs = HAPNamingConversionUtility.splitTextByElements(name, HAPConstant.SEPERATOR_CONTEXT_CATEGARY_NAME);
+		String[] segs = HAPNamingConversionUtility.splitTextByElements(name, HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);
 		this.m_name = segs[0];
 		if(segs.length>=2)   this.m_categary = segs[1];
 	}
@@ -25,7 +25,7 @@ public class HAPContextDefinitionRootId {
 	
 	public String getName() {   return this.m_name;   }
 
-	public String getFullName() {  return HAPNamingConversionUtility.cascadeElements(new String[] {this.m_name, this.m_categary}, HAPConstant.SEPERATOR_CONTEXT_CATEGARY_NAME);   }
+	public String getFullName() {  return HAPNamingConversionUtility.cascadeElements(new String[] {this.m_name, this.m_categary}, HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);   }
 
 	public String getPath() {  return HAPNamingConversionUtility.buildPath(m_categary, m_name);   }
 	

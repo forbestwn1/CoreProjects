@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -141,7 +141,7 @@ public class HAPProcessorExpression {
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				int[] subId = (int[])data;
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 					String refName = referenceOperand.getReferenceName();
 					HAPDefinitionReference refDef = referencesDef.get(refName);
@@ -176,7 +176,7 @@ public class HAPProcessorExpression {
 				@Override
 				public boolean processOperand(HAPOperandWrapper operand, Object data) {
 					String opType = operand.getOperand().getType();
-					if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						HAPExecutableExpressionGroup refExpressionExe = referenceOperand.getReferedExpression();
 						
@@ -187,7 +187,7 @@ public class HAPProcessorExpression {
 						Map<String, HAPInfoCriteria> parentVarsInfo = expressionExe.getVarsInfo();
 						Map<String, HAPInfoCriteria> referedVarsInfo = referenceOperand.getReferedExpression().getVarsInfo();
 						String inputMappingType = inputMapping.getType();
-						if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
+						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
 							HAPContext da = mappingDa.getAssociation();
 							//refered var -- parent var
@@ -205,14 +205,14 @@ public class HAPProcessorExpression {
 								}
 							}
 						}
-						else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MIRROR)) {
+						else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {
 							for(String varName : referedVarsInfo.keySet()) {
 								if(parentVarsInfo.get(varName)==null) {
 									parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneCriteriaInfo());
 								}
 							}
 						}
-						else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_NONE)) {
+						else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_NONE)) {
 							
 						}
 					}
@@ -231,7 +231,7 @@ public class HAPProcessorExpression {
 				@Override
 				public boolean processOperand(HAPOperandWrapper operand, Object data) {
 					String opType = operand.getOperand().getType();
-					if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 
 						HAPExecutableExpressionGroup refExpression =	referenceOperand.getReferedExpression();
@@ -240,7 +240,7 @@ public class HAPProcessorExpression {
 						
 						HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
 						String inputMappingType = inputMapping.getType();
-						if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
+						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
 							HAPContext da = mappingDa.getAssociation();
 							HAPContext da1 = new HAPContext();
@@ -266,7 +266,7 @@ public class HAPProcessorExpression {
 				@Override
 				public boolean processOperand(HAPOperandWrapper operand, Object data) {
 					String opType = operand.getOperand().getType();
-					if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						HAPExecutableExpressionGroup refExpressionExe = referenceOperand.getReferedExpression();
 						
@@ -276,7 +276,7 @@ public class HAPProcessorExpression {
 						Map<String, String> nameMapping = new LinkedHashMap<String, String>();
 						HAPDefinitionDataAssociation inputMapping =	referenceOperand.getInputMapping();
 						String inputMappingType = inputMapping.getType();
-						if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MAPPING)) {
+						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
 							HAPContext da = mappingDa.getAssociation();
 							for(String rootName : da.getElementNames()) {
@@ -284,12 +284,12 @@ public class HAPProcessorExpression {
 								nameMapping.putAll(path);
 							}
 						}
-						else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_MIRROR)) {
+						else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {
 							for(String varName : referedVarsInfo.keySet()) {
 								nameMapping.put(varName, HAPUtilityExpression.getBeforeUpdateName(refExpressionExe, varName));
 							}
 						}
-						else if(inputMappingType.equals(HAPConstant.DATAASSOCIATION_TYPE_NONE)) {
+						else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_NONE)) {
 							for(String varName : referedVarsInfo.keySet()) {
 								parentVarsInfo.put(varName, referedVarsInfo.get(varName).cloneCriteriaInfo());
 								nameMapping.put(varName, HAPUtilityExpression.getBeforeUpdateName(refExpressionExe, varName));

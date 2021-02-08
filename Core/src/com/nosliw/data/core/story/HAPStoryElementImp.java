@@ -9,7 +9,7 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.change.HAPChangeResult;
@@ -61,7 +61,7 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 	}
 
 	@Override
-	public String getEntityOrReferenceType() {   return HAPConstant.ENTITY;    }
+	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
 
 	@Override
 	public HAPIdElement getElementId() {	return new HAPIdElement(this.m_categary, this.getId());	}

@@ -3,7 +3,7 @@ package com.nosliw.data.core.process.activity;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
@@ -70,8 +70,8 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 //		HAPUtilityProcess.mergeDataVariableInActivityToProcessContext(affectedActivityVariablesInfo, activityContext, processDataContext);
 
 		//process success result
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, definition, HAPConstant.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, runtimeEnv);
-		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, definition, HAPConstantShared.ACTIVITY_RESULT_SUCCESS, processDataContext, m_resultContextBuilder, runtimeEnv);
+		out.addResult(HAPConstantShared.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;
 	}
@@ -80,8 +80,8 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		@Override
 		public HAPContextStructure buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPContext out = new HAPContext();
-			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
-				String outputVar = HAPConstant.ACTIVITY_OUTPUTVARIABLE_OUTPUT;
+			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
+				String outputVar = HAPConstantShared.ACTIVITY_OUTPUTVARIABLE_OUTPUT;
 				HAPExpressionActivityExecutable expressionActExt = (HAPExpressionActivityExecutable)activity;
 				HAPExecutableScriptGroup scriptExpressionGroup = expressionActExt.getScriptExpression();
 				HAPExecutableScriptEntity scriptExpression = scriptExpressionGroup.getScript(null);

@@ -4,7 +4,7 @@ import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPValueInfoUtility {
 
@@ -23,11 +23,11 @@ public class HAPValueInfoUtility {
 	 */
 	public static String getEntityClassNameFromValueInfo(HAPValueInfo valueInfo){
 		String className = null;
-		if(valueInfo.getValueInfoType().equals(HAPConstant.STRINGALBE_VALUEINFO_ENTITY)){
+		if(valueInfo.getValueInfoType().equals(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY)){
 			className = ((HAPValueInfoEntity)valueInfo).getClassName();
 		}
-		else if(valueInfo.getValueInfoType().equals(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC)){
-			if(((HAPValueInfoAtomic)valueInfo).getDataType().equals(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT)){
+		else if(valueInfo.getValueInfoType().equals(HAPConstantShared.STRINGALBE_VALUEINFO_ATOMIC)){
+			if(((HAPValueInfoAtomic)valueInfo).getDataType().equals(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT)){
 				className = ((HAPValueInfoAtomic)valueInfo).getSubDataType();
 			}
 		}
@@ -42,12 +42,12 @@ public class HAPValueInfoUtility {
 	public static Object getObjectFromStringableValue(HAPStringableValue value){
 		Object out = null;
 		
-		if(value.getStringableStructure().equals(HAPConstant.STRINGALBE_VALUEINFO_ENTITY)){
+		if(value.getStringableStructure().equals(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY)){
 			out = value;
 		}
-		else if(value.getStringableStructure().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+		else if(value.getStringableStructure().equals(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
 			HAPStringableValueAtomic atomicValue = (HAPStringableValueAtomic)value;
-			if(atomicValue.getLiterateType().getType().equals(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT)){
+			if(atomicValue.getLiterateType().getType().equals(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT)){
 				out = atomicValue.getValue();
 			}
 		}

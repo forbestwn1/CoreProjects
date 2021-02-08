@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
@@ -22,11 +22,11 @@ public class HAPUtilityStory {
 	static private int index = 0;
 
 	public static String buildStoryElementId(HAPStoryElement ele, String id) {
-		return ele.getCategary()+HAPConstant.SEPERATOR_LEVEL1+ele.getType()+HAPConstant.SEPERATOR_LEVEL1+id;
+		return ele.getCategary()+HAPConstantShared.SEPERATOR_LEVEL1+ele.getType()+HAPConstantShared.SEPERATOR_LEVEL1+id;
 	}
 	
 	public static HAPIdElementInfo parseStoryElementId(String id) {
-		String[] segs = id.split(HAPConstant.SEPERATOR_LEVEL1);
+		String[] segs = id.split(HAPConstantShared.SEPERATOR_LEVEL1);
 		return new HAPIdElementInfo(segs[0], segs[1], segs[2]);
 	}
 	
@@ -68,7 +68,7 @@ public class HAPUtilityStory {
 	public static List<HAPInfoNodeChild> getChildNode(HAPStoryNode parent, HAPStory story) {  return getChildNode(parent, story, true);  }
 	private static List<HAPInfoNodeChild> getChildNode(HAPStoryNode parent, HAPStory story, boolean onlyEnable) {
 		List<HAPInfoNodeChild> out = new ArrayList<HAPInfoNodeChild>();
-		List<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstant.STORYCONNECTION_TYPE_CONTAIN, HAPConstant.STORYNODE_PROFILE_CONTAINER, null, null, story);
+		List<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstantShared.STORYCONNECTION_TYPE_CONTAIN, HAPConstantShared.STORYNODE_PROFILE_CONTAINER, null, null, story);
 		for(HAPConnectionEnd connectionEnd : childConnectionEnds) {
 			HAPConnectionContain containerConnectionEntity = (HAPConnectionContain)story.getConnection(connectionEnd.getConnectionId());
 			HAPStoryNode node = (HAPStoryNode)story.getElement(connectionEnd.getNodeRef());
@@ -83,7 +83,7 @@ public class HAPUtilityStory {
 	public static List<HAPStoryNode> getChildNode(HAPStoryNode parent, String childId, HAPStory story) {  return getChildNode(parent, childId, story, true);  }
 	private static List<HAPStoryNode> getChildNode(HAPStoryNode parent, String childId, HAPStory story, boolean onlyEnable) {
 		List<HAPStoryNode> out = new ArrayList<HAPStoryNode>();
-		List<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstant.STORYCONNECTION_TYPE_CONTAIN, HAPConstant.STORYNODE_PROFILE_CONTAINER, null, null, story);
+		List<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstantShared.STORYCONNECTION_TYPE_CONTAIN, HAPConstantShared.STORYNODE_PROFILE_CONTAINER, null, null, story);
 		for(HAPConnectionEnd connectionEnd : childConnectionEnds) {
 			HAPConnectionContain containerConnectionEntity = (HAPConnectionContain)story.getConnection(connectionEnd.getConnectionId());
 			if(HAPBasicUtility.isEquals(childId, containerConnectionEntity.getChildId())) {
@@ -137,5 +137,5 @@ public class HAPUtilityStory {
 		return null;
 	}
 	
-	public static HAPIdElement newNodeId(String id) {   return new HAPIdElement(HAPConstant.STORYELEMENT_CATEGARY_NODE, id);    }
+	public static HAPIdElement newNodeId(String id) {   return new HAPIdElement(HAPConstantShared.STORYELEMENT_CATEGARY_NODE, id);    }
 }

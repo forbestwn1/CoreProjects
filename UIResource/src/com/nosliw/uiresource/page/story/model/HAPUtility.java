@@ -3,7 +3,7 @@ package com.nosliw.uiresource.page.story.model;
 import java.util.List;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
@@ -33,9 +33,9 @@ public class HAPUtility {
 		HAPUIDataStructureInfo out = new HAPUIDataStructureInfo();
 
 		String nodeType = uiStoryNode.getType();
-		HAPConfigureContextProcessor contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstant.UIRESOURCE_TYPE_TAG); 
+		HAPConfigureContextProcessor contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_TAG); 
 		HAPContextGroup childContext = null;
-		if(HAPConstant.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
+		if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
 			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
 			childContext = HAPUtilityProcess.buildUITagContext(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, runtimeEnv);
 			childContext = HAPProcessorContext.processRelative(childContext, HAPParentContext.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
@@ -51,7 +51,7 @@ public class HAPUtility {
 	
 	public static HAPUIDataStructureInfo buildDataStructureInfoForPageNode(HAPStory story) {
 		HAPUIDataStructureInfo out = new HAPUIDataStructureInfo();
-		Set<HAPStoryNode> varNodes = HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_VARIABLE);
+		Set<HAPStoryNode> varNodes = HAPUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
 			HAPContextDefinitionRoot varRoot = new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(varNode.getVariableInfo().getDataInfo()));
@@ -69,7 +69,7 @@ public class HAPUtility {
 	}
 	
 	public static HAPUITree buildUITree(HAPStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPManagerChange changeMan) {
-		HAPStoryNodePage pageStoryNode = (HAPStoryNodePage)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstant.STORYNODE_TYPE_PAGE).iterator().next();
+		HAPStoryNodePage pageStoryNode = (HAPStoryNodePage)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_PAGE).iterator().next();
 		HAPUINode uiNode = createUINodeByStoryNode(pageStoryNode, story, runtimeEnv, uiTagMan, changeMan);
 		buildChildUINode(uiNode, story, runtimeEnv, uiTagMan, changeMan);
 		return (HAPUITree)uiNode;
@@ -80,7 +80,7 @@ public class HAPUtility {
 
 		String nodeType = storyNode.getType();
 		switch(nodeType) {
-		case HAPConstant.STORYNODE_TYPE_PAGE:
+		case HAPConstantShared.STORYNODE_TYPE_PAGE:
 			out = new HAPUITree(storyNode.getElementId(), story, runtimeEnv, uiTagMan, changeMan); 
 			break;
 		default:

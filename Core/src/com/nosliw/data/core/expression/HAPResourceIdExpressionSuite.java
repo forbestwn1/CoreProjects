@@ -2,7 +2,7 @@ package com.nosliw.data.core.expression;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceIdSupplement;
 
@@ -10,7 +10,7 @@ public class HAPResourceIdExpressionSuite  extends HAPResourceIdSimple{
 
 	private HAPIdExpressionSuite m_expressionSuiteId; 
 	
-	public HAPResourceIdExpressionSuite(){  super(HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSIONSUITE);  }
+	public HAPResourceIdExpressionSuite(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSIONSUITE);  }
 
 	public HAPResourceIdExpressionSuite(HAPResourceIdSimple resourceId){
 		this();

@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionSequenceFlow;
 
@@ -22,7 +22,7 @@ public class HAPStartActivityDefinition extends HAPDefinitionActivity{
 	}
 
 	@Override
-	public String getType() {		return HAPConstant.ACTIVITY_TYPE_START;	}
+	public String getType() {		return HAPConstantShared.ACTIVITY_TYPE_START;	}
 	
 	public HAPDefinitionSequenceFlow getFlow() {   return this.m_flow;   }
 	

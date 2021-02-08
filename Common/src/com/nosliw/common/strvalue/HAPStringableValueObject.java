@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.resolve.HAPResolvableString;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public abstract class HAPStringableValueObject extends HAPStringableValue{
 
@@ -49,7 +49,7 @@ public abstract class HAPStringableValueObject extends HAPStringableValue{
 	public boolean isResolved(){  return this.m_strValue.isResolved();  }
 
 	@Override
-	public String getStringableStructure() {  return HAPConstant.STRINGABLE_VALUESTRUCTURE_OBJECT;  }
+	public String getStringableStructure() {  return HAPConstantShared.STRINGABLE_VALUESTRUCTURE_OBJECT;  }
 
 	@Override
 	public HAPStringableValue getChild(String name) {		return null;	}

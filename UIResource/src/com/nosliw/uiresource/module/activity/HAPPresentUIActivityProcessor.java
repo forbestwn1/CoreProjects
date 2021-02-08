@@ -2,7 +2,7 @@ package com.nosliw.uiresource.module.activity;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.process.HAPContextProcessor;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
@@ -36,8 +36,8 @@ public class HAPPresentUIActivityProcessor implements HAPProcessorActivity{
 		HAPPresentUIActivityExecutable out = new HAPPresentUIActivityExecutable(id, activity);
 		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, activity, context, runtimeEnv);
 		//process success result
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, activity, HAPConstant.ACTIVITY_RESULT_SUCCESS, null, null, runtimeEnv);
-		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, activity, HAPConstantShared.ACTIVITY_RESULT_SUCCESS, null, null, runtimeEnv);
+		out.addResult(HAPConstantShared.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;
 	}

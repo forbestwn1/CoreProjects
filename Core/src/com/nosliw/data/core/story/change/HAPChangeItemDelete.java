@@ -2,12 +2,12 @@ package com.nosliw.data.core.story.change;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.HAPReferenceElement;
 
 public class HAPChangeItemDelete extends HAPChangeItemModifyElement{
 
-	public static final String MYCHANGETYPE = HAPConstant.STORYDESIGN_CHANGETYPE_DELETE;
+	public static final String MYCHANGETYPE = HAPConstantShared.STORYDESIGN_CHANGETYPE_DELETE;
 
 	public HAPChangeItemDelete() {
 		super(MYCHANGETYPE);

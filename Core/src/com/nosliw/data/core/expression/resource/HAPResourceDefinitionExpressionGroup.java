@@ -2,7 +2,7 @@ package com.nosliw.data.core.expression.resource;
 
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
@@ -18,7 +18,7 @@ public class HAPResourceDefinitionExpressionGroup  extends HAPComponentContainer
 	}
 
 	@Override
-	public String getResourceType() {   return HAPConstant.RUNTIME_RESOURCE_TYPE_EXPRESSION;  }
+	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSION;  }
 
 	public HAPDefinitionResourceDefinitionExpressionSuiteElementEntity getExpressionGroupEntity() {    return (HAPDefinitionResourceDefinitionExpressionSuiteElementEntity)this.getComponentEntity();   }
 	public HAPResourceDefinitionExpressionSuite getSuite() {   return (HAPResourceDefinitionExpressionSuite)this.getResourceContainer();  }

@@ -18,7 +18,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntityable;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 
 /*
  * container for stringable value
@@ -45,7 +45,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	public Iterator<HAPStringableValue> iterate(){		return this.m_childrens.values().iterator();	}
 	
 	@Override
-	public String getStringableStructure(){		return HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY;	}
+	public String getStringableStructure(){		return HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ENTITY;	}
 	
 	public HAPStringableValueList getListChild(String name){
 		HAPStringableValueList out = (HAPStringableValueList)this.getChild(name);
@@ -90,7 +90,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		String childSubDataType = null;
 		if(this.getValueInfoEntityable()!=null){
 			HAPValueInfo childValueInfo = this.getValueInfoEntityable().getPropertyInfo(name);
-			if(childValueInfo.getValueInfoType().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+			if(childValueInfo.getValueInfoType().equals(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
 				HAPValueInfoAtomic childAtomicValueInfo = (HAPValueInfoAtomic)childValueInfo;
 				childDataType = childAtomicValueInfo.getDataType();
 				childSubDataType = childAtomicValueInfo.getSubDataType();
@@ -102,7 +102,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	public HAPStringableValueAtomic updateAtomicChildStrValue(String name, String strValue, String type, String subType){
 		HAPStringableValueAtomic out = null; 
 		HAPStringableValue child = this.getChild(name);
-		if(child==null || child.getStringableStructure().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+		if(child==null || child.getStringableStructure().equals(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
 			out = new HAPStringableValueAtomic(strValue, type, subType);
 			this.m_childrens.put(name, out);
 		}
@@ -116,7 +116,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	public HAPStringableValueAtomic updateAtomicChildObjectValue(String name, Object value){
 		HAPStringableValueAtomic out = null; 
 		HAPStringableValue child = this.getChild(name);
-		if(child==null || child.getStringableStructure().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+		if(child==null || child.getStringableStructure().equals(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
 			out = HAPStringableValueAtomic.buildFromObject(value); 
 			this.m_childrens.put(name, out);
 		}
@@ -219,7 +219,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		for(String child : this.m_childrens.keySet()){
 			HAPStringableValue propertyValue = this.m_childrens.get(child);
 			switch(propertyValue.getStringableStructure()){
-			case HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC:
+			case HAPConstantShared.STRINGABLE_VALUESTRUCTURE_ATOMIC:
 				jsonMap.put(child, this.m_childrens.get(child).toStringValue(HAPSerializationFormat.JSON));
 				typeJsonMap.put(child, String.class);
 				break;

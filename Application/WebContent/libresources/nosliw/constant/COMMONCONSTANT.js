@@ -322,6 +322,7 @@ var COMMONCONSTANT=
   "RUNTIME_RESOURCE_TYPE_PROCESSSUITE": "processSuite",
   "RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN": "activityPlugin",
   "RUNTIME_RESOURCE_TYPE_SERVICE": "service",
+  "RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE": "serviceInterface",
   "RUNTIME_RESOURCE_TYPE_DATA": "data",
   "RUNTIME_RESOURCE_TYPE_TESTDATA": "testData",
   "RUNTIME_RESOURCE_TYPE_STORY": "story",
@@ -384,7 +385,8 @@ var COMMONCONSTANT=
   "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
   "NOSLIW_NAME_PREFIX": "nosliw_",
   "NAME_DEFAULT": "default",
-  "ATTACHMENT_TYPE_REFERENCE": "reference",
+  "ATTACHMENT_TYPE_REFERENCEEXTERNAL": "referenceExternal",
+  "ATTACHMENT_TYPE_REFERENCELOCAL": "referenceLocal",
   "ATTACHMENT_TYPE_ENTITY": "entity",
   "ATTACHMENT_TYPE_PLACEHOLDER": "placeHolder",
   "RESOURCEID_TYPE_SIMPLE": "simple",
@@ -459,7 +461,10 @@ var COMMONCONSTANT=
   "UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR": "nosliw_validationError",
   "HANDLERSTEP_TYPE_DATAASSOCIATION": "dataAssociation",
   "HANDLERSTEP_TYPE_PROCESS": "process",
-  "HANDLERSTEP_TYPE_ACTIVITY": "activity"
+  "HANDLERSTEP_TYPE_ACTIVITY": "activity",
+  "INHERITMODE_PARENT": "parent",
+  "INHERITMODE_CHILD": "child",
+  "INHERITMODE_NONE": "none"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

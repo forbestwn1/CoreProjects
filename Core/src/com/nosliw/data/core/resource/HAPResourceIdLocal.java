@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
 
@@ -28,7 +28,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	}
 	
 	@Override
-	public String getStructure() {  return HAPConstant.RESOURCEID_TYPE_LOCAL;  }
+	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_LOCAL;  }
 
 	public HAPLocalReferenceBase getBasePath() {   return this.m_basePath;   }
 	public void setBasePath(HAPLocalReferenceBase base) {   this.m_basePath = base;   }
@@ -37,12 +37,12 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	
 	@Override
 	public String getIdLiterate() {
-		return HAPNamingConversionUtility.cascadeElements(this.m_name, HAPSerializeManager.getInstance().toStringValue(this.m_basePath, HAPSerializationFormat.LITERATE), HAPConstant.SEPERATOR_LEVEL1);
+		return HAPNamingConversionUtility.cascadeElements(this.m_name, HAPSerializeManager.getInstance().toStringValue(this.m_basePath, HAPSerializationFormat.LITERATE), HAPConstantShared.SEPERATOR_LEVEL1);
 	}
 
 	@Override
 	protected void buildCoreIdByLiterate(String idLiterate) {
-		String[] segs = HAPNamingConversionUtility.splitTextByElements(idLiterate, HAPConstant.SEPERATOR_LEVEL1);
+		String[] segs = HAPNamingConversionUtility.splitTextByElements(idLiterate, HAPConstantShared.SEPERATOR_LEVEL1);
 		this.m_name = segs[0];
 		if(segs.length>=2) {
 			this.m_basePath = new HAPLocalReferenceBase(segs[1]);
