@@ -10,16 +10,17 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
-import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.resource.HAPResourceDefinitionImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 //static information for a service. readable, query for service
 //information needed during configuration time
 @HAPEntityWithAttribute
-public class HAPInfoServiceInterface extends HAPEntityInfoWritableImp{
+public class HAPInfoServiceInterface extends HAPResourceDefinitionImp implements HAPEntityOrReference{
 
 	@HAPAttribute
 	public static String TAG = "tag";
@@ -41,6 +42,12 @@ public class HAPInfoServiceInterface extends HAPEntityInfoWritableImp{
 		this.m_serviceInterface = new HAPServiceInterface();
 		this.m_displayResource = new HAPDisplayResourceNode();
 	}
+
+	@Override
+	public String getResourceType() {  return HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE; }
+
+	@Override
+	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
 
 	public HAPServiceInterface getInterface() {  return this.m_serviceInterface;  } 
 	
@@ -77,7 +84,7 @@ public class HAPInfoServiceInterface extends HAPEntityInfoWritableImp{
 	}
 	
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(INTERFACE, HAPJsonUtility.buildJson(this.m_serviceInterface, HAPSerializationFormat.JSON));
 		jsonMap.put(TAG, HAPJsonUtility.buildJson(this.m_tags, HAPSerializationFormat.JSON));

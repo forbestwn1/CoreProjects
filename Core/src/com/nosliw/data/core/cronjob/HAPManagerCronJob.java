@@ -1,13 +1,13 @@
 package com.nosliw.data.core.cronjob;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;

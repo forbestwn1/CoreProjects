@@ -1,0 +1,13 @@
+[{
+	"static": {
+		"id": "schoolServiceStandard",
+		"name": "TestTemplateServiceSchool",
+		"displayName": "Element school ranking list",
+		"description" : "all element school rank in ontario",
+		"tag" : ["demo", "pubic"],
+		"interface" : "schoolservice"
+	},
+	"runtime" : {
+	    "implementation" : "com.nosliw.service.test.template.school.standard.HAPServiceImp",
+	}
+}]

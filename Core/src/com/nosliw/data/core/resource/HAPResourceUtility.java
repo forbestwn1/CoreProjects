@@ -12,7 +12,6 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.system.HAPSystemUtility;

@@ -35,7 +35,7 @@ public class HAPResourceIdServiceDefinition  extends HAPResourceIdSimple{
 		this.m_serviceDefinitionId = new HAPIdServcieDefinition(id);
 	}
 
-	public HAPIdServcieDefinition getServiceInterfaceId(){  return this.m_serviceDefinitionId;	}
+	public HAPIdServcieDefinition getServiceDefinitionId(){  return this.m_serviceDefinitionId;	}
 	
 	@Override
 	public HAPResourceIdServiceDefinition clone(){

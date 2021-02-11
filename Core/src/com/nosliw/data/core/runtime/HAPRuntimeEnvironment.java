@@ -1,13 +1,13 @@
 package com.nosliw.data.core.runtime;
 
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
-import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
+import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.script.expression.HAPManagerScript;

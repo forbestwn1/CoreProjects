@@ -5,9 +5,9 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.provide.HAPUtilityService;

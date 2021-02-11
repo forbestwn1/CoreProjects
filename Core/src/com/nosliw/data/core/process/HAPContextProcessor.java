@@ -1,8 +1,8 @@
 package com.nosliw.data.core.process;
 
-import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPContextResourceDefinition;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
+import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceUtility;
 

@@ -7,13 +7,14 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.resource.HAPResourceDefinitionImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //contains all information related with service definition
 @HAPEntityWithAttribute
-public class HAPDefinitionService extends HAPSerializableImp{
+public class HAPDefinitionService extends HAPResourceDefinitionImp{
 
 	@HAPAttribute
 	public static String STATIC = "static";
@@ -31,6 +32,9 @@ public class HAPDefinitionService extends HAPSerializableImp{
 
 	public HAPDefinitionService(){
 	}
+	
+	@Override
+	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE;  }
 	
 	public HAPInfoServiceStatic getStaticInfo() {   return this.m_staticInfo;   }
 	
@@ -68,5 +72,5 @@ public class HAPDefinitionService extends HAPSerializableImp{
 		jsonMap.put(STATIC, HAPJsonUtility.buildJson(this.m_staticInfo, HAPSerializationFormat.JSON));
 		jsonMap.put(RUNTIME, HAPJsonUtility.buildJson(this.m_runtimeInfo, HAPSerializationFormat.JSON));
 	}
-	
+
 }

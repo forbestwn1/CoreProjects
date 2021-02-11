@@ -74,7 +74,7 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 
 		//external context from parameter of service
 		HAPContext inputExternalContext = new HAPContext();
-		HAPServiceInterface serviceInterface = staticInfo.getInterface();
+		HAPServiceInterface serviceInterface = staticInfo.getInterface().getInterface();
 		for(HAPServiceParm parmDef : serviceInterface.getParms()){
 			inputExternalContext.addElement(parmDef.getName(), new HAPContextDefinitionLeafData(new HAPVariableDataInfo((parmDef.getCriteria()))));
 		}

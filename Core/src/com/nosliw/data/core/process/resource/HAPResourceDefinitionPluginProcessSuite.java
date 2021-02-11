@@ -7,11 +7,11 @@ import java.io.FileNotFoundException;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
+import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;

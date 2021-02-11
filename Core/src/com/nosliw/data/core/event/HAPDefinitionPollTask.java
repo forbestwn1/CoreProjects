@@ -6,13 +6,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.process.HAPEmbededProcessTask;
+import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
-public class HAPDefinitionPollTask extends HAPSerializableImp implements HAPEmbededProcessTask{
+public class HAPDefinitionPollTask extends HAPSerializableImp{
+//implements HAPEmbededProcessTask{
 
 	@HAPAttribute
 	public static String INPUT = "input";

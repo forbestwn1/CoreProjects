@@ -8,8 +8,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPDefinitionComplex;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.HAPUtilityDataComponent;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 
@@ -54,7 +54,9 @@ public class HAPUtilityExpressionComponent {
 			JSONObject attachmentEntityJsonObj = entityAttachment.getEntityJsonObj();
 			HAPParserExpressionDefinition.parseExpressionDefinitionList(out, attachmentEntityJsonObj);
 		}
-		else if(HAPConstantShared.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
+		else if(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL.equals(attachment.getType())) {
+		}
+		else if(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL.equals(attachment.getType())) {
 		}
 		return out;
 	}

@@ -1,42 +1,30 @@
 package com.nosliw.data.core.service.resource;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPPluginResourceDefinition;
+import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResourceUtility;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
-import com.nosliw.uiresource.page.definition.HAPParserPage;
+import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 
 public class HAPResourceDefinitionPluginServiceDefinition implements HAPPluginResourceDefinition{
 
-	private HAPParserPage m_pageParser;
+	private HAPManagerServiceDefinition m_serviceDefinitionMan;
 	
-	public HAPResourceDefinitionPluginServiceDefinition(HAPParserPage pageParser) {
-		this.m_pageParser = pageParser;
+	public HAPResourceDefinitionPluginServiceDefinition(HAPManagerServiceDefinition serviceDefinitionMan) {
+		this.m_serviceDefinitionMan = serviceDefinitionMan;
 	}
 	
 	@Override
-	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
-		//read content
-		String file = HAPResourceUtility.isFileBased(resourceId);
-		if(file==null) {
-			file = HAPSystemFolderUtility.getUIPageFolder()+resourceId.getId()+".res";
-		}
-		
-		//parse content
-		HAPDefinitionUIPage uiResourceDef = m_pageParser.parseFile(file);
-		return uiResourceDef;
-	}
+	public String getResourceType() {  return HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE;  }
 
 	@Override
-	public String getResourceType() {		return HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE;	}
+	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
+		return this.m_serviceDefinitionMan.getDefinition(new HAPResourceIdServiceDefinition(resourceId).getServiceDefinitionId().getId());
+	}
 
 	@Override
 	public HAPResourceDefinition parseResourceDefinition(Object content) {
-		String str = (String)content;
-		return this.m_pageParser.parseUIDefinition(null, str);
+		// TODO Auto-generated method stub
+		return null;
 	}
-
 }

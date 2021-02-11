@@ -1,4 +1,4 @@
-package com.nosliw.data.core.component;
+package com.nosliw.data.core.resource;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -7,12 +7,10 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.HAPResourceDefinitionComplex;
+import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdDynamic;
-import com.nosliw.data.core.resource.HAPResourceIdLocal;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 
 public class HAPManagerResourceDefinition {

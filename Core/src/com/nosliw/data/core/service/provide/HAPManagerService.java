@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.service.interfacee.HAManagerServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 
@@ -19,16 +20,20 @@ public class HAPManagerService {
 	
 	private HAPManagerServiceDefinition m_serviceDefinitionManager;
 	
+	private HAManagerServiceInterface m_serviceInterfaceManager;
+	
 	private Map<String, HAPInstanceService> m_serviceInstances;
 	
 	public HAPManagerService(HAPRuntimeEnvironment runtimeEnv){
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_serviceDefinitionManager = new HAPManagerServiceDefinition(this.m_runtimeEnv);
+		this.m_serviceInterfaceManager = new HAManagerServiceInterface();
 		this.m_serviceInstances = new LinkedHashMap<String, HAPInstanceService>();
 		this.m_serviceFactorys = new LinkedHashMap<String, HAPFactoryService>();
 	}
 	
 	public HAPManagerServiceDefinition getServiceDefinitionManager() {   return this.m_serviceDefinitionManager;   }
+	public HAManagerServiceInterface getServiceInterfaceManager() {    return this.m_serviceInterfaceManager;    }
 	
 	public void registerServiceInstance(String id, HAPInstanceService serviceInstance){
 		this.m_serviceInstances.put(id, serviceInstance);
@@ -68,7 +73,7 @@ public class HAPManagerService {
 		HAPResultService out = null;
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
-			HAPServiceInterface serviceInterface = serviceInstance.getDefinition().getStaticInfo().getInterface();
+			HAPServiceInterface serviceInterface = serviceInstance.getDefinition().getStaticInfo().getInterface().getInterface();
 			for(HAPServiceParm parm : serviceInterface.getParms()) {
 				String parmName = parm.getId();
 				HAPData parmData = null;

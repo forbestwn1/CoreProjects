@@ -86,4 +86,5 @@ public class HAPServiceInterface extends HAPSerializableImp{
 		jsonMap.put(PARM, HAPJsonUtility.buildJson(this.m_parms, HAPSerializationFormat.JSON));
 		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
 	}
+
 }

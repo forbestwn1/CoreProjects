@@ -7,9 +7,9 @@ import java.io.FileNotFoundException;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.expression.HAPResourceIdExpressionSuite;
+import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;

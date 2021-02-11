@@ -2,9 +2,9 @@ package com.nosliw.data.core.script.context;
 
 import java.util.Set;
 
-import com.nosliw.data.core.component.HAPManagerResourceDefinition;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPManagerExpression;
+import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 

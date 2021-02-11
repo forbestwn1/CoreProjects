@@ -8,9 +8,9 @@ import com.nosliw.data.core.component.HAPComponentContainerElement;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 
@@ -39,7 +39,11 @@ public class HAPUtilityProcessComponent {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
 			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntityJsonObj(), activityPluginMan);
 		}
-		else if(HAPConstantShared.ATTACHMENT_TYPE_REFERENCE.equals(attachment.getType())) {
+		else if(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL.equals(attachment.getType())) {
+			HAPAttachmentReference referenceAttachment = (HAPAttachmentReference)attachment;
+			out = new HAPDefinitionProcessSuiteElementReference(referenceAttachment.getReferenceId());
+		}
+		else if(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL.equals(attachment.getType())) {
 			HAPAttachmentReference referenceAttachment = (HAPAttachmentReference)attachment;
 			out = new HAPDefinitionProcessSuiteElementReference(referenceAttachment.getReferenceId());
 		}

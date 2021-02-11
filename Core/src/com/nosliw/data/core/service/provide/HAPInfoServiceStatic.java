@@ -9,12 +9,16 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
+import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 
 //static information for a service. readable, query for service
 //information needed during configuration time
@@ -27,46 +31,52 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String INTERFACE = "interface";
 
-	@HAPAttribute
-	public static String DISPLAY = "display";
-
 	private List<String> m_tags;
 	
-	private HAPServiceInterface m_serviceInterface;
+	private HAPEntityOrReference m_interface;
 	
-	private HAPDisplayResourceNode m_displayResource;
+	private HAPInfoServiceInterface m_processedInterface;
 	
 	public HAPInfoServiceStatic() {
 		this.m_tags = new ArrayList<String>();
-		this.m_serviceInterface = new HAPServiceInterface();
-		this.m_displayResource = new HAPDisplayResourceNode();
 	}
 
-	public HAPServiceInterface getInterface() {  return this.m_serviceInterface;  } 
+	public HAPInfoServiceInterface getInterface() {  return this.m_processedInterface;  } 
 	
 	public List<String> getTags(){   return this.m_tags;    }
 	
-	public HAPDisplayResourceNode getDisplayResource() {   return this.m_displayResource;     }
-	
-	public void process(HAPRuntimeEnvironment runtimeEnv) {  this.m_serviceInterface.process(runtimeEnv);	}
+	public void process(HAPRuntimeEnvironment runtimeEnv) {  
+		if(this.m_interface.getEntityOrReferenceType().equals(HAPConstantShared.REFERENCE)) {
+			this.m_processedInterface = (HAPInfoServiceInterface)runtimeEnv.getResourceDefinitionManager().getResourceDefinition((HAPResourceIdSimple)this.m_interface);
+		}
+		else {
+			this.m_processedInterface = (HAPInfoServiceInterface)this.m_interface;
+		}
+		this.m_processedInterface.process(runtimeEnv);	
+	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{
 			JSONObject objJson = (JSONObject)json;
 			super.buildObjectByJson(objJson);
-			this.m_serviceInterface = new HAPServiceInterface();
-			this.m_serviceInterface.buildObject(objJson.getJSONObject(INTERFACE), HAPSerializationFormat.JSON);
+			
+			Object interfaceObj = objJson.get(INTERFACE);
+			if(interfaceObj instanceof String) {
+				HAPResourceIdFactory.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, interfaceObj);
+			}
+			else {
+				HAPInfoServiceInterface serviceInterfaceInfo = new HAPInfoServiceInterface();
+				serviceInterfaceInfo.buildObject(objJson, HAPSerializationFormat.JSON);
+				this.m_interface = serviceInterfaceInfo;
+			}
+
 			this.m_tags.clear();
 			JSONArray tagArray = objJson.optJSONArray(TAG);
 			if(tagArray!=null) {
 				for(int i=0; i<tagArray.length(); i++) {
 					this.m_tags.add(tagArray.getString(i));
 				}
-			}
-			JSONObject displayResourceObj = objJson.optJSONObject(DISPLAY);
-			if(displayResourceObj!=null) {
-				this.m_displayResource.buildObject(displayResourceObj, HAPSerializationFormat.JSON);
 			}
 		}
 		catch(Exception e){
@@ -79,8 +89,13 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(INTERFACE, HAPJsonUtility.buildJson(this.m_serviceInterface, HAPSerializationFormat.JSON));
-		jsonMap.put(TAG, HAPJsonUtility.buildJson(this.m_tags, HAPSerializationFormat.JSON));
-		jsonMap.put(DISPLAY, HAPJsonUtility.buildJson(this.m_displayResource, HAPSerializationFormat.JSON));
+		if(this.m_interface.getEntityOrReferenceType().equals(HAPConstantShared.REFERENCE)) {
+			jsonMap.put(INTERFACE, ((HAPResourceId)this.m_interface).getIdLiterate());
+			jsonMap.put(TAG, HAPJsonUtility.buildJson(this.m_tags, HAPSerializationFormat.JSON));
+		}
+		else {
+			HAPInfoServiceInterface serviceInterfaceInfo = (HAPInfoServiceInterface)this.m_interface;
+			serviceInterfaceInfo.buildJsonMap(jsonMap, typeJsonMap);
+		}
 	}
 }

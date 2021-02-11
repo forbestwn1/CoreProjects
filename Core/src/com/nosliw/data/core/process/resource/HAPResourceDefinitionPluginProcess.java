@@ -1,10 +1,10 @@
 package com.nosliw.data.core.process.resource;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPManagerResourceDefinition;
-import com.nosliw.data.core.component.HAPPluginResourceDefinition;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
+import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 

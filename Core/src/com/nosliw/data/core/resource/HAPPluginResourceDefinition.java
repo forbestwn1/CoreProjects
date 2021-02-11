@@ -1,7 +1,4 @@
-package com.nosliw.data.core.component;
-
-import com.nosliw.data.core.resource.HAPResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+package com.nosliw.data.core.resource;
 
 public interface HAPPluginResourceDefinition {
 
