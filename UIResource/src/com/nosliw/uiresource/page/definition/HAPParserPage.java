@@ -244,7 +244,7 @@ public class HAPParserPage {
 					JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
 					HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
 					serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
-					resourceUnit.addServiceUseDefinition(serviceUseDef);
+					resourceUnit.addService(serviceUseDef);
 				}
 			}
 			break;

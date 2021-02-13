@@ -1,6 +1,7 @@
 package com.nosliw.data.core.component;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.handler.HAPHandler;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 
 abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp implements HAPComponent{
 
@@ -17,9 +19,13 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	//event handlers
 	private Set<HAPHandler> m_eventHandlers;
 
+	//used service
+	private Map<String, HAPDefinitionServiceUse> m_serviceUse;
+	
 	public HAPComponentImp() {
 		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
 		this.m_eventHandlers = new HashSet<HAPHandler>();
+		this.m_serviceUse = new LinkedHashMap<String, HAPDefinitionServiceUse>();
 	}
 
 	public HAPComponentImp(String id) {
@@ -40,6 +46,15 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	@Override
 	public void addEventHandler(HAPHandler eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
 
+	@Override
+	public HAPDefinitionServiceUse getService(String name) {   return this.m_serviceUse.get(name);   }
+	
+	@Override
+	public Set<String> getAllServices(){   return this.m_serviceUse.keySet();     }
+	
+	@Override
+	public void addService(HAPDefinitionServiceUse service) {   this.m_serviceUse.put(service.getName(), service);     }
+	
 	protected void cloneToComponent(HAPComponent component) {
 		component.setId(this.getId());
 		this.cloneToComplexResourceDefinition(component);

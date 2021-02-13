@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.HAPResourceDefinitionComplex;
+import com.nosliw.data.core.component.HAPDefinitionResourceComplex;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
@@ -57,8 +57,8 @@ public class HAPManagerResourceDefinition {
 		return out;
 	}
 
-	public HAPResourceDefinitionComplex getAdjustedComplextResourceDefinition(HAPResourceId resourceId, HAPContainerAttachment parentAttachment) {
-		HAPResourceDefinitionComplex out = (HAPResourceDefinitionComplex)this.getResourceDefinition(resourceId);
+	public HAPDefinitionResourceComplex getAdjustedComplextResourceDefinition(HAPResourceId resourceId, HAPContainerAttachment parentAttachment) {
+		HAPDefinitionResourceComplex out = (HAPDefinitionResourceComplex)this.getResourceDefinition(resourceId);
 		HAPUtilityComponent.mergeWithParentAttachment(out, parentAttachment);
 		return out;
 	}

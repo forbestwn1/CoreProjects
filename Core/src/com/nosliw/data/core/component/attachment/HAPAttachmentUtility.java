@@ -133,10 +133,10 @@ public class HAPAttachmentUtility {
 				if(referenceIdObj!=null) {
 					HAPResourceId resourceId = HAPResourceIdFactory.newInstance(type, referenceIdObj);
 					if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
-						attachment = new HAPAttachmentReferenceLocal();
+						attachment = new HAPAttachmentReferenceLocal(type);
 					}
 					else {
-						attachment = new HAPAttachmentReferenceExternal();
+						attachment = new HAPAttachmentReferenceExternal(type);
 					}
 				}
 				else if(attachmentJson.opt(HAPAttachmentEntity.ENTITY)!=null){

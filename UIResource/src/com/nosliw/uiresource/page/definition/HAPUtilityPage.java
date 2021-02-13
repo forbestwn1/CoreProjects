@@ -10,7 +10,6 @@ import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
-import com.nosliw.data.core.service.provide.HAPUtilityService;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
@@ -20,7 +19,7 @@ import com.nosliw.uiresource.resource.HAPResourceIdUIResource;
 public class HAPUtilityPage {
 
 	public static void solveServiceProvider(HAPDefinitionUIUnit uiUnitDef, HAPWithServiceUse parent, HAPManagerServiceDefinition serviceDefinitionMan) {
-		HAPUtilityService.solveServiceProvider(uiUnitDef, parent, uiUnitDef.getAttachmentContainer(), uiUnitDef.getNameMapping(), serviceDefinitionMan);
+//		HAPUtilityService.solveServiceProvider(uiUnitDef, parent, uiUnitDef.getAttachmentContainer(), uiUnitDef.getNameMapping(), serviceDefinitionMan);
 		
 //		Map<String, HAPDefinitionServiceProvider> parentProviders = parent!=null?parent.getServiceProviderDefinitions() : new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 //		HAPNameMapping nameMapping = uiUnitDef.getNameMapping();
@@ -28,8 +27,9 @@ public class HAPUtilityPage {
 //		
 //		Set<HAPDefinitionServiceProvider> providers = HAPUtilityServiceUse.buildServiceProvider(uiUnitDef.getExternalMapping(), mappedParentProviders, serviceDefinitionMan);
 //		for(HAPDefinitionServiceProvider provider : providers)	uiUnitDef.getServiceDefinition().addServiceProviderDefinition(provider);
+		
 		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
-			solveServiceProvider(uiTag, uiUnitDef, serviceDefinitionMan);
+//			solveServiceProvider(uiTag, uiUnitDef, serviceDefinitionMan);
 		}
 	}
 	

@@ -16,7 +16,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 
@@ -46,12 +46,7 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 	public List<String> getTags(){   return this.m_tags;    }
 	
 	public void process(HAPRuntimeEnvironment runtimeEnv) {  
-		if(this.m_interface.getEntityOrReferenceType().equals(HAPConstantShared.REFERENCE)) {
-			this.m_processedInterface = (HAPInfoServiceInterface)runtimeEnv.getResourceDefinitionManager().getResourceDefinition((HAPResourceIdSimple)this.m_interface);
-		}
-		else {
-			this.m_processedInterface = (HAPInfoServiceInterface)this.m_interface;
-		}
+		this.m_processedInterface = (HAPInfoServiceInterface)HAPResourceUtility.solidateResource(m_interface, runtimeEnv);
 		this.m_processedInterface.process(runtimeEnv);	
 	}
 	

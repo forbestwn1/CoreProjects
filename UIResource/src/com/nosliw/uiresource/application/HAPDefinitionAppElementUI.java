@@ -10,8 +10,8 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPChildrenComponentId;
-import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPInfoChildResource;
+import com.nosliw.data.core.component.HAPContainerChildResource;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
@@ -40,15 +40,15 @@ public class HAPDefinitionAppElementUI  extends HAPDefinitionAppElement{
 	public void addModule(HAPDefinitionAppModule module) {  this.m_modules.add(module);  }
 	
 	@Override
-	public HAPChildrenComponentIdContainer getChildrenComponentId() {
-		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
+	public HAPContainerChildResource getChildrenComponentId() {
+		HAPContainerChildResource out = new HAPContainerChildResource();
 
 		//module part
 		for(HAPDefinitionAppModule module : this.getModules()) {
 			if(HAPUtilityEntityInfo.isEnabled(module)) {
 				HAPContainerAttachment mappedParentAttachment = HAPUtilityComponent.buildNameMappedAttachment(this.getAttachmentContainer(), module);
 				HAPAttachmentReference moduleAttachment = (HAPAttachmentReference)this.getAttachmentContainer().getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIMODULE, module.getModule());
-				out.addChildCompoentId(new HAPChildrenComponentId(module.getName(), moduleAttachment.getReferenceId(), module.getInfo()), mappedParentAttachment);
+				out.addChildCompoentId(new HAPInfoChildResource(module.getName(), moduleAttachment.getReferenceId(), module.getInfo()), mappedParentAttachment);
 			}
 		}
 		return out;

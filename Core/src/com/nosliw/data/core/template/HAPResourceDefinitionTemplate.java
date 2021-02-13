@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPContainerChildResource;
 import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
 import com.nosliw.data.core.resource.dynamic.HAPParmDefinition;
 
@@ -38,7 +38,7 @@ public class HAPResourceDefinitionTemplate extends HAPResourceDefinitionComplexI
 	}
 	
 	@Override
-	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+	public HAPContainerChildResource getChildrenResource() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -12,7 +12,7 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 
-public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentImp implements HAPResourceDefinitionComplex{
+public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentImp implements HAPDefinitionResourceComplex{
 
 	private HAPResourceId m_resourceId;
 	
@@ -55,7 +55,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	}
 
 	@Override
-	public void cloneToComplexResourceDefinition(HAPResourceDefinitionComplex complexEntity) {
+	public void cloneToComplexResourceDefinition(HAPDefinitionResourceComplex complexEntity) {
 		this.cloneToEntityInfo(complexEntity);
 		this.cloneToResourceDefinition(complexEntity);
 		this.cloneToAttachment(complexEntity);

@@ -9,8 +9,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.component.HAPChildrenComponentId;
-import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPInfoChildResource;
+import com.nosliw.data.core.component.HAPContainerChildResource;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -57,12 +57,12 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer<HAPDefiniti
 	public HAPResourceDefinition getElementResourceDefinition(String eleName) {	return new HAPDefinitionAppEntry(this, eleName);	}
 
 	@Override
-	public HAPChildrenComponentIdContainer getChildrenComponentId() {
-		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
+	public HAPContainerChildResource getChildrenResource() {
+		HAPContainerChildResource out = new HAPContainerChildResource();
 		//entry part
 		Set<HAPDefinitionAppElement> entrys = this.getContainerElements();
 		for(HAPResourceDefinitionContainerElement entry : entrys) {
-			out.addChildCompoentId(new HAPChildrenComponentId(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), entry.getInfo()), this.getAttachmentContainer());
+			out.addChildCompoentId(new HAPInfoChildResource(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), entry.getInfo()), this.getAttachmentContainer());
 		}
 		return out;
 	}

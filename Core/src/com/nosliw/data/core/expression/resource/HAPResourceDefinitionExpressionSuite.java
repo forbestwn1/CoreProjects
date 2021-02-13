@@ -3,7 +3,7 @@ package com.nosliw.data.core.expression.resource;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPContainerChildResource;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
@@ -54,7 +54,7 @@ public class HAPResourceDefinitionExpressionSuite
 	}
 
 	@Override
-	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+	public HAPContainerChildResource getChildrenResource() {
 		// TODO Auto-generated method stub
 		return null;
 	}

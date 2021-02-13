@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.system.HAPSystemUtility;
 
@@ -22,6 +24,16 @@ public class HAPResourceUtility {
 	public final static String LOADRESOURCEBYFILE_MODE_ALWAYS = "always";
 	public final static String LOADRESOURCEBYFILE_MODE_DEPENDS = "depends";
 	
+	public static HAPResourceDefinition solidateResource(HAPEntityOrReference entityOrReference, HAPRuntimeEnvironment runtimeEnv) {
+		HAPResourceDefinition out = null;
+		if(entityOrReference.getEntityOrReferenceType().equals(HAPConstantShared.REFERENCE)) {
+			out = runtimeEnv.getResourceDefinitionManager().getResourceDefinition((HAPResourceId)entityOrReference);
+		}
+		else {
+			out = (HAPResourceDefinition)entityOrReference;
+		}
+		return out;
+	}
 	
 	private final static Set<String> loadResourceByFile = HAPSystemUtility.getLoadResoureByFile();
 	public static boolean isLoadResoureByFile(String resourceType) {

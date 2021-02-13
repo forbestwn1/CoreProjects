@@ -22,6 +22,10 @@ public abstract class HAPAttachmentReference extends HAPAttachmentImp{
 
 	public HAPAttachmentReference() {	}
 	
+	public HAPAttachmentReference(String resourceType) {
+		super(resourceType);
+	}
+	
 	public HAPAttachmentReference(HAPResourceId resourceId) {
 		super(resourceId.getType());
 		this.m_referenceId = resourceId;

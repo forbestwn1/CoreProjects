@@ -12,7 +12,11 @@ import com.nosliw.data.core.resource.HAPResourceIdLocal;
 public class HAPAttachmentReferenceLocal extends HAPAttachmentReference{
 
 	public HAPAttachmentReferenceLocal() {	}
-	
+
+	public HAPAttachmentReferenceLocal(String resourceType) {
+		super(resourceType);
+	}
+
 	public HAPAttachmentReferenceLocal(HAPResourceId resourceId) {
 		super(resourceId);
 	}

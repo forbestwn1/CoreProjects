@@ -24,6 +24,10 @@ public class HAPAttachmentReferenceExternal extends HAPAttachmentReference{
 	
 	public HAPAttachmentReferenceExternal() {	}
 	
+	public HAPAttachmentReferenceExternal(String resourceType) {
+		super(resourceType);
+	}
+	
 	public HAPAttachmentReferenceExternal(HAPResourceId resourceId) {
 		super(resourceId);
 	}

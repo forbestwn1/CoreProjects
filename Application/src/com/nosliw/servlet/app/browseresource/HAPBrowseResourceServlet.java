@@ -13,8 +13,8 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPChildrenComponentId;
-import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPInfoChildResource;
+import com.nosliw.data.core.component.HAPContainerChildResource;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
@@ -108,7 +108,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 		out.setUrl(url);
 		try {
 			HAPDefinitionUIPage pageDef = this.m_uiResourceMan.getUIPageDefinition(resourceId, null);
-			this.processChildren(out, pageDef.getChildrenComponentId());
+			this.processChildren(out, pageDef.getChildrenResource());
 		}
 		catch(Throwable e) {
 //			e.printStackTrace();
@@ -123,7 +123,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 		out.setUrl(url);
 		try {
 			HAPDefinitionModule moduleDef = this.m_uiResourceMan.getModuleDefinition(resourceId, null);
-			this.processChildren(out, moduleDef.getChildrenComponentId());
+			this.processChildren(out, moduleDef.getChildrenResource());
 		}
 		catch(Throwable e) {
 //			e.printStackTrace();
@@ -139,7 +139,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 		out.setUrl(url);
 		try {
 			HAPDefinitionAppEntry appEntryDef = this.m_uiResourceMan.getMiniAppEntryDefinition(resourceId, null);
-			this.processChildren(out, appEntryDef.getChildrenComponentId());
+			this.processChildren(out, appEntryDef.getChildrenResource());
 		}
 		catch(Throwable e) {
 //			e.printStackTrace();
@@ -150,14 +150,14 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 	private HAPResourceNode createResourceNodeApp(HAPResourceId resourceId) {
 		HAPDefinitionApp appDef = m_uiResourceMan.getMiniAppDefinition(resourceId, null);
 		HAPResourceNode out = new HAPResourceNode(appDef.getId());
-		this.processChildren(out, appDef.getChildrenComponentId());
+		this.processChildren(out, appDef.getChildrenResource());
 		return out;
 	}
 	
-	private void processChildren(HAPResourceNode resourceNode, HAPChildrenComponentIdContainer childrenComponentId) {
-		Map<String, List<HAPChildrenComponentId>> children = childrenComponentId.getChildren();
+	private void processChildren(HAPResourceNode resourceNode, HAPContainerChildResource childrenComponentId) {
+		Map<String, List<HAPInfoChildResource>> children = childrenComponentId.getChildren();
 		for(String type : children.keySet()) {
-			for(HAPChildrenComponentId componentId : children.get(type)) {
+			for(HAPInfoChildResource componentId : children.get(type)) {
 				HAPResourceNode childNode = null;
 				if(type.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPP)) {
 					

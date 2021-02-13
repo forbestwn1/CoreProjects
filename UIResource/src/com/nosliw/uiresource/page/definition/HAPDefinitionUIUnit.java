@@ -10,10 +10,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
-import com.nosliw.data.core.component.HAPComponentUseServiceImp;
+import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPContainerChildResource;
 import com.nosliw.data.core.component.HAPNameMapping;
-import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -24,7 +23,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
  * it contains all the information within its domain
  * 		that means, for ui resource instance, it does not contains infor within customer tag
  */
-public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
+public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
  
 	//parent ui unit
 	private HAPDefinitionUIUnit m_parent;
@@ -135,9 +134,10 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentUseServiceImp{
 	public void postRead(){}
 	
 	@Override
-	public HAPChildrenComponentIdContainer getChildrenComponentId() {
-		HAPChildrenComponentIdContainer out = new HAPChildrenComponentIdContainer();
-		HAPUtilityComponent.buildServiceChildrenComponent(out, this, this.getAttachmentContainer());
-		return out;
+	public HAPContainerChildResource getChildrenResource() {
+//		HAPContainerChildResource out = new HAPContainerChildResource();
+//		HAPUtilityComponent.buildServiceChildrenComponent(out, this, this.getAttachmentContainer());
+//		return out;
+		return null;
 	}
 }

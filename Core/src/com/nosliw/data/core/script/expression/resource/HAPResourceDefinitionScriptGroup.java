@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.component.HAPChildrenComponentIdContainer;
+import com.nosliw.data.core.component.HAPContainerChildResource;
 import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptGroup;
@@ -32,7 +32,7 @@ public class HAPResourceDefinitionScriptGroup extends HAPResourceDefinitionCompl
 	public void addEntityElement(HAPDefinitionScriptEntity entityElement) {   this.m_element.put(entityElement.getId(), entityElement);  }
 
 	@Override
-	public HAPChildrenComponentIdContainer getChildrenComponentId() {
+	public HAPContainerChildResource getChildrenResource() {
 		// TODO Auto-generated method stub
 		return null;
 	}

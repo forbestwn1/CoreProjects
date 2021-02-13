@@ -22,6 +22,13 @@ import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 public class HAPProcessorServiceUse {
 
+	public static void process(HAPDefinitionServiceUse definition, HAPContextStructure globalContext, HAPRuntimeEnvironment runtimeEnv) {
+		
+		
+		
+		
+	}
+	
 	public static HAPExecutableServiceUse process(
 			HAPDefinitionServiceUse definition,
 			HAPServiceInterface providerInterface,
