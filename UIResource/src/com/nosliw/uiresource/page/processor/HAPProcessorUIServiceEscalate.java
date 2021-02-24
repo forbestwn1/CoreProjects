@@ -24,7 +24,7 @@ public class HAPProcessorUIServiceEscalate {
 				
 				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstantShared.UITAG_PARM_SERVICE));
 				exeTag.setServiceMapping(nameMapping);
-				Map<String, HAPExecutableServiceUse> exeServiceDefs = body.getServiceDefinitions();
+				Map<String, HAPExecutableServiceUse> exeServiceDefs = body.getServiceUses();
 				for(String serviceName : exeServiceDefs.keySet()) {
 					String mappedName = nameMapping.get(serviceName);
 					if(mappedName==null)   mappedName = serviceName;
@@ -44,8 +44,8 @@ public class HAPProcessorUIServiceEscalate {
 		HAPExecutableUIBody body = exeUnit.getBody();
 		if(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
 			for(String serviceName : servicesDef.keySet()) {
-				if(body.getServiceDefinition(serviceName)==null) {
-					body.addServiceDefinition(serviceName, servicesDef.get(serviceName));
+				if(body.getServiceUse(serviceName)==null) {
+					body.addServiceUse(serviceName, servicesDef.get(serviceName));
 				}
 			}
 		}

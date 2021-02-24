@@ -9,7 +9,7 @@ import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 
 public class HAPUtilityCommon {
 

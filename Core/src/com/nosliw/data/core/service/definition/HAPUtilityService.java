@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service.provide;
+package com.nosliw.data.core.service.definition;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
@@ -40,10 +40,6 @@ public class HAPUtilityService {
 		return readServiceResult(inputStream).get(name);
 	}
 
-	public static void process() {
-		
-	}
-	
 	public static void solveServiceProvider(HAPWithServiceUse child, HAPWithServiceUse parent, HAPContainerAttachment attachment, HAPNameMapping nameMapping, HAPManagerServiceDefinition serviceDefinitionMan) {
 		Map<String, HAPDefinitionServiceProvider> parentProviders = parent!=null?parent.getServiceProviderDefinitions() : new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 		Map<String, HAPDefinitionServiceProvider> mappedParentProviders = null;

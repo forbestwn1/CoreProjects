@@ -24,7 +24,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
+import com.nosliw.data.core.script.context.HAPInfoContextElementReferenceResolve;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
@@ -57,7 +57,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		HAPContextGroup stepDataContext = processDataContext.cloneContextGroup();
 		
 		//find container data criteria 
-		HAPInfoRelativeContextResolve containerResolve = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(loopActivityDef.getContainerName()), processDataContext, null, null);
+		HAPInfoContextElementReferenceResolve containerResolve = HAPUtilityContext.resolveReferencedContextElement(new HAPContextPath(loopActivityDef.getContainerName()), processDataContext, null, null);
 		out.setContainerDataPath(containerResolve.path);
 		HAPDataTypeCriteria containerCriteria = ((HAPContextDefinitionLeafData)containerResolve.resolvedNode.getSolidContextDefinitionElement()).getCriteria();
 		//find element data criteria from coontainer data criteria

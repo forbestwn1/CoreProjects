@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -17,45 +18,66 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperT
 public class HAPExecutableServiceUse extends HAPExecutableImp{
 
 	@HAPAttribute
-	public static String PROVIDER = "provider";
-
-	@HAPAttribute
 	public static String NAME = "name";
 
 	@HAPAttribute
 	public static String INFO = "info";
 
 	@HAPAttribute
-	public static String SERVICEMAPPING = "serviceMapping";
+	public static String SERVICEUSE = "serviceUse";
 
-	private HAPExecutableWrapperTask m_serviceMapping;
+	@HAPAttribute
+	public static String PROVIDERMAPPING = "providerMapping";
+
+	@HAPAttribute
+	public static String PROVIDERID = "providerId";
+
+	//how to use service
+	private HAPExecutableWrapperTask m_serviceUse;
 	
-	private HAPDefinitionServiceUse m_definition;
+	//provider mapping to service use
+	private HAPExecutableProviderToUse m_providerMapping;
+	
+	//provider service id
+	private String m_providerId;
+	
+	private String m_name;
+	
+	private HAPInfo m_info;
 	
 	public HAPExecutableServiceUse(HAPDefinitionServiceUse definition) {
-		this.m_definition = definition;
+		this.m_name = definition.getName();
+		this.m_info = definition.getInfo();
 	}
 	
-	public HAPExecutableWrapperTask getServiceMapping() {  return this.m_serviceMapping;   }
-	public void setServiceMapping(HAPExecutableWrapperTask serviceMapping) {    this.m_serviceMapping = serviceMapping;    }
+	public HAPExecutableWrapperTask getServiceMapping() {  return this.m_serviceUse;   }
+	public void setServiceMapping(HAPExecutableWrapperTask serviceMapping) {    this.m_serviceUse = serviceMapping;    }
+	
+	public HAPExecutableProviderToUse getProviderMapping() {  return this.m_providerMapping;   }
+	public void setProviderMapping(HAPExecutableProviderToUse providerMapping) {    this.m_providerMapping = providerMapping;    }
+	
+	public void setProviderId(String providerId){    this.m_providerId = providerId;    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PROVIDER, this.m_definition.getProvider());
-		jsonMap.put(NAME, this.m_definition.getName());
-		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_definition.getInfo(), HAPSerializationFormat.JSON));
-		jsonMap.put(SERVICEMAPPING, HAPJsonUtility.buildJson(this.m_serviceMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(NAME, this.m_name);
+		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
+		jsonMap.put(SERVICEUSE, HAPJsonUtility.buildJson(this.m_serviceUse, HAPSerializationFormat.JSON));
+		jsonMap.put(PROVIDERMAPPING, HAPJsonUtility.buildJson(this.m_providerMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(PROVIDERID, this.m_providerId);
 	}
 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		jsonMap.put(SERVICEMAPPING, this.m_serviceMapping.toResourceData(runtimeInfo).toString());
+		jsonMap.put(SERVICEUSE, this.m_serviceUse.toResourceData(runtimeInfo).toString());
+		jsonMap.put(PROVIDERMAPPING, this.m_providerMapping.toResourceData(runtimeInfo).toString());
 	}
 
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		dependency.addAll(this.m_serviceMapping.getResourceDependency(runtimeInfo, resourceManager));
+		dependency.addAll(this.m_serviceUse.getResourceDependency(runtimeInfo, resourceManager));
+		dependency.addAll(this.m_providerMapping.getResourceDependency(runtimeInfo, resourceManager));
 	}
 }

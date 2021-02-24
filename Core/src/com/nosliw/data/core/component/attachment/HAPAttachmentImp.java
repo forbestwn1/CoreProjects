@@ -4,38 +4,45 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implements HAPAttachment{
 
-	@HAPAttribute
-	public static String RESOURCETYPE = "resourceType";
+	private String m_valueType;
 	
-	private String m_resourceType;
+	private Object m_adaptor;
 
 	public HAPAttachmentImp() {}
 
-	public HAPAttachmentImp(String resourceType) {
-		this.m_resourceType  = resourceType;
+	public HAPAttachmentImp(String valueType) {
+		this.m_valueType  = valueType;
 	}
 	
 	@Override
-	public String getResourceType() {   return this.m_resourceType;   }
-	public void setResourceType(String resourceType) {    this.m_resourceType = resourceType;    }
+	public String getValueType() {   return this.m_valueType;   }
+	
+	@Override
+	public void setValueType(String valueType) {    this.m_valueType = valueType;    }
+
+	@Override
+	public Object getAdaptor() {   return this.m_adaptor;    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(RESOURCETYPE, this.getResourceType());
+		jsonMap.put(VALUETYPE, this.getValueType());
+		jsonMap.put(ADAPTOR, HAPSerializeManager.getInstance().toStringValue(this.m_adaptor, HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
-		if(this.m_resourceType==null)   this.m_resourceType = jsonObj.getString(RESOURCETYPE);
+		if(this.m_valueType==null)   this.m_valueType = jsonObj.getString(VALUETYPE);
+		this.m_adaptor = jsonObj.opt(ADAPTOR);
 		return true;  
 	}
 
@@ -45,8 +52,8 @@ public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implemen
 		if(obj instanceof HAPAttachmentImp) {
 			HAPAttachmentImp ele = (HAPAttachmentImp)obj;
 			if(super.equals(ele)) {
-				if(HAPBasicUtility.isEquals(ele.getResourceType(), this.getResourceType())) {
-						out = true;
+				if(HAPBasicUtility.isEquals(ele.getValueType(), this.getValueType())) {
+					out = true;
 				}
 			}
 		}
@@ -55,6 +62,7 @@ public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implemen
 
 	public void cloneToAttachment(HAPAttachmentImp obj) {
 		this.cloneToEntityInfo(obj);
-		this.setResourceType(obj.getResourceType());
+		obj.setValueType(this.getValueType());
+		obj.m_adaptor = this.m_adaptor;
 	}
 }

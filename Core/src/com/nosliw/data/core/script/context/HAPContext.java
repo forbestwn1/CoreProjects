@@ -39,8 +39,14 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	public boolean isEmpty() {  return this.m_elements.isEmpty(); }
 
 	@Override
-	public HAPContextDefinitionRoot getElement(String name) {  return this.m_elements.get(name);   }
+	public HAPContextDefinitionRoot getElement(String name, boolean createIfNotExist) {  
+		HAPContextDefinitionRoot out = this.m_elements.get(name);
+		if(createIfNotExist && out==null) 	out = this.addElement(name);
+		return out;
+	}
 
+	public HAPContextDefinitionRoot getElement(String name) {    return this.m_elements.get(name);   }
+	
 	@Override
 	public void hardMergeWith(HAPContextStructure parent){
 		if(parent!=null) {
@@ -69,6 +75,11 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	public void addElement(String name, HAPContextDefinitionRoot rootEle){
 		rootEle.setName(name);
 		this.m_elements.put(name, rootEle);	
+	}
+	public HAPContextDefinitionRoot addElement(String name) {
+		HAPContextDefinitionRoot out = new HAPContextDefinitionRoot();
+		this.addElement(name, out);
+		return out;
 	}
 	public void addElement(HAPContextDefinitionRoot rootEle){	this.m_elements.put(rootEle.getName(), rootEle);	}
 	public void addElement(String name, HAPContextDefinitionElement contextEle) {   this.m_elements.put(name, new HAPContextDefinitionRoot(contextEle));  }
@@ -190,49 +201,51 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	//   return[0]   base node
 	//   return[1]   closest child node
 	//   return[2]   remaining path
-	public void discoverChild(String rootName, String path, HAPInfoRelativeContextResolve resolved){
+	public HAPInfoContextElementReferenceResolve discoverChild(String rootName, String path){
 		HAPContextDefinitionRoot contextRoot = this.m_elements.get(rootName);
-		resolved.rootNode = contextRoot;
-		if(contextRoot!=null) {
-			if(contextRoot.isConstant()) {
-				resolved.referedSolidNode = null;
-				resolved.remainPath = path;
-			}
-			else {
-				HAPContextDefinitionElement outSolidNodeEle = contextRoot.getDefinition().getSolidContextDefinitionElement();
-				HAPContextDefinitionElement outRefNodeEle = contextRoot.getDefinition();
-				String remainingPath = null;
-				if(HAPBasicUtility.isStringNotEmpty(path)) {
-					String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
-					for(String pathSeg : pathSegs){
-						if(remainingPath==null) {
-							//solid node
-							HAPContextDefinitionElement solidEle = null;
-							if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(outSolidNodeEle.getType())) {
-								solidEle = ((HAPContextDefinitionNode)outSolidNodeEle).getChildren().get(pathSeg);
-							}
-							if(solidEle==null) 		remainingPath = pathSeg;
-							else{
-								outSolidNodeEle = solidEle;
-							}
+		if(contextRoot==null)  return null;
+		
+		HAPInfoContextElementReferenceResolve out = new HAPInfoContextElementReferenceResolve(); 
+		out.rootNode = contextRoot;
+		if(contextRoot.isConstant()) {
+			out.referedSolidNode = null;
+			out.remainPath = path;
+		}
+		else {
+			HAPContextDefinitionElement outSolidNodeEle = contextRoot.getDefinition().getSolidContextDefinitionElement();
+			HAPContextDefinitionElement outRefNodeEle = contextRoot.getDefinition();
+			String remainingPath = null;
+			if(HAPBasicUtility.isStringNotEmpty(path)) {
+				String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
+				for(String pathSeg : pathSegs){
+					if(remainingPath==null) {
+						//solid node
+						HAPContextDefinitionElement solidEle = null;
+						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(outSolidNodeEle.getType())) {
+							solidEle = ((HAPContextDefinitionNode)outSolidNodeEle).getChildren().get(pathSeg);
+						}
+						if(solidEle==null) 		remainingPath = pathSeg;
+						else{
+							outSolidNodeEle = solidEle;
+						}
 
-							//real node
-							HAPContextDefinitionElement refEle = null;
-							if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(outRefNodeEle.getType())) {
-								refEle = ((HAPContextDefinitionNode)outRefNodeEle).getChildren().get(pathSeg);
-							}
-							if(refEle!=null)  outRefNodeEle = refEle;
+						//real node
+						HAPContextDefinitionElement refEle = null;
+						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(outRefNodeEle.getType())) {
+							refEle = ((HAPContextDefinitionNode)outRefNodeEle).getChildren().get(pathSeg);
 						}
-						else {
-							remainingPath = HAPNamingConversionUtility.cascadePath(remainingPath, pathSeg);
-						}
+						if(refEle!=null)  outRefNodeEle = refEle;
+					}
+					else {
+						remainingPath = HAPNamingConversionUtility.cascadePath(remainingPath, pathSeg);
 					}
 				}
-				resolved.referedNode = outRefNodeEle;
-				resolved.referedSolidNode = outSolidNodeEle;
-				resolved.remainPath = remainingPath;
 			}
+			out.referedNode = outRefNodeEle;
+			out.referedSolidNode = outSolidNodeEle;
+			out.remainPath = remainingPath;
 		}
+		return out;
 	}
 
 	@Override

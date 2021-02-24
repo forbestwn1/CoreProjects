@@ -28,7 +28,7 @@ public class HAPContextStructureEmpty extends HAPSerializableImp implements HAPC
 	public boolean isEmpty() {   return true;   }
 
 	@Override
-	public HAPContextDefinitionRoot getElement(String eleName) {	return null;	}
+	public HAPContextDefinitionRoot getElement(String eleName, boolean createIfNotExist) {	return null;	}
 
 	@Override
 	public HAPContextStructure cloneContextStructure() {

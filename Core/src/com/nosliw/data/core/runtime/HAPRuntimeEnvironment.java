@@ -11,7 +11,7 @@ import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.script.expression.HAPManagerScript;
-import com.nosliw.data.core.service.provide.HAPManagerService;
+import com.nosliw.data.core.service.definition.HAPManagerService;
 import com.nosliw.data.core.story.HAPManagerStory;
 
 /**

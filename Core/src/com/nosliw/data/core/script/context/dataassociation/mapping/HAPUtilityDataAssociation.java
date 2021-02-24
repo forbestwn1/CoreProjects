@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.context.dataassociation.mapping;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
@@ -14,6 +15,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPUtilityDAProcess;
 
 public class HAPUtilityDataAssociation {
 
@@ -62,9 +64,10 @@ public class HAPUtilityDataAssociation {
 		return out;
 	}
 	
-	public static HAPConfigureContextProcessor getContextProcessConfigurationForProcess() {
+	public static HAPConfigureContextProcessor getContextProcessConfigurationForDataAssociation(HAPInfo daProcessConfigure) {
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
 		configure.inheritMode = HAPConstant.INHERITMODE_NONE;
+		if(HAPUtilityDAProcess.ifModifyOutputStructure(daProcessConfigure))  configure.tolerantNoParentForRelative = true;
 		return configure;
 	} 
 

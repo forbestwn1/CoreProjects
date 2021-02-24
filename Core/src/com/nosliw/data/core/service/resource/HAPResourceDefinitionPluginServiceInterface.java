@@ -29,7 +29,7 @@ public class HAPResourceDefinitionPluginServiceInterface implements HAPPluginRes
 	public HAPResourceDefinition parseResourceDefinition(Object content) {
 		HAPInfoServiceInterface out = new HAPInfoServiceInterface();
 		if(content instanceof String) {
-			out.buildObject(new JSONObject(content), HAPSerializationFormat.JSON);
+			out.buildObject(new JSONObject(content.toString()), HAPSerializationFormat.JSON);
 		}
 		else if(content instanceof JSONObject) {
 			out.buildObject(content, HAPSerializationFormat.JSON);

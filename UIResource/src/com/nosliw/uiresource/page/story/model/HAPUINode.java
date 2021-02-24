@@ -10,7 +10,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
-import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
+import com.nosliw.data.core.script.context.HAPInfoContextElementReferenceResolve;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPReferenceElement;
@@ -80,7 +80,7 @@ public class HAPUINode {
 	
 	public HAPUIDataInfo getDataInfo(String name) {
 		HAPUIDataInfo out = new HAPUIDataInfo();
-		HAPInfoRelativeContextResolve resolve = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(name), this.getStoryNode().getDataStructureInfo().getContext(), Arrays.asList(HAPContextGroup.getVisibleContextTypes()).toArray(new String[0]), HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE).relativeResolveMode);
+		HAPInfoContextElementReferenceResolve resolve = HAPUtilityContext.resolveReferencedContextElement(new HAPContextPath(name), this.getStoryNode().getDataStructureInfo().getContext(), Arrays.asList(HAPContextGroup.getVisibleContextTypes()).toArray(new String[0]), HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE).relativeResolveMode);
 		HAPContextDefinitionElement resolvedNode = resolve.resolvedNode;
 		String nodeType = resolvedNode.getType();
 		if(nodeType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {

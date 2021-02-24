@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 
 public class HAPResourceDefinitionPluginServiceDefinition implements HAPPluginResourceDefinition{
 

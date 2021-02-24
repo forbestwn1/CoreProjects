@@ -18,6 +18,7 @@ import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 
 public abstract class HAPComponentContainerElement extends HAPSerializableImp implements HAPComponent{
 
@@ -137,6 +138,18 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 	@Override
 	public void addEventHandler(HAPHandler eventHandler) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Set<String> getAllServices() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addService(HAPDefinitionServiceUse service) {
 		// TODO Auto-generated method stub
 		
 	}

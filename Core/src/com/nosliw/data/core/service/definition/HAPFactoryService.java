@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service.provide;
+package com.nosliw.data.core.service.definition;
 
 //service instance factory that generate service instance according to service definition
 public interface HAPFactoryService {

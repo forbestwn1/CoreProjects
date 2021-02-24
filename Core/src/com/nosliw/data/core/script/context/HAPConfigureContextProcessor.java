@@ -17,11 +17,15 @@ public class HAPConfigureContextProcessor {
 	
 	//context categary to find referenced parent node 
 	public String[] parentCategary;
-	
-	//
+
+	//how to handle parent context merge with child context
 	public String inheritMode = HAPConstant.INHERITMODE_CHILD;
 	
+	//not inherit some info item from parent
 	public Set<String> inheritanceExcludedInfo;
+	
+	//whether throw error when cannot find proper parent context item for relative item
+	public boolean tolerantNoParentForRelative = false;
 	
 	public HAPConfigureContextProcessor() {	}
 	 
@@ -33,6 +37,7 @@ public class HAPConfigureContextProcessor {
 		out.inheritMode = this.inheritMode;
 		out.parentCategary = this.parentCategary;
 		out.inheritanceExcludedInfo = this.inheritanceExcludedInfo;
+		out.tolerantNoParentForRelative = this.tolerantNoParentForRelative;
 		return out;
 	}
 }

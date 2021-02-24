@@ -13,6 +13,7 @@ import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 
 //a group of context
@@ -70,7 +71,14 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	}
 
 	@Override
-	public HAPContextDefinitionRoot getElement(String name) {  return this.getElement(new HAPContextDefinitionRootId(name));   }
+	public HAPContextDefinitionRoot getElement(String name, boolean createIfNotExist) {
+		HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(name);
+		HAPContextDefinitionRoot out = this.getElement(rootId);   
+		if(out==null && createIfNotExist) {
+			out = this.addElement(rootId.getName(), rootId.getCategary());
+		}
+		return out;
+	}
 
 	@Override
 	public void hardMergeWith(HAPContextStructure context){
@@ -150,7 +158,15 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 
 	public Map<String, HAPContextDefinitionRoot> getElements(String contextType){  return this.getContext(contextType).getElements();  }
 	
-	public void addElement(String name, HAPContextDefinitionRoot rootEle, String type){	this.getContext(type).addElement(name, rootEle);	}
+	public void addElement(String name, HAPContextDefinitionRoot rootEle, String type){
+		if(HAPBasicUtility.isStringEmpty(type))   type = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+		this.getContext(type).addElement(name, rootEle);	
+	}
+	public HAPContextDefinitionRoot addElement(String name, String type) {
+		HAPContextDefinitionRoot out = new HAPContextDefinitionRoot();
+		this.addElement(name, out, type);
+		return out;
+	}
 	
 	public HAPContext getContext(String type){		return this.m_contexts.get(type);	}
 	public HAPContext getChildContext(String type){		

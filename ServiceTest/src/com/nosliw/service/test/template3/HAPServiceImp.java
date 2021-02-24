@@ -4,10 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.service.provide.HAPExecutableService;
-import com.nosliw.data.core.service.provide.HAPProviderService;
-import com.nosliw.data.core.service.provide.HAPResultService;
-import com.nosliw.data.core.service.provide.HAPUtilityService;
+import com.nosliw.data.core.service.definition.HAPExecutableService;
+import com.nosliw.data.core.service.definition.HAPProviderService;
+import com.nosliw.data.core.service.definition.HAPResultService;
+import com.nosliw.data.core.service.definition.HAPUtilityService;
 
 public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 

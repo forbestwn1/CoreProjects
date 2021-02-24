@@ -28,7 +28,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.story.HAPBuilderShow;
 import com.nosliw.data.core.story.HAPConnectionEnd;

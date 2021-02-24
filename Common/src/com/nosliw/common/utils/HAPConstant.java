@@ -13,4 +13,7 @@ public class HAPConstant {
 	public static final String INHERITMODE_CHILD = "child";    //inheritable, but child unaffected for same name
 	public static final String INHERITMODE_NONE = "none";		//UNheritable
 
+	
+	public static final String ERROR_PROCESSCONTEXT_NOREFFEREDNODE = "noRefferedNode";
+	public static final String ERROR_PROCESSCONTEXT_INVLIDREFFEREDNODE = "invalidRefferedNode";
 }

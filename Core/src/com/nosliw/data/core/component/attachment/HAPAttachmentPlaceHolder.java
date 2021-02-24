@@ -40,7 +40,7 @@ public class HAPAttachmentPlaceHolder extends HAPAttachmentImp{
 	
 	@Override
 	public HAPAttachmentPlaceHolder cloneAttachment() {
-		HAPAttachmentPlaceHolder out = new HAPAttachmentPlaceHolder(this.getResourceType());
+		HAPAttachmentPlaceHolder out = new HAPAttachmentPlaceHolder(this.getValueType());
 		return out;
 	}	
 }

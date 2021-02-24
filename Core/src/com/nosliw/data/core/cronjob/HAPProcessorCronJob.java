@@ -17,7 +17,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 
 public class HAPProcessorCronJob {
 

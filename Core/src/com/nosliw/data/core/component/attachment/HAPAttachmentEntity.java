@@ -22,7 +22,7 @@ public class HAPAttachmentEntity extends HAPAttachmentImp{
 	private HAPAttachmentEntity() {}
 	
 	public HAPAttachmentEntity(String resourceType) {
-		this.setResourceType(resourceType);
+		this.setValueType(resourceType);
 	}
 	
 	@Override

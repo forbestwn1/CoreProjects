@@ -110,14 +110,18 @@ public class HAPAttachmentUtility {
 	}
 	
 	public static HAPResourceDefinition getResourceDefinition(HAPContainerAttachment attContainer, String type, String name, HAPManagerResourceDefinition resourceDefMan) {
-		HAPResourceDefinition out = null;
 		HAPAttachment attachment = attContainer.getElement(type, name);
+		return getResourceDefinition(attachment, resourceDefMan);
+	}
+	
+	public static HAPResourceDefinition getResourceDefinition(HAPAttachment attachment, HAPManagerResourceDefinition resourceDefMan) {
+		HAPResourceDefinition out = null;
 		if(attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)||attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL)) {
 			HAPResourceId resourceId = ((HAPAttachmentReference)attachment).getReferenceId();
 			out = resourceDefMan.getResourceDefinition(resourceId);
 		}
 		else if(attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)){
-			out = resourceDefMan.parseResourceDefinition(type, ((HAPAttachmentEntity)attachment).getEntityJsonObj());
+			out = resourceDefMan.parseResourceDefinition(attachment.getValueType(), ((HAPAttachmentEntity)attachment).getEntityJsonObj());
 		}
 		return out;
 	}

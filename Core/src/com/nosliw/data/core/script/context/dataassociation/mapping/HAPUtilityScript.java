@@ -41,7 +41,7 @@ public class HAPUtilityScript {
 		templateParms.put("isFlatOutput", association.isFlatOutput()+"");
 		templateParms.put("isFlatInput", association.isFlatInput()+"");
 		templateParms.put("rootIdSeperator", HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);
-		templateParms.put("isInherit", (!HAPConstant.INHERITMODE_NONE.equals(HAPUtilityDataAssociation.getContextProcessConfigurationForProcess().inheritMode))+"");
+		templateParms.put("isInherit", (!HAPConstant.INHERITMODE_NONE.equals(HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation().inheritMode))+"");
 		
 		//build init output object for mapped root
 		HAPContext context = new HAPContext();

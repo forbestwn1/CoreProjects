@@ -4,7 +4,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.service.provide.HAPIdServcieDefinition;
+import com.nosliw.data.core.service.definition.HAPIdServcieDefinition;
 
 public class HAPResourceIdServiceDefinition  extends HAPResourceIdSimple{
 

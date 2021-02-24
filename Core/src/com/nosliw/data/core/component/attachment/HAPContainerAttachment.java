@@ -67,6 +67,7 @@ public class HAPContainerAttachment extends HAPSerializableImp{
 	}
 	
 	public void addAttachment(String type, HAPAttachment attachment) {
+		attachment.setValueType(type);
 		Map<String, HAPAttachment> byId = this.m_element.get(type);
 		if(byId==null) {
 			byId = new LinkedHashMap<String, HAPAttachment>();

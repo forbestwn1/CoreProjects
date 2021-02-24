@@ -9,7 +9,7 @@ import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;

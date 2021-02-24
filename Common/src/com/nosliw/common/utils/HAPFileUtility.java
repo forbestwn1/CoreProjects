@@ -71,23 +71,6 @@ public class HAPFileUtility {
 			e1.printStackTrace();
 			return null;
 		}
-
-/*		
-		StringBuffer out = new StringBuffer();
-		try{
-			FileReader inputFile = new FileReader(filePath);
-		    BufferedReader bufferReader = new BufferedReader(inputFile);
-            String line;
-            while ((line=bufferReader.readLine())!=null){
-            	out.append(line+nextLine);
-            }
-            bufferReader.close(); 			
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return out.toString();
-*/		
 	}
 
 	public static String readFile(InputStream stream){
@@ -102,23 +85,6 @@ public class HAPFileUtility {
 			file.getParentFile().mkdirs();
 			
 			FileUtils.writeStringToFile(file, content, Charset.forName("UTF-8"));
-/*			
-			// if file doesnt exists, then create it
-			if (!file.exists()) {
-				try{
-					file.createNewFile();
-				}
-				catch(Exception e){
-					e.printStackTrace();
-					HAPErrorUtility.invalid("");
-				}
-			}
- 
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(content);
-			bw.close();
- */
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -181,6 +147,7 @@ public class HAPFileUtility {
             	out.append(line+nextLine);
             }
             bufferReader.close(); 			
+			stream.close();
 		}
 		catch(Exception e){
 			e.printStackTrace();

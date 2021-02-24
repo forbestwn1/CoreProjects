@@ -39,6 +39,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 	private HAPContextPath m_path;
 	private String m_pathStr;
 
+	//parent name for referred context, for instance, self, external context
 	private String m_parent;
 	
 	private HAPContextDefinitionElement m_definition;

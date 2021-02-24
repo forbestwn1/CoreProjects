@@ -45,7 +45,7 @@ public abstract class HAPAttachmentReference extends HAPAttachmentImp{
 		super.buildObjectByJson(json);
 		Object referenceId = jsonObj.opt(REFERENCEID);
 		if(referenceId!=null) {
-			this.m_referenceId = HAPResourceIdFactory.newInstance(this.getResourceType(), referenceId);
+			this.m_referenceId = HAPResourceIdFactory.newInstance(this.getValueType(), referenceId);
 		}
 		return true;  
 	}

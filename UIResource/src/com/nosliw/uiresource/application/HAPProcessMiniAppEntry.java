@@ -120,7 +120,7 @@ public class HAPProcessMiniAppEntry {
 			parentContext.addContext(extraName, extraContexts.get(extraName));
 		}
 		
-		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyStructureFalse(new HAPInfoImpSimple());
+		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyOutputStructureConfigureFalse(new HAPInfoImpSimple());
 
 		//input data association
 		Map<String, HAPDefinitionDataAssociation> inputDas = module.getInputMapping().getDataAssociations();
