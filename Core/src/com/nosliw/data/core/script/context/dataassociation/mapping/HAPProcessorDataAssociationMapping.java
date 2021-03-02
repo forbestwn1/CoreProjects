@@ -15,6 +15,7 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
@@ -23,7 +24,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPInfoContextElementReferenceResolve;
-import com.nosliw.data.core.script.context.HAPInfoContextLeaf;
+import com.nosliw.data.core.script.context.HAPInfoContextNode;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
@@ -51,6 +52,8 @@ public class HAPProcessorDataAssociationMapping {
 		HAPExecutableAssociation out = new HAPExecutableAssociation(input, associationDef, outputStructure);
 
 		if(outputStructure instanceof HAPContextGroup) {
+			//for output context group only
+			//find refereed context in output
 			//update root name with full name (containing categary and element name)
 			HAPContext origin = associationDef;
 			HAPContext updated = new HAPContext();
@@ -74,15 +77,27 @@ public class HAPProcessorDataAssociationMapping {
 			for(HAPServiceData error : errors) {
 				String errorMsg = error.getMessage();
 				if(HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE.equals(errorMsg)) {
+					//enhance input context according to error
 					needReprocess = true;
-					HAPInfoContextLeaf contextEleInfo = (HAPInfoContextLeaf)error.getData();
+					HAPInfoContextNode contextEleInfo = (HAPInfoContextNode)error.getData();
 					//find referred element defined in output
-					HAPContextDefinitionElement targetContextEle = HAPUtilityContext.getDescendant(outputStructure.getElement(contextEleInfo.getContextPath().getRootElementId().getName(), false).getDefinition(), contextEleInfo.getContextPath().getSubPath());
-					//set referred element defined in output to input
+					HAPContextPath path = contextEleInfo.getContextPath();
+					HAPContextDefinitionElement sourceContextEle = HAPUtilityContext.getDescendant(outputStructure.getElement(path.getRootElementId().getName(), false).getDefinition(), path.getSubPath());
+					if(sourceContextEle==null)  throw new RuntimeException();
+					//update input: set referred element defined in output to input
 					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)contextEleInfo.getContextElement();
-					HAPUtilityContext.setDescendant(input.getContext(relativeEle.getParent()), relativeEle.getPath(), targetContextEle);
+					HAPContextDefinitionElement daElement = HAPUtilityContext.getDescendant(daContextProcessed, path);
+					daElement.unProcessed();
+					HAPContextDefinitionElement solidateSourceContextEle = sourceContextEle.getSolidContextDefinitionElement();
+					if(solidateSourceContextEle==null)    throw new RuntimeException();
+					HAPUtilityContext.setDescendant(input.getContext(relativeEle.getParent()), relativeEle.getPath(), solidateSourceContextEle.cloneContextDefinitionElement());
 				}
 				else  throw new RuntimeException();
+			}
+
+			if(needReprocess) {
+				//reprocess mapping after add some element to input context
+				daContextProcessed = HAPProcessorContext.process(daContextProcessed, input, parentDependency, errors, processConfigure, runtimeEnv);
 			}
 		}
 		
@@ -92,13 +107,44 @@ public class HAPProcessorDataAssociationMapping {
 		//try to enhance output context
 		if(HAPUtilityDAProcess.ifModifyOutputStructure(daProcessConfigure)) {
 			for(String eleName : associationDef.getElementNames()) {
-				HAPContextPath path = new HAPContextPath(eleName);
-				HAPInfoContextElementReferenceResolve solve = HAPUtilityContext.resolveReferencedContextElement(path, outputStructure);
-				if(!HAPUtilityContext.isLogicallySolved(solve)) {
-					//cannot find in output context
-					HAPUtilityContext.setDescendant(outputStructure, path, solve.resolvedNode);
-				}
-			}
+				HAPUtilityContext.processContextDefElement(new HAPInfoContextNode(associationDef.getElement(eleName).getDefinition(), new HAPContextPath(eleName)), new HAPContextDefEleProcessor() {
+
+					@Override
+					public boolean process(HAPInfoContextNode eleInfo, Object value) {
+						HAPContextStructure outputStructure = (HAPContextStructure)value;
+						if(eleInfo.getContextElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+							//if path exist in output structure
+							HAPInfoContextElementReferenceResolve targetResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(eleInfo.getContextPath(), outputStructure);
+							if(!HAPUtilityContext.isLogicallySolved(targetResolvedInfo)) {
+								//target node according to path not exist
+								//element in input structure
+								HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)eleInfo.getContextElement();
+								HAPContextStructure sourceContextStructure = input.getContext(relativeEle.getParent());
+								HAPInfoContextElementReferenceResolve sourceResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(relativeEle.getPath(), sourceContextStructure);
+								if(HAPUtilityContext.isLogicallySolved(sourceResolvedInfo)) {
+									HAPContextDefinitionElement sourceEle = sourceResolvedInfo.resolvedNode;
+									if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
+										HAPUtilityContext.setDescendant(outputStructure, eleInfo.getContextPath(), sourceEle.getSolidContextDefinitionElement());
+									}
+									else if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_VALUE)) {
+										
+									}
+									else if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+										
+									}
+								}
+								else  throw new RuntimeException();
+							}
+						}
+						return false;
+					}
+
+					@Override
+					public boolean postProcess(HAPInfoContextNode eleInfo, Object value) {
+						return false;
+					}
+				}, outputStructure);
+			}			
 		}		
 		
 		//matchers to output

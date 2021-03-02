@@ -1,12 +1,12 @@
 package com.nosliw.data.core.script.context;
 
-public class HAPInfoContextLeaf {
+public class HAPInfoContextNode {
 
 	private HAPContextDefinitionElement m_contextLeaf;
 	
 	private HAPContextPath m_contextPath;
 	
-	public HAPInfoContextLeaf(HAPContextDefinitionElement contextLeaf, HAPContextPath contextPath) {
+	public HAPInfoContextNode(HAPContextDefinitionElement contextLeaf, HAPContextPath contextPath) {
 		this.m_contextLeaf = contextLeaf;
 		this.m_contextPath = contextPath;
 	}

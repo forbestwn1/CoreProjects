@@ -35,6 +35,7 @@ public abstract class HAPContextDefinitionElement extends HAPSerializableImp{
 	public HAPContextDefinitionElement getChild(String childName) {   return null;  }
 	
 	public void processed() {   this.m_processed = true;   }
+	public void unProcessed() {    this.m_processed = false;    }
 	public boolean isProcessed() {  return this.m_processed;   }
 
 	@Override

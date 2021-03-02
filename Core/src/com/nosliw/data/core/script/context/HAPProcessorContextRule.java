@@ -11,18 +11,18 @@ public class HAPProcessorContextRule {
 		for(String group : orgContext.getAllContextTypes()) {
 			HAPContext context = orgContext.getContext(group);
 			for(String eleName : context.getElementNames()) {
-				HAPUtilityContext.processContextDefElement(context.getElement(eleName).getDefinition(), new HAPContextDefEleProcessor() {
+				HAPUtilityContext.processContextDefElement(new HAPInfoContextNode(context.getElement(eleName).getDefinition(), new HAPContextPath(eleName)), new HAPContextDefEleProcessor() {
 					@Override
-					public boolean process(HAPContextDefinitionElement ele, Object obj) {
-						if(ele.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-							HAPContextDefinitionLeafData dataEle = (HAPContextDefinitionLeafData)ele;
+					public boolean process(HAPInfoContextNode eleInfo, Object obj) {
+						if(eleInfo.getContextElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
+							HAPContextDefinitionLeafData dataEle = (HAPContextDefinitionLeafData)eleInfo.getContextElement();
 							if(dataEle.getDataInfo()!=null)    dataEle.getDataInfo().process(runtimeEnv);  
 						}
 						return true;
 					}
 
 					@Override
-					public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+					public boolean postProcess(HAPInfoContextNode eleInfo, Object value) {
 						return true;
 					}
 				}, null);

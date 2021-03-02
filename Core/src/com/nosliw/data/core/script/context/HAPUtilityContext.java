@@ -44,43 +44,20 @@ public class HAPUtilityContext {
 	
 	
 	//traverse through all the context definition element, and process it
-	public static void processContextDefElement(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, Object value) {
-		if(processor.process(contextDefEle, value)) {
+	public static void processContextDefElement(HAPInfoContextNode contextEleInfo, HAPContextDefEleProcessor processor, Object value) {
+		HAPContextDefinitionElement contextDefEle = contextEleInfo.getContextElement(); 
+		HAPContextPath path = contextEleInfo.getContextPath();
+		if(processor.process(contextEleInfo, value)) {
 			if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
 				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
 				for(String childNodeName : nodeEle.getChildren().keySet()) {
-					processContextDefElement(nodeEle.getChild(childNodeName), processor, value);
+					processContextDefElement(new HAPInfoContextNode(nodeEle.getChild(childNodeName), path.appendSegment(childNodeName)), processor, value);
 				}
 			}
 		}
-		processor.postProcess(contextDefEle, value);
+		processor.postProcess(contextEleInfo, value);
 	}
 
-	public static void processContextDefElementWithPathInfo(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, String path) {
-		if(processor.process(contextDefEle, path)) {
-			if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
-				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
-				for(String childNodeName : nodeEle.getChildren().keySet()) {
-					processContextDefElementWithPathInfo(nodeEle.getChild(childNodeName), processor, HAPNamingConversionUtility.buildPath(path, childNodeName));
-				}
-			}
-		}
-		processor.postProcess(contextDefEle, path);
-	}
-
-	public static void processExpandedContextDefElementWithPathInfo(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, String path) {
-		HAPContextDefinitionElement solidated = contextDefEle.getSolidContextDefinitionElement();
-		if(processor.process(solidated, path)) {
-			if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(solidated.getType())) {
-				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)solidated;
-				for(String childNodeName : nodeEle.getChildren().keySet()) {
-					processContextDefElementWithPathInfo(nodeEle.getChild(childNodeName), processor, HAPNamingConversionUtility.buildPath(path, childNodeName));
-				}
-			}
-		}
-		processor.postProcess(solidated, path);
-	}
-	
 	public static HAPContextStructure getReferedContext(String name, HAPParentContext parentContext, HAPContextStructure self) {
 		if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name))  return self;
 		else return parentContext.getContext(name);
@@ -95,6 +72,15 @@ public class HAPUtilityContext {
 		return out;
 	}
 
+	public static HAPContextDefinitionElement getDescendant(HAPContextStructure context, HAPContextPath path) {
+		if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+			return getDescendant((HAPContextGroup)context, path.getFullPath());
+		}
+		else {
+			return getDescendant((HAPContext)context, path.getPath());
+		}
+	}
+	
 	public static HAPContextDefinitionElement getDescendant(HAPContext context, String path) {
 		HAPContextDefinitionElement out = null;
 		HAPComplexPath complexPath = new HAPComplexPath(path);
@@ -351,14 +337,13 @@ public class HAPUtilityContext {
 		HAPInfoContextElementReferenceResolve out = null;
 		String contextType = parentContext.getType();
 		if(contextType.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-			out = resolveReferencedContextElement(contextPath, parentContext);
+			out = resolveReferencedContextElement(contextPath, (HAPContextGroup)parentContext, null, null);
 		}
 		else {
 			out = ((HAPContext)parentContext).discoverChild(contextPath.getRootElementId().getName(), contextPath.getSubPath());
+			//process remaining path
+			out = processContextElementRefResolve(out);
 		}
-		
-		//process remaining path
-		if(out!=null)   out = processContextElementRefResolve(out);
 		
 		return out;
 	}
@@ -380,7 +365,7 @@ public class HAPUtilityContext {
 		List<HAPInfoContextElementReferenceResolve> candidates = new ArrayList<HAPInfoContextElementReferenceResolve>();
 		for(String contextType : categaryCandidates){
 			HAPInfoContextElementReferenceResolve resolved = parentContext.getContext(contextType).discoverChild(refNodeId.getName(), refPath);
-			if(resolved.rootNode!=null) {
+			if(resolved!=null&&resolved.rootNode!=null) {
 				resolved.path = new HAPContextPath(contextType, refNodeId.getName(), refPath);
 				candidates.add(resolved);
 				if(HAPConstant.RESOLVEPARENTMODE_FIRST.equals(mode))   break;

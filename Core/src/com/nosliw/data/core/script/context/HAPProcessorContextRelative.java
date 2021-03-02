@@ -58,13 +58,13 @@ public class HAPProcessorContextRelative {
 			Map<String, HAPContextDefinitionRoot> eles = out.getElements(categary);
 			for(String eleName : eles.keySet()) {
 				HAPContextDefinitionRoot contextRoot = eles.get(eleName);
-				contextRoot.setDefinition(processRelativeInContextDefinitionElement(new HAPInfoContextLeaf(contextRoot.getDefinition(), new HAPContextPath(categary, eleName)), parentName, parentContextGroup, dependency, errors, isParentFlat, configure, runtimeEnv));
+				contextRoot.setDefinition(processRelativeInContextDefinitionElement(new HAPInfoContextNode(contextRoot.getDefinition(), new HAPContextPath(categary, eleName)), parentName, parentContextGroup, dependency, errors, isParentFlat, configure, runtimeEnv));
 			}
 		}
 		return out;
 	}
 
-	private static HAPContextDefinitionElement processRelativeInContextDefinitionElement(HAPInfoContextLeaf contextEleInfo, String parentName, HAPContextGroup parentContext, Set<String>  dependency, List<HAPServiceData> errors, boolean isParentFlat, HAPConfigureContextProcessor configure, HAPRuntimeEnvironment runtimeEnv) {
+	private static HAPContextDefinitionElement processRelativeInContextDefinitionElement(HAPInfoContextNode contextEleInfo, String parentName, HAPContextGroup parentContext, Set<String>  dependency, List<HAPServiceData> errors, boolean isParentFlat, HAPConfigureContextProcessor configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextDefinitionElement defContextElement = contextEleInfo.getContextElement();
 		HAPContextDefinitionElement out = defContextElement;
 		switch(defContextElement.getType()) {
@@ -85,14 +85,14 @@ public class HAPProcessorContextRelative {
 			Map<String, HAPContextDefinitionElement> processedChildren = new LinkedHashMap<String, HAPContextDefinitionElement>();
 			HAPContextDefinitionNode nodeContextElement = (HAPContextDefinitionNode)defContextElement;
 			for(String childName : nodeContextElement.getChildren().keySet()) { 	
-				processedChildren.put(childName, processRelativeInContextDefinitionElement(new HAPInfoContextLeaf(nodeContextElement.getChild(childName), contextEleInfo.getContextPath().appendSegment(childName)), parentName, parentContext, dependency, errors, isParentFlat, configure, runtimeEnv));
+				processedChildren.put(childName, processRelativeInContextDefinitionElement(new HAPInfoContextNode(nodeContextElement.getChild(childName), contextEleInfo.getContextPath().appendSegment(childName)), parentName, parentContext, dependency, errors, isParentFlat, configure, runtimeEnv));
 			}
 			break;
 		}
 		return out;
 	}
 	
-	private static HAPContextDefinitionElement processRelativeContextDefinitionElement(HAPInfoContextLeaf contextEleInfo, HAPContextGroup parentContext, List<HAPServiceData> errors, boolean isParentFlat, String[] categaryes, HAPConfigureContextProcessor configure, HAPRuntimeEnvironment runtimeEnv){
+	private static HAPContextDefinitionElement processRelativeContextDefinitionElement(HAPInfoContextNode contextEleInfo, HAPContextGroup parentContext, List<HAPServiceData> errors, boolean isParentFlat, String[] categaryes, HAPConfigureContextProcessor configure, HAPRuntimeEnvironment runtimeEnv){
 		HAPContextDefinitionLeafRelative defContextElementRelative = (HAPContextDefinitionLeafRelative)contextEleInfo.getContextElement();
 		HAPContextDefinitionElement out = defContextElementRelative;
 		

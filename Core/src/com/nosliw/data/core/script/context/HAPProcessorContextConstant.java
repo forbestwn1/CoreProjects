@@ -119,17 +119,17 @@ public class HAPProcessorContextConstant {
 			Map<String, HAPContextDefinitionRoot> cotextDefRoots = out.getElements(categary);
 			for(String name : cotextDefRoots.keySet()) {
 				HAPContextDefinitionRoot contextDefRoot = cotextDefRoots.get(name);
-				HAPUtilityContext.processContextDefElement(contextDefRoot.getDefinition(), new HAPContextDefEleProcessor() {
+				HAPUtilityContext.processContextDefElement(new HAPInfoContextNode(contextDefRoot.getDefinition(), new HAPContextPath(name)), new HAPContextDefEleProcessor() {
 					@Override
-					public boolean process(HAPContextDefinitionElement ele, Object value) {
-						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType())) {
-							solidateConstantDefEle((HAPContextDefinitionLeafConstant)ele, contextGroup, runtimeEnv);
+					public boolean process(HAPInfoContextNode eleInfo, Object value) {
+						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(eleInfo.getContextElement().getType())) {
+							solidateConstantDefEle((HAPContextDefinitionLeafConstant)eleInfo.getContextElement(), contextGroup, runtimeEnv);
 						}
 						return true;
 					}
 
 					@Override
-					public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+					public boolean postProcess(HAPInfoContextNode eleInfo, Object value) {
 						return true;
 					}}, null);
 			}

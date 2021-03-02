@@ -89,11 +89,11 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 		for(String eleName : new HashSet<String>(this.getElementNames())) {
 			HAPContextDefinitionRoot root = this.getElement(eleName);
 			root.setName(nameUpdate.getUpdatedName(root.getName()));
-			HAPUtilityContext.processContextDefElement(root.getDefinition(), new HAPContextDefEleProcessor() {
+			HAPUtilityContext.processContextDefElement(new HAPInfoContextNode(root.getDefinition(), new HAPContextPath(eleName)), new HAPContextDefEleProcessor() {
 				@Override
-				public boolean process(HAPContextDefinitionElement ele, Object value) {
-					if(ele instanceof HAPContextDefinitionLeafRelative) {
-						HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)ele;
+				public boolean process(HAPInfoContextNode eleInfo, Object value) {
+					if(eleInfo.getContextElement() instanceof HAPContextDefinitionLeafRelative) {
+						HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)eleInfo.getContextElement();
 						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(relative.getParent())) {
 							//update local relative path
 							HAPContextPath path = relative.getPath();
@@ -104,7 +104,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 				}
 
 				@Override
-				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+				public boolean postProcess(HAPInfoContextNode ele, Object value) {
 					return true;
 				}}, null);
 			//update root name
@@ -117,11 +117,11 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 		//update context
 		for(String eleName : new HashSet<String>(this.getElementNames())) {
 			HAPContextDefinitionRoot root = this.getElement(eleName);
-			HAPUtilityContext.processContextDefElement(root.getDefinition(), new HAPContextDefEleProcessor() {
+			HAPUtilityContext.processContextDefElement(new HAPInfoContextNode(root.getDefinition(), new HAPContextPath(eleName)), new HAPContextDefEleProcessor() {
 				@Override
-				public boolean process(HAPContextDefinitionElement ele, Object value) {
-					if(ele instanceof HAPContextDefinitionLeafRelative) {
-						HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)ele;
+				public boolean process(HAPInfoContextNode eleInfo, Object value) {
+					if(eleInfo.getContextElement() instanceof HAPContextDefinitionLeafRelative) {
+						HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)eleInfo.getContextElement();
 						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT.equals(relative.getParent())) {
 							//update local relative path
 							HAPContextPath path = relative.getPath();
@@ -132,7 +132,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 				}
 
 				@Override
-				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+				public boolean postProcess(HAPInfoContextNode ele, Object value) {
 					return true;
 				}}, null);
 		}
@@ -152,11 +152,11 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 
 		for(String name : this.m_elements.keySet()) {
 			HAPContextDefinitionRoot contextRoot = this.getElement(name);
-			HAPUtilityContext.processContextDefElementWithPathInfo(contextRoot.getDefinition(), new HAPContextDefEleProcessor() {
+			HAPUtilityContext.processContextDefElement(new HAPInfoContextNode(contextRoot.getDefinition(), new HAPContextPath(name)), new HAPContextDefEleProcessor() {
 				@Override
-				public boolean process(HAPContextDefinitionElement ele, Object path) {
-					if(ele.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
-						HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)ele;
+				public boolean process(HAPInfoContextNode eleInfo, Object path) {
+					if(eleInfo.getContextElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+						HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)eleInfo.getContextElement();
 						Object value = constantEle.getDataValue();
 						if(value==null)   value = constantEle.getValue();
 						out.put((String)path, value);
@@ -165,13 +165,12 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 				}
 
 				@Override
-				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+				public boolean postProcess(HAPInfoContextNode eleInfo, Object value) {
 					return true;
 				}
 			}, name);
 		}
 
-		
 		for(String name : this.m_elements.keySet()) {
 			HAPContextDefinitionRoot contextRoot = this.getElement(name);
 			if(contextRoot.isConstant()) {

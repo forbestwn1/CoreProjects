@@ -130,11 +130,6 @@
 								"path" : "schoolType"
 							}
 						},
-						"schoolRatingInService" : {
-							"definition" : {
-								"path" : "schoolRating"
-							}
-						}
 					}
 				},
 				"outputMapping" : {

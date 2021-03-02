@@ -14,6 +14,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.script.context.HAPInfoContextNode;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPUtilityDAProcess;
 
@@ -41,26 +42,24 @@ public class HAPUtilityDataAssociation {
 	
 	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionElement contextDefEle, String rootName, Map<String, Boolean> isFlatInput){
 		Map<String, String> out = new LinkedHashMap<String, String>();
-		HAPUtilityContext.processContextDefElementWithPathInfo(contextDefEle, new HAPContextDefEleProcessor() {
+		HAPUtilityContext.processContextDefElement(new HAPInfoContextNode(contextDefEle, new HAPContextPath(rootName)), new HAPContextDefEleProcessor() {
 			@Override
-			public boolean process(HAPContextDefinitionElement ele, Object value) {
-				String path = (String)value;
-				if(ele.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
-					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
+			public boolean process(HAPInfoContextNode eleInfo, Object value) {
+				if(eleInfo.getContextElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)eleInfo.getContextElement();
 					HAPContextPath contextPath = relativeEle.getPath();
 					String parent = relativeEle.getParent();
 					String sourcePath = HAPNamingConversionUtility.cascadePath(parent, isFlatInput.get(parent)? contextPath.getFullPath() : contextPath.getContextFullPath());
-					String targetPath = path; 
-					out.put(targetPath, sourcePath);
+					out.put(eleInfo.getContextPath().getFullPath(), sourcePath);
 					return false;
 				}
 				return true;
 			}
 
 			@Override
-			public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+			public boolean postProcess(HAPInfoContextNode eleInfo, Object value) {
 				return true;
-			}}, rootName);
+			}}, null);
 		return out;
 	}
 	
