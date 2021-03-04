@@ -1,5 +1,6 @@
 [{
 	"id": "TestProcessService",
+	"status":"disabled",
 	"name": "TestProcessService",
     "implementation" : "process",
 	"description" : "test service implemented by process",

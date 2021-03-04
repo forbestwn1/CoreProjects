@@ -5,28 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.nosliw.common.clss.HAPClassFilter;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPImporterDataSourceDefinition {
 
-	private static String[] serviceClasses = {
-//			"com.nosliw.service.school.HAPServiceImp",
-//			"com.nosliw.service.realtor.HAPServiceImp",
-//			"com.nosliw.service.soccer.HAPServiceGetLineup",
-//			"com.nosliw.service.soccer.HAPServiceUpdateLineup",
-//			"com.nosliw.service.test.process.HAPServiceProviderImp",
-//			"com.nosliw.service.pearsonflight.HAPServiceImp",
-//			"com.nosliw.service.email.HAPServiceImp",
-			"com.nosliw.service.test.template1.HAPServiceImp",
-			"com.nosliw.service.test.template2.HAPServiceImp",
-			"com.nosliw.service.test.template3.HAPServiceImp",
-			"com.nosliw.service.test.template.school.HAPServiceImp",
-			"com.nosliw.service.test.template.currency.HAPServiceImp",
-	};
-	
 	public static List<HAPDefinitionService> loadDataSourceDefinition() {
 		List<HAPDefinitionService> out = new ArrayList<HAPDefinitionService>();
 
@@ -75,9 +62,12 @@ public class HAPImporterDataSourceDefinition {
 				String content = HAPFileUtility.readFile(inputStream);
 				JSONArray serviceDefArray = new JSONArray(content);
 				for(int i=0; i<serviceDefArray.length(); i++) {
-					HAPDefinitionService serviceDef = new HAPDefinitionService();
-					serviceDef.buildObject(serviceDefArray.get(i), HAPSerializationFormat.JSON);
-					out.add(serviceDef);
+					JSONObject serviceDefJson = serviceDefArray.getJSONObject(i);
+					if(HAPUtilityEntityInfo.isEnabled(serviceDefJson)) {
+						HAPDefinitionService serviceDef = new HAPDefinitionService();
+						serviceDef.buildObject(serviceDefJson, HAPSerializationFormat.JSON);
+						out.add(serviceDef);
+					}
 				}
 			}
 		}

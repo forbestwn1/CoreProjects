@@ -1,6 +1,7 @@
 [
 	{
 		"id": "lineupService",
+		"status":"disabled",
 		"name": "lineupService",
 	    "implementation" : "com.nosliw.service.soccer.HAPServiceGetLineup",
 		"description" : "all element school rank in ontario",
@@ -22,6 +23,7 @@
 
 	{
 		"id": "updateLineupService",
+		"status":"disabled",
 		"name": "updateLineupService",
 	    "implementation" : "com.nosliw.service.soccer.HAPServiceUpdateLineup",
 		"description" : "all element school rank in ontario",

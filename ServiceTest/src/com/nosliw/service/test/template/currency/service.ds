@@ -1,6 +1,7 @@
 [{
 	"static": {
 		"id": "CurrencyExchangeRate",
+		"status":"disabled",
 		"name": "Currency Exchange Rate",
 		"description" : "Get currency exchange rate between different currency",
 		"tag" : ["demo", "public"],

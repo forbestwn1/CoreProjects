@@ -1,5 +1,6 @@
 [{
 	"name": "test",
+	"status":"disabled",
     "implementation" : "task",
 	"description" : "test data source",
 	"output" : "test.array;1.0.0%||element:test.map;1.0.0%||geo:test.geo;1.0.0||%||%",

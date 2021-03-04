@@ -313,7 +313,7 @@ public class HAPUtilityContext {
 			relativeEle.setPath(contextCategary, refPath);
 			if(parentNode.getDefinition().isProcessed()) {
 //				relativeEle.setDefinition(parentNode.getDefinition().getSolidContextDefinitionElement());
-				relativeEle.setDefinition(HAPUtilityContext.getDescendant(parentNode.getDefinition(), refPath).getSolidContextDefinitionElement());
+				relativeEle.setDefinition(HAPUtilityContext.getDescendant(parentNode.getDefinition(), new HAPComplexPath(refPath).getPath()).getSolidContextDefinitionElement());
 				relativeEle.processed();
 			}
 			out.setDefinition(relativeEle);
@@ -425,12 +425,12 @@ public class HAPUtilityContext {
 	
 	//find exact physical node
 	public static boolean isPhysicallySolved(HAPInfoContextElementReferenceResolve solve) {
-		return solve.resolvedNode!=null && HAPBasicUtility.isStringEmpty(solve.remainPath);
+		return solve!=null && (solve.resolvedNode!=null && HAPBasicUtility.isStringEmpty(solve.remainPath));
 	}
 
 	//find node
 	public static boolean isLogicallySolved(HAPInfoContextElementReferenceResolve solve) {
-		return solve.resolvedNode!=null;
+		return solve!=null && solve.resolvedNode!=null;
 	}
 
 	public static Map<String, HAPMatchers> mergeContextRoot(HAPContextDefinitionRoot origin, HAPContextDefinitionRoot expect, boolean modifyStructure, HAPRuntimeEnvironment runtimeEnv) {

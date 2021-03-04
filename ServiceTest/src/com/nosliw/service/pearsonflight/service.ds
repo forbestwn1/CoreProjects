@@ -1,5 +1,6 @@
 [{
 	"id": "pearsonFlightArrivalService",
+	"status":"disabled",
 	"name": "pearsonFlightArrivalService",
     "implementation" : "com.nosliw.service.pearsonflight.HAPServiceImp",
 	"description" : "flight arrival service in pearson airport",

@@ -38,15 +38,15 @@ import com.nosliw.uiresource.common.HAPIdGenerator;
  */ 
 public class HAPParserPage {
 
-	public static final String EVENT = "events";
+	public static final String EVENT = "event";
 	public static final String ATTACHMENT = "attachment";
-	public static final String SERVICE = "services";
+	public static final String SERVICE = "service";
 	public static final String SERVICE_USE = "use";
 	public static final String SERVICE_PROVIDER = "provider";
-	public static final String CONTEXT = "contexts";
+	public static final String CONTEXT = "context";
 	public static final String COMMAND = "commands";
 	public static final String EXPRESSION = "expressions";
-	public static final String SCRIPT = "scripts";
+	public static final String SCRIPT = "script";
 	
 	//for creating ui id
 	private HAPIdGenerator m_idGenerator;

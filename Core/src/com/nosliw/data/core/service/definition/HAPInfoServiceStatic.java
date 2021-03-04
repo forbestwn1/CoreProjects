@@ -58,7 +58,7 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 			
 			Object interfaceObj = objJson.get(INTERFACE);
 			if(interfaceObj instanceof String) {
-				HAPResourceIdFactory.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, interfaceObj);
+				this.m_interface = HAPResourceIdFactory.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, interfaceObj);
 			}
 			else {
 				HAPInfoServiceInterface serviceInterfaceInfo = new HAPInfoServiceInterface();

@@ -1,5 +1,6 @@
 [{
 	"id": "realtor",
+	"status":"disabled",
 	"name": "realtor",
     "implementation" : "com.nosliw.service.realtor.HAPServiceImp",
 	"description" : "all house for sale in toronto",

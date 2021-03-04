@@ -46,7 +46,7 @@
 		
 </body>
 
-	<scripts>
+	<script>
 	{
 		refreshSchoolData : function(info, env){
 
@@ -65,13 +65,13 @@
 		},
 
 	}
-	</scripts>
+	</script>
 
 	
 		<!-- This part can be used to define context (variable)
 				it describle data type criteria for each context element and its default value
 		-->
-	<contexts>
+	<context>
 	{
 		"group" : {
 			"public" : {
@@ -114,14 +114,14 @@
 			}
 		}
 	}
-	</contexts>
+	</context>
 	
-	<services>
+	<service>
 	[
 		{
 			"name" : "getSchoolData",
 			"interface" : "schoolservice",
-			"provider" : "getSchoolDataService",
+			"provider" : "getSchoolDataServiceStandard",
 			"dataMapping" :{
 				"inputMapping" : {
 					"element" : {
@@ -135,9 +135,9 @@
 				"outputMapping" : {
 					"success" : {
 						"element" : {
-							"schoolListInService" : {
+							"schoolList" : {
 								"definition" : {
-									"path" : "outputInService"
+									"path" : "schoolListInService"
 								}
 							}
 						}
@@ -146,7 +146,7 @@
 			}
 		}
 	]
-	</services>
+	</service>
 
 	<attachment>
 	{
@@ -203,7 +203,7 @@
 	}
 	</attachment>
 
-	<events>
+	<event>
 	[
 		{
 			name : "selectSchool",
@@ -218,7 +218,7 @@
 			}
 		}
 	]
-	</events>
+	</event>
 	
 </html>
 
