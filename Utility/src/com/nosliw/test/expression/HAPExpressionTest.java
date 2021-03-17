@@ -3,7 +3,7 @@ package com.nosliw.test.expression;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
+import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
@@ -29,7 +29,7 @@ public class HAPExpressionTest {
 			
 			HAPExecutableExpressionGroup expressionExe = runtimeEnvironment.getExpressionManager().getExpression(resourceId, null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null));
 
-			Map<String, Object> input = HAPAttachmentUtility.getTestValueFromAttachment(expressionDef, testData);
+			Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(expressionDef, testData);
 
 			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, null, (Map)input, null, runtimeEnvironment.getResourceManager());
 			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);

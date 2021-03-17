@@ -3,7 +3,7 @@ package com.nosliw.test.script;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
+import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -29,7 +29,7 @@ public class HAPScriptTest {
 			
 			HAPExecutableScriptGroup scriptExe = runtimeEnvironment.getScriptManager().getScript(resourceId, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null));
 
-			Map<String, Object> input = HAPAttachmentUtility.getTestValueFromAttachment(scriptGroupDef, testData);
+			Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(scriptGroupDef, testData);
 
 			
 			HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(scriptExe, script, input, null);

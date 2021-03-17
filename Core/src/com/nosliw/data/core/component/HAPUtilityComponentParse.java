@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
+import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -28,7 +28,7 @@ public class HAPUtilityComponentParse {
 		//parse attachment
 		JSONObject pageInfoObj = jsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
 		if(pageInfoObj!=null) {
-			HAPAttachmentUtility.parseDefinition(pageInfoObj, complexResourceDef.getAttachmentContainer());
+			HAPUtilityAttachment.parseDefinition(pageInfoObj, complexResourceDef.getAttachmentContainer());
 		}
 		
 		//context

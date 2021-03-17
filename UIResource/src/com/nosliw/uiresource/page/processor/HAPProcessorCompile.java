@@ -24,7 +24,7 @@ public class HAPProcessorCompile {
 		HAPDefinitionUIUnit uiUnitDef = exeUnit.getUIUnitDefinition();
 		HAPExecutableUIBody body = exeUnit.getBody();
 		
-		//attachment
+		//attachment, merge with parent
 		if(parentUnitDef!=null)   HAPUtilityComponent.mergeWithParentAttachment(uiUnitDef, parentUnitDef.getAttachmentContainer());
 
 		//expression context
@@ -59,17 +59,6 @@ public class HAPProcessorCompile {
 //			exeUnit.addAttribute(attrName, attrs.get(attrName));
 //		}
 
-		//other expressions : merge with parent + convert
-//		if(parentUnitDef!=null) {
-//			//from parent
-//			Map<String, String> parentExps = parentUnitDef.getExpressionDefinitions();
-//			for(String name : parentExps.keySet()) 		exeUnit.getExpressionContext().addExpressionDefinition(name, new HAPResourceDefinitionExpressionGroup(parentExps.get(name)));
-//			
-//			//it self
-//			Map<String, String> expressions = uiUnitDef.getExpressionDefinitions();
-//			for(String name : expressions.keySet()) 		exeUnit.getExpressionContext().addExpressionDefinition(name, new HAPResourceDefinitionExpressionGroup(expressions.get(name)));
-//		}
-	
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
 			process(childTag, exeUnit.getUIUnitDefinition());			

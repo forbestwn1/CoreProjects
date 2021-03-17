@@ -111,6 +111,7 @@ public class HAPNamingConversionUtility {
 	public static String[] parseNameSegments(String nameSegs){		return splitTextByComponents(nameSegs, HAPConstantShared.SEPERATOR_PREFIX);	}
 
 	public static String cascadeElement(String ele1, String ele2){		return cascadeComponents(ele1, ele2, HAPConstantShared.SEPERATOR_ELEMENT);	}
+	public static String cascadeElements(String[] eles){		return cascadeComponents(eles, HAPConstantShared.SEPERATOR_ELEMENT);	}
 	public static String[] parseElements(String eles){		return splitTextByElements(eles, HAPConstantShared.SEPERATOR_ELEMENT);	}
 
 	public static String cascadeProperty(String name, String value){	return cascadeComponents(name, value, HAPConstantShared.SEPERATOR_DETAIL);	}
@@ -123,6 +124,18 @@ public class HAPNamingConversionUtility {
 		for(String eleStr : eleStrs){
 			String[] nameValuePair = parseNameValuePair(eleStr);
 			out.put(nameValuePair[0], nameValuePair[1]);
+		}
+		return out;
+	}
+	
+	public static String cascadePropertyValuePairs(Map<String, String> valuePairs) {
+		String out = null;
+		if(valuePairs!=null && !valuePairs.isEmpty()) {
+			List<String> pairs = new ArrayList<String>();
+			for(String key : valuePairs.keySet()) {
+				pairs.add(cascadeNameValuePair(key, valuePairs.get(key)));
+			}
+			out = cascadeElements(pairs.toArray(new String[0]));
 		}
 		return out;
 	}

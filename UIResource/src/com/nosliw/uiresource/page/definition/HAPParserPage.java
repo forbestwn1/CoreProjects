@@ -24,7 +24,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
+import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPScript;
@@ -226,7 +226,7 @@ public class HAPParserPage {
 		for(Element childEle : childEles){
 			try {
 				JSONObject attachmentDefJson = new JSONObject(childEle.html());
-				HAPAttachmentUtility.parseDefinition(attachmentDefJson, resourceUnit.getAttachmentContainer());
+				HAPUtilityAttachment.parseDefinition(attachmentDefJson, resourceUnit.getAttachmentContainer());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();

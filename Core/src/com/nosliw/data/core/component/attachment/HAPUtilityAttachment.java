@@ -18,7 +18,7 @@ import com.nosliw.data.core.resource.HAPResourceIdSupplement;
 import com.nosliw.data.core.script.context.data.HAPContextDataFactory;
 import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
 
-public class HAPAttachmentUtility {
+public class HAPUtilityAttachment {
 
 	public static final String ATTRIBUTE_OVERRIDE_MODE = "overide"; 
 	public static final String OVERRIDE_MODE_CONFIGURABLE = "configurable"; 
@@ -79,7 +79,7 @@ public class HAPAttachmentUtility {
 	}
 	
 	public static HAPContextDataFlat getTestDataFromAttachment(HAPWithAttachment withAttachment, String name) {
-		return HAPAttachmentUtility.getContextDataFromAttachment(withAttachment.getAttachmentContainer(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
+		return HAPUtilityAttachment.getContextDataFromAttachment(withAttachment.getAttachmentContainer(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
 	}
 	
 	public static HAPContextDataFlat getContextDataFromAttachment(HAPContainerAttachment attContainer, String type, String name) {
@@ -93,7 +93,7 @@ public class HAPAttachmentUtility {
 	}
 	
 	public static Map<String, Object> getTestValueFromAttachment(HAPWithAttachment withAttachment, String name) {
-		return HAPAttachmentUtility.getContextValueFromAttachment(withAttachment.getAttachmentContainer(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
+		return HAPUtilityAttachment.getContextValueFromAttachment(withAttachment.getAttachmentContainer(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
 	}
 	
 	public static Map<String, Object> getContextValueFromAttachment(HAPContainerAttachment attContainer, String type, String name) {

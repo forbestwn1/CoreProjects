@@ -91,14 +91,14 @@ public class HAPContainerAttachment extends HAPSerializableImp{
 				if(thisEle==null || thisEle.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_PLACEHOLDER)) {
 					//element not exist, or empty, borrow from parent
 					HAPAttachment newEle = parentEle.cloneAttachment();
-					HAPAttachmentUtility.setOverridenByParent(newEle);
+					HAPUtilityAttachment.setOverridenByParent(newEle);
 					this.addAttachment(type, newEle);
 				}
 				else {
-					if(mode.equals(HAPConstant.INHERITMODE_PARENT)&&HAPAttachmentUtility.isOverridenByParentMode(thisEle)) {
+					if(mode.equals(HAPConstant.INHERITMODE_PARENT)&&HAPUtilityAttachment.isOverridenByParentMode(thisEle)) {
 						//if configurable, then parent override child
 						HAPAttachment newEle = parentEle.cloneAttachment();
-						HAPAttachmentUtility.setOverridenByParent(newEle);
+						HAPUtilityAttachment.setOverridenByParent(newEle);
 						this.addAttachment(type, newEle);
 					}
 				}

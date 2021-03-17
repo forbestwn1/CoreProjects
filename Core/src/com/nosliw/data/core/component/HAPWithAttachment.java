@@ -14,6 +14,7 @@ public interface HAPWithAttachment {
 	void setAttachmentContainer(HAPContainerAttachment attachmentContainer);
 	
 	Map<String, HAPAttachment> getAttachmentsByType(String type);
+	HAPAttachment getAttachment(String type, String name);
 
 	//path base for local resource reference
 	HAPLocalReferenceBase getLocalReferenceBase();

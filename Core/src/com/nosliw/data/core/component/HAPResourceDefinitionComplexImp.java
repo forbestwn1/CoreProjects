@@ -1,5 +1,7 @@
 package com.nosliw.data.core.component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -19,7 +21,10 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	//context definition within this component
 	private HAPContextStructure m_context;
 	
+	private List<HAPContextReference> m_contextRefs;
+	
 	public HAPResourceDefinitionComplexImp() {
+		this.m_contextRefs = new ArrayList<HAPContextReference>();
 	}
 
 	@Override
@@ -40,6 +45,9 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 		this.m_context = context;
 		if(this.m_context ==null)  this.m_context = new HAPContextGroup();
 	}
+	
+	@Override
+	public List<HAPContextReference> getContextReferences(){   return this.m_contextRefs; 	}
 	
 	public HAPContextGroup getContextNotFlat() {   return (HAPContextGroup)this.getContextStructure();    }
 	public HAPContext getContextFlat() {    return (HAPContext)this.getContextStructure();    }

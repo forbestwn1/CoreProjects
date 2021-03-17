@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
+import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -26,7 +26,7 @@ import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 public class HAPUtilityServiceUse {
 
 	public static HAPInfoServiceProvider parseServiceAttachment(HAPAttachment providerAttachment, HAPRuntimeEnvironment runtimeEnv) {
-		HAPDefinitionService serviceDef = (HAPDefinitionService)HAPAttachmentUtility.getResourceDefinition(providerAttachment, runtimeEnv.getResourceDefinitionManager());
+		HAPDefinitionService serviceDef = (HAPDefinitionService)HAPUtilityAttachment.getResourceDefinition(providerAttachment, runtimeEnv.getResourceDefinitionManager());
 
 		HAPDefinitionDataMappingTask dataMapping = null;
 		Object adaptor = providerAttachment.getAdaptor();

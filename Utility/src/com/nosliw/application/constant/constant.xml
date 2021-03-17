@@ -567,6 +567,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_STORY" value="story"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEMPLATE" value="template"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_CODETABLE" value="codeTable"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_CONTEXT" value="context"/>
 
 			<definition name="RUNTIME_RESOURCE_TYPE_MATCHER" value="matcher"/>
 

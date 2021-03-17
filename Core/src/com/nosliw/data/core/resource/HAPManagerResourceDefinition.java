@@ -10,7 +10,7 @@ import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPDefinitionResourceComplex;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
+import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 
 public class HAPManagerResourceDefinition {
@@ -49,7 +49,7 @@ public class HAPManagerResourceDefinition {
 		
 		if(out instanceof HAPWithAttachment) {
 			//merge attachment with supplment in resource id
-			HAPAttachmentUtility.mergeAttachmentInResourceIdSupplementToContainer(resourceId, ((HAPWithAttachment)out).getAttachmentContainer(), HAPConstant.INHERITMODE_PARENT);
+			HAPUtilityAttachment.mergeAttachmentInResourceIdSupplementToContainer(resourceId, ((HAPWithAttachment)out).getAttachmentContainer(), HAPConstant.INHERITMODE_PARENT);
 		}
 		
 		//set resource id

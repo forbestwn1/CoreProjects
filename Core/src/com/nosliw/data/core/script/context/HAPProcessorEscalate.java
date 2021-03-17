@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.Triple;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPComplexPath;
@@ -19,71 +19,77 @@ public class HAPProcessorEscalate {
 
 			Map<String, String> contextMapping = new LinkedHashMap<String, String>();
 			contextMapping.putAll(cm);
-			for(String key : context.getElementNames()) {
-				if(HAPBasicUtility.isStringEmpty(contextMapping.get(key)))			contextMapping.put(key, key);
+			for(String eleName : context.getElementNames()) {
+				if(HAPBasicUtility.isStringEmpty(contextMapping.get(eleName)))			contextMapping.put(eleName, eleName);
 			}
 			
-			for(String key : context.getElementNames()) {
-				process(contextGroup, key, contextMapping.get(key), categary, inheritanceExcludedInfo);
+			for(String eleName : context.getElementNames()) {
+				process(contextGroup, categary, eleName, contextMapping.get(eleName), inheritanceExcludedInfo);
 			}
 		}
 	}
-	
 	
 	//escalte context node to parent context group, only absolute variable
-	public static void process(HAPContextGroup contextGroup, String contextEleName, String mappedPath, String categaryType, Set<String> inheritanceExcludedInfo) {
-		HAPContextDefinitionRoot rootNode = contextGroup.getElement(categaryType, contextEleName);
-		if(rootNode.isAbsolute()) {
-			HAPComplexPath complexPath = new HAPComplexPath(mappedPath);
-			Triple<Boolean, HAPContextDefinitionRoot, String> a = escalate(complexPath, categaryType, contextGroup.getParent(), rootNode, inheritanceExcludedInfo);
-			if(a.getLeft())		contextGroup.addElement(contextEleName, a.getMiddle(), a.getRight());
-			else {
-				contextGroup.addElement(contextEleName, HAPUtilityContext.createRelativeContextDefinitionRoot(a.getMiddle(), a.getRight(), complexPath.getRootName(), inheritanceExcludedInfo), a.getRight());
-			}
+	public static void process(HAPContextGroup sourceContextGroup, String sourceCategaryType, String contextEleName, String escalateTargetPath, Set<String> inheritanceExcludedInfo) {
+		HAPContextDefinitionRoot sourceRootNode = sourceContextGroup.getElement(sourceCategaryType, contextEleName);
+		if(sourceRootNode.isAbsolute()) {
+			HAPComplexPath complexPath = new HAPComplexPath(escalateTargetPath);
+			Pair<Boolean, HAPContextDefinitionRoot> a = escalate(sourceRootNode, sourceCategaryType, sourceContextGroup.getParent(), complexPath, inheritanceExcludedInfo);
+			
+			HAPContextDefinitionRoot b = getEscalateStepRootNode(a, sourceCategaryType, complexPath, inheritanceExcludedInfo);
+			sourceContextGroup.addElement(contextEleName, b, sourceCategaryType);
 		}
 	}
 	
-	private static Triple<Boolean, HAPContextDefinitionRoot, String> escalate(HAPComplexPath path, String categaryType, HAPContextGroup parentContextGroup, HAPContextDefinitionRoot original, Set<String> inheritanceExcludedInfo) {
+	//out.left: true--escalate to existing root node    false--escalate to new root node
+	private static Pair<Boolean, HAPContextDefinitionRoot> escalate(HAPContextDefinitionRoot original, String categaryType, HAPContextGroup parentContextGroup, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
 		
-		Triple<Boolean, HAPContextDefinitionRoot, String> out = null;
+		Pair<Boolean, HAPContextDefinitionRoot> out = null;
 		HAPInfoContextElementReferenceResolve resolveInfo = HAPUtilityContext.resolveReferencedContextElement(new HAPContextPath(path.getFullName()), parentContextGroup, null, HAPConstant.RESOLVEPARENTMODE_FIRST);
-		if(resolveInfo!=null) {
+		if(HAPUtilityContext.isLogicallySolved(resolveInfo)) {
 			//find matched one
-			out = Triple.of(true, HAPUtilityContext.createRelativeContextDefinitionRoot(resolveInfo.rootNode, resolveInfo.path.getRootElementId().getCategary(), resolveInfo.path.getPath(), inheritanceExcludedInfo), categaryType);
-			return out;
+			out = Pair.of(true, HAPUtilityContext.createRelativeContextDefinitionRoot(resolveInfo.rootNode, resolveInfo.path.getRootElementId().getCategary(), resolveInfo.path.getPath(), inheritanceExcludedInfo));
 		}
 		else {
+			//not find
 			HAPContextGroup grandParent = parentContextGroup.getParent();
 			boolean isEnd = false;
 			if(grandParent==null)   isEnd = true;
 			else  isEnd = !HAPUtilityContext.getContextGroupPopupMode(parentContextGroup.getInfo());
 
-			//not find
 			if(isEnd){
+				//at the end of escalate
 				//only root name is valid, mappedPath with path is not valid
 				if(HAPBasicUtility.isStringEmpty(path.getPath())) {
+					//clone original root node to parent context
 					HAPContextDefinitionRoot rootNode = original.cloneContextDefinitionRoot();
 					parentContextGroup.addElement(path.getRootName(), rootNode, categaryType);
-					out = Triple.of(false, rootNode, categaryType);
+					out = Pair.of(false, rootNode);
 				}
 				else HAPErrorUtility.invalid("");
-				return out;
 			}
 			else {
-				Triple<Boolean, HAPContextDefinitionRoot, String> a = escalate(path, categaryType, grandParent, original, inheritanceExcludedInfo);
-				HAPContextDefinitionRoot b;
-				if(a.getLeft()) {
-					b = a.getMiddle();
-					parentContextGroup.addElement(path.getRootName(), b, a.getRight());
-				}
-				else {
-					b = HAPUtilityContext.createRelativeContextDefinitionRoot(a.getMiddle(), a.getRight(), path.getRootName(), inheritanceExcludedInfo);
-					parentContextGroup.addElement(path.getRootName(), b, a.getRight());
-				}
-
-				out = Triple.of(false, b, a.getRight());
-				return out;
+				//keep escalate to grand parent
+				Pair<Boolean, HAPContextDefinitionRoot> a = escalate(original, categaryType, grandParent, path, inheritanceExcludedInfo);
+				HAPContextDefinitionRoot b = getEscalateStepRootNode(a, categaryType, path, inheritanceExcludedInfo);
+				parentContextGroup.addElement(path.getRootName(), b, categaryType);
+				out = Pair.of(false, b);
 			}
 		}
+		return out;
 	}
+
+	
+	private static HAPContextDefinitionRoot getEscalateStepRootNode(Pair<Boolean, HAPContextDefinitionRoot> stepResult, String categaryType, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
+		HAPContextDefinitionRoot out;
+		if(stepResult.getLeft()) {
+			out = stepResult.getRight();
+		}
+		else {
+			out = HAPUtilityContext.createRelativeContextDefinitionRoot(stepResult.getRight(), categaryType, path.getRootName(), inheritanceExcludedInfo);
+			//kkk should set original to relative node
+		}
+		return out;
+	}
+
 }

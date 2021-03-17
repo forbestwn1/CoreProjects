@@ -30,7 +30,24 @@ public class HAPProcessorUIPage {
 		
 		HAPExecutableUIUnitPage out = new HAPExecutableUIUnitPage(uiPageDef, id);
 
-		//build page context by parent context override context defined in page
+		//expand include and build mapping for include tag
+		HAPProcessorInclude.processInclude(uiPageDef, uiResourceParser, uiResourceMan, runtimeEnv.getResourceDefinitionManager());
+		
+		//process attachment
+		HAPProcessorAttachment.processAttachment(uiPageDef, null, uiTagMan);
+		
+		//expand referred context part
+		HAPProcessorUIContext.processContextReference(uiPageDef, runtimeEnv.getResourceDefinitionManager());
+		
+		//enhance context by service
+		
+		
+		//process context
+		
+		
+		
+		//context in page can be replaced with external context
+		//build page context by external context override context defined in page
 		HAPContextGroup pageContext = uiPageDef.getContextNotFlat().cloneContextGroup();
 		if(externalContext!=null) {
 			for(String categary : externalContext.getContextTypes()) {
@@ -44,6 +61,18 @@ public class HAPProcessorUIPage {
 		if(serviceProviders==null)  serviceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, runtimeEnv);
 
+		//include -- 
+		//		attachment,
+		//build context
+		//include
+		//		build mapping for include tag
+		//context -- 
+		//		enhance context by service
+		//		process context
+		//		
+		
+		
+		
 		//compile definition to executable
 		HAPProcessorCompile.process(out, null);
 

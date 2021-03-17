@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentUtility;
+import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPContainerChildResource {
@@ -20,7 +20,7 @@ public class HAPContainerChildResource {
 	public void addChildCompoentId(HAPInfoChildResource childResourceInfo, HAPContainerAttachment parentAttachment) {
 		HAPResourceId resourceId = childResourceInfo.getResourceId();
 		
-		HAPAttachmentUtility.mergeContainerToResourceIdSupplement(resourceId, parentAttachment);
+		HAPUtilityAttachment.mergeContainerToResourceIdSupplement(resourceId, parentAttachment);
 		
 		List<HAPInfoChildResource> byName = this.m_children.get(resourceId.getType());
 		if(byName==null) {
