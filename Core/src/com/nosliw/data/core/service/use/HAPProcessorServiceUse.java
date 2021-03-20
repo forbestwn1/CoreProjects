@@ -28,6 +28,22 @@ import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 public class HAPProcessorServiceUse {
 
+	public static void enhanceContextByService(HAPDefinitionServiceUse definition, HAPContextStructure globalContext, HAPRuntimeEnvironment runtimeEnv) {
+		//process service use
+		HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPResourceUtility.solidateResource(definition.getInterface(), runtimeEnv)).getInterface();
+		
+		HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointContext(taskIO, false, definition.getDataMapping(), HAPParentContext.createDefault(globalContext), true, runtimeEnv);
+		
+		HAPProcessorDataAssociation.enhanceDataAssociationEndPointContext(
+				HAPParentContext.createDefault(globalContext), true, 
+				definition.getDataMapping().getInputMapping(), HAPParentContext.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(serviceInterface)), false, 
+				runtimeEnv);
+		
+		HAPProcessorDataAssociation.processDataAssociationWithTask(definition.getDataMapping(), taskExe, HAPParentContext.createDefault(globalContext), HAPUtilityDAProcess.withModifyInputStructureConfigureTrue(null), runtimeEnv);
+		
+	}
+	
+	
 	public static HAPExecutableServiceUse process(HAPDefinitionServiceUse definition, HAPContextStructure globalContext, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);
 

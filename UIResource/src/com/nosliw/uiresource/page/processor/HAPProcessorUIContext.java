@@ -41,7 +41,19 @@ public class HAPProcessorUIContext {
 		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
 			processContextReference(uiTag, resourceDefMan);
 		}
-
+	}
+	
+	public static void enhanceContextByService(HAPDefinitionUIUnit uiUnitDef, HAPManagerResourceDefinition resourceDefMan) {
+		for(String serviceName : uiUnitDef.getAllServices()) {
+			HAPDefinitionServiceUse service = uiUnitDef.getService(serviceName);
+			HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(service, uiExe.getBody().getContext(), uiUnitDef.getAttachmentContainer(), runtimeEnv);
+			uiExe.getBody().addServiceUse(serviceName, serviceExe);
+		}
+		
+		//child tag
+		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
+			enhanceContextByService(uiTag, resourceDefMan);
+		}
 	}
 	
 	public static void process(HAPExecutableUIUnit uiExe, HAPContextGroup contextDef, HAPContextGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){

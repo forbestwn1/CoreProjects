@@ -3,8 +3,10 @@ package com.nosliw.data.core.component;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
@@ -16,11 +18,13 @@ import com.nosliw.data.core.resource.HAPResourceIdFactory;
 import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.script.context.resource.HAPResourceDefinitionContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
@@ -72,10 +76,35 @@ public class HAPUtilityComponent {
 //		return out;
 //	}
 	
-	public static void resolveContextReference(HAPContextStructure context, List<HAPContextReference> contextRefs, HAPContainerAttachment attachments, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPContextStructure resolveContextReference(HAPContextStructure context, List<HAPContextReference> contextRefs, HAPContainerAttachment attachments, HAPManagerResourceDefinition resourceDefMan) {
+		String contextType = context.getType();
 		
+		for(HAPContextReference contextRef : contextRefs) {
+			HAPAttachment att = attachments.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTEXT, contextRef.getName());
+			
+			//find target context
+			HAPContext targetContext = null;
+			if(contextType.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+				HAPContextGroup contextGroup = (HAPContextGroup)context;
+				String categary = contextRef.getCategary();
+				if(HAPBasicUtility.isStringEmpty(categary))  categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+				targetContext = contextGroup.getChildContext(categary);
+			}
+			else {
+				targetContext = (HAPContext)context;
+			}
+			
+			//append referred context to target context
+			HAPResourceDefinitionContext contextResourceDef = (HAPResourceDefinitionContext)HAPUtilityAttachment.getResourceDefinition(att, resourceDefMan);
+			HAPContext referredContext = contextResourceDef.getContext();
+			for(String eleName : referredContext.getElementNames()) {
+				if(targetContext.getElement(eleName)==null) {
+					targetContext.addElement(eleName, referredContext.getElement(eleName));
+				}
+			}
+		}
 		
-		
+		return context;
 	}
 	
 

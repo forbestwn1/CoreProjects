@@ -23,8 +23,7 @@ public class HAPProcessorDataAssociation {
 		HAPExecutableWrapperTask out = new HAPExecutableWrapperTask();
 		out.setTask(taskExe);
 		//process input mapping
-		HAPDefinitionDataAssociation inputMapping = taskWrapperDef.getInputMapping();
-		if(inputMapping==null)  inputMapping = new HAPDefinitionDataAssociationMirror();   //if no input mapping defined, then use mirror
+		HAPDefinitionDataAssociation inputMapping = getInputMappingFromTaskDataMapping(taskWrapperDef);
 		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(inputContext, inputMapping, taskExe.getInContext(), inputConfigure, runtimeEnv));
 		
 		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
@@ -47,8 +46,7 @@ public class HAPProcessorDataAssociation {
 		HAPExecutableWrapperTask out = new HAPExecutableWrapperTask();
 		out.setTask(taskExe);
 		//process input mapping
-		HAPDefinitionDataAssociation inputMapping = taskWrapperDef.getInputMapping();
-		if(inputMapping==null)  inputMapping = new HAPDefinitionDataAssociationMirror();   //if no input mapping defined, then use mirror
+		HAPDefinitionDataAssociation inputMapping = getInputMappingFromTaskDataMapping(taskWrapperDef);
 		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(inputContext, inputMapping, taskExe.getInContext(), configure, runtimeEnv));
 		
 		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
@@ -64,6 +62,41 @@ public class HAPProcessorDataAssociation {
 		return out;
 	}
 
+	public static void enhanceDataAssociationWithTaskEndPointContext(HAPIOTask taskIO, boolean taskIOEnhance, HAPDefinitionDataMappingTask taskWrapperDef, HAPParentContext externalContext, boolean externalContextEnhance, HAPRuntimeEnvironment runtimeEnv) {
+		enhanceDataAssociationWithTaskEndPointContext(taskIO, taskIOEnhance, taskWrapperDef, externalContext, externalContextEnhance, externalContext, externalContextEnhance, runtimeEnv);
+	}
+
+	public static void enhanceDataAssociationWithTaskEndPointContext(HAPIOTask taskIO, boolean taskIOEnhance, HAPDefinitionDataMappingTask taskWrapperDef, HAPParentContext inputContext, boolean inputContextEnhance, HAPParentContext outputContext, boolean outputContextEnhance, HAPRuntimeEnvironment runtimeEnv) {
+		HAPDefinitionDataAssociation inputMapping = getInputMappingFromTaskDataMapping(taskWrapperDef);
+		enhanceDataAssociationEndPointContext(inputContext, inputContextEnhance, inputMapping, taskIO.getInContext(), taskIOEnhance, runtimeEnv);
+
+		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
+		for(String resultName : resultOutputMapping.keySet()) {
+			enhanceDataAssociationEndPointContext(taskIO.getOutResultContext().get(resultName), taskIOEnhance, resultOutputMapping.get(resultName), outputContext, outputContextEnhance, runtimeEnv);
+		}
+	}
+
+	private static HAPDefinitionDataAssociation getInputMappingFromTaskDataMapping(HAPDefinitionDataMappingTask taskWrapperDef) {
+		HAPDefinitionDataAssociation out = taskWrapperDef.getInputMapping();
+		if(out==null)  out = new HAPDefinitionDataAssociationMirror();   //if no input mapping defined, then use mirror
+		return out;
+	}
+	
+
+	public static void enhanceDataAssociationEndPointContext(HAPParentContext input, boolean inputEnhance, HAPDefinitionDataAssociation dataAssociation, HAPParentContext output, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
+		String type = dataAssociation.getType();
+		
+		switch(type) {
+		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
+			HAPProcessorDataAssociationMapping.enhanceDataAssociationEndPointContext(input, inputEnhance, (HAPDefinitionDataAssociationMapping)dataAssociation, output, outputEnhance, runtimeEnv);
+			break;
+		case HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR:
+			break;
+
+		case HAPConstantShared.DATAASSOCIATION_TYPE_NONE:
+			break;
+		}
+	}
 	
 	public static HAPExecutableDataAssociation processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociation dataAssociation, HAPParentContext output, HAPInfo configure, HAPRuntimeEnvironment runtimeEnv) {
 		if(dataAssociation==null)  dataAssociation = new HAPDefinitionDataAssociationNone();
