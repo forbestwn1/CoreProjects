@@ -1,6 +1,6 @@
 [{
 	"static": {
-		"id": "listoutput",
+		"id": "listoutput_refinterface",
 		"name": "ListOutput",
 		"displayName": "listoutput",
 		"description" : "listoutput",

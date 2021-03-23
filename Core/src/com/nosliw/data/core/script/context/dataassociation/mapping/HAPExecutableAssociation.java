@@ -19,7 +19,7 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.resource.HAPResourceUtility;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -209,6 +209,6 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		for(String name : this.m_outputMatchers.keySet()) {
 			ids.addAll(HAPMatcherUtility.getMatchersResourceId(this.m_outputMatchers.get(name)));
 		}
-		dependency.addAll(HAPResourceUtility.buildResourceDependentFromResourceId(ids));
+		dependency.addAll(HAPUtilityResource.buildResourceDependentFromResourceId(ids));
 	}
 }

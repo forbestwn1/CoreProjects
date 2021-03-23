@@ -15,7 +15,7 @@ import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.data.core.resource.HAPLoadResourceResponse;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -78,7 +78,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 	 */
 	private HAPServiceData requestDiscoverResources(JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception{
 		JSONArray resourceJsonArray = parms.getJSONArray(COMMAND_DISCOVERRESOURCES_RESOURCEIDS);
-		List<HAPResourceId> resourceIds = HAPResourceIdFactory.newInstanceList(resourceJsonArray); 
+		List<HAPResourceId> resourceIds = HAPFactoryResourceId.newInstanceList(resourceJsonArray); 
 		return this.discoverResources(resourceIds, runtimeInfo);
 	}
 	
@@ -102,7 +102,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 		HAPServiceData serviceData = null;
 
 		JSONArray resourceJsonArray = parms.getJSONArray(COMMAND_DISCOVERANDLOADRESOURCES_RESOURCEIDS);
-		List<HAPResourceId> resourceIds = HAPResourceIdFactory.newInstanceList(resourceJsonArray); 
+		List<HAPResourceId> resourceIds = HAPFactoryResourceId.newInstanceList(resourceJsonArray); 
 
 		serviceData = this.discoverResources(resourceIds, runtimeInfo);
 		if(serviceData.isFail())   return serviceData;

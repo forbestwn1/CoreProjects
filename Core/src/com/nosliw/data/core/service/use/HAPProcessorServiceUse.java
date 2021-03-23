@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.resource.HAPResourceUtility;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
@@ -32,7 +32,7 @@ public class HAPProcessorServiceUse {
 	public static void enhanceContextByService(HAPDefinitionServiceUse definition, HAPContextStructure globalContext, HAPRuntimeEnvironment runtimeEnv) {
 		if(HAPProcessorServiceUse.isHnhanceContextByService(definition)) {
 			//process service use
-			HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPResourceUtility.solidateResource(definition.getInterface(), runtimeEnv)).getInterface();
+			HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
 			
 			//
 			HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointContext(HAPUtilityServiceInterface.buildIOTaskByInterface(serviceInterface), false, definition.getDataMapping(), HAPParentContext.createDefault(globalContext), true, runtimeEnv);
@@ -43,7 +43,7 @@ public class HAPProcessorServiceUse {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);
 
 		//process service use
-		HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPResourceUtility.solidateResource(definition.getInterface(), runtimeEnv)).getInterface();
+		HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
 
 		HAPExecutableTask taskExe = HAPUtilityServiceInterface.buildExecutableTaskByInterface(serviceInterface);
 		

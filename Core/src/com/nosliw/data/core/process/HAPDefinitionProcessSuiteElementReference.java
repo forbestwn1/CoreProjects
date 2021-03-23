@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementReference;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 
 public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWritableImp implements HAPResourceDefinitionContainerElementReference{
 
@@ -33,7 +33,7 @@ public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWrit
 	protected boolean buildObjectByJson(Object obj){
 		JSONObject jsonObj = (JSONObject)obj;
 		this.buildEntityInfoByJson(jsonObj);
-		this.m_resourceId = HAPResourceIdFactory.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS, jsonObj.get(REFERENCE));
+		this.m_resourceId = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS, jsonObj.get(REFERENCE));
 		return true;  
 	}
 

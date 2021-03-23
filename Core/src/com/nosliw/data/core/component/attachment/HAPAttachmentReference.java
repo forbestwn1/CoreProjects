@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 
 //
 @HAPEntityWithAttribute
@@ -45,7 +45,7 @@ public abstract class HAPAttachmentReference extends HAPAttachmentImp{
 		super.buildObjectByJson(json);
 		Object referenceId = jsonObj.opt(REFERENCEID);
 		if(referenceId!=null) {
-			this.m_referenceId = HAPResourceIdFactory.newInstance(this.getValueType(), referenceId);
+			this.m_referenceId = HAPFactoryResourceId.newInstance(this.getValueType(), referenceId);
 		}
 		return true;  
 	}

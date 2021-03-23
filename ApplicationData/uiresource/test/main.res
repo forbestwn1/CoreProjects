@@ -5,13 +5,13 @@
 	AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA		
 </body>
 
-	<scripts>
+	<script>
 	{
 	}
-	</scripts>
+	</script>
 
 	
-	<contexts>
+	<context>
 	{
 		"group" : {
 			"public" : {
@@ -20,12 +20,49 @@
 			}
 		}
 	}
-	</contexts>
+	</context>
 	
-	<services>
+	<service>
 	[
+		{
+			"name" : "simpleServiceWithoutInterface",
+			"interface" : "service_test_listoutput",
+			"provider" : "simpleServiceWithoutInterfaceProvider",
+			"dataMapping" :{
+				"inputMapping" : {
+					"element" : {
+						"parm1" : {
+							"definition" : {
+								"path" : "forsimpleservice_1_parm1"
+							}
+						},
+						"parm2" : {
+							"definition" : {
+								"path" : "forsimpleservice_1_parm2"
+							}
+						}
+					}
+				},
+				"outputMapping" : {
+					"success" : {
+						"element" : {
+							"forsimpleservice_1_output1" : {
+								"definition" : {
+									"path" : "simpleOutput1"
+								}
+							},
+							"forsimpleservice_1_output2" : {
+								"definition" : {
+									"path" : "simpleOutput2"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	]
-	</services>
+	</service>
 
 	<contextref>
 	[
@@ -56,8 +93,8 @@
 	{
 		"service" : [
 			{
-				"name": "getSchoolDataService",
-				"referenceId" : "schoolService"
+				"name": "simpleServiceWithoutInterfaceProvider",
+				"referenceId" : "simpleoutput_refinterface"
 			}	
 		],
 		"data" : [
@@ -106,22 +143,10 @@
 	}
 	</attachment>
 
-	<events>
+	<event>
 	[
-		{
-			name : "selectSchool",
-			data : {
-				element : {
-					data : {
-						definition : {
-							path: "schoolList.element"
-						}
-					}
-				}
-			}
-		}
 	]
-	</events>
+	</event>
 	
 </html>
 

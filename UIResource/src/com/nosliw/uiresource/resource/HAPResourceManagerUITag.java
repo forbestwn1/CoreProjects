@@ -9,7 +9,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.resource.HAPResourceUtility;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
@@ -30,7 +30,7 @@ public class HAPResourceManagerUITag extends HAPResourceManagerImp{
 		if(uiTagDefinition==null)  return null;
 		HAPResourceDataUITag resourceData = new HAPResourceDataUITag(uiTagDefinition);
 		
-		return new HAPResource(resourceId, resourceData, HAPResourceUtility.buildResourceLoadPattern(resourceId, null));
+		return new HAPResource(resourceId, resourceData, HAPUtilityResource.buildResourceLoadPattern(resourceId, null));
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
@@ -45,7 +45,7 @@ public class HAPGatewayResourceDefinition extends HAPGatewayImp{
 
 	private HAPServiceData requestLoadResourceDefinition(JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception{
 		Object idObj = parms.get(COMMAND_LOADRESOURCEDEFINITION_ID);
-		HAPResourceId resourceId = HAPResourceIdFactory.newInstance(idObj);
+		HAPResourceId resourceId = HAPFactoryResourceId.newInstance(idObj);
 		HAPResourceDefinition resourceDefinition = this.m_runtimeEnviroment.getResourceDefinitionManager().getResourceDefinition(resourceId);
 		return this.createSuccessWithObject(resourceDefinition);
 	}

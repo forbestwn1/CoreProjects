@@ -51,7 +51,7 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 	@Override
 	protected void buildCoreIdByJSON(JSONObject jsonObj) {
 		this.m_path = jsonObj.optString(PATH);
-		this.m_parentId =  HAPResourceIdFactory.newInstance(jsonObj.opt(PARENT));
+		this.m_parentId =  HAPFactoryResourceId.newInstance(jsonObj.opt(PARENT));
 	}
 
 	@Override

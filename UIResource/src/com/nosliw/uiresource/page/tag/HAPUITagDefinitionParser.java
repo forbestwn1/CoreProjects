@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPParserContext;
@@ -84,7 +84,7 @@ public class HAPUITagDefinitionParser {
 				while(aliasIt.hasNext()){
 					String alias = aliasIt.next();
 					String resourceIdLiterate = requiresForTypeJson.optString(alias);
-					definition.addResourceDependency(new HAPResourceDependency(HAPResourceIdFactory.newInstance(resourceType, resourceIdLiterate), alias));
+					definition.addResourceDependency(new HAPResourceDependency(HAPFactoryResourceId.newInstance(resourceType, resourceIdLiterate), alias));
 				}
 			}
 		}

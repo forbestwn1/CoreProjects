@@ -14,7 +14,7 @@ import com.nosliw.data.core.process.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
@@ -141,7 +141,7 @@ public class HAPUtilityComponent {
 		for(String serviceName : serviceUseDefs.keySet()) {
 			HAPDefinitionServiceUse serviceUseDef = serviceUseDefs.get(serviceName);
 			HAPDefinitionServiceProvider serviceProvider = allServiceProviders.get(serviceUseDef.getProvider());
-			out.addChildCompoentId(new HAPInfoChildResource(serviceName, HAPResourceIdFactory.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE, serviceProvider.getServiceId()), null), attachment);
+			out.addChildCompoentId(new HAPInfoChildResource(serviceName, HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE, serviceProvider.getServiceId()), null), attachment);
 		}
 	}
 }

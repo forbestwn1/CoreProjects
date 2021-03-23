@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPResourceIdFactory {
+public class HAPFactoryResourceId {
 
 	private static HAPResourceId newInstanceByType(String resourceType, String structure) {
 		HAPResourceId out = null;
-		if(structure==null)   structure = HAPResourceUtility.getDefaultResourceStructure();
+		if(structure==null)   structure = HAPUtilityResource.getDefaultResourceStructure();
 		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
 			out = new HAPResourceIdSimple(resourceType);
 		}
@@ -44,18 +44,18 @@ public class HAPResourceIdFactory {
 		HAPResourceId out = null;
 		if(coreIdObj instanceof String) {
 			if(structure!=null) {
-				out = HAPResourceIdFactory.newInstanceByType(type, structure);
+				out = HAPFactoryResourceId.newInstanceByType(type, structure);
 				out.buildCoreIdByLiterate((String)coreIdObj);
 			}
 			else {
-				String[] segs = HAPResourceUtility.parseResourceCoreIdLiterate((String)coreIdObj);
-				out = HAPResourceIdFactory.newInstanceByType(type, segs[0]);
+				String[] segs = HAPUtilityResource.parseResourceCoreIdLiterate((String)coreIdObj);
+				out = HAPFactoryResourceId.newInstanceByType(type, segs[0]);
 				out.buildCoreIdByLiterate(segs[1]);
 			}
 		}
 		else if(coreIdObj instanceof JSONObject) {
 			JSONObject coreIdJson = (JSONObject)coreIdObj;
-			out = HAPResourceIdFactory.newInstanceByType(type, structure);
+			out = HAPFactoryResourceId.newInstanceByType(type, structure);
 			out.buildCoreIdByJSON(coreIdJson);
 		}
 		return out;
@@ -65,7 +65,7 @@ public class HAPResourceIdFactory {
 		HAPResourceId out = null;
 		if(content instanceof String) {
 			String literate = (String)content;
-			String[] idSegs = HAPResourceUtility.parseResourceIdLiterate(literate);
+			String[] idSegs = HAPUtilityResource.parseResourceIdLiterate(literate);
 			if(idSegs.length==1)   out = newInstance(null, idSegs[0]);
 			else if(idSegs.length==2)   out = newInstance(idSegs[0], idSegs[1]);
 		}

@@ -20,7 +20,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
@@ -76,7 +76,7 @@ public class HAPRhinoRuntimeUtility {
 				NativeObject resourceIdObject = (NativeObject)rhinoResourceIdArray.get(i);
 				String jsonString = HAPRhinoDataUtility.toJson(resourceIdObject).toString();
 
-				HAPResourceId resourceId = HAPResourceIdFactory.newInstance(new JSONObject(jsonString));
+				HAPResourceId resourceId = HAPFactoryResourceId.newInstance(new JSONObject(jsonString));
 				resourceIds.add(resourceId);
 			}
 			catch(Exception e){

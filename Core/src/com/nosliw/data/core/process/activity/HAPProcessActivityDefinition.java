@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityTask;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 
 public class HAPProcessActivityDefinition extends HAPDefinitionActivityTask{
 
@@ -30,7 +30,7 @@ public class HAPProcessActivityDefinition extends HAPDefinitionActivityTask{
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_process = HAPResourceIdFactory.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS, jsonObj.opt(PROCESS));
+		this.m_process = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS, jsonObj.opt(PROCESS));
 		return true;  
 	}
 

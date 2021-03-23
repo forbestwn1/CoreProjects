@@ -17,7 +17,7 @@ import com.nosliw.data.core.component.HAPInfoChildResource;
 import com.nosliw.data.core.component.HAPContainerChildResource;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.uiresource.HAPUIResourceManager;
@@ -73,7 +73,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 		HAPResourceNodeContainerByType out = new HAPResourceNodeContainerByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPP);
 		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getMiniAppFolder());
 		for(File file : files) {
-			HAPResourceNode node = createResourceNodeApp(HAPResourceIdFactory.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPP, HAPFileUtility.getFileName(file)));
+			HAPResourceNode node = createResourceNodeApp(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPP, HAPFileUtility.getFileName(file)));
 			out.addElement(node);
 		}
 		return out;

@@ -19,7 +19,7 @@ import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.resource.HAPResourceUtility;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
@@ -146,7 +146,7 @@ public class HAPUtilityExpression {
 						
 						refDef.setName(referenceTo);
 						refDef.setElementName(eleName);
-						refDef.setResourceId(HAPResourceUtility.buildLocalReferenceResourceId(refName));
+						refDef.setResourceId(HAPUtilityResource.buildLocalReferenceResourceId(refName));
 						refDef.setInputMapping(null);
 					}
 					out.put(refName, refDef);

@@ -1,6 +1,6 @@
 [{
 	"static": {
-		"id": "simpleoutput",
+		"id": "simpleoutput_refinterface",
 		"name": "SimpleOutput",
 		"displayName": "simpleoutput",
 		"description" : "simpleoutput",

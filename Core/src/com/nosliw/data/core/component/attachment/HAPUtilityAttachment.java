@@ -13,7 +13,7 @@ import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSupplement;
 import com.nosliw.data.core.script.context.data.HAPContextDataFactory;
 import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
@@ -135,7 +135,7 @@ public class HAPUtilityAttachment {
 				HAPAttachment attachment = null;
 				Object referenceIdObj = attachmentJson.opt(HAPAttachmentReference.REFERENCEID);
 				if(referenceIdObj!=null) {
-					HAPResourceId resourceId = HAPResourceIdFactory.newInstance(type, referenceIdObj);
+					HAPResourceId resourceId = HAPFactoryResourceId.newInstance(type, referenceIdObj);
 					if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
 						attachment = new HAPAttachmentReferenceLocal(type);
 					}

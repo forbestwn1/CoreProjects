@@ -5,7 +5,7 @@ import com.nosliw.data.core.resource.HAPContextResourceDefinition;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceUtility;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 
 //context for processing expression
 //it include related suite or process
@@ -30,7 +30,7 @@ public class HAPContextResourceExpressionGroup implements HAPContextResourceDefi
 	
 	@Override
 	public HAPEntityWithResourceContext getResourceDefinition(HAPResourceId expressionId) {
-		HAPDefinitionExpressionGroup expressionGroup = (HAPDefinitionExpressionGroup)HAPResourceUtility.getImpliedEntity(expressionId, this.m_suite, this.m_resourceDefMan);
+		HAPDefinitionExpressionGroup expressionGroup = (HAPDefinitionExpressionGroup)HAPUtilityResource.getImpliedEntity(expressionId, this.m_suite, this.m_resourceDefMan);
 		HAPDefinitionExpressionSuite suite = this.m_suite;
 		if(expressionGroup instanceof HAPResourceDefinitionExpressionGroup) {
 			suite = ((HAPResourceDefinitionExpressionGroup)expressionGroup).getSuite();

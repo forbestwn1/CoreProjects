@@ -21,7 +21,7 @@ import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 import com.nosliw.data.core.system.HAPSystemUtility;
 
-public class HAPResourceUtility {
+public class HAPUtilityResource {
 
 	public final static String LOADRESOURCEBYFILE_MODE_NEVER = "never";
 	public final static String LOADRESOURCEBYFILE_MODE_ALWAYS = "always";
@@ -92,7 +92,7 @@ public class HAPResourceUtility {
 		}
 		else {
 			//simple structure
-			out[0] = HAPResourceUtility.getDefaultResourceStructure();
+			out[0] = HAPUtilityResource.getDefaultResourceStructure();
 			out[1] = coreIdLiterate;
 		}
 		return out;

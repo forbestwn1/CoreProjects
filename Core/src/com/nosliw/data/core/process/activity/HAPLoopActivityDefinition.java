@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
@@ -63,7 +63,7 @@ public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 		this.m_elementName = jsonObj.optString(ELEMENTNAME);
 		
 		JSONObject stepObj = jsonObj.optJSONObject(STEP);
-		HAPResourceId process = HAPResourceIdFactory.newInstance(stepObj.opt(PROCESS));
+		HAPResourceId process = HAPFactoryResourceId.newInstance(stepObj.opt(PROCESS));
 		this.m_step = new HAPDefinitionWrapperTask();
 		this.m_step.buildObj(stepObj, process);
 		

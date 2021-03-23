@@ -4,7 +4,7 @@ import com.nosliw.data.core.resource.HAPContextResourceDefinition;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceUtility;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 
 //context for processing process
 //it include related suite or process
@@ -29,7 +29,7 @@ public class HAPContextProcessor implements HAPContextResourceDefinition{
 	
 	@Override
 	public HAPEntityWithResourceContext getResourceDefinition(HAPResourceId processId) {
-		HAPDefinitionProcess processDef = (HAPDefinitionProcess)HAPResourceUtility.getImpliedResourceDefinition(processId, this.m_suite, this.m_resourceDefMan);
+		HAPDefinitionProcess processDef = (HAPDefinitionProcess)HAPUtilityResource.getImpliedResourceDefinition(processId, this.m_suite, this.m_resourceDefMan);
 		HAPEntityWithResourceContext out = new HAPEntityWithResourceContext(processDef, HAPContextProcessor.createContext(processDef.getSuite(), m_resourceDefMan));
 		return out;
 	}	

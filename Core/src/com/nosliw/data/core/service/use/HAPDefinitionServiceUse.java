@@ -7,13 +7,13 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataMappingTask;
-import com.nosliw.data.core.service.interfacee.HAPUtilityServiceInterface;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
@@ -29,7 +29,7 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 
 	private String m_provider;
 
-	private HAPEntityOrReference m_interface;
+	private HAPResourceId m_interfaceId;
 
 	private HAPDefinitionDataMappingTask m_dataMapping;
 	
@@ -45,7 +45,7 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 	public String getProvider() {   return this.m_provider;   }
 	public void setProvider(String provider) {   this.m_provider = provider;   }
 	
-	public HAPEntityOrReference getInterface() {    return this.m_interface;    }
+	public HAPResourceId getInterfaceId() {    return this.m_interfaceId;    }
 	
 	public void cloneBasicTo(HAPDefinitionServiceUse command) {
 		this.cloneToEntityInfo(command);
@@ -56,14 +56,14 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PROVIDER, this.m_provider);
 		jsonMap.put(DATAMAPPING, HAPJsonUtility.buildJson(this.m_dataMapping, HAPSerializationFormat.JSON));
-		jsonMap.put(INTERFACE, HAPSerializeManager.getInstance().toStringValue(this.m_interface, HAPSerializationFormat.JSON));
+		jsonMap.put(INTERFACE, HAPSerializeManager.getInstance().toStringValue(this.m_interfaceId, HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		this.m_interface = HAPUtilityServiceInterface.parseInterface(jsonObj.opt(INTERFACE));
+		this.m_interfaceId = HAPFactoryResourceId.newInstance(jsonObj.opt(INTERFACE));
 		this.m_dataMapping = new HAPDefinitionDataMappingTask();
 		this.m_dataMapping.buildObject(jsonObj.optJSONObject(DATAMAPPING), HAPSerializationFormat.JSON);
 		this.m_provider = (String)jsonObj.opt(PROVIDER);

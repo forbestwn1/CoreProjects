@@ -97,7 +97,7 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	@Override
 	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_resourceId = HAPResourceIdFactory.newInstance(jsonObj.optJSONObject(ID));
+		this.m_resourceId = HAPFactoryResourceId.newInstance(jsonObj.optJSONObject(ID));
 		
 		JSONArray childrenArray = jsonObj.optJSONArray(CHILDREN);
 		for(int i=0; i<childrenArray.length(); i++){
@@ -115,7 +115,7 @@ public class HAPResourceInfo extends HAPSerializableImp{
 				try {
 					String alias = (String)it.next();
 
-					HAPResourceId resourceId = HAPResourceIdFactory.newInstance(dependencysObj.getJSONObject(alias));
+					HAPResourceId resourceId = HAPFactoryResourceId.newInstance(dependencysObj.getJSONObject(alias));
 					String resourceIdStr = resourceId.toStringValue(HAPSerializationFormat.JSON);
 					
 					HAPResourceDependency dependency = dependencyByResourceId.get(resourceIdStr);

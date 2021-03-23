@@ -35,7 +35,7 @@ public abstract class HAPResourceDefinitionImp extends HAPEntityInfoImp implemen
 	protected boolean buildObjectByJson(Object json){
 		JSONObject objJson = (JSONObject)json;
 		super.buildObjectByJson(objJson);
-		this.m_resourceId = HAPResourceIdFactory.newInstance(objJson.opt(RESOURCEID));
+		this.m_resourceId = HAPFactoryResourceId.newInstance(objJson.opt(RESOURCEID));
 		return true;  
 	}
 	

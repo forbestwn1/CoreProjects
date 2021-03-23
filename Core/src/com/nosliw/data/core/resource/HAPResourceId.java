@@ -62,7 +62,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPEnt
 
 	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), HAPResourceUtility.buildResourceCoreIdLiterate(this)});
+		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), HAPUtilityResource.buildResourceCoreIdLiterate(this)});
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPEnt
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, this.getType());
-		jsonMap.put(ID, HAPResourceUtility.buildResourceCoreIdLiterate(this));
+		jsonMap.put(ID, HAPUtilityResource.buildResourceCoreIdLiterate(this));
 	}
 
 	@Override

@@ -44,8 +44,6 @@ public class HAPParserPage implements HAPParserResource{
 	public static final String EVENT = "event";
 	public static final String ATTACHMENT = "attachment";
 	public static final String SERVICE = "service";
-	public static final String SERVICE_USE = "use";
-	public static final String SERVICE_PROVIDER = "provider";
 	public static final String CONTEXT = "context";
 	public static final String CONTEXTREF = "contextref";
 	public static final String COMMAND = "commands";

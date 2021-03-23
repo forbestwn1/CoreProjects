@@ -7,7 +7,7 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.resource.HAPResourceUtility;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
@@ -25,7 +25,7 @@ public class HAPResourceManagerUIAppEntry  extends HAPResourceManagerImp{
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPExecutableAppEntry uiApp = this.m_uiResourceMan.getMiniAppEntry(resourceId); 
 		if(uiApp==null)  return null;
-		return new HAPResource(resourceId, uiApp.toResourceData(runtimeInfo), HAPResourceUtility.buildResourceLoadPattern(resourceId, null));
+		return new HAPResource(resourceId, uiApp.toResourceData(runtimeInfo), HAPUtilityResource.buildResourceLoadPattern(resourceId, null));
 	}
 
 	@Override

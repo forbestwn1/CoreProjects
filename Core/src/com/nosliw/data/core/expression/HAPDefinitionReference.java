@@ -7,7 +7,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
@@ -62,7 +62,7 @@ public class HAPDefinitionReference extends HAPEntityInfoWritableImp{
 
 		setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(jsonObj.optJSONObject(INPUTMAPPING)));
 		
-		this.m_groupExprssionResourceId = HAPResourceIdFactory.newInstance(jsonObj.opt(RESOURCEID));
+		this.m_groupExprssionResourceId = HAPFactoryResourceId.newInstance(jsonObj.opt(RESOURCEID));
 		
 		setElementName(jsonObj.optString(ELEMENTNAME));
 		

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 
 public class HAPResourceDefinitionContainerElementReferenceImp extends HAPEntityInfoWritableImp implements HAPResourceDefinitionContainerElementReference{
 
@@ -36,7 +36,7 @@ public class HAPResourceDefinitionContainerElementReferenceImp extends HAPEntity
 	protected boolean buildObjectByJson(Object obj){
 		JSONObject jsonObj = (JSONObject)obj;
 		this.buildEntityInfoByJson(jsonObj);
-		this.m_resourceId = HAPResourceIdFactory.newInstance(this.m_defaultType, jsonObj.get(REFERENCE));
+		this.m_resourceId = HAPFactoryResourceId.newInstance(this.m_defaultType, jsonObj.get(REFERENCE));
 		return true;  
 	}
 
