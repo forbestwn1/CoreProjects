@@ -1,9 +1,23 @@
 package com.nosliw.data.core.service.interfacee;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.resource.HAPResourceData;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdFactory;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
+import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPParentContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableTask;
+import com.nosliw.data.core.script.context.dataassociation.HAPIOTask;
+import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 
 public class HAPUtilityServiceInterface {
 
@@ -19,5 +33,58 @@ public class HAPUtilityServiceInterface {
 		}
 		return out;
 	}
+
+	//build task io from service interface
+	public static HAPIOTask buildIOTaskByInterface(HAPServiceInterface serviceInterface) {
+		return new HAPUtilityServiceInterface.HAPIOTaskServiceUse(serviceInterface);
+	}
 	
+	//build service task executable from service interface
+	public static HAPExecutableTask buildExecutableTaskByInterface(HAPServiceInterface serviceInterface) {
+		return new HAPUtilityServiceInterface.HAPExecutableTaskServiceUse(serviceInterface);
+	}
+	
+	static class HAPExecutableTaskServiceUse extends HAPUtilityServiceInterface.HAPIOTaskServiceUse implements HAPExecutableTask{
+		
+		public HAPExecutableTaskServiceUse(HAPServiceInterface serviceInterface) {
+			super(serviceInterface);
+		}
+		
+		@Override
+		public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {		return HAPResourceDataFactory.createJSValueResourceData("");	}
+
+		@Override
+		public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {		return null;	}
+
+		@Override
+		public String toStringValue(HAPSerializationFormat format) {		return null;		}
+
+		@Override
+		public boolean buildObject(Object value, HAPSerializationFormat format) {		return false;	}
+
+	}
+	
+	static class HAPIOTaskServiceUse implements HAPIOTask{
+
+		HAPServiceInterface m_serviceInterface;
+		
+		public HAPIOTaskServiceUse(HAPServiceInterface serviceInterface) {
+			this.m_serviceInterface = serviceInterface;
+		}
+		
+		@Override
+		public HAPParentContext getInContext() {
+			return HAPParentContext.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(m_serviceInterface));
+		}
+
+		@Override
+		public Map<String, HAPParentContext> getOutResultContext() {
+			Map<String, HAPParentContext> out = new LinkedHashMap<String, HAPParentContext>();
+			Map<String, HAPContext> resultsContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(m_serviceInterface);
+			for(String resultName : resultsContext.keySet()) {
+				out.put(resultName, HAPParentContext.createDefault(resultsContext.get(resultName)));
+			}
+			return out;
+		}
+	}
 }

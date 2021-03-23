@@ -22,7 +22,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.expression.HAPContextProcessScript;
+import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
@@ -77,7 +77,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 //	private Map<String, Object> m_constants;
 	
 	//expression unit
-	private HAPContextProcessScript m_processScriptContext;
+	private HAPContextProcessExpressionScript m_processScriptContext;
 	
 	//all the customer tag within the domain
 	private Map<String, HAPExecutableUIUnitTag> m_uiTags; 
@@ -117,7 +117,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		this.m_scriptExpressionsInContent = new HashSet<HAPUIEmbededScriptExpressionInContent>();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
-		this.m_processScriptContext = new HAPContextProcessScript();
+		this.m_processScriptContext = new HAPContextProcessExpressionScript();
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
 		this.m_context = new HAPContextGroupInUIBody(uiUnit);
 //		this.m_constants = new LinkedHashMap<String, Object>();
@@ -149,8 +149,8 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 //	public Map<String, Object> getConstantsValue(){   return this.m_processScriptContext.getConstantsValue();    }
 //	public void addConstantValue(String name, Object value) {		this.m_processScriptContext.addConstant(name, value);	}
 
-	public HAPContextProcessScript getExpressionContext(){   return this.m_processScriptContext;   }
-	public void setExpressionContext(HAPContextProcessScript context){  this.m_processScriptContext = context;   }
+	public HAPContextProcessExpressionScript getProcessExpressionScriptContext(){   return this.m_processScriptContext;   }
+	public void setProcessExpressionScriptContext(HAPContextProcessExpressionScript context){  this.m_processScriptContext = context;   }
 
 	public HAPDefinitionExpressionSuiteImp getExpressionSuiteInContext() {    return (HAPDefinitionExpressionSuiteImp)this.m_processScriptContext.getExpressionDefinitionSuite();   }
 	

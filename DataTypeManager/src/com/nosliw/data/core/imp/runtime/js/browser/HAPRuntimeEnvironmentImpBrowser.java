@@ -16,6 +16,7 @@ import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -36,8 +37,6 @@ import com.nosliw.uiresource.page.tag.HAPGatewayUITag;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginApp;
 import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginAppEntry;
-import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginModule;
-import com.nosliw.uiresource.resource.HAPResourceDefinitionPluginPage;
 
 public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
@@ -107,8 +106,8 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getGatewayManager().registerGateway(GATEWAY_UITAG, new HAPGatewayUITag(this.m_uiResourceManager.getUITagManager()));
 
 		//resource definition plugin
-		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginPage(this.m_uiResourceManager.getUIResourceParser()));
-		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginModule(this.m_uiResourceManager.getModuleParser()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, this.m_uiResourceManager.getUIResourceParser()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIMODULE, this.m_uiResourceManager.getModuleParser()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginApp(this.m_uiResourceManager.getMinitAppParser()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginAppEntry(this.getResourceDefinitionManager()));
 

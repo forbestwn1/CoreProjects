@@ -1,5 +1,6 @@
 package com.nosliw.data.core.resource;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
@@ -16,6 +18,7 @@ import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
+import com.nosliw.data.core.system.HAPSystemFolderUtility;
 import com.nosliw.data.core.system.HAPSystemUtility;
 
 public class HAPResourceUtility {
@@ -23,6 +26,21 @@ public class HAPResourceUtility {
 	public final static String LOADRESOURCEBYFILE_MODE_NEVER = "never";
 	public final static String LOADRESOURCEBYFILE_MODE_ALWAYS = "always";
 	public final static String LOADRESOURCEBYFILE_MODE_DEPENDS = "depends";
+	
+	public static HAPInfoResourceLocation getResourceLocationInfo(HAPResourceIdSimple resourceId) {
+		File file = null;
+		//check single file first
+		String basePath = HAPSystemFolderUtility.getResourceFolder(resourceId.getType());
+		file = new File(basePath+resourceId.getId()+".res");
+		if(!file.exists()) {
+			basePath = basePath+resourceId.getId()+"/";
+			file = new File(basePath+"/main.res");
+			if(!file.exists()) {
+				HAPErrorUtility.invalid("Cannot find module resource " + resourceId.getId());
+			}
+		}
+		return new HAPInfoResourceLocation(file, basePath);
+	}
 	
 	public static HAPResourceDefinition solidateResource(HAPEntityOrReference entityOrReference, HAPRuntimeEnvironment runtimeEnv) {
 		HAPResourceDefinition out = null;
@@ -152,5 +170,4 @@ public class HAPResourceUtility {
 		}
 		return null;
 	}
-	
 }

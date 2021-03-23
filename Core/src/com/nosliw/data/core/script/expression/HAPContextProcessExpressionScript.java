@@ -12,15 +12,18 @@ import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 
-public class HAPContextProcessScript implements HAPWithDataContext, HAPWithConstantDefinition{
+public class HAPContextProcessExpressionScript implements HAPWithDataContext, HAPWithConstantDefinition{
 
+	//all expression container
 	private HAPDefinitionExpressionSuite m_expressionSuiteDefinition;
 
+	//all constant
 	private Map<String, HAPDefinitionConstant> m_constantsDefinition;
 
+	//context for expression
 	private HAPContext m_context;
 	
-	public HAPContextProcessScript() {
+	public HAPContextProcessExpressionScript() {
 		this.m_constantsDefinition = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 	

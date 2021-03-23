@@ -8,14 +8,14 @@ import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPProcessorAttachment {
 
-	public static void processAttachment(HAPDefinitionUIUnit uiUnitDef, HAPContainerAttachment parentAttachment, HAPManagerUITag uiTagMan) {
+	public static void mergeAttachment(HAPDefinitionUIUnit uiUnitDef, HAPContainerAttachment parentAttachment, HAPManagerUITag uiTagMan) {
 		
 		//merge with parent
 		HAPUtilityComponent.mergeWithParentAttachment(uiUnitDef, parentAttachment);
 
 		//process child tags
 		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
-			processAttachment(uiTag, uiUnitDef.getAttachmentContainer(), uiTagMan);
+			mergeAttachment(uiTag, uiUnitDef.getAttachmentContainer(), uiTagMan);
 		}
 	}
 }

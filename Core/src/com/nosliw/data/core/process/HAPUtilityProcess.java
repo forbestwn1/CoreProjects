@@ -32,7 +32,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.script.context.dataassociation.none.HAPDefinitionDataAssociationNone;
-import com.nosliw.data.core.script.expression.HAPContextProcessScript;
+import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 
 public class HAPUtilityProcess {
 
@@ -55,7 +55,7 @@ public class HAPUtilityProcess {
 //		return out;
 //	}
 
-	public static void buildScriptExpressionProcessContext(HAPContext context, HAPContextProcessScript expProcessContext) {
+	public static void buildScriptExpressionProcessContext(HAPContext context, HAPContextProcessExpressionScript expProcessContext) {
 		//prepare constant value 
 		Map<String, Object> constantsValue = context.getConstantValue();
 		for(String id : constantsValue.keySet()) {

@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 
-public class HAPParserContext {
+public class HAPParserContext{
 
 	public static HAPContextStructure parseContextStructure(JSONObject jsonObj) {
 		HAPContextStructure out = null;
@@ -61,6 +61,7 @@ public class HAPParserContext {
 	public static void parseContext(JSONObject contextJson, HAPContext context) {
 		if(contextJson!=null) {
 			Object elementsObj = contextJson.opt(HAPContext.ELEMENT);
+			if(elementsObj==null)  elementsObj = contextJson;
 			if(elementsObj instanceof JSONObject) {
 				JSONObject elementsJson = (JSONObject)elementsObj;
 				Iterator<String> it = elementsJson.keys();
@@ -155,5 +156,5 @@ public class HAPParserContext {
 		}
 		return contextRootDef;
 	}
-	
+
 }

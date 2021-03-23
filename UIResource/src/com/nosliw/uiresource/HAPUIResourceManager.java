@@ -23,7 +23,6 @@ import com.nosliw.uiresource.module.HAPParserModule;
 import com.nosliw.uiresource.module.HAPProcessorModule;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
-import com.nosliw.uiresource.page.definition.HAPUtilityPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.processor.HAPProcessorUIPage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
@@ -128,17 +127,7 @@ public class HAPUIResourceManager {
 	}
 	
 	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId, HAPContainerAttachment parentAttachment) {
-		
 		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(pageResourceId, parentAttachment);
-
-		//process include tag
-		pageDefinition = HAPUtilityPage.processInclude(pageDefinition, this.m_uiResourceParser, this, this.m_runtimeEnv.getResourceDefinitionManager());
-
-		//resolve attachment
-		HAPUtilityPage.solveAttachment(pageDefinition, null, this.m_uiTagMan);
-
-		//resolve service provider
-		HAPUtilityPage.solveServiceProvider(pageDefinition, null, this.m_runtimeEnv.getServiceManager().getServiceDefinitionManager());
 		return pageDefinition;
 	}
 

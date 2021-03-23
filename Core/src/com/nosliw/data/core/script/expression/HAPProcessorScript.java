@@ -34,7 +34,7 @@ public class HAPProcessorScript {
 			Map<String, String> configure, 
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
-		HAPContextProcessScript processScriptContext = new HAPContextProcessScript(); 
+		HAPContextProcessExpressionScript processScriptContext = new HAPContextProcessExpressionScript(); 
 		processScriptContext.setContextStructure(context==null?new HAPContext():context);
 		if(constants!=null) {
 			for(String id : constants.keySet()) {
@@ -57,7 +57,7 @@ public class HAPProcessorScript {
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 
-		HAPContextProcessScript contextProcessScript = new HAPContextProcessScript();
+		HAPContextProcessExpressionScript contextProcessScript = new HAPContextProcessExpressionScript();
 
 		//constant
 		for(HAPDefinitionConstant constantDef : HAPUtilityDataComponent.buildConstantDefinition(scriptGroupDef.getAttachmentContainer())){ 
@@ -85,7 +85,7 @@ public class HAPProcessorScript {
 	public static HAPExecutableScriptGroup processScript(
 			String id,
 			HAPDefinitionScriptGroup scriptGroupDef, 
-			HAPContextProcessScript processScriptContext,
+			HAPContextProcessExpressionScript processScriptContext,
 			HAPManagerExpression expressionMan, 
 			Map<String, String> configure, 
 			HAPRuntimeEnvironment runtimeEnv,

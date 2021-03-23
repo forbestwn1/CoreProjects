@@ -5,17 +5,37 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.script.context.HAPParentContext;
+import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
-import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
+import com.nosliw.uiresource.page.tag.HAPUITagId;
 
-public class HAPProcessorUIEventEscalate {
+public class HAPProcessorUIEvent {
 
-	public static void process(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
+	public static void processEvent(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
+		HAPConfigureContextProcessor contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
+
+		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
+		//process relative element in event defined in resource
+		Map<String, HAPDefinitionUIEvent> eventsDef = uiUnitDef.getEventDefinitions();
+		for(String name : eventsDef.keySet()) {
+			HAPDefinitionUIEvent processedEventDef = new HAPDefinitionUIEvent();
+			eventsDef.get(name).cloneToBase(processedEventDef);
+			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), HAPParentContext.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
+			uiExe.getBody().addEventDefinition(processedEventDef);
+		}
+
+	}
+	
+	public static void escalateEvent(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 
 		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
@@ -38,7 +58,7 @@ public class HAPProcessorUIEventEscalate {
 
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
-			process(childTag, uiTagMan);
+			escalateEvent(childTag, uiTagMan);
 		}
 	}
 

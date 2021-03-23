@@ -5,12 +5,20 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUtilityData {
+
+	public static JSONObject createJSONData(String dataTypeId, Object value) throws JSONException{
+		JSONObject out = new JSONObject();
+		out.put(HAPData.VALUE, value);
+		out.put(HAPData.DATATYPEID, dataTypeId);
+		return out;
+	}
 
 	public static HAPRelationship cascadeRelationship(HAPRelationship r1, HAPRelationship r2) {
 		return new HAPRelationshipImp(r1.getSource(), r2.getTarget(), cascadeRelationshipPath(r1.getPath(), r2.getPath()));

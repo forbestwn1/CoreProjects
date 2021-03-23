@@ -17,7 +17,7 @@ public class HAPSystemFolderUtility {
 	public static String getJSFolder(){  return HAPSystemUtility.getJSFolder();  }
 	public static String getNosliwJSFolder(String lib){  return getJSFolder()+"libresources/nosliw/"+lib+"/";  }
 	public static String getServiceInterfaceFolder(){  return getApplicationDataFolder() + "serviceinterface/";  }
-	public static String getUIPageFolder(){  return getApplicationDataFolder() + "page/";  }
+	public static String getUIPageFolder(){  return getApplicationDataFolder() + "uiresource/";  }
 	public static String getUIModuleFolder(){  return getApplicationDataFolder() + "uimodule/";  }
 	public static String getMiniAppFolder(){  return getApplicationDataFolder() + "miniapp/";  }
 	public static String getCronJobFolder(){  return getApplicationDataFolder() + "cronjob/";  }
@@ -27,6 +27,8 @@ public class HAPSystemFolderUtility {
 	public static String getScriptGroupFolder(){  return getApplicationDataFolder() + "script/";  }
 	public static String getCodeTableFolder(){  return getApplicationDataFolder() + "codetable/";  }
 
+	public static String getResourceFolder(String resourceType) {    return getApplicationDataFolder() + resourceType + "/";     }
+	
 	public static String getResourceTempFileFolder(){  return HAPSystemUtility.getJSTempFolder() + "resources/";  }
 	public static String getJSLibrayrTempFolder() {    return  HAPSystemUtility.getJSTempFolder() + "libs/";  }
 	

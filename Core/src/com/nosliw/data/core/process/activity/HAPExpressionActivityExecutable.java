@@ -16,7 +16,7 @@ import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.expression.HAPContextProcessScript;
+import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 
 public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal{
@@ -27,16 +27,16 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 	@HAPAttribute
 	public static String SCRIPTEXPRESSIONSCRIPT = "scriptExpressionScript";
 
-	private HAPContextProcessScript m_expressionProcessContext;
+	private HAPContextProcessExpressionScript m_expressionProcessContext;
 
 	private HAPExecutableScriptGroup m_scriptExpression;
 
 	public HAPExpressionActivityExecutable(String id, HAPExpressionActivityDefinition activityDef) {
 		super(id, activityDef);
-		this.m_expressionProcessContext = new HAPContextProcessScript();
+		this.m_expressionProcessContext = new HAPContextProcessExpressionScript();
 	}
 
-	public HAPContextProcessScript getScriptExpressionProcessContext() {
+	public HAPContextProcessExpressionScript getScriptExpressionProcessContext() {
 		return this.m_expressionProcessContext;
 	}
 	

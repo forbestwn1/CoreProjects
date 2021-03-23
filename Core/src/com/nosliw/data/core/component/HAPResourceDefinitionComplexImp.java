@@ -48,6 +48,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	
 	@Override
 	public List<HAPContextReference> getContextReferences(){   return this.m_contextRefs; 	}
+	public void addContextReference(HAPContextReference contextRef) {   this.m_contextRefs.add(contextRef);    }
 	
 	public HAPContextGroup getContextNotFlat() {   return (HAPContextGroup)this.getContextStructure();    }
 	public HAPContext getContextFlat() {    return (HAPContext)this.getContextStructure();    }

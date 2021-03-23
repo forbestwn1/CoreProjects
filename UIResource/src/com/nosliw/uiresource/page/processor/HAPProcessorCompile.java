@@ -28,16 +28,16 @@ public class HAPProcessorCompile {
 		if(parentUnitDef!=null)   HAPUtilityComponent.mergeWithParentAttachment(uiUnitDef, parentUnitDef.getAttachmentContainer());
 
 		//expression context
-		body.getExpressionContext().setContextStructure(body.getFlatContext().getContext());
+		body.getProcessExpressionScriptContext().setContextStructure(body.getFlatContext().getContext());
 		
 		//expression suite from attachment
 		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getFlatContext().getContext());
-		body.getExpressionContext().setExpressionDefinitionSuite(expressionSuite);
+		body.getProcessExpressionScriptContext().setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment
 		Set<HAPDefinitionConstant> constantsDef = HAPUtilityDataComponent.buildConstantDefinition(uiUnitDef.getAttachmentContainer());
 		for(HAPDefinitionConstant constantDef : constantsDef) {
-			body.getExpressionContext().addConstantDefinition(constantDef);
+			body.getProcessExpressionScriptContext().addConstantDefinition(constantDef);
 		}
 		
 		//embeded script in content

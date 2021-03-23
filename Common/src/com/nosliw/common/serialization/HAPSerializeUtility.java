@@ -10,6 +10,19 @@ import org.json.JSONObject;
 
 public class HAPSerializeUtility {
 
+	public static HAPSerializable buildObject(Class cls, Object value, HAPSerializationFormat format) {
+		HAPSerializable out = null;
+		try {
+			out = (HAPSerializable)cls.newInstance();
+			out.buildObject(value, format);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+	
+	public static HAPSerializable buildObjectFromJson(Class cls, JSONObject jsonObj) {  return buildObject(cls, jsonObj, HAPSerializationFormat.JSON);	}
+	
 	public static List buildListFromJsonArray(String className, JSONArray jsonArray){
 		List out = new ArrayList();
 		if(jsonArray!=null) {

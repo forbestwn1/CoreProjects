@@ -20,11 +20,14 @@ import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
+import com.nosliw.data.core.component.HAPContextReference;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.resource.HAPParserResource;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPScript;
@@ -36,7 +39,7 @@ import com.nosliw.uiresource.common.HAPIdGenerator;
  * This is a utility class that process ui resource file and create ui resource object
  * the id index start with 1 every processing start so that for same ui resource, we would get same result
  */ 
-public class HAPParserPage {
+public class HAPParserPage implements HAPParserResource{
 
 	public static final String EVENT = "event";
 	public static final String ATTACHMENT = "attachment";
@@ -44,6 +47,7 @@ public class HAPParserPage {
 	public static final String SERVICE_USE = "use";
 	public static final String SERVICE_PROVIDER = "provider";
 	public static final String CONTEXT = "context";
+	public static final String CONTEXTREF = "contextref";
 	public static final String COMMAND = "commands";
 	public static final String EXPRESSION = "expressions";
 	public static final String SCRIPT = "script";
@@ -58,6 +62,25 @@ public class HAPParserPage {
 		this.m_setting = setting;
 	}
 	
+	@Override
+	public HAPDefinitionUIPage parseFile(File file) {
+		//use file name as ui resource id
+		String resourceId = HAPFileUtility.getFileName(file);
+		String source = HAPFileUtility.readFile(file);
+		return this.parseUIDefinition(resourceId, source);
+	}
+
+	@Override
+	public HAPDefinitionUIPage parseContent(String content) {  return this.parseUIDefinition(null, content);  }
+
+	@Override
+	public HAPDefinitionUIPage parseJson(JSONObject jsonObj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
 	//resourceUnit : target ui resource object
 	//content : html content
 	public void parseAndBuildUIDefinition(HAPDefinitionUIUnit resourceUnit, String content){
@@ -71,13 +94,8 @@ public class HAPParserPage {
 	}
 	
 	public HAPDefinitionUIPage parseFile(String fileName){
-		HAPDefinitionUIPage resource = null;
-		File input = new File(fileName);
-		//use file name as ui resource id
-		String resourceId = HAPFileUtility.getFileName(input);
-		String source = HAPFileUtility.readFile(input);
-		resource = this.parseUIDefinition(resourceId, source);
-		return resource;
+		File file = new File(fileName);
+		return this.parseFile(file);
 	}
 
 	public HAPDefinitionUIPage parseUIDefinition(String resourceId, String content){
@@ -93,8 +111,9 @@ public class HAPParserPage {
 		this.parseUnitScriptBlocks(unitEle, uiUnit);
 		//process context block
 		this.parseUnitContextBlocks(unitEle, uiUnit);
-		//process expression block
-//		this.parseUnitExpressionBlocks(unitEle, uiUnit);
+
+		//parse contextref block
+		parseUnitContextRefBlocks(unitEle, uiUnit);
 		
 		//parse event definition block
 		this.parseUnitEventBlocks(unitEle, uiUnit);
@@ -286,28 +305,28 @@ public class HAPParserPage {
 		
 		for(Element childEle : childEles)  childEle.remove();
 	}
+
+	private void parseUnitContextRefBlocks(Element ele, HAPDefinitionUIUnit resourceUnit){
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, CONTEXTREF);
+		
+		for(Element childEle : childEles){
+			try {
+				JSONArray contextRefListJson = new JSONArray(childEle.html());
+				for(int i=0; i<contextRefListJson.length(); i++) {
+					HAPContextReference contextRef = (HAPContextReference)HAPSerializeUtility.buildObjectFromJson(HAPContextReference.class, contextRefListJson.getJSONObject(i));
+					resourceUnit.addContextReference(contextRef);
+				}
+				break;
+			} catch (JSONException e) {
+				e.printStackTrace();
+				System.out.println(childEle.html());
+			}
+		}
+		
+		for(Element childEle : childEles)  childEle.remove();
+	}
 	
-//	private void parseUnitExpressionBlocks(Element ele, HAPDefinitionUIUnit resource){
-//		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EXPRESSION);
-//
-//		for(Element childEle : childEles){
-//			try {
-//				String content = childEle.html();
-//				JSONObject defsJson = new JSONObject(content);
-//				Iterator<String> defNames = defsJson.keys();
-//				while(defNames.hasNext()){
-//					String defName = defNames.next();
-//					resource.addExpressionDefinition(defName, defsJson.optString(defName));
-//				}
-//				break;
-//			} catch (JSONException e) {
-//				e.printStackTrace();
-//			}
-//		}		
-//
-//		for(Element childEle : childEles)   childEle.remove();
-//	}
-	
+
 	/*
 	 * process all script blocks under unit
 	 */
@@ -422,4 +441,5 @@ public class HAPParserPage {
 			}
 		}
 	}
+
 }

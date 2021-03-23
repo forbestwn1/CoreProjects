@@ -23,6 +23,7 @@ import com.nosliw.data.core.process.resource.HAPResourceDefinitionPluginProcessS
 import com.nosliw.data.core.process.resource.HAPResourceManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPResourceManagerProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
@@ -31,6 +32,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResourceDefinition;
+import com.nosliw.data.core.script.context.resource.HAPParserContextResource;
 import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.script.expression.resource.HAPPluginResourceDefinitionScriptGroup;
 import com.nosliw.data.core.service.definition.HAPFactoryServiceProcess;
@@ -178,6 +180,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginCronJob());
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginStory());
+
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTEXT, new HAPParserContextResource()));
 
 		//runtime
 		this.m_runtime = runtime;

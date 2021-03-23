@@ -8,17 +8,20 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
+import com.nosliw.data.core.resource.HAPParserResource;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
-public class HAPParserModule {
+public class HAPParserModule implements HAPParserResource{
 
 	public HAPParserModule() {
 	}
 	
 	public HAPDefinitionModule parseFile(String fileName){		return parseFile(new File(fileName));	}
 	
+	@Override
 	public HAPDefinitionModule parseFile(File file){
 		HAPDefinitionModule out = null;
 		try{
@@ -33,14 +36,18 @@ public class HAPParserModule {
 		return out;
 	}
 
+	@Override
+	public HAPResourceDefinition parseContent(String content) {  return this.parseContent(content, null);	}
+
 	private HAPDefinitionModule parseContent(String content, String id) {
 		JSONObject jsonObj = new JSONObject(content);
-		HAPDefinitionModule out = parseModuleDefinition(jsonObj);
+		HAPDefinitionModule out = parseJson(jsonObj);
 		out.setId(id);
 		return out;
 	}
 
-	public HAPDefinitionModule parseModuleDefinition(JSONObject jsonObj) {
+	@Override
+	public HAPDefinitionModule parseJson(JSONObject jsonObj) {
 		HAPDefinitionModule out = new HAPDefinitionModule();
 
 		//build component part from json object
@@ -99,4 +106,5 @@ public class HAPParserModule {
 
 		return out;
 	}
+
 }

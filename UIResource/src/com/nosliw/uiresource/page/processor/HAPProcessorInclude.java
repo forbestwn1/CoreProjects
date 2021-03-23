@@ -20,7 +20,7 @@ import com.nosliw.uiresource.page.definition.HAPUtilityPage;
 
 public class HAPProcessorInclude {
 	
-	public static void processInclude(HAPDefinitionUIUnit uiResourceDef, HAPParserPage uiResourceParser, HAPUIResourceManager uiResourceMan, HAPManagerResourceDefinition resourceDefManager) {
+	public static void expandInclude(HAPDefinitionUIUnit uiResourceDef, HAPParserPage uiResourceParser, HAPUIResourceManager uiResourceMan, HAPManagerResourceDefinition resourceDefManager) {
 		//find all include tag units
 		Set<HAPDefinitionUITag> includeTagUnits = HAPUtilityPage.getUITagByName(uiResourceDef, HAPConstantShared.UITAG_NAME_INCLUDE);
 		for(HAPDefinitionUITag includeTagUnit : includeTagUnits){
@@ -36,7 +36,7 @@ public class HAPProcessorInclude {
 			processIncludeMapping(includeTagUnit, pageAtt);
 			
 			//keep expand grand children include page
-			processInclude(includeTagUnit, uiResourceParser, uiResourceMan, resourceDefManager);
+			expandInclude(includeTagUnit, uiResourceParser, uiResourceMan, resourceDefManager);
 		}
 	}
 

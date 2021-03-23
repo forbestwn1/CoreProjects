@@ -1,18 +1,21 @@
 package com.nosliw.test.uisource;
 
-import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.data.expression.HAPExpressionManager;
-import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
+import com.nosliw.uiresource.resource.HAPResourceIdUIResource;
 
 public class HAPUIResourceTest {
 
 	public static void main(String[] agrs){
 
 		//module init
-		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
+		HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();
+		
+//		HAPDefinitionUIPage pageDef = runtimeEnvironment.getUIResourceManager().getUIPageDefinition(new HAPResourceIdUIResource("test"), null);
+		
+		HAPExecutableUIUnitPage pageExe = runtimeEnvironment.getUIResourceManager().getUIPage(new HAPResourceIdUIResource("test"));
+		System.out.println(pageExe.toStringValue(HAPSerializationFormat.JSON));
 		
 //		HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(new HAPUITagManager(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getResourceManager(), runtimeEnvironment.getRuntime(), HAPExpressionManager.dataTypeHelper);
 

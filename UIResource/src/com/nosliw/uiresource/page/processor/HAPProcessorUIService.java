@@ -5,17 +5,37 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
+import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
-import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
+import com.nosliw.uiresource.page.tag.HAPUITagId;
 
-public class HAPProcessorUIServiceEscalate {
+public class HAPProcessorUIService {
 
-	public static void process(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
+	public static void processService(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
+		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
+		for(String serviceName : uiUnitDef.getAllServices()) {
+			HAPDefinitionServiceUse service = uiUnitDef.getService(serviceName);
+			HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(service, uiExe.getBody().getContext(), uiUnitDef.getAttachmentContainer(), runtimeEnv);
+			uiExe.getBody().addServiceUse(serviceName, serviceExe);
+		}
+		
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
+			processService(childTag, runtimeEnv);			
+		}
+	}
+	
+
+	
+	public static void escalate(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
 			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
@@ -36,7 +56,7 @@ public class HAPProcessorUIServiceEscalate {
 
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
-			process(childTag, uiTagMan);
+			escalate(childTag, uiTagMan);
 		}
 	}
 	

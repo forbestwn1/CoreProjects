@@ -1,0 +1,13 @@
+[{
+	"static": {
+		"id": "listoutput",
+		"name": "ListOutput",
+		"displayName": "listoutput",
+		"description" : "listoutput",
+		"tag" : ["test"],
+		"interface" : "service_test_listoutput"
+	},
+	"runtime" : {
+	    "implementation" : "com.nosliw.service.test.listoutput.refinterface.HAPServiceImp",
+	}
+}]
