@@ -48,7 +48,8 @@ public class HAPProcessorUIPage {
 		HAPProcessorUIContext.process(out, null, uiTagMan, runtimeEnv);
 
 		//process service
-		
+		HAPProcessorUIService.processService(out, runtimeEnv);
+		HAPProcessorUIService.escalate(out, uiTagMan);
 		
 		//process expression
 		HAPProcessorUIExpressionScript.buildExpressionScriptProcessContext(out);

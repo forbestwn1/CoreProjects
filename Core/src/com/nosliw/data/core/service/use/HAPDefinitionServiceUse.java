@@ -10,6 +10,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
@@ -63,7 +64,7 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		this.m_interfaceId = HAPFactoryResourceId.newInstance(jsonObj.opt(INTERFACE));
+		this.m_interfaceId = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, jsonObj.opt(INTERFACE));
 		this.m_dataMapping = new HAPDefinitionDataMappingTask();
 		this.m_dataMapping.buildObject(jsonObj.optJSONObject(DATAMAPPING), HAPSerializationFormat.JSON);
 		this.m_provider = (String)jsonObj.opt(PROVIDER);

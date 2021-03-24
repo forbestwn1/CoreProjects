@@ -26,8 +26,11 @@
 	[
 		{
 			"name" : "simpleServiceWithoutInterface",
-			"interface" : "service_test_listoutput",
+			"interface" : "service_simpleoutput",
 			"provider" : "simpleServiceWithoutInterfaceProvider",
+			"info" : {
+				"enhanceContext" : "true"
+			},
 			"dataMapping" :{
 				"inputMapping" : {
 					"element" : {
@@ -38,7 +41,7 @@
 						},
 						"parm2" : {
 							"definition" : {
-								"path" : "forsimpleservice_1_parm2"
+								"path" : "local_var_for_parm2"
 							}
 						}
 					}
@@ -51,7 +54,7 @@
 									"path" : "simpleOutput1"
 								}
 							},
-							"forsimpleservice_1_output2" : {
+							"local_var_for_output2" : {
 								"definition" : {
 									"path" : "simpleOutput2"
 								}

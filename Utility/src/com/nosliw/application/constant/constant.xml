@@ -561,7 +561,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESSSUITE" value="processSuite"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICE" value="service"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE" value="serviceInterface"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE" value="serviceinterface"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATA" value="data"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TESTDATA" value="testData"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_STORY" value="story"/>

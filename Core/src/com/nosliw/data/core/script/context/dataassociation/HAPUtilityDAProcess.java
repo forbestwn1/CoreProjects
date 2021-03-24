@@ -42,7 +42,7 @@ public class HAPUtilityDAProcess {
 	public static boolean ifModifyInputStructure(HAPInfo info) {
 		boolean defaultValue = true;
 		if(info==null)  return defaultValue;
-		String outStr = (String)info.getValue(INFO_MODIFY_OUTPUT_STRUCTURE, defaultValue+"");
+		String outStr = (String)info.getValue(INFO_MODIFY_INPUT_STRUCTURE, defaultValue+"");
 		return Boolean.valueOf(outStr);
 	}
 

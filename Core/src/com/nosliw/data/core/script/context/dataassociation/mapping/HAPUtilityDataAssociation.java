@@ -66,7 +66,7 @@ public class HAPUtilityDataAssociation {
 	public static HAPConfigureContextProcessor getContextProcessConfigurationForDataAssociation(HAPInfo daProcessConfigure) {
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
 		configure.inheritMode = HAPConstant.INHERITMODE_NONE;
-		if(HAPUtilityDAProcess.ifModifyOutputStructure(daProcessConfigure))  configure.tolerantNoParentForRelative = true;
+		if(HAPUtilityDAProcess.ifModifyInputStructure(daProcessConfigure))  configure.tolerantNoParentForRelative = true;
 		return configure;
 	} 
 

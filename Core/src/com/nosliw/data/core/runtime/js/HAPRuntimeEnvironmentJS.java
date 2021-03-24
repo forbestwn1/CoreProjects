@@ -37,8 +37,8 @@ import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.script.expression.resource.HAPPluginResourceDefinitionScriptGroup;
 import com.nosliw.data.core.service.definition.HAPFactoryServiceProcess;
 import com.nosliw.data.core.service.definition.HAPManagerService;
+import com.nosliw.data.core.service.resource.HAPParserServiceInterfaceResource;
 import com.nosliw.data.core.service.resource.HAPResourceDefinitionPluginServiceDefinition;
-import com.nosliw.data.core.service.resource.HAPResourceDefinitionPluginServiceInterface;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionPluginStory;
 
@@ -173,7 +173,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionScriptGroup(this.getExpressionManager().getExpressionParser()));
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginServiceDefinition(this.getServiceManager().getServiceDefinitionManager()));
-		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginServiceInterface());
+//		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginServiceInterface());
 		
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginProcessSuite(this.getProcessManager().getPluginManager()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginProcess(this.getResourceDefinitionManager()));
@@ -182,6 +182,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginStory());
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTEXT, new HAPParserContextResource()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, new HAPParserServiceInterfaceResource()));
 
 		//runtime
 		this.m_runtime = runtime;

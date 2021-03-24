@@ -71,7 +71,7 @@ public class HAPProcessorContextRelative {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE:
 			HAPContextDefinitionLeafRelative relativeContextElement = (HAPContextDefinitionLeafRelative)defContextElement;
 			if(parentName.equals(relativeContextElement.getParent())) {
-				dependency.add(parentName);
+				if(dependency!=null)  dependency.add(parentName);
 				if(!relativeContextElement.isProcessed()){
 					List<String> categaryes = new ArrayList<String>();
 					if(relativeContextElement.getParentCategary()!=null) categaryes.add(relativeContextElement.getParentCategary());

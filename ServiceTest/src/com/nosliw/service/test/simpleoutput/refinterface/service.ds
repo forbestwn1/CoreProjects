@@ -5,7 +5,7 @@
 		"displayName": "simpleoutput",
 		"description" : "simpleoutput",
 		"tag" : ["test"],
-		"interface" : "service_test_listoutput"
+		"interface" : "service_simpleoutput"
 	},
 	"runtime" : {
 	    "implementation" : "com.nosliw.service.test.simpleoutput.refinterface.HAPServiceImp",
