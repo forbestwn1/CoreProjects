@@ -45,7 +45,7 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	@Override
 	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_SIMPLE;	}
 
-	protected void init(String id, HAPResourceIdSupplement supplement){
+	protected void init(String id, HAPSupplementResourceId supplement){
 		if(id!=null)		this.setId(id);
 		if(supplement!=null)   this.setSupplement(supplement);
 	}

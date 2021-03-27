@@ -4,7 +4,7 @@
 		"name": "ListOutput",
 		"displayName": "listoutput",
 		"description" : "listoutput",
-		"tag" : ["test"],
+		"tag" : ["test", "public"],
 		"interface" : "service_test_listoutput"
 	},
 	"runtime" : {

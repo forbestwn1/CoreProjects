@@ -72,12 +72,12 @@ public class HAPExecutableServiceUse extends HAPExecutableImp{
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		jsonMap.put(SERVICEUSE, this.m_serviceUse.toResourceData(runtimeInfo).toString());
-		jsonMap.put(PROVIDERMAPPING, this.m_providerMapping.toResourceData(runtimeInfo).toString());
+		if(this.m_providerMapping!=null)   jsonMap.put(PROVIDERMAPPING, this.m_providerMapping.toResourceData(runtimeInfo).toString());
 	}
 
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		dependency.addAll(this.m_serviceUse.getResourceDependency(runtimeInfo, resourceManager));
-		dependency.addAll(this.m_providerMapping.getResourceDependency(runtimeInfo, resourceManager));
+		if(this.m_providerMapping!=null)   dependency.addAll(this.m_providerMapping.getResourceDependency(runtimeInfo, resourceManager));
 	}
 }

@@ -25,12 +25,11 @@ public class HAPManagerUITag {
 	
 	public HAPManagerUITag(HAPDataTypeHelper dataTypeHelper) {
 		this.m_dataTypeHelper = dataTypeHelper;
-		this.m_dataTagDefs = new LinkedHashMap<String, HAPUITagDefinitionData>();
-		this.m_otherTagDefs = new LinkedHashMap<String, HAPUITagDefinition>();
-		this.readAllTags();
 	}
 	
 	private void readAllTags() {
+		this.m_dataTagDefs = new LinkedHashMap<String, HAPUITagDefinitionData>();
+		this.m_otherTagDefs = new LinkedHashMap<String, HAPUITagDefinition>();
 		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getTagDefinitionFolder());
 		for(File file : files) {
 			HAPUITagDefinition uiTagDef = HAPUITagDefinitionParser.parseFromFile(file);
@@ -56,6 +55,8 @@ public class HAPManagerUITag {
 	}
 	
 	public HAPUITagQueryResultSet queryUITagData(HAPUITageQueryData query) {
+		if(this.m_dataTagDefs==null)   this.readAllTags();
+		
 		List<HAPUITagCandidate> candidates = new ArrayList<HAPUITagCandidate>();
 		HAPDataTypeCriteria queryDataTypeCriteria = query.getDataTypeCriterai();
 		for(String name : this.m_dataTagDefs.keySet()) {

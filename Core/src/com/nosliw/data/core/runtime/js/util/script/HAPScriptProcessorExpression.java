@@ -48,7 +48,9 @@ public class HAPScriptProcessorExpression implements HAPScriptProcessor{
 						}
 					}
 					else if(scriptSegmentEle instanceof HAPVariableInScript){
-						funScript.append(variablesDataParmName + "[\"" + ((HAPVariableInScript)scriptSegmentEle).getVariableName()+"\"]");
+						String varName = ((HAPVariableInScript)scriptSegmentEle).getVariableName();
+						String varValueScript = variablesDataParmName + "[\"" + varName +"\"]";
+						funScript.append("("+varValueScript+"!=undefined?"+varValueScript+":''"+")");
 					}
 				}
 			}

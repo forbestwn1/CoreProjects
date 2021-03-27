@@ -27,6 +27,9 @@ public abstract class HAPResourceDefinitionImp extends HAPEntityInfoImp implemen
 	public HAPResourceId getResourceId() {   return this.m_resourceId; }
 
 	@Override
+	public HAPResourceDefinitionOrId getChild(String path) {   return null;    }
+	
+	@Override
 	public void cloneToResourceDefinition(HAPResourceDefinition resourceDef) {
 		resourceDef.setResourceId(this.getResourceId());
 	}

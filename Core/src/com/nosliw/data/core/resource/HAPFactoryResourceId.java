@@ -77,10 +77,10 @@ public class HAPFactoryResourceId {
 	}
 	
 	public static HAPResourceId newInstance(HAPResourceId resourceId, List<HAPResourceDependency> supplement){
-		return newInstance(resourceId, HAPResourceIdSupplement.newInstance(supplement));
+		return newInstance(resourceId, HAPSupplementResourceId.newInstance(supplement));
 	}
 
-	public static HAPResourceId newInstance(HAPResourceId resourceId, HAPResourceIdSupplement supplement){
+	public static HAPResourceId newInstance(HAPResourceId resourceId, HAPSupplementResourceId supplement){
 		HAPResourceId out = resourceId.clone();
 		out.setSupplement(supplement);
 		return out;

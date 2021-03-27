@@ -9,6 +9,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithDataContext;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -53,6 +54,9 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	public HAPContextGroup getContextNotFlat() {   return (HAPContextGroup)this.getContextStructure();    }
 	public HAPContext getContextFlat() {    return (HAPContext)this.getContextStructure();    }
 	
+	@Override
+	public HAPResourceDefinitionOrId getChild(String path) {   return null;    }
+
 	@Override
 	public void cloneToDataContext(HAPWithDataContext withDataContext) {
 		if(this.m_context!=null)	withDataContext.setContextStructure(this.m_context.cloneContextStructure());

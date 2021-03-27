@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPInfoChildResource;
-import com.nosliw.data.core.component.HAPContainerChildResource;
+import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -108,7 +108,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 		out.setUrl(url);
 		try {
 			HAPDefinitionUIPage pageDef = this.m_uiResourceMan.getUIPageDefinition(resourceId, null);
-			this.processChildren(out, pageDef.getChildrenResource());
+			this.processChildren(out, pageDef.getChildrenReferencedResource());
 		}
 		catch(Throwable e) {
 //			e.printStackTrace();
@@ -123,7 +123,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 		out.setUrl(url);
 		try {
 			HAPDefinitionModule moduleDef = this.m_uiResourceMan.getModuleDefinition(resourceId, null);
-			this.processChildren(out, moduleDef.getChildrenResource());
+			this.processChildren(out, moduleDef.getChildrenReferencedResource());
 		}
 		catch(Throwable e) {
 //			e.printStackTrace();
@@ -139,7 +139,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 		out.setUrl(url);
 		try {
 			HAPDefinitionAppEntry appEntryDef = this.m_uiResourceMan.getMiniAppEntryDefinition(resourceId, null);
-			this.processChildren(out, appEntryDef.getChildrenResource());
+			this.processChildren(out, appEntryDef.getChildrenReferencedResource());
 		}
 		catch(Throwable e) {
 //			e.printStackTrace();
@@ -150,11 +150,11 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 	private HAPResourceNode createResourceNodeApp(HAPResourceId resourceId) {
 		HAPDefinitionApp appDef = m_uiResourceMan.getMiniAppDefinition(resourceId, null);
 		HAPResourceNode out = new HAPResourceNode(appDef.getId());
-		this.processChildren(out, appDef.getChildrenResource());
+		this.processChildren(out, appDef.getChildrenReferencedResource());
 		return out;
 	}
 	
-	private void processChildren(HAPResourceNode resourceNode, HAPContainerChildResource childrenComponentId) {
+	private void processChildren(HAPResourceNode resourceNode, HAPContainerChildReferenceResource childrenComponentId) {
 		Map<String, List<HAPInfoChildResource>> children = childrenComponentId.getChildren();
 		for(String type : children.keySet()) {
 			for(HAPInfoChildResource componentId : children.get(type)) {

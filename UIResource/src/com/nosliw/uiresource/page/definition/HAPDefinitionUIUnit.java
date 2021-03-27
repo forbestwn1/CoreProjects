@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPComponentImp;
-import com.nosliw.data.core.component.HAPContainerChildResource;
+import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
@@ -134,7 +134,7 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 	public void postRead(){}
 	
 	@Override
-	public HAPContainerChildResource getChildrenResource() {
+	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
 //		HAPContainerChildResource out = new HAPContainerChildResource();
 //		HAPUtilityComponent.buildServiceChildrenComponent(out, this, this.getAttachmentContainer());
 //		return out;

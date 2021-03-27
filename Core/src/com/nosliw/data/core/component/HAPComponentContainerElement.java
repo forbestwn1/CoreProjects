@@ -66,7 +66,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public void setResourceId(HAPResourceId resourceId) {   this.m_resourceId = resourceId;    }
 	
 	@Override
-	public HAPContainerChildResource getChildrenResource() {	return this.m_componentEntity.getChildrenResource();	}
+	public HAPContainerChildReferenceResource getChildrenReferencedResource() {	return this.m_componentEntity.getChildrenReferencedResource();	}
 
 	@Override
 	public HAPInfo getInfo() {		return this.m_componentEntity.getInfo();	}

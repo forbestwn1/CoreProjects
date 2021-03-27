@@ -4,7 +4,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResourceIdSupplement;
+import com.nosliw.data.core.resource.HAPSupplementResourceId;
 
 public class HAPResourceIdProcessSuite  extends HAPResourceIdSimple{
 
@@ -29,7 +29,7 @@ public class HAPResourceIdProcessSuite  extends HAPResourceIdSimple{
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(processSuiteId, HAPSerializationFormat.LITERATE); 
 	}
 
-	public HAPResourceIdProcessSuite(String id, HAPResourceIdSupplement supplement){
+	public HAPResourceIdProcessSuite(String id, HAPSupplementResourceId supplement){
 		this();
 		init(id, supplement);
 	}

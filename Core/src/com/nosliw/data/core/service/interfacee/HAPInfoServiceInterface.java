@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
-import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -20,7 +19,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 //static information for a service. readable, query for service
 //information needed during configuration time
 @HAPEntityWithAttribute
-public class HAPInfoServiceInterface extends HAPResourceDefinitionImp implements HAPEntityOrReference{
+public class HAPInfoServiceInterface extends HAPResourceDefinitionImp{
 
 	@HAPAttribute
 	public static String TAG = "tag";

@@ -10,6 +10,7 @@ import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
@@ -19,6 +20,18 @@ import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUIService {
 
+	public static void normalizeService(HAPDefinitionUIUnit uiUnitDef, HAPRuntimeEnvironment runtimeEnv) {
+		for(String serviceName : uiUnitDef.getAllServices()) {
+			HAPDefinitionServiceUse service = uiUnitDef.getService(serviceName);
+			HAPProcessorServiceUse.normalizeServiceUse(service, uiUnitDef.getAttachmentContainer(), runtimeEnv);
+		}
+		
+		//child tag
+		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
+			normalizeService(uiTag, runtimeEnv);
+		}
+	}
+	
 	public static void processService(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
 		for(String serviceName : uiUnitDef.getAllServices()) {
@@ -32,8 +45,6 @@ public class HAPProcessorUIService {
 			processService(childTag, runtimeEnv);			
 		}
 	}
-	
-
 	
 	public static void escalate(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();

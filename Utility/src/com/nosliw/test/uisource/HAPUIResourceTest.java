@@ -1,6 +1,5 @@
 package com.nosliw.test.uisource;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.resource.HAPResourceIdUIResource;
@@ -14,8 +13,9 @@ public class HAPUIResourceTest {
 		
 //		HAPDefinitionUIPage pageDef = runtimeEnvironment.getUIResourceManager().getUIPageDefinition(new HAPResourceIdUIResource("test"), null);
 		
-		HAPExecutableUIUnitPage pageExe = runtimeEnvironment.getUIResourceManager().getUIPage(new HAPResourceIdUIResource("test"));
-		System.out.println(pageExe.toStringValue(HAPSerializationFormat.JSON));
+		HAPExecutableUIUnitPage pageExe = runtimeEnvironment.getUIResourceManager().getUIPage(new HAPResourceIdUIResource("mytest"));
+//		System.out.println(pageExe.toStringValue(HAPSerializationFormat.JSON));
+		System.out.println(pageExe.toResourceData(runtimeEnvironment.getRuntime().getRuntimeInfo()));
 		
 //		HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(new HAPUITagManager(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getResourceManager(), runtimeEnvironment.getRuntime(), HAPExpressionManager.dataTypeHelper);
 

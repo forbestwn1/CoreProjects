@@ -10,10 +10,11 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.data.core.service.definition.HAPProviderService;
 import com.nosliw.data.core.service.definition.HAPResultService;
 import com.nosliw.data.core.service.definition.HAPUtilityService;
 
-public class HAPServiceImp extends com.nosliw.service.test.listoutput.refinterface.HAPServiceImp{
+public class HAPServiceImp extends com.nosliw.service.test.listoutput.refinterface.HAPServiceImp implements HAPProviderService{
 
 	@Override
 	public HAPResultService execute(Map<String, HAPData> parms) {

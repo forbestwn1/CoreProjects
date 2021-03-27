@@ -36,6 +36,9 @@ public class HAPProcessorUIPage {
 		
 		//expand referred context part
 		HAPProcessorUIContext.expandContextReference(uiPageDef, runtimeEnv.getResourceDefinitionManager());
+
+		//normalize service use
+		HAPProcessorUIService.normalizeService(uiPageDef, runtimeEnv);
 		
 		//enhance context by service
 		HAPProcessorUIContext.enhanceContextByService(uiPageDef, runtimeEnv);

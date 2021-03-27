@@ -1,10 +1,10 @@
 [{
 	"static": {
-		"id": "listoutput",
+		"id": "listoutput_internalinterface",
 		"name": "ListOutput",
 		"displayName": "listoutput",
 		"description" : "listoutput",
-		"tag" : ["test"],
+		"tag" : ["test", "public"],
 		"interface" : {
 		      "parm":[
 		         {

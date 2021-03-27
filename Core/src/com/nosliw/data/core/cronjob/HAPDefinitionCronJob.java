@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.HAPContainerChildResource;
+import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
@@ -41,7 +41,7 @@ public class HAPDefinitionCronJob extends HAPComponentImp{
 	
 
 	@Override
-	public HAPContainerChildResource getChildrenResource() {
+	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
 		// TODO Auto-generated method stub
 		return null;
 	}

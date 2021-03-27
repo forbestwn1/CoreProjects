@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.component.HAPContainerChildResource;
+import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPConnection;
@@ -56,7 +56,7 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	public HAPElementGroup getElementGroup(String id) {  return this.m_story.getElementGroup(id);  }
 
 	@Override
-	public HAPContainerChildResource getChildrenResource() {
+	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
 		// TODO Auto-generated method stub
 		return null;
 	}

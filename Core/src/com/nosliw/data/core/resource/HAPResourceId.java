@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -16,7 +15,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 @HAPEntityWithAttribute
-public abstract class HAPResourceId extends HAPSerializableImp implements HAPEntityOrReference{
+public abstract class HAPResourceId extends HAPSerializableImp implements HAPResourceDefinitionOrId{
 
 	@HAPAttribute
 	public static String TYPE = "type";
@@ -34,7 +33,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPEnt
 	private String m_type;
 
 	//all the supplement resource in order for this resource to be valid resource
-	private HAPResourceIdSupplement m_supplement;
+	private HAPSupplementResourceId m_supplement;
 
 	public HAPResourceId(String type) {
 		this.m_type = type;
@@ -48,8 +47,8 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPEnt
 	
 	public abstract String getStructure();
 	
-	public HAPResourceIdSupplement getSupplement() {  return this.m_supplement;  }
-	public void setSupplement(HAPResourceIdSupplement sup) {   this.m_supplement = sup;   }
+	public HAPSupplementResourceId getSupplement() {  return this.m_supplement;  }
+	public void setSupplement(HAPSupplementResourceId sup) {   this.m_supplement = sup;   }
 	
 	//literate for id part only
 	public abstract String getIdLiterate();

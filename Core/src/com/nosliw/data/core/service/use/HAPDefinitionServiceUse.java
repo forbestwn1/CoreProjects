@@ -47,6 +47,7 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 	public void setProvider(String provider) {   this.m_provider = provider;   }
 	
 	public HAPResourceId getInterfaceId() {    return this.m_interfaceId;    }
+	public void setInterfaceId(HAPResourceId resourceId) {   this.m_interfaceId = resourceId;   }
 	
 	public void cloneBasicTo(HAPDefinitionServiceUse command) {
 		this.cloneToEntityInfo(command);

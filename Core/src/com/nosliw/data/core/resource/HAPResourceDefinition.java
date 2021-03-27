@@ -1,10 +1,9 @@
 package com.nosliw.data.core.resource;
 
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializable;
 
-public interface HAPResourceDefinition extends HAPEntityOrReference, HAPEntityInfo, HAPSerializable{
+public interface HAPResourceDefinition extends HAPResourceDefinitionOrId, HAPEntityInfo, HAPSerializable{
 
 	void setResourceId(HAPResourceId resourceId);
 	
@@ -12,6 +11,9 @@ public interface HAPResourceDefinition extends HAPEntityOrReference, HAPEntityIn
 	
 	String getResourceType();
 
+	//get embeded resource definition
+	HAPResourceDefinitionOrId getChild(String path);
+	
 	void cloneToResourceDefinition(HAPResourceDefinition resourceDef);
 
 }

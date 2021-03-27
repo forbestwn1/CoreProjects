@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPContainerChildResource;
+import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -23,7 +23,7 @@ public class HAPDefinitionProcessSuite extends HAPResourceDefinitionContainer<HA
 	public HAPResourceDefinition getElementResourceDefinition(String eleName) {	return new HAPDefinitionProcess(this, eleName);	}
 
 	@Override
-	public HAPContainerChildResource getChildrenResource() {
+	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
 		return null;
 	}
 

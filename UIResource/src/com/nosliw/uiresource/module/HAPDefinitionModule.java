@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPInfoChildResource;
-import com.nosliw.data.core.component.HAPContainerChildResource;
+import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPUtilityComponent;
@@ -59,8 +59,8 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	public List<HAPInfoDecoration> getUIDecoration(){   return this.m_uiDecoration;    }
 	
 	@Override
-	public HAPContainerChildResource getChildrenResource() {
-		HAPContainerChildResource out = new HAPContainerChildResource();
+	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
+		HAPContainerChildReferenceResource out = new HAPContainerChildReferenceResource();
 		//ui part
 		for(HAPDefinitionModuleUI ui : this.getUIs()) {
 			if(!HAPUtilityEntityInfo.isEnabled(ui)) {

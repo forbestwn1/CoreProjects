@@ -14,7 +14,7 @@ import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdSupplement;
+import com.nosliw.data.core.resource.HAPSupplementResourceId;
 import com.nosliw.data.core.script.context.data.HAPContextDataFactory;
 import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
 
@@ -57,13 +57,13 @@ public class HAPUtilityAttachment {
 			}
 			resourceIds.put(type, byIdOut);
 		}
-		HAPResourceIdSupplement mergedSupplement = HAPResourceIdSupplement.newInstance(resourceIds);
+		HAPSupplementResourceId mergedSupplement = HAPSupplementResourceId.newInstance(resourceIds);
 		resourceId.setSupplement(mergedSupplement);
 	}
 	
 	public static void mergeAttachmentInResourceIdSupplementToContainer(HAPResourceId resourceId, HAPContainerAttachment targetContainer, String mode) {
 		if(resourceId==null)  return;
-		HAPResourceIdSupplement resourceIdSupplement = resourceId.getSupplement();
+		HAPSupplementResourceId resourceIdSupplement = resourceId.getSupplement();
 		if(resourceIdSupplement!=null) {
 			HAPContainerAttachment tempContainer = new HAPContainerAttachment();
 			Map<String, Map<String, HAPResourceId>> resourceIds = resourceIdSupplement.getAllSupplymentResourceId();

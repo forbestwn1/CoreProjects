@@ -9,11 +9,11 @@ import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPContainerChildResource {
+public class HAPContainerChildReferenceResource {
 
 	private Map<String, List<HAPInfoChildResource>> m_children;
 	
-	public HAPContainerChildResource() {
+	public HAPContainerChildReferenceResource() {
 		this.m_children = new LinkedHashMap<String, List<HAPInfoChildResource>>();
 	}
 	

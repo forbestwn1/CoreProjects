@@ -135,7 +135,7 @@ public class HAPUtilityComponent {
 		return out;
 	}
 	
-	public static void buildServiceChildrenComponent(HAPContainerChildResource out, HAPWithServiceUse withServiceProvider, HAPContainerAttachment attachment) {
+	public static void buildServiceChildrenComponent(HAPContainerChildReferenceResource out, HAPWithServiceUse withServiceProvider, HAPContainerAttachment attachment) {
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = withServiceProvider.getServiceProviderDefinitions(); 
 		Map<String, HAPDefinitionServiceUse> serviceUseDefs = withServiceProvider.getServiceUseDefinitions();
 		for(String serviceName : serviceUseDefs.keySet()) {

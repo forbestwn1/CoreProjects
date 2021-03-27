@@ -12,23 +12,23 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 //supplement information used in resource id
-public class HAPResourceIdSupplement  extends HAPSerializableImp{
+public class HAPSupplementResourceId  extends HAPSerializableImp{
 
 	private Map<String, Map<String, HAPResourceId>> m_resources;
 
-	private HAPResourceIdSupplement() {init();}
+	private HAPSupplementResourceId() {init();}
 	
-	private HAPResourceIdSupplement(String literate) {
+	private HAPSupplementResourceId(String literate) {
 		init();
 		this.buildObjectByLiterate(literate);
 	}
 	
-	private HAPResourceIdSupplement(Map<String, Map<String, HAPResourceId>> supplementResources) {
+	private HAPSupplementResourceId(Map<String, Map<String, HAPResourceId>> supplementResources) {
 		init();
 		this.m_resources.putAll(supplementResources);
 	}
 
-	private HAPResourceIdSupplement(List<HAPResourceDependency> supplementResources) {
+	private HAPSupplementResourceId(List<HAPResourceDependency> supplementResources) {
 		init();
 		for(HAPResourceDependency sup : supplementResources) {
 			for(String name : sup.getAlias()) {
@@ -37,14 +37,14 @@ public class HAPResourceIdSupplement  extends HAPSerializableImp{
 		}
 	}
 
-	public static HAPResourceIdSupplement newInstance(String literate) {  return new HAPResourceIdSupplement(literate);	}
-	public static HAPResourceIdSupplement newInstance(JSONObject jsonObj) {  
-		HAPResourceIdSupplement out = new HAPResourceIdSupplement();
+	public static HAPSupplementResourceId newInstance(String literate) {  return new HAPSupplementResourceId(literate);	}
+	public static HAPSupplementResourceId newInstance(JSONObject jsonObj) {  
+		HAPSupplementResourceId out = new HAPSupplementResourceId();
 		out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		return out;
 	}
-	public static HAPResourceIdSupplement newInstance(Map<String, Map<String, HAPResourceId>> supplementResources) {  return new HAPResourceIdSupplement(supplementResources);   }
-	public static HAPResourceIdSupplement newInstance(List<HAPResourceDependency> supplementResources) {   return new HAPResourceIdSupplement(supplementResources);    }
+	public static HAPSupplementResourceId newInstance(Map<String, Map<String, HAPResourceId>> supplementResources) {  return new HAPSupplementResourceId(supplementResources);   }
+	public static HAPSupplementResourceId newInstance(List<HAPResourceDependency> supplementResources) {   return new HAPSupplementResourceId(supplementResources);    }
 	
 
 	public Map<String, Map<String, HAPResourceId>> getAllSupplymentResourceId(){   return this.m_resources;     }
@@ -129,8 +129,8 @@ public class HAPResourceIdSupplement  extends HAPSerializableImp{
 	@Override
 	public boolean equals(Object o){
 		boolean out = false;
-		if(o instanceof HAPResourceIdSupplement){
-			HAPResourceIdSupplement resourceIdSupplement = (HAPResourceIdSupplement)o;
+		if(o instanceof HAPSupplementResourceId){
+			HAPSupplementResourceId resourceIdSupplement = (HAPSupplementResourceId)o;
 			if(this.m_resources.keySet().size()==resourceIdSupplement.m_resources.keySet().size()) {
 				out = true;
 				for(String type : this.m_resources.keySet()) {
@@ -155,5 +155,5 @@ public class HAPResourceIdSupplement  extends HAPSerializableImp{
 	public int hashCode() {	return this.toStringValue(HAPSerializationFormat.LITERATE).hashCode();	}
 	
 	@Override
-	public HAPResourceIdSupplement clone(){	return this;	}
+	public HAPSupplementResourceId clone(){	return this;	}
 }

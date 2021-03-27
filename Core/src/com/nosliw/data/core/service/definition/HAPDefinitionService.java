@@ -10,12 +10,15 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceDefinitionImp;
+import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //contains all information related with service definition
 @HAPEntityWithAttribute
 public class HAPDefinitionService extends HAPResourceDefinitionImp{
 
+	public static final String CHILD_INTERFACE = "interface";
+	
 	@HAPAttribute
 	public static String STATIC = "static";
 
@@ -36,6 +39,15 @@ public class HAPDefinitionService extends HAPResourceDefinitionImp{
 	@Override
 	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE;  }
 	
+	@Override
+	public HAPResourceDefinitionOrId getChild(String path) {
+		HAPResourceDefinitionOrId out = null;
+		if(CHILD_INTERFACE.equals(path)) {
+			out = this.m_staticInfo.getInterface();
+		}
+		return out;
+	}
+
 	public HAPInfoServiceStatic getStaticInfo() {   return this.m_staticInfo;   }
 	
 	public HAPInfoServiceRuntime getRuntimeInfo() {  return this.m_runtimeInfo;  }

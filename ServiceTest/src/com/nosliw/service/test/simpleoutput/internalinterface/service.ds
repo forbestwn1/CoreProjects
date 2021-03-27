@@ -1,10 +1,10 @@
 [{
 	"static": {
-		"id": "simpleoutput",
+		"id": "simpleoutput_internalinterface",
 		"name": "SimpleOutput",
 		"displayName": "simpleoutput",
 		"description" : "simpleoutput",
-		"tag" : ["test"],
+		"tag" : ["test", "public"],
 		"interface" : {
 		      "parm":[
 		         {

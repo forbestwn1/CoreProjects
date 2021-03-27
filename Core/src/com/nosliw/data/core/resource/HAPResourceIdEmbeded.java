@@ -26,9 +26,18 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 		super(type);
 	}
 	
+	public HAPResourceIdEmbeded(String type, HAPResourceId parentId, String path) {
+		this(type);
+		this.m_parentId = parentId;
+		this.m_path = path;
+	}
+	
 	@Override
 	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_EMBEDED;  }
 
+	public HAPResourceId getParentResourceId() {    return this.m_parentId;    }
+	public String getPath() {    return this.m_path;    }
+	
 	@Override
 	public String getIdLiterate() {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();

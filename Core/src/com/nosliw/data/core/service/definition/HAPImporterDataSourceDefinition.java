@@ -67,6 +67,7 @@ public class HAPImporterDataSourceDefinition {
 						HAPDefinitionService serviceDef = new HAPDefinitionService();
 						serviceDef.buildObject(serviceDefJson, HAPSerializationFormat.JSON);
 						out.add(serviceDef);
+						System.out.println(serviceDef.getStaticInfo().getId());
 					}
 				}
 			}

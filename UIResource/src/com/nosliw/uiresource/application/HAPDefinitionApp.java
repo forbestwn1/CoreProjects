@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.component.HAPInfoChildResource;
-import com.nosliw.data.core.component.HAPContainerChildResource;
+import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -57,8 +57,8 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer<HAPDefiniti
 	public HAPResourceDefinition getElementResourceDefinition(String eleName) {	return new HAPDefinitionAppEntry(this, eleName);	}
 
 	@Override
-	public HAPContainerChildResource getChildrenResource() {
-		HAPContainerChildResource out = new HAPContainerChildResource();
+	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
+		HAPContainerChildReferenceResource out = new HAPContainerChildReferenceResource();
 		//entry part
 		Set<HAPDefinitionAppElement> entrys = this.getContainerElements();
 		for(HAPResourceDefinitionContainerElement entry : entrys) {

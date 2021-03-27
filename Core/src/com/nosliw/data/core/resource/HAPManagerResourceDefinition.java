@@ -6,10 +6,10 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPDefinitionResourceComplex;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithAttachment;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 
@@ -44,7 +44,19 @@ public class HAPManagerResourceDefinition {
 			}
 		}
 		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
-			
+			HAPResourceIdEmbeded embededId = (HAPResourceIdEmbeded)resourceId;
+			//get parent resource def first
+			HAPResourceDefinition parentResourceDef = this.getResourceDefinition(embededId.getParentResourceId());
+			//get child resource by path
+			HAPResourceDefinitionOrId defOrId = parentResourceDef.getChild(embededId.getPath());
+			if(HAPConstantShared.REFERENCE.equals(defOrId.getEntityOrReferenceType())) {
+				//resource id
+				out = this.getResourceDefinition((HAPResourceId)defOrId);
+			}
+			else {
+				//resource def
+				out = (HAPResourceDefinition)defOrId;
+			}
 		}
 		
 		if(out instanceof HAPWithAttachment) {
