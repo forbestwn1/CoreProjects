@@ -2,6 +2,7 @@
 <html>
 <body>
     Within test.main.res
+	<!-- Constant  -->
 	<br>
 	CONSTANT FROM CONTEXT:<%=&(constantFromContext6)&.value + '' %>  
 	<br>
@@ -12,6 +13,7 @@
 	CONSTANT FROM ATTACHMENT:<%=&(constantFromAtt1)&.value + '' %>  
 	<br>
 	
+	<!-- Expression  -->
 	<br>
 	EXPRESSION IN CONTENT :<%=?(varFromContext1.attr1.attr11)?.value + '   6666 ' %>
 	<br>
@@ -21,14 +23,44 @@
 	<br>
 	CUSTOM TAG:<nosliw-string data="varFromContext1.attr1.attr11"/>  
 	
+	<!-- Data validation  -->
 	<br>
-	CUSTOM TAG WITH RULE:<nosliw-float data="varFromContext1.attr1.attr15"/>  
+	CUSTOM TAG WITH RULE:<nosliw-float data="varFromContext1.attr1.attr15" nosliwstaticid="withRule1"/>  
+	<br>
+	<nosliw-uierror data="nosliw_validationError" target="withRule1"/>
+	<br>
+	
+	VALIDATION: 	<a href='' nosliw-event="click:validateWithRule1">Submit</a><br>
 	<br>
 
 </body>
 
 	<script>
 	{
+		validateWithRule1 : function(info, env){
+
+			event.preventDefault();
+
+			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+			var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+			
+			var out = node_createServiceRequestInfoSequence(undefined);
+			out.addRequest(env.getUIValidationRequest(env.getTagsByAttribute(node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_STATICID, "withRule1"), {
+				success : function(request, errorMessages){
+					if(errorMessages==null){
+						return env.getServiceRequest("service", {
+							success : function(request){
+							}
+						});
+					}
+				}
+			}));
+			
+			node_requestServiceProcessor.processRequest(out, false);
+		},
+	
 	}
 	</script>
 
@@ -48,34 +80,47 @@
 											attr13 : {},
 											attr14 : {},
 											attr15 : {
-												criteria: "test.float;1.0.0",
-												rule : [
-													{
-														ruleType : "mandatory",
-														description : "Cannot be blank!!!",
-													},
-													{
-														ruleType : "enum",
-														dataSet : [
-															{
-																dataTypeId: "test.float;1.0.0",
-																value: 8
-															},
-															{
-																dataTypeId: "test.float;1.0.0",
-																value: 8.5
-															},
-															{
-																dataTypeId: "test.float;1.0.0",
-																value: 9
-															},
-															{
-																dataTypeId: "test.float;1.0.0",
-																value: 10
-															},
-														]
-													}
-												]
+												"criteria" : {
+													"criteria": "test.float;1.0.0",
+													"rule" : [
+														{
+															"ruleType" : "mandatory",
+															"description" : "Cannot be blank!!!",
+														},
+														{
+															"ruleType" : "enum",
+															"dataSet" : [
+																{
+																	"dataTypeId": "test.float;1.0.0",
+																	"value": 8
+																},
+																{
+																	"dataTypeId": "test.float;1.0.0",
+																	"value": 8.5
+																},
+																{
+																	"dataTypeId": "test.float;1.0.0",
+																	"value": 9
+																},
+																{
+																	"dataTypeId": "test.float;1.0.0",
+																	"value": 10
+																},
+															]
+														},
+														{
+															"description":"Cannot bigger than 9!!!",
+															"info":{},
+															"ruleType":"expression",
+															"expression":"?(data)?.largerThan(data:&(#test##float___9)&).opposite()"
+														},
+														{
+															ruleType : "jsscript",
+															description : "Cannot longer than 5!!!",
+															script : "return that.value.length<=5"
+														},
+													]
+												}
 											}
 										}
 									}

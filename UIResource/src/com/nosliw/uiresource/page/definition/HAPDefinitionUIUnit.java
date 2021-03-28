@@ -84,7 +84,6 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 	private void initContext() {
 		HAPContextGroup contextGroup = new HAPContextGroup();
 		//ui error context element
-//		contextGroup.addInternalElement(HAPConstant.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, new HAPContextDefinitionRoot(new HAPContextDefinitionLeafValue()));
 		HAPContextDefinitionRoot uiValidationErrorRoot = new HAPContextDefinitionRoot(new HAPContextDefinitionLeafValue());
 		uiValidationErrorRoot.setDefaultValue(new JSONObject());
 		contextGroup.addProtectedElement(HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, uiValidationErrorRoot);

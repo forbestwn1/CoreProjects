@@ -76,6 +76,14 @@ var node_utility = {
 		createTagResourceId : function(name){
 			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, name);
 		},
+		
+		clearUIValidationError : function(uiView){
+			
+			var clearErrorRequest = node_createBatchUIDataOperationRequest(loc_context);
+			clearErrorRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService("", {})));
+			out.addRequest(clearErrorRequest);
+			
+		},
 };
 
 //*******************************************   End Node Definition  ************************************** 	

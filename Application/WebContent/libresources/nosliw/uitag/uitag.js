@@ -364,6 +364,8 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		
 		getTagObject : function(){ return loc_uiTagObj;  },
 		
+		getParentContext : function(){   return loc_parentContext;     },
+		
 		getChildUITags : function(){  
 			var out = loc_uiTagObj.getChildUITags();
 			if(out!=undefined)  return out;
