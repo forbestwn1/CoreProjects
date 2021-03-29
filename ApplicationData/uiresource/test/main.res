@@ -50,10 +50,12 @@
 			out.addRequest(env.getUIValidationRequest(env.getTagsByAttribute(node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_STATICID, "withRule1"), {
 				success : function(request, errorMessages){
 					if(errorMessages==null){
+/*
 						return env.getServiceRequest("service", {
 							success : function(request){
 							}
 						});
+*/						
 					}
 				}
 			}));

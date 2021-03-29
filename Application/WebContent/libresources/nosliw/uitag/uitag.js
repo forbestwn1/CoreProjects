@@ -283,7 +283,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 			initViews : function(request){},
 			postInit : function(request){},
 			destroy : function(request){},
-			getChildUITags : function(){},
+			getChildUIViews : function(){},
 			getValidateDataRequest : function(handlers, request){},
 			createContextForDemo : function(id, parentContext){},
 		}, uiTagCore);
@@ -366,10 +366,18 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		
 		getParentContext : function(){   return loc_parentContext;     },
 		
+		getChildUIViews : function(){  
+			var out = loc_uiTagObj.getChildUIViews();
+			if(out==undefined)  out = [];
+			return out;
+		},
 		getChildUITags : function(){  
-			var out = loc_uiTagObj.getChildUITags();
-			if(out!=undefined)  return out;
-			else return [];
+			var childUIViews = loc_uiTagObj.getChildUIViews();
+			var out = [];
+			_.each(childUIViews, function(uiView){
+				out = out.concat(uiView.getTags());
+			});
+			return out;
 		},
 		
 		getValidateDataRequest : function(handlers, request){  return loc_uiTagObj.getValidateDataRequest(handlers, request);     },

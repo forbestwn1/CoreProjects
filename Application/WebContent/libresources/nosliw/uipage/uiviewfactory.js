@@ -16,6 +16,7 @@ var packageObj = library;
 	var node_createContextElementInfo;
 	var node_dataUtility;
 	var node_uiResourceUtility;
+	var node_utilityUIError;
 	var node_createEmbededScriptExpressionInContent;
 	var node_createEmbededScriptExpressionInAttribute;
 	var node_createEmbededScriptExpressionInTagAttribute;
@@ -518,34 +519,12 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 					getUIValidationRequest : function(uiTags, handlers, request){
 						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
 
-						var clearErrorRequest = node_createBatchUIDataOperationRequest(loc_context);
-						clearErrorRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService("", {})));
-						out.addRequest(clearErrorRequest);
+						//clear previous error data
+						out.addRequest(node_utilityUIError.getClearUIValidationErrorRequest(loc_out));
 
-						var allSetRequest = node_createServiceRequestInfoSet(undefined, {
-							success : function(requestInfo, validationsResult){
-								var results = validationsResult.getResults();
-								var allMessages = {};
-								var opsRequest = node_createBatchUIDataOperationRequest(loc_context, {
-									success : function(request){
-										return allMessages;
-									}
-								}, requestInfo);
-								_.each(results, function(message, uiTagId){
-									if(message!=undefined&&message.length!=0){
-										allMessages[uiTagId] = message;
-										opsRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTagId, message)));
-									}
-								});
-								if(!opsRequest.isEmpty())	return opsRequest;
-								else return node_requestUtility.getEmptyRequest();
-
-							},
-						});
-						_.each(uiTags, function(uiTag, i){
-							allSetRequest.addRequest(uiTag.getId(), uiTag.getValidateDataRequest());
-						});
-						out.addRequest(allSetRequest);
+						//
+						out.addRequest(node_utilityUIError.getUITagsValidationRequest(uiTags));
+						
 						return out;
 					},
 
@@ -601,17 +580,19 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		prv_getTags : function(query, cascade, output){
 			_.each(loc_uiTags, function(uiTag, tagId, list){
 				var ok = true;
-				//check name
-				if(ok && query.name!=undefined){
-					var tagName = uiTag.getTagName();
-					if(tagName!=name)  ok = false;
-				}
+				if(query!=undefined){
+					//check name
+					if(ok && query.name!=undefined){
+						var tagName = uiTag.getTagName();
+						if(tagName!=name)  ok = false;
+					}
 
-				//check attributes
-				if(ok && query.attribute!=undefined){
-					_.each(query.attribute, function(attr, i){
-						if(uiTag.getAttributeValue(attr.name)!=attr.value)	ok = false;
-					});
+					//check attributes
+					if(ok && query.attribute!=undefined){
+						_.each(query.attribute, function(attr, i){
+							if(uiTag.getAttributeValue(attr.name)!=attr.value)	ok = false;
+						});
+					}
 				}
 
 				if(ok)  output.push(uiTag);
@@ -745,6 +726,7 @@ nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_
 nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.utility", function(){node_uiResourceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uipage.utilityUIError", function(){node_utilityUIError = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInAttribute", function(){node_createEmbededScriptExpressionInAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInTagAttribute", function(){node_createEmbededScriptExpressionInTagAttribute = this.getData();});
