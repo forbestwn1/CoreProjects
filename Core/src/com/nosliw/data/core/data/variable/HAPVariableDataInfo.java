@@ -60,7 +60,7 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 	public void setCriteria(HAPDataTypeCriteria criteria) {    this.m_criteria = criteria;     }
 	
 	public List<HAPDataRule> getRules(){   return this.m_rules;   }
-	public void addRule(HAPDataRule rule) {   this.m_rules.add(rule);    }
+	public void addRule(HAPDataRule rule) {   if(rule!=null) this.m_rules.add(rule);    }
 	
 	public HAPMatchersCombo getRuleMatchers() {    return this.m_ruleMatchers;    }
 	public void setRuleMatchers(HAPMatchers matchers, HAPDataTypeCriteria ruleCriteria) {
@@ -119,7 +119,7 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 			JSONArray ruleJsonArray = jsonValue.optJSONArray(RULE);
 			if(ruleJsonArray!=null) {
 				for(int i=0; i<ruleJsonArray.length(); i++) {
-					this.m_rules.add(HAPParserDataRule.parseRule(ruleJsonArray.get(i)));
+					this.addRule(HAPParserDataRule.parseRule(ruleJsonArray.get(i)));
 				}
 			}
 			

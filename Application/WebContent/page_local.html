@@ -38,7 +38,7 @@ $(document).on("nosliwActive", function(){
 					
 					uiResourceView.appendTo($('#testDiv'));
 
-					uiResourceView.executeExecuteCommandRequest("init");
+					uiResourceView.executeExecuteCommandRequest("init", requestInfo);
 					
 					uiResourceView.registerEventListener(undefined, function(eventName, eventData, requestInfo){
 						alert(eventName + "  _______  " +JSON.stringify(eventData));

@@ -12,8 +12,8 @@ var packageObj = library;
 var node_utility = function(){
 	var loc_out = {
 			
-			getEmptyRequest : function(){
-				return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	});
+			getEmptyRequest : function(request){
+				return node_createServiceRequestInfoSimple(undefined, function(requestInfo){	}, request);
 			},
 			
 			getAllHandlerNames : function(){

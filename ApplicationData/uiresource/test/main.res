@@ -117,7 +117,7 @@
 															"expression":"?(data)?.largerThan(data:&(#test##float___9)&).opposite()"
 														},
 														{
-															ruleType : "jsscript",
+															ruleType : "jsscript1",
 															description : "Cannot longer than 5!!!",
 															script : "return that.value.length<=5"
 														},

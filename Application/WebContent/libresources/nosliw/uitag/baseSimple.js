@@ -239,7 +239,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 		},
 		
 		getValidateDataRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(handlers, request);
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var ruleValidationRequest = node_uiTagUtility.getValidateDataRequest("internal_data", loc_env);
 			var coreValidationRequest = loc_coreObj.getValidationRequest({
 				success: function(request, errMsg){

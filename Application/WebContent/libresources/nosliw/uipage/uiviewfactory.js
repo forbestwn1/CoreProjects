@@ -517,7 +517,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 					},
 
 					getUIValidationRequest : function(uiTags, handlers, request){
-						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
+						var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 
 						//clear previous error data
 						out.addRequest(node_utilityUIError.getClearUIValidationErrorRequest(loc_out));

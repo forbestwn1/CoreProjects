@@ -20,6 +20,7 @@ var packageObj = library;
 	var createServiceRequestInfoSet;
 	var node_UIDataOperation;
 	var node_uiDataOperationServiceUtility;
+	var node_requestUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -50,13 +51,13 @@ var node_utilityUIError = function(){
 		getUITagValidationRequest : function(uiTag, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(uiTag.getValidateDataRequest({
-				success : function(message){
+				success : function(request, message){
 					if(message!=undefined&&message.length!=0){
-						return node_createUIDataOperationRequest(uiTag.getParentContext(), new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTagId, message)), {
+						return node_createUIDataOperationRequest(uiTag.getParentContext(), new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTag.getId(), message)), {
 							success : function(){
 								return message;
 							}
-						});
+						}, request);
 					}
 					else return node_requestUtility.getEmptyRequest();
 				}
@@ -65,7 +66,8 @@ var node_utilityUIError = function(){
 		},
 		
 		getUITagsValidationRequest : function(uiTags, handlers, request){
-			var allSetRequest = node_createServiceRequestInfoSet(undefined, {
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var uiTagValidateRequestSet = node_createServiceRequestInfoSet(undefined, {
 				success : function(requestInfo, validationsResult){
 					var results = validationsResult.getResults();
 					var allMessages = {};
@@ -81,9 +83,10 @@ var node_utilityUIError = function(){
 				},
 			});
 			_.each(uiTags, function(uiTag, i){
-				allSetRequest.addRequest(uiTag.getId(), loc_out.getUITagValidationRequest(uiTag));
+				uiTagValidateRequestSet.addRequest(uiTag.getId(), loc_out.getUITagValidationRequest(uiTag));
 			});
-
+			out.addRequest(uiTagValidateRequestSet);
+			return out;
 		},
 			
 	};
@@ -111,6 +114,7 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationReq
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utilityUIError", node_utilityUIError); 
