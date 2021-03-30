@@ -316,6 +316,7 @@
 			<definition name="CONTEXT_ELEMENTTYPE_DATA" value="data"/>
 			<definition name="CONTEXT_ELEMENTTYPE_VALUE" value="value"/>
 			<definition name="CONTEXT_ELEMENTTYPE_CONSTANT" value="constant"/>
+			<definition name="CONTEXT_ELEMENTTYPE_CONSTANTREF" value="constantReference"/>
 			<definition name="CONTEXT_ELEMENTTYPE_NODE" value="node"/>
 			<definition name="CONTEXT_ELEMENTTYPE_UNKNOW" value="unknow"/>
 			<definition type="space"/>
@@ -562,7 +563,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICE" value="service"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE" value="serviceinterface"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_DATA" value="data"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_VALUE" value="value"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TESTDATA" value="testData"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_STORY" value="story"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEMPLATE" value="template"/>

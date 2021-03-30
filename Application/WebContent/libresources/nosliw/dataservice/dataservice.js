@@ -18,6 +18,27 @@ var node_createDataService = function(){
 
 	var loc_out = {
 
+		getExecuteDataServiceUseRequest : function(serviceUse, ioEndpoint, handlers, requester_parent){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {}), handlers, requester_parent);
+			var serviceMapping = serviceUse[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_SERVICEUSE];
+			var serviceId = serviceUse[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDERID];
+			out.addRequest(node_taskUtility.getExecuteWrappedTaskRequest(
+				ioEndpoint, undefined, serviceMapping,
+				new node_IOTaskInfo(function(input, handlers, request){
+					var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
+					serviceRequest.addRequest(loc_out.getExecuteDataServiceRequest(serviceId, input, {
+						success : function(request, serviceResult){
+							return new node_IOTaskResult(serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTNAME], serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTVALUE]);
+						}
+					}));
+					return serviceRequest;
+				})
+			));
+			return out;
+			
+		},
+			
+			
 		getExecuteEmbededDataServiceByNameRequest : function(serviceName, serviceProviders, serviceUse, ioEndpoint, handlers, requester_parent){
 			var serviceProvider = serviceProviders[serviceName];
 			return loc_out.getExecuteEmbededDataServiceByProviderRequest(serviceProvider, serviceUse, ioEndpoint, handlers, requester_parent);
@@ -54,6 +75,7 @@ var node_createDataService = function(){
 			return this.getExecuteDataServiceRequest(serviceProvider[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID], parms, handlers, requester_parent);
 		},
 		
+		//directly invoke data service
 		getExecuteDataServiceRequest : function(serviceId, parms, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExectueDataService", {"serviceId":serviceId, "parms":parms}), handlers, requestInfo);

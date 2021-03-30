@@ -28,6 +28,6 @@ public class HAPUtilityProcess {
 			HAPContextDefinitionLeafConstant cstRootNode = new HAPContextDefinitionLeafConstant(tagAttrs.get(name));
 			tagContext.addElement(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + name, new HAPContextDefinitionRoot(cstRootNode), HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE);
 		}
-		return HAPProcessorContext.processStatic(tagContext, HAPParentContext.createDefault(parentContext), null, HAPUtilityConfiguration.getContextProcessConfigurationForTagDefinition(tagDefinitionContext, contextProcessorConfig), runtimeEnv);
+		return HAPProcessorContext.processStatic(tagContext, HAPParentContext.createDefault(parentContext), null, null, HAPUtilityConfiguration.getContextProcessConfigurationForTagDefinition(tagDefinitionContext, contextProcessorConfig), runtimeEnv);
 	}
 }

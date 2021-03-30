@@ -280,7 +280,8 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	var loc_getServiceRequest = function(serviceName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":serviceName}), handlers, request);
 		var service = loc_services[serviceName];
-		out.addRequest(nosliw.runtime.getDataService().getExecuteEmbededDataServiceByNameRequest(service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDER], loc_serviceProviders, service, loc_viewIO));
+		out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceUseRequest(service, loc_viewIO));
+//		out.addRequest(nosliw.runtime.getDataService().getExecuteEmbededDataServiceByNameRequest(service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDER], loc_serviceProviders, service, loc_viewIO));
 		return out;
 	};
 	
@@ -482,40 +483,6 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 					},
 					
 					
-					getUIValidationRequest2 : function(uiTags, handlers, request){
-						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
-
-						var clearErrorRequest = node_createBatchUIDataOperationRequest(loc_context);
-						clearErrorRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService("", {})));
-						out.addRequest(clearErrorRequest);
-
-						var allSetRequest = node_createServiceRequestInfoSet(undefined, {
-							success : function(requestInfo, validationsResult){
-								var results = validationsResult.getResults();
-								var allMessages = {};
-								var opsRequest = node_createBatchUIDataOperationRequest(loc_context, {
-									success : function(request){
-										return allMessages;
-									}
-								}, requestInfo);
-								_.each(results, function(message, uiTagId){
-									if(message!=undefined&&message.length!=0){
-										allMessages[uiTagId] = message;
-										opsRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTagId, message)));
-									}
-								});
-								if(!opsRequest.isEmpty())	return opsRequest;
-								else return node_requestUtility.getEmptyRequest();
-
-							},
-						});
-						_.each(uiTags, function(uiTag, i){
-							allSetRequest.addRequest(uiTag.getId(), uiTag.getValidateDataRequest());
-						});
-						out.addRequest(allSetRequest);
-						return out;
-					},
-
 					getUIValidationRequest : function(uiTags, handlers, request){
 						var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 

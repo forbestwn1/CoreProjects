@@ -186,6 +186,7 @@ public class HAPConstantShared {
 		public static final String CONTEXT_ELEMENTTYPE_DATA = "data";
 		public static final String CONTEXT_ELEMENTTYPE_VALUE = "value";
 		public static final String CONTEXT_ELEMENTTYPE_CONSTANT = "constant";
+		public static final String CONTEXT_ELEMENTTYPE_CONSTANTREF = "constantReference";
 		public static final String CONTEXT_ELEMENTTYPE_NODE = "node";
 		public static final String CONTEXT_ELEMENTTYPE_UNKNOW = "unknow";
 
@@ -473,7 +474,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN = "activityPlugin";
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICE = "service";
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE = "serviceinterface";
-		public static final String RUNTIME_RESOURCE_TYPE_DATA = "data";
+		public static final String RUNTIME_RESOURCE_TYPE_VALUE = "value";
 		public static final String RUNTIME_RESOURCE_TYPE_TESTDATA = "testData";
 		public static final String RUNTIME_RESOURCE_TYPE_STORY = "story";
 		public static final String RUNTIME_RESOURCE_TYPE_TEMPLATE = "template";

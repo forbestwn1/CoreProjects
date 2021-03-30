@@ -28,6 +28,17 @@ public class HAPJsonUtility {
 		else if(value instanceof Double)   typeMap.put(key, Double.class);
 	}
 	
+	public static String buildJsonStringValue(Object o, HAPSerializationFormat format) {
+		String out;
+		if(o instanceof String) {
+			out = "\""+(String)o+"\"";
+		}
+		else {
+			out = buildJson(o, format);
+		}
+		return out;
+	}
+	
 	public static String buildJson(Object o, HAPSerializationFormat format) {
 		if (o == null)
 			return null;

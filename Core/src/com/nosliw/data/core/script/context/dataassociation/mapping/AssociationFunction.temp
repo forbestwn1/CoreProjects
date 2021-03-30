@@ -62,6 +62,9 @@ function(input, utilFunction){
 	
 	//asign mapped element, leaf data
 	||outputDyanimicValueBuild||
+
+	//assign constant data
+	||outputConstantValueBuild||
 	
 	return output;
 }

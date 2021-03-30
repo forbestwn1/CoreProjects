@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -54,13 +55,24 @@ public class HAPUtilityScript {
 		
 		//build dynamic part 
 		StringBuffer dynamicScript = new StringBuffer();
-		Map<String, String> relativePathMapping = association.getPathMapping();
+		Map<String, String> relativePathMapping = association.getRelativePathMappings();
 		for(String targePath : relativePathMapping.keySet()) {
 			String sourcePath = relativePathMapping.get(targePath);
 			String script = "output = utilFunction(output, "+ buildJSArrayFromContextPath(targePath) +", input, "+ buildJSArrayFromContextPath(sourcePath) +");\n";
 			dynamicScript.append(script);
 		}
 		templateParms.put("outputDyanimicValueBuild", dynamicScript.toString());
+		
+		//build cosntant assignment part
+		StringBuffer constantAssignmentScript = new StringBuffer();
+		Map<String, Object> constantAssignments = association.getConstantAssignments();
+		for(String targePath : constantAssignments.keySet()) {
+			Object constantValue = constantAssignments.get(targePath);
+			String script = "output = utilFunction(output, "+ buildJSArrayFromContextPath(targePath) +", "+ HAPJsonUtility.buildJsonStringValue(constantValue, HAPSerializationFormat.JSON) +");\n";
+			constantAssignmentScript.append(script);
+		}
+		templateParms.put("outputConstantValueBuild", constantAssignmentScript.toString());
+		
 		
 		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityScript.class, "AssociationFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);

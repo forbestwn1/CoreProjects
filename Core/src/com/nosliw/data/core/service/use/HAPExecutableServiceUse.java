@@ -33,9 +33,11 @@ public class HAPExecutableServiceUse extends HAPExecutableImp{
 	public static String PROVIDERID = "providerId";
 
 	//how to use service
+	//variable to service interface
 	private HAPExecutableWrapperTask m_serviceUse;
 	
-	//provider mapping to service use
+	//provider mapping to service interface
+	//
 	private HAPExecutableProviderToUse m_providerMapping;
 	
 	//provider service id

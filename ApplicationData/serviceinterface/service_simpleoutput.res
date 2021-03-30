@@ -29,6 +29,46 @@
             "dataInfo":{
                "criteria":"test.string;1.0.0"
             }
+         },
+         {
+            "name":"parm3",
+            "displayName":"Parm3",
+            "description":"Parm3",
+            "dataInfo":{
+               "criteria":"test.string;1.0.0"
+            }
+         },
+         {
+            "name":"parm4",
+            "displayName":"Parm4",
+            "description":"Parm4",
+            "dataInfo":{
+               "criteria":"test.string;1.0.0"
+            }
+         },
+         {
+            "name":"parm5",
+            "displayName":"Parm5",
+            "description":"Parm5",
+            "dataInfo":{
+               "criteria":"test.string;1.0.0"
+            }
+         },
+         {
+            "name":"parm6",
+            "displayName":"Parm6",
+            "description":"Parm6",
+            "dataInfo":{
+               "criteria":"test.string;1.0.0"
+            }
+         },
+         {
+            "name":"parm7",
+            "displayName":"Parm7",
+            "description":"Parm7",
+            "dataInfo":{
+               "criteria":"test.string;1.0.0"
+            }
          }
       ],
       "result":{

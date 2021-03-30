@@ -5,12 +5,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.value.HAPValue;
 
 public class HAPUtilityDataComponent {
 
@@ -34,12 +36,14 @@ public class HAPUtilityDataComponent {
 
 	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPContainerAttachment attContainer){
 		Set<HAPDefinitionConstant> out = new HashSet<HAPDefinitionConstant>();
-		Map<String, HAPAttachment> attrs = attContainer.getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATA);
+		Map<String, HAPAttachment> attrs = attContainer.getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE);
 		for(String id : attrs.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
 			HAPAttachmentEntity attr = (HAPAttachmentEntity)attrs.get(id);
 			attr.cloneToEntityInfo(constantDef);
-			constantDef.setValue(attr.getEntity());
+			HAPValue value = new HAPValue();
+			value.buildObject(attr.getEntity(), HAPSerializationFormat.JSON);
+			constantDef.setValue(value.getValue());
 			out.add(constantDef);
 		}
 		return out;

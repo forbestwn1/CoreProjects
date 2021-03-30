@@ -41,6 +41,7 @@ import com.nosliw.data.core.service.resource.HAPParserServiceInterfaceResource;
 import com.nosliw.data.core.service.resource.HAPResourceDefinitionPluginServiceDefinition;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionPluginStory;
+import com.nosliw.data.core.value.HAPParserResourceValue;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
@@ -168,6 +169,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_serviceManager.registerServiceFactory(HAPFactoryServiceProcess.FACTORY_TYPE, new HAPFactoryServiceProcess(this.m_processRuntime, this.m_processManager, this.m_resourceManager));
 		
 		//component
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, new HAPParserResourceValue()));
+
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionSuite(this.getExpressionManager().getExpressionParser()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionGroup(this.getResourceDefinitionManager()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionScriptGroup(this.getExpressionManager().getExpressionParser()));

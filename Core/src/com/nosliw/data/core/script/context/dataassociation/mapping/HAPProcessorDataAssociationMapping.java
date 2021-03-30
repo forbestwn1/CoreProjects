@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -33,17 +36,17 @@ import com.nosliw.data.core.script.context.dataassociation.HAPUtilityDAProcess;
 
 public class HAPProcessorDataAssociationMapping {
 
-	public static HAPExecutableDataAssociationMapping processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociationMapping dataAssociation, HAPParentContext output, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableDataAssociationMapping processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociationMapping dataAssociation, HAPParentContext output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociationMapping out = new HAPExecutableDataAssociationMapping(dataAssociation, input);
-		processDataAssociation(out, input, dataAssociation, output, daProcessConfigure, runtimeEnv);
+		processDataAssociation(out, input, dataAssociation, output, attachmentContainer, daProcessConfigure, runtimeEnv);
 		return out;
 	}
 	
 	//process input configure for activity and generate flat context for activity
-	public static void processDataAssociation(HAPExecutableDataAssociationMapping out, HAPParentContext input, HAPDefinitionDataAssociationMapping dataAssociation, HAPParentContext output, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processDataAssociation(HAPExecutableDataAssociationMapping out, HAPParentContext input, HAPDefinitionDataAssociationMapping dataAssociation, HAPParentContext output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		Map<String, HAPContext> associations = dataAssociation.getAssociations();
 		for(String targetName : associations.keySet()) {
-			HAPExecutableAssociation associationExe = processAssociation(input, associations.get(targetName), output.getContext(targetName), out.getInputDependency(), daProcessConfigure, runtimeEnv);
+			HAPExecutableAssociation associationExe = processAssociation(input, associations.get(targetName), output.getContext(targetName), attachmentContainer, out.getInputDependency(), daProcessConfigure, runtimeEnv);
 			out.addAssociation(targetName, associationExe);
 		}
 	}
@@ -64,7 +67,7 @@ public class HAPProcessorDataAssociationMapping {
 		List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
 
 		//process data association definition in order to find missing context data definition from input
-		HAPContext daContextProcessed = HAPProcessorContext.process(associationDef, input, null, errors, processConfigure, runtimeEnv);
+		HAPContext daContextProcessed = HAPProcessorContext.process(associationDef, input, null, null, errors, processConfigure, runtimeEnv);
 		
 		//try to enhance input context according to error
 		if(inputEnhance) {
@@ -90,10 +93,10 @@ public class HAPProcessorDataAssociationMapping {
 		//try to enhance output context
 		if(outputEnhance) {
 			for(String eleName : associationDef.getElementNames()) {
-				HAPUtilityContext.processContextDefElement(new HAPInfoContextNode(associationDef.getElement(eleName).getDefinition(), new HAPContextPath(eleName)), new HAPContextDefEleProcessor() {
+				HAPUtilityContext.processContextRootElement(associationDef.getElement(eleName), eleName, new HAPContextDefEleProcessor() {
 
 					@Override
-					public boolean process(HAPInfoContextNode eleInfo, Object value) {
+					public Pair<Boolean, HAPContextDefinitionElement> process(HAPInfoContextNode eleInfo, Object value) {
 						HAPContextStructure outputStructure = (HAPContextStructure)value;
 						if(eleInfo.getContextElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 							//only relative element
@@ -120,13 +123,11 @@ public class HAPProcessorDataAssociationMapping {
 								else  throw new RuntimeException();
 							}
 						}
-						return false;
+						return null;
 					}
 
 					@Override
-					public boolean postProcess(HAPInfoContextNode eleInfo, Object value) {
-						return false;
-					}
+					public void postProcess(HAPInfoContextNode eleInfo, Object value) {  }
 				}, outputStructure);
 			}			
 		}		
@@ -151,7 +152,7 @@ public class HAPProcessorDataAssociationMapping {
 		return out;
 	}
 
-	private static HAPExecutableAssociation processAssociation(HAPParentContext input, HAPContext associationDef, HAPContextStructure outputStructure, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	private static HAPExecutableAssociation processAssociation(HAPParentContext input, HAPContext associationDef, HAPContextStructure outputStructure, HAPContainerAttachment attachmentContainer, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableAssociation out = new HAPExecutableAssociation(input, associationDef, outputStructure);
 
 		associationDef = normalizeOutputNameInDataAssociation(input, associationDef, outputStructure);
@@ -159,10 +160,10 @@ public class HAPProcessorDataAssociationMapping {
 		//process mapping
 		List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
 		HAPConfigureContextProcessor processConfigure = HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(daProcessConfigure);
-		HAPContext daContextProcessed = HAPProcessorContext.process(associationDef, input, parentDependency, errors, processConfigure, runtimeEnv);
-		
+		HAPContext daContextProcessed = HAPProcessorContext.process(associationDef, input, attachmentContainer, parentDependency, errors, processConfigure, runtimeEnv);
 		out.setMapping(daContextProcessed);
-		buildPathMappingInDataAssociation(out);
+		buildRelativePathMappingInDataAssociation(out);
+		buildConstantAssignmentInDataAssociation(out);
 
 		//matchers to output
 		switch(outputStructure.getType()) {
@@ -185,7 +186,8 @@ public class HAPProcessorDataAssociationMapping {
 		return out;
 	}
 
-	private static void buildPathMappingInDataAssociation(HAPExecutableAssociation dataAssociationExe) {
+	//build assignment path mapping according to relative node
+	private static void buildRelativePathMappingInDataAssociation(HAPExecutableAssociation dataAssociationExe) {
 		//build path mapping according for mapped element only
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
 		for(String eleName : dataAssociationExe.getMapping().getElementNames()) {
@@ -195,8 +197,22 @@ public class HAPProcessorDataAssociationMapping {
 				pathMapping.putAll(HAPUtilityDataAssociation.buildRelativePathMapping(root, buildRootNameAccordingToFlat(eleName, dataAssociationExe.isFlatOutput()), dataAssociationExe.isFlatInput()));
 			}
 		}
-		dataAssociationExe.setPathMapping(pathMapping);
+		dataAssociationExe.setRelativePathMappings(pathMapping);
 	}
+
+	private static void buildConstantAssignmentInDataAssociation(HAPExecutableAssociation dataAssociationExe) {
+		//build path mapping according for mapped element only
+		Map<String, Object> constantAssignment = new LinkedHashMap<String, Object>();
+		for(String eleName : dataAssociationExe.getMapping().getElementNames()) {
+			HAPContextDefinitionRoot root = dataAssociationExe.getMapping().getElement(eleName);
+			//only physical root do mapping
+			if(HAPConstantShared.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(root.getInfo()))) {
+				constantAssignment.putAll(HAPUtilityDataAssociation.buildConstantAssignment(root, buildRootNameAccordingToFlat(eleName, dataAssociationExe.isFlatOutput()), dataAssociationExe.isFlatInput()));
+			}
+		}
+		dataAssociationExe.setConstantAssignments(constantAssignment);
+	}
+
 	
 	//if flat, aaa__bbb
 	//if not flat, aaa.bbb

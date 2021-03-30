@@ -140,7 +140,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			HAPData constantData = constantNode.getData();
 			if(constantData!=null) {
 				//build service attachment
-				HAPAttachmentEntity atta = new HAPAttachmentEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATA);
+				HAPAttachmentEntity atta = new HAPAttachmentEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE);
 				atta.setEntity(new JSONObject(constantData.toStringValue(HAPSerializationFormat.JSON)));
 				attachs.add(atta);
 			}

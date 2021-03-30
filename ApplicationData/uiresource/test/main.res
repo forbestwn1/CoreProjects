@@ -49,14 +49,12 @@
 			var out = node_createServiceRequestInfoSequence(undefined);
 			out.addRequest(env.getUIValidationRequest(env.getTagsByAttribute(node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_STATICID, "withRule1"), {
 				success : function(request, errorMessages){
-					if(errorMessages==null){
-/*
-						return env.getServiceRequest("service", {
+//					if(errorMessages==null){
+						return env.getServiceRequest("simpleServiceWithoutInterface", {
 							success : function(request){
 							}
 						});
-*/						
-					}
+//					}
 				}
 			}));
 			
@@ -199,7 +197,7 @@
 							definition : {
 								value : {
 									dataTypeId: "test.string",
-									value: "This is my world!"
+									value: "Constant data from context"
 								}
 							}
 						},
@@ -271,9 +269,32 @@
 						},
 						"parm2" : {
 							"definition" : {
+								"path" : "forsimpleservice_1_parm2"
+							}
+						},
+						"parm3" : {
+							"definition" : {
 								"path" : "local_var_for_parm2"
 							}
-						}
+						},
+						"parm4" : {
+							"definition" : {
+								"path" : "constantFromContext7"
+							}
+						},
+						"parm5" : {
+							definition : {
+								value : {
+									dataTypeId: "test.string",
+									value: "Constant value!"
+								}
+							}
+						},
+						"parm6" : {
+							definition : {
+								"constant" : "constantFromAtt1"
+							}
+						},
 					}
 				},
 				"outputMapping" : {
@@ -349,12 +370,15 @@
 				"referenceId" : "simpleoutput_internalinterface"
 			},	
 		],
-		"data" : [
+		"value" : [
 			{
 				"name": "constantFromAtt1",
-				"entity" : {
-					dataTypeId: "test.string;1.0.0",
-					value: "schoolName"
+				"entity" : 
+				{
+					"value" : {
+						dataTypeId: "test.string;1.0.0",
+						value: "Constant in attachment"
+					}
 				}
 			}
 		],

@@ -41,7 +41,7 @@ public class HAPBaseServlet  extends HttpServlet{
 			    writer.println(HAPJsonUtility.formatJson(content));		
 //			    writer.println(content);		
 			}
-			catch(Exception e) {
+			catch(Throwable e) {
 				e.printStackTrace();
 			}
 			finally {

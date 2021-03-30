@@ -10,8 +10,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -90,7 +90,7 @@ public class HAPUtilityServiceUse {
 				Object eleObj = eleByName.get(name);
 				HAPAttachmentReference ele = (HAPAttachmentReference)eleObj;
 				//build from ele
-				provider = buildServiceProviderFromAttachment(ele, serviceDefinitionMan);
+//				provider = buildServiceProviderFromAttachment(ele, serviceDefinitionMan);
 //				if(HAPAttachmentUtility.isOverridenByParent(ele)) {
 //					//inherited from parent
 //					if(parent!=null) {
@@ -105,20 +105,20 @@ public class HAPUtilityServiceUse {
 //					//build from ele
 //					provider = buildServiceProviderFromAttachment(ele, serviceDefinitionMan);
 //				}
-				out.put(provider.getName(), provider);
+//				out.put(provider.getName(), provider);
 			}
 		}
 		return out;
 	}
 	
-	private static HAPDefinitionServiceProvider buildServiceProviderFromAttachment(HAPAttachmentReference ele, HAPManagerServiceDefinition serviceDefinitionMan) {
-		HAPDefinitionServiceProvider provider = new HAPDefinitionServiceProvider();
-		ele.cloneToEntityInfo(provider);
-		String serviceId = ele.getReferenceId().getIdLiterate();
-		provider.setServiceId(serviceId);
-		provider.setServiceInterface(serviceDefinitionMan.getDefinition(serviceId).getStaticInfo().getInterface());
-		return provider;
-	}
+//	private static HAPDefinitionServiceProvider buildServiceProviderFromAttachment(HAPAttachmentReference ele, HAPManagerServiceDefinition serviceDefinitionMan) {
+//		HAPDefinitionServiceProvider provider = new HAPDefinitionServiceProvider();
+//		ele.cloneToEntityInfo(provider);
+//		String serviceId = ele.getReferenceId().getIdLiterate();
+//		provider.setServiceId(serviceId);
+//		provider.setServiceInterface(serviceDefinitionMan.getDefinition(serviceId).getStaticInfo().getInterface());
+//		return provider;
+//	}
 	
 //	public static Map<String, HAPDefinitionServiceProvider> buildServiceProvider(
 //			Map<String, HAPDefinitionServiceProvider> serviceProviders,

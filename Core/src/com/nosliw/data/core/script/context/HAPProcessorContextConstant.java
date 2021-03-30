@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,18 +14,22 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
+import com.nosliw.data.core.value.HAPResourceDefinitionValue;
 
 public class HAPProcessorContextConstant {
 
 	static public HAPContextGroup process(
 			HAPContextGroup originalContextGroup,
 			HAPParentContext parent,
+			HAPContainerAttachment attachmentContainer,
 			String inheritMode,
 			HAPRuntimeEnvironment runtimeEnv){
 
@@ -33,9 +38,12 @@ public class HAPProcessorContextConstant {
 		for(String parentName : parent.getNames()) {
 			merged = mergeWithParent(merged, (HAPContextGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedContext(parentName, parent, merged), false), inheritMode);
 		}
-		
+
+		//process constant ref in context
+		HAPContextGroup out =  solidateConstantRefs(merged, attachmentContainer, runtimeEnv);
+
 		//figure out constant value (some constant may use another constant)
-		HAPContextGroup out =  solidateConstantDefs(merged, runtimeEnv);
+		out =  solidateConstantDefs(out, runtimeEnv);
 		
 		//figure out root that ture out to be constant value, then convert to constant root
 		out = discoverConstantContextRoot(out);
@@ -43,6 +51,7 @@ public class HAPProcessorContextConstant {
 		return out;
 	}
 
+	
 	//merge constant with parent
 	//child constant has higher priority than parent
 	private static HAPContextGroup mergeWithParent(
@@ -105,6 +114,38 @@ public class HAPProcessorContextConstant {
 		}
 		else return null;
 	}
+
+	static private HAPContextGroup solidateConstantRefs(
+			HAPContextGroup contextGroup,
+			HAPContainerAttachment attachmentContainer,
+			HAPRuntimeEnvironment runtimeEnv){
+		if(attachmentContainer==null)   return contextGroup;
+		HAPContextGroup out = contextGroup.cloneContextGroup();
+		for(String categary : HAPContextGroup.getAllContextTypes()) {
+			Map<String, HAPContextDefinitionRoot> cotextDefRoots = out.getElements(categary);
+			for(String name : cotextDefRoots.keySet()) {
+				HAPContextDefinitionRoot contextDefRoot = cotextDefRoots.get(name);
+				HAPUtilityContext.processContextRootElement(contextDefRoot, name, new HAPContextDefEleProcessor() {
+					@Override
+					public Pair<Boolean, HAPContextDefinitionElement> process(HAPInfoContextNode eleInfo, Object value) {
+						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANTREF.equals(eleInfo.getContextElement().getType())) {
+							HAPContextDefinitionLeafConstantReference constantRefEle = (HAPContextDefinitionLeafConstantReference)eleInfo.getContextElement();
+							HAPResourceDefinitionValue valueResourceDef = (HAPResourceDefinitionValue)HAPUtilityAttachment.getResourceDefinition(attachmentContainer, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, constantRefEle.getConstantName(), runtimeEnv.getResourceDefinitionManager());
+							HAPContextDefinitionLeafConstant newEle = new HAPContextDefinitionLeafConstant(valueResourceDef.getValue().getValue());
+							return Pair.of(true, newEle);
+						}
+						return null;
+					}
+
+					@Override
+					public void postProcess(HAPInfoContextNode eleInfo, Object value) {}
+				}, null);
+			}
+		}
+		return out;
+	}
+
+
 	
 	/**
 	 * process all constants defs to get data of constant
@@ -119,25 +160,23 @@ public class HAPProcessorContextConstant {
 			Map<String, HAPContextDefinitionRoot> cotextDefRoots = out.getElements(categary);
 			for(String name : cotextDefRoots.keySet()) {
 				HAPContextDefinitionRoot contextDefRoot = cotextDefRoots.get(name);
-				HAPUtilityContext.processContextDefElement(new HAPInfoContextNode(contextDefRoot.getDefinition(), new HAPContextPath(name)), new HAPContextDefEleProcessor() {
+				HAPUtilityContext.processContextRootElement(contextDefRoot, name, new HAPContextDefEleProcessor() {
 					@Override
-					public boolean process(HAPInfoContextNode eleInfo, Object value) {
+					public Pair<Boolean, HAPContextDefinitionElement> process(HAPInfoContextNode eleInfo, Object value) {
 						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(eleInfo.getContextElement().getType())) {
 							solidateConstantDefEle((HAPContextDefinitionLeafConstant)eleInfo.getContextElement(), contextGroup, runtimeEnv);
 						}
-						return true;
+						return null;
 					}
 
 					@Override
-					public boolean postProcess(HAPInfoContextNode eleInfo, Object value) {
-						return true;
-					}}, null);
+					public void postProcess(HAPInfoContextNode eleInfo, Object value) {}
+				}, null);
 			}
 		}
 		return out;
 	}
 
-	
 	static private void solidateConstantDefEle(
 			HAPContextDefinitionLeafConstant contextDefConstant, 
 			HAPContextGroup contextGroup,

@@ -109,6 +109,7 @@ public class HAPParserContext{
 		Object criteriaDef = eleDefJson.opt(HAPContextDefinitionLeafData.CRITERIA);
 		Object valueJsonObj = eleDefJson.opt(HAPContextDefinitionLeafConstant.VALUE);
 		JSONObject childrenJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionNode.CHILD);
+		String constantName = (String)eleDefJson.opt(HAPContextDefinitionLeafConstantReference.CONSTANT);
 		
 		if(pathObj!=null){
 			//relative
@@ -149,6 +150,10 @@ public class HAPParserContext{
 			//constant
 			contextRootDef = new HAPContextDefinitionLeafConstant();
 			((HAPContextDefinitionLeafConstant)contextRootDef).setValue(valueJsonObj);
+		}
+		else if(constantName!=null) {
+			//constant reference
+			contextRootDef = new HAPContextDefinitionLeafConstantReference(constantName);
 		}
 		else {
 			//value

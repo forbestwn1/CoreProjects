@@ -9,8 +9,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -66,8 +66,10 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	//data association output context
 	private HAPContext m_mapping;
 	
-	//path mapping (output path in context - input path in context) during runtime
-	private Map<String, String> m_pathMapping;
+	//path mapping for relative node (output path in context - input path in context) during runtime
+	private Map<String, String> m_relativePathMapping;
+	
+	private Map<String, Object> m_constantAssignment;
 	
 	//match from data association output to target context variable
 	private Map<String, HAPMatchers> m_outputMatchers;
@@ -82,7 +84,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_input = new LinkedHashMap<String, HAPContextStructure>();
 		this.m_isFlatInput = new LinkedHashMap<String, Boolean>();
-		this.m_pathMapping = new LinkedHashMap<String, String>();
+		this.m_relativePathMapping = new LinkedHashMap<String, String>();
 	}
 
 	public void addInputStructure(String name, HAPContextStructure structure) {  
@@ -114,9 +116,12 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 //		if(this.m_mapping==null)   return null;
 //		return this.m_mapping.toSolidContext();
 //	}
+	
+	public void setConstantAssignments(Map<String, Object> constantAssignment) {     this.m_constantAssignment = constantAssignment;      }
+	public Map<String, Object> getConstantAssignments(){    return this.m_constantAssignment;   }
 
-	public void setPathMapping(Map<String, String> mapping) {    this.m_pathMapping = mapping;    }
-	public Map<String, String> getPathMapping() {  return this.m_pathMapping;  }
+	public void setRelativePathMappings(Map<String, String> mapping) {    this.m_relativePathMapping = mapping;    }
+	public Map<String, String> getRelativePathMappings() {  return this.m_relativePathMapping;  }
 
 	public void addOutputMatchers(String path, HAPMatchers matchers) {   this.m_outputMatchers.put(path, matchers);     }
 	public Map<String, HAPMatchers> getOutputMatchers() {  return this.m_outputMatchers; }
@@ -126,12 +131,12 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		//update path mapping
 		Map<String, String> processedPathMapping = new LinkedHashMap<String, String>();
 
-		for(String p1 : m_pathMapping.keySet()) {
+		for(String p1 : m_relativePathMapping.keySet()) {
 			HAPContextPath cPath = new HAPContextPath(p1);
 			HAPContextPath cPath1 = new HAPContextPath(new HAPContextDefinitionRootId(nameUpdate.getUpdatedName(cPath.getRootElementId().getFullName())), cPath.getSubPath());
-			processedPathMapping.put(cPath1.getFullPath(), m_pathMapping.get(p1));
+			processedPathMapping.put(cPath1.getFullPath(), m_relativePathMapping.get(p1));
 		}
-		this.m_pathMapping = processedPathMapping;
+		this.m_relativePathMapping = processedPathMapping;
 
 		//update context
 		this.m_mapping.updateRootName(nameUpdate);
@@ -141,7 +146,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CONTEXT, this.m_mapping.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(PATHMAPPING, HAPJsonUtility.buildMapJson(m_pathMapping));
+		jsonMap.put(PATHMAPPING, HAPJsonUtility.buildMapJson(m_relativePathMapping));
 
 		jsonMap.put(FLATOUTPUT, this.isFlatOutput()+"");
 		typeJsonMap.put(FLATOUTPUT, Boolean.class);
@@ -165,7 +170,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		  
 		JSONObject pathMappingJsonObj = jsonObj.getJSONObject(PATHMAPPING);
 		for(Object key1 : pathMappingJsonObj.keySet()) {
-			this.m_pathMapping.put((String)key1, pathMappingJsonObj.getString((String)key1));
+			this.m_relativePathMapping.put((String)key1, pathMappingJsonObj.getString((String)key1));
 		}
 		
 		JSONObject inputJson = jsonObj.getJSONObject(INPUT);

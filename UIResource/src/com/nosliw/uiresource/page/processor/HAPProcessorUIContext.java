@@ -92,7 +92,7 @@ public class HAPProcessorUIContext {
 		}
 		
 		//merge with context defined in tag unit
-		HAPContextGroup extContextGroup = HAPProcessorContext.processStatic(contextDef, HAPParentContext.createDefault(parentContext), null, contextProcessorConfig, runtimeEnv);
+		HAPContextGroup extContextGroup = HAPProcessorContext.processStatic(contextDef, HAPParentContext.createDefault(parentContext), uiExe.getUIUnitDefinition().getAttachmentContainer(), null, contextProcessorConfig, runtimeEnv);
 		uiExe.getBody().setContext(extContextGroup);
 
 		if(uiExe.getType().equals(HAPConstantShared.UIRESOURCE_TYPE_TAG)) {

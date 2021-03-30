@@ -3,6 +3,8 @@ package com.nosliw.data.core.script.context.dataassociation.mapping;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -10,6 +12,7 @@ import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextPath;
@@ -23,7 +26,7 @@ public class HAPUtilityDataAssociation {
 	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, HAPContextStructure context){
 		Map<String, Boolean> isFlatInput = new LinkedHashMap<String, Boolean>();
 		isFlatInput.put(HAPConstantShared.NAME_DEFAULT, context.isFlat());
-		Map<String, String> mapping = buildRelativePathMapping(contextRoot.getDefinition(), rootName, isFlatInput);
+		Map<String, String> mapping = buildRelativePathMapping(contextRoot, rootName, isFlatInput);
 		Map<String, String> out = new LinkedHashMap<String, String>();
 		for(String name : mapping.keySet()) {
 			String mappedName = mapping.get(name);
@@ -37,29 +40,42 @@ public class HAPUtilityDataAssociation {
 
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
 	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, Map<String, Boolean> isFlatInput){
-		return buildRelativePathMapping(contextRoot.getDefinition(), rootName, isFlatInput);
-	}
-	
-	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionElement contextDefEle, String rootName, Map<String, Boolean> isFlatInput){
 		Map<String, String> out = new LinkedHashMap<String, String>();
-		HAPUtilityContext.processContextDefElement(new HAPInfoContextNode(contextDefEle, new HAPContextPath(rootName)), new HAPContextDefEleProcessor() {
+		HAPUtilityContext.processContextRootElement(contextRoot, rootName, new HAPContextDefEleProcessor() {
 			@Override
-			public boolean process(HAPInfoContextNode eleInfo, Object value) {
+			public Pair<Boolean, HAPContextDefinitionElement> process(HAPInfoContextNode eleInfo, Object value) {
 				if(eleInfo.getContextElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)eleInfo.getContextElement();
 					HAPContextPath contextPath = relativeEle.getPath();
 					String parent = relativeEle.getParent();
 					String sourcePath = HAPNamingConversionUtility.cascadePath(parent, isFlatInput.get(parent)? contextPath.getFullPath() : contextPath.getContextFullPath());
 					out.put(eleInfo.getContextPath().getFullPath(), sourcePath);
-					return false;
+					return Pair.of(false, null);
 				}
-				return true;
+				return null;
 			}
 
 			@Override
-			public boolean postProcess(HAPInfoContextNode eleInfo, Object value) {
-				return true;
-			}}, null);
+			public void postProcess(HAPInfoContextNode eleInfo, Object value) {	}}, null);
+		return out;
+	}
+	
+	//build constant assignment mapping
+	public static Map<String, Object> buildConstantAssignment(HAPContextDefinitionRoot contextRoot, String rootName, Map<String, Boolean> isFlatInput){
+		Map<String, Object> out = new LinkedHashMap<String, Object>();
+		HAPUtilityContext.processContextRootElement(contextRoot, rootName, new HAPContextDefEleProcessor() {
+			@Override
+			public Pair<Boolean, HAPContextDefinitionElement> process(HAPInfoContextNode eleInfo, Object value) {
+				if(eleInfo.getContextElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+					HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)eleInfo.getContextElement();
+					out.put(eleInfo.getContextPath().getFullPath(), constantEle.getValue());
+					return Pair.of(false, null);
+				}
+				return null;
+			}
+
+			@Override
+			public void postProcess(HAPInfoContextNode eleInfo, Object value) {		}}, null);
 		return out;
 	}
 	

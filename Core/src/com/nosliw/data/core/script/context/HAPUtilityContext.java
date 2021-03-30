@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
@@ -42,20 +44,42 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
+	//traverse through all the context definition element, and process it
+	public static void processContextRootElement(HAPContextDefinitionRoot contextRoot, String rootName, HAPContextDefEleProcessor processor, Object value) {
+		HAPContextDefinitionElement processedEle = processContextDefElement(new HAPInfoContextNode(contextRoot.getDefinition(), new HAPContextPath(rootName)), processor, value);
+		if(processedEle!=null)  contextRoot.setDefinition(processedEle);
+	}
 	
 	//traverse through all the context definition element, and process it
-	public static void processContextDefElement(HAPInfoContextNode contextEleInfo, HAPContextDefEleProcessor processor, Object value) {
+	//if return not null, then means new context element
+	private static HAPContextDefinitionElement processContextDefElement(HAPInfoContextNode contextEleInfo, HAPContextDefEleProcessor processor, Object value) {
+		HAPContextDefinitionElement out = null;
 		HAPContextDefinitionElement contextDefEle = contextEleInfo.getContextElement(); 
 		HAPContextPath path = contextEleInfo.getContextPath();
-		if(processor.process(contextEleInfo, value)) {
+		Pair<Boolean, HAPContextDefinitionElement> processOut = processor.process(contextEleInfo, value);
+		boolean going = true;
+		if(processOut!=null) {
+			if(processOut.getLeft()!=null)    going = processOut.getLeft();
+			if(processOut.getRight()!=null) {
+				contextDefEle = processOut.getRight();
+				contextEleInfo.setContextElement(contextDefEle);
+				out = contextDefEle;
+			}
+		}
+		if(going) {
 			if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
 				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
 				for(String childNodeName : nodeEle.getChildren().keySet()) {
-					processContextDefElement(new HAPInfoContextNode(nodeEle.getChild(childNodeName), path.appendSegment(childNodeName)), processor, value);
+					HAPContextDefinitionElement childProcessed = processContextDefElement(new HAPInfoContextNode(nodeEle.getChild(childNodeName), path.appendSegment(childNodeName)), processor, value);
+					if(childProcessed!=null) {
+						//replace with new element
+						nodeEle.addChild(childNodeName, childProcessed);
+					}
 				}
 			}
 		}
 		processor.postProcess(contextEleInfo, value);
+		return out;
 	}
 
 	public static HAPContextStructure getReferedContext(String name, HAPParentContext parentContext, HAPContextStructure self) {

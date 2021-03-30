@@ -12,6 +12,7 @@ public class HAPInfoContextNode {
 	}
 	
 	public HAPContextDefinitionElement getContextElement() {   return this.m_contextLeaf;   }
+	public void setContextElement(HAPContextDefinitionElement ele) {    this.m_contextLeaf = ele;    }
 	
 	public HAPContextPath getContextPath() {    return this.m_contextPath;    }
 	
