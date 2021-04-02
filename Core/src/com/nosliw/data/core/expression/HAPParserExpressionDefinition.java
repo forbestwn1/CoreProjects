@@ -27,7 +27,7 @@ public class HAPParserExpressionDefinition {
 			Object expressionObj = jsonObj.opt(HAPDefinitionExpression.EXPRESSION);
 			if(expressionObj!=null) {
 				//process
-				expressionGroup.addEntityElement(HAPParserExpressionDefinition.parseExpressionDefinition(jsonObj));
+				expressionGroup.addEntityElement(HAPParserExpressionDefinition.parseExpressionDefinition(expressionObj));
 			}
 			else {
 				//reference

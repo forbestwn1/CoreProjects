@@ -64,6 +64,8 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 		}
 	}
 	
+	public void setContext(HAPContext context) {	this.setContextStructure(context);	}
+	
 	@Override
 	public HAPDefinitionExpressionSuite cloneExpressionSuiteDefinition() {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();

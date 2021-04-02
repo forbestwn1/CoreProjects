@@ -71,12 +71,14 @@
 		}
 	},
 	"attachment": {
-		"data" : [
+		"value" : [
 			{
 				"name": "fromConstant",
 				"entity": {
-					"dataTypeId": "test.integer;1.0.0",
-					"value": 1
+					"value" : {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 1
+					}
 				}
 			},
 		],

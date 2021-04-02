@@ -242,7 +242,7 @@ public class HAPParserPage implements HAPParserResource{
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, ATTACHMENT);
 		for(Element childEle : childEles){
 			try {
-				JSONObject attachmentDefJson = new JSONObject(childEle.html());
+				JSONObject attachmentDefJson = new JSONObject(getElementText(childEle));
 				HAPUtilityAttachment.parseDefinition(attachmentDefJson, resourceUnit.getAttachmentContainer());
 				break;
 			} catch (JSONException e) {
@@ -250,6 +250,11 @@ public class HAPParserPage implements HAPParserResource{
 			}
 		}
 		for(Element childEle : childEles)  childEle.remove();
+	}
+	
+	private String getElementText(Element ele) {
+		return StringEscapeUtils.unescapeHtml(ele.html());
+//		childEle.ownText().html()
 	}
 	
 	private void parseUnitServiceBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {

@@ -16,7 +16,7 @@ public class HAPContextDefinitionRootId {
 	
 	public HAPContextDefinitionRootId(String name) {
 		String[] segs = HAPNamingConversionUtility.splitTextByElements(name, HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);
-		this.m_name = segs[0];
+		if(segs.length>=1)   this.m_name = segs[0];
 		if(segs.length>=2)   this.m_categary = segs[1];
 	}
 	

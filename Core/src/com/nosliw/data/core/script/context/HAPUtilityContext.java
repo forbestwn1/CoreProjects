@@ -155,13 +155,11 @@ public class HAPUtilityContext {
 		else {
 			String seg = pathSegs[0];
 			HAPContextDefinitionElement parentEle = targetRoot.getDefinition();
+			if(parentEle==null && pathSegs.length>0) {
+				parentEle = new HAPContextDefinitionNode();
+				targetRoot.setDefinition(parentEle);
+			}
 			for(int i=0; i<pathSegs.length-1; i++) {
-				if(i==0) {
-					if(parentEle==null) {
-						parentEle = new HAPContextDefinitionNode();
-						targetRoot.setDefinition(parentEle);
-					}
-				}
 				String pathSeg = pathSegs[i]; 
 				HAPContextDefinitionElement child = parentEle.getChild(pathSeg);
 				if(child==null) {
@@ -459,7 +457,21 @@ public class HAPUtilityContext {
 
 	public static Map<String, HAPMatchers> mergeContextRoot(HAPContextDefinitionRoot origin, HAPContextDefinitionRoot expect, boolean modifyStructure, HAPRuntimeEnvironment runtimeEnv) {
 		Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
-		mergeContextDefitionElement(origin.getDefinition(), expect.getDefinition(), modifyStructure, matchers, null, runtimeEnv);
+		
+		HAPUtilityContext.processContextRootElement(expect, "", new HAPContextDefEleProcessor() {
+			@Override
+			public Pair<Boolean, HAPContextDefinitionElement> process(HAPInfoContextNode eleInfo, Object value) {
+				String path = eleInfo.getContextPath().getSubPath();
+				mergeContextDefitionElement(getDescendant(origin.getDefinition(), path), eleInfo.getContextElement(), modifyStructure, matchers, path, runtimeEnv);
+				return null;
+			}
+
+			@Override
+			public void postProcess(HAPInfoContextNode eleInfo, Object value) {	}
+		}, null);
+		
+		
+//		mergeContextDefitionElement(origin.getDefinition(), expect.getDefinition(), modifyStructure, matchers, null, runtimeEnv);
 		return matchers;
 	}
 

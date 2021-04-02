@@ -11,7 +11,7 @@ import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.HAPUtilityDataComponent;
-import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.script.context.HAPContext;
 
 public class HAPUtilityExpressionComponent {
 
@@ -19,18 +19,27 @@ public class HAPUtilityExpressionComponent {
 		return buildExpressionSuiteFromComponent(complexEntity, null);
 	}
 	
-	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPContextStructure contextStructure) {
+	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPContext context) {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
 		
 		//build context
-		if(contextStructure==null)		complexEntity.cloneToDataContext(out);
-		else   out.setContextStructure(contextStructure);
+		if(context==null)		complexEntity.cloneToDataContext(out);
+		else   out.setContext(context);
 		
-		//build constant
+		//build constant from attachment
 		for(HAPDefinitionConstant constantDef : HAPUtilityDataComponent.buildDataConstantDefinition(complexEntity.getAttachmentContainer())) {
 			out.addConstantDefinition(constantDef);
 		}
 		
+		//constant from context
+		Map<String, Object> constantsValue = context.getConstantValue();
+		for(String id : constantsValue.keySet()) {
+			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
+			if(constantDef.isData()) {
+				out.addConstantDefinition(constantDef);
+			}
+		}
+
 		//build expression definition
 		buildExpressionSuiteFromAttachment(out, complexEntity.getAttachmentContainer());
 		
