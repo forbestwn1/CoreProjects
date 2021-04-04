@@ -21,7 +21,7 @@
 	<br>
 	EXPRESSION IN ATTRIBUTE:<span  style="color:<%=#|?(varFromContext1)?.attr1.attr11.subString(from:&(constantFromContext8)&,to:&(constantFromContext9)&)|#.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
 	<br>
-	EXPRESSION REFERENCE:<%=#|<(expressionInternal)>|#.value + ' 6666 ' %>
+	EXPRESSION REFERENCE:<%=#|<(expressionInternal1)>|#.value + ' 6666 ' %>
 	<br>
 
 	<!-- Tag  -->
@@ -227,6 +227,15 @@
 								}
 							}
 						},				
+						"aaa":{
+							definition : {
+								"criteria": "test.string;1.0.0",
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "This is my world!"
+							}
+						},
 						constantFromContext1 : {
 							definition: {
 								value : "<%=5+6+7%>",
@@ -442,24 +451,17 @@
 	{
 		"expression" : [
 			{
-				"name" : "expressionInternal",
+				"name" : "expressionInternal1",
 				"entity" : {
 					"expression" : "?(varFromContext1)?.attr1.attr11.subString(from:&(constantFromContext8)&,to:&(constantFromContext9)&)",
 				}
 			},
 			{
-				"name" : "expressionLocal",
-				"referenceId": {
-					"structure" : "local",
-					"id" : "forsimpleservice_1"
+				"name" : "expressionInternal",
+				"entity" : {
+					"expression" : "?(aaa)?.subString(from:&(constantFromContext8)&,to:&(constantFromContext9)&)",
 				}
-			},
-			{
-				"name" : "expressionExternal",
-				"referenceId": "",
-				"adpator" : {
-				}
-			},
+			}
 		],
 		"service" : [
 			{
@@ -481,7 +483,17 @@
 						value: "Constant in attachment"
 					}
 				}
-			}
+			},
+			{
+				"name": "constantFromAtt2",
+				"entity" : 
+				{
+					"value" : {
+							dataTypeId: "test.integer",
+							value: 15
+					}
+				}
+			},
 		],
 		"context" : [
 			{

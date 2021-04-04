@@ -50,8 +50,16 @@ public class HAPManagerExpression {
 	}
 
 	public HAPExecutableExpressionGroup getExpression(HAPResourceId expressionId, HAPContextResourceExpressionGroup context, Map<String, String> configure) {
-		if(context==null)  context = HAPContextResourceExpressionGroup.createContext(this.getResourceDefinitionManager());
-		HAPEntityWithResourceContext resourceDefWithContext = context.getResourceDefinition(expressionId);
+		HAPEntityWithResourceContext resourceDefWithContext = null;
+		if(context==null) {
+			HAPResourceDefinitionExpressionGroup exressionGroupResourceDef = (HAPResourceDefinitionExpressionGroup)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionId);
+			HAPDefinitionExpressionSuiteImp suite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(exressionGroupResourceDef, this.m_runtimeEnv);
+			context = HAPContextResourceExpressionGroup.createContext(suite, this.getResourceDefinitionManager());
+			resourceDefWithContext = new HAPEntityWithResourceContext(exressionGroupResourceDef, context);
+		}
+		else {
+			resourceDefWithContext = context.getResourceDefinition(expressionId);
+		}
 		
 		if(configure==null) {
 			//build configure from definition info

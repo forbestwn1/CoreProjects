@@ -12,6 +12,7 @@ import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.value.HAPValue;
 
 public class HAPUtilityDataComponent {
@@ -34,6 +35,22 @@ public class HAPUtilityDataComponent {
 		return out;
 	}
 
+	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPContainerAttachment attContainer, HAPContext context){
+		Set<HAPDefinitionConstant> out = new HashSet<HAPDefinitionConstant>();
+		out.addAll(buildConstantDefinition(attContainer));
+		
+		Map<String, Object> constantsValue = context.getConstantValue();
+		for(String id : constantsValue.keySet()) {
+			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
+			out.add(constantDef);
+		}
+		return out;
+	}
+
+	public static Set<HAPDefinitionConstant> buildDataConstantDefinition(HAPContainerAttachment attContainer, HAPContext context){
+		return filterOutDataConstant(buildConstantDefinition(attContainer, context));
+	}
+	
 	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPContainerAttachment attContainer){
 		Set<HAPDefinitionConstant> out = new HashSet<HAPDefinitionConstant>();
 		Map<String, HAPAttachment> attrs = attContainer.getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE);
@@ -50,14 +67,7 @@ public class HAPUtilityDataComponent {
 	}
 
 	public static Set<HAPDefinitionConstant> buildDataConstantDefinition(HAPContainerAttachment attContainer){
-		Set<HAPDefinitionConstant> out = new HashSet<HAPDefinitionConstant>();
-		Set<HAPDefinitionConstant> constants = buildConstantDefinition(attContainer);
-		for(HAPDefinitionConstant constant : constants) {
-			if(constant.isData()) {
-				out.add(constant);
-			}
-		}
-		return out;
+		return filterOutDataConstant(buildConstantDefinition(attContainer));
 	}
 
 	public static Map<String, Object> buildConstantValue(HAPContainerAttachment attContainer){
@@ -76,5 +86,16 @@ public class HAPUtilityDataComponent {
 			out.put(constant.getId(), constant.getData());
 		}
 		return out;
-	}	
+	}
+	
+	private static Set<HAPDefinitionConstant> filterOutDataConstant(Set<HAPDefinitionConstant> constants){
+		Set<HAPDefinitionConstant> out = new HashSet<HAPDefinitionConstant>();
+		for(HAPDefinitionConstant constant : constants) {
+			if(constant.isData()) {
+				out.add(constant);
+			}
+		}
+		return out;
+		
+	}
 }

@@ -68,7 +68,7 @@ public class HAPProcessorScript {
 		contextProcessScript.setContextStructure(scriptGroupDef.getContextStructure());
 		
 		//suite
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(scriptGroupDef);
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(scriptGroupDef, runtimeEnv);
 		contextProcessScript.setExpressionDefinitionSuite(expressionSuite);
 		
 		HAPExecutableScriptGroup out = processScript(

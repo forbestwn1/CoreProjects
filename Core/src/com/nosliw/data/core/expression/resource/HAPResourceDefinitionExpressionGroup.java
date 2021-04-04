@@ -8,8 +8,8 @@ import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 
+//expressioin group resource
 public class HAPResourceDefinitionExpressionGroup  extends HAPComponentContainerElement implements HAPDefinitionExpressionGroup{
 
 	public HAPResourceDefinitionExpressionGroup() {}
@@ -60,12 +60,6 @@ public class HAPResourceDefinitionExpressionGroup  extends HAPComponentContainer
 	@Override
 	public void addConstantDefinition(HAPDefinitionConstant constantDef) {
 		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public HAPDefinitionServiceUse getService(String name) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 

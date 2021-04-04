@@ -1,6 +1,5 @@
 package com.nosliw.uiresource.page.processor;
 
-import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPProcessTracker;
@@ -39,7 +38,7 @@ public class HAPProcessorUIExpressionScript {
 //		uiExe.getExpressionContext().addDataVariable(varName, varsInfo.get(varName));
 //	}
 	
-	public static void buildExpressionScriptProcessContext(HAPExecutableUIUnit exeUnit){
+	public static void buildExpressionScriptProcessContext(HAPExecutableUIUnit exeUnit, HAPRuntimeEnvironment runtimeEnv){
 		HAPExecutableUIBody body = exeUnit.getBody();
 		HAPDefinitionUIUnit uiUnitDef = exeUnit.getUIUnitDefinition();
 
@@ -49,23 +48,13 @@ public class HAPProcessorUIExpressionScript {
 		processScriptContext.setContextStructure(body.getFlatContext().getContext());
 		
 		//expression suite from attachment
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getFlatContext().getContext());
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getFlatContext().getContext(), runtimeEnv);
 		processScriptContext.setExpressionDefinitionSuite(expressionSuite);
 		
-		//constant from attachment
-		Set<HAPDefinitionConstant> constantsDef = HAPUtilityDataComponent.buildConstantDefinition(uiUnitDef.getAttachmentContainer());
+		//constant from attachment and context
+		Set<HAPDefinitionConstant> constantsDef = HAPUtilityDataComponent.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), body.getFlatContext().getContext());
 		for(HAPDefinitionConstant constantDef : constantsDef) {
 			processScriptContext.addConstantDefinition(constantDef);
-		}
-		
-		//constant from context
-		Map<String, Object> constantsValue = body.getFlatContext().getConstantValue();
-		for(String id : constantsValue.keySet()) {
-			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
-			processScriptContext.addConstantDefinition(constantDef);
-			if(constantDef.isData()) {
-				processScriptContext.addConstantDefinition(constantDef);
-			}
 		}
 		
 		//child tag

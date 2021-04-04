@@ -117,12 +117,6 @@
 			"element" : [
 				{
 					"expression" : "!(test.string)!.subString(<(ref1)>,from:?(fromVar)?,to:?(toVar)?)",
-					"referenceMapping" : [
-						{
-							"name" : "ref1",
-							"resourceId" : "test1",
-						}
-					],
 				}
 			]
 		},
@@ -132,22 +126,7 @@
 			"description": "reference with specified mapping",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(<(ref1)>,from:?(fromVar)?,to:?(toVar)?)",
-					"referenceMapping" : [
-						{
-							"name" : "ref1",
-							"resourceId" : "test3",
-							"inputMapping" : {
-								"element" : {
-									"baseVar" : {
-										"definition": {
-											"path": "mybusiness.a.aa"
-										},
-									}
-								}
-							}
-						}
-					],
+					"expression" : "!(test.string)!.subString(<(ref2)>,from:?(fromVar)?,to:?(toVar)?)",
 				}
 			]
 		},
@@ -161,9 +140,51 @@
 				}
 			]
 		},
+		{
+			"id": "test8",
+			"name": "test8",
+			"description": "real reference",
+			"element" : [
+				{
+					"expression" : "<(ref3)>",
+				}
+			]
+		},
 	],
 	"attachment": {
 		"expression" : [
+			{
+				"name" : "ref1",
+				"referenceId": {
+					"structure" : "local",
+					"id" : "test1"
+				}
+			},
+			{
+				"name" : "ref2",
+				"referenceId": {
+					"structure" : "local",
+					"id" : "test3"
+				},
+				"adaptor" : {
+					"expression" : "default",
+					"inputMapping" : {
+						"element" : {
+							"baseVar" : {
+								"definition": {
+									"path": "mybusiness.a.aa"
+								},
+							}
+						}
+					}
+				}
+			},
+			{
+				"name" : "ref3",
+				"entity" : {
+					"expression" : "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
+				}
+			},
 		],
 		"value" : [
 			{

@@ -70,6 +70,46 @@
 			}
 		}
 	},
+	"attachment": {
+		"value" : [
+			{
+				"name": "fromConstant",
+				"entity": {
+					"value" : {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 1
+					}
+				}
+			},
+		],
+		"testData" : [
+			{
+				"name": "testData1",
+				"entity": {
+					"business.a.aa": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "This is my world!"
+					},
+					"mybusiness.a.aa": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "Hello This is my world!"
+					},
+					"baseVar": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "This is my world!"
+					},
+					"fromVar": {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 1
+					},
+					"toVar": {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 7
+					}
+				}
+			},
+		],
+	},	
 	"element": [{
 			"id": "test1",
 			"name": "test1",
@@ -161,48 +201,5 @@
 				}
 			]
 		},
-	],
-	"attachment": {
-		"expression" : [
-		],
-		"value" : [
-			{
-				"name": "fromConstant",
-				"entity": {
-					"value" : {
-						"dataTypeId": "test.integer;1.0.0",
-						"value": 1
-					}
-				}
-			},
-		],
-		"testData" : [
-			{
-				"name": "testData1",
-				"entity": {
-					"business.a.aa": {
-						"dataTypeId": "test.string;1.0.0",
-						"value": "This is my world!"
-					},
-					"mybusiness.a.aa": {
-						"dataTypeId": "test.string;1.0.0",
-						"value": "Hello This is my world!"
-					},
-					"baseVar": {
-						"dataTypeId": "test.string;1.0.0",
-						"value": "This is my world!"
-					},
-					"fromVar": {
-						"dataTypeId": "test.integer;1.0.0",
-						"value": 1
-					},
-					"toVar": {
-						"dataTypeId": "test.integer;1.0.0",
-						"value": 7
-					}
-				}
-			},
-		],
-	},	
-	
+	]
 }

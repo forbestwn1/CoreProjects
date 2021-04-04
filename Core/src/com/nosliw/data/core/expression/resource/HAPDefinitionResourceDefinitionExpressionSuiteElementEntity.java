@@ -13,6 +13,7 @@ import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementEntit
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 
+//expression group within suite
 public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity 
 		extends HAPResourceDefinitionContainerElementEntityImpComponent 
 		implements HAPDefinitionExpressionGroup{

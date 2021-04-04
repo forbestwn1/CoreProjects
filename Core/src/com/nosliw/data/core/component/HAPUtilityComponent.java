@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.common.HAPWithDataContext;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
@@ -107,6 +108,16 @@ public class HAPUtilityComponent {
 		return context;
 	}
 	
+	public static HAPContext getContext(Object def, HAPContext extraContext, HAPConfigureContextProcessor contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {
+		HAPContext out = null;
+		if(def instanceof HAPComponentContainerElement) {
+			out = (HAPContext)HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)def, extraContext, runtimeEnv, contextProcessConfig);
+		}
+		else if(def instanceof HAPWithDataContext){
+			out = (HAPContext)HAPUtilityContext.hardMerge(((HAPWithDataContext)def).getContextStructure(), extraContext); 
+		}
+		return out;
+	}
 
 	
 	public static HAPContextStructure processElementComponentContext(HAPComponentContainerElement component, HAPContextStructure extraContext, HAPRuntimeEnvironment runtimeEnv, HAPConfigureContextProcessor processConfigure) {

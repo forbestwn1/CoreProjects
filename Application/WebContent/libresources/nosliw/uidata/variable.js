@@ -344,6 +344,18 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 				}
 				return out;
 			},
+
+			prv_getBaseVariable : function(){
+				var current = loc_out;
+				while(current.prv_isBase!=true){
+					current = current.prv_getRelativeVariableInfo().parent;
+				}
+				return current;
+			},
+			
+			prv_newWrapper : function(){
+				loc_setWrapper(node_wrapperFactory.createWrapper(undefined, loc_out.prv_wrapperType), requestInfo);
+			},
 			
 			//create child variable, if exist, then reuse it
 			//return child variable info : {}
@@ -381,6 +393,11 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 					//for set root data
 					return loc_out.prv_getSetBaseDataRequest(operationService.parms.value, operationService.parms.dataType, handlers, requester_parent);
 				}
+
+				if(this.prv_wrapper==undefined){
+					loc_out.prv_getBaseVariable().prv_newWrapper()
+				}
+
 				
 				if(this.prv_wrapper!=undefined){
 					if(loc_out.prv_dataOperationRequestAdapter!=undefined){

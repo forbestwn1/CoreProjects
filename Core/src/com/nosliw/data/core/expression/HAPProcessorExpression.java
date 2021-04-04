@@ -7,6 +7,8 @@ import java.util.Set;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.component.HAPWithAttachment;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
@@ -81,15 +83,22 @@ public class HAPProcessorExpression {
 
 		HAPDefinitionExpressionGroup expressionGroupDef = (HAPDefinitionExpressionGroup)expressionGroupDefWithContext.getEntity();
 		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(exeId);
+		HAPContainerAttachment attContainer = null;
+		if(expressionGroupDef instanceof HAPWithAttachment) {
+			attContainer = ((HAPWithAttachment)expressionGroupDef).getAttachmentContainer();
+		}
 
-		//constant
-		//constant --- discover constant
-		Map<String, HAPData> constants = HAPUtilityExpression.getDataConstants(expressionGroupDef); 
-
-		//variable
-		//variable --- from context
+		//context
 		HAPContext context = HAPUtilityExpression.getContext(expressionGroupDef, extraContext, runtimeEnv);
 		out.setContext(context);
+
+		//constant
+		//constant --- discover constant from attachment and context
+		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>(); 
+		constants.putAll(HAPUtilityExpression.getDataConstants(expressionGroupDef, context));
+		
+		//variable
+		//variable --- from context
 		out.setVarsInfo(HAPUtilityContext.discoverDataVariablesInContext(context));
 
 		Set<HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();

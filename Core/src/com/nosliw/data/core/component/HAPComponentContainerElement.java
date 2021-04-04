@@ -1,5 +1,6 @@
 package com.nosliw.data.core.component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -268,6 +270,30 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public void setDisplayName(String name) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public HAPDefinitionServiceUse getService(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<HAPContextReference> getContextReferences() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPAttachment getAttachment(String type, String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPResourceDefinitionOrId getChild(String path) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

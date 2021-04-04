@@ -5,6 +5,8 @@
 	<br>
 	EXPRESSION REFERENCE:<%=#|<(expressionInternal)>|#.value + ' 6666 ' %>
 	<br>
+	EXPRESSION REFERENCE:<%=#|<(expressionLocal)>|#.value + ' 6666 ' %>
+	<br>
 
 </body>
 
@@ -20,6 +22,15 @@
 			"public" : {
 				"element" : {
 						"aaa":{
+							definition : {
+								"criteria": "test.string;1.0.0",
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "This is my world!"
+							}
+						},
+						"bbb":{
 							definition : {
 								"criteria": "test.string;1.0.0",
 							},
@@ -44,7 +55,6 @@
 								}
 							}
 						}
-						
 				}
 			}
 		}
@@ -71,6 +81,16 @@
 				"name" : "expressionInternal",
 				"entity" : {
 					"expression" : "?(aaa)?.subString(from:&(constantFromContext8)&,to:&(constantFromContext9)&)",
+				}
+			},
+			{
+				"name" : "expressionLocal",
+				"referenceId": {
+					"structure" : "local",
+					"id" : "internal1"
+				},
+				"adaptor" : {
+					"expression" : "expressionLocal",
 				}
 			}
 		],

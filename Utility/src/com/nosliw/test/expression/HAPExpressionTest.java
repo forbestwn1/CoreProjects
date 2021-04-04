@@ -17,8 +17,8 @@ public class HAPExpressionTest {
 	public static void main(String[] args) {
 
 		try {
-			String suite = "test1";
-			String id = "test6";
+			String suite = "test2";
+			String id = "test3";
 			String testData = "testData1";
 
 			HAPResourceId resourceId = HAPUtilityExpressionResource.buildResourceId(suite, id);
