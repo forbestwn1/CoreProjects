@@ -127,7 +127,8 @@ public class HAPProcessorExpression {
 			}
 
 			//referenced expression
-			Map<String, HAPDefinitionReference> refDef = HAPUtilityExpression.normalizeReferenceDefinition(operand, expressionGroupDef.getEntityElement(id).getReference());
+//			Map<String, HAPDefinitionReference> refDef = HAPUtilityExpression.normalizeReferenceDefinition(operand, expressionGroupDef.getEntityElement(id).getReference());
+			Map<String, HAPDefinitionReference> refDef = HAPUtilityExpression.buildReferenceDefinition(operand, attContainer);
 			processReferencesInOperandBasic(exeId, operand, refDef, expressionGroupDefWithContext.getResourceContext(), expressionMan, configure, runtimeEnv, processTracker);
 		}
 		
@@ -168,7 +169,7 @@ public class HAPProcessorExpression {
 					referenceOperand.setReferedExpression(refExpressionExe);
 					
 					//input mapping
-					referenceOperand.setInputMapping(refDef.getInputMapping().cloneDataAssocation());
+					if(refDef.getInputMapping()!=null)  referenceOperand.setInputMapping(refDef.getInputMapping().cloneDataAssocation());
 					
 					subId[0]++;
 				}

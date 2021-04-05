@@ -98,6 +98,8 @@ var node_utility = function()
 	
 	//convert individual data according to matchers
 	var loc_getMatchDataTaskRequest = function(data, matchers, handlers, requestInfo){
+		if(data==undefined)  return;
+		
 		var service = new node_ServiceInfo("MatchData", {"data":data, "matcher":matchers});
 		
 		if(matchers==undefined){

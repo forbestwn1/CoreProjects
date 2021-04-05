@@ -25,14 +25,15 @@ public class HAPExpressionParserImp implements HAPParserExpression{
 	public HAPExpressionParserImp(){
 	}
 	
-	  public HAPOperand parseExpression(String expression){
+	  @Override
+	public HAPOperand parseExpression(String expression){
 		  SimpleNode root = null;
 		  try{
 			  InputStream is = new ByteArrayInputStream(expression.getBytes());
 	          NosliwExpressionParser parser = new NosliwExpressionParser( is ) ;
 	          root = parser.Expression("");
 		  }
-		  catch(Exception e){
+		  catch(Throwable e){
 			  e.printStackTrace();
 			  System.out.println(expression);
 			  return null;

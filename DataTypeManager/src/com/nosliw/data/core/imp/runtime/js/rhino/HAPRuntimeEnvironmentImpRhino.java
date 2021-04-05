@@ -75,9 +75,6 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		);
 
 		//resource definition plugin
-//		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionSuite(this.getExpressionManager().getExpressionParser()));
-//		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionGroup(this.getResourceDefinitionManager()));
-//		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionScriptGroup(this.getExpressionManager().getExpressionParser()));
 
 		this.getGatewayManager().registerGateway(GATEWAY_SERVICE, new HAPGatewayService(this.getServiceManager()));
 	}

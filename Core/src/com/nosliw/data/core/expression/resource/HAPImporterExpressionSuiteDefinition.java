@@ -15,7 +15,7 @@ public class HAPImporterExpressionSuiteDefinition {
 		try{
 			String content = HAPFileUtility.readFile(inputStream);
 			JSONObject contentJson = HAPJsonUtility.newJsonObject(content);
-			suite = HAPParserResourceExpressionDefinition.parseExpressionSuite(contentJson);
+//			suite = HAPParserResourceExpressionDefinition.parseExpressionSuite(contentJson);
 		}
 		catch(Exception e){
 			e.printStackTrace();

@@ -55,7 +55,7 @@ public class HAPProcessorUIPage {
 		HAPProcessorUIService.escalate(out, uiTagMan);
 		
 		//process expression
-		HAPProcessorUIExpressionScript.buildExpressionScriptProcessContext(out);
+		HAPProcessorUIExpressionScript.buildExpressionScriptProcessContext(out, runtimeEnv);
 		HAPProcessorUIExpressionScript.processUIScriptExpression(out, runtimeEnv);
 		
 		//process command

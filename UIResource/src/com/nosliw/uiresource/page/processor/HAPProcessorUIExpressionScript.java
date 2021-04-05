@@ -59,7 +59,7 @@ public class HAPProcessorUIExpressionScript {
 		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
-			buildExpressionScriptProcessContext(childTag);			
+			buildExpressionScriptProcessContext(childTag, runtimeEnv);			
 		}
 	}
 	

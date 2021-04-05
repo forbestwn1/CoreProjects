@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.expression.HAPParserExpression;
 import com.nosliw.data.core.expression.HAPResourceIdExpressionSuite;
@@ -39,7 +37,8 @@ public class HAPPluginResourceDefinitionExpressionSuite implements HAPPluginReso
 
 	@Override
 	public HAPResourceDefinition parseResourceDefinition(Object content) {
-		JSONObject jsonObj = (JSONObject)content;
-		return HAPParserResourceExpressionDefinition.parseExpressionSuite(jsonObj);
+//		JSONObject jsonObj = (JSONObject)content;
+//		return HAPParserResourceExpressionDefinition.parseExpressionSuite(jsonObj);
+		return null;
 	}
 }

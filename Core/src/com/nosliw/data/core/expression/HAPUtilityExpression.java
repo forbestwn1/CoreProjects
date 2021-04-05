@@ -76,7 +76,8 @@ public class HAPUtilityExpression {
 					String refName = referenceOperand.getReferenceName();
 					String referenceTo = null;
 					String eleName = null;
-					String[] segs = HAPNamingConversionUtility.parsePaths(refName);
+					
+					String[] segs = HAPNamingConversionUtility.splitTextByComponents(refName, "AT");
 					if(segs.length==1) {
 						referenceTo = segs[0];
 					}
@@ -88,18 +89,21 @@ public class HAPUtilityExpression {
 					HAPDefinitionReference refDef = new HAPDefinitionReference();
 					refDef.setName(refName);
 
-					HAPAttachment refAttachment = attContainer.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSION, referenceTo);
+					HAPAttachment refAttachment = null; 
+					if(attContainer!=null)		refAttachment = attContainer.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSION, referenceTo);
 					if(refAttachment==null) {
 						//not found in attachment
-						refDef.setResourceId(HAPUtilityResource.buildLocalReferenceResourceId(referenceTo));
-						refDef.setElementName(eleName);
-						refDef.setInputMapping(null);
+						throw new RuntimeException();
+//						refDef.setResourceId(HAPUtilityResource.buildLocalReferenceResourceId(referenceTo));
+//						refDef.setElementName(eleName);
+//						refDef.setInputMapping(null);
 					}
 					else {
 						//build ref definition from attachment
 						//parse input mapping
 						JSONObject adaptorJson = (JSONObject)refAttachment.getAdaptor();
-						refDef.setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(adaptorJson.optJSONObject(HAPDefinitionReference.INPUTMAPPING)));
+						if(adaptorJson!=null)  refDef.setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(adaptorJson.optJSONObject(HAPDefinitionReference.INPUTMAPPING)));
+						else refDef.setInputMapping(null);
 						
 						if(refAttachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)) {
 							//solid reference
@@ -108,7 +112,7 @@ public class HAPUtilityExpression {
 						}
 						else if(refAttachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)||refAttachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL)){
 							refDef.setResourceId(((HAPAttachmentReference)refAttachment).getReferenceId());
-							if(eleName==null) {
+							if(eleName==null && adaptorJson!=null) {
 								//if no element in ref name, then try to find elename from adaptor
 								eleName = (String)adaptorJson.opt(HAPDefinitionReference.ELEMENTNAME);
 							}
