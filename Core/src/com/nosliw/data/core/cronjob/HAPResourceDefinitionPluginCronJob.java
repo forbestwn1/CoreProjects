@@ -19,7 +19,7 @@ public class HAPResourceDefinitionPluginCronJob implements HAPPluginResourceDefi
 	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_CRONJOB;	}
 
 	@Override
-	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		String file = HAPSystemFolderUtility.getCronJobFolder()+resourceId.getId()+".res";
 		HAPDefinitionCronJob cronJobDef = m_cronJobParser.parseFile(file);
 		return cronJobDef;

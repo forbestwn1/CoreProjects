@@ -127,7 +127,6 @@ public class HAPProcessorExpression {
 			}
 
 			//referenced expression
-//			Map<String, HAPDefinitionReference> refDef = HAPUtilityExpression.normalizeReferenceDefinition(operand, expressionGroupDef.getEntityElement(id).getReference());
 			Map<String, HAPDefinitionReference> refDef = HAPUtilityExpression.buildReferenceDefinition(operand, attContainer);
 			processReferencesInOperandBasic(exeId, operand, refDef, expressionGroupDefWithContext.getResourceContext(), expressionMan, configure, runtimeEnv, processTracker);
 		}

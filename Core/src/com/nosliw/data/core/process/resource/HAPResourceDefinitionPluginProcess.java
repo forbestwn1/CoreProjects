@@ -20,7 +20,7 @@ public class HAPResourceDefinitionPluginProcess implements HAPPluginResourceDefi
 	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS;	}
 
 	@Override
-	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		HAPResourceIdProcess processResourceId = new HAPResourceIdProcess(resourceId);
 		HAPResourceIdSimple processSuiteResourceId = processResourceId.getProcessSuiteResourceId();
 		HAPDefinitionProcessSuite processSuiteDef = (HAPDefinitionProcessSuite)this.m_resourceDefMan.getResourceDefinition(processSuiteResourceId);

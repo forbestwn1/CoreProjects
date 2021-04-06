@@ -26,7 +26,7 @@ public class HAPPluginResourceDefinitionScriptGroup implements HAPPluginResource
 	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTGROUP;  }
 
 	@Override
-	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		HAPResourceDefinitionScriptGroup scriptResourceDefinition = null;
 		try {
 			scriptResourceDefinition = HAPImporterScriptDefinition.readScriptResourceDefinitionFromFile(new FileInputStream(new File(HAPSystemFolderUtility.getScriptGroupFolder()+resourceId.getId()+".res")), this.m_expressionParser);

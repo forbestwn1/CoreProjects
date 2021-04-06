@@ -1,6 +1,6 @@
 {
-	"name": "test1",
-	"description": "test1",
+	"name": "local1",
+	"description": "local1",
 	"context": {
 		"element": {
 			"testVar1" : {
@@ -108,7 +108,7 @@
 			"description": "standard",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(?(testVar3)?,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "!(test.string)!.subString(?(testVar3)?,from:&(constantFromContext3)&,to:&(constantFromAtt4)&)"
 				}
 			]
 		},
@@ -165,40 +165,10 @@
 		{
 			"id": "test22",
 			"name": "test22",
-			"description": "reference to global with default mapping",
-			"element" : [
-				{
-					"expression" : "!(test.string)!.subString(<(ref3)>,from:?(testVar4)?,to:?(testVar5)?)"
-				}
-			]
-		},
-		{
-			"id": "test23",
-			"name": "test23",
-			"description": "reference to global with mapping",
-			"element" : [
-				{
-					"expression" : "!(test.string)!.subString(<(ref4)>,from:?(testVar4)?,to:?(testVar5)?)"
-				}
-			]
-		},
-		{
-			"id": "test24",
-			"name": "test24",
-			"description": "reference to global with mapping",
-			"element" : [
-				{
-					"expression" : "<(ref5)>"
-				}
-			]
-		},
-		{
-			"id": "test25",
-			"name": "test25",
 			"description": "reference to local with default mapping",
 			"element" : [
 				{
-					"expression" : "<(ref6)>"
+					"expression" : "!(test.string)!.subString(<(ref3)>,from:?(testVar4)?,to:?(testVar5)?)"
 				}
 			]
 		}
@@ -228,45 +198,11 @@
 			},
 			{
 				"name" : "ref3",
-				"referenceId": "test10;test2"
-			},
-			{
-				"name" : "ref4",
-				"referenceId": "test10;test3",
-				"adaptor" : {
-					"inputMapping" : {
-						"element" : {
-							"testVar33" : {
-								"definition": {
-									"path": "testVar3"
-								}
-							}
-						}
-					}
-				}
-			},
-			{
-				"name" : "ref5",
-				"referenceId": "test11;test3",
-				"adaptor" : {
-					"inputMapping" : {
-						"element" : {
-							"testVar33" : {
-								"definition": {
-									"path": "testVar3"
-								}
-							}
-						}
-					}
-				}
-			},
-			{
-				"name" : "ref6",
 				"referenceId": {
 					"structure" : "local",
-					"id" : "test10;local1"
+					"id" : "test1"
 				}
-			}
+			},
 		],
 		"value" : [
 			{
@@ -306,37 +242,6 @@
 				}
 			}
 			
-		],
-		"testData" : [
-			{
-				"name": "testData1",
-				"entity": {
-					"testVar1.var1.var11": {
-						"dataTypeId": "test.string;1.0.0",
-						"value": "0123456789"
-					},
-					"testVar2": {
-						"var1" : {
-							"var11":{
-								"dataTypeId": "test.string;1.0.0",
-								"value": "0123456789"
-							}
-						}
-					},
-					"testVar3": {
-						"dataTypeId": "test.string;1.0.0",
-						"value": "0123456789"
-					},
-					"testVar4": {
-						"dataTypeId": "test.integer;1.0.0",
-						"value": 1
-					},
-					"testVar5": {
-						"dataTypeId": "test.integer;1.0.0",
-						"value": 3
-					}
-				}
-			}
 		]
 	}
 }

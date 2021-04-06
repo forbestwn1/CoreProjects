@@ -20,7 +20,7 @@ public class HAPResourceDefinitionPluginAppEntry implements HAPPluginResourceDef
 	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPPENTRY;  }
 
 	@Override
-	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		HAPResourceIdUIAppEntry appEntryResourceId = new HAPResourceIdUIAppEntry(resourceId);
 		HAPResourceIdSimple appResourceId = appEntryResourceId.getUIAppResourceId();
 		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefMan.getResourceDefinition(appResourceId);

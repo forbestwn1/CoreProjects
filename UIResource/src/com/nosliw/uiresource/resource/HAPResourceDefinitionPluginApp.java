@@ -22,7 +22,7 @@ public class HAPResourceDefinitionPluginApp implements HAPPluginResourceDefiniti
 	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPP;  }
 
 	@Override
-	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		String file = HAPSystemFolderUtility.getMiniAppFolder()+resourceId.getId()+".res";
 		HAPDefinitionApp miniAppDef = m_miniAppParser.parseFile(file);
 		return miniAppDef;

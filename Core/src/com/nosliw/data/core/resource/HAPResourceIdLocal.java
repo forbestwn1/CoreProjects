@@ -13,6 +13,8 @@ import com.nosliw.data.core.component.HAPLocalReferenceBase;
 
 public class HAPResourceIdLocal  extends HAPResourceId{
 
+	private static final String SEPERATOR = HAPConstantShared.SEPERATOR_LEVEL3;
+	
 	@HAPAttribute
 	public static String BASEPATH = "basePath";
 
@@ -34,15 +36,16 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	public void setBasePath(HAPLocalReferenceBase base) {   this.m_basePath = base;   }
 	
 	public String getName() {   return this.m_name;   }
+	public void setName(String name) {    this.m_name = name;    }
 	
 	@Override
 	public String getIdLiterate() {
-		return HAPNamingConversionUtility.cascadeElements(this.m_name, HAPSerializeManager.getInstance().toStringValue(this.m_basePath, HAPSerializationFormat.LITERATE), HAPConstantShared.SEPERATOR_LEVEL1);
+		return HAPNamingConversionUtility.cascadeElements(this.m_name, HAPSerializeManager.getInstance().toStringValue(this.m_basePath, HAPSerializationFormat.LITERATE), SEPERATOR);
 	}
 
 	@Override
 	protected void buildCoreIdByLiterate(String idLiterate) {
-		String[] segs = HAPNamingConversionUtility.splitTextByElements(idLiterate, HAPConstantShared.SEPERATOR_LEVEL1);
+		String[] segs = HAPNamingConversionUtility.splitTextByElements(idLiterate, SEPERATOR);
 		this.m_name = segs[0];
 		if(segs.length>=2) {
 			this.m_basePath = new HAPLocalReferenceBase(segs[1]);

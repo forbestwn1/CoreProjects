@@ -15,7 +15,7 @@ public class HAPResourceDefinitionPluginTemplate implements HAPPluginResourceDef
 	}
 	
 	@Override
-	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		//read content
 		String file = HAPSystemFolderUtility.getTemplateFolder()+resourceId.getId()+".template";
 		//parse content

@@ -14,7 +14,7 @@ public class HAPResourceDefinitionPluginStory implements HAPPluginResourceDefini
 	}
 	
 	@Override
-	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		//read content
 		String file = HAPSystemFolderUtility.getStoryFolder()+resourceId.getId()+".story";
 		//parse content

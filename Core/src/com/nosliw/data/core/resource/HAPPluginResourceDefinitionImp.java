@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
 import com.nosliw.data.core.component.HAPWithAttachment;
 
@@ -22,7 +23,7 @@ public class HAPPluginResourceDefinitionImp implements HAPPluginResourceDefiniti
 	public String getResourceType() {		return this.m_resourceType;	}
 
 	@Override
-	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		//get location information
 		HAPInfoResourceLocation resourceLocInfo = HAPUtilityResource.getResourceLocationInfo(resourceId);
 		//parse file
@@ -30,6 +31,17 @@ public class HAPPluginResourceDefinitionImp implements HAPPluginResourceDefiniti
 		//set local base path
 		if(moduleDef instanceof HAPWithAttachment)	((HAPWithAttachment)moduleDef).setLocalReferenceBase(new HAPLocalReferenceBase(resourceLocInfo.getBasePath()));
 		return moduleDef;
+	}
+
+	@Override
+	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal localResourceId) {
+		HAPResourceDefinition out = null;
+		String path = localResourceId.getBasePath().getPath() + localResourceId.getType() + "/" + localResourceId.getName() + ".res";
+		out = this.parseResourceDefinition(HAPFileUtility.readFile(path));
+		if(out instanceof HAPWithAttachment) {
+			((HAPWithAttachment)out).setLocalReferenceBase(localResourceId.getBasePath());
+		}
+		return out;
 	}
 
 	@Override

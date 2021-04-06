@@ -30,7 +30,7 @@ public class HAPResourceDefinitionPluginProcessSuite implements HAPPluginResourc
 	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
 
 	@Override
-	public HAPResourceDefinition getResource(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		HAPDefinitionProcessSuite suite = null;
 		try {
 			HAPResourceIdProcessSuite processSuiteResourceId = new HAPResourceIdProcessSuite(resourceId);

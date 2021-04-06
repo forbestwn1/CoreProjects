@@ -4,8 +4,11 @@ public interface HAPPluginResourceDefinition {
 
 	String getResourceType();
 	
-	HAPResourceDefinition getResource(HAPResourceIdSimple resourceId);
+	HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId);
+	
+	HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId);
 	
 	HAPResourceDefinition parseResourceDefinition(Object content);
 
+	
 }

@@ -1,8 +1,9 @@
-package com.nosliw.data.core.expression;
+package com.nosliw.data.core.expression.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.expression.HAPIdExpressionGroup;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdExpression  extends HAPResourceIdSimple{
