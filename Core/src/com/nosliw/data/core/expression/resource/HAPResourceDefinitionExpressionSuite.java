@@ -8,6 +8,7 @@ import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 
 public class HAPResourceDefinitionExpressionSuite 
 				extends HAPResourceDefinitionContainer<HAPDefinitionResourceDefinitionExpressionSuiteElementEntity> 
@@ -27,6 +28,9 @@ public class HAPResourceDefinitionExpressionSuite
 
 	@Override
 	public HAPResourceDefinition getElementResourceDefinition(String eleId) {  return new HAPResourceDefinitionExpressionGroup(this, eleId);  }
+
+	@Override
+	public HAPResourceDefinitionOrId getChild(String path) {   return new HAPResourceDefinitionExpressionGroup(this, path);    }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

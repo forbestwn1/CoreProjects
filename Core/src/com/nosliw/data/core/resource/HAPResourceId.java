@@ -12,7 +12,6 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 @HAPEntityWithAttribute
 public abstract class HAPResourceId extends HAPSerializableImp implements HAPResourceDefinitionOrId{
@@ -60,16 +59,8 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 	protected abstract void buildCoreIdByJSON(JSONObject jsonObj);	
 
 	@Override
-	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
-		this.m_type = segs[0];
-		
-		return true;  
-	}
-	
-	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), HAPUtilityResource.buildResourceCoreIdLiterate(this)});
+		return HAPUtilityResourceId.buildResourceIdLiterate(this);
 	}
 
 	@Override
@@ -87,7 +78,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, this.getType());
-		jsonMap.put(ID, HAPUtilityResource.buildResourceCoreIdLiterate(this));
+		jsonMap.put(ID, HAPUtilityResourceId.buildResourceCoreIdLiterate(this));
 	}
 
 	@Override

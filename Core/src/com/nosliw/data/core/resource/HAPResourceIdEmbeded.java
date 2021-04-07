@@ -76,6 +76,6 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 		HAPResourceIdEmbeded out = new HAPResourceIdEmbeded(this.getType());
 		out.m_path = this.m_path;
 		out.m_parentId = this.m_parentId.clone();
-		return null;
+		return out;
 	}
 }

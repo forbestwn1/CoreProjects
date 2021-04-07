@@ -23,7 +23,103 @@ public class HAPUtilityResourceId {
 	public final static String LOADRESOURCEBYFILE_MODE_ALWAYS = "always";
 	public final static String LOADRESOURCEBYFILE_MODE_DEPENDS = "depends";
 	
+	public static String buildResourceIdLiterate(HAPResourceId resourceId) {
+		return HAPNamingConversionUtility.cascadeLevel2(new String[]{resourceId.getType(), buildResourceCoreIdLiterate(resourceId)});
+	}
+	
+	//build literate for id part
+	public static String buildResourceCoreIdLiterate(HAPResourceId resourceId) {
+		StringBuffer out = new StringBuffer();
 
+		//prefix according to structure
+		String structure = resourceId.getStructure();
+		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE);
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED);
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC);
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL);
+		
+		//append core id
+		out.append(resourceId.getCoreIdLiterate());
+		
+//		out.append(HAPConstantShared.SEPERATOR_RESOURCEID_START).append(resourceId.getStructure()).append(HAPConstantShared.SEPERATOR_RESOURCEID_STRUCTURE).append(resourceId.getCoreIdLiterate());
+		return out.toString();
+	}
+	
+	public static String[] parseResourceIdLiterate(String idLiterate) {
+		return HAPNamingConversionUtility.parseLevel2(idLiterate);
+	}
+
+
+	
+	
+	
+//	public static String[] parseResourceCoreIdLiterate(String coreIdLiterate) {
+//		String[] out = new String[2];
+//		if(coreIdLiterate.startsWith(HAPConstantShared.SEPERATOR_RESOURCEID_START)) {
+//			int index = coreIdLiterate.indexOf(HAPConstantShared.SEPERATOR_RESOURCEID_STRUCTURE, HAPConstantShared.SEPERATOR_RESOURCEID_START.length());
+//			out[0] = coreIdLiterate.substring(HAPConstantShared.SEPERATOR_RESOURCEID_START.length(), index);
+//			out[1] = coreIdLiterate.substring(index+1);
+//		}
+//		else {
+//			//simple structure
+//			out[0] = getDefaultResourceStructure();
+//			out[1] = coreIdLiterate;
+//		}
+//		return out;
+//	}
+	
+	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String literate) {
+		String structure = HAPConstantShared.RESOURCEID_TYPE_SIMPLE;
+		String coreIdLiterate = literate;
+		
+		if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED)) {
+			//embeded resource id
+			structure = HAPConstantShared.RESOURCEID_TYPE_EMBEDED;
+			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED.length());
+		}
+		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL)){
+			//local resource id
+			structure = HAPConstantShared.RESOURCEID_TYPE_LOCAL;
+			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL.length());
+		}
+		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC)){
+			//local resource id
+			structure = HAPConstantShared.RESOURCEID_TYPE_DYNAMIC;
+			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC.length());
+		}
+		else {
+			//simple
+			structure = HAPConstantShared.RESOURCEID_TYPE_SIMPLE;
+			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE.length());
+		}
+
+		HAPResourceId out = newInstanceByType(resourceType, structure);
+		out.buildCoreIdByLiterate(coreIdLiterate);
+		return out;
+	}
+	
+	public static HAPResourceId newInstanceByType(String resourceType, String structure) {
+		HAPResourceId out = null;
+		if(structure==null)   structure = getDefaultResourceStructure();
+		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
+			out = new HAPResourceIdSimple(resourceType);
+		}
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
+			out = new HAPResourceIdEmbeded(resourceType);
+		}
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
+			out = new HAPResourceIdDynamic(resourceType);
+		}
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
+			out = new HAPResourceIdLocal(resourceType);
+		}
+		return out;
+	}
+	
+
+	
+	
+	
 	public static HAPInfoResourceLocation getResourceLocationInfo(HAPResourceIdSimple resourceId) {
 		File file = null;
 		//check single file first
@@ -62,82 +158,6 @@ public class HAPUtilityResourceId {
 		return loadResourceByFile.contains(resourceType);
 	}
 	
-	//build literate for id part
-	public static String buildResourceCoreIdLiterate(HAPResourceId resourceId) {
-		StringBuffer out = new StringBuffer();
-		out.append(HAPConstantShared.SEPERATOR_RESOURCEID_START).append(resourceId.getStructure()).append(HAPConstantShared.SEPERATOR_RESOURCEID_STRUCTURE).append(resourceId.getCoreIdLiterate());
-		return out.toString();
-	}
-	
-	public static String[] parseResourceCoreIdLiterate(String coreIdLiterate) {
-		String[] out = new String[2];
-		if(coreIdLiterate.startsWith(HAPConstantShared.SEPERATOR_RESOURCEID_START)) {
-			int index = coreIdLiterate.indexOf(HAPConstantShared.SEPERATOR_RESOURCEID_STRUCTURE, HAPConstantShared.SEPERATOR_RESOURCEID_START.length());
-			out[0] = coreIdLiterate.substring(HAPConstantShared.SEPERATOR_RESOURCEID_START.length(), index);
-			out[1] = coreIdLiterate.substring(index+1);
-		}
-		else {
-			//simple structure
-			out[0] = getDefaultResourceStructure();
-			out[1] = coreIdLiterate;
-		}
-		return out;
-	}
-	
-	public static HAPResourceId buildResourceCoreIdByLiterate(String resourceType, String literate) {
-		if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED)){
-			//embeded resource id
-			return buildEmbededResourceIdByLiterate(resourceType, literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED.length()));
-		}
-		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL)){
-			//local resource id
-			return buildLocalResourceIdByLiterate(resourceType, literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL.length()));
-		}
-		else {
-			HAPResourceIdSimple simpleResourceId = new HAPResourceIdSimple(resourceType);
-			simpleResourceId.buildObjectByLiterate(literate);
-			return simpleResourceId;
-		}
-	}
-	
-	private static HAPResourceIdLocal buildLocalResourceIdByLiterate(String resourceType, String literate) {
-		HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)newInstanceByType(resourceType, HAPConstantShared.RESOURCEID_TYPE_LOCAL);
-		localResourceId.setName(literate);
-		return localResourceId;
-	}
-	
-	private static HAPResourceIdEmbeded buildEmbededResourceIdByLiterate(String resourceType, String literate) {
-		HAPResourceIdEmbeded embededResourceId = (HAPResourceIdEmbeded)newInstanceByType(resourceType, HAPConstantShared.RESOURCEID_TYPE_EMBEDED);
-		String[] idSegs = HAPNamingConversionUtility.parseLevel3(literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED.length()));
-		HAPResourceIdSimple parentResourceId = new HAPResourceIdSimple();
-		parentResourceId.buildObjectByLiterate(idSegs[0]);
-		embededResourceId.setParentResourceId(parentResourceId);
-		embededResourceId.setPath(idSegs[1]);
-		return embededResourceId;
-	}
-	
-	public static HAPResourceId newInstanceByType(String resourceType, String structure) {
-		HAPResourceId out = null;
-		if(structure==null)   structure = getDefaultResourceStructure();
-		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
-			out = new HAPResourceIdSimple(resourceType);
-		}
-		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
-			out = new HAPResourceIdEmbeded(resourceType);
-		}
-		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
-			out = new HAPResourceIdDynamic(resourceType);
-		}
-		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
-			out = new HAPResourceIdLocal(resourceType);
-		}
-		return out;
-	}
-	
-
-	public static String[] parseResourceIdLiterate(String idLiterate) {
-		return HAPNamingConversionUtility.parseLevel2(idLiterate);
-	}
 
 	public static boolean isLocalReference(HAPResourceId resourceId) {
 		//kkk

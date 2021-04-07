@@ -10,7 +10,7 @@ public class HAPFactoryResourceId {
 
 	public static HAPResourceId newInstance(String resourceType, Object obj) {
 		HAPResourceId out = null;
-		if(obj instanceof String)  out = HAPUtilityResource.buildResourceCoreIdByLiterate(resourceType, (String)obj);
+		if(obj instanceof String)  out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)obj);
 		else if(obj instanceof JSONObject)  out = newInstanceByJSONObect(resourceType, (JSONObject)obj);
 		return out;
 	}
@@ -29,18 +29,20 @@ public class HAPFactoryResourceId {
 		HAPResourceId out = null;
 		if(coreIdObj instanceof String) {
 			if(structure!=null) {
-				out = HAPUtilityResource.newInstanceByType(resourceType, structure);
+				out = HAPUtilityResourceId.newInstanceByType(resourceType, structure);
 				out.buildCoreIdByLiterate((String)coreIdObj);
 			}
 			else {
-				String[] segs = HAPUtilityResource.parseResourceCoreIdLiterate((String)coreIdObj);
-				out = HAPUtilityResource.newInstanceByType(resourceType, segs[0]);
-				out.buildCoreIdByLiterate(segs[1]);
+				out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)coreIdObj);
+				
+//				String[] segs = HAPUtilityResourceId.parseResourceCoreIdLiterate((String)coreIdObj);
+//				out = HAPUtilityResourceId.newInstanceByType(resourceType, segs[0]);
+//				out.buildCoreIdByLiterate(segs[1]);
 			}
 		}
 		else if(coreIdObj instanceof JSONObject) {
 			JSONObject coreIdJson = (JSONObject)coreIdObj;
-			out = HAPUtilityResource.newInstanceByType(resourceType, structure);
+			out = HAPUtilityResourceId.newInstanceByType(resourceType, structure);
 			out.buildCoreIdByJSON(coreIdJson);
 		}
 		return out;
@@ -51,7 +53,7 @@ public class HAPFactoryResourceId {
 		HAPResourceId out = null;
 		if(content instanceof String) {
 			String literate = (String)content;
-			String[] idSegs = HAPUtilityResource.parseResourceIdLiterate(literate);
+			String[] idSegs = HAPUtilityResourceId.parseResourceIdLiterate(literate);
 			if(idSegs.length==1)   out = newInstance(null, idSegs[0]);
 			else if(idSegs.length==2)   out = newInstance(idSegs[0], idSegs[1]);
 		}

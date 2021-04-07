@@ -279,7 +279,7 @@
 			},
 			{
 				"name" : "ref7",
-				"referenceId": "@test10;test2"
+				"referenceId": "@test10:expressionSuite|test2"
 			}
 		],
 		"value" : [

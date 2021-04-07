@@ -25,7 +25,7 @@ public class HAPPluginResourceDefinitionImp implements HAPPluginResourceDefiniti
 	@Override
 	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		//get location information
-		HAPInfoResourceLocation resourceLocInfo = HAPUtilityResource.getResourceLocationInfo(resourceId);
+		HAPInfoResourceLocation resourceLocInfo = HAPUtilityResourceId.getResourceLocationInfo(resourceId);
 		//parse file
 		HAPResourceDefinition moduleDef = this.parseResourceDefinition(resourceLocInfo.getFiile()); 
 		//set local base path
