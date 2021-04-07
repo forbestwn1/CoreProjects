@@ -67,7 +67,7 @@ public class HAPManagerCronJob {
 		if(defOrRef instanceof HAPResourceId) {
 			HAPResourceId cronJobId = (HAPResourceId)defOrRef;
 			cronJobDef = getCronJobDefinition(cronJobId, attachmentEx);
-			id = cronJobId.getIdLiterate();
+			id = cronJobId.getCoreIdLiterate();
 		}
 		else if(defOrRef instanceof HAPResourceDefinition) {
 			cronJobDef = (HAPDefinitionCronJob)defOrRef;

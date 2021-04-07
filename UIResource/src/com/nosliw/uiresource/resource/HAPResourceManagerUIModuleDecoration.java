@@ -20,7 +20,7 @@ public class HAPResourceManagerUIModuleDecoration extends HAPResourceManagerImp{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdUIModuleDecoration id = new HAPResourceIdUIModuleDecoration((HAPResourceIdSimple)resourceId);
-		String file = HAPSystemFolderUtility.getUIModuleDecorationFolder()+id.getIdLiterate()+".js";
+		String file = HAPSystemFolderUtility.getUIModuleDecorationFolder()+id.getCoreIdLiterate()+".js";
 		return new HAPResource(resourceId, HAPResourceDataFactory.createJSValueResourceData(HAPFileUtility.readFile(file)), HAPUtilityResource.buildResourceLoadPattern(resourceId, null));
 	}
 

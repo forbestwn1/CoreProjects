@@ -108,7 +108,7 @@ public class HAPUIResourceManager {
 		if(defOrRef instanceof HAPResourceId) {
 			HAPResourceId moduleId = (HAPResourceId)defOrRef;
 			moduleDef = getModuleDefinition(moduleId, attachmentEx);
-			id = moduleId.getIdLiterate();
+			id = moduleId.getCoreIdLiterate();
 		}
 		else if(defOrRef instanceof HAPResourceDefinition) {
 			moduleDef = (HAPDefinitionModule)defOrRef;
@@ -121,7 +121,7 @@ public class HAPUIResourceManager {
 	public HAPExecutableUIUnitPage getUIPage(HAPResourceId pageResourceId){
 		HAPExecutableUIUnitPage out = (HAPExecutableUIUnitPage)this.m_resourceCache.getResource(pageResourceId);
 		if(out==null) {
-			out = getEmbededUIPage(pageResourceId, pageResourceId.getIdLiterate(), null, null, null, null);
+			out = getEmbededUIPage(pageResourceId, pageResourceId.getCoreIdLiterate(), null, null, null, null);
 		}
 		return out;
 	}

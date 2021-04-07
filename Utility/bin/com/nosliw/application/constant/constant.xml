@@ -689,6 +689,12 @@
 			<definition name="RESOURCEID_TYPE_LOCAL" value="local"/>
 
 			<definition type="space"/>
+			<definition name="RESOURCEID_LITERATE_STARTER_SIMPLE" value=""/>
+			<definition name="RESOURCEID_LITERATE_STARTER_EMBEDED" value="@"/>
+			<definition name="RESOURCEID_LITERATE_STARTER_DYNAMIC" value="$"/>
+			<definition name="RESOURCEID_LITERATE_STARTER_LOCAL" value="#"/>
+
+			<definition type="space"/>
 			<definition name="PROCESSSUITE_ELEMENTTYPE_ENTITY" value="entity"/>
 			<definition name="PROCESSSUITE_ELEMENTTYPE_REFERENCE" value="reference"/>
 

@@ -38,9 +38,9 @@ public class HAPPluginResourceDefinitionImp implements HAPPluginResourceDefiniti
 		HAPResourceDefinition out = null;
 		String path = localResourceId.getBasePath().getPath() + localResourceId.getType() + "/" + localResourceId.getName() + ".res";
 		out = this.parseResourceDefinition(HAPFileUtility.readFile(path));
-		if(out instanceof HAPWithAttachment) {
-			((HAPWithAttachment)out).setLocalReferenceBase(localResourceId.getBasePath());
-		}
+//		if(out instanceof HAPWithAttachment) {
+//			((HAPWithAttachment)out).setLocalReferenceBase(localResourceId.getBasePath());
+//		}
 		return out;
 	}
 

@@ -39,7 +39,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	public void setName(String name) {    this.m_name = name;    }
 	
 	@Override
-	public String getIdLiterate() {
+	public String getCoreIdLiterate() {
 		return HAPNamingConversionUtility.cascadeElements(this.m_name, HAPSerializeManager.getInstance().toStringValue(this.m_basePath, HAPSerializationFormat.LITERATE), SEPERATOR);
 	}
 
@@ -53,7 +53,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	}
 
 	@Override
-	protected void buildCoreJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+	protected void buildCoreIdJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		if(this.m_basePath!=null)	jsonMap.put(BASEPATH, this.m_basePath.toStringValue(HAPSerializationFormat.LITERATE));
 		jsonMap.put(NAME, this.m_name);
 	}

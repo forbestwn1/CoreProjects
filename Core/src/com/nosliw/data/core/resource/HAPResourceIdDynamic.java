@@ -39,14 +39,14 @@ public class HAPResourceIdDynamic extends HAPResourceId{
 	public Set<HAPParmDefinition> getParms(){    return this.m_parms;    }
 	
 	@Override
-	public String getIdLiterate() {
+	public String getCoreIdLiterate() {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		this.buildCoreJsonMap(jsonMap, null);
+		this.buildCoreIdJsonMap(jsonMap, null);
 		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
 	@Override
-	protected void buildCoreJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+	protected void buildCoreIdJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(BUILDER, this.m_builderId);
 		jsonMap.put(PARMS, HAPJsonUtility.buildJson(m_parms, HAPSerializationFormat.JSON));
 	}

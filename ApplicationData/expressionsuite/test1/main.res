@@ -201,6 +201,16 @@
 					"expression" : "<(ref6)>"
 				}
 			]
+		},
+		{
+			"id": "test26",
+			"name": "test26",
+			"description": "reference to global embeded resource with default mapping",
+			"element" : [
+				{
+					"expression" : "<(ref7)>"
+				}
+			]
 		}
 	],
 	"attachment": {
@@ -266,6 +276,10 @@
 					"structure" : "local",
 					"id" : "test10;local1"
 				}
+			},
+			{
+				"name" : "ref7",
+				"referenceId": "@test10;test2"
 			}
 		],
 		"value" : [

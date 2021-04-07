@@ -51,10 +51,10 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	}
 
 	@Override
-	public String getIdLiterate() {	return this.m_id;	}
+	public String getCoreIdLiterate() {	return this.m_id;	}
 
 	@Override
-	protected void buildCoreJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+	protected void buildCoreIdJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(ID, this.getId());
 	}
 
@@ -100,8 +100,14 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
 		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
-		this.setType(segs[0]);
-		buildCoreIdByLiterate(segs[1]);
+		if(segs.length==2) {
+			this.setType(segs[0]);
+			buildCoreIdByLiterate(segs[1]);
+		}
+		else if(segs.length==1) {
+			if(this.getType()!=null)  buildCoreIdByLiterate(literateValue);
+			else  this.setType(literateValue);
+		}
 		return true;  
 	}
 

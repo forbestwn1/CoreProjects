@@ -85,7 +85,7 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_interface.getEntityOrReferenceType().equals(HAPConstantShared.REFERENCE)) {
-			jsonMap.put(INTERFACE, ((HAPResourceId)this.m_interface).getIdLiterate());
+			jsonMap.put(INTERFACE, ((HAPResourceId)this.m_interface).getCoreIdLiterate());
 			jsonMap.put(TAG, HAPJsonUtility.buildJson(this.m_tags, HAPSerializationFormat.JSON));
 		}
 		else {

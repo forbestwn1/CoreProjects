@@ -51,14 +51,22 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 	public void setSupplement(HAPSupplementResourceId sup) {   this.m_supplement = sup;   }
 	
 	//literate for id part only
-	public abstract String getIdLiterate();
-	protected abstract void buildCoreJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap);
+	public abstract String getCoreIdLiterate();
+	protected abstract void buildCoreIdJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap);
 	
 	//parse id part literate
 	protected abstract void buildCoreIdByLiterate(String idLiterate);	
 
 	protected abstract void buildCoreIdByJSON(JSONObject jsonObj);	
 
+	@Override
+	protected boolean buildObjectByLiterate(String literateValue){	
+		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
+		this.m_type = segs[0];
+		
+		return true;  
+	}
+	
 	@Override
 	protected String buildLiterate(){
 		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), HAPUtilityResource.buildResourceCoreIdLiterate(this)});
@@ -72,7 +80,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 		Map<String, Class<?>> typeJsonMapId = new LinkedHashMap<String, Class<?>>();
 		jsonMapId.put(STRUCUTRE, this.getStructure());
 		if(this.m_supplement!=null && !this.m_supplement.isEmpty())   jsonMapId.put(SUP, this.m_supplement.toStringValue(HAPSerializationFormat.JSON_FULL));
-		this.buildCoreJsonMap(jsonMapId, typeJsonMapId);
+		this.buildCoreIdJsonMap(jsonMapId, typeJsonMapId);
 		jsonMap.put(ID, HAPJsonUtility.buildMapJson(jsonMapId, typeJsonMapId));
 	}
 

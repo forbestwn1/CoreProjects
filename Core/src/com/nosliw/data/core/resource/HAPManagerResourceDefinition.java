@@ -38,8 +38,6 @@ public class HAPManagerResourceDefinition {
 			HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
 			String type = localResourceId.getType();
 			out = this.m_plugins.get(type).getResourceDefinitionByLocalResourceId(localResourceId);
-//			String path = localResourceId.getBasePath().getPath() + localResourceId.getType() + "/" + localResourceId.getName() + ".res";
-//			out = this.parseResourceDefinition(localResourceId.getType(), HAPFileUtility.readFile(path));
 			if(out instanceof HAPWithAttachment) {
 				((HAPWithAttachment)out).setLocalReferenceBase(localResourceId.getBasePath());
 			}

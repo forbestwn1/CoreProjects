@@ -623,6 +623,13 @@ public class HAPConstantShared {
 
 
 
+		public static final String RESOURCEID_LITERATE_STARTER_SIMPLE = "";
+		public static final String RESOURCEID_LITERATE_STARTER_EMBEDED = "@";
+		public static final String RESOURCEID_LITERATE_STARTER_DYNAMIC = "$";
+		public static final String RESOURCEID_LITERATE_STARTER_LOCAL = "#";
+
+
+
 		public static final String PROCESSSUITE_ELEMENTTYPE_ENTITY = "entity";
 		public static final String PROCESSSUITE_ELEMENTTYPE_REFERENCE = "reference";
 

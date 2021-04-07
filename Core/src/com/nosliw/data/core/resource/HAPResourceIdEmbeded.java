@@ -1,14 +1,13 @@
 package com.nosliw.data.core.resource;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPResourceIdEmbeded  extends HAPResourceId{
 
@@ -36,23 +35,32 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_EMBEDED;  }
 
 	public HAPResourceId getParentResourceId() {    return this.m_parentId;    }
+	public void setParentResourceId(HAPResourceId parentResourceId) {   this.m_parentId = parentResourceId;   }
+	
 	public String getPath() {    return this.m_path;    }
+	public void setPath(String path) {    this.m_path = path;    }
 	
 	@Override
-	public String getIdLiterate() {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		this.buildCoreJsonMap(jsonMap, null);
-		return HAPJsonUtility.buildMapJson(jsonMap);
+	public String getCoreIdLiterate() {
+		return HAPNamingConversionUtility.cascadeLevel3(this.m_path, this.m_parentId.toStringValue(HAPSerializationFormat.LITERATE));
+		
+//		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+//		this.buildCoreJsonMap(jsonMap, null);
+//		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
 	@Override
 	protected void buildCoreIdByLiterate(String idLiterate) {
-		JSONObject jsonObj = new JSONObject(idLiterate);
-		this.buildCoreIdByJSON(jsonObj);
+		String[] idSegs = HAPNamingConversionUtility.parseLevel3(idLiterate);
+		this.m_path = idSegs[0];
+		this.m_parentId = HAPFactoryResourceId.newInstance(idSegs[1]);
+		
+//		JSONObject jsonObj = new JSONObject(idLiterate);
+//		this.buildCoreIdByJSON(jsonObj);
 	}
 
 	@Override
-	protected void buildCoreJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+	protected void buildCoreIdJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(PATH, this.m_path);
 		jsonMap.put(PARENT, this.m_parentId.toStringValue(HAPSerializationFormat.JSON));
 	}
