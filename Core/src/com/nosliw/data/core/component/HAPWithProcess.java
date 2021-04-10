@@ -1,10 +1,10 @@
 package com.nosliw.data.core.component;
 
-import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 
 public interface HAPWithProcess {
 
-	HAPDefinitionProcessSuite getProcessSuite();
+	HAPResourceDefinitionProcessSuite getProcessSuite();
 
-	void setProcessSuite(HAPDefinitionProcessSuite processSuite);
+	void setProcessSuite(HAPResourceDefinitionProcessSuite processSuite);
 }

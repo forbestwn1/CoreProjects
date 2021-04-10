@@ -20,7 +20,7 @@ public class HAPParserResourceExpressionDefinition extends HAPParserResourceImp{
 		JSONArray expressionsArray = jsonObj.getJSONArray(HAPResourceDefinitionContainer.ELEMENT);
 		for(int i=0; i<expressionsArray.length(); i++){
 			JSONObject expressionObjJson = expressionsArray.getJSONObject(i);
-			Object expressionObj = expressionObjJson.opt(HAPDefinitionResourceDefinitionExpressionSuiteElementEntity.ELEMENT);
+			Object expressionObj = expressionObjJson.opt(HAPElementContainerResourceDefinitionEntityExpressionSuite.ELEMENT);
 			if(expressionObj!=null) {
 				//expression entity
 				out.addContainerElement(parseExpressionSuiteElement(expressionObjJson));
@@ -33,8 +33,8 @@ public class HAPParserResourceExpressionDefinition extends HAPParserResourceImp{
 	}
 
 	
-	private HAPDefinitionResourceDefinitionExpressionSuiteElementEntity parseExpressionSuiteElement(JSONObject jsonObj) {
-		HAPDefinitionResourceDefinitionExpressionSuiteElementEntity out = new HAPDefinitionResourceDefinitionExpressionSuiteElementEntity();
+	private HAPElementContainerResourceDefinitionEntityExpressionSuite parseExpressionSuiteElement(JSONObject jsonObj) {
+		HAPElementContainerResourceDefinitionEntityExpressionSuite out = new HAPElementContainerResourceDefinitionEntityExpressionSuite();
 		HAPUtilityComponentParse.parseComponent(out, jsonObj);
 		HAPParserExpressionDefinition.parseExpressionDefinitionList(out, jsonObj);
 		return out;

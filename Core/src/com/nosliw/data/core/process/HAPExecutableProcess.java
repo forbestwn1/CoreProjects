@@ -15,6 +15,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -52,7 +53,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	public static String INITSCRIPT = "initScript";
 
 	//process definition
-	private HAPDefinitionProcess m_processDefinition;
+	private HAPResourceDefinitionProcess m_processDefinition;
 	
 	//unique in system
 	private String m_id;
@@ -75,7 +76,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 		this.m_activityPluginMan = activityPluginMan;
 	}
 	
-	public HAPExecutableProcess(HAPDefinitionProcess definition, String id, HAPManagerActivityPlugin activityPluginMan) {
+	public HAPExecutableProcess(HAPResourceDefinitionProcess definition, String id, HAPManagerActivityPlugin activityPluginMan) {
 		this(activityPluginMan);
 		this.m_activities = new LinkedHashMap<String, HAPExecutableActivity>();
 		this.m_results = new LinkedHashMap<String, HAPExecutableDataAssociation>();
@@ -100,7 +101,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 		return out;
 	}
 
-	public HAPDefinitionProcess getDefinition() {   return this.m_processDefinition;    }
+	public HAPResourceDefinitionProcess getDefinition() {   return this.m_processDefinition;    }
 	
 	public Map<String, HAPExecutableActivity> getActivities(){  return this.m_activities;   }
 	

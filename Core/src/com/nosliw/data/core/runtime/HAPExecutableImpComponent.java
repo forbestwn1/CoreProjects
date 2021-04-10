@@ -9,8 +9,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.data.core.component.HAPComponent;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -28,7 +28,7 @@ public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implement
 	// hook up with real data during runtime
 	private HAPContextStructure m_context;
 
-	private HAPDefinitionProcessSuite m_processSuite;
+	private HAPResourceDefinitionProcessSuite m_processSuite;
 
 	private Map<String, HAPDefinitionServiceProvider> m_serviceProviders;
 	
@@ -42,8 +42,8 @@ public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implement
 	public HAPContextStructure getContextStructure() {   return this.m_context;   }
 	public void setContextStructure(HAPContextStructure context) { 	this.m_context = context;	}
 
-	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {    this.m_processSuite = processSuite;    }
-	public HAPDefinitionProcess getProcessDefinition(String name) {    return new HAPDefinitionProcess(this.m_processSuite, name);    }
+	public void setProcessSuite(HAPResourceDefinitionProcessSuite processSuite) {    this.m_processSuite = processSuite;    }
+	public HAPResourceDefinitionProcess getProcessDefinition(String name) {    return new HAPResourceDefinitionProcess(this.m_processSuite, name);    }
 
 	public void setServiceProviders(Map<String, HAPDefinitionServiceProvider> serviceProviders) {    this.m_serviceProviders = serviceProviders;    }
 	public Map<String, HAPDefinitionServiceProvider> getServiceProviders(){    return this.m_serviceProviders;     }

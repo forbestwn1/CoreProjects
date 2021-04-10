@@ -11,8 +11,8 @@ import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -59,7 +59,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 
 	private List<HAPExecutableModuleUI> m_uis;
 
-	private HAPDefinitionProcessSuite m_processSuite;
+	private HAPResourceDefinitionProcessSuite m_processSuite;
 	
 	public HAPExecutableModule(HAPDefinitionModule moduleDefinition, String id) {
 		super(moduleDefinition);
@@ -82,9 +82,9 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 
 	public void addModuleUI(HAPExecutableModuleUI ui) {  this.m_uis.add(ui);   }
 	
-	public void setProcessSuite(HAPDefinitionProcessSuite processSuite) {    this.m_processSuite = processSuite;    }
+	public void setProcessSuite(HAPResourceDefinitionProcessSuite processSuite) {    this.m_processSuite = processSuite;    }
 	
-	public HAPDefinitionProcess getProcessDefinition(String name) {    return new HAPDefinitionProcess(this.m_processSuite, name);    }
+	public HAPResourceDefinitionProcess getProcessDefinition(String name) {    return new HAPResourceDefinitionProcess(this.m_processSuite, name);    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

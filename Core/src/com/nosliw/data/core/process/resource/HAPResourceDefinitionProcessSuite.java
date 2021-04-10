@@ -1,4 +1,4 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.process.resource;
 
 import java.util.Map;
 
@@ -6,21 +6,21 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
+import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 
-//application that contains multiple tasks
+//suite that contain multiple process
 @HAPEntityWithAttribute
-public class HAPDefinitionProcessSuite extends HAPResourceDefinitionContainer<HAPResourceDefinitionContainerElement>{
+public class HAPResourceDefinitionProcessSuite extends HAPResourceDefinitionContainer<HAPElementContainerResourceDefinition>{
 
-	public HAPDefinitionProcessSuite() {
+	public HAPResourceDefinitionProcessSuite() {
 	}
 
 	@Override
 	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
 
 	@Override
-	public HAPResourceDefinition getElementResourceDefinition(String eleName) {	return new HAPDefinitionProcess(this, eleName);	}
+	public HAPResourceDefinition getElementResourceDefinition(String eleName) {	return new HAPResourceDefinitionProcess(this, eleName);	}
 
 	@Override
 	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
@@ -32,8 +32,8 @@ public class HAPDefinitionProcessSuite extends HAPResourceDefinitionContainer<HA
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
 	
-	public HAPDefinitionProcessSuite cloneProcessSuiteDefinition() {
-		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
+	public HAPResourceDefinitionProcessSuite cloneProcessSuiteDefinition() {
+		HAPResourceDefinitionProcessSuite out = new HAPResourceDefinitionProcessSuite();
 		this.cloneToResourceDefinitionContainer(out);
 		return out;
 	}

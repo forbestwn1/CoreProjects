@@ -7,7 +7,7 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdProcess  extends HAPResourceIdSimple{
 
-	private HAPProcessId m_processId; 
+	private HAPIdProcess m_processId; 
 	
 	public HAPResourceIdProcess(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS);     }
 
@@ -21,7 +21,7 @@ public class HAPResourceIdProcess  extends HAPResourceIdSimple{
 		init(idLiterate, null);
 	}
 
-	public HAPResourceIdProcess(HAPProcessId processId){
+	public HAPResourceIdProcess(HAPIdProcess processId){
 		this();
 		init(null, null);
 		this.m_processId = processId;
@@ -31,13 +31,13 @@ public class HAPResourceIdProcess  extends HAPResourceIdSimple{
 	@Override
 	protected void setId(String id){
 		super.setId(id);
-		this.m_processId = new HAPProcessId(id);
+		this.m_processId = new HAPIdProcess(id);
 	}
 
-	public HAPProcessId getProcessId(){  return this.m_processId;	}
+	public HAPIdProcess getProcessId(){  return this.m_processId;	}
 	
 	public HAPResourceIdProcessSuite getProcessSuiteResourceId() {
-		HAPProcessId processId = this.getProcessId();
+		HAPIdProcess processId = this.getProcessId();
 		HAPResourceIdProcessSuite out = new HAPResourceIdProcessSuite(processId.getSuiteId(), this.getSupplement());
 		return out;
 	}

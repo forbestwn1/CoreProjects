@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPConnection;
@@ -54,12 +53,6 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 
 	@Override
 	public HAPElementGroup getElementGroup(String id) {  return this.m_story.getElementGroup(id);  }
-
-	@Override
-	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -171,6 +164,24 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 
 	@Override
 	public List<HAPChangeItem> change(HAPRequestChange changeRequest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPStoryElement deleteElement(HAPIdElement eleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPRequestChange newRequestChange(Boolean extend) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getNextId() {
 		// TODO Auto-generated method stub
 		return null;
 	}

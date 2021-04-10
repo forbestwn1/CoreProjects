@@ -2,11 +2,11 @@ package com.nosliw.data.core.process.resource;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 
-public class HAPProcessSuiteId extends HAPSerializableImp{
+public class HAPIdProcessSuite extends HAPSerializableImp{
 
 	private String m_id;
 	
-	public HAPProcessSuiteId(String id){
+	public HAPIdProcessSuite(String id){
 		this.m_id = id;
 	}
 	

@@ -1,5 +1,7 @@
 package com.nosliw.data.core.process;
 
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPContextResourceDefinition;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -10,11 +12,11 @@ import com.nosliw.data.core.resource.HAPUtilityResource;
 //it include related suite or process
 public class HAPContextProcessor implements HAPContextResourceDefinition{
 
-	private HAPDefinitionProcessSuite m_suite; 
+	private HAPResourceDefinitionProcessSuite m_suite; 
 	
 	private HAPManagerResourceDefinition m_resourceDefMan;
 	
-	public static HAPContextProcessor createContext(HAPDefinitionProcessSuite suite, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPContextProcessor createContext(HAPResourceDefinitionProcessSuite suite, HAPManagerResourceDefinition resourceDefMan) {
 		HAPContextProcessor out = new HAPContextProcessor();
 		out.m_resourceDefMan = resourceDefMan;
 		out.m_suite = suite;
@@ -29,7 +31,7 @@ public class HAPContextProcessor implements HAPContextResourceDefinition{
 	
 	@Override
 	public HAPEntityWithResourceContext getResourceDefinition(HAPResourceId processId) {
-		HAPDefinitionProcess processDef = (HAPDefinitionProcess)HAPUtilityResource.getImpliedResourceDefinition(processId, this.m_suite, this.m_resourceDefMan);
+		HAPResourceDefinitionProcess processDef = (HAPResourceDefinitionProcess)HAPUtilityResource.getImpliedResourceDefinition(processId, this.m_suite, this.m_resourceDefMan);
 		HAPEntityWithResourceContext out = new HAPEntityWithResourceContext(processDef, HAPContextProcessor.createContext(processDef.getSuite(), m_resourceDefMan));
 		return out;
 	}	

@@ -24,19 +24,19 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 
 public class HAPImporterProcessSuiteDefinition {
 
-	static public List<HAPDefinitionProcessSuite> readProcessDefinitionSuiteFromFolder(String folder, HAPManagerActivityPlugin activityPluginMan){
-		List<HAPDefinitionProcessSuite> out = new ArrayList<HAPDefinitionProcessSuite>();
+	static public List<HAPResourceDefinitionProcessSuite> readProcessDefinitionSuiteFromFolder(String folder, HAPManagerActivityPlugin activityPluginMan){
+		List<HAPResourceDefinitionProcessSuite> out = new ArrayList<HAPResourceDefinitionProcessSuite>();
 		Set<File> files = HAPFileUtility.getAllFiles(folder);
 		for(File file : files){
 			if(file.getName().endsWith(".process")){
 				try {
 					InputStream inputStream = new FileInputStream(file);
-					HAPDefinitionProcessSuite taskDefinitionSuite = readProcessSuiteDefinitionFromFile(inputStream, activityPluginMan);
+					HAPResourceDefinitionProcessSuite taskDefinitionSuite = readProcessSuiteDefinitionFromFile(inputStream, activityPluginMan);
 			         out.add(taskDefinitionSuite);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -46,8 +46,8 @@ public class HAPImporterProcessSuiteDefinition {
 		return out;
 	}
 
-	static public List<HAPDefinitionProcessSuite> readProcessSuiteFromClassFolder(Class cs, HAPManagerActivityPlugin activityPluginMan){
-		final List<HAPDefinitionProcessSuite> out = new ArrayList<HAPDefinitionProcessSuite>();
+	static public List<HAPResourceDefinitionProcessSuite> readProcessSuiteFromClassFolder(Class cs, HAPManagerActivityPlugin activityPluginMan){
+		final List<HAPResourceDefinitionProcessSuite> out = new ArrayList<HAPResourceDefinitionProcessSuite>();
 		try{
 			URI uri = cs.getResource("").toURI();
 		    try (FileSystem fileSystem = (uri.getScheme().equals("jar") ? FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap()) : null)) {
@@ -56,7 +56,7 @@ public class HAPImporterProcessSuiteDefinition {
 		            @Override
 		            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 		            	if(file.getFileName().toString().endsWith(".process")){
-		            		HAPDefinitionProcessSuite taskDefinitionSuite = readProcessSuiteDefinitionFromFile(Files.newInputStream(file), activityPluginMan); 
+		            		HAPResourceDefinitionProcessSuite taskDefinitionSuite = readProcessSuiteDefinitionFromFile(Files.newInputStream(file), activityPluginMan); 
 					         out.add(taskDefinitionSuite);
 		            	}
 		                return FileVisitResult.CONTINUE;
@@ -70,8 +70,8 @@ public class HAPImporterProcessSuiteDefinition {
 		return out;
 	}
 
-	public static HAPDefinitionProcessSuite readProcessSuiteDefinitionFromFile(InputStream inputStream, HAPManagerActivityPlugin activityPluginMan){
-		HAPDefinitionProcessSuite suite = null;
+	public static HAPResourceDefinitionProcessSuite readProcessSuiteDefinitionFromFile(InputStream inputStream, HAPManagerActivityPlugin activityPluginMan){
+		HAPResourceDefinitionProcessSuite suite = null;
 		try{
 			String content = HAPFileUtility.readFile(inputStream);
 			JSONObject contentJson = HAPJsonUtility.newJsonObject(content);

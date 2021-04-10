@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
-import com.nosliw.data.core.process.resource.HAPProcessId;
+import com.nosliw.data.core.process.resource.HAPIdProcess;
 import com.nosliw.data.core.process.resource.HAPResourceIdProcess;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -41,7 +41,7 @@ public class HAPUtilityProcess {
 	}
 	
 	public static HAPResourceId buildResourceId(String suiteId, String processId) {
-		return new HAPResourceIdProcess(new HAPProcessId(suiteId, processId));
+		return new HAPResourceIdProcess(new HAPIdProcess(suiteId, processId));
 	}
 	
 //	public static HAPDefinitionProcessSuite buildProcessSuiteFromAttachment(HAPAttachmentContainer attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {

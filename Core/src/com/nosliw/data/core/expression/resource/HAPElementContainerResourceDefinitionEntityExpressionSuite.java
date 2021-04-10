@@ -8,19 +8,19 @@ import java.util.Set;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPComponent;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementEntityImpComponent;
+import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
+import com.nosliw.data.core.component.HAPElementContainerResourceDefinitionEntityImpComponent;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 
 //expression group within suite
-public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity 
-		extends HAPResourceDefinitionContainerElementEntityImpComponent 
+public class HAPElementContainerResourceDefinitionEntityExpressionSuite 
+		extends HAPElementContainerResourceDefinitionEntityImpComponent 
 		implements HAPDefinitionExpressionGroup{
 
 	private Map<String, HAPDefinitionExpression> m_element;
 	
-	public HAPDefinitionResourceDefinitionExpressionSuiteElementEntity() {
+	public HAPElementContainerResourceDefinitionEntityExpressionSuite() {
 		this.m_element = new LinkedHashMap<String, HAPDefinitionExpression>();
 	}
 	
@@ -50,8 +50,8 @@ public class HAPDefinitionResourceDefinitionExpressionSuiteElementEntity
 	public HAPComponent cloneComponent() {  return (HAPComponent)this.cloneResourceDefinitionContainerElement(); }
 
 	@Override
-	public HAPResourceDefinitionContainerElement cloneResourceDefinitionContainerElement() {
-		HAPDefinitionResourceDefinitionExpressionSuiteElementEntity out = new HAPDefinitionResourceDefinitionExpressionSuiteElementEntity();
+	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {
+		HAPElementContainerResourceDefinitionEntityExpressionSuite out = new HAPElementContainerResourceDefinitionEntityExpressionSuite();
 		this.cloneToResourceDefinitionContainerElementEntityImpComponent(out);
 		for(String name : this.m_element.keySet()) {
 			out.m_element.put(name, this.m_element.get(name).cloneDefinitionExpression());

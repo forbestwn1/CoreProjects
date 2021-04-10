@@ -7,6 +7,7 @@ import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -18,7 +19,7 @@ public class HAPProcessorProcess{
 
 	//process process in suite
 	public static HAPExecutableProcess process(
-			HAPDefinitionProcess processDef,
+			HAPResourceDefinitionProcess processDef,
 			HAPContextGroup extraContext,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processMan,
@@ -40,9 +41,9 @@ public class HAPProcessorProcess{
 		HAPExecutableProcess out = null;
 		HAPContextGroup oldContext = null;
 		do {
-			if(oldContext==null)   oldContext = (HAPContextGroup)HAPUtilityComponent.processElementComponentContext((HAPDefinitionProcess)process.getEntity(), extraContext, runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForProcess()); 
+			if(oldContext==null)   oldContext = (HAPContextGroup)HAPUtilityComponent.processElementComponentContext((HAPResourceDefinitionProcess)process.getEntity(), extraContext, runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForProcess()); 
 			else oldContext = out.getContext();
-			out = new HAPExecutableProcess((HAPDefinitionProcess)process.getEntity(), id, processMan.getPluginManager());
+			out = new HAPExecutableProcess((HAPResourceDefinitionProcess)process.getEntity(), id, processMan.getPluginManager());
 			HAPProcessorProcess.process(out, oldContext, (HAPContextProcessor)process.getResourceContext(), serviceProviders, processMan, runtimeEnv, processTracker);
 		}while(!oldContext.equals(out.getContext()));
 		return out;

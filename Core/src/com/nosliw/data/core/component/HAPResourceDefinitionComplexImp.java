@@ -58,6 +58,12 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	public HAPResourceDefinitionOrId getChild(String path) {   return null;    }
 
 	@Override
+	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public void cloneToDataContext(HAPWithDataContext withDataContext) {
 		if(this.m_context!=null)	withDataContext.setContextStructure(this.m_context.cloneContextStructure());
 	}

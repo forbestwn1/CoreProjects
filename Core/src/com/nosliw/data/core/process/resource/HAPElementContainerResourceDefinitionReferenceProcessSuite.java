@@ -1,25 +1,25 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.process.resource;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementReference;
+import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
+import com.nosliw.data.core.component.HAPElementContainerResourceDefinitionReference;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 
-public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWritableImp implements HAPResourceDefinitionContainerElementReference{
+public class HAPElementContainerResourceDefinitionReferenceProcessSuite extends HAPEntityInfoWritableImp implements HAPElementContainerResourceDefinitionReference{
 
 	@HAPAttribute
 	public static String REFERENCE = "reference";
 
 	private HAPResourceId m_resourceId;
 
-	public HAPDefinitionProcessSuiteElementReference() {}
+	public HAPElementContainerResourceDefinitionReferenceProcessSuite() {}
 
-	public HAPDefinitionProcessSuiteElementReference(HAPResourceId resourceId) {
+	public HAPElementContainerResourceDefinitionReferenceProcessSuite(HAPResourceId resourceId) {
 		this.m_resourceId = resourceId;
 	}
 
@@ -38,8 +38,8 @@ public class HAPDefinitionProcessSuiteElementReference extends HAPEntityInfoWrit
 	}
 
 	@Override
-	public HAPResourceDefinitionContainerElement cloneResourceDefinitionContainerElement() {
-		HAPDefinitionProcessSuiteElementReference out = new HAPDefinitionProcessSuiteElementReference();
+	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {
+		HAPElementContainerResourceDefinitionReferenceProcessSuite out = new HAPElementContainerResourceDefinitionReferenceProcessSuite();
 		this.cloneToEntityInfo(out);
 		out.m_resourceId = this.m_resourceId.clone();
 		return out;

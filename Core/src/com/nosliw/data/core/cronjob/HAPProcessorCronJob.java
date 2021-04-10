@@ -5,10 +5,10 @@ import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.dataable.HAPManagerDataable;
 import com.nosliw.data.core.expression.HAPManagerExpression;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -43,7 +43,7 @@ public class HAPProcessorCronJob {
 		HAPUtilityComponent.processComponentExecutable(out, parentContext, runtimeEnv, contextProcessConfg, processMan.getPluginManager());
 
 		//process task
-		HAPDefinitionProcess processDef = out.getProcessDefinition(cronJobDefinition.getTask().getProcess());
+		HAPResourceDefinitionProcess processDef = out.getProcessDefinition(cronJobDefinition.getTask().getProcess());
 		HAPExecutableProcess processExe = HAPProcessorProcess.process(processDef, null, out.getServiceProviders(), processMan, runtimeEnv, processTracker);
 		HAPExecutableWrapperTask<HAPExecutableProcess> processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(cronJobDefinition.getTask().getTask(), processExe, HAPParentContext.createDefault(out.getContext()), null, runtimeEnv);			
 		out.setTask(processExeWrapper);

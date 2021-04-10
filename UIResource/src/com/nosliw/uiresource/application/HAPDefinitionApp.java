@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.component.HAPInfoChildResource;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
+import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
 import com.nosliw.uiresource.resource.HAPUIAppEntryId;
@@ -61,7 +61,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer<HAPDefiniti
 		HAPContainerChildReferenceResource out = new HAPContainerChildReferenceResource();
 		//entry part
 		Set<HAPDefinitionAppElement> entrys = this.getContainerElements();
-		for(HAPResourceDefinitionContainerElement entry : entrys) {
+		for(HAPElementContainerResourceDefinition entry : entrys) {
 			out.addChildCompoentId(new HAPInfoChildResource(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), entry.getInfo()), this.getAttachmentContainer());
 		}
 		return out;

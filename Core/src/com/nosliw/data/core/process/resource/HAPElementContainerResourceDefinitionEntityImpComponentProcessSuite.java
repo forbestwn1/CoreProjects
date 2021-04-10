@@ -1,4 +1,4 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.process.resource;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -10,10 +10,11 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPComponent;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElement;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainerElementEntityImpComponent;
+import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
+import com.nosliw.data.core.component.HAPElementContainerResourceDefinitionEntityImpComponent;
+import com.nosliw.data.core.process.HAPDefinitionActivity;
+import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 
 /**
@@ -22,7 +23,7 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
  * Task is a sequence of steps
  */
 @HAPEntityWithAttribute
-public class HAPDefinitionProcessSuiteElementEntity extends HAPResourceDefinitionContainerElementEntityImpComponent{ 
+public class HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite extends HAPElementContainerResourceDefinitionEntityImpComponent implements HAPDefinitionProcess{ 
 
 	@HAPAttribute
 	public static String ACTIVITY = "activity";
@@ -32,7 +33,7 @@ public class HAPDefinitionProcessSuiteElementEntity extends HAPResourceDefinitio
 	//dependent resources
 	private Set<HAPResourceDependency> m_requiredResources;
 
-	public HAPDefinitionProcessSuiteElementEntity(){
+	public HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite(){
 		super();
 		this.m_activities = new LinkedHashMap<String, HAPDefinitionActivity>();
 		this.m_requiredResources = new HashSet<HAPResourceDependency>();
@@ -49,11 +50,6 @@ public class HAPDefinitionProcessSuiteElementEntity extends HAPResourceDefinitio
 	public Set<HAPResourceDependency> getRequiredResources(){ return this.m_requiredResources;  }
 	
 	@Override
-	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
-		return null;
-	}
-
-	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ACTIVITY, HAPJsonUtility.buildJson(this.m_activities, HAPSerializationFormat.JSON));
@@ -65,8 +61,8 @@ public class HAPDefinitionProcessSuiteElementEntity extends HAPResourceDefinitio
 	}
 
 	@Override
-	public HAPResourceDefinitionContainerElement cloneResourceDefinitionContainerElement() {
-		HAPDefinitionProcessSuiteElementEntity out = new HAPDefinitionProcessSuiteElementEntity();
+	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {
+		HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite out = new HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite();
 		this.cloneToComponent(out);
 		for(String name : this.m_activities.keySet()) {
 			out.m_activities.put(name, this.m_activities.get(name).cloneActivityDefinition());

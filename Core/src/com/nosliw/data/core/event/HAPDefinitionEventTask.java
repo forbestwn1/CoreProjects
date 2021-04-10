@@ -1,7 +1,6 @@
 package com.nosliw.data.core.event;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPComponentImp;
 
 //task definition 
@@ -39,9 +38,4 @@ public class HAPDefinitionEventTask extends HAPComponentImp{
 	public HAPDefinitionEventHandle getEventHandle() {   return this.m_eventHandle;  }
 	public void setEventHandle(HAPDefinitionEventHandle eventHandler) {  this.m_eventHandle = eventHandler;    }
 
-	@Override
-	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
-		return null;
-	}
-	
 }

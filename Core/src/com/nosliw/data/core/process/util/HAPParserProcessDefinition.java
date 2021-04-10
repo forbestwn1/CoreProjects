@@ -6,23 +6,23 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementEntity;
-import com.nosliw.data.core.process.HAPDefinitionProcessSuiteElementReference;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.process.resource.HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite;
+import com.nosliw.data.core.process.resource.HAPElementContainerResourceDefinitionReferenceProcessSuite;
+import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
 public class HAPParserProcessDefinition {
 
-	public static HAPDefinitionProcessSuite parsePocessSuite(JSONObject processSuiteJson, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
+	public static HAPResourceDefinitionProcessSuite parsePocessSuite(JSONObject processSuiteJson, HAPManagerActivityPlugin activityPluginMan) {
+		HAPResourceDefinitionProcessSuite out = new HAPResourceDefinitionProcessSuite();
 
 		HAPUtilityComponentParse.parseComplextResourceDefinition(out, processSuiteJson);
 		
-		JSONArray processesArray = processSuiteJson.getJSONArray(HAPDefinitionProcessSuite.ELEMENT);
+		JSONArray processesArray = processSuiteJson.getJSONArray(HAPResourceDefinitionProcessSuite.ELEMENT);
 		for(int i=0; i<processesArray.length(); i++){
 			JSONObject processObjJson = processesArray.getJSONObject(i);
-			Object refObj = processObjJson.opt(HAPDefinitionProcessSuiteElementReference.REFERENCE);
+			Object refObj = processObjJson.opt(HAPElementContainerResourceDefinitionReferenceProcessSuite.REFERENCE);
 			if(refObj==null) {
 				//process
 				out.addContainerElement(parseProcess(processObjJson, activityPluginMan));
@@ -35,30 +35,30 @@ public class HAPParserProcessDefinition {
 		return out;
 	}
 
-	public static HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity> parseEmbededProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity> out = new HAPDefinitionWrapperTask<HAPDefinitionProcessSuiteElementEntity>();
-		HAPDefinitionProcessSuiteElementEntity process = new HAPDefinitionProcessSuiteElementEntity();
+	public static HAPDefinitionWrapperTask<HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite> parseEmbededProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
+		HAPDefinitionWrapperTask<HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite> out = new HAPDefinitionWrapperTask<HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite>();
+		HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite process = new HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite();
 		parseProcess(process, processJson, activityPluginMan);
 		out.buildObj(processJson, process);
 		return out;
 	}
 	
-	private static HAPDefinitionProcessSuiteElementReference parseProcessReference(JSONObject processJson) {
-		HAPDefinitionProcessSuiteElementReference out = new HAPDefinitionProcessSuiteElementReference();
+	private static HAPElementContainerResourceDefinitionReferenceProcessSuite parseProcessReference(JSONObject processJson) {
+		HAPElementContainerResourceDefinitionReferenceProcessSuite out = new HAPElementContainerResourceDefinitionReferenceProcessSuite();
 		out.buildObject(processJson, HAPSerializationFormat.JSON);
 		return out;
 	}
 	
-	public static HAPDefinitionProcessSuiteElementEntity parseProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionProcessSuiteElementEntity out = new HAPDefinitionProcessSuiteElementEntity();
+	public static HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite parseProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
+		HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite out = new HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite();
 		parseProcess(out, processJson, activityPluginMan);
 		return out;
 	}
 
-	public static void parseProcess(HAPDefinitionProcessSuiteElementEntity out, JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
+	public static void parseProcess(HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite out, JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
 		HAPUtilityComponentParse.parseComponent(out, processJson);
 		
-		JSONArray activityArrayJson = processJson.optJSONArray(HAPDefinitionProcessSuiteElementEntity.ACTIVITY);
+		JSONArray activityArrayJson = processJson.optJSONArray(HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite.ACTIVITY);
 		for(int i=0; i<activityArrayJson.length(); i++) {
 			JSONObject activityObjJson = (JSONObject)activityArrayJson.get(i);
 			String activityType = activityObjJson.getString(HAPDefinitionActivity.TYPE);

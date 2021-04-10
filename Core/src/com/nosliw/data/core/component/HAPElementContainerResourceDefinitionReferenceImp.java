@@ -7,7 +7,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 
-public class HAPResourceDefinitionContainerElementReferenceImp extends HAPEntityInfoWritableImp implements HAPResourceDefinitionContainerElementReference{
+public class HAPElementContainerResourceDefinitionReferenceImp extends HAPEntityInfoWritableImp implements HAPElementContainerResourceDefinitionReference{
 
 	@HAPAttribute
 	public static String REFERENCE = "reference";
@@ -16,18 +16,18 @@ public class HAPResourceDefinitionContainerElementReferenceImp extends HAPEntity
 
 	private String m_defaultType;
 	
-	public HAPResourceDefinitionContainerElementReferenceImp() {}
+	public HAPElementContainerResourceDefinitionReferenceImp() {}
 
-	public HAPResourceDefinitionContainerElementReferenceImp(String defaultType) {
+	public HAPElementContainerResourceDefinitionReferenceImp(String defaultType) {
 		this.m_defaultType = defaultType;
 	}
 
-	public HAPResourceDefinitionContainerElementReferenceImp(HAPResourceId resourceId) {
+	public HAPElementContainerResourceDefinitionReferenceImp(HAPResourceId resourceId) {
 		this.m_resourceId = resourceId;
 	}
 
 	@Override
-	public String getType() {	return HAPResourceDefinitionContainerElement.TYPE_REFERENCE;	}
+	public String getType() {	return HAPElementContainerResourceDefinition.TYPE_REFERENCE;	}
 
 	@Override
 	public HAPResourceId getResourceId() {	return this.m_resourceId;	}
@@ -40,14 +40,14 @@ public class HAPResourceDefinitionContainerElementReferenceImp extends HAPEntity
 		return true;  
 	}
 
-	protected void cloneToResourceDefinitionContainerElementReference(HAPResourceDefinitionContainerElementReferenceImp to) {
+	protected void cloneToResourceDefinitionContainerElementReference(HAPElementContainerResourceDefinitionReferenceImp to) {
 		this.cloneToEntityInfo(to);
 		to.m_resourceId = this.m_resourceId.clone();
 	}
 	
 	@Override
-	public HAPResourceDefinitionContainerElement cloneResourceDefinitionContainerElement() {
-		HAPResourceDefinitionContainerElementReferenceImp out = new HAPResourceDefinitionContainerElementReferenceImp();
+	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {
+		HAPElementContainerResourceDefinitionReferenceImp out = new HAPElementContainerResourceDefinitionReferenceImp();
 		this.cloneToResourceDefinitionContainerElementReference(out);
 		return out;
 	}

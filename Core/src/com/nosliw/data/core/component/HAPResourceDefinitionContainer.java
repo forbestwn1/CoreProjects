@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 
-public abstract class HAPResourceDefinitionContainer <T extends HAPResourceDefinitionContainerElement> extends HAPResourceDefinitionComplexImp {
+public abstract class HAPResourceDefinitionContainer <T extends HAPElementContainerResourceDefinition> extends HAPResourceDefinitionComplexImp{
  
 	@HAPAttribute
 	public static String ELEMENT = "element";
@@ -34,14 +34,15 @@ public abstract class HAPResourceDefinitionContainer <T extends HAPResourceDefin
 		}
 	}
 	
+	
 	public T getContainerElement(String id) {     return this.m_elements.get(id);     }
 	
 	public Set<T> getContainerElements(){    return new HashSet<T>(this.m_elements.values());    }
 	
 	public void addContainerElement(T ele) {
 		String type = ele.getType(); 
-		if(type.equals(HAPResourceDefinitionContainerElement.TYPE_ENTITY)) {
-			HAPResourceDefinitionContainerElementEntity entityEle = (HAPResourceDefinitionContainerElementEntity)ele;
+		if(type.equals(HAPElementContainerResourceDefinition.TYPE_ENTITY)) {
+			HAPElementContainerResourceDefinitionEntity entityEle = (HAPElementContainerResourceDefinitionEntity)ele;
 			entityEle.getAttachmentContainer().merge(this.getAttachmentContainer(), HAPConstant.INHERITMODE_PARENT);
 		}
 		this.m_elements.put(ele.getId(), ele);  
