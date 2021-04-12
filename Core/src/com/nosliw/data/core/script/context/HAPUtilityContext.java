@@ -28,7 +28,19 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityContext {
 
-	
+	public static HAPContextFlat buildFlatContext(HAPContextStructure context, Set<String> excludedInfo) {
+		HAPContextFlat out = new HAPContextFlat(excludedInfo);
+		if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)){
+			buildFlatContextFromContextGroup((HAPContextGroup)context, excludedInfo);
+		}
+		else {
+			Map<String, HAPContextDefinitionRoot> eles = ((HAPContext)context).getElements();
+			for(String name : eles.keySet()) {
+				out.addElement(name, eles.get(name));
+			}
+		}
+		return out;
+	}
 	
 	public static HAPContextFlat buildFlatContextFromContextGroup(HAPContextGroup context, Set<String> excludedInfo) {
 		HAPContextFlat out = new HAPContextFlat(excludedInfo);

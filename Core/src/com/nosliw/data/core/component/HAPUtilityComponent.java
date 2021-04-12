@@ -108,13 +108,13 @@ public class HAPUtilityComponent {
 		return context;
 	}
 	
-	public static HAPContext getContext(Object def, HAPContext extraContext, HAPConfigureContextProcessor contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {
-		HAPContext out = null;
+	public static HAPContextStructure getContext(Object def, HAPContextStructure extraContext, HAPConfigureContextProcessor contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {
+		HAPContextStructure out = null;
 		if(def instanceof HAPComponentContainerElement) {
-			out = (HAPContext)HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)def, extraContext, runtimeEnv, contextProcessConfig);
+			out = HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)def, extraContext, runtimeEnv, contextProcessConfig);
 		}
 		else if(def instanceof HAPWithDataContext){
-			out = (HAPContext)HAPUtilityContext.hardMerge(((HAPWithDataContext)def).getContextStructure(), extraContext); 
+			out = HAPUtilityContext.hardMerge(((HAPWithDataContext)def).getContextStructure(), extraContext); 
 		}
 		return out;
 	}

@@ -1,5 +1,9 @@
 package com.nosliw.data.core.process;
 
-public interface HAPDefinitionProcess {
+import com.nosliw.common.info.HAPEntityInfoWritable;
+import com.nosliw.data.core.common.HAPWithDataContext;
+
+public interface HAPDefinitionProcess extends HAPEntityInfoWritable, HAPWithDataContext 
+{
 
 }
