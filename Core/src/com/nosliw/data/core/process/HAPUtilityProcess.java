@@ -11,7 +11,6 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.process.resource.HAPIdProcess;
 import com.nosliw.data.core.process.resource.HAPResourceIdProcess;
@@ -181,10 +180,6 @@ public class HAPUtilityProcess {
 		HAPDefinitionWrapperTask<String> process = new HAPDefinitionWrapperTask<String>();
 		process.buildObj(jsonObj, jsonObj.optString(HAPEmbededProcessTask.PROCESS));
 		task.setTask(process);
-	}
-	
-	public static HAPContext getContext(Object processDef, HAPContext extraContext, HAPRuntimeEnvironment runtimeEnv) {
-		return HAPUtilityComponent.getContext(processDef, extraContext, HAPUtilityConfigure.getContextProcessConfigurationForProcess(), runtimeEnv);
 	}
 	
 }

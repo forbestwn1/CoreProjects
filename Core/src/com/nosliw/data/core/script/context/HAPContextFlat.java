@@ -53,7 +53,7 @@ public class HAPContextFlat extends HAPSerializableImp{
 	public void addElementFromContextGroup(HAPContextGroup contextGroup, String categary, String localName) {
 		//build global name element
 		String globalName = new HAPContextDefinitionRootId(categary, localName).getFullName();
-		HAPContextDefinitionRoot globalNameRoot = contextGroup.getElement(categary, localName).cloneContextDefinitionRoot();
+		HAPContextDefinitionRoot globalNameRoot = contextGroup.getElement(categary, localName);
 		this.m_context.addElement(globalName, globalNameRoot);
 		
 		//build local name element

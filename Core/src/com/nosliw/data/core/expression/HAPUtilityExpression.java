@@ -25,7 +25,6 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 public class HAPUtilityExpression {
@@ -53,7 +52,7 @@ public class HAPUtilityExpression {
 		return out;
 	}
 
-	public static HAPContextStructure getContext(Object expressionGroupDef, HAPContextStructure extraContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPContext getContext(Object expressionGroupDef, HAPContext extraContext, HAPRuntimeEnvironment runtimeEnv) {
 		return HAPUtilityComponent.getContext(expressionGroupDef, extraContext, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
 	}
 	
