@@ -49,17 +49,11 @@ public class HAPManagerExpression {
 		return out;
 	}
 
-	public HAPExecutableExpressionGroup getExpression(HAPResourceId expressionId, HAPContextResourceExpressionGroup context, Map<String, String> configure) {
+	public HAPExecutableExpressionGroup getExpression(HAPResourceId expressionId, Map<String, String> configure) {
 		HAPEntityWithResourceContext resourceDefWithContext = null;
-		if(context==null) {
-			HAPResourceDefinitionExpressionGroup exressionGroupResourceDef = (HAPResourceDefinitionExpressionGroup)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionId);
-			HAPDefinitionExpressionSuiteImp suite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(exressionGroupResourceDef, this.m_runtimeEnv);
-			context = HAPContextResourceExpressionGroup.createContext(suite, this.getResourceDefinitionManager());
-			resourceDefWithContext = new HAPEntityWithResourceContext(exressionGroupResourceDef, context);
-		}
-		else {
-			resourceDefWithContext = context.getResourceDefinition(expressionId);
-		}
+
+		HAPResourceDefinitionExpressionGroup exressionGroupResourceDef = (HAPResourceDefinitionExpressionGroup)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionId);
+		HAPContextProcessAttachmentReferenceExpression contextProcess = new HAPContextProcessAttachmentReferenceExpression(exressionGroupResourceDef, this.m_runtimeEnv);
 		
 		if(configure==null) {
 			//build configure from definition info
@@ -72,7 +66,8 @@ public class HAPManagerExpression {
 		
 		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(
 				expressionId.toStringValue(HAPSerializationFormat.LITERATE), 
-				resourceDefWithContext, 
+				exressionGroupResourceDef,
+				contextProcess, 
 				null, 
 				null, 
 				this, 
@@ -96,7 +91,7 @@ public class HAPManagerExpression {
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
 		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionGroupDef, HAPContextResourceExpressionGroup.createContext(null, getResourceDefinitionManager()));
-		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, resourceWithContext, null, null, this, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, expressionGroupDef, new HAPContextProcessAttachmentReferenceExpression(null, this.m_runtimeEnv), null, null, this, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 
@@ -108,7 +103,7 @@ public class HAPManagerExpression {
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
 		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionGroupDef, HAPContextResourceExpressionGroup.createContext(null, getResourceDefinitionManager()));
-		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, resourceWithContext, null, null, this, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, expressionGroupDef, new HAPContextProcessAttachmentReferenceExpression(null, this.m_runtimeEnv), null, null, this, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 	

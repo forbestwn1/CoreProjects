@@ -62,5 +62,4 @@ public class HAPResourceDefinitionExpressionGroup  extends HAPComponentContainer
 		// TODO Auto-generated method stub
 	}
 
-
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPIdAttachment;
 
 public class HAPWithAttachmentImp extends HAPEntityInfoWritableImp implements HAPWithAttachment{
 	
@@ -29,6 +30,9 @@ public class HAPWithAttachmentImp extends HAPEntityInfoWritableImp implements HA
 		if(atts!=null)  out = atts.get(name);
 		return out;
 	}
+	
+	@Override
+	public HAPAttachment getAttachment(HAPIdAttachment idAttachment) {  return this.getAttachment(idAttachment.getType(), idAttachment.getName());	}
 
 	@Override
 	public HAPLocalReferenceBase getLocalReferenceBase() {    return this.m_attachmentContainer.getLocalReferenceBase(); 	}
@@ -43,4 +47,5 @@ public class HAPWithAttachmentImp extends HAPEntityInfoWritableImp implements HA
 	public void cloneToAttachment(HAPWithAttachment withAttachment) {
 		withAttachment.setAttachmentContainer(this.m_attachmentContainer.cloneAttachmentContainer());
 	}
+
 }

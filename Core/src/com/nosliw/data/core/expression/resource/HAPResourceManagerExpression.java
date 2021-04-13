@@ -25,7 +25,7 @@ public class HAPResourceManagerExpression  extends HAPResourceManagerImp{
 	
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPExecutableExpressionGroup expression = this.m_expressionMan.getExpression(resourceId, null, null);
+		HAPExecutableExpressionGroup expression = this.m_expressionMan.getExpression(resourceId, null);
 		if(expression==null)  return null;
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN, HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_FILE);
@@ -34,7 +34,7 @@ public class HAPResourceManagerExpression  extends HAPResourceManagerImp{
 
 	@Override
 	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
-		HAPExecutableExpressionGroup expression = this.m_expressionMan.getExpression(resourceId, null, null);
+		HAPExecutableExpressionGroup expression = this.m_expressionMan.getExpression(resourceId, null);
 		return expression.getResourceDependency(runtimeInfo, this.m_rootResourceMan);
 	}
 }

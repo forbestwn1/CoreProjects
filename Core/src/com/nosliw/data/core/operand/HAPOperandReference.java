@@ -21,6 +21,7 @@ import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -56,6 +57,8 @@ public class HAPOperandReference extends HAPOperandImp{
 		super(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE);
 		this.m_variableMapping = new LinkedHashMap<String, String>();
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
+		this.setElementName(null);
+		this.setInputMapping(null);
 	}
 	
 	public HAPOperandReference(String expressionName){
@@ -69,9 +72,17 @@ public class HAPOperandReference extends HAPOperandImp{
 	public void setReferedExpression(HAPExecutableExpressionGroup expression) {   this.m_expression = expression;    }
 
 	public String getElementName() {   return this.m_elementName;   }
-	public void setElementName(String name) {   this.m_elementName = name;    }
+	public void setElementName(String name) {   
+		this.m_elementName = name;    
+		if(this.m_elementName==null)  this.m_elementName = HAPConstantShared.NAME_DEFAULT;
+	}
 	
-	public void setInputMapping(HAPDefinitionDataAssociation inputMapping) {  this.m_inputMapping = inputMapping;   }
+	public void setInputMapping(HAPDefinitionDataAssociation inputMapping) {  
+		this.m_inputMapping = inputMapping;    
+		if(this.m_inputMapping==null) {
+			this.m_inputMapping = new HAPDefinitionDataAssociationMirror();
+		}
+	}
 	public HAPDefinitionDataAssociation getInputMapping() {    return this.m_inputMapping;    }
 	
 	public Map<String, String> getVariableMapping(){   return this.m_variableMapping;   }

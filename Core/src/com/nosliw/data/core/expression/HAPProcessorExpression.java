@@ -4,9 +4,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.component.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.HAPData;
@@ -16,13 +20,12 @@ import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.resource.HAPContextResourceDefinition;
-import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.script.context.dataassociation.mapping.HAPUtilityDataAssociation;
 
@@ -30,7 +33,8 @@ public class HAPProcessorExpression {
 
 	public static HAPExecutableExpressionGroup process(
 			String id,
-			HAPEntityWithResourceContext expressionGroupDefWithContext,
+			HAPDefinitionExpressionGroup expressionGroupDef,
+			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
 			HAPContext extraContext,
 			Map<String, HAPDataTypeCriteria> expectOutput,
 			HAPManagerExpression expressionMan,
@@ -38,7 +42,7 @@ public class HAPProcessorExpression {
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 
-		HAPExecutableExpressionGroup out = processBasic(id, expressionGroupDefWithContext, extraContext, expressionMan, configure, runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup out = processBasic(id, expressionGroupDef, attachmentReferenceContext, extraContext, expressionMan, configure, runtimeEnv, processTracker);
 		
 		//normalize input mapping, popup variable
 		processReferencesInputMapping(out);
@@ -74,14 +78,15 @@ public class HAPProcessorExpression {
 	
 	private static HAPExecutableExpressionGroup processBasic(
 			String exeId,
-			HAPEntityWithResourceContext expressionGroupDefWithContext,
+			HAPDefinitionExpressionGroup expressionGroupDef,
+			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
 			HAPContext extraContext,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 
-		HAPDefinitionExpressionGroup expressionGroupDef = (HAPDefinitionExpressionGroup)expressionGroupDefWithContext.getEntity();
+//		HAPDefinitionExpressionGroup expressionGroupDef = (HAPDefinitionExpressionGroup)expressionGroupDefWithContext.getEntity();
 		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(exeId);
 		HAPContainerAttachment attContainer = null;
 		if(expressionGroupDef instanceof HAPWithAttachment) {
@@ -127,8 +132,8 @@ public class HAPProcessorExpression {
 			}
 
 			//referenced expression
-			Map<String, HAPDefinitionReference> refDef = HAPUtilityExpression.buildReferenceDefinition(operand, attContainer);
-			processReferencesInOperandBasic(exeId, operand, refDef, expressionGroupDefWithContext.getResourceContext(), expressionMan, configure, runtimeEnv, processTracker);
+//			Map<String, HAPDefinitionReference> refDef = HAPUtilityExpression.buildReferenceDefinition(operand, attContainer);
+			processReferencesInOperandBasic(exeId, operand, attachmentReferenceContext, expressionMan, configure, runtimeEnv, processTracker);
 		}
 		
 		return out;
@@ -138,8 +143,7 @@ public class HAPProcessorExpression {
 	private static void processReferencesInOperandBasic(
 			String parentId,
 			HAPOperandWrapper operand, 
-			Map<String, HAPDefinitionReference> referencesDef,
-			HAPContextResourceDefinition resourceContext,
+			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure,
 			HAPRuntimeEnvironment runtimeEnv,
@@ -153,22 +157,33 @@ public class HAPProcessorExpression {
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 					String refName = referenceOperand.getReferenceName();
-					HAPDefinitionReference refDef = referencesDef.get(refName);
-
-					referenceOperand.setElementName(refDef.getElementName());
 					
-					//get refered expression definition with context
-					HAPEntityWithResourceContext refResourceDefWithContext = resourceContext.getResourceDefinition(refDef.getResourceId());
+					String referenceTo = null;
+					String eleName = null;
+					
+					String[] segs = HAPNamingConversionUtility.splitTextByComponents(refName, "AT");
+					if(segs.length==1) {
+						referenceTo = segs[0];
+					}
+					else if(segs.length == 2) {
+						referenceTo = segs[0];
+						eleName = segs[1];
+					}
+
+					HAPResultProcessAttachmentReference result = attachmentReferenceContext.processReference(referenceTo);
+					JSONObject adaptorObj = (JSONObject)result.getAdaptor();
+					if(adaptorObj!=null) {
+						if(eleName==null)  eleName = (String)adaptorObj.opt(HAPOperandReference.ELEMENTNAME);
+						referenceOperand.setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(adaptorObj.optJSONObject(HAPDefinitionReference.INPUTMAPPING)));
+					}
+					referenceOperand.setElementName(eleName);
 					
 					//refered expression id
 					String refExpressionId = parentId+"_"+subId[0];
 					
 					//process refered expression
-					HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression.processBasic(refExpressionId, refResourceDefWithContext, null, expressionMan, configure, runtimeEnv, processTracker);
+					HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression.processBasic(refExpressionId, (HAPDefinitionExpressionGroup)result.getEntity(), new HAPContextProcessAttachmentReferenceExpression(result.getContextComplexEntity(), runtimeEnv), null, expressionMan, configure, runtimeEnv, processTracker);
 					referenceOperand.setReferedExpression(refExpressionExe);
-					
-					//input mapping
-					if(refDef.getInputMapping()!=null)  referenceOperand.setInputMapping(refDef.getInputMapping().cloneDataAssocation());
 					
 					subId[0]++;
 				}
@@ -176,6 +191,51 @@ public class HAPProcessorExpression {
 			}
 		});
 	}
+	
+
+	
+	//replace reference operand with referenced operand
+//	private static void processReferencesInOperandBasic1(
+//			String parentId,
+//			HAPOperandWrapper operand, 
+//			Map<String, HAPDefinitionReference> referencesDef,
+//			HAPContextResourceDefinition resourceContext,
+//			HAPManagerExpression expressionMan,
+//			Map<String, String> configure,
+//			HAPRuntimeEnvironment runtimeEnv,
+//			HAPProcessTracker processTracker) {
+//		int[] subId = {0};
+//		HAPOperandUtility.processAllOperand(operand, subId, new HAPOperandTask(){
+//			@Override
+//			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+//				int[] subId = (int[])data;
+//				String opType = operand.getOperand().getType();
+//				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
+//					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+//					String refName = referenceOperand.getReferenceName();
+//					HAPDefinitionReference refDef = referencesDef.get(refName);
+//
+//					referenceOperand.setElementName(refDef.getElementName());
+//					
+//					//get refered expression definition with context
+//					HAPEntityWithResourceContext refResourceDefWithContext = resourceContext.getResourceDefinition(refDef.getResourceId());
+//					
+//					//refered expression id
+//					String refExpressionId = parentId+"_"+subId[0];
+//					
+//					//process refered expression
+//					HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression.processBasic(refExpressionId, refResourceDefWithContext, null, expressionMan, configure, runtimeEnv, processTracker);
+//					referenceOperand.setReferedExpression(refExpressionExe);
+//					
+//					//input mapping
+//					if(refDef.getInputMapping()!=null)  referenceOperand.setInputMapping(refDef.getInputMapping().cloneDataAssocation());
+//					
+//					subId[0]++;
+//				}
+//				return true;
+//			}
+//		});
+//	}
 	
 	private static void processReferencesInputMapping(HAPExecutableExpressionGroup expressionExe) {
 		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();

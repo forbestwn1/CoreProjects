@@ -106,6 +106,8 @@ public class HAPContainerAttachment extends HAPSerializableImp{
 		}
 	}
 
+	public HAPAttachment getElement(HAPIdAttachment attachmentId) {   return this.getElement(attachmentId.getType(), attachmentId.getName());  }
+	
 	public HAPAttachment getElement(String type, String id) {
 		HAPAttachment out = null;
 		Map<String, HAPAttachment> byId = this.m_element.get(type);

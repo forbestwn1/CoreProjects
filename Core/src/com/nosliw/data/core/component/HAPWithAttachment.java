@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPIdAttachment;
 
 public interface HAPWithAttachment {
 
@@ -15,6 +16,7 @@ public interface HAPWithAttachment {
 	
 	Map<String, HAPAttachment> getAttachmentsByType(String type);
 	HAPAttachment getAttachment(String type, String name);
+	HAPAttachment getAttachment(HAPIdAttachment idAttachment);
 
 	//path base for local resource reference
 	HAPLocalReferenceBase getLocalReferenceBase();
