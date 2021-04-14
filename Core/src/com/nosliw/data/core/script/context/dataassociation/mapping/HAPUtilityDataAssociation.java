@@ -28,11 +28,12 @@ public class HAPUtilityDataAssociation {
 		isFlatInput.put(HAPConstantShared.NAME_DEFAULT, context.isFlat());
 		Map<String, String> mapping = buildRelativePathMapping(contextRoot, rootName, isFlatInput);
 		Map<String, String> out = new LinkedHashMap<String, String>();
-		for(String name : mapping.keySet()) {
-			String mappedName = mapping.get(name);
-			int index = mappedName.indexOf(".");
-			mappedName = mappedName.substring(index+1);
-			out.put(name, mappedName);
+		for(String targetPath : mapping.keySet()) {
+			//get rid of parent part in source path
+			String sourcePath = mapping.get(targetPath);
+			int index = sourcePath.indexOf(".");
+			sourcePath = sourcePath.substring(index+1);
+			out.put(targetPath, sourcePath);
 		}
 		return out;
 	}

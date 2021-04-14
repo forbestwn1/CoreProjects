@@ -56,12 +56,14 @@ public class HAPUtilityExpression {
 		return HAPUtilityComponent.getContext(expressionGroupDef, extraContext, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
 	}
 	
-	public static HAPUpdateName getUpdateExpressionVariableName(HAPExecutableExpressionGroup expression) {
+	//make global name
+	public static HAPUpdateName getUpdateNameGlobal(HAPExecutableExpressionGroup expression) {
 		return new HAPUpdateNamePrefix(expression.getId()+"_");
 	}
 	
-	public static String getBeforeUpdateName(HAPExecutableExpressionGroup expression, String name) {
-		return name.substring((expression.getId()+"_").length());
+	//get local name according to global name
+	public static String getLocalName(HAPExecutableExpressionGroup expression, String globalName) {
+		return globalName.substring((expression.getId()+"_").length());
 	}
 
 	//build reference definition from attachment
