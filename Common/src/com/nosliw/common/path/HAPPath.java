@@ -21,4 +21,9 @@ public class HAPPath {
 		return this.m_pathSegs;
 	}
 	
+	public HAPPath clonePath() {
+		HAPPath out = new HAPPath(this.m_path);
+		return out;
+	}
+
 }

@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.context;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,17 +29,39 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityContext {
 
+	public static HAPContextFlat buildFlatContextFromContextStructure(HAPContextStructure contextStructure) {
+		HAPContextFlat out = null;
+		String type = contextStructure.getType();
+		if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+			out = buildFlatContextFromContextGroup((HAPContextGroup)contextStructure);
+		}
+		else if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+			out = buildFlatContextFromContext((HAPContext)contextStructure);
+		}
+		return out;
+	}
+
+	public static HAPContextFlat buildFlatContextFromContext(HAPContext context) {
+		HAPContextFlat out = new HAPContextFlat();
+		for(String name : context.getElementNames()) {
+			out.addElement(context.getElement(name), name);
+		}
+		return out;
+	}
 	
-	
-	public static HAPContextFlat buildFlatContextFromContextGroup(HAPContextGroup context, Set<String> excludedInfo) {
-		HAPContextFlat out = new HAPContextFlat(excludedInfo);
+	public static HAPContextFlat buildFlatContextFromContextGroup(HAPContextGroup context) {
+		HAPContextFlat out = new HAPContextFlat();
 		
 		List<String> categarys = Arrays.asList(HAPContextGroup.getContextTypesWithPriority());
 		Collections.reverse(categarys);
 		for(String categary : categarys) {
 			Map<String, HAPContextDefinitionRoot> eles = context.getElements(categary);
-			for(String name : eles.keySet()) {
-				out.addElementFromContextGroup(context, categary, name);
+			for(String localName : eles.keySet()) {
+				String globalName = new HAPContextDefinitionRootId(categary, localName).getFullName();
+				Set<String> aliases = new HashSet<String>();
+				aliases.add(localName);
+				aliases.add(globalName);
+				out.addElement(eles.get(localName), globalName, aliases);
 			}
 		}
 		return out;
@@ -284,6 +307,23 @@ public class HAPUtilityContext {
 		return out;
 	}
 
+	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInContext(HAPContextFlat context) {
+		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+		Map<String, HAPInfoCriteria> criteriaInfoById = discoverDataVariablesInContext(context.getContext());
+		for(String idPath : criteriaInfoById.keySet()) {
+			HAPComplexPath path = new HAPComplexPath(idPath);
+			String id = path.getRootName();
+			Set<String> aliases = context.getAliasById(id);
+			Set<String> aliasesPath = new HashSet<String>();
+			for(String alias : aliases) {
+				HAPComplexPath aliasPath = new HAPComplexPath(alias, path.getPath());
+				aliasesPath.add(aliasPath.getFullName());
+			}
+			out.addVariableCriteriaInfo(criteriaInfoById.get(idPath), aliasesPath);
+		}
+		return out;
+	}
+	
 	//find all data variables in context 
 	public static Map<String, HAPInfoCriteria> discoverDataVariablesInContext(HAPContext context){
 		Map<String, HAPInfoCriteria> out = new LinkedHashMap<String, HAPInfoCriteria>();

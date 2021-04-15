@@ -25,11 +25,12 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 public class HAPUtilityExpression {
 
-	public static Map<String, HAPData> getDataConstants(HAPDefinitionExpressionGroup expressionGroupDef, HAPContext context){
+	public static Map<String, HAPData> getDataConstants(HAPDefinitionExpressionGroup expressionGroupDef, HAPContextFlat context){
 		Map<String, HAPData> out = new LinkedHashMap<String, HAPData>();
 		for(HAPDefinitionConstant constantDef : getDataConstantsDefinition(expressionGroupDef, context)) {
 			HAPData data = constantDef.getData();
@@ -38,7 +39,7 @@ public class HAPUtilityExpression {
 		return out;
 	}
 	
-	public static Set<HAPDefinitionConstant> getDataConstantsDefinition(HAPDefinitionExpressionGroup expressionGroupDef, HAPContext context){
+	public static Set<HAPDefinitionConstant> getDataConstantsDefinition(HAPDefinitionExpressionGroup expressionGroupDef, HAPContextFlat context){
 		Set<HAPDefinitionConstant> out = null;
 		out = expressionGroupDef.getConstantDefinitions();
 		if(out==null) {

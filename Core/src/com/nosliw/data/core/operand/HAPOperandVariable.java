@@ -10,6 +10,7 @@ import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
 
 public class HAPOperandVariable extends HAPOperandImp{
  
@@ -36,16 +37,16 @@ public class HAPOperandVariable extends HAPOperandImp{
 
 	@Override
 	public HAPMatchers discover(
-			Map<String, HAPInfoCriteria> variablesInfo,
+			HAPContainerVariableCriteriaInfo variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
 		
-		HAPInfoCriteria variableInfo = variablesInfo.get(this.getVariableName());
+		HAPInfoCriteria variableInfo = variablesInfo.getVariableCriteriaInfoByAlias(this.getVariableName());
 		if(variableInfo==null){
 			//found a new variable
 			variableInfo = HAPInfoCriteria.buildUndefinedCriteriaInfo();
-			variablesInfo.put(this.getVariableName(), variableInfo);
+			variablesInfo.addVariableCriteriaInfo(variableInfo, this.getVariableName());
 		}
 		
 		HAPMatchers matchers = HAPCriteriaUtility.mergeVariableInfo(variableInfo, expectCriteria, dataTypeHelper);

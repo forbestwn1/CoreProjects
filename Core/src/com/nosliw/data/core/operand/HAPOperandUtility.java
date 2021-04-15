@@ -2,7 +2,6 @@ package com.nosliw.data.core.operand;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +20,7 @@ import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
 
 public class HAPOperandUtility {
 
@@ -55,7 +55,7 @@ public class HAPOperandUtility {
 	//			replace attribute operation with one variable operation
 	//  for attribute operation a.b.c.d which have responding definition a.b.c in context, 
 	//			replace attribute operation with one variable operation(a.b.c) and getChild operation
-	public static void processAttributeOperandInExpressionOperand(HAPOperandWrapper orgOperand, final Map<String, HAPInfoCriteria> varCriterias){
+	public static void processAttributeOperandInExpressionOperand(HAPOperandWrapper orgOperand, final Set<String> dataVarNames){
 		List<HAPAttributeOperandChainInfo> data = new ArrayList<HAPAttributeOperandChainInfo>();
 		HAPOperandUtility.processAllOperand(orgOperand, data, new HAPOperandTask(){
 			@Override
@@ -97,7 +97,7 @@ public class HAPOperandUtility {
 					attrInfo.veryPath.add(attrOperand.getAttribute());
 					if(attrInfo.path.size()==attrInfo.veryPath.size()){
 						//at end of attribute chain
-						processAttributeChain(attrInfo, varCriterias);
+						processAttributeChain(attrInfo, dataVarNames);
 						stack.remove(stack.size()-1);
 					}
 				}
@@ -111,14 +111,14 @@ public class HAPOperandUtility {
 		});
 	}
 	
-	private static void processAttributeChain(HAPAttributeOperandChainInfo attrInfo, Map<String, HAPInfoCriteria> contextVars){
+	private static void processAttributeChain(HAPAttributeOperandChainInfo attrInfo, Set<String> dataVarNames){
 		String startOpType = attrInfo.startOperand.getOperand().getType();
 		if(startOpType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 			//attribute start with variable
 			HAPOperandVariable varOperand = (HAPOperandVariable)attrInfo.startOperand.getOperand();
 			attrInfo.path.add(0, varOperand.getVariableName());
 			String path = HAPNamingConversionUtility.cascadePath(attrInfo.path.toArray(new String[0]));
-			for(String name : contextVars.keySet()){
+			for(String name : dataVarNames){
 				if(path.equals(name)){
 					//replace with variable operand
 					attrInfo.lastAttrOperand.setOperand(new HAPOperandVariable(name));
@@ -299,31 +299,29 @@ public class HAPOperandUtility {
 		}
 	}
 
-	static public void discover(
+	static public HAPContainerVariableCriteriaInfo discover(
 			List<HAPOperand> operands, 
 			List<HAPDataTypeCriteria> expectOutputs,
-			Map<String, HAPInfoCriteria> inVariablesInfo, 
+			HAPContainerVariableCriteriaInfo inVariablesInfo, 
 			Map<String, HAPInfoCriteria> outVariablesInfo,
 			List<HAPMatchers> matchers,
 			HAPDataTypeHelper dataTypeHelper,
 			HAPProcessTracker processTracker) {
 		//do discovery on operand
-		Map<String, HAPInfoCriteria> varsInfo = new LinkedHashMap<String, HAPInfoCriteria>();
-		varsInfo.putAll(inVariablesInfo);
+		HAPContainerVariableCriteriaInfo varsInfo = inVariablesInfo.clone();
 		
-		Map<String, HAPInfoCriteria> oldVarsInfo;
+		HAPContainerVariableCriteriaInfo oldVarsInfo;
 		//Do discovery until local vars definition not change or fail 
 		do{
 			matchers.clear();
-			oldVarsInfo = new LinkedHashMap<String, HAPInfoCriteria>();
-			oldVarsInfo.putAll(varsInfo);
+			oldVarsInfo = varsInfo;
+			varsInfo = varsInfo.clone();
 			processTracker.clear();
 			for(int i=0; i<operands.size(); i++) {
 				matchers.add(operands.get(i).discover(varsInfo, expectOutputs.get(i), processTracker, dataTypeHelper));
 			}
-		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && processTracker.isSuccess());
-		outVariablesInfo.clear();
-		outVariablesInfo.putAll(varsInfo);
+		}while(!HAPBasicUtility.isEqualMaps(varsInfo.getVariableCriteriaInfos(), oldVarsInfo.getVariableCriteriaInfos()) && processTracker.isSuccess());
+		return varsInfo;
 	}
 
 	/**

@@ -13,6 +13,7 @@ import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 
@@ -191,6 +192,13 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	}
 	
 	public Set<String> getContextTypes(){  return this.m_contexts.keySet();   }
+	
+	@Override
+	public void updateRootName(HAPUpdateName nameUpdate) {
+		for(HAPContext context : this.m_contexts.values()) {
+			context.updateRootName(nameUpdate);
+		}
+	}
 	
 	@Override
 	public HAPContextStructure cloneContextStructure() {

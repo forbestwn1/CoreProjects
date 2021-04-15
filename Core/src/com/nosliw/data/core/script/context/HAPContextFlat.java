@@ -11,7 +11,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPConstantShared;
 
 //flat context represent result of flat a context group to context
 //one root in context group named Abc will generate two element in context: local Abc and global Abc___categary
@@ -26,112 +25,92 @@ public class HAPContextFlat extends HAPSerializableImp{
 
 	//used to map from local (abc) to global name (public_abc)
 	@HAPAttribute
-	public static final String LOCAL2GLOBAL = "local2Global";
+	public static final String ALIAS2ID = "alias2Id";
 	
 	private HAPContext m_context;
 	
-	private Map<String, String> m_local2Global;
-	
-	Set<String> m_excludedInfo;
+	private Map<String, String> m_alias2Id;
 	
 	public HAPContextFlat() {
 		this.m_context = new HAPContext();
-		this.m_local2Global = new LinkedHashMap<String, String>();
-	}
-
-	public HAPContextFlat(Set<String> excludedInfo) {
-		this.m_context = new HAPContext();
-		this.m_local2Global = new LinkedHashMap<String, String>();
-		this.m_excludedInfo = excludedInfo;
+		this.m_alias2Id = new LinkedHashMap<String, String>();
 	}
 
 	public HAPContextFlat(HAPContext context) {
 		this.m_context = context;
-		this.m_local2Global = new LinkedHashMap<String, String>();
+		this.m_alias2Id = new LinkedHashMap<String, String>();
 	}
 
-	public void addElementFromContextGroup(HAPContextGroup contextGroup, String categary, String localName) {
-		//build global name element
-		String globalName = new HAPContextDefinitionRootId(categary, localName).getFullName();
-		HAPContextDefinitionRoot globalNameRoot = contextGroup.getElement(categary, localName);
-		this.m_context.addElement(globalName, globalNameRoot);
-		
-		//build local name element
-		HAPContextDefinitionRoot localNameRoot = HAPUtilityContext.createRelativeContextDefinitionRoot(globalNameRoot, HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF, null, globalName, this.m_excludedInfo);
-//		((HAPContextDefinitionLeafRelative)localNameRoot.getDefinition()).setDefinition(globalNameRoot.getDefinition());
-		localNameRoot.setDefaultValue(globalNameRoot.getDefaultValue());
-		m_context.addElement(localName, localNameRoot);
-		
-		//local to global mapping
-		this.addLocal2GlobalMapping(localName, globalName);
-	}
+	public void addElement(HAPContextDefinitionRoot element, String id) {	this.addElement(element, id, null);	}
 	
-	public void addElement(String name, HAPContextDefinitionRoot rootEle) {
-		//remove name mapping element whatever
-		this.removeLocal2GlobalMapping(name);
-		this.m_context.addElement(name, rootEle);	
-	}
-	
-	//global variable name
-	//if item does not exist, then return null
-	public String getGlobalName(String name) {
-		String out = this.m_local2Global.get(name);
-		if(out==null) {
-			if(this.m_context.getElement(name)!=null)	out = name;
-		}
-		return out;
-	}
-	
-	public HAPContextDefinitionRoot getGlobalRoot(String name) {
-		String solidName = this.getGlobalName(name);
-		if(solidName==null)   return null;
-		else return this.m_context.getElement(solidName);
-	}
-
-	public Map<String, HAPContextDefinitionRoot> getGlobalRoots(){
-		Map<String, HAPContextDefinitionRoot> out = new LinkedHashMap<String, HAPContextDefinitionRoot>();
-		for(String elementName : this.m_context.getElementNames()) {
-			if(this.m_local2Global.get(elementName)==null) {
-				out.put(elementName, this.m_context.getElement(elementName));
+	public void addElement(HAPContextDefinitionRoot element, String id, Set<String> aliases) {
+		this.m_context.addElement(id, element);
+		this.m_alias2Id.put(id, id);
+		if(aliases!=null) {
+			for(String alias : aliases) {
+				this.m_alias2Id.put(alias, id);
 			}
 		}
-		return out;
+	}
+
+	public HAPContextDefinitionRoot getElement(String name) {
+		String id = this.m_alias2Id.get(name);
+		if(id==null)  return null;
+		else return this.m_context.getElement(id);
 	}
 	
-	public HAPContext getContext() {  return this.m_context;  }
+	public Set<HAPContextDefinitionRoot> getAllElements(){
+		return new HashSet<HAPContextDefinitionRoot>(this.m_context.getElements().values());
+	}
 	
+	public Set<String> getAllNames(){
+		Set<String> out = new HashSet<String>();
+		out.addAll(this.m_alias2Id.keySet());
+		return out;
+	}
 	
 	public void updateRootName(HAPUpdateName nameUpdate) {
 		this.m_context.updateRootName(nameUpdate);
 		
 		//update name in local2Global mapping
 		Map<String, String> newMapping = new LinkedHashMap<String, String>();
-		for(String name : this.m_local2Global.keySet()) {
-			newMapping.put(nameUpdate.getUpdatedName(name), nameUpdate.getUpdatedName(this.m_local2Global.get(name)));
+		for(String name : this.m_alias2Id.keySet()) {
+			newMapping.put(nameUpdate.getUpdatedName(name), nameUpdate.getUpdatedName(this.m_alias2Id.get(name)));
 		}
-		this.m_local2Global = newMapping;
+		this.m_alias2Id = newMapping;
 	}
 	
-	
-	private void addLocal2GlobalMapping(String local, String global) {		this.m_local2Global.put(local, global);	}
-	private void removeLocal2GlobalMapping(String localName) {    this.m_local2Global.remove(localName);   }
-	
-	public Map<String, Object> getConstantValue(){		return this.m_context.getConstantValue();	}
-	
-	public HAPContextFlat getVariableContext() {   
-		HAPContextFlat out = new HAPContextFlat();
-		out.m_context = this.m_context.getVariableContext();
-		out.m_local2Global.putAll(this.m_local2Global);
+	public Map<String, Object> getConstantValue(){
+		Map<String, Object> out = new LinkedHashMap<String, Object>();
+		Map<String, Object> constantsById = this.m_context.getConstantValue();
+		for(String id : constantsById.keySet()) {
+			Object constantValue = constantsById.get(id);
+			for(String alias : this.m_alias2Id.keySet()) {
+				if(id.equals(this.m_alias2Id.get(alias))) {
+					out.put(alias, constantValue);
+				}
+			}
+		}
 		return out;
 	}
-
+	
+	public Set<String> getAliasById(String id){
+		Set<String> out = new HashSet<String>();
+		for(String alias : this.m_alias2Id.keySet()) {
+			if(id.equals(this.m_alias2Id.get(alias))) {
+				out.add(alias);
+			}
+		}
+		return out;
+	}
+	
+	
+	
+	public HAPContext getContext() {  return this.m_context;  }
+	
 	public HAPContextFlat cloneContextFlat() {
 		HAPContextFlat out = new HAPContextFlat();
-		out.m_local2Global.putAll(this.m_local2Global);
-		if(this.m_excludedInfo!=null) {
-			out.m_excludedInfo = new HashSet<String>();
-			out.m_excludedInfo.addAll(this.m_excludedInfo);
-		}
+		out.m_alias2Id.putAll(this.m_alias2Id);
 		out.m_context = this.m_context.cloneContext();
 		return null;
 	}
@@ -140,7 +119,7 @@ public class HAPContextFlat extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(LOCAL2GLOBAL, HAPJsonUtility.buildMapJson(this.m_local2Global));
+		jsonMap.put(ALIAS2ID, HAPJsonUtility.buildMapJson(this.m_alias2Id));
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

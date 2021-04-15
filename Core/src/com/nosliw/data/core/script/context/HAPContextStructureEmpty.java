@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.context;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPContextStructureEmpty extends HAPSerializableImp implements HAPContextStructure{
@@ -42,6 +43,12 @@ public class HAPContextStructureEmpty extends HAPSerializableImp implements HAPC
 
 	@Override
 	public void hardMergeWith(HAPContextStructure context) {
+	}
+
+	@Override
+	public void updateRootName(HAPUpdateName nameUpdate) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

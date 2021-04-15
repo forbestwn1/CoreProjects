@@ -21,6 +21,7 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 
 public abstract class HAPComponentContainerElement extends HAPSerializableImp implements HAPComponent{
@@ -40,7 +41,11 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	
 	private String m_elementId;
 	
+	//calculate out
 	private HAPComponent m_componentEntity;
+	
+	//calculate out
+	private HAPContextStructure m_contextStructure;
 	
 	protected HAPComponentContainerElement() {}
 	
@@ -48,12 +53,17 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		this.m_componentContainer = componentContainer;
 		this.m_elementId = elementId;
 		this.m_componentEntity = ((HAPComponent)this.getResourceContainer().getContainerElement(this.getElementId())).cloneComponent();
-		HAPUtilityComponent.mergeWithParentAttachment(this.m_componentEntity, this.m_componentContainer.getAttachmentContainer());
+		HAPUtilityComponent.mergeWithParentAttachment(this.m_componentEntity, this.m_componentContainer.getAttachmentContainer());    //build attachment
+		this.m_contextStructure = HAPUtilityContext.hardMerge(this.m_componentEntity.getContextStructure(), this.m_componentContainer.getContextStructure());   //build context
 		HAPInfoUtility.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
 	}
 
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
+
+	
+	@Override
+	public HAPContextStructure getContextStructure() {	return this.m_contextStructure;	}
 
 	public HAPResourceDefinitionContainer getResourceContainer() {   return this.m_componentContainer;    }
 	public void setResourceContainer(HAPResourceDefinitionContainer container) {   this.m_componentContainer = container;     }
@@ -105,11 +115,6 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		jsonMap.put(CONTAINER, HAPJsonUtility.buildJson(this.m_componentContainer, HAPSerializationFormat.JSON));
 	}
 	
-	@Override
-	public HAPContextStructure getContextStructure() {
-		return null;
-	}
-
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub

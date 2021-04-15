@@ -9,14 +9,13 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithDataContext;
-import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 
 public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements HAPDefinitionExpressionGroup, HAPWithDataContext{
 
 	private Map<String, HAPDefinitionExpression> m_elements;
 	
-	private HAPContext m_context;
+	private HAPContextStructure m_contextStructure;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
@@ -27,17 +26,16 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	
 	public void addExpression(HAPDefinitionExpression element) {
 		this.addEntityElement(element);
-//		this.m_elements.put(element.getName(), element);   
 	}
 
 	@Override
-	public HAPContextStructure getContextStructure() {   return this.m_context;  }
+	public HAPContextStructure getContextStructure() {   return this.m_contextStructure;  }
 
 	@Override
-	public void setContextStructure(HAPContextStructure context) {  this.m_context = (HAPContext)context;  }
+	public void setContextStructure(HAPContextStructure context) {  this.m_contextStructure = context;  }
 
 	@Override
-	public void cloneToDataContext(HAPWithDataContext dataContext) {   dataContext.setContextStructure(this.m_context.cloneContext());  }
+	public void cloneToDataContext(HAPWithDataContext dataContext) {   dataContext.setContextStructure(this.m_contextStructure.cloneContextStructure());  }
 
 	@Override
 	public Set<HAPDefinitionExpression> getEntityElements() {  return new HashSet<HAPDefinitionExpression>(this.m_elements.values()); }
@@ -63,7 +61,7 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	@Override
 	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() {
 		HAPDefinitionExpressionGroupImp out = new HAPDefinitionExpressionGroupImp();
-		if(this.m_context!=null)	out.m_context = this.m_context.cloneContext();
+		if(this.m_contextStructure!=null)	out.m_contextStructure = this.m_contextStructure.cloneContextStructure();
 		for(String id : this.m_elements.keySet()) {
 			out.m_elements.put(id, this.m_elements.get(id).cloneDefinitionExpression());
 		}

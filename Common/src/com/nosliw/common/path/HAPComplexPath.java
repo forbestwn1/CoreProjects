@@ -51,4 +51,8 @@ public class HAPComplexPath {
 	public String getFullName(){
 		return this.m_fullName;
 	}
+	
+	public HAPComplexPath cloneComplexPath() {
+		return new HAPComplexPath(this.m_fullName);
+	}
 }

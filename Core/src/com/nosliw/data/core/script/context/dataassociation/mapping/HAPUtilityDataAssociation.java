@@ -23,9 +23,10 @@ import com.nosliw.data.core.script.context.dataassociation.HAPUtilityDAProcess;
 
 public class HAPUtilityDataAssociation {
 
-	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, HAPContextStructure context){
+	public static Map<String, String> buildSimplifiedRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, HAPContextStructure context){
 		Map<String, Boolean> isFlatInput = new LinkedHashMap<String, Boolean>();
-		isFlatInput.put(HAPConstantShared.NAME_DEFAULT, context.isFlat());
+		if(context!=null)	isFlatInput.put(HAPConstantShared.NAME_DEFAULT, context.isFlat());
+		else isFlatInput.put(HAPConstantShared.NAME_DEFAULT, true);
 		Map<String, String> mapping = buildRelativePathMapping(contextRoot, rootName, isFlatInput);
 		Map<String, String> out = new LinkedHashMap<String, String>();
 		for(String targetPath : mapping.keySet()) {
@@ -38,6 +39,9 @@ public class HAPUtilityDataAssociation {
 		return out;
 	}
 	
+	public static Map<String, String> buildSimplifiedRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName){
+		return buildSimplifiedRelativePathMapping(contextRoot, rootName, null);
+	}
 
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
 	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, Map<String, Boolean> isFlatInput){

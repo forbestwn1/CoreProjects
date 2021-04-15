@@ -15,7 +15,7 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 
 	private Map<String, HAPDefinitionExpressionGroup> m_expressionGroups;
 
-	private HAPContext m_context;
+	private HAPContextStructure m_context;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
@@ -58,7 +58,7 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 
 	@Override
 	public void setContextStructure(HAPContextStructure context) {  
-		this.m_context = (HAPContext)context;  
+		this.m_context = context;  
 		for(String id : this.m_expressionGroups.keySet()) {
 			this.m_expressionGroups.get(id).setContextStructure(context.cloneContextStructure());
 		}
@@ -69,7 +69,7 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 	@Override
 	public HAPDefinitionExpressionSuite cloneExpressionSuiteDefinition() {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
-		if(this.m_context!=null)	out.m_context = this.m_context.cloneContext();
+		if(this.m_context!=null)	out.m_context = this.m_context.cloneContextStructure();
 		for(String id : this.m_expressionGroups.keySet()) {
 			out.m_expressionGroups.put(id, this.m_expressionGroups.get(id).cloneExpressionGroupDefinition());
 		}

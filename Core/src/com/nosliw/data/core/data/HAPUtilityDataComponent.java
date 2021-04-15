@@ -12,7 +12,7 @@ import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.value.HAPValue;
 
 public class HAPUtilityDataComponent {
@@ -35,7 +35,7 @@ public class HAPUtilityDataComponent {
 		return out;
 	}
 
-	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPContainerAttachment attContainer, HAPContext context){
+	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPContainerAttachment attContainer, HAPContextFlat context){
 		Set<HAPDefinitionConstant> out = new HashSet<HAPDefinitionConstant>();
 		out.addAll(buildConstantDefinition(attContainer));
 		
@@ -47,7 +47,7 @@ public class HAPUtilityDataComponent {
 		return out;
 	}
 
-	public static Set<HAPDefinitionConstant> buildDataConstantDefinition(HAPContainerAttachment attContainer, HAPContext context){
+	public static Set<HAPDefinitionConstant> buildDataConstantDefinition(HAPContainerAttachment attContainer, HAPContextFlat context){
 		return filterOutDataConstant(buildConstantDefinition(attContainer, context));
 	}
 	

@@ -16,7 +16,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandConstant;
 import com.nosliw.data.core.operand.HAPOperandReference;
@@ -29,6 +28,7 @@ import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
@@ -49,11 +49,10 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 
 	private HAPMatchers m_outputMatchers;
 	
-	private Map<String, HAPInfoCriteria> m_varInfos;
+	private HAPContainerVariableCriteriaInfo m_varInfos;
 	
 	public HAPExecutableExpression(HAPOperandWrapper operand) {
 		this.m_operand = operand;
-		this.m_varInfos = new LinkedHashMap<String, HAPInfoCriteria>();
 	}
 	
 	public HAPOperandWrapper getOperand() {		return this.m_operand;	}
@@ -63,8 +62,8 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 	public HAPMatchers getOutputMatchers() {		return this.m_outputMatchers;	}
 	public void setOutputMatchers(HAPMatchers matchers) {    this.m_outputMatchers = matchers;    }
 
-	public Map<String, HAPInfoCriteria> getVariablesInfo(){   return this.m_varInfos;    }
-	public void setVariablesInfo(Map<String, HAPInfoCriteria> varsInfo) {   this.m_varInfos.putAll(varsInfo);     }
+	public HAPContainerVariableCriteriaInfo getVariablesInfo(){   return this.m_varInfos;    }
+	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varsInfo) {   this.m_varInfos = varsInfo;     }
 
 	public void updateConstant(Map<String, Object> value) {
 		HAPOperandUtility.processAllOperand(this.m_operand, value, new HAPOperandTask(){

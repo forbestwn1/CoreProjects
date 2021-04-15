@@ -2,6 +2,7 @@ package com.nosliw.data.core.script.context;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.updatename.HAPUpdateName;
 
 public interface HAPContextStructure extends HAPSerializable{
 
@@ -15,6 +16,8 @@ public interface HAPContextStructure extends HAPSerializable{
 	boolean isEmpty();
 	
 	HAPContextDefinitionRoot getElement(String eleName, boolean createIfNotExist);
+
+	void updateRootName(HAPUpdateName nameUpdate);
 	
 	HAPContextStructure cloneContextStructure();
 
