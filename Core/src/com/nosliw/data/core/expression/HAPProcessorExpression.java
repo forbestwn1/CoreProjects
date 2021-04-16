@@ -62,8 +62,6 @@ public class HAPProcessorExpression {
 		//build variable into within expression item
 		discoverExpressionItemVariable(out);
 		
-		
-		
 		return out;
 	}
 
@@ -192,7 +190,7 @@ public class HAPProcessorExpression {
 					JSONObject adaptorObj = (JSONObject)result.getAdaptor();
 					if(adaptorObj!=null) {
 						if(eleName==null)  eleName = (String)adaptorObj.opt(HAPOperandReference.ELEMENTNAME);
-						referenceOperand.setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(adaptorObj.optJSONObject(HAPDefinitionReference.INPUTMAPPING)));
+						referenceOperand.setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(adaptorObj.optJSONObject(HAPOperandReference.VARMAPPING)));
 					}
 					referenceOperand.setElementName(eleName);
 					

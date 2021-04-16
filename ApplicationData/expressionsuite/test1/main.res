@@ -249,7 +249,7 @@
 				"name" : "ref4",
 				"referenceId": "test10;test3",
 				"adaptor" : {
-					"inputMapping" : {
+					"varMapping" : {
 						"element" : {
 							"testVar33" : {
 								"definition": {
@@ -264,7 +264,7 @@
 				"name" : "ref5",
 				"referenceId": "test11;test3",
 				"adaptor" : {
-					"inputMapping" : {
+					"varMapping" : {
 						"element" : {
 							"testVar33" : {
 								"definition": {

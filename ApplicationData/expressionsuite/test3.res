@@ -57,7 +57,7 @@
 				"name" : "ref1",
 				"referenceId": "test11;test2",
 				"adaptor" : {
-					"inputMapping" : {
+					"varMapping" : {
 						"element" : {
 							"testVar3" : {
 								"definition": {
