@@ -8,7 +8,6 @@ import java.util.Set;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.common.HAPWithDataContext;
-import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 
 public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionSuite, HAPWithDataContext, HAPWithConstantDefinition{
@@ -63,8 +62,6 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 			this.m_expressionGroups.get(id).setContextStructure(context.cloneContextStructure());
 		}
 	}
-	
-	public void setContext(HAPContext context) {	this.setContextStructure(context);	}
 	
 	@Override
 	public HAPDefinitionExpressionSuite cloneExpressionSuiteDefinition() {

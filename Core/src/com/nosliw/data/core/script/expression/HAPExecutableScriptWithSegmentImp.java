@@ -8,15 +8,15 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
 
 public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScriptImp implements HAPExecutableScriptWithSegment{
 
 	private List<HAPExecutableScript> m_segs;
 
 	//all variables info in script
-	private Map<String, HAPInfoCriteria> m_variableInfos;
+	private HAPContainerVariableCriteriaInfo m_variableInfos;
 	
 	//all expression ref id in script
 	private Set<String> m_expressionIds;
@@ -37,11 +37,11 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 	public List<HAPExecutableScript> getSegments(){    return this.m_segs;     }
 
 	@Override
-	public Map<String, HAPInfoCriteria> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {
+	public HAPContainerVariableCriteriaInfo discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {
 		if(this.m_variableInfos==null) {
-			this.m_variableInfos = new LinkedHashMap<String, HAPInfoCriteria>();
+			this.m_variableInfos = new HAPContainerVariableCriteriaInfo();
 			for(HAPExecutableScript seg : this.m_segs) {
-				Map<String, HAPInfoCriteria> varInfos = seg.discoverVariablesInfo(expressionGroup);
+				HAPContainerVariableCriteriaInfo varInfos = seg.discoverVariablesInfo(expressionGroup);
 				for(String name : varInfos.keySet()) {
 					HAPUtilityScriptExpression.addVariableInfo(this.m_variableInfos, varInfos.get(name), name);
 				}

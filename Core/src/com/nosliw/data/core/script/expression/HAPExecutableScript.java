@@ -5,9 +5,9 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.runtime.HAPExecutable;
+import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
 
 public interface HAPExecutableScript extends HAPExecutable{
 
@@ -21,7 +21,7 @@ public interface HAPExecutableScript extends HAPExecutable{
 
 	String getId();
 
-	Map<String, HAPInfoCriteria> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup);
+	HAPContainerVariableCriteriaInfo discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup);
 	
 	Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup);
 	void updateConstant(Map<String, Object> value);

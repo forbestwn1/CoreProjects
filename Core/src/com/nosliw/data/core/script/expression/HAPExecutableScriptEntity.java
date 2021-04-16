@@ -13,7 +13,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -22,6 +21,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.util.script.HAPScriptFunctionInfo;
 import com.nosliw.data.core.runtime.js.util.script.HAPUtilityScriptForExecuteJSScript;
+import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
 
 @HAPEntityWithAttribute
 public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implements HAPExecutableScriptWithSegment{
@@ -91,7 +91,7 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 	@Override
 	public List<HAPExecutableScript> getSegments(){    return this.m_script.getSegments();     }
 	@Override
-	public Map<String, HAPInfoCriteria> discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {return this.m_script.discoverVariablesInfo(expressionGroup);}
+	public HAPContainerVariableCriteriaInfo discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {return this.m_script.discoverVariablesInfo(expressionGroup);}
 	@Override
 	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup) {	return this.m_script.discoverConstantsDefinition(expressionGroup);	}
 	@Override
@@ -128,8 +128,8 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 
 		jsonMap.put(EXPRESSIONREF, HAPJsonUtility.buildJson(this.discoverExpressionReference(null), HAPSerializationFormat.JSON));
 		
-		Map<String, HAPInfoCriteria> varInfos = this.discoverVariablesInfo(null);
-		jsonMap.put(VARIABLESINFO, HAPJsonUtility.buildJson(varInfos.keySet(), HAPSerializationFormat.JSON));
+		HAPContainerVariableCriteriaInfo varInfos = this.discoverVariablesInfo(null);
+		jsonMap.put(VARIABLESINFO, varInfos.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override

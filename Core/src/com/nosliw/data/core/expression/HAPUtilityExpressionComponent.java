@@ -12,7 +12,8 @@ import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.HAPUtilityDataComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 public class HAPUtilityExpressionComponent {
 
@@ -20,14 +21,14 @@ public class HAPUtilityExpressionComponent {
 		return buildExpressionSuiteFromComponent(complexEntity, null, runtimeEnv);
 	}
 	
-	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPContext context, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPContextStructure context, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
 		
 		//build context
 		if(context==null) {
 			context = HAPUtilityExpression.getContext(complexEntity, null, runtimeEnv);
 		}
-		out.setContext(context);
+		out.setContextStructure(context);
 		
 		//build constant from attachment
 		for(HAPDefinitionConstant constantDef : HAPUtilityDataComponent.buildDataConstantDefinition(complexEntity.getAttachmentContainer())) {
@@ -35,7 +36,7 @@ public class HAPUtilityExpressionComponent {
 		}
 		
 		//constant from context
-		Map<String, Object> constantsValue = context.getConstantValue();
+		Map<String, Object> constantsValue = HAPUtilityContext.discoverContantsValueFromContextStructure(context);
 		for(String id : constantsValue.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
 			if(constantDef.isData()) {

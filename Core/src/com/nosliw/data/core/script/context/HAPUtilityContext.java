@@ -29,6 +29,11 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityContext {
 
+	public static Map<String, Object> discoverContantsValueFromContextStructure(HAPContextStructure contextStructure) {
+		HAPContextFlat flatContext = buildFlatContextFromContextStructure(contextStructure);
+		return flatContext.getConstantValue();
+	}
+	
 	public static HAPContextFlat buildFlatContextFromContextStructure(HAPContextStructure contextStructure) {
 		HAPContextFlat out = null;
 		String type = contextStructure.getType();

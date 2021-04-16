@@ -62,6 +62,8 @@ public class HAPProcessorExpression {
 		//build variable into within expression item
 		discoverExpressionItemVariable(out);
 		
+		
+		
 		return out;
 	}
 
@@ -74,6 +76,19 @@ public class HAPProcessorExpression {
 			Set<String> varNames = HAPOperandUtility.discoverVariables(item.getOperand());
 			HAPContainerVariableCriteriaInfo itemVarsInfo = expressionVarsContainer.buildSubContainer(varNames);
 			item.setVariablesInfo(itemVarsInfo);
+			
+			
+			HAPOperandUtility.processAllOperand(item.getOperand(), name, new HAPOperandTask(){
+				@Override
+				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+					String opType = operand.getOperand().getType();
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
+						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+						discoverExpressionItemVariable(referenceOperand.getReferedExpression());
+					}
+					return true;
+				}
+			});
 		}
 	}
 	
