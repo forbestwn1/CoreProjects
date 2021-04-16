@@ -73,7 +73,7 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 
 	@Override
 	public HAPContextDefinitionRoot getElement(String name, boolean createIfNotExist) {
-		HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(name);
+		HAPIdContextDefinitionRoot rootId = new HAPIdContextDefinitionRoot(name);
 		HAPContextDefinitionRoot out = this.getElement(rootId);   
 		if(out==null && createIfNotExist) {
 			out = this.addElement(rootId.getName(), rootId.getCategary());
@@ -185,7 +185,7 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 		return out;
 	}
 
-	public HAPContextDefinitionRoot getElement(HAPContextDefinitionRootId nodeId) {  return this.getElement(nodeId.getCategary(), nodeId.getName());   }
+	public HAPContextDefinitionRoot getElement(HAPIdContextDefinitionRoot nodeId) {  return this.getElement(nodeId.getCategary(), nodeId.getName());   }
 	public HAPContextDefinitionRoot getElement(String type, String name) {
 		HAPContext context = this.getContext(type);
 		return context==null?null:context.getElement(name);

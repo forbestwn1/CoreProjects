@@ -99,7 +99,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(relative.getParent())) {
 							//update local relative path
 							HAPContextPath path = relative.getPath();
-							relative.setPath(new HAPContextPath(new HAPContextDefinitionRootId(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));
+							relative.setPath(new HAPContextPath(new HAPIdContextDefinitionRoot(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));
 						}
 					}
 					return null;
@@ -126,7 +126,7 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT.equals(relative.getParent())) {
 							//update local relative path
 							HAPContextPath path = relative.getPath();
-							relative.setPath(new HAPContextPath(new HAPContextDefinitionRootId(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));
+							relative.setPath(new HAPContextPath(new HAPIdContextDefinitionRoot(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));
 						}
 					}
 					return null;

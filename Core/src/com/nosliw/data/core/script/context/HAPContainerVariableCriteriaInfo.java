@@ -5,11 +5,24 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 
-public class HAPContainerVariableCriteriaInfo {
+@HAPEntityWithAttribute
+public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static String NAMESBYVARID = "namesByVarId";
+
+	@HAPAttribute
+	public static String VARIDBYNAME = "varIdByName";
 
 	private Map<String, Set<String>> m_namesByVarId;
 	
@@ -27,6 +40,7 @@ public class HAPContainerVariableCriteriaInfo {
 	}
 	
 	public boolean addVariableCriteriaInfo(HAPInfoCriteria criteriaInfo, Set<String> aliases) {
+		aliases = new HashSet<String>(aliases);
 		boolean override = false;
 		String varId = this.generateId();
 		this.m_criteriaInfosById.put(varId, criteriaInfo);
@@ -68,6 +82,19 @@ public class HAPContainerVariableCriteriaInfo {
 	
 	public HAPInfoCriteria getVariableCriteriaInfoById(String id) {
 		return this.m_criteriaInfosById.get(id);
+	}
+	
+	public HAPContainerVariableCriteriaInfo buildSubContainer(Set<String> aliases) {
+		Set<String> varIds = new HashSet<String>();
+		for(String alias : aliases) {
+			varIds.add(this.m_varIdByName.get(alias));
+		}
+		
+		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+		for(String varId : varIds) {
+			out.addVariableCriteriaInfo(this.getVariableCriteriaInfoById(varId), this.getVariableAlias(varId));
+		}
+		return out;
 	}
 	
 	public HAPContainerVariableCriteriaInfo groupVariables(Set<String> aliases) {
@@ -144,8 +171,18 @@ public class HAPContainerVariableCriteriaInfo {
 		return updatedPath.getFullName();
 	}
 	
-	
 	private String generateId() {
 		return this.m_index++ + "";
+	}
+	
+	@Override
+	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		jsonMap.put(VARIDBYNAME, HAPSerializeManager.getInstance().toStringValue(this.m_varIdByName, HAPSerializationFormat.JSON));
+
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		for(String varId : this.m_namesByVarId.keySet()) {
+			map.put(varId, HAPJsonUtility.buildJson(this.m_namesByVarId.get(varId), HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(NAMESBYVARID, HAPJsonUtility.buildMapJson(map));
 	}
 }

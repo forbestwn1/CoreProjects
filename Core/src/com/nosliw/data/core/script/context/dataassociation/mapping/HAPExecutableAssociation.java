@@ -23,7 +23,7 @@ import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
+import com.nosliw.data.core.script.context.HAPIdContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
@@ -133,7 +133,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 
 		for(String p1 : m_relativePathMapping.keySet()) {
 			HAPContextPath cPath = new HAPContextPath(p1);
-			HAPContextPath cPath1 = new HAPContextPath(new HAPContextDefinitionRootId(nameUpdate.getUpdatedName(cPath.getRootElementId().getFullName())), cPath.getSubPath());
+			HAPContextPath cPath1 = new HAPContextPath(new HAPIdContextDefinitionRoot(nameUpdate.getUpdatedName(cPath.getRootElementId().getFullName())), cPath.getSubPath());
 			processedPathMapping.put(cPath1.getFullPath(), m_relativePathMapping.get(p1));
 		}
 		this.m_relativePathMapping = processedPathMapping;

@@ -57,7 +57,7 @@ public class HAPUtilityContext {
 		for(String categary : categarys) {
 			Map<String, HAPContextDefinitionRoot> eles = context.getElements(categary);
 			for(String localName : eles.keySet()) {
-				String globalName = new HAPContextDefinitionRootId(categary, localName).getFullName();
+				String globalName = new HAPIdContextDefinitionRoot(categary, localName).getFullName();
 				Set<String> aliases = new HashSet<String>();
 				aliases.add(localName);
 				aliases.add(globalName);
@@ -301,7 +301,7 @@ public class HAPUtilityContext {
 		HAPContextGroup out = new HAPContextGroup();
 		for(String rootName : context.getElementNames()) {
 			HAPContextDefinitionRoot root = context.getElement(rootName);
-			HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(rootName);
+			HAPIdContextDefinitionRoot rootId = new HAPIdContextDefinitionRoot(rootName);
 			out.addElement(rootId.getName(), root, rootId.getCategary());
 		}
 		return out;
@@ -414,7 +414,7 @@ public class HAPUtilityContext {
 	public static HAPInfoContextElementReferenceResolve resolveReferencedContextElement(HAPContextPath contextPath, HAPContextGroup parentContext, String[] categaryes, String mode){
 		if(parentContext==null)   return null;
 		
-		HAPContextDefinitionRootId refNodeId = contextPath.getRootElementId(); 
+		HAPIdContextDefinitionRoot refNodeId = contextPath.getRootElementId(); 
 		String refPath = contextPath.getSubPath();
 		
 		//candidate categary

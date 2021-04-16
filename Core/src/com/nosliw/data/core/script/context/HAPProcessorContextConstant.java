@@ -270,7 +270,7 @@ public class HAPProcessorContextConstant {
 		Set<HAPDefinitionConstant> constantsDef = groupExe.getConstantsDefinition();
 		for(HAPDefinitionConstant constantDef : constantsDef){
 			String constantId = constantDef.getId();
-			HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(constantId), contextGroup);
+			HAPIdContextDefinitionRoot refNodeId = solveReferencedNodeId(new HAPIdContextDefinitionRoot(constantId), contextGroup);
 			HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());
 			solidateConstantDefEle(refContextDefEle, contextGroup, runtimeEnv);
 			constantsValue.put(constantId, refContextDefEle.getValue());
@@ -367,12 +367,12 @@ public class HAPProcessorContextConstant {
 
 	
 	
-	private static HAPContextDefinitionRootId solveReferencedNodeId(HAPContextDefinitionRootId nodeId, HAPContextGroup candidateGroup) {
+	private static HAPIdContextDefinitionRoot solveReferencedNodeId(HAPIdContextDefinitionRoot nodeId, HAPContextGroup candidateGroup) {
 		if(nodeId.getCategary()!=null)   return nodeId;
 		for(String categary : HAPContextGroup.getVisibleContextTypes()) {
 			HAPContextDefinitionElement refContextEle = HAPUtilityContext.getDescendant(candidateGroup, categary, nodeId.getName());
 			if(refContextEle!=null && HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(refContextEle.getType())) {
-				return new HAPContextDefinitionRootId(categary, nodeId.getName());
+				return new HAPIdContextDefinitionRoot(categary, nodeId.getName());
 			}
 		}
 		return null;

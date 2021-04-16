@@ -30,13 +30,13 @@ public class HAPContextPath extends HAPSerializableImp{
 	public static final String CONTEXTNAME  = "contextName";
 
 	
-	private HAPContextDefinitionRootId m_rootNodeId;
+	private HAPIdContextDefinitionRoot m_rootNodeId;
 	
 	private String m_path;
 	
 	public HAPContextPath(){}
 	
-	public HAPContextPath(HAPContextDefinitionRootId rootId, String path){
+	public HAPContextPath(HAPIdContextDefinitionRoot rootId, String path){
 		this.m_rootNodeId = rootId;
 		this.m_path = path;
 	}
@@ -44,10 +44,10 @@ public class HAPContextPath extends HAPSerializableImp{
 	public HAPContextPath(String fullPath){
 		int index = fullPath.indexOf(HAPConstantShared.SEPERATOR_PATH);
 		if(index==-1){
-			this.m_rootNodeId = new HAPContextDefinitionRootId(fullPath);
+			this.m_rootNodeId = new HAPIdContextDefinitionRoot(fullPath);
 		}
 		else{
-			this.m_rootNodeId = new HAPContextDefinitionRootId(fullPath.substring(0, index));
+			this.m_rootNodeId = new HAPIdContextDefinitionRoot(fullPath.substring(0, index));
 			this.m_path = fullPath.substring(index+1);
 		}
 	}
@@ -55,16 +55,16 @@ public class HAPContextPath extends HAPSerializableImp{
 	public HAPContextPath(String categary, String path){
 		int index = path.indexOf(HAPConstantShared.SEPERATOR_PATH);
 		if(index==-1){
-			this.m_rootNodeId = new HAPContextDefinitionRootId(categary, path);
+			this.m_rootNodeId = new HAPIdContextDefinitionRoot(categary, path);
 		}
 		else{
-			this.m_rootNodeId = new HAPContextDefinitionRootId(categary, path.substring(0, index));
+			this.m_rootNodeId = new HAPIdContextDefinitionRoot(categary, path.substring(0, index));
 			this.m_path = path.substring(index+1);
 		}
 	}
 
 	public HAPContextPath(String contextCategary, String rootEleName, String path){
-		this.m_rootNodeId = new HAPContextDefinitionRootId(contextCategary, rootEleName);
+		this.m_rootNodeId = new HAPIdContextDefinitionRoot(contextCategary, rootEleName);
 		this.m_path = path;
 	}
 
@@ -76,7 +76,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	}
 	
 //	public String getRootElementName(){  return this.m_rootNodeId.getName();  }
-	public HAPContextDefinitionRootId getRootElementId() {  return this.m_rootNodeId;   }
+	public HAPIdContextDefinitionRoot getRootElementId() {  return this.m_rootNodeId;   }
 	
 	public String getSubPath(){		return this.m_path==null?"":this.m_path;	}
 	
@@ -104,7 +104,7 @@ public class HAPContextPath extends HAPSerializableImp{
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_path = (String)jsonObj.opt(PATH);
-		this.m_rootNodeId = new HAPContextDefinitionRootId(jsonObj.getString(ROOTNAME));
+		this.m_rootNodeId = new HAPIdContextDefinitionRoot(jsonObj.getString(ROOTNAME));
 		return true;
 	}
 

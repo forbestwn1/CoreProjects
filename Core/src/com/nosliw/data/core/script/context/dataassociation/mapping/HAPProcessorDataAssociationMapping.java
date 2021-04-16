@@ -22,7 +22,7 @@ import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
-import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
+import com.nosliw.data.core.script.context.HAPIdContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
@@ -176,7 +176,7 @@ public class HAPProcessorDataAssociationMapping {
 					Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeContextRoot(outputStructure.getElement(rootName, false), mapping.getElement(rootName), HAPUtilityDAProcess.ifModifyOutputStructure(daProcessConfigure), runtimeEnv);
 					//matchers when merge back to context variable
 					for(String matchPath :matchers.keySet()) {
-						out.addOutputMatchers(new HAPContextPath(new HAPContextDefinitionRootId(rootName), matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
+						out.addOutputMatchers(new HAPContextPath(new HAPIdContextDefinitionRoot(rootName), matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
 					}
 				}
 			}
@@ -217,7 +217,7 @@ public class HAPProcessorDataAssociationMapping {
 	//if flat, aaa__bbb
 	//if not flat, aaa.bbb
 	private static String buildRootNameAccordingToFlat(String eleName, boolean isFlatOutput) {
-		HAPContextDefinitionRootId eleId = new HAPContextDefinitionRootId(eleName);
+		HAPIdContextDefinitionRoot eleId = new HAPIdContextDefinitionRoot(eleName);
 		if(isFlatOutput)  return eleId.getFullName();
 		else return eleId.getPath();
 	}

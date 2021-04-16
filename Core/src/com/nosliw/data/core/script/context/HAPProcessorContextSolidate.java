@@ -48,7 +48,7 @@ public class HAPProcessorContextSolidate {
 				if(nodes.get(name).isConstant()){
 					HAPContextDefinitionLeafConstant constEleDef = (HAPContextDefinitionLeafConstant)nodes.get(name).getDefinition();
 					constantsData.put(name, constEleDef.getValue());
-					constantsData.put(new HAPContextDefinitionRootId(categarys[i], name).toString(), constEleDef.getValue());
+					constantsData.put(new HAPIdContextDefinitionRoot(categarys[i], name).toString(), constEleDef.getValue());
 				}
 			}
 		}

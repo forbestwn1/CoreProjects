@@ -3,18 +3,18 @@ package com.nosliw.data.core.script.context;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
-public class HAPContextDefinitionRootId {
+public class HAPIdContextDefinitionRoot {
 
 	private String m_categary;
 	
 	private String m_name;
 	
-	public HAPContextDefinitionRootId(String categary, String name) {
+	public HAPIdContextDefinitionRoot(String categary, String name) {
 		this.m_categary = categary;
 		this.m_name = name;
 	}
 	
-	public HAPContextDefinitionRootId(String name) {
+	public HAPIdContextDefinitionRoot(String name) {
 		String[] segs = HAPNamingConversionUtility.splitTextByElements(name, HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);
 		if(segs.length>=1)   this.m_name = segs[0];
 		if(segs.length>=2)   this.m_categary = segs[1];
@@ -30,8 +30,8 @@ public class HAPContextDefinitionRootId {
 	public String getPath() {  return HAPNamingConversionUtility.buildPath(m_categary, m_name);   }
 	
 	@Override
-	public HAPContextDefinitionRootId clone() {
-		HAPContextDefinitionRootId out = new HAPContextDefinitionRootId(this.m_categary, this.m_name);
+	public HAPIdContextDefinitionRoot clone() {
+		HAPIdContextDefinitionRoot out = new HAPIdContextDefinitionRoot(this.m_categary, this.m_name);
 		return out;
 	}
 	

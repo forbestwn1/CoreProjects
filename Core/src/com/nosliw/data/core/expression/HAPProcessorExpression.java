@@ -72,7 +72,7 @@ public class HAPProcessorExpression {
 		for(String name : items.keySet()) {
 			HAPExecutableExpression item = items.get(name);
 			Set<String> varNames = HAPOperandUtility.discoverVariables(item.getOperand());
-			HAPContainerVariableCriteriaInfo itemVarsInfo = expressionVarsContainer.groupVariables(varNames);
+			HAPContainerVariableCriteriaInfo itemVarsInfo = expressionVarsContainer.buildSubContainer(varNames);
 			item.setVariablesInfo(itemVarsInfo);
 		}
 	}

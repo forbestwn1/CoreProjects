@@ -62,7 +62,7 @@ public class HAPUtilityContextScript {
 					}
 					else {
 						//not flat, parse categary and name from root name
-						HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(rootName);
+						HAPIdContextDefinitionRoot rootId = new HAPIdContextDefinitionRoot(rootName);
 						String categary = rootId.getCategary();
 						if(HAPBasicUtility.isStringNotEmpty(categary)) {
 							//ignore those that don't have categary

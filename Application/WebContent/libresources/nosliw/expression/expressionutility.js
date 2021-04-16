@@ -82,8 +82,24 @@ var node_utility = function()
 	var loc_getExecuteExpressionItemRequest = function(expressionItem, variables, constants, references, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
 
+		//build variable value according to alias definition in expression item
+		var allVariables = {};
+		var varInfos = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS];
+		var varIdByNamme = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIDBYNAME];
+		var namesByVarId = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_NAMESBYVARID];
+		var varValueByVarId = {};
+		_.each(variables, function(variableValue, name){
+			varValueByVarId[varIdByNamme[name]] = variableValue;
+		});
+		_.each(varValueByVarId, function(variableValue, varId){
+			var names = namesByVarId[varId];
+			_.each(names, function(name){
+				allVariables[name] = variableValue;
+			});
+		});
+		
 		//execute operand
-		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_OPERAND], variables, constants, references, {
+		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_OPERAND], allVariables, constants, references, {
 			success : function(requestInfo, operandResult){
 				var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_OUTPUTMATCHERS];
 				if(outputMatchers!=undefined){
