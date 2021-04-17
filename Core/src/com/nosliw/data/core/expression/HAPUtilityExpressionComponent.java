@@ -51,7 +51,7 @@ public class HAPUtilityExpressionComponent {
 	}
 	
 	public static void buildExpressionSuiteFromAttachment(HAPDefinitionExpressionSuite suite, HAPContainerAttachment attachmentContainer) {
-		Map<String, HAPAttachment> expressionAtts = attachmentContainer.getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSION);
+		Map<String, HAPAttachment> expressionAtts = attachmentContainer.getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION);
 		for(String name : expressionAtts.keySet()) {
 			HAPAttachment attachment = expressionAtts.get(name);
 			suite.addEntityElement(buildExpressionGroup(attachment));

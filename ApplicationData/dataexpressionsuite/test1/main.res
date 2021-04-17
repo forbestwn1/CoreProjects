@@ -219,7 +219,7 @@
 		}
 	],
 	"attachment": {
-		"expression" : [
+		"dataexpression" : [
 			{
 				"name" : "ref1",
 				"entity" : {
@@ -284,7 +284,7 @@
 			},
 			{
 				"name" : "ref7",
-				"referenceId": "@test10:expressionSuite|test2"
+				"referenceId": "@test10:dataexpressionsuite|test2"
 			}
 		],
 		"value" : [

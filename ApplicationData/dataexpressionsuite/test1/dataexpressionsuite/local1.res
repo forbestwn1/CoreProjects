@@ -174,7 +174,7 @@
 		}
 	],
 	"attachment": {
-		"expression" : [
+		"dataexpression" : [
 			{
 				"name" : "ref1",
 				"entity" : {
@@ -202,7 +202,7 @@
 					"structure" : "local",
 					"id" : "test1"
 				}
-			},
+			}
 		],
 		"value" : [
 			{

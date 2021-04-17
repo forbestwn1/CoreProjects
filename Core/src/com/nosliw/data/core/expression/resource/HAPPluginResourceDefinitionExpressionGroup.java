@@ -17,7 +17,7 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 	}
 	
 	@Override
-	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSION;	}
+	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION;	}
 
 	@Override
 	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
@@ -31,7 +31,7 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId) {
 		HAPIdExpressionGroup expressionGroupId = new HAPIdExpressionGroup(resourceId.getName());
 		
-		HAPResourceIdLocal suiteResourceId = new HAPResourceIdLocal(HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSIONSUITE);
+		HAPResourceIdLocal suiteResourceId = new HAPResourceIdLocal(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE);
 		suiteResourceId.setName(expressionGroupId.getSuiteId());
 		suiteResourceId.setBasePath(resourceId.getBasePath());
 		suiteResourceId.setSupplement(resourceId.getSupplement());

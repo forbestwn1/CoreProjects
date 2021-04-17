@@ -1,9 +1,9 @@
 {
-	"name": "test2",
-	"description": "test2",
+	"name": "test3",
+	"description": "test3",
 	"context": {
 		"element": {
-			"testVar3": {
+			"testVar33": {
 				"definition":{
 					"criteria": "test.string"
 				},
@@ -12,7 +12,7 @@
 					"value": "9876543210"
 				}
 			},
-			"constantFromContext1": {
+			"constantFromContext31": {
 				"definition" : {
 					"value" : {
 						"dataTypeId": "test.integer",
@@ -20,7 +20,7 @@
 					}
 				}
 			},
-			"constantFromContext2": {
+			"constantFromContext32": {
 				"definition" : {
 					"value" : {
 						"dataTypeId": "test.integer",
@@ -36,27 +36,42 @@
 			"description": "standard",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(?(testVar3)?,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "!(test.string)!.subString(?(testVar33)?,from:&(constantFromAtt31)&,to:&(constantFromContext32)&)"
 				}
 			]
 		},
 		{
 			"id": "test11",
 			"name": "test11",
-			"description": "discover base, constant",
+			"description": "standard",
 			"element" : [
 				{
-					"expression" : "?(testVar3)?.subString(from:&(constantFromAtt1)&,to:&(constantFromContext2)&)"
+					"expression" : "!(test.string)!.subString(?(ref1)?,from:&(constantFromAtt31)&,to:&(constantFromContext32)&)"
 				}
 			]
 		}
 	],
 	"attachment": {
-		"expression" : [
+		"dataexpression" : [
+			{
+				"name" : "ref1",
+				"referenceId": "test11;test2",
+				"adaptor" : {
+					"varMapping" : {
+						"element" : {
+							"testVar3" : {
+								"definition": {
+									"path": "testVar33"
+								}
+							}
+						}
+					}
+				}
+			}
 		],
 		"value" : [
 			{
-				"name": "constantFromAtt1",
+				"name": "constantFromAtt31",
 				"entity": {
 					"value" : {
 						"dataTypeId": "test.integer;1.0.0",
@@ -65,7 +80,7 @@
 				}
 			},
 			{
-				"name": "constantFromAtt2",
+				"name": "constantFromAtt32",
 				"entity": {
 					"value" : {
 						"dataTypeId": "test.integer;1.0.0",
@@ -76,13 +91,13 @@
 		],
 		"testData" : [
 			{
-				"name": "testData1",
+				"name": "testData31",
 				"entity": {
 					"testVar1.var1.var11": {
 						"dataTypeId": "test.string;1.0.0",
 						"value": "0123456789"
 					},
-					"testVar2": {
+					"testVar32": {
 						"var1" : {
 							"var11":{
 								"dataTypeId": "test.string;1.0.0",
@@ -90,15 +105,15 @@
 							}
 						}
 					},
-					"testVar3": {
+					"testVar33": {
 						"dataTypeId": "test.string;1.0.0",
 						"value": "0123456789"
 					},
-					"testVar4": {
+					"testVar34": {
 						"dataTypeId": "test.integer;1.0.0",
 						"value": 1
 					},
-					"testVar5": {
+					"testVar35": {
 						"dataTypeId": "test.integer;1.0.0",
 						"value": 3
 					}

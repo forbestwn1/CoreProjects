@@ -10,7 +10,7 @@ public class HAPResourceIdExpression  extends HAPResourceIdSimple{
 
 	private HAPIdExpressionGroup m_expressionId; 
 	
-	public HAPResourceIdExpression(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSION);     }
+	public HAPResourceIdExpression(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION);     }
 
 	public HAPResourceIdExpression(HAPResourceIdSimple resourceId){
 		this();

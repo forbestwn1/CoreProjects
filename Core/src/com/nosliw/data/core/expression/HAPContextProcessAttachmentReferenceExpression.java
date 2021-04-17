@@ -8,7 +8,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPContextProcessAttachmentReferenceExpression extends HAPContextProcessAttachmentReference{
 
 	public HAPContextProcessAttachmentReferenceExpression(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSION, complexEntity, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, complexEntity, runtimeEnv);
 	}
 
 	@Override

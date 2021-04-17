@@ -52,7 +52,8 @@ public class HAPContextFlat extends HAPSerializableImp{
 	
 	public void addElement(HAPContextDefinitionRoot element, String id, Set<String> aliases) {
 		this.m_context.addElement(id, element);
-		Set<String> allNames = new HashSet<String>(aliases);
+		Set<String> allNames = new HashSet<String>();
+		if(aliases!=null)   allNames.addAll(aliases);
 		allNames.add(id);
 		this.m_namesByVarId.put(id, allNames);
 		for(String name : allNames) {

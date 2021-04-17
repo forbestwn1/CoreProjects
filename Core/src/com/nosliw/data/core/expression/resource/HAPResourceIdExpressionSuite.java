@@ -11,7 +11,7 @@ public class HAPResourceIdExpressionSuite  extends HAPResourceIdSimple{
 
 	private HAPIdExpressionSuite m_expressionSuiteId; 
 	
-	public HAPResourceIdExpressionSuite(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_EXPRESSIONSUITE);  }
+	public HAPResourceIdExpressionSuite(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE);  }
 
 	public HAPResourceIdExpressionSuite(HAPResourceIdSimple resourceId){
 		this();

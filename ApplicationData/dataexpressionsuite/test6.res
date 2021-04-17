@@ -1,79 +1,71 @@
 {
-	"name": "local1",
-	"description": "local1",
+	"name": "test1",
+	"description": "test1",
 	"context": {
 		"element": {
-			"localVar1" : {
-				"definition": {
-					"child" : {
-						"var1" : {
-							"child" : {
-								"var11" : {"criteria":"test.string;1.0.0"}
+			business : {
+				definition: {
+					child : {
+						a : {
+							child : {
+								aa : {criteria:"test.string;1.0.0"},
 							}
 						}
 					}
 				},
-				"defaultValue": {
-					"var1" : {
-						"var11" : {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "0123456789"
+				defaultValue: {
+					a : {
+						aa : {
+							dataTypeId: "test.string;1.0.0",
+							value: "This is my world!"
 						}
 					}
 				}
 			},
-			"localVar2" : {
-				"definition": {
-					"child" : {
-						"var1" : {
-							"child" : {
-								"var11" : {"criteria":"test.string;1.0.0"}
+			mybusiness : {
+				definition: {
+					child : {
+						a : {
+							child : {
+								aa : {criteria:"test.string;1.0.0"},
 							}
 						}
 					}
 				},
-				"defaultValue": {
-					"var1" : {
-						"var11" : {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "0123456789"
+				defaultValue: {
+					a : {
+						aa : {
+							dataTypeId: "test.string;1.0.0",
+							value: "This is my world!"
 						}
 					}
 				}
 			},
-			"localVar3": {
+			"baseVar": {
 				"definition":{
-					"criteria": "test.string"
+					criteria: "test.string",
 				},
 				"defaultValue": {
 					"dataTypeId": "test.string",
-					"value": "0123456789"
+					"value": "This is my world!"
 				}
 			},
-			"localVar4" : {
+			"fromVar" : {
 				"definition": {
-					"criteria" : "test.integer"
-				},
-				"defaultValue": {
-					"dataTypeId": "test.integer;1.0.0",
-					"value": 1
-				}
-			},
-			"localVar5" : {
-				"definition": {
-					"criteria": "test.integer"
+					criteria : "test.integer",
 				},
 				"defaultValue": {
 					"dataTypeId": "test.integer;1.0.0",
 					"value": 3
 				}
 			},
-			"localConstantFromContext1": {
-				"definition" : {
-					"value" : {
-						"dataTypeId": "test.integer",
-						"value": 3
-					}
+			"toVar" : {
+				"definition": {
+					criteria: "test.integer",
+				},
+				"defaultValue": {
+					"dataTypeId": "test.integer;1.0.0",
+					"value": 7
 				}
 			}
 		}
@@ -84,7 +76,7 @@
 			"description": "standard",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)"
+					"expression" : "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
 				}
 			]
 		},
@@ -94,7 +86,7 @@
 			"description": "discover base",
 			"element" : [
 				{
-					"expression" : "?(baseVar)?.subString(from:?(fromVar)?,to:?(toVar)?)"
+					"expression" : "?(baseVar)?.subString(from:?(fromVar)?,to:?(toVar)?)",
 				}
 			]
 		},
@@ -104,7 +96,7 @@
 			"description": "constant",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(?(baseVar)?,from:&(fromConstant)&,to:?(toVar)?)"
+					"expression" : "!(test.string)!.subString(?(baseVar)?,from:&(fromConstant)&,to:?(toVar)?)",
 				}
 			]
 		},
@@ -171,7 +163,7 @@
 		},
 	],
 	"attachment": {
-		"expression" : [
+		"dataexpression" : [
 		],
 		"value" : [
 			{
@@ -180,6 +172,33 @@
 					"value" : {
 						"dataTypeId": "test.integer;1.0.0",
 						"value": 1
+					}
+				}
+			},
+		],
+		"testData" : [
+			{
+				"name": "testData1",
+				"entity": {
+					"business.a.aa": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "This is my world!"
+					},
+					"mybusiness.a.aa": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "Hello This is my world!"
+					},
+					"baseVar": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "This is my world!"
+					},
+					"fromVar": {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 1
+					},
+					"toVar": {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 7
 					}
 				}
 			},

@@ -10,7 +10,7 @@ public class HAPResourceIdScriptGroup  extends HAPResourceIdSimple{
 
 	private HAPIdScriptGroup m_scriptId; 
 	
-	public HAPResourceIdScriptGroup(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTGROUP);    }
+	public HAPResourceIdScriptGroup(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION);    }
 
 	public HAPResourceIdScriptGroup(HAPResourceIdSimple resourceId){
 		this();
