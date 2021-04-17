@@ -6,11 +6,14 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
+import com.nosliw.data.core.resource.HAPParserResourceDefinitionImp;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 
-public class HAPParserScriptResourceDefinition {
+public class HAPParserResourceDefinitionScriptGroup extends HAPParserResourceDefinitionImp{
 
-	public static HAPResourceDefinitionScriptGroup parseScriptResourceDefinition(JSONObject scriptResourceDefJson) {
+	@Override
+	public HAPResourceDefinition parseJson(JSONObject scriptResourceDefJson) {
 		HAPResourceDefinitionScriptGroup out = new HAPResourceDefinitionScriptGroup();
 		HAPUtilityComponentParse.parseComplextResourceDefinition(out, scriptResourceDefJson);
 		

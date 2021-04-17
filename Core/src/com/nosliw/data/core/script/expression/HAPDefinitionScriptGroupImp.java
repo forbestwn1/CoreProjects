@@ -5,14 +5,23 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.common.HAPWithDataContext;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 
-public class HAPDefinitionScriptGroupImp implements HAPDefinitionScriptGroup{
+public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implements HAPDefinitionScriptGroup{
 
 	private Map<String, HAPDefinitionScriptEntity> m_scriptDefs;
 	
+	private Map<String, HAPDefinitionConstant> m_constantDef;
+	
+	private HAPContextStructure m_context;
+	
 	public HAPDefinitionScriptGroupImp() {
 		this.m_scriptDefs = new LinkedHashMap<String, HAPDefinitionScriptEntity>();
+		this.m_constantDef = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 	
 	@Override
@@ -26,5 +35,25 @@ public class HAPDefinitionScriptGroupImp implements HAPDefinitionScriptGroup{
 		HAPUtilityEntityInfo.processEntityId(entityElement);
 		this.m_scriptDefs.put(entityElement.getId(), entityElement);  
 	}
+
+	@Override
+	public HAPContextStructure getContextStructure() {   return this.m_context;  }
+
+	@Override
+	public void setContextStructure(HAPContextStructure context) {   this.m_context = context;  }
+
+	@Override
+	public void cloneToDataContext(HAPWithDataContext dataContext) {
+		dataContext.setContextStructure(this.m_context.cloneContextStructure());
+	}
+
+	@Override
+	public Set<HAPDefinitionConstant> getConstantDefinitions() {  return new HashSet<HAPDefinitionConstant>(this.m_constantDef.values());  }
+
+	@Override
+	public HAPDefinitionConstant getConstantDefinition(String id) {  return this.m_constantDef.get(id);  }
+
+	@Override
+	public void addConstantDefinition(HAPDefinitionConstant constantDef) {   this.m_constantDef.put(constantDef.getName(), constantDef);  }
 
 }

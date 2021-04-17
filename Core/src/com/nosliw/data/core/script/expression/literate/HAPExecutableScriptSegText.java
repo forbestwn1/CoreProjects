@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 
+//only plain text
 public class HAPExecutableScriptSegText extends HAPExecutableScriptImp{
 
 	@HAPAttribute

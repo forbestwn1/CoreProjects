@@ -6,11 +6,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.resource.HAPParserResource;
+import com.nosliw.data.core.resource.HAPParserResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 
-public class HAPParserServiceInterfaceResource implements HAPParserResource{
+public class HAPParserServiceInterfaceResource implements HAPParserResourceDefinition{
 
 	@Override
 	public HAPResourceDefinition parseFile(File file) {

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptGroup;
@@ -29,5 +30,23 @@ public class HAPResourceDefinitionScriptGroup extends HAPResourceDefinitionCompl
 
 	@Override
 	public void addEntityElement(HAPDefinitionScriptEntity entityElement) {   this.m_element.put(entityElement.getId(), entityElement);  }
+
+	@Override
+	public Set<HAPDefinitionConstant> getConstantDefinitions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPDefinitionConstant getConstantDefinition(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addConstantDefinition(HAPDefinitionConstant constantDef) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

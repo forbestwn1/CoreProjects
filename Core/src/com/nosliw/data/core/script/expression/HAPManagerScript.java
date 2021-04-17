@@ -3,8 +3,10 @@ package com.nosliw.data.core.script.expression;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.expression.HAPContextProcessAttachmentReferenceExpression;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -24,17 +26,26 @@ public class HAPManagerScript {
 	}
 
 	public HAPExecutableScriptGroup getScript(HAPResourceId resourceId, Map<String, String> configure) {
-		HAPResourceDefinitionScriptGroup scriptGroupDef = this.getScriptDefinition(resourceId, null);
-		
+		HAPResourceDefinitionScriptGroup scriptGroupResourceDef = (HAPResourceDefinitionScriptGroup)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId);
+		HAPContextProcessAttachmentReferenceExpression contextProcess = new HAPContextProcessAttachmentReferenceExpression(scriptGroupResourceDef, this.m_runtimeEnv);
+
 		if(configure==null) {
 			//build configure from definition info
 			configure = new LinkedHashMap<String, String>();
-			for(String n : scriptGroupDef.getInfo().getNames()) {
-				configure.put(n, (String)scriptGroupDef.getInfo().getValue(n)); 
+			for(String n : scriptGroupResourceDef.getInfo().getNames()) {
+				configure.put(n, (String)scriptGroupResourceDef.getInfo().getValue(n)); 
 			}
 		}
 		
-		HAPExecutableScriptGroup out = HAPProcessorScript.processScript(scriptGroupDef, null, this.m_runtimeEnv.getExpressionManager(), configure, this.m_runtimeEnv, new HAPProcessTracker());
+		HAPExecutableScriptGroup out = HAPProcessorScript.processScript(
+						resourceId.toStringValue(HAPSerializationFormat.LITERATE), 
+						scriptGroupResourceDef, 
+						contextProcess, 
+						null, 
+						this.m_runtimeEnv.getExpressionManager(), 
+						configure, this.m_runtimeEnv, 
+						new HAPProcessTracker()
+		);
 		return out;
 	}
 	

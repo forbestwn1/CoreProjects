@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.json.JSONObject;
 
-public interface HAPParserResource {
+public interface HAPParserResourceDefinition {
 
 	HAPResourceDefinition parseFile(File file);
 	

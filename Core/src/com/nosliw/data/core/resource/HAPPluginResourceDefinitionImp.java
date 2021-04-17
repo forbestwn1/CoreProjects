@@ -10,11 +10,11 @@ import com.nosliw.data.core.component.HAPWithAttachment;
 
 public class HAPPluginResourceDefinitionImp implements HAPPluginResourceDefinition{
 
-	private HAPParserResource m_parser;
+	private HAPParserResourceDefinition m_parser;
 	
 	private String m_resourceType;
 	
-	public HAPPluginResourceDefinitionImp(String resourceType, HAPParserResource parser) {
+	public HAPPluginResourceDefinitionImp(String resourceType, HAPParserResourceDefinition parser) {
 		this.m_resourceType = resourceType;
 		this.m_parser = parser;
 	}

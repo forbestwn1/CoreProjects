@@ -8,13 +8,13 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
-import com.nosliw.data.core.resource.HAPParserResource;
+import com.nosliw.data.core.resource.HAPParserResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
-public class HAPParserModule implements HAPParserResource{
+public class HAPParserModule implements HAPParserResourceDefinition{
 
 	public HAPParserModule() {
 	}

@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.expression.literate;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptWithSegmentImp;
 
+
 public class HAPExecutableScriptSegExpressionScript extends HAPExecutableScriptWithSegmentImp{
 
 	public HAPExecutableScriptSegExpressionScript(String id) {

@@ -1,7 +1,7 @@
 package com.nosliw.data.core.runtime.js.util.script;
 
 import com.nosliw.data.core.script.expression.HAPExecutableScript;
-import com.nosliw.data.core.script.expression.literate.HAPExecutableScriptLiterate;
+import com.nosliw.data.core.script.expression.literate.HAPExecutableScriptEntityLiterate;
 import com.nosliw.data.core.script.expression.literate.HAPExecutableScriptSegExpressionScript;
 import com.nosliw.data.core.script.expression.literate.HAPExecutableScriptSegText;
 
@@ -16,7 +16,7 @@ public class HAPScriptProcessorLiterate implements HAPScriptProcessor{
 			String variablesDataParmName) {
 		HAPOutputScriptProcessor out = new HAPOutputScriptProcessor();
 		
-		HAPExecutableScriptLiterate literateScript = (HAPExecutableScriptLiterate)scriptExe;
+		HAPExecutableScriptEntityLiterate literateScript = (HAPExecutableScriptEntityLiterate)scriptExe;
 		StringBuffer funScript = new StringBuffer();
 		for(HAPExecutableScript seg : literateScript.getSegments()){
 			if(seg instanceof HAPExecutableScriptSegExpressionScript){

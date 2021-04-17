@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
 
-public abstract class HAPParserResourceImp implements HAPParserResource{
+public abstract class HAPParserResourceDefinitionImp implements HAPParserResourceDefinition{
 
 	@Override
 	public HAPResourceDefinition parseFile(File file) {  return this.parseContent(HAPFileUtility.readFile(file)); }

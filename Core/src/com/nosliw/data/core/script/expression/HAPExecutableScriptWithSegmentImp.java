@@ -15,7 +15,7 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 
 	private List<HAPExecutableScript> m_segs;
 
-	//all variables info in script
+	//all data variables info in script
 	private HAPContainerVariableCriteriaInfo m_variableInfos;
 	
 	//all expression ref id in script

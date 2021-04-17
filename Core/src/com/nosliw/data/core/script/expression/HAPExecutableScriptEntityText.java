@@ -2,11 +2,11 @@ package com.nosliw.data.core.script.expression;
 
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPExecutableScriptText extends HAPExecutableScriptEntity{
+public class HAPExecutableScriptEntityText extends HAPExecutableScriptEntity{
 
 	private String m_text;
 	
-	public HAPExecutableScriptText(String id, String text) {
+	public HAPExecutableScriptEntityText(String id, String text) {
 		super(HAPConstantShared.SCRIPT_TYPE_TEXT, id);
 	}
 

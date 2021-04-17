@@ -27,7 +27,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.component.HAPContextReference;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
-import com.nosliw.data.core.resource.HAPParserResource;
+import com.nosliw.data.core.resource.HAPParserResourceDefinition;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPScript;
@@ -39,7 +39,7 @@ import com.nosliw.uiresource.common.HAPIdGenerator;
  * This is a utility class that process ui resource file and create ui resource object
  * the id index start with 1 every processing start so that for same ui resource, we would get same result
  */ 
-public class HAPParserPage implements HAPParserResource{
+public class HAPParserPage implements HAPParserResourceDefinition{
 
 	public static final String EVENT = "event";
 	public static final String ATTACHMENT = "attachment";

@@ -11,13 +11,14 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.script.expression.literate.HAPUtilityScriptLiterate;
 
 public class HAPUtilityScriptExpression {
 
 	public static Set<HAPVariableInfo> getDataVariables(HAPExecutableScriptGroup scriptExpressionGroup, String scriptEleName){
 		HAPExecutableScriptEntity scriptExe = scriptExpressionGroup.getScript(scriptEleName);
-		Map<String, HAPInfoCriteria> varInfos = scriptExe.discoverVariablesInfo(scriptExpressionGroup.getExpression());
+		HAPContainerVariableCriteriaInfo varInfos = scriptExe.discoverVariablesInfo(scriptExpressionGroup.getExpression());
 		Set<HAPVariableInfo> out = new HashSet<HAPVariableInfo>();
 		for(String name : varInfos.keySet()) {
 			HAPVariableInfo varInfo = HAPVariableInfo.buildVariableInfo(name, varInfos.get(name).getCriteria());

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.data;
+package com.nosliw.data.core.component;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -12,10 +12,56 @@ import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.value.HAPValue;
 
-public class HAPUtilityDataComponent {
+public class HAPUtilityComponentConstant {
+
+	public static Map<String, HAPData> getConstantsData(HAPWithConstantDefinition defWithConstant, HAPContextFlat context){
+		Map<String, HAPData> out = new LinkedHashMap<String, HAPData>();
+		for(HAPDefinitionConstant constantDef : getDataConstantsDefinition(defWithConstant, context)) {
+			HAPData data = constantDef.getData();
+			if(data!=null)	out.put(constantDef.getId(), data);
+		}
+		return out;
+	}
+	
+	public static Map<String, Object> getConstantsValue(HAPWithConstantDefinition defWithConstant, HAPContextFlat context){
+		Map<String, Object> out = new LinkedHashMap<String, Object>();
+		for(HAPDefinitionConstant constantDef : getValueConstantsDefinition(defWithConstant, context)) {
+			out.put(constantDef.getId(), constantDef.getValue());
+		}
+		return out;
+	}
+	
+	public static Set<HAPDefinitionConstant> getDataConstantsDefinition(HAPWithConstantDefinition defWithConstant, HAPContextFlat context){
+		Set<HAPDefinitionConstant> out = null;
+		out = defWithConstant.getConstantDefinitions();
+		if(out==null) {
+			//try to build constant from attachment and context
+			if(defWithConstant instanceof HAPWithAttachment) {
+				out = buildDataConstantDefinition(((HAPWithAttachment)defWithConstant).getAttachmentContainer(), context);
+			}
+		}
+		
+		if(out==null)   throw new RuntimeException();
+		return out;
+	}
+
+	public static Set<HAPDefinitionConstant> getValueConstantsDefinition(HAPWithConstantDefinition defWithConstant, HAPContextFlat context){
+		Set<HAPDefinitionConstant> out = null;
+		out = defWithConstant.getConstantDefinitions();
+		if(out==null) {
+			//try to build constant from attachment and context
+			if(defWithConstant instanceof HAPWithAttachment) {
+				out = buildConstantDefinition(((HAPWithAttachment)defWithConstant).getAttachmentContainer(), context);
+			}
+		}
+		
+		if(out==null)   throw new RuntimeException();
+		return out;
+	}
 
 	public static Map<String, Object> getConstantsValue(HAPWithConstantDefinition withConstantDef){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
@@ -98,4 +144,5 @@ public class HAPUtilityDataComponent {
 		return out;
 		
 	}
+
 }

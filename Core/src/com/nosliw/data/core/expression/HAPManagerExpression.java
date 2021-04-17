@@ -50,17 +50,14 @@ public class HAPManagerExpression {
 	}
 
 	public HAPExecutableExpressionGroup getExpression(HAPResourceId expressionId, Map<String, String> configure) {
-		HAPEntityWithResourceContext resourceDefWithContext = null;
-
 		HAPResourceDefinitionExpressionGroup exressionGroupResourceDef = (HAPResourceDefinitionExpressionGroup)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionId);
 		HAPContextProcessAttachmentReferenceExpression contextProcess = new HAPContextProcessAttachmentReferenceExpression(exressionGroupResourceDef, this.m_runtimeEnv);
 		
 		if(configure==null) {
 			//build configure from definition info
-			HAPResourceDefinitionExpressionGroup expressionDef = (HAPResourceDefinitionExpressionGroup)resourceDefWithContext.getEntity();
 			configure = new LinkedHashMap<String, String>();
-			for(String n : expressionDef.getInfo().getNames()) {
-				configure.put(n, (String)expressionDef.getInfo().getValue(n)); 
+			for(String n : exressionGroupResourceDef.getInfo().getNames()) {
+				configure.put(n, (String)exressionGroupResourceDef.getInfo().getValue(n)); 
 			}
 		}
 		

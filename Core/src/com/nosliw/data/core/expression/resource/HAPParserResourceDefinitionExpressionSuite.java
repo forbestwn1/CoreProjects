@@ -6,10 +6,10 @@ import org.json.JSONObject;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
 import com.nosliw.data.core.expression.HAPParserExpressionDefinition;
-import com.nosliw.data.core.resource.HAPParserResourceImp;
+import com.nosliw.data.core.resource.HAPParserResourceDefinitionImp;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 
-public class HAPParserResourceExpressionDefinition extends HAPParserResourceImp{
+public class HAPParserResourceDefinitionExpressionSuite extends HAPParserResourceDefinitionImp{
 
 	@Override
 	public HAPResourceDefinition parseJson(JSONObject jsonObj) {

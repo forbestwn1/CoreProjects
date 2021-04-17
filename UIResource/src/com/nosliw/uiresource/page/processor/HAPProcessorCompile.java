@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.data.HAPUtilityDataComponent;
+import com.nosliw.data.core.component.HAPUtilityComponentConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
@@ -35,7 +35,7 @@ public class HAPProcessorCompile {
 		body.getProcessExpressionScriptContext().setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment
-		Set<HAPDefinitionConstant> constantsDef = HAPUtilityDataComponent.buildConstantDefinition(uiUnitDef.getAttachmentContainer());
+		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer());
 		for(HAPDefinitionConstant constantDef : constantsDef) {
 			body.getProcessExpressionScriptContext().addConstantDefinition(constantDef);
 		}

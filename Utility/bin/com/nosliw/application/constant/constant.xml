@@ -710,13 +710,15 @@
 			<definition name="ENTITYINFO_STATUS_ENABLED" value="enabled"/>
 
 			<definition type="space"/>
-			<definition name="SCRIPT_TYPE_TEXT" value="text"/>
-			<definition name="SCRIPT_TYPE_EXPRESSION" value="expression"/>
-			<definition name="SCRIPT_TYPE_LITERATE" value="literate"/>
-			<definition name="SCRIPT_TYPE_SEG_SCRIPT" value="scriptSeg"/>
-			<definition name="SCRIPT_TYPE_SEG_EXPRESSION" value="expressionSeg"/>
-			<definition name="SCRIPT_TYPE_SEG_TEXT" value="textSeg"/>
-			<definition name="SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT" value="exprssionScriptSeg"/>
+			<definition name="SCRIPT_TYPE_TEXT" value="text" description="plain text entity"/>
+			<definition name="SCRIPT_TYPE_EXPRESSION" value="expression" description="data expression entity"/>
+			<definition name="SCRIPT_TYPE_LITERATE" value="literate"  description="literate entity"/>
+			
+			<definition type="space"/>
+			<definition name="SCRIPT_TYPE_SEG_SCRIPT" value="scriptSeg" description="js expression segment"/>
+			<definition name="SCRIPT_TYPE_SEG_EXPRESSION" value="expressionSeg" description="data expression segment"/>
+			<definition name="SCRIPT_TYPE_SEG_TEXT" value="textSeg" description="plain text segment"/>
+			<definition name="SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT" value="exprssionScriptSeg" description="script containing data expression and js expression segment"/>
 
 			<definition type="space"/>
 			<definition name="STORYELEMENT_CATEGARY_NODE" value="node"/>
