@@ -21,8 +21,10 @@ public interface HAPExecutableScript extends HAPExecutable{
 
 	String getId();
 
-	HAPContainerVariableCriteriaInfo discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup);
-	
+	HAPContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup);
+
+	Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup);
+
 	Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup);
 	void updateConstant(Map<String, Object> value);
 	

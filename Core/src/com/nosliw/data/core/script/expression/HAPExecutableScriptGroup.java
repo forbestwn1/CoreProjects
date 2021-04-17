@@ -31,11 +31,13 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static final String ELEMENT = "element";
+
+	@HAPAttribute
+	public static final String CONTEXT = "context";
 	
 	private HAPContextStructure m_contextStructure;
 	
 	private HAPContextFlat m_flatContext;
-	
 	
 	private HAPExecutableExpressionGroup m_expressionExe;
 	
@@ -106,6 +108,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(EXPRESSIONGROUP, this.m_expressionExe.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(CONTEXT, this.m_flatContext.toStringValue(HAPSerializationFormat.JSON));
 		Map<String, String> elementJsonMap = new LinkedHashMap<String, String>();
 		for(HAPExecutableScriptEntity ele : this.m_elements) {
 			elementJsonMap.put(ele.getId(), ele.toStringValue(HAPSerializationFormat.JSON));

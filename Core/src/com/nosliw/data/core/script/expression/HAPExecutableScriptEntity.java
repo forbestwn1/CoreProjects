@@ -36,6 +36,9 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 	public static final String VARIABLESINFO = "variablesInfo";
 
 	@HAPAttribute
+	public static final String VARIABLES = "variables";
+
+	@HAPAttribute
 	public static final String EXPRESSIONREF = "expressionRef";
 
 	private HAPExecutableScriptWithSegment m_script;
@@ -91,7 +94,10 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 	@Override
 	public List<HAPExecutableScript> getSegments(){    return this.m_script.getSegments();     }
 	@Override
-	public HAPContainerVariableCriteriaInfo discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {return this.m_script.discoverVariablesInfo(expressionGroup);}
+	public HAPContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {return this.m_script.discoverVariablesInfo1(expressionGroup);}
+	@Override
+	public Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup) {  return this.m_script.discoverVariables(expressionGroup); }
+
 	@Override
 	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup) {	return this.m_script.discoverConstantsDefinition(expressionGroup);	}
 	@Override
@@ -128,8 +134,8 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 
 		jsonMap.put(EXPRESSIONREF, HAPJsonUtility.buildJson(this.discoverExpressionReference(null), HAPSerializationFormat.JSON));
 		
-		HAPContainerVariableCriteriaInfo varInfos = this.discoverVariablesInfo(null);
-		jsonMap.put(VARIABLESINFO, varInfos.toStringValue(HAPSerializationFormat.JSON));
+		Set<String> vars = this.discoverVariables(null);
+		jsonMap.put(VARIABLES, HAPJsonUtility.buildJson(vars, HAPSerializationFormat.JSON));
 	}
 
 	@Override

@@ -92,27 +92,35 @@
 		}
 	},
 	"attachment": {
-		"data" : [
+		"value" : [
 			{
 				"name": "constantValueInteger",
-				"entity": 123
+				"entity": {
+					"value" : 123
+				}
 			},
 			{
 				"name": "constantValueString",
-				"entity": "How are you"
+				"entity": {
+					"value" : "How are you"
+				}
 			},
 			{
 				"name": "fromConstant",
 				"entity": {
-					"dataTypeId": "test.integer;1.0.0",
-					"value": 3
+					"value" : {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 3
+					}
 				}
 			},
 			{
 				"name": "constantValueObject",
 				"entity": {
-					value : {
-						child : "How are you"
+					"value" : {
+						value : {
+							child : "How are you"
+						}
 					}
 				}
 			},
@@ -146,12 +154,11 @@
 		],
 		"expression" : [
 			{
-				"name": "expression1",
-				"description": "standard",
+				"name" : "expression1",
 				"entity" : {
 					"expression" : "!(test.string)!.subString(?(baseVar)?,from:&(fromConstant)&,to:?(toVar)?)",
 				}
-			},		
+			},
 		]
 	},	
 	"element": [

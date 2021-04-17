@@ -83,20 +83,11 @@ var node_utility = function()
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
 
 		//build variable value according to alias definition in expression item
-		var allVariables = {};
 		var varInfos = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS];
-		var varIdByNamme = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIDBYNAME];
+		var varIdByName = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIDBYNAME];
 		var namesByVarId = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_NAMESBYVARID];
-		var varValueByVarId = {};
-		_.each(variables, function(variableValue, name){
-			varValueByVarId[varIdByNamme[name]] = variableValue;
-		});
-		_.each(varValueByVarId, function(variableValue, varId){
-			var names = namesByVarId[varId];
-			_.each(names, function(name){
-				allVariables[name] = variableValue;
-			});
-		});
+		
+		var allVariables = node_dataUtility.buildInput(variables, varIdByName, namesByVarId);
 		
 		//execute operand
 		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_OPERAND], allVariables, constants, references, {

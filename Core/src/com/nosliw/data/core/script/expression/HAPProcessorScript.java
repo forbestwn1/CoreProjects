@@ -110,7 +110,7 @@ public class HAPProcessorScript {
 		for(HAPExecutableScriptEntity script : out.getScripts()) {
 			script.discoverConstantsDefinition(out.getExpression());
 			script.discoverExpressionReference(out.getExpression());
-			script.discoverVariablesInfo(out.getExpression());
+			script.discoverVariablesInfo1(out.getExpression());
 		}
 		
 		return out;

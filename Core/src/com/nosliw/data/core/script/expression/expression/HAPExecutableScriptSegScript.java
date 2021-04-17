@@ -58,14 +58,26 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 	public List<Object> getElements(){	return this.m_elements;	}
 	
 	@Override
-	public HAPContainerVariableCriteriaInfo discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {
+	public HAPContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
 		for(Object ele : this.m_elements) {
 			if(ele instanceof HAPVariableInScript) {
 				HAPVariableInScript varInScript = (HAPVariableInScript)ele;
 				HAPInfoCriteria varInfo = HAPInfoCriteria.buildUndefinedCriteriaInfo();
 //				varInfo.setId(varInScript.getVariableName());
-				HAPUtilityScriptExpression.addVariableInfo(out, varInfo, varInScript.getVariableName());
+//				HAPUtilityScriptExpression.addVariableInfo(out, varInfo, varInScript.getVariableName());
+			}
+		}
+		return out;  
+	}
+
+	@Override
+	public Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup){
+		Set<String> out = new HashSet<String>();
+		for(Object ele : this.m_elements) {
+			if(ele instanceof HAPVariableInScript) {
+				HAPVariableInScript varInScript = (HAPVariableInScript)ele;
+				out.add(varInScript.getVariableName());
 			}
 		}
 		return out;  

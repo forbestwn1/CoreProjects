@@ -1,6 +1,5 @@
 package com.nosliw.data.core.script.expression;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,22 +9,20 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.script.expression.literate.HAPUtilityScriptLiterate;
 
 public class HAPUtilityScriptExpression {
 
-	public static Set<HAPVariableInfo> getDataVariables(HAPExecutableScriptGroup scriptExpressionGroup, String scriptEleName){
-		HAPExecutableScriptEntity scriptExe = scriptExpressionGroup.getScript(scriptEleName);
-		HAPContainerVariableCriteriaInfo varInfos = scriptExe.discoverVariablesInfo(scriptExpressionGroup.getExpression());
-		Set<HAPVariableInfo> out = new HashSet<HAPVariableInfo>();
-		for(String name : varInfos.keySet()) {
-			HAPVariableInfo varInfo = HAPVariableInfo.buildVariableInfo(name, varInfos.get(name).getCriteria());
-			out.add(varInfo);
-		}
-		return out;
-	}
+//	public static Set<HAPVariableInfo> getDataVariables(HAPExecutableScriptGroup scriptExpressionGroup, String scriptEleName){
+//		HAPExecutableScriptEntity scriptExe = scriptExpressionGroup.getScript(scriptEleName);
+//		HAPContainerVariableCriteriaInfo varInfos = scriptExe.discoverVariablesInfo1(scriptExpressionGroup.getExpression());
+//		Set<HAPVariableInfo> out = new HashSet<HAPVariableInfo>();
+//		for(String name : varInfos.keySet()) {
+//			HAPVariableInfo varInfo = HAPVariableInfo.buildVariableInfo(name, varInfos.get(name).getCriteria());
+//			out.add(varInfo);
+//		}
+//		return out;
+//	}
 	
 	public static HAPScript newScript(String content) {
 		String type = null;

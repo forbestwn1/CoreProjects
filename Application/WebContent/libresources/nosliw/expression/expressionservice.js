@@ -59,13 +59,19 @@ var node_createExpressionService = function(){
 			expressions[expressionId] = scriptGroupObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTGROUP_EXPRESSIONGROUP][node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS][expressionId]; 
 		});
 		
-		var varNames = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_VARIABLESINFO];
+		var varNames = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_VARIABLES];
 		var scriptFun = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SCRIPTFUNCTION];
 		var supportFuns = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SUPPORTFUNCTION];
+
+		
+		var flatContext = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_CONTEXT];
+		var varIdByName = varInfos[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_VARIDBYNAME];
+		var namesByVarId = varInfos[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_NAMESBYVARID];
+		var expandedInput = node_dataUtility.buildInput(input, varIdByName, namesByVarId);
 		
 		var varInputs = {};
 		_.each(varNames, function(varName, index){
-			varInputs[varName] = node_objectOperationUtility.getObjectAttributeByPath(input, varName);
+			varInputs[varName] = node_objectOperationUtility.getObjectAttributeByPath(expandedInput, varName);
 		});
 
 		return loc_getExecuteScriptRequest(scriptFun, supportFuns, expressions, varInputs, constants, handlers, requester_parent);

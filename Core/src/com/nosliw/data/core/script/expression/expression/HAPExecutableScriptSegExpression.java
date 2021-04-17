@@ -25,9 +25,15 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 	public String getScriptType() {  return HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSION;  }
 
 	@Override
-	public HAPContainerVariableCriteriaInfo discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {
+	public HAPContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
 		HAPExecutableExpression expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
 		return expressionExe.getVariablesInfo();	
+	}
+
+	@Override
+	public Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup){
+		HAPExecutableExpression expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
+		return expressionExe.getVariablesInfo().getDataVariableNames();	
 	}
 
 	@Override

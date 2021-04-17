@@ -21,8 +21,11 @@ public abstract class HAPExecutableScriptImp extends HAPExecutableImp implements
 	public String getId() {   return this.m_id;  }
 
 	@Override
-	public HAPContainerVariableCriteriaInfo discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {  return new HAPContainerVariableCriteriaInfo();  }
+	public HAPContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {  return new HAPContainerVariableCriteriaInfo();  }
 
+	@Override
+	public Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup){  return new HashSet<String>();  }
+	
 	@Override
 	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup) {  return new HashSet<HAPDefinitionConstant>(); }
 	

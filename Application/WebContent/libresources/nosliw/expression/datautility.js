@@ -11,6 +11,23 @@ var node_dataUtility =
 {
 	createStringData : function(stringValue){
 		return new node_Data("test.string;1.0.0", stringValue);
+	},
+	
+	buildInput : function(inputValue, varIdByName, namesByVarId){
+		var out = {};
+		var valueByVarId = {};
+		_.each(inputValue, function(value, name){
+			var varId = varIdByName[name];
+			if(varId!=undefined)	valueByVarId[varId] = value;
+			else out[name] = value;
+		});
+		_.each(valueByVarId, function(value, varId){
+			var names = namesByVarId[varId];
+			_.each(names, function(name){
+				out[name] = value;
+			});
+		});
+		return out;
 	}
 		
 };

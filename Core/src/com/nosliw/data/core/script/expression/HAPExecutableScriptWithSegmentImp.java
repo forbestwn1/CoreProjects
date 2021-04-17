@@ -18,6 +18,9 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 	//all data variables info in script
 	private HAPContainerVariableCriteriaInfo m_variableInfos;
 	
+	//all variables name in script
+	private Set<String> m_variables;
+	
 	//all expression ref id in script
 	private Set<String> m_expressionIds;
 	
@@ -37,19 +40,32 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 	public List<HAPExecutableScript> getSegments(){    return this.m_segs;     }
 
 	@Override
-	public HAPContainerVariableCriteriaInfo discoverVariablesInfo(HAPExecutableExpressionGroup expressionGroup) {
+	public HAPContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
 		if(this.m_variableInfos==null) {
 			this.m_variableInfos = new HAPContainerVariableCriteriaInfo();
 			for(HAPExecutableScript seg : this.m_segs) {
-				HAPContainerVariableCriteriaInfo varInfos = seg.discoverVariablesInfo(expressionGroup);
-				for(String name : varInfos.keySet()) {
-					HAPUtilityScriptExpression.addVariableInfo(this.m_variableInfos, varInfos.get(name), name);
-				}
+//				HAPContainerVariableCriteriaInfo varInfos = seg.discoverVariablesInfo1(expressionGroup);
+//				for(String name : varInfos.keySet()) {
+//					HAPUtilityScriptExpression.addVariableInfo(this.m_variableInfos, varInfos.get(name), name);
+//				}
 			}
 		}
 		return this.m_variableInfos;  
 	}
 
+	@Override
+	public Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup){
+		if(this.m_variables==null) {
+			this.m_variables = new HashSet<String>();
+			for(HAPExecutableScript seg : this.m_segs) {
+				Set<String> vars = seg.discoverVariables(expressionGroup);
+				this.m_variables.addAll(vars);
+			}
+		}
+		return this.m_variables;  
+	}
+
+	
 	@Override
 	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup) {
 		if(this.m_constantDefs==null) {
