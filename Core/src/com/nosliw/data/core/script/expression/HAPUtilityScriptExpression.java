@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.script.expression.literate.HAPUtilityScriptLiterate;
+import com.nosliw.data.core.script.expression.imp.literate.HAPUtilityScriptLiterate;
 
 public class HAPUtilityScriptExpression {
 

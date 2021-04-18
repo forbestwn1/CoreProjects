@@ -1,9 +1,9 @@
 package com.nosliw.data.core.runtime.js.util.script;
 
 import com.nosliw.data.core.script.expression.HAPExecutableScript;
-import com.nosliw.data.core.script.expression.literate.HAPExecutableScriptEntityLiterate;
-import com.nosliw.data.core.script.expression.literate.HAPExecutableScriptSegExpressionScript;
-import com.nosliw.data.core.script.expression.literate.HAPExecutableScriptSegText;
+import com.nosliw.data.core.script.expression.imp.literate.HAPExecutableScriptEntityLiterate;
+import com.nosliw.data.core.script.expression.imp.literate.HAPExecutableScriptSegExpressionScript;
+import com.nosliw.data.core.script.expression.imp.literate.HAPExecutableScriptSegText;
 
 public class HAPScriptProcessorLiterate implements HAPScriptProcessor{
 

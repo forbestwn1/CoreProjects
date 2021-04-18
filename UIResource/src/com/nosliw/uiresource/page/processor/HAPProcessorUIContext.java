@@ -64,7 +64,7 @@ public class HAPProcessorUIContext {
 
 		processRelativeElement(uiExe, parentContext, privateConfigure, uiTagMan, runtimeEnv);
 		markProcessed(uiExe);
-		flatenContext(uiExe, privateConfigure.inheritanceExcludedInfo);
+		flatenContext(uiExe);
 	}
 	
 	private static void markProcessed(HAPExecutableUIUnit uiExe) {
@@ -143,21 +143,21 @@ public class HAPProcessorUIContext {
 		
 	}	
 	
-	private static void flatenContext(HAPExecutableUIUnit uiExe, Set<String> inheritanceExcludedInfo){
+	private static void flatenContext(HAPExecutableUIUnit uiExe){
 		
 		if(uiExe.getType().equals(HAPConstantShared.UIRESOURCE_TYPE_TAG)) {
 			//flat it
 			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
-			uiTagExe.setFlatTagContext(HAPUtilityContext.buildFlatContextFromContextGroup(uiTagExe.getTagContext(), inheritanceExcludedInfo));
+			uiTagExe.setFlatTagContext(HAPUtilityContext.buildFlatContextFromContextStructure(uiTagExe.getTagContext()));
 		}
 		
 		//build flat context
-		HAPContextFlat flatContext = HAPUtilityContext.buildFlatContextFromContextGroup(uiExe.getBody().getContext(), inheritanceExcludedInfo);
+		HAPContextFlat flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(uiExe.getBody().getContext());
 		uiExe.getBody().setFlatContext(flatContext);
 
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
-			flatenContext(childTag, inheritanceExcludedInfo);			
+			flatenContext(childTag);			
 		}
 	}
 }

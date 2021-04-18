@@ -5,10 +5,10 @@ import java.util.List;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.script.expression.HAPExecutableScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptWithSegment;
-import com.nosliw.data.core.script.expression.expression.HAPConstantInScript;
-import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSegExpression;
-import com.nosliw.data.core.script.expression.expression.HAPExecutableScriptSegScript;
-import com.nosliw.data.core.script.expression.expression.HAPVariableInScript;
+import com.nosliw.data.core.script.expression.imp.expression.HAPConstantInScript;
+import com.nosliw.data.core.script.expression.imp.expression.HAPExecutableScriptSegExpression;
+import com.nosliw.data.core.script.expression.imp.expression.HAPExecutableScriptSegScript;
+import com.nosliw.data.core.script.expression.imp.expression.HAPVariableInScript;
 
 public class HAPScriptProcessorExpression implements HAPScriptProcessor{
 

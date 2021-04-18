@@ -108,6 +108,15 @@ public class HAPContextFlat extends HAPSerializableImp{
 		return updatedPath.getFullName();
 	}
 
+	public HAPContextFlat getVariableContext() {   
+		HAPContextFlat out = new HAPContextFlat();
+		HAPContext varContext = this.m_context.getVariableContext();
+		for(String rootName : varContext.getElementNames()) {
+			out.addElement(varContext.getElement(rootName), rootName, this.m_namesByVarId.get(rootName));
+		}
+		return out;
+	}
+
 	public Map<String, Object> getConstantValue(){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		Map<String, Object> constantsById = this.m_context.getConstantValue();

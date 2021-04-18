@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.expression.literate;
+package com.nosliw.data.core.script.expression.imp.literate;
 
 import java.util.List;
 import java.util.Map;
@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 import com.nosliw.data.core.script.expression.HAPScript;
-import com.nosliw.data.core.script.expression.expression.HAPProcessorScriptExpression;
+import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;
 
 public class HAPProcessorScriptLiterate {
 
