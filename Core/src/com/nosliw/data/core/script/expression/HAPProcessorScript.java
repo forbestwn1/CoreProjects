@@ -74,7 +74,7 @@ public class HAPProcessorScript {
 		expressionGroupDef.setContextStructure(contextStructure);
 
 		//constant --- discover constant from attachment and context
-		for(HAPDefinitionConstant def : HAPUtilityComponentConstant.getValueConstantsDefinition(expressionGroupDef, out.getContextFlat())) {
+		for(HAPDefinitionConstant def : HAPUtilityComponentConstant.getValueConstantsDefinition(scriptGroupDef, out.getContextFlat())) {
 			expressionGroupDef.addConstantDefinition(def);
 		}
 		

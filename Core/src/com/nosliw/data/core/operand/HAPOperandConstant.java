@@ -43,7 +43,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 
 	public HAPOperandConstant(HAPData constantData){
 		super(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT);
-		this.m_data = constantData;
+		this.setData(constantData);
 	}
 
 	public String getName(){  return this.m_name;  }

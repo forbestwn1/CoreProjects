@@ -39,11 +39,21 @@ var node_createExpressionService = function(){
 		});
 		_.each(expressionItems, function(expressionItem, name){
 			//find variable value only for this expression
-			var expVariables = {};
-			_.each(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS], function(varInfo, name){
-				expVariables[name] = variables[name];
-			});
-			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, expVariables, constants, {}));
+			var varInfos = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS];
+			var varIdByName = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIDBYNAME];
+			var namesByVarId = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_NAMESBYVARID];
+			
+			var allVariables = node_dataUtility.buildInput(variables, varIdByName, namesByVarId);
+			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, allVariables, constants, {}));
+
+			
+			
+			
+//			var expVariables = {};
+//			_.each(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS], function(varInfo, name){
+//				expVariables[name] = variables[name];
+//			});
+//			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, expVariables, constants, {}));
 		});
 		
 		out.addRequest(executeMultipleExpressionItemRequest);
