@@ -33,9 +33,11 @@ public class HAPProcessorScript {
 			HAPProcessTracker processTracker) {
 		HAPDefinitionScriptGroup group = new HAPDefinitionScriptGroupImp();
 		group.addEntityElement(new HAPDefinitionScriptEntity(HAPScript.newScript(script, scriptType)));
-		group.setContextStructure(context);
-		for(String name : constants.keySet()) {
-			group.addConstantDefinition(new HAPDefinitionConstant(name, constants.get(name)));
+		group.setContextStructure(context==null?new HAPContext():context);
+		if(constants!=null) {
+			for(String name : constants.keySet()) {
+				group.addConstantDefinition(new HAPDefinitionConstant(name, constants.get(name)));
+			}
 		}
 		
 		HAPExecutableScriptGroup groupExe = processScript(
@@ -110,7 +112,7 @@ public class HAPProcessorScript {
 		for(HAPExecutableScriptEntity script : out.getScripts()) {
 			script.discoverConstantsDefinition(out.getExpression());
 			script.discoverExpressionReference(out.getExpression());
-			script.discoverVariablesInfo1(out.getExpression());
+			script.discoverVariables(out.getExpression());
 		}
 		
 		return out;

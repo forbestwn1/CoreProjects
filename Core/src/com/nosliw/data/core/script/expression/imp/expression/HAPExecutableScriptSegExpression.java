@@ -13,7 +13,9 @@ import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 
 	private String m_expressionId;
-	
+
+	private HAPExecutableExpression m_expressionExe;
+
 	public HAPExecutableScriptSegExpression(String id, String expressionId) {
 		super(id);
 		this.m_expressionId = expressionId;
@@ -32,8 +34,10 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 
 	@Override
 	public Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup){
-		HAPExecutableExpression expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
-		return expressionExe.getVariablesInfo().getDataVariableNames();	
+		if(m_expressionExe==null) {
+			m_expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
+		}
+		return m_expressionExe.getVariablesInfo().getDataVariableNames();	
 	}
 
 	@Override

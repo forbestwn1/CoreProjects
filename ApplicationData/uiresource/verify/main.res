@@ -5,7 +5,7 @@
 	<br>
 	EXPRESSION REFERENCE:<%=#|<(expressionInternal)>|#.value + ' 6666 ' %>
 	<br>
-	EXPRESSION REFERENCE:<%=#|<(expressionLocal)>|#.value + ' 6666 ' %>
+<!--	EXPRESSION REFERENCE:<%=#|<(expressionLocal)>|#.value + ' 6666 ' %>-->
 	<br>
 
 </body>
@@ -76,7 +76,7 @@
 
 	<attachment>
 	{
-		"expression" : [
+		"dataexpression" : [
 			{
 				"name" : "expressionInternal",
 				"entity" : {

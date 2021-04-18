@@ -5,24 +5,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
-import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
-import com.nosliw.data.core.system.HAPSystemUtility;
 
 public class HAPUtilityResourceId {
 
-	public final static String LOADRESOURCEBYFILE_MODE_NEVER = "never";
-	public final static String LOADRESOURCEBYFILE_MODE_ALWAYS = "always";
-	public final static String LOADRESOURCEBYFILE_MODE_DEPENDS = "depends";
-	
 	public static String buildResourceIdLiterate(HAPResourceId resourceId) {
 		return HAPNamingConversionUtility.cascadeLevel2(new String[]{resourceId.getType(), buildResourceCoreIdLiterate(resourceId)});
 	}
@@ -141,23 +132,6 @@ public class HAPUtilityResourceId {
 		return out;
 	}
 
-	public static Map<String, Object> buildResourceLoadPattern(HAPResourceId resourceId, Map<String, Object> info) {
-		if(info==null)   info = new LinkedHashMap<String, Object>();
-		if(isLoadResoureByFile(resourceId.getType())) {
-			info.put(HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN, HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_FILE);
-		}
-		return info;
-	}
-
-	private final static Set<String> loadResourceByFile = HAPSystemUtility.getLoadResoureByFile();
-	public static boolean isLoadResoureByFile(String resourceType) {
-		String mode = HAPSystemUtility.getLoadResourceByFileMode();
-		if(mode==null)  mode = LOADRESOURCEBYFILE_MODE_DEPENDS;
-		if(LOADRESOURCEBYFILE_MODE_NEVER.equals(resourceType))  return false;
-		if(LOADRESOURCEBYFILE_MODE_ALWAYS.equals(resourceType))  return true;
-		return loadResourceByFile.contains(resourceType);
-	}
-	
 
 	public static boolean isLocalReference(HAPResourceId resourceId) {
 		//kkk
