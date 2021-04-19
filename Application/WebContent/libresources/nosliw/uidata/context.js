@@ -173,25 +173,35 @@ var node_createContext = function(id, elementInfosArray, request){
 
 	var loc_addContextElement = function(elementInfo, request){
 		//create empty wrapper variable for each element
-		var contextEle = node_createContextElement(elementInfo, request);
-		loc_out.prv_eleVariableGroup.addVariable(contextEle.variable, contextEle.path);
-		if(contextEle!=undefined){
-			loc_out.prv_elements[elementInfo.name] = contextEle;
-			
-			var eleVar = contextEle.variable;
-			nosliw.logging.info("************************  Named variable creation  ************************");
-			nosliw.logging.info("Name: " + contextEle.name);
-			nosliw.logging.info("ID: " + eleVar.prv_id);
-			nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
-//			nosliw.logging.info("Parent: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().parent.prv_id));
-//			nosliw.logging.info("ParentPath: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().path)); 
-			nosliw.logging.info("***************************************************************");
-			
-			//get all adapters from elementInfo
-			_.each(elementInfo.info.matchers, function(matchers, path){
-				loc_out.prv_adapters[node_dataUtility.combinePath(elementInfo.name, path)] = loc_buildAdapterVariableFromMatchers(elementInfo.name, path, matchers, elementInfo.info.reverseMatchers[path]);
+		var contextElesInfo = node_createContextElement(elementInfo, request);
+
+		if(contextElesInfo!=undefined){
+			_.each(contextElesInfo.variables, function(contextEleVarInfo, i){
+				var contextEle = {
+					name : contextEleVarInfo.name,
+					info : elementInfo.info,
+					variable : contextEleVarInfo.variable
+				};
+				loc_out.prv_eleVariableGroup.addVariable(contextEle.variable, contextEle.path);
+				loc_out.prv_elements[contextEle.name] = contextEle;
+				
+				var eleVar = contextEle.variable;
+				nosliw.logging.info("************************  Named variable creation  ************************");
+				nosliw.logging.info("Name: " + contextEle.name);
+				nosliw.logging.info("ID: " + eleVar.prv_id);
+				nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
+//					nosliw.logging.info("Parent: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().parent.prv_id));
+//					nosliw.logging.info("ParentPath: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().path)); 
+				nosliw.logging.info("***************************************************************");
+				
+				//get all adapters from elementInfo
+				_.each(elementInfo.info.matchers, function(matchers, path){
+					loc_out.prv_adapters[node_dataUtility.combinePath(contextEle.name, path)] = loc_buildAdapterVariableFromMatchers(contextEle.name, path, matchers, elementInfo.info.reverseMatchers[path]);
+				});
 			});
+			
 		}
+		
 	};
 	
 	var loc_out = {

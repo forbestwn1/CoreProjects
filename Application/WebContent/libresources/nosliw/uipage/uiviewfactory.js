@@ -294,7 +294,8 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		if(loc_context==undefined){
 			//if context not provide, then build context by parent context and current context definition
 			var parentContext = parent==undefined?undefined:parent.getContext();
-			loc_context = node_contextUtility.buildContext("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
+//			loc_context = node_contextUtility.buildContext("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
+			loc_context = node_contextUtility.buildContextFromFlat("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT], parentContext);
 		}
 
 		var viewAttrs = {

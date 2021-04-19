@@ -129,6 +129,90 @@ var node_utility = function(){
 			return out;
 		},
 		
+		buildContextFromFlat : function(id, flatContext, parentContext, requestInfo){
+			
+			var contextDef = flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT];
+			var namesByVarId = flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_NAMESBYVARID];
+			var varIdByName = flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_VARIDBYNAME];
+			
+			//build context element first
+			var contextElementInfosArray = [];
+			
+			_.each(contextDef, function(contextDefRootObj, eleName){
+				eleName = namesByVarId[varIdByName[eleName]];   //expand name to alias
+				
+				var contextDefRootEle = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION];
+				
+				var info = {
+					matchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_MATCHERS],
+					reverseMatchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_REVERSEMATCHERS]
+				};
+				var type = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_TYPE];
+				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
+				//if context.info.instantiate===manual, context does not need to create in the framework
+				if(contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
+					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && 
+							contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_LOGICAL){
+						//physical relative
+						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PARENT]==node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT){
+	//					if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==true){
+							//process relative that  refer to element in parent context
+							var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
+							var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
+							var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariableInfo(rootName, path), undefined, info));
+						}
+					}
+					else{
+						//not relative or logical relative variable
+						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFAULT];
+						
+						var criteria;
+						if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE)	criteria = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION][node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA];
+						else  criteria = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]; 
+						if(criteria!=undefined){
+							//app data, if no default, empty variable with wrapper type
+							if(defaultValue!=undefined) 	contextElementInfosArray.push(node_createContextElementInfo(eleName, node_dataUtility.createDataOfAppData(defaultValue), "", undefined, info));
+							else  contextElementInfosArray.push(node_createContextElementInfo(eleName, undefined, node_CONSTANT.DATA_TYPE_APPDATA, undefined, info));
+						}
+						else{
+							//object, if no default, empty variable with wrapper type
+							if(defaultValue!=undefined)		contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", undefined, info));
+							else contextElementInfosArray.push(node_createContextElementInfo(eleName, undefined, node_CONSTANT.DATA_TYPE_OBJECT, undefined, info));
+						}
+					}
+				}
+			});	
+				
+			var context = node_createContext(id, contextElementInfosArray, requestInfo);
+	
+			//for relative which refer to context ele in same context
+			_.each(contextDef, function(contextDefRootObj, eleName){
+				var contextDefRootEle = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION];
+				var info = {
+						matchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_MATCHERS],
+						reverseMatchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_REVERSEMATCHERS]
+				};
+				var type = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_TYPE];
+				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
+				//if context.info.instantiate===manual, context does not need to create in the framework
+				if(contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
+					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PARENT]==node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_SELF){
+	//				if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==false){
+						var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
+						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
+						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
+						//only process element that parent is created
+						if(context.getContextElement(rootName)!=undefined){
+							context.addContextElement(node_createContextElementInfo(eleName, context, node_createContextVariableInfo(rootName, path), undefined, info));
+						}
+					}
+				}
+			});	
+			
+			return context;
+		},
+		
 		//build context according to context definition and parent context
 		buildContext : function(id, contextDef, parentContext, requestInfo){
 			//build context element first

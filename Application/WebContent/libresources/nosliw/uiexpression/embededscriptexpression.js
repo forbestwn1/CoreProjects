@@ -37,7 +37,7 @@ var packageObj = library;
 				loc_expressions[expressionId] = scriptGroup[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTGROUP_EXPRESSIONGROUP][node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS][expressionId]; 
 			});
 			
-			var varNames = loc_script[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_VARIABLESINFO];
+			var varNames = loc_script[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_VARIABLES];
 			var scriptFun = loc_script[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SCRIPTFUNCTION];
 			var supportFuns = loc_script[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SUPPORTFUNCTION];
 			loc_scriptExprssionObj = node_createUIResourceScriptExpression(varNames, scriptFun, supportFuns, loc_expressions, constants, context, requestInfo);

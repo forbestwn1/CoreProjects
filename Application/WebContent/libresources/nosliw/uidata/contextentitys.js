@@ -88,8 +88,17 @@ var node_createContextVariableInfo = function(n, p){
  * 		4. name + undefined + value type
  */
 var node_createContextElementInfo = function(name, data1, data2, adapterInfo, info){
+	
+	var alias;
+	if(Array.isArray(name))	alias = name;
+	else{
+		alias = [];
+		alias.push(name);
+	}
+
 	var loc_out = {
-		name : name,
+		name : alias[0],
+		alias : alias,
 	};
 	var type = node_getObjectType(data1);
 	if(type==node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXT){
@@ -132,22 +141,35 @@ var node_createContextElementInfo = function(name, data1, data2, adapterInfo, in
  * 		info
  */
 var node_createContextElement = function(elementInfo, requestInfo){
+	var names = elementInfo.alias;
+
 	var loc_out = {
-		name : elementInfo.name,
+		variables : [],
 		info : elementInfo.info,
 	};
 
+	//if have mutiple name, use the first one in array as main variable
 	var adapterInfo = elementInfo.adapterInfo;
 	//get variable
 	if(elementInfo.context!=undefined){
 		var context = elementInfo.context;
 		var contextVar = elementInfo.contextVariable;
-		loc_out.variable = context.createVariable(contextVar, adapterInfo, requestInfo);
+		loc_out.variables.push({
+			name : names[0],
+			variable : context.createVariable(contextVar, adapterInfo, requestInfo),
+		});
 		//cannot create context element variable
 		if(loc_out.variable==undefined)   return;
 	}
-	else if(elementInfo.variable!=undefined)		loc_out.variable = node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo, requestInfo);
-	else		loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo);
+	else if(elementInfo.variable!=undefined)		loc_out.variables.push({name:names[0], variable:node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo, requestInfo)});
+	else		loc_out.variables.push({name:names[0], variable:node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo)});
+	
+	_.each(names, function(name, i){
+		if(i!=0){
+			//make variable except the first one
+			loc_out.variables.push({name:names[i], variable:node_createVariableWrapper(loc_out.variables[0].variable, undefined, undefined, requestInfo)});
+		}
+	});
 	
 	return loc_out;
 };

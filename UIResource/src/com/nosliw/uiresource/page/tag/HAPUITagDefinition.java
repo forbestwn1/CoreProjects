@@ -95,7 +95,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 		jsonMap.put(TYPE, this.m_type);
 		jsonMap.put(BASE, this.m_base);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(FLATCONTEXT, HAPUtilityContext.buildFlatContextFromContextGroup(this.m_context, null).getVariableContext().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(FLATCONTEXT, HAPUtilityContext.buildFlatContextFromContextStructure(this.m_context).getVariableContext().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
 	}

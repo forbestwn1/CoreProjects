@@ -3,11 +3,16 @@
 <body>
     Within test.main.res
 	<br>
-	EXPRESSION REFERENCE:<%=#|<(expressionInternal)>|#.value + ' 6666 ' %>
+<!--	EXPRESSION REFERENCE:<%=#|<(expressionInternal)>|#.value + ' 6666 ' %>-->
 	<br>
 <!--	EXPRESSION REFERENCE:<%=#|<(expressionLocal)>|#.value + ' 6666 ' %>-->
 	<br>
+	
+		EXPRESSION IN CONTENT :<%=?(aaa___public)?.value + '   6666 ' %>
+	
 
+	<br>
+<!--	<nosliw-contextvalue/> -->
 </body>
 
 	<script>
@@ -30,31 +35,6 @@
 								"value": "This is my world!"
 							}
 						},
-						"bbb":{
-							definition : {
-								"criteria": "test.string;1.0.0",
-							},
-							"defaultValue": {
-								"dataTypeId": "test.string;1.0.0",
-								"value": "This is my world!"
-							}
-						},
-						constantFromContext8: {
-							definition : {
-								value : {
-									dataTypeId: "test.integer;1.0.0",
-									value: 9
-								}
-							}
-						},
-						constantFromContext9: {
-							definition:{
-								value : {
-									dataTypeId: "test.integer;1.0.0",
-									value: 15
-								}
-							}
-						}
 				}
 			}
 		}
@@ -77,22 +57,6 @@
 	<attachment>
 	{
 		"dataexpression" : [
-			{
-				"name" : "expressionInternal",
-				"entity" : {
-					"expression" : "?(aaa)?.subString(from:&(constantFromContext8)&,to:&(constantFromContext9)&)",
-				}
-			},
-			{
-				"name" : "expressionLocal",
-				"referenceId": {
-					"structure" : "local",
-					"id" : "internal1"
-				},
-				"adaptor" : {
-					"expression" : "expressionLocal",
-				}
-			}
 		],
 		"service" : [
 		],
