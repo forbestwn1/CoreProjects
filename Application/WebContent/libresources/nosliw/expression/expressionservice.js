@@ -22,6 +22,7 @@ var packageObj = library.getChildPackage("service");
 	var node_dataUtility;
 	var node_namingConvensionUtility;
 	var node_objectOperationUtility;
+	var node_aliasUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createExpressionService = function(){
@@ -39,21 +40,8 @@ var node_createExpressionService = function(){
 		});
 		_.each(expressionItems, function(expressionItem, name){
 			//find variable value only for this expression
-			var varInfos = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS];
-			var varIdByName = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIDBYNAME];
-			var namesByVarId = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_NAMESBYVARID];
-			
-			var allVariables = node_dataUtility.buildInput(variables, varIdByName, namesByVarId);
+			var allVariables = node_aliasUtility.expandInputByVariablesInfoContainer(variables, expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS]);
 			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, allVariables, constants, {}));
-
-			
-			
-			
-//			var expVariables = {};
-//			_.each(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS], function(varInfo, name){
-//				expVariables[name] = variables[name];
-//			});
-//			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, expVariables, constants, {}));
 		});
 		
 		out.addRequest(executeMultipleExpressionItemRequest);
@@ -73,11 +61,7 @@ var node_createExpressionService = function(){
 		var scriptFun = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SCRIPTFUNCTION];
 		var supportFuns = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SUPPORTFUNCTION];
 
-		
-		var flatContext = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_CONTEXT];
-		var varIdByName = varInfos[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_VARIDBYNAME];
-		var namesByVarId = varInfos[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_NAMESBYVARID];
-		var expandedInput = node_dataUtility.buildInput(input, varIdByName, namesByVarId);
+		var expandedInput = node_aliasUtility.expandInputByFlatContext(input, scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_CONTEXT]);
 		
 		var varInputs = {};
 		_.each(varNames, function(varName, index){
@@ -172,6 +156,7 @@ nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expression
 nosliw.registerSetNodeDataEvent("expression.dataUtility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.aliasUtility", function(){node_aliasUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createExpressionService", node_createExpressionService); 

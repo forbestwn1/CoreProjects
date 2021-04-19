@@ -21,6 +21,7 @@ var packageObj = library;
 	var node_expressionUtility;
 	var node_dataUtility;
 	var node_namingConvensionUtility;
+	var node_aliasUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function() 
@@ -83,11 +84,7 @@ var node_utility = function()
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
 
 		//build variable value according to alias definition in expression item
-		var varInfos = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS];
-		var varIdByName = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIDBYNAME];
-		var namesByVarId = varInfos[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_NAMESBYVARID];
-		
-		var allVariables = node_dataUtility.buildInput(variables, varIdByName, namesByVarId);
+		var allVariables = node_aliasUtility.expandInputByVariablesInfoContainer(variables, expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS]);
 		
 		//execute operand
 		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_OPERAND], allVariables, constants, references, {
@@ -477,6 +474,7 @@ nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestI
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.dataUtility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.aliasUtility", function(){node_aliasUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

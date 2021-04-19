@@ -16,6 +16,7 @@ var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
 var node_uiDataOperationServiceUtility;
 var node_dataUtility;
+var node_aliasUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 var node_utility = function(){
@@ -132,14 +133,12 @@ var node_utility = function(){
 		buildContextFromFlat : function(id, flatContext, parentContext, requestInfo){
 			
 			var contextDef = flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT];
-			var namesByVarId = flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_NAMESBYVARID];
-			var varIdByName = flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_VARIDBYNAME];
 			
 			//build context element first
 			var contextElementInfosArray = [];
 			
 			_.each(contextDef, function(contextDefRootObj, eleName){
-				eleName = namesByVarId[varIdByName[eleName]];   //expand name to alias
+				eleName = node_aliasUtility.expandNameByFlatContext(eleName, flatContext);   //expand name to alias
 				
 				var contextDefRootEle = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION];
 				
@@ -310,6 +309,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.aliasUtility", function(){node_aliasUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

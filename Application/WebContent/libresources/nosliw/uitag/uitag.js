@@ -292,7 +292,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 
 		//create context
 		if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
-			loc_context = node_contextUtility.buildContext(
+			loc_context = node_contextUtility.buildContextFromFlat(
 					"Tag_"+loc_tagName,
 					loc_tagConfigure.contextDef, 
 					loc_parentContext);
