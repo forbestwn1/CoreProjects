@@ -12,6 +12,11 @@ var node_aliasUtility = function(){
 	
 	var loc_out = {
 
+		getFlatContextElementByAlias : function(name, flatContext){
+			var eleId = flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_VARIDBYNAME][name];
+			return flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT][eleId];
+		},
+				
 		expandNameByFlatContext : function(name, flatContext){
 			var namesByVarId = flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_NAMESBYVARID];
 			var varIdByName = flatContext[node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_VARIDBYNAME];

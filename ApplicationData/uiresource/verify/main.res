@@ -12,6 +12,9 @@
 	
 
 	<br>
+	
+	<nosliw-string data="aaa"/>
+	<br>
 <!--	<nosliw-contextvalue/> -->
 </body>
 

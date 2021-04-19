@@ -34,6 +34,7 @@ var packageObj = library;
 	var node_resourceUtility;
 	var node_createUITagOnBaseSimple;
 	var node_createUITagOnBaseArray;
+	var node_aliasUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -92,7 +93,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		var out;
 		if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
 			if(exContext==undefined)   exContext = loc_context;
-			out = node_contextUtility.buildContext(
+			out = node_contextUtility.buildContextFromFlat(
 					contextId, 
 					loc_tagConfigure.bodyContextDef, 
 					exContext);
@@ -175,7 +176,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		//---------------------------------context definition
 		getTagContextElementDefinition : function(name){
 			if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
-				return loc_tagConfigure.contextDef[name];
+				return node_aliasUtility.getFlatContextElementByAlias(name, loc_tagConfigure.contextDef); 
 			}			
 			else if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
 				var eleDef =  node_contextUtility.getContextElementDefinitionFromFlatContext(uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], name);
@@ -439,6 +440,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uitag.createUITagOnBaseSimple", function(){node_createUITagOnBaseSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uitag.createUITagOnBaseArray", function(){node_createUITagOnBaseArray = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.aliasUtility", function(){node_aliasUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITag", node_createUITag); 
