@@ -9,6 +9,7 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
@@ -84,7 +85,7 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 		//ui error context element
 		HAPContextDefinitionRoot uiValidationErrorRoot = new HAPContextDefinitionRoot(new HAPContextDefinitionLeafValue());
 		uiValidationErrorRoot.setDefaultValue(new JSONObject());
-//		contextGroup.addProtectedElement(HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, uiValidationErrorRoot);
+		contextGroup.addProtectedElement(HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, uiValidationErrorRoot);
 		this.setContextStructure(contextGroup);
 	}
 	

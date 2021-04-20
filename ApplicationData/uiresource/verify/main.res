@@ -7,7 +7,7 @@
 	<br>
 <!--	EXPRESSION REFERENCE:<%=#|<(expressionLocal)>|#.value + ' 6666 ' %>-->
 	<br>
-	
+<!--	
 		EXPRESSION IN CONTENT :<%=?(aaa___public)?.value + '   6666 ' %>
 	
 
@@ -15,6 +15,7 @@
 	
 	<nosliw-string data="aaa"/>
 	<br>
+	-->
 <!--	<nosliw-contextvalue/> -->
 </body>
 
@@ -29,15 +30,14 @@
 		"group" : {
 			"public" : {
 				"element" : {
-						"aaa":{
-							definition : {
-								"criteria": "test.string;1.0.0",
-							},
-							"defaultValue": {
-								"dataTypeId": "test.string;1.0.0",
-								"value": "This is my world!"
+					constantFromContext7: {
+						definition : {
+							value : {
+								dataTypeId: "test.string",
+								value: "Constant data from context"
 							}
-						},
+						}
+					},
 				}
 			}
 		}
@@ -53,6 +53,34 @@
 	
 	<service>
 	[
+		{
+			"name" : "simpleServiceWithoutInterface",
+			"interface" : "service_simpleoutput",
+			"provider" : "simpleServiceWithoutInterfaceProvider",
+			"info" : {
+				"enhanceContext" : "true"
+			},
+			"dataMapping" :{
+				"inputMapping" : {
+					"element" : {
+
+						"parm4" : {
+							"description" : "input from constant defined in context",
+							"definition" : {
+								"path" : "constantFromContext7"
+							}
+						},
+					}
+				},
+				"outputMapping" : {
+					"success" : {
+						"element" : {
+						}
+					}
+				}
+			}
+		},
+	
 	]
 	</service>
 
@@ -62,6 +90,10 @@
 		"dataexpression" : [
 		],
 		"service" : [
+			{
+				"name": "simpleServiceWithoutInterfaceProvider",
+				"referenceId" : "simpleoutput_refinterface"
+			},	
 		],
 		"value" : [
 		],

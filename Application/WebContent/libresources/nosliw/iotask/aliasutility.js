@@ -32,7 +32,7 @@ var node_aliasUtility = function(){
 		expandInputByVariablesInfoContainer : function(inputValue, varsInfoContainer){
 			var varIdByName = varsInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIDBYNAME];
 			var namesByVarId = varsInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_NAMESBYVARID];
-			return this.expandInput(variables, varIdByName, namesByVarId);
+			return this.expandInput(inputValue, varIdByName, namesByVarId);
 		},
 			
 		expandInput : function(inputValue, varIdByName, namesByVarId){

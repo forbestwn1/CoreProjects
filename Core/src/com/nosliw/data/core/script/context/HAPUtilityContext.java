@@ -528,11 +528,11 @@ public class HAPUtilityContext {
 	
 	//merge origin context def with child context def to expect context out
 	//also generate matchers from origin to expect
-	public static void mergeContextDefitionElement(HAPContextDefinitionElement originDef, HAPContextDefinitionElement expectDef, boolean modifyStructure, Map<String, HAPMatchers> matchers, String path, HAPRuntimeEnvironment runtimeEnv){
+	public static void mergeContextDefitionElement(HAPContextDefinitionElement originDef1, HAPContextDefinitionElement expectDef1, boolean modifyStructure, Map<String, HAPMatchers> matchers, String path, HAPRuntimeEnvironment runtimeEnv){
 		if(path==null)  path = "";
 		//merge is about solid
-		originDef = originDef.getSolidContextDefinitionElement();
-		expectDef = expectDef.getSolidContextDefinitionElement();
+		HAPContextDefinitionElement originDef = originDef1.getSolidContextDefinitionElement();
+		HAPContextDefinitionElement expectDef = expectDef1.getSolidContextDefinitionElement();
 		String type = expectDef.getType();
 		
 		if(originDef.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
