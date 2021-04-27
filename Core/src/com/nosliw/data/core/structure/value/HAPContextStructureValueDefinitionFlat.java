@@ -20,12 +20,10 @@ import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.structure.HAPElement;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
 import com.nosliw.data.core.structure.HAPElementNode;
-import com.nosliw.data.core.structure.HAPIdContextDefinitionRoot;
-import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.HAPInfoElement;
-import com.nosliw.data.core.structure.HAPParserContext;
-import com.nosliw.data.core.structure.HAPPathStructure;
+import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.HAPProcessorContextDefinitionElement;
+import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPUtilityContext;
 
@@ -86,9 +84,9 @@ public class HAPContextStructureValueDefinitionFlat extends HAPSerializableImp i
 	public Map<String, HAPRoot> getElements(){  return this.m_elements;  }
 	
 	
-	public HAPRoot addElement(String name, String id, HAPRoot rootEle) {
+	public HAPRoot addElement(String name, String localId, HAPRoot rootEle) {
 		rootEle.setName(name);
-		rootEle.setId(HAPBasicUtility.isStringEmpty(id)?name:id);
+		rootEle.setLocalId(localId);
 		this.m_elements.put(name, rootEle);	
 		return rootEle;
 	}
@@ -111,8 +109,8 @@ public class HAPContextStructureValueDefinitionFlat extends HAPSerializableImp i
 						HAPElementLeafRelative relative = (HAPElementLeafRelative)eleInfo.getContextElement();
 						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(relative.getParent())) {
 							//update local relative path
-							HAPPathStructure path = relative.getPath();
-							relative.setPath(new HAPPathStructure(new HAPIdContextDefinitionRoot(path.getRootStructureId().getCategary(), nameUpdate.getUpdatedName(path.getRootStructureId().getName())), path.getSubPath()));
+							HAPReferenceElement path = relative.getPathFormat();
+							relative.setPath(new HAPReferenceElement(new HAPIdContextDefinitionRoot(path.getRootStructureId().getCategary(), nameUpdate.getUpdatedName(path.getRootStructureId().getName())), path.getSubPath()));
 						}
 					}
 					return null;
@@ -138,8 +136,8 @@ public class HAPContextStructureValueDefinitionFlat extends HAPSerializableImp i
 						HAPElementLeafRelative relative = (HAPElementLeafRelative)eleInfo.getContextElement();
 						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT.equals(relative.getParent())) {
 							//update local relative path
-							HAPPathStructure path = relative.getPath();
-							relative.setPath(new HAPPathStructure(new HAPIdContextDefinitionRoot(path.getRootStructureId().getCategary(), nameUpdate.getUpdatedName(path.getRootStructureId().getName())), path.getSubPath()));
+							HAPReferenceElement path = relative.getPathFormat();
+							relative.setPath(new HAPReferenceElement(new HAPIdContextDefinitionRoot(path.getRootStructureId().getCategary(), nameUpdate.getUpdatedName(path.getRootStructureId().getName())), path.getSubPath()));
 						}
 					}
 					return null;
@@ -249,7 +247,7 @@ public class HAPContextStructureValueDefinitionFlat extends HAPSerializableImp i
 		try{
 			super.buildObjectByJson(json);
 			JSONObject jsonObj = (JSONObject)json;
-			HAPParserContext.parseparseValueStructureDefinitionFlat(jsonObj, this);
+			HAPParserValueStructure.parseparseValueStructureDefinitionFlat(jsonObj, this);
 			return true;  
 		}
 		catch(Exception e){

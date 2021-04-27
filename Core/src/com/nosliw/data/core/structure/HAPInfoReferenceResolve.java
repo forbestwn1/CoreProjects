@@ -3,7 +3,7 @@ package com.nosliw.data.core.structure;
 //store result for resolve reference path
 public class HAPInfoReferenceResolve{
 	//parent reference path
-	public HAPPathStructure path;
+	public HAPReferenceElement path;
 	//parent root node
 	public HAPRoot rootNode;
 	//original refered node

@@ -6,19 +6,19 @@ import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUtilityStructurePath {
 
-	public static HAPPathStructure parseStructurePath(Object structurePathObj) {
+	public static HAPReferenceElement parseStructurePath(Object structurePathObj) {
 		
 	}
 	
-	public static HAPPathStructure parseJsonStructurePath(JSONObject structurePathJson)  {
+	public static HAPReferenceElement parseJsonStructurePath(JSONObject structurePathJson)  {
 		
 	}
 	
-	public static HAPPathStructure parseLiterateStructurePath(String structurePathLiterate) {
+	public static HAPReferenceElement parseLiterateStructurePath(String structurePathLiterate) {
 		
 	}
 	
-	public static HAPPathStructure parseLiterateStructurePath(String structurePathLiterate, String refStructureType) {
+	public static HAPReferenceElement parseLiterateStructurePath(String structurePathLiterate, String refStructureType) {
 		int index = structurePathLiterate.indexOf(HAPConstantShared.SEPERATOR_PATH);
 		String rootRefLiterate = null;
 		String path = null;
@@ -31,10 +31,10 @@ public class HAPUtilityStructurePath {
 		}
 
 		HAPReferenceRoot rootRef = parseRootReferenceLiterate(rootRefLiterate);
-		return new HAPPathStructure(rootRef, path);
+		return new HAPReferenceElement(rootRef, path);
 	}
 	
-	public static String toLiterateStructurePath(HAPPathStructure path) {
+	public static String toLiterateStructurePath(HAPReferenceElement path) {
 		
 	}
 	

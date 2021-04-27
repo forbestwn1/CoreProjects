@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
-import com.nosliw.data.core.structure.HAPPathStructure;
+import com.nosliw.data.core.structure.HAPReferenceElement;
 
 @HAPEntityWithAttribute
 public class HAPUIDataInfo extends HAPSerializableImp{
@@ -22,13 +22,13 @@ public class HAPUIDataInfo extends HAPSerializableImp{
 
 	private HAPVariableDataInfo m_dataType;
 	
-	private HAPPathStructure m_contextPath;
+	private HAPReferenceElement m_contextPath;
 	
 	public HAPVariableDataInfo getDataType() {	return this.m_dataType;	}
 	public void setDataType(HAPVariableDataInfo dataTypeCriteria) {    this.m_dataType = dataTypeCriteria;      }
 
-	public HAPPathStructure getContextPath() {   return this.m_contextPath;   }
-	public void setContextPath(HAPPathStructure contextPath) {    this.m_contextPath = contextPath;    }
+	public HAPReferenceElement getContextPath() {   return this.m_contextPath;   }
+	public void setContextPath(HAPReferenceElement contextPath) {    this.m_contextPath = contextPath;    }
 	
 	public HAPUIDataInfo cloneUIDataInfo() {
 		HAPUIDataInfo out = new HAPUIDataInfo();
@@ -47,7 +47,7 @@ public class HAPUIDataInfo extends HAPSerializableImp{
 		}
 		JSONObject contextPathObj = jsonObj.optJSONObject(CONTEXTPATH);
 		if(contextPathObj!=null) {
-			this.m_contextPath = new HAPPathStructure();
+			this.m_contextPath = new HAPReferenceElement();
 			this.m_contextPath.buildObject(contextPathObj, HAPSerializationFormat.JSON);
 		}
 		return true;  

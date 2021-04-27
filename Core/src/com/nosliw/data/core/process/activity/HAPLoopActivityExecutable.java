@@ -17,7 +17,7 @@ import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.HAPPathStructure;
+import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
 
@@ -42,7 +42,7 @@ public class HAPLoopActivityExecutable extends HAPExecutableActivityNormal{
 	private HAPExecutableWrapperTask<HAPExecutableProcess> m_step;
 	
 	//path for container data
-	private HAPPathStructure m_containerDataPath;
+	private HAPReferenceElement m_containerDataPath;
 	
 	private HAPManagerActivityPlugin m_activityPluginMan;
 
@@ -59,7 +59,7 @@ public class HAPLoopActivityExecutable extends HAPExecutableActivityNormal{
 //	public HAPLoopActivityDefinition getLoopActivityDefinition() {   return (HAPLoopActivityDefinition)this.getActivityDefinition();   }
 	public void setStep(HAPExecutableWrapperTask<HAPExecutableProcess> step) {  this.m_step = step;   }
 	public HAPExecutableWrapperTask<HAPExecutableProcess> getStep() {  return this.m_step;   }
-	public void setContainerDataPath(HAPPathStructure path) {    this.m_containerDataPath = path;   }
+	public void setContainerDataPath(HAPReferenceElement path) {    this.m_containerDataPath = path;   }
 	
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
@@ -74,7 +74,7 @@ public class HAPLoopActivityExecutable extends HAPExecutableActivityNormal{
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_step = HAPParserDataAssociation.buildExecutableWrapperTask(jsonObj, new HAPExecutableProcess(m_activityPluginMan));
-		this.m_containerDataPath = new HAPPathStructure();
+		this.m_containerDataPath = new HAPReferenceElement();
 		this.m_containerDataPath.buildObject(jsonObj.getJSONObject(CONTAINERDATAPATH), HAPSerializationFormat.JSON);
 		return true;  
 	}

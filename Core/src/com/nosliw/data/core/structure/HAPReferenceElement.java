@@ -11,8 +11,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
+//
 @HAPEntityWithAttribute
-public class HAPPathStructure extends HAPSerializableImp{
+public class HAPReferenceElement extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ROOT  = "root";
@@ -24,15 +25,15 @@ public class HAPPathStructure extends HAPSerializableImp{
 	
 	private String m_path;
 	
-	public HAPPathStructure(){}
+	public HAPReferenceElement(){}
 	
-	public HAPPathStructure(HAPReferenceRoot rootId, String path){
+	public HAPReferenceElement(HAPReferenceRoot rootId, String path){
 		this.m_root = rootId;
 		this.m_path = path;
 	}
 	
-	public HAPPathStructure appendSegment(String seg){
-		HAPPathStructure out = new HAPPathStructure();
+	public HAPReferenceElement appendSegment(String seg){
+		HAPReferenceElement out = new HAPReferenceElement();
 		out.m_root = this.m_root.cloneStructureRootReference();
 		out.m_path = HAPNamingConversionUtility.cascadePath(m_path, seg);
 		return out;
@@ -44,8 +45,8 @@ public class HAPPathStructure extends HAPSerializableImp{
 	
 	public String getPath() { return this.m_path;  }
 	
-	public HAPPathStructure clonePathStructure() {
-		HAPPathStructure out = new HAPPathStructure();
+	public HAPReferenceElement clonePathStructure() {
+		HAPReferenceElement out = new HAPReferenceElement();
 		out.m_path = this.m_path;
 		out.m_root = this.m_root.cloneStructureRootReference();
 		return out;

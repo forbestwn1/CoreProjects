@@ -19,6 +19,8 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 	public static final String LOCALID = "localId";
 
 	@HAPAttribute
+	public static final String GLOBALID = "globalId";
+
 	public static final String DEFINITION = "definition";
 	
 	@HAPAttribute
@@ -58,6 +60,9 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 	
 	public String getLocalId() {  return this.m_localId;    }
 	public void setLocalId(String id) {  this.m_localId = id;    }
+	
+	public String getGlobalId() {   return this.m_globalId;   }
+	public void setGlobalId(String globalId) {    this.m_globalId = globalId;     }
 
 	public void setDefaultValue(Object defaultValue){		this.m_defaultValue = defaultValue;	}
 

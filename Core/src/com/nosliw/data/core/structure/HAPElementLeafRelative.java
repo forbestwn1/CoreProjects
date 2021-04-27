@@ -4,8 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
@@ -37,10 +39,10 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	public static final String REVERSEMATCHERS = "reverseMatchers";
 	
 	//definition of the path
-	private String m_pathDefinition;
+	private String m_reference;
 
 	//path after resolve
-	private HAPPathStructure m_pathResolved;
+	private HAPComplexPath m_resolvedPath;
 	
 	//parent name for referred context, for instance, self, external context
 	private String m_parent;
@@ -84,11 +86,11 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	public HAPReferenceContextNode getSolidNodeReference() {    return this.m_solidNodeRef;    }
 	public void setSolidNodeReference(HAPReferenceContextNode solidNodeRef) {    this.m_solidNodeRef = solidNodeRef;    }
 	
-	public String getPathDefinition() {   return this.m_pathDefinition;    }
-	public void setPathDefinition(String path) {  this.m_pathDefinition = path;	}
+	public String getPathDefinition() {   return this.m_reference;    }
+	public void setPathDefinition(String path) {  this.m_reference = path;	}
 
-	public HAPPathStructure getResolvedPath() {   return this.m_pathResolved; }
-	public void setResolvedPath(HAPPathStructure resolvedPath) {   this.m_pathResolved = resolvedPath;   }
+	public HAPReferenceElement getResolvedPath() {   return this.m_resolvedPath; }
+	public void setResolvedPath(HAPReferenceElement resolvedPath) {   this.m_resolvedPath = resolvedPath;   }
 	
 	public void setMatchers(Map<String, HAPMatchers> matchers){
 		this.m_matchers.clear();
@@ -99,6 +101,10 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 		}
 	}
 
+	public void updateReferredRootName(HAPUpdateName nameUpdate) {
+		
+	}
+	
 	@Override
 	public HAPElement getChild(String childName) {
 		if(this.m_definition!=null) 		return this.m_definition.getChild(childName);
@@ -109,8 +115,8 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	public void toContextDefinitionElement(HAPElement out) {
 		super.toContextDefinitionElement(out);
 		HAPElementLeafRelative that = (HAPElementLeafRelative)out;
-		if(this.m_pathResolved!=null)	that.m_pathResolved = this.m_pathResolved.clonePathStructure();
-		that.m_pathDefinition = this.m_pathDefinition; 
+		if(this.m_resolvedPath!=null)	that.m_resolvedPath = this.m_resolvedPath.clonePathStructure();
+		that.m_reference = this.m_reference; 
 		that.m_parent = this.m_parent; 
 		if(this.m_definition!=null)  that.m_definition = this.m_definition.cloneContextDefinitionElement();
 		
@@ -131,7 +137,7 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	public HAPElement toSolidContextDefinitionElement(Map<String, Object> constants,
 			HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementLeafRelative out = (HAPElementLeafRelative)this.cloneContextDefinitionElement();
-		out.m_pathDefinition = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, runtimeEnv);
+		out.m_reference = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, runtimeEnv);
 		out.m_path = null;
 		out.m_parent = this.m_parent;
 		if(this.m_definition!=null) 	out.m_definition = this.m_definition.toSolidContextDefinitionElement(constants, runtimeEnv);
@@ -141,7 +147,7 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PATH, this.getPath().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(PATH, this.getPathFormat().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(PARENT, this.getParent());
 		jsonMap.put(DEFINITION, HAPJsonUtility.buildJson(this.m_definition, HAPSerializationFormat.JSON));
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){

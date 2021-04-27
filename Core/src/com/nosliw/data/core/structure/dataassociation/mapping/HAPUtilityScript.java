@@ -17,7 +17,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.structure.HAPPathStructure;
+import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPUtilityContextScript;
 import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
 
@@ -81,7 +81,7 @@ public class HAPUtilityScript {
  
 	private static String buildJSArrayFromContextPath(String path) {
 		List<String> pathSegs = new ArrayList<String>();
-		HAPPathStructure contextPath = new HAPPathStructure(path);
+		HAPReferenceElement contextPath = new HAPReferenceElement(path);
 		if(HAPBasicUtility.isStringNotEmpty(contextPath.getRootStructureId().getCategary()))  pathSegs.add(contextPath.getRootStructureId().getCategary());
 		pathSegs.add(contextPath.getRootStructureId().getName());
 		pathSegs.addAll(Arrays.asList(contextPath.getPathSegments()));

@@ -51,7 +51,7 @@ public class HAPParserValueStructure {
 				parseparseValueStructureDefinitionFlat(contextEleJson, context, new HAPUpdateName() {
 					@Override
 					public String getUpdatedName(String name) {
-						return new HAPIdRootInGroup(contextType, name).getFullName();
+						return new HAPReferenceRootInGroup(contextType, name).getFullName();
 					}
 					
 				});

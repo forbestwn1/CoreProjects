@@ -81,7 +81,7 @@ public class HAPUtilityContext {
 	
 	//traverse through all the context definition element, and process it
 	public static void processContextRootElement(HAPRoot contextRoot, String rootName, HAPProcessorContextDefinitionElement processor, Object value) {
-		HAPElement processedEle = processContextDefElement(new HAPInfoElement(contextRoot.getDefinition(), new HAPPathStructure(rootName)), processor, value);
+		HAPElement processedEle = processContextDefElement(new HAPInfoElement(contextRoot.getDefinition(), new HAPReferenceElement(rootName)), processor, value);
 		if(processedEle!=null)  contextRoot.setDefinition(processedEle);
 	}
 	
@@ -90,7 +90,7 @@ public class HAPUtilityContext {
 	private static HAPElement processContextDefElement(HAPInfoElement contextEleInfo, HAPProcessorContextDefinitionElement processor, Object value) {
 		HAPElement out = null;
 		HAPElement contextDefEle = contextEleInfo.getContextElement(); 
-		HAPPathStructure path = contextEleInfo.getContextPath();
+		HAPReferenceElement path = contextEleInfo.getContextPath();
 		Pair<Boolean, HAPElement> processOut = processor.process(contextEleInfo, value);
 		boolean going = true;
 		if(processOut!=null) {
@@ -131,7 +131,7 @@ public class HAPUtilityContext {
 		return out;
 	}
 
-	public static HAPElement getDescendant(HAPContextStructureValueDefinition context, HAPPathStructure path) {
+	public static HAPElement getDescendant(HAPContextStructureValueDefinition context, HAPReferenceElement path) {
 		if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			return getDescendant((HAPContextStructureValueDefinitionGroup)context, path.getFullPath());
 		}
@@ -158,7 +158,7 @@ public class HAPUtilityContext {
 	}
 
 	public static HAPElement getDescendant(HAPContextStructureValueDefinitionGroup contextGroup, String path) {
-		HAPPathStructure contextPath = new HAPPathStructure(path);
+		HAPReferenceElement contextPath = new HAPReferenceElement(path);
 		return getDescendant(contextGroup, contextPath.getRootStructureId().getCategary(), contextPath.getPath());
 	}
 	
@@ -179,7 +179,7 @@ public class HAPUtilityContext {
 //		}
 	}
 
-	public static void setDescendant(HAPContextStructureValueDefinition contextStructure, HAPPathStructure contextPath, HAPElement ele) {
+	public static void setDescendant(HAPContextStructureValueDefinition contextStructure, HAPReferenceElement contextPath, HAPElement ele) {
 		HAPRoot targetRoot = contextStructure.getElement(contextPath.getRootStructureId().getFullName(), true);
 
 		String[] pathSegs = contextPath.getPathSegments();
@@ -212,11 +212,11 @@ public class HAPUtilityContext {
 	
 	public static void setDescendant(HAPContextStructureValueDefinitionGroup contextGroup, String categary, String path, HAPElement ele) {
 //		setDescendant(contextGroup.getContext(categary), path, ele);
-		setDescendant(contextGroup, new HAPPathStructure(categary, path), ele);
+		setDescendant(contextGroup, new HAPReferenceElement(categary, path), ele);
 	}
 
 	public static void setDescendant(HAPContextStructureValueDefinitionFlat context, String path, HAPElement ele) {
-		setDescendant(context, new HAPPathStructure((String)null, path), ele);
+		setDescendant(context, new HAPReferenceElement((String)null, path), ele);
 //		HAPComplexPath cpath = new HAPComplexPath(path);
 //		HAPContextDefinitionRoot targetRoot = context.getElement(cpath.getRootName());
 //		if(targetRoot==null) {
@@ -443,7 +443,7 @@ public class HAPUtilityContext {
 		return createRelativeContextDefinitionRoot(parentContextGroup.getElement(contextCategary, refPath), contextCategary, refPath, excludedInfo);
 	}
 
-	public static HAPInfoReferenceResolve resolveReferencedContextElement(HAPPathStructure contextPath, HAPContextStructureValueDefinition parentContext){
+	public static HAPInfoReferenceResolve resolveReferencedContextElement(HAPReferenceElement contextPath, HAPContextStructureValueDefinition parentContext){
 		if(parentContext==null)   return null;
 		HAPInfoReferenceResolve out = null;
 		String contextType = parentContext.getType();
@@ -460,7 +460,7 @@ public class HAPUtilityContext {
 	}
 	
 	//go through different context group categaryes to find referenced node in context. 
-	public static HAPInfoReferenceResolve resolveReferencedContextElement(HAPPathStructure contextPath, HAPContextStructureValueDefinitionGroup parentContext, String[] categaryes, String mode){
+	public static HAPInfoReferenceResolve resolveReferencedContextElement(HAPReferenceElement contextPath, HAPContextStructureValueDefinitionGroup parentContext, String[] categaryes, String mode){
 		if(parentContext==null)   return null;
 		
 		HAPIdContextDefinitionRoot refNodeId = contextPath.getRootStructureId(); 
@@ -477,7 +477,7 @@ public class HAPUtilityContext {
 		for(String contextType : categaryCandidates){
 			HAPInfoReferenceResolve resolved = parentContext.getContext(contextType).discoverChild(refNodeId.getName(), refPath);
 			if(resolved!=null&&resolved.rootNode!=null) {
-				resolved.path = new HAPPathStructure(contextType, refNodeId.getName(), refPath);
+				resolved.path = new HAPReferenceElement(contextType, refNodeId.getName(), refPath);
 				candidates.add(resolved);
 				if(HAPConstant.RESOLVEPARENTMODE_FIRST.equals(mode))   break;
 			}

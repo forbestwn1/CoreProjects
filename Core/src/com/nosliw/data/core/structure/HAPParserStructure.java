@@ -19,6 +19,9 @@ public class HAPParserStructure {
 		//local id
 		out.setLocalId((String)eleDefJson.opt(HAPRoot.LOCALID));
 		
+		//global id
+		out.setGlobalId((String)eleDefJson.opt(HAPRoot.GLOBALID));
+		
 		//definition
 		JSONObject defJsonObj = eleDefJson.optJSONObject(HAPRoot.DEFINITION);
 		if(defJsonObj!=null)  out.setDefinition(parseContextDefinitionElement(defJsonObj));
@@ -48,7 +51,7 @@ public class HAPParserStructure {
 			relativeLeaf.setParent(parent);
 			if(pathObj instanceof String)	relativeLeaf.setPathDefinition((String)pathObj);
 			else if(pathObj instanceof JSONObject){
-				HAPPathStructure contextPath = HAPUtilityStructurePath.parseJsonStructurePath((JSONObject)pathObj); 
+				HAPReferenceElement contextPath = HAPUtilityStructurePath.parseJsonStructurePath((JSONObject)pathObj); 
 				relativeLeaf.setResolvedPath(contextPath);
 			}
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPElementLeafRelative.DEFINITION);

@@ -7,9 +7,9 @@ public class HAPInfoElement {
 	private HAPElement m_contextLeaf;
 	
 	//path to reach this structure
-	private HAPPathStructure m_contextPath;
+	private HAPReferenceElement m_contextPath;
 	
-	public HAPInfoElement(HAPElement contextLeaf, HAPPathStructure contextPath) {
+	public HAPInfoElement(HAPElement contextLeaf, HAPReferenceElement contextPath) {
 		this.m_contextLeaf = contextLeaf;
 		this.m_contextPath = contextPath;
 	}
@@ -17,6 +17,6 @@ public class HAPInfoElement {
 	public HAPElement getContextElement() {   return this.m_contextLeaf;   }
 	public void setContextElement(HAPElement ele) {    this.m_contextLeaf = ele;    }
 	
-	public HAPPathStructure getContextPath() {    return this.m_contextPath;    }
+	public HAPReferenceElement getContextPath() {    return this.m_contextPath;    }
 	
 }

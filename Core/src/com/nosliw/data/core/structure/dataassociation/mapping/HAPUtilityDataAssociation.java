@@ -14,7 +14,7 @@ import com.nosliw.data.core.structure.HAPElement;
 import com.nosliw.data.core.structure.HAPElementLeafConstant;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
-import com.nosliw.data.core.structure.HAPPathStructure;
+import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPUtilityContext;
@@ -51,7 +51,7 @@ public class HAPUtilityDataAssociation {
 			public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getContextElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 					HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)eleInfo.getContextElement();
-					HAPPathStructure contextPath = relativeEle.getPath();
+					HAPReferenceElement contextPath = relativeEle.getPathFormat();
 					String parent = relativeEle.getParent();
 					String sourcePath = HAPNamingConversionUtility.cascadePath(parent, isFlatInput.get(parent)? contextPath.getFullPath() : contextPath.getContextFullPath());
 					out.put(eleInfo.getContextPath().getFullPath(), sourcePath);

@@ -24,7 +24,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.HAPIdContextDefinitionRoot;
 import com.nosliw.data.core.structure.HAPParserContext;
-import com.nosliw.data.core.structure.HAPPathStructure;
+import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
 import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
@@ -132,8 +132,8 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		Map<String, String> processedPathMapping = new LinkedHashMap<String, String>();
 
 		for(String p1 : m_relativePathMapping.keySet()) {
-			HAPPathStructure cPath = new HAPPathStructure(p1);
-			HAPPathStructure cPath1 = new HAPPathStructure(new HAPIdContextDefinitionRoot(nameUpdate.getUpdatedName(cPath.getRootStructureId().getFullName())), cPath.getSubPath());
+			HAPReferenceElement cPath = new HAPReferenceElement(p1);
+			HAPReferenceElement cPath1 = new HAPReferenceElement(new HAPIdContextDefinitionRoot(nameUpdate.getUpdatedName(cPath.getRootStructureId().getFullName())), cPath.getSubPath());
 			processedPathMapping.put(cPath1.getFullPath(), m_relativePathMapping.get(p1));
 		}
 		this.m_relativePathMapping = processedPathMapping;

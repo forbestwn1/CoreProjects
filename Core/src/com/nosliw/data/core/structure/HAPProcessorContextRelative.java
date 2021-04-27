@@ -63,7 +63,7 @@ public class HAPProcessorContextRelative {
 			Map<String, HAPRoot> eles = out.getElements(categary);
 			for(String eleName : eles.keySet()) {
 				HAPRoot contextRoot = eles.get(eleName);
-				contextRoot.setDefinition(processRelativeInContextDefinitionElement(new HAPInfoElement(contextRoot.getDefinition(), new HAPPathStructure(categary, eleName)), parentName, parentContextGroup, dependency, errors, isParentFlat, configure, runtimeEnv));
+				contextRoot.setDefinition(processRelativeInContextDefinitionElement(new HAPInfoElement(contextRoot.getDefinition(), new HAPReferenceElement(categary, eleName)), parentName, parentContextGroup, dependency, errors, isParentFlat, configure, runtimeEnv));
 			}
 		}
 		return out;
@@ -101,7 +101,7 @@ public class HAPProcessorContextRelative {
 		HAPElementLeafRelative defContextElementRelative = (HAPElementLeafRelative)contextEleInfo.getContextElement();
 		HAPElement out = defContextElementRelative;
 		
-		HAPPathStructure path = defContextElementRelative.getPath(); 
+		HAPReferenceElement path = defContextElementRelative.getPathFormat(); 
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.resolveReferencedContextElement(path, parentContext, categaryes, configure.relativeResolveMode);
 		
 		if(resolveInfo==null || resolveInfo.rootNode==null) {
