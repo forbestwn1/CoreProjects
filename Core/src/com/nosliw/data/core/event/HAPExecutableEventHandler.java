@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 
 public class HAPExecutableEventHandler {
 

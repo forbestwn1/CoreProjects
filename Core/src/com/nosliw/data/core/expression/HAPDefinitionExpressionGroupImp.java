@@ -8,14 +8,14 @@ import java.util.Set;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.common.HAPWithDataContext;
-import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.common.HAPWithValueContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
 
-public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements HAPDefinitionExpressionGroup, HAPWithDataContext{
+public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements HAPDefinitionExpressionGroup, HAPWithValueContext{
 
 	private Map<String, HAPDefinitionExpression> m_elements;
 	
-	private HAPContextStructure m_contextStructure;
+	private HAPContextStructureValueDefinition m_contextStructure;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
@@ -29,13 +29,13 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	}
 
 	@Override
-	public HAPContextStructure getContextStructure() {   return this.m_contextStructure;  }
+	public HAPContextStructureValueDefinition getValueContext() {   return this.m_contextStructure;  }
 
 	@Override
-	public void setContextStructure(HAPContextStructure context) {  this.m_contextStructure = context;  }
+	public void setValueContext(HAPContextStructureValueDefinition context) {  this.m_contextStructure = context;  }
 
 	@Override
-	public void cloneToDataContext(HAPWithDataContext dataContext) {   dataContext.setContextStructure(this.m_contextStructure.cloneContextStructure());  }
+	public void cloneToValueContext(HAPWithValueContext dataContext) {   dataContext.setValueContext(this.m_contextStructure.cloneContextStructure());  }
 
 	@Override
 	public Set<HAPDefinitionExpression> getEntityElements() {  return new HashSet<HAPDefinitionExpression>(this.m_elements.values()); }

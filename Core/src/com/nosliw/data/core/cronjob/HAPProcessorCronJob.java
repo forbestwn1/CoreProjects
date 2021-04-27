@@ -12,19 +12,19 @@ import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 
 public class HAPProcessorCronJob {
 
 	public static HAPExecutableCronJob process(
 			HAPDefinitionCronJob cronJobDefinition,
 			String id,
-			HAPContextGroup parentContext, 
+			HAPContextStructureValueDefinitionGroup parentContext, 
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPManagerProcess processMan,
 			HAPDataTypeHelper dataTypeHelper, 
@@ -37,7 +37,7 @@ public class HAPProcessorCronJob {
 
 		HAPExecutableCronJob out = new HAPExecutableCronJob(cronJobDefinition, id);
 
-		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForCronJob();
+		HAPConfigureProcessorStructure contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForCronJob();
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
 
 		HAPUtilityComponent.processComponentExecutable(out, parentContext, runtimeEnv, contextProcessConfg, processMan.getPluginManager());

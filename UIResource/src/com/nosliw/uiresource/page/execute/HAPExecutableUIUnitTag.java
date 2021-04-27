@@ -10,8 +10,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.HAPContextFlat;
-import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueExecutable;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
@@ -44,7 +44,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	
 	//context for tag
 	private HAPContextGroupInUITag m_tagContext;
-	private HAPContextFlat m_flatTagContext;
+	private HAPContextStructureValueExecutable m_flatTagContext;
 
 	private Map<String, HAPDefinitionUIEvent> m_tagEvent;
 
@@ -64,16 +64,16 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	}
 
 	public String getTagName() {    return this.m_tagName;   }
-	public HAPContextGroup getTagContext(){  return this.m_tagContext;   }
-	public void setTagContext(HAPContextGroup context) {
+	public HAPContextStructureValueDefinitionGroup getTagContext(){  return this.m_tagContext;   }
+	public void setTagContext(HAPContextStructureValueDefinitionGroup context) {
 		if(this.m_tagContext!=null)   this.m_tagContext.clear();
 		this.m_tagContext = new HAPContextGroupInUITag(this, context);
 	}
-	public HAPContextFlat getFlatTagContext() { return this.m_flatTagContext;  }
-	public void setFlatTagContext(HAPContextFlat context) {  this.m_flatTagContext = context;   }
-	public HAPContextFlat getTagVariableContext() {
+	public HAPContextStructureValueExecutable getFlatTagContext() { return this.m_flatTagContext;  }
+	public void setFlatTagContext(HAPContextStructureValueExecutable context) {  this.m_flatTagContext = context;   }
+	public HAPContextStructureValueExecutable getTagVariableContext() {
 		if(this.m_flatTagContext!=null)		return this.m_flatTagContext.getVariableContext();
-		else  return new HAPContextFlat();
+		else  return new HAPContextStructureValueExecutable();
 	}
 	
 	public void addTagEvent(String name, HAPDefinitionUIEvent event) {  this.m_tagEvent.put(name, event);  }

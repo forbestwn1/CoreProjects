@@ -5,18 +5,18 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
-import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
-import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.story.HAPInfoNodeChild;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.HAPElementLeafData;
+import com.nosliw.data.core.structure.HAPProcessorContext;
+import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
 import com.nosliw.uiresource.page.processor.HAPUtilityProcess;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
@@ -29,12 +29,12 @@ import com.nosliw.uiresource.page.tag.HAPUITagId;
 public class HAPUtility {
 
 	//build data info in ui story node
-	public static HAPUIDataStructureInfo buildDataStructureInfoForUIStoryNode(HAPStoryNodeUI uiStoryNode, HAPContextGroup parentContext, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
+	public static HAPUIDataStructureInfo buildDataStructureInfoForUIStoryNode(HAPStoryNodeUI uiStoryNode, HAPContextStructureValueDefinitionGroup parentContext, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		HAPUIDataStructureInfo out = new HAPUIDataStructureInfo();
 
 		String nodeType = uiStoryNode.getType();
-		HAPConfigureContextProcessor contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_TAG); 
-		HAPContextGroup childContext = null;
+		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_TAG); 
+		HAPContextStructureValueDefinitionGroup childContext = null;
 		if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
 			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
 			childContext = HAPUtilityProcess.buildUITagContext(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, runtimeEnv);
@@ -42,7 +42,7 @@ public class HAPUtility {
 			out.setContext(childContext);
 		}
 		else {
-			childContext = HAPProcessorContext.processStatic(new HAPContextGroup(), HAPParentContext.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
+			childContext = HAPProcessorContext.processStatic(new HAPContextStructureValueDefinitionGroup(), HAPParentContext.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
 			childContext = HAPProcessorContext.processRelative(childContext, HAPParentContext.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
 			out.setContext(childContext);
 		}
@@ -54,7 +54,7 @@ public class HAPUtility {
 		Set<HAPStoryNode> varNodes = HAPUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
-			HAPContextDefinitionRoot varRoot = new HAPContextDefinitionRoot(new HAPContextDefinitionLeafData(varNode.getVariableInfo().getDataInfo()));
+			HAPRoot varRoot = new HAPRoot(new HAPElementLeafData(varNode.getVariableInfo().getDataInfo()));
 			varRoot.setId(varNode.getId());
 			out.getContext().addPublicElement(varNode.getVariableInfo().getName(), varRoot);
 		}

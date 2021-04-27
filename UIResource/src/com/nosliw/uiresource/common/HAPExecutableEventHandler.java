@@ -18,7 +18,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 
 @HAPEntityWithAttribute
 public class HAPExecutableEventHandler  extends HAPEntityInfoImpWrapper implements HAPExecutable{

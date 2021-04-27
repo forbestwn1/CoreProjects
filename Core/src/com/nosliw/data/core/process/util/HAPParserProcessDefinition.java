@@ -10,7 +10,7 @@ import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite;
 import com.nosliw.data.core.process.resource.HAPElementContainerResourceDefinitionReferenceProcessSuite;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionWrapperTask;
 
 public class HAPParserProcessDefinition {
 

@@ -15,8 +15,8 @@ import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPSupplementResourceId;
-import com.nosliw.data.core.script.context.data.HAPContextDataFactory;
-import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
+import com.nosliw.data.core.structure.data.HAPContextDataFactory;
+import com.nosliw.data.core.structure.data.HAPContextDataFlat;
 
 public class HAPUtilityAttachment {
 

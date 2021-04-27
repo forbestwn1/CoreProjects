@@ -6,13 +6,13 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.HAPProcessorContextRelative;
+import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -24,7 +24,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUICommand {
 
-	private static void processInteractionElement(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureContextProcessor contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+	private static void processInteractionElement(HAPExecutableUIUnit uiExe, HAPContextStructureValueDefinitionGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
 		//process relative element in event defined in resource
 		Map<String, HAPDefinitionUIEvent> eventsDef = uiUnitDef.getEventDefinitions();
@@ -45,7 +45,7 @@ public class HAPProcessorUICommand {
 			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPParentContext.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
 
 			//command results
-			Map<String, HAPContext> results = commandDef.getResults();
+			Map<String, HAPContextStructureValueDefinitionFlat> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
 				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPParentContext.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
 			}
@@ -65,7 +65,7 @@ public class HAPProcessorUICommand {
 	}
 	
 	public static void processCommand(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
-		HAPConfigureContextProcessor contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
+		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
 		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
 		//process relative element in command defined in resource
 		Map<String, HAPDefinitionUICommand> commandsDef = uiUnitDef.getCommandDefinition();
@@ -77,7 +77,7 @@ public class HAPProcessorUICommand {
 			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPParentContext.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
 
 			//command results
-			Map<String, HAPContext> results = commandDef.getResults();
+			Map<String, HAPContextStructureValueDefinitionFlat> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
 				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPParentContext.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
 			}

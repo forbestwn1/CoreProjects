@@ -3,7 +3,7 @@ package com.nosliw.data.core.runtime;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.script.context.data.HAPContextData;
+import com.nosliw.data.core.structure.data.HAPContextData;
 
 @HAPEntityWithAttribute
 public abstract class HAPRuntimeTaskExecuteProcess extends HAPRuntimeTask{

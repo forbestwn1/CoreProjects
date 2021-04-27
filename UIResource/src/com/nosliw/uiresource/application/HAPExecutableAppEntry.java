@@ -21,10 +21,10 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPUtilityContextScript;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.HAPUtilityContextScript;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 
 @HAPEntityWithAttribute
 public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -53,7 +53,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_processes;
 
-	private HAPContextGroup m_context;
+	private HAPContextStructureValueDefinitionGroup m_context;
 	
 	private Map<String, HAPDefinitionAppData> m_applicationData;
 
@@ -74,12 +74,12 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	public String getId() {  return this.m_id;   }
 	public void setId(String id) {  this.m_id = id;  }
 	
-	public HAPContextGroup getContext() {   return this.m_context;   }
-	public void setContext(HAPContextGroup context) {   this.m_context = context;  }
+	public HAPContextStructureValueDefinitionGroup getContext() {   return this.m_context;   }
+	public void setContext(HAPContextStructureValueDefinitionGroup context) {   this.m_context = context;  }
 
 	public void addApplicationData(String dataName, HAPDefinitionAppData dataDef) {  this.m_applicationData.put(dataName, dataDef);   }
-	public Map<String, HAPContextStructure> getExtraContext(){  
-		Map<String, HAPContextStructure> out = new LinkedHashMap<String, HAPContextStructure>();
+	public Map<String, HAPContextStructureValueDefinition> getExtraContext(){  
+		Map<String, HAPContextStructureValueDefinition> out = new LinkedHashMap<String, HAPContextStructureValueDefinition>();
 		for(String dataName : this.m_applicationData.keySet()) {
 			out.put(APPLICATIONDATA+"_"+dataName, this.m_applicationData.get(dataName));
 		}

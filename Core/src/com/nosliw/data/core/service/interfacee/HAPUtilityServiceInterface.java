@@ -13,11 +13,11 @@ import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPIOTask;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableTask;
+import com.nosliw.data.core.structure.dataassociation.HAPIOTask;
+import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
 
 public class HAPUtilityServiceInterface {
 
@@ -80,7 +80,7 @@ public class HAPUtilityServiceInterface {
 		@Override
 		public Map<String, HAPParentContext> getOutResultContext() {
 			Map<String, HAPParentContext> out = new LinkedHashMap<String, HAPParentContext>();
-			Map<String, HAPContext> resultsContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(m_serviceInterface);
+			Map<String, HAPContextStructureValueDefinitionFlat> resultsContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(m_serviceInterface);
 			for(String resultName : resultsContext.keySet()) {
 				out.put(resultName, HAPParentContext.createDefault(resultsContext.get(resultName)));
 			}

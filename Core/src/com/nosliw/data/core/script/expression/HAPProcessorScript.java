@@ -14,18 +14,18 @@ import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.expression.HAPProcessorExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.imp.literate.HAPProcessorScriptLiterate;
+import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
 
 public class HAPProcessorScript {
 
 	public static HAPExecutableScriptGroup processSimpleScript(
 			String script,
 			String scriptType, 
-			HAPContext context, 
+			HAPContextStructureValueDefinitionFlat context, 
 			Map<String, Object> constants,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure, 
@@ -33,7 +33,7 @@ public class HAPProcessorScript {
 			HAPProcessTracker processTracker) {
 		HAPDefinitionScriptGroup group = new HAPDefinitionScriptGroupImp();
 		group.addEntityElement(new HAPDefinitionScriptEntity(HAPScript.newScript(script, scriptType)));
-		group.setContextStructure(context==null?new HAPContext():context);
+		group.setValueContext(context==null?new HAPContextStructureValueDefinitionFlat():context);
 		if(constants!=null) {
 			for(String name : constants.keySet()) {
 				group.addConstantDefinition(new HAPDefinitionConstant(name, constants.get(name)));
@@ -56,7 +56,7 @@ public class HAPProcessorScript {
 			String id,
 			HAPDefinitionScriptGroup scriptGroupDef, 
 			HAPContextProcessAttachmentReferenceExpression processContext,
-			HAPContextStructure extraContext,
+			HAPContextStructureValueDefinition extraContext,
 			HAPManagerExpression expressionMan, 
 			Map<String, String> configure, 
 			HAPRuntimeEnvironment runtimeEnv,
@@ -64,7 +64,7 @@ public class HAPProcessorScript {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 
 		//context
-		HAPContextStructure contextStructure =  scriptGroupDef.getContextStructure();
+		HAPContextStructureValueDefinition contextStructure =  scriptGroupDef.getValueContext();
 		contextStructure = HAPUtilityContext.hardMerge(contextStructure, extraContext);
 		out.setContextStructure(contextStructure);
 
@@ -73,7 +73,7 @@ public class HAPProcessorScript {
 		
 		//expression definition containing all expression in script 
 		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
-		expressionGroupDef.setContextStructure(contextStructure);
+		expressionGroupDef.setValueContext(contextStructure);
 
 		//constant --- discover constant from attachment and context
 		for(HAPDefinitionConstant def : HAPUtilityComponentConstant.getValueConstantsDefinition(scriptGroupDef, out.getContextFlat())) {

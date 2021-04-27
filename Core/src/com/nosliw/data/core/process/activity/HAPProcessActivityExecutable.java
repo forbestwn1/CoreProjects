@@ -17,8 +17,8 @@ import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
 
 public class HAPProcessActivityExecutable extends HAPExecutableActivityNormal{
 

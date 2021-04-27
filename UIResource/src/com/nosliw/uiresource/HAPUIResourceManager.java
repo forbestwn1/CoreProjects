@@ -9,8 +9,8 @@ import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.story.HAPParserElement;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
@@ -131,7 +131,7 @@ public class HAPUIResourceManager {
 		return pageDefinition;
 	}
 
-	public HAPExecutableUIUnitPage getEmbededUIPage(HAPEntityOrReference defOrRef, String id, HAPContextGroup context, HAPContextGroup parentContext, HAPContainerAttachment parentAttachment, HAPWithNameMapping withNameMapping){
+	public HAPExecutableUIUnitPage getEmbededUIPage(HAPEntityOrReference defOrRef, String id, HAPContextStructureValueDefinitionGroup context, HAPContextStructureValueDefinitionGroup parentContext, HAPContainerAttachment parentAttachment, HAPWithNameMapping withNameMapping){
 		HAPDefinitionUIPage pageDef = null;
 		HAPContainerAttachment attachmentEx = null;
 		if(defOrRef instanceof HAPResourceId) {

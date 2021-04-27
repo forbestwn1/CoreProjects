@@ -18,10 +18,10 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
+import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
 
 public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp implements HAPEntityWithName{
 

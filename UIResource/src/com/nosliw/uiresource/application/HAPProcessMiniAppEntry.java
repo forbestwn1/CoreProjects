@@ -19,19 +19,19 @@ import com.nosliw.data.core.process.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPProcessorContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.HAPProcessorContext;
+import com.nosliw.data.core.structure.HAPRequirementContextProcessor;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
@@ -53,31 +53,31 @@ public class HAPProcessMiniAppEntry {
 		HAPDefinitionAppElementUI entryDefinition = minAppEntryDef.getEntry();
 		
 		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(runtimeEnv.getResourceDefinitionManager(), runtimeEnv.getDataTypeHelper(), runtimeEnv.getRuntime(), runtimeEnv.getExpressionManager(), runtimeEnv.getServiceManager().getServiceDefinitionManager());
-		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityApp.getContextProcessConfigurationForApp();
+		HAPConfigureProcessorStructure contextProcessConfg = HAPUtilityApp.getContextProcessConfigurationForApp();
 		
 		//service providers
 		Map<String, HAPDefinitionServiceProvider> entryServiceProviders = HAPUtilityServiceUse.buildServiceProvider(entryDefinition.getAttachmentContainer(), null, contextProcessRequirement.serviceDefinitionManager); 
 
 		//context
-		out.setContext((HAPContextGroup)HAPProcessorContext.process(entryDefinition.getContextStructure(), HAPParentContext.createDefault(miniAppDef.getContextStructure()), contextProcessConfg, runtimeEnv));
+		out.setContext((HAPContextStructureValueDefinitionGroup)HAPProcessorContext.process(entryDefinition.getValueContext(), HAPParentContext.createDefault(miniAppDef.getValueContext()), contextProcessConfg, runtimeEnv));
 
 		//process process suite
 		HAPResourceDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(minAppEntryDef, runtimeEnv.getProcessManager().getPluginManager()).cloneProcessSuiteDefinition(); 
-		processSuite.setContextStructure(out.getContext());   //kkkk
+		processSuite.setValueContext(out.getContext());   //kkkk
 //		processSuite.setContext(HAPProcessorContext.process(processSuite.getContext(), HAPParentContext.createDefault(out.getContext()), contextProcessConfg, contextProcessRequirement));
 		out.setProcessSuite(processSuite);
 
 		//data definition
 		Map<String, HAPDefinitionAppData> dataDefs = miniAppDef.getApplicationData();
 		for(String dataDefName : dataDefs.keySet()) {
-			HAPContext processedContext = (HAPContext)HAPProcessorContext.process(dataDefs.get(dataDefName), HAPParentContext.createDefault(miniAppDef.getContextStructure()), contextProcessConfg, runtimeEnv);
+			HAPContextStructureValueDefinitionFlat processedContext = (HAPContextStructureValueDefinitionFlat)HAPProcessorContext.process(dataDefs.get(dataDefName), HAPParentContext.createDefault(miniAppDef.getValueContext()), contextProcessConfg, runtimeEnv);
 			HAPDefinitionAppData processedAppData = dataDefs.get(dataDefName).cloneAppDataDefinition();
 			processedContext.toContext(processedAppData);
 			out.addApplicationData(dataDefName, processedAppData);
 		}
 		
 		//prepare extra context
-		Map<String, HAPContextStructure> extraContext = out.getExtraContext();
+		Map<String, HAPContextStructureValueDefinition> extraContext = out.getExtraContext();
 		
 		//module
 		for(HAPDefinitionAppModule moduleDef : entryDefinition.getModules()) {
@@ -94,7 +94,7 @@ public class HAPProcessMiniAppEntry {
 			HAPDefinitionAppModule module,
 			HAPExecutableAppEntry entryExe,
 			HAPContainerAttachment parentAttachment,
-			Map<String, HAPContextStructure> extraContexts,
+			Map<String, HAPContextStructureValueDefinition> extraContexts,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,

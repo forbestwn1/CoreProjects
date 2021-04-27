@@ -13,8 +13,8 @@ import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
+import com.nosliw.data.core.structure.HAPElementLeafData;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
 
 
 public class HAPManagerExpression {
@@ -77,13 +77,13 @@ public class HAPManagerExpression {
 	public HAPExecutableExpressionGroup getExpression(String expression, Map<String, HAPDataTypeCriteria> varCriteria) {
 		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
 		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
-		HAPContext context = new HAPContext();
+		HAPContextStructureValueDefinitionFlat context = new HAPContextStructureValueDefinitionFlat();
 		if(varCriteria!=null) {
 			for(String varName : varCriteria.keySet()) {
-				context.addElement(varName, new HAPContextDefinitionLeafData(varCriteria.get(varName)));
+				context.addElement(varName, new HAPElementLeafData(varCriteria.get(varName)));
 			}
 		}
-		expressionGroupDef.setContextStructure(context);
+		expressionGroupDef.setValueContext(context);
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
@@ -95,7 +95,7 @@ public class HAPManagerExpression {
 	public HAPExecutableExpressionGroup getExpression(String expression) {
 		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
 		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
-		expressionGroupDef.setContextStructure(new HAPContext());
+		expressionGroupDef.setValueContext(new HAPContextStructureValueDefinitionFlat());
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();

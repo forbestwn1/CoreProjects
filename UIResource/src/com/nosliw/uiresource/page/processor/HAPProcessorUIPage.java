@@ -3,8 +3,8 @@ package com.nosliw.uiresource.page.processor;
 import java.util.Map;
 
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
@@ -17,8 +17,8 @@ public class HAPProcessorUIPage {
 	public static HAPExecutableUIUnitPage processUIResource(
 			HAPDefinitionUIPage uiPageDef,
 			String id,
-			HAPContextGroup externalContext,
-			HAPContextGroup parentContext,
+			HAPContextStructureValueDefinitionGroup externalContext,
+			HAPContextStructureValueDefinitionGroup parentContext,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,

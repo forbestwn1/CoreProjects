@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.process.HAPUtilityProcess;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionWrapperTask;
 
 public class HAPDefinitionPollTask extends HAPSerializableImp{
 //implements HAPEmbededProcessTask{

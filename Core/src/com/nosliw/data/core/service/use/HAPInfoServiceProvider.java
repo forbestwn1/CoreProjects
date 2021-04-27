@@ -3,8 +3,8 @@ package com.nosliw.data.core.service.use;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataMappingTask;
 import com.nosliw.data.core.service.definition.HAPDefinitionService;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataMappingTask;
 
 //store all the info related with service provider attachment
 public class HAPInfoServiceProvider extends HAPEntityInfoWritableImp{

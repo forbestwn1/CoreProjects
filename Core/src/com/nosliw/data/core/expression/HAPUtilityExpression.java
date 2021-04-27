@@ -4,12 +4,12 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.updatename.HAPUpdateNamePrefix;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
 
 public class HAPUtilityExpression {
 
-	public static HAPContextStructure getContext(Object expressionGroupDef, HAPContext extraContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPContextStructureValueDefinition getContext(Object expressionGroupDef, HAPContextStructureValueDefinitionFlat extraContext, HAPRuntimeEnvironment runtimeEnv) {
 		return HAPUtilityComponent.getContext(expressionGroupDef, extraContext, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
 	}
 	

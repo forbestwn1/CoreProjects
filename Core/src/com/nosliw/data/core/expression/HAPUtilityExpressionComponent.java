@@ -12,8 +12,8 @@ import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
 
 public class HAPUtilityExpressionComponent {
 
@@ -21,14 +21,14 @@ public class HAPUtilityExpressionComponent {
 		return buildExpressionSuiteFromComponent(complexEntity, null, runtimeEnv);
 	}
 	
-	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPContextStructure context, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPContextStructureValueDefinition context, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
 		
 		//build context
 		if(context==null) {
 			context = HAPUtilityExpression.getContext(complexEntity, null, runtimeEnv);
 		}
-		out.setContextStructure(context);
+		out.setValueContext(context);
 		
 		//build constant from attachment
 		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildDataConstantDefinition(complexEntity.getAttachmentContainer())) {

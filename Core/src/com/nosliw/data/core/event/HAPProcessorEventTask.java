@@ -6,10 +6,10 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
+import com.nosliw.data.core.structure.HAPRequirementContextProcessor;
 
 public class HAPProcessorEventTask {
 

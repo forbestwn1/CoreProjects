@@ -7,14 +7,14 @@ import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
-import com.nosliw.data.core.common.HAPWithDataContext;
-import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.common.HAPWithValueContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
 
-public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionSuite, HAPWithDataContext, HAPWithConstantDefinition{
+public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionSuite, HAPWithValueContext, HAPWithConstantDefinition{
 
 	private Map<String, HAPDefinitionExpressionGroup> m_expressionGroups;
 
-	private HAPContextStructure m_context;
+	private HAPContextStructureValueDefinition m_context;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
@@ -31,7 +31,7 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 
 	@Override
 	public void addEntityElement(HAPDefinitionExpressionGroup expressionGroup) {
-		expressionGroup.setContextStructure(this.m_context.cloneContextStructure());
+		expressionGroup.setValueContext(this.m_context.cloneContextStructure());
 		for(String id : this.m_constantDefinitions.keySet()) {
 			expressionGroup.addConstantDefinition(this.m_constantDefinitions.get(id).cloneConstantDefinition());
 		}
@@ -53,13 +53,13 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 	}
 
 	@Override
-	public HAPContextStructure getContextStructure() {  return this.m_context; }
+	public HAPContextStructureValueDefinition getValueContext() {  return this.m_context; }
 
 	@Override
-	public void setContextStructure(HAPContextStructure context) {  
+	public void setValueContext(HAPContextStructureValueDefinition context) {  
 		this.m_context = context;  
 		for(String id : this.m_expressionGroups.keySet()) {
-			this.m_expressionGroups.get(id).setContextStructure(context.cloneContextStructure());
+			this.m_expressionGroups.get(id).setValueContext(context.cloneContextStructure());
 		}
 	}
 	
@@ -77,7 +77,7 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 	}
 
 	@Override
-	public void cloneToDataContext(HAPWithDataContext dataContext) {
-		dataContext.setContextStructure(this.m_context);
+	public void cloneToValueContext(HAPWithValueContext dataContext) {
+		dataContext.setValueContext(this.m_context);
 	}
 }

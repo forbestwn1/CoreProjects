@@ -1,7 +1,9 @@
 package com.nosliw.data.core.operand;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,7 +22,7 @@ import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
 
 public class HAPOperandUtility {
 
@@ -55,7 +57,7 @@ public class HAPOperandUtility {
 	//			replace attribute operation with one variable operation
 	//  for attribute operation a.b.c.d which have responding definition a.b.c in context, 
 	//			replace attribute operation with one variable operation(a.b.c) and getChild operation
-	public static void processAttributeOperandInExpressionOperand(HAPOperandWrapper orgOperand, final Set<String> dataVarNames){
+	public static void processAttributeOperandInExpressionOperand(HAPOperandWrapper orgOperand, final Set<String> dataVarNames, Set<String> dataConstantNames){
 		List<HAPAttributeOperandChainInfo> data = new ArrayList<HAPAttributeOperandChainInfo>();
 		HAPOperandUtility.processAllOperand(orgOperand, data, new HAPOperandTask(){
 			@Override
@@ -97,7 +99,7 @@ public class HAPOperandUtility {
 					attrInfo.veryPath.add(attrOperand.getAttribute());
 					if(attrInfo.path.size()==attrInfo.veryPath.size()){
 						//at end of attribute chain
-						processAttributeChain(attrInfo, dataVarNames);
+						processAttributeChain(attrInfo, dataVarNames, dataConstantNames);
 						stack.remove(stack.size()-1);
 					}
 				}
@@ -111,17 +113,23 @@ public class HAPOperandUtility {
 		});
 	}
 	
-	private static void processAttributeChain(HAPAttributeOperandChainInfo attrInfo, Set<String> dataVarNames){
+	private static void processAttributeChain(HAPAttributeOperandChainInfo attrInfo, Set<String> dataVarNames, Set<String> dataConstantNames){
 		String startOpType = attrInfo.startOperand.getOperand().getType();
 		if(startOpType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 			//attribute start with variable
 			HAPOperandVariable varOperand = (HAPOperandVariable)attrInfo.startOperand.getOperand();
 			attrInfo.path.add(0, varOperand.getVariableName());
 			String path = HAPNamingConversionUtility.cascadePath(attrInfo.path.toArray(new String[0]));
-			for(String name : dataVarNames){
+			
+			Map<String, String> opTypeByName = new LinkedHashMap<String, String>();
+			for(String varName : dataVarNames)   opTypeByName.put(varName, HAPConstantShared.EXPRESSION_OPERAND_VARIABLE);
+			for(String constantName : dataConstantNames)   opTypeByName.put(constantName, HAPConstantShared.EXPRESSION_OPERAND_CONSTANT);
+			
+			for(String name : opTypeByName.keySet()){
 				if(path.equals(name)){
-					//replace with variable operand
-					attrInfo.lastAttrOperand.setOperand(new HAPOperandVariable(name));
+					String opType = opTypeByName.get(name);
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE))   attrInfo.lastAttrOperand.setOperand(new HAPOperandVariable(name));  //replace with variable operand
+					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT))   attrInfo.lastAttrOperand.setOperand(new HAPOperandConstant(name));  //replace with constant operand
 					break;
 				}
 				else if(path.startsWith(name+".")){
@@ -154,38 +162,30 @@ public class HAPOperandUtility {
 //			}
 //		});	
 //	}
-	
-	static public void updateVariableName(HAPOperandWrapper operand, HAPUpdateName updateVar) {
-		//update variable operand
-		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
-					HAPOperandVariable variableChild = (HAPOperandVariable)operand.getOperand();
-					String newName = updateVar.getUpdatedName(variableChild.getVariableName()); 
-					if(newName!=null)	variableChild.setVariableName(newName);
-				}
-				else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceChild = (HAPOperandReference)operand.getOperand();
-					
-				}
-				return true;
-			}
-		});	
-	}
 
-	static public void updateConstantName(HAPOperandWrapper operand, HAPUpdateName updateVar) {
+	static public void updateNameInOperand(HAPOperandWrapper operand, HAPUpdateName nameUpdate, String[] operandTypes) {
+		Set<String> types = new HashSet<String>(Arrays.asList(operandTypes));
 		//update variable operand
 		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
-					HAPOperandConstant constantChild = (HAPOperandConstant)operand.getOperand();
-					if(HAPBasicUtility.isStringNotEmpty(constantChild.getName())){
-						String newName = updateVar.getUpdatedName(constantChild.getName()); 
-						constantChild.setName(newName);
+				if(types.contains(opType)) {
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
+						HAPOperandVariable variableChild = (HAPOperandVariable)operand.getOperand();
+						String newName = nameUpdate.getUpdatedName(variableChild.getVariableName()); 
+						if(newName!=null)	variableChild.setVariableName(newName);
+					}
+					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
+						HAPOperandReference referenceChild = (HAPOperandReference)operand.getOperand();
+						
+					}
+					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
+						HAPOperandConstant constantChild = (HAPOperandConstant)operand.getOperand();
+						if(HAPBasicUtility.isStringNotEmpty(constantChild.getName())){
+							String newName = nameUpdate.getUpdatedName(constantChild.getName()); 
+							constantChild.setName(newName);
+						}
 					}
 				}
 				return true;

@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
-import com.nosliw.data.core.script.context.HAPParserContext;
+import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 public class HAPParseMiniApp {
@@ -75,7 +75,7 @@ public class HAPParseMiniApp {
 //			}
 //		}
 		
-		out.setContextStructure(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionAppElementUI.CONTEXT))); 
+		out.setValueContext(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionAppElementUI.CONTEXT))); 
 		return out;
 	}
 	

@@ -13,10 +13,10 @@ import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 
 public class HAPPresentUIActivityProcessor implements HAPProcessorActivity{
 
@@ -25,12 +25,12 @@ public class HAPPresentUIActivityProcessor implements HAPProcessorActivity{
 			HAPDefinitionActivity activityDefinition, 
 			String id,
 			HAPContextProcessor processContext,
-			HAPExecutableProcess processExe, HAPContextGroup context,
+			HAPExecutableProcess processExe, HAPContextStructureValueDefinitionGroup context,
 			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
 			HAPRuntimeEnvironment runtimeEnv, 
-			HAPConfigureContextProcessor configure, 
+			HAPConfigureProcessorStructure configure, 
 			HAPProcessTracker processTracker) {
 		HAPPresentUIActivityDefinition activity = (HAPPresentUIActivityDefinition)activityDefinition;
 		HAPPresentUIActivityExecutable out = new HAPPresentUIActivityExecutable(id, activity);

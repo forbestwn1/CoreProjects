@@ -815,7 +815,12 @@
 			<definition name="INHERITMODE_PARENT" value="parent" description="when child define the same context node name as parent inheritable, but parent override child for same name"/>
 			<definition name="INHERITMODE_CHILD" value="child" description="inheritable, but child unaffected for same name"/>
 			<definition name="INHERITMODE_NONE" value="none" description="UNheritable"/>
-			
+
+			<definition type="space"/>
+			<definition name="STRUCTURE_TYPE_VALUEFLAT" value="valueFlat"/>
+			<definition name="STRUCTURE_TYPE_VALUEGROUP" value="valueFlat"/>
+			<definition name="STRUCTURE_TYPE_VALUEEXECUTABLE" value="valueExecutable"/>
+			<definition name="STRUCTURE_TYPE_MAPPING" value="mapping"/>
 		</definitions>
 	</constants>
 </root>

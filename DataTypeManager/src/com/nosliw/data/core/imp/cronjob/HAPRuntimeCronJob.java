@@ -9,7 +9,7 @@ import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.script.context.data.HAPContextDataGroup;
+import com.nosliw.data.core.structure.data.HAPContextDataGroup;
 
 public class HAPRuntimeCronJob {
 

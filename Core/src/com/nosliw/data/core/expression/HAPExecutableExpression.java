@@ -28,10 +28,10 @@ import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
+import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
 
 @HAPEntityWithAttribute
 public class HAPExecutableExpression extends HAPExecutableImp{
@@ -102,7 +102,7 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 	}
 	
 	public void updateVariableName(HAPUpdateName nameUpdate) {
-		HAPOperandUtility.updateVariableName(this.m_operand, nameUpdate);
+		HAPOperandUtility.updateNameInOperand(this.m_operand, nameUpdate, new String[]{HAPConstantShared.EXPRESSION_OPERAND_VARIABLE});
 		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
@@ -114,7 +114,7 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 					String inputMappingType = inputMapping.getType();
 					if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-						HAPContext da = mappingDa.getAssociation();
+						HAPContextStructureValueDefinitionFlat da = mappingDa.getAssociation();
 						da.updateReferenceName(nameUpdate);
 					}
 					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {

@@ -20,18 +20,18 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.script.context.HAPContextFlat;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueExecutable;
 
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
 
 	private String m_id;
 	
-	private HAPContextStructure m_contextStructure;
+	private HAPContextStructureValueDefinition m_contextStructure;
 	
-	private HAPContextFlat m_flatContext;
+	private HAPContextStructureValueExecutable m_flatContext;
 	
 	private HAPContainerVariableCriteriaInfo m_localVarsInfo;
 
@@ -58,16 +58,16 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public void setId(String id) {   this.m_id = id;    }
 	
 	@Override
-	public HAPContextStructure getContextStructure() {   return this.m_contextStructure;  }
+	public HAPContextStructureValueDefinition getContextStructure() {   return this.m_contextStructure;  }
 
 	@Override
-	public void setContextStructure(HAPContextStructure contextStructure) {   
+	public void setContextStructure(HAPContextStructureValueDefinition contextStructure) {   
 		this.m_contextStructure = contextStructure;
 		this.m_flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(m_contextStructure);
 	}
 	
 	@Override
-	public HAPContextFlat getContextFlat() {    return this.m_flatContext;    }
+	public HAPContextStructureValueExecutable getContextFlat() {    return this.m_flatContext;    }
 
 	@Override
 	public HAPContainerVariableCriteriaInfo getVarsInfo() {  return this.m_localVarsInfo;  }

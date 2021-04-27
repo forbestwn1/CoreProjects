@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.common.HAPWithDataContext;
+import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
@@ -18,26 +18,26 @@ import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPProcessorContext;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.context.resource.HAPResourceDefinitionContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.HAPProcessorContext;
+import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.resource.HAPResourceDefinitionContext;
 
 public class HAPUtilityComponent {
 
 	public static void processComponentExecutable(
 			HAPExecutableImpComponent componentExe,
-			HAPContextGroup parentContext,
+			HAPContextStructureValueDefinitionGroup parentContext,
 			HAPRuntimeEnvironment runtimeEnv,
-			HAPConfigureContextProcessor contextProcessConfg,
+			HAPConfigureProcessorStructure contextProcessConfg,
 			HAPManagerActivityPlugin activityPluginMan
 			) {
 		HAPComponent component = componentExe.getDefinition();
@@ -47,11 +47,11 @@ public class HAPUtilityComponent {
 		componentExe.setServiceProviders(allServiceProviders);
 		
 		//process context 
-		componentExe.setContextStructure(HAPProcessorContext.process(component.getContextStructure(), HAPParentContext.createDefault(parentContext==null?new HAPContextGroup():parentContext), null, contextProcessConfg, runtimeEnv));
+		componentExe.setValueContext(HAPProcessorContext.process(component.getValueContext(), HAPParentContext.createDefault(parentContext==null?new HAPContextStructureValueDefinitionGroup():parentContext), null, contextProcessConfg, runtimeEnv));
 		
 		//process process suite
 		HAPResourceDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(component, activityPluginMan).cloneProcessSuiteDefinition(); 
-		processSuite.setContextStructure(componentExe.getContextStructure());   //kkk
+		processSuite.setValueContext(componentExe.getContextStructure());   //kkk
 		componentExe.setProcessSuite(processSuite);
 	} 
 	
@@ -77,27 +77,27 @@ public class HAPUtilityComponent {
 //		return out;
 //	}
 	
-	public static HAPContextStructure resolveContextReference(HAPContextStructure context, List<HAPContextReference> contextRefs, HAPContainerAttachment attachments, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPContextStructureValueDefinition resolveContextReference(HAPContextStructureValueDefinition context, List<HAPContextReference> contextRefs, HAPContainerAttachment attachments, HAPManagerResourceDefinition resourceDefMan) {
 		String contextType = context.getType();
 		
 		for(HAPContextReference contextRef : contextRefs) {
 			HAPAttachment att = attachments.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTEXT, contextRef.getName());
 			
 			//find target context
-			HAPContext targetContext = null;
+			HAPContextStructureValueDefinitionFlat targetContext = null;
 			if(contextType.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-				HAPContextGroup contextGroup = (HAPContextGroup)context;
+				HAPContextStructureValueDefinitionGroup contextGroup = (HAPContextStructureValueDefinitionGroup)context;
 				String categary = contextRef.getCategary();
 				if(HAPBasicUtility.isStringEmpty(categary))  categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
 				targetContext = contextGroup.getChildContext(categary);
 			}
 			else {
-				targetContext = (HAPContext)context;
+				targetContext = (HAPContextStructureValueDefinitionFlat)context;
 			}
 			
 			//append referred context to target context
 			HAPResourceDefinitionContext contextResourceDef = (HAPResourceDefinitionContext)HAPUtilityAttachment.getResourceDefinition(att, resourceDefMan);
-			HAPContext referredContext = contextResourceDef.getContext();
+			HAPContextStructureValueDefinitionFlat referredContext = contextResourceDef.getContext();
 			for(String eleName : referredContext.getElementNames()) {
 				if(targetContext.getElement(eleName)==null) {
 					targetContext.addElement(eleName, referredContext.getElement(eleName));
@@ -108,21 +108,21 @@ public class HAPUtilityComponent {
 		return context;
 	}
 	
-	public static HAPContextStructure getContext(Object def, HAPContextStructure extraContext, HAPConfigureContextProcessor contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {
-		HAPContextStructure out = null;
+	public static HAPContextStructureValueDefinition getContext(Object def, HAPContextStructureValueDefinition extraContext, HAPConfigureProcessorStructure contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {
+		HAPContextStructureValueDefinition out = null;
 		if(def instanceof HAPComponentContainerElement) {
 			out = HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)def, extraContext, runtimeEnv, contextProcessConfig);
 		}
-		else if(def instanceof HAPWithDataContext){
-			out = HAPUtilityContext.hardMerge(((HAPWithDataContext)def).getContextStructure(), extraContext); 
+		else if(def instanceof HAPWithValueContext){
+			out = HAPUtilityContext.hardMerge(((HAPWithValueContext)def).getValueContext(), extraContext); 
 		}
 		return out;
 	}
 
 	
-	public static HAPContextStructure processElementComponentContext(HAPComponentContainerElement component, HAPContextStructure extraContext, HAPRuntimeEnvironment runtimeEnv, HAPConfigureContextProcessor processConfigure) {
-		HAPContextStructure parentContext = HAPUtilityContext.hardMerge(component.getResourceContainer().getContextStructure(), extraContext); 
-		HAPContextStructure processedEleContext = HAPProcessorContext.process(component.getComponentEntity().getContextStructure(), HAPParentContext.createDefault(parentContext), component.getAttachmentContainer(), null, processConfigure, runtimeEnv);
+	public static HAPContextStructureValueDefinition processElementComponentContext(HAPComponentContainerElement component, HAPContextStructureValueDefinition extraContext, HAPRuntimeEnvironment runtimeEnv, HAPConfigureProcessorStructure processConfigure) {
+		HAPContextStructureValueDefinition parentContext = HAPUtilityContext.hardMerge(component.getResourceContainer().getValueContext(), extraContext); 
+		HAPContextStructureValueDefinition processedEleContext = HAPProcessorContext.process(component.getComponentEntity().getValueContext(), HAPParentContext.createDefault(parentContext), component.getAttachmentContainer(), null, processConfigure, runtimeEnv);
 		return HAPUtilityContext.hardMerge(parentContext, processedEleContext);
 	}
 

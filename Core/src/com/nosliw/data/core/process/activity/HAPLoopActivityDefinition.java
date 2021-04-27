@@ -8,9 +8,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
 public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 
@@ -48,7 +48,7 @@ public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 	public HAPDefinitionWrapperTask<HAPResourceId> getStep(){   return this.m_step;   }
 	
 	@Override
-	public HAPContextStructure getInputContextStructure(HAPContextStructure parentContextStructure) {  return parentContextStructure;   }
+	public HAPContextStructureValueDefinition getInputContextStructure(HAPContextStructureValueDefinition parentContextStructure) {  return parentContextStructure;   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

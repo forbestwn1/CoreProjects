@@ -3,7 +3,7 @@ package com.nosliw.data.core.template;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.data.core.script.context.HAPParmDefinition;
+import com.nosliw.data.core.structure.story.HAPParmDefinition;
 
 public class HAPDefinitionTemplate extends HAPEntityInfoImp{
 

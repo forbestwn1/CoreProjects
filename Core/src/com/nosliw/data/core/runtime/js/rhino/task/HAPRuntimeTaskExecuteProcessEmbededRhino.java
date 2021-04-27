@@ -15,8 +15,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcessEmbeded;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.script.context.data.HAPContextData;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.data.HAPContextData;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 
 public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExecuteProcessEmbeded{
 	private HAPResourceManagerRoot m_resourceManager;

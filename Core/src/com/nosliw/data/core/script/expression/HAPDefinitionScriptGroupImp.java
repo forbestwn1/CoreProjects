@@ -8,8 +8,8 @@ import java.util.Set;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.common.HAPWithDataContext;
-import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.common.HAPWithValueContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
 
 public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implements HAPDefinitionScriptGroup{
 
@@ -17,7 +17,7 @@ public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implem
 	
 	private Map<String, HAPDefinitionConstant> m_constantDef;
 	
-	private HAPContextStructure m_context;
+	private HAPContextStructureValueDefinition m_context;
 	
 	public HAPDefinitionScriptGroupImp() {
 		this.m_scriptDefs = new LinkedHashMap<String, HAPDefinitionScriptEntity>();
@@ -37,14 +37,14 @@ public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implem
 	}
 
 	@Override
-	public HAPContextStructure getContextStructure() {   return this.m_context;  }
+	public HAPContextStructureValueDefinition getValueContext() {   return this.m_context;  }
 
 	@Override
-	public void setContextStructure(HAPContextStructure context) {   this.m_context = context;  }
+	public void setValueContext(HAPContextStructureValueDefinition context) {   this.m_context = context;  }
 
 	@Override
-	public void cloneToDataContext(HAPWithDataContext dataContext) {
-		dataContext.setContextStructure(this.m_context.cloneContextStructure());
+	public void cloneToValueContext(HAPWithValueContext dataContext) {
+		dataContext.setValueContext(this.m_context.cloneContextStructure());
 	}
 
 	@Override

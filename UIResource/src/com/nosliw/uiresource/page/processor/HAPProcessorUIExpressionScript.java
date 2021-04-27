@@ -46,7 +46,7 @@ public class HAPProcessorUIExpressionScript {
 		HAPContextProcessExpressionScript processScriptContext = body.getProcessExpressionScriptContext();
 		
 		//expression context
-		processScriptContext.setContextStructure(body.getFlatContext().getContext());
+		processScriptContext.setValueContext(body.getFlatContext().getContext());
 		
 		//expression suite from attachment
 		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getFlatContext().getContext(), runtimeEnv);
@@ -83,7 +83,7 @@ public class HAPProcessorUIExpressionScript {
 
 		
 		HAPDefinitionScriptGroupImp scriptGroup = new HAPDefinitionScriptGroupImp();
-		scriptGroup.setContextStructure(exeUnit.getBody().getContext());
+		scriptGroup.setValueContext(exeUnit.getBody().getContext());
 		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), exeUnit.getBody().getFlatContext())) {
 			scriptGroup.addConstantDefinition(constantDef);
 		}

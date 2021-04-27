@@ -15,12 +15,12 @@ import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 
 public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 
@@ -30,12 +30,12 @@ public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 			String id, 
 			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPContextGroup processDataContext, 
+			HAPContextStructureValueDefinitionGroup processDataContext, 
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
 			HAPRuntimeEnvironment runtimeEnv,
-			HAPConfigureContextProcessor configure, 
+			HAPConfigureProcessorStructure configure, 
 			HAPProcessTracker processTracker) {
 		
 		HAPSwitchActivityDefinition switchActDef = (HAPSwitchActivityDefinition)activityDefinition;
@@ -43,7 +43,7 @@ public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 
 		//process input and create flat input context for activity
 		HAPUtilityProcess.processBranchActivityInputDataAssocation(out, switchActDef, processDataContext, runtimeEnv);
-		HAPContext activityContext = (HAPContext)out.getInputDataAssociation().getOutput().getOutputStructure(); 
+		HAPContextStructureValueDefinitionFlat activityContext = (HAPContextStructureValueDefinitionFlat)out.getInputDataAssociation().getOutput().getOutputStructure(); 
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());

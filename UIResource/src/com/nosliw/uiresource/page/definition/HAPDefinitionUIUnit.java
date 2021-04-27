@@ -12,9 +12,9 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPNameMapping;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
-import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
-import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.structure.HAPElementLeafValue;
+import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -81,12 +81,12 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 	}
 	
 	private void initContext() {
-		HAPContextGroup contextGroup = new HAPContextGroup();
+		HAPContextStructureValueDefinitionGroup contextGroup = new HAPContextStructureValueDefinitionGroup();
 		//ui error context element
-		HAPContextDefinitionRoot uiValidationErrorRoot = new HAPContextDefinitionRoot(new HAPContextDefinitionLeafValue());
+		HAPRoot uiValidationErrorRoot = new HAPRoot(new HAPElementLeafValue());
 		uiValidationErrorRoot.setDefaultValue(new JSONObject());
 		contextGroup.addProtectedElement(HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, uiValidationErrorRoot);
-		this.setContextStructure(contextGroup);
+		this.setValueContext(contextGroup);
 	}
 	
 	abstract public String getType(); 

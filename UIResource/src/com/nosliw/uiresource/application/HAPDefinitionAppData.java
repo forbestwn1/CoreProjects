@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.script.context.HAPContextEntity;
+import com.nosliw.data.core.structure.story.HAPContextEntity;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionAppData extends HAPContextEntity{

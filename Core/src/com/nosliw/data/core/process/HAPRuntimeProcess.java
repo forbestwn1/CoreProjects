@@ -2,8 +2,8 @@ package com.nosliw.data.core.process;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.script.context.data.HAPContextData;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.data.HAPContextData;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 
 public interface HAPRuntimeProcess {
 

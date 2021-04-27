@@ -12,11 +12,11 @@ import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.structure.story.HAPParentContext;
 
 public class HAPManagerProcess {
 	

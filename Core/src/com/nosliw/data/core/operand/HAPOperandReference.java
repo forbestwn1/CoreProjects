@@ -20,9 +20,9 @@ import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
+import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
 
 public class HAPOperandReference extends HAPOperandImp{
 

@@ -7,8 +7,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
+import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
 
 public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 

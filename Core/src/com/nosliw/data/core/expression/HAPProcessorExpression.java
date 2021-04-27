@@ -21,15 +21,15 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.script.context.dataassociation.mapping.HAPUtilityDataAssociation;
+import com.nosliw.data.core.structure.HAPElementLeafRelative;
+import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
+import com.nosliw.data.core.structure.dataassociation.mapping.HAPUtilityDataAssociation;
+import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
 
 public class HAPProcessorExpression {
 
@@ -37,14 +37,13 @@ public class HAPProcessorExpression {
 			String id,
 			HAPDefinitionExpressionGroup expressionGroupDef,
 			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
-			HAPContextStructure extraContext,
 			Map<String, HAPDataTypeCriteria> expectOutput,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 
-		HAPExecutableExpressionGroup out = processBasic(id, expressionGroupDef, attachmentReferenceContext, extraContext, expressionMan, configure, runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup out = processBasic(id, expressionGroupDef, attachmentReferenceContext, expressionMan, configure, runtimeEnv, processTracker);
 		
 		//normalize input mapping, popup variable
 		normalizeReferencesInputMapping(out);
@@ -95,7 +94,6 @@ public class HAPProcessorExpression {
 			String exeId,
 			HAPDefinitionExpressionGroup expressionGroupDef,
 			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
-			HAPContextStructure extraContext,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure,
 			HAPRuntimeEnvironment runtimeEnv,
@@ -104,7 +102,7 @@ public class HAPProcessorExpression {
 		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(exeId);
 
 		//context
-		HAPContextStructure contextStructure =  expressionGroupDef.getContextStructure();
+		HAPContextStructureValueDefinition contextStructure =  expressionGroupDef.getValueContext();
 		contextStructure = HAPUtilityContext.hardMerge(contextStructure, extraContext);
 		out.setContextStructure(contextStructure);
 
@@ -115,42 +113,46 @@ public class HAPProcessorExpression {
 		
 		//variable
 		//variable --- from context
-		out.setVarsInfo(HAPUtilityContext.discoverDataVariablesInContext(out.getContextFlat()));
+		HAPContainerVariableCriteriaInfo varsContainer = HAPUtilityContext.discoverDataVariablesInContext(out.getContextFlat());
+		out.setVarsInfo(varsContainer);
 
 		Set<HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();
 		for(HAPDefinitionExpression expressionDef : expressionDefs) {
 			out.addExpression(expressionDef.getId(), new HAPOperandWrapper(expressionMan.getExpressionParser().parseExpression(expressionDef.getExpression())));
 		}
 
-		HAPContainerVariableCriteriaInfo varsContainer = out.getVarsInfo();
-
-		Set<String> unknownVarNames = new HashSet<String>();  //variables that not defined in context
-		
-		Map<String, HAPExecutableExpression> expressionItems = out.getExpressionItems();
-		for(String id : expressionItems.keySet()) {
-			HAPExecutableExpression expressionItem = expressionItems.get(id);
-			HAPOperandWrapper operand = expressionItem.getOperand();
-			//constant --- update constant data in expression
-			HAPOperandUtility.updateConstantData(operand, constants);
-
-			//variable --- build variable according to attribute chain
-			HAPOperandUtility.processAttributeOperandInExpressionOperand(operand, varsContainer.getDataVariableNames());
-
+		//discover variables that not defined in context
+		Set<String> unknownVarNames = new HashSet<String>();  
+		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
 			//variable --- discover variable that not defined in context
-			Set<String> varNames = HAPOperandUtility.discoverVariables(operand);
+			Set<String> varNames = HAPOperandUtility.discoverVariables(expressionItem.getOperand());
 			for(String varName : varNames) {
 				if(varsContainer.getVariableCriteriaInfoByAlias(varName)==null) {
 					unknownVarNames.add(varName);
 				}
 			}
+		}
+		//add missed variable to variable info container
+		for(String varName : unknownVarNames) 	varsContainer.addVariableCriteriaInfo(HAPInfoCriteria.buildUndefinedCriteriaInfo(), varName, varName);
 
-			//referenced expression
-			processReferencesInOperandBasic(exeId, operand, attachmentReferenceContext, expressionMan, configure, runtimeEnv, processTracker);
+		//attribute chain --- consolidate attribute chain to single variable or constant operand
+		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
+			HAPOperandUtility.processAttributeOperandInExpressionOperand(expressionItem.getOperand(), varsContainer.getDataVariableNames(), constants.keySet());
+		}
+
+		//constant --- update constant data in expression
+		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
+			HAPOperandUtility.updateConstantData(expressionItem.getOperand(), constants);
 		}
 		
-		//add missed variable to variable info container
-		for(String varName : unknownVarNames) {
-			varsContainer.addVariableCriteriaInfo(HAPInfoCriteria.buildUndefinedCriteriaInfo(), varName);
+		//referenced expression
+		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
+			processReferencesInOperandBasic(exeId, expressionItem.getOperand(), attachmentReferenceContext, expressionMan, configure, runtimeEnv, processTracker);
+		}
+		
+		//variable --- replace variable rootroot name with variable id
+		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
+			HAPOperandUtility.updateNameInOperand(expressionItem.getOperand(), varsContainer.buildToVarIdNameUpdate(), new String[] {HAPConstantShared.EXPRESSION_OPERAND_VARIABLE});
 		}
 		
 		return out;
@@ -230,7 +232,7 @@ public class HAPProcessorExpression {
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-							HAPContext da = mappingDa.getAssociation();
+							HAPContextStructureValueDefinitionFlat da = mappingDa.getAssociation();
 							//refered var -- parent var
 							Map<String, String> mappingPath = new LinkedHashMap<String, String>();
 							for(String rootName : da.getElementNames()) {
@@ -244,7 +246,7 @@ public class HAPProcessorExpression {
 								Set<String> aliases = referedVarsContainer.getVariableAlias(missedRefVar);
 								boolean override = parentVarsContainer.addVariableCriteriaInfo(referedVarsContainer.getVariableCriteriaInfoById(missedRefVar).cloneCriteriaInfo(), aliases);
 								if(override)  throw new RuntimeException();    //ref var override parent var is not allowed
-								HAPContextDefinitionLeafRelative relativeEle = new HAPContextDefinitionLeafRelative();
+								HAPElementLeafRelative relativeEle = new HAPElementLeafRelative();
 								String varName = aliases.iterator().next();
 								relativeEle.setPath(varName);
 								da.addElement(varName, relativeEle);
@@ -291,8 +293,8 @@ public class HAPProcessorExpression {
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-							HAPContext da = mappingDa.getAssociation();
-							HAPContext da1 = new HAPContext();
+							HAPContextStructureValueDefinitionFlat da = mappingDa.getAssociation();
+							HAPContextStructureValueDefinitionFlat da1 = new HAPContextStructureValueDefinitionFlat();
 							for(String rootName : da.getElementNames()) {
 								da1.addElement(nameUpdate.getUpdatedName(rootName), da.getElement(rootName));
 							}
@@ -328,7 +330,7 @@ public class HAPProcessorExpression {
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-							HAPContext da = mappingDa.getAssociation();
+							HAPContextStructureValueDefinitionFlat da = mappingDa.getAssociation();
 							for(String rootName : da.getElementNames()) {
 								Map<String, String> path = HAPUtilityDataAssociation.buildSimplifiedRelativePathMapping(da.getElement(rootName), rootName, expressionExe.getContextStructure());
 								nameMapping.putAll(path);

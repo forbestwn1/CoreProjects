@@ -32,7 +32,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResourceDefinition;
-import com.nosliw.data.core.script.context.resource.HAPParserResourceDefinitionContext;
 import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.script.expression.resource.HAPParserResourceDefinitionScriptGroup;
 import com.nosliw.data.core.service.definition.HAPFactoryServiceProcess;
@@ -41,6 +40,7 @@ import com.nosliw.data.core.service.resource.HAPParserServiceInterfaceResource;
 import com.nosliw.data.core.service.resource.HAPResourceDefinitionPluginServiceDefinition;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionPluginStory;
+import com.nosliw.data.core.structure.value.resource.HAPParserResourceDefinitionContext;
 import com.nosliw.data.core.value.HAPParserResourceValue;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")

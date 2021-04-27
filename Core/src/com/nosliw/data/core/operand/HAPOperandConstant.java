@@ -13,7 +13,7 @@ import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
 
 public class HAPOperandConstant extends HAPOperandImp{
 

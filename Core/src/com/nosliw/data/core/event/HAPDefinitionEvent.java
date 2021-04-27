@@ -4,8 +4,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPParserContext;
+import com.nosliw.data.core.structure.HAPParserContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
 
 //event definition
 public class HAPDefinitionEvent extends HAPSerializableImp{
@@ -20,9 +20,9 @@ public class HAPDefinitionEvent extends HAPSerializableImp{
 	private String m_name;
 
 	//event data structure definition
-	private HAPContext m_context;
+	private HAPContextStructureValueDefinitionFlat m_context;
 
-	public HAPContext getContext() {	return this.m_context;	}
+	public HAPContextStructureValueDefinitionFlat getContext() {	return this.m_context;	}
 	
 	public String getName() {   return this.m_name;    }
 	
@@ -30,7 +30,7 @@ public class HAPDefinitionEvent extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_name = jsonObj.optString(NAME);
-		this.m_context = HAPParserContext.parseContext(jsonObj.optJSONObject(CONTEXT));
+		this.m_context = HAPParserContext.parseValueStructureDefinitionFlat(jsonObj.optJSONObject(CONTEXT));
 		return true;  
 	}
 }

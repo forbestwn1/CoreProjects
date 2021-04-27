@@ -14,8 +14,8 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
 
 @HAPEntityWithAttribute
 public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInfo{

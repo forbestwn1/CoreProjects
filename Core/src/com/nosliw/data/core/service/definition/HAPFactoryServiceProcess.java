@@ -15,18 +15,18 @@ import com.nosliw.data.core.process.HAPRuntimeProcess;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.data.HAPContextDataFactory;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 import com.nosliw.data.core.service.interfacee.HAPServiceResult;
+import com.nosliw.data.core.structure.HAPElementLeafData;
+import com.nosliw.data.core.structure.data.HAPContextDataFactory;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
+import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
 
 public class HAPFactoryServiceProcess implements HAPFactoryService{
 
@@ -73,19 +73,19 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		}
 
 		//external context from parameter of service
-		HAPContext inputExternalContext = new HAPContext();
+		HAPContextStructureValueDefinitionFlat inputExternalContext = new HAPContextStructureValueDefinitionFlat();
 		HAPServiceInterface serviceInterface = staticInfo.getInterface().getInterface();
 		for(HAPServiceParm parmDef : serviceInterface.getParms()){
-			inputExternalContext.addElement(parmDef.getName(), new HAPContextDefinitionLeafData(new HAPVariableDataInfo((parmDef.getCriteria()))));
+			inputExternalContext.addElement(parmDef.getName(), new HAPElementLeafData(new HAPVariableDataInfo((parmDef.getCriteria()))));
 		}
 
 		Map<String, HAPParentContext> outputExternalContexts = new LinkedHashMap<String, HAPParentContext>();
 		Map<String, HAPServiceResult> serviceResult = serviceInterface.getResults();
 		for(String resultName : serviceResult.keySet()) {
 			List<HAPServiceOutput> output = serviceResult.get(resultName).getOutput();
-			HAPContext outputContext = new HAPContext();
+			HAPContextStructureValueDefinitionFlat outputContext = new HAPContextStructureValueDefinitionFlat();
 			for(HAPServiceOutput parm : output) {
-				outputContext.addElement(parm.getName(), new HAPContextDefinitionLeafData(new HAPVariableDataInfo((parm.getCriteria()))));
+				outputContext.addElement(parm.getName(), new HAPElementLeafData(new HAPVariableDataInfo((parm.getCriteria()))));
 			}
 			outputExternalContexts.put(resultName, HAPParentContext.createDefault(outputContext));
 		}

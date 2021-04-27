@@ -1,16 +1,16 @@
 package com.nosliw.data.core.process;
 
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 
 public class HAPUtilityConfigure {
 
-	public static HAPConfigureContextProcessor getContextProcessConfigurationForProcess() {
-		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
+	public static HAPConfigureProcessorStructure getContextProcessConfigurationForProcess() {
+		HAPConfigureProcessorStructure out = new HAPConfigureProcessorStructure();
 		return out;
 	}
 
-	public static HAPConfigureContextProcessor getContextProcessConfigurationForActivity() {
-		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
+	public static HAPConfigureProcessorStructure getContextProcessConfigurationForActivity() {
+		HAPConfigureProcessorStructure out = new HAPConfigureProcessorStructure();
 		return out;
 	}
 

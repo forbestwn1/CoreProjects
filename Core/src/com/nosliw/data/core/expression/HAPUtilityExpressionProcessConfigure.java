@@ -3,7 +3,7 @@ package com.nosliw.data.core.expression;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 
 /**
  * Utility to build expression process configure
@@ -35,8 +35,8 @@ public class HAPUtilityExpressionProcessConfigure {
 		return out;
 	}
 	
-	public static HAPConfigureContextProcessor getContextProcessConfigurationForExpression() {
-		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
+	public static HAPConfigureProcessorStructure getContextProcessConfigurationForExpression() {
+		HAPConfigureProcessorStructure out = new HAPConfigureProcessorStructure();
 		return out;
 	}
 }

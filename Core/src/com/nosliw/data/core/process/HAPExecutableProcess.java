@@ -20,13 +20,13 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPParserContext;
-import com.nosliw.data.core.script.context.HAPUtilityContextScript;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.structure.HAPParserContext;
+import com.nosliw.data.core.structure.HAPUtilityContextScript;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableTask;
+import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
 
 @HAPEntityWithAttribute
 public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecutableTask{
@@ -65,7 +65,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	private String m_startActivityId;
 	
 	//input variables
-	private HAPContextGroup m_context;  
+	private HAPContextStructureValueDefinitionGroup m_context;  
 	
 	//all possible result
 	private Map<String, HAPExecutableDataAssociation> m_results;
@@ -113,8 +113,8 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	public HAPExecutableDataAssociation getResult(String result) {  return this.m_results.get(result);   }
 	public Set<String> getResultNames(){   return this.m_results.keySet();  }
 	
-	public HAPContextGroup getContext() {   return this.m_context;  }
-	public void setContext(HAPContextGroup context) {   this.m_context = context;  }
+	public HAPContextStructureValueDefinitionGroup getContext() {   return this.m_context;  }
+	public void setContext(HAPContextStructureValueDefinitionGroup context) {   this.m_context = context;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -125,7 +125,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 		
 		this.m_startActivityId = jsonObj.getString(STARTACTIVITYID);
 		
-		this.m_context = HAPParserContext.parseContextGroup(jsonObj.getJSONObject(CONTEXT));
+		this.m_context = HAPParserContext.parseValueStructureDefinitionGroup(jsonObj.getJSONObject(CONTEXT));
 		
 		JSONObject dsJsonObj = jsonObj.getJSONObject(RESULT);
 		for(Object key : dsJsonObj.keySet()) {

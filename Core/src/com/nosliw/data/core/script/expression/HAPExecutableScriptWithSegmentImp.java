@@ -9,7 +9,7 @@ import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
 
 public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScriptImp implements HAPExecutableScriptWithSegment{
 

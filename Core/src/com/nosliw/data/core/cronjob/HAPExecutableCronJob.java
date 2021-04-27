@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataable.HAPExecutableDataable;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 
 public class HAPExecutableCronJob extends HAPExecutableImpComponent{
 

@@ -8,7 +8,7 @@ import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessRhino;
-import com.nosliw.data.core.script.context.data.HAPContextDataFlat;
+import com.nosliw.data.core.structure.data.HAPContextDataFlat;
 
 public class HAPProcessMain {
 

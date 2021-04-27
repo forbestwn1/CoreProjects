@@ -10,8 +10,8 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
 import com.nosliw.data.core.resource.HAPParserResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 public class HAPParserModule implements HAPParserResourceDefinition{

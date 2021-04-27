@@ -20,11 +20,11 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.HAPContextFlat;
-import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueExecutable;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
@@ -72,7 +72,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 
 	//context for content
 	private HAPContextGroupInUIBody m_context;
-	private HAPContextFlat m_flatContext;
+	private HAPContextStructureValueExecutable m_flatContext;
 	
 //	private Map<String, Object> m_constants;
 	
@@ -135,15 +135,15 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		}
 	}
 	
-	public HAPContextGroup getContext(){  return this.m_context;   }
-	public void setContext(HAPContextGroup context) {
+	public HAPContextStructureValueDefinitionGroup getContext(){  return this.m_context;   }
+	public void setContext(HAPContextStructureValueDefinitionGroup context) {
 		this.m_context.setContext(context);
 	}
-	public HAPContextFlat getFlatContext() { return this.m_flatContext;  }
-	public void setFlatContext(HAPContextFlat context) {  this.m_flatContext = context;   }
-	public HAPContextFlat getVariableContext() {
+	public HAPContextStructureValueExecutable getFlatContext() { return this.m_flatContext;  }
+	public void setFlatContext(HAPContextStructureValueExecutable context) {  this.m_flatContext = context;   }
+	public HAPContextStructureValueExecutable getVariableContext() {
 		if(this.m_flatContext!=null)		return this.m_flatContext.getVariableContext();
-		else return new HAPContextFlat();
+		else return new HAPContextStructureValueExecutable();
 	}
 	
 //	public Map<String, Object> getConstantsValue(){   return this.m_processScriptContext.getConstantsValue();    }

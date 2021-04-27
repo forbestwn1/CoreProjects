@@ -9,11 +9,11 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPContextStructureEmpty;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionEmpty;
 
 public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 
@@ -40,7 +40,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	//get input context structure for activity
 	//it is for process input mapping
 	//param: parent context structure
-	public HAPContextStructure getInputContextStructure(HAPContextStructure parentContextStructure) {  return HAPContextStructureEmpty.flatStructure();   }
+	public HAPContextStructureValueDefinition getInputContextStructure(HAPContextStructureValueDefinition parentContextStructure) {  return HAPContextStructureValueDefinitionEmpty.flatStructure();   }
 	
 	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
 	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }

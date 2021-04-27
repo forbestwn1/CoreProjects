@@ -21,7 +21,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.util.script.HAPScriptFunctionInfo;
 import com.nosliw.data.core.runtime.js.util.script.HAPUtilityScriptForExecuteJSScript;
-import com.nosliw.data.core.script.context.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
 
 @HAPEntityWithAttribute
 public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implements HAPExecutableScriptWithSegment{

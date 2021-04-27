@@ -6,10 +6,10 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.HAPProcessorContextRelative;
+import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
@@ -21,7 +21,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagId;
 public class HAPProcessorUIEvent {
 
 	public static void processEvent(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
-		HAPConfigureContextProcessor contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
+		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
 
 		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
 		//process relative element in event defined in resource

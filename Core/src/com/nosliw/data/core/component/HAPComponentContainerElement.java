@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.common.HAPWithDataContext;
+import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPIdAttachment;
@@ -20,9 +20,9 @@ import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
 
 public abstract class HAPComponentContainerElement extends HAPSerializableImp implements HAPComponent{
 
@@ -45,7 +45,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	private HAPComponent m_componentEntity;
 	
 	//calculate out
-	private HAPContextStructure m_contextStructure;
+	private HAPContextStructureValueDefinition m_contextStructure;
 	
 	protected HAPComponentContainerElement() {}
 	
@@ -54,7 +54,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		this.m_elementId = elementId;
 		this.m_componentEntity = ((HAPComponent)this.getResourceContainer().getContainerElement(this.getElementId())).cloneComponent();
 		HAPUtilityComponent.mergeWithParentAttachment(this.m_componentEntity, this.m_componentContainer.getAttachmentContainer());    //build attachment
-		this.m_contextStructure = HAPUtilityContext.hardMerge(this.m_componentEntity.getContextStructure(), this.m_componentContainer.getContextStructure());   //build context
+		this.m_contextStructure = HAPUtilityContext.hardMerge(this.m_componentEntity.getValueContext(), this.m_componentContainer.getValueContext());   //build context
 		HAPInfoUtility.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
 	}
 
@@ -63,7 +63,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 	
 	@Override
-	public HAPContextStructure getContextStructure() {	return this.m_contextStructure;	}
+	public HAPContextStructureValueDefinition getValueContext() {	return this.m_contextStructure;	}
 
 	public HAPResourceDefinitionContainer getResourceContainer() {   return this.m_componentContainer;    }
 	public void setResourceContainer(HAPResourceDefinitionContainer container) {   this.m_componentContainer = container;     }
@@ -182,7 +182,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 
 	@Override
-	public void setContextStructure(HAPContextStructure context) {
+	public void setValueContext(HAPContextStructureValueDefinition context) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -238,7 +238,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 
 	@Override
-	public void cloneToDataContext(HAPWithDataContext dataContext) {
+	public void cloneToValueContext(HAPWithValueContext dataContext) {
 		// TODO Auto-generated method stub
 		
 	}

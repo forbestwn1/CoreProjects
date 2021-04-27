@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPDefinitionWrapperTask;
 
 public class HAPEmbededAttachmentReference extends HAPEntityInfoWritableImp{
 

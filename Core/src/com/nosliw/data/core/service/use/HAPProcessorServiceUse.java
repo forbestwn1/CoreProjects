@@ -9,17 +9,17 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.service.definition.HAPDefinitionService;
 import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPUtilityServiceInterface;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableTask;
+import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.structure.dataassociation.HAPUtilityDAProcess;
+import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
 
 public class HAPProcessorServiceUse {
 
@@ -33,7 +33,7 @@ public class HAPProcessorServiceUse {
 	}
 	
 	//enhance external context according to mapping with service
-	public static void enhanceContextByService(HAPDefinitionServiceUse definition, HAPContextStructure globalContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceContextByService(HAPDefinitionServiceUse definition, HAPContextStructureValueDefinition globalContext, HAPRuntimeEnvironment runtimeEnv) {
 		if(HAPProcessorServiceUse.isEnhanceContextByService(definition)) {
 			//process service use
 			HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
@@ -54,7 +54,7 @@ public class HAPProcessorServiceUse {
 		}
 	}
 	
-	public static HAPExecutableServiceUse process(HAPDefinitionServiceUse definition, HAPContextStructure globalContext, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableServiceUse process(HAPDefinitionServiceUse definition, HAPContextStructureValueDefinition globalContext, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);
 
 		//process service use
