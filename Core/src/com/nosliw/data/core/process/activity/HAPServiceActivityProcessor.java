@@ -22,8 +22,8 @@ import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPOutputStructure;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 
@@ -33,7 +33,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			String id,
 			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPContextStructureValueDefinitionGroup processDataContext,
+			HAPStructureValueDefinitionGroup processDataContext,
 			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -69,15 +69,15 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 	
 	class HAPBuilderResultContext1 implements HAPBuilderResultContext {
 		
-		HAPContextStructureValueDefinitionGroup m_processContext;
+		HAPStructureValueDefinitionGroup m_processContext;
 		
-		public HAPBuilderResultContext1(HAPContextStructureValueDefinitionGroup processContext) {
+		public HAPBuilderResultContext1(HAPStructureValueDefinitionGroup processContext) {
 			this.m_processContext = processContext;
 		}
 		
 		@Override
-		public HAPContextStructureValueDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
-			HAPContextStructureValueDefinitionGroup out = new HAPContextStructureValueDefinitionGroup();
+		public HAPStructureValueDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+			HAPStructureValueDefinitionGroup out = new HAPStructureValueDefinitionGroup();
 			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;
 				HAPExecutableDataAssociation outputMapping = serviceActivity.getService().getServiceMapping().getOutputMapping(resultName);

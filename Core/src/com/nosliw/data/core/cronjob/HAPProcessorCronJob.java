@@ -17,14 +17,14 @@ import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPProcessorCronJob {
 
 	public static HAPExecutableCronJob process(
 			HAPDefinitionCronJob cronJobDefinition,
 			String id,
-			HAPContextStructureValueDefinitionGroup parentContext, 
+			HAPStructureValueDefinitionGroup parentContext, 
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPManagerProcess processMan,
 			HAPDataTypeHelper dataTypeHelper, 

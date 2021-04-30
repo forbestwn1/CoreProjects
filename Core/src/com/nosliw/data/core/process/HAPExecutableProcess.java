@@ -26,7 +26,7 @@ import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociati
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableTask;
 import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 @HAPEntityWithAttribute
 public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecutableTask{
@@ -65,7 +65,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	private String m_startActivityId;
 	
 	//input variables
-	private HAPContextStructureValueDefinitionGroup m_context;  
+	private HAPStructureValueDefinitionGroup m_context;  
 	
 	//all possible result
 	private Map<String, HAPExecutableDataAssociation> m_results;
@@ -113,8 +113,8 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	public HAPExecutableDataAssociation getResult(String result) {  return this.m_results.get(result);   }
 	public Set<String> getResultNames(){   return this.m_results.keySet();  }
 	
-	public HAPContextStructureValueDefinitionGroup getContext() {   return this.m_context;  }
-	public void setContext(HAPContextStructureValueDefinitionGroup context) {   this.m_context = context;  }
+	public HAPStructureValueDefinitionGroup getContext() {   return this.m_context;  }
+	public void setContext(HAPStructureValueDefinitionGroup context) {   this.m_context = context;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

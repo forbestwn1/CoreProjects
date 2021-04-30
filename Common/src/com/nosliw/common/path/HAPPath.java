@@ -17,8 +17,12 @@ public class HAPPath {
 		return this.m_path;
 	}
 
-	public String[] getPathSegs(){
+	public String[] getPathSegments(){
 		return this.m_pathSegs;
+	}
+	
+	public HAPPath appendSegment(String segment) {
+		return new HAPPath(HAPNamingConversionUtility.cascadePath(this.m_path, segment));
 	}
 	
 	public HAPPath clonePath() {

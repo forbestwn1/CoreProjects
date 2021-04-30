@@ -5,7 +5,7 @@ import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.structure.HAPRoot;
 
-public interface HAPContextStructureValueDefinition extends HAPSerializable, HAPContextStructureValue{
+public interface HAPStructureValueDefinition extends HAPSerializable, HAPStructureValue{
 
 	@HAPAttribute
 	public static final String TYPE = "type";
@@ -16,12 +16,10 @@ public interface HAPContextStructureValueDefinition extends HAPSerializable, HAP
 
 	boolean isEmpty();
 	
-	HAPRoot getElement(String eleName, boolean createIfNotExist);
+	HAPRoot getRoot(String eleName, boolean createIfNotExist);
 
 	void updateRootName(HAPUpdateName nameUpdate);
 	
-	HAPContextStructureValueDefinition cloneContextStructure();
-
-	void hardMergeWith(HAPContextStructureValueDefinition context);
+	void hardMergeWith(HAPStructureValueDefinition context);
 
 }

@@ -22,7 +22,7 @@ import com.nosliw.data.core.structure.HAPUtilityContext;
 //Also, we can find global name by local name
 //flat context is back compatible with context
 @HAPEntityWithAttribute
-public class HAPContextStructureValueExecutable extends HAPSerializableImp{
+public class HAPStructureValueExecutable extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String CONTEXT = "context";
@@ -39,13 +39,13 @@ public class HAPContextStructureValueExecutable extends HAPSerializableImp{
 	
 	private Map<String, Set<String>> m_namesByVarId;
 	
-	public HAPContextStructureValueExecutable() {
+	public HAPStructureValueExecutable() {
 		this.m_context = new LinkedHashMap<String, HAPElementContextStructureValueExecutable>();
 		this.m_varIdByName = new LinkedHashMap<String, String>();
 		this.m_namesByVarId = new LinkedHashMap<String, Set<String>>();
 	}
 
-	public void addElement(HAPRoot element) {	this.addElement(element, null);	}
+	public void addElement(HAPRoot element) {	this.addRoot(element, null);	}
 	
 	public void addElement(HAPElementContextStructureValueExecutable element, Set<String> aliases) {
 		String id = element.getLocalId();
@@ -107,11 +107,11 @@ public class HAPContextStructureValueExecutable extends HAPSerializableImp{
 		return updatedPath.getFullName();
 	}
 
-	public HAPContextStructureValueExecutable getVariableContext() {   
-		HAPContextStructureValueExecutable out = new HAPContextStructureValueExecutable();
-		HAPContextStructureValueDefinitionFlat varContext = this.m_context.getVariableContext();
-		for(String rootName : varContext.getElementNames()) {
-			out.addElement(varContext.getElement(rootName), rootName, this.m_namesByVarId.get(rootName));
+	public HAPStructureValueExecutable getVariableContext() {   
+		HAPStructureValueExecutable out = new HAPStructureValueExecutable();
+		HAPStructureValueDefinitionFlat varContext = this.m_context.getVariableContext();
+		for(String rootName : varContext.getRootNames()) {
+			out.addRoot(varContext.getRoot(rootName), rootName, this.m_namesByVarId.get(rootName));
 		}
 		return out;
 	}
@@ -140,10 +140,10 @@ public class HAPContextStructureValueExecutable extends HAPSerializableImp{
 		return out;
 	}
 	
-	public HAPContextStructureValueDefinitionFlat getContext() {  return this.m_context;  }
+	public HAPStructureValueDefinitionFlat getContext() {  return this.m_context;  }
 	
-	public HAPContextStructureValueExecutable cloneContextFlat() {
-		HAPContextStructureValueExecutable out = new HAPContextStructureValueExecutable();
+	public HAPStructureValueExecutable cloneContextFlat() {
+		HAPStructureValueExecutable out = new HAPStructureValueExecutable();
 		out.m_varIdByName.putAll(this.m_varIdByName);
 		for(String varId : this.m_namesByVarId.keySet()) {
 			out.m_namesByVarId.put(varId, new HashSet<String>(this.m_namesByVarId.get(varId)));

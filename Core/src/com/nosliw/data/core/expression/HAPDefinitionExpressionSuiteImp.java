@@ -8,13 +8,13 @@ import java.util.Set;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.common.HAPWithValueContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 
 public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionSuite, HAPWithValueContext, HAPWithConstantDefinition{
 
 	private Map<String, HAPDefinitionExpressionGroup> m_expressionGroups;
 
-	private HAPContextStructureValueDefinition m_context;
+	private HAPStructureValueDefinition m_context;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
@@ -31,7 +31,7 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 
 	@Override
 	public void addEntityElement(HAPDefinitionExpressionGroup expressionGroup) {
-		expressionGroup.setValueContext(this.m_context.cloneContextStructure());
+		expressionGroup.setValueContext(this.m_context.cloneStructure());
 		for(String id : this.m_constantDefinitions.keySet()) {
 			expressionGroup.addConstantDefinition(this.m_constantDefinitions.get(id).cloneConstantDefinition());
 		}
@@ -53,20 +53,20 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 	}
 
 	@Override
-	public HAPContextStructureValueDefinition getValueContext() {  return this.m_context; }
+	public HAPStructureValueDefinition getValueContext() {  return this.m_context; }
 
 	@Override
-	public void setValueContext(HAPContextStructureValueDefinition context) {  
+	public void setValueContext(HAPStructureValueDefinition context) {  
 		this.m_context = context;  
 		for(String id : this.m_expressionGroups.keySet()) {
-			this.m_expressionGroups.get(id).setValueContext(context.cloneContextStructure());
+			this.m_expressionGroups.get(id).setValueContext(context.cloneStructure());
 		}
 	}
 	
 	@Override
 	public HAPDefinitionExpressionSuite cloneExpressionSuiteDefinition() {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
-		if(this.m_context!=null)	out.m_context = this.m_context.cloneContextStructure();
+		if(this.m_context!=null)	out.m_context = this.m_context.cloneStructure();
 		for(String id : this.m_expressionGroups.keySet()) {
 			out.m_expressionGroups.put(id, this.m_expressionGroups.get(id).cloneExpressionGroupDefinition());
 		}

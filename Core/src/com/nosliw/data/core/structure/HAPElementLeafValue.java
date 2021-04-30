@@ -11,18 +11,18 @@ public class HAPElementLeafValue extends HAPElementLeafVariable{
 	public String getType() {	return HAPConstantShared.CONTEXT_ELEMENTTYPE_VALUE;	}
 
 	@Override
-	public HAPElement cloneContextDefinitionElement() {
+	public HAPElement cloneStructureElement() {
 		HAPElementLeafValue out = new HAPElementLeafValue();
-		this.toContextDefinitionElement(out);
+		this.toStructureElement(out);
 		return out;
 	}
 
 	@Override
-	public HAPElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) { return this; }
+	public HAPElement toSolidStructureElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) { return this; }
 
 	@Override
-	public void toContextDefinitionElement(HAPElement out) {
-		super.toContextDefinitionElement(out);
+	public void toStructureElement(HAPElement out) {
+		super.toStructureElement(out);
 	}
 	
 	@Override

@@ -89,9 +89,9 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 		return out;
 	}
 
-	public HAPRoot cloneContextDefinitionRoot() {
+	public HAPRoot cloneRoot() {
 		HAPRoot out = this.cloneContextDefinitionRootBase();
-		out.m_definition = this.m_definition.cloneContextDefinitionElement();
+		out.m_definition = this.m_definition.cloneStructureElement();
 		out.m_defaultValue = this.m_defaultValue;
 		out.m_localId = this.m_localId;
 		return out;

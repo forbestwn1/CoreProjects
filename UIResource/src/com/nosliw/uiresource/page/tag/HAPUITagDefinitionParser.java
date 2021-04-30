@@ -55,7 +55,7 @@ public class HAPUITagDefinitionParser {
 	}
 	
 	private static void parseUITagDefinitionData(HAPUITagDefinitionData definition, NativeObject defObjJS) {
-		HAPElementLeafRelative eleDef = (HAPElementLeafRelative)definition.getContext().getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE).getElement("internal_data").getDefinition();
+		HAPElementLeafRelative eleDef = (HAPElementLeafRelative)definition.getContext().getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE).getRoot("internal_data").getDefinition();
 		definition.setDataTypeCriteria(((HAPElementLeafData)eleDef.getDefinition()).getCriteria());
 	}
 	

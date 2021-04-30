@@ -47,7 +47,7 @@ public class HAPComplexName {
 
 	public String[] getPathSegs(){
 		if(this.m_path==null)  return new String[0];
-		return this.m_path.getPathSegs();
+		return this.m_path.getPathSegments();
 	}
 	
 	public String getFullName(){

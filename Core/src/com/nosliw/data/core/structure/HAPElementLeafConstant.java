@@ -44,14 +44,14 @@ public class HAPElementLeafConstant extends HAPElement{
 	}
 
 	@Override
-	public HAPElement cloneContextDefinitionElement() {
+	public HAPElement cloneStructureElement() {
 		HAPElementLeafConstant out = new HAPElementLeafConstant();
-		this.toContextDefinitionElement(out);
+		this.toStructureElement(out);
 		return out;
 	}
 
 	@Override
-	public HAPElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this; }
+	public HAPElement toSolidStructureElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this; }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -62,8 +62,8 @@ public class HAPElementLeafConstant extends HAPElement{
 	}
 
 	@Override
-	public void toContextDefinitionElement(HAPElement out) {
-		super.toContextDefinitionElement(out);
+	public void toStructureElement(HAPElement out) {
+		super.toStructureElement(out);
 		((HAPElementLeafConstant)out).m_value = this.m_value;
 	}
 	

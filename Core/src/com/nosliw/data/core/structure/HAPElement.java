@@ -22,13 +22,13 @@ public abstract class HAPElement extends HAPSerializableImp{
 	
 	abstract public String getType(); 
 	
-	abstract public HAPElement cloneContextDefinitionElement();
+	abstract public HAPElement cloneStructureElement();
 
-	abstract public HAPElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv);
+	abstract public HAPElement toSolidStructureElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv);
 
-	public HAPElement getSolidContextDefinitionElement() {  return this;  }
+	public HAPElement getSolidStructureElement() {  return this;  }
 	
-	public void toContextDefinitionElement(HAPElement out) {
+	public void toStructureElement(HAPElement out) {
 		out.m_processed = this.m_processed;
 	}
 
@@ -56,5 +56,4 @@ public abstract class HAPElement extends HAPSerializableImp{
 		}
 		return out;
 	}
-	
 }

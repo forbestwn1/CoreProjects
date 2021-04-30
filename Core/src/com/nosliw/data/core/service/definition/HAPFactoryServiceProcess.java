@@ -26,7 +26,7 @@ import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
 public class HAPFactoryServiceProcess implements HAPFactoryService{
 
@@ -73,19 +73,19 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		}
 
 		//external context from parameter of service
-		HAPContextStructureValueDefinitionFlat inputExternalContext = new HAPContextStructureValueDefinitionFlat();
+		HAPStructureValueDefinitionFlat inputExternalContext = new HAPStructureValueDefinitionFlat();
 		HAPServiceInterface serviceInterface = staticInfo.getInterface().getInterface();
 		for(HAPServiceParm parmDef : serviceInterface.getParms()){
-			inputExternalContext.addElement(parmDef.getName(), new HAPElementLeafData(new HAPVariableDataInfo((parmDef.getCriteria()))));
+			inputExternalContext.addRoot(parmDef.getName(), new HAPElementLeafData(new HAPVariableDataInfo((parmDef.getCriteria()))));
 		}
 
 		Map<String, HAPParentContext> outputExternalContexts = new LinkedHashMap<String, HAPParentContext>();
 		Map<String, HAPServiceResult> serviceResult = serviceInterface.getResults();
 		for(String resultName : serviceResult.keySet()) {
 			List<HAPServiceOutput> output = serviceResult.get(resultName).getOutput();
-			HAPContextStructureValueDefinitionFlat outputContext = new HAPContextStructureValueDefinitionFlat();
+			HAPStructureValueDefinitionFlat outputContext = new HAPStructureValueDefinitionFlat();
 			for(HAPServiceOutput parm : output) {
-				outputContext.addElement(parm.getName(), new HAPElementLeafData(new HAPVariableDataInfo((parm.getCriteria()))));
+				outputContext.addRoot(parm.getName(), new HAPElementLeafData(new HAPVariableDataInfo((parm.getCriteria()))));
 			}
 			outputExternalContexts.put(resultName, HAPParentContext.createDefault(outputContext));
 		}

@@ -56,29 +56,29 @@ public class HAPElementNode extends HAPElementLeafVariable{
 	}
 
 	@Override
-	public HAPElement cloneContextDefinitionElement() {
+	public HAPElement cloneStructureElement() {
 		HAPElementNode out = new HAPElementNode();
-		this.toContextDefinitionElement(out);
+		this.toStructureElement(out);
 		return out;
 	}
 
 	@Override
-	public void toContextDefinitionElement(HAPElement out) {
-		super.toContextDefinitionElement(out);
+	public void toStructureElement(HAPElement out) {
+		super.toStructureElement(out);
 		HAPElementNode that = (HAPElementNode)out;
 		for(String name : this.m_children.keySet()) {
-			that.addChild(name, this.m_children.get(name).cloneContextDefinitionElement());
+			that.addChild(name, this.m_children.get(name).cloneStructureElement());
 		}
 	}
 	
 	@Override
-	public HAPElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPElement toSolidStructureElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementNode solid = new HAPElementNode();
-		super.toContextDefinitionElement(solid);
+		super.toStructureElement(solid);
 		for(String name : this.getChildren().keySet()){
 			String solidName = HAPProcessorContextSolidate.getSolidName(name, constants, runtimeEnv);
 			HAPElement child = this.getChildren().get(name);
-			HAPElement solidChild = child.toSolidContextDefinitionElement(constants, runtimeEnv);
+			HAPElement solidChild = child.toSolidStructureElement(constants, runtimeEnv);
 			solid.addChild(solidName, solidChild);
 		}
 		return solid;

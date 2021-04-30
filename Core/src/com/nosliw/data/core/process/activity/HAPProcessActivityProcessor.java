@@ -19,8 +19,8 @@ import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 
@@ -30,7 +30,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 			String id, 
 			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPContextStructureValueDefinitionGroup processDataContext, 
+			HAPStructureValueDefinitionGroup processDataContext, 
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -73,7 +73,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		@Override
-		public HAPContextStructureValueDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+		public HAPStructureValueDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPProcessActivityExecutable processActivity = (HAPProcessActivityExecutable)activity;
 			return this.m_processExe.getContext();
 		}

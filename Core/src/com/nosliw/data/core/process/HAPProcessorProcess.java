@@ -13,14 +13,14 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPProcessorProcess{
 
 	//process process in suite
 	public static HAPExecutableProcess process(
 			HAPResourceDefinitionProcess processDef,
-			HAPContextStructureValueDefinitionGroup extraContext,
+			HAPStructureValueDefinitionGroup extraContext,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processMan,
 			HAPRuntimeEnvironment runtimeEnv,
@@ -33,15 +33,15 @@ public class HAPProcessorProcess{
 	public static HAPExecutableProcess process(
 			String id, 
 			HAPEntityWithResourceContext process,
-			HAPContextStructureValueDefinitionGroup extraContext,
+			HAPStructureValueDefinitionGroup extraContext,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processMan,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		HAPExecutableProcess out = null;
-		HAPContextStructureValueDefinitionGroup oldContext = null;
+		HAPStructureValueDefinitionGroup oldContext = null;
 		do {
-			if(oldContext==null)   oldContext = (HAPContextStructureValueDefinitionGroup)HAPUtilityComponent.processElementComponentContext((HAPResourceDefinitionProcess)process.getEntity(), extraContext, runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForProcess()); 
+			if(oldContext==null)   oldContext = (HAPStructureValueDefinitionGroup)HAPUtilityComponent.processElementComponentContext((HAPResourceDefinitionProcess)process.getEntity(), extraContext, runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForProcess()); 
 			else oldContext = out.getContext();
 			out = new HAPExecutableProcess((HAPResourceDefinitionProcess)process.getEntity(), id, processMan.getPluginManager());
 			HAPProcessorProcess.process(out, oldContext, (HAPContextProcessor)process.getResourceContext(), serviceProviders, processMan, runtimeEnv, processTracker);
@@ -51,14 +51,14 @@ public class HAPProcessorProcess{
 	
 	private static void process(
 			HAPExecutableProcess out,
-			HAPContextStructureValueDefinitionGroup originContext, 
+			HAPStructureValueDefinitionGroup originContext, 
 			HAPContextProcessor processContext,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processMan,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		if(processContext==null)   processContext = HAPContextProcessor.createContext(runtimeEnv.getResourceDefinitionManager());
-		HAPContextStructureValueDefinitionGroup context = originContext.cloneContextGroup();
+		HAPStructureValueDefinitionGroup context = originContext.cloneContextGroup();
 		Map<String, HAPExecutableDataAssociation> results = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(out.getDefinition().getAttachmentContainer(), serviceProviders, runtimeEnv.getServiceManager().getServiceDefinitionManager()); 

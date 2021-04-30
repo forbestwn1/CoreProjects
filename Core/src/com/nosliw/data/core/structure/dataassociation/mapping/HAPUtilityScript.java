@@ -19,7 +19,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPUtilityContextScript;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
 public class HAPUtilityScript {
 
@@ -45,10 +45,10 @@ public class HAPUtilityScript {
 		templateParms.put("isInherit", (!HAPConstant.INHERITMODE_NONE.equals(HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(null).inheritMode))+"");
 		
 		//build init output object for mapped root
-		HAPContextStructureValueDefinitionFlat context = new HAPContextStructureValueDefinitionFlat();
-		HAPContextStructureValueDefinitionFlat daCotnext = association.getMapping();
-		for(String eleName : daCotnext.getElementNames()) {
-			context.addElement(eleName, daCotnext.getElement(eleName));
+		HAPStructureValueDefinitionFlat context = new HAPStructureValueDefinitionFlat();
+		HAPStructureValueDefinitionFlat daCotnext = association.getMapping();
+		for(String eleName : daCotnext.getRootNames()) {
+			context.addRoot(eleName, daCotnext.getRoot(eleName));
 		}
 		JSONObject output = HAPUtilityContextScript.buildSkeletonJsonObject(context, association.isFlatOutput());
 		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));

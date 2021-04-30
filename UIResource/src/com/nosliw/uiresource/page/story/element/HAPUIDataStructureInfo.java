@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 @HAPEntityWithAttribute
 public class HAPUIDataStructureInfo extends HAPSerializableImp{
@@ -17,15 +17,15 @@ public class HAPUIDataStructureInfo extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String CONTEXT = "context";
 
-	private HAPContextStructureValueDefinitionGroup m_context;
+	private HAPStructureValueDefinitionGroup m_context;
 	
 	public HAPUIDataStructureInfo() {
-		this.m_context = new HAPContextStructureValueDefinitionGroup();
+		this.m_context = new HAPStructureValueDefinitionGroup();
 	}
 	
-	public HAPContextStructureValueDefinitionGroup getContext() {	return this.m_context;	}
+	public HAPStructureValueDefinitionGroup getContext() {	return this.m_context;	}
 	
-	public void setContext(HAPContextStructureValueDefinitionGroup context) {   this.m_context = context;      }
+	public void setContext(HAPStructureValueDefinitionGroup context) {   this.m_context = context;      }
 
 	public HAPUIDataStructureInfo cloneUIDataStructureInfo() {
 		HAPUIDataStructureInfo out = new HAPUIDataStructureInfo();
@@ -41,7 +41,7 @@ public class HAPUIDataStructureInfo extends HAPSerializableImp{
 		super.buildObjectByJson(jsonObj);
 		JSONObject contextObj = jsonObj.optJSONObject(CONTEXT);
 		if(contextObj!=null) {
-			this.m_context = new HAPContextStructureValueDefinitionGroup();
+			this.m_context = new HAPStructureValueDefinitionGroup();
 			this.m_context.buildObject(contextObj, HAPSerializationFormat.JSON);
 		}
 		return true;  

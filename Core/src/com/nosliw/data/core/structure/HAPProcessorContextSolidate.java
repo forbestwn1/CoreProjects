@@ -12,24 +12,24 @@ import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPProcessorContextSolidate {
 
-	static public HAPContextStructureValueDefinitionGroup process(
-			HAPContextStructureValueDefinitionGroup originalContextGroup,
+	static public HAPStructureValueDefinitionGroup process(
+			HAPStructureValueDefinitionGroup originalContextGroup,
 			HAPRuntimeEnvironment runtimeEnv){
 		//find all constants
 		Map<String, Object> constantsData = buildConstants(originalContextGroup);
 
-		HAPContextStructureValueDefinitionGroup out = new HAPContextStructureValueDefinitionGroup(originalContextGroup.getInfo());
-		for(String categary : HAPContextStructureValueDefinitionGroup.getAllContextTypes()) {
+		HAPStructureValueDefinitionGroup out = new HAPStructureValueDefinitionGroup(originalContextGroup.getInfo());
+		for(String categary : HAPStructureValueDefinitionGroup.getAllContextTypes()) {
 			Map<String, HAPRoot> contextDefRoots = originalContextGroup.getElements(categary);
 			for(String name : contextDefRoots.keySet()) {
 				HAPRoot contextDefRoot = contextDefRoots.get(name);
 				if(!contextDefRoot.isConstant()) {
 					String solidName = getSolidName(name, constantsData, runtimeEnv);
-					contextDefRoot.setDefinition(contextDefRoot.getDefinition().toSolidContextDefinitionElement(constantsData, runtimeEnv));
+					contextDefRoot.setDefinition(contextDefRoot.getDefinition().toSolidStructureElement(constantsData, runtimeEnv));
 					out.addElement(solidName, contextDefRoot, categary);
 				}
 				else {
@@ -40,9 +40,9 @@ public class HAPProcessorContextSolidate {
 		return out;
 	}
 
-	private static Map<String, Object> buildConstants(HAPContextStructureValueDefinitionGroup originalContextGroup){
+	private static Map<String, Object> buildConstants(HAPStructureValueDefinitionGroup originalContextGroup){
 		Map<String, Object> constantsData = new LinkedHashMap<String, Object>();
-		String[] categarys = HAPContextStructureValueDefinitionGroup.getAllContextTypes(); 
+		String[] categarys = HAPStructureValueDefinitionGroup.getAllContextTypes(); 
 		for(int i=categarys.length-1; i>=0; i--) {
 			Map<String, HAPRoot> nodes = originalContextGroup.getElements(categarys[i]);
 			for(String name : nodes.keySet()) {

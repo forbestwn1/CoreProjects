@@ -43,20 +43,20 @@ public class HAPElementLeafData extends HAPElementLeafVariable{
 	}
 
 	@Override
-	public HAPElement cloneContextDefinitionElement() {
+	public HAPElement cloneStructureElement() {
 		HAPElementLeafData out = new HAPElementLeafData();
-		this.toContextDefinitionElement(out);
+		this.toStructureElement(out);
 		return out;
 	}
 
 	@Override
-	public void toContextDefinitionElement(HAPElement out) {
-		super.toContextDefinitionElement(out);
+	public void toStructureElement(HAPElement out) {
+		super.toStructureElement(out);
 		if(this.m_dataInfo!=null)		((HAPElementLeafData)out).m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
 	}
 
 	@Override
-	public HAPElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {	return this;}
+	public HAPElement toSolidStructureElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {	return this;}
 
 	@Override
 	public boolean equals(Object obj) {

@@ -12,10 +12,14 @@ public class HAPComplexPath {
 	
 	private String m_rootName;
 	
-	public HAPComplexPath(String rootName, String path){
+	public HAPComplexPath(String rootName, HAPPath path){
 		this.m_rootName = rootName;
-		this.m_path = new HAPPath(path);
+		this.m_path = path;
 		this.m_fullName = HAPNamingConversionUtility.cascadePath(this.m_rootName, this.m_path.getPath());
+	}
+	
+	public HAPComplexPath(String rootName, String path){
+		this(rootName, new HAPPath(path));
 	}
 	
 	public HAPComplexPath(String fullName){
@@ -45,11 +49,15 @@ public class HAPComplexPath {
 
 	public String[] getPathSegs(){
 		if(this.m_path==null)  return new String[0];
-		return this.m_path.getPathSegs();
+		return this.m_path.getPathSegments();
 	}
 	
 	public String getFullName(){
 		return this.m_fullName;
+	}
+
+	public HAPComplexPath appendSegment(String segment) {
+		return new HAPComplexPath(this.m_rootName, this.m_path.appendSegment(segment));
 	}
 	
 	public HAPComplexPath cloneComplexPath() {

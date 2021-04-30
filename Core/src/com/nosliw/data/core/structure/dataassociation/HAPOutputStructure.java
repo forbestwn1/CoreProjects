@@ -12,30 +12,30 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.structure.HAPParserContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 
 public class HAPOutputStructure extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String CONTEXTSTRUCTURE = "contextStructure";
 
-	private Map<String, HAPContextStructureValueDefinition> m_contextStructrue;
+	private Map<String, HAPStructureValueDefinition> m_contextStructrue;
 
 	public HAPOutputStructure() {
-		this.m_contextStructrue = new LinkedHashMap<String, HAPContextStructureValueDefinition>();
+		this.m_contextStructrue = new LinkedHashMap<String, HAPStructureValueDefinition>();
 	}
 
 	public Set<String> getNames(){   return this.m_contextStructrue.keySet();   };
 	
-	public Map<String, HAPContextStructureValueDefinition> getOutputStructures() {		return this.m_contextStructrue;	}
+	public Map<String, HAPStructureValueDefinition> getOutputStructures() {		return this.m_contextStructrue;	}
 	
-	public HAPContextStructureValueDefinition getOutputStructure(String name) {   return this.m_contextStructrue.get(name);   }
+	public HAPStructureValueDefinition getOutputStructure(String name) {   return this.m_contextStructrue.get(name);   }
 
-	public HAPContextStructureValueDefinition getOutputStructure() {	return this.m_contextStructrue.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
+	public HAPStructureValueDefinition getOutputStructure() {	return this.m_contextStructrue.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
 	
-	public void addOutputStructure(String name, HAPContextStructureValueDefinition structure) {   this.m_contextStructrue.put(name, structure);   }
+	public void addOutputStructure(String name, HAPStructureValueDefinition structure) {   this.m_contextStructrue.put(name, structure);   }
 
-	public void addOutputStructure(HAPContextStructureValueDefinition structure) {   this.m_contextStructrue.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT, structure);   }
+	public void addOutputStructure(HAPStructureValueDefinition structure) {   this.m_contextStructrue.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT, structure);   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){  

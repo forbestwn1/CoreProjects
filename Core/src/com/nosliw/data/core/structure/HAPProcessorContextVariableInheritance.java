@@ -7,27 +7,27 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPProcessorContextVariableInheritance {
 
 	//merge with parent through inheritance
-	public static HAPContextStructureValueDefinitionGroup process(HAPContextStructureValueDefinitionGroup orgContext, HAPParentContext parent, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
-		HAPContextStructureValueDefinitionGroup out = processConstant(orgContext);
+	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup orgContext, HAPParentContext parent, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
+		HAPStructureValueDefinitionGroup out = processConstant(orgContext);
 		for(String parentName : parent.getNames()) {
-			out = process(out, (HAPContextStructureValueDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedContext(parentName, parent, orgContext), false), inheritMode, inheritanceExcludedInfo, runtimeEnv);
+			out = process(out, (HAPStructureValueDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedContext(parentName, parent, orgContext), false), inheritMode, inheritanceExcludedInfo, runtimeEnv);
 		}
 		return out;
 	}
 
-	public static HAPContextStructureValueDefinitionGroup process(HAPContextStructureValueDefinitionGroup orgContext, HAPContextStructureValueDefinitionGroup parentContextGroup, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
-		HAPContextStructureValueDefinitionGroup out = orgContext.cloneContextGroup();
+	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup orgContext, HAPStructureValueDefinitionGroup parentContextGroup, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
+		HAPStructureValueDefinitionGroup out = orgContext.cloneContextGroup();
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
-			for(String categary : HAPContextStructureValueDefinitionGroup.getAllContextTypes()){
-				if(parentContextGroup!=null && Arrays.asList(HAPContextStructureValueDefinitionGroup.getInheritableContextTypes()).contains(categary)) {
-					HAPContextStructureValueDefinitionFlat parentContext = parentContextGroup.getContext(categary);
-					Map<String, HAPRoot> parentEles = parentContext.getElements();
+			for(String categary : HAPStructureValueDefinitionGroup.getAllContextTypes()){
+				if(parentContextGroup!=null && Arrays.asList(HAPStructureValueDefinitionGroup.getInheritableContextTypes()).contains(categary)) {
+					HAPStructureValueDefinitionFlat parentContext = parentContextGroup.getContext(categary);
+					Map<String, HAPRoot> parentEles = parentContext.getRoots();
 					for(String eleName : parentEles.keySet()) {
 						if(isInheritable(out, parentContextGroup, categary, eleName, inheritMode)) {
 							out.addElement(eleName, HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, categary, eleName, inheritanceExcludedInfo), categary);
@@ -40,10 +40,10 @@ public class HAPProcessorContextVariableInheritance {
 	} 
 
 	//add FINAL to all constant root node, means constant cannot be override by parent 
-	private static HAPContextStructureValueDefinitionGroup processConstant(HAPContextStructureValueDefinitionGroup contextGroup) {
-		HAPContextStructureValueDefinitionGroup out = contextGroup.cloneContextGroup();
-		for(String contextCategary : HAPContextStructureValueDefinitionGroup.getAllContextTypes()) {
-			for(String name : out.getContext(contextCategary).getElementNames()) {
+	private static HAPStructureValueDefinitionGroup processConstant(HAPStructureValueDefinitionGroup contextGroup) {
+		HAPStructureValueDefinitionGroup out = contextGroup.cloneContextGroup();
+		for(String contextCategary : HAPStructureValueDefinitionGroup.getAllContextTypes()) {
+			for(String name : out.getContext(contextCategary).getRootNames()) {
 				HAPRoot node = out.getElement(contextCategary, name);
 				if(node.isConstant()) {
 					node.getInfo().setValue(HAPRoot.INHERIT_MODE, HAPRoot.INHERIT_MODE_FINAL);
@@ -54,7 +54,7 @@ public class HAPProcessorContextVariableInheritance {
 	}
 	
 	//whether child can herit from parent element
-	private static boolean isInheritable(HAPContextStructureValueDefinitionGroup childContextGroup, HAPContextStructureValueDefinitionGroup parentContextGroup, String categary, String eleName, String inheritMode) {
+	private static boolean isInheritable(HAPStructureValueDefinitionGroup childContextGroup, HAPStructureValueDefinitionGroup parentContextGroup, String categary, String eleName, String inheritMode) {
 		boolean out = false;
 		HAPRoot childNode = childContextGroup.getElement(categary, eleName);
 		if(childNode==null) 		out = true;

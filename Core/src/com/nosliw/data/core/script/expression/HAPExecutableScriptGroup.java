@@ -20,8 +20,8 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueExecutable;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueExecutable;
 
 @HAPEntityWithAttribute
 public class HAPExecutableScriptGroup extends HAPExecutableImp{
@@ -35,9 +35,9 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	@HAPAttribute
 	public static final String CONTEXT = "context";
 	
-	private HAPContextStructureValueDefinition m_contextStructure;
+	private HAPStructureValueDefinition m_contextStructure;
 	
-	private HAPContextStructureValueExecutable m_flatContext;
+	private HAPStructureValueExecutable m_flatContext;
 	
 	private HAPExecutableExpressionGroup m_expressionExe;
 	
@@ -50,12 +50,12 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 //		this.m_constants = new LinkedHashMap<String, Object>();
 	}
 	
-	public void setContextStructure(HAPContextStructureValueDefinition contextStructure) {   
+	public void setContextStructure(HAPStructureValueDefinition contextStructure) {   
 		this.m_contextStructure = contextStructure;
 		this.m_flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(m_contextStructure);
 	}
 	
-	public HAPContextStructureValueExecutable getContextFlat() {    return this.m_flatContext;    }
+	public HAPStructureValueExecutable getContextFlat() {    return this.m_flatContext;    }
 
 	public HAPExecutableExpressionGroup getExpression() {    return this.m_expressionExe;   }
 	public void setExpression(HAPExecutableExpressionGroup expression) {    this.m_expressionExe = expression;    }

@@ -12,12 +12,12 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPUtilityContextScript {
 
-	public static HAPJsonTypeScript buildContextInitScript(HAPContextStructureValueDefinitionGroup context) {
+	public static HAPJsonTypeScript buildContextInitScript(HAPStructureValueDefinitionGroup context) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		//build init output object 
 		JSONObject output = HAPUtilityContextScript.buildDefaultJsonObject(context);
@@ -29,7 +29,7 @@ public class HAPUtilityContextScript {
 	}
 	
 	//build default value structure for context group
-	public static JSONObject buildDefaultJsonObject(HAPContextStructureValueDefinitionGroup contextGroup) {
+	public static JSONObject buildDefaultJsonObject(HAPStructureValueDefinitionGroup contextGroup) {
 		JSONObject out = new JSONObject();
 		for(String categary : contextGroup.getContextTypes()) {
 			out.put(categary, buildDefaultJsonObject(contextGroup.getContext(categary)));
@@ -37,10 +37,10 @@ public class HAPUtilityContextScript {
 		return out;
 	}
 	
-	public static JSONObject buildDefaultJsonObject(HAPContextStructureValueDefinitionFlat context) {
+	public static JSONObject buildDefaultJsonObject(HAPStructureValueDefinitionFlat context) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		for(String contextEleName : context.getElementNames()) {
-			Object value = context.getElement(contextEleName).getDefaultValue();
+		for(String contextEleName : context.getRootNames()) {
+			Object value = context.getRoot(contextEleName).getDefaultValue();
 			if(value!=null) {
 				jsonMap.put(contextEleName, value.toString());
 			}
@@ -49,11 +49,11 @@ public class HAPUtilityContextScript {
 	}
 
 	//build skeleton, it is used for data mapping operation
-	public static JSONObject buildSkeletonJsonObject(HAPContextStructureValueDefinitionFlat context, boolean isFlatRootName) {
+	public static JSONObject buildSkeletonJsonObject(HAPStructureValueDefinitionFlat context, boolean isFlatRootName) {
 		JSONObject output = new JSONObject();
-		for(String rootName : context.getElementNames()) {
-			if(HAPConstantShared.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(context.getElement(rootName).getInfo()))) {
-				HAPElement contextDefEle = context.getElement(rootName).getDefinition();
+		for(String rootName : context.getRootNames()) {
+			if(HAPConstantShared.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(context.getRoot(rootName).getInfo()))) {
+				HAPElement contextDefEle = context.getRoot(rootName).getDefinition();
 				Object contextEleJson = buildJsonValue(contextDefEle);
 
 				if(contextEleJson!=null) {

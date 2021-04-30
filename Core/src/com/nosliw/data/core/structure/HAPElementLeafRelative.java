@@ -38,11 +38,12 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	@HAPAttribute
 	public static final String REVERSEMATCHERS = "reverseMatchers";
 	
-	//definition of the path
-	private String m_reference;
+	//definition of the path (reference + path)
+	private String m_referencePath;
 
-	//path after resolve
-	private HAPComplexPath m_resolvedPath;
+	//path after resolve (root id + path)
+	private HAPComplexPath m_resolvedPath; 
+	private String m_unResolvedRemainPath;
 	
 	//parent name for referred context, for instance, self, external context
 	private String m_parent;
@@ -64,14 +65,14 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	
 	public HAPElementLeafRelative(String path) {
 		this();
-		this.setPathDefinition(path);
+		this.setReferencePath(path);
 	}
 	
 	@Override
 	public String getType() {		return HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE;	}
 
 	@Override
-	public HAPElement getSolidContextDefinitionElement() {	return this.m_definition;	}
+	public HAPElement getSolidStructureElement() {	return this.m_definition;	}
 
 	public String getParent() {
 		if(HAPBasicUtility.isStringNotEmpty(this.m_parent))   return this.m_parent;
@@ -81,16 +82,16 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	public void setParent(String parent) {		this.m_parent = parent;	}
 	
 	public HAPElement getDefinition() {   return this.m_definition;   }
-	public void setDefinition(HAPElement definition) {   this.m_definition = definition.getSolidContextDefinitionElement();   }
+	public void setDefinition(HAPElement definition) {   this.m_definition = definition.getSolidStructureElement();   }
 	
 	public HAPReferenceContextNode getSolidNodeReference() {    return this.m_solidNodeRef;    }
 	public void setSolidNodeReference(HAPReferenceContextNode solidNodeRef) {    this.m_solidNodeRef = solidNodeRef;    }
 	
-	public String getPathDefinition() {   return this.m_reference;    }
-	public void setPathDefinition(String path) {  this.m_reference = path;	}
+	public String getReferencePath() {   return this.m_referencePath;    }
+	public void setReferencePath(String path) {  this.m_referencePath = path;	}
 
-	public HAPReferenceElement getResolvedPath() {   return this.m_resolvedPath; }
-	public void setResolvedPath(HAPReferenceElement resolvedPath) {   this.m_resolvedPath = resolvedPath;   }
+	public HAPComplexPath getResolvedPath() {   return this.m_resolvedPath; }
+	public void setResolvedPath(HAPComplexPath resolvedPath) {   this.m_resolvedPath = resolvedPath;   }
 	
 	public void setMatchers(Map<String, HAPMatchers> matchers){
 		this.m_matchers.clear();
@@ -112,13 +113,13 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	}
 	
 	@Override
-	public void toContextDefinitionElement(HAPElement out) {
-		super.toContextDefinitionElement(out);
+	public void toStructureElement(HAPElement out) {
+		super.toStructureElement(out);
 		HAPElementLeafRelative that = (HAPElementLeafRelative)out;
 		if(this.m_resolvedPath!=null)	that.m_resolvedPath = this.m_resolvedPath.clonePathStructure();
-		that.m_reference = this.m_reference; 
+		that.m_referencePath = this.m_referencePath; 
 		that.m_parent = this.m_parent; 
-		if(this.m_definition!=null)  that.m_definition = this.m_definition.cloneContextDefinitionElement();
+		if(this.m_definition!=null)  that.m_definition = this.m_definition.cloneStructureElement();
 		
 		for(String name : this.m_matchers.keySet()) 	that.m_matchers.put(name, this.m_matchers.get(name).cloneMatchers());
 		for(String name : this.m_reverseMatchers.keySet())   that.m_reverseMatchers.put(name, this.m_reverseMatchers.get(name).cloneMatchers());
@@ -127,20 +128,20 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	}
 	
 	@Override
-	public HAPElement cloneContextDefinitionElement() {
+	public HAPElement cloneStructureElement() {
 		HAPElementLeafRelative out = new HAPElementLeafRelative();
-		this.toContextDefinitionElement(out);
+		this.toStructureElement(out);
 		return out;
 	}
 
 	@Override
-	public HAPElement toSolidContextDefinitionElement(Map<String, Object> constants,
+	public HAPElement toSolidStructureElement(Map<String, Object> constants,
 			HAPRuntimeEnvironment runtimeEnv) {
-		HAPElementLeafRelative out = (HAPElementLeafRelative)this.cloneContextDefinitionElement();
-		out.m_reference = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, runtimeEnv);
+		HAPElementLeafRelative out = (HAPElementLeafRelative)this.cloneStructureElement();
+		out.m_referencePath = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, runtimeEnv);
 		out.m_path = null;
 		out.m_parent = this.m_parent;
-		if(this.m_definition!=null) 	out.m_definition = this.m_definition.toSolidContextDefinitionElement(constants, runtimeEnv);
+		if(this.m_definition!=null) 	out.m_definition = this.m_definition.toSolidStructureElement(constants, runtimeEnv);
 		return out;
 	}
 	

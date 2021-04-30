@@ -13,17 +13,17 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
 public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableImp implements HAPDefinitionDataAssociation{
 
 	@HAPAttribute
 	public static String ASSOCIATION = "association";
 
-	private Map<String, HAPContextStructureValueDefinitionFlat> m_assocations;
+	private Map<String, HAPStructureValueDefinitionFlat> m_assocations;
 	
 	public HAPDefinitionDataAssociationMapping() {
-		this.m_assocations = new LinkedHashMap<String, HAPContextStructureValueDefinitionFlat>();
+		this.m_assocations = new LinkedHashMap<String, HAPStructureValueDefinitionFlat>();
 	}
  
 	@Override
@@ -32,7 +32,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	@Override
 	public void updateInputVarName(HAPUpdateName updateName) {
 		for(String name : this.m_assocations.keySet()) {
-			HAPContextStructureValueDefinitionFlat association = this.m_assocations.get(name);
+			HAPStructureValueDefinitionFlat association = this.m_assocations.get(name);
 			association.updateReferenceName(updateName);
 		}
 	}
@@ -40,20 +40,20 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	@Override
 	public void updateOutputVarName(HAPUpdateName updateName) {
 		for(String name : this.m_assocations.keySet()) {
-			HAPContextStructureValueDefinitionFlat association = this.m_assocations.get(name);
+			HAPStructureValueDefinitionFlat association = this.m_assocations.get(name);
 			association.updateRootName(updateName);
 		}
 	}
 
-	public void addAssociation(String targetName, HAPContextStructureValueDefinitionFlat association) {	
+	public void addAssociation(String targetName, HAPStructureValueDefinitionFlat association) {	
 		if(HAPBasicUtility.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		this.m_assocations.put(targetName, association);
 	}
 	
-	public Map<String, HAPContextStructureValueDefinitionFlat> getAssociations(){   return this.m_assocations;  }
+	public Map<String, HAPStructureValueDefinitionFlat> getAssociations(){   return this.m_assocations;  }
 	
-	public HAPContextStructureValueDefinitionFlat getAssociation(String targetName) {   return this.m_assocations.get(targetName);    }
-	public HAPContextStructureValueDefinitionFlat getAssociation() {   return this.m_assocations.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);    }
+	public HAPStructureValueDefinitionFlat getAssociation(String targetName) {   return this.m_assocations.get(targetName);    }
+	public HAPStructureValueDefinitionFlat getAssociation() {   return this.m_assocations.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);    }
  
 	@Override
 	public HAPDefinitionDataAssociationMapping cloneDataAssocation() {
@@ -79,7 +79,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 			JSONObject daJsonObj = (JSONObject)json;
 			this.buildEntityInfoByJson(daJsonObj);
 			
-			JSONObject elesJson = daJsonObj.optJSONObject(HAPContextStructureValueDefinitionFlat.ELEMENT);
+			JSONObject elesJson = daJsonObj.optJSONObject(HAPStructureValueDefinitionFlat.FLAT);
 			if(elesJson!=null) {
 				//seperate by target name
 				Map<String, JSONObject> jsonMapByTarget = new LinkedHashMap<String, JSONObject>();
@@ -95,9 +95,9 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 				}
 				
 				for(String targetName : jsonMapByTarget.keySet()) {
-					HAPContextStructureValueDefinitionFlat association = new HAPContextStructureValueDefinitionFlat();
+					HAPStructureValueDefinitionFlat association = new HAPStructureValueDefinitionFlat();
 					JSONObject targetAssociationJson = new JSONObject();
-					targetAssociationJson.put(HAPContextStructureValueDefinitionFlat.ELEMENT, jsonMapByTarget.get(targetName));
+					targetAssociationJson.put(HAPStructureValueDefinitionFlat.FLAT, jsonMapByTarget.get(targetName));
 					association.buildObject(targetAssociationJson, HAPSerializationFormat.JSON);
 					this.addAssociation(targetName, association);
 				}
@@ -106,7 +106,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 				JSONObject associationsJson = daJsonObj.optJSONObject(ASSOCIATION);
 				for(Object key : associationsJson.keySet()) {
 					String targetName = (String)key;
-					HAPContextStructureValueDefinitionFlat association = new HAPContextStructureValueDefinitionFlat();
+					HAPStructureValueDefinitionFlat association = new HAPStructureValueDefinitionFlat();
 					association.buildObject(associationsJson.getJSONObject(targetName), HAPSerializationFormat.JSON);
 					this.addAssociation(targetName, association);
 				}

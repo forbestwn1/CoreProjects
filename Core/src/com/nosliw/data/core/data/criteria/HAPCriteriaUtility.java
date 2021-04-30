@@ -71,7 +71,7 @@ public class HAPCriteriaUtility {
 	public static HAPDataTypeCriteria getChildCriteriaByPath(HAPDataTypeCriteria criteria, String path) {
 		HAPDataTypeCriteria out = criteria;
 		HAPPath pathObj = new HAPPath(path);
-		for(String pathSeg : pathObj.getPathSegs()) {
+		for(String pathSeg : pathObj.getPathSegments()) {
 			if(out!=null) {
 				out = getChildCriteria(out, pathSeg);
 			}

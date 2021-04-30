@@ -1,9 +1,9 @@
 package com.nosliw.uiresource.page.execute;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
-public class HAPContextGroupInUIBody extends HAPContextStructureValueDefinitionGroup{
+public class HAPContextGroupInUIBody extends HAPStructureValueDefinitionGroup{
 
 	private HAPExecutableUIUnit m_uiUnit; 
 	
@@ -11,19 +11,19 @@ public class HAPContextGroupInUIBody extends HAPContextStructureValueDefinitionG
 		this.m_uiUnit = uiUnit;
 	}
 	
-	public HAPContextGroupInUIBody(HAPExecutableUIUnit uiUnit, HAPContextStructureValueDefinitionGroup contextGroup) {
+	public HAPContextGroupInUIBody(HAPExecutableUIUnit uiUnit, HAPStructureValueDefinitionGroup contextGroup) {
 		this.m_uiUnit = uiUnit;
 		this.setContext(contextGroup);
 	}
 	
-	public void setContext(HAPContextStructureValueDefinitionGroup contextGroup) {
+	public void setContext(HAPStructureValueDefinitionGroup contextGroup) {
 		this.empty();
 		contextGroup.cloneTo(this);
 	}
 	
 	@Override
-	public HAPContextStructureValueDefinitionGroup getParent() {
-		HAPContextStructureValueDefinitionGroup out = null;
+	public HAPStructureValueDefinitionGroup getParent() {
+		HAPStructureValueDefinitionGroup out = null;
 		String unitType = this.m_uiUnit.getType();
 		switch(unitType) {
 		case HAPConstantShared.UIRESOURCE_TYPE_RESOURCE:
@@ -36,6 +36,6 @@ public class HAPContextGroupInUIBody extends HAPContextStructureValueDefinitionG
 	}
 	
 	@Override
-	public void setParent(HAPContextStructureValueDefinitionGroup parent) {  throw new RuntimeException();  }
+	public void setParent(HAPStructureValueDefinitionGroup parent) {  throw new RuntimeException();  }
 
 }

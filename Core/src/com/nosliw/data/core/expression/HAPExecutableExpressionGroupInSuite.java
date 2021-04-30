@@ -22,16 +22,16 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.HAPUtilityContext;
 import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueExecutable;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueExecutable;
 
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
 
 	private String m_id;
 	
-	private HAPContextStructureValueDefinition m_contextStructure;
+	private HAPStructureValueDefinition m_contextStructure;
 	
-	private HAPContextStructureValueExecutable m_flatContext;
+	private HAPStructureValueExecutable m_flatContext;
 	
 	private HAPContainerVariableCriteriaInfo m_localVarsInfo;
 
@@ -58,16 +58,16 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public void setId(String id) {   this.m_id = id;    }
 	
 	@Override
-	public HAPContextStructureValueDefinition getContextStructure() {   return this.m_contextStructure;  }
+	public HAPStructureValueDefinition getContextStructure() {   return this.m_contextStructure;  }
 
 	@Override
-	public void setContextStructure(HAPContextStructureValueDefinition contextStructure) {   
+	public void setContextStructure(HAPStructureValueDefinition contextStructure) {   
 		this.m_contextStructure = contextStructure;
 		this.m_flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(m_contextStructure);
 	}
 	
 	@Override
-	public HAPContextStructureValueExecutable getContextFlat() {    return this.m_flatContext;    }
+	public HAPStructureValueExecutable getContextFlat() {    return this.m_flatContext;    }
 
 	@Override
 	public HAPContainerVariableCriteriaInfo getVarsInfo() {  return this.m_localVarsInfo;  }

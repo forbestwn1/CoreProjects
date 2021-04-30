@@ -10,8 +10,8 @@ public abstract class HAPElementLeafVariable extends HAPElement{
 	}
 	
 	@Override
-	public void toContextDefinitionElement(HAPElement out) {
-		super.toContextDefinitionElement(out);
+	public void toStructureElement(HAPElement out) {
+		super.toStructureElement(out);
 	}
 
 	@Override

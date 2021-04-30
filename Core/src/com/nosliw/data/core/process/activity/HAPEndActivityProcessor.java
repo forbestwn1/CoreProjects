@@ -16,15 +16,15 @@ import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociati
 import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionEmpty;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionEmpty;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPEndActivityProcessor implements HAPProcessorActivity{
 
 	@Override
 	public HAPExecutableActivity process(HAPDefinitionActivity activityDefinition, String id,
 			HAPContextProcessor processContext,
-			HAPExecutableProcess processExe, HAPContextStructureValueDefinitionGroup processDataContext,
+			HAPExecutableProcess processExe, HAPStructureValueDefinitionGroup processDataContext,
 			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -36,7 +36,7 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 		
 		if(endActivity.getOutput()!=null) {
 			//build result data association only when end activity has output
-			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processDataContext), endActivity.getOutput(), HAPParentContext.createDefault(HAPContextStructureValueDefinitionEmpty.flatStructure()), null, runtimeEnv);
+			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processDataContext), endActivity.getOutput(), HAPParentContext.createDefault(HAPStructureValueDefinitionEmpty.flatStructure()), null, runtimeEnv);
 			results.put(endActivity.getName(), result);
 		}
 		else {  //kkkk

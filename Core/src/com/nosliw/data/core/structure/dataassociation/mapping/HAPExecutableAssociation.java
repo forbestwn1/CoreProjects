@@ -26,8 +26,8 @@ import com.nosliw.data.core.structure.HAPIdContextDefinitionRoot;
 import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
 @HAPEntityWithAttribute
 public class HAPExecutableAssociation extends HAPExecutableImp{
@@ -57,14 +57,14 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	public static String CONVERTFUNCTION = "convertFunction";
 	
 	//input structure
-	private Map<String, HAPContextStructureValueDefinition> m_input;
+	private Map<String, HAPStructureValueDefinition> m_input;
 	private Map<String, Boolean> m_isFlatInput;
 	
 	//output
-	private HAPContextStructureValueDefinition m_output;
+	private HAPStructureValueDefinition m_output;
 
 	//data association output context
-	private HAPContextStructureValueDefinitionFlat m_mapping;
+	private HAPStructureValueDefinitionFlat m_mapping;
 	
 	//path mapping for relative node (output path in context - input path in context) during runtime
 	private Map<String, String> m_relativePathMapping;
@@ -74,20 +74,20 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	//match from data association output to target context variable
 	private Map<String, HAPMatchers> m_outputMatchers;
 
-	public HAPExecutableAssociation(HAPParentContext input, HAPContextStructureValueDefinitionFlat definition, HAPContextStructureValueDefinition output) {
+	public HAPExecutableAssociation(HAPParentContext input, HAPStructureValueDefinitionFlat definition, HAPStructureValueDefinition output) {
 		this();
-		for(String inputName : input.getNames())  this.addInputStructure(inputName, input.getContext(inputName).cloneContextStructure()); 
+		for(String inputName : input.getNames())  this.addInputStructure(inputName, input.getContext(inputName).cloneStructure()); 
 		this.m_output = output;
 	}
 
 	public HAPExecutableAssociation() {
 		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
-		this.m_input = new LinkedHashMap<String, HAPContextStructureValueDefinition>();
+		this.m_input = new LinkedHashMap<String, HAPStructureValueDefinition>();
 		this.m_isFlatInput = new LinkedHashMap<String, Boolean>();
 		this.m_relativePathMapping = new LinkedHashMap<String, String>();
 	}
 
-	public void addInputStructure(String name, HAPContextStructureValueDefinition structure) {  
+	public void addInputStructure(String name, HAPStructureValueDefinition structure) {  
 		this.m_input.put(name, structure);
 		this.m_isFlatInput.put(name, structure.isFlat());
 	}
@@ -95,8 +95,8 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	public boolean isFlatInput(String inputName) {   return this.m_input.get(inputName).isFlat();  }
 	
 	public boolean isFlatOutput() {   return this.m_output.isFlat();  }
-	public HAPContextStructureValueDefinition getOutputContext() {
-		HAPContextStructureValueDefinition out = null;
+	public HAPStructureValueDefinition getOutputContext() {
+		HAPStructureValueDefinition out = null;
 		switch(this.m_output.getType()) {
 		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY:
 			out = this.m_mapping.toSolidContext();
@@ -110,8 +110,8 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	}
 	
 	
-	public void setMapping(HAPContextStructureValueDefinitionFlat context) {   this.m_mapping = context.cloneContext();   }
-	public HAPContextStructureValueDefinitionFlat getMapping() {   return this.m_mapping;   }
+	public void setMapping(HAPStructureValueDefinitionFlat context) {   this.m_mapping = context.cloneContext();   }
+	public HAPStructureValueDefinitionFlat getMapping() {   return this.m_mapping;   }
 //	public HAPContext getSolidContext() {
 //		if(this.m_mapping==null)   return null;
 //		return this.m_mapping.toSolidContext();
@@ -165,7 +165,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(json);
 		
-		this.m_mapping = new HAPContextStructureValueDefinitionFlat();
+		this.m_mapping = new HAPStructureValueDefinitionFlat();
 		this.m_mapping.buildObject(jsonObj.getJSONObject(CONTEXT), HAPSerializationFormat.JSON);
 		  
 		JSONObject pathMappingJsonObj = jsonObj.getJSONObject(PATHMAPPING);

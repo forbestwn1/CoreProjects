@@ -17,7 +17,7 @@ import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableTask;
 import com.nosliw.data.core.structure.dataassociation.HAPIOTask;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
 public class HAPUtilityServiceInterface {
 
@@ -80,7 +80,7 @@ public class HAPUtilityServiceInterface {
 		@Override
 		public Map<String, HAPParentContext> getOutResultContext() {
 			Map<String, HAPParentContext> out = new LinkedHashMap<String, HAPParentContext>();
-			Map<String, HAPContextStructureValueDefinitionFlat> resultsContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(m_serviceInterface);
+			Map<String, HAPStructureValueDefinitionFlat> resultsContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(m_serviceInterface);
 			for(String resultName : resultsContext.keySet()) {
 				out.put(resultName, HAPParentContext.createDefault(resultsContext.get(resultName)));
 			}

@@ -31,7 +31,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
 @HAPEntityWithAttribute
 public class HAPExecutableExpression extends HAPExecutableImp{
@@ -114,7 +114,7 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 					String inputMappingType = inputMapping.getType();
 					if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-						HAPContextStructureValueDefinitionFlat da = mappingDa.getAssociation();
+						HAPStructureValueDefinitionFlat da = mappingDa.getAssociation();
 						da.updateReferenceName(nameUpdate);
 					}
 					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {

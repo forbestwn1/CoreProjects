@@ -30,9 +30,9 @@ import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociatio
 import com.nosliw.data.core.structure.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.structure.dataassociation.none.HAPDefinitionDataAssociationNone;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPUtilityProcess {
 
@@ -55,7 +55,7 @@ public class HAPUtilityProcess {
 //		return out;
 //	}
 
-	public static void buildScriptExpressionProcessContext(HAPContextStructureValueDefinitionFlat context, HAPContextProcessExpressionScript expProcessContext) {
+	public static void buildScriptExpressionProcessContext(HAPStructureValueDefinitionFlat context, HAPContextProcessExpressionScript expProcessContext) {
 		//prepare constant value 
 		Map<String, Object> constantsValue = context.getConstantValue();
 		for(String id : constantsValue.keySet()) {
@@ -69,7 +69,7 @@ public class HAPUtilityProcess {
 //		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(context));
 	}
 
-	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPDefinitionActivityNormal activityDefinition, HAPContextStructureValueDefinitionGroup processContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPDefinitionActivityNormal activityDefinition, HAPStructureValueDefinitionGroup processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
 				HAPParentContext.createDefault(processContext), 
 				activityDefinition.getInputMapping(), 
@@ -79,7 +79,7 @@ public class HAPUtilityProcess {
 		activity.setInputDataAssociation(da);
 	}
 	
-	public static void processBranchActivityInputDataAssocation(HAPExecutableActivityBranch activity, HAPDefinitionActivityBranch activityDefinition, HAPContextStructureValueDefinitionGroup processContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processBranchActivityInputDataAssocation(HAPExecutableActivityBranch activity, HAPDefinitionActivityBranch activityDefinition, HAPStructureValueDefinitionGroup processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
 				HAPParentContext.createDefault(processContext), 
 				activityDefinition.getInputMapping(), 
@@ -90,16 +90,16 @@ public class HAPUtilityProcess {
 	}
 	
 	//data variables infor in activity merge back to process context
-	public static void mergeDataVariableInActivityToProcessContext(Set<HAPVariableInfo> activityVariablesInfo, HAPContextStructureValueDefinitionFlat activityContext, HAPContextStructureValueDefinitionGroup processContext) {
+	public static void mergeDataVariableInActivityToProcessContext(Set<HAPVariableInfo> activityVariablesInfo, HAPStructureValueDefinitionFlat activityContext, HAPStructureValueDefinitionGroup processContext) {
 		Map<String, HAPVariableInfo> expectedVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		for(HAPVariableInfo expectedVarInfo : activityVariablesInfo) {
 			HAPReferenceElement varPath = new HAPReferenceElement(expectedVarInfo.getName());
 			//affect global variable 
-			HAPRoot affectedRoot = activityContext.getElement(varPath.getRootStructureId().getFullName());
+			HAPRoot affectedRoot = activityContext.getRoot(varPath.getRootStructureId().getFullName());
 			if(affectedRoot!=null) {
 				//ele mapped from context variable
 				HAPElement currentEle = affectedRoot.getDefinition();
-				String[] pathSegs = new HAPPath(varPath.getSubPath()).getPathSegs();
+				String[] pathSegs = new HAPPath(varPath.getSubPath()).getPathSegments();
 				if(pathSegs.length>0) {
 					int i = 0;
 					while(!HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE.equals(currentEle.getType())&&currentEle!=null) {
@@ -136,14 +136,14 @@ public class HAPUtilityProcess {
 			HAPExecutableActivityNormal activity,
 			HAPDefinitionActivityNormal activityDefinition,
 			String resultName, 
-			HAPContextStructureValueDefinitionGroup parentContext,
+			HAPStructureValueDefinitionGroup parentContext,
 			HAPBuilderResultContext resultContextBuilder, 
 			HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionResultActivityNormal resultDef = activityDefinition.getResult(resultName);
 		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef);
 		if(resultContextBuilder!=null) {
 			//data association input context
-			HAPContextStructureValueDefinition dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
+			HAPStructureValueDefinition dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
 			//process data association
 			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(dataAssociationInputContext), resultDef.getOutputDataAssociation(), HAPParentContext.createDefault(parentContext), null, runtimeEnv);
 			resultExe.setDataAssociation(outputDataAssociation);

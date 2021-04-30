@@ -6,22 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPUtilityContextStructure {
 
-	public static HAPContextStructureValueDefinition hardMergeContextStructure(HAPContextStructureValueDefinition from, HAPContextStructureValueDefinition to) {
+	public static HAPStructureValueDefinition hardMergeContextStructure(HAPStructureValueDefinition from, HAPStructureValueDefinition to) {
 		if(to==null)  return from;
 		
-		HAPContextStructureValueDefinition fromModify = toSolidContextStructure(from, to.isFlat());
+		HAPStructureValueDefinition fromModify = toSolidContextStructure(from, to.isFlat());
 		if(to.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
-			((HAPContextStructureValueDefinitionFlat)to.cloneContextStructure()).hardMergeWith((HAPContextStructureValueDefinitionFlat)fromModify);
+			((HAPStructureValueDefinitionFlat)to.cloneStructure()).hardMergeWith((HAPStructureValueDefinitionFlat)fromModify);
 			return to;
 		}
 		else if(to.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-			((HAPContextStructureValueDefinitionGroup)to.cloneContextStructure()).hardMergeWith((HAPContextStructureValueDefinitionGroup)fromModify);
+			((HAPStructureValueDefinitionGroup)to.cloneStructure()).hardMergeWith((HAPStructureValueDefinitionGroup)fromModify);
 			return to;
 		}
 		else {
@@ -29,36 +29,36 @@ public class HAPUtilityContextStructure {
 		}
 	}
 	
-	public static HAPContextStructureValueDefinition toSolidContextStructure(HAPContextStructureValueDefinition context, boolean isFlat) {
+	public static HAPStructureValueDefinition toSolidContextStructure(HAPStructureValueDefinition context, boolean isFlat) {
 		if(context==null || context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY)) {
-			if(isFlat)  return new HAPContextStructureValueDefinitionFlat();
-			else return new HAPContextStructureValueDefinitionGroup();
+			if(isFlat)  return new HAPStructureValueDefinitionFlat();
+			else return new HAPStructureValueDefinitionGroup();
 		}
 		
 		if(context.isFlat()==isFlat)   return context;
 		else {
 			if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
-				HAPContextStructureValueDefinitionGroup out = new HAPContextStructureValueDefinitionGroup();
-				out.setContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPContextStructureValueDefinitionFlat)context);
+				HAPStructureValueDefinitionGroup out = new HAPStructureValueDefinitionGroup();
+				out.setContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPStructureValueDefinitionFlat)context);
 				return out;
 			}
 			else if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-				HAPContextStructureValueDefinitionFlat out = buildContextFromContextGroup((HAPContextStructureValueDefinitionGroup)context);
+				HAPStructureValueDefinitionFlat out = buildContextFromContextGroup((HAPStructureValueDefinitionGroup)context);
 				return out;
 			}
 		}
 		return null;
 	}
 	
-	public static HAPContextStructureValueDefinitionFlat buildContextFromContextGroup(HAPContextStructureValueDefinitionGroup context) {
-		HAPContextStructureValueDefinitionFlat out = new HAPContextStructureValueDefinitionFlat();
+	public static HAPStructureValueDefinitionFlat buildContextFromContextGroup(HAPStructureValueDefinitionGroup context) {
+		HAPStructureValueDefinitionFlat out = new HAPStructureValueDefinitionFlat();
 		
-		List<String> categarys = Arrays.asList(HAPContextStructureValueDefinitionGroup.getContextTypesWithPriority());
+		List<String> categarys = Arrays.asList(HAPStructureValueDefinitionGroup.getContextTypesWithPriority());
 		Collections.reverse(categarys);
 		for(String categary : categarys) {
 			Map<String, HAPRoot> eles = context.getElements(categary);
 			for(String name : eles.keySet()) {
-				out.addElement(name, eles.get(name).cloneContextDefinitionRoot());
+				out.addRoot(name, eles.get(name).cloneRoot());
 			}
 		}
 		return out;

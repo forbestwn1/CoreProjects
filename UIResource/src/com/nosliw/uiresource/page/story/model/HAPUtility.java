@@ -16,7 +16,7 @@ import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPProcessorContext;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
 import com.nosliw.uiresource.page.processor.HAPUtilityProcess;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
@@ -29,12 +29,12 @@ import com.nosliw.uiresource.page.tag.HAPUITagId;
 public class HAPUtility {
 
 	//build data info in ui story node
-	public static HAPUIDataStructureInfo buildDataStructureInfoForUIStoryNode(HAPStoryNodeUI uiStoryNode, HAPContextStructureValueDefinitionGroup parentContext, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
+	public static HAPUIDataStructureInfo buildDataStructureInfoForUIStoryNode(HAPStoryNodeUI uiStoryNode, HAPStructureValueDefinitionGroup parentContext, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		HAPUIDataStructureInfo out = new HAPUIDataStructureInfo();
 
 		String nodeType = uiStoryNode.getType();
 		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_TAG); 
-		HAPContextStructureValueDefinitionGroup childContext = null;
+		HAPStructureValueDefinitionGroup childContext = null;
 		if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
 			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
 			childContext = HAPUtilityProcess.buildUITagContext(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, runtimeEnv);
@@ -42,7 +42,7 @@ public class HAPUtility {
 			out.setContext(childContext);
 		}
 		else {
-			childContext = HAPProcessorContext.processStatic(new HAPContextStructureValueDefinitionGroup(), HAPParentContext.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
+			childContext = HAPProcessorContext.processStatic(new HAPStructureValueDefinitionGroup(), HAPParentContext.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
 			childContext = HAPProcessorContext.processRelative(childContext, HAPParentContext.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
 			out.setContext(childContext);
 		}

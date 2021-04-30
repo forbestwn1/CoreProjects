@@ -19,8 +19,8 @@ import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 
@@ -30,7 +30,7 @@ public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 			String id, 
 			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPContextStructureValueDefinitionGroup processDataContext, 
+			HAPStructureValueDefinitionGroup processDataContext, 
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -43,7 +43,7 @@ public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 
 		//process input and create flat input context for activity
 		HAPUtilityProcess.processBranchActivityInputDataAssocation(out, switchActDef, processDataContext, runtimeEnv);
-		HAPContextStructureValueDefinitionFlat activityContext = (HAPContextStructureValueDefinitionFlat)out.getInputDataAssociation().getOutput().getOutputStructure(); 
+		HAPStructureValueDefinitionFlat activityContext = (HAPStructureValueDefinitionFlat)out.getInputDataAssociation().getOutput().getOutputStructure(); 
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());

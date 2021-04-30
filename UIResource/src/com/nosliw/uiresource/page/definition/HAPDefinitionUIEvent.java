@@ -10,7 +10,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.data.core.structure.HAPRoot;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionUIEvent extends HAPEntityInfoWritableImp{
@@ -18,16 +18,16 @@ public class HAPDefinitionUIEvent extends HAPEntityInfoWritableImp{
 	public static String DATA = "data";
 
 	//context
-	private HAPContextStructureValueDefinitionFlat m_dataDefinition;
+	private HAPStructureValueDefinitionFlat m_dataDefinition;
 	
 	public HAPDefinitionUIEvent() {
-		this.m_dataDefinition = new HAPContextStructureValueDefinitionFlat();
+		this.m_dataDefinition = new HAPStructureValueDefinitionFlat();
 	}
 
-	public HAPContextStructureValueDefinitionFlat getDataDefinition() {  return this.m_dataDefinition;   }
-	public void setDataDefinition(HAPContextStructureValueDefinitionFlat dataDef) {   this.m_dataDefinition = dataDef;  }
+	public HAPStructureValueDefinitionFlat getDataDefinition() {  return this.m_dataDefinition;   }
+	public void setDataDefinition(HAPStructureValueDefinitionFlat dataDef) {   this.m_dataDefinition = dataDef;  }
 	
-	public void addDataElement(String name, HAPRoot node) {  this.m_dataDefinition.addElement(name, node);  }
+	public void addDataElement(String name, HAPRoot node) {  this.m_dataDefinition.addRoot(name, node);  }
 	
 	public void cloneToBase(HAPDefinitionUIEvent event) {
 		this.cloneToEntityInfo(event);

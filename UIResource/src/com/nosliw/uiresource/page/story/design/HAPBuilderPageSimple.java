@@ -39,7 +39,7 @@ import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
@@ -56,7 +56,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	
 	private HAPStory m_story;
 	
-	private HAPContextStructureValueDefinitionFlat m_context;
+	private HAPStructureValueDefinitionFlat m_context;
 	
 	public HAPBuilderPageSimple(HAPManagerServiceDefinition serviceDefMan, HAPManagerUITag tagManager, HAPParserPage pageParser) {
 		this.m_serviceDefMan = serviceDefMan;
@@ -70,7 +70,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		
 		//constant
-		HAPContextStructureValueDefinitionFlat context = buildContext();
+		HAPStructureValueDefinitionFlat context = buildContext();
 		this.m_context = context;
 		templateParms.put("context", context.toStringValue(HAPSerializationFormat.JSON));
 		
@@ -119,15 +119,15 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		return out.toString();
 	}
 	
-	private HAPContextStructureValueDefinitionFlat buildContext() {
-		HAPContextStructureValueDefinitionFlat context = new HAPContextStructureValueDefinitionFlat();
+	private HAPStructureValueDefinitionFlat buildContext() {
+		HAPStructureValueDefinitionFlat context = new HAPStructureValueDefinitionFlat();
 		Set<HAPStoryNode> varNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstantShared.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
 			HAPVariableInfo varInfo = varNode.getVariableInfo();
 			HAPRoot contextEle = new HAPRoot(new HAPElementLeafData(varInfo.getDataInfo()));
 			contextEle.setDefaultValue(varInfo.getDefaultValue());
-			context.addElement(varNode.getVariableInfo().getName(), contextEle);
+			context.addRoot(varNode.getVariableInfo().getName(), contextEle);
 		}
 		return context;
 	}
@@ -176,7 +176,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			
 			{
 				//input
-				HAPContextStructureValueDefinitionFlat serviceParmMapping = new HAPContextStructureValueDefinitionFlat();
+				HAPStructureValueDefinitionFlat serviceParmMapping = new HAPStructureValueDefinitionFlat();
 				List<HAPStoryNode> serviceInputNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstantShared.SERVICE_CHILD_INPUT, this.m_story);
 				if(!serviceInputNodes.isEmpty()) {
 					HAPStoryNode serviceInputNode = serviceInputNodes.get(0); 
@@ -192,12 +192,12 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 									HAPStoryNodeConstant constantInputNode = (HAPStoryNodeConstant)parmInputNode;
 									HAPData constantData = constantInputNode.getData();
 									if(constantData!=null) {
-										serviceParmMapping.addElement(parmNodeInfo.getConnection().getChildId(), new HAPElementLeafConstant(constantData));
+										serviceParmMapping.addRoot(parmNodeInfo.getConnection().getChildId(), new HAPElementLeafConstant(constantData));
 									}
 								}
 								else if(HAPConstantShared.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
 									HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
-									serviceParmMapping.addElement(parmNodeInfo.getConnection().getChildId(), new HAPElementLeafRelative(varInputNode.getVariableInfo().getName()));
+									serviceParmMapping.addRoot(parmNodeInfo.getConnection().getChildId(), new HAPElementLeafRelative(varInputNode.getVariableInfo().getName()));
 								}
 							}
 						}
@@ -212,7 +212,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			
 			{
 				//output
-				HAPContextStructureValueDefinitionFlat serviceParmMapping = new HAPContextStructureValueDefinitionFlat();
+				HAPStructureValueDefinitionFlat serviceParmMapping = new HAPStructureValueDefinitionFlat();
 				List<HAPStoryNode> serviceResultNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstantShared.SERVICE_CHILD_RESULT, this.m_story);
 				if(!serviceResultNodes.isEmpty()) {
 					HAPStoryNode serviceResultNode = serviceResultNodes.get(0);
@@ -225,7 +225,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 							String inputNodeType = parmInputNode.getType();
 							if(HAPConstantShared.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
 								HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
-								serviceParmMapping.addElement(varInputNode.getVariableInfo().getName(), new HAPElementLeafRelative(parmNodeInfo.getConnection().getChildId()));
+								serviceParmMapping.addRoot(varInputNode.getVariableInfo().getName(), new HAPElementLeafRelative(parmNodeInfo.getConnection().getChildId()));
 							}
 						}
 					}

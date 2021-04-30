@@ -30,9 +30,9 @@ import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPElementLeafValue;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
@@ -44,7 +44,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			String id, 
 			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPContextStructureValueDefinitionGroup processDataContext, 
+			HAPStructureValueDefinitionGroup processDataContext, 
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -57,7 +57,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		
 		//process input and create flat input context for activity
 		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, definition, processDataContext, runtimeEnv);
-		HAPContextStructureValueDefinitionFlat activityContext = (HAPContextStructureValueDefinitionFlat)out.getInputDataAssociation().getOutput().getOutputStructure(); 
+		HAPStructureValueDefinitionFlat activityContext = (HAPStructureValueDefinitionFlat)out.getInputDataAssociation().getOutput().getOutputStructure(); 
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());
@@ -78,8 +78,8 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
 	class HAPBuilderResultContext1 implements HAPBuilderResultContext {
 		@Override
-		public HAPContextStructureValueDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
-			HAPContextStructureValueDefinitionFlat out = new HAPContextStructureValueDefinitionFlat();
+		public HAPStructureValueDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+			HAPStructureValueDefinitionFlat out = new HAPStructureValueDefinitionFlat();
 			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				String outputVar = HAPConstantShared.ACTIVITY_OUTPUTVARIABLE_OUTPUT;
 				HAPExpressionActivityExecutable expressionActExt = (HAPExpressionActivityExecutable)activity;
@@ -89,10 +89,10 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 					//if script expression is data expression only, then affect result
 					HAPExecutableExpression expExe = scriptExpressionGroup.getExpression().getExpressionItems().values().iterator().next();
 					HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
-					out.addElement(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPElementLeafData(new HAPVariableDataInfo(outputCriteria)));
+					out.addRoot(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPElementLeafData(new HAPVariableDataInfo(outputCriteria)));
 				}
 				else {
-					out.addElement(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPElementLeafValue());
+					out.addRoot(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPElementLeafValue());
 				}
 			}
 			return out;

@@ -19,7 +19,7 @@ import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 
 public class HAPProcessorServiceUse {
 
@@ -33,7 +33,7 @@ public class HAPProcessorServiceUse {
 	}
 	
 	//enhance external context according to mapping with service
-	public static void enhanceContextByService(HAPDefinitionServiceUse definition, HAPContextStructureValueDefinition globalContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceContextByService(HAPDefinitionServiceUse definition, HAPStructureValueDefinition globalContext, HAPRuntimeEnvironment runtimeEnv) {
 		if(HAPProcessorServiceUse.isEnhanceContextByService(definition)) {
 			//process service use
 			HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
@@ -54,7 +54,7 @@ public class HAPProcessorServiceUse {
 		}
 	}
 	
-	public static HAPExecutableServiceUse process(HAPDefinitionServiceUse definition, HAPContextStructureValueDefinition globalContext, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableServiceUse process(HAPDefinitionServiceUse definition, HAPStructureValueDefinition globalContext, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);
 
 		//process service use

@@ -19,11 +19,11 @@ import com.nosliw.data.core.structure.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPUtilityContext;
 import com.nosliw.data.core.structure.dataassociation.HAPUtilityDAProcess;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 
 public class HAPUtilityDataAssociation {
 
-	public static Map<String, String> buildSimplifiedRelativePathMapping(HAPRoot contextRoot, String rootName, HAPContextStructureValueDefinition context){
+	public static Map<String, String> buildSimplifiedRelativePathMapping(HAPRoot contextRoot, String rootName, HAPStructureValueDefinition context){
 		Map<String, Boolean> isFlatInput = new LinkedHashMap<String, Boolean>();
 		if(context!=null)	isFlatInput.put(HAPConstantShared.NAME_DEFAULT, context.isFlat());
 		else isFlatInput.put(HAPConstantShared.NAME_DEFAULT, true);
@@ -49,12 +49,12 @@ public class HAPUtilityDataAssociation {
 		HAPUtilityContext.processContextRootElement(contextRoot, rootName, new HAPProcessorContextDefinitionElement() {
 			@Override
 			public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
-				if(eleInfo.getContextElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
-					HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)eleInfo.getContextElement();
+				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+					HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)eleInfo.getElement();
 					HAPReferenceElement contextPath = relativeEle.getPathFormat();
 					String parent = relativeEle.getParent();
 					String sourcePath = HAPNamingConversionUtility.cascadePath(parent, isFlatInput.get(parent)? contextPath.getFullPath() : contextPath.getContextFullPath());
-					out.put(eleInfo.getContextPath().getFullPath(), sourcePath);
+					out.put(eleInfo.getElementPath().getFullPath(), sourcePath);
 					return Pair.of(false, null);
 				}
 				return null;
@@ -71,9 +71,9 @@ public class HAPUtilityDataAssociation {
 		HAPUtilityContext.processContextRootElement(contextRoot, rootName, new HAPProcessorContextDefinitionElement() {
 			@Override
 			public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
-				if(eleInfo.getContextElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
-					HAPElementLeafConstant constantEle = (HAPElementLeafConstant)eleInfo.getContextElement();
-					out.put(eleInfo.getContextPath().getFullPath(), constantEle.getValue());
+				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+					HAPElementLeafConstant constantEle = (HAPElementLeafConstant)eleInfo.getElement();
+					out.put(eleInfo.getElementPath().getFullPath(), constantEle.getValue());
 					return Pair.of(false, null);
 				}
 				return null;

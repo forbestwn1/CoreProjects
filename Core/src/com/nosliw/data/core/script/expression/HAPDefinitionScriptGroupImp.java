@@ -9,7 +9,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithValueContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 
 public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implements HAPDefinitionScriptGroup{
 
@@ -17,7 +17,7 @@ public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implem
 	
 	private Map<String, HAPDefinitionConstant> m_constantDef;
 	
-	private HAPContextStructureValueDefinition m_context;
+	private HAPStructureValueDefinition m_context;
 	
 	public HAPDefinitionScriptGroupImp() {
 		this.m_scriptDefs = new LinkedHashMap<String, HAPDefinitionScriptEntity>();
@@ -37,14 +37,14 @@ public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implem
 	}
 
 	@Override
-	public HAPContextStructureValueDefinition getValueContext() {   return this.m_context;  }
+	public HAPStructureValueDefinition getValueContext() {   return this.m_context;  }
 
 	@Override
-	public void setValueContext(HAPContextStructureValueDefinition context) {   this.m_context = context;  }
+	public void setValueContext(HAPStructureValueDefinition context) {   this.m_context = context;  }
 
 	@Override
 	public void cloneToValueContext(HAPWithValueContext dataContext) {
-		dataContext.setValueContext(this.m_context.cloneContextStructure());
+		dataContext.setValueContext(this.m_context.cloneStructure());
 	}
 
 	@Override

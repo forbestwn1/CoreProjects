@@ -4,7 +4,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPUtilityContextStructure;
 import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 
 public class HAPProcessorDataAssociationMirror {
 
@@ -14,9 +14,9 @@ public class HAPProcessorDataAssociationMirror {
 	
 		HAPParentContext outContext = output.cloneParentContext();
 		for(String categaryName : input.getNames()) {
-			HAPContextStructureValueDefinition inputContext = input.getContext(categaryName);
-			HAPContextStructureValueDefinition outputContext = outContext.getContext(categaryName);
-			HAPContextStructureValueDefinition mergedOutputContext = HAPUtilityContextStructure.hardMergeContextStructure(inputContext, outputContext);
+			HAPStructureValueDefinition inputContext = input.getContext(categaryName);
+			HAPStructureValueDefinition outputContext = outContext.getContext(categaryName);
+			HAPStructureValueDefinition mergedOutputContext = HAPUtilityContextStructure.hardMergeContextStructure(inputContext, outputContext);
 			outContext.addContext(categaryName, mergedOutputContext);
 		}
 		

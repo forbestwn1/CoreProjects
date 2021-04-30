@@ -11,16 +11,16 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPContextStructureValueDefinitionGroup;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentImp implements HAPDefinitionResourceComplex{
 
 	private HAPResourceId m_resourceId;
 	
 	//context definition within this component
-	private HAPContextStructureValueDefinition m_context;
+	private HAPStructureValueDefinition m_context;
 	
 	private List<HAPContextReference> m_contextRefs;
 	
@@ -40,19 +40,19 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
 	
 	@Override
-	public HAPContextStructureValueDefinition getValueContext() {  return this.m_context;   }
+	public HAPStructureValueDefinition getValueContext() {  return this.m_context;   }
 	@Override
-	public void setValueContext(HAPContextStructureValueDefinition context) {  
+	public void setValueContext(HAPStructureValueDefinition context) {  
 		this.m_context = context;
-		if(this.m_context ==null)  this.m_context = new HAPContextStructureValueDefinitionGroup();
+		if(this.m_context ==null)  this.m_context = new HAPStructureValueDefinitionGroup();
 	}
 	
 	@Override
 	public List<HAPContextReference> getContextReferences(){   return this.m_contextRefs; 	}
 	public void addContextReference(HAPContextReference contextRef) {   this.m_contextRefs.add(contextRef);    }
 	
-	public HAPContextStructureValueDefinitionGroup getContextNotFlat() {   return (HAPContextStructureValueDefinitionGroup)this.getValueContext();    }
-	public HAPContextStructureValueDefinitionFlat getContextFlat() {    return (HAPContextStructureValueDefinitionFlat)this.getValueContext();    }
+	public HAPStructureValueDefinitionGroup getContextNotFlat() {   return (HAPStructureValueDefinitionGroup)this.getValueContext();    }
+	public HAPStructureValueDefinitionFlat getContextFlat() {    return (HAPStructureValueDefinitionFlat)this.getValueContext();    }
 	
 	@Override
 	public HAPResourceDefinitionOrId getChild(String path) {   return null;    }
@@ -65,7 +65,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 
 	@Override
 	public void cloneToValueContext(HAPWithValueContext withDataContext) {
-		if(this.m_context!=null)	withDataContext.setValueContext(this.m_context.cloneContextStructure());
+		if(this.m_context!=null)	withDataContext.setValueContext(this.m_context.cloneStructure());
 	}
 
 	@Override

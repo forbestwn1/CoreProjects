@@ -27,12 +27,12 @@ public class HAPElementLeafConstantReference extends HAPElement{
 	public void setConstantName(String name) {   this.m_constantName = name;   }
 	
 	@Override
-	public HAPElement cloneContextDefinitionElement() {
+	public HAPElement cloneStructureElement() {
 		return new HAPElementLeafConstantReference(this.m_constantName);
 	}
 
 	@Override
-	public HAPElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this;  }
+	public HAPElement toSolidStructureElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this;  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
