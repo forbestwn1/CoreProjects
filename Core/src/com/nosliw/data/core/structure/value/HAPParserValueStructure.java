@@ -47,7 +47,7 @@ public class HAPParserValueStructure {
 		if(groupJson!=null) {
 			for(String contextType : HAPStructureValueDefinitionGroup.getAllContextTypes()){
 				JSONObject contextEleJson = groupJson.optJSONObject(contextType);
-				HAPStructureValueDefinitionFlat context = contextGroup.getContext(contextType);
+				HAPStructureValueDefinitionFlat context = contextGroup.getFlat(contextType);
 				parseparseValueStructureDefinitionFlat(contextEleJson, context, new HAPUpdateName() {
 					@Override
 					public String getUpdatedName(String name) {

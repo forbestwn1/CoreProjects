@@ -66,10 +66,10 @@ public class HAPProcessorContextConstant {
 			if(parentContextGroup!=null) {
 				//merge constants with parent
 				for(String contextCategary : HAPStructureValueDefinitionGroup.getInheritableContextTypes()) {
-					for(String name : parentContextGroup.getContext(contextCategary).getRootNames()) {
+					for(String name : parentContextGroup.getFlat(contextCategary).getRootNames()) {
 						if(parentContextGroup.getElement(contextCategary, name).isConstant()) {
 							if(contextGroup.getElement(contextCategary, name)==null) {
-								out.addElement(name, parentContextGroup.getElement(contextCategary, name).cloneRoot(), contextCategary);
+								out.addRoot(name, parentContextGroup.getElement(contextCategary, name).cloneRoot(), contextCategary);
 							}
 						}
 					}
@@ -82,7 +82,7 @@ public class HAPProcessorContextConstant {
 	//find all the context root which is actually constant, convert it to constant element 
 	static private HAPStructureValueDefinitionGroup discoverConstantContextRoot(HAPStructureValueDefinitionGroup contextGroup) {
 		for(String contextType : contextGroup.getContextTypes()) {
-			HAPStructureValueDefinitionFlat context = contextGroup.getContext(contextType);
+			HAPStructureValueDefinitionFlat context = contextGroup.getFlat(contextType);
 			for(String eleName : context.getRootNames()) {
 				HAPRoot contextRoot = context.getRoot(eleName);
 				HAPElement ele = contextRoot.getDefinition();

@@ -1,13 +1,13 @@
 package com.nosliw.data.core.structure.value;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 
+import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -16,16 +16,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.data.core.structure.HAPConfigureReferenceResolve;
 import com.nosliw.data.core.structure.HAPElement;
-import com.nosliw.data.core.structure.HAPElementLeafRelative;
-import com.nosliw.data.core.structure.HAPElementNode;
-import com.nosliw.data.core.structure.HAPInfoElement;
-import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
-import com.nosliw.data.core.structure.HAPProcessorContextDefinitionElement;
-import com.nosliw.data.core.structure.HAPReferenceElement;
+import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
-import com.nosliw.data.core.structure.HAPUtilityContext;
 
 @HAPEntityWithAttribute
 public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implements HAPStructureValueDefinition{
@@ -33,7 +27,8 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 	@HAPAttribute
 	public static final String FLAT = "flat";
 
-	private Map<String, HAPRoot> m_roots;
+	private Map<String, HAPRoot> m_rootById;
+	private Map<String, String> m_idByName;
 	
 	public HAPStructureValueDefinitionFlat(){
 		this.empty();
@@ -46,17 +41,21 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 	public boolean isFlat() {	return true;	}
 
 	@Override
-	public boolean isEmpty() {  return this.m_roots.isEmpty(); }
+	public boolean isEmpty() {  return this.m_rootById.isEmpty(); }
 
 	@Override
-	public HAPRoot getRoot(String name, boolean createIfNotExist) {  
-		HAPRoot out = this.m_roots.get(name);
-		if(createIfNotExist && out==null) 	out = this.newRoot(name);
-		return out;
+	public HAPRoot getRoot(String id) {  return this.m_rootById.get(id);  }
+
+	@Override
+	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, HAPConfigureReferenceResolve configure, boolean createIfNotExist) {
+		HAPReferenceRootInFlat flatReference = (HAPReferenceRootInFlat)rootReference;
+		String rootName = flatReference.getName();
+		HAPRoot root = this.getRootByName(rootName);
+		if(createIfNotExist && root==null) 	root = this.newRoot(rootName);
+		if(root!=null) return Lists.newArrayList(root);
+		else return Lists.newArrayList();
 	}
 
-	public HAPRoot getRoot(String name) {    return this.m_roots.get(name);   }
-	
 	@Override
 	public void hardMergeWith(HAPStructureValueDefinition parent){
 		if(parent!=null) {
@@ -64,7 +63,7 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 				HAPStructureValueDefinitionFlat context  = (HAPStructureValueDefinitionFlat)parent;
 				Map<String, HAPRoot> eles = context.getRoots();
 				for(String rootName : eles.keySet()){
-					this.addRoot(rootName, eles.get(rootName).cloneRoot());
+					this.addRoot(eles.get(rootName).cloneRoot());
 				}
 			}
 			else  throw new RuntimeException();
@@ -72,151 +71,59 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 	}
 
 	public void empty() {
-		this.m_roots = new LinkedHashMap<String, HAPRoot>();
+		this.m_rootById = new LinkedHashMap<String, HAPRoot>();
+		this.m_idByName = new LinkedHashMap<String, String>();
 	}
 
 	//mark all the element in context as processed
 	public void processed() {   
-		for(HAPRoot ele : this.m_roots.values()) 	ele.getDefinition().processed();
+		for(HAPRoot ele : this.m_rootById.values()) 	ele.getDefinition().processed();
 	}
 
-	public Set<String> getRootNames(){  return this.m_roots.keySet();   }
-	public Map<String, HAPRoot> getRoots(){  return this.m_roots;  }
+	public Set<String> getRootNames(){  return this.m_idByName.keySet();   }
+	public Map<String, HAPRoot> getRoots(){  return this.m_rootById;  }
 	
 	
-	public HAPRoot addRoot(String name, String localId, HAPRoot root) {
-		root.setName(name);
-		root.setLocalId(localId);
-		this.m_roots.put(name, root);	
+	public HAPRoot addRoot(HAPRoot root) {
+		root = root.cloneRoot();
+		String name = root.getName();
+		if(HAPBasicUtility.isStringEmpty(root.getLocalId()))  root.setLocalId(name);
+		this.m_rootById.put(root.getLocalId(), root);
+		this.m_idByName.put(name, root.getLocalId());
 		return root;
 	}
 	
-	public HAPRoot addRoot(String name, HAPRoot rootEle){	return this.addRoot(name, name, rootEle);	}
-
-	public HAPRoot addRoot(String name, String id, HAPElement structureEle) {   return this.addRoot(name, id, new HAPRoot(structureEle));  }
-	public HAPRoot addRoot(String name, HAPElement structureEle) {   return this.addRoot(name, new HAPRoot(structureEle));  }
+	public HAPRoot addRoot(String name, HAPElement structureEle) {
+		HAPRoot root = new HAPRoot(structureEle);
+		root.setName(name);
+		return this.addRoot(root);  
+	}
 	
-	public HAPRoot newRoot(String name) {  return this.addRoot(name, new HAPRoot());  }
-
-	@Override
-	
-	public void updateReferenceName(HAPUpdateName nameUpdate) {
-		//update context
-		for(String eleName : new HashSet<String>(this.getRootNames())) {
-			HAPRoot root = this.getRoot(eleName);
-			HAPUtilityContext.processContextRootElement(root, eleName, new HAPProcessorContextDefinitionElement() {
-				@Override
-				public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
-					if(eleInfo.getElement() instanceof HAPElementLeafRelative) {
-						HAPElementLeafRelative relative = (HAPElementLeafRelative)eleInfo.getElement();
-						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT.equals(relative.getParent())) {
-							//update local relative path
-							HAPReferenceElement path = relative.getPathFormat();
-							relative.setPath(new HAPReferenceElement(new HAPIdContextDefinitionRoot(path.getRootStructureId().getCategary(), nameUpdate.getUpdatedName(path.getRootStructureId().getName())), path.getSubPath()));
-						}
-					}
-					return null;
-				}
-
-				@Override
-				public void postProcess(HAPInfoElement ele, Object value) { }
-			}, null);
-		}
+	public HAPRoot newRoot(String name) {  
+		HAPRoot root = new HAPRoot();
+		root.setName(name);
+		return this.addRoot(root);  
 	}
 
 	public HAPStructureValueDefinitionFlat toSolidContext() {
 		HAPStructureValueDefinitionFlat out = new HAPStructureValueDefinitionFlat();
 		for(String name :this.getRootNames()) {
-			out.addRoot(name, this.getRoot(name).getId(), this.getRoot(name).getDefinition().getSolidStructureElement().cloneStructureElement());
+			out.addRoot(name, this.getRoot(name).getDefinition().getSolidStructureElement().cloneStructureElement());
 		}
 		return out;
 	}
 	
-	//build another context which only include variable node in current context
-	public HAPStructureValueDefinitionFlat getVariableContext() {
-		HAPStructureValueDefinitionFlat out = new HAPStructureValueDefinitionFlat();
-		for(String name : this.m_roots.keySet()) {
-			HAPRoot contextRoot = this.getRoot(name);
-			if(!contextRoot.isConstant()) {
-				out.addRoot(name, contextRoot.getId(), contextRoot.cloneRoot());
-			}			
-		}
-		return out;
-	}
-	
-	//discover child node according to path
-	//may not find exact match child node according to path
-	//   return[0]   base node
-	//   return[1]   closest child node
-	//   return[2]   remaining path
-	public HAPInfoReferenceResolve discoverChild(String rootName, String path){
-		HAPRoot contextRoot = this.m_roots.get(rootName);
-		if(contextRoot==null)  return null;
-		
-		HAPInfoReferenceResolve out = new HAPInfoReferenceResolve(); 
-		out.referredRoot = contextRoot;
-		if(contextRoot.isConstant()) {
-			out.referedRealSolidElement = null;
-			out.remainPath = path;
-		}
-		else {
-			HAPElement outSolidNodeEle = contextRoot.getDefinition().getSolidStructureElement();
-			HAPElement outRefNodeEle = contextRoot.getDefinition();
-			String remainingPath = null;
-			if(HAPBasicUtility.isStringNotEmpty(path)) {
-				String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
-				for(String pathSeg : pathSegs){
-					if(remainingPath==null) {
-						//solid node
-						HAPElement solidEle = null;
-						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(outSolidNodeEle.getType())) {
-							solidEle = ((HAPElementNode)outSolidNodeEle).getChildren().get(pathSeg);
-						}
-						if(solidEle==null) 		remainingPath = pathSeg;
-						else{
-							outSolidNodeEle = solidEle;
-						}
-
-						//real node
-						HAPElement refEle = null;
-						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(outRefNodeEle.getType())) {
-							refEle = ((HAPElementNode)outRefNodeEle).getChildren().get(pathSeg);
-						}
-						if(refEle!=null)  outRefNodeEle = refEle;
-					}
-					else {
-						remainingPath = HAPNamingConversionUtility.cascadePath(remainingPath, pathSeg);
-					}
-				}
-			}
-			out.referedRealElement = outRefNodeEle;
-			out.referedRealSolidElement = outSolidNodeEle;
-			out.remainPath = remainingPath;
-		}
-		return out;
-	}
-
 	@Override
-	public HAPStructureValueDefinition cloneStructure() {	return this.cloneContext();	}
-
-	public HAPStructureValueDefinitionFlat cloneContextBase() {
+	public HAPStructureValueDefinition cloneStructure() {	
 		HAPStructureValueDefinitionFlat out = new HAPStructureValueDefinitionFlat();
-		return out;
-	}
-	
-	public HAPStructureValueDefinitionFlat cloneContext() {
-		HAPStructureValueDefinitionFlat out = this.cloneContextBase();
-		this.toContext(out);
-		return out;
-	}
-	
-	public void toContext(HAPStructureValueDefinitionFlat out) {
 		out.empty();
-		for(String name : this.m_roots.keySet()) {
-			out.addRoot(name, this.m_roots.get(name).getId(), this.m_roots.get(name).cloneRoot());
+		for(String id : this.m_rootById.keySet()) {
+			HAPRoot root = this.m_rootById.get(id);
+			out.addRoot(root.cloneRoot());
 		}
+		return out;	
 	}
-	
+
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{
@@ -234,7 +141,12 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, this.getType());
-		jsonMap.put(FLAT, HAPJsonUtility.buildJson(m_roots, HAPSerializationFormat.JSON));
+		
+		Map<String, String> rootsMap = new LinkedHashMap<String, String>();
+		for(String name : this.m_idByName.keySet()) {
+			rootsMap.put(name, this.getRootByName(name).toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(FLAT, HAPJsonUtility.buildMapJson(rootsMap));
 	}
 	
 	@Override
@@ -244,7 +156,7 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 			HAPStructureValueDefinitionFlat context = (HAPStructureValueDefinitionFlat)obj;
 			if(context.getRootNames().equals(this.getRootNames())) {
 				for(String eleName : this.getRootNames()) {
-					out = this.getRoot(eleName).equals(context.getRoot(eleName));
+					out = this.getRootByName(eleName).equals(context.getRootByName(eleName));
 					if(!out)  
 						break;
 				}
@@ -254,4 +166,16 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 		return out;
 	}
 
+	@Override
+	public void updateRootName(HAPUpdateName nameUpdate) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private HAPRoot getRootByName(String name) {
+		String id = this.m_idByName.get(name);
+		if(id==null)  return null;
+		return this.m_rootById.get(id);
+	}
+	
 }

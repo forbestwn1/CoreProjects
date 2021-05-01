@@ -26,11 +26,11 @@ public class HAPProcessorContextVariableInheritance {
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			for(String categary : HAPStructureValueDefinitionGroup.getAllContextTypes()){
 				if(parentContextGroup!=null && Arrays.asList(HAPStructureValueDefinitionGroup.getInheritableContextTypes()).contains(categary)) {
-					HAPStructureValueDefinitionFlat parentContext = parentContextGroup.getContext(categary);
+					HAPStructureValueDefinitionFlat parentContext = parentContextGroup.getFlat(categary);
 					Map<String, HAPRoot> parentEles = parentContext.getRoots();
 					for(String eleName : parentEles.keySet()) {
 						if(isInheritable(out, parentContextGroup, categary, eleName, inheritMode)) {
-							out.addElement(eleName, HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, categary, eleName, inheritanceExcludedInfo), categary);
+							out.addRoot(eleName, HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, categary, eleName, inheritanceExcludedInfo), categary);
 						}
 					}
 				}
@@ -43,7 +43,7 @@ public class HAPProcessorContextVariableInheritance {
 	private static HAPStructureValueDefinitionGroup processConstant(HAPStructureValueDefinitionGroup contextGroup) {
 		HAPStructureValueDefinitionGroup out = contextGroup.cloneContextGroup();
 		for(String contextCategary : HAPStructureValueDefinitionGroup.getAllContextTypes()) {
-			for(String name : out.getContext(contextCategary).getRootNames()) {
+			for(String name : out.getFlat(contextCategary).getRootNames()) {
 				HAPRoot node = out.getElement(contextCategary, name);
 				if(node.isConstant()) {
 					node.getInfo().setValue(HAPRoot.INHERIT_MODE, HAPRoot.INHERIT_MODE_FINAL);

@@ -71,7 +71,7 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 	public Map<String, HAPElementLeafRelative> getRelativeInfo() {
 		if(this.isConstant())  return null;
 		if(this.m_relativeEleInfo==null) {
-			this.m_relativeEleInfo = HAPUtilityContext.isContextDefinitionElementRelative(m_definition);
+			this.m_relativeEleInfo = HAPUtilityContext.discoverRelativeElement(m_definition);
 		}
 		if(this.m_relativeEleInfo==null || this.m_relativeEleInfo.isEmpty())  return null;
 		return this.m_relativeEleInfo;

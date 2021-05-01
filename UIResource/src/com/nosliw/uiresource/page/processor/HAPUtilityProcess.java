@@ -26,7 +26,7 @@ public class HAPUtilityProcess {
 		HAPStructureValueDefinitionGroup tagContext = tagDefinitionContext.cloneContextGroup();
 		for(String name : tagAttrs.keySet()) {
 			HAPElementLeafConstant cstRootNode = new HAPElementLeafConstant(tagAttrs.get(name));
-			tagContext.addElement(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + name, new HAPRoot(cstRootNode), HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE);
+			tagContext.addRoot(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + name, new HAPRoot(cstRootNode), HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE);
 		}
 		return HAPProcessorContext.processStatic(tagContext, HAPParentContext.createDefault(parentContext), null, null, HAPUtilityConfiguration.getContextProcessConfigurationForTagDefinition(tagDefinitionContext, contextProcessorConfig), runtimeEnv);
 	}

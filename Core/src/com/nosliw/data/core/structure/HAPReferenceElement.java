@@ -39,7 +39,7 @@ public class HAPReferenceElement extends HAPSerializableImp{
 		return out;
 	}
 	
-	public HAPReferenceRoot getRootStructureId() {  return this.m_root;   }
+	public HAPReferenceRoot getRootReference() {  return this.m_root;   }
 	
 	public String getSubPath(){		return this.m_path==null?"":this.m_path;	}
 	

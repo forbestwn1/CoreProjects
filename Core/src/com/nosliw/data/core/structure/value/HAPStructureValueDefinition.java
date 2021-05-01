@@ -16,7 +16,8 @@ public interface HAPStructureValueDefinition extends HAPSerializable, HAPStructu
 
 	boolean isEmpty();
 	
-	HAPRoot getRoot(String eleName, boolean createIfNotExist);
+	@Override
+	HAPRoot getRoot(String id);
 
 	void updateRootName(HAPUpdateName nameUpdate);
 	

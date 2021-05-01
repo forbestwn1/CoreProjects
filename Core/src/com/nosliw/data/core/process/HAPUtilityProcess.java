@@ -95,7 +95,7 @@ public class HAPUtilityProcess {
 		for(HAPVariableInfo expectedVarInfo : activityVariablesInfo) {
 			HAPReferenceElement varPath = new HAPReferenceElement(expectedVarInfo.getName());
 			//affect global variable 
-			HAPRoot affectedRoot = activityContext.getRoot(varPath.getRootStructureId().getFullName());
+			HAPRoot affectedRoot = activityContext.getRoot(varPath.getRootReference().getFullName());
 			if(affectedRoot!=null) {
 				//ele mapped from context variable
 				HAPElement currentEle = affectedRoot.getDefinition();
@@ -127,7 +127,7 @@ public class HAPUtilityProcess {
 		for(String basePath : expectedVariablesInfo.keySet()) {
 			HAPReferenceElement cpath = new HAPReferenceElement(basePath);
 			HAPElementLeafData affectedEle = new HAPElementLeafData(expectedVariablesInfo.get(basePath).getDataInfo());
-			HAPUtilityContext.updateDataDescendant(processContext, cpath.getRootStructureId().getCategary(), cpath.getPath(), affectedEle);
+			HAPUtilityContext.updateDataDescendant(processContext, cpath.getRootReference().getCategary(), cpath.getPath(), affectedEle);
 		}
 	}
 	

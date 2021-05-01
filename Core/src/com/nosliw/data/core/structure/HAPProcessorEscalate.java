@@ -17,7 +17,7 @@ public class HAPProcessorEscalate {
 
 	public static void process(HAPStructureValueDefinitionGroup contextGroup, Set<String> categarys, Map<String, String> cm, Set<String> inheritanceExcludedInfo) {
 		for(String categary : categarys) {
-			HAPStructureValueDefinitionFlat context = contextGroup.getContext(categary);
+			HAPStructureValueDefinitionFlat context = contextGroup.getFlat(categary);
 
 			Map<String, String> contextMapping = new LinkedHashMap<String, String>();
 			contextMapping.putAll(cm);
@@ -39,7 +39,7 @@ public class HAPProcessorEscalate {
 			Pair<Boolean, HAPRoot> a = escalate(sourceRootNode, sourceCategaryType, sourceContextGroup.getParent(), complexPath, inheritanceExcludedInfo);
 			
 			HAPRoot b = getEscalateStepRootNode(a, sourceCategaryType, complexPath, inheritanceExcludedInfo);
-			sourceContextGroup.addElement(contextEleName, b, sourceCategaryType);
+			sourceContextGroup.addRoot(contextEleName, b, sourceCategaryType);
 		}
 	}
 	
@@ -47,10 +47,10 @@ public class HAPProcessorEscalate {
 	private static Pair<Boolean, HAPRoot> escalate(HAPRoot original, String categaryType, HAPStructureValueDefinitionGroup parentContextGroup, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
 		
 		Pair<Boolean, HAPRoot> out = null;
-		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.resolveReferencedContextElement(new HAPReferenceElement(path.getFullName()), parentContextGroup, null, HAPConstant.RESOLVEPARENTMODE_FIRST);
+		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(path.getFullName()), parentContextGroup, null, HAPConstant.RESOLVEPARENTMODE_FIRST);
 		if(HAPUtilityContext.isLogicallySolved(resolveInfo)) {
 			//find matched one
-			out = Pair.of(true, HAPUtilityContext.createRootWithRelativeElement(resolveInfo.referredRoot, resolveInfo.path.getRootStructureId().getCategary(), resolveInfo.path.getPath(), inheritanceExcludedInfo));
+			out = Pair.of(true, HAPUtilityContext.createRootWithRelativeElement(resolveInfo.referredRoot, resolveInfo.path.getRootReference().getCategary(), resolveInfo.path.getPath(), inheritanceExcludedInfo));
 		}
 		else {
 			//not find
@@ -65,7 +65,7 @@ public class HAPProcessorEscalate {
 				if(HAPBasicUtility.isStringEmpty(path.getPath())) {
 					//clone original root node to parent context
 					HAPRoot rootNode = original.cloneRoot();
-					parentContextGroup.addElement(path.getRootName(), rootNode, categaryType);
+					parentContextGroup.addRoot(path.getRootName(), rootNode, categaryType);
 					out = Pair.of(false, rootNode);
 				}
 				else HAPErrorUtility.invalid("");
@@ -74,7 +74,7 @@ public class HAPProcessorEscalate {
 				//keep escalate to grand parent
 				Pair<Boolean, HAPRoot> a = escalate(original, categaryType, grandParent, path, inheritanceExcludedInfo);
 				HAPRoot b = getEscalateStepRootNode(a, categaryType, path, inheritanceExcludedInfo);
-				parentContextGroup.addElement(path.getRootName(), b, categaryType);
+				parentContextGroup.addRoot(path.getRootName(), b, categaryType);
 				out = Pair.of(false, b);
 			}
 		}

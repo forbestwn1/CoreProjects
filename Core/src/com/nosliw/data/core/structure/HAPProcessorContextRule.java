@@ -13,7 +13,7 @@ public class HAPProcessorContextRule {
 	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup orgContext, HAPRuntimeEnvironment runtimeEnv) {
 
 		for(String group : orgContext.getAllContextTypes()) {
-			HAPStructureValueDefinitionFlat context = orgContext.getContext(group);
+			HAPStructureValueDefinitionFlat context = orgContext.getFlat(group);
 			for(String eleName : context.getRootNames()) {
 				HAPUtilityContext.processContextRootElement(context.getRoot(eleName), eleName, new HAPProcessorContextDefinitionElement() {
 					@Override

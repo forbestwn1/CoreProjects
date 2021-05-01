@@ -82,8 +82,8 @@ public class HAPUtilityScript {
 	private static String buildJSArrayFromContextPath(String path) {
 		List<String> pathSegs = new ArrayList<String>();
 		HAPReferenceElement contextPath = new HAPReferenceElement(path);
-		if(HAPBasicUtility.isStringNotEmpty(contextPath.getRootStructureId().getCategary()))  pathSegs.add(contextPath.getRootStructureId().getCategary());
-		pathSegs.add(contextPath.getRootStructureId().getName());
+		if(HAPBasicUtility.isStringNotEmpty(contextPath.getRootReference().getCategary()))  pathSegs.add(contextPath.getRootReference().getCategary());
+		pathSegs.add(contextPath.getRootReference().getName());
 		pathSegs.addAll(Arrays.asList(contextPath.getPathSegments()));
 		String pathSegsStr = HAPJsonUtility.buildArrayJson(pathSegs.toArray(new String[0]));
 		return pathSegsStr;

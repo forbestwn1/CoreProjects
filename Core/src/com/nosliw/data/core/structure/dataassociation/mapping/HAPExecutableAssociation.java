@@ -133,7 +133,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 
 		for(String p1 : m_relativePathMapping.keySet()) {
 			HAPReferenceElement cPath = new HAPReferenceElement(p1);
-			HAPReferenceElement cPath1 = new HAPReferenceElement(new HAPIdContextDefinitionRoot(nameUpdate.getUpdatedName(cPath.getRootStructureId().getFullName())), cPath.getSubPath());
+			HAPReferenceElement cPath1 = new HAPReferenceElement(new HAPIdContextDefinitionRoot(nameUpdate.getUpdatedName(cPath.getRootReference().getFullName())), cPath.getSubPath());
 			processedPathMapping.put(cPath1.getFullPath(), m_relativePathMapping.get(p1));
 		}
 		this.m_relativePathMapping = processedPathMapping;

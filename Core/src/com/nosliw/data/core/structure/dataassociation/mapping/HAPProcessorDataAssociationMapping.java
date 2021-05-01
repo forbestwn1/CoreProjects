@@ -78,7 +78,7 @@ public class HAPProcessorDataAssociationMapping {
 					HAPInfoElement contextEleInfo = (HAPInfoElement)error.getData();
 					//find referred element defined in output
 					HAPReferenceElement path = contextEleInfo.getElementPath();
-					HAPElement sourceContextEle = HAPUtilityContext.getDescendant(outputStructure.getRoot(path.getRootStructureId().getName(), false).getDefinition(), path.getSubPath());
+					HAPElement sourceContextEle = HAPUtilityContext.getDescendant(outputStructure.getRoot(path.getRootReference().getName(), false).getDefinition(), path.getSubPath());
 					if(sourceContextEle==null)  throw new RuntimeException();
 					//update input: set referred element defined in output to input
 					HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)contextEleInfo.getElement();
@@ -144,8 +144,8 @@ public class HAPProcessorDataAssociationMapping {
 			out = new HAPStructureValueDefinitionFlat();
 			for(String eleName : origin.getRootNames()) {
 				String updatedName = eleName;
-				HAPInfoReferenceResolve resolvedInfo = HAPUtilityContext.resolveReferencedContextElement(new HAPReferenceElement(eleName), (HAPStructureValueDefinitionGroup)outputStructure, null, null);
-				if(resolvedInfo!=null) 	updatedName = resolvedInfo.path.getRootStructureId().getFullName();
+				HAPInfoReferenceResolve resolvedInfo = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(eleName), (HAPStructureValueDefinitionGroup)outputStructure, null, null);
+				if(resolvedInfo!=null) 	updatedName = resolvedInfo.path.getRootReference().getFullName();
 				out.addRoot(updatedName, origin.getRoot(eleName));
 			}
 		}

@@ -57,13 +57,13 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		HAPStructureValueDefinitionGroup stepDataContext = processDataContext.cloneContextGroup();
 		
 		//find container data criteria 
-		HAPInfoReferenceResolve containerResolve = HAPUtilityContext.resolveReferencedContextElement(new HAPReferenceElement(loopActivityDef.getContainerName()), processDataContext, null, null);
+		HAPInfoReferenceResolve containerResolve = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(loopActivityDef.getContainerName()), processDataContext, null, null);
 		out.setContainerDataPath(containerResolve.path);
 		HAPDataTypeCriteria containerCriteria = ((HAPElementLeafData)containerResolve.resolvedNode.getSolidStructureElement()).getCriteria();
 		//find element data criteria from coontainer data criteria
 		HAPDataTypeCriteria elementCriteria = HAPCriteriaUtility.getChildCriteriaByPath(containerCriteria, "element");
 		//build element data context 
-		stepDataContext.addElement(loopActivityDef.getElementName(), new HAPRoot(new HAPElementLeafData(new HAPVariableDataInfo(elementCriteria))), HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+		stepDataContext.addRoot(loopActivityDef.getElementName(), new HAPRoot(new HAPElementLeafData(new HAPVariableDataInfo(elementCriteria))), HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 		
 		//index data definition
 		HAPExecutableWrapperTask<HAPExecutableProcess> stepProcessExe = processManager.getEmbededProcess(

@@ -38,7 +38,7 @@ public class HAPProcessorContextRelative {
 		HAPStructureValueDefinitionGroup contextGroup = new HAPStructureValueDefinitionGroup();
 		contextGroup.setContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, context);
 		contextGroup = process(contextGroup, parent, dependency, errors, configure, runtimeEnv);
-		return contextGroup.getContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+		return contextGroup.getFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 	}
 	
 	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup contextGroup, HAPParentContext parent, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
@@ -102,7 +102,7 @@ public class HAPProcessorContextRelative {
 		HAPElement out = defContextElementRelative;
 		
 		HAPReferenceElement path = defContextElementRelative.getPathFormat(); 
-		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.resolveReferencedContextElement(path, parentContext, categaryes, configure.relativeResolveMode);
+		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.resolveElementReference(path, parentContext, categaryes, configure.relativeResolveMode);
 		
 		if(resolveInfo==null || resolveInfo.referredRoot==null) {
 			errors.add(HAPServiceData.createFailureData(contextEleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
@@ -120,8 +120,8 @@ public class HAPProcessorContextRelative {
 			}
 			default:
 			{
-				if(isParentFlat)  path.getRootStructureId().setCategary(null);
-				else path.getRootStructureId().setCategary(resolveInfo.path.getRootStructureId().getCategary());
+				if(isParentFlat)  path.getRootReference().setCategary(null);
+				else path.getRootReference().setCategary(resolveInfo.path.getRootReference().getCategary());
 				defContextElementRelative.setPath(path);
 				
 				HAPElement solvedContextEle = resolveInfo.resolvedNode; 

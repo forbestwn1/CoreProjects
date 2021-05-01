@@ -30,10 +30,10 @@ public class HAPProcessorContextSolidate {
 				if(!contextDefRoot.isConstant()) {
 					String solidName = getSolidName(name, constantsData, runtimeEnv);
 					contextDefRoot.setDefinition(contextDefRoot.getDefinition().toSolidStructureElement(constantsData, runtimeEnv));
-					out.addElement(solidName, contextDefRoot, categary);
+					out.addRoot(solidName, contextDefRoot, categary);
 				}
 				else {
-					out.addElement(name, contextDefRoot, categary);
+					out.addRoot(name, contextDefRoot, categary);
 				}
 			}
 		}
