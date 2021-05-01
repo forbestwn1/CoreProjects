@@ -54,7 +54,7 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 	public HAPStructureValueDefinitionGroup(){
 		this.m_info = new HAPInfoImpSimple(); 
 		this.m_flatStructureByCategary = new LinkedHashMap<String, HAPStructureValueDefinitionFlat>();
-		for(String type : getAllContextTypes()){
+		for(String type : getAllCategaries()){
 			this.m_flatStructureByCategary.put(type, new HAPStructureValueDefinitionFlat());
 		}
 	}
@@ -111,7 +111,7 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 		List<String> categaryCandidates = new ArrayList<String>();
 		if(HAPBasicUtility.isStringNotEmpty(groupReference.getCategary()))  categaryCandidates.add(groupReference.getCategary());  //check path first
 		else if(groupConfigure.categaryes!=null && groupConfigure.categaryes.length>0)    categaryCandidates.addAll(Arrays.asList(groupConfigure.categaryes));     //input
-		else categaryCandidates.addAll(Arrays.asList(HAPStructureValueDefinitionGroup.getVisibleContextTypes()));               //otherwise, use visible context
+		else categaryCandidates.addAll(Arrays.asList(HAPStructureValueDefinitionGroup.getVisibleCategaries()));               //otherwise, use visible context
 		
 		List<HAPRoot> out = new ArrayList<HAPRoot>();
 		for(String categary : categaryCandidates) {
@@ -121,16 +121,28 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 			}
 		}
 		
+		if(out.size()==0 && createIfNotExist) {
+			String categary = null;
+			if(categaryCandidates.size()==1)  categary = categaryCandidates.get(0);
+			HAPRoot newRoot = new HAPRoot();
+			newRoot.setName(groupReference.getName());
+			newRoot = this.addRoot(categary, newRoot);
+			out.add(newRoot);
+		}
+		
 		return out;
 	}
 
 	@Override
-	public void hardMergeWith(HAPStructureValueDefinition context){
-		if(context!=null) {
-			if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-				HAPStructureValueDefinitionGroup contextGroup = (HAPStructureValueDefinitionGroup)context;
-				for(String type : contextGroup.getContextTypes()){
-					this.getChildContext(type).hardMergeWith(contextGroup.getFlat(type));
+	public void hardMergeWith(HAPStructureValueDefinition structure){
+		if(structure!=null) {
+			if(structure.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+				HAPStructureValueDefinitionGroup groupStructure = (HAPStructureValueDefinitionGroup)structure;
+				for(String categary : groupStructure.getCategaries()){
+					HAPStructureValueDefinitionFlat flat = groupStructure.getFlat(categary);
+					for(HAPRoot root : flat.getRoots()) {
+						this.addRoot(categary, root);
+					}
 				}
 			}
 			else  throw new RuntimeException();
@@ -139,7 +151,8 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 
 
 	public void empty() {
-		for(String type : getAllContextTypes()) {
+		this.m_categaryById = new LinkedHashMap<String, String>();
+		for(String type : getAllCategaries()) {
 			this.getFlat(type).empty();
 		}
 	}
@@ -152,37 +165,23 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 	public HAPStructureValueDefinitionGroup getParent() {   return this.m_parent;   }
 	public void setParent(HAPStructureValueDefinitionGroup parent) {  this.m_parent = parent;   }
 	
-	public Map<String, HAPRoot> getElements(String contextType){  return this.getFlat(contextType).getRoots();  }
+	public Set<HAPRoot> getRootsByCategary(String categary){  return this.getFlat(categary).getRoots();  }
 	
 	private HAPStructureValueDefinitionFlat getFlat(String categary){
 		HAPStructureValueDefinitionFlat out = this.m_flatStructureByCategary.get(categary);
 		if(out==null) {
-			this.m_flatStructureByCategary.put(categary, new HAPStructureValueDefinitionFlat());
+			out = this.setFlat(categary, new HAPStructureValueDefinitionFlat());
 		}
-		return out;
-	}
-	public HAPStructureValueDefinitionFlat getChildContext(String type){		
-		HAPStructureValueDefinitionFlat out = this.m_flatStructureByCategary.get(type);
-		if(out==null) {
-			out = new HAPStructureValueDefinitionFlat();
-			this.setContext(type, out);
-		}
-		return out;
-	}
-	public void setContext(String type, HAPStructureValueDefinitionFlat context) {   if(context!=null) this.m_flatStructureByCategary.put(type, context);   }
-	public HAPStructureValueDefinitionFlat removeContext(String type) { 
-		HAPStructureValueDefinitionFlat out = this.m_flatStructureByCategary.get(type);
-		this.m_flatStructureByCategary.put(type, new HAPStructureValueDefinitionFlat());
 		return out;
 	}
 
-	public HAPRoot getElement(HAPIdContextDefinitionRoot nodeId) {  return this.getRoot(nodeId.getCategary(), nodeId.getName());   }
-	public HAPRoot getElement(String type, String name) {
-		HAPStructureValueDefinitionFlat context = this.getFlat(type);
-		return context==null?null:context.getRoot(name);
+	private HAPStructureValueDefinitionFlat setFlat(String categary, HAPStructureValueDefinitionFlat flat) {  
+		HAPStructureValueDefinitionFlat out = flat;
+		if(flat!=null) this.m_flatStructureByCategary.put(categary, flat);
+		return out;
 	}
 	
-	public Set<String> getContextTypes(){  return this.m_flatStructureByCategary.keySet();   }
+	public Set<String> getCategaries(){  return this.m_flatStructureByCategary.keySet();   }
 	
 	@Override
 	public void updateRootName(HAPUpdateName nameUpdate) {
@@ -240,8 +239,8 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 		boolean out = false;
 		if(obj instanceof HAPStructureValueDefinitionGroup) {
 			HAPStructureValueDefinitionGroup contextGroup = (HAPStructureValueDefinitionGroup)obj;
-			if(contextGroup.getContextTypes().equals(this.getContextTypes())) {
-				for(String categary : this.getContextTypes()) {
+			if(contextGroup.getCategaries().equals(this.getCategaries())) {
+				for(String categary : this.getCategaries()) {
 					out = contextGroup.getFlat(categary).equals(this.getFlat(categary));
 					if(!out)  break;
 				}
@@ -260,7 +259,7 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 	public void addInternalElement(HAPRoot root){  this.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL, root);  }
 	public void addPrivateElement(HAPRoot root){  this.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE, root);  }
 
-	public static String[] getAllContextTypes(){
+	public static String[] getAllCategaries(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
@@ -270,7 +269,7 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 		return contextTypes;
 	}
 
-	public static String[] getContextTypesWithPriority(){
+	public static String[] getAllCategariesWithPriority(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
@@ -281,7 +280,7 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 	}
 
 	//context type that can be inherited by child
-	public static String[] getInheritableContextTypes(){
+	public static String[] getInheritableCategaries(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
@@ -290,7 +289,7 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 	}
 
 	//visible to child
-	public static String[] getVisibleContextTypes(){
+	public static String[] getVisibleCategaries(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,

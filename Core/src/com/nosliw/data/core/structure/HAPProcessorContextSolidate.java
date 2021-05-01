@@ -23,8 +23,8 @@ public class HAPProcessorContextSolidate {
 		Map<String, Object> constantsData = buildConstants(originalContextGroup);
 
 		HAPStructureValueDefinitionGroup out = new HAPStructureValueDefinitionGroup(originalContextGroup.getInfo());
-		for(String categary : HAPStructureValueDefinitionGroup.getAllContextTypes()) {
-			Map<String, HAPRoot> contextDefRoots = originalContextGroup.getElements(categary);
+		for(String categary : HAPStructureValueDefinitionGroup.getAllCategaries()) {
+			Map<String, HAPRoot> contextDefRoots = originalContextGroup.getRootsByCategary(categary);
 			for(String name : contextDefRoots.keySet()) {
 				HAPRoot contextDefRoot = contextDefRoots.get(name);
 				if(!contextDefRoot.isConstant()) {
@@ -42,9 +42,9 @@ public class HAPProcessorContextSolidate {
 
 	private static Map<String, Object> buildConstants(HAPStructureValueDefinitionGroup originalContextGroup){
 		Map<String, Object> constantsData = new LinkedHashMap<String, Object>();
-		String[] categarys = HAPStructureValueDefinitionGroup.getAllContextTypes(); 
+		String[] categarys = HAPStructureValueDefinitionGroup.getAllCategaries(); 
 		for(int i=categarys.length-1; i>=0; i--) {
-			Map<String, HAPRoot> nodes = originalContextGroup.getElements(categarys[i]);
+			Map<String, HAPRoot> nodes = originalContextGroup.getRootsByCategary(categarys[i]);
 			for(String name : nodes.keySet()) {
 				if(nodes.get(name).isConstant()){
 					HAPElementLeafConstant constEleDef = (HAPElementLeafConstant)nodes.get(name).getDefinition();

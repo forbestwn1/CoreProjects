@@ -1,7 +1,9 @@
 package com.nosliw.data.core.structure.value;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,7 +15,11 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.updatename.HAPUpdateName;
+import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.data.core.structure.HAPConfigureReferenceResolve;
+import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityContext;
 
 //flat context represent result of flat a context group to context
@@ -22,7 +28,7 @@ import com.nosliw.data.core.structure.HAPUtilityContext;
 //Also, we can find global name by local name
 //flat context is back compatible with context
 @HAPEntityWithAttribute
-public class HAPStructureValueExecutable extends HAPSerializableImp{
+public class HAPStructureValueExecutable extends HAPSerializableImp implements HAPStructureValue{
 
 	@HAPAttribute
 	public static final String CONTEXT = "context";
@@ -33,46 +39,65 @@ public class HAPStructureValueExecutable extends HAPSerializableImp{
 	@HAPAttribute
 	public static String VARIDBYNAME = "varIdByName";
 	
-	private Map<String, HAPElementContextStructureValueExecutable> m_context;
+	private Map<String, HAPRoot> m_rootById;
 	
-	private Map<String, String> m_varIdByName;
+	private Map<String, String> m_idByName;
 	
 	private Map<String, Set<String>> m_namesByVarId;
 	
 	public HAPStructureValueExecutable() {
-		this.m_context = new LinkedHashMap<String, HAPElementContextStructureValueExecutable>();
-		this.m_varIdByName = new LinkedHashMap<String, String>();
+		this.m_rootById = new LinkedHashMap<String, HAPRoot>();
+		this.m_idByName = new LinkedHashMap<String, String>();
 		this.m_namesByVarId = new LinkedHashMap<String, Set<String>>();
 	}
 
-	public void addElement(HAPRoot element) {	this.addRoot(element, null);	}
-	
-	public void addElement(HAPElementContextStructureValueExecutable element, Set<String> aliases) {
-		String id = element.getLocalId();
-		if(this.m_context.get(id)!=null)  throw new RuntimeException();  //no overlapping allowed
-		this.m_context.put(id, element);
+	@Override
+	public HAPRoot getRoot(String localId) {  return this.m_rootById.get(localId); }
+
+	@Override
+	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, HAPConfigureReferenceResolve configure,
+			boolean createIfNotExist) {
+		List<HAPRoot> out = new ArrayList<HAPRoot>(); 
+		HAPReferenceRootInExecutable exeRootReference = (HAPReferenceRootInExecutable)rootReference;
+		String id = exeRootReference.getId();
+		String name = exeRootReference.getName();
+		if(HAPBasicUtility.isStringNotEmpty(id)) {
+			HAPRoot root = this.getRoot(id);
+			if(root!=null)   out.add(root);
+		}
+		else {
+			HAPRoot root = this.getRootByName(name);
+			if(root!=null)  out.add(root);
+		}
+		return out;
+	}
+
+	public void addRoot(HAPRoot root, Set<String> aliases) {
+		String id = root.getLocalId();
+		if(this.m_rootById.get(id)!=null)  throw new RuntimeException();  //no overlapping allowed
+		this.m_rootById.put(id, root);
 		Set<String> allNames = new HashSet<String>();
 		if(aliases!=null)   allNames.addAll(aliases);
-		allNames.add(id);
+		if(HAPBasicUtility.isStringNotEmpty(root.getName()))  allNames.add(root.getName());
 		this.m_namesByVarId.put(id, allNames);
 		for(String name : allNames) {
-			this.m_varIdByName.put(name, id);
+			this.m_idByName.put(name, id);
 		}
 	}
 
-	public HAPElementContextStructureValueExecutable getElement(String name) {
-		String id = this.m_varIdByName.get(name);
+	public void addRoot(HAPRoot root) {	this.addRoot(root, null);	}
+	
+	public HAPRoot getRootByName(String name) {
+		String id = this.m_idByName.get(name);
 		if(id==null)  return null;
-		else return this.m_context.get(id);
+		else return this.m_rootById.get(id);
 	}
 	
-	public Set<HAPElementContextStructureValueExecutable> getAllElements(){
-		return new HashSet<HAPElementContextStructureValueExecutable>(this.m_context.values());
-	}
+	public Set<HAPRoot> getAllRoots(){	return new HashSet<HAPRoot>(this.m_rootById.values());	}
 	
 	public Set<String> getAllNames(){
 		Set<String> out = new HashSet<String>();
-		out.addAll(this.m_varIdByName.keySet());
+		out.addAll(this.m_idByName.keySet());
 		return out;
 	}
 	
@@ -81,10 +106,10 @@ public class HAPStructureValueExecutable extends HAPSerializableImp{
 		
 		{
 			Map<String, String> updated = new LinkedHashMap<String, String>();
-			for(String name : this.m_varIdByName.keySet()) {
-				updated.put(updateAliasRootName(name, nameUpdate), nameUpdate.getUpdatedName(this.m_varIdByName.get(name)));
+			for(String name : this.m_idByName.keySet()) {
+				updated.put(updateAliasRootName(name, nameUpdate), nameUpdate.getUpdatedName(this.m_idByName.get(name)));
 			}
-			this.m_varIdByName = updated;
+			this.m_idByName = updated;
 		}
 		
 		{
@@ -121,8 +146,8 @@ public class HAPStructureValueExecutable extends HAPSerializableImp{
 		Map<String, Object> constantsById = HAPUtilityContext.discoverConstantValue(this.m_context);
 		for(String id : constantsById.keySet()) {
 			Object constantValue = constantsById.get(id);
-			for(String alias : this.m_varIdByName.keySet()) {
-				if(id.equals(this.m_varIdByName.get(alias))) {
+			for(String alias : this.m_idByName.keySet()) {
+				if(id.equals(this.m_idByName.get(alias))) {
 					out.put(alias, constantValue);
 				}
 			}
@@ -132,8 +157,8 @@ public class HAPStructureValueExecutable extends HAPSerializableImp{
 	
 	public Set<String> getAliasById(String id){
 		Set<String> out = new HashSet<String>();
-		for(String alias : this.m_varIdByName.keySet()) {
-			if(id.equals(this.m_varIdByName.get(alias))) {
+		for(String alias : this.m_idByName.keySet()) {
+			if(id.equals(this.m_idByName.get(alias))) {
 				out.add(alias);
 			}
 		}
@@ -142,21 +167,11 @@ public class HAPStructureValueExecutable extends HAPSerializableImp{
 	
 	public HAPStructureValueDefinitionFlat getContext() {  return this.m_context;  }
 	
-	public HAPStructureValueExecutable cloneContextFlat() {
-		HAPStructureValueExecutable out = new HAPStructureValueExecutable();
-		out.m_varIdByName.putAll(this.m_varIdByName);
-		for(String varId : this.m_namesByVarId.keySet()) {
-			out.m_namesByVarId.put(varId, new HashSet<String>(this.m_namesByVarId.get(varId)));
-		}
-		out.m_context = this.m_context.cloneContext();
-		return null;
-	}
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(VARIDBYNAME, HAPSerializeManager.getInstance().toStringValue(this.m_varIdByName, HAPSerializationFormat.JSON));
+		jsonMap.put(VARIDBYNAME, HAPSerializeManager.getInstance().toStringValue(this.m_idByName, HAPSerializationFormat.JSON));
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		for(String varId : this.m_namesByVarId.keySet()) {
@@ -164,4 +179,18 @@ public class HAPStructureValueExecutable extends HAPSerializableImp{
 		}
 		jsonMap.put(NAMESBYVARID, HAPJsonUtility.buildMapJson(map));
 	}
+
+	@Override
+	public HAPStructure cloneStructure() {
+		HAPStructureValueExecutable out = new HAPStructureValueExecutable();
+		out.m_idByName.putAll(this.m_idByName);
+		for(String varId : this.m_namesByVarId.keySet()) {
+			out.m_namesByVarId.put(varId, new HashSet<String>(this.m_namesByVarId.get(varId)));
+		}
+		for(String varId : this.m_rootById.keySet()) {
+			out.m_rootById.put(varId, this.m_rootById.get(varId).cloneRoot());
+		}
+		return out;
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.nosliw.data.core.structure.value;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,9 +62,9 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 		if(parent!=null) {
 			if(parent.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
 				HAPStructureValueDefinitionFlat context  = (HAPStructureValueDefinitionFlat)parent;
-				Map<String, HAPRoot> eles = context.getRoots();
-				for(String rootName : eles.keySet()){
-					this.addRoot(eles.get(rootName).cloneRoot());
+				Set<HAPRoot> eles = context.getRoots();
+				for(HAPRoot root : eles){
+					this.addRoot(root.cloneRoot());
 				}
 			}
 			else  throw new RuntimeException();
@@ -81,7 +82,7 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 	}
 
 	public Set<String> getRootNames(){  return this.m_idByName.keySet();   }
-	public Map<String, HAPRoot> getRoots(){  return this.m_rootById;  }
+	public Set<HAPRoot> getRoots(){  return new HashSet<HAPRoot>(this.m_rootById.values());  }
 	
 	
 	public HAPRoot addRoot(HAPRoot root) {
@@ -129,7 +130,7 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 		try{
 			super.buildObjectByJson(json);
 			JSONObject jsonObj = (JSONObject)json;
-			HAPParserValueStructure.parseparseValueStructureDefinitionFlat(jsonObj, this);
+			HAPParserValueStructure.parseValueStructureDefinitionFlat(jsonObj, this);
 			return true;  
 		}
 		catch(Exception e){

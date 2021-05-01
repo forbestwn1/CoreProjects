@@ -31,7 +31,7 @@ public class HAPUtilityContextScript {
 	//build default value structure for context group
 	public static JSONObject buildDefaultJsonObject(HAPStructureValueDefinitionGroup contextGroup) {
 		JSONObject out = new JSONObject();
-		for(String categary : contextGroup.getContextTypes()) {
+		for(String categary : contextGroup.getCategaries()) {
 			out.put(categary, buildDefaultJsonObject(contextGroup.getFlat(categary)));
 		}
 		return out;

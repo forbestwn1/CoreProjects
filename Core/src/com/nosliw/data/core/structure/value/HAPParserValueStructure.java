@@ -1,6 +1,8 @@
 package com.nosliw.data.core.structure.value;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,65 +36,70 @@ public class HAPParserValueStructure {
 		return out;
 	}
 	
-	public static HAPStructureValueDefinitionGroup parseValueStructureDefinitionGroup(JSONObject contextGroupJson) {
-		if(contextGroupJson==null)  return null;
+	public static HAPStructureValueDefinitionGroup parseValueStructureDefinitionGroup(JSONObject groupStructureJson) {
+		if(groupStructureJson==null)  return null;
 		HAPStructureValueDefinitionGroup out = new HAPStructureValueDefinitionGroup();
-		parseValueStructureDefinitionGroup(contextGroupJson, out);
+		parseValueStructureDefinitionGroup(groupStructureJson, out);
 		return out;
 	}
 	
 	//parse context group
-	public static void parseValueStructureDefinitionGroup(JSONObject contextGroupJson, HAPStructureValueDefinitionGroup contextGroup) {
-		JSONObject groupJson = contextGroupJson.optJSONObject(HAPStructureValueDefinitionGroup.GROUP);
+	public static void parseValueStructureDefinitionGroup(JSONObject groupStructureJson, HAPStructureValueDefinitionGroup groupStructure) {
+		JSONObject groupJson = groupStructureJson.optJSONObject(HAPStructureValueDefinitionGroup.GROUP);
 		if(groupJson!=null) {
-			for(String contextType : HAPStructureValueDefinitionGroup.getAllContextTypes()){
-				JSONObject contextEleJson = groupJson.optJSONObject(contextType);
-				HAPStructureValueDefinitionFlat context = contextGroup.getFlat(contextType);
-				parseparseValueStructureDefinitionFlat(contextEleJson, context, new HAPUpdateName() {
+			for(String categary : HAPStructureValueDefinitionGroup.getAllCategaries()){
+				JSONObject flatStructureJson = groupJson.optJSONObject(categary);
+				List<HAPRoot> roots = parseRoots(flatStructureJson, new HAPUpdateName() {
 					@Override
 					public String getUpdatedName(String name) {
-						return new HAPReferenceRootInGroup(contextType, name).getFullName();
+						return new HAPReferenceRootInGroup(categary, name).getFullName();
 					}
-					
 				});
+				for(HAPRoot root : roots)   groupStructure.addRoot(categary, root);
 			}
 		}
-		contextGroup.getInfo().buildObject(contextGroupJson.opt(HAPStructureValueDefinitionGroup.INFO), HAPSerializationFormat.JSON);
+		groupStructure.getInfo().buildObject(groupStructureJson.opt(HAPStructureValueDefinitionGroup.INFO), HAPSerializationFormat.JSON);
 	}
 
-	public static HAPStructureValueDefinitionFlat parseValueStructureDefinitionFlat(JSONObject contextJson) {
+	public static HAPStructureValueDefinitionFlat parseValueStructureDefinitionFlat(JSONObject structureJson) {
 		HAPStructureValueDefinitionFlat out = new HAPStructureValueDefinitionFlat();
-		parseparseValueStructureDefinitionFlat(contextJson, out);
+		parseValueStructureDefinitionFlat(structureJson, out);
 		return out;
 	}
 
-	public static void parseparseValueStructureDefinitionFlat(JSONObject contextJson, HAPStructureValueDefinitionFlat context) {
-		parseparseValueStructureDefinitionFlat(contextJson, context, null);
+	public static void parseValueStructureDefinitionFlat(JSONObject structureJson, HAPStructureValueDefinitionFlat flatStructure) {
+		List<HAPRoot> roots = parseRoots(structureJson, null);
+		for(HAPRoot root : roots)  flatStructure.addRoot(root);
 	}
-		
-	private static void parseparseValueStructureDefinitionFlat(JSONObject contextJson, HAPStructureValueDefinitionFlat context, HAPUpdateName createIdByName) {
-		if(contextJson!=null) {
-			Object elementsObj = contextJson.opt(HAPStructureValueDefinitionFlat.FLAT);
-			if(elementsObj==null)  elementsObj = contextJson;
+	
+	private static List<HAPRoot> parseRoots(JSONObject structureJson, HAPUpdateName createIdByName) {
+		List<HAPRoot> out = new ArrayList<HAPRoot>();
+		if(structureJson!=null) {
+			Object elementsObj = structureJson.opt(HAPStructureValueDefinitionFlat.FLAT);
+			if(elementsObj==null)  elementsObj = structureJson;
 			if(elementsObj instanceof JSONObject) {
 				JSONObject elementsJson = (JSONObject)elementsObj;
 				Iterator<String> it = elementsJson.keys();
 				while(it.hasNext()){
 					String eleName = it.next();
 					JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
-					HAPRoot contextDefRoot = HAPParserStructure.parseContextRootFromJson(eleDefJson);
-					context.addRoot(eleName, getElementId(contextDefRoot.getLocalId(), contextDefRoot.getName(), createIdByName), contextDefRoot);
+					HAPRoot root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
+					root.setName(eleName);
+					root.setLocalId(getElementId(root.getLocalId(), root.getName(), createIdByName));
+					out.add(root);
 				}
 			}
 			else if(elementsObj instanceof JSONArray) {
 				JSONArray elementsArray = (JSONArray)elementsObj;
 				for(int i=0; i<elementsArray.length(); i++) {
 					JSONObject eleDefJson = elementsArray.getJSONObject(i);
-					HAPRoot contextDefRoot = HAPParserStructure.parseContextRootFromJson(eleDefJson);
-					context.addRoot(contextDefRoot.getName(), getElementId(contextDefRoot.getLocalId(), contextDefRoot.getName(), createIdByName),contextDefRoot);
+					HAPRoot root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
+					root.setLocalId(getElementId(root.getLocalId(), root.getName(), createIdByName));
+					out.add(root);
 				}
 			}
 		}
+		return out;
 	}
 	
 	private static String getElementId(String localId, String name, HAPUpdateName createIdByName) {

@@ -39,7 +39,7 @@ public class HAPUtilityContextStructure {
 		else {
 			if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
 				HAPStructureValueDefinitionGroup out = new HAPStructureValueDefinitionGroup();
-				out.setContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPStructureValueDefinitionFlat)context);
+				out.setFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPStructureValueDefinitionFlat)context);
 				return out;
 			}
 			else if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
@@ -53,10 +53,10 @@ public class HAPUtilityContextStructure {
 	public static HAPStructureValueDefinitionFlat buildContextFromContextGroup(HAPStructureValueDefinitionGroup context) {
 		HAPStructureValueDefinitionFlat out = new HAPStructureValueDefinitionFlat();
 		
-		List<String> categarys = Arrays.asList(HAPStructureValueDefinitionGroup.getContextTypesWithPriority());
+		List<String> categarys = Arrays.asList(HAPStructureValueDefinitionGroup.getAllCategariesWithPriority());
 		Collections.reverse(categarys);
 		for(String categary : categarys) {
-			Map<String, HAPRoot> eles = context.getElements(categary);
+			Map<String, HAPRoot> eles = context.getRootsByCategary(categary);
 			for(String name : eles.keySet()) {
 				out.addRoot(name, eles.get(name).cloneRoot());
 			}

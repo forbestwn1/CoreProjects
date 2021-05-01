@@ -80,7 +80,7 @@ public class HAPUINode {
 	
 	public HAPUIDataInfo getDataInfo(String name) {
 		HAPUIDataInfo out = new HAPUIDataInfo();
-		HAPInfoReferenceResolve resolve = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(name), this.getStoryNode().getDataStructureInfo().getContext(), Arrays.asList(HAPStructureValueDefinitionGroup.getVisibleContextTypes()).toArray(new String[0]), HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE).relativeResolveMode);
+		HAPInfoReferenceResolve resolve = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(name), this.getStoryNode().getDataStructureInfo().getContext(), Arrays.asList(HAPStructureValueDefinitionGroup.getVisibleCategaries()).toArray(new String[0]), HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE).relativeResolveMode);
 		HAPElement resolvedNode = resolve.resolvedNode;
 		String nodeType = resolvedNode.getType();
 		if(nodeType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {

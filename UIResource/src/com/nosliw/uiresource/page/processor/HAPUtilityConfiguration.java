@@ -30,7 +30,7 @@ public class HAPUtilityConfiguration {
 	public static HAPConfigureProcessorStructure getContextProcessConfigurationForInternal(HAPConfigureProcessorStructure parentConfigure) {
 		HAPConfigureProcessorStructure out = parentConfigure.cloneConfigure();
 		populateCommonConfigure(out);
-		out.parentCategary = HAPStructureValueDefinitionGroup.getAllContextTypes();
+		out.parentCategary = HAPStructureValueDefinitionGroup.getAllCategaries();
 		out.inheritanceExcludedInfo = HAPUtilityCommon.getDefaultInheritanceExcludedInfo();
 		return out;
 	}

@@ -1,10 +1,14 @@
 package com.nosliw.data.core.structure.value;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.structure.HAPConfigureReferenceResolve;
+import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
 
 public class HAPStructureValueDefinitionEmpty extends HAPSerializableImp implements HAPStructureValueDefinition{
@@ -30,7 +34,7 @@ public class HAPStructureValueDefinitionEmpty extends HAPSerializableImp impleme
 	public boolean isEmpty() {   return true;   }
 
 	@Override
-	public HAPRoot getRoot(String eleName, boolean createIfNotExist) {	return null;	}
+	public HAPRoot getRoot(String rootId) {	return null;	}
 
 	@Override
 	public HAPStructureValueDefinition cloneStructure() {
@@ -50,6 +54,12 @@ public class HAPStructureValueDefinitionEmpty extends HAPSerializableImp impleme
 	public void updateRootName(HAPUpdateName nameUpdate) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, HAPConfigureReferenceResolve configure,
+			boolean createIfNotExist) {
+		return new ArrayList<HAPRoot>();
 	}
 
 }

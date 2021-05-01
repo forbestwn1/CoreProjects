@@ -57,7 +57,7 @@ public class HAPProcessorUIContext {
 		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
 
 		HAPConfigureProcessorStructure privateConfigure = contextProcessorConfig.cloneConfigure();
-		privateConfigure.parentCategary = HAPStructureValueDefinitionGroup.getAllContextTypes();
+		privateConfigure.parentCategary = HAPStructureValueDefinitionGroup.getAllCategaries();
 
 		//merge with parent
 		mergeContext(uiExe, parentContext, contextProcessorConfig, uiTagMan, runtimeEnv);		

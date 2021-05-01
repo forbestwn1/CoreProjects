@@ -51,10 +51,10 @@ public class HAPUtilityContext {
 	public static HAPStructureValueExecutable buildFlatContextFromContextGroup(HAPStructureValueDefinitionGroup context) {
 		HAPStructureValueExecutable out = new HAPStructureValueExecutable();
 		
-		List<String> categarys = Arrays.asList(HAPStructureValueDefinitionGroup.getContextTypesWithPriority());
+		List<String> categarys = Arrays.asList(HAPStructureValueDefinitionGroup.getAllCategariesWithPriority());
 		Collections.reverse(categarys);
 		for(String categary : categarys) {
-			Map<String, HAPRoot> eles = context.getElements(categary);
+			Map<String, HAPRoot> eles = context.getRootsByCategary(categary);
 			for(String localName : eles.keySet()) {
 				String globalName = new HAPIdContextDefinitionRoot(categary, localName).getFullName();
 				Set<String> aliases = new HashSet<String>();
