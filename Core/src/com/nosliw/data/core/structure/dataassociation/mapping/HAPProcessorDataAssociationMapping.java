@@ -21,6 +21,7 @@ import com.nosliw.data.core.structure.HAPElement;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
 import com.nosliw.data.core.structure.HAPIdContextDefinitionRoot;
 import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPProcessorContext;
@@ -29,37 +30,36 @@ import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPUtilityContext;
 import com.nosliw.data.core.structure.HAPUtilityContextInfo;
 import com.nosliw.data.core.structure.dataassociation.HAPUtilityDAProcess;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPProcessorDataAssociationMapping {
 
-	public static HAPExecutableDataAssociationMapping processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociationMapping dataAssociation, HAPParentContext output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableDataAssociationMapping processDataAssociation(HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociationMapping out = new HAPExecutableDataAssociationMapping(dataAssociation, input);
 		processDataAssociation(out, input, dataAssociation, output, attachmentContainer, daProcessConfigure, runtimeEnv);
 		return out;
 	}
 	
 	//process input configure for activity and generate flat context for activity
-	public static void processDataAssociation(HAPExecutableDataAssociationMapping out, HAPParentContext input, HAPDefinitionDataAssociationMapping dataAssociation, HAPParentContext output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processDataAssociation(HAPExecutableDataAssociationMapping out, HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		Map<String, HAPStructureValueDefinitionFlat> associations = dataAssociation.getAssociations();
 		for(String targetName : associations.keySet()) {
-			HAPExecutableAssociation associationExe = processAssociation(input, associations.get(targetName), output.getContext(targetName), attachmentContainer, out.getInputDependency(), daProcessConfigure, runtimeEnv);
+			HAPExecutableAssociation associationExe = processAssociation(input, associations.get(targetName), output.getStructure(targetName), attachmentContainer, out.getInputDependency(), daProcessConfigure, runtimeEnv);
 			out.addAssociation(targetName, associationExe);
 		}
 	}
 
-	public static void enhanceDataAssociationEndPointContext(HAPParentContext input, boolean inputEnhance, HAPDefinitionDataAssociationMapping dataAssociation, HAPParentContext output, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceDataAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
 		Map<String, HAPStructureValueDefinitionFlat> associations = dataAssociation.getAssociations();
 		for(String targetName : associations.keySet()) {
-			enhanceAssociationEndPointContext(input, inputEnhance, associations.get(targetName), output.getContext(targetName), outputEnhance, runtimeEnv);
+			enhanceAssociationEndPointContext(input, inputEnhance, associations.get(targetName), output.getStructure(targetName), outputEnhance, runtimeEnv);
 		}
 	}
 	
 	//enhance input and output context according to dataassociation
-	private static void enhanceAssociationEndPointContext(HAPParentContext input, boolean inputEnhance, HAPStructureValueDefinitionFlat associationDef, HAPStructureValueDefinition outputStructure, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
+	private static void enhanceAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPStructureValueDefinitionFlat associationDef, HAPStructureValueDefinition outputStructure, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
 		associationDef = normalizeOutputNameInDataAssociation(input, associationDef, outputStructure);
 		HAPInfo info = HAPUtilityDAProcess.withModifyInputStructureConfigure(null, inputEnhance);
 		info = HAPUtilityDAProcess.withModifyOutputStructureConfigure(info, outputEnhance);
@@ -84,7 +84,7 @@ public class HAPProcessorDataAssociationMapping {
 					HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)contextEleInfo.getElement();
 					HAPElement solidateSourceContextEle = sourceContextEle.getSolidStructureElement();
 					if(solidateSourceContextEle==null)    throw new RuntimeException();
-					HAPUtilityContext.setDescendant(input.getContext(relativeEle.getParent()), relativeEle.getPathFormat(), solidateSourceContextEle.cloneStructureElement());
+					HAPUtilityContext.setDescendant(input.getStructure(relativeEle.getParent()), relativeEle.getPathFormat(), solidateSourceContextEle.cloneStructureElement());
 				}
 				else  throw new RuntimeException();
 			}
@@ -106,10 +106,10 @@ public class HAPProcessorDataAssociationMapping {
 							if(!HAPUtilityContext.isLogicallySolved(targetResolvedInfo)) {
 								//target node in output according to path not exist
 								//element in input structure
-								HAPStructureValueDefinition sourceContextStructure = input.getContext(relativeEle.getParent());
+								HAPStructureValueDefinition sourceContextStructure = input.getStructure(relativeEle.getParent());
 								HAPInfoReferenceResolve sourceResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(relativeEle.getPathFormat(), sourceContextStructure);
 								if(HAPUtilityContext.isLogicallySolved(sourceResolvedInfo)) {
-									HAPElement sourceEle = sourceResolvedInfo.resolvedNode;
+									HAPElement sourceEle = sourceResolvedInfo.resolvedElement;
 									if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 										HAPUtilityContext.setDescendant(outputStructure, eleInfo.getElementPath(), sourceEle.getSolidStructureElement());
 									}
@@ -134,7 +134,7 @@ public class HAPProcessorDataAssociationMapping {
 	}
 	
 	//make output name in da to be global name according to refference to outputStrucutre
-	private static HAPStructureValueDefinitionFlat normalizeOutputNameInDataAssociation(HAPParentContext input, HAPStructureValueDefinitionFlat associationDef, HAPStructureValueDefinition outputStructure) {
+	private static HAPStructureValueDefinitionFlat normalizeOutputNameInDataAssociation(HAPContainerStructure input, HAPStructureValueDefinitionFlat associationDef, HAPStructureValueDefinition outputStructure) {
 		HAPStructureValueDefinitionFlat out = associationDef;
 		if(outputStructure instanceof HAPStructureValueDefinitionGroup) {
 			//for output context group only
@@ -152,7 +152,7 @@ public class HAPProcessorDataAssociationMapping {
 		return out;
 	}
 
-	private static HAPExecutableAssociation processAssociation(HAPParentContext input, HAPStructureValueDefinitionFlat associationDef, HAPStructureValueDefinition outputStructure, HAPContainerAttachment attachmentContainer, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	private static HAPExecutableAssociation processAssociation(HAPContainerStructure input, HAPStructureValueDefinitionFlat associationDef, HAPStructureValueDefinition outputStructure, HAPContainerAttachment attachmentContainer, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableAssociation out = new HAPExecutableAssociation(input, associationDef, outputStructure);
 
 		associationDef = normalizeOutputNameInDataAssociation(input, associationDef, outputStructure);

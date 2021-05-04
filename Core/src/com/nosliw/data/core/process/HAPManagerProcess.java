@@ -12,11 +12,11 @@ import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 
 public class HAPManagerProcess {
 	
@@ -64,8 +64,8 @@ public class HAPManagerProcess {
 			HAPContextProcessor context, 
 			HAPDefinitionDataAssociation inputMapping, 
 			Map<String, HAPDefinitionDataAssociation> outputMapping,
-			HAPParentContext inputContext, 
-			Map<String, HAPParentContext> outputContext 
+			HAPContainerStructure inputContext, 
+			Map<String, HAPContainerStructure> outputContext 
 		) {
 		HAPDefinitionWrapperTask<HAPEntityWithResourceContext> suiteWrapper = new HAPDefinitionWrapperTask(context.getResourceDefinition(processId));
 		suiteWrapper.setInputMapping(inputMapping);
@@ -80,8 +80,8 @@ public class HAPManagerProcess {
 			HAPContextProcessor context, 
 			HAPDefinitionDataAssociation inputMapping, 
 			Map<String, HAPDefinitionDataAssociation> outputMapping,
-			HAPParentContext inputContext, 
-			HAPParentContext outputContext 
+			HAPContainerStructure inputContext, 
+			HAPContainerStructure outputContext 
 		) {
 		HAPDefinitionWrapperTask<HAPEntityWithResourceContext> suiteWrapper = new HAPDefinitionWrapperTask(context.getResourceDefinition(processId));
 		suiteWrapper.setInputMapping(inputMapping);
@@ -96,8 +96,8 @@ public class HAPManagerProcess {
 			HAPResourceDefinitionProcessSuite suite, 
 			HAPDefinitionDataAssociation inputMapping, 
 			Map<String, HAPDefinitionDataAssociation> outputMapping,
-			HAPParentContext inputContext, 
-			HAPParentContext outputContext 
+			HAPContainerStructure inputContext, 
+			HAPContainerStructure outputContext 
 		) {
 		HAPDefinitionWrapperTask<HAPEntityWithResourceContext> suiteWrapper = new HAPDefinitionWrapperTask(new HAPEntityWithResourceContext(new HAPResourceDefinitionProcess(suite, processId)));
 		suiteWrapper.setInputMapping(inputMapping);
@@ -112,8 +112,8 @@ public class HAPManagerProcess {
 			HAPResourceDefinitionProcessSuite suite, 
 			HAPDefinitionDataAssociation inputMapping, 
 			Map<String, HAPDefinitionDataAssociation> outputMapping,
-			HAPParentContext inputContext, 
-			Map<String, HAPParentContext> outputContext 
+			HAPContainerStructure inputContext, 
+			Map<String, HAPContainerStructure> outputContext 
 		) {
 		HAPDefinitionWrapperTask<HAPEntityWithResourceContext> suiteWrapper = new HAPDefinitionWrapperTask(new HAPEntityWithResourceContext(new HAPResourceDefinitionProcess(suite, processId)));
 		suiteWrapper.setInputMapping(inputMapping);

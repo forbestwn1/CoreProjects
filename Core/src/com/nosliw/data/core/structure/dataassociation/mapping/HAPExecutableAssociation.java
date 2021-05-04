@@ -23,9 +23,9 @@ import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.HAPIdContextDefinitionRoot;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.data.core.structure.HAPReferenceElement;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
@@ -74,9 +74,9 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	//match from data association output to target context variable
 	private Map<String, HAPMatchers> m_outputMatchers;
 
-	public HAPExecutableAssociation(HAPParentContext input, HAPStructureValueDefinitionFlat definition, HAPStructureValueDefinition output) {
+	public HAPExecutableAssociation(HAPContainerStructure input, HAPStructureValueDefinitionFlat definition, HAPStructureValueDefinition output) {
 		this();
-		for(String inputName : input.getNames())  this.addInputStructure(inputName, input.getContext(inputName).cloneStructure()); 
+		for(String inputName : input.getStructureNames())  this.addInputStructure(inputName, input.getStructure(inputName).cloneStructure()); 
 		this.m_output = output;
 	}
 

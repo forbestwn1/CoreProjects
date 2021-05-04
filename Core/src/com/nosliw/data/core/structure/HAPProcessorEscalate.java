@@ -50,7 +50,7 @@ public class HAPProcessorEscalate {
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(path.getFullName()), parentContextGroup, null, HAPConstant.RESOLVEPARENTMODE_FIRST);
 		if(HAPUtilityContext.isLogicallySolved(resolveInfo)) {
 			//find matched one
-			out = Pair.of(true, HAPUtilityContext.createRootWithRelativeElement(resolveInfo.referredRoot, resolveInfo.path.getRootReference().getCategary(), resolveInfo.path.getPath(), inheritanceExcludedInfo));
+			out = Pair.of(true, HAPUtilityContext.createRootWithRelativeElement(resolveInfo.referredRoot, resolveInfo.path.getRootReference().getCategary(), resolveInfo.path.getPathStr(), inheritanceExcludedInfo));
 		}
 		else {
 			//not find
@@ -62,7 +62,7 @@ public class HAPProcessorEscalate {
 			if(isEnd){
 				//at the end of escalate
 				//only root name is valid, mappedPath with path is not valid
-				if(HAPBasicUtility.isStringEmpty(path.getPath())) {
+				if(HAPBasicUtility.isStringEmpty(path.getPathStr())) {
 					//clone original root node to parent context
 					HAPRoot rootNode = original.cloneRoot();
 					parentContextGroup.addRoot(path.getRootName(), rootNode, categaryType);

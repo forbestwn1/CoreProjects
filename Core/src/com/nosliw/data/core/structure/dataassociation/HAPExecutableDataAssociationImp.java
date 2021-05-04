@@ -10,17 +10,17 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 
 public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpEntityInfo implements HAPExecutableDataAssociation{
 
-	private HAPParentContext m_input;
+	private HAPContainerStructure m_input;
 
 	private String m_type;
 
 	public HAPExecutableDataAssociationImp() {}
 	
-	public HAPExecutableDataAssociationImp(HAPDefinitionDataAssociation definition, HAPParentContext input) {
+	public HAPExecutableDataAssociationImp(HAPDefinitionDataAssociation definition, HAPContainerStructure input) {
 		super(definition);
 		this.m_input = input;
 		this.m_type = definition.getType();
@@ -30,15 +30,15 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 	public String getType() {  return this.m_type;  }
 
 	@Override
-	public HAPParentContext getInput() {	return this.m_input;	}
-	public void setInput(HAPParentContext input) {    this.m_input = input;    }
+	public HAPContainerStructure getInput() {	return this.m_input;	}
+	public void setInput(HAPContainerStructure input) {    this.m_input = input;    }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(json);
 		this.m_type = jsonObj.getString(TYPE);
-		this.m_input = new HAPParentContext();
+		this.m_input = new HAPContainerStructure();
 		this.m_input.buildObject(jsonObj.getJSONObject(INPUT), HAPSerializationFormat.JSON);
 		return true;  
 	}
@@ -60,8 +60,8 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 
 		Map<String, String> inputFlatMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> inputFlatTypeMap = new LinkedHashMap<String, Class<?>>();
-		for(String name : this.getInput().getNames()) {
-			inputFlatMap.put(name, this.m_input.getContext(name).isFlat()+"");
+		for(String name : this.getInput().getStructureNames()) {
+			inputFlatMap.put(name, this.m_input.getStructure(name).isFlat()+"");
 			inputFlatTypeMap.put(name, Boolean.class);
 		}
 		jsonMap.put(INPUT, HAPJsonUtility.buildMapJson(inputFlatMap, inputFlatTypeMap));

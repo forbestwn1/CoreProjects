@@ -22,12 +22,12 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPUtilityContext;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
@@ -59,7 +59,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		//find container data criteria 
 		HAPInfoReferenceResolve containerResolve = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(loopActivityDef.getContainerName()), processDataContext, null, null);
 		out.setContainerDataPath(containerResolve.path);
-		HAPDataTypeCriteria containerCriteria = ((HAPElementLeafData)containerResolve.resolvedNode.getSolidStructureElement()).getCriteria();
+		HAPDataTypeCriteria containerCriteria = ((HAPElementLeafData)containerResolve.resolvedElement.getSolidStructureElement()).getCriteria();
 		//find element data criteria from coontainer data criteria
 		HAPDataTypeCriteria elementCriteria = HAPCriteriaUtility.getChildCriteriaByPath(containerCriteria, "element");
 		//build element data context 
@@ -71,8 +71,8 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 				processContext,
 				loopActivityDef.getStep().getInputMapping(), 
 				loopActivityDef.getStep().getOutputMapping(),
-				HAPParentContext.createDefault(stepDataContext), 
-				HAPParentContext.createDefault(stepDataContext)
+				HAPContainerStructure.createDefault(stepDataContext), 
+				HAPContainerStructure.createDefault(stepDataContext)
 		);
 		out.setStep(stepProcessExe);
 		

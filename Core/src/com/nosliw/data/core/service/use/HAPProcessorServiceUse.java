@@ -13,12 +13,12 @@ import com.nosliw.data.core.service.definition.HAPDefinitionService;
 import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPUtilityServiceInterface;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableTask;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPUtilityDAProcess;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 
 public class HAPProcessorServiceUse {
@@ -39,7 +39,7 @@ public class HAPProcessorServiceUse {
 			HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
 			
 			//
-			HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointContext(HAPUtilityServiceInterface.buildIOTaskByInterface(serviceInterface), false, definition.getDataMapping(), HAPParentContext.createDefault(globalContext), true, runtimeEnv);
+			HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointContext(HAPUtilityServiceInterface.buildIOTaskByInterface(serviceInterface), false, definition.getDataMapping(), HAPContainerStructure.createDefault(globalContext), true, runtimeEnv);
 		}
 	}
 
@@ -62,7 +62,7 @@ public class HAPProcessorServiceUse {
 
 		HAPExecutableTask taskExe = HAPUtilityServiceInterface.buildExecutableTaskByInterface(serviceInterface);
 		
-		HAPExecutableWrapperTask serviceMappingExe = HAPProcessorDataAssociation.processDataAssociationWithTask(definition.getDataMapping(), taskExe, HAPParentContext.createDefault(globalContext), HAPUtilityDAProcess.withModifyInputStructureConfigureTrue(null), attachmentContainer, runtimeEnv);
+		HAPExecutableWrapperTask serviceMappingExe = HAPProcessorDataAssociation.processDataAssociationWithTask(definition.getDataMapping(), taskExe, HAPContainerStructure.createDefault(globalContext), HAPUtilityDAProcess.withModifyInputStructureConfigureTrue(null), attachmentContainer, runtimeEnv);
 		out.setServiceMapping(serviceMappingExe);
 		
 		//process service provider
@@ -74,11 +74,11 @@ public class HAPProcessorServiceUse {
 		if(serviceProviderInfo.getDataMapping()!=null) {
 			HAPExecutableProviderToUse providerToUseExe = new HAPExecutableProviderToUse();
 			
-			HAPExecutableDataAssociation parmDA = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(serviceInterface)), serviceProviderInfo.getDataMapping().getInputMapping(), HAPParentContext.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(providerInterface)), attachmentContainer, null, runtimeEnv);;
+			HAPExecutableDataAssociation parmDA = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(serviceInterface)), serviceProviderInfo.getDataMapping().getInputMapping(), HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(providerInterface)), attachmentContainer, null, runtimeEnv);;
 			providerToUseExe.setParmMapping(parmDA);
 			
 			for(String result : serviceProviderInfo.getDataMapping().getOutputMapping().keySet()) {
-				HAPExecutableDataAssociation resultDA = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(HAPUtilityServiceUse.buildContextFromResultServiceOutputs(providerInterface, result)), serviceProviderInfo.getDataMapping().getInputMapping(), HAPParentContext.createDefault(HAPUtilityServiceUse.buildContextFromResultServiceOutputs(serviceInterface, result)), attachmentContainer, null, runtimeEnv);;
+				HAPExecutableDataAssociation resultDA = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildContextFromResultServiceOutputs(providerInterface, result)), serviceProviderInfo.getDataMapping().getInputMapping(), HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildContextFromResultServiceOutputs(serviceInterface, result)), attachmentContainer, null, runtimeEnv);;
 				providerToUseExe.addResultMapping(result, resultDA);
 			}
 			out.setProviderMapping(providerToUseExe);

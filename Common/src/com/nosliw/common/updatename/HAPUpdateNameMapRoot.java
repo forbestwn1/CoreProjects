@@ -16,7 +16,7 @@ public class HAPUpdateNameMapRoot implements HAPUpdateName{
 	public String getUpdatedName(String name) {
 		HAPComplexPath path = new HAPComplexPath(name);
 		String updatedRootName = this.m_map.get(path.getRootName());
-		HAPComplexPath updatedPath = new HAPComplexPath(updatedRootName, path.getPath());
+		HAPComplexPath updatedPath = new HAPComplexPath(updatedRootName, path.getPathStr());
 		return updatedPath.getFullName();
 	}
 

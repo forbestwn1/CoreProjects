@@ -12,9 +12,9 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.structure.dataassociation.HAPOutputStructure;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 
 public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssociationImp{
 
@@ -30,7 +30,7 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 
 	public HAPExecutableDataAssociationMapping() {}
 	
-	public HAPExecutableDataAssociationMapping(HAPDefinitionDataAssociationMapping definition, HAPParentContext input) {
+	public HAPExecutableDataAssociationMapping(HAPDefinitionDataAssociationMapping definition, HAPContainerStructure input) {
 		super(definition, input);
 		this.m_associations = new LinkedHashMap<String, HAPExecutableAssociation>();
 		this.m_inputDependency = new HashSet<String>();
@@ -39,10 +39,10 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	public Set<String> getInputDependency(){   return this.m_inputDependency;    }
 	
 	@Override
-	public HAPParentContext getInput() {
-		HAPParentContext out = new HAPParentContext();
+	public HAPContainerStructure getInput() {
+		HAPContainerStructure out = new HAPContainerStructure();
 		for(String dependencyName : this.m_inputDependency) {
-			out.addContext(dependencyName, super.getInput().getContext(dependencyName));
+			out.addStructure(dependencyName, super.getInput().getStructure(dependencyName));
 		}
 		return out;
 	}

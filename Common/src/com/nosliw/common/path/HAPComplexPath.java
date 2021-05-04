@@ -38,11 +38,11 @@ public class HAPComplexPath {
 		}
 	}
 	
-	public String getRootName(){
-		return this.m_rootName;
-	}
+	public String getRootName(){	return this.m_rootName; 	}
 	
-	public String getPath(){
+	public HAPPath getPath() {   return this.m_path;    }
+	
+	public String getPathStr(){
 		if(this.m_path==null)   return null;
 		return this.m_path.getPath();
 	}

@@ -22,7 +22,6 @@ import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
@@ -31,14 +30,14 @@ public class HAPProcessorContextConstant {
 
 	static public HAPStructureValueDefinitionGroup process(
 			HAPStructureValueDefinitionGroup originalContextGroup,
-			HAPParentContext parent,
+			HAPContainerStructure parent,
 			HAPContainerAttachment attachmentContainer,
 			String inheritMode,
 			HAPRuntimeEnvironment runtimeEnv){
 
 		//merge with parent
 		HAPStructureValueDefinitionGroup merged = originalContextGroup;
-		for(String parentName : parent.getNames()) {
+		for(String parentName : parent.getStructureNames()) {
 			merged = mergeWithParent(merged, (HAPStructureValueDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedContext(parentName, parent, merged), false), inheritMode);
 		}
 

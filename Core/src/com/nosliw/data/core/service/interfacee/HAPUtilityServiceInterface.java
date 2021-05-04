@@ -14,9 +14,9 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableTask;
 import com.nosliw.data.core.structure.dataassociation.HAPIOTask;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
 public class HAPUtilityServiceInterface {
@@ -73,16 +73,16 @@ public class HAPUtilityServiceInterface {
 		}
 		
 		@Override
-		public HAPParentContext getInContext() {
-			return HAPParentContext.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(m_serviceInterface));
+		public HAPContainerStructure getInContext() {
+			return HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(m_serviceInterface));
 		}
 
 		@Override
-		public Map<String, HAPParentContext> getOutResultContext() {
-			Map<String, HAPParentContext> out = new LinkedHashMap<String, HAPParentContext>();
+		public Map<String, HAPContainerStructure> getOutResultContext() {
+			Map<String, HAPContainerStructure> out = new LinkedHashMap<String, HAPContainerStructure>();
 			Map<String, HAPStructureValueDefinitionFlat> resultsContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(m_serviceInterface);
 			for(String resultName : resultsContext.keySet()) {
-				out.put(resultName, HAPParentContext.createDefault(resultsContext.get(resultName)));
+				out.put(resultName, HAPContainerStructure.createDefault(resultsContext.get(resultName)));
 			}
 			return out;
 		}

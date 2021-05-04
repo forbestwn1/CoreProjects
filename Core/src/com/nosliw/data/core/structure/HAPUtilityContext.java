@@ -13,7 +13,6 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.structure.value.HAPElementContextStructureValueExecutable;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
@@ -66,11 +65,6 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
-	public static HAPStructureValueDefinition getReferedContext(String name, HAPParentContext parentContext, HAPStructureValueDefinition self) {
-		if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name))  return self;
-		else return parentContext.getContext(name);
-	}
-	
 	public static HAPElement getDescendant(HAPStructureValueDefinition context, HAPReferenceElement path) {
 		if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			return getDescendant((HAPStructureValueDefinitionGroup)context, path.getFullPath());
@@ -85,7 +79,7 @@ public class HAPUtilityContext {
 		HAPComplexPath complexPath = new HAPComplexPath(path);
 		HAPRoot root = context.getRoot(complexPath.getRootName());
 		if(root!=null) {
-			out = getDescendant(root.getDefinition(), complexPath.getPath());
+			out = getDescendant(root.getDefinition(), complexPath.getPathStr());
 		}
 		return out;
 	}
@@ -180,14 +174,14 @@ public class HAPUtilityContext {
 
 	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInContext(HAPStructureValueExecutable context) {
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
-		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesInContext(context.getContext());
+		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesInStructure(context.getContext());
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {
 			HAPComplexPath path = new HAPComplexPath(idPath);
 			String id = path.getRootName();
 			Set<String> aliases = context.getAliasById(id);
 			Set<String> aliasesPath = new HashSet<String>();
 			for(String alias : aliases) {
-				HAPComplexPath aliasPath = new HAPComplexPath(alias, path.getPath());
+				HAPComplexPath aliasPath = new HAPComplexPath(alias, path.getPathStr());
 				aliasesPath.add(aliasPath.getFullName());
 			}
 			out.addVariableCriteriaInfo(dataVarsInfoByIdPath.get(idPath), aliasesPath);
@@ -218,12 +212,12 @@ public class HAPUtilityContext {
 	
 	//find exact physical node
 	public static boolean isPhysicallySolved(HAPInfoReferenceResolve solve) {
-		return solve!=null && (solve.resolvedNode!=null && HAPBasicUtility.isStringEmpty(solve.remainPath));
+		return solve!=null && (solve.resolvedElement!=null && HAPBasicUtility.isStringEmpty(solve.remainSolidPath));
 	}
 
 	//find node
 	public static boolean isLogicallySolved(HAPInfoReferenceResolve solve) {
-		return solve!=null && solve.resolvedNode!=null;
+		return solve!=null && solve.resolvedElement!=null;
 	}
 
 	public static HAPStructureValueDefinition hardMerge(HAPStructureValueDefinition child, HAPStructureValueDefinition parent) {

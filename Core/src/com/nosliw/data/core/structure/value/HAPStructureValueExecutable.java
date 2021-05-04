@@ -16,7 +16,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.structure.HAPConfigureReferenceResolve;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPStructure;
@@ -55,8 +54,7 @@ public class HAPStructureValueExecutable extends HAPSerializableImp implements H
 	public HAPRoot getRoot(String localId) {  return this.m_rootById.get(localId); }
 
 	@Override
-	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, HAPConfigureReferenceResolve configure,
-			boolean createIfNotExist) {
+	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
 		List<HAPRoot> out = new ArrayList<HAPRoot>(); 
 		HAPReferenceRootInExecutable exeRootReference = (HAPReferenceRootInExecutable)rootReference;
 		String id = exeRootReference.getId();
@@ -93,7 +91,8 @@ public class HAPStructureValueExecutable extends HAPSerializableImp implements H
 		else return this.m_rootById.get(id);
 	}
 	
-	public Set<HAPRoot> getAllRoots(){	return new HashSet<HAPRoot>(this.m_rootById.values());	}
+	@Override
+	public List<HAPRoot> getAllRoots(){	return new ArrayList<HAPRoot>(this.m_rootById.values());	}
 	
 	public Set<String> getAllNames(){
 		Set<String> out = new HashSet<String>();
@@ -128,7 +127,7 @@ public class HAPStructureValueExecutable extends HAPSerializableImp implements H
 	
 	private String updateAliasRootName(String aliasRootName, HAPUpdateName nameUpdate) {
 		HAPComplexPath path = new HAPComplexPath(aliasRootName);
-		HAPComplexPath updatedPath = new HAPComplexPath(nameUpdate.getUpdatedName(path.getRootName()), path.getPath());
+		HAPComplexPath updatedPath = new HAPComplexPath(nameUpdate.getUpdatedName(path.getRootName()), path.getPathStr());
 		return updatedPath.getFullName();
 	}
 

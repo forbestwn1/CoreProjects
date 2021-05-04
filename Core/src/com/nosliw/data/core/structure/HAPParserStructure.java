@@ -4,7 +4,6 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
-import com.nosliw.data.core.structure.story.HAPReferenceContextNode;
 
 public class HAPParserStructure {
 
@@ -59,7 +58,7 @@ public class HAPParserStructure {
 			
 			JSONObject solidNodeRefJsonObj = eleDefJson.optJSONObject(HAPElementLeafRelative.SOLIDNODEREF);
 			if(solidNodeRefJsonObj!=null) {
-				HAPReferenceContextNode solidNodeRef = new HAPReferenceContextNode();
+				HAPInfoPathToSolidRoot solidNodeRef = new HAPInfoPathToSolidRoot();
 				solidNodeRef.buildObject(solidNodeRefJsonObj, HAPSerializationFormat.JSON);
 				relativeLeaf.setSolidNodeReference(solidNodeRef);
 			}

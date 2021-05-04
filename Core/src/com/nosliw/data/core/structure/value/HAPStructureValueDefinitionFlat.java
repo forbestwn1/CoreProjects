@@ -1,5 +1,6 @@
 package com.nosliw.data.core.structure.value;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,7 +18,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.HAPConfigureReferenceResolve;
 import com.nosliw.data.core.structure.HAPElement;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
@@ -36,7 +36,7 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 	}
 
 	@Override
-	public String getType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT;	}
+	public String getStructureType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT;	}
 
 	@Override
 	public boolean isFlat() {	return true;	}
@@ -48,7 +48,10 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 	public HAPRoot getRoot(String id) {  return this.m_rootById.get(id);  }
 
 	@Override
-	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, HAPConfigureReferenceResolve configure, boolean createIfNotExist) {
+	public List<HAPRoot> getAllRoots(){   return new ArrayList<HAPRoot>(this.m_rootById.values());      }
+
+	@Override
+	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
 		HAPReferenceRootInFlat flatReference = (HAPReferenceRootInFlat)rootReference;
 		String rootName = flatReference.getName();
 		HAPRoot root = this.getRootByName(rootName);
@@ -60,7 +63,7 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 	@Override
 	public void hardMergeWith(HAPStructureValueDefinition parent){
 		if(parent!=null) {
-			if(parent.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+			if(parent.getStructureType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
 				HAPStructureValueDefinitionFlat context  = (HAPStructureValueDefinitionFlat)parent;
 				Set<HAPRoot> eles = context.getRoots();
 				for(HAPRoot root : eles){
@@ -141,7 +144,7 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(TYPE, this.getStructureType());
 		
 		Map<String, String> rootsMap = new LinkedHashMap<String, String>();
 		for(String name : this.m_idByName.keySet()) {
@@ -178,5 +181,5 @@ public class HAPStructureValueDefinitionFlat extends HAPSerializableImp implemen
 		if(id==null)  return null;
 		return this.m_rootById.get(id);
 	}
-	
+
 }

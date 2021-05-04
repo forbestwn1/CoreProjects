@@ -75,7 +75,7 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 
 	public void addInputDataAssociation(String name, HAPExecutableDataAssociation dataAssociation) {    
 		this.m_inputMapping.addDataAssociation(name, dataAssociation);
-		this.m_dataDependency.addAll(dataAssociation.getInput().getNames());
+		this.m_dataDependency.addAll(dataAssociation.getInput().getStructureNames());
 	}
 	
 	public void addOutputDataAssociation(String name, HAPExecutableDataAssociation dataAssociation) {   this.m_outputMapping.addDataAssociation(name, dataAssociation);  }

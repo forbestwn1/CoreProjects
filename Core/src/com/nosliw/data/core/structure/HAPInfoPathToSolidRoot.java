@@ -1,4 +1,4 @@
-package com.nosliw.data.core.structure.story;
+package com.nosliw.data.core.structure;
 
 import java.util.Map;
 
@@ -6,12 +6,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 //identify relative to root node
 //used for ui tag to track source variable
 @HAPEntityWithAttribute
-public class HAPReferenceContextNode extends HAPSerializableImp{
+public class HAPInfoPathToSolidRoot extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ROOTNODEID = "rootNodeId";
@@ -21,20 +22,20 @@ public class HAPReferenceContextNode extends HAPSerializableImp{
 
 	private String m_rootNodeId;
 	
-	private String m_path;
+	private HAPPath m_path;
 
-	public HAPReferenceContextNode() {}
+	public HAPInfoPathToSolidRoot() {}
 
-	public HAPReferenceContextNode(String rootNodeId, String path) {
+	public HAPInfoPathToSolidRoot(String rootNodeId, HAPPath path) {
 		this.m_rootNodeId = rootNodeId;
 		this.m_path = path;
 	}
 
-	public String getPath() {    return this.m_path;   }
+	public HAPPath getPath() {    return this.m_path;   }
 	public String getRootNodeId() {   return this.m_rootNodeId;    }
 
-	public HAPReferenceContextNode cloneContextNodeReference() {
-		HAPReferenceContextNode out = new HAPReferenceContextNode();
+	public HAPInfoPathToSolidRoot cloneContextNodeReference() {
+		HAPInfoPathToSolidRoot out = new HAPInfoPathToSolidRoot();
 		out.m_path = this.m_path;
 		out.m_rootNodeId = this.m_rootNodeId;
 		return out;

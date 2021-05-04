@@ -17,31 +17,29 @@ import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.story.HAPParentContext;
-import com.nosliw.data.core.structure.story.HAPReferenceContextNode;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPProcessorContextRelative {
 
-	public static HAPStructureValueDefinitionFlat process(HAPStructureValueDefinitionFlat context, HAPParentContext parent, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPStructureValueDefinitionFlat process(HAPStructureValueDefinitionFlat context, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		return process(context, parent, new HashSet<String>(), errors, configure, runtimeEnv);
 	}
 
-	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup contextGroup, HAPParentContext parent, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup contextGroup, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		return process(contextGroup, parent, new HashSet<String>(), errors, configure, runtimeEnv);
 	}
 	
 	//dependency: 
-	public static HAPStructureValueDefinitionFlat process(HAPStructureValueDefinitionFlat context, HAPParentContext parent, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPStructureValueDefinitionFlat process(HAPStructureValueDefinitionFlat context, HAPContainerStructure parent, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPStructureValueDefinitionGroup contextGroup = new HAPStructureValueDefinitionGroup();
 		contextGroup.setFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, context);
 		contextGroup = process(contextGroup, parent, dependency, errors, configure, runtimeEnv);
 		return contextGroup.getFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 	}
 	
-	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup contextGroup, HAPParentContext parent, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup contextGroup, HAPContainerStructure parent, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPStructureValueDefinitionGroup out = contextGroup.cloneContextGroup();
 		for(String parentName : allParentName(parent)) {
 			HAPStructureValueDefinition context = HAPUtilityContext.getReferedContext(parentName, parent, contextGroup);
@@ -50,9 +48,9 @@ public class HAPProcessorContextRelative {
 		return out;
 	}
 	
-	private static List<String> allParentName(HAPParentContext parent){
+	private static List<String> allParentName(HAPContainerStructure parent){
 		List<String> out = new ArrayList<String>();
-		out.addAll(parent.getNames());
+		out.addAll(parent.getStructureNames());
 		out.add(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF);
 		return out;
 	}
@@ -124,7 +122,7 @@ public class HAPProcessorContextRelative {
 				else path.getRootReference().setCategary(resolveInfo.path.getRootReference().getCategary());
 				defContextElementRelative.setPath(path);
 				
-				HAPElement solvedContextEle = resolveInfo.resolvedNode; 
+				HAPElement solvedContextEle = resolveInfo.resolvedElement; 
 				if(solvedContextEle!=null){
 					//refer to solid
 					if(configure.relativeTrackingToSolid) {
@@ -132,15 +130,15 @@ public class HAPProcessorContextRelative {
 						String refPath = null;
 						HAPElement parentContextEle = resolveInfo.referedRealElement; 
 						if(parentContextEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
-							HAPReferenceContextNode parentSolidNodeRef = ((HAPElementLeafRelative)parentContextEle).getSolidNodeReference();
+							HAPInfoPathToSolidRoot parentSolidNodeRef = ((HAPElementLeafRelative)parentContextEle).getSolidNodeReference();
 							refRootId = parentSolidNodeRef.getRootNodeId();
-							refPath = HAPNamingConversionUtility.cascadePath(parentSolidNodeRef.getPath(), resolveInfo.remainPath);
+							refPath = HAPNamingConversionUtility.cascadePath(parentSolidNodeRef.getPath(), resolveInfo.remainSolidPath);
 						}
 						else {
 							refRootId = resolveInfo.referredRoot.getId();
-							refPath = HAPNamingConversionUtility.cascadePath(resolveInfo.path.getSubPath(), resolveInfo.remainPath);
+							refPath = HAPNamingConversionUtility.cascadePath(resolveInfo.path.getSubPath(), resolveInfo.remainSolidPath);
 						}
-						defContextElementRelative.setSolidNodeReference(new HAPReferenceContextNode(refRootId, refPath));
+						defContextElementRelative.setSolidNodeReference(new HAPInfoPathToSolidRoot(refRootId, refPath));
 					}
 					
 					HAPElement relativeContextEle = defContextElementRelative.getDefinition();

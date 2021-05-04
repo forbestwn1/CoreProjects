@@ -13,9 +13,9 @@ import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementLeafData;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPProcessorContext;
 import com.nosliw.data.core.structure.HAPRoot;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
 import com.nosliw.uiresource.page.processor.HAPUtilityProcess;
@@ -38,12 +38,12 @@ public class HAPUtility {
 		if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
 			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
 			childContext = HAPUtilityProcess.buildUITagContext(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, runtimeEnv);
-			childContext = HAPProcessorContext.processRelative(childContext, HAPParentContext.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
+			childContext = HAPProcessorContext.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
 			out.setContext(childContext);
 		}
 		else {
-			childContext = HAPProcessorContext.processStatic(new HAPStructureValueDefinitionGroup(), HAPParentContext.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
-			childContext = HAPProcessorContext.processRelative(childContext, HAPParentContext.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
+			childContext = HAPProcessorContext.processStatic(new HAPStructureValueDefinitionGroup(), HAPContainerStructure.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
+			childContext = HAPProcessorContext.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
 			out.setContext(childContext);
 		}
 		return out;

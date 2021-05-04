@@ -12,10 +12,10 @@ import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionEmpty;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
@@ -36,11 +36,11 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 		
 		if(endActivity.getOutput()!=null) {
 			//build result data association only when end activity has output
-			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processDataContext), endActivity.getOutput(), HAPParentContext.createDefault(HAPStructureValueDefinitionEmpty.flatStructure()), null, runtimeEnv);
+			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(processDataContext), endActivity.getOutput(), HAPContainerStructure.createDefault(HAPStructureValueDefinitionEmpty.flatStructure()), null, runtimeEnv);
 			results.put(endActivity.getName(), result);
 		}
 		else {  //kkkk
-			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processDataContext), new HAPDefinitionDataAssociationMirror(), HAPParentContext.createDefault(processDataContext), null, runtimeEnv);
+			HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(processDataContext), new HAPDefinitionDataAssociationMirror(), HAPContainerStructure.createDefault(processDataContext), null, runtimeEnv);
 			results.put(endActivity.getName(), result);
 		}
 		

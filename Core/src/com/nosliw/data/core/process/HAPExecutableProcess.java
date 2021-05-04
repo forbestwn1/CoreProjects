@@ -20,12 +20,12 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.data.core.structure.HAPUtilityContextScript;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableTask;
 import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 @HAPEntityWithAttribute
@@ -85,18 +85,18 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	}
  
 	@Override
-	public HAPParentContext getInContext() {	return HAPParentContext.createDefault(this.m_context.getChildContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC));	}
+	public HAPContainerStructure getInContext() {	return HAPContainerStructure.createDefault(this.m_context.getChildContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC));	}
 
 	@Override
-	public Map<String, HAPParentContext> getOutResultContext() {
-		Map<String, HAPParentContext> out = new LinkedHashMap<String, HAPParentContext>();
+	public Map<String, HAPContainerStructure> getOutResultContext() {
+		Map<String, HAPContainerStructure> out = new LinkedHashMap<String, HAPContainerStructure>();
 		for(String resultName : this.m_results.keySet()) {
 //			out.put(resultName, HAPParentContext.createDefault(this.m_context));     //kkkkkk
-			out.put(resultName, HAPParentContext.createDefault(this.m_results.get(resultName).getOutput().getOutputStructure()));
+			out.put(resultName, HAPContainerStructure.createDefault(this.m_results.get(resultName).getOutput().getOutputStructure()));
 		}
 		String defaultResultName = HAPConstantShared.NAME_DEFAULT;
 		if(out.get(defaultResultName)==null) {
-			out.put(defaultResultName, HAPParentContext.createDefault(this.m_context));
+			out.put(defaultResultName, HAPContainerStructure.createDefault(this.m_context));
 		}
 		return out;
 	}

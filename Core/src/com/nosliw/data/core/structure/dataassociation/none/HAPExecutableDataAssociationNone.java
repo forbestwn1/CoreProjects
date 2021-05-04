@@ -3,20 +3,20 @@ package com.nosliw.data.core.structure.dataassociation.none;
 import java.util.Map;
 
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.structure.dataassociation.HAPOutputStructure;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 
 public class HAPExecutableDataAssociationNone extends HAPExecutableDataAssociationImp{
 
 	public HAPExecutableDataAssociationNone() {}
 
-	public HAPExecutableDataAssociationNone(HAPDefinitionDataAssociationNone definition, HAPParentContext input) {
+	public HAPExecutableDataAssociationNone(HAPDefinitionDataAssociationNone definition, HAPContainerStructure input) {
 		super(definition, input);
 	}
 	
 	@Override
-	public HAPParentContext getInput() {	return new HAPParentContext();	}
+	public HAPContainerStructure getInput() {	return new HAPContainerStructure();	}
 	
 	@Override
 	public HAPOutputStructure getOutput() {

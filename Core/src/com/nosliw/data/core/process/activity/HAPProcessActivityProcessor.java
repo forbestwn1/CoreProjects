@@ -16,9 +16,9 @@ import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
@@ -49,8 +49,8 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 				processContext,
 				processActivityDef.getTaskMapping().getInputMapping(), 
 				processActivityDef.getTaskMapping().getOutputMapping(),
-				HAPParentContext.createDefault(processDataContext), 
-				HAPParentContext.createDefault(processDataContext)
+				HAPContainerStructure.createDefault(processDataContext), 
+				HAPContainerStructure.createDefault(processDataContext)
 		);
 		out.setProcess(emProcessExe);
 		

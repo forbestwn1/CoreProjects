@@ -20,6 +20,7 @@ import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.structure.HAPElement;
 import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPUtilityContext;
@@ -29,7 +30,6 @@ import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociati
 import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.structure.dataassociation.none.HAPDefinitionDataAssociationNone;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
@@ -71,9 +71,9 @@ public class HAPUtilityProcess {
 
 	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPDefinitionActivityNormal activityDefinition, HAPStructureValueDefinitionGroup processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
-				HAPParentContext.createDefault(processContext), 
+				HAPContainerStructure.createDefault(processContext), 
 				activityDefinition.getInputMapping(), 
-				HAPParentContext.createDefault(activityDefinition.getInputContextStructure(processContext)), 
+				HAPContainerStructure.createDefault(activityDefinition.getInputContextStructure(processContext)), 
 				null, 
 				runtimeEnv);
 		activity.setInputDataAssociation(da);
@@ -81,9 +81,9 @@ public class HAPUtilityProcess {
 	
 	public static void processBranchActivityInputDataAssocation(HAPExecutableActivityBranch activity, HAPDefinitionActivityBranch activityDefinition, HAPStructureValueDefinitionGroup processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
-				HAPParentContext.createDefault(processContext), 
+				HAPContainerStructure.createDefault(processContext), 
 				activityDefinition.getInputMapping(), 
-				HAPParentContext.createDefault(activityDefinition.getInputContextStructure(processContext)), 
+				HAPContainerStructure.createDefault(activityDefinition.getInputContextStructure(processContext)), 
 				null, 
 				runtimeEnv);
 		activity.setInputDataAssociation(da);
@@ -145,7 +145,7 @@ public class HAPUtilityProcess {
 			//data association input context
 			HAPStructureValueDefinition dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
 			//process data association
-			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(dataAssociationInputContext), resultDef.getOutputDataAssociation(), HAPParentContext.createDefault(parentContext), null, runtimeEnv);
+			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(dataAssociationInputContext), resultDef.getOutputDataAssociation(), HAPContainerStructure.createDefault(parentContext), null, runtimeEnv);
 			resultExe.setDataAssociation(outputDataAssociation);
 		}
 		return resultExe;

@@ -7,9 +7,9 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.structure.dataassociation.HAPOutputStructure;
-import com.nosliw.data.core.structure.story.HAPParentContext;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 
 public class HAPExecutableDataAssociationMirror extends HAPExecutableDataAssociationImp{
@@ -21,7 +21,7 @@ public class HAPExecutableDataAssociationMirror extends HAPExecutableDataAssocia
 
 	public HAPExecutableDataAssociationMirror() {}
 
-	public HAPExecutableDataAssociationMirror(HAPDefinitionDataAssociationMirror definition, HAPParentContext input) {
+	public HAPExecutableDataAssociationMirror(HAPDefinitionDataAssociationMirror definition, HAPContainerStructure input) {
 		super(definition, input);
 		this.m_output = new HAPOutputStructure();
 	}

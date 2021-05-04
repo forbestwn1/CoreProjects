@@ -13,7 +13,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.story.HAPReferenceContextNode;
 
 public class HAPElementLeafRelative extends HAPElementLeafVariable{
 
@@ -50,7 +49,7 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	
 	private HAPElement m_definition;
 	
-	private HAPReferenceContextNode m_solidNodeRef;
+	private HAPInfoPathToSolidRoot m_solidNodeRef;
 	
 	//context node full name --- matchers
 	//used to convert data from parent to data within uiTag
@@ -84,8 +83,8 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	public HAPElement getDefinition() {   return this.m_definition;   }
 	public void setDefinition(HAPElement definition) {   this.m_definition = definition.getSolidStructureElement();   }
 	
-	public HAPReferenceContextNode getSolidNodeReference() {    return this.m_solidNodeRef;    }
-	public void setSolidNodeReference(HAPReferenceContextNode solidNodeRef) {    this.m_solidNodeRef = solidNodeRef;    }
+	public HAPInfoPathToSolidRoot getSolidNodeReference() {    return this.m_solidNodeRef;    }
+	public void setSolidNodeReference(HAPInfoPathToSolidRoot solidNodeRef) {    this.m_solidNodeRef = solidNodeRef;    }
 	
 	public String getReferencePath() {   return this.m_referencePath;    }
 	public void setReferencePath(String path) {  this.m_referencePath = path;	}

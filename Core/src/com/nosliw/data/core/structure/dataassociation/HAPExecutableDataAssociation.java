@@ -4,7 +4,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.structure.story.HAPParentContext;
+import com.nosliw.data.core.structure.HAPContainerStructure;
 
 @HAPEntityWithAttribute
 public interface HAPExecutableDataAssociation extends HAPExecutable, HAPEntityInfo{
@@ -25,7 +25,7 @@ public interface HAPExecutableDataAssociation extends HAPExecutable, HAPEntityIn
 
 //	HAPDefinitionDataAssociation getDefinition();
 
-	HAPParentContext getInput();
+	HAPContainerStructure getInput();
 	
 	HAPOutputStructure getOutput();
 	

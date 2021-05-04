@@ -161,7 +161,7 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	
 	private String updateAliasRootName(String aliasRootName, HAPUpdateName nameUpdate) {
 		HAPComplexPath path = new HAPComplexPath(aliasRootName);
-		HAPComplexPath updatedPath = new HAPComplexPath(nameUpdate.getUpdatedName(path.getRootName()), path.getPath());
+		HAPComplexPath updatedPath = new HAPComplexPath(nameUpdate.getUpdatedName(path.getRootName()), path.getPathStr());
 		return updatedPath.getFullName();
 	}
 	

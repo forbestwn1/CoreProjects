@@ -4,18 +4,17 @@ import com.nosliw.common.path.HAPComplexPath;
 
 //store result for resolve reference path
 public class HAPInfoReferenceResolve{
+	//parent root node
+	public HAPRoot referredRoot;
 	//path (root id + path)
 	public HAPComplexPath path;
 
-	//unmatched path part
-	public String remainPath;
-
-	//parent root node
-	public HAPRoot referredRoot;
-	//referred real element 
-	public HAPElement referedRealElement;
-	//referred solid real structure element
-	public HAPElement referedRealSolidElement;
-	//referred element (maybe logic element which embeded in real element)
-	public HAPElement resolvedNode;
+	//real solved
+	HAPInfoDesendantResolve realSolved;
+	
+	//sold solved
+	HAPInfoDesendantResolve realSolidSolved;
+	
+	//final referred element (maybe logic element which embeded in real element)
+	public HAPElement resolvedElement;
 }

@@ -10,8 +10,6 @@ public interface HAPStructureValueDefinition extends HAPSerializable, HAPStructu
 	@HAPAttribute
 	public static final String TYPE = "type";
 
-	String getType();
-	
 	boolean isFlat();
 
 	boolean isEmpty();

@@ -7,7 +7,6 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.HAPConfigureReferenceResolve;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
 
@@ -25,7 +24,7 @@ public class HAPStructureValueDefinitionEmpty extends HAPSerializableImp impleme
 	public HAPStructureValueDefinitionEmpty oppositeFlatStructure() {return new HAPStructureValueDefinitionEmpty(!this.m_isFlat);  }
 	
 	@Override
-	public String getType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY;	}
+	public String getStructureType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY;	}
 
 	@Override
 	public boolean isFlat() {  return this.m_isFlat;  }
@@ -37,13 +36,16 @@ public class HAPStructureValueDefinitionEmpty extends HAPSerializableImp impleme
 	public HAPRoot getRoot(String rootId) {	return null;	}
 
 	@Override
+	public List<HAPRoot> getAllRoots(){   return new ArrayList<HAPRoot>();      }
+
+	@Override
 	public HAPStructureValueDefinition cloneStructure() {
 		return  new HAPStructureValueDefinitionEmpty(this.m_isFlat);
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(TYPE, this.getStructureType());
 	}
 
 	@Override
@@ -57,8 +59,7 @@ public class HAPStructureValueDefinitionEmpty extends HAPSerializableImp impleme
 	}
 
 	@Override
-	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, HAPConfigureReferenceResolve configure,
-			boolean createIfNotExist) {
+	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
 		return new ArrayList<HAPRoot>();
 	}
 

@@ -19,7 +19,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.HAPConfigureReferenceResolve;
 import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
@@ -67,7 +66,7 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 	}
 	
 	@Override
-	public String getType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT;	}
+	public String getStructureType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT;	}
 
 	@Override
 	public boolean isFlat() {	return false;	}
@@ -103,21 +102,28 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 	}
 
 	@Override
-	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, HAPConfigureReferenceResolve configure, boolean createIfNotExist) {
+	public List<HAPRoot> getAllRoots(){
+		List<HAPRoot> out = new ArrayList<HAPRoot>();
+		for(String categary : this.m_flatStructureByCategary.keySet()) {
+			out.addAll(this.m_flatStructureByCategary.get(categary).getAllRoots());
+		}
+		return out;
+	}
+
+	@Override
+	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
 		HAPReferenceRootInGroup groupReference = (HAPReferenceRootInGroup)rootReference;
-		HAPConfigureReferenceResolveGroup groupConfigure = (HAPConfigureReferenceResolveGroup)configure;
 		
 		//candidate categary
 		List<String> categaryCandidates = new ArrayList<String>();
 		if(HAPBasicUtility.isStringNotEmpty(groupReference.getCategary()))  categaryCandidates.add(groupReference.getCategary());  //check path first
-		else if(groupConfigure.categaryes!=null && groupConfigure.categaryes.length>0)    categaryCandidates.addAll(Arrays.asList(groupConfigure.categaryes));     //input
 		else categaryCandidates.addAll(Arrays.asList(HAPStructureValueDefinitionGroup.getVisibleCategaries()));               //otherwise, use visible context
 		
 		List<HAPRoot> out = new ArrayList<HAPRoot>();
 		for(String categary : categaryCandidates) {
 			HAPStructureValueDefinitionFlat flat = this.m_flatStructureByCategary.get(categary);
 			if(flat!=null) {
-				out.addAll(flat.resolveRoot(new HAPReferenceRootInFlat(groupReference.getName()), null, false));
+				out.addAll(flat.resolveRoot(new HAPReferenceRootInFlat(groupReference.getName()), false));
 			}
 		}
 		
@@ -136,7 +142,7 @@ public class HAPStructureValueDefinitionGroup extends HAPSerializableImp impleme
 	@Override
 	public void hardMergeWith(HAPStructureValueDefinition structure){
 		if(structure!=null) {
-			if(structure.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+			if(structure.getStructureType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 				HAPStructureValueDefinitionGroup groupStructure = (HAPStructureValueDefinitionGroup)structure;
 				for(String categary : groupStructure.getCategaries()){
 					HAPStructureValueDefinitionFlat flat = groupStructure.getFlat(categary);
