@@ -5,10 +5,9 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
-public abstract class HAPElement extends HAPSerializableImp{
+public abstract class HAPElement extends HAPSerializableImp implements HAPWithConstantScript{
 	
 	@HAPAttribute
 	public static final String TYPE = "type";
@@ -23,8 +22,6 @@ public abstract class HAPElement extends HAPSerializableImp{
 	abstract public String getType(); 
 	
 	abstract public HAPElement cloneStructureElement();
-
-	abstract public HAPElement toSolidStructureElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv);
 
 	public HAPElement getSolidStructureElement() {  return this;  }
 	

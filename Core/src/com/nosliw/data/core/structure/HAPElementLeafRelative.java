@@ -134,13 +134,13 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	}
 
 	@Override
-	public HAPElement toSolidStructureElement(Map<String, Object> constants,
+	public HAPElement solidateConstantScript(Map<String, Object> constants,
 			HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementLeafRelative out = (HAPElementLeafRelative)this.cloneStructureElement();
-		out.m_referencePath = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, runtimeEnv);
+		out.m_referencePath = HAPProcessorContextSolidate.solidateLiterate(this.getPathStr(), constants, runtimeEnv);
 		out.m_path = null;
 		out.m_parent = this.m_parent;
-		if(this.m_definition!=null) 	out.m_definition = this.m_definition.toSolidStructureElement(constants, runtimeEnv);
+		if(this.m_definition!=null) 	out.m_definition = this.m_definition.solidateConstantScript(constants, runtimeEnv);
 		return out;
 	}
 	

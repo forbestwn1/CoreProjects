@@ -56,7 +56,7 @@ public class HAPElementLeafData extends HAPElementLeafVariable{
 	}
 
 	@Override
-	public HAPElement toSolidStructureElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {	return this;}
+	public HAPElement solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {	return this;}
 
 	@Override
 	public boolean equals(Object obj) {

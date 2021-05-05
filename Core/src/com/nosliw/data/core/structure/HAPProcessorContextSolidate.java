@@ -3,15 +3,7 @@ package com.nosliw.data.core.structure;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
-import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
 
 public class HAPProcessorContextSolidate {
@@ -28,8 +20,8 @@ public class HAPProcessorContextSolidate {
 			for(String name : contextDefRoots.keySet()) {
 				HAPRoot contextDefRoot = contextDefRoots.get(name);
 				if(!contextDefRoot.isConstant()) {
-					String solidName = getSolidName(name, constantsData, runtimeEnv);
-					contextDefRoot.setDefinition(contextDefRoot.getDefinition().toSolidStructureElement(constantsData, runtimeEnv));
+					String solidName = solidateLiterate(name, constantsData, runtimeEnv);
+					contextDefRoot.setDefinition(contextDefRoot.getDefinition().solidateConstantScript(constantsData, runtimeEnv));
 					out.addRoot(solidName, contextDefRoot, categary);
 				}
 				else {
@@ -76,19 +68,5 @@ public class HAPProcessorContextSolidate {
 //			}
 //		}
 //	}
-
-	public static String getSolidName(String name, Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv){
-		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(name, null, null, constants, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());
-		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
-		
-		String scriptType = scriptExe.getScriptType();
-		//if pure data
-		if(HAPConstantShared.SCRIPT_TYPE_TEXT.equals(scriptType))  return name;
-		
-		//execute script expression
-		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(groupExe, null, null, null);
-		HAPServiceData out = runtimeEnv.getRuntime().executeTaskSync(task);
-		return (String)out.getData();
-	}
 
 }

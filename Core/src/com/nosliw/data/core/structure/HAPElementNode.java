@@ -72,13 +72,13 @@ public class HAPElementNode extends HAPElementLeafVariable{
 	}
 	
 	@Override
-	public HAPElement toSolidStructureElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPElement solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementNode solid = new HAPElementNode();
 		super.toStructureElement(solid);
 		for(String name : this.getChildren().keySet()){
-			String solidName = HAPProcessorContextSolidate.getSolidName(name, constants, runtimeEnv);
+			String solidName = HAPProcessorContextSolidate.solidateLiterate(name, constants, runtimeEnv);
 			HAPElement child = this.getChildren().get(name);
-			HAPElement solidChild = child.toSolidStructureElement(constants, runtimeEnv);
+			HAPElement solidChild = child.solidateConstantScript(constants, runtimeEnv);
 			solid.addChild(solidName, solidChild);
 		}
 		return solid;

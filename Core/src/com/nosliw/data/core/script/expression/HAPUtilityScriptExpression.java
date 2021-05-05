@@ -5,10 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.imp.literate.HAPUtilityScriptLiterate;
 
 public class HAPUtilityScriptExpression {
@@ -24,6 +29,20 @@ public class HAPUtilityScriptExpression {
 //		return out;
 //	}
 	
+	public static String solidateLiterate(String literate, Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv){
+		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(literate, null, null, constants, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());
+		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
+		
+		String scriptType = scriptExe.getScriptType();
+		//if pure data
+		if(HAPConstantShared.SCRIPT_TYPE_TEXT.equals(scriptType))  return literate;
+		
+		//execute script expression
+		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(groupExe, null, null, null);
+		HAPServiceData out = runtimeEnv.getRuntime().executeTaskSync(task);
+		return (String)out.getData();
+	}
+
 	public static HAPScript newScript(String content) {
 		String type = null;
 		String script = null;

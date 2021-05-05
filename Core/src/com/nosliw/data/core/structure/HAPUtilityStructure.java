@@ -288,24 +288,44 @@ public class HAPUtilityStructure {
 		return out;
 	}
 
-	//find all constants in root, including constants defined in leaf
-	public static Map<String, Object> discoverConstantValue(HAPRoot root){
-		Map<String, Object> out = new LinkedHashMap<String, Object>();
-		HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
-			@Override
-			public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object obj) {
-				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
-					HAPElementLeafConstant constantEle = (HAPElementLeafConstant)eleInfo.getElement();
-					Object value = constantEle.getDataValue();
-					if(value==null)   value = constantEle.getValue();
-					out.put(eleInfo.getElementPath().getFullName(), value);
+	//find all constants in structure by name, including constants defined in leaf
+	public static Map<String, Object> discoverConstantValue(HAPStructure structure){
+		//discover cosntant value by id
+		Map<String, Object> constantsById = new LinkedHashMap<String, Object>();
+		for(HAPRoot root : structure.getAllRoots()) {
+			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
+				@Override
+				public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object obj) {
+					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+						HAPElementLeafConstant constantEle = (HAPElementLeafConstant)eleInfo.getElement();
+						Object value = constantEle.getDataValue();
+						if(value==null)   value = constantEle.getValue();
+						constantsById.put(eleInfo.getElementPath().getFullName(), value);
+					}
+					return null;
 				}
-				return null;
-			}
 
-			@Override
-			public void postProcess(HAPInfoElement eleInfo, Object value) {	}
-		}, null);
+				@Override
+				public void postProcess(HAPInfoElement eleInfo, Object value) {	}
+			}, null);
+		}
+
+		//update id with name
+		Map<String, Object> out = new LinkedHashMap<String, Object>();
+		Map<String, Integer> namePriorities = new LinkedHashMap<String, Integer>();
+		for(String idPath : constantsById.keySet()) {
+			HAPComplexPath complexIdPath = new HAPComplexPath(idPath);
+			Set<HAPInfoName> namesInfo = structure.discoverRootNameById(complexIdPath.getRootName());
+			for(HAPInfoName nameInfo : namesInfo) {
+				String name = nameInfo.getName();
+				HAPComplexPath complexNamePath = complexIdPath.updateRootName(name);
+				Integer currentPriroty = namePriorities.get(complexNamePath.getRootName());
+				if(currentPriroty==null || nameInfo.getPriority()<currentPriroty) {
+					namePriorities.put(name, nameInfo.getPriority());
+					out.put(complexNamePath.getFullName(), constantsById.get(idPath));
+				}
+			}
+		}
 		return out;
 	}	
 	
@@ -431,6 +451,7 @@ public class HAPUtilityStructure {
 				out = candidateNode;
 			}
 			else if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(candidateNode.getType())){
+				//kkkkkk
 				out = candidateNode;
 			}
 		}

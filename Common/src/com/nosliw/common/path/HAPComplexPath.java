@@ -60,6 +60,8 @@ public class HAPComplexPath {
 		return new HAPComplexPath(this.m_rootName, this.m_path.appendSegment(segment));
 	}
 	
+	public HAPComplexPath updateRootName(String name) {   return new HAPComplexPath(name, this.m_path);   }
+	
 	public HAPComplexPath cloneComplexPath() {
 		return new HAPComplexPath(this.m_fullName);
 	}

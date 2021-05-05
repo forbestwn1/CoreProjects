@@ -51,7 +51,7 @@ public class HAPElementLeafConstant extends HAPElement{
 	}
 
 	@Override
-	public HAPElement toSolidStructureElement(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this; }
+	public HAPElement solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this; }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
