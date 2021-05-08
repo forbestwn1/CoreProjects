@@ -210,22 +210,22 @@ public class HAPOperandUtility {
 	}
 	
 	
-	static public Set<String> discoverVariables(HAPOperandWrapper operand){
+	static public Set<String> discoverVariableNames(HAPOperandWrapper operand){
 		Set<String> out = new HashSet<String>();
 		processAllOperand(operand, out, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				Set<String> vars = (Set<String>)data;
+				Set<String> varNames = (Set<String>)data;
 				switch(operand.getOperand().getType()){
 				case HAPConstantShared.EXPRESSION_OPERAND_VARIABLE:
 					HAPOperandVariable varOperand = (HAPOperandVariable)operand.getOperand();
-					vars.add(varOperand.getVariableName());
+					varNames.add(varOperand.getVariableName());
 					break;
 				case HAPConstantShared.EXPRESSION_OPERAND_REFERENCE:
 					HAPOperandReference refOperand = (HAPOperandReference)operand.getOperand();
 					Map<String, String> refVarMapping = refOperand.getVariableMapping();
 					for(String n : refVarMapping.keySet()) {
-						vars.add(refVarMapping.get(n));
+						varNames.add(refVarMapping.get(n));
 					}
 					break;
 				}
@@ -234,7 +234,24 @@ public class HAPOperandUtility {
 		});
 		return out;
 	}
-	
+
+	static public Set<HAPOperandWrapper> discoverVariableOperands(HAPOperandWrapper operand){
+		Set<HAPOperandWrapper> out = new HashSet<HAPOperandWrapper>();
+		processAllOperand(operand, out, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				Set<HAPOperandWrapper> varOperands = (Set<HAPOperandWrapper>)data;
+				switch(operand.getOperand().getType()){
+				case HAPConstantShared.EXPRESSION_OPERAND_VARIABLE:
+					varOperands.add(operand);
+					break;
+				}
+				return true;
+			}
+		});
+		return out;
+	}
+
 	/**
 	 * Find all the unsolved constants names: constants that only provide name
 	 * @param operand

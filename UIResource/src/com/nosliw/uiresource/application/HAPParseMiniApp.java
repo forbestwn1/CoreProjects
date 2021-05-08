@@ -75,7 +75,7 @@ public class HAPParseMiniApp {
 //			}
 //		}
 		
-		out.setValueContext(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionAppElementUI.CONTEXT))); 
+		out.setValueStructure(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionAppElementUI.VALUESTRUCTURE))); 
 		return out;
 	}
 	

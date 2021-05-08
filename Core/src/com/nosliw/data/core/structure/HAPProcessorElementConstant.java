@@ -226,7 +226,7 @@ public class HAPProcessorElementConstant {
 			String constantId = constantDef.getId();
 			Set<String> types = new HashSet<String>();
 			types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT);
-			HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.resolveElementReference(constantId, structure, configure.relativeResolveMode, types);
+			HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.analyzeElementReference(constantId, structure, configure.elementReferenceResolveMode, types);
 			solidateConstantDefEle((HAPElementLeafConstant)resolveInfo.realSolved.resolvedElement, structure, configure, runtimeEnv);
 			constantsValue.put(constantId, ((HAPElementLeafConstant)HAPUtilityStructure.resolveElement(resolveInfo.realSolved)).getValue());
 		}

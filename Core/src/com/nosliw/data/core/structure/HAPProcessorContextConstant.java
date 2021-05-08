@@ -38,7 +38,7 @@ public class HAPProcessorContextConstant {
 		//merge with parent
 		HAPStructureValueDefinitionGroup merged = originalContextGroup;
 		for(String parentName : parent.getStructureNames()) {
-			merged = mergeWithParent(merged, (HAPStructureValueDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedContext(parentName, parent, merged), false), inheritMode);
+			merged = mergeWithParent(merged, (HAPStructureValueDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedStructure(parentName, parent, merged), false), inheritMode);
 		}
 
 		//process constant ref in context

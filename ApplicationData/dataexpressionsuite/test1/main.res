@@ -133,7 +133,7 @@
 			"description": "attribute chain",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(?(testVar1)?.var1.var11,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "!(test.string)!.subString(?(testVar1.var1.var11)?,from:?(testVar4)?,to:?(testVar5)?)"
 				}
 			]
 		},
@@ -143,7 +143,7 @@
 			"description": "attribute chain",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(?(testVar1)?.var1.var11,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "!(test.string)!.subString(?(testVar1.var1.var11)?,from:?(testVar4)?,to:?(testVar5)?)"
 				}
 			]
 		},

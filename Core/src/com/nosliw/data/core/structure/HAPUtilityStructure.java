@@ -375,12 +375,18 @@ public class HAPUtilityStructure {
 	}
 
 	public static HAPInfoReferenceResolve resolveElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
+		HAPInfoReferenceResolve resolveInfo = analyzeElementReference(elementReferenceLiterate, parentStructure, mode, elementTypes);
+		resolveInfo.resolvedElement = HAPUtilityStructure.resolveElement(resolveInfo.realSolidSolved);
+		return resolveInfo;
+	}
+	
+	public static HAPInfoReferenceResolve analyzeElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
 		HAPReferenceElement elementReference = HAPUtilityStructurePath.parseLiterateStructurePath(elementReferenceLiterate, parentStructure.getStructureType());
-		return resolveElementReference(elementReference, parentStructure, mode, elementTypes);
+		return analyzeElementReference(elementReference, parentStructure, mode, elementTypes);
 	}
 	
 	//find best resolved element from structure 
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElement elementReference, HAPStructure parentStructure, String mode, Set<String> elementTypes){
+	public static HAPInfoReferenceResolve analyzeElementReference(HAPReferenceElement elementReference, HAPStructure parentStructure, String mode, Set<String> elementTypes){
 		if(parentStructure==null)   return null;
 		
 		//find candidate from structure by root reference
@@ -458,11 +464,21 @@ public class HAPUtilityStructure {
 		return out;
 	}
 	
-	public static HAPStructure getReferedContext(String name, HAPContainerStructure parents, HAPStructure self) {
+	//find exact physical node
+	public static boolean isPhysicallySolved(HAPInfoReferenceResolve solve) {
+		return solve!=null && (solve.resolvedElement!=null && solve.realSolidSolved.remainPath.isEmpty());
+	}
+
+	//find node
+	public static boolean isLogicallySolved(HAPInfoReferenceResolve solve) {
+		return solve!=null && solve.resolvedElement!=null;
+	}
+
+
+	
+	public static HAPStructure getReferedStructure(String name, HAPContainerStructure parents, HAPStructure self) {
 		if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name))  return self;
 		else return parents.getStructure(name);
 	}
-	
 
-	
 }

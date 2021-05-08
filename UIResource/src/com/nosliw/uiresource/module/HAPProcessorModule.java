@@ -70,7 +70,7 @@ public class HAPProcessorModule {
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(moduleDefinition.getAttachmentContainer(), serviceProviders, runtimeEnv.getServiceManager().getServiceDefinitionManager()); 
 		
 		//process context 
-		out.setContextGroup((HAPStructureValueDefinitionGroup)HAPProcessorContext.process(moduleDefinition.getValueContext(), HAPContainerStructure.createDefault(parentContext==null?new HAPStructureValueDefinitionGroup():parentContext), contextProcessConfg, runtimeEnv));
+		out.setContextGroup((HAPStructureValueDefinitionGroup)HAPProcessorContext.process(moduleDefinition.getValueStructure(), HAPContainerStructure.createDefault(parentContext==null?new HAPStructureValueDefinitionGroup():parentContext), contextProcessConfg, runtimeEnv));
 
 		//process process suite
 		HAPResourceDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(moduleDefinition, runtimeEnv.getProcessManager().getPluginManager()).cloneProcessSuiteDefinition(); 

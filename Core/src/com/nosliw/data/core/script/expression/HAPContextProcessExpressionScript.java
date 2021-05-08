@@ -7,12 +7,12 @@ import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
-import com.nosliw.data.core.common.HAPWithValueContext;
+import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
-public class HAPContextProcessExpressionScript implements HAPWithValueContext, HAPWithConstantDefinition{
+public class HAPContextProcessExpressionScript implements HAPWithValueStructure, HAPWithConstantDefinition{
 
 	//all expression container
 	private HAPDefinitionExpressionSuite m_expressionSuiteDefinition;
@@ -40,11 +40,11 @@ public class HAPContextProcessExpressionScript implements HAPWithValueContext, H
 	public void addConstantDefinition(HAPDefinitionConstant constantDef) {  this.m_constantsDefinition.put(constantDef.getId(), constantDef);  }
 
 	@Override
-	public HAPStructureValueDefinition getValueContext() {   return this.m_context;  }
+	public HAPStructureValueDefinition getValueStructure() {   return this.m_context;  }
 
 	@Override
 	public void setValueContext(HAPStructureValueDefinition context) {   this.m_context = (HAPStructureValueDefinitionFlat)context;  }
 
 	@Override
-	public void cloneToValueContext(HAPWithValueContext withDataContext) {   withDataContext.setValueContext(m_context);  }  
+	public void cloneToWithValueStructure(HAPWithValueStructure withDataContext) {   withDataContext.setValueStructure(m_context);  }  
 }

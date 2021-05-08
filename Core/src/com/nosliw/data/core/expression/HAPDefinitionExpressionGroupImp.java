@@ -8,14 +8,14 @@ import java.util.Set;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.common.HAPWithValueContext;
+import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 
-public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements HAPDefinitionExpressionGroup, HAPWithValueContext{
+public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements HAPDefinitionExpressionGroup, HAPWithValueStructure{
 
 	private Map<String, HAPDefinitionExpression> m_elements;
 	
-	private HAPStructureValueDefinition m_contextStructure;
+	private HAPStructureValueDefinition m_valueStructure;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
@@ -29,13 +29,13 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	}
 
 	@Override
-	public HAPStructureValueDefinition getValueContext() {   return this.m_contextStructure;  }
+	public HAPStructureValueDefinition getValueStructure() {   return this.m_valueStructure;  }
 
 	@Override
-	public void setValueContext(HAPStructureValueDefinition context) {  this.m_contextStructure = context;  }
+	public void setValueStructure(HAPStructureValueDefinition context) {  this.m_valueStructure = context;  }
 
 	@Override
-	public void cloneToValueContext(HAPWithValueContext dataContext) {   dataContext.setValueContext(this.m_contextStructure.cloneStructure());  }
+	public void cloneToWithValueStructure(HAPWithValueStructure withValueStructure) {   withValueStructure.setValueStructure((HAPStructureValueDefinition)this.m_valueStructure.cloneStructure());  }
 
 	@Override
 	public Set<HAPDefinitionExpression> getEntityElements() {  return new HashSet<HAPDefinitionExpression>(this.m_elements.values()); }
@@ -61,7 +61,7 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	@Override
 	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() {
 		HAPDefinitionExpressionGroupImp out = new HAPDefinitionExpressionGroupImp();
-		if(this.m_contextStructure!=null)	out.m_contextStructure = this.m_contextStructure.cloneStructure();
+		if(this.m_valueStructure!=null)	out.m_valueStructure = (HAPStructureValueDefinition)this.m_valueStructure.cloneStructure();
 		for(String id : this.m_elements.keySet()) {
 			out.m_elements.put(id, this.m_elements.get(id).cloneDefinitionExpression());
 		}

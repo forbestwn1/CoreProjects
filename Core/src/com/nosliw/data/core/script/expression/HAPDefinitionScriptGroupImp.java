@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.common.HAPWithValueContext;
+import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 
 public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implements HAPDefinitionScriptGroup{
@@ -37,14 +37,14 @@ public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implem
 	}
 
 	@Override
-	public HAPStructureValueDefinition getValueContext() {   return this.m_context;  }
+	public HAPStructureValueDefinition getValueStructure() {   return this.m_context;  }
 
 	@Override
 	public void setValueContext(HAPStructureValueDefinition context) {   this.m_context = context;  }
 
 	@Override
-	public void cloneToValueContext(HAPWithValueContext dataContext) {
-		dataContext.setValueContext(this.m_context.cloneStructure());
+	public void cloneToWithValueStructure(HAPWithValueStructure dataContext) {
+		dataContext.setValueStructure(this.m_context.cloneStructure());
 	}
 
 	@Override

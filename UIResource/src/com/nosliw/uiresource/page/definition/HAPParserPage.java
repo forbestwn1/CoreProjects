@@ -298,7 +298,7 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		
 		for(Element childEle : childEles){
 			try {
-				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), (HAPStructureValueDefinitionGroup)resourceUnit.getValueContext());
+				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), (HAPStructureValueDefinitionGroup)resourceUnit.getValueStructure());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();

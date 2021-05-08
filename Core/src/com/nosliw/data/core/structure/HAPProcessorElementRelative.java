@@ -31,7 +31,7 @@ public class HAPProcessorElementRelative {
 						String parent = relativeEle.getParent();
 						dependency.add(parent);
 						if(!relativeEle.isProcessed()) {
-							HAPStructure parentStructure = HAPUtilityStructure.getReferedContext(parent, parents, structure);
+							HAPStructure parentStructure = HAPUtilityStructure.getReferedStructure(parent, parents, structure);
 							return Pair.of(false, processRelativeElement(relativeEle, parentStructure, errors, configure, runtimeEnv));
 						}
 					}
@@ -48,8 +48,7 @@ public class HAPProcessorElementRelative {
 	
 	private static HAPElement processRelativeElement(HAPElementLeafRelative relativeElement, HAPStructure parentStructure, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElement out = relativeElement;
-		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.resolveElementReference(HAPUtilityStructurePath.parseLiterateStructurePath(relativeElement.getReferencePath(), parentStructure.getStructureType()), parentStructure, configure.relativeResolveMode, null);
-		resolveInfo.resolvedElement = HAPUtilityStructure.resolveElement(resolveInfo.realSolidSolved);
+		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.resolveElementReference(relativeElement.getReferencePath(), parentStructure, configure.elementReferenceResolveMode, null);
 		
 		if(resolveInfo==null || resolveInfo.referredRoot==null) {
 			errors.add(HAPServiceData.createFailureData(relativeElement, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));

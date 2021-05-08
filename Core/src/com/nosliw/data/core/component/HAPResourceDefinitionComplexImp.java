@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.common.HAPWithValueContext;
+import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -40,7 +40,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
 	
 	@Override
-	public HAPStructureValueDefinition getValueContext() {  return this.m_context;   }
+	public HAPStructureValueDefinition getValueStructure() {  return this.m_context;   }
 	@Override
 	public void setValueContext(HAPStructureValueDefinition context) {  
 		this.m_context = context;
@@ -51,8 +51,8 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	public List<HAPContextReference> getContextReferences(){   return this.m_contextRefs; 	}
 	public void addContextReference(HAPContextReference contextRef) {   this.m_contextRefs.add(contextRef);    }
 	
-	public HAPStructureValueDefinitionGroup getContextNotFlat() {   return (HAPStructureValueDefinitionGroup)this.getValueContext();    }
-	public HAPStructureValueDefinitionFlat getContextFlat() {    return (HAPStructureValueDefinitionFlat)this.getValueContext();    }
+	public HAPStructureValueDefinitionGroup getContextNotFlat() {   return (HAPStructureValueDefinitionGroup)this.getValueStructure();    }
+	public HAPStructureValueDefinitionFlat getContextFlat() {    return (HAPStructureValueDefinitionFlat)this.getValueStructure();    }
 	
 	@Override
 	public HAPResourceDefinitionOrId getChild(String path) {   return null;    }
@@ -64,8 +64,8 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	}
 
 	@Override
-	public void cloneToValueContext(HAPWithValueContext withDataContext) {
-		if(this.m_context!=null)	withDataContext.setValueContext(this.m_context.cloneStructure());
+	public void cloneToWithValueStructure(HAPWithValueStructure withDataContext) {
+		if(this.m_context!=null)	withDataContext.setValueStructure(this.m_context.cloneStructure());
 	}
 
 	@Override
@@ -78,13 +78,13 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 		this.cloneToEntityInfo(complexEntity);
 		this.cloneToResourceDefinition(complexEntity);
 		this.cloneToAttachment(complexEntity);
-		this.cloneToValueContext(complexEntity);
+		this.cloneToWithValueStructure(complexEntity);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
 		jsonMap.put(HAPWithAttachment.ATTACHMENT, this.getAttachmentContainer().toStringValue(HAPSerializationFormat.JSON));
 	}
 

@@ -144,7 +144,7 @@ public class HAPProcessorDataAssociationMapping {
 			out = new HAPStructureValueDefinitionFlat();
 			for(String eleName : origin.getRootNames()) {
 				String updatedName = eleName;
-				HAPInfoReferenceResolve resolvedInfo = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(eleName), (HAPStructureValueDefinitionGroup)outputStructure, null, null);
+				HAPInfoReferenceResolve resolvedInfo = HAPUtilityContext.analyzeElementReference(new HAPReferenceElement(eleName), (HAPStructureValueDefinitionGroup)outputStructure, null, null);
 				if(resolvedInfo!=null) 	updatedName = resolvedInfo.path.getRootReference().getFullName();
 				out.addRoot(updatedName, origin.getRoot(eleName));
 			}

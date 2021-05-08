@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPConstant;
 public class HAPConfigureProcessorStructure {
 
 	//how to find referenced parent node
-	public String relativeResolveMode = HAPConstant.RESOLVEPARENTMODE_BEST;
+	public String elementReferenceResolveMode = HAPConstant.RESOLVEPARENTMODE_BEST;
 
 	//how to handle rule defined in parent node
 	public boolean relativeInheritRule = false;
@@ -31,7 +31,7 @@ public class HAPConfigureProcessorStructure {
 	 
 	public HAPConfigureProcessorStructure cloneConfigure() {
 		HAPConfigureProcessorStructure out = new HAPConfigureProcessorStructure();
-		out.relativeResolveMode = this.relativeResolveMode;
+		out.elementReferenceResolveMode = this.elementReferenceResolveMode;
 		out.relativeInheritRule = this.relativeInheritRule;
 		out.relativeTrackingToSolid = this.relativeTrackingToSolid;
 		out.inheritMode = this.inheritMode;

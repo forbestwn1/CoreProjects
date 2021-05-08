@@ -9,7 +9,6 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
@@ -199,7 +198,7 @@ public class HAPUtilityContext {
 		HAPInfoReferenceResolve out = null;
 		String contextType = parentContext.getType();
 		if(contextType.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-			out = resolveElementReference(contextPath, (HAPStructureValueDefinitionGroup)parentContext, null, null);
+			out = analyzeElementReference(contextPath, (HAPStructureValueDefinitionGroup)parentContext, null, null);
 		}
 		else {
 			out = ((HAPStructureValueDefinitionFlat)parentContext).discoverChild(contextPath.getRootReference().getName(), contextPath.getSubPath());
@@ -210,16 +209,6 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
-	//find exact physical node
-	public static boolean isPhysicallySolved(HAPInfoReferenceResolve solve) {
-		return solve!=null && (solve.resolvedElement!=null && HAPBasicUtility.isStringEmpty(solve.remainSolidPath));
-	}
-
-	//find node
-	public static boolean isLogicallySolved(HAPInfoReferenceResolve solve) {
-		return solve!=null && solve.resolvedElement!=null;
-	}
-
 	public static HAPStructureValueDefinition hardMerge(HAPStructureValueDefinition child, HAPStructureValueDefinition parent) {
 		if(child==null) return parent.cloneStructure();
 		if(parent==null)  return child.cloneStructure();

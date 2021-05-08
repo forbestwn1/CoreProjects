@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.common.HAPWithValueContext;
+import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPIdAttachment;
@@ -54,7 +54,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		this.m_elementId = elementId;
 		this.m_componentEntity = ((HAPComponent)this.getResourceContainer().getContainerElement(this.getElementId())).cloneComponent();
 		HAPUtilityComponent.mergeWithParentAttachment(this.m_componentEntity, this.m_componentContainer.getAttachmentContainer());    //build attachment
-		this.m_contextStructure = HAPUtilityContext.hardMerge(this.m_componentEntity.getValueContext(), this.m_componentContainer.getValueContext());   //build context
+		this.m_contextStructure = HAPUtilityContext.hardMerge(this.m_componentEntity.getValueStructure(), this.m_componentContainer.getValueStructure());   //build context
 		HAPInfoUtility.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
 	}
 
@@ -63,7 +63,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 	
 	@Override
-	public HAPStructureValueDefinition getValueContext() {	return this.m_contextStructure;	}
+	public HAPStructureValueDefinition getValueStructure() {	return this.m_contextStructure;	}
 
 	public HAPResourceDefinitionContainer getResourceContainer() {   return this.m_componentContainer;    }
 	public void setResourceContainer(HAPResourceDefinitionContainer container) {   this.m_componentContainer = container;     }
@@ -238,7 +238,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 
 	@Override
-	public void cloneToValueContext(HAPWithValueContext dataContext) {
+	public void cloneToWithValueStructure(HAPWithValueStructure dataContext) {
 		// TODO Auto-generated method stub
 		
 	}

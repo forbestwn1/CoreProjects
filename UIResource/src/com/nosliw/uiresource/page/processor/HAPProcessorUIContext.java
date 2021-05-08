@@ -32,7 +32,7 @@ public class HAPProcessorUIContext {
 
 	//expand context reference by using context definition in attachment
 	public static void expandContextReference(HAPDefinitionUIUnit uiUnitDef, HAPManagerResourceDefinition resourceDefMan) {
-		HAPUtilityComponent.resolveContextReference(uiUnitDef.getValueContext(), uiUnitDef.getContextReferences(), uiUnitDef.getAttachmentContainer(), resourceDefMan);
+		HAPUtilityComponent.resolveContextReference(uiUnitDef.getValueStructure(), uiUnitDef.getContextReferences(), uiUnitDef.getAttachmentContainer(), resourceDefMan);
 		
 		//process child tags
 		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
@@ -43,7 +43,7 @@ public class HAPProcessorUIContext {
 	public static void enhanceContextByService(HAPDefinitionUIUnit uiUnitDef, HAPRuntimeEnvironment runtimeEnv) {
 		for(String serviceName : uiUnitDef.getAllServices()) {
 			HAPDefinitionServiceUse service = uiUnitDef.getService(serviceName);
-			HAPProcessorServiceUse.enhanceContextByService(service, uiUnitDef.getValueContext(), runtimeEnv);
+			HAPProcessorServiceUse.enhanceContextByService(service, uiUnitDef.getValueStructure(), runtimeEnv);
 		}
 		
 		//child tag

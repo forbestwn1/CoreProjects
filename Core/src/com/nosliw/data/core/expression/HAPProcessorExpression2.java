@@ -7,9 +7,7 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPProcessTracker;
@@ -21,13 +19,10 @@ import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
-import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
-import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.structure.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
@@ -36,7 +31,7 @@ import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
 import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
 
-public class HAPProcessorExpression {
+public class HAPProcessorExpression2 {
 
 	public static HAPExecutableExpressionGroup process(
 			String id,
@@ -48,18 +43,6 @@ public class HAPProcessorExpression {
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 
-		//expand all reference
-		HAPExecutableExpressionGroup out = createExecutable(id, expressionGroupDef, null, attachmentReferenceContext, runtimeEnv, processTracker);
-		expandReference(out, attachmentReferenceContext, runtimeEnv, processTracker);
-		
-		//normalize variable(discovery new variable from operand or input mapping for reference)
-		
-		
-		//
-		
-		
-		
-		
 		HAPExecutableExpressionGroup out = processBasic(id, expressionGroupDef, attachmentReferenceContext, expressionMan, configure, runtimeEnv, processTracker);
 		
 		//normalize input mapping, popup variable
@@ -78,191 +61,6 @@ public class HAPProcessorExpression {
 		
 		//build variable into within expression item
 		discoverExpressionItemVariable(out);
-		
-		return out;
-	}
-
-	//create executable 
-	//
-	private static HAPExecutableExpressionGroup createExecutable(
-			String id,
-			HAPDefinitionExpressionGroup expressionGroupDef, 
-			String expressionId,
-			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
-			HAPRuntimeEnvironment runtimeEnv,
-			HAPProcessTracker processTracker) {
-
-		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(id);
-		
-		//context
-		HAPStructureValueDefinition valueStructure =  expressionGroupDef.getValueStructure();
-		out.setContextStructure(valueStructure);
-
-		//constant
-		//constant --- discover constant from attachment and context
-		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>(); 
-		constants.putAll(HAPUtilityComponentConstant.getConstantsData(expressionGroupDef, out.getContextFlat()));
-
-		//expression element
-		if(expressionId==null) {
-			//all elements
-			Set<HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();
-			for(HAPDefinitionExpression expressionDef : expressionDefs) {
-				out.addExpression(expressionDef.getId(), new HAPOperandWrapper(runtimeEnv.getExpressionManager().getExpressionParser().parseExpression(expressionDef.getExpression())));
-			}
-		}
-		else {
-			out.addExpression(expressionId, new HAPOperandWrapper(runtimeEnv.getExpressionManager().getExpressionParser().parseExpression(expressionGroupDef.getEntityElement(expressionId).getExpression())));
-		}
-
-		
-		return out;
-	}
-	
-	
-	//replace reference operand with referenced operand
-	private static void expandReference(
-			HAPExecutableExpressionGroup expressionGroupExe, 
-			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
-			HAPRuntimeEnvironment runtimeEnv,
-			HAPProcessTracker processTracker) {
-		
-		Map<String, HAPExecutableExpression> expressionExe = expressionGroupExe.getExpressionItems();
-		for(String key : expressionExe.keySet()) {
-			HAPOperandWrapper operand = expressionExe.get(key).getOperand();
-			String expressionId = expressionGroupExe.getId() + "_" + key;
-			int[] subId = {0};
-			HAPOperandUtility.processAllOperand(operand, subId, new HAPOperandTask(){
-				@Override
-				public boolean processOperand(HAPOperandWrapper operand, Object data) {
-					int[] subId = (int[])data;
-					String opType = operand.getOperand().getType();
-					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
-						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-						String refName = referenceOperand.getReferenceName();
-						
-						String referenceTo = null;
-						String eleName = null;
-						
-						String[] segs = HAPNamingConversionUtility.splitTextByComponents(refName, "AT");
-						if(segs.length==1) {
-							referenceTo = segs[0];
-						}
-						else if(segs.length == 2) {
-							referenceTo = segs[0];
-							eleName = segs[1];
-						}
-
-						HAPResultProcessAttachmentReference result = attachmentReferenceContext.processReference(referenceTo);
-						JSONObject adaptorObj = (JSONObject)result.getAdaptor();
-						if(adaptorObj!=null) {
-							if(eleName==null)  eleName = (String)adaptorObj.opt(HAPOperandReference.ELEMENTNAME);
-							referenceOperand.setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(adaptorObj.optJSONObject(HAPOperandReference.VARMAPPING)));
-						}
-						referenceOperand.setElementName(eleName);
-						
-						//refered expression id
-						String refExpressionId = expressionId+"_"+subId[0];
-						
-						//process refered expression
-						HAPContextProcessAttachmentReferenceExpression attachmentReferenceContextForRefExpression = new HAPContextProcessAttachmentReferenceExpression(result.getContextComplexEntity(), runtimeEnv);
-						HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression.createExecutable(refExpressionId, (HAPDefinitionExpressionGroup)result.getEntity(), eleName, attachmentReferenceContextForRefExpression, runtimeEnv, processTracker);
-						expandReference(refExpressionExe, attachmentReferenceContextForRefExpression, runtimeEnv, processTracker);
-						
-						referenceOperand.setReferedExpression(refExpressionExe);
-						
-						subId[0]++;
-					}
-					return true;
-				}
-			});
-		}
-		
-	}
-	
-	
-	
-	private static HAPExecutableExpressionGroup processBasic(
-			String exeId,
-			HAPDefinitionExpressionGroup expressionGroupDef,
-			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
-			HAPManagerExpression expressionMan,
-			Map<String, String> configure,
-			HAPRuntimeEnvironment runtimeEnv,
-			HAPProcessTracker processTracker) {
-
-		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(exeId);
-
-		//context
-		HAPStructureValueDefinition valueStructure =  expressionGroupDef.getValueStructure();
-		out.setContextStructure(valueStructure);
-
-		//constant
-		//constant --- discover constant from attachment and context
-		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>(); 
-		constants.putAll(HAPUtilityComponentConstant.getConstantsData(expressionGroupDef, out.getContextFlat()));
-		
-		
-		//expand referenced expression
-		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
-			processReferencesInOperandBasic(exeId, expressionItem.getOperand(), attachmentReferenceContext, expressionMan, configure, runtimeEnv, processTracker);
-		}
-		
-		
-		
-		
-		
-		
-		//variable
-		//replace variable name with id
-		Set<String> eleTypes = new HashSet<String>();
-		eleTypes.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA);
-		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
-			Set<HAPOperandWrapper> varOperands = HAPOperandUtility.discoverVariableOperands(expressionItem.getOperand());
-			for(HAPOperandWrapper operand : varOperands) {
-				HAPOperandVariable varOperand =  (HAPOperandVariable)operand.getOperand();
-				String varName = varOperand.getVariableName();
-				HAPInfoReferenceResolve resolve = HAPUtilityStructure.resolveElementReference(varName, valueStructure, HAPConstant.RESOLVEPARENTMODE_BEST, eleTypes);
-				if(HAPUtilityStructure.isLogicallySolved(resolve)) {
-					//able to resolve the variable, replace root name with root local id
-					varOperand.setVariableName(new HAPComplexPath(varName).updateRootName(resolve.referredRoot.getLocalId()).getFullName());
-				}
-				else {
-					//cannot resolve the variable
-					
-				}
-			}
-		}
-
-		
-		
-		
-		//variable --- from context
-		HAPContainerVariableCriteriaInfo varsContainer = HAPUtilityContext.discoverDataVariablesInContext(out.getContextFlat());
-		out.setVarsInfo(varsContainer);
-
-		Set<HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();
-		for(HAPDefinitionExpression expressionDef : expressionDefs) {
-			out.addExpression(expressionDef.getId(), new HAPOperandWrapper(expressionMan.getExpressionParser().parseExpression(expressionDef.getExpression())));
-		}
-
-		//add missed variable to variable info container
-		for(String varName : unknownVarNames) 	varsContainer.addVariableCriteriaInfo(HAPInfoCriteria.buildUndefinedCriteriaInfo(), varName, varName);
-
-		//attribute chain --- consolidate attribute chain to single variable or constant operand
-		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
-			HAPOperandUtility.processAttributeOperandInExpressionOperand(expressionItem.getOperand(), varsContainer.getDataVariableNames(), constants.keySet());
-		}
-
-		//constant --- update constant data in expression
-		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
-			HAPOperandUtility.updateConstantData(expressionItem.getOperand(), constants);
-		}
-		
-		//variable --- replace variable rootroot name with variable id
-		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
-			HAPOperandUtility.updateNameInOperand(expressionItem.getOperand(), varsContainer.buildToVarIdNameUpdate(), new String[] {HAPConstantShared.EXPRESSION_OPERAND_VARIABLE});
-		}
 		
 		return out;
 	}
@@ -290,6 +88,126 @@ public class HAPProcessorExpression {
 				}
 			});
 		}
+	}
+	
+	private static HAPExecutableExpressionGroup processBasic(
+			String exeId,
+			HAPDefinitionExpressionGroup expressionGroupDef,
+			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
+			HAPManagerExpression expressionMan,
+			Map<String, String> configure,
+			HAPRuntimeEnvironment runtimeEnv,
+			HAPProcessTracker processTracker) {
+
+		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(exeId);
+
+		//context
+		HAPStructureValueDefinition valueStructure =  expressionGroupDef.getValueStructure();
+		out.setContextStructure(valueStructure);
+
+		//constant
+		//constant --- discover constant from attachment and context
+		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>(); 
+		constants.putAll(HAPUtilityComponentConstant.getConstantsData(expressionGroupDef, out.getContextFlat()));
+		
+		//variable
+		//variable --- from context
+		HAPContainerVariableCriteriaInfo varsContainer = HAPUtilityContext.discoverDataVariablesInContext(out.getContextFlat());
+		out.setVarsInfo(varsContainer);
+
+		Set<HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();
+		for(HAPDefinitionExpression expressionDef : expressionDefs) {
+			out.addExpression(expressionDef.getId(), new HAPOperandWrapper(expressionMan.getExpressionParser().parseExpression(expressionDef.getExpression())));
+		}
+
+		//discover variables that not defined in context
+		Set<String> unknownVarNames = new HashSet<String>();  
+		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
+			//variable --- discover variable that not defined in context
+			Set<String> varNames = HAPOperandUtility.discoverVariableNames(expressionItem.getOperand());
+			for(String varName : varNames) {
+				if(varsContainer.getVariableCriteriaInfoByAlias(varName)==null) {
+					unknownVarNames.add(varName);
+				}
+			}
+		}
+		//add missed variable to variable info container
+		for(String varName : unknownVarNames) 	varsContainer.addVariableCriteriaInfo(HAPInfoCriteria.buildUndefinedCriteriaInfo(), varName, varName);
+
+		//attribute chain --- consolidate attribute chain to single variable or constant operand
+		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
+			HAPOperandUtility.processAttributeOperandInExpressionOperand(expressionItem.getOperand(), varsContainer.getDataVariableNames(), constants.keySet());
+		}
+
+		//constant --- update constant data in expression
+		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
+			HAPOperandUtility.updateConstantData(expressionItem.getOperand(), constants);
+		}
+		
+		//referenced expression
+		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
+			processReferencesInOperandBasic(exeId, expressionItem.getOperand(), attachmentReferenceContext, expressionMan, configure, runtimeEnv, processTracker);
+		}
+		
+		//variable --- replace variable rootroot name with variable id
+		for(HAPExecutableExpression expressionItem : out.getExpressionItems().values()) {
+			HAPOperandUtility.updateNameInOperand(expressionItem.getOperand(), varsContainer.buildToVarIdNameUpdate(), new String[] {HAPConstantShared.EXPRESSION_OPERAND_VARIABLE});
+		}
+		
+		return out;
+	}
+
+	//replace reference operand with referenced operand
+	private static void processReferencesInOperandBasic(
+			String parentId,
+			HAPOperandWrapper operand, 
+			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
+			HAPManagerExpression expressionMan,
+			Map<String, String> configure,
+			HAPRuntimeEnvironment runtimeEnv,
+			HAPProcessTracker processTracker) {
+		int[] subId = {0};
+		HAPOperandUtility.processAllOperand(operand, subId, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				int[] subId = (int[])data;
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
+					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+					String refName = referenceOperand.getReferenceName();
+					
+					String referenceTo = null;
+					String eleName = null;
+					
+					String[] segs = HAPNamingConversionUtility.splitTextByComponents(refName, "AT");
+					if(segs.length==1) {
+						referenceTo = segs[0];
+					}
+					else if(segs.length == 2) {
+						referenceTo = segs[0];
+						eleName = segs[1];
+					}
+
+					HAPResultProcessAttachmentReference result = attachmentReferenceContext.processReference(referenceTo);
+					JSONObject adaptorObj = (JSONObject)result.getAdaptor();
+					if(adaptorObj!=null) {
+						if(eleName==null)  eleName = (String)adaptorObj.opt(HAPOperandReference.ELEMENTNAME);
+						referenceOperand.setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(adaptorObj.optJSONObject(HAPOperandReference.VARMAPPING)));
+					}
+					referenceOperand.setElementName(eleName);
+					
+					//refered expression id
+					String refExpressionId = parentId+"_"+subId[0];
+					
+					//process refered expression
+					HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression2.processBasic(refExpressionId, (HAPDefinitionExpressionGroup)result.getEntity(), new HAPContextProcessAttachmentReferenceExpression(result.getContextComplexEntity(), runtimeEnv), null, expressionMan, configure, runtimeEnv, processTracker);
+					referenceOperand.setReferedExpression(refExpressionExe);
+					
+					subId[0]++;
+				}
+				return true;
+			}
+		});
 	}
 	
 	//discover those variable not get mapped, add those mapping by enrich variable in parent

@@ -47,7 +47,7 @@ public class HAPProcessorEscalate {
 	private static Pair<Boolean, HAPRoot> escalate(HAPRoot original, String categaryType, HAPStructureValueDefinitionGroup parentContextGroup, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
 		
 		Pair<Boolean, HAPRoot> out = null;
-		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(path.getFullName()), parentContextGroup, null, HAPConstant.RESOLVEPARENTMODE_FIRST);
+		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.analyzeElementReference(new HAPReferenceElement(path.getFullName()), parentContextGroup, null, HAPConstant.RESOLVEPARENTMODE_FIRST);
 		if(HAPUtilityContext.isLogicallySolved(resolveInfo)) {
 			//find matched one
 			out = Pair.of(true, HAPUtilityContext.createRootWithRelativeElement(resolveInfo.referredRoot, resolveInfo.path.getRootReference().getCategary(), resolveInfo.path.getPathStr(), inheritanceExcludedInfo));

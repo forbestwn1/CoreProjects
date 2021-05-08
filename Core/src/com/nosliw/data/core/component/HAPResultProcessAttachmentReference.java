@@ -1,5 +1,6 @@
 package com.nosliw.data.core.component;
 
+
 public class HAPResultProcessAttachmentReference {
 
 	//entity after solve attachment reference

@@ -15,7 +15,7 @@ public class HAPProcessorContextVariableInheritance {
 	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup orgContext, HAPContainerStructure parent, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
 		HAPStructureValueDefinitionGroup out = processConstant(orgContext);
 		for(String parentName : parent.getStructureNames()) {
-			out = process(out, (HAPStructureValueDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedContext(parentName, parent, orgContext), false), inheritMode, inheritanceExcludedInfo, runtimeEnv);
+			out = process(out, (HAPStructureValueDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedStructure(parentName, parent, orgContext), false), inheritMode, inheritanceExcludedInfo, runtimeEnv);
 		}
 		return out;
 	}

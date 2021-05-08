@@ -42,7 +42,7 @@ public class HAPProcessorContextRelative {
 	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup contextGroup, HAPContainerStructure parent, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPStructureValueDefinitionGroup out = contextGroup.cloneContextGroup();
 		for(String parentName : allParentName(parent)) {
-			HAPStructureValueDefinition context = HAPUtilityContext.getReferedContext(parentName, parent, contextGroup);
+			HAPStructureValueDefinition context = HAPUtilityContext.getReferedStructure(parentName, parent, contextGroup);
 			out = process(out, parentName, (HAPStructureValueDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(context, false), dependency, errors, context.isFlat(), configure, runtimeEnv);			
 		}
 		return out;
@@ -100,7 +100,7 @@ public class HAPProcessorContextRelative {
 		HAPElement out = defContextElementRelative;
 		
 		HAPReferenceElement path = defContextElementRelative.getPathFormat(); 
-		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.resolveElementReference(path, parentContext, categaryes, configure.relativeResolveMode);
+		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.analyzeElementReference(path, parentContext, categaryes, configure.elementReferenceResolveMode);
 		
 		if(resolveInfo==null || resolveInfo.referredRoot==null) {
 			errors.add(HAPServiceData.createFailureData(contextEleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
