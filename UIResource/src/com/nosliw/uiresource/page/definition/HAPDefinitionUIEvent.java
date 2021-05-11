@@ -10,7 +10,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.data.core.structure.HAPRoot;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionUIEvent extends HAPEntityInfoWritableImp{
@@ -18,14 +18,14 @@ public class HAPDefinitionUIEvent extends HAPEntityInfoWritableImp{
 	public static String DATA = "data";
 
 	//context
-	private HAPStructureValueDefinitionFlat m_dataDefinition;
+	private HAPValueStructureDefinitionFlat m_dataDefinition;
 	
 	public HAPDefinitionUIEvent() {
-		this.m_dataDefinition = new HAPStructureValueDefinitionFlat();
+		this.m_dataDefinition = new HAPValueStructureDefinitionFlat();
 	}
 
-	public HAPStructureValueDefinitionFlat getDataDefinition() {  return this.m_dataDefinition;   }
-	public void setDataDefinition(HAPStructureValueDefinitionFlat dataDef) {   this.m_dataDefinition = dataDef;  }
+	public HAPValueStructureDefinitionFlat getDataDefinition() {  return this.m_dataDefinition;   }
+	public void setDataDefinition(HAPValueStructureDefinitionFlat dataDef) {   this.m_dataDefinition = dataDef;  }
 	
 	public void addDataElement(String name, HAPRoot node) {  this.m_dataDefinition.addRoot(name, node);  }
 	

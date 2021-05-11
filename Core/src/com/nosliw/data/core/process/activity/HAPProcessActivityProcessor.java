@@ -3,6 +3,8 @@ package com.nosliw.data.core.process.activity;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process.HAPBuilderResultContext;
 import com.nosliw.data.core.process.HAPContextProcessor;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
@@ -17,10 +19,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPContainerStructure;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 
@@ -30,7 +30,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 			String id, 
 			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPStructureValueDefinitionGroup processDataContext, 
+			HAPValueStructureDefinitionGroup processDataContext, 
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -73,7 +73,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		@Override
-		public HAPStructureValueDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+		public HAPValueStructureDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPProcessActivityExecutable processActivity = (HAPProcessActivityExecutable)activity;
 			return this.m_processExe.getContext();
 		}

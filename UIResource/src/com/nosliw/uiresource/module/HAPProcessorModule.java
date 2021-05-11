@@ -11,6 +11,9 @@ import com.nosliw.common.utils.HAPNosliwUtility;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
@@ -28,12 +31,9 @@ import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPProcessorContext;
 import com.nosliw.data.core.structure.HAPRequirementContextProcessor;
 import com.nosliw.data.core.structure.HAPRoot;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionEmpty;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionEmpty;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
@@ -44,7 +44,7 @@ public class HAPProcessorModule {
 	public static HAPExecutableModule process(
 			HAPDefinitionModule moduleDefinition, 
 			String id, 
-			HAPStructureValueDefinitionGroup parentContext, 
+			HAPValueStructureDefinitionGroup parentContext, 
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan) {
 		
@@ -55,7 +55,7 @@ public class HAPProcessorModule {
 	private static HAPExecutableModule process(
 			HAPDefinitionModule moduleDefinition,
 			String id, 
-			HAPStructureValueDefinitionGroup parentContext, 
+			HAPValueStructureDefinitionGroup parentContext, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,
@@ -70,7 +70,7 @@ public class HAPProcessorModule {
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(moduleDefinition.getAttachmentContainer(), serviceProviders, runtimeEnv.getServiceManager().getServiceDefinitionManager()); 
 		
 		//process context 
-		out.setContextGroup((HAPStructureValueDefinitionGroup)HAPProcessorContext.process(moduleDefinition.getValueStructure(), HAPContainerStructure.createDefault(parentContext==null?new HAPStructureValueDefinitionGroup():parentContext), contextProcessConfg, runtimeEnv));
+		out.setContextGroup((HAPValueStructureDefinitionGroup)HAPProcessorContext.process(moduleDefinition.getValueStructure(), HAPContainerStructure.createDefault(parentContext==null?new HAPValueStructureDefinitionGroup():parentContext), contextProcessConfg, runtimeEnv));
 
 		//process process suite
 		HAPResourceDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(moduleDefinition, runtimeEnv.getProcessManager().getPluginManager()).cloneProcessSuiteDefinition(); 
@@ -125,9 +125,9 @@ public class HAPProcessorModule {
 		out.addUIDecoration(moduleExe.getDefinition().getUIDecoration());
 		
 		//context
-		HAPStructureValueDefinitionGroup mappingContextGroup = new HAPStructureValueDefinitionGroup();
-		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPContainerStructure.createDefault(HAPStructureValueDefinitionEmpty.flatStructure()), null, runtimeEnv);
-		mappingContextGroup.setFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPStructureValueDefinitionFlat)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk
+		HAPValueStructureDefinitionGroup mappingContextGroup = new HAPValueStructureDefinitionGroup();
+		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPContainerStructure.createDefault(HAPValueStructureDefinitionEmpty.flatStructure()), null, runtimeEnv);
+		mappingContextGroup.setFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPValueStructureDefinitionFlat)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk
 
 		HAPExecutableUIUnitPage page = uiResourceMan.getEmbededUIPage(pageResourceId, id, mappingContextGroup, null, moduleExe.getDefinition().getAttachmentContainer(), moduleUIDefinition);
 		out.setPage(page);
@@ -146,7 +146,7 @@ public class HAPProcessorModule {
 		for(HAPHandler eventHandlerDef : eventHandlerDefs) {
 			String eventName = eventHandlerDef.getName();
 			HAPRoot eventRootNode = buildContextRootFromEvent(out.getPage().getBody().getEventDefinition(eventName));
-			HAPStructureValueDefinitionGroup eventContext = new HAPStructureValueDefinitionGroup();
+			HAPValueStructureDefinitionGroup eventContext = new HAPValueStructureDefinitionGroup();
 			eventContext.addRoot(HAPNosliwUtility.buildNosliwFullName("EVENT"), eventRootNode, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 			HAPResourceDefinitionProcess processDef = moduleExe.getProcessDefinition(eventHandlerDef.getTask().getTaskDefinition());
 			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(processDef, eventContext, serviceProviders, processMan, runtimeEnv, processTracker);
@@ -160,7 +160,7 @@ public class HAPProcessorModule {
 		HAPRoot root = new HAPRoot();
 		HAPElementNode nodeEle = new HAPElementNode();
 		
-		HAPStructureValueDefinitionFlat dataDef = eventDef.getDataDefinition();
+		HAPValueStructureDefinitionFlat dataDef = eventDef.getDataDefinition();
 		for(String dataName : dataDef.getRootNames()) {
 			nodeEle.addChild(dataName, dataDef.getRoot(dataName).getDefinition());
 		}

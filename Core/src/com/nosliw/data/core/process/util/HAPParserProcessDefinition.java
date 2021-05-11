@@ -5,12 +5,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPUtilityComponentParse;
+import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite;
 import com.nosliw.data.core.process.resource.HAPElementContainerResourceDefinitionReferenceProcessSuite;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
-import com.nosliw.data.core.structure.dataassociation.HAPDefinitionWrapperTask;
 
 public class HAPParserProcessDefinition {
 

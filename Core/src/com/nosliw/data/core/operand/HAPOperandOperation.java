@@ -29,7 +29,7 @@ import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceHelper;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
 
 public class HAPOperandOperation extends HAPOperandImp{
 

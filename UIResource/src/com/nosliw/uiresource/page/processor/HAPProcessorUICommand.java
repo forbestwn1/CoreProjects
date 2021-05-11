@@ -11,8 +11,8 @@ import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPProcessorContextRelative;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -24,7 +24,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUICommand {
 
-	private static void processInteractionElement(HAPExecutableUIUnit uiExe, HAPStructureValueDefinitionGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+	private static void processInteractionElement(HAPExecutableUIUnit uiExe, HAPValueStructureDefinitionGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
 		//process relative element in event defined in resource
 		Map<String, HAPDefinitionUIEvent> eventsDef = uiUnitDef.getEventDefinitions();
@@ -45,7 +45,7 @@ public class HAPProcessorUICommand {
 			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
 
 			//command results
-			Map<String, HAPStructureValueDefinitionFlat> results = commandDef.getResults();
+			Map<String, HAPValueStructureDefinitionFlat> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
 				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
 			}
@@ -77,7 +77,7 @@ public class HAPProcessorUICommand {
 			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
 
 			//command results
-			Map<String, HAPStructureValueDefinitionFlat> results = commandDef.getResults();
+			Map<String, HAPValueStructureDefinitionFlat> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
 				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
 			}

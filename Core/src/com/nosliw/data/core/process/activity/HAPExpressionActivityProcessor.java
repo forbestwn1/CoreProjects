@@ -8,6 +8,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.process.HAPBuilderResultContext;
@@ -29,10 +30,9 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPElementLeafValue;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
@@ -44,7 +44,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			String id, 
 			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPStructureValueDefinitionGroup processDataContext, 
+			HAPValueStructureDefinitionGroup processDataContext, 
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -57,7 +57,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		
 		//process input and create flat input context for activity
 		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, definition, processDataContext, runtimeEnv);
-		HAPStructureValueDefinitionFlat activityContext = (HAPStructureValueDefinitionFlat)out.getInputDataAssociation().getOutput().getOutputStructure(); 
+		HAPValueStructureDefinitionFlat activityContext = (HAPValueStructureDefinitionFlat)out.getInputDataAssociation().getOutput().getOutputStructure(); 
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());
@@ -78,8 +78,8 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
 	class HAPBuilderResultContext1 implements HAPBuilderResultContext {
 		@Override
-		public HAPStructureValueDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
-			HAPStructureValueDefinitionFlat out = new HAPStructureValueDefinitionFlat();
+		public HAPValueStructureDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+			HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				String outputVar = HAPConstantShared.ACTIVITY_OUTPUTVARIABLE_OUTPUT;
 				HAPExpressionActivityExecutable expressionActExt = (HAPExpressionActivityExecutable)activity;

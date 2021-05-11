@@ -16,13 +16,13 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
-import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
 
 public class HAPOperandReference extends HAPOperandImp{
 

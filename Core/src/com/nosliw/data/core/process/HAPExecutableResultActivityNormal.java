@@ -10,12 +10,12 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
 
 @HAPEntityWithAttribute
 public class HAPExecutableResultActivityNormal extends HAPExecutableImpEntityInfo{

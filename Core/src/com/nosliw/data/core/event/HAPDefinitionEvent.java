@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.structure.HAPParserContext;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 //event definition
 public class HAPDefinitionEvent extends HAPSerializableImp{
@@ -20,9 +20,9 @@ public class HAPDefinitionEvent extends HAPSerializableImp{
 	private String m_name;
 
 	//event data structure definition
-	private HAPStructureValueDefinitionFlat m_context;
+	private HAPValueStructureDefinitionFlat m_context;
 
-	public HAPStructureValueDefinitionFlat getContext() {	return this.m_context;	}
+	public HAPValueStructureDefinitionFlat getContext() {	return this.m_context;	}
 	
 	public String getName() {   return this.m_name;    }
 	

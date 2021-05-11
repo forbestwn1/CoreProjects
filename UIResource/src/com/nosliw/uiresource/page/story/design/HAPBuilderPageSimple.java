@@ -20,6 +20,7 @@ import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
@@ -38,8 +39,7 @@ import com.nosliw.data.core.structure.HAPElementLeafConstant;
 import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
 import com.nosliw.data.core.structure.HAPRoot;
-import com.nosliw.data.core.structure.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
@@ -56,7 +56,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	
 	private HAPStory m_story;
 	
-	private HAPStructureValueDefinitionFlat m_context;
+	private HAPValueStructureDefinitionFlat m_context;
 	
 	public HAPBuilderPageSimple(HAPManagerServiceDefinition serviceDefMan, HAPManagerUITag tagManager, HAPParserPage pageParser) {
 		this.m_serviceDefMan = serviceDefMan;
@@ -70,7 +70,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		
 		//constant
-		HAPStructureValueDefinitionFlat context = buildContext();
+		HAPValueStructureDefinitionFlat context = buildContext();
 		this.m_context = context;
 		templateParms.put("context", context.toStringValue(HAPSerializationFormat.JSON));
 		
@@ -119,8 +119,8 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		return out.toString();
 	}
 	
-	private HAPStructureValueDefinitionFlat buildContext() {
-		HAPStructureValueDefinitionFlat context = new HAPStructureValueDefinitionFlat();
+	private HAPValueStructureDefinitionFlat buildContext() {
+		HAPValueStructureDefinitionFlat context = new HAPValueStructureDefinitionFlat();
 		Set<HAPStoryNode> varNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstantShared.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
@@ -176,7 +176,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			
 			{
 				//input
-				HAPStructureValueDefinitionFlat serviceParmMapping = new HAPStructureValueDefinitionFlat();
+				HAPValueStructureDefinitionFlat serviceParmMapping = new HAPValueStructureDefinitionFlat();
 				List<HAPStoryNode> serviceInputNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstantShared.SERVICE_CHILD_INPUT, this.m_story);
 				if(!serviceInputNodes.isEmpty()) {
 					HAPStoryNode serviceInputNode = serviceInputNodes.get(0); 
@@ -212,7 +212,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			
 			{
 				//output
-				HAPStructureValueDefinitionFlat serviceParmMapping = new HAPStructureValueDefinitionFlat();
+				HAPValueStructureDefinitionFlat serviceParmMapping = new HAPValueStructureDefinitionFlat();
 				List<HAPStoryNode> serviceResultNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstantShared.SERVICE_CHILD_RESULT, this.m_story);
 				if(!serviceResultNodes.isEmpty()) {
 					HAPStoryNode serviceResultNode = serviceResultNodes.get(0);

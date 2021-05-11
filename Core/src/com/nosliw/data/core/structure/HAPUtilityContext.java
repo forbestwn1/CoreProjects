@@ -12,44 +12,44 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.structure.value.HAPElementContextStructureValueExecutable;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
-import com.nosliw.data.core.structure.value.HAPStructureValueExecutable;
+import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPElementContextStructureValueExecutable;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
 
 public class HAPUtilityContext {
 
-	public static Map<String, Object> discoverContantsValueFromContextStructure(HAPStructureValueDefinition contextStructure) {
-		HAPStructureValueExecutable flatContext = buildFlatContextFromContextStructure(contextStructure);
+	public static Map<String, Object> discoverContantsValueFromContextStructure(HAPValueStructureDefinition contextStructure) {
+		HAPValueStructureExecutable flatContext = buildFlatContextFromContextStructure(contextStructure);
 		return flatContext.getConstantValue();
 	}
 	
-	public static HAPStructureValueExecutable buildFlatContextFromContextStructure(HAPStructureValueDefinition contextStructure) {
-		HAPStructureValueExecutable out = null;
+	public static HAPValueStructureExecutable buildFlatContextFromContextStructure(HAPValueStructureDefinition contextStructure) {
+		HAPValueStructureExecutable out = null;
 		String type = contextStructure.getType();
 		if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-			out = buildFlatContextFromContextGroup((HAPStructureValueDefinitionGroup)contextStructure);
+			out = buildFlatContextFromContextGroup((HAPValueStructureDefinitionGroup)contextStructure);
 		}
 		else if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
-			out = buildFlatContextFromContext((HAPStructureValueDefinitionFlat)contextStructure);
+			out = buildFlatContextFromContext((HAPValueStructureDefinitionFlat)contextStructure);
 		}
 		return out;
 	}
 
-	public static HAPStructureValueExecutable buildFlatContextFromContext(HAPStructureValueDefinitionFlat context) {
-		HAPStructureValueExecutable out = new HAPStructureValueExecutable();
+	public static HAPValueStructureExecutable buildFlatContextFromContext(HAPValueStructureDefinitionFlat context) {
+		HAPValueStructureExecutable out = new HAPValueStructureExecutable();
 		for(String name : context.getRootNames()) {
 			out.addRoot(context.getRoot(name), name);
 		}
 		return out;
 	}
 	
-	public static HAPStructureValueExecutable buildFlatContextFromContextGroup(HAPStructureValueDefinitionGroup context) {
-		HAPStructureValueExecutable out = new HAPStructureValueExecutable();
+	public static HAPValueStructureExecutable buildFlatContextFromContextGroup(HAPValueStructureDefinitionGroup context) {
+		HAPValueStructureExecutable out = new HAPValueStructureExecutable();
 		
-		List<String> categarys = Arrays.asList(HAPStructureValueDefinitionGroup.getAllCategariesWithPriority());
+		List<String> categarys = Arrays.asList(HAPValueStructureDefinitionGroup.getAllCategariesWithPriority());
 		Collections.reverse(categarys);
 		for(String categary : categarys) {
 			Map<String, HAPRoot> eles = context.getRootsByCategary(categary);
@@ -64,16 +64,16 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
-	public static HAPElement getDescendant(HAPStructureValueDefinition context, HAPReferenceElement path) {
+	public static HAPElement getDescendant(HAPValueStructureDefinition context, HAPReferenceElement path) {
 		if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-			return getDescendant((HAPStructureValueDefinitionGroup)context, path.getFullPath());
+			return getDescendant((HAPValueStructureDefinitionGroup)context, path.getFullPath());
 		}
 		else {
-			return getDescendant((HAPStructureValueDefinitionFlat)context, path.getPath());
+			return getDescendant((HAPValueStructureDefinitionFlat)context, path.getPath());
 		}
 	}
 	
-	public static HAPElement getDescendant(HAPStructureValueDefinitionFlat context, String path) {
+	public static HAPElement getDescendant(HAPValueStructureDefinitionFlat context, String path) {
 		HAPElement out = null;
 		HAPComplexPath complexPath = new HAPComplexPath(path);
 		HAPRoot root = context.getRoot(complexPath.getRootName());
@@ -83,23 +83,23 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
-	public static HAPElement getDescendant(HAPStructureValueDefinitionGroup contextGroup, String categary, String path) {
+	public static HAPElement getDescendant(HAPValueStructureDefinitionGroup contextGroup, String categary, String path) {
 		HAPElement out = null;
-		HAPStructureValueDefinitionFlat context = contextGroup.getFlat(categary);
+		HAPValueStructureDefinitionFlat context = contextGroup.getFlat(categary);
 		if(context!=null)   out = getDescendant(context, path);
 		return out;
 	}
 
-	public static HAPElement getDescendant(HAPStructureValueDefinitionGroup contextGroup, String path) {
+	public static HAPElement getDescendant(HAPValueStructureDefinitionGroup contextGroup, String path) {
 		HAPReferenceElement contextPath = new HAPReferenceElement(path);
 		return getDescendant(contextGroup, contextPath.getRootReference().getCategary(), contextPath.getPath());
 	}
 	
-	public static void updateDataDescendant(HAPStructureValueDefinitionGroup contextGroup, String categary, String path, HAPElementLeafData dataEle) {
+	public static void updateDataDescendant(HAPValueStructureDefinitionGroup contextGroup, String categary, String path, HAPElementLeafData dataEle) {
 		updateDataDescendant(contextGroup.getFlat(categary), path, dataEle);
 	}
 
-	public static void updateDataDescendant(HAPStructureValueDefinitionFlat context, String path, HAPElementLeafData dataEle) {
+	public static void updateDataDescendant(HAPValueStructureDefinitionFlat context, String path, HAPElementLeafData dataEle) {
 		setDescendant(context, path, dataEle);
 //		HAPComplexPath cpath = new HAPComplexPath(path);
 //		HAPContextDefinitionRoot root = context.getElement(cpath.getRootName());
@@ -112,17 +112,17 @@ public class HAPUtilityContext {
 //		}
 	}
 
-	public static void setDescendant(HAPStructureValueDefinition contextStructure, HAPReferenceElement contextPath, HAPElement ele) {
+	public static void setDescendant(HAPValueStructureDefinition contextStructure, HAPReferenceElement contextPath, HAPElement ele) {
 		HAPRoot targetRoot = contextStructure.getRoot(contextPath.getRootReference().getFullName(), true);
 
 	}
 	
-	public static void setDescendant(HAPStructureValueDefinitionGroup contextGroup, String categary, String path, HAPElement ele) {
+	public static void setDescendant(HAPValueStructureDefinitionGroup contextGroup, String categary, String path, HAPElement ele) {
 //		setDescendant(contextGroup.getContext(categary), path, ele);
 		setDescendant(contextGroup, new HAPReferenceElement(categary, path), ele);
 	}
 
-	public static void setDescendant(HAPStructureValueDefinitionFlat context, String path, HAPElement ele) {
+	public static void setDescendant(HAPValueStructureDefinitionFlat context, String path, HAPElement ele) {
 		setDescendant(context, new HAPReferenceElement((String)null, path), ele);
 	}
 	
@@ -130,8 +130,8 @@ public class HAPUtilityContext {
 	
 	//context root name can be like a.b.c and a.b.d
 	//these two root name can be consolidated to one root name with a and child of b.c and b.d
-	public static HAPStructureValueDefinitionFlat consolidateContextRoot(HAPStructureValueDefinitionFlat context) {
-		HAPStructureValueDefinitionFlat out = new HAPStructureValueDefinitionFlat();
+	public static HAPValueStructureDefinitionFlat consolidateContextRoot(HAPValueStructureDefinitionFlat context) {
+		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		
 		for(String rootName : context.getRootNames()) {
 			HAPElement def = context.getRoot(rootName).getDefinition();
@@ -142,27 +142,27 @@ public class HAPUtilityContext {
 	
 	public static String getContextGroupInheritMode(HAPInfo info) {  
 		String out = HAPConstant.INHERITMODE_CHILD;
-		if("false".equals(info.getValue(HAPStructureValueDefinitionGroup.INFO_INHERIT)))  out = HAPConstant.INHERITMODE_NONE;
+		if("false".equals(info.getValue(HAPValueStructureDefinitionGroup.INFO_INHERIT)))  out = HAPConstant.INHERITMODE_NONE;
 		return out;				
 	}
  
-	public static void setContextGroupInheritModeNone(HAPInfo info) {		info.setValue(HAPStructureValueDefinitionGroup.INFO_INHERIT, "false");	}
-	public static void setContextGroupInheritModeChild(HAPInfo info) {		info.setValue(HAPStructureValueDefinitionGroup.INFO_INHERIT, "true");	}
+	public static void setContextGroupInheritModeNone(HAPInfo info) {		info.setValue(HAPValueStructureDefinitionGroup.INFO_INHERIT, "false");	}
+	public static void setContextGroupInheritModeChild(HAPInfo info) {		info.setValue(HAPValueStructureDefinitionGroup.INFO_INHERIT, "true");	}
 	
 	public static boolean getContextGroupPopupMode(HAPInfo info) {  
 		boolean out = true;
-		if("false".equals(info.getValue(HAPStructureValueDefinitionGroup.INFO_POPUP)))  out = false;
+		if("false".equals(info.getValue(HAPValueStructureDefinitionGroup.INFO_POPUP)))  out = false;
 		return out;				
 	} 
  
 	public static boolean getContextGroupEscalateMode(HAPInfo info) {  
 		boolean out = false;
-		if("true".equals(info.getValue(HAPStructureValueDefinitionGroup.INFO_ESCALATE)))  out = true;
+		if("true".equals(info.getValue(HAPValueStructureDefinitionGroup.INFO_ESCALATE)))  out = true;
 		return out;				
 	} 
 	
-	public static HAPStructureValueDefinitionGroup buildContextGroupFromContext(HAPStructureValueDefinitionFlat context) {
-		HAPStructureValueDefinitionGroup out = new HAPStructureValueDefinitionGroup();
+	public static HAPValueStructureDefinitionGroup buildContextGroupFromContext(HAPValueStructureDefinitionFlat context) {
+		HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
 		for(String rootName : context.getRootNames()) {
 			HAPRoot root = context.getRoot(rootName);
 			HAPIdContextDefinitionRoot rootId = new HAPIdContextDefinitionRoot(rootName);
@@ -171,7 +171,7 @@ public class HAPUtilityContext {
 		return out;
 	}
 
-	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInContext(HAPStructureValueExecutable context) {
+	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInContext(HAPValueStructureExecutable context) {
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
 		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesInStructure(context.getContext());
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {
@@ -189,19 +189,19 @@ public class HAPUtilityContext {
 	}
 	
 	//build interited node from parent
-	public static HAPRoot createRelativeContextDefinitionRoot(HAPStructureValueDefinitionGroup parentContextGroup, String contextCategary, String refPath, Set<String> excludedInfo) {
+	public static HAPRoot createRelativeContextDefinitionRoot(HAPValueStructureDefinitionGroup parentContextGroup, String contextCategary, String refPath, Set<String> excludedInfo) {
 		return createRootWithRelativeElement(parentContextGroup.getElement(contextCategary, refPath), contextCategary, refPath, excludedInfo);
 	}
 
-	public static HAPInfoReferenceResolve resolveReferencedContextElement(HAPReferenceElement contextPath, HAPStructureValueDefinition parentContext){
+	public static HAPInfoReferenceResolve resolveReferencedContextElement(HAPReferenceElement contextPath, HAPValueStructureDefinition parentContext){
 		if(parentContext==null)   return null;
 		HAPInfoReferenceResolve out = null;
 		String contextType = parentContext.getType();
 		if(contextType.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-			out = analyzeElementReference(contextPath, (HAPStructureValueDefinitionGroup)parentContext, null, null);
+			out = analyzeElementReference(contextPath, (HAPValueStructureDefinitionGroup)parentContext, null, null);
 		}
 		else {
-			out = ((HAPStructureValueDefinitionFlat)parentContext).discoverChild(contextPath.getRootReference().getName(), contextPath.getSubPath());
+			out = ((HAPValueStructureDefinitionFlat)parentContext).discoverChild(contextPath.getRootReference().getName(), contextPath.getSubPath());
 			//process remaining path
 			out = processContextElementRefResolve(out);
 		}
@@ -209,7 +209,7 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
-	public static HAPStructureValueDefinition hardMerge(HAPStructureValueDefinition child, HAPStructureValueDefinition parent) {
+	public static HAPValueStructureDefinition hardMerge(HAPValueStructureDefinition child, HAPValueStructureDefinition parent) {
 		if(child==null) return parent.cloneStructure();
 		if(parent==null)  return child.cloneStructure();
 		
@@ -217,15 +217,15 @@ public class HAPUtilityContext {
 		String type2 = parent.getType();
 		if(!type1.equals(type2))  throw new RuntimeException();
 		
-		HAPStructureValueDefinition out = null;
+		HAPValueStructureDefinition out = null;
 		out = child.cloneStructure();
 		out.hardMergeWith(parent);
 		return out;
 	}
 
 	
-	public static HAPStructureValueDefinitionGroup hardMerge(HAPStructureValueDefinitionGroup child, HAPStructureValueDefinitionGroup parent) {
-		HAPStructureValueDefinitionGroup out = null;
+	public static HAPValueStructureDefinitionGroup hardMerge(HAPValueStructureDefinitionGroup child, HAPValueStructureDefinitionGroup parent) {
+		HAPValueStructureDefinitionGroup out = null;
 		if(child==null) out = parent.cloneContextGroup();
 		else {
 			out = child.cloneContextGroup();

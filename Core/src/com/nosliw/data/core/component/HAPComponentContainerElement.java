@@ -22,7 +22,7 @@ import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public abstract class HAPComponentContainerElement extends HAPSerializableImp implements HAPComponent{
 
@@ -45,7 +45,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	private HAPComponent m_componentEntity;
 	
 	//calculate out
-	private HAPStructureValueDefinition m_contextStructure;
+	private HAPValueStructureDefinition m_contextStructure;
 	
 	protected HAPComponentContainerElement() {}
 	
@@ -63,7 +63,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 	
 	@Override
-	public HAPStructureValueDefinition getValueStructure() {	return this.m_contextStructure;	}
+	public HAPValueStructureDefinition getValueStructure() {	return this.m_contextStructure;	}
 
 	public HAPResourceDefinitionContainer getResourceContainer() {   return this.m_componentContainer;    }
 	public void setResourceContainer(HAPResourceDefinitionContainer container) {   this.m_componentContainer = container;     }
@@ -182,7 +182,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 
 	@Override
-	public void setValueContext(HAPStructureValueDefinition context) {
+	public void setValueContext(HAPValueStructureDefinition context) {
 		// TODO Auto-generated method stub
 		
 	}

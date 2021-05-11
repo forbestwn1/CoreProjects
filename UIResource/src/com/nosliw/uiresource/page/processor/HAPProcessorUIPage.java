@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
@@ -17,8 +17,8 @@ public class HAPProcessorUIPage {
 	public static HAPExecutableUIUnitPage processUIResource(
 			HAPDefinitionUIPage uiPageDef,
 			String id,
-			HAPStructureValueDefinitionGroup externalContext,
-			HAPStructureValueDefinitionGroup parentContext,
+			HAPValueStructureDefinitionGroup externalContext,
+			HAPValueStructureDefinitionGroup parentContext,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,

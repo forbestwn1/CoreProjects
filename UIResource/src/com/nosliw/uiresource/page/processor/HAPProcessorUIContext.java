@@ -17,8 +17,8 @@ import com.nosliw.data.core.structure.HAPProcessorContext;
 import com.nosliw.data.core.structure.HAPProcessorContextRelative;
 import com.nosliw.data.core.structure.HAPProcessorEscalate;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
-import com.nosliw.data.core.structure.value.HAPStructureValueExecutable;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -52,12 +52,12 @@ public class HAPProcessorUIContext {
 		}
 	}
 	
-	public static void process(HAPExecutableUIUnit uiExe, HAPStructureValueDefinitionGroup parentContext, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+	public static void process(HAPExecutableUIUnit uiExe, HAPValueStructureDefinitionGroup parentContext, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		HAPExecutableUIBody body = uiExe.getBody();
 		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
 
 		HAPConfigureProcessorStructure privateConfigure = contextProcessorConfig.cloneConfigure();
-		privateConfigure.parentCategary = HAPStructureValueDefinitionGroup.getAllCategaries();
+		privateConfigure.parentCategary = HAPValueStructureDefinitionGroup.getAllCategaries();
 
 		//merge with parent
 		mergeContext(uiExe, parentContext, contextProcessorConfig, uiTagMan, runtimeEnv);		
@@ -82,8 +82,8 @@ public class HAPProcessorUIContext {
 	}
 	
 	//process context information
-	private static void mergeContext(HAPExecutableUIUnit uiExe, HAPStructureValueDefinitionGroup parentContext, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
-		HAPStructureValueDefinitionGroup contextDef = uiExe.getUIUnitDefinition().getContextNotFlat();
+	private static void mergeContext(HAPExecutableUIUnit uiExe, HAPValueStructureDefinitionGroup parentContext, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+		HAPValueStructureDefinitionGroup contextDef = uiExe.getUIUnitDefinition().getContextNotFlat();
 		if(uiExe.getType().equals(HAPConstantShared.UIRESOURCE_TYPE_TAG)) {
 			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
 			//for custom tag, build context for tag first : merge parent context with context definition in tag definition first
@@ -92,7 +92,7 @@ public class HAPProcessorUIContext {
 		}
 		
 		//merge with context defined in tag unit
-		HAPStructureValueDefinitionGroup extContextGroup = HAPProcessorContext.processStatic(contextDef, HAPContainerStructure.createDefault(parentContext), uiExe.getUIUnitDefinition().getAttachmentContainer(), null, contextProcessorConfig, runtimeEnv);
+		HAPValueStructureDefinitionGroup extContextGroup = HAPProcessorContext.processStatic(contextDef, HAPContainerStructure.createDefault(parentContext), uiExe.getUIUnitDefinition().getAttachmentContainer(), null, contextProcessorConfig, runtimeEnv);
 		uiExe.getBody().setContext(extContextGroup);
 
 		if(uiExe.getType().equals(HAPConstantShared.UIRESOURCE_TYPE_TAG)) {
@@ -116,7 +116,7 @@ public class HAPProcessorUIContext {
 		}
 	}
 	
-	private static void processRelativeElement(HAPExecutableUIUnit uiExe, HAPStructureValueDefinitionGroup parentContext, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+	private static void processRelativeElement(HAPExecutableUIUnit uiExe, HAPValueStructureDefinitionGroup parentContext, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		if(uiExe.getType().equals(HAPConstantShared.UIRESOURCE_TYPE_TAG)) {
 			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
 
@@ -152,7 +152,7 @@ public class HAPProcessorUIContext {
 		}
 		
 		//build flat context
-		HAPStructureValueExecutable flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(uiExe.getBody().getContext());
+		HAPValueStructureExecutable flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(uiExe.getBody().getContext());
 		uiExe.getBody().setFlatContext(flatContext);
 
 		//child tag

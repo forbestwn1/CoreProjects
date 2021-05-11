@@ -5,6 +5,10 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
@@ -13,10 +17,6 @@ import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPContainerStructure;
-import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPDefinitionWrapperTask;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
 
 public class HAPManagerProcess {
 	

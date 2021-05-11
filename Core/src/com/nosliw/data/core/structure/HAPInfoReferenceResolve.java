@@ -10,10 +10,10 @@ public class HAPInfoReferenceResolve{
 	public HAPComplexPath path;
 
 	//real solved
-	HAPInfoDesendantResolve realSolved;
+	public HAPInfoDesendantResolve realSolved;
 	
 	//sold solved
-	HAPInfoDesendantResolve realSolidSolved;
+	public HAPInfoDesendantResolve realSolidSolved;
 	
 	//final referred element (maybe logic element which embeded in real element)
 	public HAPElement resolvedElement;

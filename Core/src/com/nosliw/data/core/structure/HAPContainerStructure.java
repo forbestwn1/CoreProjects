@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public class HAPContainerStructure extends HAPSerializableImp{
 
@@ -28,7 +28,7 @@ public class HAPContainerStructure extends HAPSerializableImp{
 		this.m_structureNames = new ArrayList<String>();
 	}
 	
-	static public HAPContainerStructure createDefault(HAPStructureValueDefinition parent) {
+	static public HAPContainerStructure createDefault(HAPValueStructureDefinition parent) {
 		HAPContainerStructure out = new HAPContainerStructure();
 		if(parent!=null)	out.addStructure(null, parent);
 		return out;
@@ -72,7 +72,7 @@ public class HAPContainerStructure extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		JSONObject elesJsonObj = jsonObj.getJSONObject(STRUCTURE);
 		for(Object key : elesJsonObj.keySet()) {
-			HAPStructureValueDefinition ele = HAPParserStructure.parseValueStructureDefinition(elesJsonObj.getJSONObject((String)key));
+			HAPValueStructureDefinition ele = HAPParserStructure.parseValueStructureDefinition(elesJsonObj.getJSONObject((String)key));
 			this.addStructure((String)key, ele);
 		}
 		return true;  

@@ -14,6 +14,9 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPExecutableTask;
+import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -23,10 +26,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.data.core.structure.HAPUtilityContextScript;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableTask;
-import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 @HAPEntityWithAttribute
 public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecutableTask{
@@ -65,7 +65,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	private String m_startActivityId;
 	
 	//input variables
-	private HAPStructureValueDefinitionGroup m_context;  
+	private HAPValueStructureDefinitionGroup m_context;  
 	
 	//all possible result
 	private Map<String, HAPExecutableDataAssociation> m_results;
@@ -113,8 +113,8 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	public HAPExecutableDataAssociation getResult(String result) {  return this.m_results.get(result);   }
 	public Set<String> getResultNames(){   return this.m_results.keySet();  }
 	
-	public HAPStructureValueDefinitionGroup getContext() {   return this.m_context;  }
-	public void setContext(HAPStructureValueDefinitionGroup context) {   this.m_context = context;  }
+	public HAPValueStructureDefinitionGroup getContext() {   return this.m_context;  }
+	public void setContext(HAPValueStructureDefinitionGroup context) {   this.m_context = context;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

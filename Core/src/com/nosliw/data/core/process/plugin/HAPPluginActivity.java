@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.process.HAPContextProcessor;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPExecutableActivity;
@@ -14,8 +15,7 @@ import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 //each type of activity should provide a plugin which contains information:
 //   how to parse activity definition
@@ -38,7 +38,7 @@ public interface HAPPluginActivity {
 			String id,
 			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPStructureValueDefinitionGroup context,
+			HAPValueStructureDefinitionGroup context,
 			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,

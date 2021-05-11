@@ -11,9 +11,9 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueExecutable;
+import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
 
 //entity that can is runnable within runtime environment
 @HAPEntityWithAttribute(baseName="EXPRESSIONGROUP")
@@ -27,10 +27,10 @@ public interface HAPExecutableExpressionGroup extends HAPSerializable, HAPExecut
 
 	String getId();
 	
-	HAPStructureValueDefinition getContextStructure();
-	void setContextStructure(HAPStructureValueDefinition contextStructure);
+	HAPValueStructureDefinition getContextStructure();
+	void setContextStructure(HAPValueStructureDefinition contextStructure);
 
-	HAPStructureValueExecutable getContextFlat();
+	HAPValueStructureExecutable getContextFlat();
 	
 	HAPContainerVariableCriteriaInfo getVarsInfo();
 

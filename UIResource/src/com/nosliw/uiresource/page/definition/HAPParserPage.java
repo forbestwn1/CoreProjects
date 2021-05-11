@@ -32,7 +32,7 @@ import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.data.core.script.expression.imp.literate.HAPUtilityScriptLiterate;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.structure.HAPParserContext;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 
 /*
@@ -298,7 +298,7 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		
 		for(Element childEle : childEles){
 			try {
-				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), (HAPStructureValueDefinitionGroup)resourceUnit.getValueStructure());
+				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), (HAPValueStructureDefinitionGroup)resourceUnit.getValueStructure());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();

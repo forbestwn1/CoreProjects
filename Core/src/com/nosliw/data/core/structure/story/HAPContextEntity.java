@@ -11,10 +11,10 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 @HAPEntityWithAttribute
-public class HAPContextEntity  extends HAPStructureValueDefinitionFlat implements HAPEntityInfo{
+public class HAPContextEntity  extends HAPValueStructureDefinitionFlat implements HAPEntityInfo{
 
 	private HAPEntityInfoWritable m_entityInfo;
 	

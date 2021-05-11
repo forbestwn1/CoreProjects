@@ -9,8 +9,8 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPContextProcessExpressionScript implements HAPWithValueStructure, HAPWithConstantDefinition{
 
@@ -21,7 +21,7 @@ public class HAPContextProcessExpressionScript implements HAPWithValueStructure,
 	private Map<String, HAPDefinitionConstant> m_constantsDefinition;
 
 	//context for expression
-	private HAPStructureValueDefinitionFlat m_context;
+	private HAPValueStructureDefinitionFlat m_context;
 	
 	public HAPContextProcessExpressionScript() {
 		this.m_constantsDefinition = new LinkedHashMap<String, HAPDefinitionConstant>();
@@ -40,10 +40,10 @@ public class HAPContextProcessExpressionScript implements HAPWithValueStructure,
 	public void addConstantDefinition(HAPDefinitionConstant constantDef) {  this.m_constantsDefinition.put(constantDef.getId(), constantDef);  }
 
 	@Override
-	public HAPStructureValueDefinition getValueStructure() {   return this.m_context;  }
+	public HAPValueStructureDefinition getValueStructure() {   return this.m_context;  }
 
 	@Override
-	public void setValueContext(HAPStructureValueDefinition context) {   this.m_context = (HAPStructureValueDefinitionFlat)context;  }
+	public void setValueContext(HAPValueStructureDefinition context) {   this.m_context = (HAPValueStructureDefinitionFlat)context;  }
 
 	@Override
 	public void cloneToWithValueStructure(HAPWithValueStructure withDataContext) {   withDataContext.setValueStructure(m_context);  }  

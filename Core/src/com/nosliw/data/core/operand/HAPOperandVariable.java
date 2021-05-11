@@ -10,14 +10,19 @@ import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
 
 public class HAPOperandVariable extends HAPOperandImp{
  
 	@HAPAttribute
 	public final static String VARIABLENAME = "variableName";
 	
+	@HAPAttribute
+	public final static String VARIABLEID = "variableId";
+	
 	protected String m_variableName;
+	
+	protected String m_variableId;
 	
 	private HAPOperandVariable(){}
 	
@@ -28,6 +33,9 @@ public class HAPOperandVariable extends HAPOperandImp{
 	
 	public String getVariableName(){  return this.m_variableName;  }
 	public void setVariableName(String name){   this.m_variableName = name;  }
+	
+	public String getVariableId(){  return this.m_variableId;  }
+	public void setVariableId(String id){   this.m_variableId = id;  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

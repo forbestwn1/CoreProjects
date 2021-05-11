@@ -10,14 +10,14 @@ import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorEscalate {
 
-	public static void process(HAPStructureValueDefinitionGroup contextGroup, Set<String> categarys, Map<String, String> cm, Set<String> inheritanceExcludedInfo) {
+	public static void process(HAPValueStructureDefinitionGroup contextGroup, Set<String> categarys, Map<String, String> cm, Set<String> inheritanceExcludedInfo) {
 		for(String categary : categarys) {
-			HAPStructureValueDefinitionFlat context = contextGroup.getFlat(categary);
+			HAPValueStructureDefinitionFlat context = contextGroup.getFlat(categary);
 
 			Map<String, String> contextMapping = new LinkedHashMap<String, String>();
 			contextMapping.putAll(cm);
@@ -32,7 +32,7 @@ public class HAPProcessorEscalate {
 	}
 	
 	//escalte context node to parent context group, only absolute variable
-	public static void process(HAPStructureValueDefinitionGroup sourceContextGroup, String sourceCategaryType, String contextEleName, String escalateTargetPath, Set<String> inheritanceExcludedInfo) {
+	public static void process(HAPValueStructureDefinitionGroup sourceContextGroup, String sourceCategaryType, String contextEleName, String escalateTargetPath, Set<String> inheritanceExcludedInfo) {
 		HAPRoot sourceRootNode = sourceContextGroup.getElement(sourceCategaryType, contextEleName);
 		if(sourceRootNode.isAbsolute()) {
 			HAPComplexPath complexPath = new HAPComplexPath(escalateTargetPath);
@@ -44,7 +44,7 @@ public class HAPProcessorEscalate {
 	}
 	
 	//out.left: true--escalate to existing root node    false--escalate to new root node
-	private static Pair<Boolean, HAPRoot> escalate(HAPRoot original, String categaryType, HAPStructureValueDefinitionGroup parentContextGroup, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
+	private static Pair<Boolean, HAPRoot> escalate(HAPRoot original, String categaryType, HAPValueStructureDefinitionGroup parentContextGroup, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
 		
 		Pair<Boolean, HAPRoot> out = null;
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.analyzeElementReference(new HAPReferenceElement(path.getFullName()), parentContextGroup, null, HAPConstant.RESOLVEPARENTMODE_FIRST);
@@ -54,7 +54,7 @@ public class HAPProcessorEscalate {
 		}
 		else {
 			//not find
-			HAPStructureValueDefinitionGroup grandParent = parentContextGroup.getParent();
+			HAPValueStructureDefinitionGroup grandParent = parentContextGroup.getParent();
 			boolean isEnd = false;
 			if(grandParent==null)   isEnd = true;
 			else  isEnd = !HAPUtilityContext.getContextGroupPopupMode(parentContextGroup.getInfo());

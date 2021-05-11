@@ -1,8 +1,8 @@
 package com.nosliw.uiresource.page.execute;
 
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
-public class HAPContextGroupInUITag extends HAPStructureValueDefinitionGroup{
+public class HAPContextGroupInUITag extends HAPValueStructureDefinitionGroup{
 
 	private HAPExecutableUIUnitTag m_uiTag; 
 	
@@ -10,7 +10,7 @@ public class HAPContextGroupInUITag extends HAPStructureValueDefinitionGroup{
 		this.m_uiTag = uiTag;
 	}
 
-	public HAPContextGroupInUITag(HAPExecutableUIUnitTag uiTag, HAPStructureValueDefinitionGroup contextGroup) {
+	public HAPContextGroupInUITag(HAPExecutableUIUnitTag uiTag, HAPValueStructureDefinitionGroup contextGroup) {
 		this.m_uiTag = uiTag;
 		contextGroup.cloneTo(this);
 	}
@@ -20,12 +20,12 @@ public class HAPContextGroupInUITag extends HAPStructureValueDefinitionGroup{
 	}
 	
 	@Override
-	public HAPStructureValueDefinitionGroup getParent() {		
+	public HAPValueStructureDefinitionGroup getParent() {		
 		return this.m_uiTag.getParent().getBody().getContext();	
 	}
 	
 	@Override
-	public void setParent(HAPStructureValueDefinitionGroup parent) {  throw new RuntimeException();  }
+	public void setParent(HAPValueStructureDefinitionGroup parent) {  throw new RuntimeException();  }
 
 	
 }

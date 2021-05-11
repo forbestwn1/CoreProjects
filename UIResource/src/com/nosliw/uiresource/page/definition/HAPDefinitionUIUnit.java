@@ -14,7 +14,7 @@ import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.structure.HAPElementLeafValue;
 import com.nosliw.data.core.structure.HAPRoot;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -81,7 +81,7 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 	}
 	
 	private void initContext() {
-		HAPStructureValueDefinitionGroup contextGroup = new HAPStructureValueDefinitionGroup();
+		HAPValueStructureDefinitionGroup contextGroup = new HAPValueStructureDefinitionGroup();
 		//ui error context element
 		HAPRoot uiValidationErrorRoot = new HAPRoot(new HAPElementLeafValue());
 		uiValidationErrorRoot.setDefaultValue(new JSONObject());

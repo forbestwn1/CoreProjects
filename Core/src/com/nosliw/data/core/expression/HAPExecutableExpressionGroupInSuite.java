@@ -10,6 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
@@ -21,22 +22,33 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueExecutable;
+import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
 
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
 
 	private String m_id;
 	
-	private HAPStructureValueDefinition m_contextStructure;
+	private HAPValueStructureDefinition m_contextStructure;
 	
-	private HAPStructureValueExecutable m_flatContext;
+	private HAPValueStructureExecutable m_flatContext;
 	
 	private HAPContainerVariableCriteriaInfo m_localVarsInfo;
 
 	private Map<String, HAPExecutableExpression> m_expressionItem;
 	 
+	
+	//temp info
+	private Map<String, HAPData> m_dataConstants;
+	public void setDataConstants(Map<String, HAPData> dataConstants) {   this.m_dataConstants = dataConstants;    }
+	public Map<String, HAPData> getDataConstants(){   return this.m_dataConstants;     }
+	
+	private HAPContainerVariableCriteriaInfo m_variableInfo;
+	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.m_variableInfo = varInfo;    }
+	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_variableInfo;    }
+	
+	
 	public HAPExecutableExpressionGroupInSuite(String id) {
 		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpression>();
 		this.m_id = id;
@@ -58,16 +70,16 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public void setId(String id) {   this.m_id = id;    }
 	
 	@Override
-	public HAPStructureValueDefinition getContextStructure() {   return this.m_contextStructure;  }
+	public HAPValueStructureDefinition getContextStructure() {   return this.m_contextStructure;  }
 
 	@Override
-	public void setContextStructure(HAPStructureValueDefinition contextStructure) {   
+	public void setContextStructure(HAPValueStructureDefinition contextStructure) {   
 		this.m_contextStructure = contextStructure;
 		this.m_flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(m_contextStructure);
 	}
 	
 	@Override
-	public HAPStructureValueExecutable getContextFlat() {    return this.m_flatContext;    }
+	public HAPValueStructureExecutable getContextFlat() {    return this.m_flatContext;    }
 
 	@Override
 	public HAPContainerVariableCriteriaInfo getVarsInfo() {  return this.m_localVarsInfo;  }

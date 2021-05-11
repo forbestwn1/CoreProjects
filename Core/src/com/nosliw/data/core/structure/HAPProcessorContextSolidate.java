@@ -4,18 +4,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorContextSolidate {
 
-	static public HAPStructureValueDefinitionGroup process(
-			HAPStructureValueDefinitionGroup originalContextGroup,
+	static public HAPValueStructureDefinitionGroup process(
+			HAPValueStructureDefinitionGroup originalContextGroup,
 			HAPRuntimeEnvironment runtimeEnv){
 		//find all constants
 		Map<String, Object> constantsData = buildConstants(originalContextGroup);
 
-		HAPStructureValueDefinitionGroup out = new HAPStructureValueDefinitionGroup(originalContextGroup.getInfo());
-		for(String categary : HAPStructureValueDefinitionGroup.getAllCategaries()) {
+		HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup(originalContextGroup.getInfo());
+		for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()) {
 			Map<String, HAPRoot> contextDefRoots = originalContextGroup.getRootsByCategary(categary);
 			for(String name : contextDefRoots.keySet()) {
 				HAPRoot contextDefRoot = contextDefRoots.get(name);
@@ -32,9 +32,9 @@ public class HAPProcessorContextSolidate {
 		return out;
 	}
 
-	private static Map<String, Object> buildConstants(HAPStructureValueDefinitionGroup originalContextGroup){
+	private static Map<String, Object> buildConstants(HAPValueStructureDefinitionGroup originalContextGroup){
 		Map<String, Object> constantsData = new LinkedHashMap<String, Object>();
-		String[] categarys = HAPStructureValueDefinitionGroup.getAllCategaries(); 
+		String[] categarys = HAPValueStructureDefinitionGroup.getAllCategaries(); 
 		for(int i=categarys.length-1; i>=0; i--) {
 			Map<String, HAPRoot> nodes = originalContextGroup.getRootsByCategary(categarys[i]);
 			for(String name : nodes.keySet()) {

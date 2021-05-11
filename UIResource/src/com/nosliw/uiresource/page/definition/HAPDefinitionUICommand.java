@@ -11,7 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.structure.HAPParserContext;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionUICommand  extends HAPEntityInfoWritableImp{
@@ -22,20 +22,20 @@ public class HAPDefinitionUICommand  extends HAPEntityInfoWritableImp{
 	public static String RESULT = "result";
 
 	//context
-	private HAPStructureValueDefinitionFlat m_parms;
+	private HAPValueStructureDefinitionFlat m_parms;
 	
-	private Map<String, HAPStructureValueDefinitionFlat> m_results;
+	private Map<String, HAPValueStructureDefinitionFlat> m_results;
 	
 	public HAPDefinitionUICommand() {
-		this.m_parms = new HAPStructureValueDefinitionFlat();
-		this.m_results = new LinkedHashMap<String, HAPStructureValueDefinitionFlat>();
+		this.m_parms = new HAPValueStructureDefinitionFlat();
+		this.m_results = new LinkedHashMap<String, HAPValueStructureDefinitionFlat>();
 	}
 
-	public HAPStructureValueDefinitionFlat getParms() {  return this.m_parms;   }
-	public void setParms(HAPStructureValueDefinitionFlat parms) {   this.m_parms = parms;  }
+	public HAPValueStructureDefinitionFlat getParms() {  return this.m_parms;   }
+	public void setParms(HAPValueStructureDefinitionFlat parms) {   this.m_parms = parms;  }
 	
-	public Map<String, HAPStructureValueDefinitionFlat> getResults(){   return this.m_results;   }
-	public void addResult(String name, HAPStructureValueDefinitionFlat result) {   this.m_results.put(name, result);   }
+	public Map<String, HAPValueStructureDefinitionFlat> getResults(){   return this.m_results;   }
+	public void addResult(String name, HAPValueStructureDefinitionFlat result) {   this.m_results.put(name, result);   }
 	
 	public void cloneBasicTo(HAPDefinitionUICommand command) {
 		this.cloneToEntityInfo(command);
@@ -58,7 +58,7 @@ public class HAPDefinitionUICommand  extends HAPEntityInfoWritableImp{
 		JSONObject resultJson = jsonObj.optJSONObject(RESULT);
 		if(resultJson!=null) {
 			for(Object key : resultJson.keySet()) {
-				HAPStructureValueDefinitionFlat resultEle = new HAPStructureValueDefinitionFlat();
+				HAPValueStructureDefinitionFlat resultEle = new HAPValueStructureDefinitionFlat();
 				HAPParserContext.parseContext(jsonObj.optJSONObject((String)key), resultEle);
 				this.m_results.put((String)key, resultEle);
 			}

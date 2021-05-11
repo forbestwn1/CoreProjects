@@ -4,6 +4,8 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.dataable.HAPManagerDataable;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.expression.HAPManagerExpression;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
@@ -15,16 +17,14 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPContainerStructure;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorCronJob {
 
 	public static HAPExecutableCronJob process(
 			HAPDefinitionCronJob cronJobDefinition,
 			String id,
-			HAPStructureValueDefinitionGroup parentContext, 
+			HAPValueStructureDefinitionGroup parentContext, 
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPManagerProcess processMan,
 			HAPDataTypeHelper dataTypeHelper, 

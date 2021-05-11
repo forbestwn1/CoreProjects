@@ -4,9 +4,9 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
-import com.nosliw.data.core.structure.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 
 public class HAPDebugActivityDefinition extends HAPDefinitionActivityNormal{
 

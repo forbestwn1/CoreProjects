@@ -12,6 +12,10 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
@@ -25,13 +29,9 @@ import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPProcessorContext;
 import com.nosliw.data.core.structure.HAPRequirementContextProcessor;
-import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.structure.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
@@ -59,7 +59,7 @@ public class HAPProcessMiniAppEntry {
 		Map<String, HAPDefinitionServiceProvider> entryServiceProviders = HAPUtilityServiceUse.buildServiceProvider(entryDefinition.getAttachmentContainer(), null, contextProcessRequirement.serviceDefinitionManager); 
 
 		//context
-		out.setContext((HAPStructureValueDefinitionGroup)HAPProcessorContext.process(entryDefinition.getValueStructure(), HAPContainerStructure.createDefault(miniAppDef.getValueStructure()), contextProcessConfg, runtimeEnv));
+		out.setContext((HAPValueStructureDefinitionGroup)HAPProcessorContext.process(entryDefinition.getValueStructure(), HAPContainerStructure.createDefault(miniAppDef.getValueStructure()), contextProcessConfg, runtimeEnv));
 
 		//process process suite
 		HAPResourceDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(minAppEntryDef, runtimeEnv.getProcessManager().getPluginManager()).cloneProcessSuiteDefinition(); 
@@ -70,14 +70,14 @@ public class HAPProcessMiniAppEntry {
 		//data definition
 		Map<String, HAPDefinitionAppData> dataDefs = miniAppDef.getApplicationData();
 		for(String dataDefName : dataDefs.keySet()) {
-			HAPStructureValueDefinitionFlat processedContext = (HAPStructureValueDefinitionFlat)HAPProcessorContext.process(dataDefs.get(dataDefName), HAPContainerStructure.createDefault(miniAppDef.getValueStructure()), contextProcessConfg, runtimeEnv);
+			HAPValueStructureDefinitionFlat processedContext = (HAPValueStructureDefinitionFlat)HAPProcessorContext.process(dataDefs.get(dataDefName), HAPContainerStructure.createDefault(miniAppDef.getValueStructure()), contextProcessConfg, runtimeEnv);
 			HAPDefinitionAppData processedAppData = dataDefs.get(dataDefName).cloneAppDataDefinition();
 			processedContext.toContext(processedAppData);
 			out.addApplicationData(dataDefName, processedAppData);
 		}
 		
 		//prepare extra context
-		Map<String, HAPStructureValueDefinition> extraContext = out.getExtraContext();
+		Map<String, HAPValueStructureDefinition> extraContext = out.getExtraContext();
 		
 		//module
 		for(HAPDefinitionAppModule moduleDef : entryDefinition.getModules()) {
@@ -94,7 +94,7 @@ public class HAPProcessMiniAppEntry {
 			HAPDefinitionAppModule module,
 			HAPExecutableAppEntry entryExe,
 			HAPContainerAttachment parentAttachment,
-			Map<String, HAPStructureValueDefinition> extraContexts,
+			Map<String, HAPValueStructureDefinition> extraContexts,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,

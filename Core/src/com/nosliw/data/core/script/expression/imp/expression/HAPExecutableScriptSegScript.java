@@ -21,7 +21,7 @@ import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
-import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
 
 public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp implements HAPEntityWithName{
 

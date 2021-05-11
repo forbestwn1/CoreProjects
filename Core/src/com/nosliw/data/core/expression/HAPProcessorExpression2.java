@@ -16,6 +16,10 @@ import com.nosliw.data.core.component.HAPUtilityComponentConstant;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
+import com.nosliw.data.core.dataassociation.mapping.HAPUtilityDataAssociation;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -23,13 +27,9 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.structure.dataassociation.mapping.HAPUtilityDataAssociation;
-import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPProcessorExpression2 {
 
@@ -102,7 +102,7 @@ public class HAPProcessorExpression2 {
 		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(exeId);
 
 		//context
-		HAPStructureValueDefinition valueStructure =  expressionGroupDef.getValueStructure();
+		HAPValueStructureDefinition valueStructure =  expressionGroupDef.getValueStructure();
 		out.setContextStructure(valueStructure);
 
 		//constant
@@ -231,7 +231,7 @@ public class HAPProcessorExpression2 {
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-							HAPStructureValueDefinitionFlat da = mappingDa.getAssociation();
+							HAPValueStructureDefinitionFlat da = mappingDa.getAssociation();
 							//refered var -- parent var
 							Map<String, String> mappingPath = new LinkedHashMap<String, String>();
 							for(String rootName : da.getRootNames()) {
@@ -292,8 +292,8 @@ public class HAPProcessorExpression2 {
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-							HAPStructureValueDefinitionFlat da = mappingDa.getAssociation();
-							HAPStructureValueDefinitionFlat da1 = new HAPStructureValueDefinitionFlat();
+							HAPValueStructureDefinitionFlat da = mappingDa.getAssociation();
+							HAPValueStructureDefinitionFlat da1 = new HAPValueStructureDefinitionFlat();
 							for(String rootName : da.getRootNames()) {
 								da1.addRoot(nameUpdate.getUpdatedName(rootName), da.getRoot(rootName));
 							}
@@ -329,7 +329,7 @@ public class HAPProcessorExpression2 {
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-							HAPStructureValueDefinitionFlat da = mappingDa.getAssociation();
+							HAPValueStructureDefinitionFlat da = mappingDa.getAssociation();
 							for(String rootName : da.getRootNames()) {
 								Map<String, String> path = HAPUtilityDataAssociation.buildSimplifiedRelativePathMapping(da.getRoot(rootName), rootName, expressionExe.getContextStructure());
 								nameMapping.putAll(path);

@@ -17,15 +17,15 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.imp.literate.HAPProcessorScriptLiterate;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPProcessorScript {
 
 	public static HAPExecutableScriptGroup processSimpleScript(
 			String script,
 			String scriptType, 
-			HAPStructureValueDefinitionFlat context, 
+			HAPValueStructureDefinitionFlat context, 
 			Map<String, Object> constants,
 			HAPManagerExpression expressionMan,
 			Map<String, String> configure, 
@@ -33,7 +33,7 @@ public class HAPProcessorScript {
 			HAPProcessTracker processTracker) {
 		HAPDefinitionScriptGroup group = new HAPDefinitionScriptGroupImp();
 		group.addEntityElement(new HAPDefinitionScriptEntity(HAPScript.newScript(script, scriptType)));
-		group.setValueStructure(context==null?new HAPStructureValueDefinitionFlat():context);
+		group.setValueStructure(context==null?new HAPValueStructureDefinitionFlat():context);
 		if(constants!=null) {
 			for(String name : constants.keySet()) {
 				group.addConstantDefinition(new HAPDefinitionConstant(name, constants.get(name)));
@@ -56,7 +56,7 @@ public class HAPProcessorScript {
 			String id,
 			HAPDefinitionScriptGroup scriptGroupDef, 
 			HAPContextProcessAttachmentReferenceExpression processContext,
-			HAPStructureValueDefinition extraContext,
+			HAPValueStructureDefinition extraContext,
 			HAPManagerExpression expressionMan, 
 			Map<String, String> configure, 
 			HAPRuntimeEnvironment runtimeEnv,
@@ -64,7 +64,7 @@ public class HAPProcessorScript {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 
 		//context
-		HAPStructureValueDefinition contextStructure =  scriptGroupDef.getValueStructure();
+		HAPValueStructureDefinition contextStructure =  scriptGroupDef.getValueStructure();
 		contextStructure = HAPUtilityContext.hardMerge(contextStructure, extraContext);
 		out.setContextStructure(contextStructure);
 

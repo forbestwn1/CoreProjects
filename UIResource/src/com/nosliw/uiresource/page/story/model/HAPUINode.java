@@ -20,7 +20,7 @@ import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUI;
 import com.nosliw.uiresource.page.story.element.HAPUIDataStructureInfo;
@@ -80,7 +80,7 @@ public class HAPUINode {
 	
 	public HAPUIDataInfo getDataInfo(String name) {
 		HAPUIDataInfo out = new HAPUIDataInfo();
-		HAPInfoReferenceResolve resolve = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(name), this.getStoryNode().getDataStructureInfo().getContext(), Arrays.asList(HAPStructureValueDefinitionGroup.getVisibleCategaries()).toArray(new String[0]), HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE).elementReferenceResolveMode);
+		HAPInfoReferenceResolve resolve = HAPUtilityContext.resolveElementReference(new HAPReferenceElement(name), this.getStoryNode().getDataStructureInfo().getContext(), Arrays.asList(HAPValueStructureDefinitionGroup.getVisibleCategaries()).toArray(new String[0]), HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE).elementReferenceResolveMode);
 		HAPElement resolvedNode = resolve.resolvedElement;
 		String nodeType = resolvedNode.getType();
 		if(nodeType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {

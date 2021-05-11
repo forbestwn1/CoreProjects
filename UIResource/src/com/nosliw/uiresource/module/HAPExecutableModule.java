@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -21,8 +22,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.structure.HAPUtilityContextScript;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 @HAPEntityWithAttribute
 public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -50,7 +50,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	private String m_id;
 
 	// hook up with real data during runtime
-	private HAPStructureValueDefinitionGroup m_context;
+	private HAPValueStructureDefinitionGroup m_context;
 
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_processes;
@@ -72,9 +72,9 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 
 	public HAPDefinitionModule getDefinition() {   return this.m_moduleDefinition;  }
 	
-	public HAPStructureValueDefinitionGroup getContext() {   return this.m_context;   }
+	public HAPValueStructureDefinitionGroup getContext() {   return this.m_context;   }
 
-	public void setContextGroup(HAPStructureValueDefinitionGroup contextGroup) { 	this.m_context = contextGroup;	}
+	public void setContextGroup(HAPValueStructureDefinitionGroup contextGroup) { 	this.m_context = contextGroup;	}
 	
 	public void addProcess(String name, HAPExecutableWrapperTask<HAPExecutableProcess> process) {		this.m_processes.put(name, process);	}
 

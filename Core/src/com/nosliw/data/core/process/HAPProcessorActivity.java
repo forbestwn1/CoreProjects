@@ -3,11 +3,11 @@ package com.nosliw.data.core.process;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public interface HAPProcessorActivity {
 
@@ -18,7 +18,7 @@ public interface HAPProcessorActivity {
 			String id,
 			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPStructureValueDefinitionGroup context,
+			HAPValueStructureDefinitionGroup context,
 			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,

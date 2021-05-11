@@ -4,16 +4,16 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorContextRule {
 
 	//process rule in data variable in context 
-	public static HAPStructureValueDefinitionGroup process(HAPStructureValueDefinitionGroup orgContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup orgContext, HAPRuntimeEnvironment runtimeEnv) {
 
 		for(String group : orgContext.getAllCategaries()) {
-			HAPStructureValueDefinitionFlat context = orgContext.getFlat(group);
+			HAPValueStructureDefinitionFlat context = orgContext.getFlat(group);
 			for(String eleName : context.getRootNames()) {
 				HAPUtilityContext.processContextRootElement(context.getRoot(eleName), eleName, new HAPProcessorContextDefinitionElement() {
 					@Override

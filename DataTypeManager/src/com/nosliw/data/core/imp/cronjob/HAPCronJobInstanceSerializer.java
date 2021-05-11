@@ -6,10 +6,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.cronjob.HAPExecutableCronJob;
 import com.nosliw.data.core.cronjob.HAPExecutablePollSchedule;
 import com.nosliw.data.core.cronjob.HAPManagerScheduleDefinition;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
 
 public class HAPCronJobInstanceSerializer {
 

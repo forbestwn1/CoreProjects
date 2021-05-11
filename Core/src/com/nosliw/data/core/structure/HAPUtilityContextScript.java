@@ -12,12 +12,12 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPUtilityContextScript {
 
-	public static HAPJsonTypeScript buildContextInitScript(HAPStructureValueDefinitionGroup context) {
+	public static HAPJsonTypeScript buildContextInitScript(HAPValueStructureDefinitionGroup context) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		//build init output object 
 		JSONObject output = HAPUtilityContextScript.buildDefaultJsonObject(context);
@@ -29,7 +29,7 @@ public class HAPUtilityContextScript {
 	}
 	
 	//build default value structure for context group
-	public static JSONObject buildDefaultJsonObject(HAPStructureValueDefinitionGroup contextGroup) {
+	public static JSONObject buildDefaultJsonObject(HAPValueStructureDefinitionGroup contextGroup) {
 		JSONObject out = new JSONObject();
 		for(String categary : contextGroup.getCategaries()) {
 			out.put(categary, buildDefaultJsonObject(contextGroup.getFlat(categary)));
@@ -37,7 +37,7 @@ public class HAPUtilityContextScript {
 		return out;
 	}
 	
-	public static JSONObject buildDefaultJsonObject(HAPStructureValueDefinitionFlat context) {
+	public static JSONObject buildDefaultJsonObject(HAPValueStructureDefinitionFlat context) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		for(String contextEleName : context.getRootNames()) {
 			Object value = context.getRoot(contextEleName).getDefaultValue();
@@ -49,7 +49,7 @@ public class HAPUtilityContextScript {
 	}
 
 	//build skeleton, it is used for data mapping operation
-	public static JSONObject buildSkeletonJsonObject(HAPStructureValueDefinitionFlat context, boolean isFlatRootName) {
+	public static JSONObject buildSkeletonJsonObject(HAPValueStructureDefinitionFlat context, boolean isFlatRootName) {
 		JSONObject output = new JSONObject();
 		for(String rootName : context.getRootNames()) {
 			if(HAPConstantShared.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(context.getRoot(rootName).getInfo()))) {

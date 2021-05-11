@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPProcessResultHandler;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
@@ -12,7 +13,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessEmbededRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteProcessRhino;
 import com.nosliw.data.core.structure.data.HAPContextData;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
 
 public class HAPRuntimeProcessRhinoImp implements HAPRuntimeProcess{
 

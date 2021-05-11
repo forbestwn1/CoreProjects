@@ -7,6 +7,8 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process.HAPBuilderResultContext;
 import com.nosliw.data.core.process.HAPContextProcessor;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
@@ -26,10 +28,8 @@ import com.nosliw.data.core.structure.HAPContainerStructure;
 import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 
@@ -39,7 +39,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 			String id, 
 			HAPContextProcessor processContext,
 			HAPExecutableProcess processExe,
-			HAPStructureValueDefinitionGroup processDataContext, 
+			HAPValueStructureDefinitionGroup processDataContext, 
 			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -54,7 +54,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, loopActivityDef, processDataContext, runtimeEnv);
 
 		//build data context for step process (context from process + element data)
-		HAPStructureValueDefinitionGroup stepDataContext = processDataContext.cloneContextGroup();
+		HAPValueStructureDefinitionGroup stepDataContext = processDataContext.cloneContextGroup();
 		
 		//find container data criteria 
 		HAPInfoReferenceResolve containerResolve = HAPUtilityContext.analyzeElementReference(new HAPReferenceElement(loopActivityDef.getContainerName()), processDataContext, null, null);
@@ -93,7 +93,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		@Override
-		public HAPStructureValueDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+		public HAPValueStructureDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPLoopActivityExecutable processActivity = (HAPLoopActivityExecutable)activity;
 			return this.m_processExe.getContext();
 		}

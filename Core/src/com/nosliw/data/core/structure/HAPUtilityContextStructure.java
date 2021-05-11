@@ -6,22 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPUtilityContextStructure {
 
-	public static HAPStructureValueDefinition hardMergeContextStructure(HAPStructureValueDefinition from, HAPStructureValueDefinition to) {
+	public static HAPValueStructureDefinition hardMergeContextStructure(HAPValueStructureDefinition from, HAPValueStructureDefinition to) {
 		if(to==null)  return from;
 		
-		HAPStructureValueDefinition fromModify = toSolidContextStructure(from, to.isFlat());
+		HAPValueStructureDefinition fromModify = toSolidContextStructure(from, to.isFlat());
 		if(to.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
-			((HAPStructureValueDefinitionFlat)to.cloneStructure()).hardMergeWith((HAPStructureValueDefinitionFlat)fromModify);
+			((HAPValueStructureDefinitionFlat)to.cloneStructure()).hardMergeWith((HAPValueStructureDefinitionFlat)fromModify);
 			return to;
 		}
 		else if(to.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-			((HAPStructureValueDefinitionGroup)to.cloneStructure()).hardMergeWith((HAPStructureValueDefinitionGroup)fromModify);
+			((HAPValueStructureDefinitionGroup)to.cloneStructure()).hardMergeWith((HAPValueStructureDefinitionGroup)fromModify);
 			return to;
 		}
 		else {
@@ -29,31 +29,31 @@ public class HAPUtilityContextStructure {
 		}
 	}
 	
-	public static HAPStructureValueDefinition toSolidContextStructure(HAPStructureValueDefinition context, boolean isFlat) {
+	public static HAPValueStructureDefinition toSolidContextStructure(HAPValueStructureDefinition context, boolean isFlat) {
 		if(context==null || context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY)) {
-			if(isFlat)  return new HAPStructureValueDefinitionFlat();
-			else return new HAPStructureValueDefinitionGroup();
+			if(isFlat)  return new HAPValueStructureDefinitionFlat();
+			else return new HAPValueStructureDefinitionGroup();
 		}
 		
 		if(context.isFlat()==isFlat)   return context;
 		else {
 			if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
-				HAPStructureValueDefinitionGroup out = new HAPStructureValueDefinitionGroup();
-				out.setFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPStructureValueDefinitionFlat)context);
+				HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
+				out.setFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPValueStructureDefinitionFlat)context);
 				return out;
 			}
 			else if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-				HAPStructureValueDefinitionFlat out = buildContextFromContextGroup((HAPStructureValueDefinitionGroup)context);
+				HAPValueStructureDefinitionFlat out = buildContextFromContextGroup((HAPValueStructureDefinitionGroup)context);
 				return out;
 			}
 		}
 		return null;
 	}
 	
-	public static HAPStructureValueDefinitionFlat buildContextFromContextGroup(HAPStructureValueDefinitionGroup context) {
-		HAPStructureValueDefinitionFlat out = new HAPStructureValueDefinitionFlat();
+	public static HAPValueStructureDefinitionFlat buildContextFromContextGroup(HAPValueStructureDefinitionGroup context) {
+		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		
-		List<String> categarys = Arrays.asList(HAPStructureValueDefinitionGroup.getAllCategariesWithPriority());
+		List<String> categarys = Arrays.asList(HAPValueStructureDefinitionGroup.getAllCategariesWithPriority());
 		Collections.reverse(categarys);
 		for(String categary : categarys) {
 			Map<String, HAPRoot> eles = context.getRootsByCategary(categary);

@@ -16,6 +16,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandConstant;
 import com.nosliw.data.core.operand.HAPOperandReference;
@@ -28,10 +30,8 @@ import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 @HAPEntityWithAttribute
 public class HAPExecutableExpression extends HAPExecutableImp{
@@ -114,7 +114,7 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 					String inputMappingType = inputMapping.getType();
 					if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-						HAPStructureValueDefinitionFlat da = mappingDa.getAssociation();
+						HAPValueStructureDefinitionFlat da = mappingDa.getAssociation();
 						da.updateReferenceName(nameUpdate);
 					}
 					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {

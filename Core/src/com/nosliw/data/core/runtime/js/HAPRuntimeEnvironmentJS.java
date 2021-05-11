@@ -40,8 +40,8 @@ import com.nosliw.data.core.service.resource.HAPParserServiceInterfaceResource;
 import com.nosliw.data.core.service.resource.HAPResourceDefinitionPluginServiceDefinition;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionPluginStory;
-import com.nosliw.data.core.structure.value.resource.HAPParserResourceDefinitionContext;
 import com.nosliw.data.core.value.HAPParserResourceValue;
+import com.nosliw.data.core.valuestructure.resource.HAPParserResourceDefinitionContext;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{

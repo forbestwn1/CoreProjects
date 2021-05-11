@@ -9,15 +9,15 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.dataassociation.HAPExecutableTask;
+import com.nosliw.data.core.dataassociation.HAPIOTask;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.data.core.structure.HAPContainerStructure;
-import com.nosliw.data.core.structure.dataassociation.HAPExecutableTask;
-import com.nosliw.data.core.structure.dataassociation.HAPIOTask;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPUtilityServiceInterface {
 
@@ -80,7 +80,7 @@ public class HAPUtilityServiceInterface {
 		@Override
 		public Map<String, HAPContainerStructure> getOutResultContext() {
 			Map<String, HAPContainerStructure> out = new LinkedHashMap<String, HAPContainerStructure>();
-			Map<String, HAPStructureValueDefinitionFlat> resultsContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(m_serviceInterface);
+			Map<String, HAPValueStructureDefinitionFlat> resultsContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(m_serviceInterface);
 			for(String resultName : resultsContext.keySet()) {
 				out.put(resultName, HAPContainerStructure.createDefault(resultsContext.get(resultName)));
 			}
