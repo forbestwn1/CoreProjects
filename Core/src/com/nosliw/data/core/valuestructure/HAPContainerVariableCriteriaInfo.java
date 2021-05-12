@@ -75,18 +75,27 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 		return new HAPInfoVariable(this.m_criteriaInfosById.get(idPath.getFullName()), idPath, this.m_rootNamesById.get(idPath.getRootName()));
 	}
 	
+	public Set<HAPInfoVariable> getAllVariables(){
+		Set<HAPInfoVariable> out = new HashSet<HAPInfoVariable>();
+		for(String varId : this.m_criteriaInfosById.keySet()) {
+			HAPComplexPath idPath = new HAPComplexPath(varId);
+			out.add(new HAPInfoVariable(this.m_criteriaInfosById.get(varId), idPath, this.m_rootNamesById.get(idPath.getRootName())));
+		}
+		return out;
+	}
+	
 	public HAPInfoVariable getVariableInfoById(String varId){
 		HAPComplexPath idPath = new HAPComplexPath(varId);
 		return new HAPInfoVariable(this.m_criteriaInfosById.get(varId), idPath, this.m_rootNamesById.get(idPath.getRootName()));
 	}
+	
+	public Map<String, HAPInfoCriteria> getVariableCriteriaInfos(){		return this.m_criteriaInfosById;	}
 	
 	
 	public HAPUpdateName buildToVarIdNameUpdate() {   return new HAPUpdateNameMapRoot(this.m_varIdByName);   }
 	
 
 	public Set<String> getDataVariableNames(){		return this.m_varIdByName.keySet();	}
-	
-	public Map<String, HAPInfoCriteria> getVariableCriteriaInfos(){		return this.m_criteriaInfosById;	}
 	
 	
 	
