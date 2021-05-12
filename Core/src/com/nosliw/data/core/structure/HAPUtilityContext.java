@@ -11,8 +11,6 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.valuestructure.HAPElementContextStructureValueExecutable;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
@@ -171,23 +169,6 @@ public class HAPUtilityContext {
 		return out;
 	}
 
-	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInContext(HAPValueStructureExecutable context) {
-		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
-		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesInStructure(context.getContext());
-		for(String idPath : dataVarsInfoByIdPath.keySet()) {
-			HAPComplexPath path = new HAPComplexPath(idPath);
-			String id = path.getRootName();
-			Set<String> aliases = context.getAliasById(id);
-			Set<String> aliasesPath = new HashSet<String>();
-			for(String alias : aliases) {
-				HAPComplexPath aliasPath = new HAPComplexPath(alias, path.getPathStr());
-				aliasesPath.add(aliasPath.getFullName());
-			}
-			out.addVariableCriteriaInfo(dataVarsInfoByIdPath.get(idPath), aliasesPath);
-		}
-		return out;
-	}
-	
 	//build interited node from parent
 	public static HAPRoot createRelativeContextDefinitionRoot(HAPValueStructureDefinitionGroup parentContextGroup, String contextCategary, String refPath, Set<String> excludedInfo) {
 		return createRootWithRelativeElement(parentContextGroup.getElement(contextCategary, refPath), contextCategary, refPath, excludedInfo);

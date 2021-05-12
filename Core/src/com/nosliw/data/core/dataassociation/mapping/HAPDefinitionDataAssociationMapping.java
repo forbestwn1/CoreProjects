@@ -18,12 +18,12 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableImp implements HAPDefinitionDataAssociation{
 
 	@HAPAttribute
-	public static String ASSOCIATION = "association";
+	public static String MAPPING = "mapping";
 
-	private Map<String, HAPValueStructureDefinitionFlat> m_assocations;
+	private Map<String, HAPMapping> m_mappings;
 	
 	public HAPDefinitionDataAssociationMapping() {
-		this.m_assocations = new LinkedHashMap<String, HAPValueStructureDefinitionFlat>();
+		this.m_mappings = new LinkedHashMap<String, HAPMapping>();
 	}
  
 	@Override
@@ -31,36 +31,36 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 
 	@Override
 	public void updateInputVarName(HAPUpdateName updateName) {
-		for(String name : this.m_assocations.keySet()) {
-			HAPValueStructureDefinitionFlat association = this.m_assocations.get(name);
+		for(String name : this.m_mappings.keySet()) {
+			HAPValueStructureDefinitionFlat association = this.m_mappings.get(name);
 			association.updateReferenceName(updateName);
 		}
 	}
 
 	@Override
 	public void updateOutputVarName(HAPUpdateName updateName) {
-		for(String name : this.m_assocations.keySet()) {
-			HAPValueStructureDefinitionFlat association = this.m_assocations.get(name);
-			association.updateRootName(updateName);
+		for(String name : this.m_mappings.keySet()) {
+			HAPMapping mapping = this.m_mappings.get(name);
+			mapping.updateRootName(updateName);
 		}
 	}
 
-	public void addAssociation(String targetName, HAPValueStructureDefinitionFlat association) {	
+	public void addAssociation(String targetName, HAPMapping mapping) {	
 		if(HAPBasicUtility.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
-		this.m_assocations.put(targetName, association);
+		this.m_mappings.put(targetName, mapping);
 	}
 	
-	public Map<String, HAPValueStructureDefinitionFlat> getAssociations(){   return this.m_assocations;  }
+	public Map<String, HAPMapping> getMappings(){   return this.m_mappings;  }
 	
-	public HAPValueStructureDefinitionFlat getAssociation(String targetName) {   return this.m_assocations.get(targetName);    }
-	public HAPValueStructureDefinitionFlat getAssociation() {   return this.m_assocations.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);    }
+	public HAPMapping getMapping(String targetName) {   return this.m_mappings.get(targetName);    }
+	public HAPMapping getMapping() {   return this.m_mappings.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);    }
  
 	@Override
 	public HAPDefinitionDataAssociationMapping cloneDataAssocation() {
 		HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
 		this.cloneToEntityInfo(out);
-		for(String name : this.m_assocations.keySet()) {
-			out.m_assocations.put(name, this.m_assocations.get(name).cloneContext());
+		for(String name : this.m_mappings.keySet()) {
+			out.m_mappings.put(name, (HAPMapping)this.m_mappings.get(name).cloneStructure());
 		}
 		
 		return out;
@@ -70,7 +70,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.getType());
-		jsonMap.put(ASSOCIATION, HAPJsonUtility.buildJson(this.m_assocations, HAPSerializationFormat.JSON));
+		jsonMap.put(MAPPING, HAPJsonUtility.buildJson(this.m_mappings, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -103,7 +103,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 				}
 			}
 			else {
-				JSONObject associationsJson = daJsonObj.optJSONObject(ASSOCIATION);
+				JSONObject associationsJson = daJsonObj.optJSONObject(MAPPING);
 				for(Object key : associationsJson.keySet()) {
 					String targetName = (String)key;
 					HAPValueStructureDefinitionFlat association = new HAPValueStructureDefinitionFlat();

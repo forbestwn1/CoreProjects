@@ -114,7 +114,7 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 					String inputMappingType = inputMapping.getType();
 					if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-						HAPValueStructureDefinitionFlat da = mappingDa.getAssociation();
+						HAPValueStructureDefinitionFlat da = mappingDa.getMapping();
 						da.updateReferenceName(nameUpdate);
 					}
 					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {

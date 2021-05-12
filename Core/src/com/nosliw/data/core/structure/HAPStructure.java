@@ -17,6 +17,8 @@ public interface HAPStructure extends HAPWithConstantScript{
 	List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist);
 	Set<HAPInfoName> discoverRootNameById(String id);
 
+	HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root);
+	
 	void updateRootName(HAPUpdateName updateName);
 	
 	HAPStructure cloneStructure();

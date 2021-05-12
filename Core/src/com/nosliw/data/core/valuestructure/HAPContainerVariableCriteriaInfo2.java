@@ -15,10 +15,9 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.updatename.HAPUpdateNameMapRoot;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.structure.HAPInfoVariable;
 
 @HAPEntityWithAttribute
-public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
+public class HAPContainerVariableCriteriaInfo2 extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String NAMESBYVARID = "namesByVarId";
@@ -26,39 +25,36 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	@HAPAttribute
 	public static String VARIDBYNAME = "varIdByName";
 
-	private Map<String, Set<String>> m_rootNamesById;
+	private Map<String, Set<String>> m_namesByVarId;
 	
 	private Map<String, HAPInfoCriteria> m_criteriaInfosById;
 	
-	private Map<String, String> m_rootIdByName;
-	
-	
+	private Map<String, String> m_varIdByName;
 	
 	private int m_index;
 	
-	public HAPContainerVariableCriteriaInfo() {
+	public HAPContainerVariableCriteriaInfo2() {
 		this.m_index = 0;
-		m_rootNamesById = new LinkedHashMap<String, Set<String>>();
+		m_namesByVarId = new LinkedHashMap<String, Set<String>>();
 		m_criteriaInfosById = new LinkedHashMap<String, HAPInfoCriteria>();
-		m_rootIdByName = new LinkedHashMap<String, String>();
+		m_varIdByName = new LinkedHashMap<String, String>();
 	}
 	
 	public boolean addVariableCriteriaInfo(HAPInfoCriteria criteriaInfo, String varId, Set<String> rootAliases) {
 		rootAliases = new HashSet<String>(rootAliases);
 		boolean override = false;
-		HAPComplexPath varIdPath = new HAPComplexPath(varId);
 		this.m_criteriaInfosById.put(varId, criteriaInfo);
-		this.m_rootNamesById.put(varIdPath.getRootName(), rootAliases);
-		for(String rootAlias : rootAliases) {
-			String oldVarId = this.m_rootIdByName.get(rootAlias);
+		this.m_namesByVarId.put(varId, rootAliases);
+		for(String alias : rootAliases) {
+			String oldVarId = this.m_varIdByName.get(alias);
 			if(oldVarId!=null) {
 				//alias exist already, remove it first
-				this.m_rootIdByName.remove(rootAlias);
-				this.m_rootNamesById.get(oldVarId).remove(rootAlias);
+				this.m_varIdByName.remove(alias);
+				this.m_namesByVarId.get(oldVarId).remove(alias);
 				override = true;
 			}
 			
-			this.m_rootIdByName.put(rootAlias, varId);
+			this.m_varIdByName.put(alias, varId);
 		}
 		return override;
 	}
@@ -69,43 +65,33 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 		this.addVariableCriteriaInfo(criteriaInfo, id, aliases);
 	}
 
-	public HAPInfoVariable getVariableInfoByAlias(String name) {
-		HAPComplexPath namePath = new HAPComplexPath(name);
-		HAPComplexPath idPath = new HAPComplexPath(this.m_rootIdByName.get(namePath.getRootName()), namePath.getPath());
-		return new HAPInfoVariable(this.m_criteriaInfosById.get(idPath.getFullName()), idPath, this.m_rootNamesById.get(idPath.getRootName()));
-	}
-	
-	public HAPInfoVariable getVariableInfoById(String varId){
-		HAPComplexPath idPath = new HAPComplexPath(varId);
-		return new HAPInfoVariable(this.m_criteriaInfosById.get(varId), idPath, this.m_rootNamesById.get(idPath.getRootName()));
-	}
-	
-	
 	public HAPUpdateName buildToVarIdNameUpdate() {   return new HAPUpdateNameMapRoot(this.m_varIdByName);   }
 	
+	public Set<String> getVariableAlias(String varId){		return this.m_namesByVarId.get(varId);	}
 
 	public Set<String> getDataVariableNames(){		return this.m_varIdByName.keySet();	}
 	
 	public Map<String, HAPInfoCriteria> getVariableCriteriaInfos(){		return this.m_criteriaInfosById;	}
 	
+	public HAPInfoCriteria getVariableCriteriaInfoByAlias(String name) {		return this.m_criteriaInfosById.get(this.m_varIdByName.get(name));	}
 	
 	
 	public HAPInfoCriteria getVariableCriteriaInfoById(String id) {		return this.m_criteriaInfosById.get(id);	}
 	
-	public HAPContainerVariableCriteriaInfo buildSubContainer(Set<String> aliases) {
+	public HAPContainerVariableCriteriaInfo2 buildSubContainer(Set<String> aliases) {
 		Set<String> varIds = new HashSet<String>();
 		for(String alias : aliases) {
 			varIds.add(this.m_varIdByName.get(alias));
 		}
 		
-		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+		HAPContainerVariableCriteriaInfo2 out = new HAPContainerVariableCriteriaInfo2();
 		for(String varId : varIds) {
-			out.addVariableCriteriaInfo(this.getVariableCriteriaInfoById(varId), varId, this.getVariableInfoById(varId));
+			out.addVariableCriteriaInfo(this.getVariableCriteriaInfoById(varId), varId, this.getVariableAlias(varId));
 		}
 		return out;
 	}
 	
-	public HAPContainerVariableCriteriaInfo groupVariables(Set<String> aliases) {
+	public HAPContainerVariableCriteriaInfo2 groupVariables(Set<String> aliases) {
 		Map<String, Set<String>> group = new LinkedHashMap<String, Set<String>>();
 		for(String alias : aliases) {
 			String varId = this.m_varIdByName.get(alias);
@@ -117,7 +103,7 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 			groupAliases.add(alias);
 		}
 		
-		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+		HAPContainerVariableCriteriaInfo2 out = new HAPContainerVariableCriteriaInfo2();
 		for(String varId : group.keySet()) {
 			out.addVariableCriteriaInfo(this.m_criteriaInfosById.get(varId), varId, group.get(varId));
 		}
@@ -157,8 +143,8 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	}
 
 	@Override
-	public HAPContainerVariableCriteriaInfo clone() {
-		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+	public HAPContainerVariableCriteriaInfo2 clone() {
+		HAPContainerVariableCriteriaInfo2 out = new HAPContainerVariableCriteriaInfo2();
 		
 		for(String varId : this.m_namesByVarId.keySet()) {
 			out.m_namesByVarId.put(varId, new HashSet<String>(this.m_namesByVarId.get(varId)));

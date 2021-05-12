@@ -44,7 +44,7 @@ public class HAPProcessorDataAssociationMapping {
 	
 	//process input configure for activity and generate flat context for activity
 	public static void processDataAssociation(HAPExecutableDataAssociationMapping out, HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
-		Map<String, HAPValueStructureDefinitionFlat> associations = dataAssociation.getAssociations();
+		Map<String, HAPValueStructureDefinitionFlat> associations = dataAssociation.getMappings();
 		for(String targetName : associations.keySet()) {
 			HAPExecutableAssociation associationExe = processAssociation(input, associations.get(targetName), output.getStructure(targetName), attachmentContainer, out.getInputDependency(), daProcessConfigure, runtimeEnv);
 			out.addAssociation(targetName, associationExe);
@@ -52,7 +52,7 @@ public class HAPProcessorDataAssociationMapping {
 	}
 
 	public static void enhanceDataAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
-		Map<String, HAPValueStructureDefinitionFlat> associations = dataAssociation.getAssociations();
+		Map<String, HAPValueStructureDefinitionFlat> associations = dataAssociation.getMappings();
 		for(String targetName : associations.keySet()) {
 			enhanceAssociationEndPointContext(input, inputEnhance, associations.get(targetName), output.getStructure(targetName), outputEnhance, runtimeEnv);
 		}

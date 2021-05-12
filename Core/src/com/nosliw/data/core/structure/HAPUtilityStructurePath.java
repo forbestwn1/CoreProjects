@@ -46,4 +46,7 @@ public class HAPUtilityStructurePath {
 		
 	}
 	
+	public static HAPReferenceRoot parseRootReferenceLiterate(String rootRefLiterate, String refStructureType) {
+		
+	}
 }

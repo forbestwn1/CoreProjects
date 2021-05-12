@@ -19,6 +19,10 @@ import com.nosliw.data.core.component.HAPUtilityComponentConstant;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
+import com.nosliw.data.core.dataassociation.mapping.HAPMapping;
+import com.nosliw.data.core.dataassociation.mapping.HAPUtilityStructureDataAssociation;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -35,14 +39,7 @@ import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityContext;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.structure.HAPUtilityStructureDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.structure.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.structure.dataassociation.mapping.HAPUtilityDataAssociation;
-import com.nosliw.data.core.structure.value.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinition;
-import com.nosliw.data.core.structure.value.HAPStructureValueDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
 
 public class HAPProcessorExpression {
 
@@ -94,7 +91,7 @@ public class HAPProcessorExpression {
 	private static void normalizeVariable(HAPExecutableExpressionGroup expressionExe) {
 		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();
 		
-		
+		//normalize child reference expression first
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpression expressionItem = expressionItems.get(name);
 			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){
@@ -122,30 +119,36 @@ public class HAPProcessorExpression {
 						
 						//variable mapping
 						HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
-						HAPContainerVariableCriteriaInfo parentVarsContainer = expressionExe.getVarsInfo();
-						HAPContainerVariableCriteriaInfo referedVarsContainer = referenceOperand.getReferedExpression().getVarsInfo();
+						HAPContainerVariableCriteriaInfo expressionVarsContainer = expressionExe.getVarsInfo();
+						HAPContainerVariableCriteriaInfo referenceExpContainer = referenceOperand.getReferedExpression().getVarsInfo();
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
-							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-							HAPStructure da = mappingDa.getAssociation();
+							HAPDefinitionDataAssociationMapping mappingDataAssociation = (HAPDefinitionDataAssociationMapping)inputMapping;
+							HAPMapping mapping = mappingDataAssociation.getMapping();
 							//var path in referred exression -- var path in current expression
 							
-							da = HAPUtilityStructureDataAssociation.enhanceVariableMapping(da, parentVarsContainer);
+							//expand mapping so that all variabel in reference expressin got mapped
+							mapping = HAPUtilityStructureDataAssociation.expandMappingByTargetVariable(mapping, expressionVarsContainer);
 							
-							for(HAPRoot root : da.getAllRoots()) {
+							//normalize variable expression according to reference input mapping
+							for(HAPRoot root : mapping.getAllRoots()) {
 								HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
 									@Override
 									public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object obj) {
 										if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 											HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)eleInfo.getElement();
 											String refPath = relativeEle.getReferencePath();
-											HAPInfoReferenceResolve resolve = HAPUtilityStructure.analyzeElementReference(refPath, expressionExe.getContextStructure(), null, elementTypes);
+											Set<String> types = new HashSet<String>();
+											types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA);
+											types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT);
+											
+											HAPInfoReferenceResolve resolve = HAPUtilityStructure.analyzeElementReference(refPath, expressionExe.getContextStructure(), null, types);
 											if(resolve.referredRoot==null || resolve.realSolved.remainPath!=null) {
 												HAPRoot root = resolve.referredRoot;
 												if(root==null) {
 													expressionExe.getContextStructure().addRoot(root);
 												}
-												HAPDataTypeCriteria dataTyppeCriteria = referedVarsContainer.getVariableCriteriaInfoByAlias(eleInfo.getElementPath().getFullName()).getCriteria();
+												HAPDataTypeCriteria dataTyppeCriteria = referenceExpContainer.getVariableCriteriaInfoByAlias(eleInfo.getElementPath().getFullName()).getCriteria();
 												HAPUtilityStructure.setDescendant(resolve.referredRoot, new HAPComplexPath(refPath).getPath(), new HAPElementLeafData(dataTyppeCriteria));
 											}
 										
@@ -158,6 +161,11 @@ public class HAPProcessorExpression {
 								}, null);
 							}
 							
+							//normalize variable expression according to variable operand
+							
+							
+							
+							
 							
 							Map<String, String> mappingPath = new LinkedHashMap<String, String>();
 							for(String rootName : da.getRootNames()) {
@@ -166,15 +174,15 @@ public class HAPProcessorExpression {
 							}
 							
 							//find missing variables in reference expression that did not get mapped
-							Set<String> missedRefVarIds = referedVarsContainer.findMissingVariables(mappingPath.keySet());
+							Set<String> missedRefVarIds = referenceExpContainer.findMissingVariables(mappingPath.keySet());
 							for(String missedRefVarId : missedRefVarIds) {
 								//if variable in referred expression is not mapped, then pop up the variable to parent
-								Set<String> missedVarAliases = referedVarsContainer.getVariableAlias(missedRefVarId);
-								HAPInfoCriteria missedVarCriteria = referedVarsContainer.getVariableCriteriaInfoById(missedRefVarId).cloneCriteriaInfo();
+								Set<String> missedVarAliases = referenceExpContainer.getVariableAlias(missedRefVarId);
+								HAPInfoCriteria missedVarCriteria = referenceExpContainer.getVariableCriteriaInfoById(missedRefVarId).cloneCriteriaInfo();
 								
 								
 								
-								boolean override = parentVarsContainer.addVariableCriteriaInfo(, aliases);
+								boolean override = expressionVarsContainer.addVariableCriteriaInfo(, aliases);
 								if(override)  throw new RuntimeException();    //ref var override parent var is not allowed
 								HAPElementLeafRelative relativeEle = new HAPElementLeafRelative();
 								String varName = aliases.iterator().next();
@@ -184,11 +192,11 @@ public class HAPProcessorExpression {
 						}
 						else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {
 							
-							Set<String> missedRefVars = referedVarsContainer.findMissingVariables(parentVarsContainer.getDataVariableNames());
+							Set<String> missedRefVars = referenceExpContainer.findMissingVariables(expressionVarsContainer.getDataVariableNames());
 							for(String missedRefVar : missedRefVars) {
 								//if variable in referred expression is not mapped, then pop up the variable to parent
-								Set<String> aliases = referedVarsContainer.getVariableAlias(missedRefVar);
-								boolean override = parentVarsContainer.addVariableCriteriaInfo(referedVarsContainer.getVariableCriteriaInfoById(missedRefVar).cloneCriteriaInfo(), aliases);
+								Set<String> aliases = referenceExpContainer.getVariableAlias(missedRefVar);
+								boolean override = expressionVarsContainer.addVariableCriteriaInfo(referenceExpContainer.getVariableCriteriaInfoById(missedRefVar).cloneCriteriaInfo(), aliases);
 								if(override)  throw new RuntimeException();    //ref var override parent var is not allowed
 							}
 						}

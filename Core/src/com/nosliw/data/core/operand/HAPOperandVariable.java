@@ -50,7 +50,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
 		
-		HAPInfoCriteria variableInfo = variablesInfo.getVariableCriteriaInfoByAlias(this.getVariableName());
+		HAPInfoCriteria variableInfo = variablesInfo.getVariableInfoByAlias(this.getVariableName());
 		if(variableInfo==null){
 			//found a new variable
 			variableInfo = HAPInfoCriteria.buildUndefinedCriteriaInfo();

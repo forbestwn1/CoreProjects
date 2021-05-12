@@ -27,7 +27,7 @@ import com.nosliw.data.core.structure.HAPUtilityContext;
 //Also, we can find global name by local name
 //flat context is back compatible with context
 @HAPEntityWithAttribute
-public class HAPValueStructureExecutable extends HAPSerializableImp implements HAPStructureValue{
+public class HAPValueStructureExecutable extends HAPSerializableImp implements HAPValueStructure{
 
 	@HAPAttribute
 	public static final String CONTEXT = "context";
@@ -40,14 +40,8 @@ public class HAPValueStructureExecutable extends HAPSerializableImp implements H
 	
 	private Map<String, HAPRoot> m_rootById;
 	
-	private Map<String, String> m_idByName;
-	
-	private Map<String, Set<String>> m_namesByVarId;
-	
 	public HAPValueStructureExecutable() {
 		this.m_rootById = new LinkedHashMap<String, HAPRoot>();
-		this.m_idByName = new LinkedHashMap<String, String>();
-		this.m_namesByVarId = new LinkedHashMap<String, Set<String>>();
 	}
 
 	@Override
@@ -100,6 +94,7 @@ public class HAPValueStructureExecutable extends HAPSerializableImp implements H
 		return out;
 	}
 	
+	@Override
 	public void updateRootName(HAPUpdateName nameUpdate) {
 		this.m_context.updateRootName(nameUpdate);
 		
