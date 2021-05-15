@@ -21,7 +21,6 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
@@ -69,14 +68,9 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public String getId() {  return this.m_id;  }
 	public void setId(String id) {   this.m_id = id;    }
 	
-	@Override
-	public HAPValueStructureDefinition getContextStructure() {   return this.m_contextStructure;  }
+	public HAPValueStructureDefinition getStructureDefinition() {   return this.m_contextStructure;  }
 
-	@Override
-	public void setContextStructure(HAPValueStructureDefinition contextStructure) {   
-		this.m_contextStructure = contextStructure;
-		this.m_flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(m_contextStructure);
-	}
+	public void setStructureDefinition(HAPValueStructureDefinition structureDefinition) {	this.m_contextStructure = structureDefinition;	}
 	
 	@Override
 	public HAPValueStructureExecutable getContextFlat() {    return this.m_flatContext;    }

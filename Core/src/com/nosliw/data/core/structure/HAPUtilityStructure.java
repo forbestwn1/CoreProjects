@@ -219,7 +219,7 @@ public class HAPUtilityStructure {
 	}
 
 	public static List<HAPRoot> resolveRoot(String rootRefLiterate, HAPStructure structure, boolean createIfNotExist) {
-		HAPReferenceRoot rootReference = HAPUtilityStructurePath.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
+		HAPReferenceRoot rootReference = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
 		List<HAPRoot> out = structure.resolveRoot(rootReference, createIfNotExist);
 		return out;
 	}
@@ -231,13 +231,16 @@ public class HAPUtilityStructure {
 	}
 	
 	public static HAPInfoReferenceResolve analyzeElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
-		HAPReferenceElement elementReference = HAPUtilityStructurePath.parseLiterateStructurePath(elementReferenceLiterate, parentStructure.getStructureType());
+		HAPReferenceElement elementReference = new HAPReferenceElement(elementReferenceLiterate); 
 		return analyzeElementReference(elementReference, parentStructure, mode, elementTypes);
 	}
 	
 	//find best resolved element from structure 
 	public static HAPInfoReferenceResolve analyzeElementReference(HAPReferenceElement elementReference, HAPStructure parentStructure, String mode, Set<String> elementTypes){
 		if(parentStructure==null)   return null;
+		
+		//normalize element reference
+		elementReference = HAPUtilityStructureReference.normalizeElementReference(elementReference, parentStructure.getStructureType());
 		
 		//find candidate from structure by root reference
 		List<HAPRoot> candidatesRoot = parentStructure.resolveRoot(elementReference.getRootReference(), false);
@@ -329,6 +332,10 @@ public class HAPUtilityStructure {
 	public static HAPStructure getReferedStructure(String name, HAPContainerStructure parents, HAPStructure self) {
 		if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name))  return self;
 		else return parents.getStructure(name);
+	}
+
+	public static HAPRoot addRoot(HAPStructure structure, String rootReference, HAPRoot root) {
+		return structure.addRoot(HAPUtilityStructureReference.parseRootReferenceLiterate(rootReference, structure.getStructureType()), root);
 	}
 
 }

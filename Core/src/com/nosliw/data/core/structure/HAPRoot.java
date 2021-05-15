@@ -71,7 +71,7 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 	public Map<String, HAPElementLeafRelative> getRelativeInfo() {
 		if(this.isConstant())  return null;
 		if(this.m_relativeEleInfo==null) {
-			this.m_relativeEleInfo = HAPUtilityContext.discoverRelativeElement(m_definition);
+			this.m_relativeEleInfo = HAPUtilityStructure.discoverRelativeElement(this);
 		}
 		if(this.m_relativeEleInfo==null || this.m_relativeEleInfo.isEmpty())  return null;
 		return this.m_relativeEleInfo;
@@ -86,14 +86,23 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 	public HAPRoot cloneRootBase() {
 		HAPRoot out = new HAPRoot();
 		this.cloneToEntityInfo(out);
+		out.m_localId = this.m_localId;
+		out.m_globalId = this.m_globalId;
+		return out;
+	}
+	
+	public HAPRoot cloneExceptElement() {
+		HAPRoot out = new HAPRoot();
+		this.cloneToEntityInfo(out);
+		out.m_localId = this.m_localId;
+		out.m_globalId = this.m_globalId;
+		out.m_definition = this.m_definition.cloneStructureElement();
+		out.m_defaultValue = this.m_defaultValue;
 		return out;
 	}
 
 	public HAPRoot cloneRoot() {
-		HAPRoot out = this.cloneRootBase();
-		out.m_definition = this.m_definition.cloneStructureElement();
-		out.m_defaultValue = this.m_defaultValue;
-		out.m_localId = this.m_localId;
+		HAPRoot out = this.cloneExceptElement();
 		return out;
 	}
 

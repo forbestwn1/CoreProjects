@@ -470,7 +470,12 @@ var COMMONCONSTANT=
   "HANDLERSTEP_TYPE_ACTIVITY": "activity",
   "INHERITMODE_PARENT": "parent",
   "INHERITMODE_CHILD": "child",
-  "INHERITMODE_NONE": "none"
+  "INHERITMODE_NONE": "none",
+  "STRUCTURE_TYPE_UNKNOWN": "unknown",
+  "STRUCTURE_TYPE_VALUEFLAT": "valueFlat",
+  "STRUCTURE_TYPE_VALUEGROUP": "valueFlat",
+  "STRUCTURE_TYPE_VALUEEXECUTABLE": "valueExecutable",
+  "STRUCTURE_TYPE_MAPPING": "mapping"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

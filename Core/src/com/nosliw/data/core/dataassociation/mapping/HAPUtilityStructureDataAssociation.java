@@ -7,75 +7,87 @@ import java.util.Set;
 
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.structure.HAPUtilityStructurePath;
 import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
 
 public class HAPUtilityStructureDataAssociation {
 
-	//automatic enahnce mapping so that all the variables are mapped as target
+	public static HAPDefinitionDataAssociation replaceVarNameWithId(HAPDefinitionDataAssociation da, HAPStructure target, HAPStructure source) {
+		
+	}
+	
+	public static void mirroringVariableInStructure(HAPStructure sourceStructure) {
+		
+	}
+	
+	//automatic enhance mapping so that all the variables are mapped as target
 	public static HAPMapping expandMappingByTargetVariable(HAPMapping mapping, HAPContainerVariableCriteriaInfo targetVarsContainer) {
 		
 		HAPMapping out = new HAPMapping();
 		
-		Map<String, HAPRoot> newRoots = new LinkedHashMap<String, HAPRoot>();
+		Map<String, HAPRoot> outMappingRoots = new LinkedHashMap<String, HAPRoot>();   //all roots for output mapping
 		for(HAPInfoVariable varInfo : targetVarsContainer.getAllVariables()) {
-			//find target root in mapping first
+			//find root in mapping for target variable first
 			String varSubPath = varInfo.getSubPath().getPath();
 			Set<String> rootAliases = varInfo.getRootAliases();
 			HAPRoot mappingRoot = null;
-			String mappingRootAlias = null;
+			String mappingRootName = null;
 			for(String rootAlias : rootAliases) {
 				List<HAPRoot> roots = HAPUtilityStructure.resolveRoot(rootAlias, mapping, false);
 				if(roots!=null && roots.size()>=1) {
 					mappingRoot = roots.get(0);
-					mappingRootAlias = rootAlias;
+					mappingRootName = rootAlias;
 					break;
 				}
 			}
 			
 			if(mappingRoot==null) {
 				//if no root in mapping, create root name for new root
-				mappingRootAlias = rootAliases.iterator().next();
+				mappingRootName = rootAliases.iterator().next();
 			}
 			
-			HAPRoot newRoot = newRoots.get(mappingRootAlias);
-			if(newRoot==null) {
-				if(mappingRoot!=null)  newRoot = mappingRoot.cloneRootBase();
-				else newRoot = new HAPRoot();
-				newRoots.put(mappingRootAlias, newRoot);
+			HAPRoot newMappingRoot = outMappingRoots.get(mappingRootName);
+			if(newMappingRoot==null) {
+				//if no new mapping root created, then create new mapping root
+				if(mappingRoot!=null)  newMappingRoot = mappingRoot.cloneExceptElement();
+				else newMappingRoot = new HAPRoot();
+				outMappingRoots.put(mappingRootName, newMappingRoot);
 			}
 
 			boolean found = false;
-			Map<String, HAPElementLeafRelative> relativeElesByIdPath = HAPUtilityStructure.discoverRelativeElement(mappingRoot);
-			for(String idPath : relativeElesByIdPath.keySet()) {
-				HAPElementLeafRelative relativeEle = relativeElesByIdPath.get(idPath);
-				if(idPath.equals(varSubPath)) {
-					//exactly mapped
-					HAPUtilityStructure.setDescendant(newRoot, varInfo.getSubPath(), relativeEle.cloneStructureElement());
+			Map<String, HAPElementLeafRelative> relativeElesByIdPath = HAPUtilityStructure.discoverRelativeElement(mappingRoot);  //all relative element in mapping root
+			for(String mappingRelativeIdPath : relativeElesByIdPath.keySet()) {
+				HAPElementLeafRelative relativeEle = relativeElesByIdPath.get(mappingRelativeIdPath);
+				String mappingRelativeSubPath = new HAPComplexPath(mappingRelativeIdPath).getPath().getPath();
+				if(mappingRelativeSubPath.equals(varSubPath)) {
+					//exactly mapped, add the element to new mapping root
+					HAPUtilityStructure.setDescendant(newMappingRoot, varInfo.getSubPath(), relativeEle.cloneStructureElement());
 					found = true;
 					break;
 				}
-				else if(varSubPath.startsWith(idPath)) {
-					//match only part of variable path
-					String relativePath = HAPNamingConversionUtility.cascadePath(varSubPath.substring(idPath.length()), relativeEle.getReferencePath());
-					HAPUtilityStructure.setDescendant(newRoot, varInfo.getSubPath(), new HAPElementLeafRelative(relativePath));
+				else if(varSubPath.startsWith(mappingRelativeSubPath)) {
+					//match only part of variable path, extend relative path to full path
+					String relativePath = HAPNamingConversionUtility.cascadePath(relativeEle.getReferencePath(), varSubPath.substring(mappingRelativeSubPath.length()));
+					HAPUtilityStructure.setDescendant(newMappingRoot, varInfo.getSubPath(), new HAPElementLeafRelative(relativePath));
 					found = true;
 					break;
 				}
 			}
 			
 			if(found==false) {
-				//if not mapped at all
-				HAPUtilityStructure.setDescendant(newRoot, varInfo.getSubPath(), new HAPElementLeafRelative(new HAPComplexPath(mappingRootAlias, varSubPath).getFullName()));
+				//if variable not mapped at all, create new relative element
+				HAPUtilityStructure.setDescendant(newMappingRoot, varInfo.getSubPath(), new HAPElementLeafRelative(new HAPComplexPath(mappingRootName, varSubPath).getFullName()));
 			}
 		}
 		
-		for(String rootName : newRoots.keySet()) {
-			out.addRoot(HAPUtilityStructurePath.parseRootReferenceLiterate(rootName, out.getStructureType()), newRoots.get(rootName));
+		//put all roots to new mapping 
+		for(String rootName : outMappingRoots.keySet()) {
+			HAPUtilityStructure.addRoot(out, rootName, outMappingRoots.get(rootName));
 		}
 		
 		return out;

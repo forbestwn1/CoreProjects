@@ -31,9 +31,9 @@ import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityValueStructure {
 
-	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInContext(HAPValueStructureDefinition structure) {
+	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(HAPValueStructureDefinition structure) {
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
-		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesInStructure(structure);
+		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {
 			HAPComplexPath path = new HAPComplexPath(idPath);
 			String id = path.getRootName();
@@ -45,7 +45,7 @@ public class HAPUtilityValueStructure {
 	
 	
 	//find all data variables in context 
-	public static Map<String, HAPInfoCriteria> discoverDataVariablesInStructure(HAPValueStructure structure){
+	public static Map<String, HAPInfoCriteria> discoverDataVariablesByIdInStructure(HAPValueStructure structure){
 		Map<String, HAPInfoCriteria> out = new LinkedHashMap<String, HAPInfoCriteria>();
 		for(HAPRoot root : structure.getAllRoots()){
 			if(!root.isConstant()){

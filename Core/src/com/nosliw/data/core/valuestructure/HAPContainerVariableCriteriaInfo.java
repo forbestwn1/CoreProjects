@@ -13,10 +13,10 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.updatename.HAPUpdateNameMapRoot;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 
+//store all variable in structure
 @HAPEntityWithAttribute
 public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 
@@ -91,15 +91,12 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	
 	public Map<String, HAPInfoCriteria> getVariableCriteriaInfos(){		return this.m_criteriaInfosById;	}
 	
+	public HAPInfoCriteria getVariableCriteriaInfoById(String id) {		return this.m_criteriaInfosById.get(id);	}
 	
+/*	
 	public HAPUpdateName buildToVarIdNameUpdate() {   return new HAPUpdateNameMapRoot(this.m_varIdByName);   }
-	
 
 	public Set<String> getDataVariableNames(){		return this.m_varIdByName.keySet();	}
-	
-	
-	
-	public HAPInfoCriteria getVariableCriteriaInfoById(String id) {		return this.m_criteriaInfosById.get(id);	}
 	
 	public HAPContainerVariableCriteriaInfo buildSubContainer(Set<String> aliases) {
 		Set<String> varIds = new HashSet<String>();
@@ -165,6 +162,8 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 		}
 	}
 
+*/
+	
 	@Override
 	public HAPContainerVariableCriteriaInfo clone() {
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();

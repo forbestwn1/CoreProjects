@@ -115,7 +115,7 @@ public class HAPElementLeafRelative extends HAPElementLeafVariable{
 	public void toStructureElement(HAPElement out) {
 		super.toStructureElement(out);
 		HAPElementLeafRelative that = (HAPElementLeafRelative)out;
-		if(this.m_resolvedPath!=null)	that.m_resolvedPath = this.m_resolvedPath.clonePathStructure();
+		if(this.m_resolvedPath!=null)	that.m_resolvedPath = this.m_resolvedPath.cloneElementReference();
 		that.m_referencePath = this.m_referencePath; 
 		that.m_parent = this.m_parent; 
 		if(this.m_definition!=null)  that.m_definition = this.m_definition.cloneStructureElement();
