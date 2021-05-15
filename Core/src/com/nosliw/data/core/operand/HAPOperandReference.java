@@ -68,6 +68,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 
 	public String getReferenceName(){  return this.m_referenceName;  }
+	
+	public void setMapping(List<HAPMappingInReferenceOperand> mapping) {}
 
 	public HAPExecutableExpressionGroup getReferedExpression() {   return this.m_expression;   }
 	public void setReferedExpression(HAPExecutableExpressionGroup expression) {   this.m_expression = expression;    }

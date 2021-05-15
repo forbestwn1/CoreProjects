@@ -5,7 +5,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.expression.HAPParserExpression;
+import com.nosliw.data.core.operand.HAPMappingInReferenceOperand;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandAttribute;
 import com.nosliw.data.core.operand.HAPOperandConstant;
@@ -86,13 +89,30 @@ public class HAPExpressionParserImp implements HAPParserExpression{
 		  HAPOperand operand = null;
 		  if("function".equals(parentNode.jjtGetValue())){
 			  //function call
-			  operand = new HAPOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes));
+			  if(aheadOperand!=null && HAPBasicUtility.isEquals(aheadOperand.getType(), HAPConstantShared.EXPRESSION_OPERAND_REFERENCE) && HAPBasicUtility.isEquals(name, "with")) {
+				  //reference
+				  ((HAPOperandReference)aheadOperand).setMapping(getReferenceMapping(expressionEles.expressionNodes));
+				  operand = aheadOperand;
+			  }
+			  else {
+				  //operation
+				  operand = new HAPOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes));
+			  }
 		  }
 		  else{
 			  //path
 			  operand = new HAPOperandAttribute(aheadOperand, name);
 		  }
 		  out = processExpression1Node(expressionEles.expression1Node, operand);
+		  return out;
+	  }
+
+	  private List<HAPMappingInReferenceOperand> getReferenceMapping(List<Parm> expressionParms){
+		  List<HAPMappingInReferenceOperand> out = new ArrayList<HAPMappingInReferenceOperand>();
+		  for(Parm parm : expressionParms){
+			  HAPOperand op = processExpressionNode(parm.valuNode);
+			  out.add(new HAPMappingInReferenceOperand(parm.name, op));
+		  }
 		  return out;
 	  }
 

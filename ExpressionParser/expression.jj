@@ -28,7 +28,7 @@ TOKEN : { < OPEN_PAR : "(" > }
 TOKEN : { < CLOSE_PAR : ")" > }
 TOKEN : { < COMMAR : "," > }
 TOKEN : { < COLON : ":" > }
-TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", "#", " ", "\t", "\n", "\r", "'"])+ > }
+TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", "#", " ", "\t", "\n", "\r", "'", "|", "@", "-", "$", "%", "*", "."])+ > }
 /*TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }*/
 TOKEN : { < OPEN_CONSTANT : "&(" > }
 TOKEN : { < CLOSE_CONSTANT : ")&" > }
