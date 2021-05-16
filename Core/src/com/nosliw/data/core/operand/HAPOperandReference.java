@@ -1,5 +1,6 @@
 package com.nosliw.data.core.operand;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,8 +17,6 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -43,10 +42,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private String m_referenceName;
 	
-	private HAPDefinitionDataAssociation m_inputMapping;
-	
-	//referred variable name ---- parent variable name
-	private Map<String, String> m_variableMapping;
+	//operation parms
+	protected Map<String, HAPOperandWrapper> m_mapping = new LinkedHashMap<String, HAPOperandWrapper>();
 
 	private HAPExecutableExpressionGroup m_expression;
 	
@@ -56,7 +53,6 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private HAPOperandReference(){
 		super(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE);
-		this.m_variableMapping = new LinkedHashMap<String, String>();
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		this.setElementName(null);
 		this.setInputMapping(null);
@@ -69,7 +65,10 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	public String getReferenceName(){  return this.m_referenceName;  }
 	
-	public void setMapping(List<HAPMappingInReferenceOperand> mapping) {}
+	public void setMapping(List<HAPMappingInReferenceOperand> mapping) {
+		for(HAPMappingInReferenceOperand ele : mapping)		this.m_mapping.put(ele.getName(), this.createOperandWrapper(ele.getOperand()));
+		
+	}
 
 	public HAPExecutableExpressionGroup getReferedExpression() {   return this.m_expression;   }
 	public void setReferedExpression(HAPExecutableExpressionGroup expression) {   this.m_expression = expression;    }
@@ -80,17 +79,13 @@ public class HAPOperandReference extends HAPOperandImp{
 		if(this.m_elementName==null)  this.m_elementName = HAPConstantShared.NAME_DEFAULT;
 	}
 	
-	public void setInputMapping(HAPDefinitionDataAssociation inputMapping) {  
-		this.m_inputMapping = inputMapping;    
-		if(this.m_inputMapping==null) {
-			this.m_inputMapping = new HAPDefinitionDataAssociationMirror();
-		}
+	@Override
+	public List<HAPOperandWrapper> getChildren(){
+		List<HAPOperandWrapper> out = new ArrayList<HAPOperandWrapper>();
+		out.addAll(this.m_mapping.values());
+		return out;
 	}
-	public HAPDefinitionDataAssociation getInputMapping() {    return this.m_inputMapping;    }
-	
-	public Map<String, String> getVariableMapping(){   return this.m_variableMapping;   }
-	public void setVariableMapping(Map<String, String> mapping) {   this.m_variableMapping = mapping;    }
-	
+
 	@Override
 	public Set<HAPDataTypeConverter> getConverters(){
 		Set<HAPDataTypeConverter> out = new HashSet<HAPDataTypeConverter>();

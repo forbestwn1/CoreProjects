@@ -12,15 +12,15 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.component.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPUtilityComponentConstant;
+import com.nosliw.data.core.component.HAPWithComplexEntity;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPUtilityDataAssociation;
@@ -30,6 +30,8 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElement;
 import com.nosliw.data.core.structure.HAPElementLeafData;
@@ -291,29 +293,41 @@ public class HAPProcessorExpression {
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						String refName = referenceOperand.getReferenceName();
 						
-						String referenceTo = null;
 						String eleName = null;
 						
-						String[] segs = HAPNamingConversionUtility.splitTextByComponents(refName, "AT");
-						if(segs.length==1) {
-							referenceTo = segs[0];
+						//try to get element name from reference name
+						int eleIndex = refName.lastIndexOf("^");
+						if(eleIndex!=-1) {
+							eleName = refName.substring(eleIndex+1);
+							refName = refName.substring(0, eleIndex);
 						}
-						else if(segs.length == 2) {
-							referenceTo = segs[0];
-							eleName = segs[1];
+						
+						HAPDefinitionExpressionGroup expressionGroupDefiniton = null;
+						HAPContextProcessAttachmentReferenceExpression attachmentReferenceContextForRefExpression = null;
+						HAPDefinitionEntityComplex contextComplexEntity = null;
+						HAPResourceId expressionResourceId = HAPUtilityResourceId.buildResourceIdByLiterate(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, refName, true);
+						if(expressionResourceId!=null) {
+							//reference name is resource id
+							expressionGroupDefiniton = (HAPDefinitionExpressionGroup)runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionResourceId);
+							if(expressionGroupDefiniton instanceof HAPWithComplexEntity)  contextComplexEntity = ((HAPWithComplexEntity)expressionGroupDefiniton).getComplexEntity();
+							attachmentReferenceContextForRefExpression = new HAPContextProcessAttachmentReferenceExpression(contextComplexEntity, runtimeEnv);
 						}
-
-						HAPResultProcessAttachmentReference result = attachmentReferenceContext.processReference(referenceTo);
-						JSONObject adaptorObj = (JSONObject)result.getAdaptor();
-						if(adaptorObj!=null) {
-							if(eleName==null)  eleName = (String)adaptorObj.opt(HAPOperandReference.ELEMENTNAME);
-							referenceOperand.setInputMapping(HAPParserDataAssociation.buildDefinitionByJson(adaptorObj.optJSONObject(HAPOperandReference.VARMAPPING)));
+						else {
+							//reference name is reference to attachment
+							String referenceTo = refName;
+							HAPResultProcessAttachmentReference result = attachmentReferenceContext.processReference(referenceTo);
+							JSONObject adaptorObj = (JSONObject)result.getAdaptor();
+							if(adaptorObj!=null && eleName==null) {
+								eleName = (String)adaptorObj.opt(HAPOperandReference.ELEMENTNAME);
+							}
+							attachmentReferenceContextForRefExpression = new HAPContextProcessAttachmentReferenceExpression(result.getContextComplexEntity(), runtimeEnv);
+							expressionGroupDefiniton = (HAPDefinitionExpressionGroup)result.getEntity();
 						}
+						
 						referenceOperand.setElementName(eleName);
 						
 						//process refered expression
-						HAPContextProcessAttachmentReferenceExpression attachmentReferenceContextForRefExpression = new HAPContextProcessAttachmentReferenceExpression(result.getContextComplexEntity(), runtimeEnv);
-						HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression.createExecutable(expressionId+"_"+subId[0], (HAPDefinitionExpressionGroup)result.getEntity(), eleName, attachmentReferenceContextForRefExpression, runtimeEnv, processTracker);
+						HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression.createExecutable(expressionId+"_"+subId[0], expressionGroupDefiniton, eleName, attachmentReferenceContextForRefExpression, runtimeEnv, processTracker);
 						expandReference(refExpressionExe, attachmentReferenceContextForRefExpression, runtimeEnv, processTracker);
 						
 						referenceOperand.setReferedExpression(refExpressionExe);

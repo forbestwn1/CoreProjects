@@ -40,27 +40,8 @@ public class HAPUtilityResourceId {
 		return HAPNamingConversionUtility.parseLevel2(idLiterate);
 	}
 
-
-	
-	
-	
-//	public static String[] parseResourceCoreIdLiterate(String coreIdLiterate) {
-//		String[] out = new String[2];
-//		if(coreIdLiterate.startsWith(HAPConstantShared.SEPERATOR_RESOURCEID_START)) {
-//			int index = coreIdLiterate.indexOf(HAPConstantShared.SEPERATOR_RESOURCEID_STRUCTURE, HAPConstantShared.SEPERATOR_RESOURCEID_START.length());
-//			out[0] = coreIdLiterate.substring(HAPConstantShared.SEPERATOR_RESOURCEID_START.length(), index);
-//			out[1] = coreIdLiterate.substring(index+1);
-//		}
-//		else {
-//			//simple structure
-//			out[0] = getDefaultResourceStructure();
-//			out[1] = coreIdLiterate;
-//		}
-//		return out;
-//	}
-	
-	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String literate) {
-		String structure = HAPConstantShared.RESOURCEID_TYPE_SIMPLE;
+	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String literate, boolean strict) {
+		String structure = null;
 		String coreIdLiterate = literate;
 		
 		if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED)) {
@@ -78,12 +59,14 @@ public class HAPUtilityResourceId {
 			structure = HAPConstantShared.RESOURCEID_TYPE_DYNAMIC;
 			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC.length());
 		}
-		else {
+		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE) || !strict){
 			//simple
 			structure = HAPConstantShared.RESOURCEID_TYPE_SIMPLE;
 			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE.length());
 		}
 
+		if(structure==null)  return null;
+		
 		HAPResourceId out = newInstanceByType(resourceType, structure);
 		out.buildCoreIdByLiterate(coreIdLiterate);
 		return out;

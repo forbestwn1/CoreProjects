@@ -209,8 +209,8 @@
 			<definition name="SEPERATOR_PREFIX" value="_"/>
 			<definition name="SEPERATOR_LEVEL1" value=";"/>
 			<definition name="SEPERATOR_LEVEL2" value="|"/>
-			<definition name="SEPERATOR_LEVEL3" value=":"/>
-			<definition name="SEPERATOR_LEVEL4" value=","/>
+			<definition name="SEPERATOR_LEVEL3" value="="/>
+			<definition name="SEPERATOR_LEVEL4" value="#"/>
 			<definition name="SEPERATOR_ARRAYSTART" value="[" type="string"/>
 			<definition name="SEPERATOR_ARRAYEND" value="]"/>
 			<definition name="SEPERATOR_VARSTART" value="{{" type="string"/>
@@ -689,7 +689,7 @@
 			<definition name="RESOURCEID_TYPE_LOCAL" value="local"/>
 
 			<definition type="space"/>
-			<definition name="RESOURCEID_LITERATE_STARTER_SIMPLE" value=""/>
+			<definition name="RESOURCEID_LITERATE_STARTER_SIMPLE" value="*"/>
 			<definition name="RESOURCEID_LITERATE_STARTER_EMBEDED" value="@"/>
 			<definition name="RESOURCEID_LITERATE_STARTER_DYNAMIC" value="$"/>
 			<definition name="RESOURCEID_LITERATE_STARTER_LOCAL" value="#"/>

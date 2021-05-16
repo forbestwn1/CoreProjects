@@ -52,8 +52,8 @@ public class HAPConstantShared {
 		public static final String SEPERATOR_PREFIX = "_";
 		public static final String SEPERATOR_LEVEL1 = ";";
 		public static final String SEPERATOR_LEVEL2 = "|";
-		public static final String SEPERATOR_LEVEL3 = ":";
-		public static final String SEPERATOR_LEVEL4 = ",";
+		public static final String SEPERATOR_LEVEL3 = "=";
+		public static final String SEPERATOR_LEVEL4 = "#";
 		public static final String SEPERATOR_ARRAYSTART = "[";
 		public static final String SEPERATOR_ARRAYEND = "]";
 		public static final String SEPERATOR_VARSTART = "{{";
@@ -623,7 +623,7 @@ public class HAPConstantShared {
 
 
 
-		public static final String RESOURCEID_LITERATE_STARTER_SIMPLE = "";
+		public static final String RESOURCEID_LITERATE_STARTER_SIMPLE = "*";
 		public static final String RESOURCEID_LITERATE_STARTER_EMBEDED = "@";
 		public static final String RESOURCEID_LITERATE_STARTER_DYNAMIC = "$";
 		public static final String RESOURCEID_LITERATE_STARTER_LOCAL = "#";

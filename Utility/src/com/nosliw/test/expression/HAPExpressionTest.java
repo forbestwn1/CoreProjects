@@ -7,7 +7,7 @@ public class HAPExpressionTest {
 	public static void main(String[] args) {
 		HAPExpressionParserImp parser = new HAPExpressionParserImp();
 		
-		parser.parseExpression("!(test.string)!.subString(bbb:<(test10#test3)>.with(aa_a_b:?(testVar4_a_b)?,to:?(testVar5)?),from_a_b:?(testVar4)?,to:?(testVar5)?)");
+		parser.parseExpression("!(test.string)!.subString(bbb:<(test10;test3@test10dataexpressionsuite|test2)>.with(aa_a_b:?(testVar4_a_b)?,to:?(testVar5)?),from_a_b:?(testVar4)?,to:?(testVar5)?)");
 	}
 	
 	
