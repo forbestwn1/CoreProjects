@@ -52,26 +52,18 @@ public class HAPExpressionParserImp implements HAPParserExpression{
 		  HAPOperand operand = null;
 		  if(expressionEles.constantNode!=null){
 			//it is a constant operand  
-			 operand = new HAPOperandConstant(HAPExpressionEscape.deescape((String)expressionEles.constantNode.jjtGetValue()));
+			 operand = new HAPOperandConstant(HAPExpressionEscape.deescape(getName(expressionEles.constantNode, NosliwExpressionParser.JJTCONSTANTNAME)));
 		  }
 		  else if(expressionEles.variableNode!=null){
 			  //it is a variable operand
-			 operand = new HAPOperandVariable(((String)expressionEles.variableNode.jjtGetValue()));
+			 operand = new HAPOperandVariable(getName(expressionEles.variableNode, NosliwExpressionParser.JJTVAIRALBENAME));
 		  }
 		  else if(expressionEles.referenceNode!=null){
-			  //it is a variable operand
-			 operand = new HAPOperandReference(((String)expressionEles.referenceNode.jjtGetValue()));
+			  //it is a reference operand
+			 operand = new HAPOperandReference(getName(expressionEles.referenceNode, NosliwExpressionParser.JJTREFERENCENAME));
 		  }
 		  else if(expressionEles.dataTypeNode!=null){
-			  String dataTypeInfo = null;
-			  int childNum = expressionEles.dataTypeNode.jjtGetNumChildren();
-			  for(int i=0; i<childNum; i++){
-				  SimpleNode childNode = (SimpleNode)expressionEles.dataTypeNode.jjtGetChild(i);
-				  if(childNode.getId()==NosliwExpressionParser.JJTDATATYPENAME){
-					  dataTypeInfo = (String)childNode.jjtGetValue();
-					  break;
-				  }
-			  }
+			  String dataTypeInfo = getName(expressionEles.dataTypeNode, NosliwExpressionParser.JJTDATATYPENAME);
 			  String operation = (String)expressionEles.nameNode.jjtGetValue();
 			  operand = new HAPOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes));
 		  }
@@ -80,6 +72,20 @@ public class HAPExpressionParserImp implements HAPParserExpression{
 		  return out;
 	  }
 
+	  
+	  private String getName(SimpleNode node, int nameId){
+		  String out = null;
+		  int childNum = node.jjtGetNumChildren();
+		  for(int i=0; i<childNum; i++){
+			  SimpleNode childNode = (SimpleNode)node.jjtGetChild(i);
+			  if(childNode.getId()==nameId){
+				  out = (String)childNode.jjtGetValue();
+				  break;
+			  }
+		  }
+		  return out;
+	  }
+	  
 	  private HAPOperand processExpression1Node(SimpleNode parentNode, HAPOperand aheadOperand){
 		  if(isNodeEmpty(parentNode))  return aheadOperand;
 
@@ -192,13 +198,11 @@ public class HAPExpressionParserImp implements HAPParserExpression{
 		  return out;
 	  }
 	  
-	  
 	  private static boolean isNodeEmpty(SimpleNode node){
 		  if(node.jjtGetNumChildren()==0)   return true;
 		  return false;
 	  } 
 	  
-//	  protected HAPDataTypeManager getDataTypeManager(){  return this.m_dataTypeMan;   }
 }
 
 class ExpressionElements{

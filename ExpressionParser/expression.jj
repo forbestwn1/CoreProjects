@@ -51,21 +51,54 @@ Token Name():
 }
 
 /*
-Token DataTypeName():
-{
-	Token t ;
-}
-{
-	t = <NAME>
-	{jjtThis.value = t.image; return t;}
-}
-*/
-
-
-/*
-operation parm
+data type name
 */
 SimpleNode DataTypeName() #DATATYPENAME:
+{
+	String value = "";
+	Token t;
+}
+{
+	(
+(t=<CONSTANT> {value=value+t.image;}) (t=<CONSTANT> {value=value+t.image;} | "." {value=value+".";})*
+	)
+	{jjtThis.value=value;   return jjtThis;}
+} 
+
+/*
+variable name
+*/
+SimpleNode VariableName() #VAIRALBENAME:
+{
+	String value = "";
+	Token t;
+}
+{
+	(
+(t=<CONSTANT> {value=value+t.image;}) (t=<CONSTANT> {value=value+t.image;} | "." {value=value+".";})*
+	)
+	{jjtThis.value=value;   return jjtThis;}
+} 
+
+/*
+constant name
+*/
+SimpleNode ConstantName() #CONSTANTNAME:
+{
+	String value = "";
+	Token t;
+}
+{
+	(
+(t=<CONSTANT> {value=value+t.image;}) (t=<CONSTANT> {value=value+t.image;} | "." {value=value+".";})*
+	)
+	{jjtThis.value=value;   return jjtThis;}
+} 
+
+/*
+reference name
+*/
+SimpleNode ReferenceName() #REFERENCENAME:
 {
 	String value = "";
 	Token t;
@@ -81,13 +114,12 @@ SimpleNode DataTypeName() #DATATYPENAME:
 /*
 constant data, any format allowed, json, string literal, ...
 */
-void Constant() #CONSTANT:
+SimpleNode Constant() #CONSTANT:
 {
-	Token t ;
 }
 {
-	<OPEN_CONSTANT>  t=<CONSTANT>  <CLOSE_CONSTANT>
-	{jjtThis.value = t.image;}
+	<OPEN_CONSTANT>  ConstantName()  <CLOSE_CONSTANT>
+	{return jjtThis;}
 }
 
 /*
@@ -104,38 +136,38 @@ SimpleNode DataType() #DATATYPE:
 /*
 variable in expression. 
 */
-void Variable() #VARIABLE:
+SimpleNode Variable() #VARIABLE:
 {
-	Token t ;
 }
 {
-	<OPEN_VARIABLE>	t=Name()  <CLOSE_VARIABLE>
-	{jjtThis.value = t.image;}
+	<OPEN_VARIABLE>	VariableName()  <CLOSE_VARIABLE>
+	{return jjtThis;}
 }
 
 /*
 parm name in expression. 
 */
-void ParmName() #PARMNAME:
+SimpleNode ParmName() #PARMNAME:
 {
-	Token t ;
+	String value = "";
+	Token t;
 }
 {
-	t = <CONSTANT>
-	{jjtThis.value = t.image;}
-}
-
+	(
+(t=<CONSTANT> {value=value+t.image;}) (t=<CONSTANT> {value=value+t.image;} | "." {value=value+".";})*
+	)
+	{jjtThis.value=value;   return jjtThis;}
+} 
 
 /*
 reference in expression. 
 */
-void Reference() #REFERENCE:
+SimpleNode Reference() #REFERENCE:
 {
-	Token t ;
 }
 {
-	<OPEN_REFERENCE>	t=Name()  <CLOSE_REFERENCE>
-	{jjtThis.value = t.image;}
+	<OPEN_REFERENCE> ReferenceName()  <CLOSE_REFERENCE>
+	{return jjtThis;}
 }
 
 /*

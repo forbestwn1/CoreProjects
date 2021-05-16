@@ -55,7 +55,6 @@ public class HAPOperandReference extends HAPOperandImp{
 		super(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE);
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		this.setElementName(null);
-		this.setInputMapping(null);
 	}
 	
 	public HAPOperandReference(String expressionName){
@@ -108,10 +107,9 @@ public class HAPOperandReference extends HAPOperandImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(REFERENCENAME, m_referenceName);
-		jsonMap.put(EXPRESSION, this.m_expression.toStringValue(HAPSerializationFormat.JSON));
+//		jsonMap.put(EXPRESSION, this.m_expression.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ELEMENTNAME, this.m_elementName);
 		jsonMap.put(VARMATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
-		jsonMap.put(VARMAPPING, HAPJsonUtility.buildJson(this.m_variableMapping, HAPSerializationFormat.JSON));
 	}
 
 	private String getInternalVariable(String ext) {
@@ -119,7 +117,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 	
 	private String getExternalVariable(String ext) {
-		return this.m_variableMapping.get(ext);
+//		return this.m_variableMapping.get(ext);
 	}
 	
 	@Override

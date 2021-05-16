@@ -31,19 +31,7 @@ public class NosliwExpressionParser/*@bgen(jjtree)*/implements NosliwExpressionP
   }
 
 /*
-Token DataTypeName():
-{
-	Token t ;
-}
-{
-	t = <NAME>
-	{jjtThis.value = t.image; return t;}
-}
-*/
-
-
-/*
-operation parm
+data type name
 */
   final public SimpleNode DataTypeName() throws ParseException {
  /*@bgen(jjtree) DATATYPENAME */
@@ -92,25 +80,187 @@ operation parm
   }
 
 /*
-constant data, any format allowed, json, string literal, ...
+variable name
 */
-  final public void Constant() throws ParseException {
- /*@bgen(jjtree) CONSTANT */
-        SimpleNode jjtn000 = new SimpleNode(JJTCONSTANT);
+  final public SimpleNode VariableName() throws ParseException {
+ /*@bgen(jjtree) VAIRALBENAME */
+        SimpleNode jjtn000 = new SimpleNode(JJTVAIRALBENAME);
         boolean jjtc000 = true;
-        jjtree.openNodeScope(jjtn000);Token t ;
+        jjtree.openNodeScope(jjtn000);String value = "";
+        Token t;
     try {
-      jj_consume_token(OPEN_CONSTANT);
       t = jj_consume_token(CONSTANT);
-      jj_consume_token(CLOSE_CONSTANT);
+               value=value+t.image;
+      label_2:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONSTANT:
+        case 14:
+          ;
+          break;
+        default:
+          jj_la1[2] = jj_gen;
+          break label_2;
+        }
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONSTANT:
+          t = jj_consume_token(CONSTANT);
+                                                     value=value+t.image;
+          break;
+        case 14:
+          jj_consume_token(14);
+                                                                                  value=value+".";
+          break;
+        default:
+          jj_la1[3] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
-         jjtn000.value = t.image;
+         jjtn000.value=value;   {if (true) return jjtn000;}
     } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
     }
+    throw new Error("Missing return statement in function");
+  }
+
+/*
+constant name
+*/
+  final public SimpleNode ConstantName() throws ParseException {
+ /*@bgen(jjtree) CONSTANTNAME */
+        SimpleNode jjtn000 = new SimpleNode(JJTCONSTANTNAME);
+        boolean jjtc000 = true;
+        jjtree.openNodeScope(jjtn000);String value = "";
+        Token t;
+    try {
+      t = jj_consume_token(CONSTANT);
+               value=value+t.image;
+      label_3:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONSTANT:
+        case 14:
+          ;
+          break;
+        default:
+          jj_la1[4] = jj_gen;
+          break label_3;
+        }
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONSTANT:
+          t = jj_consume_token(CONSTANT);
+                                                     value=value+t.image;
+          break;
+        case 14:
+          jj_consume_token(14);
+                                                                                  value=value+".";
+          break;
+        default:
+          jj_la1[5] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      }
+          jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+         jjtn000.value=value;   {if (true) return jjtn000;}
+    } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+/*
+reference name
+*/
+  final public SimpleNode ReferenceName() throws ParseException {
+ /*@bgen(jjtree) REFERENCENAME */
+        SimpleNode jjtn000 = new SimpleNode(JJTREFERENCENAME);
+        boolean jjtc000 = true;
+        jjtree.openNodeScope(jjtn000);String value = "";
+        Token t;
+    try {
+      t = jj_consume_token(CONSTANT);
+               value=value+t.image;
+      label_4:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONSTANT:
+        case 14:
+          ;
+          break;
+        default:
+          jj_la1[6] = jj_gen;
+          break label_4;
+        }
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONSTANT:
+          t = jj_consume_token(CONSTANT);
+                                                     value=value+t.image;
+          break;
+        case 14:
+          jj_consume_token(14);
+                                                                                  value=value+".";
+          break;
+        default:
+          jj_la1[7] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      }
+          jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+         jjtn000.value=value;   {if (true) return jjtn000;}
+    } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+/*
+constant data, any format allowed, json, string literal, ...
+*/
+  final public SimpleNode Constant() throws ParseException {
+ /*@bgen(jjtree) CONSTANT */
+  SimpleNode jjtn000 = new SimpleNode(JJTCONSTANT);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+    try {
+      jj_consume_token(OPEN_CONSTANT);
+      ConstantName();
+      jj_consume_token(CLOSE_CONSTANT);
+          jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+         {if (true) return jjtn000;}
+    } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            {if (true) throw (RuntimeException)jjte000;}
+          }
+          if (jjte000 instanceof ParseException) {
+            {if (true) throw (ParseException)jjte000;}
+          }
+          {if (true) throw (Error)jjte000;}
+    } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+    }
+    throw new Error("Missing return statement in function");
   }
 
 /*
@@ -153,18 +303,18 @@ data type, it is appeared when do data type function call
 /*
 variable in expression. 
 */
-  final public void Variable() throws ParseException {
+  final public SimpleNode Variable() throws ParseException {
  /*@bgen(jjtree) VARIABLE */
-        SimpleNode jjtn000 = new SimpleNode(JJTVARIABLE);
-        boolean jjtc000 = true;
-        jjtree.openNodeScope(jjtn000);Token t ;
+  SimpleNode jjtn000 = new SimpleNode(JJTVARIABLE);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
     try {
       jj_consume_token(OPEN_VARIABLE);
-      t = Name();
+      VariableName();
       jj_consume_token(CLOSE_VARIABLE);
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
-         jjtn000.value = t.image;
+         {if (true) return jjtn000;}
     } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
@@ -184,43 +334,73 @@ variable in expression.
             jjtree.closeNodeScope(jjtn000, true);
           }
     }
+    throw new Error("Missing return statement in function");
   }
 
 /*
 parm name in expression. 
 */
-  final public void ParmName() throws ParseException {
+  final public SimpleNode ParmName() throws ParseException {
  /*@bgen(jjtree) PARMNAME */
         SimpleNode jjtn000 = new SimpleNode(JJTPARMNAME);
         boolean jjtc000 = true;
-        jjtree.openNodeScope(jjtn000);Token t ;
+        jjtree.openNodeScope(jjtn000);String value = "";
+        Token t;
     try {
       t = jj_consume_token(CONSTANT);
+               value=value+t.image;
+      label_5:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONSTANT:
+        case 14:
+          ;
+          break;
+        default:
+          jj_la1[8] = jj_gen;
+          break label_5;
+        }
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONSTANT:
+          t = jj_consume_token(CONSTANT);
+                                                     value=value+t.image;
+          break;
+        case 14:
+          jj_consume_token(14);
+                                                                                  value=value+".";
+          break;
+        default:
+          jj_la1[9] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
-         jjtn000.value = t.image;
+         jjtn000.value=value;   {if (true) return jjtn000;}
     } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
     }
+    throw new Error("Missing return statement in function");
   }
 
 /*
 reference in expression. 
 */
-  final public void Reference() throws ParseException {
+  final public SimpleNode Reference() throws ParseException {
  /*@bgen(jjtree) REFERENCE */
-        SimpleNode jjtn000 = new SimpleNode(JJTREFERENCE);
-        boolean jjtc000 = true;
-        jjtree.openNodeScope(jjtn000);Token t ;
+  SimpleNode jjtn000 = new SimpleNode(JJTREFERENCE);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
     try {
       jj_consume_token(OPEN_REFERENCE);
-      t = Name();
+      ReferenceName();
       jj_consume_token(CLOSE_REFERENCE);
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
-         jjtn000.value = t.image;
+         {if (true) return jjtn000;}
     } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
@@ -240,6 +420,7 @@ reference in expression.
             jjtree.closeNodeScope(jjtn000, true);
           }
     }
+    throw new Error("Missing return statement in function");
   }
 
 /*
@@ -264,7 +445,7 @@ operation parm
         Expression(String.valueOf(i));
         break;
       default:
-        jj_la1[2] = jj_gen;
+        jj_la1[10] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -328,15 +509,15 @@ represent any expression
         case OPEN_REFERENCE:
           Parameter(String.valueOf(i));
                                                            i++;
-          label_2:
+          label_6:
           while (true) {
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case COMMAR:
               ;
               break;
             default:
-              jj_la1[3] = jj_gen;
-              break label_2;
+              jj_la1[11] = jj_gen;
+              break label_6;
             }
             jj_consume_token(COMMAR);
             Parameter(String.valueOf(i));
@@ -344,14 +525,14 @@ represent any expression
           }
           break;
         default:
-          jj_la1[4] = jj_gen;
+          jj_la1[12] = jj_gen;
           ;
         }
         jj_consume_token(CLOSE_PAR);
         Expression1();
         break;
       default:
-        jj_la1[5] = jj_gen;
+        jj_la1[13] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -404,15 +585,15 @@ it is create to avoid left recursion.
           case OPEN_REFERENCE:
             Parameter(String.valueOf(i));
                                                                     i++;
-            label_3:
+            label_7:
             while (true) {
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case COMMAR:
                 ;
                 break;
               default:
-                jj_la1[6] = jj_gen;
-                break label_3;
+                jj_la1[14] = jj_gen;
+                break label_7;
               }
               jj_consume_token(COMMAR);
               Parameter(String.valueOf(i));
@@ -420,20 +601,20 @@ it is create to avoid left recursion.
             }
             break;
           default:
-            jj_la1[7] = jj_gen;
+            jj_la1[15] = jj_gen;
             ;
           }
           jj_consume_token(CLOSE_PAR);
                                                                                                                                         jjtn000.value="function";
           break;
         default:
-          jj_la1[8] = jj_gen;
+          jj_la1[16] = jj_gen;
           ;
         }
         Expression1();
         break;
       default:
-        jj_la1[9] = jj_gen;
+        jj_la1[17] = jj_gen;
 
       }
           jjtree.closeNodeScope(jjtn000, true);
@@ -470,13 +651,13 @@ it is create to avoid left recursion.
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[10];
+  final private int[] jj_la1 = new int[18];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x4020,0x4020,0x1560,0x8,0x1560,0x1540,0x8,0x1560,0x2,0x4000,};
+      jj_la1_0 = new int[] {0x4020,0x4020,0x4020,0x4020,0x4020,0x4020,0x4020,0x4020,0x4020,0x4020,0x1560,0x8,0x1560,0x1540,0x8,0x1560,0x2,0x4000,};
    }
 
   /** Constructor with InputStream. */
@@ -490,7 +671,7 @@ it is create to avoid left recursion.
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -505,7 +686,7 @@ it is create to avoid left recursion.
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -515,7 +696,7 @@ it is create to avoid left recursion.
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -526,7 +707,7 @@ it is create to avoid left recursion.
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -535,7 +716,7 @@ it is create to avoid left recursion.
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -545,7 +726,7 @@ it is create to avoid left recursion.
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -601,7 +782,7 @@ it is create to avoid left recursion.
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 18; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

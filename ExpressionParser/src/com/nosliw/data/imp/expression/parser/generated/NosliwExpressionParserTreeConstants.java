@@ -5,19 +5,25 @@ public interface NosliwExpressionParserTreeConstants
 {
   public int JJTNAME = 0;
   public int JJTDATATYPENAME = 1;
-  public int JJTCONSTANT = 2;
-  public int JJTDATATYPE = 3;
-  public int JJTVARIABLE = 4;
-  public int JJTPARMNAME = 5;
-  public int JJTREFERENCE = 6;
-  public int JJTPARAMETER = 7;
-  public int JJTEXPRESSION = 8;
-  public int JJTEXPRESSION1 = 9;
+  public int JJTVAIRALBENAME = 2;
+  public int JJTCONSTANTNAME = 3;
+  public int JJTREFERENCENAME = 4;
+  public int JJTCONSTANT = 5;
+  public int JJTDATATYPE = 6;
+  public int JJTVARIABLE = 7;
+  public int JJTPARMNAME = 8;
+  public int JJTREFERENCE = 9;
+  public int JJTPARAMETER = 10;
+  public int JJTEXPRESSION = 11;
+  public int JJTEXPRESSION1 = 12;
 
 
   public String[] jjtNodeName = {
     "Name",
     "DATATYPENAME",
+    "VAIRALBENAME",
+    "CONSTANTNAME",
+    "REFERENCENAME",
     "CONSTANT",
     "DATATYPE",
     "VARIABLE",
@@ -28,4 +34,4 @@ public interface NosliwExpressionParserTreeConstants
     "EXPRESSION1",
   };
 }
-/* JavaCC - OriginalChecksum=df0cdad4e91277c25b5f697c5e111daa (do not edit this line) */
+/* JavaCC - OriginalChecksum=949f9d91b40f6069df5cda71b4067ab4 (do not edit this line) */
