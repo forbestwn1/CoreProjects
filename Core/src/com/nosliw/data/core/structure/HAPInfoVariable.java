@@ -18,10 +18,11 @@ public class HAPInfoVariable {
 		this.m_criteriaInfo = criteriaInfo;
 		this.m_idPath = idPath;
 		this.m_rootAliases = rootAliases;
-		
 	}
 
 	public Set<String> getRootAliases(){   return this.m_rootAliases;     }
+	
+	public String getPrincipleRootAlias(){   return this.m_rootAliases.iterator().next();    }
 	
 	public HAPInfoCriteria getCriteriaInfo() {   return this.m_criteriaInfo;    }
 	

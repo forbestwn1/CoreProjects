@@ -16,7 +16,6 @@ import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -64,9 +63,11 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	public String getReferenceName(){  return this.m_referenceName;  }
 	
-	public void setMapping(List<HAPMappingInReferenceOperand> mapping) {
-		for(HAPMappingInReferenceOperand ele : mapping)		this.m_mapping.put(ele.getName(), this.createOperandWrapper(ele.getOperand()));
-		
+	public void addMapping(String varName, HAPOperand operand) {	this.m_mapping.put(varName, this.createOperandWrapper(operand));	}
+	public Map<String, HAPOperandWrapper> getMapping(){    return this.m_mapping;      }
+	public void setMapping(Map<String, HAPOperandWrapper> mapping) {    
+		this.m_mapping.clear();
+		this.m_mapping.putAll(mapping);
 	}
 
 	public HAPExecutableExpressionGroup getReferedExpression() {   return this.m_expression;   }
@@ -112,14 +113,6 @@ public class HAPOperandReference extends HAPOperandImp{
 		jsonMap.put(VARMATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 	}
 
-	private String getInternalVariable(String ext) {
-		return null;
-	}
-	
-	private String getExternalVariable(String ext) {
-//		return this.m_variableMapping.get(ext);
-	}
-	
 	@Override
 	public HAPMatchers discover(
 			HAPContainerVariableCriteriaInfo variablesInfo,
@@ -133,13 +126,11 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_expression.discover(cs, dataTypeHelper, processTracker);
 
 		//variable
+		
 		HAPContainerVariableCriteriaInfo internalVariablesInfo = this.m_expression.getVarsInfo();
-		for(String inVarName : this.m_variableMapping.keySet()) {
-			String exVarName = getExternalVariable(inVarName);
-			HAPInfoCriteria inVar = internalVariablesInfo.getVariableInfoByAlias(inVarName);
-			HAPInfoCriteria exVar = variablesInfo.getVariableInfoByAlias(exVarName);
-			HAPMatchers matchers = HAPCriteriaUtility.mergeVariableInfo(exVar, inVar.getCriteria(), dataTypeHelper);
-			this.m_matchers.put(inVarName, matchers);
+		for(String inVarId : this.m_mapping.keySet()) {
+			HAPMatchers matchers = this.m_mapping.get(inVarId).getOperand().discover(variablesInfo, internalVariablesInfo.getVariableCriteriaInfoById(inVarId).getCriteria(), processTracker, dataTypeHelper);
+			this.m_matchers.put(inVarId, matchers);
 		}
 		
 		//output

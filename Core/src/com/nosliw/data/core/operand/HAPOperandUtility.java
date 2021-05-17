@@ -221,13 +221,6 @@ public class HAPOperandUtility {
 					HAPOperandVariable varOperand = (HAPOperandVariable)operand.getOperand();
 					varNames.add(varOperand.getVariableName());
 					break;
-				case HAPConstantShared.EXPRESSION_OPERAND_REFERENCE:
-					HAPOperandReference refOperand = (HAPOperandReference)operand.getOperand();
-					Map<String, String> refVarMapping = refOperand.getVariableMapping();
-					for(String n : refVarMapping.keySet()) {
-						varNames.add(refVarMapping.get(n));
-					}
-					break;
 				}
 				return true;
 			}
