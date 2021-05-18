@@ -10,7 +10,6 @@ import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
 
 public class HAPOperandVariable extends HAPOperandImp{
  
@@ -41,6 +40,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLENAME, m_variableName);
+		jsonMap.put(VARIABLEID, m_variableId);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
 		
-		HAPInfoCriteria variableInfo = variablesInfo.getVariableCriteriaInfoById(this.getVariableId());
+		HAPInfoCriteria variableInfo = variablesInfo.getVariableCriteriaInfo(this.getVariableId());
 		
 //		if(variableInfo==null){
 //			//found a new variable

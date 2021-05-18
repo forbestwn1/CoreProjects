@@ -15,17 +15,17 @@ import com.nosliw.data.core.valuestructure.HAPElementContextStructureValueExecut
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
+import com.nosliw.data.core.valuestructure.HAPStructure;
 
 public class HAPUtilityContext {
 
 	public static Map<String, Object> discoverContantsValueFromContextStructure(HAPValueStructureDefinition contextStructure) {
-		HAPValueStructureExecutable flatContext = buildFlatContextFromContextStructure(contextStructure);
+		HAPStructure flatContext = buildFlatContextFromContextStructure(contextStructure);
 		return flatContext.getConstantValue();
 	}
 	
-	public static HAPValueStructureExecutable buildFlatContextFromContextStructure(HAPValueStructureDefinition contextStructure) {
-		HAPValueStructureExecutable out = null;
+	public static HAPStructure buildFlatContextFromContextStructure(HAPValueStructureDefinition contextStructure) {
+		HAPStructure out = null;
 		String type = contextStructure.getType();
 		if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			out = buildFlatContextFromContextGroup((HAPValueStructureDefinitionGroup)contextStructure);
@@ -36,16 +36,16 @@ public class HAPUtilityContext {
 		return out;
 	}
 
-	public static HAPValueStructureExecutable buildFlatContextFromContext(HAPValueStructureDefinitionFlat context) {
-		HAPValueStructureExecutable out = new HAPValueStructureExecutable();
+	public static HAPStructure buildFlatContextFromContext(HAPValueStructureDefinitionFlat context) {
+		HAPStructure out = new HAPStructure();
 		for(String name : context.getRootNames()) {
 			out.addRoot(context.getRoot(name), name);
 		}
 		return out;
 	}
 	
-	public static HAPValueStructureExecutable buildFlatContextFromContextGroup(HAPValueStructureDefinitionGroup context) {
-		HAPValueStructureExecutable out = new HAPValueStructureExecutable();
+	public static HAPStructure buildFlatContextFromContextGroup(HAPValueStructureDefinitionGroup context) {
+		HAPStructure out = new HAPStructure();
 		
 		List<String> categarys = Arrays.asList(HAPValueStructureDefinitionGroup.getAllCategariesWithPriority());
 		Collections.reverse(categarys);

@@ -9,14 +9,14 @@ import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
-import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
 
 public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScriptImp implements HAPExecutableScriptWithSegment{
 
 	private List<HAPExecutableScript> m_segs;
 
 	//all data variables info in script
-	private HAPContainerVariableCriteriaInfo m_variableInfos;
+	private HAPDefinitionContainerVariableCriteriaInfo m_variableInfos;
 	
 	//all variables name in script
 	private Set<String> m_variables;
@@ -40,9 +40,9 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 	public List<HAPExecutableScript> getSegments(){    return this.m_segs;     }
 
 	@Override
-	public HAPContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
+	public HAPDefinitionContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
 		if(this.m_variableInfos==null) {
-			this.m_variableInfos = new HAPContainerVariableCriteriaInfo();
+			this.m_variableInfos = new HAPDefinitionContainerVariableCriteriaInfo();
 			for(HAPExecutableScript seg : this.m_segs) {
 //				HAPContainerVariableCriteriaInfo varInfos = seg.discoverVariablesInfo1(expressionGroup);
 //				for(String name : varInfos.keySet()) {

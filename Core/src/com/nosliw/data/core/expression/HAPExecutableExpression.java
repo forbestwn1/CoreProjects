@@ -11,16 +11,13 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperandConstant;
-import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
@@ -30,8 +27,6 @@ import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 @HAPEntityWithAttribute
 public class HAPExecutableExpression extends HAPExecutableImp{
@@ -101,31 +96,31 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 		return new HashSet<HAPDefinitionConstant>(out.values());
 	}
 	
-	public void updateVariableName(HAPUpdateName nameUpdate) {
-		HAPOperandUtility.updateNameInOperand(this.m_operand, nameUpdate, new String[]{HAPConstantShared.EXPRESSION_OPERAND_VARIABLE});
-		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
-					
-					String inputMappingType = inputMapping.getType();
-					if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
-						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-						HAPValueStructureDefinitionFlat da = mappingDa.getMapping();
-						da.updateReferenceName(nameUpdate);
-					}
-					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {
-					}
-					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_NONE)) {
-					}
-				}
-				return true;
-			}
-		});
-	}
+//	public void updateVariableName(HAPUpdateName nameUpdate) {
+//		HAPOperandUtility.updateNameInOperand(this.m_operand, nameUpdate, new String[]{HAPConstantShared.EXPRESSION_OPERAND_VARIABLE});
+//		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
+//			@Override
+//			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+//				String opType = operand.getOperand().getType();
+//				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
+//					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+//					HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
+//					
+//					String inputMappingType = inputMapping.getType();
+//					if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
+//						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
+//						HAPValueStructureDefinitionFlat da = mappingDa.getMapping();
+//						da.updateReferenceName(nameUpdate);
+//					}
+//					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {
+//					}
+//					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_NONE)) {
+//					}
+//				}
+//				return true;
+//			}
+//		});
+//	}
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {

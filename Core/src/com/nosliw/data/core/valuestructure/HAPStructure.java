@@ -27,7 +27,7 @@ import com.nosliw.data.core.structure.HAPUtilityContext;
 //Also, we can find global name by local name
 //flat context is back compatible with context
 @HAPEntityWithAttribute
-public class HAPValueStructureExecutable extends HAPSerializableImp implements HAPValueStructure{
+public class HAPStructure extends HAPSerializableImp implements HAPValueStructure{
 
 	@HAPAttribute
 	public static final String CONTEXT = "context";
@@ -40,7 +40,7 @@ public class HAPValueStructureExecutable extends HAPSerializableImp implements H
 	
 	private Map<String, HAPRoot> m_rootById;
 	
-	public HAPValueStructureExecutable() {
+	public HAPStructure() {
 		this.m_rootById = new LinkedHashMap<String, HAPRoot>();
 	}
 
@@ -126,8 +126,8 @@ public class HAPValueStructureExecutable extends HAPSerializableImp implements H
 		return updatedPath.getFullName();
 	}
 
-	public HAPValueStructureExecutable getVariableContext() {   
-		HAPValueStructureExecutable out = new HAPValueStructureExecutable();
+	public HAPStructure getVariableContext() {   
+		HAPStructure out = new HAPStructure();
 		HAPValueStructureDefinitionFlat varContext = this.m_context.getVariableContext();
 		for(String rootName : varContext.getRootNames()) {
 			out.addRoot(varContext.getRoot(rootName), rootName, this.m_namesByVarId.get(rootName));
@@ -176,7 +176,7 @@ public class HAPValueStructureExecutable extends HAPSerializableImp implements H
 
 	@Override
 	public HAPStructure cloneStructure() {
-		HAPValueStructureExecutable out = new HAPValueStructureExecutable();
+		HAPStructure out = new HAPStructure();
 		out.m_idByName.putAll(this.m_idByName);
 		for(String varId : this.m_namesByVarId.keySet()) {
 			out.m_namesByVarId.put(varId, new HashSet<String>(this.m_namesByVarId.get(varId)));

@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
-import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
 
 public abstract class HAPExecutableScriptImp extends HAPExecutableImp implements HAPExecutableScript{
 
@@ -21,7 +21,7 @@ public abstract class HAPExecutableScriptImp extends HAPExecutableImp implements
 	public String getId() {   return this.m_id;  }
 
 	@Override
-	public HAPContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {  return new HAPContainerVariableCriteriaInfo();  }
+	public HAPDefinitionContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {  return new HAPDefinitionContainerVariableCriteriaInfo();  }
 
 	@Override
 	public Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup){  return new HashSet<String>();  }

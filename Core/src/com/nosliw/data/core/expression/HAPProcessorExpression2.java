@@ -27,7 +27,7 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
 import com.nosliw.data.core.structure.HAPUtilityContext;
-import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
@@ -67,12 +67,12 @@ public class HAPProcessorExpression2 {
 
 	//build variable into within expression item
 	private static void discoverExpressionItemVariable(HAPExecutableExpressionGroup expression) {
-		HAPContainerVariableCriteriaInfo expressionVarsContainer = expression.getVarsInfo();
+		HAPDefinitionContainerVariableCriteriaInfo expressionVarsContainer = expression.getVarsInfo();
 		Map<String, HAPExecutableExpression> items = expression.getExpressionItems();
 		for(String name : items.keySet()) {
 			HAPExecutableExpression item = items.get(name);
 			Set<String> varNames = HAPOperandUtility.discoverVariableNames(item.getOperand());
-			HAPContainerVariableCriteriaInfo itemVarsInfo = expressionVarsContainer.buildSubContainer(varNames);
+			HAPDefinitionContainerVariableCriteriaInfo itemVarsInfo = expressionVarsContainer.buildSubContainer(varNames);
 			item.setVariablesInfo(itemVarsInfo);
 			
 			
@@ -112,7 +112,7 @@ public class HAPProcessorExpression2 {
 		
 		//variable
 		//variable --- from context
-		HAPContainerVariableCriteriaInfo varsContainer = HAPUtilityContext.discoverDataVariablesInStructure(out.getContextFlat());
+		HAPDefinitionContainerVariableCriteriaInfo varsContainer = HAPUtilityContext.discoverDataVariablesInStructure(out.getContextFlat());
 		out.setVarsInfo(varsContainer);
 
 		Set<HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();
@@ -226,8 +226,8 @@ public class HAPProcessorExpression2 {
 						
 						//variable mapping
 						HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
-						HAPContainerVariableCriteriaInfo parentVarsContainer = expressionExe.getVarsInfo();
-						HAPContainerVariableCriteriaInfo referedVarsContainer = referenceOperand.getReferedExpression().getVarsInfo();
+						HAPDefinitionContainerVariableCriteriaInfo parentVarsContainer = expressionExe.getVarsInfo();
+						HAPDefinitionContainerVariableCriteriaInfo referedVarsContainer = referenceOperand.getReferedExpression().getVarsInfo();
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
@@ -321,8 +321,8 @@ public class HAPProcessorExpression2 {
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						HAPExecutableExpressionGroup refExpressionExe = referenceOperand.getReferedExpression();
 						
-						HAPContainerVariableCriteriaInfo parentContainer = expressionExe.getVarsInfo();
-						HAPContainerVariableCriteriaInfo referedContainer = referenceOperand.getReferedExpression().getVarsInfo();
+						HAPDefinitionContainerVariableCriteriaInfo parentContainer = expressionExe.getVarsInfo();
+						HAPDefinitionContainerVariableCriteriaInfo referedContainer = referenceOperand.getReferedExpression().getVarsInfo();
 
 						Map<String, String> nameMapping = new LinkedHashMap<String, String>();
 						HAPDefinitionDataAssociation inputMapping =	referenceOperand.getInputMapping();

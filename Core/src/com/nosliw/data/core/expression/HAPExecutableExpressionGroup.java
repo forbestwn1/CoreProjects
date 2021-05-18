@@ -5,14 +5,12 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
 
 //entity that can is runnable within runtime environment
 @HAPEntityWithAttribute(baseName="EXPRESSIONGROUP")
@@ -26,14 +24,14 @@ public interface HAPExecutableExpressionGroup extends HAPSerializable, HAPExecut
 
 	String getId();
 	
-	HAPValueStructureExecutable getContextFlat();
+//	HAPValueStructureExecutable getContextFlat();
 	
 	HAPContainerVariableCriteriaInfo getVarsInfo();
 
 	void addExpression(String name, HAPOperandWrapper operand);
 	Map<String, HAPExecutableExpression> getExpressionItems();
 	
-	void updateVariableName(HAPUpdateName nameUpdate);
+//	void updateVariableName(HAPUpdateName nameUpdate);
 	
 	void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker);
 	

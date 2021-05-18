@@ -18,7 +18,7 @@ import com.nosliw.data.core.structure.HAPProcessorContextRelative;
 import com.nosliw.data.core.structure.HAPProcessorEscalate;
 import com.nosliw.data.core.structure.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
+import com.nosliw.data.core.valuestructure.HAPStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -152,7 +152,7 @@ public class HAPProcessorUIContext {
 		}
 		
 		//build flat context
-		HAPValueStructureExecutable flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(uiExe.getBody().getContext());
+		HAPStructure flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(uiExe.getBody().getContext());
 		uiExe.getBody().setFlatContext(flatContext);
 
 		//child tag

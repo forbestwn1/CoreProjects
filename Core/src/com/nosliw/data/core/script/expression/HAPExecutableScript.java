@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
 
 public interface HAPExecutableScript extends HAPExecutable{
 
@@ -21,7 +21,7 @@ public interface HAPExecutableScript extends HAPExecutable{
 
 	String getId();
 
-	HAPContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup);
+	HAPDefinitionContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup);
 
 	Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup);
 

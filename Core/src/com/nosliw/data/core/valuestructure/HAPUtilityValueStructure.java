@@ -31,8 +31,8 @@ import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityValueStructure {
 
-	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(HAPValueStructureDefinition structure) {
-		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+	public static HAPDefinitionContainerVariableCriteriaInfo discoverDataVariablesInStructure(HAPValueStructureDefinition structure) {
+		HAPDefinitionContainerVariableCriteriaInfo out = new HAPDefinitionContainerVariableCriteriaInfo();
 		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {
 			HAPComplexPath path = new HAPComplexPath(idPath);

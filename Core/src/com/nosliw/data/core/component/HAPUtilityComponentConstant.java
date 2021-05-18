@@ -13,35 +13,36 @@ import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.structure.HAPStructure;
+import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.value.HAPValue;
-import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
 
 public class HAPUtilityComponentConstant {
 
-	public static Map<String, HAPData> getConstantsData(HAPWithConstantDefinition defWithConstant, HAPValueStructureExecutable context){
+	public static Map<String, HAPData> getConstantsData(HAPWithConstantDefinition defWithConstant, HAPStructure structure){
 		Map<String, HAPData> out = new LinkedHashMap<String, HAPData>();
-		for(HAPDefinitionConstant constantDef : getDataConstantsDefinition(defWithConstant, context)) {
+		for(HAPDefinitionConstant constantDef : getDataConstantsDefinition(defWithConstant, structure)) {
 			HAPData data = constantDef.getData();
 			if(data!=null)	out.put(constantDef.getId(), data);
 		}
 		return out;
 	}
 	
-	public static Map<String, Object> getConstantsValue(HAPWithConstantDefinition defWithConstant, HAPValueStructureExecutable context){
+	public static Map<String, Object> getConstantsValue(HAPWithConstantDefinition defWithConstant, HAPStructure structure){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
-		for(HAPDefinitionConstant constantDef : getValueConstantsDefinition(defWithConstant, context)) {
+		for(HAPDefinitionConstant constantDef : getValueConstantsDefinition(defWithConstant, structure)) {
 			out.put(constantDef.getId(), constantDef.getValue());
 		}
 		return out;
 	}
 	
-	public static Set<HAPDefinitionConstant> getDataConstantsDefinition(HAPWithConstantDefinition defWithConstant, HAPValueStructureExecutable context){
+	public static Set<HAPDefinitionConstant> getDataConstantsDefinition(HAPWithConstantDefinition defWithConstant, HAPStructure structure){
 		Set<HAPDefinitionConstant> out = null;
 		out = defWithConstant.getConstantDefinitions();
 		if(out==null) {
 			//try to build constant from attachment and context
 			if(defWithConstant instanceof HAPWithAttachment) {
-				out = buildDataConstantDefinition(((HAPWithAttachment)defWithConstant).getAttachmentContainer(), context);
+				out = buildDataConstantDefinition(((HAPWithAttachment)defWithConstant).getAttachmentContainer(), structure);
 			}
 		}
 		
@@ -49,13 +50,13 @@ public class HAPUtilityComponentConstant {
 		return out;
 	}
 
-	public static Set<HAPDefinitionConstant> getValueConstantsDefinition(HAPWithConstantDefinition defWithConstant, HAPValueStructureExecutable context){
+	public static Set<HAPDefinitionConstant> getValueConstantsDefinition(HAPWithConstantDefinition defWithConstant, HAPStructure structure){
 		Set<HAPDefinitionConstant> out = null;
 		out = defWithConstant.getConstantDefinitions();
 		if(out==null) {
 			//try to build constant from attachment and context
 			if(defWithConstant instanceof HAPWithAttachment) {
-				out = buildConstantDefinition(((HAPWithAttachment)defWithConstant).getAttachmentContainer(), context);
+				out = buildConstantDefinition(((HAPWithAttachment)defWithConstant).getAttachmentContainer(), structure);
 			}
 		}
 		
@@ -81,11 +82,11 @@ public class HAPUtilityComponentConstant {
 		return out;
 	}
 
-	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPContainerAttachment attContainer, HAPValueStructureExecutable context){
+	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPContainerAttachment attContainer, HAPStructure structure){
 		Set<HAPDefinitionConstant> out = new HashSet<HAPDefinitionConstant>();
 		out.addAll(buildConstantDefinition(attContainer));
 		
-		Map<String, Object> constantsValue = context.getConstantValue();
+		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(structure);
 		for(String id : constantsValue.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
 			out.add(constantDef);
@@ -93,7 +94,7 @@ public class HAPUtilityComponentConstant {
 		return out;
 	}
 
-	public static Set<HAPDefinitionConstant> buildDataConstantDefinition(HAPContainerAttachment attContainer, HAPValueStructureExecutable context){
+	public static Set<HAPDefinitionConstant> buildDataConstantDefinition(HAPContainerAttachment attContainer, HAPStructure context){
 		return filterOutDataConstant(buildConstantDefinition(attContainer, context));
 	}
 	

@@ -18,7 +18,7 @@ import com.nosliw.data.core.structure.HAPInfoVariable;
 
 //store all variable in structure
 @HAPEntityWithAttribute
-public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
+public class HAPDefinitionContainerVariableCriteriaInfo extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String NAMESBYVARID = "namesByVarId";
@@ -36,7 +36,7 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	
 	private int m_index;
 	
-	public HAPContainerVariableCriteriaInfo() {
+	public HAPDefinitionContainerVariableCriteriaInfo() {
 		this.m_index = 0;
 		m_rootNamesById = new LinkedHashMap<String, Set<String>>();
 		m_criteriaInfosById = new LinkedHashMap<String, HAPInfoCriteria>();
@@ -165,8 +165,8 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 */
 	
 	@Override
-	public HAPContainerVariableCriteriaInfo clone() {
-		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+	public HAPDefinitionContainerVariableCriteriaInfo clone() {
+		HAPDefinitionContainerVariableCriteriaInfo out = new HAPDefinitionContainerVariableCriteriaInfo();
 		
 		for(String varId : this.m_namesByVarId.keySet()) {
 			out.m_namesByVarId.put(varId, new HashSet<String>(this.m_namesByVarId.get(varId)));

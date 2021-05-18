@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPData;
@@ -15,15 +14,15 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
-import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
 
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
 
@@ -31,21 +30,18 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	
 	private HAPValueStructureDefinition m_contextStructure;
 	
-	private HAPValueStructureExecutable m_flatContext;
-	
-	private HAPContainerVariableCriteriaInfo m_localVarsInfo;
-
 	private Map<String, HAPExecutableExpression> m_expressionItem;
 	 
-	
+	private HAPContainerVariableCriteriaInfo m_varInfos;
+
 	//temp info
 	private Map<String, HAPData> m_dataConstants;
 	public void setDataConstants(Map<String, HAPData> dataConstants) {   this.m_dataConstants = dataConstants;    }
 	public Map<String, HAPData> getDataConstants(){   return this.m_dataConstants;     }
 	
-	private HAPContainerVariableCriteriaInfo m_variableInfo;
-	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.m_variableInfo = varInfo;    }
-	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_variableInfo;    }
+	private HAPDefinitionContainerVariableCriteriaInfo m_variableInfo;
+	public void setVariablesInfo(HAPDefinitionContainerVariableCriteriaInfo varInfo) {  this.m_variableInfo = varInfo;    }
+	public HAPDefinitionContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_variableInfo;    }
 	
 	
 	public HAPExecutableExpressionGroupInSuite(String id) {
@@ -73,25 +69,6 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public void setStructureDefinition(HAPValueStructureDefinition structureDefinition) {	this.m_contextStructure = structureDefinition;	}
 	
 	@Override
-	public HAPValueStructureExecutable getContextFlat() {    return this.m_flatContext;    }
-
-	@Override
-	public HAPContainerVariableCriteriaInfo getVarsInfo() {  return this.m_localVarsInfo;  }
-	public void setVarsInfo(HAPContainerVariableCriteriaInfo varsInfo) {   this.m_localVarsInfo = varsInfo;  }
-
-	@Override
-	public void updateVariableName(HAPUpdateName nameUpdate) {
-		this.m_localVarsInfo.updateRootVariableName(nameUpdate);
-		
-		this.m_contextStructure.updateRootName(nameUpdate);
-		this.m_flatContext.updateRootName(nameUpdate);
-		
-		for(String name : this.m_expressionItem.keySet()) {
-			this.m_expressionItem.get(name).updateVariableName(nameUpdate);
-		}
-	}
-	
-	@Override
 	public void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker) {
 		Map<String, HAPInfoCriteria> discoveredVarsInf = new LinkedHashMap<String, HAPInfoCriteria>();
 		List<String> names = new ArrayList<String>();
@@ -106,10 +83,10 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 			operands.add(this.m_expressionItem.get(name).getOperand().getOperand());
 		}
 		
-		this.m_localVarsInfo = HAPOperandUtility.discover(
+		this.m_varInfos = HAPOperandUtility.discover(
 				operands,
 				outPutCriteria,
-				this.m_localVarsInfo,
+				this.m_varInfos,
 				discoveredVarsInf,
 				matchers,
 				dataTypeHelper,
@@ -129,7 +106,7 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(this.getExpressionItems(), HAPSerializationFormat.JSON));
-		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_localVarsInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_varInfos, HAPSerializationFormat.JSON));
 	}
 
 	@Override

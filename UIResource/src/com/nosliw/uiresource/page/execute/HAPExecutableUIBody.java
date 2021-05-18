@@ -24,7 +24,7 @@ import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPValueStructureExecutable;
+import com.nosliw.data.core.valuestructure.HAPStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
@@ -72,7 +72,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 
 	//context for content
 	private HAPContextGroupInUIBody m_context;
-	private HAPValueStructureExecutable m_flatContext;
+	private HAPStructure m_flatContext;
 	
 //	private Map<String, Object> m_constants;
 	
@@ -139,11 +139,11 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	public void setContext(HAPValueStructureDefinitionGroup context) {
 		this.m_context.setContext(context);
 	}
-	public HAPValueStructureExecutable getFlatContext() { return this.m_flatContext;  }
-	public void setFlatContext(HAPValueStructureExecutable context) {  this.m_flatContext = context;   }
-	public HAPValueStructureExecutable getVariableContext() {
+	public HAPStructure getFlatContext() { return this.m_flatContext;  }
+	public void setFlatContext(HAPStructure context) {  this.m_flatContext = context;   }
+	public HAPStructure getVariableContext() {
 		if(this.m_flatContext!=null)		return this.m_flatContext.getVariableContext();
-		else return new HAPValueStructureExecutable();
+		else return new HAPStructure();
 	}
 	
 //	public Map<String, Object> getConstantsValue(){   return this.m_processScriptContext.getConstantsValue();    }

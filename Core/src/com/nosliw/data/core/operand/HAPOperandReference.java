@@ -20,7 +20,6 @@ import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.valuestructure.HAPContainerVariableCriteriaInfo;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -129,7 +128,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		
 		HAPContainerVariableCriteriaInfo internalVariablesInfo = this.m_expression.getVarsInfo();
 		for(String inVarId : this.m_mapping.keySet()) {
-			HAPMatchers matchers = this.m_mapping.get(inVarId).getOperand().discover(variablesInfo, internalVariablesInfo.getVariableCriteriaInfoById(inVarId).getCriteria(), processTracker, dataTypeHelper);
+			HAPMatchers matchers = this.m_mapping.get(inVarId).getOperand().discover(variablesInfo, internalVariablesInfo.getVariableCriteriaInfo(inVarId).getCriteria(), processTracker, dataTypeHelper);
 			this.m_matchers.put(inVarId, matchers);
 		}
 		
