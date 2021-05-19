@@ -32,7 +32,7 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	public HAPValueStructureDefinition getValueStructure() {   return this.m_valueStructure;  }
 
 	@Override
-	public void setValueStructure(HAPValueStructureDefinition context) {  this.m_valueStructure = context;  }
+	public void setValueStructure(HAPValueStructureDefinition valueStructure) {  this.m_valueStructure = valueStructure;  }
 
 	@Override
 	public void cloneToWithValueStructure(HAPWithValueStructure withValueStructure) {   withValueStructure.setValueStructure((HAPValueStructureDefinition)this.m_valueStructure.cloneStructure());  }

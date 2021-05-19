@@ -8,6 +8,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 
 public class HAPElementNode extends HAPElementLeafVariable{
 
@@ -76,9 +77,9 @@ public class HAPElementNode extends HAPElementLeafVariable{
 		HAPElementNode solid = new HAPElementNode();
 		super.toStructureElement(solid);
 		for(String name : this.getChildren().keySet()){
-			String solidName = HAPProcessorContextSolidate.solidateLiterate(name, constants, runtimeEnv);
+			String solidName = HAPUtilityScriptExpression.solidateLiterate(name, constants, runtimeEnv);
 			HAPElement child = this.getChildren().get(name);
-			HAPElement solidChild = child.solidateConstantScript(constants, runtimeEnv);
+			HAPElement solidChild = (HAPElement)child.solidateConstantScript(constants, runtimeEnv);
 			solid.addChild(solidName, solidChild);
 		}
 		return solid;

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.structure;
+package com.nosliw.data.core.structure.temp;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -22,7 +22,14 @@ import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
+import com.nosliw.data.core.structure.HAPElement;
+import com.nosliw.data.core.structure.HAPElementLeafConstant;
+import com.nosliw.data.core.structure.HAPElementLeafConstantReference;
+import com.nosliw.data.core.structure.HAPElementNode;
+import com.nosliw.data.core.structure.HAPInfoElement;
+import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
+import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 

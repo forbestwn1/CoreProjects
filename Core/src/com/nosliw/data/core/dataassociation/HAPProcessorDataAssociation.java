@@ -12,7 +12,7 @@ import com.nosliw.data.core.dataassociation.mirror.HAPProcessorDataAssociationMi
 import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNone;
 import com.nosliw.data.core.dataassociation.none.HAPProcessorDataAssociationNone;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPProcessorDataAssociation {
 

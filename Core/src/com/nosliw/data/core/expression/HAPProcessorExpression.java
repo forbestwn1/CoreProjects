@@ -31,9 +31,9 @@ import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 public class HAPProcessorExpression {
 
@@ -42,7 +42,6 @@ public class HAPProcessorExpression {
 			HAPDefinitionExpressionGroup expressionGroupDef,
 			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
 			Map<String, HAPDataTypeCriteria> expectOutput,
-			HAPManagerExpression expressionMan,
 			Map<String, String> configure,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
@@ -110,7 +109,7 @@ public class HAPProcessorExpression {
 						//go through all variables in reference expression and find those that not mapped
 						Map<String, HAPOperandWrapper> refExpMapping = referenceOperand.getMapping();
 						Set<String> mappedVarNames = new HashSet<String>(refExpMapping.keySet());
-						HAPDefinitionContainerVariableCriteriaInfo referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesInStructure(((HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression()).getStructureDefinition());
+						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesInStructure(((HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression()).getStructureDefinition());
 						for(HAPInfoVariable varInfo : referenceExpContainer.getAllVariables()) {
 							boolean mapped = false;
 							for(String rootAlias : varInfo.getRootAliases()) {
@@ -299,7 +298,7 @@ public class HAPProcessorExpression {
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						//replace referenced variable name mapping  
-						HAPDefinitionContainerVariableCriteriaInfo referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesInStructure(((HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression()).getStructureDefinition());
+						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesInStructure(((HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression()).getStructureDefinition());
 
 						Map<String, HAPOperandWrapper> mapping = referenceOperand.getMapping();
 						Map<String, HAPOperandWrapper> newMapping = new LinkedHashMap<String, HAPOperandWrapper>();

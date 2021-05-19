@@ -19,7 +19,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.HAPParserContext;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
 
@@ -79,21 +80,6 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 		return true;
 	}
 
-	public HAPRoot addRoot(String categary, HAPRoot root){
-		root = root.cloneRoot();
-		if(HAPBasicUtility.isStringEmpty(categary))   categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
-		if(HAPBasicUtility.isStringEmpty(root.getLocalId()))  root.setLocalId(new HAPReferenceRootInGroup(categary, root.getName()).getFullName());
-		this.m_categaryById.put(root.getId(), categary);
-		this.getFlat(categary).addRoot(root);
-		return root;
-	}
-	public HAPRoot newRoot(String categary, String name) {
-		HAPRoot out = new HAPRoot();
-		out.setName(name);
-		this.addRoot(categary, out);
-		return out;
-	}
-	
 	@Override
 	public HAPRoot getRoot(String id) {
 		String categary = this.m_categaryById.get(id);
@@ -107,6 +93,72 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 		for(String categary : this.m_flatStructureByCategary.keySet()) {
 			out.addAll(this.m_flatStructureByCategary.get(categary).getAllRoots());
 		}
+		return out;
+	}
+
+	@Override
+	public List<HAPInfoAlias> discoverRootAliasById(String id) {
+		String categary = this.m_categaryById.get(id);
+		int priority = this.getPriorityByCategary(categary);
+		HAPRoot root = this.m_flatStructureByCategary.get(categary).getRoot(id);
+		
+		//if simple name is override
+		boolean isSimpleNameValid = true;
+		for(int i=priority-1; i>=0; i--) {
+			String ctg = this.getCetegaryByPriority(i);
+			if(ctg!=null) {
+				HAPValueStructureDefinitionFlat flat = this.m_flatStructureByCategary.get(ctg);
+				if(flat!=null) {
+					List<HAPRoot> sameNameRoots = flat.resolveRoot(new HAPReferenceRootInFlat(root.getName()), false);
+					if(sameNameRoots.size()>0) {
+						isSimpleNameValid = false;
+					}
+				}
+			}
+		}
+		
+		//build alias
+		List<HAPInfoAlias> out = new ArrayList<HAPInfoAlias>();
+		out.add(new HAPInfoAlias(new HAPReferenceRootInGroup(categary, root.getName()).getFullName(), priority));
+		if(isSimpleNameValid) {
+			out.add(new HAPInfoAlias(root.getName(), priority+0.5));
+		}
+		return out;
+	}
+
+	private int getPriorityByCategary(String categary) {
+		for(int i=0; i<getAllCategaries().length; i++) {
+			if(categary.equals(getAllCategaries()[i])) {
+				return i;
+			}
+		}
+		return 9999;
+	}
+	
+	private String getCetegaryByPriority(int priority) {
+		return getAllCategaries()[priority];
+	}
+	
+	@Override
+	public HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root) {
+		HAPReferenceRootInGroup groupRootReference = (HAPReferenceRootInGroup)rootReference;
+		root.setName(groupRootReference.getName());
+		return this.addRoot(groupRootReference.getCategary(), root);
+	}
+
+	public HAPRoot addRoot(String categary, HAPRoot root){
+		root = root.cloneRoot();
+		if(HAPBasicUtility.isStringEmpty(categary))   categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+		if(HAPBasicUtility.isStringEmpty(root.getLocalId()))  root.setLocalId(new HAPReferenceRootInGroup(categary, root.getName()).getFullName());
+		this.m_categaryById.put(root.getId(), categary);
+		this.getFlat(categary).addRoot(root);
+		return root;
+	}
+	
+	public HAPRoot newRoot(String categary, String name) {
+		HAPRoot out = new HAPRoot();
+		out.setName(name);
+		this.addRoot(categary, out);
 		return out;
 	}
 
@@ -220,23 +272,23 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 	public void cloneTo(HAPValueStructureDefinitionGroup out) {
 		this.cloneToBase(out);
 		for(String categary : this.m_flatStructureByCategary.keySet()) {
-			HAPValueStructureDefinitionFlat context = this.m_flatStructureByCategary.get(categary);
-			for(String name : context.getRoots().keySet()) {
-				out.addRoot(name, this.getElement(categary, name).cloneRoot(), categary);
-			}
+			HAPValueStructureDefinitionFlat flat = this.m_flatStructureByCategary.get(categary);
+			out.m_flatStructureByCategary.put(categary, (HAPValueStructureDefinitionFlat)flat.cloneStructure());
 		}
+		out.m_categaryById.clear();
+		out.m_categaryById.putAll(this.m_categaryById);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(TYPE, this.getStructureType());
 		jsonMap.put(GROUP, HAPJsonUtility.buildJson(this.m_flatStructureByCategary, HAPSerializationFormat.JSON));
 		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
-		HAPParserContext.parseValueStructureDefinitionGroup((JSONObject)json, this);
+		HAPParserValueStructure.parseValueStructureDefinitionGroup((JSONObject)json, this);
 		return true;
 	}
 	
@@ -302,6 +354,12 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 		};
 		return contextTypes;
+	}
+
+	@Override
+	public Object solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -18,7 +18,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElement;
+import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
 
@@ -49,6 +51,27 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 
 	@Override
 	public List<HAPRoot> getAllRoots(){   return new ArrayList<HAPRoot>(this.m_rootById.values());      }
+
+	@Override
+	public HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root) {
+		HAPReferenceRootInFlat flatRootReference = (HAPReferenceRootInFlat)rootReference;
+		root.setName(flatRootReference.getName());
+		return this.addRoot(root);
+	}
+
+	@Override
+	public List<HAPInfoAlias> discoverRootAliasById(String id) {
+		List<HAPInfoAlias> out = new ArrayList<HAPInfoAlias>();
+		for(String name : this.m_idByName.keySet()) {
+			if(id.equals(this.m_idByName.get(name))) {
+				HAPInfoAlias aliasInfo = new HAPInfoAlias(name, 0);
+				out.add(aliasInfo);
+				break;
+			}
+		}
+		return out;
+	}
+
 
 	@Override
 	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
@@ -180,6 +203,12 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 		String id = this.m_idByName.get(name);
 		if(id==null)  return null;
 		return this.m_rootById.get(id);
+	}
+
+	@Override
+	public Object solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

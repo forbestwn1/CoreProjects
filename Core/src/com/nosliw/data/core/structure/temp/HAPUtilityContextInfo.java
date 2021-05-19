@@ -1,4 +1,4 @@
-package com.nosliw.data.core.structure;
+package com.nosliw.data.core.structure.temp;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstantShared;

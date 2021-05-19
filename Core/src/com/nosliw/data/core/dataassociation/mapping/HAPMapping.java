@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPInfoName;
+import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPStructure;
@@ -51,7 +51,7 @@ public class HAPMapping implements HAPStructure{
 	}
 
 	@Override
-	public Set<HAPInfoName> discoverRootNameById(String id) {
+	public Set<HAPInfoAlias> discoverRootAliasById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.structure;
+package com.nosliw.data.core.structure.temp;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,21 +11,26 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.structure.HAPElement;
+import com.nosliw.data.core.structure.HAPElementLeafData;
+import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.HAPReferenceElement;
+import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.valuestructure.HAPElementContextStructureValueExecutable;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPStructure;
+import com.nosliw.data.core.valuestructure.HAPExecutableStructure;
 
 public class HAPUtilityContext {
 
 	public static Map<String, Object> discoverContantsValueFromContextStructure(HAPValueStructureDefinition contextStructure) {
-		HAPStructure flatContext = buildFlatContextFromContextStructure(contextStructure);
+		HAPExecutableStructure flatContext = buildFlatContextFromContextStructure(contextStructure);
 		return flatContext.getConstantValue();
 	}
 	
-	public static HAPStructure buildFlatContextFromContextStructure(HAPValueStructureDefinition contextStructure) {
-		HAPStructure out = null;
+	public static HAPExecutableStructure buildFlatContextFromContextStructure(HAPValueStructureDefinition contextStructure) {
+		HAPExecutableStructure out = null;
 		String type = contextStructure.getType();
 		if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			out = buildFlatContextFromContextGroup((HAPValueStructureDefinitionGroup)contextStructure);
@@ -36,16 +41,16 @@ public class HAPUtilityContext {
 		return out;
 	}
 
-	public static HAPStructure buildFlatContextFromContext(HAPValueStructureDefinitionFlat context) {
-		HAPStructure out = new HAPStructure();
+	public static HAPExecutableStructure buildFlatContextFromContext(HAPValueStructureDefinitionFlat context) {
+		HAPExecutableStructure out = new HAPExecutableStructure();
 		for(String name : context.getRootNames()) {
 			out.addRoot(context.getRoot(name), name);
 		}
 		return out;
 	}
 	
-	public static HAPStructure buildFlatContextFromContextGroup(HAPValueStructureDefinitionGroup context) {
-		HAPStructure out = new HAPStructure();
+	public static HAPExecutableStructure buildFlatContextFromContextGroup(HAPValueStructureDefinitionGroup context) {
+		HAPExecutableStructure out = new HAPExecutableStructure();
 		
 		List<String> categarys = Arrays.asList(HAPValueStructureDefinitionGroup.getAllCategariesWithPriority());
 		Collections.reverse(categarys);

@@ -12,7 +12,7 @@ import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public class HAPUtilityExpressionComponent {
@@ -21,14 +21,14 @@ public class HAPUtilityExpressionComponent {
 		return buildExpressionSuiteFromComponent(complexEntity, null, runtimeEnv);
 	}
 	
-	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPValueStructureDefinition context, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPValueStructureDefinition valueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
 		
 		//build context
-		if(context==null) {
-			context = HAPUtilityExpression.getContext(complexEntity, null, runtimeEnv);
+		if(valueStructure==null) {
+			valueStructure = HAPUtilityExpression.getValueStructure(complexEntity, null, runtimeEnv);
 		}
-		out.setValueContext(context);
+		out.setValueStructure(valueStructure);
 		
 		//build constant from attachment
 		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildDataConstantDefinition(complexEntity.getAttachmentContainer())) {
@@ -36,7 +36,7 @@ public class HAPUtilityExpressionComponent {
 		}
 		
 		//constant from context
-		Map<String, Object> constantsValue = HAPUtilityContext.discoverContantsValueFromContextStructure(context);
+		Map<String, Object> constantsValue = HAPUtilityContext.discoverContantsValueFromContextStructure(valueStructure);
 		for(String id : constantsValue.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
 			if(constantDef.isData()) {

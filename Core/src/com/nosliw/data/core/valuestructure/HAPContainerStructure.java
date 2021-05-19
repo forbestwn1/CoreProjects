@@ -1,4 +1,4 @@
-package com.nosliw.data.core.structure;
+package com.nosliw.data.core.valuestructure;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -13,18 +13,17 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public class HAPContainerStructure extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String STRUCTURE = "structure";
 	
-	private Map<String, HAPStructure> m_structures;
+	private Map<String, HAPValueStructure> m_structures;
 	private List<String> m_structureNames;
 	
 	public HAPContainerStructure() {
-		this.m_structures = new LinkedHashMap<String, HAPStructure>();
+		this.m_structures = new LinkedHashMap<String, HAPValueStructure>();
 		this.m_structureNames = new ArrayList<String>();
 	}
 	
@@ -34,7 +33,7 @@ public class HAPContainerStructure extends HAPSerializableImp{
 		return out;
 	}
 	
-	public HAPContainerStructure addStructure(String name, HAPStructure structure) {
+	public HAPContainerStructure addStructure(String name, HAPValueStructure structure) {
 		if(structure==null)  return this;
 		if(this.isSelf(name))  return this;   //ignore self parent
 		
@@ -46,9 +45,9 @@ public class HAPContainerStructure extends HAPSerializableImp{
 	
 	public boolean isEmpty() {  return this.m_structureNames.isEmpty();  }
 	
-	public HAPStructure getStructure(String name) {	return this.m_structures.get(name);	}
+	public HAPValueStructure getStructure(String name) {	return this.m_structures.get(name);	}
 
-	public HAPStructure getStructure() {	return this.m_structures.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
+	public HAPValueStructure getStructure() {	return this.m_structures.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
 
 	public List<String> getStructureNames(){  return this.m_structureNames;  }	
 
@@ -72,7 +71,7 @@ public class HAPContainerStructure extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		JSONObject elesJsonObj = jsonObj.getJSONObject(STRUCTURE);
 		for(Object key : elesJsonObj.keySet()) {
-			HAPValueStructureDefinition ele = HAPParserStructure.parseValueStructureDefinition(elesJsonObj.getJSONObject((String)key));
+			HAPValueStructureDefinition ele = HAPParserValueStructure.parseValueStructureDefinition(elesJsonObj.getJSONObject((String)key));
 			this.addStructure((String)key, ele);
 		}
 		return true;  

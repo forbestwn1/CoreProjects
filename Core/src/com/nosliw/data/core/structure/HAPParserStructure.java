@@ -50,8 +50,9 @@ public class HAPParserStructure {
 			relativeLeaf.setParent(parent);
 			if(pathObj instanceof String)	relativeLeaf.setReferencePath((String)pathObj);
 			else if(pathObj instanceof JSONObject){
-				HAPReferenceElement contextPath = HAPUtilityStructureReference.parseJsonStructurePath((JSONObject)pathObj); 
-				relativeLeaf.setResolvedPath(contextPath);
+				HAPReferenceElement contextPath = new HAPReferenceElement();
+				contextPath.buildObject(pathObj, HAPSerializationFormat.JSON);
+				relativeLeaf.setReferencePath(contextPath.toStringValue(HAPSerializationFormat.LITERATE));
 			}
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPElementLeafRelative.DEFINITION);
 			if(definitionJsonObj!=null) 	relativeLeaf.setDefinition(parseContextDefinitionElement(definitionJsonObj));

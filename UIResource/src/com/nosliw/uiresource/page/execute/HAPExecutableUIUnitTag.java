@@ -11,7 +11,7 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPStructure;
+import com.nosliw.data.core.valuestructure.HAPExecutableStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
@@ -44,7 +44,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	
 	//context for tag
 	private HAPContextGroupInUITag m_tagContext;
-	private HAPStructure m_flatTagContext;
+	private HAPExecutableStructure m_flatTagContext;
 
 	private Map<String, HAPDefinitionUIEvent> m_tagEvent;
 
@@ -69,11 +69,11 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 		if(this.m_tagContext!=null)   this.m_tagContext.clear();
 		this.m_tagContext = new HAPContextGroupInUITag(this, context);
 	}
-	public HAPStructure getFlatTagContext() { return this.m_flatTagContext;  }
-	public void setFlatTagContext(HAPStructure context) {  this.m_flatTagContext = context;   }
-	public HAPStructure getTagVariableContext() {
+	public HAPExecutableStructure getFlatTagContext() { return this.m_flatTagContext;  }
+	public void setFlatTagContext(HAPExecutableStructure context) {  this.m_flatTagContext = context;   }
+	public HAPExecutableStructure getTagVariableContext() {
 		if(this.m_flatTagContext!=null)		return this.m_flatTagContext.getVariableContext();
-		else  return new HAPStructure();
+		else  return new HAPExecutableStructure();
 	}
 	
 	public void addTagEvent(String name, HAPDefinitionUIEvent event) {  this.m_tagEvent.put(name, event);  }

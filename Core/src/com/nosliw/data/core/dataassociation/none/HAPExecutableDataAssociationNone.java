@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.dataassociation.HAPOutputStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPExecutableDataAssociationNone extends HAPExecutableDataAssociationImp{
 

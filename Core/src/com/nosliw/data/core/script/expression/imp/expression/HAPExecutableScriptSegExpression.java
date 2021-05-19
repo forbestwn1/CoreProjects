@@ -8,7 +8,7 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
-import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 
@@ -27,7 +27,7 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 	public String getScriptType() {  return HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSION;  }
 
 	@Override
-	public HAPDefinitionContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
+	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
 		HAPExecutableExpression expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
 		return expressionExe.getVariablesInfo();	
 	}

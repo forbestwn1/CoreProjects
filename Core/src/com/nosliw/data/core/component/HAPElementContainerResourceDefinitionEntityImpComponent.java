@@ -25,10 +25,4 @@ public class HAPElementContainerResourceDefinitionEntityImpComponent extends HAP
 	@Override
 	public HAPComponent cloneComponent() {  return (HAPComponent)this.cloneResourceDefinitionContainerElement(); }
 
-	@Override
-	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

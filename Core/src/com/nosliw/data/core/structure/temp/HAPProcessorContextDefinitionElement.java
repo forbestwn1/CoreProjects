@@ -1,6 +1,9 @@
-package com.nosliw.data.core.structure;
+package com.nosliw.data.core.structure.temp;
 
 import org.apache.commons.lang3.tuple.Pair;
+
+import com.nosliw.data.core.structure.HAPElement;
+import com.nosliw.data.core.structure.HAPInfoElement;
 
 public interface HAPProcessorContextDefinitionElement {
 

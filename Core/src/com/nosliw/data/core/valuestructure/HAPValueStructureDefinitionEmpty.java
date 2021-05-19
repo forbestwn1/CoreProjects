@@ -7,6 +7,8 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
 
@@ -61,6 +63,24 @@ public class HAPValueStructureDefinitionEmpty extends HAPSerializableImp impleme
 	@Override
 	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
 		return new ArrayList<HAPRoot>();
+	}
+
+	@Override
+	public List<HAPInfoAlias> discoverRootAliasById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

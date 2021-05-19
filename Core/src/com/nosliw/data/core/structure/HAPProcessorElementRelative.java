@@ -16,6 +16,8 @@ import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
+import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPProcessorElementRelative {
 
@@ -68,7 +70,7 @@ public class HAPProcessorElementRelative {
 			{
 				HAPElement solvedContextEle = resolveInfo.resolvedElement; 
 				if(solvedContextEle!=null){
-					relativeElement.setResolvedPath(resolveInfo.path);
+					relativeElement.setResolvedIdPath(resolveInfo.path);
 					//refer to solid
 					if(configure.relativeTrackingToSolid) {
 						String refRootId = null;

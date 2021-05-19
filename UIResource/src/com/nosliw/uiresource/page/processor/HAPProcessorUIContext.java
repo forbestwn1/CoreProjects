@@ -12,13 +12,13 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.HAPContainerStructure;
-import com.nosliw.data.core.structure.HAPProcessorContext;
-import com.nosliw.data.core.structure.HAPProcessorContextRelative;
 import com.nosliw.data.core.structure.HAPProcessorEscalate;
-import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.temp.HAPProcessorContext;
+import com.nosliw.data.core.structure.temp.HAPProcessorContextRelative;
+import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPStructure;
+import com.nosliw.data.core.valuestructure.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure.HAPExecutableStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -152,7 +152,7 @@ public class HAPProcessorUIContext {
 		}
 		
 		//build flat context
-		HAPStructure flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(uiExe.getBody().getContext());
+		HAPExecutableStructure flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(uiExe.getBody().getContext());
 		uiExe.getBody().setFlatContext(flatContext);
 
 		//child tag

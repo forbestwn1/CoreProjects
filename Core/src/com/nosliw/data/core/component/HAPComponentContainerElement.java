@@ -21,7 +21,7 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public abstract class HAPComponentContainerElement extends HAPSerializableImp implements HAPComponent{
@@ -31,7 +31,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 	@HAPAttribute
 	public static String COMPONENTENTITY = "componentEntity";
-
+ 
 	@HAPAttribute
 	public static String ELEMENTID = "elementId";
 
@@ -182,7 +182,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 
 	@Override
-	public void setValueContext(HAPValueStructureDefinition context) {
+	public void setValueStructure(HAPValueStructureDefinition valueStructure) {
 		// TODO Auto-generated method stub
 		
 	}

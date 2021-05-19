@@ -23,9 +23,9 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.HAPContainerStructure;
-import com.nosliw.data.core.structure.HAPProcessorContext;
-import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.temp.HAPProcessorContext;
+import com.nosliw.data.core.structure.temp.HAPUtilityContext;
+import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
@@ -108,13 +108,13 @@ public class HAPUtilityComponent {
 		return context;
 	}
 	
-	public static HAPValueStructureDefinition getContext(Object def, HAPValueStructureDefinition extraContext, HAPConfigureProcessorStructure contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPValueStructureDefinition getValueStructure(Object def, HAPValueStructureDefinition extraValueStructure, HAPConfigureProcessorStructure contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {
 		HAPValueStructureDefinition out = null;
 		if(def instanceof HAPComponentContainerElement) {
-			out = HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)def, extraContext, runtimeEnv, contextProcessConfig);
+			out = HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)def, extraValueStructure, runtimeEnv, contextProcessConfig);
 		}
 		else if(def instanceof HAPWithValueStructure){
-			out = HAPUtilityContext.hardMerge(((HAPWithValueStructure)def).getValueStructure(), extraContext); 
+			out = HAPUtilityContext.hardMerge(((HAPWithValueStructure)def).getValueStructure(), extraValueStructure); 
 		}
 		return out;
 	}

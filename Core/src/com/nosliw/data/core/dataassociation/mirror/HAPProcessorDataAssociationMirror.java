@@ -2,8 +2,8 @@ package com.nosliw.data.core.dataassociation.mirror;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPContainerStructure;
-import com.nosliw.data.core.structure.HAPUtilityContextStructure;
+import com.nosliw.data.core.structure.temp.HAPUtilityContextStructure;
+import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public class HAPProcessorDataAssociationMirror {

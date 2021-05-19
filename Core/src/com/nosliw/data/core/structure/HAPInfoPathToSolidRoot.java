@@ -44,7 +44,7 @@ public class HAPInfoPathToSolidRoot extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PATH, this.m_path);
+		jsonMap.put(PATH, this.m_path.getPath());
 		jsonMap.put(ROOTNODEID, this.m_rootNodeId);
 	}
 
@@ -52,7 +52,7 @@ public class HAPInfoPathToSolidRoot extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_rootNodeId = (String)jsonObj.opt(ROOTNODEID);
-		this.m_path = (String)jsonObj.opt(PATH);
+		this.m_path = new HAPPath((String)jsonObj.opt(PATH));
 		return true;  
 	}
 

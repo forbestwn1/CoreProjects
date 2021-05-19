@@ -13,7 +13,7 @@ import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 public class HAPUtilityStructureDataAssociation {
 
@@ -26,7 +26,7 @@ public class HAPUtilityStructureDataAssociation {
 	}
 	
 	//automatic enhance mapping so that all the variables are mapped as target
-	public static HAPMapping expandMappingByTargetVariable(HAPMapping mapping, HAPDefinitionContainerVariableCriteriaInfo targetVarsContainer) {
+	public static HAPMapping expandMappingByTargetVariable(HAPMapping mapping, HAPVariableInfoInStructure targetVarsContainer) {
 		
 		HAPMapping out = new HAPMapping();
 		

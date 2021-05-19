@@ -66,8 +66,6 @@ public class HAPManagerExpression {
 				exressionGroupResourceDef,
 				contextProcess, 
 				null, 
-				null, 
-				this, 
 				configure, 
 				this.m_runtimeEnv,
 				new HAPProcessTracker());
@@ -77,30 +75,30 @@ public class HAPManagerExpression {
 	public HAPExecutableExpressionGroup getExpression(String expression, Map<String, HAPDataTypeCriteria> varCriteria) {
 		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
 		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
-		HAPValueStructureDefinitionFlat context = new HAPValueStructureDefinitionFlat();
+		HAPValueStructureDefinitionFlat valueStructure = new HAPValueStructureDefinitionFlat();
 		if(varCriteria!=null) {
 			for(String varName : varCriteria.keySet()) {
-				context.addRoot(varName, new HAPElementLeafData(varCriteria.get(varName)));
+				valueStructure.addRoot(varName, new HAPElementLeafData(varCriteria.get(varName)));
 			}
 		}
-		expressionGroupDef.setValueContext(context);
+		expressionGroupDef.setValueStructure(valueStructure);
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
 		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionGroupDef, HAPContextResourceExpressionGroup.createContext(null, getResourceDefinitionManager()));
-		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, expressionGroupDef, new HAPContextProcessAttachmentReferenceExpression(null, this.m_runtimeEnv), null, null, this, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, expressionGroupDef, new HAPContextProcessAttachmentReferenceExpression(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 
 	public HAPExecutableExpressionGroup getExpression(String expression) {
 		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
 		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
-		expressionGroupDef.setValueContext(new HAPValueStructureDefinitionFlat());
+		expressionGroupDef.setValueStructure(new HAPValueStructureDefinitionFlat());
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
 		HAPEntityWithResourceContext resourceWithContext = new HAPEntityWithResourceContext(expressionGroupDef, HAPContextResourceExpressionGroup.createContext(null, getResourceDefinitionManager()));
-		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, expressionGroupDef, new HAPContextProcessAttachmentReferenceExpression(null, this.m_runtimeEnv), null, null, this, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, expressionGroupDef, new HAPContextProcessAttachmentReferenceExpression(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 	

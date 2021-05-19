@@ -10,7 +10,7 @@ public class HAPFactoryResourceId {
 
 	public static HAPResourceId newInstance(String resourceType, Object obj) {
 		HAPResourceId out = null;
-		if(obj instanceof String)  out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)obj);
+		if(obj instanceof String)  out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)obj, false);
 		else if(obj instanceof JSONObject)  out = newInstanceByJSONObect(resourceType, (JSONObject)obj);
 		return out;
 	}
@@ -33,7 +33,7 @@ public class HAPFactoryResourceId {
 				out.buildCoreIdByLiterate((String)coreIdObj);
 			}
 			else {
-				out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)coreIdObj);
+				out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)coreIdObj, false);
 				
 //				String[] segs = HAPUtilityResourceId.parseResourceCoreIdLiterate((String)coreIdObj);
 //				out = HAPUtilityResourceId.newInstanceByType(resourceType, segs[0]);

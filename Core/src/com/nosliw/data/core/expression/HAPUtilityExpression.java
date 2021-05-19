@@ -9,8 +9,8 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPUtilityExpression {
 
-	public static HAPValueStructureDefinition getContext(Object expressionGroupDef, HAPValueStructureDefinitionFlat extraContext, HAPRuntimeEnvironment runtimeEnv) {
-		return HAPUtilityComponent.getContext(expressionGroupDef, extraContext, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
+	public static HAPValueStructureDefinition getValueStructure(Object expressionGroupDef, HAPValueStructureDefinitionFlat extraContext, HAPRuntimeEnvironment runtimeEnv) {
+		return HAPUtilityComponent.getValueStructure(expressionGroupDef, extraContext, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
 	}
 	
 	//make global name

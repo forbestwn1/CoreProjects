@@ -19,9 +19,9 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.HAPUtilityContext;
+import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
-import com.nosliw.data.core.valuestructure.HAPStructure;
+import com.nosliw.data.core.valuestructure.HAPExecutableStructure;
 
 @HAPEntityWithAttribute
 public class HAPExecutableScriptGroup extends HAPExecutableImp{
@@ -37,7 +37,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	
 	private HAPValueStructureDefinition m_contextStructure;
 	
-	private HAPStructure m_flatContext;
+	private HAPExecutableStructure m_flatContext;
 	
 	private HAPExecutableExpressionGroup m_expressionExe;
 	
@@ -55,7 +55,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 		this.m_flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(m_contextStructure);
 	}
 	
-	public HAPStructure getContextFlat() {    return this.m_flatContext;    }
+	public HAPExecutableStructure getContextFlat() {    return this.m_flatContext;    }
 
 	public HAPExecutableExpressionGroup getExpression() {    return this.m_expressionExe;   }
 	public void setExpression(HAPExecutableExpressionGroup expression) {    this.m_expressionExe = expression;    }

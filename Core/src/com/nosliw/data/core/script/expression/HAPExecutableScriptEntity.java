@@ -21,7 +21,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.util.script.HAPScriptFunctionInfo;
 import com.nosliw.data.core.runtime.js.util.script.HAPUtilityScriptForExecuteJSScript;
-import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 @HAPEntityWithAttribute
 public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implements HAPExecutableScriptWithSegment{
@@ -94,7 +94,7 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 	@Override
 	public List<HAPExecutableScript> getSegments(){    return this.m_script.getSegments();     }
 	@Override
-	public HAPDefinitionContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {return this.m_script.discoverVariablesInfo1(expressionGroup);}
+	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {return this.m_script.discoverVariablesInfo1(expressionGroup);}
 	@Override
 	public Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup) {  return this.m_script.discoverVariables(expressionGroup); }
 

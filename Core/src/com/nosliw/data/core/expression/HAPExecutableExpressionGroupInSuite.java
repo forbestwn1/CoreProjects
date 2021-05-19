@@ -21,7 +21,7 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
@@ -39,9 +39,9 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public void setDataConstants(Map<String, HAPData> dataConstants) {   this.m_dataConstants = dataConstants;    }
 	public Map<String, HAPData> getDataConstants(){   return this.m_dataConstants;     }
 	
-	private HAPDefinitionContainerVariableCriteriaInfo m_variableInfo;
-	public void setVariablesInfo(HAPDefinitionContainerVariableCriteriaInfo varInfo) {  this.m_variableInfo = varInfo;    }
-	public HAPDefinitionContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_variableInfo;    }
+	private HAPVariableInfoInStructure m_variableInfo;
+	public void setVariablesInfo(HAPVariableInfoInStructure varInfo) {  this.m_variableInfo = varInfo;    }
+	public HAPVariableInfoInStructure getVariablesInfo() {   return this.m_variableInfo;    }
 	
 	
 	public HAPExecutableExpressionGroupInSuite(String id) {
@@ -123,5 +123,10 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 		for(String id : this.m_expressionItem.keySet()) {
 			dependency.addAll(this.m_expressionItem.get(id).getResourceDependency(runtimeInfo, resourceManager));
 		}
+	}
+	@Override
+	public HAPContainerVariableCriteriaInfo getVarsInfo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

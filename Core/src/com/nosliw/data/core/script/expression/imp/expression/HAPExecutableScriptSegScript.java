@@ -21,7 +21,7 @@ import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
-import com.nosliw.data.core.valuestructure.HAPDefinitionContainerVariableCriteriaInfo;
+import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp implements HAPEntityWithName{
 
@@ -58,8 +58,8 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 	public List<Object> getElements(){	return this.m_elements;	}
 	
 	@Override
-	public HAPDefinitionContainerVariableCriteriaInfo discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
-		HAPDefinitionContainerVariableCriteriaInfo out = new HAPDefinitionContainerVariableCriteriaInfo();
+	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
+		HAPVariableInfoInStructure out = new HAPVariableInfoInStructure();
 		for(Object ele : this.m_elements) {
 			if(ele instanceof HAPVariableInScript) {
 				HAPVariableInScript varInScript = (HAPVariableInScript)ele;

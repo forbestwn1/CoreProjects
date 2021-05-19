@@ -8,7 +8,7 @@ import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
-import com.nosliw.data.core.structure.HAPParserContext;
+import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
 
 public class HAPUtilityComponentParse {
 
@@ -34,7 +34,7 @@ public class HAPUtilityComponentParse {
 		//context
 		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPComponentImp.VALUESTRUCTURE);
 		if(contextJsonObj!=null) {
-			complexResourceDef.setValueStructure(HAPParserContext.parseValueStructureDefinition(contextJsonObj));
+			complexResourceDef.setValueStructure(HAPParserValueStructure.parseValueStructureDefinition(contextJsonObj));
 		}
 	}
 	

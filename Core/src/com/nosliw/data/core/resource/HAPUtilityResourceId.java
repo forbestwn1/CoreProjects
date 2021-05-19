@@ -40,6 +40,10 @@ public class HAPUtilityResourceId {
 		return HAPNamingConversionUtility.parseLevel2(idLiterate);
 	}
 
+	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String literate) {
+		return buildResourceIdByLiterate(resourceType, literate, false);
+	}
+	
 	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String literate, boolean strict) {
 		String structure = null;
 		String coreIdLiterate = literate;

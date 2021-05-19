@@ -19,8 +19,8 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 
 	private HAPResourceId m_resourceId;
 	
-	//context definition within this component
-	private HAPValueStructureDefinition m_context;
+	//value structure definition within this component
+	private HAPValueStructureDefinition m_valueStructure;
 	
 	private List<HAPContextReference> m_contextRefs;
 	
@@ -40,11 +40,11 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
 	
 	@Override
-	public HAPValueStructureDefinition getValueStructure() {  return this.m_context;   }
+	public HAPValueStructureDefinition getValueStructure() {  return this.m_valueStructure;   }
 	@Override
-	public void setValueContext(HAPValueStructureDefinition context) {  
-		this.m_context = context;
-		if(this.m_context ==null)  this.m_context = new HAPValueStructureDefinitionGroup();
+	public void setValueStructure(HAPValueStructureDefinition valueStructure) {
+		this.m_valueStructure = valueStructure;
+		if(this.m_valueStructure ==null)  this.m_valueStructure = new HAPValueStructureDefinitionGroup();
 	}
 	
 	@Override
@@ -65,7 +65,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 
 	@Override
 	public void cloneToWithValueStructure(HAPWithValueStructure withDataContext) {
-		if(this.m_context!=null)	withDataContext.setValueStructure(this.m_context.cloneStructure());
+		if(this.m_valueStructure!=null)	withDataContext.setValueStructure((HAPValueStructureDefinition)this.m_valueStructure.cloneStructure());
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildJson(this.m_valueStructure, HAPSerializationFormat.JSON));
 		jsonMap.put(HAPWithAttachment.ATTACHMENT, this.getAttachmentContainer().toStringValue(HAPSerializationFormat.JSON));
 	}
 

@@ -1,25 +1,7 @@
 package com.nosliw.data.core.valuestructure;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
-import com.nosliw.data.core.structure.HAPRoot;
-import com.nosliw.data.core.structure.HAPStructure;
-import com.nosliw.data.core.structure.HAPUtilityContext;
 
 //flat context represent result of flat a context group to context
 //one root in context group named Abc will generate two element in context: local Abc and global Abc___categary
@@ -27,8 +9,9 @@ import com.nosliw.data.core.structure.HAPUtilityContext;
 //Also, we can find global name by local name
 //flat context is back compatible with context
 @HAPEntityWithAttribute
-public class HAPStructure extends HAPSerializableImp implements HAPValueStructure{
-
+public class HAPExecutableStructure extends HAPSerializableImp //implements HAPValueStructure
+{
+/*
 	@HAPAttribute
 	public static final String CONTEXT = "context";
 
@@ -40,7 +23,7 @@ public class HAPStructure extends HAPSerializableImp implements HAPValueStructur
 	
 	private Map<String, HAPRoot> m_rootById;
 	
-	public HAPStructure() {
+	public HAPExecutableStructure() {
 		this.m_rootById = new LinkedHashMap<String, HAPRoot>();
 	}
 
@@ -126,8 +109,8 @@ public class HAPStructure extends HAPSerializableImp implements HAPValueStructur
 		return updatedPath.getFullName();
 	}
 
-	public HAPStructure getVariableContext() {   
-		HAPStructure out = new HAPStructure();
+	public HAPExecutableStructure getVariableContext() {   
+		HAPExecutableStructure out = new HAPExecutableStructure();
 		HAPValueStructureDefinitionFlat varContext = this.m_context.getVariableContext();
 		for(String rootName : varContext.getRootNames()) {
 			out.addRoot(varContext.getRoot(rootName), rootName, this.m_namesByVarId.get(rootName));
@@ -175,8 +158,8 @@ public class HAPStructure extends HAPSerializableImp implements HAPValueStructur
 	}
 
 	@Override
-	public HAPStructure cloneStructure() {
-		HAPStructure out = new HAPStructure();
+	public HAPExecutableStructure cloneStructure() {
+		HAPExecutableStructure out = new HAPExecutableStructure();
 		out.m_idByName.putAll(this.m_idByName);
 		for(String varId : this.m_namesByVarId.keySet()) {
 			out.m_namesByVarId.put(varId, new HashSet<String>(this.m_namesByVarId.get(varId)));
@@ -186,5 +169,5 @@ public class HAPStructure extends HAPSerializableImp implements HAPValueStructur
 		}
 		return out;
 	}
-
+*/
 }

@@ -1,24 +1,23 @@
 package com.nosliw.data.core.valuestructure;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 
 //store all variable in structure
 @HAPEntityWithAttribute
-public class HAPDefinitionContainerVariableCriteriaInfo extends HAPSerializableImp{
+public class HAPVariableInfoInStructure extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String NAMESBYVARID = "namesByVarId";
@@ -36,15 +35,17 @@ public class HAPDefinitionContainerVariableCriteriaInfo extends HAPSerializableI
 	
 	private int m_index;
 	
-	public HAPDefinitionContainerVariableCriteriaInfo() {
+	public HAPVariableInfoInStructure() {
 		this.m_index = 0;
 		m_rootNamesById = new LinkedHashMap<String, Set<String>>();
 		m_criteriaInfosById = new LinkedHashMap<String, HAPInfoCriteria>();
 		m_rootIdByName = new LinkedHashMap<String, String>();
 	}
 	
-	public boolean addVariableCriteriaInfo(HAPInfoCriteria criteriaInfo, String varId, Set<String> rootAliases) {
-		rootAliases = new HashSet<String>(rootAliases);
+	public boolean addVariableCriteriaInfo(HAPInfoCriteria criteriaInfo, String varId, List<HAPInfoAlias> rootAliasesInfo) {
+		Set<String> rootAliases = new HashSet<String>();
+		for(HAPInfoAlias rootAliasInfo : rootAliasesInfo)  rootAliases.add(rootAliasInfo.getName());
+		
 		boolean override = false;
 		HAPComplexPath varIdPath = new HAPComplexPath(varId);
 		this.m_criteriaInfosById.put(varId, criteriaInfo);
@@ -64,8 +65,8 @@ public class HAPDefinitionContainerVariableCriteriaInfo extends HAPSerializableI
 	}
 
 	public void addVariableCriteriaInfo(HAPInfoCriteria criteriaInfo, String id, String alias) {
-		Set<String> aliases = new HashSet<String>();
-		aliases.add(alias);
+		List<HAPInfoAlias> aliases = new ArrayList<HAPInfoAlias>();
+		aliases.add(new HAPInfoAlias(alias, 0));
 		this.addVariableCriteriaInfo(criteriaInfo, id, aliases);
 	}
 
@@ -163,7 +164,7 @@ public class HAPDefinitionContainerVariableCriteriaInfo extends HAPSerializableI
 	}
 
 */
-	
+/*	
 	@Override
 	public HAPDefinitionContainerVariableCriteriaInfo clone() {
 		HAPDefinitionContainerVariableCriteriaInfo out = new HAPDefinitionContainerVariableCriteriaInfo();
@@ -201,4 +202,5 @@ public class HAPDefinitionContainerVariableCriteriaInfo extends HAPSerializableI
 		}
 		jsonMap.put(NAMESBYVARID, HAPJsonUtility.buildMapJson(map));
 	}
+*/	
 }
