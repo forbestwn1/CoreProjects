@@ -21,7 +21,7 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.data.core.structure.temp.HAPUtilityContext;
+import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public abstract class HAPComponentContainerElement extends HAPSerializableImp implements HAPComponent{
@@ -54,7 +54,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		this.m_elementId = elementId;
 		this.m_componentEntity = ((HAPComponent)this.getResourceContainer().getContainerElement(this.getElementId())).cloneComponent();
 		HAPUtilityComponent.mergeWithParentAttachment(this.m_componentEntity, this.m_componentContainer.getAttachmentContainer());    //build attachment
-		this.m_contextStructure = HAPUtilityContext.hardMerge(this.m_componentEntity.getValueStructure(), this.m_componentContainer.getValueStructure());   //build context
+		this.m_contextStructure = HAPUtilityValueStructure.hardMerge(this.m_componentEntity.getValueStructure(), this.m_componentContainer.getValueStructure());   //build context
 		HAPInfoUtility.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
 	}
 

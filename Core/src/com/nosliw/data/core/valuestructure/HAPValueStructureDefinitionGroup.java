@@ -54,6 +54,7 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 	public HAPValueStructureDefinitionGroup(){
 		this.m_info = new HAPInfoImpSimple(); 
 		this.m_flatStructureByCategary = new LinkedHashMap<String, HAPValueStructureDefinitionFlat>();
+		this.m_categaryById = new LinkedHashMap<String, String>();
 		for(String type : getAllCategaries()){
 			this.m_flatStructureByCategary.put(type, new HAPValueStructureDefinitionFlat());
 		}
@@ -67,7 +68,7 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 	}
 	
 	@Override
-	public String getStructureType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT;	}
+	public String getStructureType() {	return HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP;	}
 
 	@Override
 	public boolean isFlat() {	return false;	}
@@ -150,7 +151,7 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 		root = root.cloneRoot();
 		if(HAPBasicUtility.isStringEmpty(categary))   categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
 		if(HAPBasicUtility.isStringEmpty(root.getLocalId()))  root.setLocalId(new HAPReferenceRootInGroup(categary, root.getName()).getFullName());
-		this.m_categaryById.put(root.getId(), categary);
+		this.m_categaryById.put(root.getLocalId(), categary);
 		this.getFlat(categary).addRoot(root);
 		return root;
 	}

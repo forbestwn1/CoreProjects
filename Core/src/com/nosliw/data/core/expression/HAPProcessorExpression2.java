@@ -112,7 +112,7 @@ public class HAPProcessorExpression2 {
 		
 		//variable
 		//variable --- from context
-		HAPVariableInfoInStructure varsContainer = HAPUtilityContext.discoverDataVariablesInStructure(out.getContextFlat());
+		HAPVariableInfoInStructure varsContainer = HAPUtilityContext.discoverDataVariablesDefinitionInStructure(out.getContextFlat());
 		out.setVarsInfo(varsContainer);
 
 		Set<HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();

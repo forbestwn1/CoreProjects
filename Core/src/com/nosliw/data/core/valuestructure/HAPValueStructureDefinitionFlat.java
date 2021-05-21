@@ -38,7 +38,7 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 	}
 
 	@Override
-	public String getStructureType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT;	}
+	public String getStructureType() {	return HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT;	}
 
 	@Override
 	public boolean isFlat() {	return true;	}

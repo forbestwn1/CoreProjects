@@ -8,6 +8,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.structure.HAPElement;
 import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
@@ -17,7 +18,30 @@ import com.nosliw.data.core.structure.HAPRoot;
 
 public class HAPUtilityValueStructure {
 
-	public static HAPVariableInfoInStructure discoverDataVariablesInStructure(HAPValueStructureDefinition structure) {
+	public static HAPValueStructureDefinition hardMerge(HAPValueStructureDefinition child, HAPValueStructureDefinition parent) {
+		if(child==null) return (HAPValueStructureDefinition)parent.cloneStructure();
+		if(parent==null)  return (HAPValueStructureDefinition)child.cloneStructure();
+		
+		String type1 = child.getStructureType();
+		String type2 = parent.getStructureType();
+		if(!type1.equals(type2))  throw new RuntimeException();
+		
+		HAPValueStructureDefinition out = null;
+		out = (HAPValueStructureDefinition)child.cloneStructure();
+		out.hardMergeWith(parent);
+		return out;
+	}
+
+	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(HAPValueStructureDefinition structure) {
+		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
+		for(String idPath : dataVarsInfoByIdPath.keySet()) {
+			out.addVariable(idPath, dataVarsInfoByIdPath.get(idPath));
+		}
+		return out;
+	}
+
+	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPValueStructureDefinition structure) {
 		HAPVariableInfoInStructure out = new HAPVariableInfoInStructure();
 		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {

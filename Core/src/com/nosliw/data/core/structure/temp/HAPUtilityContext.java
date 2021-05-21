@@ -17,10 +17,10 @@ import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.valuestructure.HAPElementContextStructureValueExecutable;
+import com.nosliw.data.core.valuestructure.HAPExecutableStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPExecutableStructure;
 
 public class HAPUtilityContext {
 
@@ -195,20 +195,6 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
-	public static HAPValueStructureDefinition hardMerge(HAPValueStructureDefinition child, HAPValueStructureDefinition parent) {
-		if(child==null) return parent.cloneStructure();
-		if(parent==null)  return child.cloneStructure();
-		
-		String type1 = child.getType();
-		String type2 = parent.getType();
-		if(!type1.equals(type2))  throw new RuntimeException();
-		
-		HAPValueStructureDefinition out = null;
-		out = child.cloneStructure();
-		out.hardMergeWith(parent);
-		return out;
-	}
-
 	
 	public static HAPValueStructureDefinitionGroup hardMerge(HAPValueStructureDefinitionGroup child, HAPValueStructureDefinitionGroup parent) {
 		HAPValueStructureDefinitionGroup out = null;

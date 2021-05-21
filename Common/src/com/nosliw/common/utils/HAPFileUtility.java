@@ -118,7 +118,7 @@ public class HAPFileUtility {
 		
 		
 //		char[] invalidChars = {'|', '[', ']', ';', ':'};
-		char[] invalidChars = {'|', ':'};
+		char[] invalidChars = {'|', ':', '*'};
 		for(char invalidChar : invalidChars){
 			fileName = fileName.replace(invalidChar, '_');
 		}

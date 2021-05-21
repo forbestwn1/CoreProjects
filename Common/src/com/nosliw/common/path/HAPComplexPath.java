@@ -30,6 +30,7 @@ public class HAPComplexPath {
 			if(index==-1){
 				//name only
 				this.m_rootName = this.m_fullName;
+				this.m_path = new HAPPath();
 			}
 			else{
 				this.m_rootName = this.m_fullName.substring(0, index);
