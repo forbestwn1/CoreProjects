@@ -319,7 +319,7 @@ public class HAPProcessorExpression {
 	
 	//build variable into within expression item
 	private static void discoverExpressionItemVariable(HAPExecutableExpressionGroup expressionGroup) {
-		HAPContainerVariableCriteriaInfo expressionGroupVarsContainer = expressionGroup.getVarsInfo();
+		HAPContainerVariableCriteriaInfo expressionGroupVarsContainer = expressionGroup.getVariablesInfo();
 		Map<String, HAPExecutableExpression> items = expressionGroup.getExpressionItems();
 		for(String name : items.keySet()) {
 			HAPExecutableExpression item = items.get(name);

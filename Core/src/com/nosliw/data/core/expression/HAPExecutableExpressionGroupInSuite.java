@@ -39,6 +39,7 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public Map<String, HAPData> getDataConstants(){   return this.m_dataConstants;     }
 	
 	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.m_varInfos = varInfo;    }
+	@Override
 	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_varInfos;    }
 	
 	
@@ -121,10 +122,5 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 		for(String id : this.m_expressionItem.keySet()) {
 			dependency.addAll(this.m_expressionItem.get(id).getResourceDependency(runtimeInfo, resourceManager));
 		}
-	}
-	@Override
-	public HAPContainerVariableCriteriaInfo getVarsInfo() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
