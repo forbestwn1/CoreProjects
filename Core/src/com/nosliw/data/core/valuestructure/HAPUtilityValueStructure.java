@@ -14,10 +14,30 @@ import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
 import com.nosliw.data.core.structure.HAPElementNode;
 import com.nosliw.data.core.structure.HAPInfoAlias;
+import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
 
 public class HAPUtilityValueStructure {
 
+	public static Map<String, Object> replaceValueNameWithId(HAPValueStructure valueStructure, Map<String, Object> values){
+		Map<String, Object> out = new LinkedHashMap<String, Object>();
+		for(String rootName : values.keySet()) {
+			HAPReferenceRoot rootReference = null;
+			String structureType = valueStructure.getStructureType();
+			if(structureType.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP)) {
+				rootReference = new HAPReferenceRootInGroup(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, rootName);
+			}
+			else if(structureType.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT)) {
+				rootReference = new HAPReferenceRootInFlat(rootName);
+			}
+			List<HAPRoot> roots = valueStructure.resolveRoot(rootReference, false);
+			if(roots!=null && roots.size()>0) {
+				out.put(roots.get(0).getLocalId(), values.get(rootName));
+			}
+		}
+		return out;
+	}
+	
 	public static HAPValueStructureDefinition hardMerge(HAPValueStructureDefinition child, HAPValueStructureDefinition parent) {
 		if(child==null) return (HAPValueStructureDefinition)parent.cloneStructure();
 		if(parent==null)  return (HAPValueStructureDefinition)child.cloneStructure();

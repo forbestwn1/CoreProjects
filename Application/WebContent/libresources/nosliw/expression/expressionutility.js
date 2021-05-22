@@ -84,7 +84,8 @@ var node_utility = function()
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
 
 		//build variable value according to alias definition in expression item
-		var allVariables = node_aliasUtility.expandInputByVariablesInfoContainer(variables, expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS]);
+		var allVariables = variables;
+//			node_aliasUtility.expandInputByVariablesInfoContainer(variables, expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS]);
 		
 		//execute operand
 		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_OPERAND], allVariables, constants, references, {
@@ -311,7 +312,7 @@ var node_utility = function()
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_VARIABLE: 
 			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteVariableOperand", {"operand":operand, "variables":variables}), 
 					function(requestInfo){  
-						var varName = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARIABLENAME];
+						var varName = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARIABLEID];
 						return requestInfo.getService().parms.variables[varName];  
 					}, 
 					handlers, requestInfo);

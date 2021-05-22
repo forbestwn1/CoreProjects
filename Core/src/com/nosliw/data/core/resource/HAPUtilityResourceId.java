@@ -63,10 +63,15 @@ public class HAPUtilityResourceId {
 			structure = HAPConstantShared.RESOURCEID_TYPE_DYNAMIC;
 			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC.length());
 		}
-		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE) || !strict){
+		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE)){
 			//simple
 			structure = HAPConstantShared.RESOURCEID_TYPE_SIMPLE;
 			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE.length());
+		}
+		else if(!strict) {
+			//if no sign, then by default simple
+			structure = HAPConstantShared.RESOURCEID_TYPE_SIMPLE;
+			coreIdLiterate = literate;
 		}
 
 		if(structure==null)  return null;
