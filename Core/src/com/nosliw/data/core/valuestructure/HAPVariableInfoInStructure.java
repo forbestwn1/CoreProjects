@@ -59,7 +59,7 @@ public class HAPVariableInfoInStructure extends HAPSerializableImp{
 				override = true;
 			}
 			
-			this.m_rootIdByName.put(rootAlias, varId);
+			this.m_rootIdByName.put(rootAlias, varIdPath.getRootName());
 		}
 		return override;
 	}

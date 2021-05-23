@@ -16,15 +16,15 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorContext {
 
-	public static HAPValueStructureDefinition process(HAPValueStructureDefinition context, HAPContainerStructure parent, HAPContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPValueStructureDefinition process(HAPValueStructureDefinition valueStructure, HAPContainerStructure parent, HAPContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPValueStructureDefinition out = null;
-		if(context!=null) {
-			String type = context.getType();
+		if(valueStructure!=null) {
+			String type = valueStructure.getStructureType();
 			if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
-				out = process((HAPValueStructureDefinitionFlat)context, parent, attachmentContainer, new HashSet<String>(), errors, configure, runtimeEnv);
+				out = process((HAPValueStructureDefinitionFlat)valueStructure, parent, attachmentContainer, new HashSet<String>(), errors, configure, runtimeEnv);
 			}
 			else if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-				out = process((HAPValueStructureDefinitionGroup)context, parent, attachmentContainer, new HashSet<String>(), errors, configure, runtimeEnv);
+				out = process((HAPValueStructureDefinitionGroup)valueStructure, parent, attachmentContainer, new HashSet<String>(), errors, configure, runtimeEnv);
 			}
 		}
 		return out;

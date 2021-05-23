@@ -126,7 +126,7 @@ public class HAPOperandReference extends HAPOperandImp{
 
 		//variable
 		
-		HAPContainerVariableCriteriaInfo internalVariablesInfo = this.m_expression.getVarsInfo();
+		HAPContainerVariableCriteriaInfo internalVariablesInfo = this.m_expression.getVariablesInfo();
 		for(String inVarId : this.m_mapping.keySet()) {
 			HAPMatchers matchers = this.m_mapping.get(inVarId).getOperand().discover(variablesInfo, internalVariablesInfo.getVariableCriteriaInfo(inVarId).getCriteria(), processTracker, dataTypeHelper);
 			this.m_matchers.put(inVarId, matchers);

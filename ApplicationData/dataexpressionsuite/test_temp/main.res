@@ -106,18 +106,27 @@
 			}
 		}
 	},
-	"element": [{
-			"id": "test10",
-			"name": "test10",
-			"description": "standard",
+	"element": [
+		{
+			"id": "test20",
+			"name": "test20",
+			"description": "reference to real expression, default",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(?(testVar3___public)?,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "!(test.string)!.subString(<(ref1)>,from:?(testVar4)?,to:?(testVar5)?)"
 				}
 			]
 		}
 	],
 	"attachment": {
+		"dataexpression" : [
+			{
+				"name" : "ref1",
+				"entity" : {
+					"expression" : "!(test.string)!.subString(?(testVar3)?,from:&(constantFromContext3)&,to:&(constantFromAtt4)&)"
+				}
+			}
+		],
 		"value" : [
 			{
 				"name": "constantFromAtt1",

@@ -307,6 +307,7 @@ public class HAPProcessorExpression {
 							HAPInfoVariable varInfo = referenceExpContainer.getVariableInfoByAlias(refVarName);
 							newMapping.put(varInfo.getIdPath().getFullName(), mapping.get(refVarName));
 						}
+						referenceOperand.setMapping(newMapping);
 						
 						//replace variable name in referenced expression
 						replaceVarNameWithId((HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression());

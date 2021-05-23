@@ -5,11 +5,10 @@ import com.nosliw.common.updatename.HAPUpdateNamePrefix;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPUtilityExpression {
 
-	public static HAPValueStructureDefinition getValueStructure(Object expressionGroupDef, HAPValueStructureDefinitionFlat extraContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPValueStructureDefinition getValueStructure(Object expressionGroupDef, HAPValueStructureDefinition extraContext, HAPRuntimeEnvironment runtimeEnv) {
 		return HAPUtilityComponent.getValueStructure(expressionGroupDef, extraContext, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
 	}
 	

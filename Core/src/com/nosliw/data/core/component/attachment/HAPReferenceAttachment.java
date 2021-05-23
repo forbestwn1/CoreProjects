@@ -1,6 +1,6 @@
 package com.nosliw.data.core.component.attachment;
 
-public class HAPIdAttachment {
+public class HAPReferenceAttachment {
 
 	private String m_type;
 	

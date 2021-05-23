@@ -24,8 +24,8 @@ import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
-import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
@@ -114,16 +114,16 @@ public class HAPUtilityComponent {
 			out = HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)def, extraValueStructure, runtimeEnv, contextProcessConfig);
 		}
 		else if(def instanceof HAPWithValueStructure){
-			out = HAPUtilityContext.hardMerge(((HAPWithValueStructure)def).getValueStructure(), extraValueStructure); 
+			out = HAPUtilityValueStructure.hardMerge(((HAPWithValueStructure)def).getValueStructure(), extraValueStructure); 
 		}
 		return out;
 	}
 
 	
 	public static HAPValueStructureDefinition processElementComponentContext(HAPComponentContainerElement component, HAPValueStructureDefinition extraContext, HAPRuntimeEnvironment runtimeEnv, HAPConfigureProcessorStructure processConfigure) {
-		HAPValueStructureDefinition parentContext = HAPUtilityContext.hardMerge(component.getResourceContainer().getValueStructure(), extraContext); 
+		HAPValueStructureDefinition parentContext = HAPUtilityValueStructure.hardMerge(component.getResourceContainer().getValueStructure(), extraContext); 
 		HAPValueStructureDefinition processedEleContext = HAPProcessorContext.process(component.getComponentEntity().getValueStructure(), HAPContainerStructure.createDefault(parentContext), component.getAttachmentContainer(), null, processConfigure, runtimeEnv);
-		return HAPUtilityContext.hardMerge(parentContext, processedEleContext);
+		return HAPUtilityValueStructure.hardMerge(parentContext, processedEleContext);
 	}
 
 	//parent attachment merge to child, child attachment has higher priority

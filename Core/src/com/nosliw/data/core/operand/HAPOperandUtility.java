@@ -21,6 +21,8 @@ import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroupInSuite;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandUtility {
@@ -300,6 +302,14 @@ public class HAPOperandUtility {
 							//find constant value for variable, replace with constant
 							HAPOperandConstant constantOperand = new HAPOperandConstant(cstData);
 							operand.setOperand(constantOperand);
+						}
+					}
+					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
+						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+						HAPExecutableExpressionGroupInSuite refExpGroup = (HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression();
+						Map<String, HAPExecutableExpression> expItems = refExpGroup.getExpressionItems();
+						for(HAPExecutableExpression expItem : expItems.values()) {
+							updateConstantData(expItem.getOperand(), refExpGroup.getDataConstants());
 						}
 					}
 					return true;

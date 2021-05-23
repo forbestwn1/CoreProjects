@@ -32,7 +32,8 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	
 	public HAPEntityInfoImp(String name, String description) {
 		this.m_info = new HAPInfoImpSimple(); 
-		this.m_name = name;
+		this.setName(name);
+//		this.m_name = name;
 		this.m_description = description;
 	}
 
@@ -115,8 +116,8 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	@Override
 	public void buildEntityInfoByJson(Object json) {
 		JSONObject jsonObj = (JSONObject)json;
-		this.setName((String)jsonObj.opt(NAME));
 		this.setId((String)jsonObj.opt(ID));
+		this.setName((String)jsonObj.opt(NAME));
 		this.setStatus((String)jsonObj.opt(STATUS));
 		this.setDisplayName((String)jsonObj.opt(DISPLAYNAME));
 		this.setDescription(jsonObj.optString(DESCRIPTION));

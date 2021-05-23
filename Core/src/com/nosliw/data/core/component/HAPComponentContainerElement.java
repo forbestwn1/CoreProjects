@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPIdAttachment;
+import com.nosliw.data.core.component.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
@@ -94,7 +94,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public HAPAttachment getAttachment(String type, String name) {  return this.getAttachmentContainer().getElement(type, name);  }
 
 	@Override
-	public HAPAttachment getAttachment(HAPIdAttachment idAttachment) {   return this.getAttachmentContainer().getElement(idAttachment);  }
+	public HAPAttachment getAttachment(HAPReferenceAttachment idAttachment) {   return this.getAttachmentContainer().getElement(idAttachment);  }
 
 
 	@Override

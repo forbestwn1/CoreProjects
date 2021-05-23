@@ -12,7 +12,7 @@ import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.temp.HAPUtilityContext;
+import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public class HAPUtilityExpressionComponent {
@@ -36,7 +36,7 @@ public class HAPUtilityExpressionComponent {
 		}
 		
 		//constant from context
-		Map<String, Object> constantsValue = HAPUtilityContext.discoverContantsValueFromContextStructure(valueStructure);
+		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(valueStructure);
 		for(String id : constantsValue.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
 			if(constantDef.isData()) {
