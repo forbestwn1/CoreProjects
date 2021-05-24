@@ -16,7 +16,9 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOperand{
 
@@ -36,16 +38,14 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	public Set<HAPDataTypeConverter> getConverters(){	return new HashSet<HAPDataTypeConverter>();	}
 	
 	@Override
-	public List<HAPResourceIdSimple> getResources() {
+	public List<HAPResourceIdSimple> getResources(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceIdSimple> out = new ArrayList<HAPResourceIdSimple>();
 		//converter as resource
 		for(HAPDataTypeConverter converter : this.getConverters()){
 			out.add(new HAPResourceIdConverter(converter));
 		}
 		return out;
-		
 	}
-
 	
 	@Override
 	public String getType(){ return this.m_type;  }

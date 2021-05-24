@@ -285,7 +285,7 @@ var COMMONATRIBUTECONSTANT=
   "OPERAND_PARMS": "parms",
   "OPERAND_BASE": "base",
   "OPERAND_MATCHERSPARMS": "matchersParms",
-  "OPERAND_REFERENCENAME": "referenceName",
+  "OPERAND_REFERENCE": "reference",
   "OPERAND_EXPRESSION": "expression",
   "OPERAND_ELEMENTNAME": "elementName",
   "OPERAND_VARMATCHERS": "varMatchers",

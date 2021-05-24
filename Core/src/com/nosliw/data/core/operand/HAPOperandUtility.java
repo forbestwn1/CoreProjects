@@ -202,7 +202,7 @@ public class HAPOperandUtility {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					out.add(referenceOperand.getReferenceName());
+					out.add(referenceOperand.getReference());
 				}
 				return true;
 			}

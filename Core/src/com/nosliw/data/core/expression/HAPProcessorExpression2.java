@@ -174,7 +174,7 @@ public class HAPProcessorExpression2 {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					String refName = referenceOperand.getReferenceName();
+					String refName = referenceOperand.getReference();
 					
 					String referenceTo = null;
 					String eleName = null;

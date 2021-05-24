@@ -113,7 +113,7 @@
 			"description": "reference to real expression, default",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(<(ref1)>,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "<(ref1)>"
 				}
 			]
 		}
@@ -123,7 +123,7 @@
 			{
 				"name" : "ref1",
 				"entity" : {
-					"expression" : "!(test.string)!.subString(?(testVar3)?,from:&(constantFromContext3)&,to:&(constantFromAtt4)&)"
+					"expression" : "?(testVar3)?"
 				}
 			}
 		],

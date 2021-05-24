@@ -24,14 +24,10 @@ public interface HAPExecutableExpressionGroup extends HAPSerializable, HAPExecut
 
 	String getId();
 	
-//	HAPValueStructureExecutable getContextFlat();
-	
 	HAPContainerVariableCriteriaInfo getVariablesInfo();
 
 	void addExpression(String name, HAPOperandWrapper operand);
 	Map<String, HAPExecutableExpression> getExpressionItems();
-	
-//	void updateVariableName(HAPUpdateName nameUpdate);
 	
 	void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker);
 	

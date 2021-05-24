@@ -295,6 +295,92 @@ var node_utility = function()
 		return out;
 	};
 
+	//execute reference operand
+	var loc_getExecuteReferenceOperandRequest = function(referenceOperand, variables, constants, references, handlers, requestInfo){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteReferenceOperand", {}), handlers, requestInfo);
+
+		//cal all mapping operands
+		var refVarsMapping = referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMAPPING];
+		var refVarsInOperandRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("CalRefVarsInOperandRequest", {"refVarsMapping":refVarsMapping}), {
+			success : function(requestInfo, setResult){
+				var refVarsInValue = setResult.getResults();
+				
+				//match parms and base
+				var refVarsInMatcherRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchOperationParms", {}), {
+					success : function(requestInfo, refVarsInMatchResult){
+						var refVarsValue = refVarsInMatchResult.getResults();
+						return loc_getExecuteExpressionRequest(referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_EXPRESSION], referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_ELEMENTNAME], refVarsValue, undefined, undefined, {
+							success : function(requestInfo, referenceData){
+								return referenceData;
+							}
+						});
+					}
+				});
+				_.each(referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMATCHERS], function(varMatchers, varId, list){
+					var refVarInMatchRequest = loc_getMatchDataTaskRequest(refVarsInValue[varId], varMatchers, {});
+					refVarsInMatcherRequest.addRequest(varId, refVarInMatchRequest);
+				}, this);
+				return refVarsInMatcherRequest;
+			}
+		});
+		_.each(refVarsMapping, function(refVarInOperand, refVarId, list){
+			var refVarInOperandRequest = loc_getExecuteOperandRequest(refVarInOperand, variables, constants, references, {
+				success :function(request, refVarInValue){
+					return refVarInValue;
+				}
+			});
+			refVarsInOperandRequest.addRequest(refVarId, refVarInOperandRequest);
+		}, this);
+		out.addRequest(refVarsInOperandRequest);
+		
+		return out;
+	};
+	
+	
+	//execute reference operand
+	var loc_getExecuteReferenceOperandRequest1 = function(referenceOperand, variables, constants, references, handlers, requestInfo){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteReferenceOperand", {}), handlers, requestInfo);
+		//
+		var varMapping = operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMAPPING];
+		var refVarValue = {};
+		_.each(varMapping, function(parentVar, refVar){
+			refVarValue[refVar] = variables[parentVar];
+		});
+		
+		//if have variables, convert variables
+		var varsMatchers = operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMATCHERS];
+		if(varsMatchers==undefined)  varsMatchers = {};
+		var varsMatchRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatcherVariable", {"variables":variables, "variablesMatchers":varsMatchers}), 
+				{			
+					success : function(reqInfo, setResult){
+						var variables = reqInfo.getData();
+						var matchedVars = {};
+						_.each(variables, function(varData, varName, list){
+							var matchedVar = setResult.getResult(varName);
+							if(matchedVar==undefined){
+								matchedVar = variables[varName];
+							}
+							matchedVars[varName] = matchedVar;
+						}, this);
+						reqInfo.setData(matchedVars);
+						
+						//execute operand
+						return loc_getExecuteExpressionRequest(operand[node_COMMONATRIBUTECONSTANT.OPERAND_EXPRESSION], operand[node_COMMONATRIBUTECONSTANT.OPERAND_ELEMENTNAME], variables, constants, references);
+					}, 
+				}, 
+				null).withData(refVarValue);
+			
+		_.each(refVarValue, function(varData, varName, list){
+			var varMatchers = varsMatchers[varName];
+			if(varMatchers!=undefined){
+				var request = loc_getMatchDataTaskRequest(varData, varMatchers, {}, null);
+				varsMatchRequest.addRequest(varName, request);
+			}
+		}, this);
+		out.addRequest(varsMatchRequest);
+		return out;
+	};
+	
 	var loc_getExecuteOperandRequest = function(operand, variables, constants, references, handlers, requestInfo){
 		var out;
 		var operandType = operand[node_COMMONATRIBUTECONSTANT.OPERAND_TYPE];
@@ -321,45 +407,7 @@ var node_utility = function()
 			out = loc_getExecuteOperationOperandRequest(operand, variables, constants, references, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_REFERENCE:
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteReferenceOperand", {}), handlers, requestInfo);
-			//
-			var varMapping = operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMAPPING];
-			var refVarValue = {};
-			_.each(varMapping, function(parentVar, refVar){
-				refVarValue[refVar] = variables[parentVar];
-			});
-			
-			//if have variables, convert variables
-			var varsMatchers = operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMATCHERS];
-			if(varsMatchers==undefined)  varsMatchers = {};
-			var varsMatchRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatcherVariable", {"variables":variables, "variablesMatchers":varsMatchers}), 
-					{			
-						success : function(reqInfo, setResult){
-							var variables = reqInfo.getData();
-							var matchedVars = {};
-							_.each(variables, function(varData, varName, list){
-								var matchedVar = setResult.getResult(varName);
-								if(matchedVar==undefined){
-									matchedVar = variables[varName];
-								}
-								matchedVars[varName] = matchedVar;
-							}, this);
-							reqInfo.setData(matchedVars);
-							
-							//execute operand
-							return loc_getExecuteExpressionRequest(operand[node_COMMONATRIBUTECONSTANT.OPERAND_EXPRESSION], operand[node_COMMONATRIBUTECONSTANT.OPERAND_ELEMENTNAME], variables, constants, references);
-						}, 
-					}, 
-					null).withData(refVarValue);
-				
-			_.each(refVarValue, function(varData, varName, list){
-				var varMatchers = varsMatchers[varName];
-				if(varMatchers!=undefined){
-					var request = loc_getMatchDataTaskRequest(varData, varMatchers, {}, null);
-					varsMatchRequest.addRequest(varName, request);
-				}
-			}, this);
-			out.addRequest(varsMatchRequest);
+			out = loc_getExecuteReferenceOperandRequest(operand, variables, constants, references, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
 			break;

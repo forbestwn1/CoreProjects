@@ -139,7 +139,7 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				List<HAPResourceDependency> dependency = (List<HAPResourceDependency>)data;
-				List<HAPResourceId> operandResourceIds = (List)operand.getOperand().getResources();
+				List<HAPResourceId> operandResourceIds = (List)operand.getOperand().getResources(runtimeInfo, resourceManager);
 				List<HAPResourceInfo> resourceInfos = resourceManager.discoverResources(operandResourceIds, runtimeInfo);
 				for(HAPResourceInfo resourceInfo : resourceInfos) {
 					dependency.addAll(resourceInfo.getDependency());

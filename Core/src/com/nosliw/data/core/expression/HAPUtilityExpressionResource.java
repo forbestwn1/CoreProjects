@@ -37,12 +37,12 @@ public class HAPUtilityExpressionResource {
 	static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecutableExpressionGroup> expressions, HAPResourceManagerRoot resourceMan, HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		for(HAPExecutableExpressionGroup expression : expressions){
-			resourceIds.addAll(discoverResources(expression));
+			resourceIds.addAll(discoverResources(expression, runtimeInfo, resourceMan));
 		}
 		return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds), runtimeInfo);
 	}
 
-	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableExpressionGroup expressions){
+	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableExpressionGroup expressions, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager){
 		Set<HAPResourceIdSimple> result = new LinkedHashSet<HAPResourceIdSimple>();
 		Map<String, HAPExecutableExpression> items = expressions.getExpressionItems();
 		for(String name : items.keySet()) {
@@ -57,7 +57,7 @@ public class HAPUtilityExpressionResource {
 				@Override
 				public boolean processOperand(HAPOperandWrapper operand, Object data) {
 					Set<HAPResourceIdSimple> resourceIds = (Set<HAPResourceIdSimple>)data;
-					resourceIds.addAll(operand.getOperand().getResources());
+					resourceIds.addAll(operand.getOperand().getResources(runtimeInfo, resourceManager));
 					return true;
 				}
 			});
