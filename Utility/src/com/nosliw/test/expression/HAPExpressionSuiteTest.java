@@ -36,6 +36,7 @@ public class HAPExpressionSuiteTest {
 				HAPResourceDefinitionExpressionGroup expressionDef = runtimeEnvironment.getExpressionManager().getExpressionDefinition(resourceId, null);
 				
 				HAPExecutableExpressionGroupInSuite expressionExe = (HAPExecutableExpressionGroupInSuite)runtimeEnvironment.getExpressionManager().getExpression(resourceId, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null));
+				System.out.println(expressionExe);
 
 				Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(expressionDef, testData);
 				Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(expressionExe.getStructureDefinition(), input);

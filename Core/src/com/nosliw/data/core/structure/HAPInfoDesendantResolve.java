@@ -9,6 +9,6 @@ public class HAPInfoDesendantResolve {
 	//solved path to element
 	public HAPPath solvedPath;
 	//unsolved path part
-	public HAPPath remainPath;
+	public HAPPath remainPath = new HAPPath();
 	
 }

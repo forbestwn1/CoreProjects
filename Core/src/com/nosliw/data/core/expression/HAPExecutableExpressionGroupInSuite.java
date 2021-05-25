@@ -106,6 +106,7 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(this.getExpressionItems(), HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_varInfos, HAPSerializationFormat.JSON));
+		jsonMap.put("structure", HAPJsonUtility.buildJson(this.m_contextStructure, HAPSerializationFormat.JSON));
 	}
 
 	@Override

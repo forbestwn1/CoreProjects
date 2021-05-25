@@ -5,44 +5,6 @@
 		"group" : {
 			"public" : {
 				"flat": {
-					"testVar1" : {
-						"definition": {
-							"child" : {
-								"var1" : {
-									"child" : {
-										"var11" : {"criteria":"test.string;1.0.0"}
-									}
-								}
-							}
-						},
-						"defaultValue": {
-							"var1" : {
-								"var11" : {
-									"dataTypeId": "test.string;1.0.0",
-									"value": "9876543210"
-								}
-							}
-						}
-					},
-					"testVar2" : {
-						"definition": {
-							"child" : {
-								"var1" : {
-									"child" : {
-										"var11" : {"criteria":"test.string;1.0.0"}
-									}
-								}
-							}
-						},
-						"defaultValue": {
-							"var1" : {
-								"var11" : {
-									"dataTypeId": "test.string;1.0.0",
-									"value": "9876543210"
-								}
-							}
-						}
-					},
 					"testVar3": {
 						"definition":{
 							"criteria": "test.string"
@@ -50,24 +12,6 @@
 						"defaultValue": {
 							"dataTypeId": "test.string",
 							"value": "9876543210"
-						}
-					},
-					"testVar4" : {
-						"definition": {
-							"criteria" : "test.integer"
-						},
-						"defaultValue": {
-							"dataTypeId": "test.integer;1.0.0",
-							"value": 5
-						}
-					},
-					"testVar5" : {
-						"definition": {
-							"criteria": "test.integer"
-						},
-						"defaultValue": {
-							"dataTypeId": "test.integer;1.0.0",
-							"value": 7
 						}
 					},
 					"constantFromContext1": {

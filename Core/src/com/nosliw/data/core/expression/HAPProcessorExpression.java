@@ -145,7 +145,7 @@ public class HAPProcessorExpression {
 						Set<String> types = new HashSet<String>();
 						types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA);
 						HAPInfoReferenceResolve resolve = HAPUtilityStructure.analyzeElementReference(variablePath, expressionExe.getStructureDefinition(), null, types);
-						if(resolve.referredRoot==null || resolve.realSolidSolved.remainPath!=null) {
+						if(resolve.referredRoot==null || !resolve.realSolidSolved.remainPath.isEmpty()) {
 							//variable name cannot be resolved
 							HAPRoot root = resolve.referredRoot;
 							if(root==null) {

@@ -116,7 +116,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(REFERENCE, m_reference);
 		jsonMap.put(ELEMENTNAME, this.m_elementName);
-		jsonMap.put(EXPRESSION, this.m_expression.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_expression!=null)  jsonMap.put(EXPRESSION, this.m_expression.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(VARMAPPING, HAPJsonUtility.buildJson(this.m_mapping, HAPSerializationFormat.JSON));
 		jsonMap.put(VARMATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 	}
