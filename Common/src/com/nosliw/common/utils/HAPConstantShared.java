@@ -779,7 +779,7 @@ public class HAPConstantShared {
 
 		public static final String STRUCTURE_TYPE_UNKNOWN = "unknown";
 		public static final String STRUCTURE_TYPE_VALUEFLAT = "valueFlat";
-		public static final String STRUCTURE_TYPE_VALUEGROUP = "valueFlat";
+		public static final String STRUCTURE_TYPE_VALUEGROUP = "valueGroup";
 		public static final String STRUCTURE_TYPE_VALUEEXECUTABLE = "valueExecutable";
 		public static final String STRUCTURE_TYPE_MAPPING = "mapping";
 

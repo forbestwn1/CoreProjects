@@ -14,36 +14,22 @@
 							"value": "9876543210"
 						}
 					},
-					"constantFromContext1": {
-						"definition" : {
-							"value" : {
-								"dataTypeId": "test.integer",
-								"value": 1
-							}
+					"testVar4" : {
+						"definition": {
+							"criteria" : "test.integer"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 5
 						}
 					},
-					"constantFromContext2": {
-						"definition" : {
-							"value" : {
-								"dataTypeId": "test.integer",
-								"value": 3
-							}
-						}
-					},
-					"constantFromContext3": {
-						"definition" : {
-							"value" : {
-								"dataTypeId": "test.integer",
-								"value": 2
-							}
-						}
-					},
-					"constantFromContext4": {
-						"definition" : {
-							"value" : {
-								"dataTypeId": "test.integer",
-								"value": 7
-							}
+					"testVar5" : {
+						"definition": {
+							"criteria": "test.integer"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 7
 						}
 					}
 				}
@@ -52,12 +38,12 @@
 	},
 	"element": [
 		{
-			"id": "test20",
-			"name": "test20",
-			"description": "reference to real expression, default",
+			"id": "test22",
+			"name": "test22",
+			"description": "reference to global with default mapping",
 			"element" : [
 				{
-					"expression" : "<(ref1)>"
+					"expression" : "!(test.string)!.subString(<(*test10;test2)>,from:?(testVar4)?,to:?(testVar5)?)"
 				}
 			]
 		}
@@ -67,7 +53,22 @@
 			{
 				"name" : "ref1",
 				"entity" : {
-					"expression" : "?(testVar3)?"
+					"expression" : "!(test.string)!.subString(?(testVar3)?,from:&(constantFromContext3)&,to:&(constantFromAtt4)&)"
+				}
+			},
+			{
+				"name" : "ref2",
+				"entity" : {
+					"element" : [
+						{
+							"name" : "test1",
+							"expression" : "?(testVar3)?"
+						},					
+						{
+							"name" : "test2",
+							"expression" : "!(test.string)!.subString(?(testVar3)?,from:&(constantFromContext3)&,to:&(constantFromAtt4)&)"
+						}					
+					]
 				}
 			}
 		],

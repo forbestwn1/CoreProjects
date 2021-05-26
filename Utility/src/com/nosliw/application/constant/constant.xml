@@ -819,7 +819,7 @@
 			<definition type="space"/>
 			<definition name="STRUCTURE_TYPE_UNKNOWN" value="unknown"/>
 			<definition name="STRUCTURE_TYPE_VALUEFLAT" value="valueFlat"/>
-			<definition name="STRUCTURE_TYPE_VALUEGROUP" value="valueFlat"/>
+			<definition name="STRUCTURE_TYPE_VALUEGROUP" value="valueGroup"/>
 			<definition name="STRUCTURE_TYPE_VALUEEXECUTABLE" value="valueExecutable"/>
 			<definition name="STRUCTURE_TYPE_MAPPING" value="mapping"/>
 		</definitions>

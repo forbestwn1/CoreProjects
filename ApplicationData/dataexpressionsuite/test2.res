@@ -1,8 +1,8 @@
 {
 	"name": "test2",
 	"description": "test2",
-	"context": {
-		"element": {
+	"valueStructure": {
+		"flat": {
 			"testVar3": {
 				"definition":{
 					"criteria": "test.string"

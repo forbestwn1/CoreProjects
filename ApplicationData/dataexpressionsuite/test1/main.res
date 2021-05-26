@@ -162,7 +162,7 @@
 			"description": "reference to real expression, not default",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(<(ref2ATtest2)>,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "!(test.string)!.subString(<(ref2^test2)>,from:?(testVar4)?,to:?(testVar5)?)"
 				}
 			]
 		},
@@ -172,7 +172,7 @@
 			"description": "reference to global with default mapping",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(<(ref3)>,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "!(test.string)!.subString(<(*test10;test2)>,from:?(testVar4)?,to:?(testVar5)?)"
 				}
 			]
 		},
