@@ -96,7 +96,7 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 		this.cloneToEntityInfo(out);
 		out.m_localId = this.m_localId;
 		out.m_globalId = this.m_globalId;
-		out.m_definition = this.m_definition.cloneStructureElement();
+		if(this.m_definition!=null)  out.m_definition = this.m_definition.cloneStructureElement();
 		out.m_defaultValue = this.m_defaultValue;
 		return out;
 	}

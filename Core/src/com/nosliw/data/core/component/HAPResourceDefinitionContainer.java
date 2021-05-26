@@ -22,19 +22,6 @@ public abstract class HAPResourceDefinitionContainer <T extends HAPElementContai
 		this.m_elements = new LinkedHashMap<String, T>();
 	}
 	
-	@Override
-	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {   
-		super.setLocalReferenceBase(localRefBase);
-
-		//set children as well
-		for(T ele : this.m_elements.values()) {
-			if(ele instanceof HAPWithAttachment) {
-				((HAPWithAttachment)ele).setLocalReferenceBase(localRefBase);
-			}
-		}
-	}
-	
-	
 	public T getContainerElement(String id) {     return this.m_elements.get(id);     }
 	
 	public Set<T> getContainerElements(){    return new HashSet<T>(this.m_elements.values());    }

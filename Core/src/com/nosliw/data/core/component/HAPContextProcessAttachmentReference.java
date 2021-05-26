@@ -3,6 +3,7 @@ package com.nosliw.data.core.component;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPContextProcessAttachmentReference {
@@ -33,7 +34,9 @@ public abstract class HAPContextProcessAttachmentReference {
 			if(entity instanceof HAPDefinitionEntityComplex)  contextComplexEntity = (HAPDefinitionEntityComplex)entity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL)) {
-			entity = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(((HAPAttachmentReference)attachment).getReferenceId());
+			HAPResourceDefinition relatedResource = null;
+			if(m_complexEntity instanceof HAPResourceDefinition)   relatedResource = (HAPResourceDefinition)m_complexEntity;
+			entity = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(((HAPAttachmentReference)attachment).getReferenceId(), relatedResource);
 			if(entity instanceof HAPDefinitionEntityComplex)  contextComplexEntity = (HAPDefinitionEntityComplex)entity;
 		}
 		
@@ -42,8 +45,8 @@ public abstract class HAPContextProcessAttachmentReference {
 	
 	abstract protected Object processEntityAttachment(String attachmentName);
 	
-	protected HAPDefinitionEntityComplex getComplexEntity() {    return this.m_complexEntity;    }
+	public HAPDefinitionEntityComplex getComplexEntity() {    return this.m_complexEntity;    }
 	
-	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;     }
+	public HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;     }
 
 }

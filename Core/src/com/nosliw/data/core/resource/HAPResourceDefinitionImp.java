@@ -9,6 +9,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.component.HAPLocalReferenceBase;
 
 public abstract class HAPResourceDefinitionImp extends HAPEntityInfoImp implements HAPResourceDefinition{
 
@@ -16,6 +17,8 @@ public abstract class HAPResourceDefinitionImp extends HAPEntityInfoImp implemen
 	public static String RESOURCEID = "resourceId";
 
 	private HAPResourceId m_resourceId;
+	
+	private HAPLocalReferenceBase m_localReferenceBase;
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
@@ -29,6 +32,13 @@ public abstract class HAPResourceDefinitionImp extends HAPEntityInfoImp implemen
 	@Override
 	public HAPResourceDefinitionOrId getChild(String path) {   return null;    }
 	
+	//path base for local resource reference
+	@Override
+	public HAPLocalReferenceBase getLocalReferenceBase() {   return this.m_localReferenceBase;	}
+
+	@Override
+	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {   this.m_localReferenceBase = localRefBase;  }
+
 	@Override
 	public void cloneToResourceDefinition(HAPResourceDefinition resourceDef) {
 		resourceDef.setResourceId(this.getResourceId());

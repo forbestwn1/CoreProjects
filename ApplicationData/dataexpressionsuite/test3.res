@@ -1,8 +1,8 @@
 {
 	"name": "test3",
 	"description": "test3",
-	"context": {
-		"element": {
+	"valueStructure": {
+		"flat": {
 			"testVar33": {
 				"definition":{
 					"criteria": "test.string"
@@ -46,7 +46,7 @@
 			"description": "standard",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(?(ref1)?,from:&(constantFromAtt31)&,to:&(constantFromContext32)&)"
+					"expression" : "!(test.string)!.subString(<(*test11;test2)>.with(testVar3:?(testVar33)?),from:&(constantFromAtt31)&,to:&(constantFromContext32)&)"
 				}
 			]
 		}

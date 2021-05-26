@@ -21,8 +21,12 @@ public class HAPManagerResourceDefinition {
 		this.m_plugins = new LinkedHashMap<String, HAPPluginResourceDefinition>();
 		this.m_dynamicResourceManager = dynamicResourceMan;
 	}
-	
+
 	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId) {
+		return getResourceDefinition(resourceId, null);
+	}
+	
+	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId, HAPResourceDefinition relatedResource) {
 		HAPResourceDefinition out = null;
 		String structure = resourceId.getStructure();
 		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
@@ -37,24 +41,22 @@ public class HAPManagerResourceDefinition {
 		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
 			HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
 			String type = localResourceId.getType();
-			out = this.m_plugins.get(type).getResourceDefinitionByLocalResourceId(localResourceId);
-			if(out instanceof HAPWithAttachment) {
-				((HAPWithAttachment)out).setLocalReferenceBase(localResourceId.getBasePath());
-			}
+			out = this.m_plugins.get(type).getResourceDefinitionByLocalResourceId(localResourceId, relatedResource);
 		}
 		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
 			HAPResourceIdEmbeded embededId = (HAPResourceIdEmbeded)resourceId;
 			//get parent resource def first
-			HAPResourceDefinition parentResourceDef = this.getResourceDefinition(embededId.getParentResourceId());
+			HAPResourceDefinition parentResourceDef = this.getResourceDefinition(embededId.getParentResourceId(), relatedResource);
 			//get child resource by path
 			HAPResourceDefinitionOrId defOrId = parentResourceDef.getChild(embededId.getPath());
 			if(HAPConstantShared.REFERENCE.equals(defOrId.getEntityOrReferenceType())) {
 				//resource id
-				out = this.getResourceDefinition((HAPResourceId)defOrId);
+				out = this.getResourceDefinition((HAPResourceId)defOrId, parentResourceDef);
 			}
 			else {
 				//resource def
 				out = (HAPResourceDefinition)defOrId;
+				out.setLocalReferenceBase(parentResourceDef.getLocalReferenceBase());
 			}
 		}
 		

@@ -87,18 +87,18 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	@Override
 	public HAPContainerAttachment getAttachmentContainer() {  return this.getComponentEntity().getAttachmentContainer(); }
 
+	//path base for local resource reference
 	@Override
-	public HAPLocalReferenceBase getLocalReferenceBase() {  return this.getAttachmentContainer().getLocalReferenceBase(); }
+	public HAPLocalReferenceBase getLocalReferenceBase() {   return this.m_componentContainer.getLocalReferenceBase();	}
 
+	@Override
+	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {   throw new RuntimeException();  }
+	
 	@Override
 	public HAPAttachment getAttachment(String type, String name) {  return this.getAttachmentContainer().getElement(type, name);  }
 
 	@Override
 	public HAPAttachment getAttachment(HAPReferenceAttachment idAttachment) {   return this.getAttachmentContainer().getElement(idAttachment);  }
-
-
-	@Override
-	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {  this.getAttachmentContainer().setLocalReferenceBase(localRefBase);  }
 
 	protected void cloneToComponentContainerElement(HAPComponentContainerElement componentContainerElement) {
 		componentContainerElement.m_elementId = this.m_elementId;

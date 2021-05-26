@@ -182,7 +182,7 @@
 			"description": "reference to global with mapping",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(<(ref4)>,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "!(test.string)!.subString(<(*test10;test3)>.with(testVar33:?(testVar3)?),from:?(testVar4)?,to:?(testVar5)?)"
 				}
 			]
 		},
@@ -192,7 +192,7 @@
 			"description": "reference to global with mapping",
 			"element" : [
 				{
-					"expression" : "<(ref5)>"
+					"expression" : "<(*test11;test3)>.with(testVar33:?(testVar3)?)"
 				}
 			]
 		},
@@ -202,7 +202,7 @@
 			"description": "reference to local with default mapping",
 			"element" : [
 				{
-					"expression" : "<(ref6)>"
+					"expression" : "<(#test10;local1)>"
 				}
 			]
 		},

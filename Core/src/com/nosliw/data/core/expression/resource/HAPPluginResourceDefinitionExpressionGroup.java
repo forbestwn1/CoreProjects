@@ -28,7 +28,7 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 	}
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId) {
+	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId, HAPResourceDefinition relatedResource) {
 		HAPIdExpressionGroup expressionGroupId = new HAPIdExpressionGroup(resourceId.getName());
 		
 		HAPResourceIdLocal suiteResourceId = new HAPResourceIdLocal(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE);
@@ -36,7 +36,7 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 		suiteResourceId.setBasePath(resourceId.getBasePath());
 		suiteResourceId.setSupplement(resourceId.getSupplement());
 		
-		HAPResourceDefinitionExpressionSuite expressionSuiteDef = (HAPResourceDefinitionExpressionSuite)this.m_resourceDefMan.getResourceDefinition(suiteResourceId);
+		HAPResourceDefinitionExpressionSuite expressionSuiteDef = (HAPResourceDefinitionExpressionSuite)this.m_resourceDefMan.getResourceDefinition(suiteResourceId, relatedResource);
 		return new HAPResourceDefinitionExpressionGroup(expressionSuiteDef, expressionGroupId.getExpressionGroupId());
 	}
 

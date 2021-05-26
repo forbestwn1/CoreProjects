@@ -18,11 +18,6 @@ public interface HAPWithAttachment {
 	HAPAttachment getAttachment(String type, String name);
 	HAPAttachment getAttachment(HAPReferenceAttachment idAttachment);
 
-	//path base for local resource reference
-	HAPLocalReferenceBase getLocalReferenceBase();
-
-	void setLocalReferenceBase(HAPLocalReferenceBase localRefBase);
-
 	//
 	void mergeBy(HAPWithAttachment parent, String mode);
 

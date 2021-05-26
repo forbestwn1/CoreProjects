@@ -152,8 +152,7 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 		if(HAPBasicUtility.isStringEmpty(categary))   categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
 		if(HAPBasicUtility.isStringEmpty(root.getLocalId()))  root.setLocalId(new HAPReferenceRootInGroup(categary, root.getName()).getFullName());
 		this.m_categaryById.put(root.getLocalId(), categary);
-		this.getFlat(categary).addRoot(root);
-		return root;
+		return this.getFlat(categary).addRoot(root);
 	}
 	
 	public HAPRoot newRoot(String categary, String name) {

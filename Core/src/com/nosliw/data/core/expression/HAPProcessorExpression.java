@@ -22,6 +22,7 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -145,13 +146,13 @@ public class HAPProcessorExpression {
 						Set<String> types = new HashSet<String>();
 						types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA);
 						HAPInfoReferenceResolve resolve = HAPUtilityStructure.analyzeElementReference(variablePath, expressionExe.getStructureDefinition(), null, types);
-						if(resolve.referredRoot==null || !resolve.realSolidSolved.remainPath.isEmpty()) {
+						if(resolve==null || resolve.referredRoot==null || !resolve.realSolidSolved.remainPath.isEmpty()) {
 							//variable name cannot be resolved
-							HAPRoot root = resolve.referredRoot;
+							HAPRoot root = resolve==null?null:resolve.referredRoot;
 							if(root==null) {
 								root = HAPUtilityStructure.addRoot(expressionExe.getStructureDefinition(), new HAPComplexPath(variablePath).getRootName(), new HAPRoot());
 							}
-							HAPUtilityStructure.setDescendant(resolve.referredRoot, new HAPComplexPath(variablePath).getPath(), new HAPElementLeafData());
+							HAPUtilityStructure.setDescendant(root, new HAPComplexPath(variablePath).getPath(), new HAPElementLeafData());
 						}
 						
 					}
@@ -237,7 +238,9 @@ public class HAPProcessorExpression {
 						HAPResourceId expressionResourceId = HAPUtilityResourceId.buildResourceIdByLiterate(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, refName, true);
 						if(expressionResourceId!=null) {
 							//reference name is resource id
-							expressionGroupDefiniton = (HAPDefinitionExpressionGroup)runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionResourceId);
+							HAPResourceDefinition relatedResource = null;
+							if(attachmentReferenceContext.getComplexEntity() instanceof HAPResourceDefinition) relatedResource = (HAPResourceDefinition)attachmentReferenceContext.getComplexEntity();
+							expressionGroupDefiniton = (HAPDefinitionExpressionGroup)runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionResourceId, relatedResource);
 							if(expressionGroupDefiniton instanceof HAPWithComplexEntity)  contextComplexEntity = ((HAPWithComplexEntity)expressionGroupDefiniton).getComplexEntity();
 							attachmentReferenceContextForRefExpression = new HAPContextProcessAttachmentReferenceExpression(contextComplexEntity, runtimeEnv);
 						}

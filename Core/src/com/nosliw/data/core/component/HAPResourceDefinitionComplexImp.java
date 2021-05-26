@@ -24,6 +24,8 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	
 	private List<HAPContextReference> m_contextRefs;
 	
+	private HAPLocalReferenceBase m_localReferenceBase;
+
 	public HAPResourceDefinitionComplexImp() {
 		this.m_contextRefs = new ArrayList<HAPContextReference>();
 	}
@@ -57,6 +59,13 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	@Override
 	public HAPResourceDefinitionOrId getChild(String path) {   return null;    }
 
+	//path base for local resource reference
+	@Override
+	public HAPLocalReferenceBase getLocalReferenceBase() {   return this.m_localReferenceBase;	}
+
+	@Override
+	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {   this.m_localReferenceBase = localRefBase;  }
+	
 	@Override
 	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
 		// TODO Auto-generated method stub

@@ -38,12 +38,12 @@
 	},
 	"element": [
 		{
-			"id": "test22",
-			"name": "test22",
-			"description": "reference to global with default mapping",
+			"id": "test26",
+			"name": "test26",
+			"description": "reference to global embeded resource with default mapping",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(<(*test10;test2)>,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "<(@test10=dataexpressionsuite|test2)>"
 				}
 			]
 		}
