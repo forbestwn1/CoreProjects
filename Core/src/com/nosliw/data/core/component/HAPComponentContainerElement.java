@@ -92,7 +92,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public HAPLocalReferenceBase getLocalReferenceBase() {   return this.m_componentContainer.getLocalReferenceBase();	}
 
 	@Override
-	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {   throw new RuntimeException();  }
+	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {     }
 	
 	@Override
 	public HAPAttachment getAttachment(String type, String name) {  return this.getAttachmentContainer().getElement(type, name);  }
