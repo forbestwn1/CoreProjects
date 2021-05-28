@@ -229,6 +229,24 @@ public class HAPOperandUtility {
 		return out;
 	}
 
+	static public Set<String> discoverVariableIds(HAPOperandWrapper operand){
+		Set<String> out = new HashSet<String>();
+		processAllOperand(operand, out, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				Set<String> varIds = (Set<String>)data;
+				switch(operand.getOperand().getType()){
+				case HAPConstantShared.EXPRESSION_OPERAND_VARIABLE:
+					HAPOperandVariable varOperand = (HAPOperandVariable)operand.getOperand();
+					varIds.add(varOperand.getVariableId());
+					break;
+				}
+				return true;
+			}
+		});
+		return out;
+	}
+
 	static public Set<HAPOperandWrapper> discoverVariableOperands(HAPOperandWrapper operand){
 		Set<HAPOperandWrapper> out = new HashSet<HAPOperandWrapper>();
 		processAllOperand(operand, out, new HAPOperandTask(){

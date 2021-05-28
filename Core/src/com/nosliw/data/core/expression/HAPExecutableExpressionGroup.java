@@ -25,6 +25,7 @@ public interface HAPExecutableExpressionGroup extends HAPSerializable, HAPExecut
 	String getId();
 	
 	HAPContainerVariableCriteriaInfo getVariablesInfo();
+	void setVariablesInfo(HAPContainerVariableCriteriaInfo variablesInfo);
 
 	void addExpression(String name, HAPOperandWrapper operand);
 	Map<String, HAPExecutableExpression> getExpressionItems();

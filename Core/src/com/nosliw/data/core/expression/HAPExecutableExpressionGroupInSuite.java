@@ -27,7 +27,7 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 
 	private String m_id;
 	
-	private HAPValueStructureDefinition m_contextStructure;
+	private HAPValueStructureDefinition m_valueStructure;
 	
 	private Map<String, HAPExecutableExpression> m_expressionItem;
 	 
@@ -63,9 +63,9 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public String getId() {  return this.m_id;  }
 	public void setId(String id) {   this.m_id = id;    }
 	
-	public HAPValueStructureDefinition getStructureDefinition() {   return this.m_contextStructure;  }
+	public HAPValueStructureDefinition getValueStructureDefinition() {   return this.m_valueStructure;  }
 
-	public void setStructureDefinition(HAPValueStructureDefinition structureDefinition) {	this.m_contextStructure = structureDefinition;	}
+	public void setValueStructureDefinition(HAPValueStructureDefinition structureDefinition) {	this.m_valueStructure = structureDefinition;	}
 	
 	@Override
 	public void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker) {
@@ -106,7 +106,6 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(this.getExpressionItems(), HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_varInfos, HAPSerializationFormat.JSON));
-		jsonMap.put("structure", HAPJsonUtility.buildJson(this.m_contextStructure, HAPSerializationFormat.JSON));
 	}
 
 	@Override

@@ -212,7 +212,7 @@
 			"description": "reference to global embeded resource with default mapping",
 			"element" : [
 				{
-					"expression" : "<(ref7)>"
+					"expression" : "<(@test10=dataexpressionsuite|test2)>"
 				}
 			]
 		}
@@ -239,51 +239,6 @@
 						}					
 					]
 				}
-			},
-			{
-				"name" : "ref3",
-				"referenceId": "test10;test2"
-			},
-			{
-				"name" : "ref4",
-				"referenceId": "test10;test3",
-				"adaptor" : {
-					"varMapping" : {
-						"element" : {
-							"testVar33" : {
-								"definition": {
-									"path": "testVar3"
-								}
-							}
-						}
-					}
-				}
-			},
-			{
-				"name" : "ref5",
-				"referenceId": "test11;test3",
-				"adaptor" : {
-					"varMapping" : {
-						"element" : {
-							"testVar33" : {
-								"definition": {
-									"path": "testVar3"
-								}
-							}
-						}
-					}
-				}
-			},
-			{
-				"name" : "ref6",
-				"referenceId": {
-					"structure" : "local",
-					"id" : "test10;local1"
-				}
-			},
-			{
-				"name" : "ref7",
-				"referenceId": "@test10:dataexpressionsuite|test2"
 			}
 		],
 		"value" : [

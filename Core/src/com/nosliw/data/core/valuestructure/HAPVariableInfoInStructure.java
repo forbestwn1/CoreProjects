@@ -25,7 +25,7 @@ public class HAPVariableInfoInStructure extends HAPSerializableImp{
 	@HAPAttribute
 	public static String VARIDBYNAME = "varIdByName";
 
-	private Map<String, Set<String>> m_rootNamesById;
+	private Map<String, List<HAPInfoAlias>> m_rootNamesById;
 	
 	private Map<String, HAPInfoCriteria> m_criteriaInfosById;
 	
@@ -37,9 +37,13 @@ public class HAPVariableInfoInStructure extends HAPSerializableImp{
 	
 	public HAPVariableInfoInStructure() {
 		this.m_index = 0;
-		m_rootNamesById = new LinkedHashMap<String, Set<String>>();
+		m_rootNamesById = new LinkedHashMap<String, List<HAPInfoAlias>>();
 		m_criteriaInfosById = new LinkedHashMap<String, HAPInfoCriteria>();
 		m_rootIdByName = new LinkedHashMap<String, String>();
+	}
+	
+	public boolean addVariableCriteriaInfo(HAPInfoVariable varInfo) {
+		return this.addVariableCriteriaInfo(varInfo.getCriteriaInfo(), varInfo.getIdPath().getFullName(), varInfo.getRootAliases());
 	}
 	
 	public boolean addVariableCriteriaInfo(HAPInfoCriteria criteriaInfo, String varId, List<HAPInfoAlias> rootAliasesInfo) {
@@ -49,7 +53,7 @@ public class HAPVariableInfoInStructure extends HAPSerializableImp{
 		boolean override = false;
 		HAPComplexPath varIdPath = new HAPComplexPath(varId);
 		this.m_criteriaInfosById.put(varId, criteriaInfo);
-		this.m_rootNamesById.put(varIdPath.getRootName(), rootAliases);
+		this.m_rootNamesById.put(varIdPath.getRootName(), rootAliasesInfo);
 		for(String rootAlias : rootAliases) {
 			String oldVarId = this.m_rootIdByName.get(rootAlias);
 			if(oldVarId!=null) {

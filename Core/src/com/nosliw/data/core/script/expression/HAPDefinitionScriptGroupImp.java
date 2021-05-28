@@ -17,7 +17,7 @@ public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implem
 	
 	private Map<String, HAPDefinitionConstant> m_constantDef;
 	
-	private HAPValueStructureDefinition m_context;
+	private HAPValueStructureDefinition m_valueStructure;
 	
 	public HAPDefinitionScriptGroupImp() {
 		this.m_scriptDefs = new LinkedHashMap<String, HAPDefinitionScriptEntity>();
@@ -37,14 +37,14 @@ public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implem
 	}
 
 	@Override
-	public HAPValueStructureDefinition getValueStructure() {   return this.m_context;  }
+	public HAPValueStructureDefinition getValueStructure() {   return this.m_valueStructure;  }
 
 	@Override
-	public void setValueContext(HAPValueStructureDefinition context) {   this.m_context = context;  }
+	public void setValueStructure(HAPValueStructureDefinition valueStructure) {   this.m_valueStructure = valueStructure;  }
 
 	@Override
-	public void cloneToWithValueStructure(HAPWithValueStructure dataContext) {
-		dataContext.setValueStructure(this.m_context.cloneStructure());
+	public void cloneToWithValueStructure(HAPWithValueStructure withValueStructure) {
+		withValueStructure.setValueStructure((HAPValueStructureDefinition)this.m_valueStructure.cloneStructure());
 	}
 
 	@Override

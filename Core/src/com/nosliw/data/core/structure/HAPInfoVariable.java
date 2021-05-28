@@ -1,6 +1,6 @@
 package com.nosliw.data.core.structure;
 
-import java.util.Set;
+import java.util.List;
 
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
@@ -12,17 +12,17 @@ public class HAPInfoVariable {
 	
 	private HAPComplexPath m_idPath;
 	
-	private Set<String> m_rootAliases;
+	private List<HAPInfoAlias> m_rootAliases;
 	
-	public HAPInfoVariable(HAPInfoCriteria criteriaInfo, HAPComplexPath idPath, Set<String> rootAliases) {
+	public HAPInfoVariable(HAPInfoCriteria criteriaInfo, HAPComplexPath idPath, List<HAPInfoAlias> rootAliases) {
 		this.m_criteriaInfo = criteriaInfo;
 		this.m_idPath = idPath;
 		this.m_rootAliases = rootAliases;
 	}
 
-	public Set<String> getRootAliases(){   return this.m_rootAliases;     }
+	public List<HAPInfoAlias> getRootAliases(){   return this.m_rootAliases;     }
 	
-	public String getPrincipleRootAlias(){   return this.m_rootAliases.iterator().next();    }
+	public String getPrincipleRootAlias(){   return this.m_rootAliases.iterator().next().getName();    }
 	
 	public HAPInfoCriteria getCriteriaInfo() {   return this.m_criteriaInfo;    }
 	

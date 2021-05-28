@@ -56,7 +56,7 @@ public class HAPProcessorScript {
 			String id,
 			HAPDefinitionScriptGroup scriptGroupDef, 
 			HAPContextProcessAttachmentReferenceExpression processContext,
-			HAPValueStructureDefinition extraStructure,
+			HAPValueStructureDefinition extraContext,
 			HAPManagerExpression expressionMan, 
 			Map<String, String> configure, 
 			HAPRuntimeEnvironment runtimeEnv,
@@ -64,27 +64,22 @@ public class HAPProcessorScript {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 
 		//context
-		HAPValueStructureDefinition valueStructure =  scriptGroupDef.getValueStructure();
-		valueStructure = HAPUtilityValueStructure.hardMerge(valueStructure, extraStructure);
-		out.setValueStructureDefinition(valueStructure);
+		HAPValueStructureDefinition contextStructure =  scriptGroupDef.getValueStructure();
+		contextStructure = HAPUtilityValueStructure.hardMerge(contextStructure, extraContext);
+		out.setContextStructure(contextStructure);
 
+		//constant
+		Map<String, Object> constantsValue = HAPUtilityComponentConstant.getConstantsValue(scriptGroupDef, out.getContextFlat());
+		
 		//expression definition containing all expression in script 
 		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
-		//value structure for expression
 		expressionGroupDef.setValueContext(contextStructure);
-		//data constant for expression
-		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.getDataConstantsDefinition(scriptGroupDef, out.getValueStructureDefinition())) {
-			expressionGroupDef.addConstantDefinition(constantDef);
-		}
 
 		//constant --- discover constant from attachment and context
-		for(HAPDefinitionConstant def : HAPUtilityComponentConstant.getValueConstantsDefinition(scriptGroupDef, out.getValueStructureDefinition())) {
+		for(HAPDefinitionConstant def : HAPUtilityComponentConstant.getValueConstantsDefinition(scriptGroupDef, out.getContextFlat())) {
 			expressionGroupDef.addConstantDefinition(def);
 		}
 		
-		//value constant for script
-		Map<String, Object> constantsValue = HAPUtilityComponentConstant.getConstantsValue(scriptGroupDef, out.getValueStructureDefinition());
-
 		Set<HAPDefinitionScriptEntity> scriptElements = scriptGroupDef.getEntityElements();
 		int i = 0;
 		for(HAPDefinitionScriptEntity scriptDef : scriptElements) {
@@ -111,7 +106,7 @@ public class HAPProcessorScript {
 			i++;
 		}
 		
-		HAPExecutableExpressionGroup expressionExe = HAPProcessorExpression.process(id, expressionGroupDef, processContext, null, configure, runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup expressionExe = HAPProcessorExpression.process(id, expressionGroupDef, processContext, null, null, expressionMan, configure, runtimeEnv, processTracker);
 		out.setExpression(expressionExe);
 		
 		for(HAPExecutableScriptEntity script : out.getScripts()) {

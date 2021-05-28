@@ -39,7 +39,7 @@ public class HAPExpressionSuiteTest {
 				System.out.println(expressionExe);
 
 				Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(expressionDef, testData);
-				Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(expressionExe.getStructureDefinition(), input);
+				Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(expressionExe.getValueStructureDefinition(), input);
 				
 				Map<String, Object> varInput = new LinkedHashMap<String, Object>();
 				for(String varName : expressionExe.getVariablesInfo().getVariablesName()) {

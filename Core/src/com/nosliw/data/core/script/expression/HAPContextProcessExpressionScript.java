@@ -21,7 +21,7 @@ public class HAPContextProcessExpressionScript implements HAPWithValueStructure,
 	private Map<String, HAPDefinitionConstant> m_constantsDefinition;
 
 	//context for expression
-	private HAPValueStructureDefinitionFlat m_context;
+	private HAPValueStructureDefinitionFlat m_valueStructure;
 	
 	public HAPContextProcessExpressionScript() {
 		this.m_constantsDefinition = new LinkedHashMap<String, HAPDefinitionConstant>();
@@ -40,11 +40,11 @@ public class HAPContextProcessExpressionScript implements HAPWithValueStructure,
 	public void addConstantDefinition(HAPDefinitionConstant constantDef) {  this.m_constantsDefinition.put(constantDef.getId(), constantDef);  }
 
 	@Override
-	public HAPValueStructureDefinition getValueStructure() {   return this.m_context;  }
+	public HAPValueStructureDefinition getValueStructure() {   return this.m_valueStructure;  }
 
 	@Override
-	public void setValueContext(HAPValueStructureDefinition context) {   this.m_context = (HAPValueStructureDefinitionFlat)context;  }
+	public void setValueStructure(HAPValueStructureDefinition valueStructure) {   this.m_valueStructure = (HAPValueStructureDefinitionFlat)valueStructure;  }
 
 	@Override
-	public void cloneToWithValueStructure(HAPWithValueStructure withDataContext) {   withDataContext.setValueStructure(m_context);  }  
+	public void cloneToWithValueStructure(HAPWithValueStructure withDataContext) {   withDataContext.setValueStructure(m_valueStructure);  }  
 }

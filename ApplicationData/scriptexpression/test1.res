@@ -1,23 +1,23 @@
 {
 	"name": "test1",
 	"description": "test1",
-	"context": {
-		"element": {
-			business : {
-				definition: {
-					child : {
-						a : {
-							child : {
-								aa : {criteria:"test.string;1.0.0"},
+	"valueStructure": {
+		"flat": {
+			"business" : {
+				"definition": {
+					"child" : {
+						"a" : {
+							"child" : {
+								"aa" : {criteria:"test.string;1.0.0"}
 							}
 						}
 					}
 				},
-				defaultValue: {
-					a : {
-						aa : {
-							dataTypeId: "test.string;1.0.0",
-							value: "This is my world!"
+				"defaultValue": {
+					"a" : {
+						"aa" : {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "This is my world!"
 						}
 					}
 				}
