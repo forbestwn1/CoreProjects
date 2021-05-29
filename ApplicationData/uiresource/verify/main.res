@@ -25,11 +25,11 @@
 	</script>
 
 
-	<context>
+	<valueStructure>
 	{
 		"group" : {
 			"public" : {
-				"element" : {
+				"flat" : {
 					constantFromContext7: {
 						definition : {
 							value : {

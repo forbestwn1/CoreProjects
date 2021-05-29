@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.structure.HAPParserContext;
+import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 @HAPEntityWithAttribute
@@ -53,13 +53,13 @@ public class HAPDefinitionUICommand  extends HAPEntityInfoWritableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
 		
-		HAPParserContext.parseContext(jsonObj.optJSONObject(PARM), this.m_parms);
+		HAPParserValueStructure.parseValueStructureDefinitionFlat(jsonObj.optJSONObject(PARM), this.m_parms);
 		
 		JSONObject resultJson = jsonObj.optJSONObject(RESULT);
 		if(resultJson!=null) {
 			for(Object key : resultJson.keySet()) {
 				HAPValueStructureDefinitionFlat resultEle = new HAPValueStructureDefinitionFlat();
-				HAPParserContext.parseContext(jsonObj.optJSONObject((String)key), resultEle);
+				HAPParserValueStructure.parseValueStructureDefinitionFlat(jsonObj.optJSONObject((String)key), resultEle);
 				this.m_results.put((String)key, resultEle);
 			}
 		}

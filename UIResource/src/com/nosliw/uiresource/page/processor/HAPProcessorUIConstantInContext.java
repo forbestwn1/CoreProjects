@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
+import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
@@ -15,7 +16,7 @@ public class HAPProcessorUIConstantInContext {
 	public static void resolveConstants(HAPExecutableUIUnit exeUnit, HAPRuntime runtime) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 		HAPContextProcessExpressionScript scriptContext = body.getProcessExpressionScriptContext();
-		Map<String, Object> constantsValue = body.getFlatContext().getConstantValue();
+		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(body.getValueStructureDefinition());
 		for(String id : constantsValue.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
 			scriptContext.addConstantDefinition(constantDef);

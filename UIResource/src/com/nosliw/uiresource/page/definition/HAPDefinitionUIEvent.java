@@ -8,8 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 @HAPEntityWithAttribute
@@ -27,7 +27,10 @@ public class HAPDefinitionUIEvent extends HAPEntityInfoWritableImp{
 	public HAPValueStructureDefinitionFlat getDataDefinition() {  return this.m_dataDefinition;   }
 	public void setDataDefinition(HAPValueStructureDefinitionFlat dataDef) {   this.m_dataDefinition = dataDef;  }
 	
-	public void addDataElement(String name, HAPRoot node) {  this.m_dataDefinition.addRoot(name, node);  }
+	public void addDataElement(String name, HAPRoot node) {
+		node.setName(name);
+		this.m_dataDefinition.addRoot(node);  
+	}
 	
 	public void cloneToBase(HAPDefinitionUIEvent event) {
 		this.cloneToEntityInfo(event);
@@ -43,7 +46,7 @@ public class HAPDefinitionUIEvent extends HAPEntityInfoWritableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		HAPParserContext.parseContext(jsonObj.optJSONObject(DATA), this.m_dataDefinition);
+		HAPParserValueStructure.parseValueStructureDefinitionFlat(jsonObj.optJSONObject(DATA), this.m_dataDefinition);
 		return true;  
 	}
 }

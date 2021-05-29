@@ -31,7 +31,7 @@ import com.nosliw.data.core.resource.HAPParserResourceDefinition;
 import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.data.core.script.expression.imp.literate.HAPUtilityScriptLiterate;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.data.core.structure.HAPParserContext;
+import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 
@@ -44,7 +44,7 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 	public static final String EVENT = "event";
 	public static final String ATTACHMENT = "attachment";
 	public static final String SERVICE = "service";
-	public static final String CONTEXT = "context";
+	public static final String VALUESTRUCTURE = "valueStructure";
 	public static final String CONTEXTREF = "contextref";
 	public static final String COMMAND = "commands";
 	public static final String EXPRESSION = "expressions";
@@ -107,8 +107,8 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 	private void parseUIDefinitionUnit(HAPDefinitionUIUnit uiUnit, Element unitEle, HAPDefinitionUIUnit parentUIUnit){
 		//process script block
 		this.parseUnitScriptBlocks(unitEle, uiUnit);
-		//process context block
-		this.parseUnitContextBlocks(unitEle, uiUnit);
+		//process value structure block
+		this.parseUnitValueStructureBlocks(unitEle, uiUnit);
 
 		//parse contextref block
 		parseUnitContextRefBlocks(unitEle, uiUnit);
@@ -293,12 +293,12 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		for(Element childEle : childEles)  childEle.remove();
 	}
 	
-	private void parseUnitContextBlocks(Element ele, HAPDefinitionUIUnit resourceUnit){
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, CONTEXT);
+	private void parseUnitValueStructureBlocks(Element ele, HAPDefinitionUIUnit resourceUnit){
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, VALUESTRUCTURE);
 		
 		for(Element childEle : childEles){
 			try {
-				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), (HAPValueStructureDefinitionGroup)resourceUnit.getValueStructure());
+				HAPParserValueStructure.parseValueStructureDefinitionGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), (HAPValueStructureDefinitionGroup)resourceUnit.getValueStructure());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();

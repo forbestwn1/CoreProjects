@@ -134,11 +134,11 @@ public class HAPProcessorModule {
 
 		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyOutputStructureConfigureFalse(new HAPInfoImpSimple());
 		//build input data association
-		HAPExecutableDataAssociation inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPContainerStructure.createDefault(page.getBody().getFlatContext().getContext()), daConfigure, runtimeEnv);
+		HAPExecutableDataAssociation inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPContainerStructure.createDefault(page.getBody().getValueStructureExe().getValueStructureDefinition()), daConfigure, runtimeEnv);
 		out.setInputMapping(inputDataAssocation);
 		
 		//build output data association
-		HAPExecutableDataAssociation outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(page.getBody().getContext()), moduleUIDefinition.getOutputMapping().getDefaultDataAssociation(), HAPContainerStructure.createDefault(moduleExe.getContext()), daConfigure, runtimeEnv);
+		HAPExecutableDataAssociation outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(page.getBody().getValueStructureDefinition()), moduleUIDefinition.getOutputMapping().getDefaultDataAssociation(), HAPContainerStructure.createDefault(moduleExe.getContext()), daConfigure, runtimeEnv);
 		out.setOutputMapping(outputDataAssocation);
 		
 		//event handler

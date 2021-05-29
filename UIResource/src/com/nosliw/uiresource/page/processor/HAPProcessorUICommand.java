@@ -31,7 +31,7 @@ public class HAPProcessorUICommand {
 		for(String name : eventsDef.keySet()) {
 			HAPDefinitionUIEvent processedEventDef = new HAPDefinitionUIEvent();
 			eventsDef.get(name).cloneToBase(processedEventDef);
-			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), HAPContainerStructure.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
+			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinition()), null, contextProcessorConfig, runtimeEnv));
 			uiExe.getBody().addEventDefinition(processedEventDef);
 		}
 
@@ -42,12 +42,12 @@ public class HAPProcessorUICommand {
 			HAPDefinitionUICommand processedCommendDef = new HAPDefinitionUICommand();
 			commandDef.cloneBasicTo(processedCommendDef);
 			//command parms
-			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
+			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinition()), null, contextProcessorConfig, runtimeEnv));
 
 			//command results
 			Map<String, HAPValueStructureDefinitionFlat> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
-				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
+				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinition()), null, contextProcessorConfig, runtimeEnv));
 			}
 			
 			uiExe.getBody().addCommandDefinition(processedCommendDef);
@@ -60,7 +60,7 @@ public class HAPProcessorUICommand {
 				
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
-			processInteractionElement(childTag, uiExe.getBody().getContext(), null, contextProcessorConfig, uiTagMan, runtimeEnv);			
+			processInteractionElement(childTag, uiExe.getBody().getValueStructureDefinition(), null, contextProcessorConfig, uiTagMan, runtimeEnv);			
 		}
 	}
 	
@@ -74,12 +74,12 @@ public class HAPProcessorUICommand {
 			HAPDefinitionUICommand processedCommendDef = new HAPDefinitionUICommand();
 			commandDef.cloneBasicTo(processedCommendDef);
 			//command parms
-			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
+			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinition()), null, contextProcessorConfig, runtimeEnv));
 
 			//command results
 			Map<String, HAPValueStructureDefinitionFlat> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
-				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getContext()), null, contextProcessorConfig, runtimeEnv));
+				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinition()), null, contextProcessorConfig, runtimeEnv));
 			}
 			
 			uiExe.getBody().addCommandDefinition(processedCommendDef);
@@ -92,7 +92,7 @@ public class HAPProcessorUICommand {
 
 		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
 			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
-			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getContext().getInfo())) {
+			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getValueStructureDefinition().getInfo())) {
 				Map<String, HAPDefinitionUICommand> mappedCommandDefs = new LinkedHashMap<String, HAPDefinitionUICommand>();
 				
 				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstantShared.UITAG_PARM_COMMAND));
@@ -123,7 +123,7 @@ public class HAPProcessorUICommand {
 			}
 		}
 		else {
-			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(((HAPExecutableUIUnitTag)exeUnit).getTagName())).getContext().getInfo())) {
+			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(((HAPExecutableUIUnitTag)exeUnit).getTagName())).getValueStructureDefinition().getInfo())) {
 				escalate(exeUnit.getParent(), commandsDef, uiTagMan);
 			}
 		}

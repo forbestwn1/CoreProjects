@@ -46,14 +46,14 @@ public class HAPProcessorUIExpressionScript {
 		HAPContextProcessExpressionScript processScriptContext = body.getProcessExpressionScriptContext();
 		
 		//expression context
-		processScriptContext.setValueContext(body.getFlatContext().getContext());
+		processScriptContext.setValueStructure(body.getValueStructureDefinition());
 		
 		//expression suite from attachment
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getFlatContext().getContext(), runtimeEnv);
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getValueStructureDefinition(), runtimeEnv);
 		processScriptContext.setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment and context
-		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), body.getFlatContext());
+		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), body.getValueStructureDefinition());
 		for(HAPDefinitionConstant constantDef : constantsDef) {
 			processScriptContext.addConstantDefinition(constantDef);
 		}
@@ -83,8 +83,8 @@ public class HAPProcessorUIExpressionScript {
 
 		
 		HAPDefinitionScriptGroupImp scriptGroup = new HAPDefinitionScriptGroupImp();
-		scriptGroup.setValueContext(exeUnit.getBody().getContext());
-		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), exeUnit.getBody().getFlatContext())) {
+		scriptGroup.setValueStructure(exeUnit.getBody().getValueStructureDefinition());
+		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), exeUnit.getBody().getValueStructureDefinition())) {
 			scriptGroup.addConstantDefinition(constantDef);
 		}
 		
@@ -104,8 +104,6 @@ public class HAPProcessorUIExpressionScript {
 				exeUnit.getId(), 
 				scriptGroup, 
 				new HAPContextProcessAttachmentReferenceExpression(uiUnitDef, runtimeEnv), 
-				null,
-				runtimeEnv.getExpressionManager(), 
 				HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), 
 				runtimeEnv, 
 				new HAPProcessTracker()

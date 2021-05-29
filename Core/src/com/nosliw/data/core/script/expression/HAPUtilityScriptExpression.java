@@ -30,7 +30,7 @@ public class HAPUtilityScriptExpression {
 //	}
 	
 	public static String solidateLiterate(String literate, Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv){
-		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(literate, null, null, constants, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());
+		HAPExecutableScriptGroup groupExe = HAPProcessorScript.processSimpleScript(literate, null, null, constants, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());
 		HAPExecutableScriptEntity scriptExe = groupExe.getScript(null);
 		
 		String scriptType = scriptExe.getScriptType();

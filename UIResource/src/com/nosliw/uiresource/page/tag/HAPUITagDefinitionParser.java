@@ -14,11 +14,12 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
-import com.nosliw.data.core.structure.HAPParserContext;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
+import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
+import com.nosliw.data.core.valuestructure.HAPReferenceRootInGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 public class HAPUITagDefinitionParser {
@@ -55,7 +56,7 @@ public class HAPUITagDefinitionParser {
 	}
 	
 	private static void parseUITagDefinitionData(HAPUITagDefinitionData definition, NativeObject defObjJS) {
-		HAPElementLeafRelative eleDef = (HAPElementLeafRelative)definition.getContext().getFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE).getRoot("internal_data").getDefinition();
+		HAPElementLeafRelative eleDef = (HAPElementLeafRelative)definition.getValueStructureDefinition().resolveRoot(new HAPReferenceRootInGroup(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE, "internal_data"), false).iterator().next().getDefinition();
 		definition.setDataTypeCriteria(((HAPElementLeafData)eleDef.getDefinition()).getCriteria());
 	}
 	
@@ -67,8 +68,8 @@ public class HAPUITagDefinitionParser {
 		definition.setBase((String)defObjJS.get(HAPUITagDefinition.BASE));
     	
 		//parse context
-		HAPContextUITagDefinition context = definition.getContext();
-		NativeObject contextObj = (NativeObject)defObjJS.get(HAPUITagDefinition.CONTEXT);
+		HAPValueStructureDefinitionInUITag context = definition.getValueStructureDefinition();
+		NativeObject contextObj = (NativeObject)defObjJS.get(HAPUITagDefinition.VALUESTRUCTUREDEFINITION);
 		JSONObject contextJson = (JSONObject)HAPRhinoDataUtility.toJson(contextObj);
 		HAPUITagDefinitionParser.parseContextInTagDefinition(contextJson, context);
 		
@@ -111,7 +112,7 @@ public class HAPUITagDefinitionParser {
 	}
 	
 	//parse 
-	public static void parseContextInTagDefinition(JSONObject contextJson, HAPContextUITagDefinition contextOut){
-		HAPParserContext.parseContextGroup(contextJson, contextOut);
+	public static void parseContextInTagDefinition(JSONObject contextJson, HAPValueStructureDefinitionInUITag contextOut){
+		HAPParserValueStructure.parseValueStructureDefinitionGroup(contextJson, contextOut);
 	}
 }

@@ -6,7 +6,7 @@ import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
-import com.nosliw.uiresource.page.tag.HAPContextUITagDefinition;
+import com.nosliw.uiresource.page.tag.HAPValueStructureDefinitionInUITag;
 
 public class HAPUtilityConfiguration {
 
@@ -19,7 +19,7 @@ public class HAPUtilityConfiguration {
 		return out;
 	}
 
-	public static HAPConfigureProcessorStructure getContextProcessConfigurationForTagDefinition(HAPContextUITagDefinition tagDefinitionContext, HAPConfigureProcessorStructure parentConfigure) {
+	public static HAPConfigureProcessorStructure getContextProcessConfigurationForTagDefinition(HAPValueStructureDefinitionInUITag tagDefinitionContext, HAPConfigureProcessorStructure parentConfigure) {
 		HAPConfigureProcessorStructure out = parentConfigure.cloneConfigure();
 		populateCommonConfigure(out);
 		out.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefinitionContext.getInfo());

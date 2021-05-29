@@ -23,8 +23,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
+import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPExecutableStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
@@ -35,7 +35,7 @@ import com.nosliw.uiresource.page.definition.HAPElementEvent;
 public class HAPExecutableUIBody extends HAPExecutableImp{
 
 	@HAPAttribute
-	public static final String CONTEXT = "context";
+	public static final String VALUESTRUCTURE = "valueStructure";
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONSINCONTENT = "scriptExpressionsInContent";
 	@HAPAttribute
@@ -71,8 +71,8 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	public static final String COMMANDS = "commands";
 
 	//context for content
-	private HAPContextGroupInUIBody m_context;
-	private HAPExecutableStructure m_flatContext;
+	private HAPValueStructureGroupInUIBody m_valueStructureDefinition;
+	private HAPExecutableValueStructure m_valueStructureExe;
 	
 //	private Map<String, Object> m_constants;
 	
@@ -119,7 +119,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
 		this.m_processScriptContext = new HAPContextProcessExpressionScript();
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
-		this.m_context = new HAPContextGroupInUIBody(uiUnit);
+		this.m_valueStructureDefinition = new HAPValueStructureGroupInUIBody(uiUnit);
 //		this.m_constants = new LinkedHashMap<String, Object>();
 		
 		this.m_events = new LinkedHashMap<String, HAPDefinitionUIEvent>();
@@ -135,15 +135,14 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		}
 	}
 	
-	public HAPValueStructureDefinitionGroup getContext(){  return this.m_context;   }
-	public void setContext(HAPValueStructureDefinitionGroup context) {
-		this.m_context.setContext(context);
+	public HAPValueStructureDefinitionGroup getValueStructureDefinition(){  return this.m_valueStructureDefinition;   }
+	public void setValueStructureDefinition(HAPValueStructureDefinitionGroup context) {
+		this.m_valueStructureDefinition.setValueStructure(context);
 	}
-	public HAPExecutableStructure getFlatContext() { return this.m_flatContext;  }
-	public void setFlatContext(HAPExecutableStructure context) {  this.m_flatContext = context;   }
-	public HAPExecutableStructure getVariableContext() {
-		if(this.m_flatContext!=null)		return this.m_flatContext.getVariableContext();
-		else return new HAPExecutableStructure();
+	public void setValueStructureExe(HAPExecutableValueStructure context) {  this.m_valueStructureExe = context;   }
+	public HAPExecutableValueStructure getValueStructureExe() {
+		if(this.m_valueStructureExe!=null)		return this.m_valueStructureExe;
+		else return new HAPExecutableValueStructure();
 	}
 	
 //	public Map<String, Object> getConstantsValue(){   return this.m_processScriptContext.getConstantsValue();    }
@@ -183,7 +182,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(CONTEXT, this.getVariableContext().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTURE, this.getValueStructureExe().toStringValue(HAPSerializationFormat.JSON));
 		
 		List<String> eleEventsJsons = new ArrayList<String>();
 		for(HAPElementEvent elementEvent : this.m_elementEvents)  eleEventsJsons.add(elementEvent.toStringValue(HAPSerializationFormat.JSON));

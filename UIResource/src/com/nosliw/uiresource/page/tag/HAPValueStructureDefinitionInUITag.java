@@ -8,10 +8,10 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
  * Represent definition of context according to relationship with parent 
  */
 @HAPEntityWithAttribute
-public class HAPContextUITagDefinition extends HAPValueStructureDefinitionGroup{
+public class HAPValueStructureDefinitionInUITag extends HAPValueStructureDefinitionGroup{
 
 
-	public HAPContextUITagDefinition(){
+	public HAPValueStructureDefinitionInUITag(){
 	}
  
 	@Override

@@ -19,6 +19,14 @@ import com.nosliw.data.core.structure.HAPRoot;
 
 public class HAPUtilityValueStructure {
 
+	public static HAPExecutableValueStructure buildFlatContextFromContextStructure(HAPValueStructureDefinition valueStructure) {
+		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
+		for(HAPRoot root : valueStructure.getAllRoots()) {
+			out.addRoot(root);
+		}
+		return out;
+	}
+	
 	public static Map<String, Object> replaceValueNameWithId(HAPValueStructure valueStructure, Map<String, Object> values){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		for(String rootName : values.keySet()) {

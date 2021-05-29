@@ -33,7 +33,7 @@ public class HAPUtilityPage {
 	}
 	
 	public static String getTagInheritableMode(String tagName, HAPManagerUITag uiTagMan) {
-		return HAPUtilityContext.getContextGroupInheritMode(uiTagMan.getUITagDefinition(new HAPUITagId(tagName)).getContext().getInfo());
+		return HAPUtilityContext.getContextGroupInheritMode(uiTagMan.getUITagDefinition(new HAPUITagId(tagName)).getValueStructureDefinition().getInfo());
 	}
 
 	public static Set<HAPDefinitionUITag> getUITagByName(HAPDefinitionUIUnit uiUnit, String tagName){

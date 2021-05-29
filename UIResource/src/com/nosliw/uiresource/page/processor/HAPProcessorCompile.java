@@ -7,6 +7,7 @@ import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPUtilityComponentConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -19,7 +20,7 @@ import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 //compile definition to executable
 public class HAPProcessorCompile {
 
-	public static void process(HAPExecutableUIUnit exeUnit, HAPDefinitionUIUnit parentUnitDef) {
+	public static void process(HAPExecutableUIUnit exeUnit, HAPDefinitionUIUnit parentUnitDef, HAPRuntimeEnvironment runtimeEnv) {
 		
 		HAPDefinitionUIUnit uiUnitDef = exeUnit.getUIUnitDefinition();
 		HAPExecutableUIBody body = exeUnit.getBody();
@@ -28,10 +29,10 @@ public class HAPProcessorCompile {
 		if(parentUnitDef!=null)   HAPUtilityComponent.mergeWithParentAttachment(uiUnitDef, parentUnitDef.getAttachmentContainer());
 
 		//expression context
-		body.getProcessExpressionScriptContext().setValueContext(body.getFlatContext().getContext());
+		body.getProcessExpressionScriptContext().setValueStructure(body.getValueStructureDefinition());
 		
 		//expression suite from attachment
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getFlatContext().getContext());
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getValueStructureDefinition(), runtimeEnv);
 		body.getProcessExpressionScriptContext().setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment
@@ -61,7 +62,7 @@ public class HAPProcessorCompile {
 
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
-			process(childTag, exeUnit.getUIUnitDefinition());			
+			process(childTag, exeUnit.getUIUnitDefinition(), runtimeEnv);			
 		}
 		
 	}

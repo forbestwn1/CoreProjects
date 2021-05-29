@@ -77,16 +77,17 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 		this.m_nameMapping = new HAPNameMapping();
-		this.initContext();
+		this.initValueStructure();
 	}
 	
-	private void initContext() {
-		HAPValueStructureDefinitionGroup contextGroup = new HAPValueStructureDefinitionGroup();
+	private void initValueStructure() {
+		HAPValueStructureDefinitionGroup valueStructure = new HAPValueStructureDefinitionGroup();
 		//ui error context element
 		HAPRoot uiValidationErrorRoot = new HAPRoot(new HAPElementLeafValue());
 		uiValidationErrorRoot.setDefaultValue(new JSONObject());
-		contextGroup.addProtectedElement(HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, uiValidationErrorRoot);
-		this.setValueContext(contextGroup);
+		uiValidationErrorRoot.setName(HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
+		valueStructure.addProtectedElement(uiValidationErrorRoot);
+		this.setValueStructure(valueStructure);
 	}
 	
 	abstract public String getType(); 

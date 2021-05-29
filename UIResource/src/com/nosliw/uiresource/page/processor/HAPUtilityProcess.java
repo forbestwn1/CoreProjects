@@ -10,23 +10,25 @@ import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.uiresource.page.tag.HAPContextUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUtilityUITag;
+import com.nosliw.uiresource.page.tag.HAPValueStructureDefinitionInUITag;
 
 public class HAPUtilityProcess {
 
 	//build context for ui Tag
 	public static HAPValueStructureDefinitionGroup buildUITagContext(HAPUITagDefinition tagDef, HAPValueStructureDefinitionGroup parentContext, Map<String, String> attributes, HAPConfigureProcessorStructure contextProcessorConfig, HAPRuntimeEnvironment runtimeEnv){
 		//get contextDef 
-		HAPContextUITagDefinition tagDefinitionContext = tagDef.getContext();
+		HAPValueStructureDefinitionInUITag tagDefinitionContext = tagDef.getValueStructureDefinition();
 
 		//add attribute constant as part of tagContext
 		Map<String, String> tagAttrs = HAPUtilityUITag.getTagAttributeValue(tagDef, attributes);
 		HAPValueStructureDefinitionGroup tagContext = tagDefinitionContext.cloneContextGroup();
 		for(String name : tagAttrs.keySet()) {
 			HAPElementLeafConstant cstRootNode = new HAPElementLeafConstant(tagAttrs.get(name));
-			tagContext.addRoot(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + name, new HAPRoot(cstRootNode), HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE);
+			HAPRoot root = new HAPRoot(cstRootNode);
+			root.setName(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + name);
+			tagContext.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE, root);
 		}
 		return HAPProcessorContext.processStatic(tagContext, HAPContainerStructure.createDefault(parentContext), null, null, HAPUtilityConfiguration.getContextProcessConfigurationForTagDefinition(tagDefinitionContext, contextProcessorConfig), runtimeEnv);
 	}

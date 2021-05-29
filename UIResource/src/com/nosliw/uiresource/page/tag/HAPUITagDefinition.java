@@ -15,7 +15,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.structure.temp.HAPUtilityContext;
+import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 @HAPEntityWithAttribute
@@ -30,9 +30,9 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String ATTRIBUTES = "attributes";
 	@HAPAttribute
-	public static final String CONTEXT = "context";
+	public static final String VALUESTRUCTUREDEFINITION = "valueStructureDefinition";
 	@HAPAttribute
-	public static final String FLATCONTEXT = "flatContext";
+	public static final String VALUESTRUCTUREEXE = "valueStructureExe";
 	@HAPAttribute
 	public static final String REQUIRES = "requires";
 	@HAPAttribute
@@ -49,7 +49,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
 	
 	//context definition
-	private HAPContextUITagDefinition m_context;
+	private HAPValueStructureDefinitionInUITag m_valueStructureDefinition;
 
 	//dependency resources
 	private List<HAPResourceDependency> m_resourceDependency;
@@ -62,7 +62,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	public HAPUITagDefinition(String type){
 		this.m_type = type;
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
-		this.m_context = new HAPContextUITagDefinition();
+		this.m_valueStructureDefinition = new HAPValueStructureDefinitionInUITag();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependency>();
 		this.m_eventsDefinition = new ArrayList<HAPDefinitionUIEvent>();
 	}
@@ -75,7 +75,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	public HAPJsonTypeScript getScript(){return this.m_script;}
 	public void setScript(String script) {  this.m_script = new HAPJsonTypeScript(script);    }
 	
-	public HAPContextUITagDefinition getContext(){  return this.m_context;   }
+	public HAPValueStructureDefinitionInUITag getValueStructureDefinition(){  return this.m_valueStructureDefinition;   }
 
 	public List<HAPResourceDependency> getResourceDependency(){   return this.m_resourceDependency;    }
 	public void addResourceDependency(HAPResourceDependency dep){  this.m_resourceDependency.add(dep);  }
@@ -94,8 +94,8 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.m_type);
 		jsonMap.put(BASE, this.m_base);
-		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(FLATCONTEXT, HAPUtilityContext.buildFlatContextFromContextStructure(this.m_context).getVariableContext().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTUREDEFINITION, this.m_valueStructureDefinition.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTUREEXE, HAPUtilityValueStructure.buildFlatContextFromContextStructure(this.m_valueStructureDefinition).toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
 	}

@@ -1,7 +1,21 @@
 package com.nosliw.data.core.structure;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.nosliw.common.exception.HAPErrorUtility;
+import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.structure.temp.HAPUtilityContext;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+
 public class HAPProcessorEscalate {
-/*
+
 	public static void process(HAPValueStructureDefinitionGroup contextGroup, Set<String> categarys, Map<String, String> cm, Set<String> inheritanceExcludedInfo) {
 		for(String categary : categarys) {
 			HAPValueStructureDefinitionFlat context = contextGroup.getFlat(categary);
@@ -80,5 +94,5 @@ public class HAPProcessorEscalate {
 		}
 		return out;
 	}
-*/
+
 }

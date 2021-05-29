@@ -3,20 +3,20 @@ package com.nosliw.uiresource.page.execute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
-public class HAPContextGroupInUIBody extends HAPValueStructureDefinitionGroup{
+public class HAPValueStructureGroupInUIBody extends HAPValueStructureDefinitionGroup{
 
 	private HAPExecutableUIUnit m_uiUnit; 
 	
-	public HAPContextGroupInUIBody(HAPExecutableUIUnit uiUnit) {
+	public HAPValueStructureGroupInUIBody(HAPExecutableUIUnit uiUnit) {
 		this.m_uiUnit = uiUnit;
 	}
 	
-	public HAPContextGroupInUIBody(HAPExecutableUIUnit uiUnit, HAPValueStructureDefinitionGroup contextGroup) {
+	public HAPValueStructureGroupInUIBody(HAPExecutableUIUnit uiUnit, HAPValueStructureDefinitionGroup valueStructureGroup) {
 		this.m_uiUnit = uiUnit;
-		this.setContext(contextGroup);
+		this.setValueStructure(valueStructureGroup);
 	}
 	
-	public void setContext(HAPValueStructureDefinitionGroup contextGroup) {
+	public void setValueStructure(HAPValueStructureDefinitionGroup contextGroup) {
 		this.empty();
 		contextGroup.cloneTo(this);
 	}
@@ -29,7 +29,7 @@ public class HAPContextGroupInUIBody extends HAPValueStructureDefinitionGroup{
 		case HAPConstantShared.UIRESOURCE_TYPE_RESOURCE:
 			break;
 		case HAPConstantShared.UIRESOURCE_TYPE_TAG:
-			out = ((HAPExecutableUIUnitTag)this.m_uiUnit).getTagContext();
+			out = ((HAPExecutableUIUnitTag)this.m_uiUnit).getTagValueStructureDefinition();
 			break;
 		}
 		return out;
