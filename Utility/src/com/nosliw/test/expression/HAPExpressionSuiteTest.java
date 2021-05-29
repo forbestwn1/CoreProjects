@@ -3,10 +3,9 @@ package com.nosliw.test.expression;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.value.HAPJsonDataUtility;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroupInSuite;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
@@ -43,17 +42,8 @@ public class HAPExpressionSuiteTest {
 				
 				Map<String, Object> varInput = new LinkedHashMap<String, Object>();
 				for(String varName : expressionExe.getVariablesInfo().getVariablesName()) {
-					HAPComplexPath path = new HAPComplexPath(varName);
-					Object varValue = inputById.get(path.getRootName());
-					for(String pathSeg : path.getPathSegs()) {
-						if(varValue!=null) {
-							if(varValue instanceof JSONObject) {
-								varValue = ((JSONObject)varValue).opt(pathSeg);
-							}
-							else varValue = null;
-						}
-					}
-					if(varValue!=null)   varInput.put(varName, varValue);
+					Object varValue = HAPJsonDataUtility.getValue(inputById, new HAPComplexPath(varName));
+					if(varValue!=null)   varInput.put(varName, varValue);					
 				}
 				
 				HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expressionExe, null, (Map)varInput, null, runtimeEnvironment.getResourceManager());

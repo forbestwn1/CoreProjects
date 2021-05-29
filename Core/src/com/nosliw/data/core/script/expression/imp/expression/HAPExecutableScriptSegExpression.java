@@ -28,8 +28,9 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 
 	@Override
 	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
-		HAPExecutableExpression expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
-		return expressionExe.getVariablesInfo();	
+//		HAPExecutableExpression expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
+//		return expressionExe.getVariablesInfo());
+		return null;
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 		if(m_expressionExe==null) {
 			m_expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
 		}
-		return m_expressionExe.getVariablesInfo().getDataVariableNames();	
+		return m_expressionExe.getVariablesInfo().getVariablesName();	
 	}
 
 	@Override

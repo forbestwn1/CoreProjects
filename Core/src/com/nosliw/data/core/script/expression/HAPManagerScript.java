@@ -41,8 +41,6 @@ public class HAPManagerScript {
 						resourceId.toStringValue(HAPSerializationFormat.LITERATE), 
 						scriptGroupResourceDef, 
 						contextProcess, 
-						null, 
-						this.m_runtimeEnv.getExpressionManager(), 
 						configure, this.m_runtimeEnv, 
 						new HAPProcessTracker()
 		);

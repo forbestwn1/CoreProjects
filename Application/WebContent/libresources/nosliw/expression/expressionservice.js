@@ -40,8 +40,8 @@ var node_createExpressionService = function(){
 		});
 		_.each(expressionItems, function(expressionItem, name){
 			//find variable value only for this expression
-			var allVariables = node_aliasUtility.expandInputByVariablesInfoContainer(variables, expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS]);
-			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, allVariables, constants, {}));
+//			var allVariables = node_aliasUtility.expandInputByVariablesInfoContainer(variables, expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEINFOS]);
+			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, variables, constants, {}));
 		});
 		
 		out.addRequest(executeMultipleExpressionItemRequest);

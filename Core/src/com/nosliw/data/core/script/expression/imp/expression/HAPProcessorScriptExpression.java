@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
@@ -21,11 +22,12 @@ public class HAPProcessorScriptExpression {
 			String id,
 			HAPDefinitionScriptEntity scriptDef,
 			Map<String, Object> constantValues,
+			HAPUpdateName name2IdUpdate,
 			HAPDefinitionExpressionGroup expressionDef
 		) {
 		HAPExecutableScriptEntityExpression out = new HAPExecutableScriptEntityExpression(id);
 		scriptDef.cloneToEntityInfo(out);
-		out.addSegments(process(id, scriptDef.getScript(), constantValues, expressionDef));
+		out.addSegments(process(id, scriptDef.getScript(), constantValues, name2IdUpdate, expressionDef));
 		return out;
 	}
 	
@@ -33,6 +35,7 @@ public class HAPProcessorScriptExpression {
 			String id,
 			HAPScript script,
 			Map<String, Object> constantValues,
+			HAPUpdateName name2IdUpdate,
 			HAPDefinitionExpressionGroup expressionGroup
 		) {
 		List<HAPExecutableScript> out = new ArrayList<HAPExecutableScript>();

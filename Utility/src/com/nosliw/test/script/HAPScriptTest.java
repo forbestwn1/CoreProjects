@@ -1,8 +1,11 @@
 package com.nosliw.test.script;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.value.HAPJsonDataUtility;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
@@ -11,6 +14,7 @@ import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScriptGroup;
 import com.nosliw.data.core.script.expression.resource.HAPUtilityScriptResource;
+import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 
 public class HAPScriptTest {
 
@@ -18,7 +22,7 @@ public class HAPScriptTest {
 
 		try {
 			String id = "test1";
-			String script = "test5";
+			String script = "test4";
 			String testData = "testData1";
 
 			HAPResourceId resourceId = HAPUtilityScriptResource.buildResourceId(id);
@@ -31,8 +35,15 @@ public class HAPScriptTest {
 
 			Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(scriptGroupDef, testData);
 
+			Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(scriptExe.getValueStructureDefinition(), input);
 			
-			HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(scriptExe, script, input, null);
+			Map<String, Object> varInput = new LinkedHashMap<String, Object>();
+			for(String varName : scriptExe.discoverVariables()) {
+				Object varValue = HAPJsonDataUtility.getValue(inputById, new HAPComplexPath(varName));
+				if(varValue!=null)   varInput.put(varName, varValue);					
+			}
+
+			HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(scriptExe, script, varInput, null);
 			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 			System.out.println(out);

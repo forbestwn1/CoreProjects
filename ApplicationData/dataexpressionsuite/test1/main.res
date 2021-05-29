@@ -284,9 +284,13 @@
 			{
 				"name": "testData1",
 				"entity": {
-					"testVar1.var1.var11": {
-						"dataTypeId": "test.string;1.0.0",
-						"value": "0123456789"
+					"testVar1": {
+						"var1" : {
+							"var11":{
+								"dataTypeId": "test.string;1.0.0",
+								"value": "0123456789"
+							}
+						}
 					},
 					"testVar2": {
 						"var1" : {

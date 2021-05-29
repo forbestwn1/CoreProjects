@@ -1,14 +1,24 @@
 package com.nosliw.common.value;
 
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
 public class HAPJsonDataUtility {
 
+	public static Object getValue(Map<String, Object> valueSet, HAPComplexPath complexPath) {
+		Object rootValue = valueSet.get(complexPath.getRootName());
+		return getValue(rootValue, complexPath.getPath().getPath());
+	}
+	
 	public static Object getValue(Object value, String path) {
 		Object out = value;
+		if(HAPBasicUtility.isStringEmpty(path))   return out;
 		String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
 		for(String seg : pathSegs) {
 			out = getChild(out, seg);

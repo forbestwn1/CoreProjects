@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.expression.imp.literate;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
@@ -15,6 +16,7 @@ public class HAPProcessorScriptLiterate {
 		String id,
 		HAPDefinitionScriptEntity scriptDef,
 		Map<String, Object> constantValues,
+		HAPUpdateName name2IdUpdate,
 		HAPDefinitionExpressionGroup expressionDef
 	) {
 		HAPExecutableScriptEntityLiterate out = new HAPExecutableScriptEntityLiterate(id);
@@ -26,7 +28,7 @@ public class HAPProcessorScriptLiterate {
 			String scriptId = id+"_"+j;
 			if(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT.equals(scriptType)) {
 				HAPExecutableScriptSegExpressionScript expressionScriptSegExe = new HAPExecutableScriptSegExpressionScript(scriptId);
-				expressionScriptSegExe.addSegments(HAPProcessorScriptExpression.process(scriptId, scriptSeg, constantValues, expressionDef));
+				expressionScriptSegExe.addSegments(HAPProcessorScriptExpression.process(scriptId, scriptSeg, constantValues, name2IdUpdate, expressionDef));
 				out.addSegment(expressionScriptSegExe);
 			}
 			else if(HAPConstantShared.SCRIPT_TYPE_SEG_TEXT.equals(scriptType)) {

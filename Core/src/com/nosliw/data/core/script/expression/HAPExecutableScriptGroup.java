@@ -19,8 +19,6 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.temp.HAPUtilityContext;
-import com.nosliw.data.core.valuestructure.HAPExecutableStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 @HAPEntityWithAttribute
@@ -32,12 +30,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
-	@HAPAttribute
-	public static final String CONTEXT = "context";
-	
 	private HAPValueStructureDefinition m_valueStructure;
-	
-	private HAPExecutableStructure m_flatContext;
 	
 	private HAPExecutableExpressionGroup m_expressionExe;
 	
@@ -52,13 +45,10 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	
 	public void setValueStructureDefinition(HAPValueStructureDefinition valueStructure) {   
 		this.m_valueStructure = (HAPValueStructureDefinition)valueStructure.cloneStructure();
-		this.m_flatContext = HAPUtilityContext.buildFlatContextFromContextStructure(m_valueStructure);
 	}
 	
 	public HAPValueStructureDefinition getValueStructureDefinition() {    return this.m_valueStructure;    }
 	
-	public HAPExecutableStructure getContextFlat() {    return this.m_flatContext;    }
-
 	public HAPExecutableExpressionGroup getExpression() {    return this.m_expressionExe;   }
 	public void setExpression(HAPExecutableExpressionGroup expression) {    this.m_expressionExe = expression;    }
 	
@@ -107,10 +97,17 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 		return out;
 	}
 	
+	public Set<String> discoverVariables(){
+		Set<String> out = new HashSet<String>();
+		for(HAPExecutableScriptEntity scriptEntity : this.m_elements) {
+			out.addAll(scriptEntity.discoverVariables(this.m_expressionExe));
+		}
+		return out;
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(EXPRESSIONGROUP, this.m_expressionExe.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(CONTEXT, this.m_flatContext.toStringValue(HAPSerializationFormat.JSON));
 		Map<String, String> elementJsonMap = new LinkedHashMap<String, String>();
 		for(HAPExecutableScriptEntity ele : this.m_elements) {
 			elementJsonMap.put(ele.getId(), ele.toStringValue(HAPSerializationFormat.JSON));
