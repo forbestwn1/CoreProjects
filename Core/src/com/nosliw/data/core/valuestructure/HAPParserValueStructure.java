@@ -58,7 +58,7 @@ public class HAPParserValueStructure {
 				for(HAPRoot root : roots)   groupStructure.addRoot(categary, root);
 			}
 		}
-		groupStructure.getInfo().buildObject(groupStructureJson.opt(HAPValueStructureDefinitionGroup.INFO), HAPSerializationFormat.JSON);
+		groupStructure.getInfo().buildObject(groupStructureJson.opt(HAPValueStructure.INFO), HAPSerializationFormat.JSON);
 	}
 
 	public static HAPValueStructureDefinitionFlat parseValueStructureDefinitionFlat(JSONObject structureJson) {
@@ -70,6 +70,7 @@ public class HAPParserValueStructure {
 	public static void parseValueStructureDefinitionFlat(JSONObject structureJson, HAPValueStructureDefinitionFlat flatStructure) {
 		List<HAPRoot> roots = parseRoots(structureJson, null);
 		for(HAPRoot root : roots)  flatStructure.addRoot(root);
+		flatStructure.getInfo().buildObject(structureJson.opt(HAPValueStructure.INFO), HAPSerializationFormat.JSON);
 	}
 	
 	private static List<HAPRoot> parseRoots(JSONObject structureJson, HAPUpdateName createIdByName) {

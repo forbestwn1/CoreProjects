@@ -13,14 +13,14 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
+import com.nosliw.data.core.structure.HAPElement;
 import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
@@ -28,14 +28,11 @@ import com.nosliw.data.core.structure.HAPRoot;
 //a group of context
 //normally contexts are grouped according to type : public, private, ...
 @HAPEntityWithAttribute
-public class HAPValueStructureDefinitionGroup extends HAPSerializableImp implements HAPValueStructureDefinition{
+public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitionImp{
 
 	@HAPAttribute
 	public static final String GROUP = "group";
 
-	@HAPAttribute
-	public static final String INFO = "info";
-	
 	@HAPAttribute
 	public static final String INFO_INHERIT = "inherit";
 
@@ -48,12 +45,7 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 	private Map<String, HAPValueStructureDefinitionFlat> m_flatStructureByCategary;
 	private Map<String, String> m_categaryById;
 	
-	private HAPInfoImpSimple m_info;
-	
-	private HAPValueStructure m_parent;
-	
 	public HAPValueStructureDefinitionGroup(){
-		this.m_info = new HAPInfoImpSimple(); 
 		this.m_flatStructureByCategary = new LinkedHashMap<String, HAPValueStructureDefinitionFlat>();
 		this.m_categaryById = new LinkedHashMap<String, String>();
 		for(String type : getAllCategaries()){
@@ -63,9 +55,7 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 
 	public HAPValueStructureDefinitionGroup(HAPInfo info){
 		this();
-		for(String name : info.getNames()) {
-			this.m_info.setValue(name, info.getValue(name));
-		}
+		this.setInfo(info.cloneInfo());
 	}
 	
 	@Override
@@ -133,6 +123,30 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 		String categary = this.m_categaryById.get(id);
 		String name = this.getRoot(id).getName();
 		return new HAPReferenceRootInGroup(categary, name);
+	}
+
+	@Override
+	public Object solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
+		HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
+		this.cloneBaseToValueStructureDefinition(out);
+		
+		for(String categary : this.getCategaries()) {
+			for(HAPRoot root : this.getRootsByCategary(categary)) {
+				String solidName = HAPUtilityScriptExpression.solidateLiterate(root.getName(), constants, runtimeEnv);
+				HAPRoot newRoot = root.cloneRoot();
+				newRoot.setDefinition(((HAPElement)newRoot.getDefinition().solidateConstantScript(constants, runtimeEnv)).cloneStructureElement());
+				newRoot.setName(solidName);
+				newRoot.setLocalId(null);
+				out.addRoot(categary, newRoot);
+			}
+		}
+		return out;
+	}
+
+	@Override
+	public boolean isExternalVisible(String rootId) {
+		HAPReferenceRootInGroup rootRef = (HAPReferenceRootInGroup)this.getRootReferenceById(rootId);
+		return HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC.equals(rootRef.getCategary());
 	}
 
 	//whether root is inherited by child
@@ -233,13 +247,6 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 		}
 	}
 	
-	public HAPInfo getInfo() {  return this.m_info;  }
-	
-	@Override
-	public HAPValueStructure getParent() {   return this.m_parent;   }
-	@Override
-	public void setParent(HAPValueStructure parent) {  this.m_parent = parent;   }
-	 
 	public Set<HAPRoot> getRootsByCategary(String categary){  return this.getFlat(categary).getRoots();  }
 	
 	private HAPValueStructureDefinitionFlat getFlat(String categary){
@@ -272,22 +279,18 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 	
 	public HAPValueStructureDefinitionGroup cloneValueStructureGroup() {
 		HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
-		this.cloneTo(out);
+		this.cloneToValueStructureDefinitionGroup(out);
 		return out;
 	}
 
-	public HAPValueStructureDefinitionGroup cloneContextGroupBase() {
+	public HAPValueStructureDefinitionGroup cloneValueStructureGroupBase() {
 		HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
-		this.cloneToBase(out);
+		this.cloneBaseToValueStructureDefinition(out);
 		return out;
 	}
 
-	public void cloneToBase(HAPValueStructureDefinitionGroup out) {
-		out.m_info = this.m_info.cloneInfo();
-	}
-	
-	public void cloneTo(HAPValueStructureDefinitionGroup out) {
-		this.cloneToBase(out);
+	public void cloneToValueStructureDefinitionGroup(HAPValueStructureDefinitionGroup out) {
+		this.cloneBaseToValueStructureDefinition(out);
 		for(String categary : this.m_flatStructureByCategary.keySet()) {
 			HAPValueStructureDefinitionFlat flat = this.m_flatStructureByCategary.get(categary);
 			out.m_flatStructureByCategary.put(categary, (HAPValueStructureDefinitionFlat)flat.cloneStructure());
@@ -298,9 +301,8 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(TYPE, this.getStructureType());
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(GROUP, HAPJsonUtility.buildJson(this.m_flatStructureByCategary, HAPSerializationFormat.JSON));
-		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -372,12 +374,5 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 		};
 		return contextTypes;
 	}
-
-	@Override
-	public Object solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 }

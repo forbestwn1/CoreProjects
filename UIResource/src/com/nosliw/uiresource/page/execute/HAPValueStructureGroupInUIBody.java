@@ -18,7 +18,7 @@ public class HAPValueStructureGroupInUIBody extends HAPValueStructureDefinitionG
 	
 	public void setValueStructure(HAPValueStructureDefinitionGroup contextGroup) {
 		this.empty();
-		contextGroup.cloneTo(this);
+		contextGroup.cloneToValueStructureDefinitionGroup(this);
 	}
 	
 	@Override

@@ -26,6 +26,7 @@ public interface HAPStructure extends HAPWithConstantScript{
 	void processed();
 	
 	HAPInfo getInfo();
+	void setInfo(HAPInfo info);
 	
 	HAPStructure cloneStructure();
 

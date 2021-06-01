@@ -12,7 +12,7 @@ public class HAPValueStructureGroupInUITag extends HAPValueStructureDefinitionGr
 
 	public HAPValueStructureGroupInUITag(HAPExecutableUIUnitTag uiTag, HAPValueStructureDefinitionGroup contextGroup) {
 		this.m_uiTag = uiTag;
-		contextGroup.cloneTo(this);
+		contextGroup.cloneToValueStructureDefinitionGroup(this);
 	}
 	
 	public void clear() {

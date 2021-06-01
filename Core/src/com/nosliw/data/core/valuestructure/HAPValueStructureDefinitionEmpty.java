@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -109,6 +110,18 @@ public class HAPValueStructureDefinitionEmpty extends HAPSerializableImp impleme
 	public void setParent(HAPValueStructure parent) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isExternalVisible(String rootId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public HAPInfo getInfo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

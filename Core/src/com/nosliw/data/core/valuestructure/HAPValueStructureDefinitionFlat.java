@@ -13,27 +13,25 @@ import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.data.core.structure.HAPElement;
 import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
 
 @HAPEntityWithAttribute
-public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implements HAPValueStructureDefinition{
+public class HAPValueStructureDefinitionFlat extends HAPValueStructureDefinitionImp{
 
 	@HAPAttribute
 	public static final String FLAT = "flat";
 
 	private Map<String, HAPRoot> m_rootById;
 	private Map<String, String> m_idByName;
-	
-	private HAPValueStructure m_parent;
 	
 	public HAPValueStructureDefinitionFlat(){
 		this.empty();
@@ -55,16 +53,31 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 	public List<HAPRoot> getAllRoots(){   return new ArrayList<HAPRoot>(this.m_rootById.values());      }
 
 	@Override
-	public HAPValueStructure getParent() {   return this.m_parent; }
-
-	@Override
-	public void setParent(HAPValueStructure parent) {  this.m_parent = parent;  }
-
-	@Override
 	public HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root) {
 		HAPReferenceRootInFlat flatRootReference = (HAPReferenceRootInFlat)rootReference;
 		root.setName(flatRootReference.getName());
 		return this.addRoot(root);
+	}
+
+	public HAPRoot addRoot(HAPRoot root) {
+		root = root.cloneRoot();
+		String name = root.getName();
+		if(HAPBasicUtility.isStringEmpty(root.getLocalId()))  root.setLocalId(name);
+		this.m_rootById.put(root.getLocalId(), root);
+		this.m_idByName.put(name, root.getLocalId());
+		return root;
+	}
+	
+	public HAPRoot addRoot(String name, HAPElement structureEle) {
+		HAPRoot root = new HAPRoot(structureEle);
+		root.setName(name);
+		return this.addRoot(root);  
+	}
+	
+	public HAPRoot newRoot(String name) {  
+		HAPRoot root = new HAPRoot();
+		root.setName(name);
+		return this.addRoot(root);  
 	}
 
 	@Override
@@ -88,6 +101,9 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 	public boolean isInheriable(String rootId) {   return true;	}
 
 	@Override
+	public boolean isExternalVisible(String rootId) {  return true; }
+
+	@Override
 	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
 		HAPReferenceRootInFlat flatReference = (HAPReferenceRootInFlat)rootReference;
 		String rootName = flatReference.getName();
@@ -95,6 +111,22 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 		if(createIfNotExist && root==null) 	root = this.newRoot(rootName);
 		if(root!=null) return Lists.newArrayList(root);
 		else return Lists.newArrayList();
+	}
+
+	@Override
+	public Object solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
+		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
+		this.cloneBaseToValueStructureDefinition(out);
+		
+		for(HAPRoot root : this.getAllRoots()) {
+			String solidName = HAPUtilityScriptExpression.solidateLiterate(root.getName(), constants, runtimeEnv);
+			HAPRoot newRoot = root.cloneRoot();
+			newRoot.setDefinition(((HAPElement)newRoot.getDefinition().solidateConstantScript(constants, runtimeEnv)).cloneStructureElement());
+			newRoot.setName(solidName);
+			newRoot.setLocalId(null);
+			out.addRoot(newRoot);
+		}
+		return out;
 	}
 
 	@Override
@@ -126,27 +158,6 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 	public Set<HAPRoot> getRoots(){  return new HashSet<HAPRoot>(this.m_rootById.values());  }
 	
 	
-	public HAPRoot addRoot(HAPRoot root) {
-		root = root.cloneRoot();
-		String name = root.getName();
-		if(HAPBasicUtility.isStringEmpty(root.getLocalId()))  root.setLocalId(name);
-		this.m_rootById.put(root.getLocalId(), root);
-		this.m_idByName.put(name, root.getLocalId());
-		return root;
-	}
-	
-	public HAPRoot addRoot(String name, HAPElement structureEle) {
-		HAPRoot root = new HAPRoot(structureEle);
-		root.setName(name);
-		return this.addRoot(root);  
-	}
-	
-	public HAPRoot newRoot(String name) {  
-		HAPRoot root = new HAPRoot();
-		root.setName(name);
-		return this.addRoot(root);  
-	}
-
 	public HAPValueStructureDefinitionFlat toSolidContext() {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		for(String name :this.getRootNames()) {
@@ -182,8 +193,7 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(TYPE, this.getStructureType());
-		
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		Map<String, String> rootsMap = new LinkedHashMap<String, String>();
 		for(String name : this.m_idByName.keySet()) {
 			rootsMap.put(name, this.getRootByName(name).toStringValue(HAPSerializationFormat.JSON));
@@ -229,12 +239,6 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 		String id = this.m_idByName.get(name);
 		if(id==null)  return null;
 		return this.m_rootById.get(id);
-	}
-
-	@Override
-	public Object solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
