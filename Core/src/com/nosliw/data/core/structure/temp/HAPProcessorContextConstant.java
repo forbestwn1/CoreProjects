@@ -27,9 +27,12 @@ import com.nosliw.data.core.structure.HAPElementLeafConstant;
 import com.nosliw.data.core.structure.HAPElementLeafConstantReference;
 import com.nosliw.data.core.structure.HAPElementNode;
 import com.nosliw.data.core.structure.HAPInfoElement;
+import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
@@ -45,7 +48,7 @@ public class HAPProcessorContextConstant {
 		//merge with parent
 		HAPValueStructureDefinitionGroup merged = originalContextGroup;
 		for(String parentName : parent.getStructureNames()) {
-			merged = mergeWithParent(merged, (HAPValueStructureDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedStructure(parentName, parent, merged), false), inheritMode);
+			merged = (HAPValueStructureDefinitionGroup)mergeWithParent(merged, HAPUtilityContextStructure.toSolidContextStructure((HAPValueStructureDefinition)HAPUtilityStructure.getReferedStructure(parentName, parent, merged), false), inheritMode);
 		}
 
 		//process constant ref in context
@@ -63,24 +66,23 @@ public class HAPProcessorContextConstant {
 	
 	//merge constant with parent
 	//child constant has higher priority than parent
-	private static HAPValueStructureDefinitionGroup mergeWithParent(
-			HAPValueStructureDefinitionGroup contextGroup,
-			HAPValueStructureDefinitionGroup parentContextGroup,
+	private static HAPValueStructureDefinition mergeWithParent(
+			HAPValueStructureDefinition valueStructure,
+			HAPValueStructureDefinition parentValueStructure,
 			String inheritMode){
-		HAPValueStructureDefinitionGroup out = contextGroup.cloneContextGroup();
+		HAPValueStructureDefinition out = (HAPValueStructureDefinition)valueStructure.cloneStructure();
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
-			if(parentContextGroup!=null) {
+			if(parentValueStructure!=null) {
 				//merge constants with parent
-				for(String contextCategary : HAPValueStructureDefinitionGroup.getInheritableCategaries()) {
-					for(String name : parentContextGroup.getFlat(contextCategary).getRootNames()) {
-						if(parentContextGroup.getElement(contextCategary, name).isConstant()) {
-							if(contextGroup.getElement(contextCategary, name)==null) {
-								out.addRoot(name, parentContextGroup.getElement(contextCategary, name).cloneRoot(), contextCategary);
-							}
+				for(HAPRoot root : parentValueStructure.getAllRoots()) {
+					if(root.isConstant()) {
+						HAPReferenceRoot rootReference = parentValueStructure.getRootReferenceById(root.getLocalId());
+						if(out.resolveRoot(rootReference, false)==null) {
+							out.addRoot(rootReference, root);
 						}
 					}
 				}
-			} 
+			}
 		}
 		return out;
 	}
@@ -129,7 +131,7 @@ public class HAPProcessorContextConstant {
 			HAPContainerAttachment attachmentContainer,
 			HAPRuntimeEnvironment runtimeEnv){
 		if(attachmentContainer==null)   return contextGroup;
-		HAPValueStructureDefinitionGroup out = contextGroup.cloneContextGroup();
+		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();
 		for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()) {
 			Map<String, HAPRoot> cotextDefRoots = out.getRootsByCategary(categary);
 			for(String name : cotextDefRoots.keySet()) {
@@ -164,7 +166,7 @@ public class HAPProcessorContextConstant {
 	static private HAPValueStructureDefinitionGroup solidateConstantDefs(
 			HAPValueStructureDefinitionGroup contextGroup,
 			HAPRuntimeEnvironment runtimeEnv){
-		HAPValueStructureDefinitionGroup out = contextGroup.cloneContextGroup();
+		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();
 		for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()) {
 			Map<String, HAPRoot> cotextDefRoots = out.getRootsByCategary(categary);
 			for(String name : cotextDefRoots.keySet()) {

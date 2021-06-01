@@ -2,6 +2,7 @@ package com.nosliw.data.core.valuestructure;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 	
 	private HAPInfoImpSimple m_info;
 	
-	private HAPValueStructureDefinitionGroup m_parent;
+	private HAPValueStructure m_parent;
 	
 	public HAPValueStructureDefinitionGroup(){
 		this.m_info = new HAPInfoImpSimple(); 
@@ -125,6 +126,20 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 			out.add(new HAPInfoAlias(root.getName(), priority+0.5));
 		}
 		return out;
+	}
+
+	@Override
+	public HAPReferenceRoot getRootReferenceById(String id) {
+		String categary = this.m_categaryById.get(id);
+		String name = this.getRoot(id).getName();
+		return new HAPReferenceRootInGroup(categary, name);
+	}
+
+	//whether root is inherited by child
+	@Override
+	public boolean isInheriable(String rootId) {
+		HAPReferenceRootInGroup rootRef = (HAPReferenceRootInGroup)this.getRootReferenceById(rootId);
+		return new HashSet<>(Arrays.asList(this.getInheritableCategaries())).contains(rootRef.getCategary());
 	}
 
 	private int getPriorityByCategary(String categary) {
@@ -207,7 +222,10 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 		}
 	}
 
-
+	//mark all the context root ele in context group as processed
+	@Override
+	public void processed() {		for(HAPValueStructureDefinitionFlat context : this.m_flatStructureByCategary.values())   context.processed();	}
+	
 	public void empty() {
 		this.m_categaryById = new LinkedHashMap<String, String>();
 		for(String type : getAllCategaries()) {
@@ -217,12 +235,11 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 	
 	public HAPInfo getInfo() {  return this.m_info;  }
 	
-	//mark all the context root ele in context group as processed
-	public void processed() {		for(HAPValueStructureDefinitionFlat context : this.m_flatStructureByCategary.values())   context.processed();	}
-	
-	public HAPValueStructureDefinitionGroup getParent() {   return this.m_parent;   }
-	public void setParent(HAPValueStructureDefinitionGroup parent) {  this.m_parent = parent;   }
-	
+	@Override
+	public HAPValueStructure getParent() {   return this.m_parent;   }
+	@Override
+	public void setParent(HAPValueStructure parent) {  this.m_parent = parent;   }
+	 
 	public Set<HAPRoot> getRootsByCategary(String categary){  return this.getFlat(categary).getRoots();  }
 	
 	private HAPValueStructureDefinitionFlat getFlat(String categary){
@@ -250,10 +267,10 @@ public class HAPValueStructureDefinitionGroup extends HAPSerializableImp impleme
 	
 	@Override
 	public HAPValueStructureDefinition cloneStructure() {
-		return this.cloneContextGroup();
+		return this.cloneValueStructureGroup();
 	}
 	
-	public HAPValueStructureDefinitionGroup cloneContextGroup() {
+	public HAPValueStructureDefinitionGroup cloneValueStructureGroup() {
 		HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
 		this.cloneTo(out);
 		return out;

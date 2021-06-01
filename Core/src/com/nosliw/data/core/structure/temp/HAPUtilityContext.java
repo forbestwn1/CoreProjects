@@ -198,9 +198,9 @@ public class HAPUtilityContext {
 	
 	public static HAPValueStructureDefinitionGroup hardMerge(HAPValueStructureDefinitionGroup child, HAPValueStructureDefinitionGroup parent) {
 		HAPValueStructureDefinitionGroup out = null;
-		if(child==null) out = parent.cloneContextGroup();
+		if(child==null) out = parent.cloneValueStructureGroup();
 		else {
-			out = child.cloneContextGroup();
+			out = child.cloneValueStructureGroup();
 			out.hardMergeWith(parent);;
 		}
 		return out;

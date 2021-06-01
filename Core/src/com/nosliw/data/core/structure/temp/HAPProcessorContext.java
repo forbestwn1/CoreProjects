@@ -9,6 +9,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.HAPProcessorElementConstant;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
@@ -55,7 +56,7 @@ public class HAPProcessorContext {
 		if(configure==null)  configure = new HAPConfigureProcessorStructure();
 		
 		//figure out all constant values in context
-		contextGroup = HAPProcessorContextConstant.process(contextGroup, parent, attachmentContainer, configure.inheritMode, runtimeEnv);
+		contextGroup = HAPProcessorElementConstant.process(contextGroup, parent, attachmentContainer, configure, runtimeEnv);
 		
 		//solidate name in context  
 		contextGroup = HAPProcessorContextSolidate.process(contextGroup, runtimeEnv);

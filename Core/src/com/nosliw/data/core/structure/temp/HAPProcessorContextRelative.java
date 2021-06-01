@@ -52,7 +52,7 @@ public class HAPProcessorContextRelative {
 	}
 	
 	public static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup contextGroup, HAPContainerStructure parent, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPValueStructureDefinitionGroup out = contextGroup.cloneContextGroup();
+		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();
 		for(String parentName : allParentName(parent)) {
 			HAPValueStructureDefinition context = HAPUtilityContext.getReferedStructure(parentName, parent, contextGroup);
 			out = process(out, parentName, (HAPValueStructureDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(context, false), dependency, errors, context.isFlat(), configure, runtimeEnv);			
@@ -68,7 +68,7 @@ public class HAPProcessorContextRelative {
 	}
 	
 	private static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup contextGroup, String parentName, HAPValueStructureDefinitionGroup parentContextGroup, Set<String> dependency, List<HAPServiceData> errors, boolean isParentFlat, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPValueStructureDefinitionGroup out = contextGroup.cloneContextGroup();
+		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();
 		for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()){
 			Map<String, HAPRoot> eles = out.getRootsByCategary(categary);
 			for(String eleName : eles.keySet()) {

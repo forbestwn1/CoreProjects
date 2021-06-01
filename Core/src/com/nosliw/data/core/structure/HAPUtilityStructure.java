@@ -27,6 +27,12 @@ import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPUtilityStructure {
 
+	public static HAPRoot getRootFromStructure(HAPStructure structure, HAPReferenceRoot rootRef) {
+		List<HAPRoot> roots = structure.resolveRoot(rootRef, false);
+		if(roots==null || roots.size()==1)  return null;
+		return roots.get(0);
+	}
+
 	public static HAPElement getDescendant(HAPElement element, String path) {
 		HAPElement out = element;
 		HAPPath pathObj = new HAPPath(path);
@@ -334,8 +340,6 @@ public class HAPUtilityStructure {
 		return solve!=null && solve.resolvedElement!=null;
 	}
 
-
-	
 	public static HAPStructure getReferedStructure(String name, HAPContainerStructure parents, HAPStructure self) {
 		if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name))  return self;
 		else return parents.getStructure(name);

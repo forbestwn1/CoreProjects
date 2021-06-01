@@ -23,7 +23,7 @@ public class HAPUtilityProcess {
 
 		//add attribute constant as part of tagContext
 		Map<String, String> tagAttrs = HAPUtilityUITag.getTagAttributeValue(tagDef, attributes);
-		HAPValueStructureDefinitionGroup tagContext = tagDefinitionContext.cloneContextGroup();
+		HAPValueStructureDefinitionGroup tagContext = tagDefinitionContext.cloneValueStructureGroup();
 		for(String name : tagAttrs.keySet()) {
 			HAPElementLeafConstant cstRootNode = new HAPElementLeafConstant(tagAttrs.get(name));
 			HAPRoot root = new HAPRoot(cstRootNode);

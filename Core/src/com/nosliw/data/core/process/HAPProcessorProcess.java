@@ -58,7 +58,7 @@ public class HAPProcessorProcess{
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		if(processContext==null)   processContext = HAPContextProcessor.createContext(runtimeEnv.getResourceDefinitionManager());
-		HAPValueStructureDefinitionGroup context = originContext.cloneContextGroup();
+		HAPValueStructureDefinitionGroup context = originContext.cloneValueStructureGroup();
 		Map<String, HAPExecutableDataAssociation> results = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(out.getDefinition().getAttachmentContainer(), serviceProviders, runtimeEnv.getServiceManager().getServiceDefinitionManager()); 

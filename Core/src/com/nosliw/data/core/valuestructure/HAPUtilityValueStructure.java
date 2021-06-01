@@ -4,7 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
@@ -19,6 +21,12 @@ import com.nosliw.data.core.structure.HAPRoot;
 
 public class HAPUtilityValueStructure {
 
+	public static HAPRoot getRootFromGroupStructure(HAPValueStructureDefinitionGroup groupStructure, String categary, String name) {
+		List<HAPRoot> roots = groupStructure.resolveRoot(new HAPReferenceRootInGroup(categary, name), false);
+		if(roots==null || roots.size()==0)   return null;
+		return roots.get(0);
+	}
+	
 	public static HAPExecutableValueStructure buildFlatContextFromContextStructure(HAPValueStructureDefinition valueStructure) {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		for(HAPRoot root : valueStructure.getAllRoots()) {
@@ -117,6 +125,27 @@ public class HAPUtilityValueStructure {
 			break;
 		}
 	}
+
+	public static String getContextGroupInheritMode(HAPInfo info) {  
+		String out = HAPConstant.INHERITMODE_CHILD;
+		if("false".equals(info.getValue(HAPValueStructureDefinitionGroup.INFO_INHERIT)))  out = HAPConstant.INHERITMODE_NONE;
+		return out;				
+	}
+ 
+	public static void setContextGroupInheritModeNone(HAPInfo info) {		info.setValue(HAPValueStructureDefinitionGroup.INFO_INHERIT, "false");	}
+	public static void setContextGroupInheritModeChild(HAPInfo info) {		info.setValue(HAPValueStructureDefinitionGroup.INFO_INHERIT, "true");	}
+	
+	public static boolean getContextGroupPopupMode(HAPInfo info) {  
+		boolean out = true;
+		if("false".equals(info.getValue(HAPValueStructureDefinitionGroup.INFO_POPUP)))  out = false;
+		return out;				
+	} 
+ 
+	public static boolean getContextGroupEscalateMode(HAPInfo info) {  
+		boolean out = false;
+		if("true".equals(info.getValue(HAPValueStructureDefinitionGroup.INFO_ESCALATE)))  out = true;
+		return out;				
+	} 
 
 /*
 	//build another context which only include variable node in current context

@@ -50,6 +50,10 @@ public class HAPValueStructureDefinitionEmpty extends HAPSerializableImp impleme
 		jsonMap.put(TYPE, this.getStructureType());
 	}
 
+	//whether root is inherited by child
+	@Override
+	public boolean isInheriable(String rootId) {   return true;	}
+
 	@Override
 	public void hardMergeWith(HAPValueStructureDefinition context) {
 	}
@@ -81,6 +85,30 @@ public class HAPValueStructureDefinitionEmpty extends HAPSerializableImp impleme
 	public Object solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public HAPReferenceRoot getRootReferenceById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void processed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public HAPValueStructure getParent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setParent(HAPValueStructure parent) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

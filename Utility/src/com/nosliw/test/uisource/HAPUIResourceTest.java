@@ -13,7 +13,7 @@ public class HAPUIResourceTest {
 		
 //		HAPDefinitionUIPage pageDef = runtimeEnvironment.getUIResourceManager().getUIPageDefinition(new HAPResourceIdUIResource("test"), null);
 		
-		HAPExecutableUIUnitPage pageExe = runtimeEnvironment.getUIResourceManager().getUIPage(new HAPResourceIdUIResource("mytest"));
+		HAPExecutableUIUnitPage pageExe = runtimeEnvironment.getUIResourceManager().getUIPage(new HAPResourceIdUIResource("verify"));
 //		System.out.println(pageExe.toStringValue(HAPSerializationFormat.JSON));
 		System.out.println(pageExe.toResourceData(runtimeEnvironment.getRuntime().getRuntimeInfo()));
 		

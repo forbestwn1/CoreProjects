@@ -2,6 +2,7 @@ package com.nosliw.data.core.structure;
 
 import java.util.List;
 
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.updatename.HAPUpdateName;
 
 public interface HAPStructure extends HAPWithConstantScript{
@@ -16,10 +17,15 @@ public interface HAPStructure extends HAPWithConstantScript{
 	List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist);
 
 	List<HAPInfoAlias> discoverRootAliasById(String id);
-
+	HAPReferenceRoot getRootReferenceById(String id);
+	
 	HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root);
 	
 	void updateRootName(HAPUpdateName updateName);
+	
+	void processed();
+	
+	HAPInfo getInfo();
 	
 	HAPStructure cloneStructure();
 

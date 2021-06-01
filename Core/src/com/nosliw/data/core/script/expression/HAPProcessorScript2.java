@@ -20,7 +20,7 @@ import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
-public class HAPProcessorScript {
+public class HAPProcessorScript2 {
 
 	public static HAPExecutableScriptGroup processSimpleScript(
 			String script,

@@ -3,11 +3,9 @@ package com.nosliw.data.core.component;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithValueStructure;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.process.HAPUtilityProcessComponent;
@@ -27,9 +25,7 @@ import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.resource.HAPResourceDefinitionContext;
 
 public class HAPUtilityComponent {
 
@@ -78,34 +74,35 @@ public class HAPUtilityComponent {
 //	}
 	
 	public static HAPValueStructureDefinition resolveContextReference(HAPValueStructureDefinition context, List<HAPContextReference> contextRefs, HAPContainerAttachment attachments, HAPManagerResourceDefinition resourceDefMan) {
-		String contextType = context.getType();
-		
-		for(HAPContextReference contextRef : contextRefs) {
-			HAPAttachment att = attachments.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTEXT, contextRef.getName());
-			
-			//find target context
-			HAPValueStructureDefinitionFlat targetContext = null;
-			if(contextType.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-				HAPValueStructureDefinitionGroup contextGroup = (HAPValueStructureDefinitionGroup)context;
-				String categary = contextRef.getCategary();
-				if(HAPBasicUtility.isStringEmpty(categary))  categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
-				targetContext = contextGroup.getChildContext(categary);
-			}
-			else {
-				targetContext = (HAPValueStructureDefinitionFlat)context;
-			}
-			
-			//append referred context to target context
-			HAPResourceDefinitionContext contextResourceDef = (HAPResourceDefinitionContext)HAPUtilityAttachment.getResourceDefinition(att, resourceDefMan);
-			HAPValueStructureDefinitionFlat referredContext = contextResourceDef.getContext();
-			for(String eleName : referredContext.getRootNames()) {
-				if(targetContext.getRoot(eleName)==null) {
-					targetContext.addRoot(eleName, referredContext.getRoot(eleName));
-				}
-			}
-		}
-		
-		return context;
+//		String contextType = context.getType();
+//		
+//		for(HAPContextReference contextRef : contextRefs) {
+//			HAPAttachment att = attachments.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTEXT, contextRef.getName());
+//			
+//			//find target context
+//			HAPValueStructureDefinitionFlat targetContext = null;
+//			if(contextType.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+//				HAPValueStructureDefinitionGroup contextGroup = (HAPValueStructureDefinitionGroup)context;
+//				String categary = contextRef.getCategary();
+//				if(HAPBasicUtility.isStringEmpty(categary))  categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+//				targetContext = contextGroup.getChildContext(categary);
+//			}
+//			else {
+//				targetContext = (HAPValueStructureDefinitionFlat)context;
+//			}
+//			
+//			//append referred context to target context
+//			HAPResourceDefinitionContext contextResourceDef = (HAPResourceDefinitionContext)HAPUtilityAttachment.getResourceDefinition(att, resourceDefMan);
+//			HAPValueStructureDefinitionFlat referredContext = contextResourceDef.getContext();
+//			for(String eleName : referredContext.getRootNames()) {
+//				if(targetContext.getRoot(eleName)==null) {
+//					targetContext.addRoot(eleName, referredContext.getRoot(eleName));
+//				}
+//			}
+//		}
+//		
+//		return context;
+		return null;
 	}
 	
 	public static HAPValueStructureDefinition getValueStructure(Object def, HAPValueStructureDefinition extraValueStructure, HAPConfigureProcessorStructure contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {

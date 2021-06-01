@@ -7,6 +7,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
@@ -23,7 +24,7 @@ public class HAPProcessorContextVariableInheritance {
 	}
 
 	public static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup orgContext, HAPValueStructureDefinitionGroup parentContextGroup, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
-		HAPValueStructureDefinitionGroup out = orgContext.cloneContextGroup();
+		HAPValueStructureDefinitionGroup out = orgContext.cloneValueStructureGroup();
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()){
 				if(parentContextGroup!=null && Arrays.asList(HAPValueStructureDefinitionGroup.getInheritableCategaries()).contains(categary)) {
@@ -41,14 +42,11 @@ public class HAPProcessorContextVariableInheritance {
 	} 
 
 	//add FINAL to all constant root node, means constant cannot be override by parent 
-	private static HAPValueStructureDefinitionGroup processConstant(HAPValueStructureDefinitionGroup contextGroup) {
-		HAPValueStructureDefinitionGroup out = contextGroup.cloneContextGroup();
-		for(String contextCategary : HAPValueStructureDefinitionGroup.getAllCategaries()) {
-			for(String name : out.getFlat(contextCategary).getRootNames()) {
-				HAPRoot node = out.getElement(contextCategary, name);
-				if(node.isConstant()) {
-					node.getInfo().setValue(HAPRoot.INHERIT_MODE, HAPRoot.INHERIT_MODE_FINAL);
-				}
+	private static HAPStructure processConstant(HAPStructure structure) {
+		HAPStructure out = structure.cloneStructure();
+		for(HAPRoot root : out.getAllRoots()) {
+			if(root.isConstant()) {
+				root.getInfo().setValue(HAPRoot.INHERIT_MODE, HAPRoot.INHERIT_MODE_FINAL);
 			}
 		}
 		return out;

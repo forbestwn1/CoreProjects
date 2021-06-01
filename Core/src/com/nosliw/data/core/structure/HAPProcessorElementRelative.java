@@ -1,5 +1,6 @@
 package com.nosliw.data.core.structure;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,10 @@ import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPProcessorElementRelative {
 
-	
+	public static HAPStructure process(HAPStructure context, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		return process(context, parent, new HashSet<String>(), errors, configure, runtimeEnv);
+	}
+
 	public static HAPStructure process(HAPStructure structure, HAPContainerStructure parents, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPStructure out = structure.cloneStructure();
 		for(HAPRoot root : out.getAllRoots()) {

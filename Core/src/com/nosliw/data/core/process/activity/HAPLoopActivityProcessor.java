@@ -54,7 +54,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, loopActivityDef, processDataContext, runtimeEnv);
 
 		//build data context for step process (context from process + element data)
-		HAPValueStructureDefinitionGroup stepDataContext = processDataContext.cloneContextGroup();
+		HAPValueStructureDefinitionGroup stepDataContext = processDataContext.cloneValueStructureGroup();
 		
 		//find container data criteria 
 		HAPInfoReferenceResolve containerResolve = HAPUtilityContext.analyzeElementReference(new HAPReferenceElement(loopActivityDef.getContainerName()), processDataContext, null, null);

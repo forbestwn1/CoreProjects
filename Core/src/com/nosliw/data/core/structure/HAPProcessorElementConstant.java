@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
@@ -23,15 +24,25 @@ import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
+import com.nosliw.data.core.structure.temp.HAPUtilityContextStructure;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
+import com.nosliw.data.core.valuestructure.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public class HAPProcessorElementConstant {
 
 	static public HAPStructure process(
 			HAPStructure structure,
+			HAPContainerStructure parent,
 			HAPContainerAttachment attachmentContainer,
 			HAPConfigureProcessorStructure configure,
 			HAPRuntimeEnvironment runtimeEnv){
+
+		//merge with parent
+		HAPStructure merged = structure;
+		for(String parentName : parent.getStructureNames()) {
+			merged = mergeWithParent(merged, HAPUtilityContextStructure.toSolidContextStructure((HAPValueStructureDefinition)HAPUtilityStructure.getReferedStructure(parentName, parent, merged), false), configure.inheritMode);
+		}
 
 		//process constant ref in context
 		HAPStructure out =  solidateConstantRefs(structure, attachmentContainer, runtimeEnv);
@@ -42,6 +53,29 @@ public class HAPProcessorElementConstant {
 		//figure out root that ture out to be constant value, then convert to constant root
 		out = discoverConstantContextRoot(out);
 		
+		return out;
+	}
+
+	//merge constant with parent
+	//child constant has higher priority than parent
+	private static HAPValueStructureDefinition mergeWithParent(
+			HAPStructure valueStructure,
+			HAPStructure parentValueStructure,
+			String inheritMode){
+		HAPValueStructureDefinition out = (HAPValueStructureDefinition)valueStructure.cloneStructure();
+		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
+			if(parentValueStructure!=null) {
+				//merge constants with parent
+				for(HAPRoot root : parentValueStructure.getAllRoots()) {
+					if(root.isConstant()) {
+						HAPReferenceRoot rootReference = parentValueStructure.getRootReferenceById(root.getLocalId());
+						if(out.resolveRoot(rootReference, false)==null) {
+							out.addRoot(rootReference, root);
+						}
+					}
+				}
+			}
+		}
 		return out;
 	}
 

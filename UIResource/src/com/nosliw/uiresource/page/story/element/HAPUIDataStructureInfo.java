@@ -30,7 +30,7 @@ public class HAPUIDataStructureInfo extends HAPSerializableImp{
 	public HAPUIDataStructureInfo cloneUIDataStructureInfo() {
 		HAPUIDataStructureInfo out = new HAPUIDataStructureInfo();
 		if(this.m_context!=null) {
-			out.m_context = this.m_context.cloneContextGroup();
+			out.m_context = this.m_context.cloneValueStructureGroup();
 		}
 		return out;
 	}

@@ -33,6 +33,8 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 	private Map<String, HAPRoot> m_rootById;
 	private Map<String, String> m_idByName;
 	
+	private HAPValueStructure m_parent;
+	
 	public HAPValueStructureDefinitionFlat(){
 		this.empty();
 	}
@@ -53,6 +55,12 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 	public List<HAPRoot> getAllRoots(){   return new ArrayList<HAPRoot>(this.m_rootById.values());      }
 
 	@Override
+	public HAPValueStructure getParent() {   return this.m_parent; }
+
+	@Override
+	public void setParent(HAPValueStructure parent) {  this.m_parent = parent;  }
+
+	@Override
 	public HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root) {
 		HAPReferenceRootInFlat flatRootReference = (HAPReferenceRootInFlat)rootReference;
 		root.setName(flatRootReference.getName());
@@ -62,16 +70,22 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 	@Override
 	public List<HAPInfoAlias> discoverRootAliasById(String id) {
 		List<HAPInfoAlias> out = new ArrayList<HAPInfoAlias>();
-		for(String name : this.m_idByName.keySet()) {
-			if(id.equals(this.m_idByName.get(name))) {
-				HAPInfoAlias aliasInfo = new HAPInfoAlias(name, 0);
-				out.add(aliasInfo);
-				break;
-			}
+		String name = getNameById(id);
+		if(name!=null) {
+			HAPInfoAlias aliasInfo = new HAPInfoAlias(name, 0);
+			out.add(aliasInfo);
 		}
 		return out;
 	}
 
+	@Override
+	public HAPReferenceRoot getRootReferenceById(String id) {
+		return new HAPReferenceRootInFlat(this.getNameById(id));
+	}
+
+	//whether root is inherited by child
+	@Override
+	public boolean isInheriable(String rootId) {   return true;	}
 
 	@Override
 	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
@@ -103,6 +117,7 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 	}
 
 	//mark all the element in context as processed
+	@Override
 	public void processed() {   
 		for(HAPRoot ele : this.m_rootById.values()) 	ele.getDefinition().processed();
 	}
@@ -199,6 +214,17 @@ public class HAPValueStructureDefinitionFlat extends HAPSerializableImp implemen
 		
 	}
 
+	private String getNameById(String id) {
+		String out = null;
+		for(String name : this.m_idByName.keySet()) {
+			if(id.equals(this.m_idByName.get(name))) {
+				out = name;
+				break;
+			}
+		}
+		return out;
+	}
+	
 	private HAPRoot getRootByName(String name) {
 		String id = this.m_idByName.get(name);
 		if(id==null)  return null;
