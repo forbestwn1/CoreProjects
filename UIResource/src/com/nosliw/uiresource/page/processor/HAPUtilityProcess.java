@@ -9,21 +9,21 @@ import com.nosliw.data.core.structure.HAPElementLeafConstant;
 import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUtilityUITag;
-import com.nosliw.uiresource.page.tag.HAPValueStructureDefinitionInUITag;
 
 public class HAPUtilityProcess {
 
 	//build context for ui Tag
 	public static HAPValueStructureDefinitionGroup buildUITagContext(HAPUITagDefinition tagDef, HAPValueStructureDefinitionGroup parentContext, Map<String, String> attributes, HAPConfigureProcessorStructure contextProcessorConfig, HAPRuntimeEnvironment runtimeEnv){
 		//get contextDef 
-		HAPValueStructureDefinitionInUITag tagDefinitionContext = tagDef.getValueStructureDefinition();
+		HAPValueStructure tagDefinitionContext = tagDef.getValueStructureDefinition();
 
 		//add attribute constant as part of tagContext
 		Map<String, String> tagAttrs = HAPUtilityUITag.getTagAttributeValue(tagDef, attributes);
-		HAPValueStructureDefinitionGroup tagContext = tagDefinitionContext.cloneValueStructureGroup();
+		HAPValueStructureDefinitionGroup tagContext = (HAPValueStructureDefinitionGroup)tagDefinitionContext.cloneStructure();
 		for(String name : tagAttrs.keySet()) {
 			HAPElementLeafConstant cstRootNode = new HAPElementLeafConstant(tagAttrs.get(name));
 			HAPRoot root = new HAPRoot(cstRootNode);

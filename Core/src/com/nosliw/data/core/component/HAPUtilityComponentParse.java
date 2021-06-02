@@ -34,7 +34,7 @@ public class HAPUtilityComponentParse {
 		//context
 		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPComponentImp.VALUESTRUCTURE);
 		if(contextJsonObj!=null) {
-			complexResourceDef.setValueStructure(HAPParserValueStructure.parseValueStructureDefinition(contextJsonObj));
+			complexResourceDef.setValueStructure(HAPParserValueStructure.parseValueStructure(contextJsonObj));
 		}
 	}
 	

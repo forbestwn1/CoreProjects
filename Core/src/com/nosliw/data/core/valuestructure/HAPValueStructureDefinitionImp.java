@@ -8,11 +8,9 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
-public abstract class HAPValueStructureDefinitionImp extends HAPSerializableImp implements HAPValueStructureDefinition{
+public abstract class HAPValueStructureDefinitionImp extends HAPSerializableImp implements HAPValueStructure{
 
 	private HAPInfo m_info;
-	
-	private HAPValueStructure m_parent;
 	
 	public HAPValueStructureDefinitionImp() {
 		this.m_info = new HAPInfoImpSimple(); 
@@ -25,14 +23,8 @@ public abstract class HAPValueStructureDefinitionImp extends HAPSerializableImp 
 	@Override
 	public void setInfo(HAPInfo info) {  this.m_info = info.cloneInfo();   }
 	
-	@Override
-	public HAPValueStructure getParent() {   return this.m_parent;   }
-	@Override
-	public void setParent(HAPValueStructure parent) {  this.m_parent = parent;   }
-	 
-	public void cloneBaseToValueStructureDefinition(HAPValueStructureDefinition valueStructureDefinition) {
-		valueStructureDefinition.setInfo(this.getInfo());
-		valueStructureDefinition.setParent(this.getParent());
+	public void cloneBaseToValueStructureDefinition(HAPValueStructure valueStructure) {
+		valueStructure.setInfo(this.getInfo());
 	}
 	
 	@Override

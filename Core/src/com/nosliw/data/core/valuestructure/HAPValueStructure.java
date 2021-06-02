@@ -1,10 +1,11 @@
 package com.nosliw.data.core.valuestructure;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.core.structure.HAPStructure;
 
 //
-public interface HAPValueStructure extends HAPStructure{
+public interface HAPValueStructure extends HAPSerializable, HAPStructure{
 
 	@HAPAttribute
 	public static final String TYPE = "type";
@@ -17,7 +18,11 @@ public interface HAPValueStructure extends HAPStructure{
 	boolean isInheriable(String rootId);
 
 	boolean isExternalVisible(String rootId);
+
+	boolean isFlat();
+
+	boolean isEmpty();
 	
-	HAPValueStructure getParent();
-	void setParent(HAPValueStructure parent);
+	void hardMergeWith(HAPValueStructure context);
+
 }

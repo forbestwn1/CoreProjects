@@ -175,7 +175,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		
 		JSONObject inputJson = jsonObj.getJSONObject(INPUT);
 		for(Object key2 : inputJson.keySet()) {
-			this.m_input.put((String)key2, HAPParserContext.parseValueStructureDefinition(inputJson.getJSONObject((String)key2)));
+			this.m_input.put((String)key2, HAPParserContext.parseValueStructure(inputJson.getJSONObject((String)key2)));
 		}
 		
 		JSONObject flatInputJsonObj = jsonObj.getJSONObject(FLATINPUT);
@@ -184,7 +184,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		}
 
 		JSONObject outputJson = jsonObj.getJSONObject(OUTPUT);
-		this.m_output = HAPParserContext.parseValueStructureDefinition(outputJson);
+		this.m_output = HAPParserContext.parseValueStructure(outputJson);
 		
 		JSONObject outputMatchersJson = jsonObj.optJSONObject(OUTPUTMATCHERS);
 		if(outputMatchersJson!=null) {

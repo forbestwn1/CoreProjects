@@ -11,7 +11,7 @@ import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
@@ -20,7 +20,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	private HAPResourceId m_resourceId;
 	
 	//value structure definition within this component
-	private HAPValueStructureDefinition m_valueStructure;
+	private HAPValueStructure m_valueStructure;
 	
 	private List<HAPContextReference> m_contextRefs;
 	
@@ -42,9 +42,9 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
 	
 	@Override
-	public HAPValueStructureDefinition getValueStructure() {  return this.m_valueStructure;   }
+	public HAPValueStructure getValueStructure() {  return this.m_valueStructure;   }
 	@Override
-	public void setValueStructure(HAPValueStructureDefinition valueStructure) {
+	public void setValueStructure(HAPValueStructure valueStructure) {
 		this.m_valueStructure = valueStructure;
 		if(this.m_valueStructure ==null)  this.m_valueStructure = new HAPValueStructureDefinitionGroup();
 	}
@@ -74,7 +74,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 
 	@Override
 	public void cloneToWithValueStructure(HAPWithValueStructure withDataContext) {
-		if(this.m_valueStructure!=null)	withDataContext.setValueStructure((HAPValueStructureDefinition)this.m_valueStructure.cloneStructure());
+		if(this.m_valueStructure!=null)	withDataContext.setValueStructure((HAPValueStructure)this.m_valueStructure.cloneStructure());
 	}
 
 	@Override

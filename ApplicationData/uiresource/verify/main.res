@@ -2,21 +2,6 @@
 <html>
 <body>
     Within test.main.res
-	<br>
-<!--	EXPRESSION REFERENCE:<%=#|<(expressionInternal)>|#.value + ' 6666 ' %>-->
-	<br>
-<!--	EXPRESSION REFERENCE:<%=#|<(expressionLocal)>|#.value + ' 6666 ' %>-->
-	<br>
-<!--	
-		EXPRESSION IN CONTENT :<%=?(aaa___public)?.value + '   6666 ' %>
-	
-
-	<br>
-	
-	<nosliw-string data="aaa"/>
-	<br>
-	-->
-<!--	<nosliw-contextvalue/> -->
 </body>
 
 	<script>
@@ -25,24 +10,26 @@
 	</script>
 
 
-	<valueStructure>
+	<valuestructure>
 	{
 		"group" : {
 			"public" : {
 				"flat" : {
-					constantFromContext7: {
-						definition : {
-							value : {
-								dataTypeId: "test.string",
-								value: "Constant data from context"
+						constantFromContext1 : {
+							definition: {
+								value : "<%=5+6+7%>",
 							}
-						}
-					},
+						},
+						constantFromContext5 : {
+							definition: {
+								value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
+							}
+						},
 				}
 			}
 		}
 	}
-	</context>
+	</valuestructure>
 
 	
 	<contextref>
@@ -53,33 +40,6 @@
 	
 	<service>
 	[
-		{
-			"name" : "simpleServiceWithoutInterface",
-			"interface" : "service_simpleoutput",
-			"provider" : "simpleServiceWithoutInterfaceProvider",
-			"info" : {
-				"enhanceContext" : "true"
-			},
-			"dataMapping" :{
-				"inputMapping" : {
-					"element" : {
-
-						"parm4" : {
-							"description" : "input from constant defined in context",
-							"definition" : {
-								"path" : "constantFromContext7"
-							}
-						},
-					}
-				},
-				"outputMapping" : {
-					"success" : {
-						"element" : {
-						}
-					}
-				}
-			}
-		},
 	
 	]
 	</service>
@@ -89,13 +49,27 @@
 	{
 		"dataexpression" : [
 		],
-		"service" : [
-			{
-				"name": "simpleServiceWithoutInterfaceProvider",
-				"referenceId" : "simpleoutput_refinterface"
-			},	
-		],
 		"value" : [
+			{
+				"name": "constantFromAtt1",
+				"entity" : 
+				{
+					"value" : {
+						dataTypeId: "test.string;1.0.0",
+						value: "Constant in attachment"
+					}
+				}
+			},
+			{
+				"name": "constantFromAtt2",
+				"entity" : 
+				{
+					"value" : {
+							dataTypeId: "test.integer",
+							value: 15
+					}
+				}
+			},
 		],
 		"context" : [
 		]

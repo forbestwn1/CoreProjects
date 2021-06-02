@@ -34,7 +34,7 @@ import com.nosliw.data.core.structure.HAPRoot;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 public class HAPProcessorExpression {
@@ -207,8 +207,8 @@ public class HAPProcessorExpression {
 		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(id);
 		
 		//structure
-		HAPValueStructureDefinition valueStructure =  expressionGroupDef.getValueStructure();
-		out.setValueStructureDefinition((HAPValueStructureDefinition)valueStructure.cloneStructure());
+		HAPValueStructure valueStructure =  expressionGroupDef.getValueStructure();
+		out.setValueStructureDefinition((HAPValueStructure)valueStructure.cloneStructure());
 
 		//constant
 		//constant --- discover constant from attachment and context

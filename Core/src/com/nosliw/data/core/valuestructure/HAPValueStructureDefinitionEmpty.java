@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -13,7 +11,7 @@ import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRoot;
 
-public class HAPValueStructureDefinitionEmpty extends HAPSerializableImp implements HAPValueStructureDefinition{
+public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitionImp{
 
 	private boolean m_isFlat;
 	
@@ -42,7 +40,7 @@ public class HAPValueStructureDefinitionEmpty extends HAPSerializableImp impleme
 	public List<HAPRoot> getAllRoots(){   return new ArrayList<HAPRoot>();      }
 
 	@Override
-	public HAPValueStructureDefinition cloneStructure() {
+	public HAPValueStructure cloneStructure() {
 		return  new HAPValueStructureDefinitionEmpty(this.m_isFlat);
 	}
 
@@ -56,7 +54,7 @@ public class HAPValueStructureDefinitionEmpty extends HAPSerializableImp impleme
 	public boolean isInheriable(String rootId) {   return true;	}
 
 	@Override
-	public void hardMergeWith(HAPValueStructureDefinition context) {
+	public void hardMergeWith(HAPValueStructure context) {
 	}
 
 	@Override
@@ -101,27 +99,9 @@ public class HAPValueStructureDefinitionEmpty extends HAPSerializableImp impleme
 	}
 
 	@Override
-	public HAPValueStructure getParent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setParent(HAPValueStructure parent) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public boolean isExternalVisible(String rootId) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public HAPInfo getInfo() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

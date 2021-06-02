@@ -1,6 +1,7 @@
 package com.nosliw.uiresource.page.execute;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPValueStructureGroupInUIBody extends HAPValueStructureDefinitionGroup{
@@ -36,6 +37,6 @@ public class HAPValueStructureGroupInUIBody extends HAPValueStructureDefinitionG
 	}
 	
 	@Override
-	public void setParent(HAPValueStructureDefinitionGroup parent) {  throw new RuntimeException();  }
+	public void setParent(HAPValueStructure parent) {  throw new RuntimeException();  }
 
 }

@@ -11,9 +11,10 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
+import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.resource.HAPResourceIdUITag;
 
@@ -42,8 +43,10 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 
 	private String m_tagName;
 	
+	private HAPUITagDefinition m_uiTagDefinition;
+	
 	//context for tag
-	private HAPValueStructureGroupInUITag m_tagValueStructureDefinition;
+	private HAPTreeNodeValueStructure m_tagValueStructureDefinitionNode;
 	private HAPExecutableValueStructure m_tagValueStructureExe;
 
 	private Map<String, HAPDefinitionUIEvent> m_tagEvent;
@@ -55,6 +58,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	
 	public HAPExecutableUIUnitTag(HAPDefinitionUITag uiTagDefinition, String id) {
 		super(uiTagDefinition, id);
+		this.m_tagValueStructureDefinitionNode = new HAPTreeNodeValueStructure();
 		this.m_tagName = uiTagDefinition.getTagName();
 		this.m_tagEvent = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_eventMapping = new LinkedHashMap<String, String>();
@@ -65,11 +69,11 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 
 	public String getTagName() {    return this.m_tagName;   }
 	
-	public HAPValueStructureDefinitionGroup getTagValueStructureDefinition(){  return this.m_tagValueStructureDefinition;   }
-	public void setTagValueStructureDefinition(HAPValueStructureDefinitionGroup valueStructureDefinition) {
-		if(this.m_tagValueStructureDefinition!=null)   this.m_tagValueStructureDefinition.clear();
-		this.m_tagValueStructureDefinition = new HAPValueStructureGroupInUITag(this, valueStructureDefinition);
-	}
+	public HAPTreeNodeValueStructure getTagValueStructureDefinitionNode(){  return this.m_tagValueStructureDefinitionNode;   }
+	
+	public HAPUITagDefinition getUITagDefinition() {   return this.m_uiTagDefinition;   }
+	public void setUITagDefinition(HAPUITagDefinition uiTagDefinition) {    this.m_uiTagDefinition = uiTagDefinition;     }
+	
 	public void setTagValueStructureExe(HAPExecutableValueStructure context) {  this.m_tagValueStructureExe = context;   }
 	public HAPExecutableValueStructure getTagValueStructureExe() {
 		if(this.m_tagValueStructureExe!=null)		return this.m_tagValueStructureExe;

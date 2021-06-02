@@ -24,10 +24,8 @@ import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
-import com.nosliw.data.core.structure.temp.HAPUtilityContextStructure;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 
 public class HAPProcessorElementConstant {
 
@@ -41,7 +39,7 @@ public class HAPProcessorElementConstant {
 		//merge with parent
 		HAPStructure merged = structure;
 		for(String parentName : parent.getStructureNames()) {
-			merged = mergeWithParent(merged, HAPUtilityContextStructure.toSolidContextStructure((HAPValueStructureDefinition)HAPUtilityStructure.getReferedStructure(parentName, parent, merged), false), configure.inheritMode);
+			merged = mergeWithParent(merged, HAPUtilityStructure.getReferedStructure(parentName, parent, merged), configure.inheritMode);
 		}
 
 		//process constant ref in context
@@ -58,11 +56,11 @@ public class HAPProcessorElementConstant {
 
 	//merge constant with parent
 	//child constant has higher priority than parent
-	private static HAPValueStructureDefinition mergeWithParent(
+	private static HAPStructure mergeWithParent(
 			HAPStructure valueStructure,
 			HAPStructure parentValueStructure,
 			String inheritMode){
-		HAPValueStructureDefinition out = (HAPValueStructureDefinition)valueStructure.cloneStructure();
+		HAPStructure out = valueStructure.cloneStructure();
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			if(parentValueStructure!=null) {
 				//merge constants with parent

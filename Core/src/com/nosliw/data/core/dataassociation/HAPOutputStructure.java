@@ -41,7 +41,7 @@ public class HAPOutputStructure extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){  
 		JSONObject jsonObj = (JSONObject)json;
 		for(Object key : jsonObj.keySet()) {
-			this.m_contextStructrue.put((String)key, HAPParserContext.parseValueStructureDefinition(jsonObj.getJSONObject((String)key)));
+			this.m_contextStructrue.put((String)key, HAPParserContext.parseValueStructure(jsonObj.getJSONObject((String)key)));
 		}
 		return true;  
 	}

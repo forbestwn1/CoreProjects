@@ -16,6 +16,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 @HAPEntityWithAttribute
@@ -49,7 +50,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
 	
 	//context definition
-	private HAPValueStructureDefinitionInUITag m_valueStructureDefinition;
+	private HAPValueStructureDefinitionGroup m_valueStructureDefinition;
 
 	//dependency resources
 	private List<HAPResourceDependency> m_resourceDependency;
@@ -75,7 +76,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	public HAPJsonTypeScript getScript(){return this.m_script;}
 	public void setScript(String script) {  this.m_script = new HAPJsonTypeScript(script);    }
 	
-	public HAPValueStructureDefinitionInUITag getValueStructureDefinition(){  return this.m_valueStructureDefinition;   }
+	public HAPValueStructureDefinitionGroup getValueStructureDefinition(){  return this.m_valueStructureDefinition;   }
 
 	public List<HAPResourceDependency> getResourceDependency(){   return this.m_resourceDependency;    }
 	public void addResourceDependency(HAPResourceDependency dep){  this.m_resourceDependency.add(dep);  }

@@ -12,13 +12,13 @@ import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 public class HAPUtilityExpression {
 
-	public static HAPValueStructureDefinition getValueStructure(Object expressionGroupDef, HAPValueStructureDefinition extraContext, HAPRuntimeEnvironment runtimeEnv) {
-		return HAPUtilityComponent.getValueStructure(expressionGroupDef, extraContext, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
+	public static HAPValueStructure getValueStructure(Object expressionGroupDef, HAPValueStructure extraValueStructure, HAPRuntimeEnvironment runtimeEnv) {
+		return HAPUtilityComponent.getValueStructure(expressionGroupDef, extraValueStructure, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
 	}
 	
 	//make global name

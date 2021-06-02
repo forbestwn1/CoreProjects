@@ -8,13 +8,13 @@ import java.util.Set;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.common.HAPWithValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionSuite, HAPWithValueStructure, HAPWithConstantDefinition{
 
 	private Map<String, HAPDefinitionExpressionGroup> m_expressionGroups;
 
-	private HAPValueStructureDefinition m_valueStructure;
+	private HAPValueStructure m_valueStructure;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
@@ -31,7 +31,7 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 
 	@Override
 	public void addEntityElement(HAPDefinitionExpressionGroup expressionGroup) {
-		expressionGroup.setValueStructure((HAPValueStructureDefinition)this.m_valueStructure.cloneStructure());
+		expressionGroup.setValueStructure((HAPValueStructure)this.m_valueStructure.cloneStructure());
 		for(String id : this.m_constantDefinitions.keySet()) {
 			expressionGroup.addConstantDefinition(this.m_constantDefinitions.get(id).cloneConstantDefinition());
 		}
@@ -53,20 +53,20 @@ public class HAPDefinitionExpressionSuiteImp implements HAPDefinitionExpressionS
 	}
 
 	@Override
-	public HAPValueStructureDefinition getValueStructure() {  return this.m_valueStructure; }
+	public HAPValueStructure getValueStructure() {  return this.m_valueStructure; }
 
 	@Override
-	public void setValueStructure(HAPValueStructureDefinition context) {
+	public void setValueStructure(HAPValueStructure context) {
 		this.m_valueStructure = context;  
 		for(String id : this.m_expressionGroups.keySet()) {
-			this.m_expressionGroups.get(id).setValueStructure((HAPValueStructureDefinition)context.cloneStructure());
+			this.m_expressionGroups.get(id).setValueStructure((HAPValueStructure)context.cloneStructure());
 		}
 	}
 	
 	@Override
 	public HAPDefinitionExpressionSuite cloneExpressionSuiteDefinition() {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
-		if(this.m_valueStructure!=null)	out.m_valueStructure = (HAPValueStructureDefinition)this.m_valueStructure.cloneStructure();
+		if(this.m_valueStructure!=null)	out.m_valueStructure = (HAPValueStructure)this.m_valueStructure.cloneStructure();
 		for(String id : this.m_expressionGroups.keySet()) {
 			out.m_expressionGroups.put(id, this.m_expressionGroups.get(id).cloneExpressionGroupDefinition());
 		}

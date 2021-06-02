@@ -27,7 +27,7 @@ public class HAPUtilityValueStructure {
 		return roots.get(0);
 	}
 	
-	public static HAPExecutableValueStructure buildFlatContextFromContextStructure(HAPValueStructureDefinition valueStructure) {
+	public static HAPExecutableValueStructure buildFlatContextFromContextStructure(HAPValueStructure valueStructure) {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		for(HAPRoot root : valueStructure.getAllRoots()) {
 			out.addRoot(root);
@@ -54,21 +54,21 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 	
-	public static HAPValueStructureDefinition hardMerge(HAPValueStructureDefinition child, HAPValueStructureDefinition parent) {
-		if(child==null) return (HAPValueStructureDefinition)parent.cloneStructure();
-		if(parent==null)  return (HAPValueStructureDefinition)child.cloneStructure();
+	public static HAPValueStructure hardMerge(HAPValueStructure child, HAPValueStructure parent) {
+		if(child==null) return (HAPValueStructure)parent.cloneStructure();
+		if(parent==null)  return (HAPValueStructure)child.cloneStructure();
 		
 		String type1 = child.getStructureType();
 		String type2 = parent.getStructureType();
 		if(!type1.equals(type2))  throw new RuntimeException();
 		
-		HAPValueStructureDefinition out = null;
-		out = (HAPValueStructureDefinition)child.cloneStructure();
+		HAPValueStructure out = null;
+		out = (HAPValueStructure)child.cloneStructure();
 		out.hardMergeWith(parent);
 		return out;
 	}
 
-	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(HAPValueStructureDefinition structure) {
+	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(HAPValueStructure structure) {
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
 		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {
@@ -77,7 +77,7 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 
-	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPValueStructureDefinition structure) {
+	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPValueStructure structure) {
 		HAPVariableInfoInStructure out = new HAPVariableInfoInStructure();
 		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {

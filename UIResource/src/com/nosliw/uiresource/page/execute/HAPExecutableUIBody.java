@@ -24,7 +24,7 @@ import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
@@ -71,7 +71,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	public static final String COMMANDS = "commands";
 
 	//context for content
-	private HAPValueStructureGroupInUIBody m_valueStructureDefinition;
+	private HAPTreeNodeValueStructure m_valueStructureDefinitionNode;
 	private HAPExecutableValueStructure m_valueStructureExe;
 	
 //	private Map<String, Object> m_constants;
@@ -119,7 +119,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
 		this.m_processScriptContext = new HAPContextProcessExpressionScript();
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
-		this.m_valueStructureDefinition = new HAPValueStructureGroupInUIBody(uiUnit);
+		this.m_valueStructureDefinitionNode = new HAPTreeNodeValueStructure();
 //		this.m_constants = new LinkedHashMap<String, Object>();
 		
 		this.m_events = new LinkedHashMap<String, HAPDefinitionUIEvent>();
@@ -135,10 +135,9 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		}
 	}
 	
-	public HAPValueStructureDefinitionGroup getValueStructureDefinition(){  return this.m_valueStructureDefinition;   }
-	public void setValueStructureDefinition(HAPValueStructureDefinitionGroup context) {
-		this.m_valueStructureDefinition.setValueStructure(context);
-	}
+	public HAPTreeNodeValueStructure getValueStructureDefinitionNode(){  return this.m_valueStructureDefinitionNode;   }
+	
+	
 	public void setValueStructureExe(HAPExecutableValueStructure context) {  this.m_valueStructureExe = context;   }
 	public HAPExecutableValueStructure getValueStructureExe() {
 		if(this.m_valueStructureExe!=null)		return this.m_valueStructureExe;
@@ -213,7 +212,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		for(HAPUIEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  expressionTagAttributeJsons.add(expressionTagAttr.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(SCRIPTEXPRESSIONINTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
 
-		jsonMap.put(SCRIPTGROUP, this.m_scriptGroupExe.toStringValue(HAPSerializationFormat.JSON));
+		if(m_scriptGroupExe!=null)  jsonMap.put(SCRIPTGROUP, this.m_scriptGroupExe.toStringValue(HAPSerializationFormat.JSON));
 		
 		Map<String, String> uiTagJsons = new LinkedHashMap<String, String>();
 		for(String uiId : this.m_uiTags.keySet())	uiTagJsons.put(uiId, this.m_uiTags.get(uiId).toStringValue(HAPSerializationFormat.JSON));

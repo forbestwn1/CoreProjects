@@ -11,14 +11,14 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPProcessorElementConstant;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorContext {
 
-	public static HAPValueStructureDefinition process(HAPValueStructureDefinition valueStructure, HAPContainerStructure parent, HAPContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPValueStructureDefinition out = null;
+	public static HAPValueStructure process(HAPValueStructure valueStructure, HAPContainerStructure parent, HAPContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPValueStructure out = null;
 		if(valueStructure!=null) {
 			String type = valueStructure.getStructureType();
 			if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {

@@ -21,13 +21,13 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
 
 	private String m_id;
 	
-	private HAPValueStructureDefinition m_valueStructure;
+	private HAPValueStructure m_valueStructure;
 	
 	private Map<String, HAPExecutableExpression> m_expressionItem;
 	 
@@ -38,6 +38,7 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public void setDataConstants(Map<String, HAPData> dataConstants) {   this.m_dataConstants = dataConstants;    }
 	public Map<String, HAPData> getDataConstants(){   return this.m_dataConstants;     }
 	
+	@Override
 	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.m_varInfos = varInfo;    }
 	@Override
 	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_varInfos;    }
@@ -63,9 +64,9 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public String getId() {  return this.m_id;  }
 	public void setId(String id) {   this.m_id = id;    }
 	
-	public HAPValueStructureDefinition getValueStructureDefinition() {   return this.m_valueStructure;  }
+	public HAPValueStructure getValueStructureDefinition() {   return this.m_valueStructure;  }
 
-	public void setValueStructureDefinition(HAPValueStructureDefinition structureDefinition) {	this.m_valueStructure = structureDefinition;	}
+	public void setValueStructureDefinition(HAPValueStructure structureDefinition) {	this.m_valueStructure = structureDefinition;	}
 	
 	@Override
 	public void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker) {

@@ -27,7 +27,7 @@ public class HAPContainerStructure extends HAPSerializableImp{
 		this.m_structureNames = new ArrayList<String>();
 	}
 	
-	static public HAPContainerStructure createDefault(HAPValueStructureDefinition parent) {
+	static public HAPContainerStructure createDefault(HAPValueStructure parent) {
 		HAPContainerStructure out = new HAPContainerStructure();
 		if(parent!=null)	out.addStructure(null, parent);
 		return out;
@@ -71,7 +71,7 @@ public class HAPContainerStructure extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		JSONObject elesJsonObj = jsonObj.getJSONObject(STRUCTURE);
 		for(Object key : elesJsonObj.keySet()) {
-			HAPValueStructureDefinition ele = HAPParserValueStructure.parseValueStructureDefinition(elesJsonObj.getJSONObject((String)key));
+			HAPValueStructure ele = HAPParserValueStructure.parseValueStructure(elesJsonObj.getJSONObject((String)key));
 			this.addStructure((String)key, ele);
 		}
 		return true;  

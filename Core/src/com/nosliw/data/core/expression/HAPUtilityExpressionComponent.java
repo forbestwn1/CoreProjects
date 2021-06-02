@@ -13,7 +13,7 @@ import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPUtilityExpressionComponent {
 
@@ -21,7 +21,7 @@ public class HAPUtilityExpressionComponent {
 		return buildExpressionSuiteFromComponent(complexEntity, null, runtimeEnv);
 	}
 	
-	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPValueStructureDefinition valueStructure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPValueStructure valueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
 		
 		//build context

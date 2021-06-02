@@ -18,7 +18,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.imp.literate.HAPProcessorScriptLiterate;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPProcessorScript {
@@ -60,7 +60,7 @@ public class HAPProcessorScript {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 
 		//context
-		HAPValueStructureDefinition valueStructure =  scriptGroupDef.getValueStructure();
+		HAPValueStructure valueStructure =  scriptGroupDef.getValueStructure();
 		out.setValueStructureDefinition(valueStructure);
 
 		//expression definition containing all expression in script 
@@ -75,7 +75,7 @@ public class HAPProcessorScript {
 
 		//name to id updat
 		HAPUpdateName name2IdUpdate = new HAPUpdateName() {
-			private HAPValueStructureDefinition m_valueStructure;
+			private HAPValueStructure m_valueStructure;
 			
 			@Override
 			public String getUpdatedName(String name) {

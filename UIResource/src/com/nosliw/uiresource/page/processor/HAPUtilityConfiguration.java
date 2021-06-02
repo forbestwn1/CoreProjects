@@ -4,9 +4,9 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
-import com.nosliw.uiresource.page.tag.HAPValueStructureDefinitionInUITag;
 
 public class HAPUtilityConfiguration {
 
@@ -19,10 +19,10 @@ public class HAPUtilityConfiguration {
 		return out;
 	}
 
-	public static HAPConfigureProcessorStructure getContextProcessConfigurationForTagDefinition(HAPValueStructureDefinitionInUITag tagDefinitionContext, HAPConfigureProcessorStructure parentConfigure) {
+	public static HAPConfigureProcessorStructure getContextProcessConfigurationForTagDefinition(HAPValueStructure tagDefValueStructure, HAPConfigureProcessorStructure parentConfigure) {
 		HAPConfigureProcessorStructure out = parentConfigure.cloneConfigure();
 		populateCommonConfigure(out);
-		out.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefinitionContext.getInfo());
+		out.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefValueStructure.getInfo());
 		out.inheritanceExcludedInfo = HAPUtilityCommon.getDefaultInheritanceExcludedInfo();
 		return out;
 	}

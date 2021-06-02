@@ -16,9 +16,9 @@ import com.nosliw.data.core.structure.HAPRoot;
 
 public class HAPParserValueStructure {
 
-	public static HAPValueStructureDefinition parseValueStructureDefinition(JSONObject jsonObj) {
-		HAPValueStructureDefinition out = null;
-		String type = jsonObj.optString(HAPValueStructureDefinition.TYPE);
+	public static HAPValueStructure parseValueStructure(JSONObject jsonObj) {
+		HAPValueStructure out = null;
+		String type = jsonObj.optString(HAPValueStructure.TYPE);
 		if(HAPBasicUtility.isStringEmpty(type)) {
 			if(jsonObj.optJSONObject(HAPValueStructureDefinitionGroup.GROUP)!=null) {
 				type = HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT;

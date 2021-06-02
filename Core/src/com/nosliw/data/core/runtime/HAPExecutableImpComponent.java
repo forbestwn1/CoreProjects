@@ -16,7 +16,7 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implements HAPExecutable{
 
@@ -26,7 +26,7 @@ public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implement
 	private HAPComponent m_component;
 	
 	// hook up with real data during runtime
-	private HAPValueStructureDefinition m_context;
+	private HAPValueStructure m_context;
 
 	private HAPResourceDefinitionProcessSuite m_processSuite;
 
@@ -39,8 +39,8 @@ public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implement
 
 	public HAPComponent getDefinition() {   return this.m_component;    }
 	
-	public HAPValueStructureDefinition getContextStructure() {   return this.m_context;   }
-	public void setContextStructure(HAPValueStructureDefinition context) { 	this.m_context = context;	}
+	public HAPValueStructure getContextStructure() {   return this.m_context;   }
+	public void setContextStructure(HAPValueStructure context) { 	this.m_context = context;	}
 
 	public void setProcessSuite(HAPResourceDefinitionProcessSuite processSuite) {    this.m_processSuite = processSuite;    }
 	public HAPResourceDefinitionProcess getProcessDefinition(String name) {    return new HAPResourceDefinitionProcess(this.m_processSuite, name);    }

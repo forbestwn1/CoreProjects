@@ -221,7 +221,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	}
 
 	@Override
-	public void hardMergeWith(HAPValueStructureDefinition structure){
+	public void hardMergeWith(HAPValueStructure structure){
 		if(structure!=null) {
 			if(structure.getStructureType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 				HAPValueStructureDefinitionGroup groupStructure = (HAPValueStructureDefinitionGroup)structure;
@@ -273,7 +273,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	}
 	
 	@Override
-	public HAPValueStructureDefinition cloneStructure() {
+	public HAPValueStructure cloneStructure() {
 		return this.cloneValueStructureGroup();
 	}
 	
