@@ -46,14 +46,14 @@ public class HAPProcessorUIExpressionScript {
 		HAPContextProcessExpressionScript processScriptContext = body.getProcessExpressionScriptContext();
 		
 		//expression context
-		processScriptContext.setValueStructure(body.getValueStructureDefinition());
+		processScriptContext.setValueStructure(body.getValueStructureDefinitionNode().getValueStructure());
 		
 		//expression suite from attachment
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getValueStructureDefinition(), runtimeEnv);
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getValueStructureDefinitionNode().getValueStructure(), runtimeEnv);
 		processScriptContext.setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment and context
-		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), body.getValueStructureDefinition());
+		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), body.getValueStructureDefinitionNode().getValueStructure());
 		for(HAPDefinitionConstant constantDef : constantsDef) {
 			processScriptContext.addConstantDefinition(constantDef);
 		}
@@ -83,8 +83,8 @@ public class HAPProcessorUIExpressionScript {
 
 		
 		HAPDefinitionScriptGroupImp scriptGroup = new HAPDefinitionScriptGroupImp();
-		scriptGroup.setValueStructure(exeUnit.getBody().getValueStructureDefinition());
-		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), exeUnit.getBody().getValueStructureDefinition())) {
+		scriptGroup.setValueStructure(exeUnit.getBody().getValueStructureDefinitionNode().getValueStructure());
+		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), exeUnit.getBody().getValueStructureDefinitionNode().getValueStructure())) {
 			scriptGroup.addConstantDefinition(constantDef);
 		}
 		

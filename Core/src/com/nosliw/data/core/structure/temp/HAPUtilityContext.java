@@ -25,7 +25,7 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 public class HAPUtilityContext {
 
 	public static Map<String, Object> discoverContantsValueFromContextStructure(HAPValueStructureDefinition contextStructure) {
-		HAPExecutableValueStructure flatContext = buildFlatContextFromContextStructure(contextStructure);
+		HAPExecutableValueStructure flatContext = buildExecuatableValueStructure(contextStructure);
 		return flatContext.getConstantValue();
 	}
 	

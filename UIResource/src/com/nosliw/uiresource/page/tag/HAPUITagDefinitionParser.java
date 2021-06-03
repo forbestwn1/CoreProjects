@@ -20,6 +20,7 @@ import com.nosliw.data.core.structure.HAPElementLeafData;
 import com.nosliw.data.core.structure.HAPElementLeafRelative;
 import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
 import com.nosliw.data.core.valuestructure.HAPReferenceRootInGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 public class HAPUITagDefinitionParser {
@@ -68,10 +69,10 @@ public class HAPUITagDefinitionParser {
 		definition.setBase((String)defObjJS.get(HAPUITagDefinition.BASE));
     	
 		//parse context
-		HAPValueStructureDefinitionInUITag context = definition.getValueStructureDefinition();
-		NativeObject contextObj = (NativeObject)defObjJS.get(HAPUITagDefinition.VALUESTRUCTUREDEFINITION);
-		JSONObject contextJson = (JSONObject)HAPRhinoDataUtility.toJson(contextObj);
-		HAPUITagDefinitionParser.parseContextInTagDefinition(contextJson, context);
+		HAPValueStructureDefinitionGroup valueStructure = definition.getValueStructureDefinition();
+		NativeObject valueStructureObj = (NativeObject)defObjJS.get(HAPUITagDefinition.VALUESTRUCTUREDEFINITION);
+		JSONObject valueStructureJson = (JSONObject)HAPRhinoDataUtility.toJson(valueStructureObj);
+		HAPUITagDefinitionParser.parseValueStructureInTagDefinition(valueStructureJson, valueStructure);
 		
 		//parse dependency
 		NativeObject requiresObj = (NativeObject)defObjJS.get(HAPUITagDefinition.REQUIRES);
@@ -112,7 +113,7 @@ public class HAPUITagDefinitionParser {
 	}
 	
 	//parse 
-	public static void parseContextInTagDefinition(JSONObject contextJson, HAPValueStructureDefinitionInUITag contextOut){
-		HAPParserValueStructure.parseValueStructureDefinitionGroup(contextJson, contextOut);
+	public static void parseValueStructureInTagDefinition(JSONObject valueStructureJson, HAPValueStructureDefinitionGroup valueStructure){
+		HAPParserValueStructure.parseValueStructureDefinitionGroup(valueStructureJson, valueStructure);
 	}
 }

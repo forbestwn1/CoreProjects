@@ -2,6 +2,15 @@
 <html>
 <body>
     Within test.main.res
+    
+    	<br>
+	CONSTANT FROM CONTEXT:<%=&(constantFromContext5)&.value + '' %>  
+	<br>
+	CONSTANT FROM CONTEXT:<%=&(constantFromContext1)& + '' %>  
+	<br>
+	CONSTANT FROM ATTACHMENT:<%=&(constantFromAtt1)&.value + '' %>  
+	<br>
+    
 </body>
 
 	<script>

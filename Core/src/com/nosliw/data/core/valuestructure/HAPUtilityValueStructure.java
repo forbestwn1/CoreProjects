@@ -27,7 +27,7 @@ public class HAPUtilityValueStructure {
 		return roots.get(0);
 	}
 	
-	public static HAPExecutableValueStructure buildFlatContextFromContextStructure(HAPValueStructure valueStructure) {
+	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPValueStructure valueStructure) {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		for(HAPRoot root : valueStructure.getAllRoots()) {
 			out.addRoot(root);

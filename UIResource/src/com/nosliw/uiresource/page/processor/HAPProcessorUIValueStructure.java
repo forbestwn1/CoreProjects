@@ -17,6 +17,7 @@ import com.nosliw.data.core.structure.HAPProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
+import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
@@ -29,7 +30,7 @@ import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 
-public class HAPProcessorUIContext {
+public class HAPProcessorUIValueStructure {
 
 	//expand context reference by using context definition in attachment
 	public static void expandContextReference(HAPDefinitionUIUnit uiUnitDef, HAPManagerResourceDefinition resourceDefMan) {
@@ -53,29 +54,43 @@ public class HAPProcessorUIContext {
 		}
 	}
 	
-	public static void process(HAPExecutableUIUnitPage uiExe, HAPValueStructureDefinitionGroup parentValueStructure, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
-		HAPExecutableUIBody body = uiExe.getBody();
-		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
+	public static void buildExecutable(HAPExecutableUIUnit uiExe) {
+		if(uiExe.getType().equals(HAPConstantShared.UIRESOURCE_TYPE_TAG)) {
+			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
+			uiTagExe.setTagValueStructureExe(HAPUtilityValueStructure.buildExecuatableValueStructure(uiTagExe.getTagValueStructureDefinitionNode().getValueStructure()));
+		}
+		
+		uiExe.getBody().setValueStructureExe(HAPUtilityValueStructure.buildExecuatableValueStructure(uiExe.getBody().getValueStructureDefinitionNode().getValueStructure()));
+		
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
+			buildExecutable(childTag);
+		}
+	}
+	
+	public static void process(HAPExecutableUIUnitPage uiPageExe, HAPValueStructureDefinitionGroup parentValueStructure, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+		HAPExecutableUIBody body = uiPageExe.getBody();
+		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiPageExe.getType()); 
 
 		HAPConfigureProcessorStructure privateConfigure = contextProcessorConfig.cloneConfigure();
 		privateConfigure.parentCategary = HAPValueStructureDefinitionGroup.getAllCategaries();
 
 		//build value structure tree
-		buildValueStructureTree(uiExe, null, uiTagMan);
+		buildValueStructureTree(uiPageExe, null, uiTagMan);
 		
 		//process static in value structure
-		processStatic(uiExe, parentValueStructure, contextProcessorConfig, uiTagMan, runtimeEnv);		
+		processStatic(uiPageExe, parentValueStructure, contextProcessorConfig, uiTagMan, runtimeEnv);		
 
 		//escalate
-		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
+		for(HAPExecutableUIUnitTag childTag : uiPageExe.getBody().getUITags()) {
 			processEscalate(childTag, uiTagMan, contextProcessorConfig.inheritanceExcludedInfo);
 		}
 		
 		//process relative element in value structure
-		processRelativeElement(uiExe, parentValueStructure, privateConfigure, uiTagMan, runtimeEnv);
+		processRelativeElement(uiPageExe, parentValueStructure, privateConfigure, uiTagMan, runtimeEnv);
 		
 		//mark value structure as processed
-		markProcessed(uiExe);
+		markProcessed(uiPageExe);
 		
 		
 //		flatenContext(uiExe);
@@ -159,7 +174,7 @@ public class HAPProcessorUIContext {
 
 		//merge with context defined in resource
 		HAPTreeNodeValueStructure nodeInBody = uiExe.getBody().getValueStructureDefinitionNode();
-		if(parentContext==null)  parentContext = nodeInBody.getParent().getValueStructure();
+		if(parentContext==null && nodeInBody.getParent()!=null)  parentContext = nodeInBody.getParent().getValueStructure();
 		
 		nodeInBody.setValueStructure((HAPValueStructureDefinitionGroup)HAPProcessorStructure.processRelative(nodeInBody.getValueStructure(), HAPContainerStructure.createDefault(parentContext), null, contextProcessorConfig, runtimeEnv));
 

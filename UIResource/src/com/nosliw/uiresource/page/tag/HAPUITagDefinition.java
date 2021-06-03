@@ -63,7 +63,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	public HAPUITagDefinition(String type){
 		this.m_type = type;
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
-		this.m_valueStructureDefinition = new HAPValueStructureDefinitionInUITag();
+		this.m_valueStructureDefinition = new HAPValueStructureDefinitionGroup();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependency>();
 		this.m_eventsDefinition = new ArrayList<HAPDefinitionUIEvent>();
 	}
@@ -96,7 +96,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 		jsonMap.put(TYPE, this.m_type);
 		jsonMap.put(BASE, this.m_base);
 		jsonMap.put(VALUESTRUCTUREDEFINITION, this.m_valueStructureDefinition.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(VALUESTRUCTUREEXE, HAPUtilityValueStructure.buildFlatContextFromContextStructure(this.m_valueStructureDefinition).toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTUREEXE, HAPUtilityValueStructure.buildExecuatableValueStructure(this.m_valueStructureDefinition).toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
 	}

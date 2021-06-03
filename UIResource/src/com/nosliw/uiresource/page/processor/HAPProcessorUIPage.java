@@ -35,20 +35,20 @@ public class HAPProcessorUIPage {
 		HAPProcessorAttachment.mergeAttachment(uiPageDef, null, uiTagMan);
 		
 		//expand referred context part
-		HAPProcessorUIContext.expandContextReference(uiPageDef, runtimeEnv.getResourceDefinitionManager());
+		HAPProcessorUIValueStructure.expandContextReference(uiPageDef, runtimeEnv.getResourceDefinitionManager());
 
 		//normalize service use
 		HAPProcessorUIService.normalizeService(uiPageDef, runtimeEnv);
 		
 		//enhance context by service
-		HAPProcessorUIContext.enhanceContextByService(uiPageDef, runtimeEnv);
+		HAPProcessorUIValueStructure.enhanceContextByService(uiPageDef, runtimeEnv);
 		
 		
 		//----------------------  Build executable
 		HAPExecutableUIUnitPage out = new HAPExecutableUIUnitPage(uiPageDef, id);
 
 		//process context
-		HAPProcessorUIContext.process(out, null, uiTagMan, runtimeEnv);
+		HAPProcessorUIValueStructure.process(out, null, uiTagMan, runtimeEnv);
 
 		//process service
 		HAPProcessorUIService.processService(out, runtimeEnv);
@@ -69,6 +69,8 @@ public class HAPProcessorUIPage {
 		//process style
 		HAPProcessorStyle.process(out);
 		
+		//build executable value structure
+		HAPProcessorUIValueStructure.buildExecutable(out);
 		
 		
 //		if(serviceProviders==null)  serviceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
