@@ -9,7 +9,7 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPStructure;
 
 public class HAPMapping implements HAPStructure{
@@ -17,7 +17,7 @@ public class HAPMapping implements HAPStructure{
 	@HAPAttribute
 	public static final String MAPPING = "mapping";
 	
-	private Map<String, HAPRoot> m_rootById;
+	private Map<String, HAPRootStructure> m_rootById;
 
 	
 	@Override
@@ -33,19 +33,19 @@ public class HAPMapping implements HAPStructure{
 	}
 
 	@Override
-	public HAPRoot getRoot(String localId) {
+	public HAPRootStructure getRoot(String localId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<HAPRoot> getAllRoots() {
+	public List<HAPRootStructure> getAllRoots() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
+	public List<HAPRootStructure> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -57,7 +57,7 @@ public class HAPMapping implements HAPStructure{
 	}
 
 	@Override
-	public HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root) {
+	public HAPRootStructure addRoot(HAPReferenceRoot rootReference, HAPRootStructure root) {
 		// TODO Auto-generated method stub
 		return null;
 	}

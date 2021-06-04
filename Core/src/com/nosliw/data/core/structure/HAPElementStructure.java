@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 @HAPEntityWithAttribute
-public abstract class HAPElement extends HAPSerializableImp implements HAPWithConstantScript{
+public abstract class HAPElementStructure extends HAPSerializableImp implements HAPWithConstantScript{
 	
 	@HAPAttribute
 	public static final String TYPE = "type";
@@ -17,19 +17,19 @@ public abstract class HAPElement extends HAPSerializableImp implements HAPWithCo
 	
 	private boolean m_processed = false;
 	
-	public HAPElement(){}
+	public HAPElementStructure(){}
 	
 	abstract public String getType(); 
 	
-	abstract public HAPElement cloneStructureElement();
+	abstract public HAPElementStructure cloneStructureElement();
 
-	public HAPElement getSolidStructureElement() {  return this;  }
+	public HAPElementStructure getSolidStructureElement() {  return this;  }
 	
-	public void toStructureElement(HAPElement out) {
+	public void toStructureElement(HAPElementStructure out) {
 		out.m_processed = this.m_processed;
 	}
 
-	public HAPElement getChild(String childName) {   return null;  }
+	public HAPElementStructure getChild(String childName) {   return null;  }
 	
 	public void processed() {   this.m_processed = true;   }
 	public void unProcessed() {    this.m_processed = false;    }
@@ -45,8 +45,8 @@ public abstract class HAPElement extends HAPSerializableImp implements HAPWithCo
 	@Override
 	public boolean equals(Object obj) {
 		boolean out = false;
-		if(obj instanceof HAPElement) {
-			HAPElement ele = (HAPElement)obj;
+		if(obj instanceof HAPElementStructure) {
+			HAPElementStructure ele = (HAPElementStructure)obj;
 			if(!ele.getType().equals(this.getType()))  return false;
 			if(!(ele.m_processed==this.m_processed))  return false;
 			out = true;

@@ -19,7 +19,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessActivityProcessor implements HAPProcessorActivity{
@@ -73,7 +73,7 @@ public class HAPProcessActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		@Override
-		public HAPValueStructureDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+		public HAPValueStructure buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPProcessActivityExecutable processActivity = (HAPProcessActivityExecutable)activity;
 			return this.m_processExe.getContext();
 		}

@@ -34,20 +34,20 @@ public class HAPProcessorEscalate {
 	
 	//escalte context node to parent context group, only absolute variable
 	public static void process(HAPValueStructureDefinitionGroup sourceContextGroup, String sourceCategaryType, String contextEleName, String escalateTargetPath, Set<String> inheritanceExcludedInfo) {
-		HAPRoot sourceRootNode = sourceContextGroup.getElement(sourceCategaryType, contextEleName);
+		HAPRootStructure sourceRootNode = sourceContextGroup.getElement(sourceCategaryType, contextEleName);
 		if(sourceRootNode.isAbsolute()) {
 			HAPComplexPath complexPath = new HAPComplexPath(escalateTargetPath);
-			Pair<Boolean, HAPRoot> a = escalate(sourceRootNode, sourceCategaryType, sourceContextGroup.getParent(), complexPath, inheritanceExcludedInfo);
+			Pair<Boolean, HAPRootStructure> a = escalate(sourceRootNode, sourceCategaryType, sourceContextGroup.getParent(), complexPath, inheritanceExcludedInfo);
 			
-			HAPRoot b = getEscalateStepRootNode(a, sourceCategaryType, complexPath, inheritanceExcludedInfo);
+			HAPRootStructure b = getEscalateStepRootNode(a, sourceCategaryType, complexPath, inheritanceExcludedInfo);
 			sourceContextGroup.addRoot(contextEleName, b, sourceCategaryType);
 		}
 	}
 	
 	//out.left: true--escalate to existing root node    false--escalate to new root node
-	private static Pair<Boolean, HAPRoot> escalate(HAPRoot original, String categaryType, HAPValueStructureDefinitionGroup parentContextGroup, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
+	private static Pair<Boolean, HAPRootStructure> escalate(HAPRootStructure original, String categaryType, HAPValueStructureDefinitionGroup parentContextGroup, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
 		
-		Pair<Boolean, HAPRoot> out = null;
+		Pair<Boolean, HAPRootStructure> out = null;
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.analyzeElementReference(new HAPReferenceElement(path.getFullName()), parentContextGroup, null, HAPConstant.RESOLVEPARENTMODE_FIRST);
 		if(HAPUtilityStructure.isLogicallySolved(resolveInfo)) {
 			//find matched one
@@ -65,17 +65,17 @@ public class HAPProcessorEscalate {
 				//only root name is valid, mappedPath with path is not valid
 				if(HAPBasicUtility.isStringEmpty(path.getPathStr())) {
 					//clone original root node to parent context
-					HAPRoot rootNode = original.cloneRoot();
-					parentContextGroup.addRoot(path.getRootName(), rootNode, categaryType);
+					HAPRootStructure rootNode = original.cloneRoot();
+					parentContextGroup.addRoot(path.getRoot(), rootNode, categaryType);
 					out = Pair.of(false, rootNode);
 				}
 				else HAPErrorUtility.invalid("");
 			}
 			else {
 				//keep escalate to grand parent
-				Pair<Boolean, HAPRoot> a = escalate(original, categaryType, grandParent, path, inheritanceExcludedInfo);
-				HAPRoot b = getEscalateStepRootNode(a, categaryType, path, inheritanceExcludedInfo);
-				parentContextGroup.addRoot(path.getRootName(), b, categaryType);
+				Pair<Boolean, HAPRootStructure> a = escalate(original, categaryType, grandParent, path, inheritanceExcludedInfo);
+				HAPRootStructure b = getEscalateStepRootNode(a, categaryType, path, inheritanceExcludedInfo);
+				parentContextGroup.addRoot(path.getRoot(), b, categaryType);
 				out = Pair.of(false, b);
 			}
 		}
@@ -83,13 +83,13 @@ public class HAPProcessorEscalate {
 	}
 
 	
-	private static HAPRoot getEscalateStepRootNode(Pair<Boolean, HAPRoot> stepResult, String categaryType, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
-		HAPRoot out;
+	private static HAPRootStructure getEscalateStepRootNode(Pair<Boolean, HAPRootStructure> stepResult, String categaryType, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
+		HAPRootStructure out;
 		if(stepResult.getLeft()) {
 			out = stepResult.getRight();
 		}
 		else {
-			out = HAPUtilityStructure.createRootWithRelativeElement(stepResult.getRight(), categaryType, path.getRootName(), inheritanceExcludedInfo);
+			out = HAPUtilityStructure.createRootWithRelativeElement(stepResult.getRight(), categaryType, path.getRoot(), inheritanceExcludedInfo);
 			//kkk should set original to relative node
 		}
 		return out;

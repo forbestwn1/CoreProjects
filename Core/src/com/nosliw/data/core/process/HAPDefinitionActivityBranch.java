@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionEmpty;
 
@@ -40,7 +41,7 @@ public abstract class HAPDefinitionActivityBranch extends HAPDefinitionActivity{
 	//get input context structure for activity
 	//it is for process input mapping
 	//param: parent context structure
-	public HAPValueStructureDefinition getInputContextStructure(HAPValueStructureDefinition parentContextStructure) {  return HAPValueStructureDefinitionEmpty.flatStructure();   }
+	public HAPValueStructure getInputContextStructure(HAPValueStructureDefinition parentContextStructure) {  return HAPValueStructureDefinitionEmpty.flatStructure();   }
 	
 	public List<HAPDefinitionResultActivityBranch> getBranch(){    return this.m_branchs;    }
 	

@@ -23,14 +23,14 @@ import com.nosliw.data.core.process.resource.HAPResourceIdProcess;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
-import com.nosliw.data.core.structure.HAPElement;
-import com.nosliw.data.core.structure.HAPElementLeafData;
-import com.nosliw.data.core.structure.HAPElementLeafRelative;
+import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPReferenceElement;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
@@ -95,10 +95,10 @@ public class HAPUtilityProcess {
 		for(HAPVariableInfo expectedVarInfo : activityVariablesInfo) {
 			HAPReferenceElement varPath = new HAPReferenceElement(expectedVarInfo.getName());
 			//affect global variable 
-			HAPRoot affectedRoot = activityContext.getRoot(varPath.getRootReference().getFullName());
+			HAPRootStructure affectedRoot = activityContext.getRoot(varPath.getRootReference().getFullName());
 			if(affectedRoot!=null) {
 				//ele mapped from context variable
-				HAPElement currentEle = affectedRoot.getDefinition();
+				HAPElementStructure currentEle = affectedRoot.getDefinition();
 				String[] pathSegs = new HAPPath(varPath.getSubPath()).getPathSegments();
 				if(pathSegs.length>0) {
 					int i = 0;
@@ -107,7 +107,7 @@ public class HAPUtilityProcess {
 						i++;
 					}
 				}
-				HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)currentEle;
+				HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)currentEle;
 				HAPReferenceElement relativeElePath = relativeEle.getPathFormat();
 				String fullName = relativeElePath.getFullPath();
 				for(int i=0;i<pathSegs.length; i++) {
@@ -126,7 +126,7 @@ public class HAPUtilityProcess {
 		//affect parent context
 		for(String basePath : expectedVariablesInfo.keySet()) {
 			HAPReferenceElement cpath = new HAPReferenceElement(basePath);
-			HAPElementLeafData affectedEle = new HAPElementLeafData(expectedVariablesInfo.get(basePath).getDataInfo());
+			HAPElementStructureLeafData affectedEle = new HAPElementStructureLeafData(expectedVariablesInfo.get(basePath).getDataInfo());
 			HAPUtilityContext.updateDataDescendant(processContext, cpath.getRootReference().getCategary(), cpath.getPath(), affectedEle);
 		}
 	}
@@ -143,7 +143,7 @@ public class HAPUtilityProcess {
 		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef);
 		if(resultContextBuilder!=null) {
 			//data association input context
-			HAPValueStructureDefinition dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
+			HAPValueStructure dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
 			//process data association
 			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(dataAssociationInputContext), resultDef.getOutputDataAssociation(), HAPContainerStructure.createDefault(parentContext), null, runtimeEnv);
 			resultExe.setDataAssociation(outputDataAssociation);

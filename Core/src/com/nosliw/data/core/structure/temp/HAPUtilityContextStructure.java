@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.HAPRoot;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.structure.HAPRootStructure;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPUtilityContextStructure {
 
-	public static HAPValueStructureDefinition hardMergeContextStructure(HAPValueStructureDefinition from, HAPValueStructureDefinition to) {
+	public static HAPValueStructure hardMergeContextStructure(HAPValueStructure from, HAPValueStructure to) {
 		if(to==null)  return from;
 		
-		HAPValueStructureDefinition fromModify = toSolidContextStructure(from, to.isFlat());
+		HAPValueStructure fromModify = toSolidContextStructure(from, to.isFlat());
 		if(to.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
 			((HAPValueStructureDefinitionFlat)to.cloneStructure()).hardMergeWith((HAPValueStructureDefinitionFlat)fromModify);
 			return to;
@@ -30,7 +30,7 @@ public class HAPUtilityContextStructure {
 		}
 	}
 	
-	public static HAPValueStructureDefinition toSolidContextStructure(HAPValueStructureDefinition context, boolean isFlat) {
+	public static HAPValueStructure toSolidContextStructure(HAPValueStructure context, boolean isFlat) {
 		if(context==null || context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY)) {
 			if(isFlat)  return new HAPValueStructureDefinitionFlat();
 			else return new HAPValueStructureDefinitionGroup();
@@ -57,7 +57,7 @@ public class HAPUtilityContextStructure {
 		List<String> categarys = Arrays.asList(HAPValueStructureDefinitionGroup.getAllCategariesWithPriority());
 		Collections.reverse(categarys);
 		for(String categary : categarys) {
-			Map<String, HAPRoot> eles = context.getRootsByCategary(categary);
+			Map<String, HAPRootStructure> eles = context.getRootsByCategary(categary);
 			for(String name : eles.keySet()) {
 				out.addRoot(name, eles.get(name).cloneRoot());
 			}

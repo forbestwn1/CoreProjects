@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public abstract class HAPDefinitionActivityTask extends HAPDefinitionActivityNormal{
 
@@ -19,7 +19,7 @@ public abstract class HAPDefinitionActivityTask extends HAPDefinitionActivityNor
 	public HAPDefinitionWrapperTask getTaskMapping() {   return this.m_taskMapping;  }
 	
 	@Override
-	public HAPValueStructureDefinition getInputContextStructure(HAPValueStructureDefinition parentContextStructure) {  return parentContextStructure;   }
+	public HAPValueStructure getInputContextStructure(HAPValueStructure parentContextStructure) {  return parentContextStructure;   }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

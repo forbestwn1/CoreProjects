@@ -2,7 +2,7 @@ package com.nosliw.data.core.structure;
 
 import java.util.Map;
 
-public abstract class HAPElementLeafVariable extends HAPElement{
+public abstract class HAPElementStructureLeafVariable extends HAPElementStructure{
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -10,7 +10,7 @@ public abstract class HAPElementLeafVariable extends HAPElement{
 	}
 	
 	@Override
-	public void toStructureElement(HAPElement out) {
+	public void toStructureElement(HAPElementStructure out) {
 		super.toStructureElement(out);
 	}
 

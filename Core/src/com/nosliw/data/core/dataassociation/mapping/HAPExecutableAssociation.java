@@ -22,11 +22,10 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.HAPIdContextDefinitionRoot;
 import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 @HAPEntityWithAttribute
@@ -57,11 +56,11 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	public static String CONVERTFUNCTION = "convertFunction";
 	
 	//input structure
-	private Map<String, HAPValueStructureDefinition> m_input;
+	private Map<String, HAPValueStructure> m_input;
 	private Map<String, Boolean> m_isFlatInput;
 	
 	//output
-	private HAPValueStructureDefinition m_output;
+	private HAPValueStructure m_output;
 
 	//data association output context
 	private HAPValueStructureDefinitionFlat m_mapping;
@@ -74,7 +73,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	//match from data association output to target context variable
 	private Map<String, HAPMatchers> m_outputMatchers;
 
-	public HAPExecutableAssociation(HAPContainerStructure input, HAPValueStructureDefinitionFlat definition, HAPValueStructureDefinition output) {
+	public HAPExecutableAssociation(HAPContainerStructure input, HAPValueStructureDefinitionFlat definition, HAPValueStructure output) {
 		this();
 		for(String inputName : input.getStructureNames())  this.addInputStructure(inputName, input.getStructure(inputName).cloneStructure()); 
 		this.m_output = output;
@@ -82,12 +81,12 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 
 	public HAPExecutableAssociation() {
 		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
-		this.m_input = new LinkedHashMap<String, HAPValueStructureDefinition>();
+		this.m_input = new LinkedHashMap<String, HAPValueStructure>();
 		this.m_isFlatInput = new LinkedHashMap<String, Boolean>();
 		this.m_relativePathMapping = new LinkedHashMap<String, String>();
 	}
 
-	public void addInputStructure(String name, HAPValueStructureDefinition structure) {  
+	public void addInputStructure(String name, HAPValueStructure structure) {  
 		this.m_input.put(name, structure);
 		this.m_isFlatInput.put(name, structure.isFlat());
 	}
@@ -95,8 +94,8 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	public boolean isFlatInput(String inputName) {   return this.m_input.get(inputName).isFlat();  }
 	
 	public boolean isFlatOutput() {   return this.m_output.isFlat();  }
-	public HAPValueStructureDefinition getOutputContext() {
-		HAPValueStructureDefinition out = null;
+	public HAPValueStructure getOutputContext() {
+		HAPValueStructure out = null;
 		switch(this.m_output.getType()) {
 		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY:
 			out = this.m_mapping.toSolidContext();
@@ -133,8 +132,8 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 
 		for(String p1 : m_relativePathMapping.keySet()) {
 			HAPReferenceElement cPath = new HAPReferenceElement(p1);
-			HAPReferenceElement cPath1 = new HAPReferenceElement(new HAPIdContextDefinitionRoot(nameUpdate.getUpdatedName(cPath.getRootReference().getFullName())), cPath.getSubPath());
-			processedPathMapping.put(cPath1.getFullPath(), m_relativePathMapping.get(p1));
+//			HAPReferenceElement cPath1 = new HAPReferenceElement(new HAPIdContextDefinitionRoot(nameUpdate.getUpdatedName(cPath.getRootReference().getFullName())), cPath.getSubPath());
+//			processedPathMapping.put(cPath1.getFullPath(), m_relativePathMapping.get(p1));
 		}
 		this.m_relativePathMapping = processedPathMapping;
 

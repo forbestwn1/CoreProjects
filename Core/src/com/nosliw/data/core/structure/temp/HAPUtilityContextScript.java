@@ -7,15 +7,15 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.structure.HAPElement;
-import com.nosliw.data.core.structure.HAPElementLeafConstant;
-import com.nosliw.data.core.structure.HAPElementLeafRelative;
-import com.nosliw.data.core.structure.HAPElementNode;
+import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
+import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
@@ -57,7 +57,7 @@ public class HAPUtilityContextScript {
 		JSONObject output = new JSONObject();
 		for(String rootName : context.getRootNames()) {
 			if(HAPConstantShared.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(context.getRoot(rootName).getInfo()))) {
-				HAPElement contextDefEle = context.getRoot(rootName).getDefinition();
+				HAPElementStructure contextDefEle = context.getRoot(rootName).getDefinition();
 				Object contextEleJson = buildJsonValue(contextDefEle);
 
 				if(contextEleJson!=null) {
@@ -68,7 +68,7 @@ public class HAPUtilityContextScript {
 					}
 					else {
 						//not flat, parse categary and name from root name
-						HAPIdContextDefinitionRoot rootId = new HAPIdContextDefinitionRoot(rootName);
+//						HAPIdContextDefinitionRoot rootId = new HAPIdContextDefinitionRoot(rootName);
 						String categary = rootId.getCategary();
 						if(HAPBasicUtility.isStringNotEmpty(categary)) {
 							//ignore those that don't have categary
@@ -86,16 +86,16 @@ public class HAPUtilityContextScript {
 		return output;
 	}
 	
-	private static Object buildJsonValue(HAPElement contextDefEle) {
+	private static Object buildJsonValue(HAPElementStructure contextDefEle) {
 		switch(contextDefEle.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT:
 		{
-			HAPElementLeafConstant constantEle = (HAPElementLeafConstant)contextDefEle;
+			HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)contextDefEle;
 			return constantEle.getValue();
 		}
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 		{
-			HAPElementNode nodeEle = (HAPElementNode)contextDefEle;
+			HAPElementStructureNode nodeEle = (HAPElementStructureNode)contextDefEle;
 			JSONObject out = new JSONObject();
 			for(String childName : nodeEle.getChildren().keySet()) {
 				Object childJsonValue = buildJsonValue(nodeEle.getChild(childName));
@@ -107,7 +107,7 @@ public class HAPUtilityContextScript {
 		}
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE:
 		{
-			HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)contextDefEle;
+			HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)contextDefEle;
 			return new JSONObject();
 		}
 		default:

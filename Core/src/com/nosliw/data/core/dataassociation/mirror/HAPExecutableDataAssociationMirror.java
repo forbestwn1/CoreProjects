@@ -10,7 +10,7 @@ import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.dataassociation.HAPOutputStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPExecutableDataAssociationMirror extends HAPExecutableDataAssociationImp{
 
@@ -29,7 +29,7 @@ public class HAPExecutableDataAssociationMirror extends HAPExecutableDataAssocia
 	@Override
 	public HAPOutputStructure getOutput() {  return this.m_output;  }
 	
-	public void addOutputStructure(String name, HAPValueStructureDefinition context) {
+	public void addOutputStructure(String name, HAPValueStructure context) {
 		this.m_output.addOutputStructure(name, context);
 	}
 

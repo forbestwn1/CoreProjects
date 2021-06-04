@@ -12,7 +12,7 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.structure.HAPParserStructure;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPParserValueStructure {
 
@@ -49,13 +49,13 @@ public class HAPParserValueStructure {
 		if(groupJson!=null) {
 			for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()){
 				JSONObject flatStructureJson = groupJson.optJSONObject(categary);
-				List<HAPRoot> roots = parseRoots(flatStructureJson, new HAPUpdateName() {
+				List<HAPRootStructure> roots = parseRoots(flatStructureJson, new HAPUpdateName() {
 					@Override
 					public String getUpdatedName(String name) {
 						return new HAPReferenceRootInGroup(categary, name).getFullName();
 					}
 				});
-				for(HAPRoot root : roots)   groupStructure.addRoot(categary, root);
+				for(HAPRootStructure root : roots)   groupStructure.addRoot(categary, root);
 			}
 		}
 		groupStructure.getInfo().buildObject(groupStructureJson.opt(HAPValueStructure.INFO), HAPSerializationFormat.JSON);
@@ -68,13 +68,13 @@ public class HAPParserValueStructure {
 	}
 
 	public static void parseValueStructureDefinitionFlat(JSONObject structureJson, HAPValueStructureDefinitionFlat flatStructure) {
-		List<HAPRoot> roots = parseRoots(structureJson, null);
-		for(HAPRoot root : roots)  flatStructure.addRoot(root);
+		List<HAPRootStructure> roots = parseRoots(structureJson, null);
+		for(HAPRootStructure root : roots)  flatStructure.addRoot(root);
 		flatStructure.getInfo().buildObject(structureJson.opt(HAPValueStructure.INFO), HAPSerializationFormat.JSON);
 	}
 	
-	private static List<HAPRoot> parseRoots(JSONObject structureJson, HAPUpdateName createIdByName) {
-		List<HAPRoot> out = new ArrayList<HAPRoot>();
+	private static List<HAPRootStructure> parseRoots(JSONObject structureJson, HAPUpdateName createIdByName) {
+		List<HAPRootStructure> out = new ArrayList<HAPRootStructure>();
 		if(structureJson!=null) {
 			Object elementsObj = structureJson.opt(HAPValueStructureDefinitionFlat.FLAT);
 			if(elementsObj==null)  elementsObj = structureJson;
@@ -84,7 +84,7 @@ public class HAPParserValueStructure {
 				while(it.hasNext()){
 					String eleName = it.next();
 					JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
-					HAPRoot root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
+					HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
 					root.setName(eleName);
 					root.setLocalId(getElementId(root.getLocalId(), root.getName(), createIdByName));
 					out.add(root);
@@ -94,7 +94,7 @@ public class HAPParserValueStructure {
 				JSONArray elementsArray = (JSONArray)elementsObj;
 				for(int i=0; i<elementsArray.length(); i++) {
 					JSONObject eleDefJson = elementsArray.getJSONObject(i);
-					HAPRoot root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
+					HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
 					root.setLocalId(getElementId(root.getLocalId(), root.getName(), createIdByName));
 					out.add(root);
 				}

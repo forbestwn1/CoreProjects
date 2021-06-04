@@ -1,19 +1,19 @@
 package com.nosliw.data.core.valuestructure;
 
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPElementContextStructureValueExecutable {
 
-	private HAPRoot m_contextRoot;
+	private HAPRootStructure m_contextRoot;
 	
 	private String m_categary;
 	
-	public HAPElementContextStructureValueExecutable(HAPRoot contextRoot, String categary) {
+	public HAPElementContextStructureValueExecutable(HAPRootStructure contextRoot, String categary) {
 		this.m_contextRoot = contextRoot;
 		this.m_categary = categary;
 	}
 	
-	public HAPElementContextStructureValueExecutable(HAPRoot contextRoot) {
+	public HAPElementContextStructureValueExecutable(HAPRootStructure contextRoot) {
 		this(contextRoot, null);
 	}
 	

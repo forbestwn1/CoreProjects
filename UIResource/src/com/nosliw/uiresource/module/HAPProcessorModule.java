@@ -26,9 +26,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.HAPElementNode;
+import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPRequirementContextProcessor;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionEmpty;
@@ -145,7 +145,7 @@ public class HAPProcessorModule {
 		Set<HAPHandler> eventHandlerDefs = moduleUIDefinition.getEventHandlers();
 		for(HAPHandler eventHandlerDef : eventHandlerDefs) {
 			String eventName = eventHandlerDef.getName();
-			HAPRoot eventRootNode = buildContextRootFromEvent(out.getPage().getBody().getEventDefinition(eventName));
+			HAPRootStructure eventRootNode = buildContextRootFromEvent(out.getPage().getBody().getEventDefinition(eventName));
 			HAPValueStructureDefinitionGroup eventContext = new HAPValueStructureDefinitionGroup();
 			eventContext.addRoot(HAPNosliwUtility.buildNosliwFullName("EVENT"), eventRootNode, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 			HAPResourceDefinitionProcess processDef = moduleExe.getProcessDefinition(eventHandlerDef.getTask().getTaskDefinition());
@@ -156,9 +156,9 @@ public class HAPProcessorModule {
 		return out;
 	}
 
-	private static HAPRoot buildContextRootFromEvent(HAPDefinitionUIEvent eventDef) {
-		HAPRoot root = new HAPRoot();
-		HAPElementNode nodeEle = new HAPElementNode();
+	private static HAPRootStructure buildContextRootFromEvent(HAPDefinitionUIEvent eventDef) {
+		HAPRootStructure root = new HAPRootStructure();
+		HAPElementStructureNode nodeEle = new HAPElementStructureNode();
 		
 		HAPValueStructureDefinitionFlat dataDef = eventDef.getDataDefinition();
 		for(String dataName : dataDef.getRootNames()) {

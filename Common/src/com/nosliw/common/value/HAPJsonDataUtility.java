@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPNamingConversionUtility;
 public class HAPJsonDataUtility {
 
 	public static Object getValue(Map<String, Object> valueSet, HAPComplexPath complexPath) {
-		Object rootValue = valueSet.get(complexPath.getRootName());
+		Object rootValue = valueSet.get(complexPath.getRoot());
 		return getValue(rootValue, complexPath.getPath().getPath());
 	}
 	

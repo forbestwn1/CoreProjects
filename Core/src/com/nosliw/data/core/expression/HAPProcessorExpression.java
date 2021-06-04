@@ -26,11 +26,11 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPElementLeafData;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.HAPInfoVariable;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
@@ -180,11 +180,11 @@ public class HAPProcessorExpression {
 						HAPInfoReferenceResolve resolve = HAPUtilityStructure.analyzeElementReference(variablePath, expressionExe.getValueStructureDefinition(), null, types);
 						if(resolve==null || resolve.referredRoot==null || !resolve.realSolidSolved.remainPath.isEmpty()) {
 							//variable name cannot be resolved
-							HAPRoot root = resolve==null?null:resolve.referredRoot;
+							HAPRootStructure root = resolve==null?null:resolve.referredRoot;
 							if(root==null) {
-								root = HAPUtilityStructure.addRoot(expressionExe.getValueStructureDefinition(), new HAPComplexPath(variablePath).getRootName(), new HAPRoot());
+								root = HAPUtilityStructure.addRoot(expressionExe.getValueStructureDefinition(), new HAPComplexPath(variablePath).getRoot(), new HAPRootStructure());
 							}
-							HAPUtilityStructure.setDescendant(root, new HAPComplexPath(variablePath).getPath(), new HAPElementLeafData());
+							HAPUtilityStructure.setDescendant(root, new HAPComplexPath(variablePath).getPath(), new HAPElementStructureLeafData());
 						}
 						
 					}

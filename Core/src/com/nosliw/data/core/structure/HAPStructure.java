@@ -9,17 +9,17 @@ public interface HAPStructure extends HAPWithConstantScript{
 
 	String getStructureType();
 	
-	HAPRoot getRoot(String localId);
+	HAPRootStructure getRoot(String localId);
 
-	List<HAPRoot> getAllRoots();
+	List<HAPRootStructure> getAllRoots();
 	
 	//resolve root by reference, 
-	List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist);
+	List<HAPRootStructure> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist);
 
 	List<HAPInfoAlias> discoverRootAliasById(String id);
 	HAPReferenceRoot getRootReferenceById(String id);
 	
-	HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root);
+	HAPRootStructure addRoot(HAPReferenceRoot rootReference, HAPRootStructure root);
 	
 	void updateRootName(HAPUpdateName updateName);
 	

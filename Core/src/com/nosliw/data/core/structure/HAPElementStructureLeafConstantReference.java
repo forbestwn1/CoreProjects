@@ -7,16 +7,16 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPElementLeafConstantReference extends HAPElement{
+public class HAPElementStructureLeafConstantReference extends HAPElementStructure{
 
 	@HAPAttribute
 	public static final String CONSTANT = "constant";
 
 	private String m_constantName;
 	
-	public HAPElementLeafConstantReference() {}
+	public HAPElementStructureLeafConstantReference() {}
 	
-	public HAPElementLeafConstantReference(String constantName) {
+	public HAPElementStructureLeafConstantReference(String constantName) {
 		this.m_constantName = constantName;
 	}
 
@@ -27,12 +27,12 @@ public class HAPElementLeafConstantReference extends HAPElement{
 	public void setConstantName(String name) {   this.m_constantName = name;   }
 	
 	@Override
-	public HAPElement cloneStructureElement() {
-		return new HAPElementLeafConstantReference(this.m_constantName);
+	public HAPElementStructure cloneStructureElement() {
+		return new HAPElementStructureLeafConstantReference(this.m_constantName);
 	}
 
 	@Override
-	public HAPElement solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this;  }
+	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this;  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -45,8 +45,8 @@ public class HAPElementLeafConstantReference extends HAPElement{
 		if(!super.equals(obj))  return false;
 
 		boolean out = false;
-		if(obj instanceof HAPElementLeafConstantReference) {
-			HAPElementLeafConstantReference ele = (HAPElementLeafConstantReference)obj;
+		if(obj instanceof HAPElementStructureLeafConstantReference) {
+			HAPElementStructureLeafConstantReference ele = (HAPElementStructureLeafConstantReference)obj;
 			if(!HAPBasicUtility.isEquals(this.getConstantName(), ele.getConstantName()))  return false;
 			out = true;
 		}

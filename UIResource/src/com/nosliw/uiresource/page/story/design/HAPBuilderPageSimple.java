@@ -35,10 +35,10 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeConstant;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeScript;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeService;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
-import com.nosliw.data.core.structure.HAPElementLeafConstant;
-import com.nosliw.data.core.structure.HAPElementLeafData;
-import com.nosliw.data.core.structure.HAPElementLeafRelative;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
@@ -125,7 +125,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
 			HAPVariableInfo varInfo = varNode.getVariableInfo();
-			HAPRoot contextEle = new HAPRoot(new HAPElementLeafData(varInfo.getDataInfo()));
+			HAPRootStructure contextEle = new HAPRootStructure(new HAPElementStructureLeafData(varInfo.getDataInfo()));
 			contextEle.setDefaultValue(varInfo.getDefaultValue());
 			context.addRoot(varNode.getVariableInfo().getName(), contextEle);
 		}
@@ -192,12 +192,12 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 									HAPStoryNodeConstant constantInputNode = (HAPStoryNodeConstant)parmInputNode;
 									HAPData constantData = constantInputNode.getData();
 									if(constantData!=null) {
-										serviceParmMapping.addRoot(parmNodeInfo.getConnection().getChildId(), new HAPElementLeafConstant(constantData));
+										serviceParmMapping.addRoot(parmNodeInfo.getConnection().getChildId(), new HAPElementStructureLeafConstant(constantData));
 									}
 								}
 								else if(HAPConstantShared.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
 									HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
-									serviceParmMapping.addRoot(parmNodeInfo.getConnection().getChildId(), new HAPElementLeafRelative(varInputNode.getVariableInfo().getName()));
+									serviceParmMapping.addRoot(parmNodeInfo.getConnection().getChildId(), new HAPElementStructureLeafRelative(varInputNode.getVariableInfo().getName()));
 								}
 							}
 						}
@@ -225,7 +225,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 							String inputNodeType = parmInputNode.getType();
 							if(HAPConstantShared.STORYNODE_TYPE_VARIABLE.equals(inputNodeType)) {
 								HAPStoryNodeVariable varInputNode = (HAPStoryNodeVariable)parmInputNode;
-								serviceParmMapping.addRoot(varInputNode.getVariableInfo().getName(), new HAPElementLeafRelative(parmNodeInfo.getConnection().getChildId()));
+								serviceParmMapping.addRoot(varInputNode.getVariableInfo().getName(), new HAPElementStructureLeafRelative(parmNodeInfo.getConnection().getChildId()));
 							}
 						}
 					}

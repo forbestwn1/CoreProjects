@@ -28,9 +28,9 @@ import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.HAPElementLeafData;
-import com.nosliw.data.core.structure.HAPElementLeafValue;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
+import com.nosliw.data.core.structure.HAPElementStructureLeafValue;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
@@ -78,7 +78,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
 	class HAPBuilderResultContext1 implements HAPBuilderResultContext {
 		@Override
-		public HAPValueStructureDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+		public HAPValueStructure buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				String outputVar = HAPConstantShared.ACTIVITY_OUTPUTVARIABLE_OUTPUT;
@@ -89,10 +89,10 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 					//if script expression is data expression only, then affect result
 					HAPExecutableExpression expExe = scriptExpressionGroup.getExpression().getExpressionItems().values().iterator().next();
 					HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
-					out.addRoot(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPElementLeafData(new HAPVariableDataInfo(outputCriteria)));
+					out.addRoot(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPElementStructureLeafData(new HAPVariableDataInfo(outputCriteria)));
 				}
 				else {
-					out.addRoot(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPElementLeafValue());
+					out.addRoot(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPElementStructureLeafValue());
 				}
 			}
 			return out;

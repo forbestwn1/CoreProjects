@@ -53,7 +53,7 @@ public class HAPVariableInfoInStructure extends HAPSerializableImp{
 		boolean override = false;
 		HAPComplexPath varIdPath = new HAPComplexPath(varId);
 		this.m_criteriaInfosById.put(varId, criteriaInfo);
-		this.m_rootNamesById.put(varIdPath.getRootName(), rootAliasesInfo);
+		this.m_rootNamesById.put(varIdPath.getRoot(), rootAliasesInfo);
 		for(String rootAlias : rootAliases) {
 			String oldVarId = this.m_rootIdByName.get(rootAlias);
 			if(oldVarId!=null) {
@@ -63,7 +63,7 @@ public class HAPVariableInfoInStructure extends HAPSerializableImp{
 				override = true;
 			}
 			
-			this.m_rootIdByName.put(rootAlias, varIdPath.getRootName());
+			this.m_rootIdByName.put(rootAlias, varIdPath.getRoot());
 		}
 		return override;
 	}
@@ -76,22 +76,22 @@ public class HAPVariableInfoInStructure extends HAPSerializableImp{
 
 	public HAPInfoVariable getVariableInfoByAlias(String name) {
 		HAPComplexPath namePath = new HAPComplexPath(name);
-		HAPComplexPath idPath = new HAPComplexPath(this.m_rootIdByName.get(namePath.getRootName()), namePath.getPath());
-		return new HAPInfoVariable(this.m_criteriaInfosById.get(idPath.getFullName()), idPath, this.m_rootNamesById.get(idPath.getRootName()));
+		HAPComplexPath idPath = new HAPComplexPath(this.m_rootIdByName.get(namePath.getRoot()), namePath.getPath());
+		return new HAPInfoVariable(this.m_criteriaInfosById.get(idPath.getFullName()), idPath, this.m_rootNamesById.get(idPath.getRoot()));
 	}
 	
 	public Set<HAPInfoVariable> getAllVariables(){
 		Set<HAPInfoVariable> out = new HashSet<HAPInfoVariable>();
 		for(String varId : this.m_criteriaInfosById.keySet()) {
 			HAPComplexPath idPath = new HAPComplexPath(varId);
-			out.add(new HAPInfoVariable(this.m_criteriaInfosById.get(varId), idPath, this.m_rootNamesById.get(idPath.getRootName())));
+			out.add(new HAPInfoVariable(this.m_criteriaInfosById.get(varId), idPath, this.m_rootNamesById.get(idPath.getRoot())));
 		}
 		return out;
 	}
 	
 	public HAPInfoVariable getVariableInfoById(String varId){
 		HAPComplexPath idPath = new HAPComplexPath(varId);
-		return new HAPInfoVariable(this.m_criteriaInfosById.get(varId), idPath, this.m_rootNamesById.get(idPath.getRootName()));
+		return new HAPInfoVariable(this.m_criteriaInfosById.get(varId), idPath, this.m_rootNamesById.get(idPath.getRoot()));
 	}
 	
 	public Map<String, HAPInfoCriteria> getVariableCriteriaInfos(){		return this.m_criteriaInfosById;	}

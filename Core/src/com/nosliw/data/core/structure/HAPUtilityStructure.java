@@ -27,14 +27,14 @@ import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPUtilityStructure {
 
-	public static HAPRoot getRootFromStructure(HAPStructure structure, HAPReferenceRoot rootRef) {
-		List<HAPRoot> roots = structure.resolveRoot(rootRef, false);
+	public static HAPRootStructure getRootFromStructure(HAPStructure structure, HAPReferenceRoot rootRef) {
+		List<HAPRootStructure> roots = structure.resolveRoot(rootRef, false);
 		if(roots==null || roots.size()==1)  return null;
 		return roots.get(0);
 	}
 
-	public static HAPElement getDescendant(HAPElement element, String path) {
-		HAPElement out = element;
+	public static HAPElementStructure getDescendant(HAPElementStructure element, String path) {
+		HAPElementStructure out = element;
 		HAPPath pathObj = new HAPPath(path);
 		for(String pathSeg : pathObj.getPathSegments()) {
 			if(out!=null)			out = out.getChild(pathSeg);
@@ -43,8 +43,8 @@ public class HAPUtilityStructure {
 		return out;
 	}
 
-	public static HAPInfoDesendantResolve resolveDescendant(HAPElement element, String path) {
-		HAPElement solvedElment = element;
+	public static HAPInfoDesendantResolve resolveDescendant(HAPElementStructure element, String path) {
+		HAPElementStructure solvedElment = element;
 		HAPPath solvedPath = new HAPPath();
 		HAPPath remainingPath = new HAPPath();
 		if(HAPBasicUtility.isStringNotEmpty(path)) {
@@ -52,9 +52,9 @@ public class HAPUtilityStructure {
 			for(String pathSeg : pathSegs){
 				if(remainingPath.isEmpty()) {
 					//solid node
-					HAPElement solidEle = null;
+					HAPElementStructure solidEle = null;
 					if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(solvedElment.getType())) {
-						solidEle = ((HAPElementNode)solvedElment).getChildren().get(pathSeg);
+						solidEle = ((HAPElementStructureNode)solvedElment).getChildren().get(pathSeg);
 					}
 					if(solidEle==null) 		remainingPath = remainingPath.appendSegment(pathSeg);
 					else{
@@ -74,7 +74,7 @@ public class HAPUtilityStructure {
 		return out;
 	}
 	
-	public static void setDescendant(HAPRoot targetRoot, HAPPath path, HAPElement ele) {
+	public static void setDescendant(HAPRootStructure targetRoot, HAPPath path, HAPElementStructure ele) {
 		String[] pathSegs = path.getPathSegments();
 		if(pathSegs.length==0) {
 			if(targetRoot.getDefinition()!=null && !targetRoot.getDefinition().getType().equals(ele.getType()))  HAPErrorUtility.invalid("");  //should be same type
@@ -82,40 +82,40 @@ public class HAPUtilityStructure {
 		}
 		else {
 			String seg = pathSegs[0];
-			HAPElement parentEle = targetRoot.getDefinition();
+			HAPElementStructure parentEle = targetRoot.getDefinition();
 			if(parentEle==null && pathSegs.length>0) {
-				parentEle = new HAPElementNode();
+				parentEle = new HAPElementStructureNode();
 				targetRoot.setDefinition(parentEle);
 			}
 			for(int i=0; i<pathSegs.length-1; i++) {
 				String pathSeg = pathSegs[i]; 
-				HAPElement child = parentEle.getChild(pathSeg);
+				HAPElementStructure child = parentEle.getChild(pathSeg);
 				if(child==null) {
-					child = new HAPElementNode();
-					((HAPElementNode)parentEle).addChild(pathSeg, child);
+					child = new HAPElementStructureNode();
+					((HAPElementStructureNode)parentEle).addChild(pathSeg, child);
 				}
 				parentEle = child;
 				seg = pathSegs[i+1];
 			}
-			if(((HAPElementNode)parentEle).getChild(seg)!=null && !((HAPElementNode)parentEle).getChild(seg).getType().equals(ele.getType())) 
+			if(((HAPElementStructureNode)parentEle).getChild(seg)!=null && !((HAPElementStructureNode)parentEle).getChild(seg).getType().equals(ele.getType())) 
 				HAPErrorUtility.invalid("");  //should be same type
-			((HAPElementNode)parentEle).addChild(seg, ele);
+			((HAPElementStructureNode)parentEle).addChild(seg, ele);
 		}
 	}
 
 	//traverse through all the structure element under root, and process it
-	public static void traverseElement(HAPRoot root, HAPProcessorContextDefinitionElement processor, Object value) {
-		HAPElement processedEle = traverseElement(new HAPInfoElement(root.getDefinition(), new HAPComplexPath(root.getLocalId())), processor, value);
+	public static void traverseElement(HAPRootStructure root, HAPProcessorContextDefinitionElement processor, Object value) {
+		HAPElementStructure processedEle = traverseElement(new HAPInfoElement(root.getDefinition(), new HAPComplexPath(root.getLocalId())), processor, value);
 		if(processedEle!=null)  root.setDefinition(processedEle);
 	}
 	
 	//traverse through all the context definition element, and process it
 	//if return not null, then means new context element
-	private static HAPElement traverseElement(HAPInfoElement elementInfo, HAPProcessorContextDefinitionElement processor, Object value) {
-		HAPElement out = null;
-		HAPElement element = elementInfo.getElement(); 
+	private static HAPElementStructure traverseElement(HAPInfoElement elementInfo, HAPProcessorContextDefinitionElement processor, Object value) {
+		HAPElementStructure out = null;
+		HAPElementStructure element = elementInfo.getElement(); 
 		HAPComplexPath path = elementInfo.getElementPath();
-		Pair<Boolean, HAPElement> processOut = processor.process(elementInfo, value);
+		Pair<Boolean, HAPElementStructure> processOut = processor.process(elementInfo, value);
 		boolean going = true;
 		if(processOut!=null) {
 			if(processOut.getLeft()!=null)    going = processOut.getLeft();
@@ -127,9 +127,9 @@ public class HAPUtilityStructure {
 		}
 		if(going) {
 			if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(element.getType())) {
-				HAPElementNode nodeEle = (HAPElementNode)element;
+				HAPElementStructureNode nodeEle = (HAPElementStructureNode)element;
 				for(String childNodeName : nodeEle.getChildren().keySet()) {
-					HAPElement childProcessed = traverseElement(new HAPInfoElement(nodeEle.getChild(childNodeName), path.appendSegment(childNodeName)), processor, value);
+					HAPElementStructure childProcessed = traverseElement(new HAPInfoElement(nodeEle.getChild(childNodeName), path.appendSegment(childNodeName)), processor, value);
 					if(childProcessed!=null) {
 						//replace with new element
 						nodeEle.addChild(childNodeName, childProcessed);
@@ -142,16 +142,16 @@ public class HAPUtilityStructure {
 	}
 	
 
-	public static HAPRoot createRootWithRelativeElement(HAPRoot parentNode, String parentStructure, String elePath, Set<String> excludedInfo) {
-		HAPRoot out = null;
+	public static HAPRootStructure createRootWithRelativeElement(HAPRootStructure parentNode, String parentStructure, String elePath, Set<String> excludedInfo) {
+		HAPRootStructure out = null;
 		
 		if(parentNode.isConstant()) {
 			out = parentNode.cloneRoot();
 		}
 		else {
-			out = new HAPRoot();
+			out = new HAPRootStructure();
 			out.setInfo(parentNode.getInfo().cloneInfo(excludedInfo));
-			HAPElementLeafRelative relativeEle = new HAPElementLeafRelative();
+			HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
 			relativeEle.setParent(parentStructure);
 			relativeEle.setResolvedIdPath(new HAPComplexPath(parentNode.getLocalId(), elePath));
 			relativeEle.setReferencePath(elePath);
@@ -166,7 +166,7 @@ public class HAPUtilityStructure {
 	}
 	
 	//build interited node from parent
-	public static HAPRoot createRootWithRelativeElement(HAPRoot parentNode, String elePath, Set<String> excludedInfo) {
+	public static HAPRootStructure createRootWithRelativeElement(HAPRootStructure parentNode, String elePath, Set<String> excludedInfo) {
 		return createRootWithRelativeElement(parentNode, null, elePath, excludedInfo);
 	}
 
@@ -174,12 +174,12 @@ public class HAPUtilityStructure {
 	public static Map<String, Object> discoverConstantValue(HAPStructure structure){
 		//discover cosntant value by id
 		Map<String, Object> constantsById = new LinkedHashMap<String, Object>();
-		for(HAPRoot root : structure.getAllRoots()) {
+		for(HAPRootStructure root : structure.getAllRoots()) {
 			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
 				@Override
-				public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object obj) {
+				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
-						HAPElementLeafConstant constantEle = (HAPElementLeafConstant)eleInfo.getElement();
+						HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)eleInfo.getElement();
 						Object value = constantEle.getDataValue();
 						if(value==null)   value = constantEle.getValue();
 						constantsById.put(eleInfo.getElementPath().getFullName(), value);
@@ -197,11 +197,11 @@ public class HAPUtilityStructure {
 		Map<String, Double> namePriorities = new LinkedHashMap<String, Double>();
 		for(String idPath : constantsById.keySet()) {
 			HAPComplexPath complexIdPath = new HAPComplexPath(idPath);
-			List<HAPInfoAlias> namesInfo = structure.discoverRootAliasById(complexIdPath.getRootName());
+			List<HAPInfoAlias> namesInfo = structure.discoverRootAliasById(complexIdPath.getRoot());
 			for(HAPInfoAlias nameInfo : namesInfo) {
 				String name = nameInfo.getName();
 				HAPComplexPath complexNamePath = complexIdPath.updateRootName(name);
-				Double currentPriroty = namePriorities.get(complexNamePath.getRootName());
+				Double currentPriroty = namePriorities.get(complexNamePath.getRoot());
 				if(currentPriroty==null || nameInfo.getPriority()<currentPriroty) {
 					namePriorities.put(name, nameInfo.getPriority());
 					out.put(complexNamePath.getFullName(), constantsById.get(idPath));
@@ -212,14 +212,14 @@ public class HAPUtilityStructure {
 	}	
 	
 	//discover all the relative elements in context def element
-	public static Map<String, HAPElementLeafRelative> discoverRelativeElement(HAPRoot root) {
-		Map<String, HAPElementLeafRelative> out = new LinkedHashMap<String, HAPElementLeafRelative>();
+	public static Map<String, HAPElementStructureLeafRelative> discoverRelativeElement(HAPRootStructure root) {
+		Map<String, HAPElementStructureLeafRelative> out = new LinkedHashMap<String, HAPElementStructureLeafRelative>();
 		
 		HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
 			@Override
-			public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object obj) {
+			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
-					out.put(eleInfo.getElementPath().getFullName(), (HAPElementLeafRelative)eleInfo.getElement());
+					out.put(eleInfo.getElementPath().getFullName(), (HAPElementStructureLeafRelative)eleInfo.getElement());
 				}
 				return null;
 			}
@@ -231,9 +231,9 @@ public class HAPUtilityStructure {
 		return out;
 	}
 
-	public static List<HAPRoot> resolveRoot(String rootRefLiterate, HAPStructure structure, boolean createIfNotExist) {
+	public static List<HAPRootStructure> resolveRoot(String rootRefLiterate, HAPStructure structure, boolean createIfNotExist) {
 		HAPReferenceRoot rootReference = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
-		List<HAPRoot> out = structure.resolveRoot(rootReference, createIfNotExist);
+		List<HAPRootStructure> out = structure.resolveRoot(rootReference, createIfNotExist);
 		return out;
 	}
 	
@@ -256,12 +256,12 @@ public class HAPUtilityStructure {
 		elementReference = HAPUtilityStructureReference.normalizeElementReference(elementReference, parentStructure.getStructureType());
 		
 		//find candidate from structure by root reference
-		List<HAPRoot> candidatesRoot = parentStructure.resolveRoot(elementReference.getRootReference(), false);
+		List<HAPRootStructure> candidatesRoot = parentStructure.resolveRoot(elementReference.getRootReference(), false);
 		
 		//resolve path, 
 		//find all candidate
 		List<HAPInfoReferenceResolve> resolveCandidates = new ArrayList<HAPInfoReferenceResolve>();
-		for(HAPRoot root : candidatesRoot) {
+		for(HAPRootStructure root : candidatesRoot) {
 			HAPInfoReferenceResolve resolved = new HAPInfoReferenceResolve(); 
 			String path = elementReference.getPath();
 			resolved.referredRoot = root;
@@ -299,21 +299,21 @@ public class HAPUtilityStructure {
 	}
 	
 	//resolve the remain path part
-	public static HAPElement resolveElement(HAPInfoDesendantResolve resolveInfo) {
-		HAPElement out = null;
+	public static HAPElementStructure resolveElement(HAPInfoDesendantResolve resolveInfo) {
+		HAPElementStructure out = null;
 		if(resolveInfo.remainPath.isEmpty()) {
 			//exactly match with path
 			out = resolveInfo.resolvedElement;
 		}
 		else {
 			//nof exactly match with path
-			HAPElement candidateNode = resolveInfo.resolvedElement.getSolidStructureElement();
+			HAPElementStructure candidateNode = resolveInfo.resolvedElement.getSolidStructureElement();
 			if(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA.equals(candidateNode.getType())) {
 				//data type node
-				HAPElementLeafData dataLeafEle = (HAPElementLeafData)candidateNode;
+				HAPElementStructureLeafData dataLeafEle = (HAPElementStructureLeafData)candidateNode;
 				HAPDataTypeCriteria childCriteria = HAPCriteriaUtility.getChildCriteriaByPath(dataLeafEle.getCriteria(), resolveInfo.remainPath.getPath());
 				if(childCriteria!=null) {
-					out = new HAPElementLeafData(new HAPVariableDataInfo(childCriteria)); 
+					out = new HAPElementStructureLeafData(new HAPVariableDataInfo(childCriteria)); 
 				}
 				else {
 //					out.resolvedNode = new HAPContextDefinitionLeafValue();
@@ -345,16 +345,16 @@ public class HAPUtilityStructure {
 		else return parents.getStructure(name);
 	}
 
-	public static HAPRoot addRoot(HAPStructure structure, String rootReference, HAPRoot root) {
+	public static HAPRootStructure addRoot(HAPStructure structure, String rootReference, HAPRootStructure root) {
 		return structure.addRoot(HAPUtilityStructureReference.parseRootReferenceLiterate(rootReference, structure.getStructureType()), root);
 	}
 
-	public static Map<String, HAPMatchers> mergeRoot(HAPRoot origin, HAPRoot expect, boolean modifyStructure, HAPRuntimeEnvironment runtimeEnv) {
+	public static Map<String, HAPMatchers> mergeRoot(HAPRootStructure origin, HAPRootStructure expect, boolean modifyStructure, HAPRuntimeEnvironment runtimeEnv) {
 		Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
 		
 		HAPUtilityStructure.traverseElement(expect, new HAPProcessorContextDefinitionElement() {
 			@Override
-			public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
+			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				String path = eleInfo.getElementPath().getPathStr();
 				mergeElement(getDescendant(origin.getDefinition(), path), eleInfo.getElement(), modifyStructure, matchers, path, runtimeEnv);
 				return null;
@@ -367,7 +367,7 @@ public class HAPUtilityStructure {
 		return matchers;
 	}
 
-	public static Map<String, HAPMatchers> mergeElement(HAPElement originDef, HAPElement expectDef, boolean modifyStructure, String path, HAPRuntimeEnvironment runtimeEnv){
+	public static Map<String, HAPMatchers> mergeElement(HAPElementStructure originDef, HAPElementStructure expectDef, boolean modifyStructure, String path, HAPRuntimeEnvironment runtimeEnv){
 		Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
 		mergeElement(originDef, expectDef, modifyStructure, matchers, null, runtimeEnv);
 		return matchers;
@@ -375,19 +375,19 @@ public class HAPUtilityStructure {
 	
 	//merge origin context def with child context def to expect context out
 	//also generate matchers from origin to expect
-	public static void mergeElement(HAPElement originDef1, HAPElement expectDef1, boolean modifyStructure, Map<String, HAPMatchers> matchers, String path, HAPRuntimeEnvironment runtimeEnv){
+	public static void mergeElement(HAPElementStructure originDef1, HAPElementStructure expectDef1, boolean modifyStructure, Map<String, HAPMatchers> matchers, String path, HAPRuntimeEnvironment runtimeEnv){
 		if(path==null)  path = "";
 		//merge is about solid
-		HAPElement originDef = originDef1.getSolidStructureElement();
-		HAPElement expectDef = expectDef1.getSolidStructureElement();
+		HAPElementStructure originDef = originDef1.getSolidStructureElement();
+		HAPElementStructure expectDef = expectDef1.getSolidStructureElement();
 		String type = expectDef.getType();
 		
 		if(originDef.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
 			switch(type) {
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 			{
-				HAPElementLeafConstant dataOrigin = (HAPElementLeafConstant)originDef.getSolidStructureElement();
-				HAPElementLeafData dataExpect = (HAPElementLeafData)expectDef;
+				HAPElementStructureLeafConstant dataOrigin = (HAPElementStructureLeafConstant)originDef.getSolidStructureElement();
+				HAPElementStructureLeafData dataExpect = (HAPElementStructureLeafData)expectDef;
 				//cal matchers
 				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(new HAPDataTypeCriteriaId(dataOrigin.getDataValue().getDataTypeId(), null)), dataExpect.getCriteria(), runtimeEnv.getDataTypeHelper()); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
@@ -399,8 +399,8 @@ public class HAPUtilityStructure {
 			switch(originDef.getType()) {
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 			{
-				HAPElementLeafData dataOrigin = (HAPElementLeafData)originDef;
-				 HAPElementLeafConstant dataExpect = (HAPElementLeafConstant)expectDef.getSolidStructureElement();
+				HAPElementStructureLeafData dataOrigin = (HAPElementStructureLeafData)originDef;
+				 HAPElementStructureLeafConstant dataExpect = (HAPElementStructureLeafConstant)expectDef.getSolidStructureElement();
 				//cal matchers
 				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), new HAPDataTypeCriteriaId(dataExpect.getDataValue().getDataTypeId(), null), runtimeEnv.getDataTypeHelper()); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
@@ -413,8 +413,8 @@ public class HAPUtilityStructure {
 			switch(type) {
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 			{
-				HAPElementLeafData dataOrigin = (HAPElementLeafData)originDef.getSolidStructureElement();
-				HAPElementLeafData dataExpect = (HAPElementLeafData)expectDef;
+				HAPElementStructureLeafData dataOrigin = (HAPElementStructureLeafData)originDef.getSolidStructureElement();
+				HAPElementStructureLeafData dataExpect = (HAPElementStructureLeafData)expectDef;
 				//cal matchers
 				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), dataExpect.getCriteria(), runtimeEnv.getDataTypeHelper()); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
@@ -422,17 +422,17 @@ public class HAPUtilityStructure {
 			}
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 			{
-				HAPElementNode nodeOrigin = (HAPElementNode)originDef;
-				HAPElementNode nodeExpect = (HAPElementNode)expectDef;
+				HAPElementStructureNode nodeOrigin = (HAPElementStructureNode)originDef;
+				HAPElementStructureNode nodeExpect = (HAPElementStructureNode)expectDef;
 				for(String nodeName : nodeExpect.getChildren().keySet()) {
-					HAPElement childNodeExpect = nodeExpect.getChildren().get(nodeName);
-					HAPElement childNodeOrigin = nodeOrigin.getChildren().get(nodeName);
+					HAPElementStructure childNodeExpect = nodeExpect.getChildren().get(nodeName);
+					HAPElementStructure childNodeOrigin = nodeOrigin.getChildren().get(nodeName);
 					if(childNodeOrigin!=null || modifyStructure) {
 						switch(childNodeExpect.getType()) {
 						case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 						{
 							if(childNodeOrigin==null) {
-								childNodeOrigin = new HAPElementLeafData();
+								childNodeOrigin = new HAPElementStructureLeafData();
 								nodeOrigin.addChild(nodeName, childNodeOrigin);
 							}
 							mergeElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), runtimeEnv);
@@ -441,7 +441,7 @@ public class HAPUtilityStructure {
 						case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 						{
 							if(childNodeOrigin==null) {
-								childNodeOrigin = new HAPElementNode();
+								childNodeOrigin = new HAPElementStructureNode();
 								nodeOrigin.addChild(nodeName, childNodeOrigin);
 							}
 							mergeElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), runtimeEnv);

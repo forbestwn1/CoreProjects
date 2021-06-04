@@ -11,16 +11,16 @@ import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
-public class HAPElementLeafConstant extends HAPElement{
+public class HAPElementStructureLeafConstant extends HAPElementStructure{
 
 	@HAPAttribute
 	public static final String VALUE = "value";
 
 	private Object m_value;
 	
-	public HAPElementLeafConstant() {	}
+	public HAPElementStructureLeafConstant() {	}
 
-	public HAPElementLeafConstant(Object value) {
+	public HAPElementStructureLeafConstant(Object value) {
 		this.m_value = value;
 	}
 	
@@ -44,14 +44,14 @@ public class HAPElementLeafConstant extends HAPElement{
 	}
 
 	@Override
-	public HAPElement cloneStructureElement() {
-		HAPElementLeafConstant out = new HAPElementLeafConstant();
+	public HAPElementStructure cloneStructureElement() {
+		HAPElementStructureLeafConstant out = new HAPElementStructureLeafConstant();
 		this.toStructureElement(out);
 		return out;
 	}
 
 	@Override
-	public HAPElement solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this; }
+	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this; }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -62,9 +62,9 @@ public class HAPElementLeafConstant extends HAPElement{
 	}
 
 	@Override
-	public void toStructureElement(HAPElement out) {
+	public void toStructureElement(HAPElementStructure out) {
 		super.toStructureElement(out);
-		((HAPElementLeafConstant)out).m_value = this.m_value;
+		((HAPElementStructureLeafConstant)out).m_value = this.m_value;
 	}
 	
 	@Override
@@ -72,8 +72,8 @@ public class HAPElementLeafConstant extends HAPElement{
 		if(!super.equals(obj))  return false;
 
 		boolean out = false;
-		if(obj instanceof HAPElementLeafConstant) {
-			HAPElementLeafConstant ele = (HAPElementLeafConstant)obj;
+		if(obj instanceof HAPElementStructureLeafConstant) {
+			HAPElementStructureLeafConstant ele = (HAPElementStructureLeafConstant)obj;
 			if(!HAPBasicUtility.isEquals(this.m_value, ele.m_value))  return false;
 			out = true;
 		}

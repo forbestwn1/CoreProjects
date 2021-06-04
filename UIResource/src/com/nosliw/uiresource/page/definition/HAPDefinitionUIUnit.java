@@ -12,8 +12,8 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPNameMapping;
-import com.nosliw.data.core.structure.HAPElementLeafValue;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPElementStructureLeafValue;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 /*
@@ -83,7 +83,7 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 	private void initValueStructure() {
 		HAPValueStructureDefinitionGroup valueStructure = new HAPValueStructureDefinitionGroup();
 		//ui error context element
-		HAPRoot uiValidationErrorRoot = new HAPRoot(new HAPElementLeafValue());
+		HAPRootStructure uiValidationErrorRoot = new HAPRootStructure(new HAPElementStructureLeafValue());
 		uiValidationErrorRoot.setDefaultValue(new JSONObject());
 		uiValidationErrorRoot.setName(HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
 		valueStructure.addProtectedElement(uiValidationErrorRoot);

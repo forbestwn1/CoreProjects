@@ -16,8 +16,8 @@ public class HAPProcessorElementSolidateConstantScript {
 		HAPStructure out = (HAPStructure)structure.solidateConstantScript(constantsValue, runtimeEnv);
 		
 		//solidate element in root
-		for(HAPRoot root : out.getAllRoots()) {
-			root.setDefinition((HAPElement)root.getDefinition().solidateConstantScript(constantsValue, runtimeEnv));
+		for(HAPRootStructure root : out.getAllRoots()) {
+			root.setDefinition((HAPElementStructure)root.getDefinition().solidateConstantScript(constantsValue, runtimeEnv));
 		}
 		
 		return out;

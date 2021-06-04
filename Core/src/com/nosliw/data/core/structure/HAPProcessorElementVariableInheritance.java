@@ -25,11 +25,11 @@ public class HAPProcessorElementVariableInheritance {
 		HAPValueStructure out = (HAPValueStructure)orgValueStructure.cloneStructure();
 		
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
-			for(HAPRoot root : parentValueStructure.getAllRoots()) {
+			for(HAPRootStructure root : parentValueStructure.getAllRoots()) {
 				if(parentValueStructure.isInheriable(root.getLocalId())) {
 					HAPReferenceRoot refToParent = parentValueStructure.getRootReferenceById(root.getLocalId());
 					if(isInheritable(out, refToParent, inheritMode)) {
-						HAPRoot newRootInChild = HAPUtilityStructure.createRootWithRelativeElement(root, refToParent.toStringValue(HAPSerializationFormat.LITERATE), inheritanceExcludedInfo);
+						HAPRootStructure newRootInChild = HAPUtilityStructure.createRootWithRelativeElement(root, refToParent.toStringValue(HAPSerializationFormat.LITERATE), inheritanceExcludedInfo);
 						out.addRoot(refToParent, newRootInChild);
 					}
 				}
@@ -41,9 +41,9 @@ public class HAPProcessorElementVariableInheritance {
 	//add FINAL to all constant root node, means constant cannot be override by parent 
 	private static HAPStructure processConstant(HAPStructure structure) {
 		HAPStructure out = structure.cloneStructure();
-		for(HAPRoot root : out.getAllRoots()) {
+		for(HAPRootStructure root : out.getAllRoots()) {
 			if(root.isConstant()) {
-				root.getInfo().setValue(HAPRoot.INHERIT_MODE, HAPRoot.INHERIT_MODE_FINAL);
+				root.getInfo().setValue(HAPRootStructure.INHERIT_MODE, HAPRootStructure.INHERIT_MODE_FINAL);
 			}
 		}
 		return out;
@@ -52,11 +52,11 @@ public class HAPProcessorElementVariableInheritance {
 	//whether child can herit from parent element
 	private static boolean isInheritable(HAPValueStructure childStructure, HAPReferenceRoot rootRef, String inheritMode) {
 		boolean out = false;
-		HAPRoot childNode = HAPUtilityStructure.getRootFromStructure(childStructure, rootRef); 
+		HAPRootStructure childNode = HAPUtilityStructure.getRootFromStructure(childStructure, rootRef); 
 		if(childNode==null) 		out = true;
 		else {
 			if(HAPConstant.INHERITMODE_PARENT.equals(inheritMode)) {
-				if(!HAPRoot.INHERIT_MODE_FINAL.equals(childNode.getInfo().getValue(HAPRoot.INHERIT_MODE_FINAL))) {
+				if(!HAPRootStructure.INHERIT_MODE_FINAL.equals(childNode.getInfo().getValue(HAPRootStructure.INHERIT_MODE_FINAL))) {
 					out = true;
 				}
 			}

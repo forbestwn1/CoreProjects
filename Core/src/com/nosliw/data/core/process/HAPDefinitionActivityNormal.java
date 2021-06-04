@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionEmpty;
 
 public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
@@ -40,7 +40,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	//get input context structure for activity
 	//it is for process input mapping
 	//param: parent context structure
-	public HAPValueStructureDefinition getInputContextStructure(HAPValueStructureDefinition parentContextStructure) {  return HAPValueStructureDefinitionEmpty.flatStructure();   }
+	public HAPValueStructure getInputContextStructure(HAPValueStructure parentContextStructure) {  return HAPValueStructureDefinitionEmpty.flatStructure();   }
 	
 	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
 	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }

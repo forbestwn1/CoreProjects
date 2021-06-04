@@ -28,12 +28,12 @@ public class HAPProcessorElementRelative {
 
 	public static HAPStructure process(HAPStructure structure, HAPContainerStructure parents, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPStructure out = structure.cloneStructure();
-		for(HAPRoot root : out.getAllRoots()) {
+		for(HAPRootStructure root : out.getAllRoots()) {
 			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
 				@Override
-				public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object obj) {
+				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
-						HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)eleInfo.getElement();
+						HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 						String parent = relativeEle.getParent();
 						dependency.add(parent);
 						if(!relativeEle.isProcessed()) {
@@ -52,8 +52,8 @@ public class HAPProcessorElementRelative {
 	}
 	
 	
-	private static HAPElement processRelativeElement(HAPElementLeafRelative relativeElement, HAPStructure parentStructure, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPElement out = relativeElement;
+	private static HAPElementStructure processRelativeElement(HAPElementStructureLeafRelative relativeElement, HAPStructure parentStructure, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPElementStructure out = relativeElement;
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.resolveElementReference(relativeElement.getReferencePath(), parentStructure, configure.elementReferenceResolveMode, null);
 		
 		if(resolveInfo==null || resolveInfo.referredRoot==null) {
@@ -65,23 +65,23 @@ public class HAPProcessorElementRelative {
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT:
 			{
 				//if refer to a constant element
-				out = new HAPElementLeafConstant();
-				Object constantValue = ((HAPElementLeafConstant)resolveInfo.referredRoot.getDefinition()).getValue();
-				((HAPElementLeafConstant)out).setValue(constantValue);
+				out = new HAPElementStructureLeafConstant();
+				Object constantValue = ((HAPElementStructureLeafConstant)resolveInfo.referredRoot.getDefinition()).getValue();
+				((HAPElementStructureLeafConstant)out).setValue(constantValue);
 				break;
 			}
 			default:
 			{
-				HAPElement solvedContextEle = resolveInfo.resolvedElement; 
+				HAPElementStructure solvedContextEle = resolveInfo.resolvedElement; 
 				if(solvedContextEle!=null){
 					relativeElement.setResolvedIdPath(resolveInfo.path);
 					//refer to solid
 					if(configure.relativeTrackingToSolid) {
 						String refRootId = null;
 						HAPPath refPath = new HAPPath();
-						HAPElement parentContextEle = resolveInfo.realSolved.resolvedElement; 
+						HAPElementStructure parentContextEle = resolveInfo.realSolved.resolvedElement; 
 						if(parentContextEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
-							HAPInfoPathToSolidRoot parentSolidNodeRef = ((HAPElementLeafRelative)parentContextEle).getSolidNodeReference();
+							HAPInfoPathToSolidRoot parentSolidNodeRef = ((HAPElementStructureLeafRelative)parentContextEle).getSolidNodeReference();
 							refRootId = parentSolidNodeRef.getRootNodeId();
 							refPath = parentSolidNodeRef.getPath().appendPath(resolveInfo.path.getPath());
 						}
@@ -92,7 +92,7 @@ public class HAPProcessorElementRelative {
 						relativeElement.setSolidNodeReference(new HAPInfoPathToSolidRoot(refRootId, refPath));
 					}
 					
-					HAPElement relativeEleDef = relativeElement.getDefinition();
+					HAPElementStructure relativeEleDef = relativeElement.getDefinition();
 					if(relativeEleDef==null) {
 						relativeElement.setDefinition(solvedContextEle.cloneStructureElement());
 					}
@@ -112,12 +112,12 @@ public class HAPProcessorElementRelative {
 						
 						//inherit rule from parent
 						if(configure.relativeInheritRule) {
-							HAPElement solidParent = solvedContextEle.getSolidStructureElement();
+							HAPElementStructure solidParent = solvedContextEle.getSolidStructureElement();
 							if(solidParent.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-								HAPVariableDataInfo solidParentDataInfo = ((HAPElementLeafData)solidParent).getDataInfo();
+								HAPVariableDataInfo solidParentDataInfo = ((HAPElementStructureLeafData)solidParent).getDataInfo();
 								HAPMatchers ruleMatchers = HAPMatcherUtility.reversMatchers(HAPMatcherUtility.cascadeMatchers(solidParentDataInfo.getRuleMatchers()==null?null:solidParentDataInfo.getRuleMatchers().getReverseMatchers(), noVoidMatchers.get("")));
 								for(HAPDataRule rule : solidParentDataInfo.getRules()) {
-									HAPVariableDataInfo relativeDataInfo = ((HAPElementLeafData)relativeEleDef).getDataInfo();
+									HAPVariableDataInfo relativeDataInfo = ((HAPElementStructureLeafData)relativeEleDef).getDataInfo();
 									relativeDataInfo.addRule(rule);
 									relativeDataInfo.setRuleMatchers(ruleMatchers, solidParentDataInfo.getRuleCriteria());
 								}

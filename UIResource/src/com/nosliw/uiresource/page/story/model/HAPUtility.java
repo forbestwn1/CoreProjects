@@ -12,8 +12,8 @@ import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.HAPElementLeafData;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
@@ -54,7 +54,7 @@ public class HAPUtility {
 		Set<HAPStoryNode> varNodes = HAPUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
-			HAPRoot varRoot = new HAPRoot(new HAPElementLeafData(varNode.getVariableInfo().getDataInfo()));
+			HAPRootStructure varRoot = new HAPRootStructure(new HAPElementStructureLeafData(varNode.getVariableInfo().getDataInfo()));
 			varRoot.setId(varNode.getId());
 			out.getContext().addPublicElement(varNode.getVariableInfo().getName(), varRoot);
 		}

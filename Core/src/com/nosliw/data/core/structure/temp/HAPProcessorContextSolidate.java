@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPElementLeafConstant;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorContextSolidate {
@@ -18,9 +18,9 @@ public class HAPProcessorContextSolidate {
 
 		HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup(originalContextGroup.getInfo());
 		for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()) {
-			Map<String, HAPRoot> contextDefRoots = originalContextGroup.getRootsByCategary(categary);
+			Map<String, HAPRootStructure> contextDefRoots = originalContextGroup.getRootsByCategary(categary);
 			for(String name : contextDefRoots.keySet()) {
-				HAPRoot contextDefRoot = contextDefRoots.get(name);
+				HAPRootStructure contextDefRoot = contextDefRoots.get(name);
 				if(!contextDefRoot.isConstant()) {
 					String solidName = solidateLiterate(name, constantsData, runtimeEnv);
 					contextDefRoot.setDefinition(contextDefRoot.getDefinition().solidateConstantScript(constantsData, runtimeEnv));
@@ -38,12 +38,12 @@ public class HAPProcessorContextSolidate {
 		Map<String, Object> constantsData = new LinkedHashMap<String, Object>();
 		String[] categarys = HAPValueStructureDefinitionGroup.getAllCategaries(); 
 		for(int i=categarys.length-1; i>=0; i--) {
-			Map<String, HAPRoot> nodes = originalContextGroup.getRootsByCategary(categarys[i]);
+			Map<String, HAPRootStructure> nodes = originalContextGroup.getRootsByCategary(categarys[i]);
 			for(String name : nodes.keySet()) {
 				if(nodes.get(name).isConstant()){
-					HAPElementLeafConstant constEleDef = (HAPElementLeafConstant)nodes.get(name).getDefinition();
+					HAPElementStructureLeafConstant constEleDef = (HAPElementStructureLeafConstant)nodes.get(name).getDefinition();
 					constantsData.put(name, constEleDef.getValue());
-					constantsData.put(new HAPIdContextDefinitionRoot(categarys[i], name).toString(), constEleDef.getValue());
+//					constantsData.put(new HAPIdContextDefinitionRoot(categarys[i], name).toString(), constEleDef.getValue());
 				}
 			}
 		}

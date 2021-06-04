@@ -20,10 +20,10 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
-import com.nosliw.data.core.structure.HAPElement;
+import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 
 //a group of context
 //normally contexts are grouped according to type : public, private, ...
@@ -73,15 +73,15 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	}
 
 	@Override
-	public HAPRoot getRoot(String id) {
+	public HAPRootStructure getRoot(String id) {
 		String categary = this.m_categaryById.get(id);
 		if(categary==null)  return null;
 		return this.getFlat(categary).getRoot(id);
 	}
 
 	@Override
-	public List<HAPRoot> getAllRoots(){
-		List<HAPRoot> out = new ArrayList<HAPRoot>();
+	public List<HAPRootStructure> getAllRoots(){
+		List<HAPRootStructure> out = new ArrayList<HAPRootStructure>();
 		for(String categary : this.m_flatStructureByCategary.keySet()) {
 			out.addAll(this.m_flatStructureByCategary.get(categary).getAllRoots());
 		}
@@ -92,7 +92,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	public List<HAPInfoAlias> discoverRootAliasById(String id) {
 		String categary = this.m_categaryById.get(id);
 		int priority = this.getPriorityByCategary(categary);
-		HAPRoot root = this.m_flatStructureByCategary.get(categary).getRoot(id);
+		HAPRootStructure root = this.m_flatStructureByCategary.get(categary).getRoot(id);
 		
 		//if simple name is override
 		boolean isSimpleNameValid = true;
@@ -101,7 +101,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 			if(ctg!=null) {
 				HAPValueStructureDefinitionFlat flat = this.m_flatStructureByCategary.get(ctg);
 				if(flat!=null) {
-					List<HAPRoot> sameNameRoots = flat.resolveRoot(new HAPReferenceRootInFlat(root.getName()), false);
+					List<HAPRootStructure> sameNameRoots = flat.resolveRoot(new HAPReferenceRootInFlat(root.getName()), false);
 					if(sameNameRoots.size()>0) {
 						isSimpleNameValid = false;
 					}
@@ -131,10 +131,10 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 		this.cloneBaseToValueStructureDefinition(out);
 		
 		for(String categary : this.getCategaries()) {
-			for(HAPRoot root : this.getRootsByCategary(categary)) {
+			for(HAPRootStructure root : this.getRootsByCategary(categary)) {
 				String solidName = HAPUtilityScriptExpression.solidateLiterate(root.getName(), constants, runtimeEnv);
-				HAPRoot newRoot = root.cloneRoot();
-				newRoot.setDefinition(((HAPElement)newRoot.getDefinition().solidateConstantScript(constants, runtimeEnv)).cloneStructureElement());
+				HAPRootStructure newRoot = root.cloneRoot();
+				newRoot.setDefinition(((HAPElementStructure)newRoot.getDefinition().solidateConstantScript(constants, runtimeEnv)).cloneStructureElement());
 				newRoot.setName(solidName);
 				newRoot.setLocalId(null);
 				out.addRoot(categary, newRoot);
@@ -170,13 +170,13 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	}
 	
 	@Override
-	public HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root) {
+	public HAPRootStructure addRoot(HAPReferenceRoot rootReference, HAPRootStructure root) {
 		HAPReferenceRootInGroup groupRootReference = (HAPReferenceRootInGroup)rootReference;
 		root.setName(groupRootReference.getName());
 		return this.addRoot(groupRootReference.getCategary(), root);
 	}
 
-	public HAPRoot addRoot(String categary, HAPRoot root){
+	public HAPRootStructure addRoot(String categary, HAPRootStructure root){
 		root = root.cloneRoot();
 		if(HAPBasicUtility.isStringEmpty(categary))   categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
 		if(HAPBasicUtility.isStringEmpty(root.getLocalId()))  root.setLocalId(new HAPReferenceRootInGroup(categary, root.getName()).getFullName());
@@ -184,15 +184,15 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 		return this.getFlat(categary).addRoot(root);
 	}
 	
-	public HAPRoot newRoot(String categary, String name) {
-		HAPRoot out = new HAPRoot();
+	public HAPRootStructure newRoot(String categary, String name) {
+		HAPRootStructure out = new HAPRootStructure();
 		out.setName(name);
 		this.addRoot(categary, out);
 		return out;
 	}
 
 	@Override
-	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
+	public List<HAPRootStructure> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
 		HAPReferenceRootInGroup groupReference = (HAPReferenceRootInGroup)rootReference;
 		
 		//candidate categary
@@ -200,7 +200,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 		if(HAPBasicUtility.isStringNotEmpty(groupReference.getCategary()))  categaryCandidates.add(groupReference.getCategary());  //check path first
 		else categaryCandidates.addAll(Arrays.asList(HAPValueStructureDefinitionGroup.getVisibleCategaries()));               //otherwise, use visible context
 		
-		List<HAPRoot> out = new ArrayList<HAPRoot>();
+		List<HAPRootStructure> out = new ArrayList<HAPRootStructure>();
 		for(String categary : categaryCandidates) {
 			HAPValueStructureDefinitionFlat flat = this.m_flatStructureByCategary.get(categary);
 			if(flat!=null) {
@@ -211,7 +211,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 		if(out.size()==0 && createIfNotExist) {
 			String categary = null;
 			if(categaryCandidates.size()==1)  categary = categaryCandidates.get(0);
-			HAPRoot newRoot = new HAPRoot();
+			HAPRootStructure newRoot = new HAPRootStructure();
 			newRoot.setName(groupReference.getName());
 			newRoot = this.addRoot(categary, newRoot);
 			out.add(newRoot);
@@ -227,7 +227,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 				HAPValueStructureDefinitionGroup groupStructure = (HAPValueStructureDefinitionGroup)structure;
 				for(String categary : groupStructure.getCategaries()){
 					HAPValueStructureDefinitionFlat flat = groupStructure.getFlat(categary);
-					for(HAPRoot root : flat.getRoots()) {
+					for(HAPRootStructure root : flat.getRoots()) {
 						this.addRoot(categary, root);
 					}
 				}
@@ -247,7 +247,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 		}
 	}
 	
-	public Set<HAPRoot> getRootsByCategary(String categary){  return this.getFlat(categary).getRoots();  }
+	public Set<HAPRootStructure> getRootsByCategary(String categary){  return this.getFlat(categary).getRoots();  }
 	
 	private HAPValueStructureDefinitionFlat getFlat(String categary){
 		HAPValueStructureDefinitionFlat out = this.m_flatStructureByCategary.get(categary);
@@ -331,10 +331,10 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	public HAPValueStructureDefinitionFlat getInternalContext(){  return this.getFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
 	public HAPValueStructureDefinitionFlat getPrivateContext(){  return this.getFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
 
-	public void addPublicElement(HAPRoot root){  this.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, root);  }
-	public void addProtectedElement(HAPRoot root){  this.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED, root);  }
-	public void addInternalElement(HAPRoot root){  this.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL, root);  }
-	public void addPrivateElement(HAPRoot root){  this.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE, root);  }
+	public void addPublicElement(HAPRootStructure root){  this.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, root);  }
+	public void addProtectedElement(HAPRootStructure root){  this.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED, root);  }
+	public void addInternalElement(HAPRootStructure root){  this.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL, root);  }
+	public void addPrivateElement(HAPRootStructure root){  this.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE, root);  }
 
 	public static String[] getAllCategaries(){
 		String[] contextTypes = {

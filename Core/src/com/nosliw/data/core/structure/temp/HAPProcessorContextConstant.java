@@ -22,17 +22,17 @@ import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
-import com.nosliw.data.core.structure.HAPElement;
-import com.nosliw.data.core.structure.HAPElementLeafConstant;
-import com.nosliw.data.core.structure.HAPElementLeafConstantReference;
-import com.nosliw.data.core.structure.HAPElementNode;
+import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
+import com.nosliw.data.core.structure.HAPElementStructureLeafConstantReference;
+import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
@@ -48,7 +48,7 @@ public class HAPProcessorContextConstant {
 		//merge with parent
 		HAPValueStructureDefinitionGroup merged = originalContextGroup;
 		for(String parentName : parent.getStructureNames()) {
-			merged = (HAPValueStructureDefinitionGroup)mergeWithParent(merged, HAPUtilityContextStructure.toSolidContextStructure((HAPValueStructureDefinition)HAPUtilityStructure.getReferedStructure(parentName, parent, merged), false), inheritMode);
+			merged = (HAPValueStructureDefinitionGroup)mergeWithParent(merged, HAPUtilityContextStructure.toSolidContextStructure((HAPValueStructure)HAPUtilityStructure.getReferedStructure(parentName, parent, merged), false), inheritMode);
 		}
 
 		//process constant ref in context
@@ -66,15 +66,15 @@ public class HAPProcessorContextConstant {
 	
 	//merge constant with parent
 	//child constant has higher priority than parent
-	private static HAPValueStructureDefinition mergeWithParent(
-			HAPValueStructureDefinition valueStructure,
-			HAPValueStructureDefinition parentValueStructure,
+	private static HAPValueStructure mergeWithParent(
+			HAPValueStructure valueStructure,
+			HAPValueStructure parentValueStructure,
 			String inheritMode){
-		HAPValueStructureDefinition out = (HAPValueStructureDefinition)valueStructure.cloneStructure();
+		HAPValueStructure out = (HAPValueStructure)valueStructure.cloneStructure();
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			if(parentValueStructure!=null) {
 				//merge constants with parent
-				for(HAPRoot root : parentValueStructure.getAllRoots()) {
+				for(HAPRootStructure root : parentValueStructure.getAllRoots()) {
 					if(root.isConstant()) {
 						HAPReferenceRoot rootReference = parentValueStructure.getRootReferenceById(root.getLocalId());
 						if(out.resolveRoot(rootReference, false)==null) {
@@ -92,12 +92,12 @@ public class HAPProcessorContextConstant {
 		for(String contextType : contextGroup.getCategaries()) {
 			HAPValueStructureDefinitionFlat context = contextGroup.getFlat(contextType);
 			for(String eleName : context.getRootNames()) {
-				HAPRoot contextRoot = context.getRoot(eleName);
-				HAPElement ele = contextRoot.getDefinition();
+				HAPRootStructure contextRoot = context.getRoot(eleName);
+				HAPElementStructure ele = contextRoot.getDefinition();
 				if (HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(ele.getType())) {
 					Object value = discoverConstantValue(ele);
 					if(value!=null) {
-						HAPElementLeafConstant constantEle = new HAPElementLeafConstant();
+						HAPElementStructureLeafConstant constantEle = new HAPElementStructureLeafConstant();
 						constantEle.setValue(value);
 						contextRoot.setDefinition(constantEle);
 					}
@@ -107,14 +107,14 @@ public class HAPProcessorContextConstant {
 		return contextGroup;
 	}
 	
-	static private Object discoverConstantValue(HAPElement contextDefEle) {
+	static private Object discoverConstantValue(HAPElementStructure contextDefEle) {
 		String type = contextDefEle.getType();
 		if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(type)) {
-			HAPElementLeafConstant constantEle = (HAPElementLeafConstant)contextDefEle;
+			HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)contextDefEle;
 			return constantEle.getValue();
 		}
 		else if (HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(type)) {
-			HAPElementNode nodeEle = (HAPElementNode)contextDefEle;
+			HAPElementStructureNode nodeEle = (HAPElementStructureNode)contextDefEle;
 			JSONObject out = new JSONObject();
 			for(String nodeName : nodeEle.getChildren().keySet()) {
 				Object childOut = discoverConstantValue(nodeEle.getChild(nodeName));
@@ -133,16 +133,16 @@ public class HAPProcessorContextConstant {
 		if(attachmentContainer==null)   return contextGroup;
 		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();
 		for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()) {
-			Map<String, HAPRoot> cotextDefRoots = out.getRootsByCategary(categary);
+			Map<String, HAPRootStructure> cotextDefRoots = out.getRootsByCategary(categary);
 			for(String name : cotextDefRoots.keySet()) {
-				HAPRoot contextDefRoot = cotextDefRoots.get(name);
+				HAPRootStructure contextDefRoot = cotextDefRoots.get(name);
 				HAPUtilityContext.processContextRootElement(contextDefRoot, name, new HAPProcessorContextDefinitionElement() {
 					@Override
-					public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
+					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANTREF.equals(eleInfo.getElement().getType())) {
-							HAPElementLeafConstantReference constantRefEle = (HAPElementLeafConstantReference)eleInfo.getElement();
+							HAPElementStructureLeafConstantReference constantRefEle = (HAPElementStructureLeafConstantReference)eleInfo.getElement();
 							HAPResourceDefinitionValue valueResourceDef = (HAPResourceDefinitionValue)HAPUtilityAttachment.getResourceDefinition(attachmentContainer, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, constantRefEle.getConstantName(), runtimeEnv.getResourceDefinitionManager());
-							HAPElementLeafConstant newEle = new HAPElementLeafConstant(valueResourceDef.getValue().getValue());
+							HAPElementStructureLeafConstant newEle = new HAPElementStructureLeafConstant(valueResourceDef.getValue().getValue());
 							return Pair.of(true, newEle);
 						}
 						return null;
@@ -168,14 +168,14 @@ public class HAPProcessorContextConstant {
 			HAPRuntimeEnvironment runtimeEnv){
 		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();
 		for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()) {
-			Map<String, HAPRoot> cotextDefRoots = out.getRootsByCategary(categary);
+			Map<String, HAPRootStructure> cotextDefRoots = out.getRootsByCategary(categary);
 			for(String name : cotextDefRoots.keySet()) {
-				HAPRoot contextDefRoot = cotextDefRoots.get(name);
+				HAPRootStructure contextDefRoot = cotextDefRoots.get(name);
 				HAPUtilityContext.processContextRootElement(contextDefRoot, name, new HAPProcessorContextDefinitionElement() {
 					@Override
-					public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
+					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(eleInfo.getElement().getType())) {
-							solidateConstantDefEle((HAPElementLeafConstant)eleInfo.getElement(), contextGroup, runtimeEnv);
+							solidateConstantDefEle((HAPElementStructureLeafConstant)eleInfo.getElement(), contextGroup, runtimeEnv);
 						}
 						return null;
 					}
@@ -189,7 +189,7 @@ public class HAPProcessorContextConstant {
 	}
 
 	static private void solidateConstantDefEle(
-			HAPElementLeafConstant contextDefConstant, 
+			HAPElementStructureLeafConstant contextDefConstant, 
 			HAPValueStructureDefinitionGroup contextGroup,
 			HAPRuntimeEnvironment runtimeEnv) {
 
@@ -280,11 +280,11 @@ public class HAPProcessorContextConstant {
 		Map<String, Object> constantsValue = new LinkedHashMap<String, Object>();
 		Set<HAPDefinitionConstant> constantsDef = groupExe.getConstantsDefinition();
 		for(HAPDefinitionConstant constantDef : constantsDef){
-			String constantId = constantDef.getId();
-			HAPIdContextDefinitionRoot refNodeId = solveReferencedNodeId(new HAPIdContextDefinitionRoot(constantId), contextGroup);
-			HAPElementLeafConstant refContextDefEle = (HAPElementLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());
-			solidateConstantDefEle(refContextDefEle, contextGroup, runtimeEnv);
-			constantsValue.put(constantId, refContextDefEle.getValue());
+//			String constantId = constantDef.getId();
+//			HAPIdContextDefinitionRoot refNodeId = solveReferencedNodeId(new HAPIdContextDefinitionRoot(constantId), contextGroup);
+//			HAPElementLeafConstant refContextDefEle = (HAPElementLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());
+//			solidateConstantDefEle(refContextDefEle, contextGroup, runtimeEnv);
+//			constantsValue.put(constantId, refContextDefEle.getValue());
 		}
 
 		//process script again with constant and discovery
@@ -296,14 +296,14 @@ public class HAPProcessorContextConstant {
 		return out.getData();
 	}
 	
-	private static HAPIdContextDefinitionRoot solveReferencedNodeId(HAPIdContextDefinitionRoot nodeId, HAPValueStructureDefinitionGroup candidateGroup) {
-		if(nodeId.getCategary()!=null)   return nodeId;
-		for(String categary : HAPValueStructureDefinitionGroup.getVisibleCategaries()) {
-			HAPElement refContextEle = HAPUtilityContext.getDescendant(candidateGroup, categary, nodeId.getName());
-			if(refContextEle!=null && HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(refContextEle.getType())) {
-				return new HAPIdContextDefinitionRoot(categary, nodeId.getName());
-			}
-		}
-		return null;
-	}
+//	private static HAPIdContextDefinitionRoot solveReferencedNodeId(HAPIdContextDefinitionRoot nodeId, HAPValueStructureDefinitionGroup candidateGroup) {
+//		if(nodeId.getCategary()!=null)   return nodeId;
+//		for(String categary : HAPValueStructureDefinitionGroup.getVisibleCategaries()) {
+//			HAPElement refContextEle = HAPUtilityContext.getDescendant(candidateGroup, categary, nodeId.getName());
+//			if(refContextEle!=null && HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(refContextEle.getType())) {
+////				return new HAPIdContextDefinitionRoot(categary, nodeId.getName());
+//			}
+//		}
+//		return null;
+//	}
 }

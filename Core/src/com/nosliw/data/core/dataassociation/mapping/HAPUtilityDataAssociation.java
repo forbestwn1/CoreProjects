@@ -11,19 +11,19 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.HAPElement;
-import com.nosliw.data.core.structure.HAPElementLeafConstant;
-import com.nosliw.data.core.structure.HAPElementLeafRelative;
+import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPReferenceElement;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPUtilityDataAssociation {
 
-	public static Map<String, String> buildSimplifiedRelativePathMapping(HAPRoot contextRoot, String rootName, HAPValueStructureDefinition context){
+	public static Map<String, String> buildSimplifiedRelativePathMapping(HAPRootStructure contextRoot, String rootName, HAPValueStructure context){
 		Map<String, Boolean> isFlatInput = new LinkedHashMap<String, Boolean>();
 		if(context!=null)	isFlatInput.put(HAPConstantShared.NAME_DEFAULT, context.isFlat());
 		else isFlatInput.put(HAPConstantShared.NAME_DEFAULT, true);
@@ -39,18 +39,18 @@ public class HAPUtilityDataAssociation {
 		return out;
 	}
 	
-	public static Map<String, String> buildSimplifiedRelativePathMapping(HAPRoot contextRoot, String rootName){
+	public static Map<String, String> buildSimplifiedRelativePathMapping(HAPRootStructure contextRoot, String rootName){
 		return buildSimplifiedRelativePathMapping(contextRoot, rootName, null);
 	}
 
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
-	public static Map<String, String> buildRelativePathMapping(HAPRoot contextRoot, String rootName, Map<String, Boolean> isFlatInput){
+	public static Map<String, String> buildRelativePathMapping(HAPRootStructure contextRoot, String rootName, Map<String, Boolean> isFlatInput){
 		Map<String, String> out = new LinkedHashMap<String, String>();
 		HAPUtilityContext.processContextRootElement(contextRoot, rootName, new HAPProcessorContextDefinitionElement() {
 			@Override
-			public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
+			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
-					HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)eleInfo.getElement();
+					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 					HAPReferenceElement contextPath = relativeEle.getPathFormat();
 					String parent = relativeEle.getParent();
 					String sourcePath = HAPNamingConversionUtility.cascadePath(parent, isFlatInput.get(parent)? contextPath.getFullPath() : contextPath.getContextFullPath());
@@ -66,13 +66,13 @@ public class HAPUtilityDataAssociation {
 	}
 	
 	//build constant assignment mapping
-	public static Map<String, Object> buildConstantAssignment(HAPRoot contextRoot, String rootName, Map<String, Boolean> isFlatInput){
+	public static Map<String, Object> buildConstantAssignment(HAPRootStructure contextRoot, String rootName, Map<String, Boolean> isFlatInput){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		HAPUtilityContext.processContextRootElement(contextRoot, rootName, new HAPProcessorContextDefinitionElement() {
 			@Override
-			public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
+			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
-					HAPElementLeafConstant constantEle = (HAPElementLeafConstant)eleInfo.getElement();
+					HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)eleInfo.getElement();
 					out.put(eleInfo.getElementPath().getFullPath(), constantEle.getValue());
 					return Pair.of(false, null);
 				}

@@ -22,7 +22,7 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPServiceActivityProcessor implements HAPProcessorActivity{
@@ -76,7 +76,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		@Override
-		public HAPValueStructureDefinition buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+		public HAPValueStructure buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
 			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;

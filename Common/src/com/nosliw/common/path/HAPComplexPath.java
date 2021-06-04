@@ -1,21 +1,33 @@
 package com.nosliw.common.path;
 
+import java.util.Map;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 
-public class HAPComplexPath {
+@HAPEntityWithAttribute
+public class HAPComplexPath extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static final String ROOT = "root";
+
+	@HAPAttribute
+	public static final String PATH = "path";
 
 	private String m_fullName;
 
 	private HAPPath m_path;
 	
-	private String m_rootName;
+	private String m_root;
 	
 	public HAPComplexPath(String rootName, HAPPath path){
-		this.m_rootName = rootName;
+		this.m_root = rootName;
 		this.m_path = path;
-		this.m_fullName = HAPNamingConversionUtility.cascadePath(this.m_rootName, this.m_path.getPath());
+		this.m_fullName = HAPNamingConversionUtility.cascadePath(this.m_root, this.m_path.getPath());
 	}
 	
 	public HAPComplexPath(String rootName, String path){
@@ -29,17 +41,17 @@ public class HAPComplexPath {
 			int index = this.m_fullName.indexOf(HAPConstantShared.SEPERATOR_PATH);
 			if(index==-1){
 				//name only
-				this.m_rootName = this.m_fullName;
+				this.m_root = this.m_fullName;
 				this.m_path = new HAPPath();
 			}
 			else{
-				this.m_rootName = this.m_fullName.substring(0, index);
+				this.m_root = this.m_fullName.substring(0, index);
 				this.m_path = new HAPPath(this.m_fullName.substring(index+1));
 			}
 		}
 	}
 	
-	public String getRootName(){	return this.m_rootName; 	}
+	public String getRoot(){	return this.m_root; 	}
 	
 	public HAPPath getPath() {   return this.m_path;    }
 	
@@ -58,7 +70,7 @@ public class HAPComplexPath {
 	}
 
 	public HAPComplexPath appendSegment(String segment) {
-		return new HAPComplexPath(this.m_rootName, this.m_path.appendSegment(segment));
+		return new HAPComplexPath(this.m_root, this.m_path.appendSegment(segment));
 	}
 	
 	public HAPComplexPath updateRootName(String name) {   return new HAPComplexPath(name, this.m_path);   }
@@ -66,4 +78,12 @@ public class HAPComplexPath {
 	public HAPComplexPath cloneComplexPath() {
 		return new HAPComplexPath(this.m_fullName);
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ROOT, this.m_root);
+		if(this.m_path!=null && !this.m_path.isEmpty()) jsonMap.put(PATH, this.m_path.getPath());
+	}
+
 }

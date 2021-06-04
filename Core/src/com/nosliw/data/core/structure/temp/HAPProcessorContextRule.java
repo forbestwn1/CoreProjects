@@ -4,8 +4,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPElement;
-import com.nosliw.data.core.structure.HAPElementLeafData;
+import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
@@ -20,9 +20,9 @@ public class HAPProcessorContextRule {
 			for(String eleName : context.getRootNames()) {
 				HAPUtilityContext.processContextRootElement(context.getRoot(eleName), eleName, new HAPProcessorContextDefinitionElement() {
 					@Override
-					public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object obj) {
+					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 						if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-							HAPElementLeafData dataEle = (HAPElementLeafData)eleInfo.getElement();
+							HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)eleInfo.getElement();
 							if(dataEle.getDataInfo()!=null)    dataEle.getDataInfo().process(runtimeEnv);  
 						}
 						return null;

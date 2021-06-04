@@ -11,25 +11,25 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.structure.HAPElement;
-import com.nosliw.data.core.structure.HAPElementLeafData;
-import com.nosliw.data.core.structure.HAPElementLeafRelative;
-import com.nosliw.data.core.structure.HAPElementNode;
+import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
+import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPUtilityValueStructure {
 
-	public static HAPRoot getRootFromGroupStructure(HAPValueStructureDefinitionGroup groupStructure, String categary, String name) {
-		List<HAPRoot> roots = groupStructure.resolveRoot(new HAPReferenceRootInGroup(categary, name), false);
+	public static HAPRootStructure getRootFromGroupStructure(HAPValueStructureDefinitionGroup groupStructure, String categary, String name) {
+		List<HAPRootStructure> roots = groupStructure.resolveRoot(new HAPReferenceRootInGroup(categary, name), false);
 		if(roots==null || roots.size()==0)   return null;
 		return roots.get(0);
 	}
 	
 	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPValueStructure valueStructure) {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
-		for(HAPRoot root : valueStructure.getAllRoots()) {
+		for(HAPRootStructure root : valueStructure.getAllRoots()) {
 			out.addRoot(root);
 		}
 		return out;
@@ -46,7 +46,7 @@ public class HAPUtilityValueStructure {
 			else if(structureType.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT)) {
 				rootReference = new HAPReferenceRootInFlat(rootName);
 			}
-			List<HAPRoot> roots = valueStructure.resolveRoot(rootReference, false);
+			List<HAPRootStructure> roots = valueStructure.resolveRoot(rootReference, false);
 			if(roots!=null && roots.size()>0) {
 				out.put(roots.get(0).getLocalId(), values.get(rootName));
 			}
@@ -82,7 +82,7 @@ public class HAPUtilityValueStructure {
 		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {
 			HAPComplexPath path = new HAPComplexPath(idPath);
-			String id = path.getRootName();
+			String id = path.getRoot();
 			List<HAPInfoAlias> aliases = structure.discoverRootAliasById(id);
 			out.addVariableCriteriaInfo(dataVarsInfoByIdPath.get(idPath), idPath, aliases);
 		}
@@ -93,7 +93,7 @@ public class HAPUtilityValueStructure {
 	//find all data variables in context 
 	public static Map<String, HAPInfoCriteria> discoverDataVariablesByIdInStructure(HAPValueStructure structure){
 		Map<String, HAPInfoCriteria> out = new LinkedHashMap<String, HAPInfoCriteria>();
-		for(HAPRoot root : structure.getAllRoots()){
+		for(HAPRootStructure root : structure.getAllRoots()){
 			if(!root.isConstant()){
 				discoverDataVariableInElement(root.getLocalId(), root.getDefinition(), out);
 			}
@@ -104,20 +104,20 @@ public class HAPUtilityValueStructure {
 	//discover data type criteria defined in context node
 	//the purpose is to find variables related with data type criteria
 	//the data type criteria name is full name in path, for instance, a.b.c.d
-	private static void discoverDataVariableInElement(String path, HAPElement contextDefEle, Map<String, HAPInfoCriteria> criterias){
+	private static void discoverDataVariableInElement(String path, HAPElementStructure contextDefEle, Map<String, HAPInfoCriteria> criterias){
 		switch(contextDefEle.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE:
-			HAPElementLeafRelative relativeEle = (HAPElementLeafRelative)contextDefEle;
+			HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)contextDefEle;
 			if(relativeEle.getDefinition()!=null)		discoverDataVariableInElement(path, relativeEle.getSolidStructureElement(), criterias);
 			break;
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
-			HAPElementLeafData dataEle = (HAPElementLeafData)contextDefEle;
+			HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)contextDefEle;
 			HAPInfoCriteria varInfo = HAPInfoCriteria.buildCriteriaInfo(dataEle.getCriteria());
 //			varInfo.setId(path);
 			criterias.put(path, varInfo);
 			break;
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
-			HAPElementNode nodeEle = (HAPElementNode)contextDefEle;
+			HAPElementStructureNode nodeEle = (HAPElementStructureNode)contextDefEle;
 			for(String childName : nodeEle.getChildren().keySet()) {
 				String childPath = HAPNamingConversionUtility.cascadeComponentPath(path, childName);
 				discoverDataVariableInElement(childPath, nodeEle.getChildren().get(childName), criterias);

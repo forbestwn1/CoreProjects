@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 
 //flat context represent result of flat a context group to context
 //one root in context group named Abc will generate two element in context: local Abc and global Abc___categary
@@ -24,19 +24,19 @@ public class HAPExecutableValueStructure extends HAPSerializableImp
 	@HAPAttribute
 	public static final String ROOT = "root";
 
-	private Map<String, HAPRoot> m_roots;
+	private Map<String, HAPRootStructure> m_roots;
 	
 	public HAPExecutableValueStructure() {
-		this.m_roots = new LinkedHashMap<String, HAPRoot>();
+		this.m_roots = new LinkedHashMap<String, HAPRootStructure>();
 	}
 
-	public HAPRoot getRoot(String localId) {  return this.m_roots.get(localId); }
+	public HAPRootStructure getRoot(String localId) {  return this.m_roots.get(localId); }
 
-	public void addRoot(HAPRoot root) {
+	public void addRoot(HAPRootStructure root) {
 		this.m_roots.put(root.getName(), root);
 	}
 
-	public Set<HAPRoot> getAllRoots(){	return new HashSet<HAPRoot>(this.m_roots.values());	}
+	public Set<HAPRootStructure> getAllRoots(){	return new HashSet<HAPRootStructure>(this.m_roots.values());	}
 	
 	public Set<String> getAllNames(){
 		Set<String> out = new HashSet<String>();
@@ -50,6 +50,7 @@ public class HAPExecutableValueStructure extends HAPSerializableImp
 		for(String varId : this.m_roots.keySet()) {
 			map.put(varId, HAPJsonUtility.buildJson(this.m_roots.get(varId), HAPSerializationFormat.JSON));
 		}
+		jsonMap.put(ROOT, HAPJsonUtility.buildMapJson(map));
 	}
 
 	public HAPExecutableValueStructure cloneExecutableStructure() {

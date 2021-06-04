@@ -16,8 +16,8 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.structure.HAPElementLeafData;
-import com.nosliw.data.core.structure.HAPElementLeafRelative;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
 import com.nosliw.data.core.valuestructure.HAPReferenceRootInGroup;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
@@ -57,8 +57,8 @@ public class HAPUITagDefinitionParser {
 	}
 	
 	private static void parseUITagDefinitionData(HAPUITagDefinitionData definition, NativeObject defObjJS) {
-		HAPElementLeafRelative eleDef = (HAPElementLeafRelative)definition.getValueStructureDefinition().resolveRoot(new HAPReferenceRootInGroup(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE, "internal_data"), false).iterator().next().getDefinition();
-		definition.setDataTypeCriteria(((HAPElementLeafData)eleDef.getDefinition()).getCriteria());
+		HAPElementStructureLeafRelative eleDef = (HAPElementStructureLeafRelative)definition.getValueStructureDefinition().resolveRoot(new HAPReferenceRootInGroup(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE, "internal_data"), false).iterator().next().getDefinition();
+		definition.setDataTypeCriteria(((HAPElementStructureLeafData)eleDef.getDefinition()).getCriteria());
 	}
 	
 	private static void parseUITagDefinition(HAPUITagDefinition definition, NativeObject defObjJS) throws Exception {

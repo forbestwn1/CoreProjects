@@ -11,12 +11,12 @@ public class HAPProcessorElementRule {
 	//process rule in data variable in context 
 	public static HAPStructure process(HAPStructure structure, HAPRuntimeEnvironment runtimeEnv) {
 
-		for(HAPRoot root : structure.getAllRoots()) {
+		for(HAPRootStructure root : structure.getAllRoots()) {
 			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
 				@Override
-				public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object obj) {
+				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-						HAPElementLeafData dataEle = (HAPElementLeafData)eleInfo.getElement();
+						HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)eleInfo.getElement();
 						if(dataEle.getDataInfo()!=null)    dataEle.getDataInfo().process(runtimeEnv);  
 					}
 					return null;

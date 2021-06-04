@@ -80,7 +80,7 @@ public class HAPProcessorScript {
 			@Override
 			public String getUpdatedName(String name) {
 				HAPComplexPath namePath = new HAPComplexPath(name);
-				return new HAPComplexPath(HAPUtilityStructure.resolveRoot(namePath.getRootName(), valueStructure, false).iterator().next().getLocalId(), namePath.getPath().getPath()).getFullName();
+				return new HAPComplexPath(HAPUtilityStructure.resolveRoot(namePath.getRoot(), valueStructure, false).iterator().next().getLocalId(), namePath.getPath().getPath()).getFullName();
 			}
 		};
 		

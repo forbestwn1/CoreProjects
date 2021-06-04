@@ -64,7 +64,7 @@ public class HAPProcessorElementConstant {
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			if(parentValueStructure!=null) {
 				//merge constants with parent
-				for(HAPRoot root : parentValueStructure.getAllRoots()) {
+				for(HAPRootStructure root : parentValueStructure.getAllRoots()) {
 					if(root.isConstant()) {
 						HAPReferenceRoot rootReference = parentValueStructure.getRootReferenceById(root.getLocalId());
 						if(out.resolveRoot(rootReference, false)==null) {
@@ -80,24 +80,24 @@ public class HAPProcessorElementConstant {
 	//find all the context root which is actually constant, convert it to constant element 
 	static private HAPStructure discoverConstantContextRoot(HAPStructure structure) {
 		HAPStructure out = structure.cloneStructure();
-		for(HAPRoot root : out.getAllRoots()) {
+		for(HAPRootStructure root : out.getAllRoots()) {
 			Object value = discoverConstantValue(root.getDefinition());
 			if(value!=null) {
-				HAPElementLeafConstant constantEle = new HAPElementLeafConstant(value);
+				HAPElementStructureLeafConstant constantEle = new HAPElementStructureLeafConstant(value);
 				root.setDefinition(constantEle);
 			}
 		}
 		return out;
 	}
 	
-	static private Object discoverConstantValue(HAPElement element) {
+	static private Object discoverConstantValue(HAPElementStructure element) {
 		String type = element.getType();
 		if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(type)) {
-			HAPElementLeafConstant constantEle = (HAPElementLeafConstant)element;
+			HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)element;
 			return constantEle.getValue();
 		}
 		else if (HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(type)) {
-			HAPElementNode nodeEle = (HAPElementNode)element;
+			HAPElementStructureNode nodeEle = (HAPElementStructureNode)element;
 			JSONObject out = new JSONObject();
 			for(String nodeName : nodeEle.getChildren().keySet()) {
 				Object childOut = discoverConstantValue(nodeEle.getChild(nodeName));
@@ -116,14 +116,14 @@ public class HAPProcessorElementConstant {
 			HAPRuntimeEnvironment runtimeEnv){
 		if(attachmentContainer==null)   return structure;
 		HAPStructure out = structure.cloneStructure();
-		for(HAPRoot root : out.getAllRoots()) {
+		for(HAPRootStructure root : out.getAllRoots()) {
 			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
 				@Override
-				public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
+				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 					if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANTREF.equals(eleInfo.getElement().getType())) {
-						HAPElementLeafConstantReference constantRefEle = (HAPElementLeafConstantReference)eleInfo.getElement();
+						HAPElementStructureLeafConstantReference constantRefEle = (HAPElementStructureLeafConstantReference)eleInfo.getElement();
 						HAPResourceDefinitionValue valueResourceDef = (HAPResourceDefinitionValue)HAPUtilityAttachment.getResourceDefinition(attachmentContainer, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, constantRefEle.getConstantName(), runtimeEnv.getResourceDefinitionManager());
-						HAPElementLeafConstant newEle = new HAPElementLeafConstant(valueResourceDef.getValue().getValue());
+						HAPElementStructureLeafConstant newEle = new HAPElementStructureLeafConstant(valueResourceDef.getValue().getValue());
 						return Pair.of(false, newEle);
 					}
 					return null;
@@ -141,12 +141,12 @@ public class HAPProcessorElementConstant {
 			HAPConfigureProcessorStructure configure,
 			HAPRuntimeEnvironment runtimeEnv){
 		HAPStructure out = structure.cloneStructure();
-		for(HAPRoot root : out.getAllRoots()) {
+		for(HAPRootStructure root : out.getAllRoots()) {
 			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
 				@Override
-				public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
+				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 					if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(eleInfo.getElement().getType())) {
-						HAPElementLeafConstant constantEle = (HAPElementLeafConstant)eleInfo.getElement();
+						HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)eleInfo.getElement();
 						solidateConstantDefEle(constantEle, structure, configure, runtimeEnv);
 						return null;
 					}
@@ -161,7 +161,7 @@ public class HAPProcessorElementConstant {
 	}
 
 	static private void solidateConstantDefEle(
-			HAPElementLeafConstant contextElement, 
+			HAPElementStructureLeafConstant contextElement, 
 			HAPStructure structure,
 			HAPConfigureProcessorStructure configure,
 			HAPRuntimeEnvironment runtimeEnv) {
@@ -260,8 +260,8 @@ public class HAPProcessorElementConstant {
 			Set<String> types = new HashSet<String>();
 			types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT);
 			HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.analyzeElementReference(constantId, structure, configure.elementReferenceResolveMode, types);
-			solidateConstantDefEle((HAPElementLeafConstant)resolveInfo.realSolved.resolvedElement, structure, configure, runtimeEnv);
-			constantsValue.put(constantId, ((HAPElementLeafConstant)HAPUtilityStructure.resolveElement(resolveInfo.realSolved)).getValue());
+			solidateConstantDefEle((HAPElementStructureLeafConstant)resolveInfo.realSolved.resolvedElement, structure, configure, runtimeEnv);
+			constantsValue.put(constantId, ((HAPElementStructureLeafConstant)HAPUtilityStructure.resolveElement(resolveInfo.realSolved)).getValue());
 		}
 
 		//process script again with constant and discovery

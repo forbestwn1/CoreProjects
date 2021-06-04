@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
-public class HAPRoot extends HAPEntityInfoWritableImp{
+public class HAPRootStructure extends HAPEntityInfoWritableImp{
 
 	public static final String INHERIT_MODE = "inherit";
 	public static final String INHERIT_MODE_FINAL = "final";
@@ -21,6 +21,7 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static final String GLOBALID = "globalId";
 
+	@HAPAttribute
 	public static final String DEFINITION = "definition";
 	
 	@HAPAttribute
@@ -36,20 +37,20 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 	private Object m_defaultValue;
 
 	//context element definition
-	private HAPElement m_definition;
+	private HAPElementStructure m_definition;
 	
 	//calculated, discover all the relative element with path to it: path --- element
-	private Map<String, HAPElementLeafRelative> m_relativeEleInfo;
+	private Map<String, HAPElementStructureLeafRelative> m_relativeEleInfo;
 	
-	public HAPRoot() {}
+	public HAPRootStructure() {}
 	
-	public HAPRoot(HAPElement definition) {  this.m_definition = definition;  }
+	public HAPRootStructure(HAPElementStructure definition) {  this.m_definition = definition;  }
 
 	public Object getDefaultValue(){   
 		Object value;
 		if(this.isConstant()) {
 			//for constant, default value is constant value
-			HAPElementLeafConstant constantEle = (HAPElementLeafConstant)this.getDefinition();
+			HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)this.getDefinition();
 			value = constantEle.getValue();
 		}
 		else {
@@ -68,7 +69,7 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 
 	public boolean isConstant() {		return HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(this.m_definition.getType());	}
 	
-	public Map<String, HAPElementLeafRelative> getRelativeInfo() {
+	public Map<String, HAPElementStructureLeafRelative> getRelativeInfo() {
 		if(this.isConstant())  return null;
 		if(this.m_relativeEleInfo==null) {
 			this.m_relativeEleInfo = HAPUtilityStructure.discoverRelativeElement(this);
@@ -79,20 +80,20 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 	
 	public boolean isAbsolute() {  return !(this.isConstant() || this.getRelativeInfo()!=null);      }
 
-	public HAPElement getDefinition() {   return this.m_definition;   }
+	public HAPElementStructure getDefinition() {   return this.m_definition;   }
 
-	public void setDefinition(HAPElement definition) {   this.m_definition = definition;  }
+	public void setDefinition(HAPElementStructure definition) {   this.m_definition = definition;  }
 	
-	public HAPRoot cloneRootBase() {
-		HAPRoot out = new HAPRoot();
+	public HAPRootStructure cloneRootBase() {
+		HAPRootStructure out = new HAPRootStructure();
 		this.cloneToEntityInfo(out);
 		out.m_localId = this.m_localId;
 		out.m_globalId = this.m_globalId;
 		return out;
 	}
 	
-	public HAPRoot cloneExceptElement() {
-		HAPRoot out = new HAPRoot();
+	public HAPRootStructure cloneExceptElement() {
+		HAPRootStructure out = new HAPRootStructure();
 		this.cloneToEntityInfo(out);
 		out.m_localId = this.m_localId;
 		out.m_globalId = this.m_globalId;
@@ -101,8 +102,8 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 		return out;
 	}
 
-	public HAPRoot cloneRoot() {
-		HAPRoot out = this.cloneExceptElement();
+	public HAPRootStructure cloneRoot() {
+		HAPRootStructure out = this.cloneExceptElement();
 		return out;
 	}
 
@@ -115,13 +116,16 @@ public class HAPRoot extends HAPEntityInfoWritableImp{
 			jsonMap.put(DEFAULT, this.m_defaultValue.toString());
 			typeJsonMap.put(DEFAULT, this.m_defaultValue.getClass());
 		}
+		
+		jsonMap.put(LOCALID, this.m_localId);
+		jsonMap.put(GLOBALID, this.m_globalId);
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		boolean out = false;
-		if(obj instanceof HAPRoot) {
-			HAPRoot root = (HAPRoot)obj;
+		if(obj instanceof HAPRootStructure) {
+			HAPRootStructure root = (HAPRootStructure)obj;
 			if(!super.equals(obj))  return false;
 			if(!HAPBasicUtility.isEquals(this.m_defaultValue, root.m_defaultValue))  return false;
 			if(!HAPBasicUtility.isEquals(this.m_definition, root.m_definition)) return false;

@@ -13,7 +13,7 @@ import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPElementLeafData;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 
@@ -78,7 +78,7 @@ public class HAPManagerExpression {
 		HAPValueStructureDefinitionFlat valueStructure = new HAPValueStructureDefinitionFlat();
 		if(varCriteria!=null) {
 			for(String varName : varCriteria.keySet()) {
-				valueStructure.addRoot(varName, new HAPElementLeafData(varCriteria.get(varName)));
+				valueStructure.addRoot(varName, new HAPElementStructureLeafData(varCriteria.get(varName)));
 			}
 		}
 		expressionGroupDef.setValueStructure(valueStructure);

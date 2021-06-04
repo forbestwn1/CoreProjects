@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitionImp{
 
@@ -34,10 +34,10 @@ public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitio
 	public boolean isEmpty() {   return true;   }
 
 	@Override
-	public HAPRoot getRoot(String rootId) {	return null;	}
+	public HAPRootStructure getRoot(String rootId) {	return null;	}
 
 	@Override
-	public List<HAPRoot> getAllRoots(){   return new ArrayList<HAPRoot>();      }
+	public List<HAPRootStructure> getAllRoots(){   return new ArrayList<HAPRootStructure>();      }
 
 	@Override
 	public HAPValueStructure cloneStructure() {
@@ -64,8 +64,8 @@ public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitio
 	}
 
 	@Override
-	public List<HAPRoot> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
-		return new ArrayList<HAPRoot>();
+	public List<HAPRootStructure> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
+		return new ArrayList<HAPRootStructure>();
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitio
 	}
 
 	@Override
-	public HAPRoot addRoot(HAPReferenceRoot rootReference, HAPRoot root) {
+	public HAPRootStructure addRoot(HAPReferenceRoot rootReference, HAPRootStructure root) {
 		// TODO Auto-generated method stub
 		return null;
 	}

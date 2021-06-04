@@ -20,7 +20,7 @@ import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
-import com.nosliw.data.core.structure.HAPElementLeafData;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPUtilityServiceUse {
@@ -42,7 +42,7 @@ public class HAPUtilityServiceUse {
 	public static HAPValueStructureDefinitionFlat buildContextFromServiceParms(HAPServiceInterface serviceInterface) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		for(HAPServiceParm parm : serviceInterface.getParms()) {
-			out.addRoot(parm.getName(), new HAPElementLeafData(new HAPVariableDataInfo(parm.getCriteria())));
+			out.addRoot(parm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo(parm.getCriteria())));
 		}
 		return out;
 	}
@@ -50,7 +50,7 @@ public class HAPUtilityServiceUse {
 	public static HAPValueStructureDefinitionFlat buildContextFromServiceParms(Map<String, HAPServiceParm> parms) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		for(String parm : parms.keySet()) {
-			out.addRoot(parm, new HAPElementLeafData(new HAPVariableDataInfo(parms.get(parm).getCriteria())));
+			out.addRoot(parm, new HAPElementStructureLeafData(new HAPVariableDataInfo(parms.get(parm).getCriteria())));
 		}
 		return out;
 	}
@@ -70,7 +70,7 @@ public class HAPUtilityServiceUse {
 	public static HAPValueStructureDefinitionFlat buildContextFromServiceOutputs(List<HAPServiceOutput> serviceOutput) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		for(HAPServiceOutput outParm : serviceOutput) {
-			out.addRoot(outParm.getName(), new HAPElementLeafData(new HAPVariableDataInfo(outParm.getCriteria())));
+			out.addRoot(outParm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo(outParm.getCriteria())));
 		}
 		return out;
 	}

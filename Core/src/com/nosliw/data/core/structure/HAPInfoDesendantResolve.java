@@ -5,7 +5,7 @@ import com.nosliw.common.path.HAPPath;
 public class HAPInfoDesendantResolve {
 
 	//solved element 
-	public HAPElement resolvedElement;
+	public HAPElementStructure resolvedElement;
 	//solved path to element
 	public HAPPath solvedPath;
 	//unsolved path part

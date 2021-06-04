@@ -25,11 +25,11 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPElementLeafRelative;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
-import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinition;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 public class HAPProcessorExpression2 {
 
@@ -102,7 +102,7 @@ public class HAPProcessorExpression2 {
 		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(exeId);
 
 		//context
-		HAPValueStructureDefinition valueStructure =  expressionGroupDef.getValueStructure();
+		HAPValueStructure valueStructure =  expressionGroupDef.getValueStructure();
 		out.setValueStructureDefinition(valueStructure);
 
 		//constant
@@ -245,7 +245,7 @@ public class HAPProcessorExpression2 {
 								Set<String> aliases = referedVarsContainer.getVariableInfoById(missedRefVar);
 								boolean override = parentVarsContainer.addVariableCriteriaInfo(referedVarsContainer.getVariableCriteriaInfoById(missedRefVar).cloneCriteriaInfo(), aliases);
 								if(override)  throw new RuntimeException();    //ref var override parent var is not allowed
-								HAPElementLeafRelative relativeEle = new HAPElementLeafRelative();
+								HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
 								String varName = aliases.iterator().next();
 								relativeEle.setPath(varName);
 								da.addRoot(varName, relativeEle);

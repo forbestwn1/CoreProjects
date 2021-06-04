@@ -25,7 +25,7 @@ public class HAPProcessorEscalate {
 		Map<String, String> contextMapping = new LinkedHashMap<String, String>();
 		contextMapping.putAll(cm);
 
-		for(HAPRoot root : structure.getAllRoots()) {
+		for(HAPRootStructure root : structure.getAllRoots()) {
 			if(structure.isExternalVisible(root.getLocalId())) {
 				//only external visible root
 				List<HAPInfoAlias> rootAliases = structure.discoverRootAliasById(root.getLocalId());
@@ -46,23 +46,23 @@ public class HAPProcessorEscalate {
 	//escalte context node to parent context group, only absolute variable
 	public static void process(HAPTreeNodeValueStructure sourceNode, String sourceRootId, String escalateTargetPath, Set<String> inheritanceExcludedInfo) {
 		HAPValueStructure sourceStructure = sourceNode.getValueStructure();
-		HAPRoot sourceRootNode = sourceStructure.getRoot(sourceRootId);
+		HAPRootStructure sourceRootNode = sourceStructure.getRoot(sourceRootId);
 		if(sourceRootNode.isAbsolute()) {
 			HAPComplexPath complexPath = new HAPComplexPath(escalateTargetPath);
-			Pair<Boolean, HAPRoot> a = escalate(sourceNode, sourceRootId, sourceNode.getParent(), complexPath, inheritanceExcludedInfo);
+			Pair<Boolean, HAPRootStructure> a = escalate(sourceNode, sourceRootId, sourceNode.getParent(), complexPath, inheritanceExcludedInfo);
 			
-			HAPRoot b = getEscalateStepRootNode(a, complexPath, inheritanceExcludedInfo);
+			HAPRootStructure b = getEscalateStepRootNode(a, complexPath, inheritanceExcludedInfo);
 			sourceStructure.addRoot(sourceStructure.getRootReferenceById(sourceRootId), b);
 		}
 	}
 	
 	//out.left: true--escalate to existing root node    false--escalate to new root node
-	private static Pair<Boolean, HAPRoot> escalate(HAPTreeNodeValueStructure originalNode, String originalRootId, HAPTreeNodeValueStructure parentNode, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
+	private static Pair<Boolean, HAPRootStructure> escalate(HAPTreeNodeValueStructure originalNode, String originalRootId, HAPTreeNodeValueStructure parentNode, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
 		
 		HAPValueStructure originalStrucutre = originalNode.getValueStructure();
 		HAPValueStructure parentStructure = parentNode.getValueStructure();
 		
-		Pair<Boolean, HAPRoot> out = null;
+		Pair<Boolean, HAPRootStructure> out = null;
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.analyzeElementReference(new HAPReferenceElement(path.getFullName()), parentStructure, HAPConstant.RESOLVEPARENTMODE_FIRST, null);
 		if(HAPUtilityStructure.isLogicallySolved(resolveInfo)) {
 			//find matched one
@@ -80,16 +80,16 @@ public class HAPProcessorEscalate {
 				//only root name is valid, mappedPath with path is not valid
 				if(HAPBasicUtility.isStringEmpty(path.getPathStr())) {
 					//clone original root node to parent context
-					HAPRoot newRoot = HAPUtilityStructure.addRoot(parentStructure, path.getRootName(), originalStrucutre.getRoot(originalRootId).cloneRoot());
+					HAPRootStructure newRoot = HAPUtilityStructure.addRoot(parentStructure, path.getRoot(), originalStrucutre.getRoot(originalRootId).cloneRoot());
 					out = Pair.of(false, newRoot);
 				}
 				else HAPErrorUtility.invalid("");
 			}
 			else {
 				//keep escalate to grand parent
-				Pair<Boolean, HAPRoot> a = escalate(originalNode, originalRootId, grandParentNode, path, inheritanceExcludedInfo);
-				HAPRoot b = getEscalateStepRootNode(a, path, inheritanceExcludedInfo);
-				HAPRoot newRoot = HAPUtilityStructure.addRoot(parentStructure, path.getRootName(), b);
+				Pair<Boolean, HAPRootStructure> a = escalate(originalNode, originalRootId, grandParentNode, path, inheritanceExcludedInfo);
+				HAPRootStructure b = getEscalateStepRootNode(a, path, inheritanceExcludedInfo);
+				HAPRootStructure newRoot = HAPUtilityStructure.addRoot(parentStructure, path.getRoot(), b);
 				out = Pair.of(false, newRoot);
 			}
 		}
@@ -97,13 +97,13 @@ public class HAPProcessorEscalate {
 	}
 
 	
-	private static HAPRoot getEscalateStepRootNode(Pair<Boolean, HAPRoot> stepResult, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
-		HAPRoot out;
+	private static HAPRootStructure getEscalateStepRootNode(Pair<Boolean, HAPRootStructure> stepResult, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
+		HAPRootStructure out;
 		if(stepResult.getLeft()) {
 			out = stepResult.getRight();
 		}
 		else {
-			out = HAPUtilityStructure.createRootWithRelativeElement(stepResult.getRight(), null, path.getRootName(), inheritanceExcludedInfo);
+			out = HAPUtilityStructure.createRootWithRelativeElement(stepResult.getRight(), null, path.getRoot(), inheritanceExcludedInfo);
 			//kkk should set original to relative node
 		}
 		return out;

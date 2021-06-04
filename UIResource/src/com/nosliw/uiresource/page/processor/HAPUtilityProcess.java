@@ -5,8 +5,8 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.HAPElementLeafConstant;
-import com.nosliw.data.core.structure.HAPRoot;
+import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
@@ -25,8 +25,8 @@ public class HAPUtilityProcess {
 		Map<String, String> tagAttrs = HAPUtilityUITag.getTagAttributeValue(tagDef, attributes);
 		HAPValueStructureDefinitionGroup tagContext = (HAPValueStructureDefinitionGroup)tagDefinitionContext.cloneStructure();
 		for(String name : tagAttrs.keySet()) {
-			HAPElementLeafConstant cstRootNode = new HAPElementLeafConstant(tagAttrs.get(name));
-			HAPRoot root = new HAPRoot(cstRootNode);
+			HAPElementStructureLeafConstant cstRootNode = new HAPElementStructureLeafConstant(tagAttrs.get(name));
+			HAPRootStructure root = new HAPRootStructure(cstRootNode);
 			root.setName(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + name);
 			tagContext.addRoot(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE, root);
 		}
