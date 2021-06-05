@@ -24,25 +24,25 @@ public class HAPExecutableValueStructure extends HAPSerializableImp
 	@HAPAttribute
 	public static final String ROOT = "root";
 
+	@HAPAttribute
+	public static final String NAME2ID = "name2Id";
+
 	private Map<String, HAPRootStructure> m_roots;
+	
+	private Map<String, String> m_name2Id;
 	
 	public HAPExecutableValueStructure() {
 		this.m_roots = new LinkedHashMap<String, HAPRootStructure>();
+		this.m_name2Id = new LinkedHashMap<String, String>();
 	}
 
 	public HAPRootStructure getRoot(String localId) {  return this.m_roots.get(localId); }
 
-	public void addRoot(HAPRootStructure root) {
-		this.m_roots.put(root.getName(), root);
-	}
+	public void addRoot(HAPRootStructure root) {		this.m_roots.put(root.getName(), root); 	}
 
-	public Set<HAPRootStructure> getAllRoots(){	return new HashSet<HAPRootStructure>(this.m_roots.values());	}
+	public void addNameMapping(String name, String id) {  this.m_name2Id.put(name, id); 	}
 	
-	public Set<String> getAllNames(){
-		Set<String> out = new HashSet<String>();
-		out.addAll(this.m_roots.keySet());
-		return out;
-	}
+	public Set<HAPRootStructure> getAllRoots(){	return new HashSet<HAPRootStructure>(this.m_roots.values());	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -51,6 +51,7 @@ public class HAPExecutableValueStructure extends HAPSerializableImp
 			map.put(varId, HAPJsonUtility.buildJson(this.m_roots.get(varId), HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(ROOT, HAPJsonUtility.buildMapJson(map));
+		jsonMap.put(NAME2ID, HAPJsonUtility.buildMapJson(m_name2Id));
 	}
 
 	public HAPExecutableValueStructure cloneExecutableStructure() {
@@ -58,6 +59,8 @@ public class HAPExecutableValueStructure extends HAPSerializableImp
 		for(String varId : this.m_roots.keySet()) {
 			out.m_roots.put(varId, this.m_roots.get(varId).cloneRoot());
 		}
+		
+		out.m_name2Id.putAll(this.m_name2Id);
 		return out;
 	}
 }

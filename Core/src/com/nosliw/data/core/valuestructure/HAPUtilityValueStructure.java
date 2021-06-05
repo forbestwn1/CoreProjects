@@ -31,6 +31,11 @@ public class HAPUtilityValueStructure {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		for(HAPRootStructure root : valueStructure.getAllRoots()) {
 			out.addRoot(root);
+			String rootId = root.getLocalId();
+			List<HAPInfoAlias> aliases = valueStructure.discoverRootAliasById(rootId);
+			for(HAPInfoAlias alias : aliases) {
+				out.addNameMapping(alias.getName(), rootId);
+			}
 		}
 		return out;
 	}

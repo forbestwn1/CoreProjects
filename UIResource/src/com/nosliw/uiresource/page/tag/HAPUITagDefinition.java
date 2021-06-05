@@ -31,7 +31,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String ATTRIBUTES = "attributes";
 	@HAPAttribute
-	public static final String VALUESTRUCTUREDEFINITION = "valueStructureDefinition";
+	public static final String VALUESTRUCTURE = "valueStructure";
 	@HAPAttribute
 	public static final String VALUESTRUCTUREEXE = "valueStructureExe";
 	@HAPAttribute
@@ -95,7 +95,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.m_type);
 		jsonMap.put(BASE, this.m_base);
-		jsonMap.put(VALUESTRUCTUREDEFINITION, this.m_valueStructureDefinition.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTURE, this.m_valueStructureDefinition.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(VALUESTRUCTUREEXE, HAPUtilityValueStructure.buildExecuatableValueStructure(this.m_valueStructureDefinition).toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));

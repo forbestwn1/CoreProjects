@@ -32,7 +32,7 @@ public class HAPManagerUITag {
 		this.m_otherTagDefs = new LinkedHashMap<String, HAPUITagDefinition>();
 		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getTagDefinitionFolder());
 		for(File file : files) {
-			HAPUITagDefinition uiTagDef = HAPUITagDefinitionParser.parseFromFile(file);
+			HAPUITagDefinition uiTagDef = HAPParserUITagDefinition.parseFromFile(file);
 			uiTagDef.setSourceFile(file);
 			String type = uiTagDef.getType();
 			if(HAPConstantShared.UITAG_TYPE_DATA.equals(type)) {
@@ -97,7 +97,7 @@ public class HAPManagerUITag {
 		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + id.getId() + ".js";
 		File file = new File(fileName);
 		
-		HAPUITagDefinition out = HAPUITagDefinitionParser.parseFromFile(file);
+		HAPUITagDefinition out = HAPParserUITagDefinition.parseFromFile(file);
 		out.setSourceFile(file);
 		
 		return out;

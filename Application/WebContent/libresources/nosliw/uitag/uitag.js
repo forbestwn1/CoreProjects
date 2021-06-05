@@ -93,9 +93,9 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		var out;
 		if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
 			if(exContext==undefined)   exContext = loc_context;
-			out = node_contextUtility.buildContextFromFlat(
+			out = node_contextUtility.buildContext(
 					contextId, 
-					loc_tagConfigure.bodyContextDef, 
+					loc_tagConfigure.bodyContextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUESTRUCTURE_ROOT], 
 					exContext);
 		}
 		else if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
@@ -124,6 +124,24 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		return out;
 	};
 
+	var loc_getContextRootIdByName = function(name){
+		if(loc_tagConfigure.contextDef==undefined)  return name;
+		else{
+			return loc_tagConfigure.contextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUESTRUCTURE_NAME2ID][name];
+		}
+	};
+	
+	var loc_getVariableIdByName = function(variableFullPath){
+		var root = variableFullPath;
+		var path;
+		var index = variableFullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
+		if(index!=-1){
+			root = variableFullPath.substring(0, index);
+			path = variableFullPath.substring(index+1);
+		}
+		return node_namingConvensionUtility.cascadePath(loc_getContextRootIdByName(root), path);
+	};
+	
 	//runtime env for uiTagObj
 	//include : basic info, utility method
 	var loc_envObj = {
@@ -141,8 +159,9 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		getMode : function(){   return loc_mode;   },
 		
 		//utility methods
-		createVariable : function(fullPath){  
-			return loc_context.createVariable(node_createContextVariableInfo(fullPath));  
+		createVariable : function(fullNamePath){  
+			var fullIdPath = loc_getVariableIdByName(fullNamePath);
+			return loc_context.createVariable(node_createContextVariableInfo(fullIdPath));  
 		},
 		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo);  },
 		
@@ -176,7 +195,9 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		//---------------------------------context definition
 		getTagContextElementDefinition : function(name){
 			if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
-				return node_aliasUtility.getFlatContextElementByAlias(name, loc_tagConfigure.contextDef); 
+				var eleId = loc_getContextRootIdByName(name);
+				return loc_tagConfigure.contextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUESTRUCTURE_ROOT][eleId];
+//				return node_aliasUtility.getFlatContextElementByAlias(name, loc_tagConfigure.contextDef); 
 			}			
 			else if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
 				var eleDef =  node_contextUtility.getContextElementDefinitionFromFlatContext(uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], name);
@@ -197,13 +218,14 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		//---------------------------------build context
 		createContextElementInfo : function(name, data1, data2, adapterInfo, info){
 			var out = [];
-			_.each(loc_getRelatedName(name), function(name, index){
-				out.push(node_createContextElementInfo(name, data1, data2, adapterInfo, info));  
-			});
+			out.push(node_createContextElementInfo(loc_getContextRootIdByName(name), data1, data2, adapterInfo, info));  
+//			_.each(loc_getRelatedName(name), function(name, index){
+//				out.push(node_createContextElementInfo(name, data1, data2, adapterInfo, info));  
+//			});
 			return out;
 		},
 		createContextElementInfoFromContext : function(name, contextEle, path){	 
-			return node_createContextElementInfo(name, loc_context, node_createContextVariableInfo(contextEle, path));	
+			return node_createContextElementInfo(loc_getContextRootIdByName(name), loc_context, node_createContextVariableInfo(contextEle, path));	
 		},
 		
 		//create extended ui tag resource context : 
@@ -223,15 +245,15 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		},
 		
 		//---------------------------------operation request
-		getDataOperationGet : function(target, path){  return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createGetOperationService(path)); },
+		getDataOperationGet : function(target, path){  return new node_UIDataOperation(loc_getContextRootIdByName(target), node_uiDataOperationServiceUtility.createGetOperationService(path)); },
 		getDataOperationRequestGet : function(target, path, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(target, path), handler, request);	},
 		executeDataOperationRequestGet : function(target, path, handler, request){			return this.processRequest(this.getDataOperationRequestGet(target, path, handler, request));		},
 
-		getDataOperationSet : function(target, path, value){  return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createSetOperationService(path, value)); },
+		getDataOperationSet : function(target, path, value){  return new node_UIDataOperation(loc_getContextRootIdByName(target), node_uiDataOperationServiceUtility.createSetOperationService(path, value)); },
 		getDataOperationRequestSet : function(target, path, value, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationSet(target, path, value), handler, request);	},
 		executeDataOperationRequestSet : function(target, path, value, handler, request){	return this.processRequest(this.getDataOperationRequestSet(target, path, value, handler, request));	},
 
-		createHandleEachElementProcessor : function(name, path){  return this.getContext().createHandleEachElementProcessor(name, path);  },
+		createHandleEachElementProcessor : function(name, path){  return this.getContext().createHandleEachElementProcessor(loc_getContextRootIdByName(name), path);  },
 		
 		getBatchDataOperationRequest : function(operations, handlers, request){
 			var requestInfo = node_createBatchUIDataOperationRequest(loc_context, handlers, request);
@@ -293,9 +315,9 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 
 		//create context
 		if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
-			loc_context = node_contextUtility.buildContextFromFlat(
+			loc_context = node_contextUtility.buildContext(
 					"Tag_"+loc_tagName,
-					loc_tagConfigure.contextDef, 
+					loc_tagConfigure.contextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUESTRUCTURE_ROOT], 
 					loc_parentContext);
 		}
 		else if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){

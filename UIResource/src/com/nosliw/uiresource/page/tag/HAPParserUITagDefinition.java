@@ -23,7 +23,7 @@ import com.nosliw.data.core.valuestructure.HAPReferenceRootInGroup;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
-public class HAPUITagDefinitionParser {
+public class HAPParserUITagDefinition {
 
 	public static HAPUITagDefinition parseFromFile(File file){
 		HAPUITagDefinition out = null;
@@ -70,9 +70,9 @@ public class HAPUITagDefinitionParser {
     	
 		//parse context
 		HAPValueStructureDefinitionGroup valueStructure = definition.getValueStructureDefinition();
-		NativeObject valueStructureObj = (NativeObject)defObjJS.get(HAPUITagDefinition.VALUESTRUCTUREDEFINITION);
+		NativeObject valueStructureObj = (NativeObject)defObjJS.get(HAPUITagDefinition.VALUESTRUCTURE);
 		JSONObject valueStructureJson = (JSONObject)HAPRhinoDataUtility.toJson(valueStructureObj);
-		HAPUITagDefinitionParser.parseValueStructureInTagDefinition(valueStructureJson, valueStructure);
+		HAPParserUITagDefinition.parseValueStructureInTagDefinition(valueStructureJson, valueStructure);
 		
 		//parse dependency
 		NativeObject requiresObj = (NativeObject)defObjJS.get(HAPUITagDefinition.REQUIRES);
