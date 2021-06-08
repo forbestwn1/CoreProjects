@@ -7,7 +7,7 @@
     	<br>
 	EXPRESSION IN CONTENT :<%=?(aaa)?.value + '   6666 ' %>
 	<br>
-    	<!--CUSTOM TAG:<nosliw-string data="aaa"/>-->   
+    CUSTOM TAG:<nosliw-string data="aaa"/>   
     
 </body>
 

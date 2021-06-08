@@ -34,6 +34,7 @@ var packageObj = library;
 	var node_resourceUtility;
 	var node_createUITagOnBaseSimple;
 	var node_createUITagOnBaseArray;
+	var node_namingConvensionUtility;
 	var node_aliasUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -245,11 +246,19 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		},
 		
 		//---------------------------------operation request
-		getDataOperationGet : function(target, path){  return new node_UIDataOperation(loc_getContextRootIdByName(target), node_uiDataOperationServiceUtility.createGetOperationService(path)); },
+		getDataOperationGet : function(target, path){  
+			if (typeof target === 'string' || target instanceof String)   target = loc_getContextRootIdByName(target);
+			return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createGetOperationService(path)); 
+		},
 		getDataOperationRequestGet : function(target, path, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(target, path), handler, request);	},
-		executeDataOperationRequestGet : function(target, path, handler, request){			return this.processRequest(this.getDataOperationRequestGet(target, path, handler, request));		},
+		executeDataOperationRequestGet : function(target, path, handler, request){			
+			return this.processRequest(this.getDataOperationRequestGet(target, path, handler, request));		
+		},
 
-		getDataOperationSet : function(target, path, value){  return new node_UIDataOperation(loc_getContextRootIdByName(target), node_uiDataOperationServiceUtility.createSetOperationService(path, value)); },
+		getDataOperationSet : function(target, path, value){  
+			if (typeof target === 'string' || target instanceof String)   target = loc_getContextRootIdByName(target);
+			return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createSetOperationService(path, value)); 
+		},
 		getDataOperationRequestSet : function(target, path, value, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationSet(target, path, value), handler, request);	},
 		executeDataOperationRequestSet : function(target, path, value, handler, request){	return this.processRequest(this.getDataOperationRequestSet(target, path, value, handler, request));	},
 
@@ -462,6 +471,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uitag.createUITagOnBaseSimple", function(){node_createUITagOnBaseSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uitag.createUITagOnBaseArray", function(){node_createUITagOnBaseArray = this.getData();});
+nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.aliasUtility", function(){node_aliasUtility = this.getData();});
 
 //Register Node by Name
