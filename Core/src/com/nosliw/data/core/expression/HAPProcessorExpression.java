@@ -98,7 +98,7 @@ public class HAPProcessorExpression {
 		}
 		
 		HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression = new HAPContainerVariableCriteriaInfo();
-		HAPContainerVariableCriteriaInfo varCrteriaInfoInStructure = HAPUtilityValueStructure.discoverDataVariablesInStructure(expressionExe.getValueStructureDefinitionWrapper().getValueStructure());
+		HAPContainerVariableCriteriaInfo varCrteriaInfoInStructure = HAPUtilityValueStructure.discoverDataVariablesInStructure(HAPUtilityValueStructure.getValueStructureFromWrapper(expressionExe.getValueStructureDefinitionWrapper()));
 		for(String varId : HAPUtilityExpression.discoverDataVariablesIdInExpression(expressionExe)) {
 			varCrteriaInfoInExpression.addVariable(varId, varCrteriaInfoInStructure.getVariableCriteriaInfo(varId));
 		}
@@ -213,7 +213,7 @@ public class HAPProcessorExpression {
 		//constant
 		//constant --- discover constant from attachment and context
 		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>(); 
-		constants.putAll(HAPUtilityComponentConstant.getConstantsData(expressionGroupDef, out.getValueStructureDefinitionWrapper().getValueStructure()));
+		constants.putAll(HAPUtilityComponentConstant.getConstantsData(expressionGroupDef, HAPUtilityValueStructure.getValueStructureFromWrapper(out.getValueStructureDefinitionWrapper())));
 		out.setDataConstants(constants);
 		
 		//expression element
@@ -313,7 +313,7 @@ public class HAPProcessorExpression {
 	private static void replaceVarNameWithId(HAPExecutableExpressionGroupInSuite expressionExe) {
 		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();
 		
-		HAPStructure structure = expressionExe.getValueStructureDefinitionWrapper().getValueStructure();
+		HAPStructure structure = HAPUtilityValueStructure.getValueStructureFromWrapper(expressionExe.getValueStructureDefinitionWrapper());
 		
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpression expressionItem = expressionItems.get(name);

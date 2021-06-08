@@ -13,7 +13,7 @@
     	<br>
 	EXPRESSION IN CONTENT :<%=?(varFromContext1.attr1.attr11)?.value + '   6666 ' %>
 	<br>
-    	CUSTOM TAG:<nosliw-string data="varFromContext1.attr1.attr11"/>  
+    	CUSTOM TAG:<nosliw-string data="varFromContext1.attr1.attr11"/>   
     
 </body>
 

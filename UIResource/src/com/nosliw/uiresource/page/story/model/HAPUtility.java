@@ -37,7 +37,7 @@ public class HAPUtility {
 		HAPValueStructureDefinitionGroup childContext = null;
 		if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
 			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
-			childContext = HAPUtilityProcess.buildUITagContext(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, runtimeEnv);
+			childContext = HAPUtilityProcess.buildUITagValueStructure(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, runtimeEnv);
 			childContext = HAPProcessorContext.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
 			out.setContext(childContext);
 		}

@@ -17,7 +17,7 @@ import com.nosliw.uiresource.page.tag.HAPUtilityUITag;
 public class HAPUtilityProcess {
 
 	//build context for ui Tag
-	public static HAPValueStructureDefinitionGroup buildUITagContext(HAPUITagDefinition tagDef, HAPValueStructureDefinitionGroup parentValueStructure, Map<String, String> attributes, HAPConfigureProcessorStructure contextProcessorConfig, HAPRuntimeEnvironment runtimeEnv){
+	public static HAPValueStructureDefinitionGroup buildUITagValueStructure(HAPUITagDefinition tagDef, HAPValueStructureDefinitionGroup parentValueStructure, Map<String, String> attributes, HAPConfigureProcessorStructure contextProcessorConfig, HAPRuntimeEnvironment runtimeEnv){
 		//get contextDef 
 		HAPValueStructure tagValueStructure = tagDef.getValueStructureDefinition();
 

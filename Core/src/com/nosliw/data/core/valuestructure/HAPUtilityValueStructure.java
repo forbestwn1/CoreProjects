@@ -21,6 +21,19 @@ import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPUtilityValueStructure {
 
+	public static HAPValueStructure getValueStructureFromWrapper(HAPWrapperValueStructure wrapper) {
+		if(wrapper==null)   return null;
+		return wrapper.getValueStructure();
+	}
+	
+	public static HAPValueStructureDefinitionFlat getFlateFromWrapper(HAPWrapperValueStructure wrapper) {
+		return (HAPValueStructureDefinitionFlat)getValueStructureFromWrapper(wrapper);
+	}
+	
+	public static HAPValueStructureDefinitionGroup getGroupFromWrapper(HAPWrapperValueStructure wrapper) {
+		return (HAPValueStructureDefinitionGroup)getValueStructureFromWrapper(wrapper);
+	}
+	
 	public static HAPRootStructure getRootFromGroupStructure(HAPValueStructureDefinitionGroup groupStructure, String categary, String name) {
 		List<HAPRootStructure> roots = groupStructure.resolveRoot(new HAPReferenceRootInGroup(categary, name), false);
 		if(roots==null || roots.size()==0)   return null;
@@ -28,6 +41,7 @@ public class HAPUtilityValueStructure {
 	}
 	
 	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPValueStructure valueStructure) {
+		if(valueStructure==null)   return null;
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		for(HAPRootStructure root : valueStructure.getAllRoots()) {
 			out.addRoot(root);
@@ -98,9 +112,11 @@ public class HAPUtilityValueStructure {
 	//find all data variables in context 
 	public static Map<String, HAPInfoCriteria> discoverDataVariablesByIdInStructure(HAPValueStructure structure){
 		Map<String, HAPInfoCriteria> out = new LinkedHashMap<String, HAPInfoCriteria>();
-		for(HAPRootStructure root : structure.getAllRoots()){
-			if(!root.isConstant()){
-				discoverDataVariableInElement(root.getLocalId(), root.getDefinition(), out);
+		if(structure!=null) {
+			for(HAPRootStructure root : structure.getAllRoots()){
+				if(!root.isConstant()){
+					discoverDataVariableInElement(root.getLocalId(), root.getDefinition(), out);
+				}
 			}
 		}
 		return out;

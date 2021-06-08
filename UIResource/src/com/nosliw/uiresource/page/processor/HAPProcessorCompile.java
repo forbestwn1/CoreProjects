@@ -32,7 +32,7 @@ public class HAPProcessorCompile {
 		body.getProcessExpressionScriptContext().setValueStructureWrapper(body.getValueStructureDefinitionNode().getValueStructureWrapper());
 		
 		//expression suite from attachment
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getValueStructureDefinitionNode().getValueStructureWrapper(), runtimeEnv);
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, runtimeEnv);
 		body.getProcessExpressionScriptContext().setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment

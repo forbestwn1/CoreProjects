@@ -17,6 +17,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 @HAPEntityWithAttribute
@@ -50,7 +51,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
 	
 	//context definition
-	private HAPValueStructureDefinitionGroup m_valueStructureDefinition;
+	private HAPWrapperValueStructure m_valueStructureDefinitionWrapper;
 
 	//dependency resources
 	private List<HAPResourceDependency> m_resourceDependency;
@@ -63,7 +64,6 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	public HAPUITagDefinition(String type){
 		this.m_type = type;
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
-		this.m_valueStructureDefinition = new HAPValueStructureDefinitionGroup();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependency>();
 		this.m_eventsDefinition = new ArrayList<HAPDefinitionUIEvent>();
 	}
@@ -76,7 +76,9 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	public HAPJsonTypeScript getScript(){return this.m_script;}
 	public void setScript(String script) {  this.m_script = new HAPJsonTypeScript(script);    }
 	
-	public HAPValueStructureDefinitionGroup getValueStructureDefinition(){  return this.m_valueStructureDefinition;   }
+	public HAPValueStructureDefinitionGroup getValueStructureDefinition(){  return HAPUtilityValueStructure.getGroupFromWrapper(this.m_valueStructureDefinitionWrapper);  }
+	public HAPWrapperValueStructure getValueStructureDefinitionWrapper(){  return this.m_valueStructureDefinitionWrapper;  }
+	public void setValueStructureDefinitionWrapper(HAPWrapperValueStructure valueStructureWrapper){  this.m_valueStructureDefinitionWrapper = valueStructureWrapper;  }
 
 	public List<HAPResourceDependency> getResourceDependency(){   return this.m_resourceDependency;    }
 	public void addResourceDependency(HAPResourceDependency dep){  this.m_resourceDependency.add(dep);  }
@@ -95,8 +97,9 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.m_type);
 		jsonMap.put(BASE, this.m_base);
-		jsonMap.put(VALUESTRUCTURE, this.m_valueStructureDefinition.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(VALUESTRUCTUREEXE, HAPUtilityValueStructure.buildExecuatableValueStructure(this.m_valueStructureDefinition).toStringValue(HAPSerializationFormat.JSON));
+		HAPValueStructureDefinitionGroup valueStructure = HAPUtilityValueStructure.getGroupFromWrapper(m_valueStructureDefinitionWrapper);
+		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildJson(valueStructure, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTUREEXE, HAPJsonUtility.buildJson(HAPUtilityValueStructure.buildExecuatableValueStructure(valueStructure), HAPSerializationFormat.JSON));
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
 	}

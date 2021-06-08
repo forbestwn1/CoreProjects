@@ -10,13 +10,13 @@ import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 
-public class HAPProcessorUIConstantInContext {
+public class HAPProcessorUIConstantInValueStructure {
 
 	//resolve constants defined in context
 	public static void resolveConstants(HAPExecutableUIUnit exeUnit, HAPRuntime runtime) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 		HAPContextProcessExpressionScript scriptContext = body.getProcessExpressionScriptContext();
-		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(body.getValueStructureDefinitionNode().getValueStructureWrapper());
+		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(body.getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure());
 		for(String id : constantsValue.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
 			scriptContext.addConstantDefinition(constantDef);
