@@ -23,9 +23,9 @@ import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPUtilityComponent {
 
@@ -43,7 +43,7 @@ public class HAPUtilityComponent {
 		componentExe.setServiceProviders(allServiceProviders);
 		
 		//process context 
-		componentExe.setValueStructureDefinition(HAPProcessorContext.process(component.getValueStructure(), HAPContainerStructure.createDefault(parentContext==null?new HAPValueStructureDefinitionGroup():parentContext), null, contextProcessConfg, runtimeEnv));
+		componentExe.setValueStructureDefinitionWrapper(HAPProcessorContext.process(component.getValueStructureWrapper(), HAPContainerStructure.createDefault(parentContext==null?new HAPValueStructureDefinitionGroup():parentContext), null, contextProcessConfg, runtimeEnv));
 		
 		//process process suite
 		HAPResourceDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(component, activityPluginMan).cloneProcessSuiteDefinition(); 
@@ -105,23 +105,24 @@ public class HAPUtilityComponent {
 		return null;
 	}
 	
-	public static HAPValueStructure getValueStructure(Object def, HAPValueStructure extraValueStructure, HAPConfigureProcessorStructure contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {
-		HAPValueStructure out = null;
+	public static HAPWrapperValueStructure getValueStructure(Object def, HAPConfigureProcessorStructure contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {
+		HAPWrapperValueStructure out = null;
 		if(def instanceof HAPComponentContainerElement) {
-			out = HAPUtilityComponent.processElementComponentContext((HAPComponentContainerElement)def, extraValueStructure, runtimeEnv, contextProcessConfig);
+			out = ((HAPComponentContainerElement)def).getValueStructureWrapper();
 		}
 		else if(def instanceof HAPWithValueStructure){
-			out = HAPUtilityValueStructure.hardMerge(((HAPWithValueStructure)def).getValueStructure(), extraValueStructure); 
+			out = ((HAPWithValueStructure)def).getValueStructureWrapper();
 		}
 		return out;
 	}
 
 	
-	public static HAPValueStructure processElementComponentContext(HAPComponentContainerElement component, HAPValueStructure extraContext, HAPRuntimeEnvironment runtimeEnv, HAPConfigureProcessorStructure processConfigure) {
-		HAPValueStructure parentContext = HAPUtilityValueStructure.hardMerge(component.getResourceContainer().getValueStructure(), extraContext); 
-		HAPValueStructure processedEleContext = HAPProcessorContext.process(component.getComponentEntity().getValueStructure(), HAPContainerStructure.createDefault(parentContext), component.getAttachmentContainer(), null, processConfigure, runtimeEnv);
-		return HAPUtilityValueStructure.hardMerge(parentContext, processedEleContext);
-	}
+//	public static HAPValueStructure processElementComponentContext(HAPComponentContainerElement component, HAPValueStructure extraContext, HAPRuntimeEnvironment runtimeEnv, HAPConfigureProcessorStructure processConfigure) {
+//		HAPValueStructure parentContext = HAPUtilityValueStructure.hardMerge(component.getResourceContainer().getValueStructureWrapper().getValueStructure(), extraContext); 
+//		HAPValueStructure processedEleContext = HAPProcessorContext.process(component.getValueStructureWrapper().getValueStructure(), HAPContainerStructure.createDefault(parentContext), component.getAttachmentContainer(), null, processConfigure, runtimeEnv);
+//		component.getValueStructureWrapper().setValueStructure(processedEleContext);
+//		return HAPUtilityValueStructure.hardMerge(parentContext, processedEleContext);
+//	}
 
 	//parent attachment merge to child, child attachment has higher priority
 	public static void mergeWithParentAttachment(HAPWithAttachment withAttachment, HAPContainerAttachment parentAttachment) {

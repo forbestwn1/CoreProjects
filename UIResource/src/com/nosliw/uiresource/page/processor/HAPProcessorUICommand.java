@@ -31,7 +31,7 @@ public class HAPProcessorUICommand {
 		for(String name : eventsDef.keySet()) {
 			HAPDefinitionUIEvent processedEventDef = new HAPDefinitionUIEvent();
 			eventsDef.get(name).cloneToBase(processedEventDef);
-			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
+			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper()), null, contextProcessorConfig, runtimeEnv));
 			uiExe.getBody().addEventDefinition(processedEventDef);
 		}
 
@@ -42,12 +42,12 @@ public class HAPProcessorUICommand {
 			HAPDefinitionUICommand processedCommendDef = new HAPDefinitionUICommand();
 			commandDef.cloneBasicTo(processedCommendDef);
 			//command parms
-			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
+			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper()), null, contextProcessorConfig, runtimeEnv));
 
 			//command results
 			Map<String, HAPValueStructureDefinitionFlat> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
-				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
+				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper()), null, contextProcessorConfig, runtimeEnv));
 			}
 			
 			uiExe.getBody().addCommandDefinition(processedCommendDef);
@@ -60,7 +60,7 @@ public class HAPProcessorUICommand {
 				
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
-			processInteractionElement(childTag, (HAPValueStructureDefinitionGroup)uiExe.getBody().getValueStructureDefinitionNode().getValueStructure(), null, contextProcessorConfig, uiTagMan, runtimeEnv);			
+			processInteractionElement(childTag, (HAPValueStructureDefinitionGroup)uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper(), null, contextProcessorConfig, uiTagMan, runtimeEnv);			
 		}
 	}
 	
@@ -74,12 +74,12 @@ public class HAPProcessorUICommand {
 			HAPDefinitionUICommand processedCommendDef = new HAPDefinitionUICommand();
 			commandDef.cloneBasicTo(processedCommendDef);
 			//command parms
-			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
+			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper()), null, contextProcessorConfig, runtimeEnv));
 
 			//command results
 			Map<String, HAPValueStructureDefinitionFlat> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
-				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
+				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper()), null, contextProcessorConfig, runtimeEnv));
 			}
 			
 			uiExe.getBody().addCommandDefinition(processedCommendDef);

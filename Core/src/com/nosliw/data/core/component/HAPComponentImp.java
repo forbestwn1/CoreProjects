@@ -55,9 +55,9 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	@Override
 	public void addService(HAPDefinitionServiceUse service) {   this.m_serviceUse.put(service.getName(), service);     }
 	
-	protected void cloneToComponent(HAPComponent component) {
+	protected void cloneToComponent(HAPComponent component, boolean cloneValueStructure) {
 		component.setId(this.getId());
-		this.cloneToComplexResourceDefinition(component);
+		this.cloneToComplexResourceDefinition(component, cloneValueStructure);
 		for(HAPHandlerLifecycle handler : this.m_lifecycleAction) {
 			component.addLifecycleAction(handler.cloneLifecycleHander());
 		}

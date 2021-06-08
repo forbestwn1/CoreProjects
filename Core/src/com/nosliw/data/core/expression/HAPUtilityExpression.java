@@ -12,13 +12,13 @@ import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPUtilityExpression {
 
-	public static HAPValueStructure getValueStructure(Object expressionGroupDef, HAPValueStructure extraValueStructure, HAPRuntimeEnvironment runtimeEnv) {
-		return HAPUtilityComponent.getValueStructure(expressionGroupDef, extraValueStructure, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
+	public static HAPWrapperValueStructure getValueStructure(Object expressionGroupDef, HAPRuntimeEnvironment runtimeEnv) {
+		return HAPUtilityComponent.getValueStructure(expressionGroupDef, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
 	}
 	
 	//make global name
@@ -32,7 +32,7 @@ public class HAPUtilityExpression {
 	}
 
 	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPExecutableExpressionGroupInSuite expressionGroup) {
-		HAPVariableInfoInStructure allVarInfosInStructure = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(expressionGroup.getValueStructureDefinition());
+		HAPVariableInfoInStructure allVarInfosInStructure = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(expressionGroup.getValueStructureDefinitionWrapper().getValueStructure());
 
 		Map<String, HAPInfoVariable> allVarInfosInExpression = new LinkedHashMap<String, HAPInfoVariable>(); 
 		for(HAPExecutableExpression expression : expressionGroup.getExpressionItems().values()) {

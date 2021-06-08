@@ -10,12 +10,13 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements HAPDefinitionExpressionGroup, HAPWithValueStructure{
 
 	private Map<String, HAPDefinitionExpression> m_elements;
 	
-	private HAPValueStructure m_valueStructure;
+	private HAPWrapperValueStructure m_valueStructureWrapper;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
@@ -29,14 +30,26 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	}
 
 	@Override
-	public HAPValueStructure getValueStructure() {   return this.m_valueStructure;  }
+	public HAPWrapperValueStructure getValueStructureWrapper() {   return this.m_valueStructureWrapper;  }
 
 	@Override
-	public void setValueStructure(HAPValueStructure valueStructure) {  this.m_valueStructure = valueStructure;  }
+	public void setValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper) {  this.m_valueStructureWrapper = valueStructureWrapper;  }
 
-	@Override
-	public void cloneToWithValueStructure(HAPWithValueStructure withValueStructure) {   withValueStructure.setValueStructure((HAPValueStructure)this.m_valueStructure.cloneStructure());  }
-
+	public HAPValueStructure getValueStructure() {
+		HAPValueStructure out = null;
+		if(this.getValueStructureWrapper()!=null) out = this.getValueStructureWrapper().getValueStructure();
+		return out;
+	}
+	
+	public void setValueStructure(HAPValueStructure valueStructure) {
+		if(this.m_valueStructureWrapper==null) {
+			this.m_valueStructureWrapper = new HAPWrapperValueStructure(valueStructure);
+		}
+		else {
+			this.m_valueStructureWrapper.setValueStructure(valueStructure);
+		}
+	}
+	
 	@Override
 	public Set<HAPDefinitionExpression> getEntityElements() {  return new HashSet<HAPDefinitionExpression>(this.m_elements.values()); }
 
@@ -61,7 +74,7 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	@Override
 	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() {
 		HAPDefinitionExpressionGroupImp out = new HAPDefinitionExpressionGroupImp();
-		if(this.m_valueStructure!=null)	out.m_valueStructure = (HAPValueStructure)this.m_valueStructure.cloneStructure();
+		if(this.m_valueStructureWrapper!=null)	out.m_valueStructureWrapper = this.m_valueStructureWrapper.cloneValueStructureWrapper();
 		for(String id : this.m_elements.keySet()) {
 			out.m_elements.put(id, this.m_elements.get(id).cloneDefinitionExpression());
 		}

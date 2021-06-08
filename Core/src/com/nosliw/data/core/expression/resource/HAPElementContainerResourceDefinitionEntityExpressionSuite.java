@@ -52,7 +52,7 @@ public class HAPElementContainerResourceDefinitionEntityExpressionSuite
 	@Override
 	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {
 		HAPElementContainerResourceDefinitionEntityExpressionSuite out = new HAPElementContainerResourceDefinitionEntityExpressionSuite();
-		this.cloneToResourceDefinitionContainerElementEntityImpComponent(out);
+		this.cloneToResourceDefinitionContainerElementEntityImpComponent(out, true);
 		for(String name : this.m_element.keySet()) {
 			out.m_element.put(name, this.m_element.get(name).cloneDefinitionExpression());
 		}

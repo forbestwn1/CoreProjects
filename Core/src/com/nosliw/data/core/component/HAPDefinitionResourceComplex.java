@@ -8,5 +8,5 @@ public interface HAPDefinitionResourceComplex extends HAPDefinitionEntityComplex
 	//all external resource reffered by this complex resource, for debug purpose
 	HAPContainerChildReferenceResource getChildrenReferencedResource();
 
-	void cloneToComplexResourceDefinition(HAPDefinitionResourceComplex complexEntity);
+	void cloneToComplexResourceDefinition(HAPDefinitionResourceComplex complexEntity, boolean cloneValueStructure);
 }

@@ -29,10 +29,10 @@ public class HAPProcessorCompile {
 		if(parentUnitDef!=null)   HAPUtilityComponent.mergeWithParentAttachment(uiUnitDef, parentUnitDef.getAttachmentContainer());
 
 		//expression context
-		body.getProcessExpressionScriptContext().setValueStructure(body.getValueStructureDefinitionNode().getValueStructure());
+		body.getProcessExpressionScriptContext().setValueStructureWrapper(body.getValueStructureDefinitionNode().getValueStructureWrapper());
 		
 		//expression suite from attachment
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getValueStructureDefinitionNode().getValueStructure(), runtimeEnv);
+		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(uiUnitDef, body.getValueStructureDefinitionNode().getValueStructureWrapper(), runtimeEnv);
 		body.getProcessExpressionScriptContext().setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment

@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.common.HAPUtilityWithValueStructure;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPReferenceAttachment;
@@ -22,7 +22,7 @@ import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public abstract class HAPComponentContainerElement extends HAPSerializableImp implements HAPComponent{
 
@@ -45,7 +45,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	private HAPComponent m_componentEntity;
 	
 	//calculate out
-	private HAPValueStructure m_contextStructure;
+	private HAPWrapperValueStructure m_valueStructureWrapper;
 	
 	protected HAPComponentContainerElement() {}
 	
@@ -54,7 +54,9 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		this.m_elementId = elementId;
 		this.m_componentEntity = ((HAPComponent)this.getResourceContainer().getContainerElement(this.getElementId())).cloneComponent();
 		HAPUtilityComponent.mergeWithParentAttachment(this.m_componentEntity, this.m_componentContainer.getAttachmentContainer());    //build attachment
-		this.m_contextStructure = HAPUtilityValueStructure.hardMerge(this.m_componentEntity.getValueStructure(), this.m_componentContainer.getValueStructure());   //build context
+		//build value structure
+		
+		this.m_valueStructureWrapper = new HAPWrapperValueStructure(HAPUtilityValueStructure.hardMerge(HAPUtilityWithValueStructure.getValueStructure(m_componentEntity), HAPUtilityWithValueStructure.getValueStructure(m_componentContainer)));   
 		HAPInfoUtility.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
 	}
 
@@ -63,7 +65,10 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 	
 	@Override
-	public HAPValueStructure getValueStructure() {	return this.m_contextStructure;	}
+	public HAPWrapperValueStructure getValueStructureWrapper() {	return this.m_valueStructureWrapper;	}
+
+	@Override
+	public void setValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper) {   this.m_valueStructureWrapper = valueStructureWrapper;	}
 
 	public HAPResourceDefinitionContainer getResourceContainer() {   return this.m_componentContainer;    }
 	public void setResourceContainer(HAPResourceDefinitionContainer container) {   this.m_componentContainer = container;     }
@@ -115,6 +120,12 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		jsonMap.put(CONTAINER, HAPJsonUtility.buildJson(this.m_componentContainer, HAPSerializationFormat.JSON));
 	}
 	
+	@Override
+	public void cloneToComplexResourceDefinition(HAPDefinitionResourceComplex complexEntity,
+			boolean cloneValueStructure) {
+		// TODO Auto-generated method stub
+	}
+
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
@@ -182,12 +193,6 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	}
 
 	@Override
-	public void setValueStructure(HAPValueStructure valueStructure) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return null;
@@ -236,13 +241,6 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		
 	}
 
-
-	@Override
-	public void cloneToWithValueStructure(HAPWithValueStructure dataContext) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void setAttachmentContainer(HAPContainerAttachment attachmentContainer) {
 		// TODO Auto-generated method stub
@@ -251,12 +249,6 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 	@Override
 	public void cloneToAttachment(HAPWithAttachment withAttachment) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void cloneToComplexResourceDefinition(HAPDefinitionResourceComplex complexEntity) {
 		// TODO Auto-generated method stub
 		
 	}

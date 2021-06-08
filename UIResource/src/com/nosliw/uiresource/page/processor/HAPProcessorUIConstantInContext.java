@@ -16,7 +16,7 @@ public class HAPProcessorUIConstantInContext {
 	public static void resolveConstants(HAPExecutableUIUnit exeUnit, HAPRuntime runtime) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 		HAPContextProcessExpressionScript scriptContext = body.getProcessExpressionScriptContext();
-		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(body.getValueStructureDefinitionNode().getValueStructure());
+		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(body.getValueStructureDefinitionNode().getValueStructureWrapper());
 		for(String id : constantsValue.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
 			scriptContext.addConstantDefinition(constantDef);

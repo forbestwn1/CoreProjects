@@ -19,7 +19,7 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 @HAPEntityWithAttribute
 public class HAPExecutableScriptGroup extends HAPExecutableImp{
@@ -30,7 +30,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
-	private HAPValueStructure m_valueStructure;
+	private HAPWrapperValueStructure m_valueStructureWrapper;
 	
 	private HAPExecutableExpressionGroup m_expressionExe;
 	
@@ -43,11 +43,9 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 //		this.m_constants = new LinkedHashMap<String, Object>();
 	}
 	
-	public void setValueStructureDefinition(HAPValueStructure valueStructure) {   
-		this.m_valueStructure = (HAPValueStructure)valueStructure.cloneStructure();
-	}
+	public void setValueStructureDefinitionWrapper(HAPWrapperValueStructure valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
 	
-	public HAPValueStructure getValueStructureDefinition() {    return this.m_valueStructure;    }
+	public HAPWrapperValueStructure getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
 	
 	public HAPExecutableExpressionGroup getExpression() {    return this.m_expressionExe;   }
 	public void setExpression(HAPExecutableExpressionGroup expression) {    this.m_expressionExe = expression;    }

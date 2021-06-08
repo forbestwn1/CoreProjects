@@ -37,7 +37,7 @@ public class HAPProcessorUIService {
 		for(String serviceName : uiUnitDef.getAllServices()) {
 			HAPDefinitionServiceUse service = uiUnitDef.getService(serviceName);
 //			HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(service, uiExe.getBody().getFlatContext().getContext(), uiUnitDef.getAttachmentContainer(), runtimeEnv);   kkkk
-			HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(service, uiExe.getBody().getValueStructureDefinitionNode().getValueStructure(), uiUnitDef.getAttachmentContainer(), runtimeEnv);
+			HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(service, uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper(), uiUnitDef.getAttachmentContainer(), runtimeEnv);
 			uiExe.getBody().addServiceUse(serviceName, serviceExe);
 		}
 		

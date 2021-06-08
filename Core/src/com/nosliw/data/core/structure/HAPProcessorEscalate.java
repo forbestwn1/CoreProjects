@@ -19,7 +19,7 @@ public class HAPProcessorEscalate {
 
 	public static void process(HAPTreeNodeValueStructure sourceNode, Set<String> categarys, Map<String, String> cm, Set<String> inheritanceExcludedInfo) {
 		
-		HAPValueStructure structure = sourceNode.getValueStructure();
+		HAPValueStructure structure = sourceNode.getValueStructureWrapper().getValueStructure();
 
 		//normalize mapping first
 		Map<String, String> contextMapping = new LinkedHashMap<String, String>();
@@ -45,7 +45,7 @@ public class HAPProcessorEscalate {
 	
 	//escalte context node to parent context group, only absolute variable
 	public static void process(HAPTreeNodeValueStructure sourceNode, String sourceRootId, String escalateTargetPath, Set<String> inheritanceExcludedInfo) {
-		HAPValueStructure sourceStructure = sourceNode.getValueStructure();
+		HAPValueStructure sourceStructure = sourceNode.getValueStructureWrapper().getValueStructure();
 		HAPRootStructure sourceRootNode = sourceStructure.getRoot(sourceRootId);
 		if(sourceRootNode.isAbsolute()) {
 			HAPComplexPath complexPath = new HAPComplexPath(escalateTargetPath);
@@ -59,8 +59,8 @@ public class HAPProcessorEscalate {
 	//out.left: true--escalate to existing root node    false--escalate to new root node
 	private static Pair<Boolean, HAPRootStructure> escalate(HAPTreeNodeValueStructure originalNode, String originalRootId, HAPTreeNodeValueStructure parentNode, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
 		
-		HAPValueStructure originalStrucutre = originalNode.getValueStructure();
-		HAPValueStructure parentStructure = parentNode.getValueStructure();
+		HAPValueStructure originalStrucutre = originalNode.getValueStructureWrapper().getValueStructure();
+		HAPValueStructure parentStructure = parentNode.getValueStructureWrapper().getValueStructure();
 		
 		Pair<Boolean, HAPRootStructure> out = null;
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.analyzeElementReference(new HAPReferenceElement(path.getFullName()), parentStructure, HAPConstant.RESOLVEPARENTMODE_FIRST, null);

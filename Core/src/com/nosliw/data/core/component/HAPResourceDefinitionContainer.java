@@ -40,7 +40,7 @@ public abstract class HAPResourceDefinitionContainer <T extends HAPElementContai
 	public abstract HAPResourceDefinitionContainer<T> cloneResourceDefinitionContainer();
 	 
 	public void cloneToResourceDefinitionContainer(HAPResourceDefinitionContainer<T> to) {
-		this.cloneToComplexResourceDefinition(to);
+		this.cloneToComplexResourceDefinition(to, true);
 		for(String id : this.m_elements.keySet()) {
 			to.addContainerElement((T)this.m_elements.get(id).cloneResourceDefinitionContainerElement());
 		}

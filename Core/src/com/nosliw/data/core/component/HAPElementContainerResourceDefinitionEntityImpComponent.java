@@ -11,14 +11,14 @@ public class HAPElementContainerResourceDefinitionEntityImpComponent extends HAP
 	@Override
 	public String getType() {  return HAPElementContainerResourceDefinition.TYPE_ENTITY;  }
 
-	protected void cloneToResourceDefinitionContainerElementEntityImpComponent(HAPElementContainerResourceDefinitionEntityImpComponent to) {
-		super.cloneToComponent(to);
+	protected void cloneToResourceDefinitionContainerElementEntityImpComponent(HAPElementContainerResourceDefinitionEntityImpComponent to, boolean cloneValueStructure) {
+		super.cloneToComponent(to, cloneValueStructure);
 	}
 	
 	@Override
 	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {
 		HAPElementContainerResourceDefinitionEntityImpComponent out = new HAPElementContainerResourceDefinitionEntityImpComponent();
-		this.cloneToResourceDefinitionContainerElementEntityImpComponent(out);
+		this.cloneToResourceDefinitionContainerElementEntityImpComponent(out, true);
 		return out;
 	}
 

@@ -13,22 +13,16 @@ import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPUtilityExpressionComponent {
 
 	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
-		return buildExpressionSuiteFromComponent(complexEntity, null, runtimeEnv);
-	}
-	
-	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPValueStructure valueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
 		
 		//build context
-		if(valueStructure==null) {
-			valueStructure = HAPUtilityExpression.getValueStructure(complexEntity, null, runtimeEnv);
-		}
-		out.setValueStructure(valueStructure);
+		HAPWrapperValueStructure valueStructureWrapper = HAPUtilityExpression.getValueStructure(complexEntity, runtimeEnv);
+		out.setValueStructureWrapper(valueStructureWrapper);
 		
 		//build constant from attachment
 		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildDataConstantDefinition(complexEntity.getAttachmentContainer())) {
@@ -36,7 +30,7 @@ public class HAPUtilityExpressionComponent {
 		}
 		
 		//constant from context
-		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(valueStructure);
+		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(valueStructureWrapper.getValueStructure());
 		for(String id : constantsValue.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(id, constantsValue.get(id));
 			if(constantDef.isData()) {

@@ -33,7 +33,7 @@ public class HAPProcessorScript2 {
 			HAPProcessTracker processTracker) {
 		HAPDefinitionScriptGroup group = new HAPDefinitionScriptGroupImp();
 		group.addEntityElement(new HAPDefinitionScriptEntity(HAPScript.newScript(script, scriptType)));
-		group.setValueStructure(context==null?new HAPValueStructureDefinitionFlat():context);
+		group.setValueStructureWrapper(context==null?new HAPValueStructureDefinitionFlat():context);
 		if(constants!=null) {
 			for(String name : constants.keySet()) {
 				group.addConstantDefinition(new HAPDefinitionConstant(name, constants.get(name)));
@@ -64,7 +64,7 @@ public class HAPProcessorScript2 {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 
 		//context
-		HAPValueStructure contextStructure =  scriptGroupDef.getValueStructure();
+		HAPValueStructure contextStructure =  scriptGroupDef.getValueStructureWrapper();
 		contextStructure = HAPUtilityValueStructure.hardMerge(contextStructure, extraContext);
 		out.setContextStructure(contextStructure);
 

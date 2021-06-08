@@ -21,13 +21,13 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
 
 	private String m_id;
 	
-	private HAPValueStructure m_valueStructure;
+	private HAPWrapperValueStructure m_valueStructureWrapper;
 	
 	private Map<String, HAPExecutableExpression> m_expressionItem;
 	 
@@ -64,9 +64,9 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public String getId() {  return this.m_id;  }
 	public void setId(String id) {   this.m_id = id;    }
 	
-	public HAPValueStructure getValueStructureDefinition() {   return this.m_valueStructure;  }
+	public HAPWrapperValueStructure getValueStructureDefinitionWrapper() {   return this.m_valueStructureWrapper;  }
 
-	public void setValueStructureDefinition(HAPValueStructure structureDefinition) {	this.m_valueStructure = structureDefinition;	}
+	public void setValueStructureDefinitionWrapper(HAPWrapperValueStructure structureDefinition) {	this.m_valueStructureWrapper = structureDefinition;	}
 	
 	@Override
 	public void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker) {

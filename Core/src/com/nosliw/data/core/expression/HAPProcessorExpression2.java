@@ -102,8 +102,8 @@ public class HAPProcessorExpression2 {
 		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(exeId);
 
 		//context
-		HAPValueStructure valueStructure =  expressionGroupDef.getValueStructure();
-		out.setValueStructureDefinition(valueStructure);
+		HAPValueStructure valueStructure =  expressionGroupDef.getValueStructureWrapper();
+		out.setValueStructureDefinitionWrapper(valueStructure);
 
 		//constant
 		//constant --- discover constant from attachment and context
@@ -331,7 +331,7 @@ public class HAPProcessorExpression2 {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
 							HAPValueStructureDefinitionFlat da = mappingDa.getMapping();
 							for(String rootName : da.getRootNames()) {
-								Map<String, String> path = HAPUtilityDataAssociation.buildSimplifiedRelativePathMapping(da.getRoot(rootName), rootName, expressionExe.getValueStructureDefinition());
+								Map<String, String> path = HAPUtilityDataAssociation.buildSimplifiedRelativePathMapping(da.getRoot(rootName), rootName, expressionExe.getValueStructureDefinitionWrapper());
 								nameMapping.putAll(path);
 							}
 						}

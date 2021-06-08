@@ -58,7 +58,7 @@ public class HAPProcessMiniAppEntry {
 		Map<String, HAPDefinitionServiceProvider> entryServiceProviders = HAPUtilityServiceUse.buildServiceProvider(entryDefinition.getAttachmentContainer(), null, contextProcessRequirement.serviceDefinitionManager); 
 
 		//context
-		out.setContext((HAPValueStructureDefinitionGroup)HAPProcessorContext.process(entryDefinition.getValueStructure(), HAPContainerStructure.createDefault(miniAppDef.getValueStructure()), contextProcessConfg, runtimeEnv));
+		out.setContext((HAPValueStructureDefinitionGroup)HAPProcessorContext.process(entryDefinition.getValueStructureWrapper(), HAPContainerStructure.createDefault(miniAppDef.getValueStructureWrapper()), contextProcessConfg, runtimeEnv));
 
 		//process process suite
 		HAPResourceDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(minAppEntryDef, runtimeEnv.getProcessManager().getPluginManager()).cloneProcessSuiteDefinition(); 
@@ -69,7 +69,7 @@ public class HAPProcessMiniAppEntry {
 		//data definition
 		Map<String, HAPDefinitionAppData> dataDefs = miniAppDef.getApplicationData();
 		for(String dataDefName : dataDefs.keySet()) {
-			HAPValueStructureDefinitionFlat processedContext = (HAPValueStructureDefinitionFlat)HAPProcessorContext.process(dataDefs.get(dataDefName), HAPContainerStructure.createDefault(miniAppDef.getValueStructure()), contextProcessConfg, runtimeEnv);
+			HAPValueStructureDefinitionFlat processedContext = (HAPValueStructureDefinitionFlat)HAPProcessorContext.process(dataDefs.get(dataDefName), HAPContainerStructure.createDefault(miniAppDef.getValueStructureWrapper()), contextProcessConfg, runtimeEnv);
 			HAPDefinitionAppData processedAppData = dataDefs.get(dataDefName).cloneAppDataDefinition();
 			processedContext.toContext(processedAppData);
 			out.addApplicationData(dataDefName, processedAppData);

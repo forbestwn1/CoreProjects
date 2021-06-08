@@ -34,8 +34,8 @@ import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPProcessorExpression {
 
@@ -98,7 +98,7 @@ public class HAPProcessorExpression {
 		}
 		
 		HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression = new HAPContainerVariableCriteriaInfo();
-		HAPContainerVariableCriteriaInfo varCrteriaInfoInStructure = HAPUtilityValueStructure.discoverDataVariablesInStructure(expressionExe.getValueStructureDefinition());
+		HAPContainerVariableCriteriaInfo varCrteriaInfoInStructure = HAPUtilityValueStructure.discoverDataVariablesInStructure(expressionExe.getValueStructureDefinitionWrapper().getValueStructure());
 		for(String varId : HAPUtilityExpression.discoverDataVariablesIdInExpression(expressionExe)) {
 			varCrteriaInfoInExpression.addVariable(varId, varCrteriaInfoInStructure.getVariableCriteriaInfo(varId));
 		}
@@ -177,12 +177,12 @@ public class HAPProcessorExpression {
 						String variablePath = variableOperand.getVariableName();
 						Set<String> types = new HashSet<String>();
 						types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA);
-						HAPInfoReferenceResolve resolve = HAPUtilityStructure.analyzeElementReference(variablePath, expressionExe.getValueStructureDefinition(), null, types);
+						HAPInfoReferenceResolve resolve = HAPUtilityStructure.analyzeElementReference(variablePath, expressionExe.getValueStructureDefinitionWrapper().getValueStructure(), null, types);
 						if(resolve==null || resolve.referredRoot==null || !resolve.realSolidSolved.remainPath.isEmpty()) {
 							//variable name cannot be resolved
 							HAPRootStructure root = resolve==null?null:resolve.referredRoot;
 							if(root==null) {
-								root = HAPUtilityStructure.addRoot(expressionExe.getValueStructureDefinition(), new HAPComplexPath(variablePath).getRoot(), new HAPRootStructure());
+								root = HAPUtilityStructure.addRoot(expressionExe.getValueStructureDefinitionWrapper().getValueStructure(), new HAPComplexPath(variablePath).getRoot(), new HAPRootStructure());
 							}
 							HAPUtilityStructure.setDescendant(root, new HAPComplexPath(variablePath).getPath(), new HAPElementStructureLeafData());
 						}
@@ -207,13 +207,13 @@ public class HAPProcessorExpression {
 		HAPExecutableExpressionGroupInSuite out = new HAPExecutableExpressionGroupInSuite(id);
 		
 		//structure
-		HAPValueStructure valueStructure =  expressionGroupDef.getValueStructure();
-		out.setValueStructureDefinition((HAPValueStructure)valueStructure.cloneStructure());
+		HAPWrapperValueStructure valueStructureWrapper =  expressionGroupDef.getValueStructureWrapper();
+		out.setValueStructureDefinitionWrapper(valueStructureWrapper);
 
 		//constant
 		//constant --- discover constant from attachment and context
 		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>(); 
-		constants.putAll(HAPUtilityComponentConstant.getConstantsData(expressionGroupDef, out.getValueStructureDefinition()));
+		constants.putAll(HAPUtilityComponentConstant.getConstantsData(expressionGroupDef, out.getValueStructureDefinitionWrapper().getValueStructure()));
 		out.setDataConstants(constants);
 		
 		//expression element
@@ -313,7 +313,7 @@ public class HAPProcessorExpression {
 	private static void replaceVarNameWithId(HAPExecutableExpressionGroupInSuite expressionExe) {
 		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();
 		
-		HAPStructure structure = expressionExe.getValueStructureDefinition();
+		HAPStructure structure = expressionExe.getValueStructureDefinitionWrapper().getValueStructure();
 		
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpression expressionItem = expressionItems.get(name);
@@ -331,7 +331,7 @@ public class HAPProcessorExpression {
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						//replace referenced variable name mapping  
-						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(((HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression()).getValueStructureDefinition());
+						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(((HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression()).getValueStructureDefinitionWrapper().getValueStructure());
 
 						Map<String, HAPOperandWrapper> mapping = referenceOperand.getMapping();
 						Map<String, HAPOperandWrapper> newMapping = new LinkedHashMap<String, HAPOperandWrapper>();

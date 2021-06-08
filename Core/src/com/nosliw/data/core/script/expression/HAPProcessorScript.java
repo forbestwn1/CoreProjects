@@ -18,22 +18,21 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.imp.literate.HAPProcessorScriptLiterate;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPProcessorScript {
 
 	public static HAPExecutableScriptGroup processSimpleScript(
 			String script,
 			String scriptType, 
-			HAPValueStructureDefinitionFlat context, 
+			HAPWrapperValueStructure valueStructureWrapper, 
 			Map<String, Object> constants,
 			Map<String, String> configure, 
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		HAPDefinitionScriptGroup group = new HAPDefinitionScriptGroupImp();
 		group.addEntityElement(new HAPDefinitionScriptEntity(HAPScript.newScript(script, scriptType)));
-		group.setValueStructure(context==null?new HAPValueStructureDefinitionFlat():context);
+		group.setValueStructureWrapper(valueStructureWrapper);
 		if(constants!=null) {
 			for(String name : constants.keySet()) {
 				group.addConstantDefinition(new HAPDefinitionConstant(name, constants.get(name)));
@@ -60,32 +59,30 @@ public class HAPProcessorScript {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 
 		//context
-		HAPValueStructure valueStructure =  scriptGroupDef.getValueStructure();
-		out.setValueStructureDefinition(valueStructure);
+		HAPWrapperValueStructure valueStructureWrapper =  scriptGroupDef.getValueStructureWrapper();
+		out.setValueStructureDefinitionWrapper(valueStructureWrapper);
 
 		//expression definition containing all expression in script 
 		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
 		//value structure for expression
-		expressionGroupDef.setValueStructure(valueStructure);
+		expressionGroupDef.setValueStructureWrapper(valueStructureWrapper);
 		//data constant for expression
-		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.getDataConstantsDefinition(scriptGroupDef, out.getValueStructureDefinition())) {
+		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.getDataConstantsDefinition(scriptGroupDef, out.getValueStructureDefinitionWrapper().getValueStructure())) {
 			expressionGroupDef.addConstantDefinition(constantDef);
 		}
 
 
 		//name to id updat
 		HAPUpdateName name2IdUpdate = new HAPUpdateName() {
-			private HAPValueStructure m_valueStructure;
-			
 			@Override
 			public String getUpdatedName(String name) {
 				HAPComplexPath namePath = new HAPComplexPath(name);
-				return new HAPComplexPath(HAPUtilityStructure.resolveRoot(namePath.getRoot(), valueStructure, false).iterator().next().getLocalId(), namePath.getPath().getPath()).getFullName();
+				return new HAPComplexPath(HAPUtilityStructure.resolveRoot(namePath.getRoot(), valueStructureWrapper.getValueStructure(), false).iterator().next().getLocalId(), namePath.getPath().getPath()).getFullName();
 			}
 		};
 		
 		//value constant for script
-		Map<String, Object> constantsValue = HAPUtilityComponentConstant.getConstantsValue(scriptGroupDef, out.getValueStructureDefinition());
+		Map<String, Object> constantsValue = HAPUtilityComponentConstant.getConstantsValue(scriptGroupDef, out.getValueStructureDefinitionWrapper().getValueStructure());
 
 		Set<HAPDefinitionScriptEntity> scriptElements = scriptGroupDef.getEntityElements();
 		int i = 0;
