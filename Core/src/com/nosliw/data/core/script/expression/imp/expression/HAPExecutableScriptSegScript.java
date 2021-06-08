@@ -84,6 +84,9 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 	}
 
 	@Override
+	public void updateVariableName(HAPUpdateName nameUpdate) {  this.updateVariableNames(nameUpdate); }
+
+	@Override
 	public void updateConstant(Map<String, Object> value) {	
 		for(Object ele : this.m_elements) {
 			if(ele instanceof HAPConstantInScript) {

@@ -25,6 +25,7 @@ import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
+import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
@@ -72,7 +73,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 
 	//context for content
 	private HAPTreeNodeValueStructure m_valueStructureDefinitionNode;
-	private HAPExecutableValueStructure m_valueStructureExe;
+//	private HAPExecutableValueStructure m_valueStructureExe;
 	
 //	private Map<String, Object> m_constants;
 	
@@ -138,10 +139,9 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	public HAPTreeNodeValueStructure getValueStructureDefinitionNode(){  return this.m_valueStructureDefinitionNode;   }
 	
 	
-	public void setValueStructureExe(HAPExecutableValueStructure context) {  this.m_valueStructureExe = context;   }
+//	public void setValueStructureExe(HAPExecutableValueStructure context) {  this.m_valueStructureExe = context;   }
 	public HAPExecutableValueStructure getValueStructureExe() {
-		if(this.m_valueStructureExe!=null)		return this.m_valueStructureExe;
-		else return new HAPExecutableValueStructure();
+		return HAPUtilityValueStructure.buildExecuatableValueStructure(this.getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure());
 	}
 	
 //	public Map<String, Object> getConstantsValue(){   return this.m_processScriptContext.getConstantsValue();    }

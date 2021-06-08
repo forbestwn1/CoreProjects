@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
@@ -55,7 +56,8 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 		this.m_scriptType = scriptType;
 		this.m_script = new HAPExecutableScriptWithSegmentImp(id) {
 			@Override
-			public String getScriptType() { return null; }};
+			public String getScriptType() { return null; }
+		};
 		
 		this.setId(id);
 	}
@@ -106,6 +108,9 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 	@Override
 	public void updateConstant(Map<String, Object> value) {  this.m_script.updateConstant(value);  }
 	
+	@Override
+	public void updateVariableName(HAPUpdateName nameUpdate) {  this.m_script.updateVariableName(nameUpdate);	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

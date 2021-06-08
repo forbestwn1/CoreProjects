@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.expression.imp.literate;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 
@@ -25,8 +26,12 @@ public class HAPExecutableScriptSegText extends HAPExecutableScriptImp{
 	public String getText() {    return this.m_text;   }
 	
 	@Override
+	public void updateVariableName(HAPUpdateName nameUpdate) {}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TEXT, this.m_text);
 	}
+
 }

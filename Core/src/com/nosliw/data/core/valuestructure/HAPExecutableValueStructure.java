@@ -38,7 +38,7 @@ public class HAPExecutableValueStructure extends HAPSerializableImp
 
 	public HAPRootStructure getRoot(String localId) {  return this.m_roots.get(localId); }
 
-	public void addRoot(HAPRootStructure root) {		this.m_roots.put(root.getName(), root); 	}
+	public void addRoot(HAPRootStructure root) {		this.m_roots.put(root.getLocalId(), root); 	}
 
 	public void addNameMapping(String name, String id) {  this.m_name2Id.put(name, id); 	}
 	

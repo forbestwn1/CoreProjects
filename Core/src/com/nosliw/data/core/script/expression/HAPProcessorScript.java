@@ -108,6 +108,7 @@ public class HAPProcessorScript {
 				scriptExe = new HAPExecutableScriptEntityText(scriptId, script.getScript());
 			}
 			out.addScript(scriptExe);
+			scriptExe.updateVariableName(name2IdUpdate);
 			i++;
 		}
 		

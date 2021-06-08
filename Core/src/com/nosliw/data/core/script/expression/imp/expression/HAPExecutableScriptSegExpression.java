@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.expression.imp.expression;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
@@ -53,5 +54,8 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 		out.add(this.m_expressionId);
 		return out;
 	}
+
+	@Override
+	public void updateVariableName(HAPUpdateName nameUpdate) {	}
 	
 }

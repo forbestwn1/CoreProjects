@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
@@ -94,6 +95,13 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 	public void updateConstant(Map<String, Object> value) {
 		for(HAPExecutableScript seg : this.m_segs) {
 			seg.updateConstant(value);
+		}
+	}
+	
+	@Override
+	public void updateVariableName(HAPUpdateName nameUpdate) {
+		for(HAPExecutableScript segment : this.getSegments()) {
+			segment.updateVariableName(nameUpdate);
 		}
 	}
 	
