@@ -21,6 +21,13 @@ import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPUtilityValueStructure {
 
+	public static HAPValueStructure newValueStructure(String valueStructureType) {
+		if(HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT.equals(valueStructureType))  return new HAPValueStructureDefinitionFlat();
+		if(HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP.equals(valueStructureType))  return new HAPValueStructureDefinitionGroup();
+		if(HAPConstantShared.STRUCTURE_TYPE_VALUEEMPTY.equals(valueStructureType))  return new HAPValueStructureDefinitionEmpty();
+		return null;
+	}
+	
 	public static HAPValueStructure getValueStructureFromWrapper(HAPWrapperValueStructure wrapper) {
 		if(wrapper==null)   return null;
 		return wrapper.getValueStructure();

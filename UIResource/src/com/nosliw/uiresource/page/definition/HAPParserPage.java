@@ -17,6 +17,7 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import com.nosliw.common.configure.HAPConfigure;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -27,12 +28,12 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.component.HAPContextReference;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.component.valuestructure.HAPValueStructureGroupInComponent;
+import com.nosliw.data.core.component.valuestructure.HAParserComponentValueStructure;
 import com.nosliw.data.core.resource.HAPParserResourceDefinition;
 import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.data.core.script.expression.imp.literate.HAPUtilityScriptLiterate;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 
 /*
@@ -264,9 +265,11 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 			if(serviceUseListJson!=null) {
 				for(int i=0; i<serviceUseListJson.length(); i++) {
 					JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
-					HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
-					serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
-					resourceUnit.addService(serviceUseDef);
+					if(HAPUtilityEntityInfo.isEnabled(serviceUseJson)) {
+						HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
+						serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
+						resourceUnit.addService(serviceUseDef);
+					}
 				}
 			}
 			break;
@@ -295,17 +298,21 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 	
 	private void parseUnitValueStructureBlocks(Element ele, HAPDefinitionUIUnit resourceUnit){
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, VALUESTRUCTURE);
-		
+
+		JSONObject jsonObj = null;
 		for(Element childEle : childEles){
 			try {
-				HAPParserValueStructure.parseValueStructureDefinitionGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), (HAPValueStructureDefinitionGroup)resourceUnit.getValueStructureWrapper().getValueStructure());
+				jsonObj = HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html()));
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();
 				System.out.println(childEle.html());
 			}
 		}
-		
+
+		HAPValueStructureGroupInComponent groupValueStructureInComponent = (HAPValueStructureGroupInComponent)HAParserComponentValueStructure.parseComponentValueStructure(jsonObj, HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP);
+		resourceUnit.setValueStructure(groupValueStructureInComponent);
+
 		for(Element childEle : childEles)  childEle.remove();
 	}
 

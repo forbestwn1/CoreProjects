@@ -3,9 +3,10 @@ package com.nosliw.data.core.structure;
 import java.util.List;
 
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.updatename.HAPUpdateName;
 
-public interface HAPStructure extends HAPWithConstantScript{
+public interface HAPStructure extends HAPWithConstantScript, HAPSerializable{
 
 	String getStructureType();
 	

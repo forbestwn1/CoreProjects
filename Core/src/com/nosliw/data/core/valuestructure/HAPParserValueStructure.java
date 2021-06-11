@@ -17,27 +17,36 @@ import com.nosliw.data.core.structure.HAPRootStructure;
 public class HAPParserValueStructure {
 
 	public static HAPValueStructure parseValueStructure(JSONObject jsonObj) {
-		HAPValueStructure out = null;
-		String type = jsonObj.optString(HAPValueStructure.TYPE);
-		if(HAPBasicUtility.isStringEmpty(type)) {
-			if(jsonObj.optJSONObject(HAPValueStructureDefinitionGroup.GROUP)!=null) {
-				type = HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT;
+		return parseValueStructure(jsonObj, null);
+	}
+	
+	public static HAPValueStructure parseValueStructure(JSONObject jsonObj, String typeIfEmpty) {
+		HAPValueStructure out = new HAPValueStructureDefinitionEmpty();
+		if(jsonObj!=null) {
+			String type = jsonObj.optString(HAPValueStructure.TYPE);
+			if(HAPBasicUtility.isStringEmpty(type)) {
+				if(jsonObj.optJSONObject(HAPValueStructureDefinitionGroup.GROUP)!=null) {
+					type = HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP;
+				}
+				else if(jsonObj.optJSONObject(HAPValueStructureDefinitionFlat.FLAT)!=null) {
+					type = HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT;
+				}
 			}
-			else if(jsonObj.optJSONObject(HAPValueStructureDefinitionFlat.FLAT)!=null) {
-				type = HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT;
+			if(type.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP)) {
+				out = parseValueStructureDefinitionGroup(jsonObj);
+			}
+			else if(type.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT)) {
+				out = parseValueStructureDefinitionFlat(jsonObj);
 			}
 		}
-		if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-			out = parseValueStructureDefinitionGroup(jsonObj);
-		}
-		else if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
-			out = parseValueStructureDefinitionFlat(jsonObj);
+		
+		if(out.getStructureType().equals(HAPConstantShared.STRUCTURE_TYPE_VALUEEMPTY)&&typeIfEmpty!=null) {
+			out = HAPUtilityValueStructure.newValueStructure(typeIfEmpty);
 		}
 		return out;
 	}
 	
 	public static HAPValueStructureDefinitionGroup parseValueStructureDefinitionGroup(JSONObject groupStructureJson) {
-		if(groupStructureJson==null)  return null;
 		HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
 		parseValueStructureDefinitionGroup(groupStructureJson, out);
 		return out;

@@ -6,15 +6,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPNameMapping;
-import com.nosliw.data.core.structure.HAPElementStructureLeafValue;
-import com.nosliw.data.core.structure.HAPRootStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -77,18 +71,18 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 		this.m_nameMapping = new HAPNameMapping();
-		this.initValueStructure();
+//		this.initValueStructure();
 	}
 	
-	private void initValueStructure() {
-		HAPValueStructureDefinitionGroup valueStructure = new HAPValueStructureDefinitionGroup();
-		//ui error context element
-		HAPRootStructure uiValidationErrorRoot = new HAPRootStructure(new HAPElementStructureLeafValue());
-		uiValidationErrorRoot.setDefaultValue(new JSONObject());
-		uiValidationErrorRoot.setName(HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
-		valueStructure.addProtectedElement(uiValidationErrorRoot);
-		this.setValueStructure(valueStructure);
-	}
+//	private void initValueStructure() {
+//		HAPValueStructureDefinitionGroup valueStructure = new HAPValueStructureDefinitionGroup();
+//		//ui error context element
+//		HAPRootStructure uiValidationErrorRoot = new HAPRootStructure(new HAPElementStructureLeafValue());
+//		uiValidationErrorRoot.setDefaultValue(new JSONObject());
+//		uiValidationErrorRoot.setName(HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
+//		valueStructure.addProtectedElement(uiValidationErrorRoot);
+//		this.setValueStructure(valueStructure);
+//	}
 	
 	abstract public String getType(); 
 

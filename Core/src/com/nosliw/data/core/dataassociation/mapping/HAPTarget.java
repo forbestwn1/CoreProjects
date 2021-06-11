@@ -3,34 +3,36 @@ package com.nosliw.data.core.dataassociation.mapping;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootUnknowType;
 
 public class HAPTarget {
 
-//	private HAPIdContextDefinitionRoot m_rootNodeId;
+	private HAPReferenceRoot m_rootReference;
 	
-	private String m_targetName;
+	private String m_valueStructure;
 	
 	public HAPTarget(String leterate) {
 		String[] segs = HAPNamingConversionUtility.parseLevel1(leterate);
 		if(segs.length==1) {
-//			this.m_rootNodeId = new HAPIdContextDefinitionRoot(segs[0]);
+			this.m_rootReference = new HAPReferenceRootUnknowType(segs[0]);
 		}
 		else if(segs.length==2) {
-//			this.m_rootNodeId = new HAPIdContextDefinitionRoot(segs[1]);
-			this.m_targetName = segs[0];
+			this.m_rootReference = new HAPReferenceRootUnknowType(segs[1]);
+			this.m_valueStructure = segs[0];
 		}
 		else {}
 		this.init();
 	}
 
 	private void init() {
-		if(HAPBasicUtility.isStringEmpty(this.m_targetName)) {
-			this.m_targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+		if(HAPBasicUtility.isStringEmpty(this.m_valueStructure)) {
+			this.m_valueStructure = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		}
 	}
 	
-//	public HAPIdContextDefinitionRoot getRootNodeId() {    return this.m_rootNodeId;    }
+	public HAPReferenceRoot getRootNodeId() {    return this.m_rootReference;    }
 	
-	public String getTargetName() {   return this.m_targetName;    }
+	public String getValueStructureName() {   return this.m_valueStructure;    }
 	
 }

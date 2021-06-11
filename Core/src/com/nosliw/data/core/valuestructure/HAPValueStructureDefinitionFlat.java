@@ -170,13 +170,18 @@ public class HAPValueStructureDefinitionFlat extends HAPValueStructureDefinition
 	public HAPValueStructure cloneStructure() {	
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		out.empty();
-		for(String id : this.m_rootById.keySet()) {
-			HAPRootStructure root = this.m_rootById.get(id);
-			out.addRoot(root.cloneRoot());
-		}
+		this.cloneToFlatValueStructure(out);
 		return out;	
 	}
 
+	public void cloneToFlatValueStructure(HAPValueStructureDefinitionFlat to) {
+		this.cloneBaseToValueStructureDefinition(to);
+		for(String id : this.m_rootById.keySet()) {
+			HAPRootStructure root = this.m_rootById.get(id);
+			to.addRoot(root.cloneRoot());
+		}
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{

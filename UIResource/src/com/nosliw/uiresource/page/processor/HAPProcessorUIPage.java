@@ -37,6 +37,9 @@ public class HAPProcessorUIPage {
 		//expand referred context part
 		HAPProcessorUIValueStructure.expandContextReference(uiPageDef, runtimeEnv.getResourceDefinitionManager());
 
+		//enhance value structure (error)
+		HAPProcessorUIValueStructure.enhanceValueStructure(uiPageDef);
+		
 		//normalize service use
 		HAPProcessorUIService.normalizeService(uiPageDef, runtimeEnv);
 		

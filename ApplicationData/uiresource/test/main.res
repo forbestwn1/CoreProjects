@@ -119,11 +119,11 @@
 	</script>
 
 
-	<context>
+	<valuestructure>
 	{
 		"group" : {
 			"public" : {
-				"element" : {
+				"flat" : {
 						varFromContext1 : {
 							definition: {
 								child : {
@@ -299,7 +299,7 @@
 			}
 		}
 	}
-	</context>
+	</valuestructure>
 
 	
 	<contextref>

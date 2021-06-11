@@ -15,6 +15,8 @@ public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitio
 
 	private boolean m_isFlat;
 	
+	public HAPValueStructureDefinitionEmpty() {}
+	
 	private HAPValueStructureDefinitionEmpty(boolean isFlat) {
 		this.m_isFlat = isFlat;
 	}
@@ -25,7 +27,7 @@ public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitio
 	public HAPValueStructureDefinitionEmpty oppositeFlatStructure() {return new HAPValueStructureDefinitionEmpty(!this.m_isFlat);  }
 	
 	@Override
-	public String getStructureType() {	return HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY;	}
+	public String getStructureType() {	return HAPConstantShared.STRUCTURE_TYPE_VALUEEMPTY;	}
 
 	@Override
 	public boolean isFlat() {  return this.m_isFlat;  }

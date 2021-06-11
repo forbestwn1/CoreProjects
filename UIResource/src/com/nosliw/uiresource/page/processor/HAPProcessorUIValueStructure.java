@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
 import com.nosliw.data.core.component.HAPUtilityComponent;
@@ -12,8 +14,10 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.structure.HAPElementStructureLeafValue;
 import com.nosliw.data.core.structure.HAPProcessorEscalate;
 import com.nosliw.data.core.structure.HAPProcessorStructure;
+import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
@@ -32,6 +36,20 @@ import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUIValueStructure {
 
+	public static void enhanceValueStructure(HAPDefinitionUIUnit uiUnitDef) {
+		HAPValueStructureDefinitionGroup valueStructure = (HAPValueStructureDefinitionGroup)uiUnitDef.getValueStructure();
+
+		//ui error value structure element
+		HAPRootStructure uiValidationErrorRoot = new HAPRootStructure(new HAPElementStructureLeafValue());
+		uiValidationErrorRoot.setDefaultValue(new JSONObject());
+		uiValidationErrorRoot.setName(HAPConstantShared.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR);
+		valueStructure.addProtectedElement(uiValidationErrorRoot);
+
+		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
+			enhanceValueStructure(uiTag);
+		}
+	}
+	
 	//expand context reference by using context definition in attachment
 	public static void expandContextReference(HAPDefinitionUIUnit uiUnitDef, HAPManagerResourceDefinition resourceDefMan) {
 		HAPUtilityComponent.resolveContextReference(uiUnitDef.getValueStructureWrapper().getValueStructure(), uiUnitDef.getContextReferences(), uiUnitDef.getAttachmentContainer(), resourceDefMan);

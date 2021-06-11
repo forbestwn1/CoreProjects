@@ -5,10 +5,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.component.valuestructure.HAParserComponentValueStructure;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
-import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
 
 public class HAPUtilityComponentParse {
 
@@ -34,7 +34,7 @@ public class HAPUtilityComponentParse {
 		//context
 		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPComponentImp.VALUESTRUCTURE);
 		if(contextJsonObj!=null) {
-			complexResourceDef.setValueStructure(HAPParserValueStructure.parseValueStructure(contextJsonObj));
+			complexResourceDef.setValueStructure(HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj));
 		}
 	}
 	
