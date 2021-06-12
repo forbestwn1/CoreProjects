@@ -279,7 +279,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	
 	public HAPValueStructureDefinitionGroup cloneValueStructureGroup() {
 		HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
-		this.cloneToValueStructureDefinitionGroup(out);
+		this.cloneToGroupValueStructure(out);
 		return out;
 	}
 
@@ -289,7 +289,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 		return out;
 	}
 
-	public void cloneToValueStructureDefinitionGroup(HAPValueStructureDefinitionGroup out) {
+	public void cloneToGroupValueStructure(HAPValueStructureDefinitionGroup out) {
 		this.cloneBaseToValueStructureDefinition(out);
 		for(String categary : this.m_flatStructureByCategary.keySet()) {
 			HAPValueStructureDefinitionFlat flat = this.m_flatStructureByCategary.get(categary);

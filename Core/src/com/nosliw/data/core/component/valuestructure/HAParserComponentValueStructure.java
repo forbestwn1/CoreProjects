@@ -1,5 +1,6 @@
 package com.nosliw.data.core.component.valuestructure;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
@@ -22,13 +23,35 @@ public class HAParserComponentValueStructure {
 		
 		if(valueStructure.getStructureType().equals(HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT)) {
 			HAPValueStructureDefinitionFlat flatValueStructure = (HAPValueStructureDefinitionFlat)valueStructure;
-			out = new HAPValueStructureFlatInComponent();
-			flatValueStructure.cloneToFlatValueStructure((HAPValueStructureFlatInComponent)out);
+			HAPValueStructureFlatInComponent flat = new HAPValueStructureFlatInComponent();
+			flatValueStructure.cloneToFlatValueStructure(flat);
+			
+			//parse reference
+			JSONArray refArray = jsonObj.optJSONArray(HAPValueStructureInComponent.REFERENCE);
+			if(refArray!=null) {
+				for(int i=0; i<refArray.length(); i++) {
+					flat.addReference(new HAPInfoReference(refArray.get(i)));
+				}
+			}
+			out = flat;
 		}
 		else if(valueStructure.getStructureType().equals(HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP)) {
 			HAPValueStructureDefinitionGroup groupValueStructure = (HAPValueStructureDefinitionGroup)valueStructure;
-			out = new HAPValueStructureGroupInComponent();
-			groupValueStructure.cloneToValueStructureDefinitionGroup((HAPValueStructureDefinitionGroup)out);
+			HAPValueStructureGroupInComponent group = new HAPValueStructureGroupInComponent();
+			groupValueStructure.cloneToGroupValueStructure(group);
+			
+			//parse reference
+			JSONObject refByCategary = jsonObj.optJSONObject(HAPValueStructureDefinitionGroup.GROUP);
+			if(refByCategary!=null) {
+				for(Object key : refByCategary.keySet()) {
+					String categary = (String)key;
+					JSONArray refArray = refByCategary.getJSONObject(categary).optJSONArray(HAPValueStructureInComponent.REFERENCE);
+					for(int i=0; i<refArray.length(); i++) {
+						group.addReference(categary, new HAPInfoReference(refArray.get(i)));
+					}
+				}
+			}
+			out = group;
 		}
 
 		return out;

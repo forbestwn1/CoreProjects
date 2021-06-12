@@ -44,6 +44,14 @@ public class HAPUtilityResourceId {
 		return buildResourceIdByLiterate(resourceType, literate, false);
 	}
 	
+	public static boolean isResourceIdLiterate(String literate) {
+		if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED))  return true;
+		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL))   return true;
+		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC))  return true;
+		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE))  return true;
+		return false;
+	}
+	
 	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String literate, boolean strict) {
 		String structure = null;
 		String coreIdLiterate = literate;

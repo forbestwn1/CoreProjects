@@ -185,7 +185,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginStory());
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTEXT, new HAPParserResourceDefinitionStructure()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, new HAPParserResourceDefinitionStructure()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, new HAPParserServiceInterfaceResource()));
 
 		//runtime
