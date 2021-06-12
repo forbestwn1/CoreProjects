@@ -9,21 +9,21 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPValueStructureGroupInComponent extends HAPValueStructureDefinitionGroup implements HAPValueStructureInComponent{
 
-	private Map<String, List<HAPInfoReference>> m_references;
+	private Map<String, List<HAPInfoEntityReference>> m_references;
 	
 	public HAPValueStructureGroupInComponent() {
-		this.m_references = new LinkedHashMap<String, List<HAPInfoReference>>();
+		this.m_references = new LinkedHashMap<String, List<HAPInfoEntityReference>>();
 	}
 	
-	public void addReference(String categary, HAPInfoReference reference) {
-		List<HAPInfoReference> refs = this.m_references.get(categary);
+	public void addReference(String categary, HAPInfoEntityReference reference) {
+		List<HAPInfoEntityReference> refs = this.m_references.get(categary);
 		if(refs==null) {
-			refs = new ArrayList<HAPInfoReference>();
+			refs = new ArrayList<HAPInfoEntityReference>();
 			this.m_references.put(categary, refs);
 		}
 		refs.add(reference);
 	}
 
-	public Map<String, List<HAPInfoReference>> getReferences(){    return this.m_references;     }
+	public Map<String, List<HAPInfoEntityReference>> getReferences(){    return this.m_references;     }
 	
 }

@@ -27,10 +27,12 @@ public class HAParserComponentValueStructure {
 			flatValueStructure.cloneToFlatValueStructure(flat);
 			
 			//parse reference
-			JSONArray refArray = jsonObj.optJSONArray(HAPValueStructureInComponent.REFERENCE);
-			if(refArray!=null) {
-				for(int i=0; i<refArray.length(); i++) {
-					flat.addReference(new HAPInfoReference(refArray.get(i)));
+			if(jsonObj!=null) {
+				JSONArray refArray = jsonObj.optJSONArray(HAPValueStructureInComponent.REFERENCE);
+				if(refArray!=null) {
+					for(int i=0; i<refArray.length(); i++) {
+						flat.addReference(new HAPInfoEntityReference(refArray.get(i)));
+					}
 				}
 			}
 			out = flat;
@@ -41,13 +43,17 @@ public class HAParserComponentValueStructure {
 			groupValueStructure.cloneToGroupValueStructure(group);
 			
 			//parse reference
-			JSONObject refByCategary = jsonObj.optJSONObject(HAPValueStructureDefinitionGroup.GROUP);
-			if(refByCategary!=null) {
-				for(Object key : refByCategary.keySet()) {
-					String categary = (String)key;
-					JSONArray refArray = refByCategary.getJSONObject(categary).optJSONArray(HAPValueStructureInComponent.REFERENCE);
-					for(int i=0; i<refArray.length(); i++) {
-						group.addReference(categary, new HAPInfoReference(refArray.get(i)));
+			if(jsonObj!=null) {
+				JSONObject refByCategary = jsonObj.optJSONObject(HAPValueStructureDefinitionGroup.GROUP);
+				if(refByCategary!=null) {
+					for(Object key : refByCategary.keySet()) {
+						String categary = (String)key;
+						JSONArray refArray = refByCategary.getJSONObject(categary).optJSONArray(HAPValueStructureInComponent.REFERENCE);
+						if(refArray!=null) {
+							for(int i=0; i<refArray.length(); i++) {
+								group.addReference(categary, new HAPInfoEntityReference(refArray.get(i)));
+							}
+						}
 					}
 				}
 			}

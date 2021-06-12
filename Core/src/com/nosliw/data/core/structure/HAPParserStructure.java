@@ -1,5 +1,10 @@
 package com.nosliw.data.core.structure;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -7,6 +12,29 @@ import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 
 public class HAPParserStructure {
 
+	public static List<HAPRootStructure> parseRoots(Object rootsObj){
+		List<HAPRootStructure> out = new ArrayList<HAPRootStructure>();
+		if(rootsObj instanceof JSONObject) {
+			JSONObject elementsJson = (JSONObject)rootsObj;
+			Iterator<String> it = elementsJson.keys();
+			while(it.hasNext()){
+				String eleName = it.next();
+				JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
+				HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
+				root.setName(eleName);
+				out.add(root);
+			}
+		}
+		else if(rootsObj instanceof JSONArray) {
+			JSONArray elementsArray = (JSONArray)rootsObj;
+			for(int i=0; i<elementsArray.length(); i++) {
+				JSONObject eleDefJson = elementsArray.getJSONObject(i);
+				HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
+				out.add(root);
+			}
+		}
+		return out;
+	}
 	
 	//parse context root
 	public static HAPRootStructure parseContextRootFromJson(JSONObject eleDefJson){

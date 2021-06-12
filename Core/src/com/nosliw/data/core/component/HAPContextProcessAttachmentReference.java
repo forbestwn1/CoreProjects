@@ -2,6 +2,7 @@ package com.nosliw.data.core.component;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -26,7 +27,7 @@ public abstract class HAPContextProcessAttachmentReference {
 		Object entity = null;
 		HAPDefinitionEntityComplex contextComplexEntity = null;
 		if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)) {
-			entity = this.processEntityAttachment(attachmentName);
+			entity = this.processEntityAttachment(attachmentName, ((HAPAttachmentEntity)attachment).getEntity());
 			contextComplexEntity = this.m_complexEntity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)) {
@@ -43,7 +44,7 @@ public abstract class HAPContextProcessAttachmentReference {
 		return new HAPResultProcessAttachmentReference(entity, attachment.getAdaptor(), contextComplexEntity);
 	}
 	
-	abstract protected Object processEntityAttachment(String attachmentName);
+	abstract protected Object processEntityAttachment(String attachmentName, Object entity);
 	
 	public HAPDefinitionEntityComplex getComplexEntity() {    return this.m_complexEntity;    }
 	

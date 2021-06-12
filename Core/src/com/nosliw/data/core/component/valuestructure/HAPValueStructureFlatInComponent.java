@@ -7,13 +7,13 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPValueStructureFlatInComponent extends HAPValueStructureDefinitionFlat implements HAPValueStructureInComponent{
 
-	private List<HAPInfoReference> m_references;
+	private List<HAPInfoEntityReference> m_references;
 	
 	public HAPValueStructureFlatInComponent() {
-		this.m_references = new ArrayList<HAPInfoReference>();
+		this.m_references = new ArrayList<HAPInfoEntityReference>();
 	}
 	
-	public void addReference(HAPInfoReference reference) {     this.m_references.add(reference);    }
+	public void addReference(HAPInfoEntityReference reference) {     this.m_references.add(reference);    }
 	
-	public List<HAPInfoReference> getReferences(){   return this.m_references;     }
+	public List<HAPInfoEntityReference> getReferences(){   return this.m_references;     }
 }

@@ -1,10 +1,8 @@
 package com.nosliw.data.core.valuestructure;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -87,26 +85,9 @@ public class HAPParserValueStructure {
 		if(structureJson!=null) {
 			Object elementsObj = structureJson.opt(HAPValueStructureDefinitionFlat.FLAT);
 			if(elementsObj==null)  elementsObj = structureJson;
-			if(elementsObj instanceof JSONObject) {
-				JSONObject elementsJson = (JSONObject)elementsObj;
-				Iterator<String> it = elementsJson.keys();
-				while(it.hasNext()){
-					String eleName = it.next();
-					JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
-					HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
-					root.setName(eleName);
-					root.setLocalId(getElementId(root.getLocalId(), root.getName(), createIdByName));
-					out.add(root);
-				}
-			}
-			else if(elementsObj instanceof JSONArray) {
-				JSONArray elementsArray = (JSONArray)elementsObj;
-				for(int i=0; i<elementsArray.length(); i++) {
-					JSONObject eleDefJson = elementsArray.getJSONObject(i);
-					HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
-					root.setLocalId(getElementId(root.getLocalId(), root.getName(), createIdByName));
-					out.add(root);
-				}
+			out = HAPParserStructure.parseRoots(elementsObj);
+			for(HAPRootStructure root : out) {
+				root.setLocalId(getElementId(root.getLocalId(), root.getName(), createIdByName));
 			}
 		}
 		return out;

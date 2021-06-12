@@ -1,7 +1,11 @@
 package com.nosliw.data.core.valuestructure.resource;
 
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.data.core.component.valuestructure.HAPInfoEntityReference;
 import com.nosliw.data.core.resource.HAPParserResourceDefinitionImp;
 import com.nosliw.data.core.structure.HAPParserStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
@@ -11,13 +15,16 @@ public class HAPParserResourceDefinitionStructure extends HAPParserResourceDefin
 	@Override
 	public HAPResourceDefinitionValueStructure parseJson(JSONObject jsonObj) {	
 		HAPResourceDefinitionValueStructure out = new HAPResourceDefinitionValueStructure();
-		for(Object key : jsonObj.keySet()) {
-			String name = (String)key;
-			JSONObject eleDefJson = jsonObj.getJSONObject(name);
-			HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
-			root.setName(name);
-			out.addRoot(root);
+		
+		Object rootsObj = jsonObj.get(HAPResourceDefinitionValueStructure.ROOT);
+		List<HAPRootStructure> roots = HAPParserStructure.parseRoots(rootsObj);
+		for(HAPRootStructure root : roots)  out.addRoot(root);
+		
+		JSONArray refArray = jsonObj.optJSONArray(HAPResourceDefinitionValueStructure.REFERENCE);
+		for(int i=0; i<refArray.length(); i++) {
+			out.addReference(new HAPInfoEntityReference(refArray.get(i)));
 		}
+
 		return out;
 	}
 	
