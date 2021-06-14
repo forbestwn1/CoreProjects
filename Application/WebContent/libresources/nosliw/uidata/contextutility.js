@@ -60,10 +60,11 @@ var node_utility = function(){
 				}
 			});
 			_.each(contextItems, function(ele, eleName){
-				var eleNameInfo = loc_out.parseContextElementName(eleName);
-				if(eleNameInfo.categary==undefined){
-					setRequest.addRequest(eleName, ele.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
-				}
+				setRequest.addRequest(eleName, ele.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+//				var eleNameInfo = loc_out.parseContextElementName(eleName);
+//				if(eleNameInfo.categary==undefined){
+//					setRequest.addRequest(eleName, ele.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+//				}
 			});
 			outRequest.addRequest(setRequest);
 			return outRequest;

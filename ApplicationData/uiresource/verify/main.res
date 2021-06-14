@@ -4,6 +4,7 @@
     Within test.main.res
     
     	<br>
+	EXPRESSION IN CONTENT :<%=?(aaa)?.value + '   6666 ' %>
 	<br>
     	SERVICE SUBMIT: 	<a href='' nosliw-event="click:submitSimpleServiceWithoutInterface">Submit</a>
 	<br>
