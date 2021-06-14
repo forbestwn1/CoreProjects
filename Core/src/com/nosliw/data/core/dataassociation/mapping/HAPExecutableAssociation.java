@@ -93,11 +93,11 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	public HAPValueStructure getOutputContext() {
 		HAPValueStructure out = null;
 		switch(this.m_output.getStructureType()) {
-		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY:
+		case HAPConstantShared.STRUCTURE_TYPE_VALUEEMPTY:
 //			out = this.m_mapping;
 			break;
-		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT:
-		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT:
+		case HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT:
+		case HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP:
 			out = this.m_output;
 			break;
 		}

@@ -51,7 +51,8 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 
 		Map<String, String> outputFlatMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> outputFlatTypeMap = new LinkedHashMap<String, Class<?>>();
-		for(String name : this.getOutput().getNames()) {
+		HAPOutputStructure outputStructure = this.getOutput();
+		for(String name : outputStructure.getNames()) {
 			outputFlatMap.put(name, this.getOutput().getOutputStructure(name).isFlat()+"");
 			outputFlatTypeMap.put(name, Boolean.class);
 		}

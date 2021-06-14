@@ -24,7 +24,7 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	@HAPAttribute
 	public static String INPUTDEPENDENCY = "inputDependency";
 
-	private Map<String, HAPExecutableAssociation> m_associations;
+	private Map<String, HAPExecutableAssociation> m_mappings;
 	
 	private Set<String> m_inputDependency;
 
@@ -32,7 +32,7 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	
 	public HAPExecutableDataAssociationMapping(HAPDefinitionDataAssociationMapping definition, HAPContainerStructure input) {
 		super(definition, input);
-		this.m_associations = new LinkedHashMap<String, HAPExecutableAssociation>();
+		this.m_mappings = new LinkedHashMap<String, HAPExecutableAssociation>();
 		this.m_inputDependency = new HashSet<String>();
 	}
 	
@@ -50,18 +50,18 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	@Override
 	public HAPOutputStructure getOutput() {
 		HAPOutputStructure out = new HAPOutputStructure();
-		for(String name : this.m_associations.keySet()) {
-			out.addOutputStructure(name, this.m_associations.get(name).getOutputContext());
+		for(String name : this.m_mappings.keySet()) {
+			out.addOutputStructure(name, this.m_mappings.get(name).getOutputContext());
 		}
 		return out;
 	}
 
-	public void addAssociation(String name, HAPExecutableAssociation association) {   this.m_associations.put(name, association);  }
-	public HAPExecutableAssociation getAssociation(String name) {return this.m_associations.get(name);  }
-	public HAPExecutableAssociation getAssociation() {return this.m_associations.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);  }
-	public Map<String, HAPExecutableAssociation> getAssociations(){ return m_associations;  }
+	public void addMapping(String name, HAPExecutableAssociation mapping) {   this.m_mappings.put(name, mapping);  }
+	public HAPExecutableAssociation getMapping(String name) {return this.m_mappings.get(name);  }
+	public HAPExecutableAssociation getMapping() {return this.m_mappings.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);  }
+	public Map<String, HAPExecutableAssociation> getMappings(){ return m_mappings;  }
 	
-	public boolean isEmpty() {   return this.m_associations==null || this.m_associations.isEmpty();   }
+	public boolean isEmpty() {   return this.m_mappings==null || this.m_mappings.isEmpty();   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -71,7 +71,7 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 		for(Object key : associationJsonObj.keySet()) {
 			HAPExecutableAssociation assocation = new HAPExecutableAssociation();
 			assocation.buildObject(associationJsonObj.getJSONObject((String)key), HAPSerializationFormat.JSON);
-			this.m_associations.put((String)key, assocation);
+			this.m_mappings.put((String)key, assocation);
 		}
 		return true;  
 	}
@@ -80,8 +80,8 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		Map<String, String> assocationJsonMap = new LinkedHashMap<String, String>();
-		for(String assosName : this.m_associations.keySet()) {
-			assocationJsonMap.put(assosName, this.m_associations.get(assosName).toStringValue(HAPSerializationFormat.JSON));
+		for(String assosName : this.m_mappings.keySet()) {
+			assocationJsonMap.put(assosName, this.m_mappings.get(assosName).toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(ASSOCIATION, HAPJsonUtility.buildMapJson(assocationJsonMap));
 	}
@@ -90,8 +90,8 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		Map<String, String> assocationJsonMap = new LinkedHashMap<String, String>();
-		for(String assosName : this.m_associations.keySet()) {
-			assocationJsonMap.put(assosName, this.m_associations.get(assosName).toResourceData(runtimeInfo).toString());
+		for(String assosName : this.m_mappings.keySet()) {
+			assocationJsonMap.put(assosName, this.m_mappings.get(assosName).toResourceData(runtimeInfo).toString());
 		}
 		jsonMap.put(ASSOCIATION, HAPJsonUtility.buildMapJson(assocationJsonMap));
 	}

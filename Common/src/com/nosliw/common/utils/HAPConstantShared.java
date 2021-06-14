@@ -577,12 +577,6 @@ public class HAPConstantShared {
 
 
 
-		public static final String CONTEXTSTRUCTURE_TYPE_FLAT = "flat";
-		public static final String CONTEXTSTRUCTURE_TYPE_NOTFLAT = "notFlat";
-		public static final String CONTEXTSTRUCTURE_TYPE_EMPTY = "empty";
-
-
-
 		public static final String DATAASSOCIATION_TYPE_MAPPING = "mapping";
 		public static final String DATAASSOCIATION_TYPE_MIRROR = "mirror";
 		public static final String DATAASSOCIATION_TYPE_TRANSPARENT = "transparent";

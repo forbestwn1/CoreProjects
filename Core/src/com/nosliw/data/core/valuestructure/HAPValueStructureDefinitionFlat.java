@@ -132,7 +132,7 @@ public class HAPValueStructureDefinitionFlat extends HAPValueStructureDefinition
 	@Override
 	public void hardMergeWith(HAPValueStructure parent){
 		if(parent!=null) {
-			if(parent.getStructureType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+			if(parent.getStructureType().equals(HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT)) {
 				HAPValueStructureDefinitionFlat context  = (HAPValueStructureDefinitionFlat)parent;
 				Set<HAPRootStructure> eles = context.getRoots();
 				for(HAPRootStructure root : eles){

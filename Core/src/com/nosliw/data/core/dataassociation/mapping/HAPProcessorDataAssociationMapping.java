@@ -44,7 +44,7 @@ public class HAPProcessorDataAssociationMapping {
 		Map<String, HAPValueMapping> valueMappings = dataAssociation.getMappings();
 		for(String targetName : valueMappings.keySet()) {
 			HAPExecutableAssociation associationExe = processAssociation(input, valueMappings.get(targetName), output.getStructure(targetName), attachmentContainer, out.getInputDependency(), daProcessConfigure, runtimeEnv);
-			out.addAssociation(targetName, associationExe);
+			out.addMapping(targetName, associationExe);
 		}
 	}
 

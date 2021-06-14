@@ -25,7 +25,7 @@ public class HAPUtilityScript2 {
 
 	public static HAPJsonTypeScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationMapping dataAssociation) {
 		StringBuffer assocationScripts = new StringBuffer();
-		Map<String, HAPExecutableAssociation> associations = dataAssociation.getAssociations();
+		Map<String, HAPExecutableAssociation> associations = dataAssociation.getMappings();
 		for(String targetName : associations.keySet()) {
 			String associationScript = buildAssociationConvertFunction(associations.get(targetName)).getScript();
 			assocationScripts.append("output."+targetName+"="+associationScript+"(input, utilFunction);\n");

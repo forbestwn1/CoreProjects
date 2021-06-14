@@ -1,12 +1,16 @@
 package com.nosliw.data.core.dataassociation.mapping;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -24,7 +28,7 @@ public class HAPUtilityScript {
 
 	public static HAPJsonTypeScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationMapping dataAssociation) {
 		StringBuffer assocationScripts = new StringBuffer();
-		Map<String, HAPExecutableAssociation> associations = dataAssociation.getAssociations();
+		Map<String, HAPExecutableAssociation> associations = dataAssociation.getMappings();
 		for(String targetName : associations.keySet()) {
 			String associationScript = buildAssociationConvertFunction(associations.get(targetName)).getScript();
 			assocationScripts.append("output."+targetName+"="+associationScript+"(input, utilFunction);\n");
@@ -53,7 +57,7 @@ public class HAPUtilityScript {
 		Map<String, String> relativePathMapping = association.getRelativePathMappings();
 		for(String targePath : relativePathMapping.keySet()) {
 			String sourcePath = relativePathMapping.get(targePath);
-			String script = "output = utilFunction(output, "+ targePath +", input, "+ sourcePath +");\n";
+			String script = "output = utilFunction(output, "+ buildJSArrayFromContextPath(targePath) +", input, "+ buildJSArrayFromContextPath(sourcePath) +");\n";
 			dynamicScript.append(script);
 		}
 		templateParms.put("outputDyanimicValueBuild", dynamicScript.toString());
@@ -63,7 +67,7 @@ public class HAPUtilityScript {
 		Map<String, Object> constantAssignments = association.getConstantAssignments();
 		for(String targePath : constantAssignments.keySet()) {
 			Object constantValue = constantAssignments.get(targePath);
-			String script = "output = utilFunction(output, "+ targePath +", "+ HAPJsonUtility.buildJsonStringValue(constantValue, HAPSerializationFormat.JSON) +");\n";
+			String script = "output = utilFunction(output, "+ buildJSArrayFromContextPath(targePath) +", "+ HAPJsonUtility.buildJsonStringValue(constantValue, HAPSerializationFormat.JSON) +");\n";
 			constantAssignmentScript.append(script);
 		}
 		templateParms.put("outputConstantValueBuild", constantAssignmentScript.toString());
@@ -74,6 +78,15 @@ public class HAPUtilityScript {
 		return new HAPJsonTypeScript(script);
 	}
  
+	private static String buildJSArrayFromContextPath(String path) {
+		List<String> pathSegs = new ArrayList<String>();
+		HAPComplexPath contextPath = new HAPComplexPath(path);
+		pathSegs.add(contextPath.getRoot());
+		pathSegs.addAll(Arrays.asList(contextPath.getPath().getPathSegments()));
+		String pathSegsStr = HAPJsonUtility.buildArrayJson(pathSegs.toArray(new String[0]));
+		return pathSegsStr;
+	}
+
 	//build skeleton, it is used for data mapping operation
 	public static JSONObject buildSkeletonJsonObject(HAPValueMapping valueMapping) {
 		JSONObject output = new JSONObject();

@@ -223,7 +223,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	@Override
 	public void hardMergeWith(HAPValueStructure structure){
 		if(structure!=null) {
-			if(structure.getStructureType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+			if(structure.getStructureType().equals(HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP)) {
 				HAPValueStructureDefinitionGroup groupStructure = (HAPValueStructureDefinitionGroup)structure;
 				for(String categary : groupStructure.getCategaries()){
 					HAPValueStructureDefinitionFlat flat = groupStructure.getFlat(categary);

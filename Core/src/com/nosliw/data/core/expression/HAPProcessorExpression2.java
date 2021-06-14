@@ -297,7 +297,7 @@ public class HAPProcessorExpression2 {
 							for(String rootName : da.getRootNames()) {
 								da1.addRoot(nameUpdate.getUpdatedName(rootName), da.getRoot(rootName));
 							}
-							mappingDa.addAssociation(null, da1);
+							mappingDa.addMapping(null, da1);
 						}
 						
 						updateReferenceVariableName(refExpression);
