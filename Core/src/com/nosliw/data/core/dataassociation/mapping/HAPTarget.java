@@ -31,7 +31,7 @@ public class HAPTarget {
 		}
 	}
 	
-	public HAPReferenceRoot getRootNodeId() {    return this.m_rootReference;    }
+	public HAPReferenceRoot getRootNodeReference() {    return this.m_rootReference;    }
 	
 	public String getValueStructureName() {   return this.m_valueStructure;    }
 	

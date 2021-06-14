@@ -26,9 +26,9 @@ public class HAPUtilityStructureDataAssociation {
 	}
 	
 	//automatic enhance mapping so that all the variables are mapped as target
-	public static HAPMapping expandMappingByTargetVariable(HAPMapping mapping, HAPVariableInfoInStructure targetVarsContainer) {
+	public static HAPValueMapping expandMappingByTargetVariable(HAPValueMapping mapping, HAPVariableInfoInStructure targetVarsContainer) {
 		
-		HAPMapping out = new HAPMapping();
+		HAPValueMapping out = new HAPValueMapping();
 		
 		Map<String, HAPRootStructure> outMappingRoots = new LinkedHashMap<String, HAPRootStructure>();   //all roots for output mapping
 		for(HAPInfoVariable varInfo : targetVarsContainer.getAllVariables()) {

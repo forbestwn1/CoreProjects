@@ -78,8 +78,6 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		return null;
 	}
 
-	
-	
 	//resourceUnit : target ui resource object
 	//content : html content
 	public void parseAndBuildUIDefinition(HAPDefinitionUIUnit resourceUnit, String content){

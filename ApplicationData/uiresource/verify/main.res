@@ -210,29 +210,29 @@
 	[
 		{
 			"name" : "simpleServiceWithInterface",
-			"status" : "disabled",
+			"status" : "enable",
 			"provider" : "simpleServiceWithInterfaceProvider",
 			"info" : {
-				"enhanceContext" : "true"
+				"enhanceContext" : "false"
 			},
 			"dataMapping" :{
 				"inputMapping" : {
-					"element" : {
+					"mapping" : {
 						"parm1" : {
 							"definition" : {
-								"path" : "forsimpleservice_1_parm1"
+								"path" : "aaa"
 							}
 						},
 						"parm2" : {
 							"definition" : {
-								"path" : "forsimpleservice_1_parm2"
+								"path" : "aaa"
 							}
 						}
 					}
 				},
 				"outputMapping" : {
 					"success" : {
-						"element" : {
+						"mapping" : {
 						}
 					}
 				}

@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.HAPParserContext;
+import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPOutputStructure extends HAPSerializableImp{
@@ -41,7 +41,7 @@ public class HAPOutputStructure extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){  
 		JSONObject jsonObj = (JSONObject)json;
 		for(Object key : jsonObj.keySet()) {
-			this.m_contextStructrue.put((String)key, HAPParserContext.parseValueStructure(jsonObj.getJSONObject((String)key)));
+			this.m_contextStructrue.put((String)key, HAPParserValueStructure.parseValueStructure(jsonObj.getJSONObject((String)key)));
 		}
 		return true;  
 	}

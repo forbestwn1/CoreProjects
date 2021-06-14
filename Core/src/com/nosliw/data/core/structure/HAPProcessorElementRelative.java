@@ -22,8 +22,8 @@ import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPProcessorElementRelative {
 
-	public static HAPStructure process(HAPStructure context, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
-		return process(context, parent, new HashSet<String>(), errors, configure, runtimeEnv);
+	public static HAPStructure process(HAPStructure structure, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		return process(structure, parent, new HashSet<String>(), errors, configure, runtimeEnv);
 	}
 
 	public static HAPStructure process(HAPStructure structure, HAPContainerStructure parents, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
@@ -35,7 +35,7 @@ public class HAPProcessorElementRelative {
 					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 						HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 						String parent = relativeEle.getParent();
-						dependency.add(parent);
+						if(dependency!=null)   dependency.add(parent);
 						if(!relativeEle.isProcessed()) {
 							HAPStructure parentStructure = HAPUtilityStructure.getReferedStructure(parent, parents, structure);
 							return Pair.of(false, processRelativeElement(relativeEle, parentStructure, errors, configure, runtimeEnv));
@@ -51,6 +51,28 @@ public class HAPProcessorElementRelative {
 		return out;
 	}
 	
+	public static HAPRootStructure process(HAPRootStructure root, HAPContainerStructure parents, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPRootStructure out = root.cloneRoot();
+		HAPUtilityStructure.traverseElement(out, new HAPProcessorContextDefinitionElement() {
+			@Override
+			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
+				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
+					String parent = relativeEle.getParent();
+					if(dependency!=null)   dependency.add(parent);
+					if(!relativeEle.isProcessed()) {
+						HAPStructure parentStructure = HAPUtilityStructure.getReferedStructure(parent, parents, null);
+						return Pair.of(false, processRelativeElement(relativeEle, parentStructure, errors, configure, runtimeEnv));
+					}
+				}
+				return null;
+			}
+
+			@Override
+			public void postProcess(HAPInfoElement eleInfo, Object value) {	}
+		}, null);
+		return out;
+	}
 	
 	private static HAPElementStructure processRelativeElement(HAPElementStructureLeafRelative relativeElement, HAPStructure parentStructure, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructure out = relativeElement;

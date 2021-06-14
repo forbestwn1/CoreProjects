@@ -10,12 +10,10 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
-import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
@@ -23,15 +21,18 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
-import com.nosliw.data.core.structure.HAPProcessorElementRelative;
+import com.nosliw.data.core.structure.HAPReferenceElement;
 import com.nosliw.data.core.structure.HAPRootStructure;
-import com.nosliw.data.core.structure.HAPUtilityStructure;
+import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
+import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
-public class HAPProcessorDataAssociationMapping {
+public class HAPProcessorDataAssociationMapping2 {
 
 	public static HAPExecutableDataAssociationMapping processDataAssociation(HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociationMapping out = new HAPExecutableDataAssociationMapping(dataAssociation, input);
@@ -49,26 +50,23 @@ public class HAPProcessorDataAssociationMapping {
 	}
 
 	public static void enhanceDataAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
-		Map<String, HAPValueMapping> associations = dataAssociation.getMappings();
+		Map<String, HAPValueStructureDefinitionFlat> associations = dataAssociation.getMappings();
 		for(String targetName : associations.keySet()) {
 			enhanceAssociationEndPointContext(input, inputEnhance, associations.get(targetName), output.getStructure(targetName), outputEnhance, runtimeEnv);
 		}
 	}
 	
 	//enhance input and output context according to dataassociation
-	private static void enhanceAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPValueMapping associationDef, HAPValueStructure outputStructure, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
-//		associationDef = normalizeOutputNameInDataAssociation(input, associationDef, outputStructure);
+	private static void enhanceAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPValueStructureDefinitionFlat associationDef, HAPValueStructure outputStructure, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
+		associationDef = normalizeOutputNameInDataAssociation(input, associationDef, outputStructure);
 		HAPInfo info = HAPUtilityDAProcess.withModifyInputStructureConfigure(null, inputEnhance);
 		info = HAPUtilityDAProcess.withModifyOutputStructureConfigure(info, outputEnhance);
 		HAPConfigureProcessorStructure processConfigure = HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(info);
 		List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
 
 		//process data association definition in order to find missing context data definition from input
-		Map<String, HAPRootStructure> mappingItems = associationDef.getItems();
-		for(String targetId : mappingItems.keySet()) {
-			HAPRootStructure item1 = HAPProcessorElementRelative.process(mappingItems.get(targetId), input, null, errors, processConfigure, runtimeEnv);
-		}
-
+		HAPValueStructureDefinitionFlat daContextProcessed = HAPProcessorContext.process(associationDef, input, null, null, errors, processConfigure, runtimeEnv);
+		
 		//try to enhance input context according to error
 		if(inputEnhance) {
 			for(HAPServiceData error : errors) {
@@ -77,14 +75,14 @@ public class HAPProcessorDataAssociationMapping {
 					//enhance input context according to error
 					HAPInfoElement contextEleInfo = (HAPInfoElement)error.getData();
 					//find referred element defined in output
-					HAPComplexPath path = contextEleInfo.getElementPath();
-					HAPElementStructure sourceContextEle = HAPUtilityStructure.getDescendant(outputStructure.getRoot(path.getRoot()).getDefinition(), path.getPathStr());
+					HAPReferenceElement path = contextEleInfo.getElementPath();
+					HAPElementStructure sourceContextEle = HAPUtilityContext.getDescendant(outputStructure.getRoot(path.getRootReference().getName(), false).getDefinition(), path.getSubPath());
 					if(sourceContextEle==null)  throw new RuntimeException();
 					//update input: set referred element defined in output to input
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)contextEleInfo.getElement();
 					HAPElementStructure solidateSourceContextEle = sourceContextEle.getSolidStructureElement();
 					if(solidateSourceContextEle==null)    throw new RuntimeException();
-					HAPUtilityStructure.setDescendant(input.getStructure(relativeEle.getParent()), relativeEle.getResolvedIdPath(), solidateSourceContextEle.cloneStructureElement());
+					HAPUtilityContext.setDescendant(input.getStructure(relativeEle.getParent()), relativeEle.getPathFormat(), solidateSourceContextEle.cloneStructureElement());
 				}
 				else  throw new RuntimeException();
 			}
@@ -92,8 +90,8 @@ public class HAPProcessorDataAssociationMapping {
 		
 		//try to enhance output context
 		if(outputEnhance) {
-			for(String eleName : mappingItems.keySet()) {
-				HAPUtilityStructure.traverseElement(mappingItems.get(eleName), new HAPProcessorContextDefinitionElement() {
+			for(String eleName : associationDef.getRootNames()) {
+				HAPUtilityContext.processContextRootElement(associationDef.getRoot(eleName), eleName, new HAPProcessorContextDefinitionElement() {
 
 					@Override
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
@@ -102,16 +100,16 @@ public class HAPProcessorDataAssociationMapping {
 							//only relative element
 							HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 							//if element path exist in output structure
-							HAPInfoReferenceResolve targetResolvedInfo = HAPUtilityStructure.resolveElementReference(eleInfo.getElementPath().getFullName(), outputStructure, processConfigure.elementReferenceResolveMode, null);
-							if(!HAPUtilityStructure.isLogicallySolved(targetResolvedInfo)) {
+							HAPInfoReferenceResolve targetResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(eleInfo.getElementPath(), outputStructure);
+							if(!HAPUtilityContext.isLogicallySolved(targetResolvedInfo)) {
 								//target node in output according to path not exist
 								//element in input structure
 								HAPValueStructure sourceContextStructure = input.getStructure(relativeEle.getParent());
-								HAPInfoReferenceResolve sourceResolvedInfo = HAPUtilityStructure.resolveElementReference(relativeEle.getReferencePath(), sourceContextStructure, processConfigure.elementReferenceResolveMode, null);
-								if(HAPUtilityStructure.isLogicallySolved(sourceResolvedInfo)) {
+								HAPInfoReferenceResolve sourceResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(relativeEle.getPathFormat(), sourceContextStructure);
+								if(HAPUtilityContext.isLogicallySolved(sourceResolvedInfo)) {
 									HAPElementStructure sourceEle = sourceResolvedInfo.resolvedElement;
 									if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-										HAPUtilityStructure.setDescendant(outputStructure, eleInfo.getElementPath(), sourceEle.getSolidStructureElement());
+										HAPUtilityContext.setDescendant(outputStructure, eleInfo.getElementPath(), sourceEle.getSolidStructureElement());
 									}
 									else if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_VALUE)) {
 										
@@ -133,80 +131,92 @@ public class HAPProcessorDataAssociationMapping {
 		}		
 	}
 	
-	private static HAPValueMapping updateOutputNameWithId(HAPContainerStructure input, HAPValueMapping valueMapping, HAPValueStructure outputStructure) {
-		HAPValueMapping out = new HAPValueMapping();
-		Map<String, HAPRootStructure> items = valueMapping.getItems();
-		for(String target : items.keySet()) {
-			HAPRootStructure mapping = items.get(target);
-			HAPRootStructure targetRoot = HAPUtilityStructure.getRootByName(target, outputStructure);
-			out.addItem(targetRoot.getLocalId(), items.get(target));
+	//make output name in da to be global name according to refference to outputStrucutre
+	private static HAPValueStructureDefinitionFlat normalizeOutputNameInDataAssociation(HAPContainerStructure input, HAPValueStructureDefinitionFlat associationDef, HAPValueStructure outputStructure) {
+		HAPValueStructureDefinitionFlat out = associationDef;
+		if(outputStructure instanceof HAPValueStructureDefinitionGroup) {
+			//for output context group only
+			//find refereed context in output
+			//update root name with full name (containing categary and element name)
+			HAPValueStructureDefinitionFlat origin = associationDef;
+			out = new HAPValueStructureDefinitionFlat();
+			for(String eleName : origin.getRootNames()) {
+				String updatedName = eleName;
+				HAPInfoReferenceResolve resolvedInfo = HAPUtilityContext.analyzeElementReference(new HAPReferenceElement(eleName), (HAPValueStructureDefinitionGroup)outputStructure, null, null);
+				if(resolvedInfo!=null) 	updatedName = resolvedInfo.path.getRootReference().getFullName();
+				out.addRoot(updatedName, origin.getRoot(eleName));
+			}
 		}
 		return out;
 	}
-	
+
 	private static HAPExecutableAssociation processAssociation(HAPContainerStructure input, HAPValueMapping valueMapping, HAPValueStructure outputStructure, HAPContainerAttachment attachmentContainer, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPExecutableAssociation out = new HAPExecutableAssociation(input, outputStructure);
+		HAPExecutableAssociation out = new HAPExecutableAssociation(input, valueMapping, outputStructure);
 
-		valueMapping = updateOutputNameWithId(input, valueMapping, outputStructure);
+		valueMapping = normalizeOutputNameInDataAssociation(input, valueMapping, outputStructure);
 		
-		//process relative
-		{
-			List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
-			HAPConfigureProcessorStructure processConfigure = HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(daProcessConfigure);
-			Map<String, HAPRootStructure> mappingItems = valueMapping.getItems();
-			for(String targetId : mappingItems.keySet()) {
-				HAPRootStructure item1 = HAPProcessorElementRelative.process(mappingItems.get(targetId), input, parentDependency, errors, processConfigure, runtimeEnv);
-				valueMapping.addItem(targetId, item1);
-			}
-		}
-		
-		out.setRelativePathMappings(buildRelativePathMappingInDataAssociation(valueMapping));
+		//process mapping
+		List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
+		HAPConfigureProcessorStructure processConfigure = HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(daProcessConfigure);
+		HAPValueStructureDefinitionFlat daContextProcessed = HAPProcessorContext.process(valueMapping, input, attachmentContainer, parentDependency, errors, processConfigure, runtimeEnv);
+		out.setMapping(daContextProcessed);
+		buildRelativePathMappingInDataAssociation(out);
+		buildConstantAssignmentInDataAssociation(out);
 
-		out.setConstantAssignments(buildConstantAssignmentInDataAssociation(valueMapping));
-
-		Map<String, HAPRootStructure> mappingItems = valueMapping.getItems();
-		for(String targetId : mappingItems.keySet()) {
-			//merge back to context variable
-			HAPRootStructure outputRoot = outputStructure.getRoot(targetId);
-			if(outputRoot!=null) {
-				Map<String, HAPMatchers> matchers = HAPUtilityStructure.mergeRoot(outputRoot, mappingItems.get(targetId), HAPUtilityDAProcess.ifModifyOutputStructure(daProcessConfigure), runtimeEnv);
-				//matchers when merge back to context variable
-				for(String matchPath :matchers.keySet()) {
-					out.addOutputMatchers(new HAPComplexPath(targetId, matchPath).getFullName(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
+		//matchers to output
+		switch(outputStructure.getType()) {
+		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT:
+		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT:
+			HAPValueStructureDefinitionFlat mapping = out.getMapping();
+			for(String rootName : mapping.getRootNames()) {
+				//merge back to context variable
+				if(outputStructure.getRoot(rootName, false)!=null) {
+					Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeRoot(outputStructure.getRoot(rootName, false), mapping.getRoot(rootName), HAPUtilityDAProcess.ifModifyOutputStructure(daProcessConfigure), runtimeEnv);
+					//matchers when merge back to context variable
+					for(String matchPath :matchers.keySet()) {
+//						out.addOutputMatchers(new HAPReferenceElement(new HAPIdContextDefinitionRoot(rootName), matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
+					}
 				}
 			}
+			break;
 		}
 
-		out.setMapping(valueMapping);
 		return out;
 	}
 
 	//build assignment path mapping according to relative node
-	private static Map<String, String> buildRelativePathMappingInDataAssociation(HAPValueMapping valueMapping) {
+	private static void buildRelativePathMappingInDataAssociation(HAPExecutableAssociation dataAssociationExe) {
 		//build path mapping according for mapped element only
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
-		Map<String, HAPRootStructure> items = valueMapping.getItems();
-		for(String eleName : items.keySet()) {
-			HAPRootStructure root = items.get(eleName);
+		for(String eleName : dataAssociationExe.getMapping().getRootNames()) {
+			HAPRootStructure root = dataAssociationExe.getMapping().getRoot(eleName);
 			//only physical root do mapping
 			if(HAPConstantShared.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(root.getInfo()))) {
-				pathMapping.putAll(HAPUtilityDataAssociation.buildRelativePathMapping(root, eleName));
+				pathMapping.putAll(HAPUtilityDataAssociation.buildRelativePathMapping(root, buildRootNameAccordingToFlat(eleName, dataAssociationExe.isFlatOutput()), dataAssociationExe.isFlatInput()));
 			}
 		}
-		return pathMapping;
+		dataAssociationExe.setRelativePathMappings(pathMapping);
 	}
 
-	private static Map<String, Object> buildConstantAssignmentInDataAssociation(HAPValueMapping valueMapping) {
+	private static void buildConstantAssignmentInDataAssociation(HAPExecutableAssociation dataAssociationExe) {
 		//build path mapping according for mapped element only
-		Map<String, Object> out = new LinkedHashMap<String, Object>();
-		Map<String, HAPRootStructure> items = valueMapping.getItems();
-		for(String eleName : items.keySet()) {
-			HAPRootStructure root = items.get(eleName);
+		Map<String, Object> constantAssignment = new LinkedHashMap<String, Object>();
+		for(String eleName : dataAssociationExe.getMapping().getRootNames()) {
+			HAPRootStructure root = dataAssociationExe.getMapping().getRoot(eleName);
 			//only physical root do mapping
 			if(HAPConstantShared.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(root.getInfo()))) {
-				out.putAll(HAPUtilityDataAssociation.buildConstantAssignment(root, eleName));
+				constantAssignment.putAll(HAPUtilityDataAssociation.buildConstantAssignment(root, buildRootNameAccordingToFlat(eleName, dataAssociationExe.isFlatOutput()), dataAssociationExe.isFlatInput()));
 			}
 		}
-		return out;
+		dataAssociationExe.setConstantAssignments(constantAssignment);
+	}
+
+	
+	//if flat, aaa__bbb
+	//if not flat, aaa.bbb
+	private static String buildRootNameAccordingToFlat(String eleName, boolean isFlatOutput) {
+//		HAPIdContextDefinitionRoot eleId = new HAPIdContextDefinitionRoot(eleName);
+		if(isFlatOutput)  return eleId.getFullName();
+		else return eleId.getPathFormat();
 	}
 }

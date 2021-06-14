@@ -1,0 +1,67 @@
+package com.nosliw.data.core.dataassociation.mapping;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.structure.HAPParserStructure;
+import com.nosliw.data.core.structure.HAPRootStructure;
+
+public class HAPValueMapping extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static final String MAPPING = "mapping";
+	
+	private Map<String, HAPRootStructure> m_items;
+
+	public HAPValueMapping() {
+		this.m_items = new LinkedHashMap<String, HAPRootStructure>();
+	}
+	
+	public void addItem(String targetName, HAPRootStructure item) {
+		this.m_items.put(targetName, item);
+	}
+	
+	public Map<String, HAPRootStructure> getItems(){   return this.m_items;    }
+
+	
+	public HAPValueMapping cloneValueMapping() {
+		HAPValueMapping out = new HAPValueMapping();
+		for(String targetName : this.m_items.keySet()) {
+			out.addItem(targetName, this.m_items.get(targetName).cloneRoot());
+		}
+		return out;
+	}
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		try{
+			super.buildObjectByJson(json);
+			JSONObject jsonObj = (JSONObject)json;
+			JSONObject jsonMapping = jsonObj.optJSONObject(MAPPING);
+			if(jsonMapping==null)  jsonMapping = jsonObj;
+			for(Object key : jsonMapping.keySet()) {
+				String name = (String)key;
+				HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(jsonMapping.getJSONObject(name));
+				this.addItem(name, root);
+			}
+			return true;  
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(MAPPING, HAPJsonUtility.buildJson(this.m_items, HAPSerializationFormat.JSON));
+	}
+	
+}

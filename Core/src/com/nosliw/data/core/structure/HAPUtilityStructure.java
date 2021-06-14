@@ -73,6 +73,10 @@ public class HAPUtilityStructure {
 		out.solvedPath = solvedPath;
 		return out;
 	}
+
+	public static void setDescendant(HAPStructure targetStructure, HAPComplexPath path, HAPElementStructure ele) {
+		setDescendant(targetStructure.getRoot(path.getRoot()), path.getPath(), ele);
+	}
 	
 	public static void setDescendant(HAPRootStructure targetRoot, HAPPath path, HAPElementStructure ele) {
 		String[] pathSegs = path.getPathSegments();
@@ -105,7 +109,11 @@ public class HAPUtilityStructure {
 
 	//traverse through all the structure element under root, and process it
 	public static void traverseElement(HAPRootStructure root, HAPProcessorContextDefinitionElement processor, Object value) {
-		HAPElementStructure processedEle = traverseElement(new HAPInfoElement(root.getDefinition(), new HAPComplexPath(root.getLocalId())), processor, value);
+		traverseElement(root, root.getLocalId(), processor, value);
+	}
+	
+	public static void traverseElement(HAPRootStructure root, String rootId, HAPProcessorContextDefinitionElement processor, Object value) {
+		HAPElementStructure processedEle = traverseElement(new HAPInfoElement(root.getDefinition(), new HAPComplexPath(rootId)), processor, value);
 		if(processedEle!=null)  root.setDefinition(processedEle);
 	}
 	
@@ -235,6 +243,12 @@ public class HAPUtilityStructure {
 		HAPReferenceRoot rootReference = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
 		List<HAPRootStructure> out = structure.resolveRoot(rootReference, createIfNotExist);
 		return out;
+	}
+	
+	public static HAPRootStructure getRootByName(String name, HAPStructure structure) {
+		List<HAPRootStructure> allRoots = resolveRoot(name, structure, false);
+		if(allRoots==null || allRoots.size()==0)  return null;
+		else return allRoots.get(0);
 	}
 	
 	public static HAPInfoReferenceResolve resolveElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
