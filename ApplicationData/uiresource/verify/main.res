@@ -6,6 +6,8 @@
     	<br>
 	EXPRESSION IN CONTENT :<%=?(aaa)?.value + '   6666 ' %>
 	<br>
+	EXPRESSION IN CONTENT :<%=?(bbb)?.value + '   6666 ' %>
+	<br>
     	SERVICE SUBMIT: 	<a href='' nosliw-event="click:submitSimpleServiceWithoutInterface">Submit</a>
 	<br>
     
@@ -49,6 +51,15 @@
 							}
 						},
 
+						"bbb":{
+							definition : {
+								"criteria": "test.string;1.0.0",
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "This is my world!"
+							}
+						},
 				}
 			}
 		}
@@ -69,7 +80,7 @@
 			"status" : "enable",
 			"provider" : "simpleServiceWithInterfaceProvider",
 			"info" : {
-				"enhanceContext" : "false"
+				"enhanceContext" : "true"
 			},
 			"dataMapping" :{
 				"inputMapping" : {
@@ -81,7 +92,7 @@
 						},
 						"parm2" : {
 							"definition" : {
-								"path" : "aaa"
+								"path" : "ccc"
 							}
 						}
 					}
@@ -89,6 +100,11 @@
 				"outputMapping" : {
 					"success" : {
 						"mapping" : {
+							"bbb" : {
+								"definition" : {
+									"path" : "simpleOutput2"
+								}
+							}
 						}
 					}
 				}

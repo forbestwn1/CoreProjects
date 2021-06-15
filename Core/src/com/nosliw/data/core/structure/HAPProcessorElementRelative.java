@@ -38,7 +38,7 @@ public class HAPProcessorElementRelative {
 						if(dependency!=null)   dependency.add(parent);
 						if(!relativeEle.isProcessed()) {
 							HAPStructure parentStructure = HAPUtilityStructure.getReferedStructure(parent, parents, structure);
-							return Pair.of(false, processRelativeElement(relativeEle, parentStructure, errors, configure, runtimeEnv));
+							return Pair.of(false, processRelativeElement(eleInfo, parentStructure, errors, configure, runtimeEnv));
 						}
 					}
 					return null;
@@ -52,8 +52,12 @@ public class HAPProcessorElementRelative {
 	}
 	
 	public static HAPRootStructure process(HAPRootStructure root, HAPContainerStructure parents, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		return process(root, root.getLocalId(), parents, dependency, errors, configure, runtimeEnv);		
+	}
+	
+	public static HAPRootStructure process(HAPRootStructure root, String rootId, HAPContainerStructure parents, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPRootStructure out = root.cloneRoot();
-		HAPUtilityStructure.traverseElement(out, new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(out, rootId, new HAPProcessorContextDefinitionElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
@@ -62,7 +66,7 @@ public class HAPProcessorElementRelative {
 					if(dependency!=null)   dependency.add(parent);
 					if(!relativeEle.isProcessed()) {
 						HAPStructure parentStructure = HAPUtilityStructure.getReferedStructure(parent, parents, null);
-						return Pair.of(false, processRelativeElement(relativeEle, parentStructure, errors, configure, runtimeEnv));
+						return Pair.of(false, processRelativeElement(eleInfo, parentStructure, errors, configure, runtimeEnv));
 					}
 				}
 				return null;
@@ -74,12 +78,13 @@ public class HAPProcessorElementRelative {
 		return out;
 	}
 	
-	private static HAPElementStructure processRelativeElement(HAPElementStructureLeafRelative relativeElement, HAPStructure parentStructure, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	private static HAPElementStructure processRelativeElement(HAPInfoElement eleInfo, HAPStructure parentStructure, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPElementStructureLeafRelative relativeElement = (HAPElementStructureLeafRelative)eleInfo.getElement();
 		HAPElementStructure out = relativeElement;
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.resolveElementReference(relativeElement.getReferencePath(), parentStructure, configure.elementReferenceResolveMode, null);
 		
 		if(resolveInfo==null || resolveInfo.referredRoot==null) {
-			errors.add(HAPServiceData.createFailureData(relativeElement, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
+			errors.add(HAPServiceData.createFailureData(eleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
 			if(!configure.tolerantNoParentForRelative)  throw new RuntimeException();
 		}
 		else {
@@ -149,7 +154,7 @@ public class HAPProcessorElementRelative {
 				}
 				else{
 					//not find parent node, throw exception
-					errors.add(HAPServiceData.createFailureData(relativeElement, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
+					errors.add(HAPServiceData.createFailureData(eleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
 					if(!configure.tolerantNoParentForRelative)  throw new RuntimeException();
 				}
 			}

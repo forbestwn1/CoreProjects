@@ -74,11 +74,11 @@ public class HAPProcessorServiceUse {
 		if(serviceProviderInfo.getDataMapping()!=null) {
 			HAPExecutableProviderToUse providerToUseExe = new HAPExecutableProviderToUse();
 			
-			HAPExecutableDataAssociation parmDA = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(serviceInterface)), serviceProviderInfo.getDataMapping().getInputMapping(), HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(providerInterface)), attachmentContainer, null, runtimeEnv);;
+			HAPExecutableDataAssociation parmDA = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromServiceParms(serviceInterface)), serviceProviderInfo.getDataMapping().getInputMapping(), HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromServiceParms(providerInterface)), attachmentContainer, null, runtimeEnv);;
 			providerToUseExe.setParmMapping(parmDA);
 			
 			for(String result : serviceProviderInfo.getDataMapping().getOutputMapping().keySet()) {
-				HAPExecutableDataAssociation resultDA = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildContextFromResultServiceOutputs(providerInterface, result)), serviceProviderInfo.getDataMapping().getInputMapping(), HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildContextFromResultServiceOutputs(serviceInterface, result)), attachmentContainer, null, runtimeEnv);;
+				HAPExecutableDataAssociation resultDA = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromResultServiceOutputs(providerInterface, result)), serviceProviderInfo.getDataMapping().getInputMapping(), HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromResultServiceOutputs(serviceInterface, result)), attachmentContainer, null, runtimeEnv);;
 				providerToUseExe.addResultMapping(result, resultDA);
 			}
 			out.setProviderMapping(providerToUseExe);

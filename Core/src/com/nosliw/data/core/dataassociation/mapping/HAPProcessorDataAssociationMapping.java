@@ -66,7 +66,7 @@ public class HAPProcessorDataAssociationMapping {
 		//process data association definition in order to find missing context data definition from input
 		Map<String, HAPRootStructure> mappingItems = associationDef.getItems();
 		for(String targetId : mappingItems.keySet()) {
-			HAPRootStructure item1 = HAPProcessorElementRelative.process(mappingItems.get(targetId), input, null, errors, processConfigure, runtimeEnv);
+			HAPRootStructure item1 = HAPProcessorElementRelative.process(mappingItems.get(targetId), targetId, input, null, errors, processConfigure, runtimeEnv);
 		}
 
 		//try to enhance input context according to error
@@ -93,7 +93,7 @@ public class HAPProcessorDataAssociationMapping {
 		//try to enhance output context
 		if(outputEnhance) {
 			for(String eleName : mappingItems.keySet()) {
-				HAPUtilityStructure.traverseElement(mappingItems.get(eleName), new HAPProcessorContextDefinitionElement() {
+				HAPUtilityStructure.traverseElement(mappingItems.get(eleName), eleName, new HAPProcessorContextDefinitionElement() {
 
 					@Override
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
