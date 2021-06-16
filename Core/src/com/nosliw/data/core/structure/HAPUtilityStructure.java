@@ -27,9 +27,14 @@ import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPUtilityStructure {
 
+	public static HAPRootStructure getRootFromStructure(HAPStructure structure, String rootRefLiterate) {
+		HAPReferenceRoot rootRef = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
+		return getRootFromStructure(structure, rootRef);
+	}
+
 	public static HAPRootStructure getRootFromStructure(HAPStructure structure, HAPReferenceRoot rootRef) {
 		List<HAPRootStructure> roots = structure.resolveRoot(rootRef, false);
-		if(roots==null || roots.size()==1)  return null;
+		if(roots==null || roots.size()==0)  return null;
 		return roots.get(0);
 	}
 
@@ -74,6 +79,16 @@ public class HAPUtilityStructure {
 		return out;
 	}
 
+	public static void setDescendantByNamePath(HAPStructure targetStructure, HAPComplexPath path, HAPElementStructure ele) {
+		HAPReferenceRoot rootRef = HAPUtilityStructureReference.parseRootReferenceLiterate(path.getRoot(), targetStructure.getStructureType());
+		HAPRootStructure root = getRootFromStructure(targetStructure, rootRef);
+		if(root==null) {
+			root = new HAPRootStructure();
+			root = targetStructure.addRoot(rootRef, root);
+		}
+		setDescendant(root, path.getPath(), ele);
+	}
+	
 	public static void setDescendant(HAPStructure targetStructure, HAPComplexPath path, HAPElementStructure ele) {
 		setDescendant(targetStructure.getRoot(path.getRoot()), path.getPath(), ele);
 	}

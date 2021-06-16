@@ -84,7 +84,7 @@ public class HAPProcessorDataAssociationMapping {
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)contextEleInfo.getElement();
 					HAPElementStructure solidateSourceContextEle = sourceContextEle.getSolidStructureElement();
 					if(solidateSourceContextEle==null)    throw new RuntimeException();
-					HAPUtilityStructure.setDescendant(input.getStructure(relativeEle.getParent()), relativeEle.getResolvedIdPath(), solidateSourceContextEle.cloneStructureElement());
+					HAPUtilityStructure.setDescendantByNamePath(input.getStructure(relativeEle.getParent()), new HAPComplexPath(relativeEle.getReferencePath()), solidateSourceContextEle.cloneStructureElement());
 				}
 				else  throw new RuntimeException();
 			}
@@ -111,7 +111,7 @@ public class HAPProcessorDataAssociationMapping {
 								if(HAPUtilityStructure.isLogicallySolved(sourceResolvedInfo)) {
 									HAPElementStructure sourceEle = sourceResolvedInfo.resolvedElement;
 									if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-										HAPUtilityStructure.setDescendant(outputStructure, eleInfo.getElementPath(), sourceEle.getSolidStructureElement());
+										HAPUtilityStructure.setDescendantByNamePath(outputStructure, eleInfo.getElementPath(), sourceEle.getSolidStructureElement());
 									}
 									else if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_VALUE)) {
 										

@@ -6,7 +6,11 @@
     	<br>
 	EXPRESSION IN CONTENT :<%=?(aaa)?.value + '   6666 ' %>
 	<br>
-	EXPRESSION IN CONTENT :<%=?(bbb)?.value + '   6666 ' %>
+	EXPRESSION IN CONTENT :<%=?(ddd)?.value + '   6666 ' %>
+	<br>
+	EXPRESSION IN CONTENT :<%=?(ccc)?.value + '   6666 ' %>
+	<br>
+	CUSTOM TAG:<nosliw-string data="ccc"/>  
 	<br>
     	SERVICE SUBMIT: 	<a href='' nosliw-event="click:submitSimpleServiceWithoutInterface">Submit</a>
 	<br>
@@ -100,7 +104,7 @@
 				"outputMapping" : {
 					"success" : {
 						"mapping" : {
-							"bbb" : {
+							"ddd" : {
 								"definition" : {
 									"path" : "simpleOutput2"
 								}
