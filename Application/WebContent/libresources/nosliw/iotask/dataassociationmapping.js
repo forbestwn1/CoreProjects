@@ -14,20 +14,20 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_getExecuteMappingAssociationRequest = function(inputDataSet, association, outputIODataSet, targetName, name, handlers, request){
+var loc_getExecuteMappingRequest = function(inputDataSet, association, outputIODataSet, targetName, name, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
 
 	//use convert function to calculate output
 	var dataAssociationOutput;
-	if(association!=undefined && association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_CONVERTFUNCTION]!=undefined){
-		dataAssociationOutput = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_CONVERTFUNCTION](inputDataSet, node_objectOperationUtility.assignObjectAttributeByPath);
+	if(association!=undefined && association[node_COMMONATRIBUTECONSTANT.EXECUTABLEMAPPING_CONVERTFUNCTION]!=undefined){
+		dataAssociationOutput = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEMAPPING_CONVERTFUNCTION](inputDataSet, node_objectOperationUtility.assignObjectAttributeByPath);
 	}
 
 	//matchers
-	out.addRequest(node_ioTaskUtility.processMatchersRequest(dataAssociationOutput, association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_OUTPUTMATCHERS], {
+	out.addRequest(node_ioTaskUtility.processMatchersRequest(dataAssociationOutput, association[node_COMMONATRIBUTECONSTANT.EXECUTABLEMAPPING_OUTPUTMATCHERS], {
 		success :function(request, value){
 			//to output dataSetIO
-			return node_ioTaskUtility.outputToDataSetIORequest(outputIODataSet, value, targetName, association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_FLATOUTPUT]);
+			return node_ioTaskUtility.outputToDataSetIORequest(outputIODataSet, value, targetName, true);
 		}
 	}));
 	return out;
@@ -43,7 +43,7 @@ var node_getExecuteMappingDataAssociationRequest = function(inputDataSet, dataAs
 	});
 	
 	_.each(dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_ASSOCIATION], function(association, targetName){
-		executeAssociationsRequest.addRequest(targetName, loc_getExecuteMappingAssociationRequest(inputDataSet, association, outputIODataSet, targetName));
+		executeAssociationsRequest.addRequest(targetName, loc_getExecuteMappingRequest(inputDataSet, association, outputIODataSet, targetName));
 	});
 	out.addRequest(executeAssociationsRequest);
 

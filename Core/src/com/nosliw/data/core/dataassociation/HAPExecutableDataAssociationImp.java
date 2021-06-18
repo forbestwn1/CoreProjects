@@ -16,13 +16,16 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 
 	private HAPContainerStructure m_input;
 
+	private HAPContainerStructure m_output;
+	
 	private String m_type;
 
 	public HAPExecutableDataAssociationImp() {}
 	
-	public HAPExecutableDataAssociationImp(HAPDefinitionDataAssociation definition, HAPContainerStructure input) {
+	public HAPExecutableDataAssociationImp(HAPDefinitionDataAssociation definition, HAPContainerStructure input, HAPContainerStructure output) {
 		super(definition);
 		this.m_input = input;
+		this.m_output = output;
 		this.m_type = definition.getType();
 	}
 	
@@ -33,6 +36,16 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 	public HAPContainerStructure getInput() {	return this.m_input;	}
 	public void setInput(HAPContainerStructure input) {    this.m_input = input;    }
 
+	@Override
+	public HAPOutputStructure getOutput() {
+		HAPOutputStructure out = new HAPOutputStructure();
+		for(String outStructureName : this.m_output.getStructureNames()) {
+			out.addOutputStructure(outStructureName, this.m_output.getStructure(outStructureName));
+		}
+		return out;
+	}
+
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;

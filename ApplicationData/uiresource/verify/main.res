@@ -10,6 +10,11 @@
 	<br>
 	EXPRESSION IN CONTENT :<%=?(ccc)?.value + '   6666 ' %>
 	<br>
+	EXPRESSION IN CONTENT :<%=?(internal)?.value + '   6666 ' %>
+	<br>
+	EXPRESSION IN CONTENT :<%=?(forlistservice_1_ex_parm1)?.value + '   6666 ' %>
+	
+	<br>
 	CUSTOM TAG:<nosliw-string data="ccc"/>  
 	<br>
     	SERVICE SUBMIT: 	<a href='' nosliw-event="click:submitSimpleServiceWithoutInterface">Submit</a>
@@ -45,26 +50,29 @@
 		"group" : {
 			"public" : {
 				"flat" : {
-						"aaa":{
-							definition : {
-								"criteria": "test.string;1.0.0",
-							},
-							"defaultValue": {
-								"dataTypeId": "test.string;1.0.0",
-								"value": "This is my world!"
-							}
+					"aaa":{
+						definition : {
+							"criteria": "test.string;1.0.0",
 						},
+						"defaultValue": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "This is my world!"
+						}
+					},
 
-						"bbb":{
-							definition : {
-								"criteria": "test.string;1.0.0",
-							},
-							"defaultValue": {
-								"dataTypeId": "test.string;1.0.0",
-								"value": "This is my world!"
-							}
+					"bbb":{
+						definition : {
+							"criteria": "test.string;1.0.0",
 						},
-				}
+						"defaultValue": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "This is my world!"
+						}
+					},
+				},
+				"reference" : [
+					"internal", "*forlistservice_1_ex"
+				]
 			}
 		}
 	}
@@ -154,7 +162,21 @@
 				}
 			},
 		],
-		"context" : [
+		"valuestructure" : [
+			{
+				"name": "internal",
+				"entity": {
+					"internal": {
+						"definition": {
+							"criteria": "test.float;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "Internal variable!"
+						}
+					},
+				} 
+			},
 		]
 	}
 	</attachment>

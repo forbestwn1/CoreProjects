@@ -8,8 +8,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
-import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.data.core.component.valuestructure.HAPContextProcessAttachmentReferenceValueStructure;
+import com.nosliw.data.core.component.valuestructure.HAPProcessorValueStructureInComponent;
+import com.nosliw.data.core.component.valuestructure.HAPValueStructureInComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
@@ -24,6 +25,7 @@ import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
@@ -51,12 +53,15 @@ public class HAPProcessorUIValueStructure {
 	}
 	
 	//expand context reference by using context definition in attachment
-	public static void expandContextReference(HAPDefinitionUIUnit uiUnitDef, HAPManagerResourceDefinition resourceDefMan) {
-		HAPUtilityComponent.resolveContextReference(uiUnitDef.getValueStructureWrapper().getValueStructure(), uiUnitDef.getContextReferences(), uiUnitDef.getAttachmentContainer(), resourceDefMan);
+	public static void expandValueStructureReference(HAPDefinitionUIUnit uiUnitDef, HAPContextProcessAttachmentReferenceValueStructure attachmentReferenceContext, HAPRuntimeEnvironment runtimeEnv) {
+		HAPWrapperValueStructure valueStructureWrapper = uiUnitDef.getValueStructureWrapper();
+		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.process((HAPValueStructureInComponent)valueStructureWrapper.getValueStructure(), attachmentReferenceContext, runtimeEnv));
+		
+//		HAPUtilityComponent.resolveContextReference(uiUnitDef.getValueStructureWrapper().getValueStructure(), uiUnitDef.getContextReferences(), uiUnitDef.getAttachmentContainer(), resourceDefMan);
 		
 		//process child tags
 		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
-			expandContextReference(uiTag, resourceDefMan);
+			expandValueStructureReference(uiTag, attachmentReferenceContext, runtimeEnv);
 		}
 	}
 	

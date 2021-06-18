@@ -9,7 +9,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
@@ -27,22 +26,6 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
  
 	@Override
 	public String getType() {  return HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;  }
-
-	@Override
-	public void updateInputVarName(HAPUpdateName updateName) {
-//		for(String name : this.m_mappings.keySet()) {
-//			HAPValueStructureDefinitionFlat association = this.m_mappings.get(name);
-//			association.updateReferenceName(updateName);
-//		}
-	}
-
-	@Override
-	public void updateOutputVarName(HAPUpdateName updateName) {
-//		for(String name : this.m_mappings.keySet()) {
-//			HAPValueMapping mapping = this.m_mappings.get(name);
-//			mapping.updateRootName(updateName);
-//		}
-	}
 
 	public void addAssociation(String targetName, HAPValueMapping mapping) {	
 		if(HAPBasicUtility.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;

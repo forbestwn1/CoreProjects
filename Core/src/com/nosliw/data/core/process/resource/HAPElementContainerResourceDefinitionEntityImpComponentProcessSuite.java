@@ -63,7 +63,7 @@ public class HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite
 	@Override
 	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {
 		HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite out = new HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite();
-		this.cloneToComponent(out);
+		this.cloneToComponent(out, true);
 		for(String name : this.m_activities.keySet()) {
 			out.m_activities.put(name, this.m_activities.get(name).cloneActivityDefinition());
 		}

@@ -38,6 +38,7 @@ public class HAPProcessorValueStructureInComponent {
 					flatOut.addRoot(root);
 				}
 			}
+			out = flatOut;
 		}
 		else if(type.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP)) {
 			HAPValueStructureGroupInComponent groupIn = (HAPValueStructureGroupInComponent)valueStructureInComponent;
@@ -53,6 +54,7 @@ public class HAPProcessorValueStructureInComponent {
 					}
 				}
 			}
+			out = groupOut;
 		}
 		
 		return out;

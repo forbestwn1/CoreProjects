@@ -14,7 +14,6 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.structure.HAPElementStructure;
@@ -28,7 +27,7 @@ public class HAPUtilityScript {
 
 	public static HAPJsonTypeScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationMapping dataAssociation) {
 		StringBuffer assocationScripts = new StringBuffer();
-		Map<String, HAPExecutableAssociation> associations = dataAssociation.getMappings();
+		Map<String, HAPExecutableMapping> associations = dataAssociation.getMappings();
 		for(String targetName : associations.keySet()) {
 			String associationScript = buildAssociationConvertFunction(associations.get(targetName)).getScript();
 			assocationScripts.append("output."+targetName+"="+associationScript+"(input, utilFunction);\n");
@@ -40,13 +39,8 @@ public class HAPUtilityScript {
 		return new HAPJsonTypeScript(script);
 	}
 	
-	public static HAPJsonTypeScript buildAssociationConvertFunction(HAPExecutableAssociation association) {
+	public static HAPJsonTypeScript buildAssociationConvertFunction(HAPExecutableMapping association) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("isFlatOutput", association.isFlatOutput()+"");
-		templateParms.put("isFlatInput", association.isFlatInput()+"");
-		templateParms.put("rootIdSeperator", HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);
-		templateParms.put("isInherit", (!HAPConstant.INHERITMODE_NONE.equals(HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(null).inheritMode))+"");
-		
 		//build init output object for mapped root
 		HAPValueMapping valueMappinig = association.getMapping();
 		JSONObject output = buildSkeletonJsonObject(valueMappinig);

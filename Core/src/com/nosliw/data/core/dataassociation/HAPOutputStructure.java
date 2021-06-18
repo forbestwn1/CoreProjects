@@ -17,38 +17,38 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 public class HAPOutputStructure extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static String CONTEXTSTRUCTURE = "contextStructure";
+	public static String VALUESTRUCTURE = "valueStructure";
 
-	private Map<String, HAPValueStructure> m_contextStructrue;
+	private Map<String, HAPValueStructure> m_valueStructrue;
 
 	public HAPOutputStructure() {
-		this.m_contextStructrue = new LinkedHashMap<String, HAPValueStructure>();
+		this.m_valueStructrue = new LinkedHashMap<String, HAPValueStructure>();
 	}
 
-	public Set<String> getNames(){   return this.m_contextStructrue.keySet();   };
+	public Set<String> getNames(){   return this.m_valueStructrue.keySet();   };
 	
-	public Map<String, HAPValueStructure> getOutputStructures() {		return this.m_contextStructrue;	}
+	public Map<String, HAPValueStructure> getOutputStructures() {		return this.m_valueStructrue;	}
 	
-	public HAPValueStructure getOutputStructure(String name) {   return this.m_contextStructrue.get(name);   }
+	public HAPValueStructure getOutputStructure(String name) {   return this.m_valueStructrue.get(name);   }
 
-	public HAPValueStructure getOutputStructure() {	return this.m_contextStructrue.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
+	public HAPValueStructure getOutputStructure() {	return this.m_valueStructrue.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
 	
-	public void addOutputStructure(String name, HAPValueStructure structure) {   this.m_contextStructrue.put(name, structure);   }
+	public void addOutputStructure(String name, HAPValueStructure structure) {   this.m_valueStructrue.put(name, structure);   }
 
-	public void addOutputStructure(HAPValueStructure structure) {   this.m_contextStructrue.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT, structure);   }
+	public void addOutputStructure(HAPValueStructure structure) {   this.m_valueStructrue.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT, structure);   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){  
 		JSONObject jsonObj = (JSONObject)json;
 		for(Object key : jsonObj.keySet()) {
-			this.m_contextStructrue.put((String)key, HAPParserValueStructure.parseValueStructure(jsonObj.getJSONObject((String)key)));
+			this.m_valueStructrue.put((String)key, HAPParserValueStructure.parseValueStructure(jsonObj.getJSONObject((String)key)));
 		}
 		return true;  
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(CONTEXTSTRUCTURE, HAPJsonUtility.buildJson(this.m_contextStructrue, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildJson(this.m_valueStructrue, HAPSerializationFormat.JSON));
 	}
 
 }

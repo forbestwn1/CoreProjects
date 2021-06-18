@@ -11,8 +11,8 @@ public class HAPExecutableDataAssociationNone extends HAPExecutableDataAssociati
 
 	public HAPExecutableDataAssociationNone() {}
 
-	public HAPExecutableDataAssociationNone(HAPDefinitionDataAssociationNone definition, HAPContainerStructure input) {
-		super(definition, input);
+	public HAPExecutableDataAssociationNone(HAPDefinitionDataAssociationNone definition, HAPContainerStructure input, HAPContainerStructure output) {
+		super(definition, input, output);
 	}
 	
 	@Override

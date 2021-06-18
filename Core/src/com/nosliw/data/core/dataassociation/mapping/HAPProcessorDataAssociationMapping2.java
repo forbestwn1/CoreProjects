@@ -44,7 +44,7 @@ public class HAPProcessorDataAssociationMapping2 {
 	public static void processDataAssociation(HAPExecutableDataAssociationMapping out, HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		Map<String, HAPValueMapping> valueMappings = dataAssociation.getMappings();
 		for(String targetName : valueMappings.keySet()) {
-			HAPExecutableAssociation associationExe = processAssociation(input, valueMappings.get(targetName), output.getStructure(targetName), attachmentContainer, out.getInputDependency(), daProcessConfigure, runtimeEnv);
+			HAPExecutableMapping associationExe = processAssociation(input, valueMappings.get(targetName), output.getStructure(targetName), attachmentContainer, out.getInputDependency(), daProcessConfigure, runtimeEnv);
 			out.addMapping(targetName, associationExe);
 		}
 	}
@@ -150,8 +150,8 @@ public class HAPProcessorDataAssociationMapping2 {
 		return out;
 	}
 
-	private static HAPExecutableAssociation processAssociation(HAPContainerStructure input, HAPValueMapping valueMapping, HAPValueStructure outputStructure, HAPContainerAttachment attachmentContainer, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPExecutableAssociation out = new HAPExecutableAssociation(input, valueMapping, outputStructure);
+	private static HAPExecutableMapping processAssociation(HAPContainerStructure input, HAPValueMapping valueMapping, HAPValueStructure outputStructure, HAPContainerAttachment attachmentContainer, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPExecutableMapping out = new HAPExecutableMapping(input, valueMapping, outputStructure);
 
 		valueMapping = normalizeOutputNameInDataAssociation(input, valueMapping, outputStructure);
 		
@@ -185,7 +185,7 @@ public class HAPProcessorDataAssociationMapping2 {
 	}
 
 	//build assignment path mapping according to relative node
-	private static void buildRelativePathMappingInDataAssociation(HAPExecutableAssociation dataAssociationExe) {
+	private static void buildRelativePathMappingInDataAssociation(HAPExecutableMapping dataAssociationExe) {
 		//build path mapping according for mapped element only
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
 		for(String eleName : dataAssociationExe.getMapping().getRootNames()) {
@@ -198,7 +198,7 @@ public class HAPProcessorDataAssociationMapping2 {
 		dataAssociationExe.setRelativePathMappings(pathMapping);
 	}
 
-	private static void buildConstantAssignmentInDataAssociation(HAPExecutableAssociation dataAssociationExe) {
+	private static void buildConstantAssignmentInDataAssociation(HAPExecutableMapping dataAssociationExe) {
 		//build path mapping according for mapped element only
 		Map<String, Object> constantAssignment = new LinkedHashMap<String, Object>();
 		for(String eleName : dataAssociationExe.getMapping().getRootNames()) {

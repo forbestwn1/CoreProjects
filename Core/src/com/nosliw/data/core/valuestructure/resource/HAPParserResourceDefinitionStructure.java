@@ -21,8 +21,10 @@ public class HAPParserResourceDefinitionStructure extends HAPParserResourceDefin
 		for(HAPRootStructure root : roots)  out.addRoot(root);
 		
 		JSONArray refArray = jsonObj.optJSONArray(HAPResourceDefinitionValueStructure.REFERENCE);
-		for(int i=0; i<refArray.length(); i++) {
-			out.addReference(new HAPInfoEntityReference(refArray.get(i)));
+		if(refArray!=null) {
+			for(int i=0; i<refArray.length(); i++) {
+				out.addReference(new HAPInfoEntityReference(refArray.get(i)));
+			}
 		}
 
 		return out;

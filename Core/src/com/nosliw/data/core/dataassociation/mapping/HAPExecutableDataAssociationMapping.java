@@ -24,15 +24,15 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	@HAPAttribute
 	public static String INPUTDEPENDENCY = "inputDependency";
 
-	private Map<String, HAPExecutableAssociation> m_mappings;
+	private Map<String, HAPExecutableMapping> m_mappings;
 	
 	private Set<String> m_inputDependency;
 
 	public HAPExecutableDataAssociationMapping() {}
 	
-	public HAPExecutableDataAssociationMapping(HAPDefinitionDataAssociationMapping definition, HAPContainerStructure input) {
-		super(definition, input);
-		this.m_mappings = new LinkedHashMap<String, HAPExecutableAssociation>();
+	public HAPExecutableDataAssociationMapping(HAPDefinitionDataAssociationMapping definition, HAPContainerStructure input, HAPContainerStructure output) {
+		super(definition, input, output);
+		this.m_mappings = new LinkedHashMap<String, HAPExecutableMapping>();
 		this.m_inputDependency = new HashSet<String>();
 	}
 	
@@ -51,15 +51,15 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	public HAPOutputStructure getOutput() {
 		HAPOutputStructure out = new HAPOutputStructure();
 		for(String name : this.m_mappings.keySet()) {
-			out.addOutputStructure(name, this.m_mappings.get(name).getOutputContext());
+			out.addOutputStructure(name, super.getOutput().getOutputStructure(name));
 		}
 		return out;
 	}
 
-	public void addMapping(String name, HAPExecutableAssociation mapping) {   this.m_mappings.put(name, mapping);  }
-	public HAPExecutableAssociation getMapping(String name) {return this.m_mappings.get(name);  }
-	public HAPExecutableAssociation getMapping() {return this.m_mappings.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);  }
-	public Map<String, HAPExecutableAssociation> getMappings(){ return m_mappings;  }
+	public void addMapping(String name, HAPExecutableMapping mapping) {   this.m_mappings.put(name, mapping);  }
+	public HAPExecutableMapping getMapping(String name) {return this.m_mappings.get(name);  }
+	public HAPExecutableMapping getMapping() {return this.m_mappings.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);  }
+	public Map<String, HAPExecutableMapping> getMappings(){ return m_mappings;  }
 	
 	public boolean isEmpty() {   return this.m_mappings==null || this.m_mappings.isEmpty();   }
 	
@@ -69,7 +69,7 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 		super.buildObjectByJson(json);
 		JSONObject associationJsonObj = jsonObj.getJSONObject(ASSOCIATION);
 		for(Object key : associationJsonObj.keySet()) {
-			HAPExecutableAssociation assocation = new HAPExecutableAssociation();
+			HAPExecutableMapping assocation = new HAPExecutableMapping();
 			assocation.buildObject(associationJsonObj.getJSONObject((String)key), HAPSerializationFormat.JSON);
 			this.m_mappings.put((String)key, assocation);
 		}

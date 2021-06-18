@@ -7,24 +7,14 @@ import java.util.Set;
 
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.structure.HAPRootStructure;
-import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 public class HAPUtilityStructureDataAssociation {
 
-	public static HAPDefinitionDataAssociation replaceVarNameWithId(HAPDefinitionDataAssociation da, HAPStructure target, HAPStructure source) {
-		
-	}
-	
-	public static void mirroringVariableInStructure(HAPStructure sourceStructure) {
-		
-	}
-	
 	//automatic enhance mapping so that all the variables are mapped as target
 	public static HAPValueMapping expandMappingByTargetVariable(HAPValueMapping mapping, HAPVariableInfoInStructure targetVarsContainer) {
 		
