@@ -29,6 +29,7 @@ public class HAPValueMapping extends HAPSerializableImp{
 	
 	public Map<String, HAPRootStructure> getItems(){   return this.m_items;    }
 
+	public boolean isEmpty() {   return this.getItems().isEmpty();   }
 	
 	public HAPValueMapping cloneValueMapping() {
 		HAPValueMapping out = new HAPValueMapping();

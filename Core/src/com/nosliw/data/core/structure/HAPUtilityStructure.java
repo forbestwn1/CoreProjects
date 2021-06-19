@@ -164,7 +164,15 @@ public class HAPUtilityStructure {
 		return out;
 	}
 	
-
+	public static HAPRootStructure createRootWithRelativeElement(String refPath, String parentStructure) {
+		HAPRootStructure out = new HAPRootStructure();
+		HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
+		relativeEle.setParent(parentStructure);
+		relativeEle.setReferencePath(refPath);
+		out.setDefinition(relativeEle);
+		return out;
+	}
+	
 	public static HAPRootStructure createRootWithRelativeElement(HAPRootStructure parentNode, String parentStructure, String elePath, Set<String> excludedInfo) {
 		HAPRootStructure out = null;
 		

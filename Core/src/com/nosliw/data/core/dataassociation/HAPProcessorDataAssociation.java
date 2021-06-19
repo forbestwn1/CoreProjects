@@ -108,7 +108,8 @@ public class HAPProcessorDataAssociation {
 			return HAPProcessorDataAssociationMapping.processDataAssociation(input, (HAPDefinitionDataAssociationMapping)dataAssociation, output, attachmentContainer, configure, runtimeEnv);
 		
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR:
-			return HAPProcessorDataAssociationMirror.processDataAssociation(input, (HAPDefinitionDataAssociationMirror)dataAssociation, output, configure, runtimeEnv);
+			HAPDefinitionDataAssociationMapping mappingDataAssociation = HAPProcessorDataAssociationMirror.convertToDataAssociationMapping(input, (HAPDefinitionDataAssociationMirror)dataAssociation, output);
+			return processDataAssociation(input, mappingDataAssociation, output, attachmentContainer, configure, runtimeEnv);
 
 		case HAPConstantShared.DATAASSOCIATION_TYPE_NONE:
 			return HAPProcessorDataAssociationNone.processDataAssociation(input, (HAPDefinitionDataAssociationNone)dataAssociation, output, configure, runtimeEnv);
