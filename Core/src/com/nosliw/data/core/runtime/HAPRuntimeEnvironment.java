@@ -1,5 +1,6 @@
 package com.nosliw.data.core.runtime;
 
+import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -34,6 +35,8 @@ public interface HAPRuntimeEnvironment {
 
 	HAPManagerScript getScriptManager();
 
+	HAPManagerActivity getActivityManager();
+	
 	HAPManagerProcess getProcessManager();
 
 	HAPRuntimeProcess getProcessRuntime();

@@ -27,7 +27,7 @@ public class HAPPluginResourceDefinitionProcess implements HAPPluginResourceDefi
 	}
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId) {
+	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId, HAPResourceDefinition relatedResource) {
 		HAPIdProcess processId = new HAPIdProcess(resourceId.getName());
 		
 		HAPResourceIdLocal suiteResourceId = new HAPResourceIdLocal(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE);

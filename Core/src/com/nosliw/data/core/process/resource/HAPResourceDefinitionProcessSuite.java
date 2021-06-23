@@ -5,13 +5,14 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
+import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 
 //suite that contain multiple process
 @HAPEntityWithAttribute
-public class HAPResourceDefinitionProcessSuite extends HAPResourceDefinitionContainer<HAPElementContainerResourceDefinition>{
+public class HAPResourceDefinitionProcessSuite extends HAPResourceDefinitionContainer<HAPElementContainerResourceDefinition> implements HAPDefinitionProcessSuite{
 
 	public HAPResourceDefinitionProcessSuite() {
 	}

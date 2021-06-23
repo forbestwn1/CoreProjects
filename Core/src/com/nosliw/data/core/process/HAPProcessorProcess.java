@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
@@ -17,6 +18,17 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorProcess{
 
+	public static HAPExecutableProcess process(
+			String id,
+			HAPDefinitionProcess processDef,
+			HAPContextProcessAttachmentReferenceProcess attachmentReferenceContext,
+			Map<String, String> configure,
+			HAPRuntimeEnvironment runtimeEnv,
+			HAPProcessTracker processTracker) {
+		
+	}
+	
+	
 	//process process in suite
 	public static HAPExecutableProcess process(
 			HAPResourceDefinitionProcess processDef,

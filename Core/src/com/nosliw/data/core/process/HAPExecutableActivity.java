@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 
 @HAPEntityWithAttribute

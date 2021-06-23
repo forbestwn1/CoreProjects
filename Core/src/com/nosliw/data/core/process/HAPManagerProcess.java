@@ -4,12 +4,12 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
@@ -25,9 +25,7 @@ public class HAPManagerProcess {
 	private HAPManagerActivityPlugin m_pluginManager;
 	
 	public HAPManagerProcess(
-			HAPManagerActivityPlugin pluginMan,
 			HAPRuntimeEnvironment runtimeEnv) {
-		this.m_pluginManager = pluginMan;
 		this.m_runtimeEnv = runtimeEnv;
 	}
 

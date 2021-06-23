@@ -5,8 +5,8 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
+import com.nosliw.data.core.activity.HAPDefinitionActivity;
+import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 
 public class HAPPresentUIActivityDefinition extends HAPDefinitionActivityNormal{
 

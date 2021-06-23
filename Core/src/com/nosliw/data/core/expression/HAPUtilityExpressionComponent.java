@@ -17,7 +17,7 @@ import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPUtilityExpressionComponent {
 
-	public static HAPDefinitionExpressionSuiteImp buildExpressionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPDefinitionExpressionSuiteImp buildActivitySuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
 		
 		//build context

@@ -3,6 +3,8 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.activity.HAPManagerActivity;
+import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -14,7 +16,6 @@ import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
@@ -73,7 +74,8 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerService serviceManager = new HAPManagerService(this);
 		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), this);
 		HAPManagerScript scriptMan = new HAPManagerScript(this);
-		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), this);
+		HAPManagerActivity activityMan = new HAPManagerActivity(new HAPManagerActivityPlugin());
+		HAPManagerProcess processMan = new HAPManagerProcess(this);
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
@@ -83,6 +85,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			dataTypeHelper,
 			codeTableManager,
 			resourceMan,
+			activityMan,
 			processMan,
 			processRuntimeMan,
 			expressionMan,

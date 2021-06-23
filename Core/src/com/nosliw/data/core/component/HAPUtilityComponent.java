@@ -5,11 +5,11 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.process.HAPUtilityProcessComponent;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;

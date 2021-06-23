@@ -3,6 +3,7 @@ package com.nosliw.data.core.process;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
 import com.nosliw.data.core.component.HAPComponentImp;
@@ -11,7 +12,6 @@ import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPElementContainerResourceDefinitionReferenceProcessSuite;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;

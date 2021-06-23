@@ -3,6 +3,9 @@ package com.nosliw.data.core.runtime.js;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.activity.HAPManagerActivity;
+import com.nosliw.data.core.activity.resource.HAPParserResourceDefinitionActivitySuite;
+import com.nosliw.data.core.activity.resource.HAPResourceManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPGatewayCodeTable;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.codetable.HAPResourceManagerCodeTable;
@@ -20,7 +23,6 @@ import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPRuntimeProcess;
 import com.nosliw.data.core.process.resource.HAPParserResourceDefinitionProcess;
 import com.nosliw.data.core.process.resource.HAPPluginResourceDefinitionProcess;
-import com.nosliw.data.core.process.resource.HAPResourceManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPResourceManagerProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
@@ -72,6 +74,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPResourceManagerRoot m_resourceManager;
 	
+	private HAPManagerActivity m_activityManager;
+	
 	private HAPManagerProcess m_processManager;
 	
 	private HAPRuntimeProcess m_processRuntime;
@@ -101,6 +105,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			HAPDataTypeHelper dataTypeHelper,
 			HAPManagerCodeTable codeTableManager,
 			HAPResourceManagerRoot resourceMan,
+			HAPManagerActivity activityManager,
 			HAPManagerProcess processManager,
 			HAPRuntimeProcess processRuntime,
 			HAPManagerExpression expressionManager,
@@ -113,7 +118,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, activityManager, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
@@ -121,6 +126,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 				HAPDataTypeHelper dataTypeHelper,
 				HAPManagerCodeTable codeTableManager,
 				HAPResourceManagerRoot resourceMan,
+				HAPManagerActivity activityManager,
 				HAPManagerProcess processManager,
 				HAPRuntimeProcess processRuntime,
 				HAPManagerExpression expressionManager,
@@ -135,6 +141,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_dataTypeManager = dataTypeManager;
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_resourceManager = resourceMan;
+		this.m_activityManager = activityManager;
 		this.m_processManager = processManager;
 		this.m_processRuntime = processRuntime;
 		this.m_expressionManager = expressionManager;
@@ -176,7 +183,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION, new HAPParserResourceDefinitionScriptGroup()));
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginServiceDefinition(this.getServiceManager().getServiceDefinitionManager()));
-		
+
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ACTIVITYSUITE, new HAPParserResourceDefinitionActivitySuite(this.getProcessManager().getPluginManager())));
+
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE, new HAPParserResourceDefinitionProcess(this.getProcessManager().getPluginManager())));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionProcess(this.getResourceDefinitionManager()));
 
@@ -200,6 +209,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@Override
 	public HAPResourceManagerRoot getResourceManager() {		return this.m_resourceManager;	}
+
+	@Override
+	public HAPManagerActivity getActivityManager() {   return this.m_activityManager;    }
 
 	@Override
 	public HAPManagerProcess getProcessManager() {  return this.m_processManager;  }

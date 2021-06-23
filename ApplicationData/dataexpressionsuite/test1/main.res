@@ -106,7 +106,8 @@
 			}
 		}
 	},
-	"element": [{
+	"element": [
+		{
 			"id": "test10",
 			"name": "test10",
 			"description": "standard",
@@ -139,10 +140,10 @@
 		{
 			"id": "test13",
 			"name": "test13",
-			"description": "attribute chain",
+			"description": "variable discover (var not defined in value structure)",
 			"element" : [
 				{
-					"expression" : "!(test.string)!.subString(?(testVar1.var1.var11)?,from:?(testVar4)?,to:?(testVar5)?)"
+					"expression" : "!(test.string)!.subString(?(discoverVar2.var1.var11)?,from:?(testVar4)?,to:?(testVar5)?)"
 				}
 			]
 		},
@@ -311,6 +312,18 @@
 					"testVar5": {
 						"dataTypeId": "test.integer;1.0.0",
 						"value": 3
+					},
+					"discoverVar1": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "0123456789"
+					},
+					"discoverVar2": {
+						"var1" : {
+							"var11":{
+								"dataTypeId": "test.string;1.0.0",
+								"value": "0123456789"
+							}
+						}
 					}
 				}
 			}

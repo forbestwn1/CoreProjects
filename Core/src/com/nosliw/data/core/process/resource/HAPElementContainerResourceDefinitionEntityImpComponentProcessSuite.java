@@ -10,10 +10,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
 import com.nosliw.data.core.component.HAPElementContainerResourceDefinitionEntityImpComponent;
-import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 

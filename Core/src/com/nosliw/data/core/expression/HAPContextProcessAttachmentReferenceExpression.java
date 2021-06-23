@@ -13,7 +13,7 @@ public class HAPContextProcessAttachmentReferenceExpression extends HAPContextPr
 
 	@Override
 	protected Object processEntityAttachment(String attachmentName, Object entity) {
-		HAPDefinitionExpressionSuiteImp suite = HAPUtilityExpressionComponent.buildExpressionSuiteFromComponent(this.getComplexEntity(), this.getRuntimeEnvironment());
+		HAPDefinitionExpressionSuiteImp suite = HAPUtilityExpressionComponent.buildActivitySuiteFromComponent(this.getComplexEntity(), this.getRuntimeEnvironment());
 		return suite.getEntityElement(attachmentName);
 	}
 

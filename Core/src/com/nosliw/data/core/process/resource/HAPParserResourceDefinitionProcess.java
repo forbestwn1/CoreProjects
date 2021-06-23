@@ -2,7 +2,7 @@ package com.nosliw.data.core.process.resource;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.resource.HAPParserResourceDefinitionImp;
 import com.nosliw.data.core.resource.HAPResourceDefinition;

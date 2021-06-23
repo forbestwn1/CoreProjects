@@ -14,6 +14,7 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPProcessorDataAssociationMirror {
 
+	
 	public static HAPDefinitionDataAssociationMapping convertToDataAssociationMapping(HAPContainerStructure input, HAPDefinitionDataAssociationMirror dataAssociation, HAPContainerStructure output) {
 		HAPDefinitionDataAssociationMapping mappigDataAssociation = new HAPDefinitionDataAssociationMapping();
 		

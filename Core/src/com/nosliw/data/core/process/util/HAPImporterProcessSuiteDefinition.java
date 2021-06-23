@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
 
 public class HAPImporterProcessSuiteDefinition {
