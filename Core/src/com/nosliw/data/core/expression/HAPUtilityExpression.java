@@ -18,7 +18,7 @@ import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 public class HAPUtilityExpression {
 
 	public static HAPWrapperValueStructure getValueStructure(Object expressionGroupDef, HAPRuntimeEnvironment runtimeEnv) {
-		return HAPUtilityComponent.getValueStructure(expressionGroupDef, HAPUtilityExpressionProcessConfigure.getContextProcessConfigurationForExpression(), runtimeEnv);
+		return HAPUtilityComponent.getValueStructure(expressionGroupDef, runtimeEnv);
 	}
 	
 	//make global name

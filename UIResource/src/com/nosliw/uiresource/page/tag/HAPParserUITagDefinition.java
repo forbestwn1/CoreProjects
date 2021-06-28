@@ -13,7 +13,7 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.value.HAPRhinoDataUtility;
+import com.nosliw.common.value.HAPRhinoValueUtility;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
@@ -71,7 +71,7 @@ public class HAPParserUITagDefinition {
     	
 		//parse context
 		NativeObject valueStructureObj = (NativeObject)defObjJS.get(HAPUITagDefinition.VALUESTRUCTURE);
-		JSONObject valueStructureJson = (JSONObject)HAPRhinoDataUtility.toJson(valueStructureObj);
+		JSONObject valueStructureJson = (JSONObject)HAPRhinoValueUtility.toJson(valueStructureObj);
 		
 		HAPWrapperValueStructure valueStructureWrapper = new HAPWrapperValueStructure(new HAPValueStructureDefinitionGroup());
 		HAPParserUITagDefinition.parseValueStructureInTagDefinition(valueStructureJson, (HAPValueStructureDefinitionGroup)valueStructureWrapper.getValueStructure());
@@ -80,7 +80,7 @@ public class HAPParserUITagDefinition {
 		//parse dependency
 		NativeObject requiresObj = (NativeObject)defObjJS.get(HAPUITagDefinition.REQUIRES);
 		if(requiresObj!=null){
-			JSONObject requiresJson = (JSONObject)HAPRhinoDataUtility.toJson(requiresObj);
+			JSONObject requiresJson = (JSONObject)HAPRhinoValueUtility.toJson(requiresObj);
 			Iterator<String> typeIt = requiresJson.keys();
 			while(typeIt.hasNext()){
 				String resourceType = typeIt.next();
@@ -97,7 +97,7 @@ public class HAPParserUITagDefinition {
 		//attribute definition
 		NativeArray attributesArrayObj = (NativeArray)defObjJS.get(HAPUITagDefinition.ATTRIBUTES);
 		for(int i=0; i<attributesArrayObj.size(); i++) {
-			JSONObject attrDefJson = (JSONObject)HAPRhinoDataUtility.toJson(attributesArrayObj.get(i));
+			JSONObject attrDefJson = (JSONObject)HAPRhinoValueUtility.toJson(attributesArrayObj.get(i));
 			HAPUITagDefinitionAttribute attrDef = new HAPUITagDefinitionAttribute();
 			attrDef.buildObject(attrDefJson, HAPSerializationFormat.JSON);
 			definition.addAttributeDefinition(attrDef);
@@ -107,7 +107,7 @@ public class HAPParserUITagDefinition {
 		NativeArray eventDefObjs = (NativeArray)defObjJS.get(HAPUITagDefinition.EVENT);
 		if(eventDefObjs!=null) {
 			for(int i=0; i<eventDefObjs.size(); i++) {
-				JSONObject eventDefJson = (JSONObject)HAPRhinoDataUtility.toJson(eventDefObjs.get(i));
+				JSONObject eventDefJson = (JSONObject)HAPRhinoValueUtility.toJson(eventDefObjs.get(i));
 				HAPDefinitionUIEvent eventDef = new HAPDefinitionUIEvent();
 				eventDef.buildObject(eventDefJson, HAPSerializationFormat.JSON);
 				definition.addEventDefinition(eventDef);

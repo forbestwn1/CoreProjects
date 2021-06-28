@@ -28,11 +28,11 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	private HAPDefinitionDataAssociation m_inputMapping;
 	
 	//possible result for activity
-	private Map<String, HAPDefinitionResultActivityNormal> m_results;
+	private Map<String, HAPDefinitionResultActivity> m_results;
 	
 	public HAPDefinitionActivityNormal(String type) {
 		super(type);
-		this.m_results = new LinkedHashMap<String, HAPDefinitionResultActivityNormal>();
+		this.m_results = new LinkedHashMap<String, HAPDefinitionResultActivity>();
 	}
 	
 	public HAPDefinitionDataAssociation getInputMapping() {  return this.m_inputMapping;   }
@@ -43,8 +43,8 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	//param: parent context structure
 	public HAPValueStructure getInputContextStructure(HAPValueStructure parentContextStructure) {  return HAPValueStructureDefinitionEmpty.flatStructure();   }
 	
-	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
-	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }
+	public Map<String, HAPDefinitionResultActivity> getResults(){   return this.m_results;  }
+	public HAPDefinitionResultActivity getResult(String resultName){   return this.m_results.get(resultName);  }
 	
 	//if no inputmapping, build default one which is mirror
 	protected void buildDefaultInputMapping() {

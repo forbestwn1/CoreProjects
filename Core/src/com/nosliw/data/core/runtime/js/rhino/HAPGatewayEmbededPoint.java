@@ -12,7 +12,7 @@ import com.google.gson.GsonBuilder;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.value.HAPRhinoDataUtility;
+import com.nosliw.common.value.HAPRhinoValueUtility;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
@@ -37,7 +37,7 @@ public class HAPGatewayEmbededPoint {
 			JSONObject jsonObjParms = null; 
 			if(parmsObj instanceof String)				jsonObjParms = new JSONObject(parmsObj);
 			else if(parmsObj instanceof JSONObject)		jsonObjParms = (JSONObject)parmsObj;
-			else if(parmsObj instanceof NativeObject)	jsonObjParms = (JSONObject)HAPRhinoDataUtility.toJson(parmsObj);
+			else if(parmsObj instanceof NativeObject)	jsonObjParms = (JSONObject)HAPRhinoValueUtility.toJson(parmsObj);
 
 			HAPServiceData serviceData = this.m_gatewayMan.executeGateway(gatewayId, command, jsonObjParms, this.m_runtime.getRuntimeInfo());
 			if(serviceData.isSuccess()){

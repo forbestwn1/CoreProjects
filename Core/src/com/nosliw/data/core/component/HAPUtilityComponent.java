@@ -105,7 +105,7 @@ public class HAPUtilityComponent {
 		return null;
 	}
 	
-	public static HAPWrapperValueStructure getValueStructure(Object def, HAPConfigureProcessorStructure contextProcessConfig, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPWrapperValueStructure getValueStructure(Object def, HAPRuntimeEnvironment runtimeEnv) {
 		HAPWrapperValueStructure out = null;
 		if(def instanceof HAPComponentContainerElement) {
 			out = ((HAPComponentContainerElement)def).getValueStructureWrapper();

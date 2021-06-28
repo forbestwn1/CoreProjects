@@ -5,11 +5,12 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.value.HAPJsonDataUtility;
+import com.nosliw.common.value.HAPJsonValueUtility;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPInfoRuntimeTaskScript;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.resource.HAPResourceDefinitionScriptGroup;
@@ -39,11 +40,11 @@ public class HAPScriptTest {
 			
 			Map<String, Object> varInput = new LinkedHashMap<String, Object>();
 			for(String varName : scriptExe.discoverVariables()) {
-				Object varValue = HAPJsonDataUtility.getValue(inputById, new HAPComplexPath(varName));
+				Object varValue = HAPJsonValueUtility.getValue(inputById, new HAPComplexPath(varName));
 				if(varValue!=null)   varInput.put(varName, varValue);					
 			}
 
-			HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(scriptExe, script, varInput, null);
+			HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(new HAPInfoRuntimeTaskScript(scriptExe, script, varInput, null), runtimeEnvironment);
 			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 			System.out.println(out);

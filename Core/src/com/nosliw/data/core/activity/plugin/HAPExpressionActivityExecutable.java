@@ -10,16 +10,16 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.process.HAPActivityPluginId;
-import com.nosliw.data.core.process.HAPExecutableActivityNormal;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 
-public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal{
+public class HAPExpressionActivityExecutable extends HAPExecutableActivity{
 
 	@HAPAttribute
 	public static String SCRIPTEXPRESSION = "scriptExpression";

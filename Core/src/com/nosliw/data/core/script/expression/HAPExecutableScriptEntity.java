@@ -20,8 +20,8 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.util.script.HAPScriptFunctionInfo;
-import com.nosliw.data.core.runtime.js.util.script.HAPUtilityScriptForExecuteJSScript;
+import com.nosliw.data.core.runtime.js.util.script.expressionscrip.HAPScriptFunctionInfo;
+import com.nosliw.data.core.runtime.js.util.script.expressionscrip.HAPUtilityScriptForExecuteJSScript;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 @HAPEntityWithAttribute

@@ -30,6 +30,7 @@ import com.nosliw.data.core.resource.HAPResourceHelper;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskExpression;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -109,7 +110,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData) {
 		HAPExecutableExpressionGroup expression = this.getRuntimeEnvironment().getExpressionManager().getExpression(expressionStr);
 		//execute task
-		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, null, parmsData, null, this.getRuntimeEnvironment().getResourceManager());
+		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(new HAPInfoRuntimeTaskExpression(expression, null, parmsData, null), this.getRuntimeEnvironment());
 		HAPServiceData serviceData = this.executeTaskSync(task);
 		return serviceData;
 		
