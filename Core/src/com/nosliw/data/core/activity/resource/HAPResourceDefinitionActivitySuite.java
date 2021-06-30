@@ -1,5 +1,6 @@
 package com.nosliw.data.core.activity.resource;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -31,33 +32,25 @@ public class HAPResourceDefinitionActivitySuite extends HAPComponentImp implemen
 	
 
 	@Override
-	public Set<HAPDefinitionActivity> getEntityElements() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Set<HAPDefinitionActivity> getEntityElements() {  return new HashSet<HAPDefinitionActivity>(this.m_activities.values()); }
 
 	@Override
-	public HAPDefinitionActivity getEntityElement(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPDefinitionActivity getEntityElement(String id) {   return this.m_activities.get(id);  }
 
 	@Override
-	public void addEntityElement(HAPDefinitionActivity entityElement) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void addEntityElement(HAPDefinitionActivity entityElement) {  this.m_activities.put(entityElement.getId(), entityElement); }
 
 	@Override
-	public HAPComponent cloneComponent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPComponent cloneComponent() {  return (HAPComponent)cloneActivitySuiteDefinition();  }
 
 	@Override
 	public HAPDefinitionActivitySuite cloneActivitySuiteDefinition() {
-		// TODO Auto-generated method stub
-		return null;
+		HAPResourceDefinitionActivitySuite out = new HAPResourceDefinitionActivitySuite();
+		this.cloneToComponent(out, true);
+		for(String id : this.m_activities.keySet()) {
+			out.addEntityElement(this.m_activities.get(id).cloneActivityDefinition());
+		}
+		return out;
 	}
 
 }

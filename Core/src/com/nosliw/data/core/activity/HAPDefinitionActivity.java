@@ -5,6 +5,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 
 @HAPEntityWithAttribute
 public abstract class HAPDefinitionActivity extends HAPEntityInfoWritableImp{
@@ -44,4 +46,6 @@ public abstract class HAPDefinitionActivity extends HAPEntityInfoWritableImp{
 	}
 	
 	public abstract HAPDefinitionActivity cloneActivityDefinition();
+	
+	public abstract void parseActivityDefinition(Object obj, HAPDefinitionEntityComplex complexEntity, HAPSerializationFormat format);
 }

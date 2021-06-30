@@ -18,7 +18,7 @@ public class HAPDebugActivityDefinition extends HAPDefinitionActivityNormal{
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.setInputMapping(new HAPDefinitionDataAssociationMirror());
+		this.setInputDataAssociation(new HAPDefinitionDataAssociationMirror());
 		return true;  
 	}
 

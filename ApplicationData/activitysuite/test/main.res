@@ -4,8 +4,8 @@
 	"valueStructure": {
 		"group": {
 			"public": {
-				"element": {
-					business : {
+				"flat": {
+					"business" : {
 						definition: {
 							child : {
 								a : {
@@ -54,7 +54,7 @@
 				}
 			},
 			"protected": {
-				"element": {
+				"flat": {
 					"expressionResultVar": {},
 					"errorCodeVar": {},
 					"errorDataVar": {}
@@ -63,30 +63,18 @@
 		}
 	},
 	"element": [{
-			"id": "expressionActivityId",
+			"id": "expression",
 			"name": "expressionActivity",
 			"type": "expression",
-			"script": "#|!(test.string)!.subString(?(inputA.b.c)?,from:?(fromVar)?,to:?(toVar)?)|#",
-			"inputMapping": {
-				"element": {
-					"inputA.b.c" : {
-						"definition" : {
-							"path" : "business.a.aa"
-						}
-					}, 
-					"inputA.d.c" : {
-						"definition" : {
-							"path" : "business.a.aa"
-						}
-					} 
-				},
+			"script": "#|!(test.string)!.subString(?(business.a.aa)?,from:?(fromVar)?,to:?(toVar)?)|#",
+			"input": {
 				"info": {}
 			},
 			"result": [
 				{
 					"name" : "success",
 					"output": {
-						"element": {
+						"mapping": {
 							"expressionResultVar": {
 								definition:{
 									"path": "nosliw_output"
@@ -96,9 +84,9 @@
 					}
 				},
 				{
-					"name" : fail",
+					"name" : "fail",
 					"output": {
-						"element": {
+						"mapping": {
 							"errorCodeVar": {
 								definition: {
 									"path": "error.code"
@@ -114,5 +102,42 @@
 				}
 			]
 		}	
-	]
+	],
+	"attachment": {
+		"testData" : [
+			{
+				"name": "testData",
+				"entity": {
+					"business": {
+						"a" : {
+							"aa" : {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "This is my world!"
+							}
+						}
+					},
+					"mybusiness": {
+						"a" : {
+							"aa" : {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "Hello This is my world!"
+							}
+						}
+					},
+					"baseVar": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "This is my world!"
+					},
+					"fromVar": {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 1
+					},
+					"toVar": {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 7
+					}
+				}
+			}
+		],
+	},
 }

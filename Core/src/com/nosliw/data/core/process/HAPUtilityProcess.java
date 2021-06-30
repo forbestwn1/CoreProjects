@@ -73,8 +73,8 @@ public class HAPUtilityProcess {
 	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPDefinitionActivityNormal activityDefinition, HAPValueStructureDefinitionGroup processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
 				HAPContainerStructure.createDefault(processContext), 
-				activityDefinition.getInputMapping(), 
-				HAPContainerStructure.createDefault(activityDefinition.getInputContextStructure(processContext)), 
+				activityDefinition.getInputDataAssociation(), 
+				HAPContainerStructure.createDefault(activityDefinition.getInputValueStructure(processContext)), 
 				null, 
 				runtimeEnv);
 		activity.setInputDataAssociation(da);
@@ -163,8 +163,8 @@ public class HAPUtilityProcess {
 	//all the input and result output for activity is mirror 
 	public static HAPDefinitionWrapperTask parseTaskDefinition(HAPDefinitionActivityNormal activity, JSONObject jsonObj) {
 		HAPDefinitionWrapperTask out = new HAPDefinitionWrapperTask();
-		out.setInputMapping(activity.getInputMapping());
-		activity.setInputMapping(new HAPDefinitionDataAssociationMirror());
+		out.setInputMapping(activity.getInputDataAssociation());
+		activity.setInputDataAssociation(new HAPDefinitionDataAssociationMirror());
 		
 		Map<String, HAPDefinitionResultActivityNormal> results = activity.getResults();
 		for(String resultName : results.keySet()) {

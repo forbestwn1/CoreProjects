@@ -5,8 +5,10 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityTask;
+import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 
 public class HAPServiceActivityDefinition extends HAPDefinitionActivityTask{
 
@@ -41,6 +43,13 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityTask{
 		this.cloneToTaskActivityDefinition(out);
 		out.m_provider = this.m_provider;
 		return out;
+	}
+
+	@Override
+	public void parseActivityDefinition(Object obj, HAPDefinitionEntityComplex complexEntity,
+			HAPSerializationFormat format) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

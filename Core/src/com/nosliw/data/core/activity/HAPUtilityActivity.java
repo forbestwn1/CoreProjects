@@ -2,7 +2,6 @@ package com.nosliw.data.core.activity;
 
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.process.HAPBuilderResultContext;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
@@ -10,7 +9,7 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 public class HAPUtilityActivity {
 
 	//process result
-	public static HAPExecutableResultActivity processNormalActivityResult(
+	public static HAPExecutableResultActivity processActivityResult(
 			HAPExecutableActivity activity,
 			HAPDefinitionActivityNormal activityDefinition,
 			String resultName, 
@@ -21,23 +20,23 @@ public class HAPUtilityActivity {
 		HAPExecutableResultActivity resultExe = new HAPExecutableResultActivity(resultDef);
 		if(resultContextBuilder!=null) {
 			//data association input context
-			HAPValueStructure dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
+			HAPValueStructure activityOutputValueStructure = resultContextBuilder.buildResultValueStructure(resultName, activity);
 			//process data association
-			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(dataAssociationInputContext), resultDef.getOutputDataAssociation(), HAPContainerStructure.createDefault(parentContext), null, null, runtimeEnv);
+			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(activityOutputValueStructure), resultDef.getOutputDataAssociation(), HAPContainerStructure.createDefault(parentContext), null, null, runtimeEnv);
 			resultExe.setDataAssociation(outputDataAssociation);
 		}
 		return resultExe;
 	}
 
-	public static void processNormalActivityInputDataAssocation(HAPExecutableActivity activity, HAPDefinitionActivityNormal activityDefinition, HAPValueStructure valueStructure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableDataAssociation processActivityInputDataAssocation(HAPDefinitionActivityNormal activityDefinition, HAPValueStructure externalValueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
-				HAPContainerStructure.createDefault(valueStructure), 
-				activityDefinition.getInputMapping(), 
-				HAPContainerStructure.createDefault(activityDefinition.getInputContextStructure(valueStructure)), 
+				HAPContainerStructure.createDefault(externalValueStructure), 
+				activityDefinition.getInputDataAssociation(), 
+				HAPContainerStructure.createDefault(activityDefinition.getInputValueStructureWrapper().getValueStructure()), 
 				null, 
 				null,
 				runtimeEnv);
-		activity.setInputDataAssociation(da);
+		return da;
 	}
 
 }

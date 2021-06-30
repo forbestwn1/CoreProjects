@@ -11,9 +11,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
+import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public abstract class HAPExecutableActivity{
+public abstract class HAPExecutableActivity extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
 	public static String INPUTMAPPING = "inputMapping";
@@ -34,8 +35,6 @@ public abstract class HAPExecutableActivity{
 	public void setInputDataAssociation(HAPExecutableDataAssociation input) {  this.m_inputMapping = input;  }
 	public HAPExecutableDataAssociation getInputDataAssociation() {   return this.m_inputMapping;   }
 	 
-//	public HAPDefinitionActivityNormal getNormalActivityDefinition() {   return (HAPDefinitionActivityNormal)this.getActivityDefinition();  }
-	
 	public Map<String, HAPExecutableResultActivity> getResults(){   return this.m_results;   }
 	public HAPExecutableResultActivity getResult(String name) {   return this.m_results.get(name);   }
 

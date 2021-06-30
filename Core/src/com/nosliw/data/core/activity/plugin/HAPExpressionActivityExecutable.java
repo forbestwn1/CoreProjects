@@ -43,8 +43,6 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivity{
 	public void setScriptExpression(HAPExecutableScriptGroup scriptExpression) {    this.m_scriptExpression = scriptExpression;    }
 	public HAPExecutableScriptGroup getScriptExpression() {   return this.m_scriptExpression;  }
 	
-//	public HAPExpressionActivityDefinition getExpressionActivityDefinition() {   return (HAPExpressionActivityDefinition)this.getActivityDefinition();   }
-
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);

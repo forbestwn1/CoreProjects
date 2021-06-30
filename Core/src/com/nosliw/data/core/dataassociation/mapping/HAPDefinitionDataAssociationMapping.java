@@ -86,11 +86,13 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 			}
 			else {
 				JSONObject associationsJson = daJsonObj.optJSONObject(TARGET);
-				for(Object key : associationsJson.keySet()) {
-					String targetName = (String)key;
-					HAPValueMapping association = new HAPValueMapping();
-					association.buildObject(associationsJson.getJSONObject(targetName), HAPSerializationFormat.JSON);
-					this.addAssociation(targetName, association);
+				if(associationsJson!=null) {
+					for(Object key : associationsJson.keySet()) {
+						String targetName = (String)key;
+						HAPValueMapping association = new HAPValueMapping();
+						association.buildObject(associationsJson.getJSONObject(targetName), HAPSerializationFormat.JSON);
+						this.addAssociation(targetName, association);
+					}
 				}
 			}
 			return true;  

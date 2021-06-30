@@ -454,7 +454,7 @@ public class HAPUtilityStructure {
 				HAPElementStructureLeafData dataExpect = (HAPElementStructureLeafData)expectDef;
 				//cal matchers
 				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), dataExpect.getCriteria(), runtimeEnv.getDataTypeHelper()); 
-				if(!matcher.isVoid())  matchers.put(path, matcher);
+				if(matcher!=null&&!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:

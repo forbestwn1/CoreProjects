@@ -35,7 +35,6 @@ public class HAPScriptTest {
 			HAPExecutableScriptGroup scriptExe = runtimeEnvironment.getScriptManager().getScript(resourceId, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null));
 
 			Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(scriptGroupDef, testData);
-
 			Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(scriptExe.getValueStructureDefinitionWrapper().getValueStructure(), input);
 			
 			Map<String, Object> varInput = new LinkedHashMap<String, Object>();

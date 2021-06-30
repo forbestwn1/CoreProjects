@@ -1,20 +1,13 @@
 package com.nosliw.data.core.activity;
 
-import java.util.Map;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.process.HAPContextProcessor;
-import com.nosliw.data.core.process.HAPExecutableActivity;
-import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 //each type of activity should provide a plugin which contains information:
 //   how to parse activity definition
@@ -33,20 +26,15 @@ public interface HAPPluginActivity {
 	
 	//process activity definition to executable
 	HAPExecutableActivity process(
-			HAPDefinitionActivity activityDefinition,
+			HAPDefinitionActivity activityDefinition, 
 			String id,
-			HAPContextProcessor processContext,
-			HAPExecutableProcess processExe,
-			HAPValueStructureDefinitionGroup context,
-			Map<String, HAPExecutableDataAssociation> results,
-			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcess processManager,
+			HAPContextProcessAttachmentReferenceActivity processContext, 
+			HAPWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorStructure configure, 
-			HAPProcessTracker processTracker
-	);
+			HAPProcessTracker processTracker);
 	
-	HAPDefinitionActivity buildActivityDefinition(Object obj);
+	HAPDefinitionActivity buildActivityDefinition(Object obj, HAPDefinitionEntityComplex complexEntity);
 	
 	HAPExecutableActivity buildActivityExecutable(Object obj);
 	

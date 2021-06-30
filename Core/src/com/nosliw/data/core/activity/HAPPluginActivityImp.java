@@ -7,15 +7,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.process.HAPContextProcessor;
-import com.nosliw.data.core.process.HAPExecutableActivity;
-import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPPluginActivityImp implements HAPPluginActivity{
 
@@ -63,26 +58,22 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 	
 	@Override
 	public HAPExecutableActivity process(
-			HAPDefinitionActivity activityDefinition,
+			HAPDefinitionActivity activityDefinition, 
 			String id,
-			HAPContextProcessor processContext,
-			HAPExecutableProcess processExe, 
-			HAPValueStructureDefinitionGroup processDataContext,
-			Map<String, HAPExecutableDataAssociation> results,
-			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcess processManager,
-			HAPRuntimeEnvironment runtimeEnv, 
+			HAPContextProcessAttachmentReferenceActivity processContext, 
+			HAPWrapperValueStructure valueStructureWrapper,
+			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorStructure configure, 
 			HAPProcessTracker processTracker) {
-		return this.m_processor.process(activityDefinition, id, processContext, processExe, processDataContext, results, serviceProviders, processManager, runtimeEnv, configure, processTracker);
+		return this.m_processor.process(activityDefinition, id, processContext, valueStructureWrapper, runtimeEnv, configure, processTracker);
 	}
 
 	@Override
-	public HAPDefinitionActivity buildActivityDefinition(Object obj) {
+	public HAPDefinitionActivity buildActivityDefinition(Object obj, HAPDefinitionEntityComplex complexEntity) {
 		HAPDefinitionActivity out = null;
 		try {
 			out = (HAPDefinitionActivity)this.m_activityClass.getConstructor(String.class).newInstance(this.getType());
-			out.buildObject(obj, HAPSerializationFormat.JSON);
+			out.parseActivityDefinition(obj, complexEntity, HAPSerializationFormat.JSON);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

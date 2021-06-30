@@ -4,9 +4,9 @@
 {
 	type : "expression",
 	
-	processor : "com.nosliw.data.core.process.activity.HAPExpressionActivityProcessor",
+	processor : "com.nosliw.data.core.activity.plugin.HAPExpressionActivityProcessor",
 	
-	definition : "com.nosliw.data.core.process.activity.HAPExpressionActivityDefinition",
+	definition : "com.nosliw.data.core.activity.plugin.HAPExpressionActivityDefinition",
 	
 	script : {
 		

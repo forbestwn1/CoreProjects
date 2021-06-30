@@ -28,7 +28,7 @@ public class HAPParserResourceDefinitionActivitySuite extends HAPParserResourceD
 		JSONArray activityArrayJson = jsonObj.getJSONArray(HAPWithEntityElement.ELEMENT);
 		for(int i=0; i<activityArrayJson.length(); i++) {
 			JSONObject activityObjJson = (JSONObject)activityArrayJson.get(i);
-			HAPDefinitionActivity activity = HAPParserActivity.parseActivityDefinition(activityObjJson, m_activityPluginMan);
+			HAPDefinitionActivity activity = HAPParserActivity.parseActivityDefinition(activityObjJson, out, m_activityPluginMan);
 			out.addEntityElement(activity);
 		}
 		return out;

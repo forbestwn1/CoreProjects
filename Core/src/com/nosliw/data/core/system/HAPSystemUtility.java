@@ -45,4 +45,9 @@ public class HAPSystemUtility {
 	public static String getLoadResourceByFileMode() {
 		return prop.getProperty("LoadResourceByFileMode");
 	}
+	
+	public static String buildSystemName(String name) {
+		return "nosliw_" + name;
+	}
+
 }

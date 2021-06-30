@@ -20,7 +20,7 @@ public abstract class HAPDefinitionActivityTask extends HAPDefinitionActivityNor
 	public HAPDefinitionWrapperTask getTaskMapping() {   return this.m_taskMapping;  }
 	
 	@Override
-	public HAPValueStructure getInputContextStructure(HAPValueStructure parentContextStructure) {  return parentContextStructure;   }
+	public HAPValueStructure getInputValueStructure(HAPValueStructure parentContextStructure) {  return parentContextStructure;   }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

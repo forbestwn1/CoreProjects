@@ -14,7 +14,15 @@ public class HAPProcessorActivitySuite {
 			Map<String, String> configure,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
-		return null;
+		
+		HAPExecutableActivitySuite out = new HAPExecutableActivitySuite(activitySuiteDef);
+		
+		for(HAPDefinitionActivity activityDef : activitySuiteDef.getEntityElements()) {
+			HAPExecutableActivity activityExe = runtimeEnv.getActivityManager().getPluginManager().getPlugin(activityDef.getType()).process(activityDef, activityDef.getId(), attachmentReferenceContext, activitySuiteDef.getValueStructureWrapper(), runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForActivity(), processTracker);
+			
+		}
+		
+		return out;
 	}
 	
 	

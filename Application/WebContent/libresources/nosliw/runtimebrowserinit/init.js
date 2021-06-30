@@ -13,6 +13,7 @@ nosliw.init = function(configure){
 		"nosliw.common",
 		"nosliw.data",
 		"nosliw.expression",
+		"nosliw.activity",
 		"nosliw.process",
 		"nosliw.request",
 		"nosliw.id",

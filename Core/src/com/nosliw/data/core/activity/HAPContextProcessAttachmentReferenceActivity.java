@@ -15,7 +15,7 @@ public class HAPContextProcessAttachmentReferenceActivity extends HAPContextProc
 
 	@Override
 	protected Object processEntityAttachment(String attachmentName, Object entity) {
-		return HAPParserActivity.parseActivitySuiteDefinition((JSONObject)entity, this.getRuntimeEnvironment().getActivityManager().getPluginManager());
+		return HAPParserActivity.parseActivitySuiteDefinition((JSONObject)entity, this.getComplexEntity(), this.getRuntimeEnvironment().getActivityManager().getPluginManager());
 	}
 
 }

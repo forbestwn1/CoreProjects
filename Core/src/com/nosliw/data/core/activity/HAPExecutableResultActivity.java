@@ -12,8 +12,6 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.process.HAPDefinitionResultActivityNormal;
-import com.nosliw.data.core.process.HAPDefinitionSequenceFlow;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
@@ -33,12 +31,9 @@ public class HAPExecutableResultActivity extends HAPExecutableImpEntityInfo{
 	public HAPExecutableResultActivity() {}
 
 	//next activity
-	public HAPExecutableResultActivity(HAPDefinitionResultActivityNormal definition) {
+	public HAPExecutableResultActivity(HAPDefinitionResultActivity definition) {
 		super(definition);
-//		this.m_definition = definition;
 	}
-	
-	public HAPDefinitionSequenceFlow getFlow() {  return this.m_flow;  }
 	
 	public HAPExecutableDataAssociation getDataAssociation() {   return this.m_dataAssociation;  }
 	public void setDataAssociation(HAPExecutableDataAssociation dataAssociation) {   this.m_dataAssociation = dataAssociation;   }
@@ -56,8 +51,6 @@ public class HAPExecutableResultActivity extends HAPExecutableImpEntityInfo{
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_dataAssociation = HAPParserDataAssociation.buildExecutalbeByJson(jsonObj.getJSONObject(DATAASSOCIATION));
-		this.m_flow = new HAPDefinitionSequenceFlow();
-		this.m_flow.buildObject(jsonObj.getJSONObject(FLOW), HAPSerializationFormat.JSON);
 		return true;  
 	}
 	
@@ -65,13 +58,11 @@ public class HAPExecutableResultActivity extends HAPExecutableImpEntityInfo{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
 		if(this.m_dataAssociation!=null)  jsonMap.put(DATAASSOCIATION, this.m_dataAssociation.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		if(this.m_dataAssociation!=null)	jsonMap.put(DATAASSOCIATION, this.m_dataAssociation.toResourceData(runtimeInfo).toString());
-		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
