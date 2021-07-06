@@ -4,30 +4,28 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPInfoAttachment;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public abstract class HAPContextProcessAttachmentReference {
+public class HAPContextProcessAttachmentReference {
 
-	private String m_attachmentValueType;
-	
 	private HAPDefinitionEntityComplex m_complexEntity;
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 
-	public HAPContextProcessAttachmentReference(String attachmentValueType, HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
-		this.m_attachmentValueType = attachmentValueType;
+	public HAPContextProcessAttachmentReference(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_complexEntity = complexEntity;
 	}
 	
-	public HAPResultProcessAttachmentReference processReference(String attachmentName) {
-		HAPAttachment attachment = this.m_complexEntity.getAttachment(this.m_attachmentValueType, attachmentName);
+	public HAPResultProcessAttachmentReference processReference(String attachmentValueType, String attachmentName) {
+		HAPAttachment attachment = this.m_complexEntity.getAttachment(attachmentValueType, attachmentName);
 		String attType = attachment.getType();
 		Object entity = null;
 		HAPDefinitionEntityComplex contextComplexEntity = null;
 		if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)) {
-			entity = this.processEntityAttachment(attachmentName, ((HAPAttachmentEntity)attachment).getEntity());
+			entity = this.m_runtimeEnv.getAttachmentManager().parseEntityAttachment(new HAPInfoAttachment(attachmentValueType, attachmentName, ((HAPAttachmentEntity)attachment).getEntity()), this.m_complexEntity);
 			contextComplexEntity = this.m_complexEntity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)) {
@@ -43,8 +41,6 @@ public abstract class HAPContextProcessAttachmentReference {
 		
 		return new HAPResultProcessAttachmentReference(entity, attachment.getAdaptor(), contextComplexEntity);
 	}
-	
-	abstract protected Object processEntityAttachment(String attachmentName, Object entity);
 	
 	public HAPDefinitionEntityComplex getComplexEntity() {    return this.m_complexEntity;    }
 	

@@ -4,11 +4,13 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivity;
+import com.nosliw.data.core.activity.HAPProcessorAttachmentEntityActivity;
 import com.nosliw.data.core.activity.resource.HAPParserResourceDefinitionActivitySuite;
 import com.nosliw.data.core.activity.resource.HAPResourceManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPGatewayCodeTable;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.codetable.HAPResourceManagerCodeTable;
+import com.nosliw.data.core.component.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
@@ -16,6 +18,7 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
 import com.nosliw.data.core.expression.HAPManagerExpression;
+import com.nosliw.data.core.expression.HAPProcessorAttachmentEntityExpression;
 import com.nosliw.data.core.expression.resource.HAPParserResourceDefinitionExpressionSuite;
 import com.nosliw.data.core.expression.resource.HAPPluginResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.resource.HAPResourceManagerExpression;
@@ -43,6 +46,7 @@ import com.nosliw.data.core.service.resource.HAPResourceDefinitionPluginServiceD
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionPluginStory;
 import com.nosliw.data.core.value.HAPParserResourceValue;
+import com.nosliw.data.core.valuestructure.HAPProcessorAttachmentEntityValueStructure;
 import com.nosliw.data.core.valuestructure.resource.HAPParserResourceDefinitionStructure;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
@@ -88,6 +92,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPManagerService m_serviceManager;
 	
+	private HAPManagerAttachment m_attachmentManager;
+	
 	private HAPManagerResourceDefinition m_resourceDefinitionManager;
 	
 	private HAPManagerDynamicResource m_dynamicResourceManager;
@@ -114,11 +120,12 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerService serviceManager,
 		    HAPManagerDynamicResource dynamicResourceManager,
 		    HAPManagerResourceDefinition resourceDefManager,
+			HAPManagerAttachment attachmentManager,
 		    HAPManagerCronJob cronJobManager,
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, activityManager, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, activityManager, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, attachmentManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
@@ -135,6 +142,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			    HAPManagerService serviceManager,
 			    HAPManagerDynamicResource dynamicResourceManager,
 			    HAPManagerResourceDefinition resourceDefManager,
+				HAPManagerAttachment attachmentManager,
 			    HAPManagerCronJob cronJobManager,
 			    HAPManagerStory storyManager,
 			    HAPRuntime runtime){ 
@@ -148,6 +156,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_scriptManager = scriptManager;
 		this.m_serviceManager = serviceManager;
 		this.m_resourceDefinitionManager = resourceDefManager;
+		this.m_attachmentManager = attachmentManager;
 		this.m_dynamicResourceManager = dynamicResourceManager;
 		this.m_storyManager = storyManager;
 		this.m_cronJobManager = cronJobManager;
@@ -174,6 +183,11 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		//service factory
 		
 		this.m_serviceManager.registerServiceFactory(HAPFactoryServiceProcess.FACTORY_TYPE, new HAPFactoryServiceProcess(this.m_processRuntime, this.m_processManager, this.m_resourceManager));
+		
+		//attachment
+		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, new HAPProcessorAttachmentEntityExpression(this));
+		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, new HAPProcessorAttachmentEntityValueStructure());
+		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ACTIVITYSUITE, new HAPProcessorAttachmentEntityActivity(this.getActivityManager().getPluginManager()));
 		
 		//component
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, new HAPParserResourceValue()));
@@ -233,6 +247,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@Override
 	public HAPManagerResourceDefinition getResourceDefinitionManager() {  return this.m_resourceDefinitionManager;  }
+
+	@Override
+	public HAPManagerAttachment getAttachmentManager() {    return this.m_attachmentManager;     }
 
 	@Override
 	public HAPManagerDynamicResource getDynamicResourceManager() {  return this.m_dynamicResourceManager;	}

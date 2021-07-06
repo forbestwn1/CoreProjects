@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.component.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPUtilityComponentConstant;
@@ -42,7 +43,7 @@ public class HAPProcessorExpression {
 	public static HAPExecutableExpressionGroup process(
 			String id,
 			HAPDefinitionExpressionGroup expressionGroupDef,
-			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
+			HAPContextProcessAttachmentReference attachmentReferenceContext,
 			Map<String, HAPDataTypeCriteria> expectOutput,
 			Map<String, String> configure,
 			HAPRuntimeEnvironment runtimeEnv,
@@ -200,7 +201,7 @@ public class HAPProcessorExpression {
 			String id,
 			HAPDefinitionExpressionGroup expressionGroupDef, 
 			String expressionId,
-			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
+			HAPContextProcessAttachmentReference attachmentReferenceContext,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 
@@ -234,7 +235,7 @@ public class HAPProcessorExpression {
 	//replace reference operand with referenced expression exe
 	private static void expandReference(
 			HAPExecutableExpressionGroup expressionGroupExe, 
-			HAPContextProcessAttachmentReferenceExpression attachmentReferenceContext,
+			HAPContextProcessAttachmentReference attachmentReferenceContext,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		
@@ -262,7 +263,7 @@ public class HAPProcessorExpression {
 						}
 						
 						HAPDefinitionExpressionGroup expressionGroupDefiniton = null;
-						HAPContextProcessAttachmentReferenceExpression attachmentReferenceContextForRefExpression = null;
+						HAPContextProcessAttachmentReference attachmentReferenceContextForRefExpression = null;
 						HAPDefinitionEntityComplex contextComplexEntity = null;
 						HAPResourceId expressionResourceId = HAPUtilityResourceId.buildResourceIdByLiterate(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, refName, true);
 						if(expressionResourceId!=null) {
@@ -271,17 +272,17 @@ public class HAPProcessorExpression {
 							if(attachmentReferenceContext.getComplexEntity() instanceof HAPResourceDefinition) relatedResource = (HAPResourceDefinition)attachmentReferenceContext.getComplexEntity();
 							expressionGroupDefiniton = (HAPDefinitionExpressionGroup)runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionResourceId, relatedResource);
 							if(expressionGroupDefiniton instanceof HAPWithComplexEntity)  contextComplexEntity = ((HAPWithComplexEntity)expressionGroupDefiniton).getComplexEntity();
-							attachmentReferenceContextForRefExpression = new HAPContextProcessAttachmentReferenceExpression(contextComplexEntity, runtimeEnv);
+							attachmentReferenceContextForRefExpression = new HAPContextProcessAttachmentReference(contextComplexEntity, runtimeEnv);
 						}
 						else {
 							//reference name is reference to attachment
 							String referenceTo = refName;
-							HAPResultProcessAttachmentReference result = attachmentReferenceContext.processReference(referenceTo);
+							HAPResultProcessAttachmentReference result = attachmentReferenceContext.processReference(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, referenceTo);
 							JSONObject adaptorObj = (JSONObject)result.getAdaptor();
 							if(adaptorObj!=null && eleName==null) {
 								eleName = (String)adaptorObj.opt(HAPOperandReference.ELEMENTNAME);
 							}
-							attachmentReferenceContextForRefExpression = new HAPContextProcessAttachmentReferenceExpression(result.getContextComplexEntity(), runtimeEnv);
+							attachmentReferenceContextForRefExpression = new HAPContextProcessAttachmentReference(result.getContextComplexEntity(), runtimeEnv);
 							expressionGroupDefiniton = (HAPDefinitionExpressionGroup)result.getEntity();
 						}
 						

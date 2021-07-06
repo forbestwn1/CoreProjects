@@ -15,6 +15,7 @@ nosliw.init = function(configure){
 		"nosliw.expression",
 		"nosliw.activity",
 		"nosliw.process",
+		"nosliw.executable",
 		"nosliw.request",
 		"nosliw.id",
 		"nosliw.resource",

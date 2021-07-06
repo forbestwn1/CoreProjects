@@ -21,9 +21,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 public class HAPExecutableResultActivity extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
-	public static String FLOW = "flow";
-
-	@HAPAttribute
 	public static String DATAASSOCIATION = "dataAssociation";
 
 	private HAPExecutableDataAssociation m_dataAssociation;

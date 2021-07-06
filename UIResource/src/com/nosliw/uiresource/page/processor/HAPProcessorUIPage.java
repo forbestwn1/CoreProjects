@@ -2,7 +2,7 @@ package com.nosliw.uiresource.page.processor;
 
 import java.util.Map;
 
-import com.nosliw.data.core.component.valuestructure.HAPContextProcessAttachmentReferenceValueStructure;
+import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
@@ -36,9 +36,9 @@ public class HAPProcessorUIPage {
 		HAPProcessorAttachment.mergeAttachment(uiPageDef, null, uiTagMan);
 		
 		//expand referred context part
-		HAPProcessorUIValueStructure.expandValueStructureReference(uiPageDef, new HAPContextProcessAttachmentReferenceValueStructure(uiPageDef, runtimeEnv), runtimeEnv);
+		HAPProcessorUIValueStructure.expandValueStructureReference(uiPageDef, new HAPContextProcessAttachmentReference(uiPageDef, runtimeEnv), runtimeEnv);
 //		HAPWrapperValueStructure valueStructureWrapper = uiPageDef.getValueStructureWrapper();
-//		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.process((HAPValueStructureInComponent)valueStructureWrapper.getValueStructure(), new HAPContextProcessAttachmentReferenceValueStructure(uiPageDef, runtimeEnv), runtimeEnv));
+//		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.process((HAPValueStructureInComponent)valueStructureWrapper.getValueStructure(), new HAPContextProcessAttachmentReference(uiPageDef, runtimeEnv), runtimeEnv));
 
 		//enhance value structure (error)
 		HAPProcessorUIValueStructure.enhanceValueStructure(uiPageDef);

@@ -9,8 +9,8 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPUtilityComponentConstant;
-import com.nosliw.data.core.expression.HAPContextProcessAttachmentReferenceExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroupImp;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPProcessorExpression;
@@ -43,7 +43,7 @@ public class HAPProcessorScript {
 		HAPExecutableScriptGroup groupExe = processScript(
 															null, 
 															group, 
-															new HAPContextProcessAttachmentReferenceExpression(null, runtimeEnv), 
+															new HAPContextProcessAttachmentReference(null, runtimeEnv), 
 															configure, 
 															runtimeEnv, 
 															processTracker);
@@ -53,7 +53,7 @@ public class HAPProcessorScript {
 	public static HAPExecutableScriptGroup processScript(
 			String id,
 			HAPDefinitionScriptGroup scriptGroupDef, 
-			HAPContextProcessAttachmentReferenceExpression processContext,
+			HAPContextProcessAttachmentReference processContext,
 			Map<String, String> configure, 
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {

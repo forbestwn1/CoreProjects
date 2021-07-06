@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
-import com.nosliw.data.core.component.valuestructure.HAPContextProcessAttachmentReferenceValueStructure;
+import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.component.valuestructure.HAPProcessorValueStructureInComponent;
 import com.nosliw.data.core.component.valuestructure.HAPValueStructureInComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -53,7 +53,7 @@ public class HAPProcessorUIValueStructure {
 	}
 	
 	//expand context reference by using context definition in attachment
-	public static void expandValueStructureReference(HAPDefinitionUIUnit uiUnitDef, HAPContextProcessAttachmentReferenceValueStructure attachmentReferenceContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static void expandValueStructureReference(HAPDefinitionUIUnit uiUnitDef, HAPContextProcessAttachmentReference attachmentReferenceContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPWrapperValueStructure valueStructureWrapper = uiUnitDef.getValueStructureWrapper();
 		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.process((HAPValueStructureInComponent)valueStructureWrapper.getValueStructure(), attachmentReferenceContext, runtimeEnv));
 		

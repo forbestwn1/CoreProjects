@@ -29,6 +29,7 @@ public abstract class HAPExecutableActivity extends HAPExecutableImpEntityInfo{
 	public HAPExecutableActivity() {}
 
 	public HAPExecutableActivity(String id, HAPDefinitionActivityNormal activityDef) {
+		this.setId(id);
 		this.m_results = new LinkedHashMap<String, HAPExecutableResultActivity>();
 	}
 	

@@ -9,7 +9,6 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPWithEntityElement;
@@ -18,7 +17,6 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.temp.HAPUtilityContextScript;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 @HAPEntityWithAttribute
@@ -35,12 +33,6 @@ public class HAPExecutableActivitySuite extends HAPExecutableImp implements HAPW
 
 	@HAPAttribute
 	public static String VALUESTRUCTURE = "context";
-
-	@HAPAttribute
-	public static String RESULT = "result";
-
-	@HAPAttribute
-	public static String INITSCRIPT = "initScript";
 
 	private String m_id;
 	
@@ -90,25 +82,12 @@ public class HAPExecutableActivitySuite extends HAPExecutableImp implements HAPW
 			activityJsonMap.put(actId, this.m_activities.get(actId).toResourceData(runtimeInfo).toString());
 		}
 		jsonMap.put(ACTIVITY, HAPJsonUtility.buildMapJson(activityJsonMap));
-		
-		Map<String, String> resultsJsonMap = new LinkedHashMap<String, String>();
-		for(String resultName : this.m_results.keySet()) {
-			resultsJsonMap.put(resultName, this.m_results.get(resultName).toResourceData(runtimeInfo).toString());
-		}
-		jsonMap.put(RESULT, HAPJsonUtility.buildMapJson(resultsJsonMap));
-	
-		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
-		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
-//		jsonMap.put(DEFINITION, this.m_processDefinition.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
-
-		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
 		jsonMap.put(ACTIVITY, HAPJsonUtility.buildJson(this.m_activities, HAPSerializationFormat.JSON));
 	}
 

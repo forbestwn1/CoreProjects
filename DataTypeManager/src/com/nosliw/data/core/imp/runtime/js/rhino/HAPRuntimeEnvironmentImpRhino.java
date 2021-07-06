@@ -5,6 +5,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
+import com.nosliw.data.core.component.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
@@ -49,6 +50,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPResourceManagerJSImp resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
 		HAPManagerDynamicResource dynamicResourceManager = new HAPManagerDynamicResource();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(dynamicResourceManager);
+		HAPManagerAttachment attachmentManager = new HAPManagerAttachment();
 		HAPManagerService serviceManager = new HAPManagerService(this);
 		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), this);
 		HAPManagerScript scriptMan = new HAPManagerScript(this);
@@ -72,6 +74,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 				serviceManager,
 				dynamicResourceManager,
 				resourceDefManager,
+				attachmentManager,
 				cronJobManager,
 				storyManager,
 				runtime

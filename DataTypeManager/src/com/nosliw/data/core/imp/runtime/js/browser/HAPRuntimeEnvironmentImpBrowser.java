@@ -6,6 +6,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
+import com.nosliw.data.core.component.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
@@ -71,6 +72,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
 		HAPManagerDynamicResource dynamicResourceManager = new HAPManagerDynamicResource();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(dynamicResourceManager);
+		HAPManagerAttachment attachmentManager = new HAPManagerAttachment();
 		HAPManagerService serviceManager = new HAPManagerService(this);
 		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), this);
 		HAPManagerScript scriptMan = new HAPManagerScript(this);
@@ -94,6 +96,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			serviceManager,
 			dynamicResourceManager,
 			resourceDefManager,
+			attachmentManager,
 			cronJobManager,
 			storyManager,
 			runtime

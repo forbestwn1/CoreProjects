@@ -558,6 +558,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_UIAPP" value="uiApp"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPDECORATION" value="uiAppDecoration"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE" value="uiAppConfigure"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_TASKSUITE" value="tasksuite"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYSUITE" value="activitysuite"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESS" value="process"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESSSUITE" value="processSuite"/>
