@@ -20,7 +20,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 @HAPEntityWithAttribute
-public class HAPExecutableActivitySuite extends HAPExecutableImp implements HAPWithEntityElement<HAPExecutableActivity>{
+public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithEntityElement<HAPExecutableActivity>{
 
 	@HAPAttribute
 	public static String DEFINITION = "definition";
@@ -43,7 +43,7 @@ public class HAPExecutableActivitySuite extends HAPExecutableImp implements HAPW
 	
 	private Map<String, HAPExecutableActivity> m_activities;
 	
-	public HAPExecutableActivitySuite(HAPDefinitionActivitySuite definition, String id){
+	public HAPExecutableTaskSuite(HAPDefinitionActivitySuite definition, String id){
 		this.m_id = id;
 		this.m_definition = definition;
 		this.setValueStructureDefinitionWrapper(definition.getValueStructureWrapper());

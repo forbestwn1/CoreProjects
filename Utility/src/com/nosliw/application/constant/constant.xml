@@ -821,6 +821,11 @@
 			<definition name="STRUCTURE_TYPE_VALUEGROUP" value="valueGroup"/>
 			<definition name="STRUCTURE_TYPE_VALUEEXECUTABLE" value="valueExecutable"/>
 			<definition name="STRUCTURE_TYPE_MAPPING" value="mapping"/>
+			
+			<definition type="space"/>
+			<definition name="TASK_TYPE_ACTIVITY" value="activity"/>
+			<definition name="TASK_TYPE_PPROCESS" value="process"/>
+			
 		</definitions>
 	</constants>
 </root>

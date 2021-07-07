@@ -16,10 +16,10 @@ import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
 @HAPEntityWithAttribute
 public class HAPResourceDefinitionTaskSuite extends HAPComponentImp implements HAPDefinitionTaskSuite{
 
-	private Map<String, HAPDefinitionTask> m_activities;
+	private Map<String, HAPDefinitionTask> m_tasks;
 	
 	public HAPResourceDefinitionTaskSuite() {
-		this.m_activities = new LinkedHashMap<String, HAPDefinitionTask>();
+		this.m_tasks = new LinkedHashMap<String, HAPDefinitionTask>();
 	}
 
 	@Override
@@ -30,15 +30,14 @@ public class HAPResourceDefinitionTaskSuite extends HAPComponentImp implements H
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
 	
+	@Override
+	public Set<HAPDefinitionTask> getEntityElements() {  return new HashSet<HAPDefinitionTask>(this.m_tasks.values()); }
 
 	@Override
-	public Set<HAPDefinitionTask> getEntityElements() {  return new HashSet<HAPDefinitionTask>(this.m_activities.values()); }
+	public HAPDefinitionTask getEntityElement(String id) {   return this.m_tasks.get(id);  }
 
 	@Override
-	public HAPDefinitionTask getEntityElement(String id) {   return this.m_activities.get(id);  }
-
-	@Override
-	public void addEntityElement(HAPDefinitionTask entityElement) {  this.m_activities.put(entityElement.getId(), entityElement); }
+	public void addEntityElement(HAPDefinitionTask entityElement) {  this.m_tasks.put(entityElement.getId(), entityElement); }
 
 	@Override
 	public HAPComponent cloneComponent() {  return (HAPComponent)cloneTaskSuiteDefinition();  }
@@ -47,8 +46,8 @@ public class HAPResourceDefinitionTaskSuite extends HAPComponentImp implements H
 	public HAPDefinitionTaskSuite cloneTaskSuiteDefinition() {
 		HAPResourceDefinitionTaskSuite out = new HAPResourceDefinitionTaskSuite();
 		this.cloneToComponent(out, true);
-		for(String id : this.m_activities.keySet()) {
-			out.addEntityElement(this.m_activities.get(id).cloneTaskDefinition());
+		for(String id : this.m_tasks.keySet()) {
+			out.addEntityElement(this.m_tasks.get(id).cloneTaskDefinition());
 		}
 		return out;
 	}

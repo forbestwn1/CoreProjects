@@ -475,7 +475,9 @@ var COMMONCONSTANT=
   "STRUCTURE_TYPE_VALUEFLAT": "valueFlat",
   "STRUCTURE_TYPE_VALUEGROUP": "valueGroup",
   "STRUCTURE_TYPE_VALUEEXECUTABLE": "valueExecutable",
-  "STRUCTURE_TYPE_MAPPING": "mapping"
+  "STRUCTURE_TYPE_MAPPING": "mapping",
+  "TASK_TYPE_ACTIVITY": "activity",
+  "TASK_TYPE_PPROCESS": "process"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -7,30 +7,30 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPSupplementResourceId;
 import com.nosliw.data.core.task.HAPIdTaskSuite;
 
-public class HAPResourceIdActivitySuite  extends HAPResourceIdSimple{
+public class HAPResourceIdTaskSuite  extends HAPResourceIdSimple{
 
 	private HAPIdTaskSuite m_activitySuiteId; 
 	
-	public HAPResourceIdActivitySuite(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ACTIVITYSUITE);  }
+	public HAPResourceIdTaskSuite(){  super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASKSUITE);  }
 
-	public HAPResourceIdActivitySuite(HAPResourceIdSimple resourceId){
+	public HAPResourceIdTaskSuite(HAPResourceIdSimple resourceId){
 		this();
 		this.cloneFrom(resourceId);
 	}
 	
-	public HAPResourceIdActivitySuite(String idLiterate) {
+	public HAPResourceIdTaskSuite(String idLiterate) {
 		this();
 		init(idLiterate, null);
 	}
 
-	public HAPResourceIdActivitySuite(HAPIdTaskSuite activitySuiteId){
+	public HAPResourceIdTaskSuite(HAPIdTaskSuite activitySuiteId){
 		this();
 		init(null, null);
 		this.m_activitySuiteId = activitySuiteId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(activitySuiteId, HAPSerializationFormat.LITERATE); 
 	}
 
-	public HAPResourceIdActivitySuite(String id, HAPSupplementResourceId supplement){
+	public HAPResourceIdTaskSuite(String id, HAPSupplementResourceId supplement){
 		this();
 		init(id, supplement);
 	}
@@ -44,8 +44,8 @@ public class HAPResourceIdActivitySuite  extends HAPResourceIdSimple{
 	public HAPIdTaskSuite getExpressionSuiteId(){  return this.m_activitySuiteId;	}
 	
 	@Override
-	public HAPResourceIdActivitySuite clone(){
-		HAPResourceIdActivitySuite out = new HAPResourceIdActivitySuite();
+	public HAPResourceIdTaskSuite clone(){
+		HAPResourceIdTaskSuite out = new HAPResourceIdTaskSuite();
 		out.cloneFrom(this);
 		return out;
 	}

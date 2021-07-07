@@ -6,7 +6,6 @@ import org.json.JSONObject;
 
 import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.process.HAPUtilityProcess;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public abstract class HAPDefinitionActivityTask extends HAPDefinitionActivityNormal{
 
@@ -19,9 +18,6 @@ public abstract class HAPDefinitionActivityTask extends HAPDefinitionActivityNor
 
 	public HAPDefinitionWrapperTask getTaskMapping() {   return this.m_taskMapping;  }
 	
-	@Override
-	public HAPValueStructure getInputValueStructure(HAPValueStructure parentContextStructure) {  return parentContextStructure;   }
-
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);

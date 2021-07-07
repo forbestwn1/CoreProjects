@@ -781,4 +781,9 @@ public class HAPConstantShared {
 		public static final String STRUCTURE_TYPE_MAPPING = "mapping";
 
 
+
+		public static final String TASK_TYPE_ACTIVITY = "activity";
+		public static final String TASK_TYPE_PPROCESS = "process";
+
+
 }

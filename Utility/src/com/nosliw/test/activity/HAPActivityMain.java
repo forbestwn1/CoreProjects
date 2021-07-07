@@ -4,13 +4,14 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.activity.HAPExecutableActivitySuite;
 import com.nosliw.data.core.activity.resource.HAPResourceDefinitionActivitySuite;
-import com.nosliw.data.core.activity.resource.HAPUtilityResourceActivity;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskActivity;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteActivityRhino;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteTaskRhino;
+import com.nosliw.data.core.task.HAPExecutableTaskSuite;
+import com.nosliw.data.core.task.resource.HAPUtilityResourceTask;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 
 public class HAPActivityMain {
@@ -22,13 +23,15 @@ public class HAPActivityMain {
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 
-		HAPExecutableActivitySuite activitySuiteExe = runtimeEnvironment.getActivityManager().getActivitySuite(HAPUtilityResourceActivity.buildResourceId(suite));
-		HAPResourceDefinitionActivitySuite activitySuiteDefinition = (HAPResourceDefinitionActivitySuite)activitySuiteExe.getDefinition();
+		HAPResourceId resourceId = HAPUtilityResourceTask.buildResourceId(suite);
+		HAPExecutableTaskSuite taskSuiteExe = runtimeEnvironment.getTaskManager().getTaskSuite(resourceId);
+		
+		HAPResourceDefinitionActivitySuite activitySuiteDefinition = (HAPResourceDefinitionActivitySuite)runtimeEnvironment.getResourceDefinitionManager().getResourceDefinition(resourceId);
 		
 		Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(activitySuiteDefinition, testData);
-		Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(activitySuiteExe.getValueStructureDefinitionWrapper().getValueStructure(), input);
+		Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(taskSuiteExe.getValueStructureDefinitionWrapper().getValueStructure(), input);
 
-		HAPRuntimeTaskExecuteActivityRhino task = new HAPRuntimeTaskExecuteActivityRhino(new HAPInfoRuntimeTaskActivity(activitySuiteExe, activity, input), runtimeEnvironment);
+		HAPRuntimeTaskExecuteTaskRhino task = new HAPRuntimeTaskExecuteTaskRhino(new HAPInfoRuntimeTaskTask(taskSuiteExe, activity, input), runtimeEnvironment);
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 		
 		System.out.println(out);

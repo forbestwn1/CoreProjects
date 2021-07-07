@@ -7,7 +7,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorActivitySuite {
 
-	public static HAPExecutableActivitySuite process(
+	public static HAPExecutableTaskSuite process(
 			String id,
 			HAPDefinitionActivitySuite activitySuiteDef,
 			HAPContextProcessAttachmentReferenceActivity attachmentReferenceContext,
@@ -15,7 +15,7 @@ public class HAPProcessorActivitySuite {
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		
-		HAPExecutableActivitySuite out = new HAPExecutableActivitySuite(activitySuiteDef);
+		HAPExecutableTaskSuite out = new HAPExecutableTaskSuite(activitySuiteDef);
 		
 		for(HAPDefinitionActivity activityDef : activitySuiteDef.getEntityElements()) {
 			HAPExecutableActivity activityExe = runtimeEnv.getActivityManager().getPluginManager().getPlugin(activityDef.getType()).process(activityDef, activityDef.getId(), attachmentReferenceContext, activitySuiteDef.getValueStructureWrapper(), runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForActivity(), processTracker);

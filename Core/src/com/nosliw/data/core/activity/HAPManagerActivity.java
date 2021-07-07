@@ -18,11 +18,11 @@ public class HAPManagerActivity {
 	
 	public HAPManagerActivityPlugin getPluginManager() {   return this.m_pluginManager;    }
 
-	public HAPExecutableActivitySuite getActivitySuite(HAPResourceId activitySuiteId) {
+	public HAPExecutableTaskSuite getActivitySuite(HAPResourceId activitySuiteId) {
 		HAPResourceDefinitionActivitySuite activitySuiteResourceDef = (HAPResourceDefinitionActivitySuite)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(activitySuiteId);
 		HAPContextProcessAttachmentReferenceActivity contextProcess = new HAPContextProcessAttachmentReferenceActivity(activitySuiteResourceDef, this.m_runtimeEnv);
 		
-		HAPExecutableActivitySuite out = HAPProcessorActivitySuite.process(
+		HAPExecutableTaskSuite out = HAPProcessorActivitySuite.process(
 				activitySuiteId.toStringValue(HAPSerializationFormat.LITERATE), 
 				activitySuiteResourceDef,
 				contextProcess, 

@@ -63,6 +63,7 @@
 		}
 	},
 	"element": [{
+			"taskType": "activity",
 			"id": "expression",
 			"name": "expressionActivity",
 			"type": "expression",

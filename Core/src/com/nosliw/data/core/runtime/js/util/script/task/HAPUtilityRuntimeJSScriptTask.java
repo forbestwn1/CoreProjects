@@ -1,4 +1,4 @@
-package com.nosliw.data.core.runtime.js.util.script.activity;
+package com.nosliw.data.core.runtime.js.util.script.task;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
@@ -8,16 +8,16 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskActivity;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 
-public class HAPUtilityRuntimeJSScriptActivity {
+public class HAPUtilityRuntimeJSScriptTask {
 
-	public static HAPJSScriptInfo buildRequestScript(HAPInfoRuntimeTaskActivity taskInfo, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
+	public static HAPJSScriptInfo buildRequestScript(HAPInfoRuntimeTaskTask taskInfo, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 
 		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);

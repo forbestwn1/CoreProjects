@@ -31,6 +31,7 @@ import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.service.definition.HAPGatewayService;
 import com.nosliw.data.core.service.definition.HAPManagerService;
 import com.nosliw.data.core.story.HAPManagerStory;
+import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.story.design.HAPBuilderPageSimple;
@@ -76,6 +77,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerService serviceManager = new HAPManagerService(this);
 		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), this);
 		HAPManagerScript scriptMan = new HAPManagerScript(this);
+		HAPManagerTask taskManager = new HAPManagerTask(this);
 		HAPManagerActivity activityMan = new HAPManagerActivity(new HAPManagerActivityPlugin(), this);
 		HAPManagerProcess processMan = new HAPManagerProcess(this);
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
@@ -87,6 +89,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			dataTypeHelper,
 			codeTableManager,
 			resourceMan,
+			taskManager,
 			activityMan,
 			processMan,
 			processRuntimeMan,

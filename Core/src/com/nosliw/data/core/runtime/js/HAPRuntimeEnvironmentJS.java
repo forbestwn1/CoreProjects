@@ -45,6 +45,8 @@ import com.nosliw.data.core.service.resource.HAPParserServiceInterfaceResource;
 import com.nosliw.data.core.service.resource.HAPResourceDefinitionPluginServiceDefinition;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionPluginStory;
+import com.nosliw.data.core.task.HAPManagerTask;
+import com.nosliw.data.core.task.resource.HAPParserResourceDefinitionTaskSuite;
 import com.nosliw.data.core.value.HAPParserResourceValue;
 import com.nosliw.data.core.valuestructure.HAPProcessorAttachmentEntityValueStructure;
 import com.nosliw.data.core.valuestructure.resource.HAPParserResourceDefinitionStructure;
@@ -77,6 +79,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
 	private HAPResourceManagerRoot m_resourceManager;
+	
+	private HAPManagerTask m_taskManager;
 	
 	private HAPManagerActivity m_activityManager;
 	
@@ -111,6 +115,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			HAPDataTypeHelper dataTypeHelper,
 			HAPManagerCodeTable codeTableManager,
 			HAPResourceManagerRoot resourceMan,
+			HAPManagerTask taskManager,
 			HAPManagerActivity activityManager,
 			HAPManagerProcess processManager,
 			HAPRuntimeProcess processRuntime,
@@ -125,7 +130,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, activityManager, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, attachmentManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, attachmentManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
@@ -133,6 +138,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 				HAPDataTypeHelper dataTypeHelper,
 				HAPManagerCodeTable codeTableManager,
 				HAPResourceManagerRoot resourceMan,
+				HAPManagerTask taskManager,
 				HAPManagerActivity activityManager,
 				HAPManagerProcess processManager,
 				HAPRuntimeProcess processRuntime,
@@ -149,6 +155,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_dataTypeManager = dataTypeManager;
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_resourceManager = resourceMan;
+		this.m_taskManager = taskManager;
 		this.m_activityManager = activityManager;
 		this.m_processManager = processManager;
 		this.m_processRuntime = processRuntime;
@@ -198,6 +205,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginServiceDefinition(this.getServiceManager().getServiceDefinitionManager()));
 
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASKSUITE, new HAPParserResourceDefinitionTaskSuite(this.getTaskManager())));
+
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ACTIVITYSUITE, new HAPParserResourceDefinitionActivitySuite(this.getActivityManager().getPluginManager())));
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE, new HAPParserResourceDefinitionProcess(this.getProcessManager().getPluginManager())));
@@ -223,6 +232,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@Override
 	public HAPResourceManagerRoot getResourceManager() {		return this.m_resourceManager;	}
+
+	@Override
+	public HAPManagerTask getTaskManager() {    return this.m_taskManager;    }
 
 	@Override
 	public HAPManagerActivity getActivityManager() {   return this.m_activityManager;    }

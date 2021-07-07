@@ -1,21 +1,34 @@
 package com.nosliw.data.core.runtime.js.rhino.task;
 
-import java.util.Map;
+import java.util.List;
 
-import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.runtime.HAPRuntimeTask;
-import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteTask;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
+import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskRhino;
+import com.nosliw.data.core.runtime.js.util.script.task.HAPUtilityRuntimeJSScriptTask;
 
-public class HAPRuntimeTaskExecuteTaskRhino extends HAPRuntimeTaskExecuteTask{
+public class HAPRuntimeTaskExecuteTaskRhino extends HAPRuntimeTaskRhino{
+	
+	final public static String TASK = "ExecuteActivity"; 
 
-	public HAPRuntimeTaskExecuteTaskRhino(HAPExecutableProcess task, Map<String, Object> input) {
-		super(task, input);
+	private HAPInfoRuntimeTaskTask m_taskInfo;
+	
+	public HAPRuntimeTaskExecuteTaskRhino(HAPInfoRuntimeTaskTask taskInfo, HAPRuntimeEnvironment runtTimeEnv) {
+		super(TASK, runtTimeEnv);
+		this.m_taskInfo = taskInfo;
 	}
 
 	@Override
-	public HAPRuntimeTask execute(HAPRuntime runtime) {
-		return null;
+	protected List<HAPResourceDependency> getResourceDependency() {
+		return this.m_taskInfo.getTaskSuite().getResourceDependency(this.getRuntime().getRuntimeInfo(), this.getRuntimeEnv().getResourceManager());
+	}
+
+	@Override
+	protected HAPJSScriptInfo buildRuntimeScript() {
+		HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScriptTask.buildRequestScript(this.m_taskInfo, this, this.getRuntime());
+		return scriptInfo;
 	}
 
 }

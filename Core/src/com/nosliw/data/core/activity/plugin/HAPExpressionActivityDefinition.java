@@ -7,11 +7,13 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal{
@@ -30,6 +32,9 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 		super(type);
 	}
 	
+	@Override
+	public String getTaskType() {   return HAPConstantShared.TASK_TYPE_ACTIVITY;  }
+
 	public HAPDefinitionScriptEntity getScript(){  return this.m_script;    }
 
 	@Override
@@ -66,4 +71,7 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 		this.m_valueStructure = complexEntity.getValueStructureWrapper();
 		this.setInputDataAssociation(new HAPDefinitionDataAssociationMirror());
 	}
+
+	@Override
+	public HAPDefinitionTask cloneTaskDefinition() {  return (HAPDefinitionTask)this.cloneActivityDefinition();  }
 }

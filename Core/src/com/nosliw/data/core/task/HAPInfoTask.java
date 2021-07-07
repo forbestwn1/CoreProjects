@@ -1,15 +1,25 @@
 package com.nosliw.data.core.task;
 
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+
 public class HAPInfoTask {
 
-	public HAPParserTask getParser() {
-		
+	private HAPParserTask m_parser;
+	
+	private HAPProcessorTask m_processor;
+	
+	private HAPConfigureProcessorStructure m_configure;
+	
+	public HAPInfoTask(HAPParserTask parser, HAPProcessorTask processor) {
+		this.m_parser = parser;
+		this.m_processor = processor;
 	}
 	
-	public HAPProcessorTask getProcessor() {
-		
-	}
+	public HAPParserTask getParser() {	return this.m_parser;	}
+	
+	public HAPProcessorTask getProcessor() {   return this.m_processor;  }
 	
 	
-	
+	public HAPConfigureProcessorStructure getContextProcessConfiguration() {   return this.m_configure;  }
+
 }
