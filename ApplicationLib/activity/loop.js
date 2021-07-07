@@ -17,12 +17,12 @@
 			var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 			var node_createServiceRequestInfoService = nosliw.getNodeData("request.request.createServiceRequestInfoService");
 			var node_DependentServiceRequestInfo = nosliw.getNodeData("request.request.entity.DependentServiceRequestInfo");
-			var node_IOTaskResult = nosliw.getNodeData("iotask.entity.IOTaskResult");
+			var node_IOTaskResult = nosliw.getNodeData("iovalue.entity.IOTaskResult");
 			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 			var node_objectOperationUtility = nosliw.getNodeData("common.utility.objectOperationUtility");
 			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 			var node_dataOperationUtility = nosliw.getNodeData("common.utility.dataOperationUtility");
-			var node_createIODataSet = nosliw.getNodeData("iotask.entity.createIODataSet");
+			var node_createIODataSet = nosliw.getNodeData("iovalue.entity.createIODataSet");
 			
 			var loc_out = {
 				

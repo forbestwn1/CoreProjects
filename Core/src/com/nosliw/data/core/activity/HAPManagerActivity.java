@@ -1,9 +1,5 @@
 package com.nosliw.data.core.activity;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.activity.resource.HAPResourceDefinitionActivitySuite;
-import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManagerActivity {
@@ -18,17 +14,4 @@ public class HAPManagerActivity {
 	
 	public HAPManagerActivityPlugin getPluginManager() {   return this.m_pluginManager;    }
 
-	public HAPExecutableActivitySuite getActivitySuite(HAPResourceId activitySuiteId) {
-		HAPResourceDefinitionActivitySuite activitySuiteResourceDef = (HAPResourceDefinitionActivitySuite)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(activitySuiteId);
-		HAPContextProcessAttachmentReferenceActivity contextProcess = new HAPContextProcessAttachmentReferenceActivity(activitySuiteResourceDef, this.m_runtimeEnv);
-		
-		HAPExecutableActivitySuite out = HAPProcessorActivitySuite.process(
-				activitySuiteId.toStringValue(HAPSerializationFormat.LITERATE), 
-				activitySuiteResourceDef,
-				contextProcess, 
-				null, 
-				this.m_runtimeEnv,
-				new HAPProcessTracker());
-		return out;
-	}
 }

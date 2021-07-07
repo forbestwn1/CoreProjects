@@ -5,7 +5,7 @@ function(gate){
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
-	var node_createIODataSet = nosliw.getNodeData("iotask.entity.createIODataSet");
+	var node_createIODataSet = nosliw.getNodeData("iovalue.entity.createIODataSet");
 	
 	var loc_gate = gate;
 	var loc_uiModule = loc_gate.getComponentCore();

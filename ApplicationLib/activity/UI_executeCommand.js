@@ -14,7 +14,7 @@
 			var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 			var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
-			var node_IOTaskResult = nosliw.getNodeData("iotask.entity.IOTaskResult");
+			var node_IOTaskResult = nosliw.getNodeData("iovalue.entity.IOTaskResult");
 			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 
 			var loc_out = {

@@ -14,7 +14,7 @@
 			var loc_env = env;
 			var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 			var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-			var node_IOTaskResult = nosliw.getNodeData("iotask.entity.IOTaskResult");
+			var node_IOTaskResult = nosliw.getNodeData("iovalue.entity.IOTaskResult");
 			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 			var node_createSettingConfigure = nosliw.getNodeData("common.setting.createSettingConfigure");
