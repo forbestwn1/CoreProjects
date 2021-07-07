@@ -12,10 +12,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
-import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
-public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity implements HAPDefinitionTask{
+public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 
 	@HAPAttribute
 	public static String INPUT = "input";

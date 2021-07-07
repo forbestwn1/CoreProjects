@@ -17,10 +17,11 @@ public class HAPProcessorTaskSuite {
 			HAPProcessTracker processTracker) {
 		
 		HAPExecutableTaskSuite out = new HAPExecutableTaskSuite(id);
+		out.setValueStructureDefinitionWrapper(taskSuiteDef.getValueStructureWrapper());
 		
 		for(HAPDefinitionTask taskDef : taskSuiteDef.getEntityElements()) {
 			HAPInfoTask taskInfo = runtimeEnv.getTaskManager().getTaskInfo(taskDef.getTaskType());
-			HAPExecutableTask taskExe = taskInfo.getProcessor().process(taskDef, id, attachmentReferenceContext, taskSuiteDef.getValueStructureWrapper(), runtimeEnv, taskInfo.getContextProcessConfiguration(), processTracker);
+			HAPExecutableTask taskExe = taskInfo.getProcessor().process(taskDef, id, attachmentReferenceContext, taskSuiteDef.getValueStructureWrapper(), processTracker);
 			out.addEntityElement(taskExe);
 		}
 		

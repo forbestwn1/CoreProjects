@@ -7,9 +7,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 
 @HAPEntityWithAttribute
-public abstract class HAPDefinitionActivity extends HAPEntityInfoWritableImp{
+public abstract class HAPDefinitionActivity extends HAPEntityInfoWritableImp implements HAPDefinitionTask{
 
 	@HAPAttribute
 	public static String TYPE = "type";

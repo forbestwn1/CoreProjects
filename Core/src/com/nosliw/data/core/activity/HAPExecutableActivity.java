@@ -11,10 +11,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.task.HAPExecutableTask;
 
-public abstract class HAPExecutableActivity extends HAPExecutableImpEntityInfo{
+public abstract class HAPExecutableActivity extends HAPExecutableTask{
 
 	@HAPAttribute
 	public static String INPUTMAPPING = "inputMapping";

@@ -15,7 +15,7 @@ public class HAPParserResourceDefinitionTaskSuite extends HAPParserResourceDefin
 	private HAPManagerTask m_taskMan;
 	
 	public HAPParserResourceDefinitionTaskSuite(HAPManagerTask taskMan) {
-		this.m_taskMan = m_taskMan;
+		this.m_taskMan = taskMan;
 	}
 	
 	@Override

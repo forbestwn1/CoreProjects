@@ -7,6 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
@@ -60,7 +61,7 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 	public HAPExecutableActivity process(
 			HAPDefinitionActivity activityDefinition, 
 			String id,
-			HAPContextProcessAttachmentReferenceActivity processContext, 
+			HAPContextProcessAttachmentReference processContext, 
 			HAPWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorStructure configure, 

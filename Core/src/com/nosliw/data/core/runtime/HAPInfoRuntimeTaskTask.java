@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.activity.HAPExecutableTaskSuite;
+import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 
 @HAPEntityWithAttribute
 public class HAPInfoRuntimeTaskTask{
@@ -26,8 +26,8 @@ public class HAPInfoRuntimeTaskTask{
 	
 	private Map<String, Object> m_inputValue;
 
-	public HAPInfoRuntimeTaskTask(HAPExecutableTaskSuite activitySuite, String itemName, Map<String, Object> inputValue){
-		this.m_taskSuite = activitySuite;
+	public HAPInfoRuntimeTaskTask(HAPExecutableTaskSuite taskSuite, String itemName, Map<String, Object> inputValue){
+		this.m_taskSuite = taskSuite;
 		this.m_itemName = itemName;
 		if(HAPBasicUtility.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstantShared.NAME_DEFAULT;
 		this.m_inputValue = inputValue; 
