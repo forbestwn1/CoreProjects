@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPWithEntityElement;
@@ -16,6 +17,9 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
+import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
+import com.nosliw.data.core.valuestructure.HAPUtilityValueStructureScript;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 @HAPEntityWithAttribute
@@ -26,6 +30,9 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 
 	@HAPAttribute
 	public static String TASK = "task";
+
+	@HAPAttribute
+	public static String INITSCRIPT = "initScript";
 
 	private String m_id;
 
@@ -51,6 +58,10 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 	
 	public HAPWrapperValueStructure getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
 
+	public HAPExecutableValueStructure getValueStructureExe() {
+		return HAPUtilityValueStructure.buildExecuatableValueStructure(this.getValueStructureDefinitionWrapper().getValueStructure());
+	}
+
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {		
 		//process resources
@@ -69,6 +80,9 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 			activityJsonMap.put(taskId, this.m_tasks.get(taskId).toResourceData(runtimeInfo).toString());
 		}
 		jsonMap.put(TASK, HAPJsonUtility.buildMapJson(activityJsonMap));
+
+		jsonMap.put(INITSCRIPT, HAPUtilityValueStructureScript.buildValueStructureInitScript(this.getValueStructureExe()).getScript());
+		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
 	}
 
 	@Override

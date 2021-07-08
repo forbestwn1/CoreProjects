@@ -32,8 +32,13 @@ var node_createActivity = function(activityDef, inputData, envObj){
 	//io data for activity status
 	var loc_actvityStatusIO;
 	
+	//input data type, value or data set io, different data type have different output 
+	var loc_inputDataType;
+	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(activityDef, inputData, envObj){
+		loc_inputDataType = node_getObjectType(value);
+		
 		loc_actvityStatusIO = node_createIODataSet(inputData);
 
 		if(loc_envObj.getSyncOutRequest==undefined){
@@ -111,11 +116,19 @@ var node_createActivity = function(activityDef, inputData, envObj){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_getExecuteActivityRequest({
 				success : function(request, activityTaskResult){
-					return loc_actvityStatusIO.getGetDataSetValueRequest({
-						success : function(request, dataSet){
-							return new node_ExecutableResult(activityTaskResult.resultName, dataSet);
-						}
-					});
+					if(loc_inputDataType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_IODATASET){
+						//if input data is io data set, out put is io data set as well
+						return new node_ExecutableResult(activityTaskResult.resultName, loc_actvityStatusIO);
+					}
+					else{
+						//otherwise, input data is value, then output is value
+						return loc_actvityStatusIO.getGetDataValueRequest(undefined, {
+							success : function(request, value){
+								return new node_ExecutableResult(activityTaskResult.resultName, value);
+							}
+						});
+						
+					}
 				}
 			}));
 			return out;
@@ -153,7 +166,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("executable.entity.ExecutableResult", function(){node_ExecutableResult = this.getData();});
+nosliw.registerSetNodeDataEvent("task.entity.ExecutableResult", function(){node_ExecutableResult = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createActivity", node_createActivity); 

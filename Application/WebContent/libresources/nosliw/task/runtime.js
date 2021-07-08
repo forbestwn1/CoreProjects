@@ -17,135 +17,43 @@ var packageObj = library;
 	var node_IOTaskInfo;
 	var node_ProcessResult;
 	var node_resourceUtility;
+	var node_createActivity;
 
 //*******************************************   Start Node Definition  **************************************
-var node_createExecutableRuntime = function(envObj){
+var node_createTaskRuntime = function(envObj){
 
 	var loc_envObj = envObj; 
+
+	var loc_getExecuteTaskRequest = function(taskSuite, taskId, input, handlers, request){
+		var out;
+		var task = taskSuite[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_TASK][taskId];
+		if(task[node_COMMONATRIBUTECONSTANT.EXECUTABLETASK_TASKTYPE]==node_COMMONCONSTANT.TASK_TYPE_ACTIVITY){
+			out = node_createActivity(task, input, loc_envObj).getExecuteRequest(handlers, request);
+		}
+		return out;
+	};
 	
 	var loc_out = {
 
-		//execute process by resource id
-		//return ProcessResult with resultName and mapped output value by result
-		getExecuteProcessResourceRequest : function(id, inputValue, outputMappingsByResult, handlers, requester_parent){
-//			id = node_resourceUtility.buildReourceCoreIdLiterate(id);
-
-			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteProcessResource", {"id":id, "input":inputValue}), handlers, requestInfo);
-			//get process resource first
-			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([id], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_PROCESS, {
-				success : function(requestInfo, processes){
-					var process = processes[id];
-					//execute process
-					return node_createProcess(process, loc_envObj).getExecuteProcessRequest(inputValue, {
-						success : function(request, processResult){
-							if(outputMappingsByResult==undefined || outputMappingsByResult[processResult.resultName]==undefined){
-								//no mapping needed, calculate value
-								return processResult;
-							}
-							else{
-								//otherwise, do mapping according to result
-								var dataAssociation = node_createDataAssociation(
-										processResult.resultValue,
-										outputMappingsByResult[processResult.resultName], 
-										undefined, 
-										node_dataAssociationUtility.buildDataAssociationName("PROCESSRESULT", id, "RESULT", "MAPPEDRESULT")
-								);
-								return dataAssociation.getExecuteRequest(						
-									{
-										success : function(requestInfo, processOutputIODataSet){
-											//calculate mapping output value
-											return processOutputIODataSet.getGetDataValueRequest(undefined, {
-												success : function(request, value){
-													return new node_ProcessResult(processResult.resultName, value);
-												}
-											});
-										}
-									}
-								);
-							}
-						}
-					}); 
-				}
-			}));
-			return out;
-		},
-			
-		executeProcessResourceRequest : function(id, inputValue, outputMappingsByResult, handlers, requester_parent){
-			var requestInfo = this.getExecuteProcessResourceRequest(id, inputValue, outputMappingsByResult, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo);
-		},
-
-		getExecuteProcessRequest : function(processDef, inputValue, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("executeProcess", {}), handlers, request);
-			out.addRequest(node_createProcess(processDef, loc_envObj).getExecuteProcessRequest(inputValue, {
-				success : function(request, processResult){
-					return new node_IOTaskResult(processResult.resultName, processResult.resultValue);
-				}
-			}));
-			return out;
+		getExecuteTaskRequest : function(taskSuite, taskId, inputValue, handlers, request){
+			var updatedInputData = taskSuite[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_INITSCRIPT](inputValue);
+			return loc_getExecuteTaskRequest(taskSuite, taskId, updatedInputData, handlers, request);
 		},
 		
-		executeProcessRequest : function(processDef, inputValue, handlers, request){
-			var requestInfo = this.getExecuteProcessRequest(processDef, inputValue, handlers, request);
-			node_requestServiceProcessor.processRequest(requestInfo);
-		},		
-
-		getExecuteEmbededProcessRequest : function(processDef, inputIODataSet, outputIODataSet, extraInputDataSet, handlers, requester_parent){
-			var envObj = {
-				//add method for sync data from internal process context to external process context
-				getSyncOutRequest : function(internalValue, handlers, request){
-					var taskOutputDataAssociation = node_createDataAssociation(internalValue, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING][node_COMMONCONSTANT.NAME_DEFAULT], outputIODataSet, loc_buildTaskOutputDataAssociationName(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID]));
-					return taskOutputDataAssociation.getExecuteRequest(handlers, request);
-				}
-			};
-			envObj = _.extend(envObj, loc_envObj);
-			
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteEmbededProcessRequest", {}), handlers, requester_parent);
-			out.addRequest(node_taskUtility.getExecuteEmbededTaskRequest(
-				inputIODataSet, 
-				outputIODataSet,
-				extraInputDataSet, 
-				processDef, 
-				new node_IOTaskInfo(function(inputValue, handlers, request){
-					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("executeEmbededProcess", {}), handlers, request);
-					out.addRequest(node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(inputValue, {
-						success : function(request, processResult){
-							return new node_IOTaskResult(processResult.resultName, processResult.resultValue);
-						}
-					}));
-					return out;
-				}, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID]), 
-				{
-					success : function(requestInfo, processResult){
-						//calculate mapping output value
-						return processResult.resultValue.getGetDataValueRequest(undefined, {
-							success : function(request, value){
-								return new node_ProcessResult(processResult.resultName, value);
-							}
-						});
-					}
-				}
-			));
-			return out;
-		},
-
-		executeEmbededProcessRequest : function(processDef, inputIODataSet, outputIODataSet, extraInputDataSet, handlers, requester_parent){
-			var requestInfo = this.getExecuteEmbededProcessRequest(processDef, inputIODataSet, outputIODataSet, extraInputDataSet, handlers, requester_parent);
+		executeExecuteTaskRequest : function(taskSuite, taskId, inputValue, handlers, request){
+			var requestInfo = this.getExecuteTaskRequest(taskSuite, taskId, inputValue, handlers, request)
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
-		//process defined within other component
-		//extraInputDataSet is other component's contextIo
-		//return : IOTaskResult with resultName and outputIODataSet (which is externalIODataSet)
-		getExecuteWrappedProcessRequest : function(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent){
-			return loc_out.getExecuteEmbededProcessRequest(processDef, externalIODataSet, externalIODataSet, extraInputDataSet, handlers, requester_parent);
+		getExecuteEmbededTaskRequest : function(taskSuite, taskId, inputValueIo, handlers, request){
+			return loc_getExecuteTaskRequest(taskSuite, taskId, inputValueIo, handlers, request);
 		},
-
-		executeWrappedProcessRequest : function(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent){
-			var requestInfo = this.getExecuteWrappedProcessRequest(processDef, externalIODataSet, extraInputDataSet, handlers, requester_parent);
+		
+		executeExecuteEmbededTaskRequest : function(taskSuite, taskId, inputValueIo, handlers, request){
+			var requestInfo = getExecuteEmbededTaskRequest(taskSuite, taskId, inputValueIo, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
+		
 	};
 
 	loc_out = node_buildServiceProvider(loc_out, "processService");
@@ -157,10 +65,10 @@ var node_createExecutableRuntime = function(envObj){
 //when create process runtime, the process environment is needed
 //process environment is object connect the process to external 
 //example include process in module, app, or others
-var node_createExecutableRuntimeFactory = function(){
+var node_createTaskRuntimeFactory = function(){
 	var loc_out = {
-		createProcessRuntime : function(envObj){
-			return node_createExecutableRuntime(node_createEnv(envObj));
+		createTaskRuntime : function(envObj){
+			return node_createTaskRuntime(node_createEnv(envObj));
 		}
 	};
 	return loc_out;
@@ -199,9 +107,10 @@ nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskResult", function(){node_I
 nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("activity.createActivity", function(){node_createActivity = this.getData();});
 
 
 //Register Node by Name
-packageObj.createChildNode("createExecutableRuntimeFactory", node_createExecutableRuntimeFactory); 
+packageObj.createChildNode("createTaskRuntimeFactory", node_createTaskRuntimeFactory); 
 
 })(packageObj);
