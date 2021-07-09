@@ -24,16 +24,17 @@ public class HAPUtilityRuntimeJSScriptTask {
 		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
 		
 		templateParms.put("taskSuiteDef", taskInfo.getTaskSuite().toResourceData(runtime.getRuntimeInfo()).toString());
-		templateParms.put("taskId", taskInfo.getItemName());
+		templateParms.put("itemId", taskInfo.getItemName());
 		templateParms.put("inputData", HAPJsonUtility.buildJson(taskInfo.getInputValue(), HAPSerializationFormat.JSON));
 		
 		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
 		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
+		templateParms.put("taskId", task.getTaskId());
 		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScriptTask.class, "ExecuteTaskScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
-		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, taskInfo.getTaskId());
+		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
 		return out;
 	}
 }

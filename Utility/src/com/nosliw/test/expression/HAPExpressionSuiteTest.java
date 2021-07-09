@@ -44,7 +44,7 @@ public class HAPExpressionSuiteTest {
 				Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(expressionExe.getValueStructureDefinitionWrapper().getValueStructure(), input);
 				
 				Map<String, HAPData> varInput = new LinkedHashMap<String, HAPData>();
-				for(String varName : expressionExe.getVariablesInfo().getVariablesName()) {
+				for(String varName : expressionExe.getVariablesInfo().getVariablesId()) {
 					Object varValue = HAPJsonValueUtility.getValue(inputById, new HAPComplexPath(varName));
 					if(varValue!=null)   varInput.put(varName, HAPUtilityData.buildDataWrapperFromObject(varValue));					
 				}

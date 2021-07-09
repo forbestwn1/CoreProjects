@@ -27,7 +27,7 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 		this.m_criteriaInfosById.put(id, criteria);
 	}
 	
-	public Set<String> getVariablesName(){    return this.m_criteriaInfosById.keySet();     }
+	public Set<String> getVariablesId(){    return this.m_criteriaInfosById.keySet();     }
 	
 	public HAPInfoCriteria getVariableCriteriaInfo(String variableId) {     return this.m_criteriaInfosById.get(variableId);     }
 	

@@ -39,7 +39,7 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 		if(m_expressionExe==null) {
 			m_expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
 		}
-		return m_expressionExe.getVariablesInfo().getVariablesName();	
+		return m_expressionExe.getVariablesInfo().getVariablesId();	
 	}
 
 	@Override

@@ -4,7 +4,7 @@ var env = {
 	}
 };
 
-nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(env).executeExecuteTaskRequest(||taskSuiteDef||, "||taskId||", ||inputData||, 
+nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(env).executeExecuteTaskRequest(||taskSuiteDef||, "||itemId||", ||inputData||, 
 	{
 		success : function(requestInfo, data){
 			var parms = {};

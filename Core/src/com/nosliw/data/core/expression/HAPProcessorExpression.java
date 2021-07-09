@@ -357,11 +357,11 @@ public class HAPProcessorExpression {
 		Map<String, HAPExecutableExpression> items = expressionGroup.getExpressionItems();
 		for(String name : items.keySet()) {
 			HAPExecutableExpression item = items.get(name);
-			Set<String> varNames = HAPOperandUtility.discoverVariableNames(item.getOperand());
+			Set<String> varIds = HAPOperandUtility.discoverVariableIds(item.getOperand());
 			
 			HAPContainerVariableCriteriaInfo expressionVarsContainer = new HAPContainerVariableCriteriaInfo();
-			for(String varName : varNames) {
-				expressionVarsContainer.addVariable(varName, expressionGroupVarsContainer.getVariableCriteriaInfo(varName));
+			for(String varId : varIds) {
+				expressionVarsContainer.addVariable(varId, expressionGroupVarsContainer.getVariableCriteriaInfo(varId));
 			}
 			item.setVariablesInfo(expressionVarsContainer);
 			

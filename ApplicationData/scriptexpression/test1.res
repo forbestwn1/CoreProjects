@@ -2,93 +2,102 @@
 	"name": "test1",
 	"description": "test1",
 	"valueStructure": {
-		"flat": {
-			"business" : {
-				"definition": {
-					"child" : {
-						"a" : {
+		"group": {
+			"public": {
+				"flat": {
+					"business" : {
+						"definition": {
 							"child" : {
-								"aa" : {"criteria":"test.string;1.0.0"}
+								"a" : {
+									"child" : {
+										"aa" : {"criteria":"test.string;1.0.0"}
+									}
+								}
+							}
+						},
+						"defaultValue": {
+							"a" : {
+								"aa" : {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "This is my world!"
+								}
 							}
 						}
-					}
-				},
-				"defaultValue": {
-					"a" : {
-						"aa" : {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "This is my world!"
-						}
-					}
-				}
-			},
-			"mybusiness" : {
-				"definition": {
-					"child" : {
-						"a" : {
+					},
+					"mybusiness" : {
+						"definition": {
 							"child" : {
-								"aa" : {"criteria":"test.string;1.0.0"}
+								"a" : {
+									"child" : {
+										"aa" : {"criteria":"test.string;1.0.0"}
+									}
+								}
+							}
+						},
+						"defaultValue": {
+							"a" : {
+								"aa" : {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "This is my world!"
+								}
 							}
 						}
-					}
-				},
-				"defaultValue": {
-					"a" : {
-						"aa" : {
-							"dataTypeId": "test.string;1.0.0",
+					},
+					"baseVar": {
+						"definition":{
+							"criteria": "test.string"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.string",
 							"value": "This is my world!"
 						}
-					}
-				}
-			},
-			"baseVar": {
-				"definition":{
-					"criteria": "test.string"
-				},
-				"defaultValue": {
-					"dataTypeId": "test.string",
-					"value": "This is my world!"
-				}
-			},
-			"fromVar" : {
-				"definition": {
-					"criteria" : "test.integer"
-				},
-				"defaultValue": {
-					"dataTypeId": "test.integer;1.0.0",
-					"value": 3
-				}
-			},
-			"toVar" : {
-				"definition": {
-					"criteria": "test.integer"
-				},
-				"defaultValue": {
-					"dataTypeId": "test.integer;1.0.0",
-					"value": 7
-				}
-			},
-			"fromConstant" : {
-				"definition": {
-					"value" : {
-						"dataTypeId": "test.integer;1.0.0",
-						"value": 3
-					}
-				}
-			},
-			"constantValueString" : {
-				"definition": {
-					"value" : "How are you"
-				}
-			},
-			"constantValueObject" : {
-				"definition": {
-					"value" : {
-						"child" : "How are you"
+					},
+					"fromVar" : {
+						"definition": {
+							"criteria" : "test.integer"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 3
+						}
+					},
+					"toVar" : {
+						"definition": {
+							"criteria": "test.integer"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 7
+						}
+					},
+					"fromConstant" : {
+						"definition": {
+							"value" : {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 3
+							}
+						}
+					},
+					"constantValueString" : {
+						"definition": {
+							"value" : "How are you"
+						}
+					},
+					"constantValueObject" : {
+						"definition": {
+							"value" : {
+								"child" : "How are you"
+							}
+						}
+					},
+					"valueVar" : {
+						"definition": {
+						}
 					}
 				}
 			}
 		}
+
 	},
 	"element": [
 		{
@@ -99,7 +108,7 @@
 			"name": "test1",
 			"type": "expression",
 			"description": "without expression",
-			"script" : "#|?(business.a.aa)?.subString(from:?(fromVar)?,to:?(toVar)?)|#.value=='s isfff'?'red':'blue'"
+			"script" : "#|?(business.a.aa)?.subString(from:?(fromVar)?,to:?(toVar)?)|#.value=='s isfff'?'red':'blue' + ?(valueVar)?"
 		},
 		{
 			"id": "test2",
@@ -207,7 +216,8 @@
 					"toVar": {
 						"dataTypeId": "test.integer;1.0.0",
 						"value": 7
-					}
+					},
+					"valueVar" : "1234567890"
 				}
 			}
 		],
