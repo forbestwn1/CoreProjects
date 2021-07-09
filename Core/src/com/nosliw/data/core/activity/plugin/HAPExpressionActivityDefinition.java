@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
@@ -32,9 +31,6 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 		super(type);
 	}
 	
-	@Override
-	public String getTaskType() {   return HAPConstantShared.TASK_TYPE_ACTIVITY;  }
-
 	public HAPDefinitionScriptEntity getScript(){  return this.m_script;    }
 
 	@Override
@@ -73,5 +69,5 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	}
 
 	@Override
-	public HAPDefinitionTask cloneTaskDefinition() {  return (HAPDefinitionTask)this.cloneActivityDefinition();  }
+	public HAPDefinitionTask cloneTaskDefinition() {  return this.cloneActivityDefinition();  }
 }

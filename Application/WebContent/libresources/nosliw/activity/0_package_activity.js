@@ -1,1 +1,1 @@
-var library = nosliw.getPackage("actvity");
+var library = nosliw.getPackage("activity");

@@ -14,6 +14,10 @@ public class HAPExecutableTask extends HAPExecutableImpEntityInfo{
 	
 	private String m_taskType;
 	
+	public HAPExecutableTask(String taskType) {
+		this.m_taskType = taskType;
+	}
+	
 	public String getTaskType() {   return this.m_taskType;   }
 	
 	@Override

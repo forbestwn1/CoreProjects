@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 
@@ -20,6 +21,9 @@ public abstract class HAPDefinitionActivity extends HAPEntityInfoWritableImp imp
 	public HAPDefinitionActivity(String type) {
 		this.m_type = type;
 	}
+
+	@Override
+	public String getTaskType() {   return HAPConstantShared.TASK_TYPE_ACTIVITY;  }
 
 	public String getType() {   return this.m_type;   }
 	

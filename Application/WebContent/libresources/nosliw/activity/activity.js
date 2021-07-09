@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_IOTaskInfo;
 	var node_ExecutableResult;
+	var node_getObjectType;
 	
 //*******************************************   Start Node Definition  **************************************
 var loc_moduleName = "activity";	
@@ -37,7 +38,7 @@ var node_createActivity = function(activityDef, inputData, envObj){
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(activityDef, inputData, envObj){
-		loc_inputDataType = node_getObjectType(value);
+		loc_inputDataType = node_getObjectType(inputData);
 		
 		loc_actvityStatusIO = node_createIODataSet(inputData);
 
@@ -76,7 +77,7 @@ var node_createActivity = function(activityDef, inputData, envObj){
 						}
 					}));
 					return executeActivityPluginRequest;
-				}, "ACTIVITYTASK_"+normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_ID]), 
+				}, "ACTIVITYTASK_"+loc_activityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_ID]), 
 				function(resultName){   //output data association function for result by name
 					return loc_activityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][resultName][node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITY_DATAASSOCIATION]; 
 				},
@@ -167,6 +168,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("task.entity.ExecutableResult", function(){node_ExecutableResult = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createActivity", node_createActivity); 

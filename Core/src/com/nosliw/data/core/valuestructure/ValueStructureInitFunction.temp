@@ -3,7 +3,7 @@ function(input){
 	var output = ||outputInit||;
 	
 	_.each(input, function(value, name){
-		output.public[name] = value;
+		output[name] = value;
 	});
 	
 	return output;

@@ -15,7 +15,7 @@ var packageObj = library;
 	var node_createRemoteService;
 	var node_createGatewayService;
 	var node_createMiniAppService;
-	var node_createProcessRuntimeFactory;
+	var node_createTaskRuntimeFactory;
 	var node_createDataService;
 	var node_createUIPageService;
 	var node_createUIModuleService;
@@ -46,7 +46,7 @@ var node_createRuntime = function(name){
 	
 	var loc_gatewayService;
 
-	var loc_processRuntimeFactory;
+	var loc_taskRuntimeFactory;
 	
 	var loc_remoteService;
 	
@@ -86,7 +86,7 @@ var node_createRuntime = function(name){
 
 		getDataService(){   return loc_dataService;   },
 
-		getProcessRuntimeFactory(){   return loc_processRuntimeFactory;  },
+		getTaskRuntimeFactory(){   return loc_taskRuntimeFactory;  },
 		
 		getUIPageService(){		return loc_uiPageService;		},
 		
@@ -115,7 +115,7 @@ var node_createRuntime = function(name){
 		loc_remoteService.interfaceObjectLifecycle.init();
 		loc_gatewayService = node_createGatewayService();
 		if(node_createUIPageService!=undefined)  loc_uiPageService = node_createUIPageService();
-		loc_processRuntimeFactory = node_createProcessRuntimeFactory();
+		loc_taskRuntimeFactory = node_createTaskRuntimeFactory();
 		loc_dataService = node_createDataService();
 		loc_securityService = node_createSecurityService();
 		
@@ -160,7 +160,7 @@ nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){nod
 nosliw.registerSetNodeDataEvent("remote.createRemoteService", function(){node_createRemoteService = this.getData();});
 nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.service.createMiniAppService", function(){node_createMiniAppService = this.getData();});
-nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(){node_createProcessRuntimeFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createTaskRuntimeFactory", function(){node_createTaskRuntimeFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node_createDataService = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createUIPageService", function(){node_createUIPageService = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.service.createUIModuleService", function(){node_createUIModuleService = this.getData();});

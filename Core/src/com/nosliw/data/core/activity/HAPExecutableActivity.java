@@ -6,15 +6,21 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.task.HAPExecutableTask;
 
+@HAPEntityWithAttribute
 public abstract class HAPExecutableActivity extends HAPExecutableTask{
+
+	@HAPAttribute
+	public static String TYPE = "type";
 
 	@HAPAttribute
 	public static String INPUTMAPPING = "inputMapping";
@@ -22,13 +28,19 @@ public abstract class HAPExecutableActivity extends HAPExecutableTask{
 	@HAPAttribute
 	public static String RESULT = "result";
 
+	private String m_type;
+	
 	private HAPExecutableDataAssociation m_inputMapping;
 
 	private Map<String, HAPExecutableResultActivity> m_results;
 
-	public HAPExecutableActivity() {}
+	public HAPExecutableActivity(String type) {
+		super(HAPConstantShared.TASK_TYPE_ACTIVITY);
+		this.m_type = type;
+	}
 
-	public HAPExecutableActivity(String id, HAPDefinitionActivityNormal activityDef) {
+	public HAPExecutableActivity(String type, String id, HAPDefinitionActivityNormal activityDef) {
+		this(type);
 		this.setId(id);
 		this.m_results = new LinkedHashMap<String, HAPExecutableResultActivity>();
 	}
@@ -59,6 +71,7 @@ public abstract class HAPExecutableActivity extends HAPExecutableTask{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_inputMapping!=null)		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
+		jsonMap.put(TYPE, this.m_type);
 	}
 	
 	@Override

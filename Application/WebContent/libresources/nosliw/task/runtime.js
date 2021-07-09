@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_ProcessResult;
 	var node_resourceUtility;
 	var node_createActivity;
+	var node_getObjectType;
 
 //*******************************************   Start Node Definition  **************************************
 var node_createTaskRuntime = function(envObj){
@@ -108,6 +109,7 @@ nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskInfo", function(){node_IOT
 nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("activity.createActivity", function(){node_createActivity = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 
 //Register Node by Name

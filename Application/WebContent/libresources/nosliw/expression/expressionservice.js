@@ -60,7 +60,8 @@ var node_createExpressionService = function(){
 		var scriptFun = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SCRIPTFUNCTION];
 		var supportFuns = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_SUPPORTFUNCTION];
 
-		var expandedInput = node_aliasUtility.expandInputByFlatContext(input, scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_CONTEXT]);
+//		var expandedInput = node_aliasUtility.expandInputByFlatContext(input, scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPTENTITY_CONTEXT]);
+		var expandedInput = input;
 		
 		var varInputs = {};
 		_.each(varNames, function(varName, index){
