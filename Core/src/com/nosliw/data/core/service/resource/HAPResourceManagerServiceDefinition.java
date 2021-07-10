@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.process1.HAPExecutableProcess;
+import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;

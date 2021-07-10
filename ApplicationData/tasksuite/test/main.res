@@ -50,7 +50,17 @@
 							"dataTypeId": "test.integer",
 							"value": 7
 						}
-					}
+					},
+					"outputVar1" : {
+						"definition": {
+							criteria: "test.string"
+						}
+					},
+					"outputVar2" : {
+						"definition": {
+							criteria: "test.string"
+						}
+					},
 				}
 			},
 			"protected": {
@@ -102,9 +112,106 @@
 					}
 				}
 			]
-		}	
+		},
+		{
+			"taskType": "activity",
+			"id": "service",
+			"name": "serviceActivity",
+			"type": "Service_request",
+			"serviceUse" : {
+				"interface" : "service_simpleoutput",
+				"provider" : "simpleServiceWithoutInterfaceProvider",
+				"info" : {
+					"enhanceContext" : "true"
+				},
+				"dataMapping" :{
+					"inputMapping" : {
+						"element" : {
+							"parm1" : {
+								"description" : "input from context node with default value",
+								"definition" : {
+									"path" : "business.a.aa"
+								}
+							},
+							"parm2" : {
+								"description" : "input from context node without default value",
+								"definition" : {
+									"path" : "mybusiness.a.aa"
+								}
+							},
+						}
+					},
+					"outputMapping" : {
+						"success" : {
+							"element" : {
+								"forsimpleservice_1_output1" : {
+									"definition" : {
+										"child" : {
+											"attr1" : {
+												"path" : "simpleOutput1"	
+											}
+										}
+									}
+								},
+								"local_var_for_output2" : {
+									"description" : "output to enhance variable",
+									"definition" : {
+										"child" : {
+											"attr1" : {
+												"path" : "simpleOutput2"	
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"result": [
+				{
+					"name" : "success",
+					"output": {
+						"mapping": {
+							"expressionResultVar": {
+								definition:{
+									"path": "nosliw_output"
+								}
+							}
+						}
+					}
+				},
+				{
+					"name" : "fail",
+					"output": {
+						"mapping": {
+							"errorCodeVar": {
+								definition: {
+									"path": "error.code"
+								}
+							},
+							"errorDataVar": {
+								definition: {
+									"path": "error.data"
+								}
+							}
+						}
+					}
+				}
+			]
+		}				
 	],
 	"attachment": {
+		"service" : [
+			{
+				"name": "simpleServiceWithoutInterfaceProvider",
+				"referenceId" : "simpleoutput_refinterface"
+			},	
+			{
+				"name": "simpleServiceWithInterfaceProvider",
+				"referenceId" : "simpleoutput_internalinterface"
+			},	
+		],
 		"testData" : [
 			{
 				"name": "testData",

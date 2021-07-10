@@ -65,15 +65,15 @@ public class HAPProcessorUIValueStructure {
 		}
 	}
 	
-	public static void enhanceContextByService(HAPDefinitionUIUnit uiUnitDef, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceValueStructureByService(HAPDefinitionUIUnit uiUnitDef, HAPRuntimeEnvironment runtimeEnv) {
 		for(String serviceName : uiUnitDef.getAllServices()) {
 			HAPDefinitionServiceUse service = uiUnitDef.getService(serviceName);
-			HAPProcessorServiceUse.enhanceContextByService(service, uiUnitDef.getValueStructureWrapper().getValueStructure(), runtimeEnv);
+			HAPProcessorServiceUse.enhanceValueStructureByService(service, uiUnitDef.getValueStructureWrapper().getValueStructure(), runtimeEnv);
 		}
 		
 		//child tag
 		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
-			enhanceContextByService(uiTag, runtimeEnv);
+			enhanceValueStructureByService(uiTag, runtimeEnv);
 		}
 	}
 	

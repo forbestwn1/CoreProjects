@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.process.HAPExecutableProcess;
+import com.nosliw.data.core.process1.HAPExecutableProcess;
 
 //task to run poll event resource and generate event
 public class HAPExecutablePollTask {

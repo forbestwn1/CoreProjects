@@ -46,7 +46,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		HAPExecutableScriptGroup scriptExpressionGroup = HAPProcessorScript.processSimpleScript(definition.getScript().getScript().getScript(), definition.getScript().getScript().getType(), definition.getInputValueStructureWrapper(), null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, processTracker);
 		out.setScriptExpression(scriptExpressionGroup);
 
-		//process input and create flat input context for activity
+		//process input
 		out.setInputDataAssociation(HAPUtilityActivity.processActivityInputDataAssocation(definition, valueStructureWrapper.getValueStructure(), runtimeEnv));
 		
 		//process success result

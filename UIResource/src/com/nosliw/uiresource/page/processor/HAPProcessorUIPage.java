@@ -47,7 +47,7 @@ public class HAPProcessorUIPage {
 		HAPProcessorUIService.normalizeService(uiPageDef, runtimeEnv);
 		
 		//enhance context by service
-		HAPProcessorUIValueStructure.enhanceContextByService(uiPageDef, runtimeEnv);
+		HAPProcessorUIValueStructure.enhanceValueStructureByService(uiPageDef, runtimeEnv);
 		
 		
 		//----------------------  Build executable

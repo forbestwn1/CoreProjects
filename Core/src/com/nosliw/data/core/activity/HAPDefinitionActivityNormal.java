@@ -41,6 +41,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	//param: parent context structure
 	public HAPWrapperValueStructure getInputValueStructureWrapper() {  return null;   }
 	
+	public void addResult(String name, HAPDefinitionResultActivity result) {   this.m_results.put(name, result);   }
 	public Map<String, HAPDefinitionResultActivity> getResults(){   return this.m_results;  }
 	public HAPDefinitionResultActivity getResult(String resultName){   return this.m_results.get(resultName);  }
 	

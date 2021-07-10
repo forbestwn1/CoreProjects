@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.activity.resource.HAPResourceIdActivityPlugin;
-import com.nosliw.data.core.process.HAPActivityPluginId;
-import com.nosliw.data.core.process.HAPExecutableActivityNormal;
+import com.nosliw.data.core.process1.HAPActivityPluginId;
+import com.nosliw.data.core.process1.HAPExecutableActivityNormal;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;

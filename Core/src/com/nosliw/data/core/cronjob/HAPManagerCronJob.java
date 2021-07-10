@@ -6,7 +6,7 @@ import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPManagerExpression;
-import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;

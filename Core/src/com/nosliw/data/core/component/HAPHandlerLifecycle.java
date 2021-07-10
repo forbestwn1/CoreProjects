@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.process.HAPEmbededProcessTask;
+import com.nosliw.data.core.process1.HAPEmbededProcessTask;
 
 public class HAPHandlerLifecycle extends HAPEmbededProcessTask{
 

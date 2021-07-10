@@ -1,8 +1,8 @@
 package com.nosliw.test.task;
 
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.process.resource.HAPResourceDefinitionProcessSuite;
-import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
+import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
+import com.nosliw.data.core.process1.util.HAPImporterProcessSuiteDefinition;
 
 public class HAPTaskMain {
 

@@ -33,13 +33,13 @@ public class HAPProcessorServiceUse {
 	}
 	
 	//enhance external context according to mapping with service
-	public static void enhanceContextByService(HAPDefinitionServiceUse definition, HAPValueStructure globalContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceValueStructureByService(HAPDefinitionServiceUse definition, HAPValueStructure globalValueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		if(HAPProcessorServiceUse.isEnhanceContextByService(definition)) {
 			//process service use
 			HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
 			
 			//
-			HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointContext(HAPUtilityServiceInterface.buildIOTaskByInterface(serviceInterface), false, definition.getDataMapping(), HAPContainerStructure.createDefault(globalContext), true, runtimeEnv);
+			HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointValueStructure(HAPUtilityServiceInterface.buildIOTaskByInterface(serviceInterface), false, definition.getDataMapping(), HAPContainerStructure.createDefault(globalValueStructure), true, runtimeEnv);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class HAPProcessorServiceUse {
 		}
 	}
 	
-	public static HAPExecutableServiceUse process(HAPDefinitionServiceUse definition, HAPValueStructure globalContext, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableServiceUse process(HAPDefinitionServiceUse definition, HAPValueStructure globalValueStructure, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);
 
 		//process service use
@@ -62,7 +62,7 @@ public class HAPProcessorServiceUse {
 
 		HAPExecutableTask taskExe = HAPUtilityServiceInterface.buildExecutableTaskByInterface(serviceInterface);
 		
-		HAPExecutableWrapperTask serviceMappingExe = HAPProcessorDataAssociation.processDataAssociationWithTask(definition.getDataMapping(), taskExe, HAPContainerStructure.createDefault(globalContext), HAPUtilityDAProcess.withModifyInputStructureConfigureTrue(null), attachmentContainer, runtimeEnv);
+		HAPExecutableWrapperTask serviceMappingExe = HAPProcessorDataAssociation.processDataAssociationWithTask(definition.getDataMapping(), taskExe, HAPContainerStructure.createDefault(globalValueStructure), HAPUtilityDAProcess.withModifyInputStructureConfigureTrue(null), attachmentContainer, runtimeEnv);
 		out.setServiceMapping(serviceMappingExe);
 		
 		//process service provider

@@ -63,17 +63,17 @@ public class HAPProcessorDataAssociation {
 		return out;
 	}
 
-	public static void enhanceDataAssociationWithTaskEndPointContext(HAPIOTask taskIO, boolean taskIOEnhance, HAPDefinitionDataMappingTask taskWrapperDef, HAPContainerStructure externalContext, boolean externalContextEnhance, HAPRuntimeEnvironment runtimeEnv) {
-		enhanceDataAssociationWithTaskEndPointContext(taskIO, taskIOEnhance, taskWrapperDef, externalContext, externalContextEnhance, externalContext, externalContextEnhance, runtimeEnv);
+	public static void enhanceDataAssociationWithTaskEndPointValueStructure(HAPIOTask taskIO, boolean taskIOEnhance, HAPDefinitionDataMappingTask taskWrapperDef, HAPContainerStructure externalValueStructure, boolean externalValueStructureEnhance, HAPRuntimeEnvironment runtimeEnv) {
+		enhanceDataAssociationWithTaskEndPointValueStructure(taskIO, taskIOEnhance, taskWrapperDef, externalValueStructure, externalValueStructureEnhance, externalValueStructure, externalValueStructureEnhance, runtimeEnv);
 	}
 
-	public static void enhanceDataAssociationWithTaskEndPointContext(HAPIOTask taskIO, boolean taskIOEnhance, HAPDefinitionDataMappingTask taskWrapperDef, HAPContainerStructure inputContext, boolean inputContextEnhance, HAPContainerStructure outputContext, boolean outputContextEnhance, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceDataAssociationWithTaskEndPointValueStructure(HAPIOTask taskIO, boolean taskIOEnhance, HAPDefinitionDataMappingTask taskWrapperDef, HAPContainerStructure inputContext, boolean inputContextEnhance, HAPContainerStructure outputContext, boolean outputContextEnhance, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionDataAssociation inputMapping = getInputMappingFromTaskDataMapping(taskWrapperDef);
-		enhanceDataAssociationEndPointContext(inputContext, inputContextEnhance, inputMapping, taskIO.getInContext(), taskIOEnhance, runtimeEnv);
+		enhanceDataAssociationEndPointValueStructure(inputContext, inputContextEnhance, inputMapping, taskIO.getInContext(), taskIOEnhance, runtimeEnv);
 
 		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
 		for(String resultName : resultOutputMapping.keySet()) {
-			enhanceDataAssociationEndPointContext(taskIO.getOutResultContext().get(resultName), taskIOEnhance, resultOutputMapping.get(resultName), outputContext, outputContextEnhance, runtimeEnv);
+			enhanceDataAssociationEndPointValueStructure(taskIO.getOutResultContext().get(resultName), taskIOEnhance, resultOutputMapping.get(resultName), outputContext, outputContextEnhance, runtimeEnv);
 		}
 	}
 
@@ -84,7 +84,7 @@ public class HAPProcessorDataAssociation {
 	}
 	
 
-	public static void enhanceDataAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPDefinitionDataAssociation dataAssociation, HAPContainerStructure output, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceDataAssociationEndPointValueStructure(HAPContainerStructure input, boolean inputEnhance, HAPDefinitionDataAssociation dataAssociation, HAPContainerStructure output, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
 		String type = dataAssociation.getType();
 		
 		switch(type) {

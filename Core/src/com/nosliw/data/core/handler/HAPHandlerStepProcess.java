@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.process.HAPEmbededProcessTask;
+import com.nosliw.data.core.process1.HAPEmbededProcessTask;
 
 @HAPEntityWithAttribute
 public class HAPHandlerStepProcess extends HAPEmbededProcessTask implements HAPHandlerStep{

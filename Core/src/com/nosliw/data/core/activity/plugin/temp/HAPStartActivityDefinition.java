@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionSequenceFlow;
+import com.nosliw.data.core.process1.HAPDefinitionSequenceFlow;
 
 public class HAPStartActivityDefinition extends HAPDefinitionActivity{
 

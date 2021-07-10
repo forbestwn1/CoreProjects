@@ -6,11 +6,11 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
-import com.nosliw.data.core.process.HAPExecutableActivityNormal;
+import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 
-public class HAPServiceActivityExecutable extends HAPExecutableActivityNormal{
+public class HAPServiceActivityExecutable extends HAPExecutableActivity{
 
 	@HAPAttribute
 	public static String SERVICE = "service";
@@ -23,7 +23,7 @@ public class HAPServiceActivityExecutable extends HAPExecutableActivityNormal{
 	private String m_provider;
 	
 	public HAPServiceActivityExecutable(String id, HAPDefinitionActivityNormal activityDef) {
-		super(id, activityDef);
+		super(activityDef.getType(), id, activityDef);
 	}
 
 	public void setService(HAPExecutableServiceUse service) {   this.m_service = service;  }

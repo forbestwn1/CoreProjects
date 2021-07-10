@@ -20,10 +20,10 @@ var node_createDataService = function(){
 
 		getExecuteDataServiceUseRequest : function(serviceUse, ioEndpoint, handlers, requester_parent){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {}), handlers, requester_parent);
-			var serviceMapping = serviceUse[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_SERVICEUSE];
+			var inputMapping = serviceUse[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_SERVICEUSE];
 			var serviceId = serviceUse[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDERID];
 			out.addRequest(node_taskUtility.getExecuteWrappedTaskRequest(
-				ioEndpoint, undefined, serviceMapping,
+				ioEndpoint, undefined, inputMapping,
 				new node_IOTaskInfo(function(input, handlers, request){
 					var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
 					serviceRequest.addRequest(loc_out.getExecuteDataServiceRequest(serviceId, input, {
@@ -38,6 +38,38 @@ var node_createDataService = function(){
 			
 		},
 			
+		//directly invoke data service
+		getExecuteDataServiceRequest : function(serviceId, parms, handlers, requester_parent){
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExectueDataService", {"serviceId":serviceId, "parms":parms}), handlers, requestInfo);
+
+			var gatewayParm = {};
+			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST_QUERY] = {}
+			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST_QUERY][node_COMMONATRIBUTECONSTANT.QUERYSERVICE_SERVICEID] = serviceId;
+			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST_PARMS] = parms;
+			
+			out.addRequest(nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(
+					node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_SERVICE, 
+					node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST, 
+					gatewayParm,
+					{
+						success : function(requestInfo, serviceResult){
+							return serviceResult;
+						}
+					}
+			));
+			
+			return out;
+		},
+			
+		executeExecuteDataServiceRequest : function(serviceId, parms, handlers, requester_parent){
+			var requestInfo = this.getExecuteDataServiceRequest(serviceId, parms, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+			
+		
+		
+		
 			
 		getExecuteEmbededDataServiceByNameRequest : function(serviceName, serviceProviders, serviceUse, ioEndpoint, handlers, requester_parent){
 			var serviceProvider = serviceProviders[serviceName];
@@ -75,35 +107,6 @@ var node_createDataService = function(){
 			return this.getExecuteDataServiceRequest(serviceProvider[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID], parms, handlers, requester_parent);
 		},
 		
-		//directly invoke data service
-		getExecuteDataServiceRequest : function(serviceId, parms, handlers, requester_parent){
-			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExectueDataService", {"serviceId":serviceId, "parms":parms}), handlers, requestInfo);
-
-			var gatewayParm = {};
-			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST_QUERY] = {}
-			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST_QUERY][node_COMMONATRIBUTECONSTANT.QUERYSERVICE_SERVICEID] = serviceId;
-			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST_PARMS] = parms;
-			
-			out.addRequest(nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(
-					node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_SERVICE, 
-					node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST, 
-					gatewayParm,
-					{
-						success : function(requestInfo, serviceResult){
-							return serviceResult;
-						}
-					}
-			));
-			
-			return out;
-		},
-			
-		executeExecuteDataServiceRequest : function(serviceId, parms, handlers, requester_parent){
-			var requestInfo = this.getExecuteDataServiceRequest(serviceId, parms, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo);
-		},
-			
 	};
 
 	loc_out = node_buildServiceProvider(loc_out, "processService");
