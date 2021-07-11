@@ -126,7 +126,7 @@
 				},
 				"dataMapping" :{
 					"inputMapping" : {
-						"element" : {
+						"mapping" : {
 							"parm1" : {
 								"description" : "input from context node with default value",
 								"definition" : {
@@ -143,24 +143,16 @@
 					},
 					"outputMapping" : {
 						"success" : {
-							"element" : {
-								"forsimpleservice_1_output1" : {
+							"mapping" : {
+								"outputVar1" : {
 									"definition" : {
-										"child" : {
-											"attr1" : {
-												"path" : "simpleOutput1"	
-											}
-										}
+										"path" : "simpleOutput1"	
 									}
 								},
-								"local_var_for_output2" : {
+								"outputVar2" : {
 									"description" : "output to enhance variable",
 									"definition" : {
-										"child" : {
-											"attr1" : {
-												"path" : "simpleOutput2"	
-											}
-										}
+										"path" : "simpleOutput2"	
 									}
 								}
 							}
@@ -169,37 +161,58 @@
 				}
 			},
 			"result": [
-				{
-					"name" : "success",
-					"output": {
-						"mapping": {
-							"expressionResultVar": {
-								definition:{
-									"path": "nosliw_output"
-								}
-							}
-						}
-					}
+			]
+		},			
+		{
+			"taskType": "activity",
+			"id": "embededTask",
+			"name": "embededTask",
+			"type": "Service_request",
+			"serviceUse" : {
+				"interface" : "service_simpleoutput",
+				"provider" : "simpleServiceWithoutInterfaceProvider",
+				"info" : {
+					"enhanceContext" : "true"
 				},
-				{
-					"name" : "fail",
-					"output": {
-						"mapping": {
-							"errorCodeVar": {
-								definition: {
-									"path": "error.code"
+				"dataMapping" :{
+					"inputMapping" : {
+						"mapping" : {
+							"parm1" : {
+								"description" : "input from context node with default value",
+								"definition" : {
+									"path" : "business.a.aa"
 								}
 							},
-							"errorDataVar": {
-								definition: {
-									"path": "error.data"
+							"parm2" : {
+								"description" : "input from context node without default value",
+								"definition" : {
+									"path" : "mybusiness.a.aa"
+								}
+							},
+						}
+					},
+					"outputMapping" : {
+						"success" : {
+							"mapping" : {
+								"outputVar1" : {
+									"definition" : {
+										"path" : "simpleOutput1"	
+									}
+								},
+								"outputVar2" : {
+									"description" : "output to enhance variable",
+									"definition" : {
+										"path" : "simpleOutput2"	
+									}
 								}
 							}
 						}
 					}
 				}
+			},
+			"result": [
 			]
-		}				
+		},			
 	],
 	"attachment": {
 		"service" : [

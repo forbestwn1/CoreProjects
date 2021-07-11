@@ -9,6 +9,7 @@ import com.nosliw.data.core.resource.HAPParserResourceDefinitionImp;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPManagerTask;
+import com.nosliw.data.core.task.HAPUtilityTask;
 
 public class HAPParserResourceDefinitionTaskSuite extends HAPParserResourceDefinitionImp{
 
@@ -27,8 +28,7 @@ public class HAPParserResourceDefinitionTaskSuite extends HAPParserResourceDefin
 		JSONArray taskArrayJson = jsonObj.getJSONArray(HAPWithEntityElement.ELEMENT);
 		for(int i=0; i<taskArrayJson.length(); i++) {
 			JSONObject taskObjJson = (JSONObject)taskArrayJson.get(i);
-			String taskType = taskObjJson.getString(HAPDefinitionTask.TASKTYPE);
-			HAPDefinitionTask taskDefinition = this.m_taskMan.getTaskInfo(taskType).getParser().parseTaskDefinition(taskObjJson, out);
+			HAPDefinitionTask taskDefinition = HAPUtilityTask.parseTask(taskObjJson, out, m_taskMan);
 			out.addEntityElement(taskDefinition);
 		}
 		return out;

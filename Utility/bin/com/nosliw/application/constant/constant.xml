@@ -824,6 +824,7 @@
 			
 			<definition type="space"/>
 			<definition name="TASK_TYPE_ACTIVITY" value="activity"/>
+			<definition name="TASK_TYPE_SEQUENCE" value="sequence"/>
 			<definition name="TASK_TYPE_PPROCESS" value="process"/>
 			
 		</definitions>

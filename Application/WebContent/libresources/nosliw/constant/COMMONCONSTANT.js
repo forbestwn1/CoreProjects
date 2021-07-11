@@ -477,6 +477,7 @@ var COMMONCONSTANT=
   "STRUCTURE_TYPE_VALUEEXECUTABLE": "valueExecutable",
   "STRUCTURE_TYPE_MAPPING": "mapping",
   "TASK_TYPE_ACTIVITY": "activity",
+  "TASK_TYPE_SEQUENCE": "sequence",
   "TASK_TYPE_PPROCESS": "process"
 };
 

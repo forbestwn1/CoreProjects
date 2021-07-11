@@ -41,6 +41,8 @@ import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResourceDefinition;
 import com.nosliw.data.core.script.expression.HAPManagerScript;
 import com.nosliw.data.core.script.expression.resource.HAPParserResourceDefinitionScriptGroup;
+import com.nosliw.data.core.sequence.HAPTaskInfoParserSequence;
+import com.nosliw.data.core.sequence.HAPTaskInfoProcessorSequence;
 import com.nosliw.data.core.service.definition.HAPFactoryServiceProcess;
 import com.nosliw.data.core.service.definition.HAPManagerService;
 import com.nosliw.data.core.service.resource.HAPParserServiceInterfaceResource;
@@ -196,6 +198,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		
 		//task
 		this.m_taskManager.registerTaskInfo(HAPConstantShared.TASK_TYPE_ACTIVITY, new HAPInfoTask(new HAPTaskInfoParserActivity(this.getActivityManager().getPluginManager()), new HAPTaskInfoProcessorActivity(this)));
+		this.m_taskManager.registerTaskInfo(HAPConstantShared.TASK_TYPE_SEQUENCE, new HAPInfoTask(new HAPTaskInfoParserSequence(this.getTaskManager()), new HAPTaskInfoProcessorSequence(this.getTaskManager())));
 		
 		//attachment
 		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, new HAPProcessorAttachmentEntityExpression(this));
