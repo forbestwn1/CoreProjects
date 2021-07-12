@@ -24,14 +24,12 @@ var packageObj = library;
 var loc_moduleName = "sequence";	
 
 //process has contextIO as its status
-var node_createSequence = function(activityDef, inputData, envObj){
-	var loc_activityDef = activityDef;
+var node_createSequence = function(sequenceDef, inputData, envObj){
+	var loc_sequenceDef = sequenceDef;
 	//environment obj for activity to interact with external world
 	var loc_envObj = envObj;
-	//activity plugin
-	var loc_activityPlugin = undefined;
 	//io data for activity status
-	var loc_actvityStatusIO;
+	var loc_sequenceStatusIO;
 	
 	//input data type, value or data set io, different data type have different output 
 	var loc_inputDataType;
@@ -40,7 +38,7 @@ var node_createSequence = function(activityDef, inputData, envObj){
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(activityDef, inputData, envObj){
 		loc_inputDataType = node_getObjectType(inputData);
 		
-		loc_actvityStatusIO = node_createIODataSet(inputData);
+		loc_sequenceStatusIO = node_createIODataSet(inputData);
 
 		if(loc_envObj.getSyncOutRequest==undefined){
 			var envObj = {
@@ -56,76 +54,77 @@ var node_createSequence = function(activityDef, inputData, envObj){
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 	};	
 	
-	var loc_getExecuteActivityRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteNormalActivity", {}), handlers, request);
+	var loc_getExecuteSequenceRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
 		
-		out.addRequest(node_taskUtility.getExecuteTaskRequest(
-				loc_actvityStatusIO, 
-				undefined,
-				loc_activityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUTMAPPING],    //input data association
-				new node_IOTaskInfo(function(inputValue, handlers, request){
-					var executeActivityPluginRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteActivityPlugin", {}), handlers, request);
-					//get activity plugin 
-					executeActivityPluginRequest.addRequest(loc_getActivityPluginRequest(loc_activityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_TYPE], {
-						success : function(requestInfo, activityPlugin){
-							//execute activity plugin
-							return activityPlugin.getExecuteActivityRequest(loc_activityDef, inputValue, loc_envObj, {
-								success : function(requestInfo, activityResult){  //get activity results (result name + result value map)
-									return activityResult;
-								}
-							});
-						}
-					}));
-					return executeActivityPluginRequest;
-				}, "ACTIVITYTASK_"+loc_activityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_ID]), 
-				function(resultName){   //output data association function for result by name
-					return loc_activityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][resultName][node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITY_DATAASSOCIATION]; 
-				},
-				loc_actvityStatusIO,
-				{
-					success : function(request, taskResult){
-						//build normal activity output
-						return taskResult;
+		var steps = loc_sequenceDef[node_COMMONATRIBUTECONSTANT.EXECUTABLESEQUENCE_STEP];
+		out.addRequest(loc_getExecuteStepRequest(steps, 0, {
+			success : function(request, taskResult){
+				if(taskResult.resultName==node_COMMONCONSTANT.TASK_RESULT_SUCCESS){
+					if(loc_inputDataType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_IODATASET){
+						//if input data is io data set, out put is io data set as well
+						return new node_ExecutableResult(taskResult.resultName, loc_sequenceStatusIO);
 					}
-				}));
+					else{
+						//otherwise, input data is value, then output is value
+						return loc_sequenceStatusIO.getGetDataValueRequest(undefined, {
+							success : function(request, value){
+								return new node_ExecutableResult(taskResult.resultName, value);
+							}
+						});
+					}
+				}
+				else{
+					//if error, stop sequence
+					return taskResult;
+				}
+			}
+		}));
 		
 		return out;
-		
 	};
 	
-	//load plugin resource
-	var loc_getActivityPluginRequest = function(pluginName, handlers, request){
-		var service = new node_ServiceInfo("getActivityPlugin", {"pluginName":pluginName})
-		if(loc_activityPlugin!=null){
-			return node_createServiceRequestInfoSimple(service, function(requestInfo){	return loc_activityPlugin;}, handlers, request);
-		}
-		else{
-			var out = node_createServiceRequestInfoSequence(service, handlers, request);
-			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([pluginName], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, {
-				success : function(request, resourceData){
-					loc_activityPlugin = resourceData[pluginName][node_COMMONATRIBUTECONSTANT.PLUGINACTIVITY_SCRIPT](nosliw, loc_envObj);
-					return loc_activityPlugin;
+	var loc_getExecuteStepRequest = function(steps, current, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
+		
+		out.addRequest(nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_envObj).getExecuteEmbededTaskRequest(step[current], loc_sequenceStatusIO, {
+			success : function(request, taskResult){
+				if(taskResult.resultName==node_COMMONCONSTANT.TASK_RESULT_SUCCESS){
+					current++;
+					if(current>=steps.length()){
+						//last step
+						return taskResult;
+					}
+					else{
+						return loc_getExecuteStepRequest(steps, current);
+					}
 				}
-			}));
-			return out;
-		}
+				else{
+					//if error, stop sequence
+					return taskResult;
+				}
+			}
+		}));
+		
+		return out;
 	};
+	
 	
 	var loc_out = {
 		
 		getExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_getExecuteActivityRequest({
-				success : function(request, activityTaskResult){
+				success : function(request, sequenceTaskResult){
 					if(loc_inputDataType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_IODATASET){
 						//if input data is io data set, out put is io data set as well
-						return new node_ExecutableResult(activityTaskResult.resultName, loc_actvityStatusIO);
+						return new node_ExecutableResult(sequenceTaskResult.resultName, loc_sequenceStatusIO);
 					}
 					else{
 						//otherwise, input data is value, then output is value
 						return loc_actvityStatusIO.getGetDataValueRequest(undefined, {
 							success : function(request, value){
-								return new node_ExecutableResult(activityTaskResult.resultName, value);
+								return new node_ExecutableResult(sequenceTaskResult.resultName, value);
 							}
 						});
 						
@@ -145,7 +144,7 @@ var node_createSequence = function(activityDef, inputData, envObj){
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_ACTIVITY);
 
-	node_getLifecycleInterface(loc_out).init(activityDef, inputData, envObj);
+	node_getLifecycleInterface(loc_out).init(sequenceDef, inputData, envObj);
 
 	return loc_out;
 };

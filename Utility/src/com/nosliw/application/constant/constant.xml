@@ -633,6 +633,12 @@
 			<definition name="ACTIVITY_OUTPUTVARIABLE_OUTPUT" value="output"/>
 
 			<definition type="space"/>
+			<definition name="TASK_RESULT_SUCCESS" value="success"/>
+			<definition name="TASK_RESULT_FAIL" value="fail"/>
+			<definition name="TASK_RESULT_EXCEPTION" value="exception"/>
+
+
+			<definition type="space"/>
 			<definition name="SERVICE_RESULT_SUCCESS" value="success"/>
 			<definition name="SERVICE_RESULT_FAIL" value="fail"/>
 			<definition name="SERVICE_RESULT_EXCEPTION" value="exception"/>

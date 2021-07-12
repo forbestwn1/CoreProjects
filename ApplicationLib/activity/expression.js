@@ -34,7 +34,7 @@
 						success:function(requestInfo, scriptExpressionOut){
 							var activityOutput = {};
 							activityOutput[env.buildOutputVarialbeName(node_COMMONCONSTANT.ACTIVITY_OUTPUTVARIABLE_OUTPUT)] = scriptExpressionOut;
-							return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
+							return new node_IOTaskResult(node_COMMONCONSTANT.TASK_RESULT_SUCCESS, activityOutput);
 						}
 					}));
 

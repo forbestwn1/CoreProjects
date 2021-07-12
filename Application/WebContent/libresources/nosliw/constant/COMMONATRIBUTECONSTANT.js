@@ -458,6 +458,8 @@ var COMMONATRIBUTECONSTANT=
   "_ELEMENTS": "elements",
   "_VARIABLENAME": "variableName",
   "_TEXT": "text",
+  "DEFINITIONSEQUENCE_STEP": "step",
+  "EXECUTABLESEQUENCE_STEP": "step",
   "DEFINITIONSERVICE_STATIC": "static",
   "DEFINITIONSERVICE_RUNTIME": "runtime",
   "_SUITE": "suite",

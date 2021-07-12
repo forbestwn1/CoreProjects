@@ -555,6 +555,12 @@ public class HAPConstantShared {
 
 
 
+		public static final String TASK_RESULT_SUCCESS = "success";
+		public static final String TASK_RESULT_FAIL = "fail";
+		public static final String TASK_RESULT_EXCEPTION = "exception";
+
+
+
 		public static final String SERVICE_RESULT_SUCCESS = "success";
 		public static final String SERVICE_RESULT_FAIL = "fail";
 		public static final String SERVICE_RESULT_EXCEPTION = "exception";

@@ -6,12 +6,14 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPDefinitionTaskImp;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionSequence extends HAPEntityInfoWritableImp implements HAPDefinitionTask{
+public class HAPDefinitionSequence extends HAPDefinitionTaskImp{
 
 	@HAPAttribute
 	public static String STEP = "step";
@@ -19,11 +21,9 @@ public class HAPDefinitionSequence extends HAPEntityInfoWritableImp implements H
 	private List<HAPDefinitionTask> m_steps;
 	
 	public HAPDefinitionSequence() {
+		super(HAPConstantShared.TASK_TYPE_SEQUENCE);
 		this.m_steps = new ArrayList<HAPDefinitionTask>();
 	}
-
-	@Override
-	public String getTaskType() {   return HAPConstantShared.TASK_TYPE_SEQUENCE;  }
 
 	public void addStep(HAPDefinitionTask step) {   this.m_steps.add(step);    }
 	
@@ -32,24 +32,20 @@ public class HAPDefinitionSequence extends HAPEntityInfoWritableImp implements H
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(STEP, HAPJsonUtility.buildJson(this.m_steps, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
-		try{
-			super.buildObjectByJson(json);
-			return true;  
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
+		return true;
 	}
 	
 	@Override
 	public HAPDefinitionTask cloneTaskDefinition() {
-		// TODO Auto-generated method stub
-		return null;
+		HAPDefinitionSequence out = new HAPDefinitionSequence();
+		for(HAPDefinitionTask step : this.m_steps) {
+			out.addStep(step.cloneTaskDefinition());
+		}
+		return out;
 	}
 }

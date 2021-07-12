@@ -164,53 +164,92 @@
 			]
 		},			
 		{
-			"taskType": "activity",
-			"id": "embededTask",
-			"name": "embededTask",
-			"type": "Service_request",
-			"serviceUse" : {
-				"interface" : "service_simpleoutput",
-				"provider" : "simpleServiceWithoutInterfaceProvider",
-				"info" : {
-					"enhanceContext" : "true"
-				},
-				"dataMapping" :{
-					"inputMapping" : {
-						"mapping" : {
-							"parm1" : {
-								"description" : "input from context node with default value",
-								"definition" : {
-									"path" : "business.a.aa"
-								}
-							},
-							"parm2" : {
-								"description" : "input from context node without default value",
-								"definition" : {
-									"path" : "mybusiness.a.aa"
-								}
-							},
-						}
+			"taskType": "sequence",
+			"id": "sequenceTask",
+			"name": "sequenceTask",
+			"step" : [
+				{
+					"taskType": "activity",
+					"type": "expression",
+					"id": "step1",
+					"name": "step1",
+					"script": "#|!(test.string)!.subString(?(business.a.aa)?,from:?(fromVar)?,to:?(toVar)?)|#",
+					"input": {
+						"info": {}
 					},
-					"outputMapping" : {
-						"success" : {
-							"mapping" : {
-								"outputVar1" : {
-									"definition" : {
-										"path" : "simpleOutput1"	
+					"result": [
+						{
+							"name" : "success",
+							"output": {
+								"mapping": {
+									"expressionResultVar": {
+										definition:{
+											"path": "nosliw_output"
+										}
 									}
-								},
-								"outputVar2" : {
-									"description" : "output to enhance variable",
-									"definition" : {
-										"path" : "simpleOutput2"	
+								}
+							}
+						},
+						{
+							"name" : "fail",
+							"output": {
+								"mapping": {
+									"errorCodeVar": {
+										definition: {
+											"path": "error.code"
+										}
+									},
+									"errorDataVar": {
+										definition: {
+											"path": "error.data"
+										}
 									}
 								}
 							}
 						}
-					}
-				}
-			},
-			"result": [
+					]
+				},
+				{
+					"taskType": "activity",
+					"type": "expression",
+					"id": "step2",
+					"name": "step2",
+					"script": "#|!(test.string)!.subString(?(expressionResultVar)?,from:?(fromVar)?,to:?(toVar)?)|#",
+					"input": {
+						"info": {}
+					},
+					"result": [
+						{
+							"name" : "success",
+							"output": {
+								"mapping": {
+									"expressionResultVar": {
+										definition:{
+											"path": "nosliw_output"
+										}
+									}
+								}
+							}
+						},
+						{
+							"name" : "fail",
+							"output": {
+								"mapping": {
+									"errorCodeVar": {
+										definition: {
+											"path": "error.code"
+										}
+									},
+									"errorDataVar": {
+										definition: {
+											"path": "error.data"
+										}
+									}
+								}
+							}
+						}
+					]
+				},
 			]
 		},			
 	],

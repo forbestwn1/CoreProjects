@@ -25,6 +25,7 @@ public class HAPTaskInfoProcessorSequence implements HAPProcessorTask{
 			HAPProcessTracker processTracker) {
 		HAPDefinitionSequence sequenceDef = (HAPDefinitionSequence)taskDefinition;
 		HAPExecutableSequence out = new HAPExecutableSequence();
+		taskDefinition.cloneToEntityInfo(out);
 		int i = 0;
 		for(HAPDefinitionTask step : sequenceDef.getSteps()) {
 			 out.addStep(m_taskMan.getTaskInfo(step.getTaskType()).getProcessor().process(step, id+"_"+i, processContext, valueStructureWrapper, processTracker));

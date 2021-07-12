@@ -4,14 +4,13 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPDefinitionTaskImp;
 
 @HAPEntityWithAttribute
-public abstract class HAPDefinitionActivity extends HAPEntityInfoWritableImp implements HAPDefinitionTask{
+public abstract class HAPDefinitionActivity extends HAPDefinitionTaskImp{
 
 	@HAPAttribute
 	public static String TYPE = "type";
@@ -19,11 +18,9 @@ public abstract class HAPDefinitionActivity extends HAPEntityInfoWritableImp imp
 	private String m_type;
 	
 	public HAPDefinitionActivity(String type) {
+		super(HAPConstantShared.TASK_TYPE_ACTIVITY);
 		this.m_type = type;
 	}
-
-	@Override
-	public String getTaskType() {   return HAPConstantShared.TASK_TYPE_ACTIVITY;  }
 
 	public String getType() {   return this.m_type;   }
 	

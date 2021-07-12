@@ -25,33 +25,51 @@ var node_createTaskRuntime = function(envObj){
 
 	var loc_envObj = envObj; 
 
-	var loc_getExecuteTaskRequest = function(taskSuite, taskId, input, handlers, request){
-		var out;
+	var loc_getExecuteTaskInSuiteRequest = function(taskSuite, taskId, input, handlers, request){
 		var task = taskSuite[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_TASK][taskId];
+		return loc_getExecuteTaskRequest(task, input, handlers, request);
+	};
+	
+	var loc_getExecuteTaskRequest = function(task, input, handlers, request){
+		var out;
 		if(task[node_COMMONATRIBUTECONSTANT.EXECUTABLETASK_TASKTYPE]==node_COMMONCONSTANT.TASK_TYPE_ACTIVITY){
 			out = node_createActivity(task, input, loc_envObj).getExecuteRequest(handlers, request);
 		}
+		else if(task[node_COMMONATRIBUTECONSTANT.EXECUTABLETASK_TASKTYPE]==node_COMMONCONSTANT.TASK_TYPE_SEQUENCE){
+			out = node_createSequence(task, input, loc_envObj).getExecuteRequest(handlers, request);
+		}
 		return out;
 	};
+
 	
 	var loc_out = {
 
-		getExecuteTaskRequest : function(taskSuite, taskId, inputValue, handlers, request){
-			var updatedInputData = taskSuite[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_INITSCRIPT](inputValue);
-			return loc_getExecuteTaskRequest(taskSuite, taskId, updatedInputData, handlers, request);
+		getExecuteEmbededTaskRequest : function(task, inputValueIo, handlers, request){
+			return loc_getExecuteTaskRequest(task, inputValueIo, handlers, request);
 		},
 		
-		executeExecuteTaskRequest : function(taskSuite, taskId, inputValue, handlers, request){
-			var requestInfo = this.getExecuteTaskRequest(taskSuite, taskId, inputValue, handlers, request)
+		executeExecuteEmbededTasRequest : function(taskSuite, taskId, inputValueIo, handlers, request){
+			var requestInfo = getExecuteEmbededTaskRequest(task, inputValueIo, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+			
+			
+		getExecuteTaskInSuiteRequest : function(taskSuite, taskId, inputValue, handlers, request){
+			var updatedInputData = taskSuite[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_INITSCRIPT](inputValue);
+			return loc_getExecuteTaskInSuiteRequest(taskSuite, taskId, updatedInputData, handlers, request);
+		},
+		
+		executeExecuteTaskInSuiteRequest : function(taskSuite, taskId, inputValue, handlers, request){
+			var requestInfo = this.getExecuteTaskInSuiteRequest(taskSuite, taskId, inputValue, handlers, request)
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
-		getExecuteEmbededTaskRequest : function(taskSuite, taskId, inputValueIo, handlers, request){
-			return loc_getExecuteTaskRequest(taskSuite, taskId, inputValueIo, handlers, request);
+		getExecuteEmbededTaskInSuiteRequest : function(taskSuite, taskId, inputValueIo, handlers, request){
+			return loc_getExecuteTaskInSuiteRequest(taskSuite, taskId, inputValueIo, handlers, request);
 		},
 		
-		executeExecuteEmbededTaskRequest : function(taskSuite, taskId, inputValueIo, handlers, request){
-			var requestInfo = getExecuteEmbededTaskRequest(taskSuite, taskId, inputValueIo, handlers, request);
+		executeExecuteEmbededTaskInSuiteRequest : function(taskSuite, taskId, inputValueIo, handlers, request){
+			var requestInfo = getExecuteEmbededTaskInSuiteRequest(taskSuite, taskId, inputValueIo, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
@@ -109,6 +127,7 @@ nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskInfo", function(){node_IOT
 nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("activity.createActivity", function(){node_createActivity = this.getData();});
+nosliw.registerSetNodeDataEvent("sequence.createSequence", function(){node_createSequence = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 

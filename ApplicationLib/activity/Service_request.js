@@ -34,7 +34,7 @@
 					out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceUseRequest(service, node_createIODataSet(input), {
 						success : function(request, taskResult){
 							var activityOutput = taskResult.resultValue.getData();
-							return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
+							return new node_IOTaskResult(node_COMMONCONSTANT.TASK_RESULT_SUCCESS, activityOutput);
 						}
 					}));
 
