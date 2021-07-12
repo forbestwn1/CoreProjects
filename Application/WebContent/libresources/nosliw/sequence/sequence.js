@@ -35,7 +35,7 @@ var node_createSequence = function(sequenceDef, inputData, envObj){
 	var loc_inputDataType;
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(activityDef, inputData, envObj){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(sequenceDef, inputData, envObj){
 		loc_inputDataType = node_getObjectType(inputData);
 		
 		loc_sequenceStatusIO = node_createIODataSet(inputData);
@@ -87,11 +87,11 @@ var node_createSequence = function(sequenceDef, inputData, envObj){
 	var loc_getExecuteStepRequest = function(steps, current, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
 		
-		out.addRequest(nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_envObj).getExecuteEmbededTaskRequest(step[current], loc_sequenceStatusIO, {
+		out.addRequest(nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_envObj).getExecuteEmbededTaskRequest(steps[current], loc_sequenceStatusIO, {
 			success : function(request, taskResult){
 				if(taskResult.resultName==node_COMMONCONSTANT.TASK_RESULT_SUCCESS){
 					current++;
-					if(current>=steps.length()){
+					if(current>=steps.length){
 						//last step
 						return taskResult;
 					}
@@ -114,7 +114,7 @@ var node_createSequence = function(sequenceDef, inputData, envObj){
 		
 		getExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_getExecuteActivityRequest({
+			out.addRequest(loc_getExecuteSequenceRequest({
 				success : function(request, sequenceTaskResult){
 					if(loc_inputDataType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_IODATASET){
 						//if input data is io data set, out put is io data set as well
@@ -122,7 +122,7 @@ var node_createSequence = function(sequenceDef, inputData, envObj){
 					}
 					else{
 						//otherwise, input data is value, then output is value
-						return loc_actvityStatusIO.getGetDataValueRequest(undefined, {
+						return loc_sequenceStatusIO.getGetDataValueRequest(undefined, {
 							success : function(request, value){
 								return new node_ExecutableResult(sequenceTaskResult.resultName, value);
 							}
@@ -142,7 +142,7 @@ var node_createSequence = function(sequenceDef, inputData, envObj){
 	};
 	
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_ACTIVITY);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_SEQUENCE);
 
 	node_getLifecycleInterface(loc_out).init(sequenceDef, inputData, envObj);
 

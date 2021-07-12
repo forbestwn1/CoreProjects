@@ -22,6 +22,7 @@ public class HAPTaskInfoParserSequence implements HAPParserTask{
 		HAPDefinitionSequence out = new HAPDefinitionSequence();
 		
 		JSONObject jsonObj = (JSONObject)obj;
+		out.buildEntityInfoByJson(jsonObj);
 		JSONArray stepsArray = jsonObj.getJSONArray(HAPDefinitionSequence.STEP);
 		
 		for(int i=0; i<stepsArray.length(); i++) {

@@ -18,7 +18,8 @@ public class HAPActivityMain {
 
 	static public void main(String[] args) throws FileNotFoundException {
 		String suite = "test";
-		String taskId = "sequenceTask";
+//		String taskId = "sequenceTask";
+		String taskId = "expression";
 		String testData = "testData";
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
