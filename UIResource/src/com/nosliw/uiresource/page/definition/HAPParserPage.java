@@ -238,6 +238,7 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 					String name = (String)key;
 					JSONObject taskJson = tasksObjJson.getJSONObject(name);
 					HAPDefinitionTask handler = HAPUtilityTask.parseTask(taskJson, resourceUnit, this.m_runtimeEnv.getTaskManager());
+					handler.setName(name);
 					resourceUnit.addHandler(handler);
 				}
 				break;

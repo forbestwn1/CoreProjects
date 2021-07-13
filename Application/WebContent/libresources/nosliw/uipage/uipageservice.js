@@ -18,12 +18,13 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUIPageService = function(){
+var node_createUIPageService = function(taskRuntime){
 	
-	var loc_uiResourceViewFactory = node_uiResourceViewFactory;
+	var loc_taskRuntime = taskRuntime;
+	var loc_uiResourceViewFactory = node_uiResourceViewFactory(loc_taskRuntime);
 	
 	var loc_getResourceViewId = function(){	return nosliw.generateId();	};
-	
+
 	var loc_getStyleScript = function(uiResource){
 		return _.unescape(uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_STYLE][node_COMMONATRIBUTECONSTANT.EXECUTABLESTYLE_DEFINITION]);
 	};
@@ -56,7 +57,7 @@ var node_createUIPageService = function(){
 			getGenerateUIPageRequest : function(uiResource, context, handlers, requester_parent){
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo);
-				out.addRequest(loc_uiResourceViewFactory.getCreateUIViewRequest(uiResource, loc_getResourceViewId(), undefined, context, {
+				out.addRequest(loc_uiResourceViewFactory.getCreateUIViewRequest(uiResource, loc_getResourceViewId(), undefined, context, loc_taskRuntime, {
 					success : function(requestInfo, uiView){
 						return node_createUIPage(uiView, loc_getStyleScript(uiResource));
 					}

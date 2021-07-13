@@ -51,8 +51,6 @@
 	{
 		"submitSimpleServiceWithoutInterface2":{
 			"taskType": "activity",
-			"id": "service",
-			"name": "serviceActivity",
 			"type": "Service_request",
 			"serviceUse" : "simpleServiceWithoutInterface"
 		}

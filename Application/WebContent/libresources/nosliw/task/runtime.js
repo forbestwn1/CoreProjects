@@ -48,7 +48,7 @@ var node_createTaskRuntime = function(envObj){
 			return loc_getExecuteTaskRequest(task, inputValueIo, handlers, request);
 		},
 		
-		executeExecuteEmbededTasRequest : function(taskSuite, taskId, inputValueIo, handlers, request){
+		executeExecuteEmbededTasRequest : function(task, inputValueIo, handlers, request){
 			var requestInfo = getExecuteEmbededTaskRequest(task, inputValueIo, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
@@ -69,7 +69,7 @@ var node_createTaskRuntime = function(envObj){
 		},
 		
 		executeExecuteEmbededTaskInSuiteRequest : function(taskSuite, taskId, inputValueIo, handlers, request){
-			var requestInfo = getExecuteEmbededTaskInSuiteRequest(taskSuite, taskId, inputValueIo, handlers, request);
+			var requestInfo = this.getExecuteEmbededTaskInSuiteRequest(taskSuite, taskId, inputValueIo, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		

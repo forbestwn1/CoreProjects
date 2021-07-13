@@ -39,7 +39,9 @@ var packageObj = library;
 	var node_requestUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_uiResourceViewFactory = function(){
+var loc_uiResourceViewFactory = function(taskRuntime){
+	
+	var loc_taskRuntime = taskRuntime;
 	
 	var loc_out = {
 		getCreateUIViewRequest : function(uiResource, id, parent, context, handlers, requestInfo){
@@ -51,7 +53,7 @@ var loc_uiResourceViewFactory = function(){
 		getCreateUIBodyViewRequest : function(uiResource, uiBody, attributes, id, parent, context, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIView", {}), handlers, requestInfo);
 
-			var uiView = loc_createUIView(uiResource, uiBody, attributes, id, parent, context, requestInfo);
+			var uiView = loc_createUIView(uiResource, uiBody, attributes, id, parent, context, loc_taskRuntime, requestInfo);
 
 			//create tags
 			var createUITagRequest = node_createServiceRequestInfoSet(undefined, {
@@ -81,7 +83,7 @@ var loc_uiResourceViewFactory = function(){
 			
 			_.each(uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_UITAGS], function(uiTagResource, tagUiId, list){
 				var uiTagId = uiView.prv_getUpdateUIId(tagUiId);
-				createUITagRequest.addRequest(uiTagId, node_createUITagRequest(uiTagId, uiTagResource, uiView, {
+				createUITagRequest.addRequest(uiTagId, node_createUITagRequest(uiTagId, uiTagResource, uiView, loc_out, {
 					success : function(requestInfo, uiTag){
 						return uiTag;
 					}
@@ -94,10 +96,10 @@ var loc_uiResourceViewFactory = function(){
 	};
 	
 	return loc_out;
-}();	
+};	
 	
 	
-var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, handlers, requestInfo){
+var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, uiResourceViewFactory, handlers, requestInfo){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUITag", {}), handlers, requestInfo);
 	var tagId = uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_TAGNAME];
 	out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([tagId], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, {
@@ -123,6 +125,7 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
 //						startElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX),
 //						endElement : parentUIResourceView.get$EleByUIId(id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX),
 						resource : uiTagResource,
+						uiResourceViewFactory : uiResourceViewFactory
 					}, 
 					uiTagResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIUNIT_BODYUNIT]);
 
@@ -139,7 +142,9 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
  * 	 	name space id
  * 		parent uiresource
  */
-var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, context, requestInfo){
+var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, context, taskRuntime, requestInfo){
+
+	var loc_taskRuntime = taskRuntime;
 
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
@@ -173,6 +178,9 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	
 	//all events on regular elements
 	var loc_elementEvents = [];
+
+	//handlers
+	var loc_handlers = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HANDLERS];
 	
 	//object store all the functions for js block
 	var loc_scriptObject = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPT];
@@ -216,7 +224,10 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 				event : event, 
 				source : this,
 			};
-			loc_out.prv_callScriptFunctionUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], info);
+//			loc_out.prv_callScriptFunctionUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], info);
+			
+			event.preventDefault();
+			loc_out.prv_callHandlerUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION]);
 		});
 		
 		return {
@@ -289,7 +300,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(uiBody, attributes, id, parent, context, requestInfo){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(uiBody, attributes, id, parent, context, taskRuntime, requestInfo){
 
 		loc_attributes = attributes;
 		
@@ -506,6 +517,30 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 			return fun.apply(this, args);
 		},
 		
+		
+		prv_callHandlerUp : function(handlerName){
+			var handlerSuite = this.prv_findHandlerSuite(handlerName);
+			loc_taskRuntime.executeExecuteEmbededTaskInSuiteRequest(handlerSuite.handlerSuite, handlerName, loc_viewIO);
+		},
+		
+		prv_findHandlerSuite : function(handlerName){
+			var handlerSuite;
+			if(loc_handlers!=undefined){
+				if(loc_handlers[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_TASK][handlerName]!=undefined){
+					handlerSuite = loc_handlers;
+				}
+			}
+			if(handlerSuite!=undefined){
+				return {
+					handlerSuite : handlerSuite,
+					uiUnit : loc_out,
+				};
+			}
+			else{
+				return loc_parentResourveView.prv_findHandlerSuite(handlerName);
+			}
+		},
+		
 		prv_callScriptFunctionUp : function(funName){   
 			var find = this.prv_findFunctionUp(funName);
 			if(find!=undefined)		return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
@@ -677,7 +712,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIVIEW);
 
-	node_getLifecycleInterface(loc_out).init(uiBody, attributes, id, parent, context, requestInfo);
+	node_getLifecycleInterface(loc_out).init(uiBody, attributes, id, parent, context, taskRuntime, requestInfo);
 	
 	return loc_out;
 };

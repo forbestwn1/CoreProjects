@@ -170,7 +170,7 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 		getCreateUIViewWithIdRequest : function(id, context, handlers, requestInfo){
 			if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_PAGE){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
-				out.addRequest(node_uiResourceViewFactory.getCreateUIBodyViewRequest(loc_tagConfigure.resource, loc_tagBody, {}, id, loc_tagConfigure.parentResourceView, context, {
+				out.addRequest(loc_tagConfigure.uiResourceViewFactory.getCreateUIBodyViewRequest(loc_tagConfigure.resource, loc_tagBody, {}, id, loc_tagConfigure.parentResourceView, context, {
 					success : function(request, uiBodyView){
 						uiBodyView.registerEventListener(loc_eventObject, loc_processChildUIViewEvent, loc_out);
 						return uiBodyView;
