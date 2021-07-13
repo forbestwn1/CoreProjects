@@ -23,6 +23,8 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 
 	private HAPDefinitionServiceUse m_serviceUse;
 	
+	private String m_serviceUseName;
+	
 	private HAPWrapperValueStructure m_valueStructure;
 	
 	public HAPServiceActivityDefinition(String type) {
@@ -31,6 +33,8 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 
 	public HAPDefinitionServiceUse getServiceUse() {   return this.m_serviceUse;  }
 
+	public String getServiceUseName() {    return this.m_serviceUseName;      }
+	
 	@Override
 	public HAPWrapperValueStructure getInputValueStructureWrapper() {  return this.m_valueStructure;   }
 
@@ -38,8 +42,15 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_serviceUse = new HAPDefinitionServiceUse();
-		this.m_serviceUse.buildObject(jsonObj.getJSONObject(SERVICEUSE), HAPSerializationFormat.JSON);
+		
+		Object serviceUseObj = jsonObj.get(SERVICEUSE);
+		if(serviceUseObj instanceof JSONObject) {
+			this.m_serviceUse = new HAPDefinitionServiceUse();
+			this.m_serviceUse.buildObject(serviceUseObj, HAPSerializationFormat.JSON);
+		}
+		else {
+			this.m_serviceUseName = (String)serviceUseObj;
+		}
 		return true;  
 	}
 

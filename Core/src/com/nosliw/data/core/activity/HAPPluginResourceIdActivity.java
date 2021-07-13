@@ -1,4 +1,4 @@
-package com.nosliw.data.core.activity.resource;
+package com.nosliw.data.core.activity;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -6,23 +6,23 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process1.HAPActivityPluginId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPResourceIdActivityPlugin  extends HAPResourceIdSimple{
+public class HAPPluginResourceIdActivity  extends HAPResourceIdSimple{
 
 	private HAPActivityPluginId m_activityPluginId; 
 	
-	public HAPResourceIdActivityPlugin(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN);    }
+	public HAPPluginResourceIdActivity(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN);    }
 
-	public HAPResourceIdActivityPlugin(HAPResourceIdSimple resourceId){
+	public HAPPluginResourceIdActivity(HAPResourceIdSimple resourceId){
 		this();
 		this.cloneFrom(resourceId);
 	}
 	
-	public HAPResourceIdActivityPlugin(String idLiterate) {
+	public HAPPluginResourceIdActivity(String idLiterate) {
 		this();
 		init(idLiterate, null);
 	}
 
-	public HAPResourceIdActivityPlugin(HAPActivityPluginId activityPluginId){
+	public HAPPluginResourceIdActivity(HAPActivityPluginId activityPluginId){
 		this();
 		init(null, null);
 		this.m_activityPluginId = activityPluginId;
@@ -38,8 +38,8 @@ public class HAPResourceIdActivityPlugin  extends HAPResourceIdSimple{
 	public HAPActivityPluginId getActivityPlugId(){  return this.m_activityPluginId;	}
 	
 	@Override
-	public HAPResourceIdActivityPlugin clone(){
-		HAPResourceIdActivityPlugin out = new HAPResourceIdActivityPlugin();
+	public HAPPluginResourceIdActivity clone(){
+		HAPPluginResourceIdActivity out = new HAPPluginResourceIdActivity();
 		out.cloneFrom(this);
 		return out;
 	}

@@ -8,8 +8,11 @@ import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.HAPExecutableResultActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.activity.HAPUtilityActivity;
+import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
@@ -31,11 +34,19 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		HAPServiceActivityDefinition serviceActDef = (HAPServiceActivityDefinition)activityDefinition;
 		HAPServiceActivityExecutable out = new HAPServiceActivityExecutable(id, serviceActDef);
 
+		HAPDefinitionServiceUse serviceUse = serviceActDef.getServiceUse();
+		if(serviceUse==null) {
+			//service use is reference
+			HAPDefinitionEntityComplex complexEntity = processContext.getComplexEntity();
+			if(complexEntity instanceof HAPComponent) {
+				serviceUse = ((HAPComponent)complexEntity).getService(serviceActDef.getServiceUseName());
+			}
+		}
 		
-		HAPProcessorServiceUse.normalizeServiceUse(serviceActDef.getServiceUse(), processContext.getComplexEntity().getAttachmentContainer(), runtimeEnv);
-		HAPProcessorServiceUse.enhanceValueStructureByService(serviceActDef.getServiceUse(), serviceActDef.getInputValueStructureWrapper().getValueStructure(), runtimeEnv);
+		HAPProcessorServiceUse.normalizeServiceUse(serviceUse, processContext.getComplexEntity().getAttachmentContainer(), runtimeEnv);
+		HAPProcessorServiceUse.enhanceValueStructureByService(serviceUse, serviceActDef.getInputValueStructureWrapper().getValueStructure(), runtimeEnv);
 
-		HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(serviceActDef.getServiceUse(), valueStructureWrapper.getValueStructure(), processContext.getComplexEntity().getAttachmentContainer(), runtimeEnv);
+		HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(serviceUse, valueStructureWrapper.getValueStructure(), processContext.getComplexEntity().getAttachmentContainer(), runtimeEnv);
 		out.setService(serviceExe);
 		
 		//process input

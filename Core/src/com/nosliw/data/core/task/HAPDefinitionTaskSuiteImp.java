@@ -1,150 +1,46 @@
 package com.nosliw.data.core.task;
 
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
-public class HAPDefinitionTaskSuiteImp implements HAPDefinitionTaskSuite{
+public class HAPDefinitionTaskSuiteImp extends HAPEntityInfoImp implements HAPDefinitionTaskSuite{
+
+	private Map<String, HAPDefinitionTask> m_tasks;
+	
+	private HAPWithValueStructure m_withValueStructure;
+	
+	public HAPDefinitionTaskSuiteImp(HAPWithValueStructure withValueStructure) {
+		this.m_tasks = new LinkedHashMap<String, HAPDefinitionTask>();
+		this.m_withValueStructure = withValueStructure;
+	}
+	
+	@Override
+	public Set<HAPDefinitionTask> getEntityElements() {  return new HashSet<HAPDefinitionTask>(this.m_tasks.values()); }
 
 	@Override
-	public Set<HAPDefinitionTask> getEntityElements() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPDefinitionTask getEntityElement(String id) {   return this.m_tasks.get(id);  }
 
 	@Override
-	public HAPDefinitionTask getEntityElement(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void addEntityElement(HAPDefinitionTask entityElement) {  this.m_tasks.put(entityElement.getId(), entityElement); }
 
 	@Override
-	public void addEntityElement(HAPDefinitionTask entityElement) {
-		// TODO Auto-generated method stub
-		
-	}
+	public HAPWrapperValueStructure getValueStructureWrapper() {    return this.m_withValueStructure.getValueStructureWrapper();   }
 
 	@Override
-	public void setId(String id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setName(String name) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setDescription(String description) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setInfo(HAPInfo info) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getStatus() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setStatus(String status) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getDisplayName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setDisplayName(String name) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HAPInfo getInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void buildEntityInfoByJson(Object json) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public HAPEntityInfo cloneEntityInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String toStringValue(HAPSerializationFormat format) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean buildObject(Object value, HAPSerializationFormat format) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public HAPWrapperValueStructure getValueStructureWrapper() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper) {    throw new RuntimeException();  }
 
 	@Override
 	public HAPDefinitionTaskSuite cloneTaskSuiteDefinition() {
-		// TODO Auto-generated method stub
-		return null;
+		HAPDefinitionTaskSuiteImp out = new HAPDefinitionTaskSuiteImp(this.m_withValueStructure);
+		for(String name : this.m_tasks.keySet()) {
+			out.m_tasks.put(name, this.m_tasks.get(name));
+		}
+		return out;
 	}
-
 }

@@ -7,7 +7,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.activity.resource.HAPResourceIdActivityPlugin;
+import com.nosliw.data.core.activity.HAPPluginResourceIdActivity;
 import com.nosliw.data.core.process1.HAPActivityPluginId;
 import com.nosliw.data.core.process1.HAPExecutableActivityNormal;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -54,7 +54,7 @@ public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivity
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		out.add(new HAPResourceDependency(new HAPResourceIdActivityPlugin(new HAPActivityPluginId("UI_executeCommand"))));
+		out.add(new HAPResourceDependency(new HAPPluginResourceIdActivity(new HAPActivityPluginId("UI_executeCommand"))));
 		return out;
 	}
 

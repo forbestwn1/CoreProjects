@@ -31,9 +31,12 @@ import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.component.valuestructure.HAPValueStructureGroupInComponent;
 import com.nosliw.data.core.component.valuestructure.HAParserComponentValueStructure;
 import com.nosliw.data.core.resource.HAPParserResourceDefinition;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.data.core.script.expression.imp.literate.HAPUtilityScriptLiterate;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPUtilityTask;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 
 /*
@@ -43,6 +46,7 @@ import com.nosliw.uiresource.common.HAPIdGenerator;
 public class HAPParserPage implements HAPParserResourceDefinition{
 
 	public static final String EVENT = "event";
+	public static final String TASK = "task";
 	public static final String ATTACHMENT = "attachment";
 	public static final String SERVICE = "service";
 	public static final String VALUESTRUCTURE = "valuestructure";
@@ -56,9 +60,12 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 	//configuration object
 	private HAPConfigure m_setting;
 	
-	public HAPParserPage(HAPConfigure setting, HAPIdGenerator idGenerator){
+	private HAPRuntimeEnvironment m_runtimeEnv;
+	
+	public HAPParserPage(HAPConfigure setting, HAPIdGenerator idGenerator, HAPRuntimeEnvironment runtimeEnv){
 		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
+		this.m_runtimeEnv = runtimeEnv;
 	}
 	
 	@Override
@@ -111,6 +118,9 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 
 		//parse contextref block
 		parseUnitContextRefBlocks(unitEle, uiUnit);
+		
+		//parse handlers
+		parseUnitHandlers(unitEle, uiUnit);
 		
 		//parse event definition block
 		this.parseUnitEventBlocks(unitEle, uiUnit);
@@ -217,7 +227,28 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		ele.remove();
 		parentUnit.setStyle(style);
 	}
-	
+
+	//parse handlers
+	private void parseUnitHandlers(Element ele, HAPDefinitionUIUnit resourceUnit) {
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, TASK);
+		for(Element childEle : childEles){
+			try {
+				JSONObject tasksObjJson = new JSONObject(childEle.html());
+				for(Object key : tasksObjJson.keySet()) {
+					String name = (String)key;
+					JSONObject taskJson = tasksObjJson.getJSONObject(name);
+					HAPDefinitionTask handler = HAPUtilityTask.parseTask(taskJson, resourceUnit, this.m_runtimeEnv.getTaskManager());
+					resourceUnit.addHandler(handler);
+				}
+				break;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		for(Element childEle : childEles)  childEle.remove();
+	}
+
+
 	private void parseUnitEventBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EVENT);
 		for(Element childEle : childEles){

@@ -470,7 +470,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_UIAPPDECORATION = "uiAppDecoration";
 		public static final String RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE = "uiAppConfigure";
 		public static final String RUNTIME_RESOURCE_TYPE_TASKSUITE = "tasksuite";
-		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITYSUITE = "activitysuite";
+		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITY = "activity";
 		public static final String RUNTIME_RESOURCE_TYPE_PROCESS = "process";
 		public static final String RUNTIME_RESOURCE_TYPE_PROCESSSUITE = "processSuite";
 		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN = "activityPlugin";

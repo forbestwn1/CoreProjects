@@ -1,4 +1,4 @@
-package com.nosliw.data.core.activity.resource;
+package com.nosliw.data.core.activity;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -6,17 +6,16 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.activity.HAPPluginActivity;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSValueImp;
 
-public class HAPResourceDataActivityPlugin extends HAPResourceDataJSValueImp{
+public class HAPPluginResourceDataActivity extends HAPResourceDataJSValueImp{
 
 	private HAPPluginActivity m_activityPlugin;
 	
 	private String m_env;
 	
-	public HAPResourceDataActivityPlugin(HAPPluginActivity activityPlugin, String env){
+	public HAPPluginResourceDataActivity(HAPPluginActivity activityPlugin, String env){
 		this.m_activityPlugin = activityPlugin;
 		this.m_env = env;
 	}

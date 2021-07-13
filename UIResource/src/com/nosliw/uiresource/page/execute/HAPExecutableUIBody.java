@@ -23,6 +23,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
+import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
@@ -65,6 +66,8 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	@HAPAttribute
 	public static final String EVENTS = "events";
 	@HAPAttribute
+	public static final String HANDLERS = "handlers";
+	@HAPAttribute
 	public static final String SERVICES = "services";
 	@HAPAttribute
 	public static final String SERVICEPROVIDERS = "serviceProviders";
@@ -96,6 +99,8 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	//event definition 
 	private Map<String, HAPDefinitionUIEvent> m_events;
 	private Map<String, HAPDefinitionUICommand> m_commands;
+
+	private HAPExecutableTaskSuite m_handlers;
 	
 	//service requirement definition
 	private Map<String, HAPExecutableServiceUse> m_services;
@@ -179,6 +184,9 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	public Map<String, HAPDefinitionUICommand> getCommandDefinitions() {   return this.m_commands;  }
 	public HAPDefinitionUICommand getCommandDefinition(String name) {   return this.m_commands.get(name);  }
 
+	public HAPExecutableTaskSuite getHandlers() {    return this.m_handlers;     }
+	public void setHandlers(HAPExecutableTaskSuite handlers) {     this.m_handlers = handlers;     }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(VALUESTRUCTURE, this.getValueStructureExe().toStringValue(HAPSerializationFormat.JSON));
@@ -198,6 +206,8 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
 		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commands, HAPSerializationFormat.JSON));
 
+		jsonMap.put(HANDLERS, this.m_handlers.toStringValue(HAPSerializationFormat.JSON));
+		
 		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_services, HAPSerializationFormat.JSON));
 
 		List<String> expressionContentJsons = new ArrayList<String>();
@@ -241,8 +251,8 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 
 		jsonMap.put(SCRIPTGROUP, this.m_scriptGroupExe.toResourceData(runtimeInfo).toString());
 		
+		jsonMap.put(HANDLERS, this.m_handlers.toResourceData(runtimeInfo).toString());
 
-		
 		Map<String, String> serviceResourceMap = new LinkedHashMap<String, String>();
 		for(String serviceName : this.m_services.keySet()) 	serviceResourceMap.put(serviceName, this.m_services.get(serviceName).toResourceData(runtimeInfo).toString());
 		jsonMap.put(SERVICES, HAPJsonUtility.buildMapJson(serviceResourceMap));

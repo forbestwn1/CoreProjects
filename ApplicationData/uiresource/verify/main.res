@@ -17,14 +17,17 @@
 	<br>
 	CUSTOM TAG:<nosliw-string data="ccc"/>  
 	<br>
-    	SERVICE SUBMIT: 	<a href='' nosliw-event="click:submitSimpleServiceWithoutInterface">Submit</a>
+    	SERVICE SUBMIT: 	<a href='' nosliw-event="click:submitSimpleServiceWithoutInterface1">Submit</a>
+	<br>
+	<br>
+    	SERVICE SUBMIT: 	<a href='' nosliw-event="click:submitSimpleServiceWithoutInterface2">Submit</a>
 	<br>
     
 </body>
 
 	<script>
 	{
-		submitSimpleServiceWithoutInterface : function(info, env){
+		submitSimpleServiceWithoutInterface1 : function(info, env){
 
 			event.preventDefault();
 
@@ -44,6 +47,19 @@
 	}
 	</script>
 
+	<task>
+	{
+		"submitSimpleServiceWithoutInterface2":{
+			"taskType": "activity",
+			"id": "service",
+			"name": "serviceActivity",
+			"type": "Service_request",
+			"serviceUse" : "simpleServiceWithoutInterface"
+		}
+	
+	
+	}
+	</task>
 
 	<valuestructure>
 	{

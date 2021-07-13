@@ -54,7 +54,7 @@ public class HAPUIResourceManager {
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagMan = uiTagMan;
 		this.m_resourceCache = new HAPResourceCache();
-		this.m_uiResourceParser = new HAPParserPage(null, m_idGengerator);
+		this.m_uiResourceParser = new HAPParserPage(null, m_idGengerator, runtimeEnv);
 		this.m_moduleParser = new HAPParserModule();
 		this.m_miniAppParser = new HAPParseMiniApp();
 

@@ -16,7 +16,7 @@ public class HAPProcessorAttachmentEntityActivity implements HAPProcessorAttachm
 	
 	@Override
 	public Object parseEntityAttachment(HAPInfoAttachment attachmentInfo, HAPDefinitionEntityComplex complexEntity) {
-		return HAPParserActivity.parseActivitySuiteDefinition((JSONObject)attachmentInfo.getEntity(), complexEntity, m_activityPluginMan);	
+		return HAPParserActivity.parseActivityDefinition((JSONObject)attachmentInfo.getEntity(), complexEntity, m_activityPluginMan);	
 	}
 
 }
