@@ -180,7 +180,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	var loc_elementEvents = [];
 
 	//handlers
-	var loc_handlers = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HANDLERS];
+	var loc_tasks = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HANDLERS];
 	
 	//object store all the functions for js block
 	var loc_scriptObject = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPT];
@@ -227,7 +227,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 //			loc_out.prv_callScriptFunctionUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], info);
 			
 			event.preventDefault();
-			loc_out.prv_callHandlerUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION]);
+			loc_out.prv_callHandlerUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], info);
 		});
 		
 		return {
@@ -291,12 +291,46 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		}
 	);
 
-	var loc_getServiceRequest = function(serviceName, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":serviceName}), handlers, request);
-		var service = loc_services[serviceName];
-		out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceUseRequest(service, loc_viewIO));
-//		out.addRequest(nosliw.runtime.getDataService().getExecuteEmbededDataServiceByNameRequest(service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDER], loc_serviceProviders, service, loc_viewIO));
-		return out;
+	var loc_findHandlerLocally = function(handlerName){
+		var handlerInfo;
+		//search task first
+		var taskSuite;
+		if(loc_tasks!=undefined){
+			if(loc_tasks[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_TASK][handlerName]!=undefined){
+				taskSuite = loc_tasks;
+			}
+		}
+		if(taskSuite!=undefined){
+			handlerInfo = {
+				handlerSuite : taskSuite,
+				handlerName : handlerName,
+				handlerType : node_CONSTANT.HANDLER_TYPE_TASK,
+				uiUnit : loc_out,
+			};
+		}
+		
+		if(handlerInfo==null){
+			//if not found in task, try to find in script function
+			var fun = loc_scriptObject==undefined?undefined:loc_scriptObject[handlerName];
+			if(fun!=undefined){
+				handlerInfo = {
+					handlerSuite : loc_scriptObject,
+					handlerName : handlerName,
+					handlerType : node_CONSTANT.HANDLER_TYPE_SCRIPT,
+					uiUnit : loc_out,
+				};
+			}
+		}
+		return handlerInfo;
+	};
+
+	var loc_executeHandler = function(handlerInfo, args){
+		if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_SCRIPT){
+			node_uiResourceUtility.callScriptFunction.apply(handlerInfo.uiUnit, [handlerInfo.handlerName, args]);
+		}
+		else if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_TASK){
+			loc_taskRuntime.executeExecuteEmbededTaskInSuiteRequest(handlerInfo.handlerSuite, handlerInfo.handlerName, loc_viewIO);
+		}
 	};
 	
 	var lifecycleCallback = {};
@@ -375,7 +409,8 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 
 	loc_out = {
 		ovr_getResourceLifecycleObject : function(){	return loc_resourceLifecycleObj;	},
-		
+		prv_getContextIO : function(){   return loc_viewIO;     },
+		prv_getServices : function(){   return loc_services;    },
 		prv_getScriptObject : function(){return loc_scriptObject;},
 		//get the parent resource view that contain this resource view, when this resource is within tag
 		prv_getParentResourceView : function(){		return loc_parentResourveView;		},
@@ -425,127 +460,38 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		 */
 		prv_getLocalElementByUIId : function(id){return loc_findLocalElement("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+id+"']");},
 		
-		prv_callScriptFunction : function(funName){   
-			var fun = loc_scriptObject[funName];
-			var env = {
-					context : loc_out.getContext(),
-					uiUnit : loc_out,
-					trigueEvent : function(eventName, eventData, requestInfo){
-						loc_out.prv_trigueEvent(eventName, eventData, requestInfo);
-					},
-					trigueNosliwEvent : function(eventName, eventData, requestInfo){
-						loc_out.prv_trigueEvent(node_basicUtility.buildNosliwFullName(eventName), eventData, requestInfo);
-					},
-					getServiceRequest : function(serviceName, handlers, request){
-						return loc_getServiceRequest(serviceName, handlers, request);
-					},
-					getTagsByAttribute : function(attributeName, attributeValue){
-						return loc_out.getTags({
-							attribute : [
-								{
-									name : attributeName,
-									value : attributeValue,
-								}
-							]
-						}, true);
-					},
-					getUIValidationRequest1 : function(uiTags, handlers, request){
-						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
-
-						var clearErrorRequest = node_createBatchUIDataOperationRequest(loc_context);
-						clearErrorRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService("", {})));
-						out.addRequest(clearErrorRequest);
-
-						var allSetRequest = node_createServiceRequestInfoSet(undefined, {
-							success : function(requestInfo, validationsResult){
-								var results = validationsResult.getResults();
-								var allMessages = {};
-								var opsRequest = node_createBatchUIDataOperationRequest(loc_context, {
-									success : function(request){
-										return allMessages;
-									}
-								}, requestInfo);
-								_.each(results, function(message, uiTagId){
-									if(message!=undefined){
-										allMessages[uiTagId] = message;
-										opsRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTagId, message)));
-									}
-								});
-								if(!opsRequest.isEmpty())	return opsRequest;
-								else return node_requestUtility.getEmptyRequest();
-
-							},
-						});
-						_.each(uiTags, function(uiTag, i){
-							var uiTagDataValidationRequest = node_createServiceRequestInfoSequence();
-							var varName = uiTag.getAttribute("data");
-							uiTagDataValidationRequest.addRequest(node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(varName, ""), {
-								success : function(request, uiData){
-									var dataEleDef = node_contextUtility.getContextElementDefinitionFromFlatContext(loc_uiResource[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], varName);
-									var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
-															[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
-															[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]
-															[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
-									var data;
-									if(uiData!=undefined)  data = uiData.value;
-									return node_dataRuleUtility.getDataValidationByRulesRequest(data, rules);
-								}
-							}));
-
-							allSetRequest.addRequest(uiTag.getId(), uiTagDataValidationRequest);
-						});
-						out.addRequest(allSetRequest);
-						return out;
-					},
-					
-					
-					getUIValidationRequest : function(uiTags, handlers, request){
-						var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
-
-						//clear previous error data
-						out.addRequest(node_utilityUIError.getClearUIValidationErrorRequest(loc_out));
-
-						//
-						out.addRequest(node_utilityUIError.getUITagsValidationRequest(uiTags));
-						
-						return out;
-					},
-
-			};
-			var args = Array.prototype.slice.call(arguments, 1);
-			args.push(env);
-			return fun.apply(this, args);
-		},
-		
 		
 		prv_callHandlerUp : function(handlerName){
-			var handlerSuite = this.prv_findHandlerSuite(handlerName);
-			loc_taskRuntime.executeExecuteEmbededTaskInSuiteRequest(handlerSuite.handlerSuite, handlerName, loc_viewIO);
+			var args = Array.prototype.slice.call(arguments, 1)
+			var handlerInfo = this.prv_findHandlerUp(handlerName);
+			loc_executeHandler(handlerInfo, args);
 		},
 		
-		prv_findHandlerSuite : function(handlerName){
-			var handlerSuite;
-			if(loc_handlers!=undefined){
-				if(loc_handlers[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_TASK][handlerName]!=undefined){
-					handlerSuite = loc_handlers;
-				}
+		prv_findHandlerUp : function(handlerName){
+			var handlerInfo = loc_findHandlerLocally(handlerName);
+			if(handlerInfo==undefined){
+				handlerInfo = loc_parentResourveView.prv_findHandlerUp(handlerName);
 			}
-			if(handlerSuite!=undefined){
-				return {
-					handlerSuite : handlerSuite,
-					uiUnit : loc_out,
+			return handlerInfo;
+		},
+		
+		prv_getExecuteServiceRequest : function(serviceName, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":serviceName}), handlers, request);
+			var serviceInfo = this.prv_findServiceUp(serviceName);
+			out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceUseRequest(serviceInfo.service, serviceInfo.uiUnit.prv_getContextIO()));
+			return out;
+		},
+		
+		prv_findServiceUp : function(serviceName){
+			if(this.prv_getServices()!=undefined&&this.prv_getServices()[serviceName]!=null){
+				return	{
+						service : this.prv_getServices()[serviceName],
+						uiUnit : this
 				};
 			}
-			else{
-				return loc_parentResourveView.prv_findHandlerSuite(handlerName);
-			}
+			else return loc_parentResourveView.prv_findServiceUp(serviceName);
 		},
 		
-		prv_callScriptFunctionUp : function(funName){   
-			var find = this.prv_findFunctionUp(funName);
-			if(find!=undefined)		return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
-			else  nosliw.error("Cannot find function : " + funName);
-		},
 
 		prv_callScriptFunctionDown : function(funName){
 			var find = this.prv_findFunctionDown(funName);
@@ -559,6 +505,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 				return {
 					fun : fun,
 					uiUnit : loc_out,
+					handlerType : node_CONSTANT.HANDLER_TYPE_SCRIPT
 				};
 			}
 			else{
@@ -571,19 +518,6 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 			}
 		},
 
-		prv_findFunctionUp : function(funName){
-			var fun = loc_scriptObject==undefined?undefined:loc_scriptObject[funName];
-			if(fun!=undefined){
-				return {
-					fun : fun,
-					uiUnit : loc_out,
-				};
-			}
-			else{
-				return loc_parentResourveView.prv_findFunctionUp(funName);
-			}
-		},
-		
 		prv_getTags : function(query, cascade, output){
 			_.each(loc_uiTags, function(uiTag, tagId, list){
 				var ok = true;

@@ -271,6 +271,9 @@ var node_CONSTANT=
 	  "TAG_RUNTIME_MODE_PAGE" : "page",
 	  "TAG_RUNTIME_MODE_DEMO" : "demo",
 	  
+	  "HANDLER_TYPE_SCRIPT" : "script",
+	  "HANDLER_TYPE_TASK" : "task",
+	  
 };
 
 //*******************************************   End Node Definition  ************************************** 	

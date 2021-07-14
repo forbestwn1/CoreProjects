@@ -77,6 +77,102 @@ var node_utility = {
 			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, name);
 		},
 		
+		callScriptFunction : function(funName, args){
+			var that = this;
+			var fun = that.prv_getScriptObject()[funName];
+			var env = {
+					context : that.getContext(),
+					uiUnit : that,
+					trigueEvent : function(eventName, eventData, requestInfo){
+						that.prv_trigueEvent(eventName, eventData, requestInfo);
+					},
+					trigueNosliwEvent : function(eventName, eventData, requestInfo){
+						that.prv_trigueEvent(node_basicUtility.buildNosliwFullName(eventName), eventData, requestInfo);
+					},
+					getServiceRequest : function(serviceName, handlers, request){
+						return that.prv_getExecuteServiceRequest(serviceName, handlers, request);
+					},
+					getTagsByAttribute : function(attributeName, attributeValue){
+						return that.getTags({
+							attribute : [
+								{
+									name : attributeName,
+									value : attributeValue,
+								}
+							]
+						}, true);
+					},
+					getUIValidationRequest1 : function(uiTags, handlers, request){
+						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
+
+						var clearErrorRequest = node_createBatchUIDataOperationRequest(that.getContext());
+						clearErrorRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService("", {})));
+						out.addRequest(clearErrorRequest);
+
+						var allSetRequest = node_createServiceRequestInfoSet(undefined, {
+							success : function(requestInfo, validationsResult){
+								var results = validationsResult.getResults();
+								var allMessages = {};
+								var opsRequest = node_createBatchUIDataOperationRequest(that.getContext(), {
+									success : function(request){
+										return allMessages;
+									}
+								}, requestInfo);
+								_.each(results, function(message, uiTagId){
+									if(message!=undefined){
+										allMessages[uiTagId] = message;
+										opsRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTagId, message)));
+									}
+								});
+								if(!opsRequest.isEmpty())	return opsRequest;
+								else return node_requestUtility.getEmptyRequest();
+
+							},
+						});
+						_.each(uiTags, function(uiTag, i){
+							var uiTagDataValidationRequest = node_createServiceRequestInfoSequence();
+							var varName = uiTag.getAttribute("data");
+							uiTagDataValidationRequest.addRequest(node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(varName, ""), {
+								success : function(request, uiData){
+									var dataEleDef = node_contextUtility.getContextElementDefinitionFromFlatContext(loc_uiResource[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], varName);
+									var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
+															[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
+															[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]
+															[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
+									var data;
+									if(uiData!=undefined)  data = uiData.value;
+									return node_dataRuleUtility.getDataValidationByRulesRequest(data, rules);
+								}
+							}));
+
+							allSetRequest.addRequest(uiTag.getId(), uiTagDataValidationRequest);
+						});
+						out.addRequest(allSetRequest);
+						return out;
+					},
+					
+					
+					getUIValidationRequest : function(uiTags, handlers, request){
+						var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+
+						//clear previous error data
+						out.addRequest(node_utilityUIError.getClearUIValidationErrorRequest(this));
+
+						//
+						out.addRequest(node_utilityUIError.getUITagsValidationRequest(uiTags));
+						
+						return out;
+					},
+
+			};
+//			var args = Array.prototype.slice.call(arguments, 1);
+			if(args==undefined)  args = [];
+			args.push(env);
+			return fun.apply(this, args);
+		},
+		
+
+		
 };
 
 //*******************************************   End Node Definition  ************************************** 	
