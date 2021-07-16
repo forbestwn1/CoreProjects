@@ -6,7 +6,7 @@
 			name : "value"
 		}
 	],
-	context: {
+	valueStructure: {
 		public : {
 		},
 		internal : {

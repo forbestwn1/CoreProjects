@@ -56,7 +56,8 @@ public class HAPUtility {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
 			HAPRootStructure varRoot = new HAPRootStructure(new HAPElementStructureLeafData(varNode.getVariableInfo().getDataInfo()));
 			varRoot.setId(varNode.getId());
-			varRoot.setLocalId(varNode.getId());
+			varRoot.setName(varNode.getVariableInfo().getName());
+//			varRoot.setLocalId(varNode.getId());
 			out.getContext().addRootToCategary(null, varRoot);
 		}
 		return out;

@@ -13,14 +13,14 @@
 			name : "event"
 		}
 	],
-	context: {
+	valueStructure: {
 		group : {
 			public : {
-				element : {
+				flat : {
 				},
 			},
 			private : {
-				element : {
+				flat : {
 				},
 			},
 		},

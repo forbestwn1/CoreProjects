@@ -9,10 +9,10 @@
 			name : "data",
 		},
 	],
-	context: {
+	valueStructure: {
 		group : {
 			private : {
-				element : {
+				flat : {
 					"internal_data": {
 						definition : {
 							path : "<%=&(nosliwattribute_data)&%>",

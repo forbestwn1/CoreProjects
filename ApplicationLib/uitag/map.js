@@ -16,10 +16,10 @@
 			defaultValue : "index", 
 		}	
 	],
-	context: {
+	valueStructure: {
 		group : {
 			private : {
-				element : {
+				flat : {
 					"internal_data": {
 						definition : {
 							path : "<%=&(nosliwattribute_data)&%>",
@@ -31,7 +31,7 @@
 				},
 			},
 			protected : {
-				element : {
+				flat : {
 					"<%=&(nosliwattribute_element)&%>" : {
 						definition : {
 							path : "<%=&(nosliwattribute_data)&%>.element",

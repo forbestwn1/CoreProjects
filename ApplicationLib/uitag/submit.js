@@ -15,7 +15,7 @@
 			name : "output"
 		},
 	],
-	context: {
+	valueStructure: {
 		public : {
 			
 		},

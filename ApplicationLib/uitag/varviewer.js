@@ -3,7 +3,7 @@
 	description : "",
 	attributes : [
 	],
-	context: {
+	valueStructure: {
 	},
 	events : {
 		

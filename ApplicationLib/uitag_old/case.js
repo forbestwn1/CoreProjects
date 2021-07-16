@@ -6,17 +6,19 @@
 			name : "value"
 		}
 	],
-	context: {
-		public : {
-		},
-		private : {
-			"private_caseVariable" : {
-				path : "internal_switchVariable"
-			},		
-			"private_found" : {
-				path : "internal_found"
-			}
-		},
+	valueStructure: {
+		group: {
+			public : {
+			},
+			private : {
+				"private_caseVariable" : {
+					path : "internal_switchVariable"
+				},		
+				"private_found" : {
+					path : "internal_found"
+				}
+			},
+		}
 		
 	},
 	script : function(env){

@@ -8,14 +8,14 @@
 			name : "data"
 		}
 	],
-	context: {
+	valueStructure: {
 		group : {
 			public : {
 				element : {
 				},
 			},
 			private : {
-				element : {
+				flat : {
 					internal_data: {
 						definition: {
 							path : "<%=&(nosliwattribute_data)&%>",
