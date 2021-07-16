@@ -13,8 +13,8 @@ import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
+import com.nosliw.data.core.structure.HAPProcessorStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
-import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
@@ -38,12 +38,12 @@ public class HAPUtility {
 		if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
 			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
 			childContext = HAPUtilityProcess.buildUITagValueStructure(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, runtimeEnv);
-			childContext = HAPProcessorContext.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
+			childContext = (HAPValueStructureDefinitionGroup)HAPProcessorStructure.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), null, contextProcessorConfig, runtimeEnv);
 			out.setContext(childContext);
 		}
 		else {
-			childContext = HAPProcessorContext.processStatic(new HAPValueStructureDefinitionGroup(), HAPContainerStructure.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
-			childContext = HAPProcessorContext.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), contextProcessorConfig, runtimeEnv);
+			childContext = (HAPValueStructureDefinitionGroup)HAPProcessorStructure.processStatic(new HAPValueStructureDefinitionGroup(), HAPContainerStructure.createDefault(parentContext), null, null, contextProcessorConfig, runtimeEnv);
+			childContext = (HAPValueStructureDefinitionGroup)HAPProcessorStructure.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), null, contextProcessorConfig, runtimeEnv);
 			out.setContext(childContext);
 		}
 		return out;
@@ -56,7 +56,8 @@ public class HAPUtility {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
 			HAPRootStructure varRoot = new HAPRootStructure(new HAPElementStructureLeafData(varNode.getVariableInfo().getDataInfo()));
 			varRoot.setId(varNode.getId());
-			out.getContext().addPublicElement(varNode.getVariableInfo().getName(), varRoot);
+			varRoot.setLocalId(varNode.getId());
+			out.getContext().addRootToCategary(null, varRoot);
 		}
 		return out;
 	}

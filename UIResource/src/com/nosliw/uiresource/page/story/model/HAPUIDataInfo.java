@@ -6,10 +6,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
-import com.nosliw.data.core.structure.HAPReferenceElement;
 
 @HAPEntityWithAttribute
 public class HAPUIDataInfo extends HAPSerializableImp{
@@ -22,18 +22,18 @@ public class HAPUIDataInfo extends HAPSerializableImp{
 
 	private HAPVariableDataInfo m_dataType;
 	
-	private HAPReferenceElement m_contextPath;
+	private HAPComplexPath m_contextPath;
 	
 	public HAPVariableDataInfo getDataType() {	return this.m_dataType;	}
 	public void setDataType(HAPVariableDataInfo dataTypeCriteria) {    this.m_dataType = dataTypeCriteria;      }
 
-	public HAPReferenceElement getContextPath() {   return this.m_contextPath;   }
-	public void setContextPath(HAPReferenceElement contextPath) {    this.m_contextPath = contextPath;    }
+	public HAPComplexPath getContextPath() {   return this.m_contextPath;   }
+	public void setContextPath(HAPComplexPath contextPath) {    this.m_contextPath = contextPath;    }
 	
 	public HAPUIDataInfo cloneUIDataInfo() {
 		HAPUIDataInfo out = new HAPUIDataInfo();
 		out.m_dataType = this.m_dataType.cloneVariableDataInfo();
-		out.m_contextPath = this.m_contextPath.clone();
+		out.m_contextPath = this.m_contextPath.cloneComplexPath();
 		return out;
 	}
 	
@@ -45,10 +45,9 @@ public class HAPUIDataInfo extends HAPSerializableImp{
 			this.m_dataType = new HAPVariableDataInfo();
 			this.m_dataType.buildObject(dataTypeObj, HAPSerializationFormat.JSON);
 		}
-		JSONObject contextPathObj = jsonObj.optJSONObject(CONTEXTPATH);
-		if(contextPathObj!=null) {
-			this.m_contextPath = new HAPReferenceElement();
-			this.m_contextPath.buildObject(contextPathObj, HAPSerializationFormat.JSON);
+		String contextPathStr = (String)jsonObj.opt(CONTEXTPATH);
+		if(contextPathStr!=null) {
+			this.m_contextPath = new HAPComplexPath(contextPathStr);
 		}
 		return true;  
 	}
@@ -57,6 +56,6 @@ public class HAPUIDataInfo extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(DATATYPE, this.m_dataType.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(CONTEXTPATH, this.m_contextPath.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(CONTEXTPATH, this.m_contextPath.toStringValue(HAPSerializationFormat.LITERATE));
 	}
 }

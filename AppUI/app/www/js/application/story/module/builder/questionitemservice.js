@@ -25,8 +25,8 @@ var node_createComponentQuestionItemService = function(availableService){
 				var services = [];
 				_.each(serviceDefs, function(serviceDef, i){
 					var serviceStatic = serviceDef[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICE_STATIC];
-					var displayResource = serviceStatic[node_COMMONATRIBUTECONSTANT.INFOSERVICESTATIC_DISPLAY];
-					var displayName = displayResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DISPLAYNAME];
+					var displayResource = serviceStatic[node_COMMONATRIBUTECONSTANT.INFOSERVICEINTERFACE_DISPLAY];
+					var displayName = displayResource!=undefined?displayResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DISPLAYNAME]:undefined;
 					if(displayName==undefined)  displayName = serviceStatic[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DISPLAYNAME];   
 					var service = {
 						id : serviceStatic[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], 

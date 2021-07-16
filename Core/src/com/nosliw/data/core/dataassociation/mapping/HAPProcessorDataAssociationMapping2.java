@@ -144,7 +144,7 @@ public class HAPProcessorDataAssociationMapping2 {
 				String updatedName = eleName;
 				HAPInfoReferenceResolve resolvedInfo = HAPUtilityContext.analyzeElementReference(new HAPReferenceElement(eleName), (HAPValueStructureDefinitionGroup)outputStructure, null, null);
 				if(resolvedInfo!=null) 	updatedName = resolvedInfo.path.getRootReference().getFullName();
-				out.addRoot(updatedName, origin.getRoot(eleName));
+				out.addRootToCategary(updatedName, origin.getRoot(eleName));
 			}
 		}
 		return out;

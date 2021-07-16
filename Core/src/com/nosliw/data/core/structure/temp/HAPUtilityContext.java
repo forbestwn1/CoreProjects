@@ -44,7 +44,7 @@ public class HAPUtilityContext {
 	public static HAPExecutableValueStructure buildFlatContextFromContext(HAPValueStructureDefinitionFlat context) {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		for(String name : context.getRootNames()) {
-			out.addRoot(context.getRoot(name), name);
+			out.addRootToCategary(context.getRoot(name), name);
 		}
 		return out;
 	}

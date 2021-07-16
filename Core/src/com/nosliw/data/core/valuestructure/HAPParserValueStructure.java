@@ -62,7 +62,7 @@ public class HAPParserValueStructure {
 						return new HAPReferenceRootInGroup(categary, name).getFullName();
 					}
 				});
-				for(HAPRootStructure root : roots)   groupStructure.addRoot(categary, root);
+				for(HAPRootStructure root : roots)   groupStructure.addRootToCategary(categary, root);
 			}
 		}
 		groupStructure.getInfo().buildObject(groupStructureJson.opt(HAPValueStructure.INFO), HAPSerializationFormat.JSON);

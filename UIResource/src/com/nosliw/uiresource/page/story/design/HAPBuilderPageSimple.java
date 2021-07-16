@@ -127,7 +127,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			HAPVariableInfo varInfo = varNode.getVariableInfo();
 			HAPRootStructure contextEle = new HAPRootStructure(new HAPElementStructureLeafData(varInfo.getDataInfo()));
 			contextEle.setDefaultValue(varInfo.getDefaultValue());
-			context.addRoot(varNode.getVariableInfo().getName(), contextEle);
+			context.addRootToCategary(varNode.getVariableInfo().getName(), contextEle);
 		}
 		return context;
 	}

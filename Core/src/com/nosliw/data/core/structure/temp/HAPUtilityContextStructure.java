@@ -59,7 +59,7 @@ public class HAPUtilityContextStructure {
 		for(String categary : categarys) {
 			Map<String, HAPRootStructure> eles = context.getRootsByCategary(categary);
 			for(String name : eles.keySet()) {
-				out.addRoot(name, eles.get(name).cloneRoot());
+				out.addRootToCategary(name, eles.get(name).cloneRoot());
 			}
 		}
 		return out;

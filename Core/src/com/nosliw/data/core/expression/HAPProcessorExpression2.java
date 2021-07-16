@@ -295,7 +295,7 @@ public class HAPProcessorExpression2 {
 							HAPValueStructureDefinitionFlat da = mappingDa.getMapping();
 							HAPValueStructureDefinitionFlat da1 = new HAPValueStructureDefinitionFlat();
 							for(String rootName : da.getRootNames()) {
-								da1.addRoot(nameUpdate.getUpdatedName(rootName), da.getRoot(rootName));
+								da1.addRootToCategary(nameUpdate.getUpdatedName(rootName), da.getRoot(rootName));
 							}
 							mappingDa.addMapping(null, da1);
 						}

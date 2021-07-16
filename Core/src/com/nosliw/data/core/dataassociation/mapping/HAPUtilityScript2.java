@@ -48,7 +48,7 @@ public class HAPUtilityScript2 {
 		HAPValueStructureDefinitionFlat context = new HAPValueStructureDefinitionFlat();
 		HAPValueMapping daCotnext = association.getMapping();
 		for(String eleName : daCotnext.getRootNames()) {
-			context.addRoot(eleName, daCotnext.getRoot(eleName));
+			context.addRootToCategary(eleName, daCotnext.getRoot(eleName));
 		}
 		JSONObject output = HAPUtilityContextScript.buildSkeletonJsonObject(context, association.isFlatOutput());
 		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));

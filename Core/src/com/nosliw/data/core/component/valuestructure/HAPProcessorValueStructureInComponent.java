@@ -51,7 +51,7 @@ public class HAPProcessorValueStructureInComponent {
 				for(HAPInfoEntityReference reference : referencesByCategary.get(categary)) {
 					List<HAPRootStructure> roots = buildRoot(reference, attachmentReferenceContext, runtimeEnv);
 					for(HAPRootStructure root : roots) {
-						groupOut.addRoot(categary, root);
+						groupOut.addRootToCategary(categary, root);
 					}
 				}
 			}

@@ -80,6 +80,9 @@ public class HAPComplexPath extends HAPSerializableImp{
 	}
 	
 	@Override
+	protected String buildLiterate(){  return this.getFullName(); }
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ROOT, this.m_root);
