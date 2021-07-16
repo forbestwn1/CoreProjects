@@ -201,12 +201,15 @@ var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentCon
 //				return node_aliasUtility.getFlatContextElementByAlias(name, loc_tagConfigure.contextDef); 
 			}			
 			else if(loc_mode==node_CONSTANT.TAG_RUNTIME_MODE_DEMO){
-				var eleDef =  node_contextUtility.getContextElementDefinitionFromFlatContext(uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], name);
+				var structureDef = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_VALUESTRUCTUREEXE];
+				var eleId = structureDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUESTRUCTURE_NAME2ID][name];
+				var eleDef = structureDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUESTRUCTURE_ROOT][eleId];
+//				var eleDef =  node_contextUtility.getContextElementDefinitionFromFlatContext(uiTagResourceObj[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], name);
 				if(name=="internal_data"){
 					eleDef = node_basicUtility.clone(eleDef);
-					var eleDataInfo = eleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
-											[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
-											[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA];
+					var eleDataInfo = eleDef[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFINITION]
+											[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION]
+											[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_CRITERIA];
 					var dataInfo = loc_tagConfigure.dataInfos[name];
 					eleDataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE] = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
 					eleDataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS] = dataInfo[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULEMATCHERS];
