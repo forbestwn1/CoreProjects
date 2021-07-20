@@ -7,6 +7,8 @@ public class HAPReferenceRootUnknowType extends HAPSerializableImp implements HA
 
 	private String m_content;
 	
+	public HAPReferenceRootUnknowType() {}
+	
 	public HAPReferenceRootUnknowType(String content) {
 		this.m_content = content;
 	}

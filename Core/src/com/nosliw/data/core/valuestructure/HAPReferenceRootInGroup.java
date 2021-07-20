@@ -28,6 +28,8 @@ public class HAPReferenceRootInGroup extends HAPSerializableImp implements HAPRe
 	
 	private String m_name;
 	
+	public HAPReferenceRootInGroup() {}
+	
 	public HAPReferenceRootInGroup(String categary, String name) {
 		this.m_categary = categary;
 		this.m_name = name;

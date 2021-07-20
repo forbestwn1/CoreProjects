@@ -10,6 +10,8 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPUtilityStructureReference;
 
 @HAPEntityWithAttribute
 public class HAPUIDataInfo extends HAPSerializableImp{
@@ -18,22 +20,31 @@ public class HAPUIDataInfo extends HAPSerializableImp{
 	public static final String DATATYPE = "dataType";
 
 	@HAPAttribute
-	public static final String CONTEXTPATH = "contextPath";
+	public static final String IDPATH = "idPath";
+
+	@HAPAttribute
+	public static final String ROOTREFERENCE = "rootReference";
 
 	private HAPVariableDataInfo m_dataType;
 	
-	private HAPComplexPath m_contextPath;
+	private HAPComplexPath m_idPath;
+	
+	private HAPReferenceRoot m_rootReference;
 	
 	public HAPVariableDataInfo getDataType() {	return this.m_dataType;	}
 	public void setDataType(HAPVariableDataInfo dataTypeCriteria) {    this.m_dataType = dataTypeCriteria;      }
 
-	public HAPComplexPath getContextPath() {   return this.m_contextPath;   }
-	public void setContextPath(HAPComplexPath contextPath) {    this.m_contextPath = contextPath;    }
+	public HAPComplexPath getIdPath() {   return this.m_idPath;   }
+	public void setIdPath(HAPComplexPath contextPath) {    this.m_idPath = contextPath;    }
+	
+	public HAPReferenceRoot getRootReference() {  return this.m_rootReference;    }
+	public void setRootReference(HAPReferenceRoot rootRef) {    this.m_rootReference = rootRef;     }
 	
 	public HAPUIDataInfo cloneUIDataInfo() {
 		HAPUIDataInfo out = new HAPUIDataInfo();
 		out.m_dataType = this.m_dataType.cloneVariableDataInfo();
-		out.m_contextPath = this.m_contextPath.cloneComplexPath();
+		out.m_idPath = this.m_idPath.cloneComplexPath();
+		out.m_rootReference = this.m_rootReference.cloneStructureRootReference();
 		return out;
 	}
 	
@@ -45,10 +56,18 @@ public class HAPUIDataInfo extends HAPSerializableImp{
 			this.m_dataType = new HAPVariableDataInfo();
 			this.m_dataType.buildObject(dataTypeObj, HAPSerializationFormat.JSON);
 		}
-		String contextPathStr = (String)jsonObj.opt(CONTEXTPATH);
-		if(contextPathStr!=null) {
-			this.m_contextPath = new HAPComplexPath(contextPathStr);
+		Object contextPathObj = jsonObj.opt(IDPATH);
+		if(contextPathObj!=null) {
+			if(contextPathObj instanceof String) {
+				this.m_idPath = new HAPComplexPath((String)contextPathObj);
+			}
+			else {
+				this.m_idPath = new HAPComplexPath();
+				this.m_idPath.buildObject(contextPathObj, HAPSerializationFormat.JSON);
+			}
 		}
+		
+		this.m_rootReference = HAPUtilityStructureReference.parseRootReferenceJson(jsonObj.getJSONObject(ROOTREFERENCE));
 		return true;  
 	}
 
@@ -56,6 +75,7 @@ public class HAPUIDataInfo extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(DATATYPE, this.m_dataType.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(CONTEXTPATH, this.m_contextPath.toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(IDPATH, this.m_idPath.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(ROOTREFERENCE, this.m_rootReference.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

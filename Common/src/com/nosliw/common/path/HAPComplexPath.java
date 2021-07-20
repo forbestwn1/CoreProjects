@@ -2,6 +2,8 @@ package com.nosliw.common.path;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -23,6 +25,8 @@ public class HAPComplexPath extends HAPSerializableImp{
 	private HAPPath m_path;
 	
 	private String m_root;
+	
+	public HAPComplexPath() {}
 	
 	public HAPComplexPath(String rootName, HAPPath path){
 		this.m_root = rootName;
@@ -79,9 +83,24 @@ public class HAPComplexPath extends HAPSerializableImp{
 		return new HAPComplexPath(this.m_fullName);
 	}
 	
+	private void init(String rootName, HAPPath path){
+		this.m_root = rootName;
+		this.m_path = path;
+		this.m_fullName = HAPNamingConversionUtility.cascadePath(this.m_root, this.m_path==null?null:this.m_path.getPath());
+	}
+	
 	@Override
 	protected String buildLiterate(){  return this.getFullName(); }
 
+	@Override	
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		String root = jsonObj.getString(ROOT);
+		String path = (String)jsonObj.opt(PATH);
+		this.init(root, path==null?null:new HAPPath(path));
+		return true;
+	}
+		
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

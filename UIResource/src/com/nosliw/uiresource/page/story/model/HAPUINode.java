@@ -83,7 +83,8 @@ public class HAPUINode {
 		if(nodeType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 			HAPElementStructureLeafData dataNode = (HAPElementStructureLeafData)resolvedNode;
 			out.setDataType(dataNode.getDataInfo());
-			out.setContextPath(resolve.path);
+			out.setIdPath(resolve.path);
+			out.setRootReference(resolve.rootReference);
 		}
 		return out;
 	}

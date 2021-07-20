@@ -6,6 +6,8 @@ import com.nosliw.common.path.HAPComplexPath;
 public class HAPInfoReferenceResolve{
 	//parent root node
 	public HAPRootStructure referredRoot;
+	//unique reference to root
+	public HAPReferenceRoot rootReference;
 	//path (root id + path)
 	public HAPComplexPath path;
 

@@ -7,6 +7,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 
@@ -82,6 +83,12 @@ public class HAPParserStructure {
 				contextPath.buildObject(pathObj, HAPSerializationFormat.JSON);
 				relativeLeaf.setReferencePath(contextPath.toStringValue(HAPSerializationFormat.LITERATE));
 			}
+			String resolvedPathStr = (String)eleDefJson.opt(HAPElementStructureLeafRelative.RESOLVEDPATH);
+			if(resolvedPathStr!=null) {
+				HAPComplexPath resolvedPath = new HAPComplexPath(resolvedPathStr);
+				relativeLeaf.setResolvedIdPath(resolvedPath);
+			}
+			
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPElementStructureLeafRelative.DEFINITION);
 			if(definitionJsonObj!=null) 	relativeLeaf.setDefinition(parseContextDefinitionElement(definitionJsonObj));
 			

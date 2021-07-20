@@ -303,6 +303,7 @@ public class HAPUtilityStructure {
 			String path = elementReference.getPath();
 			resolved.referredRoot = root;
 			resolved.path = new HAPComplexPath(root.getLocalId(), path);
+			resolved.rootReference = parentStructure.getRootReferenceById(root.getLocalId());
 
 			resolved.realSolidSolved = HAPUtilityStructure.resolveDescendant(root.getDefinition().getSolidStructureElement(), path);
 			resolved.realSolved = HAPUtilityStructure.resolveDescendant(root.getDefinition(), path);

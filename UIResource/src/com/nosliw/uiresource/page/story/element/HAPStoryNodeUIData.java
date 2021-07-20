@@ -31,7 +31,7 @@ public class HAPStoryNodeUIData extends HAPStoryNodeUITag{
 	@HAPAttribute
 	public static final String ATTRIBUTE_DATAFLOW = "dataflow";
 	
-	//data info for external tag data to handlle
+	//data info for external tag data to handle
 	private HAPUIDataInfo m_uiDataInfo;
 
 	//matchers for convert external tag data to internal data

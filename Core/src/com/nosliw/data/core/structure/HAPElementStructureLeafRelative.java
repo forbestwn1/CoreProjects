@@ -21,6 +21,9 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	public static final String PATH = "path";
 
 	@HAPAttribute
+	public static final String RESOLVEDPATH = "resolvedPath";
+
+	@HAPAttribute
 	public static final String PARENT = "parent";
 
 	@HAPAttribute
@@ -147,7 +150,8 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PATH, HAPJsonUtility.buildJson(this.getResolvedIdPath(), HAPSerializationFormat.JSON));
+		jsonMap.put(PATH, this.getReferencePath());
+		if(this.getResolvedIdPath()!=null)  jsonMap.put(RESOLVEDPATH, this.getResolvedIdPath().getFullName());
 		jsonMap.put(PARENT, this.getParent());
 		jsonMap.put(DEFINITION, HAPJsonUtility.buildJson(this.m_definition, HAPSerializationFormat.JSON));
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){

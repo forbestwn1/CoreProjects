@@ -113,7 +113,7 @@ public class HAPProcessorElementRelative {
 							refPath = parentSolidNodeRef.getPath().appendPath(resolveInfo.path.getPath());
 						}
 						else {
-							refRootId = resolveInfo.referredRoot.getLocalId();
+							refRootId = resolveInfo.referredRoot.getId();
 							refPath = resolveInfo.path.getPath(); 
 						}
 						relativeElement.setSolidNodeReference(new HAPInfoPathToSolidRoot(refRootId, refPath));
