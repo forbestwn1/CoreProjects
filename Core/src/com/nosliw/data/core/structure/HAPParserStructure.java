@@ -83,10 +83,17 @@ public class HAPParserStructure {
 				contextPath.buildObject(pathObj, HAPSerializationFormat.JSON);
 				relativeLeaf.setReferencePath(contextPath.toStringValue(HAPSerializationFormat.LITERATE));
 			}
-			String resolvedPathStr = (String)eleDefJson.opt(HAPElementStructureLeafRelative.RESOLVEDPATH);
-			if(resolvedPathStr!=null) {
-				HAPComplexPath resolvedPath = new HAPComplexPath(resolvedPathStr);
-				relativeLeaf.setResolvedIdPath(resolvedPath);
+			Object resolvedPathObj = eleDefJson.opt(HAPElementStructureLeafRelative.RESOLVEDPATH);
+			if(resolvedPathObj!=null) {
+				if(resolvedPathObj instanceof String) {
+					HAPComplexPath resolvedPath = new HAPComplexPath((String)resolvedPathObj);
+					relativeLeaf.setResolvedIdPath(resolvedPath);
+				}
+				else {
+					HAPComplexPath resolvedPath = new HAPComplexPath();
+					resolvedPath.buildObject(resolvedPathObj, HAPSerializationFormat.JSON);
+					relativeLeaf.setResolvedIdPath(resolvedPath);
+				}
 			}
 			
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPElementStructureLeafRelative.DEFINITION);

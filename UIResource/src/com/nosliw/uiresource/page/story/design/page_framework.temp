@@ -18,15 +18,15 @@
 	}
 	</scripts>
 	
-	<contexts>
+	<valuestructure>
 	{
 		group : {
 			public : 
-					||context||
+					||valuestructure||
 			
 		}
 	}
-	</contexts>
+	</valuestructure>
 	
 	<services>
 		||serviceUse||

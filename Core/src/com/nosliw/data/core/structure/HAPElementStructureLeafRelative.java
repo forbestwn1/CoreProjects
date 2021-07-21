@@ -151,7 +151,7 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PATH, this.getReferencePath());
-		if(this.getResolvedIdPath()!=null)  jsonMap.put(RESOLVEDPATH, this.getResolvedIdPath().getFullName());
+		if(this.getResolvedIdPath()!=null)  jsonMap.put(RESOLVEDPATH, this.getResolvedIdPath().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(PARENT, this.getParent());
 		jsonMap.put(DEFINITION, HAPJsonUtility.buildJson(this.m_definition, HAPSerializationFormat.JSON));
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){

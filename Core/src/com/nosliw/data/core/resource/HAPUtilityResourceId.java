@@ -113,17 +113,25 @@ public class HAPUtilityResourceId {
 	
 	public static HAPInfoResourceLocation getResourceLocationInfo(HAPResourceIdSimple resourceId) {
 		File file = null;
-		//check single file first
-		String basePath = HAPSystemFolderUtility.getResourceFolder(resourceId.getType());
-		file = new File(basePath+resourceId.getId()+".res");
-		if(!file.exists()) {
-			basePath = basePath+resourceId.getId()+"/";
-			file = new File(basePath+"/main.res");
-			if(!file.exists()) {
-				HAPErrorUtility.invalid("Cannot find module resource " + resourceId.getId());
-			}
+		
+		String localFile = isFileBased(resourceId);
+		if(localFile!=null) {
+			//if file base
+			return new HAPInfoResourceLocation(new File(localFile), localFile);
 		}
-		return new HAPInfoResourceLocation(file, basePath);
+		else {
+			//check single file first
+			String basePath = HAPSystemFolderUtility.getResourceFolder(resourceId.getType());
+			file = new File(basePath+resourceId.getId()+".res");
+			if(!file.exists()) {
+				basePath = basePath+resourceId.getId()+"/";
+				file = new File(basePath+"/main.res");
+				if(!file.exists()) {
+					HAPErrorUtility.invalid("Cannot find module resource " + resourceId.getId());
+				}
+			}
+			return new HAPInfoResourceLocation(file, basePath);
+		}
 	}
 	
 	public static List<HAPResourceDependency> buildResourceDependentFromResourceId(List<HAPResourceIdSimple> ids){
