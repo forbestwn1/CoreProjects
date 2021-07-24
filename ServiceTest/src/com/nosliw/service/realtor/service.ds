@@ -15,7 +15,7 @@
 				},			
 			}
 		],
-		"parm" : [ 
+		"request" : [ 
 			{
 				name : "buildingType",
 				criteria : "test.array;1.0.0%||element:test.options;1.0.0||%",

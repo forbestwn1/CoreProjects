@@ -16,7 +16,7 @@
 					},			
 				}
 			],
-			"parm" : [ 
+			"request" : [ 
 			]
 		},
 	},
@@ -47,7 +47,7 @@
 					},			
 				}
 			],
-			"parm" : [ 
+			"request" : [ 
 				{
 					name : "player",
 					criteria : "test.string;1.0.0",

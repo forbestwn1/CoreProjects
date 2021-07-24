@@ -10,7 +10,7 @@
       "rating"
    ],
    "interface":{
-      "parm":[
+      "request":[
          {
             "name":"schoolTypeInService",
             "displayName":"School Type",

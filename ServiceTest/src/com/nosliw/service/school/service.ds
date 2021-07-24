@@ -7,7 +7,7 @@
 		"description" : "all element school rank in ontario",
 		"tag" : ["demo", "pubic"],
 		"interface" : {
-			"parm" : [
+			"request" : [
 				{
 					"name" : "schoolTypeInService",
 					"displayName" : "School Type",

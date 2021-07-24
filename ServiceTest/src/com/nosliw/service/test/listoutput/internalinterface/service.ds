@@ -6,7 +6,7 @@
 		"description" : "listoutput",
 		"tag" : ["test", "public"],
 		"interface" : {
-		      "parm":[
+		      "request":[
 		         {
 		            "name":"parm1",
 		            "displayName":"Parm1",

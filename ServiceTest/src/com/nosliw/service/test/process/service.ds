@@ -15,7 +15,7 @@
 				},			
 			}
 		],
-		"parm" : [
+		"request" : [
 			{
 				name : "fromInput",
 				criteria : "test.integer;1.0.0",

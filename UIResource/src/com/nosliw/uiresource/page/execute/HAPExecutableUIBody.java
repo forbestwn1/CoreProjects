@@ -15,6 +15,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.HAPDefinitionCommand;
+import com.nosliw.data.core.component.HAPDefinitionEvent;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuiteImp;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -27,8 +29,6 @@ import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPElementEvent;
@@ -97,8 +97,8 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	private HAPExecutableScriptGroup m_scriptGroupExe;
 	
 	//event definition 
-	private Map<String, HAPDefinitionUIEvent> m_events;
-	private Map<String, HAPDefinitionUICommand> m_commands;
+	private List<HAPDefinitionEvent> m_events;
+	private List<HAPDefinitionCommand> m_commands;
 
 	private HAPExecutableTaskSuite m_handlers;
 	
@@ -128,8 +128,8 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		this.m_valueStructureDefinitionNode = new HAPTreeNodeValueStructure();
 //		this.m_constants = new LinkedHashMap<String, Object>();
 		
-		this.m_events = new LinkedHashMap<String, HAPDefinitionUIEvent>();
-		this.m_commands = new LinkedHashMap<String, HAPDefinitionUICommand>();
+		this.m_events = new ArrayList<HAPDefinitionEvent>();
+		this.m_commands = new ArrayList<HAPDefinitionCommand>();
 
 		this.m_services = new LinkedHashMap<String, HAPExecutableServiceUse>();
 		
@@ -172,17 +172,17 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	public HAPExecutableScriptGroup getScriptGroupExecutable() {   return this.m_scriptGroupExe;    }
 	public void setScriptGroupExecutable(HAPExecutableScriptGroup scriptGroupExe) {   this.m_scriptGroupExe = scriptGroupExe;     }
 	
-	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_events;    }
-	public HAPDefinitionUIEvent getEventDefinition(String name) {   return this.m_events.get(name);  }
-	public void addEventDefinition(HAPDefinitionUIEvent eventDef) {  this.m_events.put(eventDef.getName(), eventDef);    }
+	public List<HAPDefinitionEvent> getEventDefinitions(){  return this.m_events;    }
+//	public HAPDefinitionUIEvent getEventDefinition(String name) {   return this.m_events.get(name);  }
+	public void addEventDefinition(HAPDefinitionEvent eventDef) {  this.m_events.add(eventDef);    }
 	
 	public void addServiceUse(String name, HAPExecutableServiceUse serviceDef) {   this.m_services.put(name, serviceDef);   }
 	public Map<String, HAPExecutableServiceUse> getServiceUses(){  return this.m_services;   }
 	public HAPExecutableServiceUse getServiceUse(String name) {   return this.m_services.get(name);  }
 
-	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commands.put(commandDef.getName(), commandDef);   }
-	public Map<String, HAPDefinitionUICommand> getCommandDefinitions() {   return this.m_commands;  }
-	public HAPDefinitionUICommand getCommandDefinition(String name) {   return this.m_commands.get(name);  }
+	public void addCommandDefinition(HAPDefinitionCommand commandDef) {   this.m_commands.add(commandDef);   }
+	public List<HAPDefinitionCommand> getCommandDefinitions() {   return this.m_commands;  }
+//	public HAPDefinitionUICommand getCommandDefinition(String name) {   return this.m_commands.get(name);  }
 
 	public HAPExecutableTaskSuite getHandlers() {    return this.m_handlers;     }
 	public void setHandlers(HAPExecutableTaskSuite handlers) {     this.m_handlers = handlers;     }

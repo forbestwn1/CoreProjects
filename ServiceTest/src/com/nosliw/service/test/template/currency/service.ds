@@ -6,7 +6,7 @@
 		"description" : "Get currency exchange rate between different currency",
 		"tag" : ["demo", "public"],
 		"interface" : {
-			"parm" : [
+			"request" : [
 				{
 					"name" : "fromMoney",
 					"displayName" : "Source Money",

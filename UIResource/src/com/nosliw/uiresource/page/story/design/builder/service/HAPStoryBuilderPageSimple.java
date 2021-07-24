@@ -10,18 +10,17 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.common.HAPResultInteractive;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.definition.HAPInfoServiceStatic;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
-import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
-import com.nosliw.data.core.service.interfacee.HAPServiceParm;
-import com.nosliw.data.core.service.interfacee.HAPServiceResult;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStory;
@@ -199,10 +198,10 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				//service input
 				HAPAliasElement serviceInputNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceInput()).getAlias();
 				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceInputNodeName, HAPConstantShared.SERVICE_CHILD_INPUT));
-				HAPDisplayResourceNode inputDisplayResource = interfaceDisplayResource.getResourceNode(HAPServiceInterface.PARM);
+				HAPDisplayResourceNode inputDisplayResource = interfaceDisplayResource.getResourceNode(HAPServiceInterface.REQUEST);
 				
 				//parms
-				for(HAPServiceParm parm : serviceInterface.getParms()) {
+				for(HAPVariableInfo parm : serviceInterface.getRequestParms()) {
 					String parmName = parm.getName();
 					HAPParmBranchInfo parmBranchInfo = new HAPParmBranchInfo();
 					parmBranchInfo.parmDef = parm;
@@ -256,9 +255,9 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				//output
 				HAPAliasElement serviceOutputNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceOutput()).getAlias();
 				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceOutputNodeName, HAPConstantShared.SERVICE_CHILD_RESULT));
-				HAPServiceResult successResult = serviceInterface.getResult("success");
+				HAPResultInteractive successResult = serviceInterface.getResult("success");
 				HAPDisplayResourceNode outputDisplayResource = interfaceDisplayResource.getResourceNode(HAPServiceInterface.RESULT);
-				for(HAPServiceOutput parm : successResult.getOutput()) {
+				for(HAPVariableInfo parm : successResult.getOutput()) {
 					String parmName = parm.getName();
 					HAPOutputBranchInfo parmBranchInfo = new HAPOutputBranchInfo();
 					parmBranchInfo.outputDef = parm;
@@ -601,7 +600,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	}
 	
 	class HAPOutputBranchInfo{
-		public HAPServiceOutput outputDef;
+		public HAPVariableInfo outputDef;
 		public HAPDisplayResourceNode displayResource;
 		public HAPDataUIInfo dataUIInfo;
 		public HAPAliasElement variableAlias;
@@ -610,7 +609,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	}
 	
 	class HAPParmBranchInfo{
-		public HAPServiceParm parmDef;
+		public HAPVariableInfo parmDef;
 		public HAPDisplayResourceNode displayResource;
 		public HAPDataUIInfo dataUIInfo;
 		public HAPAliasElement variableAlias;

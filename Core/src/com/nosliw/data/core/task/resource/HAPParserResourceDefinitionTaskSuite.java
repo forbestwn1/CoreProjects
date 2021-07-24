@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.component.HAPUtilityComponentParse;
+import com.nosliw.data.core.component.HAPParserComponent;
 import com.nosliw.data.core.resource.HAPParserResourceDefinitionImp;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.task.HAPDefinitionTask;
@@ -23,7 +23,7 @@ public class HAPParserResourceDefinitionTaskSuite extends HAPParserResourceDefin
 	public HAPResourceDefinition parseJson(JSONObject jsonObj) {
 		HAPResourceDefinitionTaskSuite out = new HAPResourceDefinitionTaskSuite();
 
-		HAPUtilityComponentParse.parseComplextResourceDefinition(out, jsonObj);
+		HAPParserComponent.parseComplextResourceDefinition(out, jsonObj);
 		
 		JSONArray taskArrayJson = jsonObj.getJSONArray(HAPWithEntityElement.ELEMENT);
 		for(int i=0; i<taskArrayJson.length(); i++) {

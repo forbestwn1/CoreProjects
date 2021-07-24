@@ -4,7 +4,7 @@
     "implementation" : "task",
 	"description" : "my realtor data source",
 	"output" : "test.array;1.0.0%||element:test.map;1.0.0%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0,url:test.url;1.0.0||%||%",
-	"parms" : [ 
+	"request" : [ 
 		{
 			name : "schoolType",
 			criteria : "test.options;1.0.0",

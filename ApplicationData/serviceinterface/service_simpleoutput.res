@@ -9,7 +9,7 @@
       "output"
    ],
    "interface":{
-      "parm":[
+      "request":[
          {
             "name":"parm1",
             "displayName":"Parm1",

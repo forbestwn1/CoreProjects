@@ -1,10 +1,13 @@
 package com.nosliw.uiresource.page.processor;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.data.core.component.HAPDefinitionCommand;
+import com.nosliw.data.core.component.HAPDefinitionEvent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
@@ -14,7 +17,6 @@ import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
@@ -27,16 +29,15 @@ public class HAPProcessorUICommand {
 	private static void processInteractionElement(HAPExecutableUIUnit uiExe, HAPValueStructureDefinitionGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
 		//process relative element in event defined in resource
-		Map<String, HAPDefinitionUIEvent> eventsDef = uiUnitDef.getEventDefinitions();
-		for(String name : eventsDef.keySet()) {
-			HAPDefinitionUIEvent processedEventDef = new HAPDefinitionUIEvent();
-			eventsDef.get(name).cloneToBase(processedEventDef);
-			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
+		List<HAPDefinitionEvent> eventsDef = uiUnitDef.getEvents();
+		for(HAPDefinitionEvent eventDef : eventsDef) {
+			HAPDefinitionEvent processedEventDef = eventDef.cloneEventDefinition();
+			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventDef.getDataDefinition(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
 			uiExe.getBody().addEventDefinition(processedEventDef);
 		}
 
 		//process relative element in command defined in resource
-		Map<String, HAPDefinitionUICommand> commandsDef = uiUnitDef.getCommandDefinition();
+		List<HAPDefinitionCommand> commandsDef = uiUnitDef.getCommands();
 		for(String name : commandsDef.keySet()) {
 			HAPDefinitionUICommand commandDef = commandsDef.get(name);
 			HAPDefinitionUICommand processedCommendDef = new HAPDefinitionUICommand();

@@ -10,7 +10,7 @@ import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
-public class HAPUtilityComponentParse {
+public class HAPParserComponent {
 
 	public static void parseComponentChild(HAPEmbededComponent child, JSONObject jsonObj) {
 		child.buildEntityInfoByJson(jsonObj);
@@ -46,6 +46,11 @@ public class HAPUtilityComponentParse {
 
 		//event handler
 		parseEventHandler(component, jsonObj);
+		
+		parseCommmendDefinition(component, jsonObj);
+
+		parseEventDefinition(component, jsonObj);
+
 	}
 
 	public static HAPWithEventHanlder parseEventHandler(HAPWithEventHanlder withEventHandler, JSONObject jsonObj) {
@@ -81,6 +86,30 @@ public class HAPUtilityComponentParse {
 				HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
 				serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
 				serviceUse.addServiceUseDefinition(serviceUseDef);
+			}
+		}
+	}
+
+	public static void parseCommmendDefinition(HAPWithCommand withCommand, JSONObject jsonObj) {
+		JSONArray commandListJson = jsonObj.optJSONArray(HAPWithCommand.COMMAND);
+		if(commandListJson!=null) {
+			for(int i=0; i<commandListJson.length(); i++) {
+				JSONObject commandJson = commandListJson.getJSONObject(i);
+				HAPDefinitionCommand commandDef = new HAPDefinitionCommand();
+				commandDef.buildObject(commandJson, HAPSerializationFormat.JSON);
+				withCommand.addCommand(commandDef);
+			}
+		}
+	}
+
+	public static void parseEventDefinition(HAPWithEvent withEvent, JSONObject jsonObj) {
+		JSONArray eventListJson = jsonObj.optJSONArray(HAPWithEvent.EVENT);
+		if(eventListJson!=null) {
+			for(int i=0; i<eventListJson.length(); i++) {
+				JSONObject eventJson = eventListJson.getJSONObject(i);
+				HAPDefinitionEvent eventDef = new HAPDefinitionEvent();
+				eventDef.buildObject(eventJson, HAPSerializationFormat.JSON);
+				withEvent.addEvent(eventDef);
 			}
 		}
 	}

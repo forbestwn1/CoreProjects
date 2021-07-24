@@ -14,7 +14,7 @@
 				},			
 			}
 		],
-		"parm" : [ 
+		"request" : [ 
 			{
 				name : "schoolTypeInService",
 				dataInfo : {

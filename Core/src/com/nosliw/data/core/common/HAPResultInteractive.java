@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service.interfacee;
+package com.nosliw.data.core.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,21 +12,30 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 
 @HAPEntityWithAttribute
-public class HAPServiceResult extends HAPEntityInfoWritableImp{
+public class HAPResultInteractive extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String OUTPUT = "output";
 	
-	private List<HAPServiceOutput> m_output;
+	private List<HAPVariableInfo> m_output;
 	
-	public HAPServiceResult(){
-		this.m_output = new ArrayList<HAPServiceOutput>();
+	public HAPResultInteractive(){
+		this.m_output = new ArrayList<HAPVariableInfo>();
 	}
 
-	public void addOutput(HAPServiceOutput output) {   this.m_output.add(output);   }
-	public List<HAPServiceOutput> getOutput(){   return this.m_output;  }
+	public void addOutput(HAPVariableInfo output) {   this.m_output.add(output);   }
+	public List<HAPVariableInfo> getOutput(){   return this.m_output;  }
+	
+	public HAPResultInteractive cloneInteractiveResult() {
+		HAPResultInteractive out = new HAPResultInteractive();
+		for(HAPVariableInfo output : this.m_output) {
+			out.addOutput(output.cloneVariableInfo());
+		}
+		return out;
+	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -36,8 +45,7 @@ public class HAPServiceResult extends HAPEntityInfoWritableImp{
 			
 			JSONArray outputArray = objJson.getJSONArray(OUTPUT);
 			for(int i=0; i<outputArray.length(); i++) {
-				HAPServiceOutput output = new HAPServiceOutput();
-				output.buildObject(outputArray.get(i), HAPSerializationFormat.JSON);
+				HAPVariableInfo output = HAPVariableInfo.buildVariableInfoFromObject(outputArray.get(i));
 				this.addOutput(output);
 			}
 		}
@@ -52,4 +60,5 @@ public class HAPServiceResult extends HAPEntityInfoWritableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(OUTPUT, HAPJsonUtility.buildJson(this.m_output, HAPSerializationFormat.JSON));
 	}
+
 }

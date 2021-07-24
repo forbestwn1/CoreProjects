@@ -27,6 +27,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.component.HAPContextReference;
+import com.nosliw.data.core.component.HAPDefinitionCommand;
+import com.nosliw.data.core.component.HAPDefinitionEvent;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.component.valuestructure.HAPValueStructureGroupInComponent;
 import com.nosliw.data.core.component.valuestructure.HAParserComponentValueStructure;
@@ -123,11 +125,11 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		parseUnitHandlers(unitEle, uiUnit);
 		
 		//parse event definition block
-		this.parseUnitEventBlocks(unitEle, uiUnit);
+		this.parseEventBlocks(unitEle, uiUnit);
 		//parse service definition block
 		this.parseUnitServiceBlocks(unitEle, uiUnit);
 		//parse command definition block
-		this.parseChildCommandBlocks(unitEle, uiUnit);
+		this.parseCommandBlocks(unitEle, uiUnit);
 		
 		//parse attachment
 		parseAttachmentBlocks(unitEle, uiUnit);
@@ -250,16 +252,16 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 	}
 
 
-	private void parseUnitEventBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
+	private void parseEventBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EVENT);
 		for(Element childEle : childEles){
 			try {
 				JSONArray eventListJson = new JSONArray(childEle.html());
 				for(int i=0; i<eventListJson.length(); i++) {
 					JSONObject eventJson = eventListJson.getJSONObject(i);
-					HAPDefinitionUIEvent eventDef = new HAPDefinitionUIEvent();
+					HAPDefinitionEvent eventDef = new HAPDefinitionEvent();
 					eventDef.buildObject(eventJson, HAPSerializationFormat.JSON);
-					resourceUnit.addEventDefinition(eventDef);
+					resourceUnit.addEvent(eventDef);
 				}
 				break;
 			} catch (JSONException e) {
@@ -268,6 +270,26 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		}
 		for(Element childEle : childEles)  childEle.remove();
 	}
+
+	private void parseCommandBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, COMMAND);
+		for(Element childEle : childEles){
+			try {
+				JSONArray commandListJson = new JSONArray(childEle.html());
+				for(int i=0; i<commandListJson.length(); i++) {
+					JSONObject commandJson = commandListJson.getJSONObject(i);
+					HAPDefinitionCommand commandDef = new HAPDefinitionCommand();
+					commandDef.buildObject(commandJson, HAPSerializationFormat.JSON);
+					resourceUnit.addCommand(commandDef);
+				}
+				break;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		for(Element childEle : childEles)  childEle.remove();
+	}
+	
 
 	private void parseAttachmentBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, ATTACHMENT);
@@ -307,25 +329,6 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		for(Element childEle : childEles)  childEle.remove();
 	}
 
-	private void parseChildCommandBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, COMMAND);
-		for(Element childEle : childEles){
-			try {
-				JSONArray commandListJson = new JSONArray(childEle.html());
-				for(int i=0; i<commandListJson.length(); i++) {
-					JSONObject commandJson = commandListJson.getJSONObject(i);
-					HAPDefinitionUICommand commandDef = new HAPDefinitionUICommand();
-					commandDef.buildObject(commandJson, HAPSerializationFormat.JSON);
-					resourceUnit.addCommandDefinition(commandDef);
-				}
-				break;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		for(Element childEle : childEles)  childEle.remove();
-	}
-	
 	private void parseUnitValueStructureBlocks(Element ele, HAPDefinitionUIUnit resourceUnit){
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, VALUESTRUCTURE);
 

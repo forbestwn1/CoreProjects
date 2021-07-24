@@ -13,13 +13,12 @@ import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataMappingTask;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.definition.HAPDefinitionService;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
-import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
-import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
@@ -41,13 +40,13 @@ public class HAPUtilityServiceUse {
 	
 	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceParms(HAPServiceInterface serviceInterface) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
-		for(HAPServiceParm parm : serviceInterface.getParms()) {
+		for(HAPVariableInfo parm : serviceInterface.getRequestParms()) {
 			out.addRoot(parm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo(parm.getCriteria())));
 		}
 		return out;
 	}
 	
-	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceParms(Map<String, HAPServiceParm> parms) {
+	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceParms(Map<String, HAPVariableInfo> parms) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		for(String parm : parms.keySet()) {
 			out.addRoot(parm, new HAPElementStructureLeafData(new HAPVariableDataInfo(parms.get(parm).getCriteria())));
@@ -67,9 +66,9 @@ public class HAPUtilityServiceUse {
 		return buildValueStructureFromServiceOutputs(serviceInterface.getResultOutput(result));
 	}
 	
-	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceOutputs(List<HAPServiceOutput> serviceOutput) {
+	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceOutputs(List<HAPVariableInfo> serviceOutput) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
-		for(HAPServiceOutput outParm : serviceOutput) {
+		for(HAPVariableInfo outParm : serviceOutput) {
 			out.addRoot(outParm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo(outParm.getCriteria())));
 		}
 		return out;

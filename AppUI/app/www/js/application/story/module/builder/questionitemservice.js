@@ -129,7 +129,7 @@ var node_createComponentQuestionItemService = function(availableService){
 				Inputs: 
 				<br>
 				<div v-if="currentService.sinterface!=undefined" style="margin-left:25px">
-					<div v-for="parm in currentService.sinterface.parm">
+					<div v-for="parm in currentService.sinterface.request">
 						name : {{parm.name}}
 						<br>
 						dataType : {{parm.dataInfo.criteria}}

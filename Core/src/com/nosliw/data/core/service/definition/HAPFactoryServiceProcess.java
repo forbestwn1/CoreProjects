@@ -8,8 +8,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.common.HAPResultInteractive;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
@@ -20,9 +22,6 @@ import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.process1.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
-import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
-import com.nosliw.data.core.service.interfacee.HAPServiceParm;
-import com.nosliw.data.core.service.interfacee.HAPServiceResult;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.data.HAPContextDataFactory;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
@@ -75,16 +74,16 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		//external context from parameter of service
 		HAPValueStructureDefinitionFlat inputExternalContext = new HAPValueStructureDefinitionFlat();
 		HAPServiceInterface serviceInterface = staticInfo.getInterface().getInterface();
-		for(HAPServiceParm parmDef : serviceInterface.getParms()){
+		for(HAPVariableInfo parmDef : serviceInterface.getRequestParms()){
 			inputExternalContext.addRoot(parmDef.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo((parmDef.getCriteria()))));
 		}
 
 		Map<String, HAPContainerStructure> outputExternalContexts = new LinkedHashMap<String, HAPContainerStructure>();
-		Map<String, HAPServiceResult> serviceResult = serviceInterface.getResults();
+		Map<String, HAPResultInteractive> serviceResult = serviceInterface.getResults();
 		for(String resultName : serviceResult.keySet()) {
-			List<HAPServiceOutput> output = serviceResult.get(resultName).getOutput();
+			List<HAPVariableInfo> output = serviceResult.get(resultName).getOutput();
 			HAPValueStructureDefinitionFlat outputContext = new HAPValueStructureDefinitionFlat();
-			for(HAPServiceOutput parm : output) {
+			for(HAPVariableInfo parm : output) {
 				outputContext.addRoot(parm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo((parm.getCriteria()))));
 			}
 			outputExternalContexts.put(resultName, HAPContainerStructure.createDefault(outputContext));

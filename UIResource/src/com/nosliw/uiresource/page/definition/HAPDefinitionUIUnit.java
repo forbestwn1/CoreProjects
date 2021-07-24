@@ -53,11 +53,6 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 	//all the customer tag within the domain
 	private Map<String, HAPDefinitionUITag> m_uiTags; 
 
-	//event definition 
-	private Map<String, HAPDefinitionUIEvent> m_eventsDefinition;
-	//command definition
-	private Map<String, HAPDefinitionUICommand> m_commandsDefinition;
-
 	private HAPDefinitionTaskSuite m_handlers;
 	
 	//mapping from attachment name to internal name(service, resource, ...)
@@ -73,8 +68,8 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 		this.m_customTagEvents = new HashSet<HAPElementEvent>();
 		this.m_attributes = new LinkedHashMap<String, String>();
 //		this.m_expressionDefinitions = new LinkedHashMap<String, String>();
-		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
-		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
+//		this.m_eventsDefinition = new ArrayList<HAPDefinitionEvent>();
+//		this.m_commandsDefinition = new ArrayList<HAPDefinitionCommand>();
 		this.m_nameMapping = new HAPNameMapping();
 		this.m_handlers = new HAPDefinitionTaskSuiteImp(this);
 //		this.initValueStructure();
@@ -98,8 +93,6 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 	public Set<HAPElementEvent> getCustomTagEvents(){   return this.m_customTagEvents;   }
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public String getContent() {  return this.m_content;  }
-	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_eventsDefinition;    }
-	public Map<String, HAPDefinitionUICommand> getCommandDefinition() {   return this.m_commandsDefinition;  }
 //	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
 	public HAPDefinitionStyle getStyle() {    return this.m_style;    }
 	public void setStyle(HAPDefinitionStyle style) {   this.m_style = style;   }
@@ -114,8 +107,6 @@ public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
 	public Set<HAPDefinitionUIEmbededScriptExpressionInAttribute> getScriptExpressionsInAttribute(){   return this.m_scriptExpressionsInAttribute;    }
 	public Set<HAPDefinitionUIEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttribute(){   return this.m_scriptExpressionsInTagAttribute;   }
 	
-	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
-	public void addEventDefinition(HAPDefinitionUIEvent def) {  this.m_eventsDefinition.put(def.getName(), def);   }
 //	public void addExpressionDefinition(String name, String expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
 	public void addScriptExpressionInAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
 	public void addScriptExpressionInTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}

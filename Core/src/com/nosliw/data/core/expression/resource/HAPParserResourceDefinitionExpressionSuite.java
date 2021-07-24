@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
-import com.nosliw.data.core.component.HAPUtilityComponentParse;
+import com.nosliw.data.core.component.HAPParserComponent;
 import com.nosliw.data.core.expression.HAPParserExpressionDefinition;
 import com.nosliw.data.core.resource.HAPParserResourceDefinitionImp;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -15,7 +15,7 @@ public class HAPParserResourceDefinitionExpressionSuite extends HAPParserResourc
 	public HAPResourceDefinition parseJson(JSONObject jsonObj) {
 		HAPResourceDefinitionExpressionSuite out = new HAPResourceDefinitionExpressionSuite();
 
-		HAPUtilityComponentParse.parseComplextResourceDefinition(out, jsonObj);
+		HAPParserComponent.parseComplextResourceDefinition(out, jsonObj);
 		
 		JSONArray expressionsArray = jsonObj.getJSONArray(HAPResourceDefinitionContainer.ELEMENT);
 		for(int i=0; i<expressionsArray.length(); i++){
@@ -35,7 +35,7 @@ public class HAPParserResourceDefinitionExpressionSuite extends HAPParserResourc
 	
 	private HAPElementContainerResourceDefinitionEntityExpressionSuite parseExpressionSuiteElement(JSONObject jsonObj) {
 		HAPElementContainerResourceDefinitionEntityExpressionSuite out = new HAPElementContainerResourceDefinitionEntityExpressionSuite();
-		HAPUtilityComponentParse.parseComponent(out, jsonObj);
+		HAPParserComponent.parseComponent(out, jsonObj);
 		HAPParserExpressionDefinition.parseExpressionDefinitionList(out, jsonObj);
 		return out;
 	}

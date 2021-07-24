@@ -30,7 +30,8 @@ public class HAPResourceDefinitionPluginServiceDefinition implements HAPPluginRe
 	}
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId) {
+	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId,
+			HAPResourceDefinition relatedResource) {
 		// TODO Auto-generated method stub
 		return null;
 	}

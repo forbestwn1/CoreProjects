@@ -8,8 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
 import com.nosliw.data.core.story.change.HAPChangeResult;
@@ -22,11 +22,11 @@ public class HAPStoryNodeServiceInputParm extends HAPStoryNodeImp{
 	@HAPAttribute
 	public static final String PARMDEFINITION = "parmDefinition";
 
-	private HAPServiceParm m_parmDefinition;
+	private HAPVariableInfo m_parmDefinition;
 	
 	public HAPStoryNodeServiceInputParm() {}
 	
-	public HAPStoryNodeServiceInputParm(HAPServiceParm parmDefinition) {
+	public HAPStoryNodeServiceInputParm(HAPVariableInfo parmDefinition) {
 		super(STORYNODE_TYPE);
 		this.m_parmDefinition = parmDefinition;
 	}
@@ -40,7 +40,7 @@ public class HAPStoryNodeServiceInputParm extends HAPStoryNodeImp{
 	public HAPStoryElement cloneStoryElement() {
 		HAPStoryNodeServiceInputParm out = new HAPStoryNodeServiceInputParm();
 		super.cloneTo(out);
-		out.m_parmDefinition = this.m_parmDefinition.cloneServiceParm();
+		out.m_parmDefinition = this.m_parmDefinition.cloneVariableInfo();
 		return out;
 	}
 
@@ -50,8 +50,7 @@ public class HAPStoryNodeServiceInputParm extends HAPStoryNodeImp{
 		super.buildObjectByJson(jsonObj);
 		JSONObject defJsonObj = jsonObj.optJSONObject(PARMDEFINITION);
 		if(defJsonObj!=null) {
-			this.m_parmDefinition = new HAPServiceParm();
-			this.m_parmDefinition.buildObject(defJsonObj, HAPSerializationFormat.JSON);
+			this.m_parmDefinition = HAPVariableInfo.buildVariableInfoFromObject(defJsonObj);
 		}
 		return true;  
 	}

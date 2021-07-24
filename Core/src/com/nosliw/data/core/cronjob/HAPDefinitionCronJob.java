@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentImp;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
-import com.nosliw.data.core.component.HAPUtilityComponentParse;
+import com.nosliw.data.core.component.HAPParserComponent;
 
 public class HAPDefinitionCronJob extends HAPComponentImp{
 
@@ -49,7 +49,7 @@ public class HAPDefinitionCronJob extends HAPComponentImp{
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		HAPUtilityComponentParse.parseComponent(this, jsonObj);
+		HAPParserComponent.parseComponent(this, jsonObj);
 		
 		HAPDefinitionSchedule schedule = new HAPDefinitionSchedule();
 		schedule.buildObject(jsonObj.getJSONObject(SCHEDULE), HAPSerializationFormat.JSON);
