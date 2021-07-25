@@ -12,7 +12,7 @@ import org.jsoup.select.Elements;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPUtilityUIResourceParser {
 
@@ -29,7 +29,7 @@ public class HAPUtilityUIResourceParser {
 	 * build custom tag name based on tag basic name
 	 */
 	public static String makeCustomTagName(String tag){
-		return HAPNamingConversionUtility.createKeyword(tag, CUSTOMTAG_PREFIX);
+		return HAPUtilityNamingConversion.createKeyword(tag, CUSTOMTAG_PREFIX);
 	}
 	
 	/*
@@ -39,7 +39,7 @@ public class HAPUtilityUIResourceParser {
 	 */
 	public static String isCustomTag(Element ele){
 		String tagName = ele.tagName();
-		return HAPNamingConversionUtility.getKeyword(tagName, CUSTOMTAG_PREFIX);
+		return HAPUtilityNamingConversion.getKeyword(tagName, CUSTOMTAG_PREFIX);
 	}
 	
 	public static boolean isDataKeyAttribute(String attribute){
@@ -56,7 +56,7 @@ public class HAPUtilityUIResourceParser {
 	 * if no, return null
 	 */
 	public static String isKeyAttribute(String attribute){
-		return HAPNamingConversionUtility.getKeyword(attribute, HAPConstantShared.UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX);
+		return HAPUtilityNamingConversion.getKeyword(attribute, HAPConstantShared.UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX);
 	}
 	
 	/*

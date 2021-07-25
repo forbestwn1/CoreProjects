@@ -5,7 +5,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /**
  * Every data type have a version with it
@@ -74,7 +74,7 @@ public class HAPDataTypeVersion extends HAPSerializableImp{
 	protected boolean buildObjectByLiterate(String literateValue){
 		this.init();
 
-		String[] segs = HAPNamingConversionUtility.parsePaths(literateValue);
+		String[] segs = HAPUtilityNamingConversion.parsePaths(literateValue);
 		if(segs.length>=3) this.setRevision(segs[2]);   
 		if(segs.length>=2) this.setMinor(segs[1]); 
 		if(segs.length>=1) this.setMajor(segs[0]); 
@@ -85,7 +85,7 @@ public class HAPDataTypeVersion extends HAPSerializableImp{
 	protected String buildLiterate(){
 		String out = this.m_name;
 		if(HAPBasicUtility.isStringEmpty(out)){
-			out = HAPNamingConversionUtility.cascadeComponentPath(new String[]{String.valueOf(this.getMajor()), String.valueOf(this.getMinor()), this.getRevision()});
+			out = HAPUtilityNamingConversion.cascadeComponentPath(new String[]{String.valueOf(this.getMajor()), String.valueOf(this.getMinor()), this.getRevision()});
 			this.m_name = out;
 		}
 		return out; 

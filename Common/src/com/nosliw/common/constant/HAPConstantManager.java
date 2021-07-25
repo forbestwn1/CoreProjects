@@ -19,7 +19,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPConstantManager  extends HAPConfigurableImp{
 
@@ -71,7 +71,7 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 							try {
 								String constantValue = field.get(null).toString();
 								String baseName = HAPConstantUtility.getBaseName(checkClass);
-								String constantName = HAPNamingConversionUtility.cascadeNameSegment(baseName, fieldName);
+								String constantName = HAPUtilityNamingConversion.cascadeNameSegment(baseName, fieldName);
 								HAPConstantInfo constantInfo = HAPConstantInfo.build(constantName, constantValue);
 								group.addConstantInfo(constantInfo);
 							} catch (Exception e) {

@@ -8,13 +8,13 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
-import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -22,7 +22,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextScript;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 @HAPEntityWithAttribute
 public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -31,7 +31,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	public static String ID = "id";
 
 	@HAPAttribute
-	public static String CONTEXT = "context";
+	public static String VALUESTRUCTURE = "valueStructure";
 	
 	@HAPAttribute
 	public static String UI = "ui";
@@ -50,7 +50,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	private String m_id;
 
 	// hook up with real data during runtime
-	private HAPValueStructureDefinitionGroup m_context;
+	private HAPWrapperValueStructure m_valueStructureWrapper;
 
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_processes;
@@ -72,9 +72,9 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 
 	public HAPDefinitionModule getDefinition() {   return this.m_moduleDefinition;  }
 	
-	public HAPValueStructureDefinitionGroup getContext() {   return this.m_context;   }
+	public HAPWrapperValueStructure getValueStructureWrapper() {   return this.m_valueStructureWrapper;   }
 
-	public void setContextGroup(HAPValueStructureDefinitionGroup contextGroup) { 	this.m_context = contextGroup;	}
+	public void setValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper) { 	this.m_valueStructureWrapper = valueStructureWrapper;	}
 	
 	public void addProcess(String name, HAPExecutableWrapperTask<HAPExecutableProcess> process) {		this.m_processes.put(name, process);	}
 
@@ -90,7 +90,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
-		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildJson(this.m_valueStructureWrapper, HAPSerializationFormat.JSON));
 		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
 		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
 		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildJson(this.m_lifecycle, HAPSerializationFormat.JSON));
@@ -120,7 +120,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		}
 		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildMapJson(lifecycleJsonMap));
 
-		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
+		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getValueStructureWrapper()).getScript());
 		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
 		
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));

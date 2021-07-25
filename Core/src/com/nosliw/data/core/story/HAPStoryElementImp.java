@@ -10,7 +10,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.change.HAPChangeResult;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
@@ -105,7 +105,7 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 	
 	@Override
 	public HAPChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv) {
-		String[] pathSegs = HAPNamingConversionUtility.parsePaths(path);
+		String[] pathSegs = HAPUtilityNamingConversion.parsePaths(path);
 		HAPChangeResult out = new HAPChangeResult(HAPStoryElement.class);
 		if(ENABLE.equals(path)) {
 			out.addRevertChange(HAPUtilityChange.buildChangePatch(this, path, this.m_enable));

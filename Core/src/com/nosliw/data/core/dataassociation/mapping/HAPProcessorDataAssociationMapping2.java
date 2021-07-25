@@ -164,7 +164,7 @@ public class HAPProcessorDataAssociationMapping2 {
 		buildConstantAssignmentInDataAssociation(out);
 
 		//matchers to output
-		switch(outputStructure.getType()) {
+		switch(outputStructure.getDataType()) {
 		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT:
 		case HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT:
 			HAPValueStructureDefinitionFlat mapping = out.getMapping();

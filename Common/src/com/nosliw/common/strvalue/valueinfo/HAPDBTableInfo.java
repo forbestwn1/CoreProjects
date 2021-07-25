@@ -11,7 +11,7 @@ import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.path.HAPComplexName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPDBTableInfo {
 
@@ -48,7 +48,7 @@ public class HAPDBTableInfo {
 		}
 
 		//update property
-		columnInfo.setProperty(HAPNamingConversionUtility.cascadePath(attrPath, property));
+		columnInfo.setProperty(HAPUtilityNamingConversion.cascadePath(attrPath, property));
 		
 		String methodProperty = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.COLUMN);
 
@@ -116,7 +116,7 @@ public class HAPDBTableInfo {
 				methodPath = attrPath;
 				break;
 			case HAPConstantShared.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTYASPATH:
-				methodPath = HAPNamingConversionUtility.cascadePath(new String[]{attrPath, attr, methodPath});
+				methodPath = HAPUtilityNamingConversion.cascadePath(new String[]{attrPath, attr, methodPath});
 				break;
 			}
 			
@@ -131,7 +131,7 @@ public class HAPDBTableInfo {
 				break;
 			}
 			
-			return HAPNamingConversionUtility.cascadePath(methodPath, methodMethod);
+			return HAPUtilityNamingConversion.cascadePath(methodPath, methodMethod);
 		}
 	}
 }

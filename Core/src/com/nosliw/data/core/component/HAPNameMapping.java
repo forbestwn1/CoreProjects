@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 
@@ -24,10 +24,10 @@ public class HAPNameMapping {
 	public static HAPNameMapping newNamingMapping(String literate) {
 		HAPNameMapping out = new HAPNameMapping();
 		if(HAPBasicUtility.isStringNotEmpty(literate)) {
-			Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(literate);
+			Map<String, String> nameMapping = HAPUtilityNamingConversion.parsePropertyValuePairs(literate);
 			if(nameMapping!=null) {
 				for(String complexName : nameMapping.keySet()) {
-					String[] segs = HAPNamingConversionUtility.parseNameSegments(complexName);
+					String[] segs = HAPUtilityNamingConversion.parseNameSegments(complexName);
 					String type = segs[0];
 					String name = segs[1];
 					out.addNameMapping(type, nameMapping.get(complexName), name);

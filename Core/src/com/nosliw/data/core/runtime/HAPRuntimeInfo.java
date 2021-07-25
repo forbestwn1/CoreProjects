@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /*
  * This entity represent a runtime env
@@ -39,11 +39,11 @@ public class HAPRuntimeInfo extends HAPSerializableImp{
 	public String getEnvironment(){ return this.m_environment;	}
 	
 	@Override
-	protected String buildLiterate(){  return HAPNamingConversionUtility.cascadeLevel1(m_language, m_environment); }
+	protected String buildLiterate(){  return HAPUtilityNamingConversion.cascadeLevel1(m_language, m_environment); }
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseLevel1(literateValue);
+		String[] segs = HAPUtilityNamingConversion.parseLevel1(literateValue);
 		this.m_language = segs[0];
 		this.m_environment = segs[1];
 		return true;

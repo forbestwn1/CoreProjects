@@ -7,7 +7,7 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -52,7 +52,7 @@ public class HAPProcessorInclude {
 				for(Object key : mappingObj.keySet()) {
 					mapping.put((String)key, mappingObj.getString((String)key));
 				}
-				String mappingStr = HAPNamingConversionUtility.cascadePropertyValuePairs(mapping);
+				String mappingStr = HAPUtilityNamingConversion.cascadePropertyValuePairs(mapping);
 				if(mappingStr!=null)   includeTagUnit.addAttribute(HAPConstantShared.UITAG_PARM_CONTEXT, mappingStr);
 			}
 
@@ -63,7 +63,7 @@ public class HAPProcessorInclude {
 				for(Object key : mappingObj.keySet()) {
 					mapping.put((String)key, mappingObj.getString((String)key));
 				}
-				String mappingStr = HAPNamingConversionUtility.cascadePropertyValuePairs(mapping);
+				String mappingStr = HAPUtilityNamingConversion.cascadePropertyValuePairs(mapping);
 				if(mappingStr!=null)   includeTagUnit.addAttribute(HAPConstantShared.UITAG_PARM_EVENT, mappingStr);
 			}
 		
@@ -74,7 +74,7 @@ public class HAPProcessorInclude {
 				for(Object key : mappingObj.keySet()) {
 					mapping.put((String)key, mappingObj.getString((String)key));
 				}
-				String mappingStr = HAPNamingConversionUtility.cascadePropertyValuePairs(mapping);
+				String mappingStr = HAPUtilityNamingConversion.cascadePropertyValuePairs(mapping);
 				if(mappingStr!=null)   includeTagUnit.addAttribute(HAPConstantShared.UITAG_PARM_COMMAND, mappingStr);
 			}
 		}

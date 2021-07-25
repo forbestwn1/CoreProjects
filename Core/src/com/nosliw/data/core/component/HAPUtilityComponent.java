@@ -3,17 +3,24 @@ package com.nosliw.data.core.component;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPReferenceAttachment;
+import com.nosliw.data.core.component.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.process1.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -29,6 +36,51 @@ import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPUtilityComponent {
 
+	public static HAPResultSolveReference solveReference(Object refObj, String dataType, HAPContextProcessAttachmentReference context) {
+		HAPRuntimeEnvironment runtimeEnv = context.getRuntimeEnvironment();
+		
+		//figure out reference is resource id or attachment reference
+		HAPResourceId resourceId = null;
+		HAPReferenceAttachment attachmentReference = null;
+		
+		if(refObj instanceof String) {
+			String refStr = (String)refObj;
+			resourceId = HAPUtilityResourceId.buildResourceIdByLiterate(dataType, refStr, true);
+			if(resourceId==null)    attachmentReference = HAPReferenceAttachment.newInstance(refStr, dataType);
+		}
+		else if(refObj instanceof JSONObject) {
+			JSONObject refJsonObj = (JSONObject)refObj;
+			if(refJsonObj.opt(HAPReferenceAttachment.DATATYPE)!=null) {
+				attachmentReference = HAPReferenceAttachment.newInstance(refJsonObj, dataType);
+			}
+			else {
+				resourceId = HAPFactoryResourceId.newInstance(dataType, refObj);
+			}
+		}
+		
+		Object entity = null;
+		HAPContextProcessAttachmentReference contextResult = null;
+		HAPDefinitionEntityComplex contextComplexEntity = null;
+		
+		if(resourceId!=null) {
+			//is resource id
+			//reference name is resource id
+			HAPResourceDefinition relatedResource = null;
+			if(context.getComplexEntity() instanceof HAPResourceDefinition) relatedResource = (HAPResourceDefinition)context.getComplexEntity();
+			entity = runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, relatedResource);
+			if(entity instanceof HAPWithComplexEntity)  contextComplexEntity = ((HAPWithComplexEntity)entity).getComplexEntity();
+			contextResult = new HAPContextProcessAttachmentReference(contextComplexEntity, runtimeEnv);
+			return HAPResultSolveReference.newResultFromResource(entity, contextResult);
+		}
+		else {
+			//reference name is reference to attachment
+			HAPResultProcessAttachmentReference result = context.processReference(attachmentReference.getDataType(), attachmentReference.getName());
+			contextResult = new HAPContextProcessAttachmentReference(result.getContextComplexEntity(), runtimeEnv);
+			entity = result.getEntity();
+			return HAPResultSolveReference.newResultFromAttachment(entity, (JSONObject)result.getAdaptor(), contextResult);
+		}
+	}
+	
 	public static void processComponentExecutable(
 			HAPExecutableImpComponent componentExe,
 			HAPValueStructureDefinitionGroup parentContext,

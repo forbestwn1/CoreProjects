@@ -1,6 +1,5 @@
 package com.nosliw.data.core.component;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -282,13 +281,6 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public List<HAPContextReference> getContextReferences() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public HAPResourceDefinitionOrId getChild(String path) {

@@ -1,5 +1,6 @@
-package com.nosliw.data.core.component;
+package com.nosliw.data.core.component.attachment;
 
+import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 
 public class HAPResultProcessAttachmentReference {
 

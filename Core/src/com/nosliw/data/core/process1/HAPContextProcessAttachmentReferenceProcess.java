@@ -1,8 +1,8 @@
 package com.nosliw.data.core.process1;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPContextProcessAttachmentReferenceProcess extends HAPContextProcessAttachmentReference{

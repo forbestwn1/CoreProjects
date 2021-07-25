@@ -2,7 +2,7 @@ package com.nosliw.common.path;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 //for name like java class: a.b.c.d.Abcd
 public class HAPComplexName {
@@ -16,7 +16,7 @@ public class HAPComplexName {
 	public HAPComplexName(String simpleName, String path){
 		this.m_simpleName = simpleName;
 		this.m_path = new HAPPath(path);
-		this.m_fullName = HAPNamingConversionUtility.cascadePath(this.m_path.getPath(), this.m_simpleName);
+		this.m_fullName = HAPUtilityNamingConversion.cascadePath(this.m_path.getPath(), this.m_simpleName);
 	}
 	
 	public HAPComplexName(String fullName){

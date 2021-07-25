@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 @HAPEntityWithAttribute
 public class HAPComplexPath extends HAPSerializableImp{
@@ -31,7 +31,7 @@ public class HAPComplexPath extends HAPSerializableImp{
 	public HAPComplexPath(String rootName, HAPPath path){
 		this.m_root = rootName;
 		this.m_path = path;
-		this.m_fullName = HAPNamingConversionUtility.cascadePath(this.m_root, this.m_path.getPath());
+		this.m_fullName = HAPUtilityNamingConversion.cascadePath(this.m_root, this.m_path.getPath());
 	}
 	
 	public HAPComplexPath(String rootName, String path){
@@ -86,7 +86,7 @@ public class HAPComplexPath extends HAPSerializableImp{
 	private void init(String rootName, HAPPath path){
 		this.m_root = rootName;
 		this.m_path = path;
-		this.m_fullName = HAPNamingConversionUtility.cascadePath(this.m_root, this.m_path==null?null:this.m_path.getPath());
+		this.m_fullName = HAPUtilityNamingConversion.cascadePath(this.m_root, this.m_path==null?null:this.m_path.getPath());
 	}
 	
 	@Override

@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
 
 public class HAPResourceIdLocal  extends HAPResourceId{
@@ -40,12 +40,12 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	
 	@Override
 	public String getCoreIdLiterate() {
-		return HAPNamingConversionUtility.cascadeElements(this.m_name, HAPSerializeManager.getInstance().toStringValue(this.m_basePath, HAPSerializationFormat.LITERATE), SEPERATOR);
+		return HAPUtilityNamingConversion.cascadeElements(this.m_name, HAPSerializeManager.getInstance().toStringValue(this.m_basePath, HAPSerializationFormat.LITERATE), SEPERATOR);
 	}
 
 	@Override
 	protected void buildCoreIdByLiterate(String idLiterate) {
-		String[] segs = HAPNamingConversionUtility.splitTextByElements(idLiterate, SEPERATOR);
+		String[] segs = HAPUtilityNamingConversion.splitTextByElements(idLiterate, SEPERATOR);
 		this.m_name = segs[0];
 		if(segs.length>=2) {
 			this.m_basePath = new HAPLocalReferenceBase(segs[1]);

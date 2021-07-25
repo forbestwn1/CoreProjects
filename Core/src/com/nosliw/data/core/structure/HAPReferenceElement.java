@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 //
 @HAPEntityWithAttribute
@@ -40,7 +40,7 @@ public class HAPReferenceElement extends HAPSerializableImp{
 	public HAPReferenceElement appendSegment(String seg){
 		HAPReferenceElement out = new HAPReferenceElement();
 		out.m_rootReference = this.m_rootReference.cloneStructureRootReference();
-		out.m_path = HAPNamingConversionUtility.cascadePath(m_path, seg);
+		out.m_path = HAPUtilityNamingConversion.cascadePath(m_path, seg);
 		return out;
 	}
 	
@@ -61,7 +61,7 @@ public class HAPReferenceElement extends HAPSerializableImp{
 	
 	public String[] getPathSegments(){
 		if(HAPBasicUtility.isStringEmpty(m_path))  return new String[0];
-		else  return HAPNamingConversionUtility.parseComponentPaths(m_path);     
+		else  return HAPUtilityNamingConversion.parseComponentPaths(m_path);     
 	}
 	
 	@Override
@@ -80,7 +80,7 @@ public class HAPReferenceElement extends HAPSerializableImp{
 	}
 
 	@Override
-	protected String buildLiterate(){	return HAPNamingConversionUtility.buildPath(this.m_rootReference.toStringValue(HAPSerializationFormat.LITERATE), this.m_path);	}
+	protected String buildLiterate(){	return HAPUtilityNamingConversion.buildPath(this.m_rootReference.toStringValue(HAPSerializationFormat.LITERATE), this.m_path);	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

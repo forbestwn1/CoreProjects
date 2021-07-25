@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.structure.HAPRootStructure;
@@ -62,7 +62,7 @@ public class HAPUtilityStructureDataAssociation {
 				}
 				else if(varSubPath.startsWith(mappingRelativeSubPath)) {
 					//match only part of variable path, extend relative path to full path
-					String relativePath = HAPNamingConversionUtility.cascadePath(relativeEle.getReferencePath(), varSubPath.substring(mappingRelativeSubPath.length()));
+					String relativePath = HAPUtilityNamingConversion.cascadePath(relativeEle.getReferencePath(), varSubPath.substring(mappingRelativeSubPath.length()));
 					HAPUtilityStructure.setDescendant(newMappingRoot, varInfo.getSubPath(), new HAPElementStructureLeafRelative(relativePath));
 					found = true;
 					break;

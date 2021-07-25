@@ -2,7 +2,7 @@ package com.nosliw.data.core.data;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPOperationId extends HAPDataTypeId{
 
@@ -40,7 +40,7 @@ public class HAPOperationId extends HAPDataTypeId{
 	
 	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeLevel1(super.buildLiterate(), this.getOperation());
+		return HAPUtilityNamingConversion.cascadeLevel1(super.buildLiterate(), this.getOperation());
 	}
 
 	@Override

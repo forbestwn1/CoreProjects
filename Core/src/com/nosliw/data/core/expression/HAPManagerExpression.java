@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;

@@ -31,7 +31,7 @@ public class HAPUtilityContext {
 	
 	public static HAPExecutableValueStructure buildFlatContextFromContextStructure(HAPValueStructure contextStructure) {
 		HAPExecutableValueStructure out = null;
-		String type = contextStructure.getType();
+		String type = contextStructure.getDataType();
 		if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			out = buildFlatContextFromContextGroup((HAPValueStructureDefinitionGroup)contextStructure);
 		}
@@ -68,7 +68,7 @@ public class HAPUtilityContext {
 	}
 	
 	public static HAPElementStructure getDescendant(HAPValueStructure context, HAPReferenceElement path) {
-		if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+		if(context.getDataType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			return getDescendant((HAPValueStructureDefinitionGroup)context, path.getFullPath());
 		}
 		else {
@@ -182,7 +182,7 @@ public class HAPUtilityContext {
 	public static HAPInfoReferenceResolve resolveReferencedContextElement(HAPReferenceElement contextPath, HAPValueStructure parentContext){
 		if(parentContext==null)   return null;
 		HAPInfoReferenceResolve out = null;
-		String contextType = parentContext.getType();
+		String contextType = parentContext.getDataType();
 		if(contextType.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			out = analyzeElementReference(contextPath, (HAPValueStructureDefinitionGroup)parentContext, null, null);
 		}

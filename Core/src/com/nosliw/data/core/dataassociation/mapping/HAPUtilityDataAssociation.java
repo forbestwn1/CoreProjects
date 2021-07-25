@@ -9,7 +9,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
@@ -32,7 +32,7 @@ public class HAPUtilityDataAssociation {
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 					HAPComplexPath contextPath = relativeEle.getResolvedIdPath();
 					String parent = relativeEle.getParent();
-					String sourcePath = HAPNamingConversionUtility.cascadePath(parent, contextPath.getFullName());
+					String sourcePath = HAPUtilityNamingConversion.cascadePath(parent, contextPath.getFullName());
 					out.put(eleInfo.getElementPath().getFullName(), sourcePath);
 					return Pair.of(false, null);
 				}

@@ -10,7 +10,7 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPLiterateArray  implements HAPLiterateDef{
 
@@ -40,7 +40,7 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 			type1 = subType;
 		}
 		
-		String[] elesArray = HAPNamingConversionUtility.parseElements(arrayStr);
+		String[] elesArray = HAPUtilityNamingConversion.parseElements(arrayStr);
 		for(String eleStr : elesArray){
 			String a = eleStr;
 			if(a.startsWith("\""))  a = eleStr.substring(1, a.length()-1);
@@ -61,7 +61,7 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 			elesStr.add("\""+HAPLiterateManager.getInstance().valueToString(eleObj)+"\"");
 		}
 		
-		arrayStr.append(HAPNamingConversionUtility.cascadeElementArray(elesStr.toArray(new String[0])));
+		arrayStr.append(HAPUtilityNamingConversion.cascadeElementArray(elesStr.toArray(new String[0])));
 		return arrayStr.toString(); 
 		
 	}

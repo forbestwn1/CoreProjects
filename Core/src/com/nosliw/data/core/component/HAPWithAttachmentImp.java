@@ -32,7 +32,7 @@ public class HAPWithAttachmentImp extends HAPEntityInfoWritableImp implements HA
 	}
 	
 	@Override
-	public HAPAttachment getAttachment(HAPReferenceAttachment idAttachment) {  return this.getAttachment(idAttachment.getType(), idAttachment.getName());	}
+	public HAPAttachment getAttachment(HAPReferenceAttachment idAttachment) {  return this.getAttachment(idAttachment.getDataType(), idAttachment.getName());	}
 
 	@Override
 	public void mergeBy(HAPWithAttachment parent, String mode) {	this.m_attachmentContainer.merge(parent.getAttachmentContainer(), mode);	}

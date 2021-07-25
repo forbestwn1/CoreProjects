@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
@@ -35,7 +35,7 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 	protected HAPServiceData processServiceRequest(String gatewayCommand, JSONObject parms) throws Exception {
 		HAPServiceData out = null;
 
-		String[] segs = HAPNamingConversionUtility.parseLevel1(gatewayCommand);
+		String[] segs = HAPUtilityNamingConversion.parseLevel1(gatewayCommand);
 		String gatewayId = segs[0];
 		String command = segs[1];
 		

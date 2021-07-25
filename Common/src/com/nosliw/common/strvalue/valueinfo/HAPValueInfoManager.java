@@ -28,7 +28,7 @@ import com.nosliw.common.strvalue.mode.HAPValueInfoModeUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPValueInfoManager {
 
@@ -227,7 +227,7 @@ public class HAPValueInfoManager {
 				
 				String propertyValueInfoType = propertyValueInfo.getValueInfoType();
 				if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
-					readColumnInfoFromEntity(tableInfo, (HAPValueInfoEntity)propertyValueInfo, HAPNamingConversionUtility.cascadePath(path, property));
+					readColumnInfoFromEntity(tableInfo, (HAPValueInfoEntity)propertyValueInfo, HAPUtilityNamingConversion.cascadePath(path, property));
 				}
 			}
 		}

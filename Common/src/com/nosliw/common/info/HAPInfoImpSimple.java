@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 
@@ -95,17 +95,17 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 	protected String buildLiterate(){
 		List<String> segs = new ArrayList<String>();
 		for(String name : this.m_values.keySet()) {
-			segs.add(HAPNamingConversionUtility.cascadeComponents(new String[] {name, HAPSerializeManager.getInstance().toStringValue(this.m_values.get(name), HAPSerializationFormat.LITERATE)}, this.m_seperator2));
+			segs.add(HAPUtilityNamingConversion.cascadeComponents(new String[] {name, HAPSerializeManager.getInstance().toStringValue(this.m_values.get(name), HAPSerializationFormat.LITERATE)}, this.m_seperator2));
 		}
-		return HAPNamingConversionUtility.cascadeComponents(segs.toArray(new String[0]), this.m_seperator1); 
+		return HAPUtilityNamingConversion.cascadeComponents(segs.toArray(new String[0]), this.m_seperator1); 
 	}
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
 		if(HAPBasicUtility.isStringNotEmpty(literateValue)) {
-			String[] segs = HAPNamingConversionUtility.splitTextByComponents(literateValue, m_seperator1);
+			String[] segs = HAPUtilityNamingConversion.splitTextByComponents(literateValue, m_seperator1);
 			for(String seg : segs) {
-				String[] eles = HAPNamingConversionUtility.splitTextByComponents(seg, this.m_seperator2);
+				String[] eles = HAPUtilityNamingConversion.splitTextByComponents(seg, this.m_seperator2);
 				this.m_values.put(eles[0], eles[1]);
 			}
 		}

@@ -2,7 +2,7 @@ package com.nosliw.data.core.runtime.js.resource;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPJSLibraryId  extends HAPSerializableImp{
 
@@ -30,12 +30,12 @@ public class HAPJSLibraryId  extends HAPSerializableImp{
 	
 	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeLevel1(this.m_name, this.m_version);
+		return HAPUtilityNamingConversion.cascadeLevel1(this.m_name, this.m_version);
 	}
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseLevel1(literateValue);
+		String[] segs = HAPUtilityNamingConversion.parseLevel1(literateValue);
 		this.m_name = segs[0];
 		if(segs.length>=2){
 			this.m_version = segs[1];

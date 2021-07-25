@@ -16,7 +16,7 @@ import com.nosliw.common.strvalue.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.common.utils.HAPXMLUtility;
 
 public class HAPValueInfoImporterXML {
@@ -186,7 +186,7 @@ public class HAPValueInfoImporterXML {
 		HAPAttributeValues out = new HAPAttributeValues(path);
 		
 		String attrsValue = attrValuesEle.getAttribute(HAPAttributeValues.ATTRIBUTES); 
-		Map<String, String> attrs = HAPNamingConversionUtility.parsePropertyValuePairs(attrsValue);
+		Map<String, String> attrs = HAPUtilityNamingConversion.parsePropertyValuePairs(attrsValue);
 		
 		for(String attr : attrs.keySet()){
 			out.addAttributeValue(new HAPAttributeValue(attr, attrs.get(attr)));

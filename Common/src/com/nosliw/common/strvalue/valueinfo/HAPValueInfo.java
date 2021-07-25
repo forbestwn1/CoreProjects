@@ -2,7 +2,7 @@ package com.nosliw.common.strvalue.valueinfo;
 
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntityBasic;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 
@@ -21,7 +21,7 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 	
 	public HAPValueInfo getChildByPath(String path){
 		HAPValueInfo out = this;
-		String[] pathSegs = HAPNamingConversionUtility.parsePaths(path);
+		String[] pathSegs = HAPUtilityNamingConversion.parsePaths(path);
 		for(String pathSeg: pathSegs){
 			out = out.getElement(pathSeg);
 		}

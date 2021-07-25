@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.component.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPWithComplexEntity;
+import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;

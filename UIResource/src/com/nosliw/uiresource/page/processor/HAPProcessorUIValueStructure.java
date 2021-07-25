@@ -7,8 +7,8 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
-import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.component.valuestructure.HAPProcessorValueStructureInComponent;
 import com.nosliw.data.core.component.valuestructure.HAPValueStructureInComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -167,7 +167,7 @@ public class HAPProcessorUIValueStructure {
 		if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeUITag.getUIUnitTagDefinition().getTagName())).getValueStructureDefinition().getInfo())) {
 			Set<String> categarys = new HashSet<String>();
 			categarys.add(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
-			Map<String, String> contextMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeUITag.getAttributes().get(HAPConstantShared.UITAG_PARM_CONTEXT));
+			Map<String, String> contextMapping = HAPUtilityNamingConversion.parsePropertyValuePairs(exeUITag.getAttributes().get(HAPConstantShared.UITAG_PARM_CONTEXT));
 			exeUITag.setContextMapping(contextMapping);
 			HAPProcessorEscalate.process(exeUITag.getBody().getValueStructureDefinitionNode(), categarys, contextMapping, inheritanceExcludedInfo);
 		}

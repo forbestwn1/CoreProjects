@@ -1,11 +1,11 @@
 package com.nosliw.data.core.story;
 
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPUtilityGroup {
 
 	public static String buildInsertElementPath(int index) {
-		return HAPNamingConversionUtility.cascadeLevel1(new String[]{HAPElementGroup.ELEMENTS, index+""});
+		return HAPUtilityNamingConversion.cascadeLevel1(new String[]{HAPElementGroup.ELEMENTS, index+""});
 	}
 	
 	public static String buildAppendElementPath() {
@@ -13,7 +13,7 @@ public class HAPUtilityGroup {
 	}
 	
 	public static String buildDeleteElementPath(int id) {
-		return HAPNamingConversionUtility.cascadeLevel1(new String[]{HAPElementGroup.ELEMENTS, "-"+id+""});
+		return HAPUtilityNamingConversion.cascadeLevel1(new String[]{HAPElementGroup.ELEMENTS, "-"+id+""});
 	}	
 	
 //	public static HAPGroupElementPatchPathInfo parseGroupElementPath(String path) {

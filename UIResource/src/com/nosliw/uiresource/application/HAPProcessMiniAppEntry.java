@@ -143,7 +143,7 @@ public class HAPProcessMiniAppEntry {
 			HAPResourceDefinitionProcess processDef = entryExe.getProcessDefinition(eventHandlerDef.getTask().getTaskDefinition());
 //			HAPDefinitionProcessSuiteElementEntity processDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(eventHandlerDef.getProcess().getTaskDefinition(), moduleExe.getDefinition().getAttachmentContainer(), processMan.getPluginManager());
 			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(processDef, null, serviceProviders, runtimeEnv.getProcessManager(), runtimeEnv, processTracker);
-			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getTask(), eventProcessor, HAPContainerStructure.createDefault(moduleExe.getContext()), null, runtimeEnv);			
+			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getTask(), eventProcessor, HAPContainerStructure.createDefault(moduleExe.getValueStructureWrapper()), null, runtimeEnv);			
 			out.addEventHandler(eventName, processExeWrapper);
 		}	
 		

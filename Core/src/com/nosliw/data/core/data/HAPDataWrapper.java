@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /**
  * DataWapper is used to create data structure during processing constant in configuration
@@ -101,7 +101,7 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 				//it is not case for json structure 
 				this.setValueFormat(HAPSerializationFormat.LITERATE);
 				//parse literate to get data type and value parts
-				String[] parts = HAPNamingConversionUtility.splitTextByComponents(text.substring(TOKEN_LITERATE.length()), SEPERATOR_DATATYPE);
+				String[] parts = HAPUtilityNamingConversion.splitTextByComponents(text.substring(TOKEN_LITERATE.length()), SEPERATOR_DATATYPE);
 				if(parts.length<2)   return false;
 				this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), parts[0], HAPSerializationFormat.LITERATE);
 				this.m_value = parts[1];

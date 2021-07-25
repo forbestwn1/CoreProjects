@@ -17,11 +17,11 @@ public class HAPUtilityContextStructure {
 		if(to==null)  return from;
 		
 		HAPValueStructure fromModify = toSolidContextStructure(from, to.isFlat());
-		if(to.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+		if(to.getDataType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
 			((HAPValueStructureDefinitionFlat)to.cloneStructure()).hardMergeWith((HAPValueStructureDefinitionFlat)fromModify);
 			return to;
 		}
-		else if(to.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+		else if(to.getDataType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			((HAPValueStructureDefinitionGroup)to.cloneStructure()).hardMergeWith((HAPValueStructureDefinitionGroup)fromModify);
 			return to;
 		}
@@ -31,19 +31,19 @@ public class HAPUtilityContextStructure {
 	}
 	
 	public static HAPValueStructure toSolidContextStructure(HAPValueStructure context, boolean isFlat) {
-		if(context==null || context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY)) {
+		if(context==null || context.getDataType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY)) {
 			if(isFlat)  return new HAPValueStructureDefinitionFlat();
 			else return new HAPValueStructureDefinitionGroup();
 		}
 		
 		if(context.isFlat()==isFlat)   return context;
 		else {
-			if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
+			if(context.getDataType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
 				HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
 				out.setFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPValueStructureDefinitionFlat)context);
 				return out;
 			}
-			else if(context.getType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
+			else if(context.getDataType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 				HAPValueStructureDefinitionFlat out = buildContextFromContextGroup((HAPValueStructureDefinitionGroup)context);
 				return out;
 			}

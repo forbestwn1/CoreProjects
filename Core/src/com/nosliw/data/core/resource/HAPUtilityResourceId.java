@@ -9,13 +9,13 @@ import java.util.List;
 
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityResourceId {
 
 	public static String buildResourceIdLiterate(HAPResourceId resourceId) {
-		return HAPNamingConversionUtility.cascadeLevel2(new String[]{resourceId.getType(), buildResourceCoreIdLiterate(resourceId)});
+		return HAPUtilityNamingConversion.cascadeLevel2(new String[]{resourceId.getType(), buildResourceCoreIdLiterate(resourceId)});
 	}
 	
 	//build literate for id part
@@ -37,7 +37,7 @@ public class HAPUtilityResourceId {
 	}
 	
 	public static String[] parseResourceIdLiterate(String idLiterate) {
-		return HAPNamingConversionUtility.parseLevel2(idLiterate);
+		return HAPUtilityNamingConversion.parseLevel2(idLiterate);
 	}
 
 	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String literate) {

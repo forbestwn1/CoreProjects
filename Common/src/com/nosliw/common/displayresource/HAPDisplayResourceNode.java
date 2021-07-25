@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 @HAPEntityWithAttribute
 public class HAPDisplayResourceNode extends HAPDisplayResource{
@@ -25,13 +25,13 @@ public class HAPDisplayResourceNode extends HAPDisplayResource{
 	
 	public HAPDisplayResource getResource(String name) {
 		if(HAPBasicUtility.isStringEmpty(name))  return this;
-		String[] segs = HAPNamingConversionUtility.parsePaths(name);
+		String[] segs = HAPUtilityNamingConversion.parsePaths(name);
 		return this.getChild(segs, 0); 
 	}
 
 	public HAPDisplayResourceNode getResourceNode(String name) {
 		if(HAPBasicUtility.isStringEmpty(name))  return this;
-		String[] segs = HAPNamingConversionUtility.parsePaths(name);
+		String[] segs = HAPUtilityNamingConversion.parsePaths(name);
 		HAPDisplayResourceNode out = (HAPDisplayResourceNode)this.getChild(segs, 0);
 		if(out==null)  out = new HAPDisplayResourceNode();
 		return out;

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPResourceIdEmbeded  extends HAPResourceId{
 
@@ -42,7 +42,7 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 	
 	@Override
 	public String getCoreIdLiterate() {
-		return HAPNamingConversionUtility.cascadeLevel3(this.m_path, this.m_parentId.toStringValue(HAPSerializationFormat.LITERATE));
+		return HAPUtilityNamingConversion.cascadeLevel3(this.m_path, this.m_parentId.toStringValue(HAPSerializationFormat.LITERATE));
 		
 //		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 //		this.buildCoreJsonMap(jsonMap, null);
@@ -51,7 +51,7 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 
 	@Override
 	protected void buildCoreIdByLiterate(String idLiterate) {
-		String[] idSegs = HAPNamingConversionUtility.parseLevel3(idLiterate);
+		String[] idSegs = HAPUtilityNamingConversion.parseLevel3(idLiterate);
 		this.m_path = idSegs[0];
 		this.m_parentId = HAPFactoryResourceId.newInstance(idSegs[1]);
 		

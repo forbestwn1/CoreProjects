@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
@@ -112,7 +112,7 @@ public class HAPUtilityProcess {
 				HAPReferenceElement relativeElePath = relativeEle.getPathFormat();
 				String fullName = relativeElePath.getFullPath();
 				for(int i=0;i<pathSegs.length; i++) {
-					fullName = HAPNamingConversionUtility.buildPath(fullName, pathSegs[i]);
+					fullName = HAPUtilityNamingConversion.buildPath(fullName, pathSegs[i]);
 				}
 				expectedVariablesInfo.put(fullName, expectedVarInfo);
 			}

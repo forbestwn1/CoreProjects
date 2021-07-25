@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /**
  * Resource Id to identify resource 
@@ -99,7 +99,7 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
+		String[] segs = HAPUtilityNamingConversion.parseLevel2(literateValue);
 		if(segs.length==2) {
 			this.setType(segs[0]);
 			buildCoreIdByLiterate(segs[1]);

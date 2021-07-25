@@ -1,7 +1,5 @@
 package com.nosliw.data.core.component;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -22,12 +20,9 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 	//value structure definition within this component
 	private HAPWrapperValueStructure m_valueStructureWrapper;
 	
-	private List<HAPContextReference> m_contextRefs;
-	
 	private HAPLocalReferenceBase m_localReferenceBase;
 
 	public HAPResourceDefinitionComplexImp() {
-		this.m_contextRefs = new ArrayList<HAPContextReference>();
 	}
 
 	@Override
@@ -54,10 +49,6 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 		if(this.m_valueStructureWrapper==null)    this.m_valueStructureWrapper = new HAPWrapperValueStructure(valueStructure);
 		else  this.m_valueStructureWrapper.setValueStructure(valueStructure);
 	}
-	
-	@Override
-	public List<HAPContextReference> getContextReferences(){   return this.m_contextRefs; 	}
-	public void addContextReference(HAPContextReference contextRef) {   this.m_contextRefs.add(contextRef);    }
 	
 	public HAPValueStructureDefinitionGroup getContextNotFlat() {   return (HAPValueStructureDefinitionGroup)this.getValueStructureWrapper().getValueStructure();    }
 	public HAPValueStructureDefinitionFlat getContextFlat() {    return (HAPValueStructureDefinitionFlat)this.getValueStructureWrapper().getValueStructure();    }

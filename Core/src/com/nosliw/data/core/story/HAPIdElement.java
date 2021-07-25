@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 @HAPEntityWithAttribute
 public class HAPIdElement extends HAPSerializableImp implements HAPReferenceElement{
@@ -48,12 +48,12 @@ public class HAPIdElement extends HAPSerializableImp implements HAPReferenceElem
 
 	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getCategary(), this.getId()});
+		return HAPUtilityNamingConversion.cascadeLevel2(new String[]{this.getCategary(), this.getId()});
 	}
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
-		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
+		String[] segs = HAPUtilityNamingConversion.parseLevel2(literateValue);
 		this.m_categary = segs[0];
 		this.m_id = segs[1];
 		return true;

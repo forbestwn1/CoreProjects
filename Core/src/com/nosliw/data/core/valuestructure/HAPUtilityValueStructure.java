@@ -8,7 +8,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.structure.HAPElementStructure;
@@ -147,7 +147,7 @@ public class HAPUtilityValueStructure {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 			HAPElementStructureNode nodeEle = (HAPElementStructureNode)contextDefEle;
 			for(String childName : nodeEle.getChildren().keySet()) {
-				String childPath = HAPNamingConversionUtility.cascadeComponentPath(path, childName);
+				String childPath = HAPUtilityNamingConversion.cascadeComponentPath(path, childName);
 				discoverDataVariableInElement(childPath, nodeEle.getChildren().get(childName), criterias);
 			}
 			break;

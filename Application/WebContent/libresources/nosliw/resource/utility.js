@@ -13,7 +13,7 @@ var node_utility =
 {
 		buildResourceTree : function(tree, resource){
 			var resourceId = resource.resourceInfo[node_COMMONATRIBUTECONSTANT.RESOURCEINFO_ID];
-			var type = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE];
+			var type = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE];
 			var id = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID];
 			var typeResources = tree[type];
 			if(typeResources==undefined){
@@ -24,7 +24,7 @@ var node_utility =
 		},
 
 		getResourceFromTree : function(tree, resourceId){
-			var type = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE];
+			var type = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE];
 			var id = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID];
 			var typeResources = tree[type];
 			if(typeResources==undefined)  return undefined;

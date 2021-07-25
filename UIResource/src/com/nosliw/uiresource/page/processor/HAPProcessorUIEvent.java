@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextRelative;
@@ -43,7 +43,7 @@ public class HAPProcessorUIEvent {
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getValueStructureDefinition().getInfo())) {
 				Map<String, HAPDefinitionUIEvent> mappedEventDefs = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 				
-				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstantShared.UITAG_PARM_EVENT));
+				Map<String, String> nameMapping = HAPUtilityNamingConversion.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstantShared.UITAG_PARM_EVENT));
 				exeTag.setEventMapping(nameMapping);
 				Map<String, HAPDefinitionUIEvent> exeEventDefs = body.getEventDefinitions();
 				for(String eventName : exeEventDefs.keySet()) {

@@ -9,7 +9,7 @@ var packageObj = library.getChildPackage("entity");
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_ResourceId = function(type, id){
-	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = type;
+	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE] = type;
 	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = node_resourceUtility.buildReourceCoreIdLiterate(id);
 	this.name = id;
 };	

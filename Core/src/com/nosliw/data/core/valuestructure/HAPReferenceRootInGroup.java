@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 
 @HAPEntityWithAttribute
@@ -47,9 +47,9 @@ public class HAPReferenceRootInGroup extends HAPSerializableImp implements HAPRe
 	
 	public String getName() {   return this.m_name;   }
 
-	public String getFullName() {  return HAPNamingConversionUtility.cascadeElements(new String[] {this.m_name, this.m_categary}, HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);   }
+	public String getFullName() {  return HAPUtilityNamingConversion.cascadeElements(new String[] {this.m_name, this.m_categary}, HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);   }
 
-	public String getPathFormat() {  return HAPNamingConversionUtility.buildPath(m_categary, m_name);   }
+	public String getPathFormat() {  return HAPUtilityNamingConversion.buildPath(m_categary, m_name);   }
 	
 	@Override
 	public HAPReferenceRoot cloneStructureRootReference() {  return new HAPReferenceRootInGroup(this.m_categary, this.m_name);  }
@@ -78,7 +78,7 @@ public class HAPReferenceRootInGroup extends HAPSerializableImp implements HAPRe
 	
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
-		String[] segs = HAPNamingConversionUtility.splitTextByElements(literateValue, HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);
+		String[] segs = HAPUtilityNamingConversion.splitTextByElements(literateValue, HAPConstantShared.SEPERATOR_CONTEXT_CATEGARY_NAME);
 		if(segs.length>=1)   this.m_name = segs[0];
 		if(segs.length>=2)   this.m_categary = segs[1];
 		return true;  

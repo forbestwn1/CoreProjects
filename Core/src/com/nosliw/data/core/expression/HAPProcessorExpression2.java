@@ -9,10 +9,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPUtilityComponentConstant;
+import com.nosliw.data.core.component.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
@@ -179,7 +179,7 @@ public class HAPProcessorExpression2 {
 					String referenceTo = null;
 					String eleName = null;
 					
-					String[] segs = HAPNamingConversionUtility.splitTextByComponents(refName, "AT");
+					String[] segs = HAPUtilityNamingConversion.splitTextByComponents(refName, "AT");
 					if(segs.length==1) {
 						referenceTo = segs[0];
 					}

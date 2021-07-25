@@ -7,7 +7,7 @@ import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /**
  * Data type id to specify the data type
@@ -65,14 +65,14 @@ public class HAPDataTypeId extends HAPSerializableImp{
 				versionLiterate = this.m_version.toStringValue(HAPSerializationFormat.LITERATE);
 			}
 //			this.m_fullName = HAPNamingConversionUtility.cascadeLevel1(new String[] {this.getName(), versionLiterate, this.m_parms.toStringValue(HAPSerializationFormat.LITERATE)});
-			this.m_fullName = HAPNamingConversionUtility.cascadeLevel1(new String[] {this.getName(), versionLiterate});
+			this.m_fullName = HAPUtilityNamingConversion.cascadeLevel1(new String[] {this.getName(), versionLiterate});
 		}
 		return this.m_fullName;
 	}
 	public void setFullName(String fullName){
 		this.m_fullName = null;
 
-		String[] segs = HAPNamingConversionUtility.parseLevel1(fullName);
+		String[] segs = HAPUtilityNamingConversion.parseLevel1(fullName);
 		this.m_name = segs[0];
 		if(segs.length>=2){
 			this.m_version = new HAPDataTypeVersion(segs[1]);
@@ -114,7 +114,7 @@ public class HAPDataTypeId extends HAPSerializableImp{
 	}
 	
 	public static String buildStringValue(String name, String version){
-		return HAPNamingConversionUtility.cascadeLevel1(name, version);
+		return HAPUtilityNamingConversion.cascadeLevel1(name, version);
 	}
 	
 	@Override

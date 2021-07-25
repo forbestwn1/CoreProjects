@@ -5,11 +5,13 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPParserElement;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
@@ -141,7 +143,12 @@ public class HAPUIResourceManager {
 		}
 		
 		//compile it
-		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, context, parentContext, null, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
+		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, parentContext, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
+		return out;
+	}
+	
+	public HAPExecutableUIUnitPage getUIPage(HAPDefinitionUIPage pageDef, String id, HAPValueStructure parentValueStructure, HAPContextProcessAttachmentReference attachmentReferenceContext) {
+		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, parentValueStructure, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
 		return out;
 	}
 

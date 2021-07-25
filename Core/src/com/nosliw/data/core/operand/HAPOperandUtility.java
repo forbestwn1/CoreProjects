@@ -11,7 +11,7 @@ import java.util.Set;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -120,7 +120,7 @@ public class HAPOperandUtility {
 			//attribute start with variable
 			HAPOperandVariable varOperand = (HAPOperandVariable)attrInfo.startOperand.getOperand();
 			attrInfo.path.add(0, varOperand.getVariableName());
-			String path = HAPNamingConversionUtility.cascadePath(attrInfo.path.toArray(new String[0]));
+			String path = HAPUtilityNamingConversion.cascadePath(attrInfo.path.toArray(new String[0]));
 			
 			Map<String, String> opTypeByName = new LinkedHashMap<String, String>();
 			for(String varName : dataVarNames)   opTypeByName.put(varName, HAPConstantShared.EXPRESSION_OPERAND_VARIABLE);
@@ -136,7 +136,7 @@ public class HAPOperandUtility {
 				else if(path.startsWith(name+".")){
 					//replace with variable operand.child
 					HAPOperand operand = new HAPOperandVariable(name);
-					String[] pathSegs = HAPNamingConversionUtility.parsePaths(path.substring(name.length()+1));
+					String[] pathSegs = HAPUtilityNamingConversion.parsePaths(path.substring(name.length()+1));
 					for(String pathSeg : pathSegs){
 						List<HAPParmInOperationOperand> parms = new ArrayList<HAPParmInOperationOperand>();
 						parms.add(new HAPParmInOperationOperand(HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDDATA_NAME, new HAPOperandConstant("#string:simple:"+pathSeg)));

@@ -2,7 +2,7 @@ package com.nosliw.data.core.dataassociation.mapping;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPReferenceRootUnknowType;
 
@@ -13,7 +13,7 @@ public class HAPTarget {
 	private String m_valueStructure;
 	
 	public HAPTarget(String leterate) {
-		String[] segs = HAPNamingConversionUtility.parseLevel1(leterate);
+		String[] segs = HAPUtilityNamingConversion.parseLevel1(leterate);
 		if(segs.length==1) {
 			this.m_rootReference = new HAPReferenceRootUnknowType(segs[0]);
 		}

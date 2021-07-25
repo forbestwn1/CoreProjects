@@ -18,7 +18,7 @@ public class HAPFactoryResourceId {
 	private static HAPResourceId newInstanceByJSONObect(String resourceType, JSONObject jsonObj) {
 		Object coreIdObj = jsonObj;
 		
-		Object typeObj = jsonObj.opt(HAPResourceId.TYPE);
+		Object typeObj = jsonObj.opt(HAPResourceId.RESOURCETYPE);
 		String structure = (String)jsonObj.opt(HAPResourceId.STRUCUTRE);
 		if(typeObj!=null) resourceType = (String)typeObj;
 		
@@ -59,7 +59,7 @@ public class HAPFactoryResourceId {
 		}
 		else if(content instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)content;
-			out = newInstance(jsonObj.getString(HAPResourceId.TYPE), jsonObj.get(HAPResourceId.ID));
+			out = newInstance(jsonObj.getString(HAPResourceId.RESOURCETYPE), jsonObj.get(HAPResourceId.ID));
 		}
 		return out;
 	}

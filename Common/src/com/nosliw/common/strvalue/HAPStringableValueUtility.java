@@ -15,7 +15,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.common.utils.HAPXMLUtility;
 
 public class HAPStringableValueUtility {
@@ -60,7 +60,7 @@ public class HAPStringableValueUtility {
 		HAPStringableValue out = entity;
 		try{
 			if(HAPBasicUtility.isStringNotEmpty(path)){
-				String[] pathSegs = HAPNamingConversionUtility.parsePaths(path);
+				String[] pathSegs = HAPUtilityNamingConversion.parsePaths(path);
 				HAPStringableValueEntity parent = null;
 				HAPValueInfoEntity parentValueInfo = null;
 				HAPValueInfo childValueInfo = valueInfo;

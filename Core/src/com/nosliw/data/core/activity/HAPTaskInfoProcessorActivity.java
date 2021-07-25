@@ -1,7 +1,7 @@
 package com.nosliw.data.core.activity;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutableTask;

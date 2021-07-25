@@ -10,13 +10,13 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPInfoChildResource;
-import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
+import com.nosliw.data.core.component.HAPInfoChildResource;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 /**
@@ -82,7 +82,7 @@ public class HAPDefinitionModule extends HAPComponentImp{
 	@Override
 	public HAPComponent cloneComponent() {
 		HAPDefinitionModule out = new HAPDefinitionModule();
-		this.cloneToComponent(out);
+		this.cloneToComponent(out, true);
 		for(HAPDefinitionModuleUI ui : this.m_uis) {
 			out.m_uis.add(ui.cloneModuleUIDef());
 		}

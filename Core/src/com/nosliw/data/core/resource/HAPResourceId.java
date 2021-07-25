@@ -17,7 +17,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 public abstract class HAPResourceId extends HAPSerializableImp implements HAPResourceDefinitionOrId{
 
 	@HAPAttribute
-	public static String TYPE = "type";
+	public static String RESOURCETYPE = "resourceType";
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -65,7 +65,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(RESOURCETYPE, this.getType());
 		
 		Map<String, String> jsonMapId = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMapId = new LinkedHashMap<String, Class<?>>();
@@ -77,7 +77,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(RESOURCETYPE, this.getType());
 		jsonMap.put(ID, HAPUtilityResourceId.buildResourceCoreIdLiterate(this));
 	}
 

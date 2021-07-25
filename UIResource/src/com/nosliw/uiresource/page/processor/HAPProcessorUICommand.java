@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.component.HAPDefinitionCommand;
 import com.nosliw.data.core.component.HAPDefinitionEvent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -96,7 +96,7 @@ public class HAPProcessorUICommand {
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getValueStructureDefinition().getInfo())) {
 				Map<String, HAPDefinitionUICommand> mappedCommandDefs = new LinkedHashMap<String, HAPDefinitionUICommand>();
 				
-				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstantShared.UITAG_PARM_COMMAND));
+				Map<String, String> nameMapping = HAPUtilityNamingConversion.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstantShared.UITAG_PARM_COMMAND));
 				exeTag.setCommandMapping(nameMapping);
 				Map<String, HAPDefinitionUICommand> exeCommandDefs = body.getCommandDefinitions();
 				for(String commandName : exeCommandDefs.keySet()) {

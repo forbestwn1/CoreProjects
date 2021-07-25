@@ -1,7 +1,7 @@
 package com.nosliw.uiresource.resource;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPUIAppEntryId extends HAPSerializableImp{
 
@@ -21,12 +21,12 @@ public class HAPUIAppEntryId extends HAPSerializableImp{
 
 	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeLevel1(m_appId, m_entry);
+		return HAPUtilityNamingConversion.cascadeLevel1(m_appId, m_entry);
 	}
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
-		String[] segs = HAPNamingConversionUtility.parseLevel1(literateValue);
+		String[] segs = HAPUtilityNamingConversion.parseLevel1(literateValue);
 		this.m_appId = segs[0];
 		this.m_entry = segs[1];
 		return true;

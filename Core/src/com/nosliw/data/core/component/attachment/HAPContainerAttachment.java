@@ -74,7 +74,7 @@ public class HAPContainerAttachment extends HAPSerializableImp{
 		}
 	}
 
-	public HAPAttachment getElement(HAPReferenceAttachment attachmentReference) {   return this.getElement(attachmentReference.getType(), attachmentReference.getName());  }
+	public HAPAttachment getElement(HAPReferenceAttachment attachmentReference) {   return this.getElement(attachmentReference.getDataType(), attachmentReference.getName());  }
 	
 	public HAPAttachment getElement(String type, String name) {
 		HAPAttachment out = null;

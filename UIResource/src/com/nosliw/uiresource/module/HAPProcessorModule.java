@@ -10,13 +10,15 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPNosliwUtility;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPHandlerLifecycle;
+import com.nosliw.data.core.component.HAPResultSolveReference;
+import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
-import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPProcessorProcess;
 import com.nosliw.data.core.process1.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
@@ -37,6 +39,7 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 
 public class HAPProcessorModule {
@@ -49,14 +52,13 @@ public class HAPProcessorModule {
 			HAPUIResourceManager uiResourceMan) {
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-		return HAPProcessorModule.process(moduleDefinition, id, parentContext, null, runtimeEnv, uiResourceMan, processTracker);
+		return HAPProcessorModule.process(moduleDefinition, id, parentContext, runtimeEnv, uiResourceMan, processTracker);
 	}
 	
 	private static HAPExecutableModule process(
 			HAPDefinitionModule moduleDefinition,
 			String id, 
 			HAPValueStructureDefinitionGroup parentContext, 
-			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,
 			HAPProcessTracker processTracker) {
@@ -67,7 +69,7 @@ public class HAPProcessorModule {
 		HAPConfigureProcessorStructure contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForModule();
 		
 		//service providers
-		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(moduleDefinition.getAttachmentContainer(), serviceProviders, runtimeEnv.getServiceManager().getServiceDefinitionManager()); 
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(moduleDefinition.getAttachmentContainer(), runtimeEnv.getServiceManager().getServiceDefinitionManager()); 
 		
 		//process context 
 		out.setContextGroup((HAPValueStructureDefinitionGroup)HAPProcessorContext.process(moduleDefinition.getValueStructureWrapper(), HAPContainerStructure.createDefault(parentContext==null?new HAPValueStructureDefinitionGroup():parentContext), contextProcessConfg, runtimeEnv));
@@ -89,7 +91,7 @@ public class HAPProcessorModule {
 		//process ui
 		for(HAPDefinitionModuleUI ui : moduleDefinition.getUIs()) {
 			if(!HAPUtilityEntityInfo.isEnabled(ui)) {
-				HAPExecutableModuleUI uiExe = processModuleUI(ui, ui.getName(), out, allServiceProviders, runtimeEnv.getProcessManager(), uiResourceMan, runtimeEnv, processTracker);
+				HAPExecutableModuleUI uiExe = processModuleUI(ui, ui.getName(), out, runtimeEnv, processTracker);
 				out.addModuleUI(uiExe);
 			}
 		}
@@ -101,21 +103,33 @@ public class HAPProcessorModule {
 			HAPDefinitionModuleUI moduleUIDefinition,
 			String id,
 			HAPExecutableModule moduleExe,
-			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-			HAPManagerProcess processMan,
+			HAPContextProcessAttachmentReference attachmentReferenceContext,
 			HAPUIResourceManager uiResourceMan,
-			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		HAPExecutableModuleUI out = new HAPExecutableModuleUI(moduleUIDefinition, id);
 		
-		//process page, use context in module override context in page
-		//find pape resource id from attachment mapping
-		HAPAttachmentReference pageAttachment = (HAPAttachmentReference)moduleExe.getDefinition().getAttachmentContainer().getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, moduleUIDefinition.getPage());
-		HAPResourceId pageResourceId = pageAttachment.getReferenceId();
+		HAPRuntimeEnvironment runtimeEnv = attachmentReferenceContext.getRuntimeEnvironment();
+		
+		HAPDefinitionModule moduleDef = moduleExe.getDefinition();
 
-		//attachment
-//		HAPAttachmentContainer mappedParentAttachment = HAPComponentUtility.buildInternalAttachment(pageResourceId, moduleExe.getDefinition().getAttachmentContainer(), moduleUIDefinition);
+		
+		
+		//resolve page reference
+		HAPResultSolveReference refSolveResult = HAPUtilityComponent.solveReference(moduleUIDefinition.getPage(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, attachmentReferenceContext);
+		HAPExecutableUIUnitPage pageExe = uiResourceMan.getUIPage((HAPDefinitionUIPage)refSolveResult.getEntity(), id, moduleDef.getValueStructure(), attachmentReferenceContext);
 
+		//data mapping between module and page
+		HAPValueStructureDefinitionGroup mappingContextGroup = new HAPValueStructureDefinitionGroup();
+		HAPProcessorDataAssociation.processDataAssociation(
+				HAPContainerStructure.createDefault(moduleExe.getValueStructureWrapper().getValueStructure()), 
+				moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), 
+				HAPContainerStructure.createDefault(pageExe.getUIUnitDefinition().getValueStructure()), 
+				attachmentReferenceContext.getComplexEntity().getAttachmentContainer(), 
+				null, 
+				runtimeEnv);
+		
+
+		
 		//ui decoration
 		//ui decoration from page first
 //		out.addUIDecoration(pageInfo.getDecoration());
@@ -124,6 +138,23 @@ public class HAPProcessorModule {
 		//ui decoration from module
 		out.addUIDecoration(moduleExe.getDefinition().getUIDecoration());
 		
+		
+		
+		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPContainerStructure.createDefault(HAPValueStructureDefinitionEmpty.flatStructure()), null, runtimeEnv);
+		mappingContextGroup.setFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPValueStructureDefinitionFlat)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk
+
+		
+		
+		//process page, use context in module override context in page
+		//find pape resource id from attachment mapping
+		
+		
+		HAPAttachmentReference pageAttachment = (HAPAttachmentReference)moduleDef.getAttachmentContainer().getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, moduleUIDefinition.getPage());
+		HAPResourceId pageResourceId = pageAttachment.getReferenceId();
+
+		//attachment
+//		HAPAttachmentContainer mappedParentAttachment = HAPComponentUtility.buildInternalAttachment(pageResourceId, moduleExe.getDefinition().getAttachmentContainer(), moduleUIDefinition);
+
 		//context
 		HAPValueStructureDefinitionGroup mappingContextGroup = new HAPValueStructureDefinitionGroup();
 		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPContainerStructure.createDefault(HAPValueStructureDefinitionEmpty.flatStructure()), null, runtimeEnv);

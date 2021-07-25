@@ -5,7 +5,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /**
  * Segment in path that indicate how to convert source data type to target data type
@@ -46,7 +46,7 @@ public class HAPRelationshipPathSegment extends HAPSerializableImp{
 	
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
-		String[] details = HAPNamingConversionUtility.parseLevel2(literateValue);
+		String[] details = HAPUtilityNamingConversion.parseLevel2(literateValue);
 		this.m_type = details[0];
 		this.m_id = details[1];
 		return true;
@@ -54,6 +54,6 @@ public class HAPRelationshipPathSegment extends HAPSerializableImp{
 	
 	@Override
 	protected String buildLiterate(){  
-		return HAPNamingConversionUtility.cascadeLevel2(m_type, m_id);
+		return HAPUtilityNamingConversion.cascadeLevel2(m_type, m_id);
 	}
 }

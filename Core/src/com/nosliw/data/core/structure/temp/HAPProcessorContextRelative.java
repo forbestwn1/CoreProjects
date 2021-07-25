@@ -11,7 +11,7 @@ import java.util.Set;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
@@ -144,11 +144,11 @@ public class HAPProcessorContextRelative {
 						if(parentContextEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 							HAPInfoPathToSolidRoot parentSolidNodeRef = ((HAPElementStructureLeafRelative)parentContextEle).getSolidNodeReference();
 							refRootId = parentSolidNodeRef.getRootNodeId();
-							refPath = HAPNamingConversionUtility.cascadePath(parentSolidNodeRef.getPath(), resolveInfo.remainSolidPath);
+							refPath = HAPUtilityNamingConversion.cascadePath(parentSolidNodeRef.getPath(), resolveInfo.remainSolidPath);
 						}
 						else {
 							refRootId = resolveInfo.referredRoot.getId();
-							refPath = HAPNamingConversionUtility.cascadePath(resolveInfo.path.getSubPath(), resolveInfo.remainSolidPath);
+							refPath = HAPUtilityNamingConversion.cascadePath(resolveInfo.path.getSubPath(), resolveInfo.remainSolidPath);
 						}
 						defContextElementRelative.setSolidNodeReference(new HAPInfoPathToSolidRoot(refRootId, refPath));
 					}

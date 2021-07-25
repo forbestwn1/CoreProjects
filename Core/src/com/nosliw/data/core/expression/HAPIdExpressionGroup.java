@@ -1,7 +1,7 @@
 package com.nosliw.data.core.expression;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPIdExpressionGroup extends HAPSerializableImp{
 
@@ -17,13 +17,13 @@ public class HAPIdExpressionGroup extends HAPSerializableImp{
 		this.parseId(id);
 	}
 
-	public String getId(){  return HAPNamingConversionUtility.cascadeLevel1(m_expressionGroupId, m_suiteId);  }
+	public String getId(){  return HAPUtilityNamingConversion.cascadeLevel1(m_expressionGroupId, m_suiteId);  }
 
 	public String getSuiteId() {   return this.m_suiteId;   }
 	public String getExpressionGroupId() {    return this.m_expressionGroupId;    }
 	
 	private void parseId(String id) {
-		String[] segs = HAPNamingConversionUtility.parseLevel1(id);
+		String[] segs = HAPUtilityNamingConversion.parseLevel1(id);
 		this.m_expressionGroupId = segs[0];
 		if(segs.length>1)	this.m_suiteId = segs[1];
 	}

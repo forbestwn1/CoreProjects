@@ -10,7 +10,7 @@ import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPValueInfoReference extends HAPValueInfo{
 

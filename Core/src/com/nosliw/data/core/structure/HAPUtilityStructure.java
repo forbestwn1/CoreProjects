@@ -14,7 +14,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
@@ -473,7 +473,7 @@ public class HAPUtilityStructure {
 								childNodeOrigin = new HAPElementStructureLeafData();
 								nodeOrigin.addChild(nodeName, childNodeOrigin);
 							}
-							mergeElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), runtimeEnv);
+							mergeElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPUtilityNamingConversion.cascadePath(path, nodeName), runtimeEnv);
 							break;
 						}
 						case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
@@ -482,7 +482,7 @@ public class HAPUtilityStructure {
 								childNodeOrigin = new HAPElementStructureNode();
 								nodeOrigin.addChild(nodeName, childNodeOrigin);
 							}
-							mergeElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), runtimeEnv);
+							mergeElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPUtilityNamingConversion.cascadePath(path, nodeName), runtimeEnv);
 							break;
 						}
 						default :

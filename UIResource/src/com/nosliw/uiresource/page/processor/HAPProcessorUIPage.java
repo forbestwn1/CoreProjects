@@ -1,11 +1,8 @@
 package com.nosliw.uiresource.page.processor;
 
-import java.util.Map;
-
-import com.nosliw.data.core.component.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
@@ -18,9 +15,7 @@ public class HAPProcessorUIPage {
 	public static HAPExecutableUIUnitPage processUIResource(
 			HAPDefinitionUIPage uiPageDef,
 			String id,
-			HAPValueStructureDefinitionGroup externalContext,
-			HAPValueStructureDefinitionGroup parentContext,
-			Map<String, HAPDefinitionServiceProvider> serviceProviders,
+			HAPValueStructure parentContext,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,
 			HAPManagerUITag uiTagMan,  

@@ -1,6 +1,6 @@
 package com.nosliw.common.path;
 
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPPath {
 
@@ -12,7 +12,7 @@ public class HAPPath {
 
 	public HAPPath(String path){
 		this.m_path = path;
-		this.m_pathSegs = HAPNamingConversionUtility.parsePaths(this.m_path);
+		this.m_pathSegs = HAPUtilityNamingConversion.parsePaths(this.m_path);
 	}
 	
 	public boolean isEmpty() {  return this.m_pathSegs.length==0;    }
@@ -28,11 +28,11 @@ public class HAPPath {
 	public int getLength() {  return this.m_pathSegs.length;  }
 	
 	public HAPPath appendSegment(String segment) {
-		return new HAPPath(HAPNamingConversionUtility.cascadePath(this.m_path, segment));
+		return new HAPPath(HAPUtilityNamingConversion.cascadePath(this.m_path, segment));
 	}
 	
 	public HAPPath appendPath(HAPPath path) {
-		return new HAPPath(HAPNamingConversionUtility.cascadePath(this.m_path, path.m_path));
+		return new HAPPath(HAPUtilityNamingConversion.cascadePath(this.m_path, path.m_path));
 	}
 	
 	public HAPPath clonePath() {

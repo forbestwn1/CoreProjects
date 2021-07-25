@@ -1,10 +1,7 @@
-package com.nosliw.data.core.component;
+package com.nosliw.data.core.component.attachment;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.component.attachment.HAPInfoAttachment;
+import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 

@@ -16,7 +16,7 @@ import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPConfigureUtility {
 
@@ -144,7 +144,7 @@ public class HAPConfigureUtility {
 
 		if(valueMap!=null){
 			for(String name : valueMap.keySet()){
-				String path = HAPNamingConversionUtility.cascadePath(importConfigure.getBasePath(), name);
+				String path = HAPUtilityNamingConversion.cascadePath(importConfigure.getBasePath(), name);
 				String value = valueMap.get(name).trim(); 
 				if(importConfigure.isHard()){
 					out.addConfigureItem(path, value);
