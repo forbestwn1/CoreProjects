@@ -1,16 +1,17 @@
 package com.nosliw.uiresource.page.processor;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.component.event.HAPDefinitionEvent;
+import com.nosliw.data.core.component.event.HAPExecutableEvent;
+import com.nosliw.data.core.component.event.HAPProcessEvent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextRelative;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
-import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
@@ -25,14 +26,16 @@ public class HAPProcessorUIEvent {
 
 		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
 		//process relative element in event defined in resource
-		Map<String, HAPDefinitionUIEvent> eventsDef = uiUnitDef.getEventDefinitions();
-		for(String name : eventsDef.keySet()) {
-			HAPDefinitionUIEvent processedEventDef = new HAPDefinitionUIEvent();
-			eventsDef.get(name).cloneToBase(processedEventDef);
-			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
-			uiExe.getBody().addEventDefinition(processedEventDef);
+		List<HAPDefinitionEvent> eventsDef = uiUnitDef.getEvents();
+		for(HAPDefinitionEvent event : eventsDef) {
+			HAPExecutableEvent eventExe = HAPProcessEvent.process(event, uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure(), runtimeEnv);
+			uiExe.getBody().addEventDefinition(eventExe);
 		}
-
+		
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
+			processEvent(childTag, runtimeEnv);
+		}
 	}
 	
 	public static void escalateEvent(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
@@ -41,15 +44,18 @@ public class HAPProcessorUIEvent {
 		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
 			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getValueStructureDefinition().getInfo())) {
-				Map<String, HAPDefinitionUIEvent> mappedEventDefs = new LinkedHashMap<String, HAPDefinitionUIEvent>();
+				List<HAPExecutableEvent> mappedEventDefs = new ArrayList<HAPExecutableEvent>();
 				
 				Map<String, String> nameMapping = HAPUtilityNamingConversion.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstantShared.UITAG_PARM_EVENT));
 				exeTag.setEventMapping(nameMapping);
-				Map<String, HAPDefinitionUIEvent> exeEventDefs = body.getEventDefinitions();
-				for(String eventName : exeEventDefs.keySet()) {
+				List<HAPExecutableEvent> exeEventDefs = body.getEvents();
+				for(HAPExecutableEvent event : exeEventDefs) {
+					HAPExecutableEvent mappedEvent = event.cloneExeEvent();
+					String eventName = mappedEvent.getName();
 					String mappedName = nameMapping.get(eventName);
 					if(mappedName==null)   mappedName = eventName;
-					mappedEventDefs.put(mappedName, exeEventDefs.get(eventName));
+					mappedEvent.setName(mappedName);
+					mappedEventDefs.add(mappedEvent);
 				}
 				escalate(exeTag, mappedEventDefs);
 			}
@@ -62,13 +68,13 @@ public class HAPProcessorUIEvent {
 		}
 	}
 
-	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPDefinitionUIEvent> eventsDef) {
+	private static void escalate(HAPExecutableUIUnit exeUnit, List<HAPExecutableEvent> eventsDef) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 		HAPExecutableUIUnit parent = exeUnit.getParent();
 		if(parent==null) {
-			for(String eventName : eventsDef.keySet()) {
-				if(body.getEventDefinition(eventName)==null) {
-					body.addEventDefinition(eventsDef.get(eventName));
+			for(HAPExecutableEvent event : eventsDef) {
+				if(body.getEventDefinition(event.getName())==null) {
+					body.addEventDefinition(event);
 				}
 			}
 		}

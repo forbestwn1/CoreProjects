@@ -5,16 +5,56 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
+import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
+import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
-public class HAPUtilityStructureDataAssociation {
+public class HAPUtilityDataAssociationnMapping {
 
+	public static HAPDefinitionDataAssociationMapping reverseMapping(HAPDefinitionDataAssociationMapping mappinigDataAssociation) {
+		HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
+		Map<String, HAPValueMapping> mappings = mappinigDataAssociation.getMappings();
+		for(String targetName : mappings.keySet()) {
+			HAPValueMapping mapping = mappings.get(targetName);
+			Map<String, HAPRootStructure> items = mapping.getItems();
+			for(String rootName : items.keySet()) {
+				HAPUtilityStructure.traverseElement(items.get(rootName), rootName, new HAPProcessorContextDefinitionElement() {
+
+					@Override
+					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
+						if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+							HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
+							String parent = relativeEle.getParent();
+							
+							HAPElementStructureLeafRelative reverseEle = new HAPElementStructureLeafRelative(eleInfo.getElementPath().getFullName());
+							reverseEle.setParent(targetName);
+							HAPValueMapping reverseValueMapping = out.getMapping(parent, true);
+							reverseValueMapping.addMapping(eleInfo.getElementPath().getFullName(), reverseEle);
+						}
+						return null;
+					}
+
+					@Override
+					public void postProcess(HAPInfoElement eleInfo, Object value) {}
+				}, null);
+			}
+			
+		}
+		return out;
+	}
+	
+	
+	
 	//automatic enhance mapping so that all the variables are mapped as target
 	public static HAPValueMapping expandMappingByTargetVariable(HAPValueMapping mapping, HAPVariableInfoInStructure targetVarsContainer) {
 		

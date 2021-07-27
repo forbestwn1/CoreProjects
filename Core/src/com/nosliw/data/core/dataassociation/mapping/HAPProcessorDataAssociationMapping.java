@@ -13,7 +13,6 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -33,17 +32,17 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPProcessorDataAssociationMapping {
 
-	public static HAPExecutableDataAssociationMapping processDataAssociation(HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableDataAssociationMapping processDataAssociation(HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociationMapping out = new HAPExecutableDataAssociationMapping(dataAssociation, input, output);
-		processDataAssociation(out, input, dataAssociation, output, attachmentContainer, daProcessConfigure, runtimeEnv);
+		processDataAssociation(out, input, dataAssociation, output, daProcessConfigure, runtimeEnv);
 		return out;
 	}
 	
 	//process input configure for activity and generate flat context for activity
-	public static void processDataAssociation(HAPExecutableDataAssociationMapping out, HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPContainerAttachment attachmentContainer, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processDataAssociation(HAPExecutableDataAssociationMapping out, HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		Map<String, HAPValueMapping> valueMappings = dataAssociation.getMappings();
 		for(String targetName : valueMappings.keySet()) {
-			HAPExecutableMapping associationExe = processAssociation(input, valueMappings.get(targetName), output.getStructure(targetName), attachmentContainer, out.getInputDependency(), daProcessConfigure, runtimeEnv);
+			HAPExecutableMapping associationExe = processValueMapping(input, valueMappings.get(targetName), output.getStructure(targetName), out.getInputDependency(), daProcessConfigure, runtimeEnv);
 			out.addMapping(targetName, associationExe);
 		}
 	}
@@ -56,7 +55,7 @@ public class HAPProcessorDataAssociationMapping {
 	}
 	
 	//enhance input and output context according to dataassociation
-	private static void enhanceAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPValueMapping associationDef, HAPValueStructure outputStructure, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPValueMapping associationDef, HAPValueStructure outputStructure, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
 		HAPInfo info = HAPUtilityDAProcess.withModifyInputStructureConfigure(null, inputEnhance);
 		info = HAPUtilityDAProcess.withModifyOutputStructureConfigure(info, outputEnhance);
 		HAPConfigureProcessorStructure processConfigure = HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(info);
@@ -143,7 +142,7 @@ public class HAPProcessorDataAssociationMapping {
 		return out;
 	}
 	
-	private static HAPExecutableMapping processAssociation(HAPContainerStructure input, HAPValueMapping valueMapping, HAPValueStructure outputStructure, HAPContainerAttachment attachmentContainer, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableMapping processValueMapping(HAPContainerStructure input, HAPValueMapping valueMapping, HAPValueStructure outputStructure, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableMapping out = new HAPExecutableMapping();
 
 		valueMapping = updateOutputNameWithId(input, valueMapping, outputStructure);

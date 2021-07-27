@@ -22,7 +22,7 @@ public class HAPUtilityActivity {
 			//data association input context
 			HAPValueStructure activityOutputValueStructure = resultContextBuilder.buildResultValueStructure(resultName, activity);
 			//process data association
-			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(activityOutputValueStructure), resultDef.getOutputDataAssociation(), HAPContainerStructure.createDefault(parentContext), null, null, runtimeEnv);
+			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(activityOutputValueStructure), resultDef.getOutputDataAssociation(), HAPContainerStructure.createDefault(parentContext), null, runtimeEnv);
 			resultExe.setDataAssociation(outputDataAssociation);
 		}
 		return resultExe;
@@ -33,7 +33,6 @@ public class HAPUtilityActivity {
 				HAPContainerStructure.createDefault(externalValueStructure), 
 				activityDefinition.getInputDataAssociation(), 
 				HAPContainerStructure.createDefault(activityDefinition.getInputValueStructureWrapper().getValueStructure()), 
-				null, 
 				null,
 				runtimeEnv);
 		return da;

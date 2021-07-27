@@ -21,15 +21,13 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.component.HAPContextReference;
 import com.nosliw.data.core.component.HAPDefinitionCommand;
-import com.nosliw.data.core.component.HAPDefinitionEvent;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.valuestructure.HAPValueStructureGroupInComponent;
 import com.nosliw.data.core.component.valuestructure.HAParserComponentValueStructure;
 import com.nosliw.data.core.resource.HAPParserResourceDefinition;
@@ -118,9 +116,6 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		//process value structure block
 		this.parseUnitValueStructureBlocks(unitEle, uiUnit);
 
-		//parse contextref block
-		parseUnitContextRefBlocks(unitEle, uiUnit);
-		
 		//parse handlers
 		parseUnitHandlers(unitEle, uiUnit);
 		
@@ -348,27 +343,6 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 
 		for(Element childEle : childEles)  childEle.remove();
 	}
-
-	private void parseUnitContextRefBlocks(Element ele, HAPDefinitionUIUnit resourceUnit){
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, CONTEXTREF);
-		
-		for(Element childEle : childEles){
-			try {
-				JSONArray contextRefListJson = new JSONArray(childEle.html());
-				for(int i=0; i<contextRefListJson.length(); i++) {
-					HAPContextReference contextRef = (HAPContextReference)HAPSerializeUtility.buildObjectFromJson(HAPContextReference.class, contextRefListJson.getJSONObject(i));
-					resourceUnit.addContextReference(contextRef);
-				}
-				break;
-			} catch (JSONException e) {
-				e.printStackTrace();
-				System.out.println(childEle.html());
-			}
-		}
-		
-		for(Element childEle : childEles)  childEle.remove();
-	}
-	
 
 	/*
 	 * process all script blocks under unit

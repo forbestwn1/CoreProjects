@@ -14,7 +14,7 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_getExecuteMappingRequest = function(inputDataSet, association, outputIODataSet, targetName, name, handlers, request){
+var node_getExecuteMappingRequest = function(inputDataSet, association, outputIODataSet, targetName, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
 
 	//use convert function to calculate output
@@ -43,7 +43,7 @@ var node_getExecuteMappingDataAssociationRequest = function(inputDataSet, dataAs
 	});
 	
 	_.each(dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_ASSOCIATION], function(association, targetName){
-		executeAssociationsRequest.addRequest(targetName, loc_getExecuteMappingRequest(inputDataSet, association, outputIODataSet, targetName));
+		executeAssociationsRequest.addRequest(targetName, node_getExecuteMappingRequest(inputDataSet, association, outputIODataSet, targetName));
 	});
 	out.addRequest(executeAssociationsRequest);
 
@@ -64,5 +64,6 @@ nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", functio
 
 //Register Node by Name
 packageObj.createChildNode("getExecuteMappingDataAssociationRequest", node_getExecuteMappingDataAssociationRequest); 
+packageObj.createChildNode("getExecuteMappingRequest", node_getExecuteMappingRequest); 
 
 })(packageObj);

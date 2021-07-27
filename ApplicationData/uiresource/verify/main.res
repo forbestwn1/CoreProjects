@@ -22,6 +22,9 @@
 	<br>
     	SERVICE SUBMIT: 	<a href='' nosliw-event="click:submitSimpleServiceWithoutInterface2">Submit</a>
 	<br>
+	<br>
+    	TRIGUE EVENT: 	<a href='' nosliw-event="click:trigueEvent">Submit</a>
+	<br>
     
 </body>
 
@@ -53,8 +56,13 @@
 			"taskType": "activity",
 			"type": "Service_request",
 			"serviceUse" : "simpleServiceWithoutInterface"
-		}
+		},
 	
+		"trigueEvent":{
+			"taskType": "activity",
+			"type": "Event_trigue",
+			"eventName" : "event1"
+		},
 	
 	}
 	</task>
@@ -197,8 +205,23 @@
 
 	<event>
 	[
+		{
+			"name" : "event1",
+			"value" : {
+				"eventData1" : {
+					"definition" : {
+						"path": "aaa"
+					}
+				}
+			}
+		}
 	]
 	</event>
+	
+	<command>
+	[
+	]
+	</command>
 	
 </html>
 

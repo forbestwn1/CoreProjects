@@ -70,7 +70,7 @@ nosliw.utility = function(){
 			for(var i in libNames){
 				resourceIds.push({
 					"id" : libNames[i],
-					"type" : "jslibrary"
+					"resourceType" : "jslibrary"
 				});
 			}
 			loc_requestLoadFileResources(

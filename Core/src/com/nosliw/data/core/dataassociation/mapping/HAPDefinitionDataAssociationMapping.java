@@ -34,7 +34,17 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	
 	public Map<String, HAPValueMapping> getMappings(){   return this.m_mappings;  }
 	
-	public HAPValueMapping getMapping(String targetName) {   return this.m_mappings.get(targetName);    }
+	public HAPValueMapping getMapping(String targetName, boolean createIfNotExist) {
+		HAPValueMapping out = null;
+		if(HAPBasicUtility.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+		out = this.m_mappings.get(targetName);
+		if(out==null&&createIfNotExist) {
+			out = new HAPValueMapping();
+			this.addAssociation(targetName, out);
+		}
+		return out;
+	}
+	public HAPValueMapping getMapping(String targetName) {   return this.getMapping(targetName, false);    }
 	public HAPValueMapping getMapping() {   return this.m_mappings.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);    }
  
 	@Override

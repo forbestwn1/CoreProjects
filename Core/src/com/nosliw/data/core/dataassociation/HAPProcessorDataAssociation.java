@@ -25,19 +25,19 @@ public class HAPProcessorDataAssociation {
 		out.setTask(taskExe);
 		//process input mapping
 		HAPDefinitionDataAssociation inputMapping = getInputMappingFromTaskDataMapping(taskWrapperDef);
-		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(inputContext, inputMapping, taskExe.getInContext(), attachmentContainer, inputConfigure, runtimeEnv));
+		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(inputContext, inputMapping, taskExe.getInContext(), inputConfigure, runtimeEnv));
 		
 		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
 		for(String resultName : resultOutputMapping.keySet()) {
 			HAPContainerStructure inContext = taskExe.getOutResultContext().get(resultName);
-			out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(inContext, resultOutputMapping.get(resultName), outputContext, attachmentContainer, outputConfigure, runtimeEnv));
+			out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(inContext, resultOutputMapping.get(resultName), outputContext, outputConfigure, runtimeEnv));
 		}
 		String defaultResultName = HAPConstantShared.NAME_DEFAULT;
 		if(out.getOutputMapping(defaultResultName)==null) {
 			//if no default output mapping defined, then create default output with mirror data association
 			HAPContainerStructure inContext = taskExe.getOutResultContext().get(defaultResultName);
 			if(inContext!=null) {
-				out.addOutputMapping(defaultResultName, HAPProcessorDataAssociation.processDataAssociation(inContext, new HAPDefinitionDataAssociationMirror(), outputContext, attachmentContainer, outputConfigure, runtimeEnv));
+				out.addOutputMapping(defaultResultName, HAPProcessorDataAssociation.processDataAssociation(inContext, new HAPDefinitionDataAssociationMirror(), outputContext, outputConfigure, runtimeEnv));
 			}
 		}
 		return out;
@@ -48,7 +48,7 @@ public class HAPProcessorDataAssociation {
 		out.setTask(taskExe);
 		//process input mapping
 		HAPDefinitionDataAssociation inputMapping = getInputMappingFromTaskDataMapping(taskWrapperDef);
-		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(inputContext, inputMapping, taskExe.getInContext(), attachmentContainer, configure, runtimeEnv));
+		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(inputContext, inputMapping, taskExe.getInContext(), configure, runtimeEnv));
 		
 		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
 		Map<String, HAPContainerStructure> taskResults = taskExe.getOutResultContext();
@@ -57,7 +57,7 @@ public class HAPProcessorDataAssociation {
 			if(outputMapping==null)  outputMapping = new HAPDefinitionDataAssociationMirror();
 			HAPContainerStructure outputContext = outputContexts.get(resultName);
 //			if(outputContext==null)  outputContext = inputContext;
-			if(outputContext!=null) out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(taskResults.get(resultName), outputMapping, outputContext, attachmentContainer, configure, runtimeEnv));
+			if(outputContext!=null) out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(taskResults.get(resultName), outputMapping, outputContext, configure, runtimeEnv));
 		}
 		
 		return out;
@@ -99,17 +99,17 @@ public class HAPProcessorDataAssociation {
 		}
 	}
 	
-	public static HAPExecutableDataAssociation processDataAssociation(HAPContainerStructure input, HAPDefinitionDataAssociation dataAssociation, HAPContainerStructure output, HAPContainerAttachment attachmentContainer, HAPInfo configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableDataAssociation processDataAssociation(HAPContainerStructure input, HAPDefinitionDataAssociation dataAssociation, HAPContainerStructure output, HAPInfo configure, HAPRuntimeEnvironment runtimeEnv) {
 		if(dataAssociation==null)  dataAssociation = new HAPDefinitionDataAssociationNone();
 		String type = dataAssociation.getType();
 		
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
-			return HAPProcessorDataAssociationMapping.processDataAssociation(input, (HAPDefinitionDataAssociationMapping)dataAssociation, output, attachmentContainer, configure, runtimeEnv);
+			return HAPProcessorDataAssociationMapping.processDataAssociation(input, (HAPDefinitionDataAssociationMapping)dataAssociation, output, configure, runtimeEnv);
 		
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR:
 			HAPDefinitionDataAssociationMapping mappingDataAssociation = HAPProcessorDataAssociationMirror.convertToDataAssociationMapping(input, (HAPDefinitionDataAssociationMirror)dataAssociation, output);
-			return processDataAssociation(input, mappingDataAssociation, output, attachmentContainer, configure, runtimeEnv);
+			return processDataAssociation(input, mappingDataAssociation, output, configure, runtimeEnv);
 
 		case HAPConstantShared.DATAASSOCIATION_TYPE_NONE:
 			return HAPProcessorDataAssociationNone.processDataAssociation(input, (HAPDefinitionDataAssociationNone)dataAssociation, output, configure, runtimeEnv);

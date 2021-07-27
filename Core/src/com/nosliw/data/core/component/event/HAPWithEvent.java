@@ -1,4 +1,4 @@
-package com.nosliw.data.core.component;
+package com.nosliw.data.core.component.event;
 
 import java.util.List;
 
@@ -11,5 +11,7 @@ public interface HAPWithEvent {
 
 	List<HAPDefinitionEvent> getEvents();
 
+	HAPDefinitionEvent getEvent(String eventName);
+	
 	void addEvent(HAPDefinitionEvent event);
 }

@@ -16,7 +16,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPDefinitionCommand;
-import com.nosliw.data.core.component.HAPDefinitionEvent;
+import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuiteImp;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -97,7 +97,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	private HAPExecutableScriptGroup m_scriptGroupExe;
 	
 	//event definition 
-	private List<HAPDefinitionEvent> m_events;
+	private List<HAPExecutableEvent> m_events;
 	private List<HAPDefinitionCommand> m_commands;
 
 	private HAPExecutableTaskSuite m_handlers;
@@ -128,7 +128,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		this.m_valueStructureDefinitionNode = new HAPTreeNodeValueStructure();
 //		this.m_constants = new LinkedHashMap<String, Object>();
 		
-		this.m_events = new ArrayList<HAPDefinitionEvent>();
+		this.m_events = new ArrayList<HAPExecutableEvent>();
 		this.m_commands = new ArrayList<HAPDefinitionCommand>();
 
 		this.m_services = new LinkedHashMap<String, HAPExecutableServiceUse>();
@@ -172,9 +172,14 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	public HAPExecutableScriptGroup getScriptGroupExecutable() {   return this.m_scriptGroupExe;    }
 	public void setScriptGroupExecutable(HAPExecutableScriptGroup scriptGroupExe) {   this.m_scriptGroupExe = scriptGroupExe;     }
 	
-	public List<HAPDefinitionEvent> getEventDefinitions(){  return this.m_events;    }
-//	public HAPDefinitionUIEvent getEventDefinition(String name) {   return this.m_events.get(name);  }
-	public void addEventDefinition(HAPDefinitionEvent eventDef) {  this.m_events.add(eventDef);    }
+	public List<HAPExecutableEvent> getEvents(){  return this.m_events;    }
+	public HAPExecutableEvent getEventDefinition(String name) {   
+		for(HAPExecutableEvent event : this.m_events) {
+			if(name.equals(event.getName()))   return event;
+		}
+		return null;  
+	}
+	public void addEventDefinition(HAPExecutableEvent event) {  this.m_events.add(event);    }
 	
 	public void addServiceUse(String name, HAPExecutableServiceUse serviceDef) {   this.m_services.put(name, serviceDef);   }
 	public Map<String, HAPExecutableServiceUse> getServiceUses(){  return this.m_services;   }

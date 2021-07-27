@@ -10,6 +10,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 
@@ -65,6 +66,15 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	
 	@Override
 	public List<HAPDefinitionEvent> getEvents(){   return this.m_events;  }
+	@Override
+	public HAPDefinitionEvent getEvent(String eventName) {
+		for(HAPDefinitionEvent eventDef : this.m_events) {
+			if(eventName.equals(eventDef.getName())) {
+				return eventDef;
+			}
+		}
+		return null;
+	}
 	@Override
 	public void addEvent(HAPDefinitionEvent event) {   this.m_events.add(event);   }
 

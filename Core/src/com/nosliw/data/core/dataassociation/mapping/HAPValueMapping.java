@@ -6,11 +6,14 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPParserStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
+import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPValueMapping extends HAPSerializableImp{
 
@@ -21,6 +24,17 @@ public class HAPValueMapping extends HAPSerializableImp{
 
 	public HAPValueMapping() {
 		this.m_items = new LinkedHashMap<String, HAPRootStructure>();
+	}
+	
+	public void addMapping(String path, HAPElementStructure structureEle) {
+		HAPRootStructure root = null;
+		HAPComplexPath cPath = new HAPComplexPath(path);
+		root = this.m_items.get(cPath.getRoot());
+		if(root==null) {
+			root = new HAPRootStructure();
+			this.m_items.put(cPath.getRoot(), root);
+		}
+		HAPUtilityStructure.setDescendant(root, cPath.getPath(), structureEle);
 	}
 	
 	public void addItem(String targetName, HAPRootStructure item) {
