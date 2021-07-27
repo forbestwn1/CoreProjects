@@ -36,7 +36,7 @@
 						success : function(request, outputIO){
 							return outputIO.getGetDataValueRequest(undefined, {
 								success : function(request, outputValue){
-//									env.trigueEvent(event[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME], outputValue);
+									env.trigueEvent(event[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME], outputValue);
 									return new node_IOTaskResult(node_COMMONCONSTANT.TASK_RESULT_SUCCESS);
 								}
 							});

@@ -115,7 +115,7 @@ var node_createRuntime = function(name){
 		loc_remoteService.interfaceObjectLifecycle.init();
 		loc_gatewayService = node_createGatewayService();
 		loc_taskRuntimeFactory = node_createTaskRuntimeFactory();
-		if(node_createUIPageService!=undefined)  loc_uiPageService = node_createUIPageService(loc_taskRuntimeFactory.createTaskRuntime());
+		if(node_createUIPageService!=undefined)  loc_uiPageService = node_createUIPageService();
 		loc_dataService = node_createDataService();
 		loc_securityService = node_createSecurityService();
 		

@@ -39,9 +39,7 @@ var packageObj = library;
 	var node_requestUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_uiResourceViewFactory = function(taskRuntime){
-	
-	var loc_taskRuntime = taskRuntime;
+var loc_uiResourceViewFactory = function(){
 	
 	var loc_out = {
 		getCreateUIViewRequest : function(uiResource, id, parent, context, handlers, requestInfo){
@@ -53,7 +51,7 @@ var loc_uiResourceViewFactory = function(taskRuntime){
 		getCreateUIBodyViewRequest : function(uiResource, uiBody, attributes, id, parent, context, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIView", {}), handlers, requestInfo);
 
-			var uiView = loc_createUIView(uiResource, uiBody, attributes, id, parent, context, loc_taskRuntime, requestInfo);
+			var uiView = loc_createUIView(uiResource, uiBody, attributes, id, parent, context, requestInfo);
 
 			//create tags
 			var createUITagRequest = node_createServiceRequestInfoSet(undefined, {
@@ -142,9 +140,13 @@ var node_createUITagRequest = function(id, uiTagResource, parentUIResourceView, 
  * 	 	name space id
  * 		parent uiresource
  */
-var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, context, taskRuntime, requestInfo){
+var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, context, requestInfo){
 
-	var loc_taskRuntime = taskRuntime;
+	var loc_taskRuntime = nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime({
+		trigueEvent : function(eventName, eventData, request){
+			loc_out.prv_trigueEvent(eventName, eventData, request);
+		}
+	});
 
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
@@ -334,7 +336,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(uiBody, attributes, id, parent, context, taskRuntime, requestInfo){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(uiBody, attributes, id, parent, context, requestInfo){
 
 		loc_attributes = attributes;
 		
@@ -646,7 +648,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIVIEW);
 
-	node_getLifecycleInterface(loc_out).init(uiBody, attributes, id, parent, context, taskRuntime, requestInfo);
+	node_getLifecycleInterface(loc_out).init(uiBody, attributes, id, parent, context, requestInfo);
 	
 	return loc_out;
 };
