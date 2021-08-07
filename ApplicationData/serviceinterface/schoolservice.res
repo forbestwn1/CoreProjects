@@ -75,9 +75,7 @@
                {
                   "name":"schoolListInService",
                   "displayName":"All Schools",
-                  "dataInfo":{
-                     "criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0,geo:test.geo;1.0.0||%%||%%"
-                  }
+                  "criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0,geo:test.geo;1.0.0||%%||%%"
                }
             ]
          }

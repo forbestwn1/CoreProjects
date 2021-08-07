@@ -1,6 +1,6 @@
 package com.nosliw.data.core.component.command;
 
-import com.nosliw.data.core.common.HAPWithInteractiveImpBasic;
+import com.nosliw.data.core.interactive.HAPWithInteractiveImpBasic;
 
 public class HAPDefinitionCommand extends HAPWithInteractiveImpBasic{
 

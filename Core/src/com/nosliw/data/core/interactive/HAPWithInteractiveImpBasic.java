@@ -1,4 +1,4 @@
-package com.nosliw.data.core.common;
+package com.nosliw.data.core.interactive;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -34,16 +34,11 @@ public class HAPWithInteractiveImpBasic extends HAPEntityInfoWritableImp impleme
 	@Override
 	public Map<String, HAPResultInteractive> getResults(){ return this.m_results;  }
 	public HAPResultInteractive getResult(String result) {   return this.m_results.get(result);  }
-	public List<HAPVariableInfo> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
+	public List<HAPOutputInteractive> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
 	public void addResult(String name, HAPResultInteractive result) {  this.m_results.put(name, result);  }
 	
 	public void process(HAPRuntimeEnvironment runtimeEnv) {
 		for(HAPVariableInfo parm : this.m_requestParms) 	parm.getDataInfo().process(runtimeEnv);
-		for(HAPResultInteractive result : this.m_results.values()) {
-			for(HAPVariableInfo output : result.getOutput()) {
-				output.getDataInfo().process(runtimeEnv);
-			}
-		}
 	}
 	
 	protected void cloneToWithInteractive(HAPWithInteractiveImpBasic withInteractive) {

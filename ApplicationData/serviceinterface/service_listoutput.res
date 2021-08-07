@@ -37,9 +37,7 @@
                {
                   "name":"listOutput",
                   "displayName":"ListOutput",
-                  "dataInfo":{
-                     "criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||attribute1:test.string;1.0.0,attribute2:test.float;1.0.0,attribute3:test.float;1.0.0||%%||%%"
-                  }
+                  "criteria":"test.array;1.0.0%%||element:test.map;1.0.0%%||attribute1:test.string;1.0.0,attribute2:test.float;1.0.0,attribute3:test.float;1.0.0||%%||%%"
                }
             ]
          }

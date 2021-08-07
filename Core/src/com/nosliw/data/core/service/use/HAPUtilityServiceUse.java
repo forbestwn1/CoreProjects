@@ -15,6 +15,7 @@ import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataMappingTask;
+import com.nosliw.data.core.interactive.HAPOutputInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.definition.HAPDefinitionService;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
@@ -66,9 +67,9 @@ public class HAPUtilityServiceUse {
 		return buildValueStructureFromServiceOutputs(serviceInterface.getResultOutput(result));
 	}
 	
-	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceOutputs(List<HAPVariableInfo> serviceOutput) {
+	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceOutputs(List<HAPOutputInteractive> serviceOutput) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
-		for(HAPVariableInfo outParm : serviceOutput) {
+		for(HAPOutputInteractive outParm : serviceOutput) {
 			out.addRoot(outParm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo(outParm.getCriteria())));
 		}
 		return out;

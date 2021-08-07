@@ -60,11 +60,7 @@
 						{
 							"name": "toMoney",
 							"displayName" : "Target Money",
-							"dataInfo" : {
-								"criteria": "test.money;1.0.0",
-								"rule" : [
-								]
-							},
+							"criteria": "test.money;1.0.0",
 						}
 					]
 				}

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.common;
+package com.nosliw.data.core.interactive;
 
 import java.util.List;
 import java.util.Map;

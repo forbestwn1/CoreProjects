@@ -85,44 +85,32 @@
                {
                   "name":"simpleOutput1",
                   "displayName":"SimpleOutput1",
-                  "dataInfo":{
-                     "criteria":"test.string;1.0.0"
-                  }
+                  "criteria":"test.string;1.0.0"
                },
                {
                   "name":"simpleOutput2",
                   "displayName":"SimpleOutput2",
-                  "dataInfo":{
-                     "criteria":"test.string;1.0.0"
-                  }
+                  "criteria":"test.string;1.0.0"
                },
                {
                   "name":"simpleOutput3",
                   "displayName":"SimpleOutput3",
-                  "dataInfo":{
-                     "criteria":"test.string;1.0.0"
-                  }
+                  "criteria":"test.string;1.0.0"
                },
                {
                   "name":"simpleOutput4",
                   "displayName":"SimpleOutput4",
-                  "dataInfo":{
-                     "criteria":"test.string;1.0.0"
-                  }
+                  "criteria":"test.string;1.0.0"
                },
                {
                   "name":"simpleOutput5",
                   "displayName":"SimpleOutput5",
-                  "dataInfo":{
-                     "criteria":"test.string;1.0.0"
-                  }
+                  "criteria":"test.string;1.0.0"
                },
                {
                   "name":"simpleOutput6",
                   "displayName":"SimpleOutput6",
-                  "dataInfo":{
-                     "criteria":"test.string;1.0.0"
-                  }
+                  "criteria":"test.string;1.0.0"
                }
             ]
          }

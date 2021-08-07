@@ -34,16 +34,12 @@
 		               {
 		                  "name":"simpleOutput1",
 		                  "displayName":"SimpleOutput1",
-		                  "dataInfo":{
-		                     "criteria":"test.string;1.0.0"
-		                  }
+  	                      "criteria":"test.string;1.0.0"
 		               },
 		               {
 		                  "name":"simpleOutput2",
 		                  "displayName":"SimpleOutput2",
-		                  "dataInfo":{
-		                     "criteria":"test.string;1.0.0"
-		                  }
+                          "criteria":"test.string;1.0.0"
 		               }
 		            ]
 		         }

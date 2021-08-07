@@ -17,11 +17,11 @@
 					"output": [
 						{
 							"name" : "outputInService1",
-							dataInfo : "test.options;1.0.0",
+							criteria : "test.options;1.0.0",
 						},
 						{
 							"name" : "outputInService2",
-							dataInfo : "test.string;1.0.0",
+							criteria : "test.string;1.0.0",
 						},
 					]
 				}
