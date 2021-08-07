@@ -1,7 +1,7 @@
 package com.nosliw.data.core.sequence;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPManagerTask;
@@ -20,7 +20,7 @@ public class HAPTaskInfoProcessorSequence implements HAPProcessorTask{
 	public HAPExecutableTask process(
 			HAPDefinitionTask taskDefinition, 
 			String id,
-			HAPContextProcessAttachmentReference processContext, 
+			HAPContextProcessor processContext, 
 			HAPWrapperValueStructure valueStructureWrapper,
 			HAPProcessTracker processTracker) {
 		HAPDefinitionSequence sequenceDef = (HAPDefinitionSequence)taskDefinition;

@@ -88,86 +88,84 @@
 			}
 		}
 	},
-	"lifecycle" : [
-		{
-			"name" : "nosliw_INIT_ACTIVE",
-			"process" : "nosliw_INIT_ACTIVE"
-		}
-	], 
 	"ui": [
 		{
 			"name": "schoolListUI",
 			"type": "list",
 			"page": "schoolListPage",
 			"status" : "disabled111",
-			"inputMapping": {
-				"element": {
-					"schoolList": {
-						"definition": {
-							"path": "schoolListInModule"
+			"inputMapping": [
+				{
+					"name" : "default",
+					"mapping": {
+						"schoolList": {
+							"definition": {
+								"path": "schoolListInModule"
+							},
+							"info": {
+								"relativeConnection": "physical"
+							}
 						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					},
-					"schoolType": {
-						"definition": {
-							"path": "schoolTypeInModule"
+						"schoolType": {
+							"definition": {
+								"path": "schoolTypeInModule"
+							},
+							"info": {
+								"relativeConnection": "physical"
+							}
 						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					},
-					"schoolRating": {
-						"definition": {
-							"path": "schoolRatingInModule"
-						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					}
-				}
-			},
-			"outputMapping": {
-				"element": {
-					"schoolListInModule": {
-						"definition": {
-							"path": "schoolList"
-						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					},
-					"schoolTypeInModule": {
-						"definition": {
-							"path": "schoolType"
-						},
-						"info": {
-							"relativeConnection": "physical"
-						}
-					},
-					"schoolRatingInModule": {
-						"definition": {
-							"path": "schoolRating"
-						},
-						"info": {
-							"relativeConnection": "physical"
+						"schoolRating": {
+							"definition": {
+								"path": "schoolRatingInModule"
+							},
+							"info": {
+								"relativeConnection": "physical"
+							}
 						}
 					}
 				}
-			},
+			],
+			"outputMapping": [
+				{
+					"name" : "default",
+					"mapping" : {
+						"schoolListInModule": {
+							"definition": {
+								"path": "schoolList"
+							},
+							"info": {
+								"relativeConnection": "physical"
+							}
+						},
+						"schoolTypeInModule": {
+							"definition": {
+								"path": "schoolType"
+							},
+							"info": {
+								"relativeConnection": "physical"
+							}
+						},
+						"schoolRatingInModule": {
+							"definition": {
+								"path": "schoolRating"
+							},
+							"info": {
+								"relativeConnection": "physical"
+							}
+						}
+					}
+				}
+			],
 			"eventHandler": [
 				{
 					"eventName" : "selectSchool",
-					"eventDataVariable" : "selectSchoolInfoInModule",
 					"dataMapping" : {
 						"selectSchoolInfoInModule" : "EVENT.data"
-					}
+					},
 					"handler" : [
 						{
-							"stepType" : "process",
-							"process" : "selectSchool"
-						}
+							"task" : "showInfo",
+						},
 					]
 				}
 			],
@@ -177,39 +175,93 @@
 			"type": "info",
 			"page": "schoolInfoPage",
 			"status" : "disabled111",
-			"inputMapping": {
-				"element": {
-					"schoolData": {
-						"definition": {
-							"path": "selectSchoolInfoInModule"
-						},
-						"defaultValue": {
-							"dataTypeId": "test.map;1.0.0",
-							"value": {
-								"schoolName": {
-									"dataTypeId": "test.string;1.0.0",
-									"value": "School5"
-								},
-								"schoolRating": {
-									"dataTypeId": "test.float;1.0.0",
-									"value": 6.0
-								},
-								"geo": {
-									"dataTypeId": "test.geo;1.0.0",
-									"value": {
-										"latitude": 43.651299,
-										"longitude": -79.579473
+			"inputMapping": [
+				{
+					"name" : "default",
+					"mapping": {
+						"schoolData": {
+							"definition": {
+								"path": "selectSchoolInfoInModule"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.map;1.0.0",
+								"value": {
+									"schoolName": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "School5"
+									},
+									"schoolRating": {
+										"dataTypeId": "test.float;1.0.0",
+										"value": 6.0
+									},
+									"geo": {
+										"dataTypeId": "test.geo;1.0.0",
+										"value": {
+											"latitude": 43.651299,
+											"longitude": -79.579473
+										}
 									}
 								}
+							},
+							"info": {
+								"relativeConnection": "physical"
 							}
-						},
-						"info": {
-							"relativeConnection": "physical"
 						}
 					}
 				}
-			}				
 			
+			]				
+		}
+	],
+	
+	"task" : [
+			{
+				"stepType" : "activity",
+				"activityType" : "transitPage",
+				"configuration" : {
+					"page" : "infoPage"
+				}
+			},
+			{
+				"stepType" : "activity",
+				"activityType" : "exeDA",
+				"configuration" : {
+					"path" : ""
+				}
+			},
+		
+	
+	],
+	
+	"lifecycle" : [
+		{
+			"name" : "nosliw_INIT_ACTIVE",
+			"task" : "nosliw_INIT_ACTIVE"
+		}
+	], 
+	
+	"command" : [
+		{
+			"name" : "command1",
+			"task" : "commandTask1",
+			"request" : {
+				"eventData1" : {
+					"definition" : {
+						"path": "aaa"
+					}
+				}
+			},
+			"result" : {
+				"success" : {
+					"output" : {
+						"output1" : {
+							"definition" : {
+								"path": "aaa"
+							}
+						}
+					}
+				}
+			}
 		}
 	],
 	
@@ -280,6 +332,12 @@
 			}
 		}
 	],
+	"lifecycle" : [
+		{
+			"name" : "nosliw_INIT_ACTIVE",
+			"process" : "nosliw_INIT_ACTIVE"
+		}
+	], 
 	"attachment": {
 		"uiResource" : [
 			{
@@ -288,8 +346,6 @@
 					"structure" : "local",
 					"id" : "MySchool_SchoolList"
 				},
-				"adapter" : {
-				}
 			},
 			{
 				"name": "schoolInfoPage",

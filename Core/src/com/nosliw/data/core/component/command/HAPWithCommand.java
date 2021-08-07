@@ -1,4 +1,4 @@
-package com.nosliw.data.core.component;
+package com.nosliw.data.core.component.command;
 
 import java.util.List;
 

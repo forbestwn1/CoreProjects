@@ -81,7 +81,7 @@ public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPLoopActivityDefinition out = new HAPLoopActivityDefinition(this.getType());
+		HAPLoopActivityDefinition out = new HAPLoopActivityDefinition(this.getActivityType());
 		this.cloneToNormalActivityDefinition(out);
 		out.m_containerName = this.m_containerName;
 		out.m_indexName = this.m_indexName;

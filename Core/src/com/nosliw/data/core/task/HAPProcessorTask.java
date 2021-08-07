@@ -1,7 +1,7 @@
 package com.nosliw.data.core.task;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public interface HAPProcessorTask {
@@ -11,7 +11,7 @@ public interface HAPProcessorTask {
 	HAPExecutableTask process(
 			HAPDefinitionTask taskDefinition,
 			String id,
-			HAPContextProcessAttachmentReference processContext,
+			HAPContextProcessor processContext,
 			HAPWrapperValueStructure valueStructureWrapper,
 			HAPProcessTracker processTracker
 	);

@@ -9,7 +9,7 @@ import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.activity.HAPUtilityActivity;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
@@ -23,7 +23,7 @@ public class HAPEventTrigueActivityProcessor implements HAPProcessorActivity{
 	public HAPExecutableActivity process(
 			HAPDefinitionActivity activityDefinition, 
 			String id,
-			HAPContextProcessAttachmentReference processContext, 
+			HAPContextProcessor processContext, 
 			HAPWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorStructure configure, 

@@ -108,11 +108,11 @@ public class HAPProcessorExpression2 {
 		//constant
 		//constant --- discover constant from attachment and context
 		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>(); 
-		constants.putAll(HAPUtilityComponentConstant.getConstantsData(expressionGroupDef, out.getContextFlat()));
+		constants.putAll(HAPUtilityComponentConstant.getConstantsData(expressionGroupDef, out.getValueStructureFlat()));
 		
 		//variable
 		//variable --- from context
-		HAPVariableInfoInStructure varsContainer = HAPUtilityContext.discoverDataVariablesDefinitionInStructure(out.getContextFlat());
+		HAPVariableInfoInStructure varsContainer = HAPUtilityContext.discoverDataVariablesDefinitionInStructure(out.getValueStructureFlat());
 		out.setVarsInfo(varsContainer);
 
 		Set<HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();

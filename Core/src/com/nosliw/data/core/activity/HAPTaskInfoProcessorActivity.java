@@ -1,7 +1,7 @@
 package com.nosliw.data.core.activity;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutableTask;
@@ -20,12 +20,12 @@ public class HAPTaskInfoProcessorActivity implements HAPProcessorTask{
 	public HAPExecutableTask process(
 			HAPDefinitionTask taskDefinition, 
 			String id,
-			HAPContextProcessAttachmentReference processContext, 
+			HAPContextProcessor processContext, 
 			HAPWrapperValueStructure valueStructureWrapper,
 			HAPProcessTracker processTracker) {
 		HAPDefinitionActivity activityDef = (HAPDefinitionActivity)taskDefinition;
 		
-		HAPExecutableActivity activityExe = m_runtimeEnv.getActivityManager().getPluginManager().getPlugin(activityDef.getType()).process(activityDef, activityDef.getId(), processContext, valueStructureWrapper, m_runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForActivity(), processTracker);
+		HAPExecutableActivity activityExe = m_runtimeEnv.getActivityManager().getPluginManager().getPlugin(activityDef.getActivityType()).process(activityDef, activityDef.getId(), processContext, valueStructureWrapper, m_runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForActivity(), processTracker);
 		return activityExe;
 	}
 

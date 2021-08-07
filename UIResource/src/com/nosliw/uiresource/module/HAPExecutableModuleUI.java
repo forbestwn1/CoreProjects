@@ -55,13 +55,15 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	private List<HAPInfoDecoration> m_uiDecoration;
 	
 	// hook up with real data during runtime
-	private HAPExecutableDataAssociation m_inputMapping;
-	private HAPExecutableDataAssociation m_outputMapping;
+	private Map<String, HAPExecutableDataAssociation> m_inputMapping;
+	private Map<String, HAPExecutableDataAssociation> m_outputMapping;
 	
 	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_eventHandlers;
 	
 	public HAPExecutableModuleUI(HAPDefinitionModuleUI moduleUIDefinition, String id) {
 		super(moduleUIDefinition);
+		this.m_inputMapping = new LinkedHashMap<String, HAPExecutableDataAssociation>();
+		this.m_outputMapping = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 		this.m_uiDecoration = new ArrayList<HAPInfoDecoration>();
 		this.m_eventHandlers = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
 		this.m_moduleUIDefinition = moduleUIDefinition;
@@ -70,10 +72,10 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 
 	public void addEventHandler(String eventName, HAPExecutableWrapperTask<HAPExecutableProcess> eventHander) {   this.m_eventHandlers.put(eventName, eventHander);   }
 	
-	public void setInputMapping(HAPExecutableDataAssociation contextMapping) {   this.m_inputMapping = contextMapping;	}
+	public void addInputMapping(String name, HAPExecutableDataAssociation dataAssociation) {   this.m_inputMapping.put(name, dataAssociation);	}
 	public HAPExecutableDataAssociation getInputMapping() {   return this.m_inputMapping;   }
 
-	public void setOutputMapping(HAPExecutableDataAssociation contextMapping) {   this.m_outputMapping = contextMapping;	}
+	public void addOutputMapping(String name, HAPExecutableDataAssociation dataAssociation) {   this.m_outputMapping.put(name, dataAssociation);	}
 	public HAPExecutableDataAssociation getOutputMapping() {   return this.m_outputMapping;   }
 
 	public void setPage(HAPExecutableUIUnitPage page) {  this.m_page = page;   }

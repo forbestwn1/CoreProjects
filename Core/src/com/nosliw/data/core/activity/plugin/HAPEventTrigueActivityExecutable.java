@@ -18,7 +18,7 @@ public class HAPEventTrigueActivityExecutable extends HAPExecutableActivity{
 	private HAPExecutableEvent m_eventExe;
 	
 	public HAPEventTrigueActivityExecutable(String id, HAPDefinitionActivityNormal activityDef) {
-		super(activityDef.getType(), id, activityDef);
+		super(activityDef.getActivityType(), id, activityDef);
 	}
 
 	public void setEvent(HAPExecutableEvent event) {   this.m_eventExe = event;  }

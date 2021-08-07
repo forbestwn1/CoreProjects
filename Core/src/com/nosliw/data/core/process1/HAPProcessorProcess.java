@@ -79,10 +79,10 @@ public class HAPProcessorProcess{
 			HAPDefinitionActivity activity = out.getDefinition().getProcess().getActivityById(activityId);
 			
 			//start activity
-			if(activity.getType().equals(HAPConstantShared.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    
+			if(activity.getActivityType().equals(HAPConstantShared.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    
 			
 			//process activity
-			HAPExecutableActivity activityExe = processMan.getPluginManager().getPlugin(activity.getType()).process(activity, activityId, processContext, out, context, results, allServiceProviders, processMan, runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForActivity(), processTracker);
+			HAPExecutableActivity activityExe = processMan.getPluginManager().getPlugin(activity.getActivityType()).process(activity, activityId, processContext, out, context, results, allServiceProviders, processMan, runtimeEnv, HAPUtilityConfigure.getContextProcessConfigurationForActivity(), processTracker);
 			if(activityExe!=null) {
 				out.addActivity(activityId, activityExe);
 			}

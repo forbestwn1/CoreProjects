@@ -2,7 +2,7 @@ package com.nosliw.data.core.component;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 
 public class HAPResultSolveReference {
 
@@ -12,9 +12,9 @@ public class HAPResultSolveReference {
 	
 	private JSONObject m_attachmentAdapter;
 	
-	private HAPContextProcessAttachmentReference m_context;
+	private HAPContextProcessor m_context;
 	
-	public static HAPResultSolveReference newResultFromResource(Object entity, HAPContextProcessAttachmentReference context) {
+	public static HAPResultSolveReference newResultFromResource(Object entity, HAPContextProcessor context) {
 		HAPResultSolveReference out = new HAPResultSolveReference();
 		out.m_isFromAttachment = false;
 		out.m_entity = entity;
@@ -22,7 +22,7 @@ public class HAPResultSolveReference {
 		return out;
 	}
 	
-	public static HAPResultSolveReference newResultFromAttachment(Object entity, JSONObject attachmentAdapter, HAPContextProcessAttachmentReference context) {
+	public static HAPResultSolveReference newResultFromAttachment(Object entity, JSONObject attachmentAdapter, HAPContextProcessor context) {
 		HAPResultSolveReference out = new HAPResultSolveReference();
 		out.m_isFromAttachment = true;
 		out.m_entity = entity;
@@ -37,6 +37,6 @@ public class HAPResultSolveReference {
 	
 	public JSONObject getAttachmentAdapter() {    return this.m_attachmentAdapter;     }
 	
-	public HAPContextProcessAttachmentReference getContext() {   return this.m_context;    }
+	public HAPContextProcessor getContext() {   return this.m_context;    }
 	
 }

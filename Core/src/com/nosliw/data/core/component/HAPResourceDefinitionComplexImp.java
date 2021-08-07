@@ -50,8 +50,8 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPWithAttachmentI
 		else  this.m_valueStructureWrapper.setValueStructure(valueStructure);
 	}
 	
-	public HAPValueStructureDefinitionGroup getContextNotFlat() {   return (HAPValueStructureDefinitionGroup)this.getValueStructureWrapper().getValueStructure();    }
-	public HAPValueStructureDefinitionFlat getContextFlat() {    return (HAPValueStructureDefinitionFlat)this.getValueStructureWrapper().getValueStructure();    }
+	public HAPValueStructureDefinitionGroup getValueStructureGroup() {   return (HAPValueStructureDefinitionGroup)this.getValueStructureWrapper().getValueStructure();    }
+	public HAPValueStructureDefinitionFlat getValueStructureFlat() {    return (HAPValueStructureDefinitionFlat)this.getValueStructureWrapper().getValueStructure();    }
 	
 	@Override
 	public HAPResourceDefinitionOrId getChild(String path) {   return null;    }

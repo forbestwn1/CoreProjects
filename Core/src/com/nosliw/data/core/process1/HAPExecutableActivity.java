@@ -39,7 +39,7 @@ public abstract class HAPExecutableActivity extends HAPExecutableImpEntityInfo{
 		this.m_categary = categary;
 		this.m_id = id;
 //		this.m_activityDefinition = activityDef;
-		this.m_type = activityDef.getType();
+		this.m_type = activityDef.getActivityType();
 	}
 	
 	public String getType() {   return this.m_type;  }

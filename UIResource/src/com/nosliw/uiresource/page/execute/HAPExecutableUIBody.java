@@ -15,7 +15,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.HAPDefinitionCommand;
+import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuiteImp;
 import com.nosliw.data.core.resource.HAPResourceDependency;

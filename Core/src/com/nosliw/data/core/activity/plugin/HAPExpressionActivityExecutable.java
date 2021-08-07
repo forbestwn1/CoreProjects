@@ -32,7 +32,7 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivity{
 	private HAPExecutableScriptGroup m_scriptExpression;
 
 	public HAPExpressionActivityExecutable(String id, HAPExpressionActivityDefinition activityDef) {
-		super(activityDef.getType(), id, activityDef);
+		super(activityDef.getActivityType(), id, activityDef);
 		this.m_expressionProcessContext = new HAPContextProcessExpressionScript();
 	}
 

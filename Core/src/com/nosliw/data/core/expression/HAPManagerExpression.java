@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
@@ -45,7 +45,7 @@ public class HAPManagerExpression {
 	
 	public HAPExecutableExpressionGroup getExpression(HAPResourceId expressionId, Map<String, String> configure) {
 		HAPResourceDefinitionExpressionGroup exressionGroupResourceDef = (HAPResourceDefinitionExpressionGroup)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionId);
-		HAPContextProcessAttachmentReference contextProcess = new HAPContextProcessAttachmentReference(exressionGroupResourceDef, this.m_runtimeEnv);
+		HAPContextProcessor contextProcess = new HAPContextProcessor(exressionGroupResourceDef, this.m_runtimeEnv);
 		
 		if(configure==null) {
 			//build configure from definition info
@@ -79,7 +79,7 @@ public class HAPManagerExpression {
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
-		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, expressionGroupDef, new HAPContextProcessAttachmentReference(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 
@@ -90,7 +90,7 @@ public class HAPManagerExpression {
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
-		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, expressionGroupDef, new HAPContextProcessAttachmentReference(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup out = HAPProcessorExpression.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 	

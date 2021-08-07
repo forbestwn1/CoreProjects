@@ -5,7 +5,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -147,7 +147,7 @@ public class HAPUIResourceManager {
 		return out;
 	}
 	
-	public HAPExecutableUIUnitPage getUIPage(HAPDefinitionUIPage pageDef, String id, HAPValueStructure parentValueStructure, HAPContextProcessAttachmentReference attachmentReferenceContext) {
+	public HAPExecutableUIUnitPage getUIPage(HAPDefinitionUIPage pageDef, String id, HAPValueStructure parentValueStructure, HAPContextProcessor attachmentReferenceContext) {
 		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, parentValueStructure, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
 		return out;
 	}

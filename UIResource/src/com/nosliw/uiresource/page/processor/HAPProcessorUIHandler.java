@@ -1,7 +1,7 @@
 package com.nosliw.uiresource.page.processor;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 import com.nosliw.data.core.task.HAPProcessorTaskSuite;
@@ -28,7 +28,7 @@ public class HAPProcessorUIHandler {
 	private static HAPExecutableTaskSuite createHandler(HAPExecutableUIUnit uiUnit, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionUIUnit uiUnitDef = uiUnit.getUIUnitDefinition();
 		
-		HAPContextProcessAttachmentReference contextProcess = new HAPContextProcessAttachmentReference(uiUnitDef, runtimeEnv);
+		HAPContextProcessor contextProcess = new HAPContextProcessor(uiUnitDef, runtimeEnv);
 		
 		HAPExecutableTaskSuite out = HAPProcessorTaskSuite.process(
 				null, 

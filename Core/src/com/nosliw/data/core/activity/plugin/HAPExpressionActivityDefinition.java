@@ -40,9 +40,9 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-
+		JSONObject configureObj = this.getConfigurationObject(jsonObj);
 		this.m_script = new HAPDefinitionScriptEntity();
-		this.m_script.buildObject(jsonObj, HAPSerializationFormat.JSON);
+		this.m_script.buildObject(configureObj, HAPSerializationFormat.JSON);
 		this.m_script.setId(null);
 		return true;  
 	}
@@ -55,7 +55,7 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPExpressionActivityDefinition out = new HAPExpressionActivityDefinition(this.getType());
+		HAPExpressionActivityDefinition out = new HAPExpressionActivityDefinition(this.getActivityType());
 		this.cloneToNormalActivityDefinition(out);
 		out.m_script = this.m_script.cloneScriptEntityDefinition();
 		return out;

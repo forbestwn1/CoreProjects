@@ -22,6 +22,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextScript;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 @HAPEntityWithAttribute
@@ -68,13 +69,14 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		this.m_uis = new ArrayList<HAPExecutableModuleUI>();
 		this.m_moduleDefinition = moduleDefinition;
 		this.m_id = id;
+		this.m_valueStructureWrapper = moduleDefinition.getValueStructureWrapper();
 	}
 
 	public HAPDefinitionModule getDefinition() {   return this.m_moduleDefinition;  }
 	
-	public HAPWrapperValueStructure getValueStructureWrapper() {   return this.m_valueStructureWrapper;   }
+	public HAPValueStructure getValueStructure() {   return this.m_valueStructureWrapper.getValueStructure();   }
 
-	public void setValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper) { 	this.m_valueStructureWrapper = valueStructureWrapper;	}
+	public void setValueStructure(HAPValueStructure valueStructure) { 	this.m_valueStructureWrapper.setValueStructure(valueStructure);	}
 	
 	public void addProcess(String name, HAPExecutableWrapperTask<HAPExecutableProcess> process) {		this.m_processes.put(name, process);	}
 

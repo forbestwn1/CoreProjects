@@ -33,9 +33,9 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 	//mapping reference name from attachment to internal name
 	private HAPNameMapping m_nameMapping;
 
-	private HAPDefinitionGroupDataAssociation m_outputMapping;
+	private HAPDefinitionGroupDataAssociation m_outputMappings;
 	
-	private HAPDefinitionGroupDataAssociation m_inputMapping;
+	private HAPDefinitionGroupDataAssociation m_inputMappings;
 	
 	//event handlers
 	private Set<HAPHandler> m_eventHandlers;
@@ -43,8 +43,8 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 	public HAPEmbededComponent() {
 		this.m_nameMapping = new HAPNameMapping();
 		this.m_eventHandlers = new HashSet<HAPHandler>();
-		this.m_outputMapping = new HAPDefinitionGroupDataAssociation();
-		this.m_inputMapping = new HAPDefinitionGroupDataAssociation();
+		this.m_outputMappings = new HAPDefinitionGroupDataAssociation();
+		this.m_inputMappings = new HAPDefinitionGroupDataAssociation();
 	}
 	
 	public void setNameMapping(HAPNameMapping nameMapping) {   if(nameMapping!=null)  this.m_nameMapping = nameMapping;  }
@@ -56,19 +56,19 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 	@Override
 	public void addEventHandler(HAPHandler eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
 
-	public HAPDefinitionGroupDataAssociation getInputMapping() {   return this.m_inputMapping;   }
-	public void setInputMapping(HAPDefinitionGroupDataAssociation contextMapping) {   this.m_inputMapping = contextMapping;   }
-	public void addInputMapping(String name, HAPDefinitionDataAssociation mapping) {   this.m_inputMapping.addDataAssociation(name, mapping);  }
+	public HAPDefinitionGroupDataAssociation getInputMapping() {   return this.m_inputMappings;   }
+	public void setInputMapping(HAPDefinitionGroupDataAssociation contextMapping) {   this.m_inputMappings = contextMapping;   }
+	public void addInputMapping(String name, HAPDefinitionDataAssociation mapping) {   this.m_inputMappings.addDataAssociation(name, mapping);  }
 
-	public HAPDefinitionGroupDataAssociation getOutputMapping() {   return this.m_outputMapping;    }
-	public void setOutputMapping(HAPDefinitionGroupDataAssociation contextMapping) {   this.m_outputMapping = contextMapping;   }
-	public void addOutputMapping(String name, HAPDefinitionDataAssociation mapping) {   this.m_outputMapping.addDataAssociation(name, mapping);  }
+	public HAPDefinitionGroupDataAssociation getOutputMapping() {   return this.m_outputMappings;    }
+	public void setOutputMapping(HAPDefinitionGroupDataAssociation contextMapping) {   this.m_outputMappings = contextMapping;   }
+	public void addOutputMapping(String name, HAPDefinitionDataAssociation mapping) {   this.m_outputMappings.addDataAssociation(name, mapping);  }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(OUTPUTMAPPING, this.m_outputMapping.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(INPUTMAPPING, this.m_inputMappings.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(OUTPUTMAPPING, this.m_outputMappings.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
 	}
 
@@ -76,8 +76,8 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_inputMapping.buildObject(jsonObj.optJSONArray(INPUTMAPPING), HAPSerializationFormat.JSON);
-		this.m_outputMapping.buildObject(jsonObj.optJSONArray(OUTPUTMAPPING), HAPSerializationFormat.JSON);
+		this.m_inputMappings.buildObject(jsonObj.optJSONArray(INPUTMAPPING), HAPSerializationFormat.JSON);
+		this.m_outputMappings.buildObject(jsonObj.optJSONArray(OUTPUTMAPPING), HAPSerializationFormat.JSON);
 		return true;
 	}
 
@@ -88,8 +88,8 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 		}
 		if(this.m_nameMapping==null)   embededComponent.m_nameMapping = null;
 		else   embededComponent.m_nameMapping = this.m_nameMapping.cloneNameMapping();
-		embededComponent.m_inputMapping = this.m_inputMapping.cloneGroupDataAssociation();
-		embededComponent.m_outputMapping = this.m_outputMapping.cloneGroupDataAssociation();
+		embededComponent.m_inputMappings = this.m_inputMappings.cloneGroupDataAssociation();
+		embededComponent.m_outputMappings = this.m_outputMappings.cloneGroupDataAssociation();
 	}
 	
 }

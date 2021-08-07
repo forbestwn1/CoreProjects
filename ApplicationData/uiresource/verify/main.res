@@ -54,14 +54,18 @@
 	{
 		"submitSimpleServiceWithoutInterface2":{
 			"taskType": "activity",
-			"type": "Service_request",
-			"serviceUse" : "simpleServiceWithoutInterface"
+			"activityType": "Service_request",
+			"configuration" : {
+				"serviceUse" : "simpleServiceWithoutInterface"
+			}
 		},
 	
 		"trigueEvent":{
 			"taskType": "activity",
-			"type": "Event_trigue",
-			"eventName" : "event1"
+			"activityType": "Event_trigue",
+			"configuration" : {
+				"eventName" : "event1"
+			}
 		},
 	
 	}
@@ -220,6 +224,30 @@
 	
 	<command>
 	[
+		{
+			"name" : "command1",
+			"task" : "commandTask1",
+			"request" : [
+				{
+					"name" : "parm1",
+					"displayName" : "Parm1",
+					"dataInfo" : {
+						"refPath": "aaa",
+					},
+				},			
+			],
+			"result" : {
+				"success" : {
+					"output" : {
+						"output1" : {
+							"definition" : {
+								"path": "aaa"
+							}
+						}
+					}
+				}
+			}
+		}
 	]
 	</command>
 	

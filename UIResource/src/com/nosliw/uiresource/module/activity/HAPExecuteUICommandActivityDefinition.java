@@ -47,7 +47,7 @@ public class HAPExecuteUICommandActivityDefinition extends HAPDefinitionActivity
 
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPExecuteUICommandActivityDefinition out = new HAPExecuteUICommandActivityDefinition(this.getType());
+		HAPExecuteUICommandActivityDefinition out = new HAPExecuteUICommandActivityDefinition(this.getActivityType());
 		this.cloneToNormalActivityDefinition(out);
 		out.m_componentId = this.m_componentId;
 		out.m_command = this.m_command;

@@ -10,6 +10,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;

@@ -61,7 +61,7 @@ public class HAPParserProcessDefinition {
 		JSONArray activityArrayJson = processJson.optJSONArray(HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite.ACTIVITY);
 		for(int i=0; i<activityArrayJson.length(); i++) {
 			JSONObject activityObjJson = (JSONObject)activityArrayJson.get(i);
-			String activityType = activityObjJson.getString(HAPDefinitionActivity.TYPE);
+			String activityType = activityObjJson.getString(HAPDefinitionActivity.ACTIVITYTYPE);
 			HAPDefinitionActivity activity = activityPluginMan.getPlugin(activityType).buildActivityDefinition(activityObjJson);
 			out.addActivity(activityObjJson.getString("id"), activity);
 		}

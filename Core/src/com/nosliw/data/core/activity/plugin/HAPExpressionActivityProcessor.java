@@ -8,7 +8,7 @@ import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.HAPExecutableResultActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.activity.HAPUtilityActivity;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
@@ -33,7 +33,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 	public HAPExecutableActivity process(
 			HAPDefinitionActivity activityDefinition, 
 			String id,
-			HAPContextProcessAttachmentReference processContext, 
+			HAPContextProcessor processContext, 
 			HAPWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorStructure configure, 

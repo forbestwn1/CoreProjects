@@ -1,38 +1,23 @@
 package com.nosliw.uiresource.module;
 
-import java.util.Map;
-import java.util.Set;
-
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPNosliwUtility;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.HAPHandlerLifecycle;
 import com.nosliw.data.core.component.HAPResultSolveReference;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
+import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPUtilityDataAssociation;
-import com.nosliw.data.core.handler.HAPHandler;
-import com.nosliw.data.core.process1.HAPExecutableProcess;
-import com.nosliw.data.core.process1.HAPProcessorProcess;
-import com.nosliw.data.core.process1.HAPUtilityProcessComponent;
-import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
-import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
+import com.nosliw.data.core.structure.HAPProcessorStructure;
 import com.nosliw.data.core.structure.HAPRequirementContextProcessor;
 import com.nosliw.data.core.structure.HAPRootStructure;
-import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionEmpty;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
@@ -44,18 +29,20 @@ public class HAPProcessorModule {
 	public static HAPExecutableModule process(
 			HAPDefinitionModule moduleDefinition, 
 			String id, 
-			HAPValueStructureDefinitionGroup parentContext, 
+			HAPValueStructure parentValueStructure, 
+			HAPContextProcessor attachmentReferenceContext,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan) {
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-		return HAPProcessorModule.process(moduleDefinition, id, parentContext, runtimeEnv, uiResourceMan, processTracker);
+		return HAPProcessorModule.process(moduleDefinition, id, parentValueStructure, attachmentReferenceContext, runtimeEnv, uiResourceMan, processTracker);
 	}
 	
 	private static HAPExecutableModule process(
 			HAPDefinitionModule moduleDefinition,
 			String id, 
-			HAPValueStructureDefinitionGroup parentContext, 
+			HAPValueStructure parentValueStructure, 
+			HAPContextProcessor attachmentReferenceContext,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,
 			HAPProcessTracker processTracker) {
@@ -65,30 +52,31 @@ public class HAPProcessorModule {
 		HAPRequirementContextProcessor contextProcessRequirement1 = HAPUtilityCommon.getDefaultContextProcessorRequirement(runtimeEnv.getResourceDefinitionManager(), runtimeEnv.getDataTypeHelper(), runtimeEnv.getRuntime(), runtimeEnv.getExpressionManager(), runtimeEnv.getServiceManager().getServiceDefinitionManager());
 		HAPConfigureProcessorStructure contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForModule();
 		
-		//service providers
-		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(moduleDefinition.getAttachmentContainer(), runtimeEnv.getServiceManager().getServiceDefinitionManager()); 
+		//attachment
+		HAPUtilityComponent.processAttachmentInChild(moduleDefinition, attachmentReferenceContext.getComplexEntity());
 		
-		//process context 
-		out.setContextGroup((HAPValueStructureDefinitionGroup)HAPProcessorContext.process(moduleDefinition.getValueStructureWrapper(), HAPContainerStructure.createDefault(parentContext==null?new HAPValueStructureDefinitionGroup():parentContext), contextProcessConfg, runtimeEnv));
+		//process value structure
+		HAPValueStructure processedValueStructure = (HAPValueStructure)HAPProcessorStructure.process(moduleDefinition.getValueStructure(), HAPContainerStructure.createDefault(parentValueStructure), moduleDefinition.getAttachmentContainer(), null, contextProcessConfg, runtimeEnv);
+		out.setValueStructure(processedValueStructure);
 
-		//process process suite
-		HAPResourceDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(moduleDefinition, runtimeEnv.getProcessManager().getPluginManager()).cloneProcessSuiteDefinition(); 
-		processSuite.setValueContext(out.getContext());   //kkk
-		out.setProcessSuite(processSuite);
-		
-		//process lifecycle action
-		Set<HAPHandlerLifecycle> lifecycleActions = moduleDefinition.getLifecycleAction();
-		for(HAPHandlerLifecycle action : lifecycleActions) {
-			HAPResourceDefinitionProcess processDef = out.getProcessDefinition(action.getTask().getTaskDefinition());
-			HAPExecutableProcess processExe = HAPProcessorProcess.process(processDef, null, allServiceProviders, runtimeEnv.getProcessManager(), runtimeEnv, processTracker);
-			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(action.getTask(), processExe, HAPContainerStructure.createDefault(out.getContext()), null, runtimeEnv);			
-			out.addLifecycle(action.getName(), processExeWrapper);
-		}
+//		//process process suite
+//		HAPResourceDefinitionProcessSuite processSuite = HAPUtilityProcessComponent.buildProcessSuiteFromComponent(moduleDefinition, runtimeEnv.getProcessManager().getPluginManager()).cloneProcessSuiteDefinition(); 
+//		processSuite.setValueContext(out.getContext());   //kkk
+//		out.setProcessSuite(processSuite);
+//		
+//		//process lifecycle action
+//		Set<HAPHandlerLifecycle> lifecycleActions = moduleDefinition.getLifecycleAction();
+//		for(HAPHandlerLifecycle action : lifecycleActions) {
+//			HAPResourceDefinitionProcess processDef = out.getProcessDefinition(action.getTask().getTaskDefinition());
+//			HAPExecutableProcess processExe = HAPProcessorProcess.process(processDef, null, allServiceProviders, runtimeEnv.getProcessManager(), runtimeEnv, processTracker);
+//			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(action.getTask(), processExe, HAPContainerStructure.createDefault(out.getContext()), null, runtimeEnv);			
+//			out.addLifecycle(action.getName(), processExeWrapper);
+//		}
 		
 		//process ui
 		for(HAPDefinitionModuleUI ui : moduleDefinition.getUIs()) {
 			if(!HAPUtilityEntityInfo.isEnabled(ui)) {
-				HAPExecutableModuleUI uiExe = processModuleUI(ui, ui.getName(), out, runtimeEnv, processTracker);
+				HAPExecutableModuleUI uiExe = processModuleUI(ui, ui.getName(), out, attachmentReferenceContext, uiResourceMan, processTracker);
 				out.addModuleUI(uiExe);
 			}
 		}
@@ -100,7 +88,7 @@ public class HAPProcessorModule {
 			HAPDefinitionModuleUI moduleUIDefinition,
 			String id,
 			HAPExecutableModule moduleExe,
-			HAPContextProcessAttachmentReference attachmentReferenceContext,
+			HAPContextProcessor attachmentReferenceContext,
 			HAPUIResourceManager uiResourceMan,
 			HAPProcessTracker processTracker) {
 		HAPExecutableModuleUI out = new HAPExecutableModuleUI(moduleUIDefinition, id);
@@ -109,36 +97,32 @@ public class HAPProcessorModule {
 		
 		HAPDefinitionModule moduleDef = moduleExe.getDefinition();
 		
-		//value structure
-		HAPValueStructureDefinitionGroup mappingContextGroup = new HAPValueStructureDefinitionGroup();
-		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPContainerStructure.createDefault(HAPValueStructureDefinitionEmpty.flatStructure()), null, runtimeEnv);
-		mappingContextGroup.setFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPValueStructureDefinitionFlat)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk
-
-		
 		//resolve page reference
 		HAPResultSolveReference refSolveResult = HAPUtilityComponent.solveReference(moduleUIDefinition.getPage(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, attachmentReferenceContext);
 		HAPExecutableUIUnitPage pageExe = uiResourceMan.getUIPage((HAPDefinitionUIPage)refSolveResult.getEntity(), id, moduleDef.getValueStructure(), attachmentReferenceContext);
 
 		//input data mapping between module and page
-		HAPExecutableDataAssociation inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(
-				HAPContainerStructure.createDefault(moduleExe.getValueStructureWrapper().getValueStructure()), 
-				moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), 
-				HAPContainerStructure.createDefault(pageExe.getUIUnitDefinition().getValueStructure()), 
-				attachmentReferenceContext.getComplexEntity().getAttachmentContainer(), 
-				null, 
-				runtimeEnv);
-		out.setInputMapping(inputDataAssocation);
-
-		HAPExecutableDataAssociation outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(
-				HAPContainerStructure.createDefault(pageExe.getUIUnitDefinition().getValueStructure()), 
-				HAPUtilityDataAssociation.reverseMapping(moduleUIDefinition.getInputMapping().getDefaultDataAssociation()), 
-				HAPContainerStructure.createDefault(moduleExe.getValueStructureWrapper().getValueStructure()), 
-				attachmentReferenceContext.getComplexEntity().getAttachmentContainer(), 
-				null, 
-				runtimeEnv);
-		out.setOutputMapping(outputDataAssocation);
-
+		for(HAPDefinitionDataAssociation dataAssociation : moduleUIDefinition.getInputMapping().getDataAssociations()) {
+			HAPExecutableDataAssociation inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(
+					HAPContainerStructure.createDefault(moduleExe.getValueStructure()), 
+					dataAssociation, 
+					HAPContainerStructure.createDefault(pageExe.getUIUnitDefinition().getValueStructure()), 
+					null, 
+					runtimeEnv);
+			out.addInputMapping(dataAssociation.getName(), inputDataAssocation);
+		}
 		
+		//output data mapping
+		for(HAPDefinitionDataAssociation dataAssociation : moduleUIDefinition.getOutputMapping().getDataAssociations()) {
+			HAPExecutableDataAssociation outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(
+					HAPContainerStructure.createDefault(pageExe.getUIUnitDefinition().getValueStructure()), 
+					dataAssociation,
+					HAPContainerStructure.createDefault(moduleExe.getValueStructure()), 
+					null, 
+					runtimeEnv);
+			out.addOutputMapping(dataAssociation.getName(), outputDataAssocation);
+		}
+
 		//ui decoration
 		//ui decoration from page first
 //		out.addUIDecoration(pageInfo.getDecoration());
@@ -148,17 +132,17 @@ public class HAPProcessorModule {
 		out.addUIDecoration(moduleExe.getDefinition().getUIDecoration());
 		
 		//event handler
-		Set<HAPHandler> eventHandlerDefs = moduleUIDefinition.getEventHandlers();
-		for(HAPHandler eventHandlerDef : eventHandlerDefs) {
-			String eventName = eventHandlerDef.getName();
-			HAPRootStructure eventRootNode = buildContextRootFromEvent(out.getPage().getBody().getEventDefinition(eventName));
-			HAPValueStructureDefinitionGroup eventContext = new HAPValueStructureDefinitionGroup();
-			eventContext.addRoot(HAPNosliwUtility.buildNosliwFullName("EVENT"), eventRootNode, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
-			HAPResourceDefinitionProcess processDef = moduleExe.getProcessDefinition(eventHandlerDef.getTask().getTaskDefinition());
-			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(processDef, eventContext, serviceProviders, processMan, runtimeEnv, processTracker);
-			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getTask(), eventProcessor, HAPContainerStructure.createDefault(moduleExe.getContext()), null, runtimeEnv);			
-			out.addEventHandler(eventName, processExeWrapper);
-		}	
+//		Set<HAPHandler> eventHandlerDefs = moduleUIDefinition.getEventHandlers();
+//		for(HAPHandler eventHandlerDef : eventHandlerDefs) {
+//			String eventName = eventHandlerDef.getName();
+//			HAPRootStructure eventRootNode = buildContextRootFromEvent(out.getPage().getBody().getEventDefinition(eventName));
+//			HAPValueStructureDefinitionGroup eventContext = new HAPValueStructureDefinitionGroup();
+//			eventContext.addRoot(HAPNosliwUtility.buildNosliwFullName("EVENT"), eventRootNode, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+//			HAPResourceDefinitionProcess processDef = moduleExe.getProcessDefinition(eventHandlerDef.getTask().getTaskDefinition());
+//			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(processDef, eventContext, serviceProviders, processMan, runtimeEnv, processTracker);
+//			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getTask(), eventProcessor, HAPContainerStructure.createDefault(moduleExe.getContext()), null, runtimeEnv);			
+//			out.addEventHandler(eventName, processExeWrapper);
+//		}	
 		
 /*		
 		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping().getDefaultDataAssociation(), HAPContainerStructure.createDefault(HAPValueStructureDefinitionEmpty.flatStructure()), null, runtimeEnv);

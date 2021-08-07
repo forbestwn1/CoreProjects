@@ -46,7 +46,7 @@ public class HAPPresentUIActivityDefinition extends HAPDefinitionActivityNormal{
 
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPPresentUIActivityDefinition out = new HAPPresentUIActivityDefinition(this.getType());
+		HAPPresentUIActivityDefinition out = new HAPPresentUIActivityDefinition(this.getActivityType());
 		this.cloneToNormalActivityDefinition(out);
 		out.m_ui = this.m_ui;
 		out.m_setting = this.m_setting;

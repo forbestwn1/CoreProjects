@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -27,7 +27,7 @@ public class HAPManagerScript {
 
 	public HAPExecutableScriptGroup getScript(HAPResourceId resourceId, Map<String, String> configure) {
 		HAPResourceDefinitionScriptGroup scriptGroupResourceDef = (HAPResourceDefinitionScriptGroup)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId);
-		HAPContextProcessAttachmentReference contextProcess = new HAPContextProcessAttachmentReference(scriptGroupResourceDef, this.m_runtimeEnv);
+		HAPContextProcessor contextProcess = new HAPContextProcessor(scriptGroupResourceDef, this.m_runtimeEnv);
 
 		if(configure==null) {
 			//build configure from definition info

@@ -124,7 +124,7 @@ public class HAPProcessMiniAppEntry {
 		//input data association
 		Map<String, HAPDefinitionDataAssociation> inputDas = module.getInputMapping().getDataAssociations();
 		for(String inputDaName : inputDas.keySet()) {
-			HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(parentContext, inputDas.get(inputDaName), HAPContainerStructure.createDefault(moduleDef.getContextNotFlat().getFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC)), daConfigure, runtimeEnv);
+			HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(parentContext, inputDas.get(inputDaName), HAPContainerStructure.createDefault(moduleDef.getValueStructureGroup().getFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC)), daConfigure, runtimeEnv);
 			out.addInputDataAssociation(inputDaName, inputMapping);
 		}
 		
@@ -132,7 +132,7 @@ public class HAPProcessMiniAppEntry {
 		//output data association
 		Map<String, HAPDefinitionDataAssociation> outputMapping = module.getOutputMapping().getDataAssociations();
 		for(String outputTargetName : outputMapping.keySet()) {
-			HAPExecutableDataAssociation outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleDef.getContextNotFlat()), outputMapping.get(outputTargetName), parentContext, daConfigure, runtimeEnv);
+			HAPExecutableDataAssociation outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleDef.getValueStructureGroup()), outputMapping.get(outputTargetName), parentContext, daConfigure, runtimeEnv);
 			out.addOutputDataAssociation(outputTargetName, outputMappingByTarget);
 		}
 		

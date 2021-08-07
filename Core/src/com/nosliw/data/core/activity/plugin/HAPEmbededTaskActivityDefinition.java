@@ -53,7 +53,7 @@ public class HAPEmbededTaskActivityDefinition extends HAPDefinitionActivityNorma
 
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPEmbededTaskActivityDefinition out = new HAPEmbededTaskActivityDefinition(this.getType());
+		HAPEmbededTaskActivityDefinition out = new HAPEmbededTaskActivityDefinition(this.getActivityType());
 		this.cloneToTaskActivityDefinition(out);
 		out.m_task = this.m_task.clone();
 		return out;

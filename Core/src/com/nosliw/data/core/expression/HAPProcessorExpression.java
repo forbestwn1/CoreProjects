@@ -13,7 +13,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPResultSolveReference;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPUtilityComponentConstant;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
@@ -39,7 +39,7 @@ public class HAPProcessorExpression {
 	public static HAPExecutableExpressionGroup process(
 			String id,
 			HAPDefinitionExpressionGroup expressionGroupDef,
-			HAPContextProcessAttachmentReference attachmentReferenceContext,
+			HAPContextProcessor attachmentReferenceContext,
 			Map<String, HAPDataTypeCriteria> expectOutput,
 			Map<String, String> configure,
 			HAPRuntimeEnvironment runtimeEnv,
@@ -197,7 +197,7 @@ public class HAPProcessorExpression {
 			String id,
 			HAPDefinitionExpressionGroup expressionGroupDef, 
 			String expressionId,
-			HAPContextProcessAttachmentReference attachmentReferenceContext,
+			HAPContextProcessor attachmentReferenceContext,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 
@@ -231,7 +231,7 @@ public class HAPProcessorExpression {
 	//replace reference operand with referenced expression exe
 	private static void expandReference(
 			HAPExecutableExpressionGroup expressionGroupExe, 
-			HAPContextProcessAttachmentReference attachmentReferenceContext,
+			HAPContextProcessor attachmentReferenceContext,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		

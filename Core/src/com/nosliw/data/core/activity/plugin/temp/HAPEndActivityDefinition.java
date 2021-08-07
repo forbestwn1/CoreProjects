@@ -28,7 +28,7 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 	}
 	
 	@Override
-	public String getType() {		return HAPConstantShared.ACTIVITY_TYPE_END;	}
+	public String getActivityType() {		return HAPConstantShared.ACTIVITY_TYPE_END;	}
 	
 	public HAPDefinitionDataAssociation getOutput() {    return this.m_output;   }
 	
@@ -55,7 +55,7 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPEndActivityDefinition out = new HAPEndActivityDefinition(this.getType());
+		HAPEndActivityDefinition out = new HAPEndActivityDefinition(this.getActivityType());
 		this.cloneToActivityDefinition(out);
 		if(this.m_output!=null)    out.m_output = this.m_output.cloneDataAssocation();
 		return out;

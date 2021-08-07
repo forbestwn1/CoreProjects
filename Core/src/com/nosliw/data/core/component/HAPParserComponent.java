@@ -5,6 +5,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.component.command.HAPDefinitionCommand;
+import com.nosliw.data.core.component.command.HAPWithCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPWithEvent;
 import com.nosliw.data.core.component.valuestructure.HAParserComponentValueStructure;

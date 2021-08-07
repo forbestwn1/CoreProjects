@@ -5,7 +5,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPUtilityComponentConstant;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
@@ -103,7 +103,7 @@ public class HAPProcessorUIExpressionScript {
 		HAPExecutableScriptGroup scriptGroupExe = HAPProcessorScript.processScript(
 				exeUnit.getId(), 
 				scriptGroup, 
-				new HAPContextProcessAttachmentReference(uiUnitDef, runtimeEnv), 
+				new HAPContextProcessor(uiUnitDef, runtimeEnv), 
 				HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), 
 				runtimeEnv, 
 				new HAPProcessTracker()

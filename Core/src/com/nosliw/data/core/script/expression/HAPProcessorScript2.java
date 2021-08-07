@@ -69,14 +69,14 @@ public class HAPProcessorScript2 {
 		out.setContextStructure(contextStructure);
 
 		//constant
-		Map<String, Object> constantsValue = HAPUtilityComponentConstant.getConstantsValue(scriptGroupDef, out.getContextFlat());
+		Map<String, Object> constantsValue = HAPUtilityComponentConstant.getConstantsValue(scriptGroupDef, out.getValueStructureFlat());
 		
 		//expression definition containing all expression in script 
 		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
 		expressionGroupDef.setValueContext(contextStructure);
 
 		//constant --- discover constant from attachment and context
-		for(HAPDefinitionConstant def : HAPUtilityComponentConstant.getValueConstantsDefinition(scriptGroupDef, out.getContextFlat())) {
+		for(HAPDefinitionConstant def : HAPUtilityComponentConstant.getValueConstantsDefinition(scriptGroupDef, out.getValueStructureFlat())) {
 			expressionGroupDef.addConstantDefinition(def);
 		}
 		

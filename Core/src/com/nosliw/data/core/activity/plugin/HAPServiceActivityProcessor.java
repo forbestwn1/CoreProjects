@@ -10,7 +10,7 @@ import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.activity.HAPUtilityActivity;
 import com.nosliw.data.core.component.HAPComponent;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
@@ -26,7 +26,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 	public HAPExecutableActivity process(
 			HAPDefinitionActivity activityDefinition, 
 			String id,
-			HAPContextProcessAttachmentReference processContext, 
+			HAPContextProcessor processContext, 
 			HAPWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorStructure configure, 

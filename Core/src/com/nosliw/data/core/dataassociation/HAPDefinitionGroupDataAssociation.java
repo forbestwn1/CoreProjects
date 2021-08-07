@@ -1,6 +1,8 @@
 package com.nosliw.data.core.dataassociation;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -14,22 +16,22 @@ import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 
-	private Map<String, HAPDefinitionDataAssociation> m_dataAssociations;
+	private List<HAPDefinitionDataAssociation> m_dataAssociations;
 	
 	public HAPDefinitionGroupDataAssociation() {
-		this.m_dataAssociations = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
+		this.m_dataAssociations = new ArrayList<HAPDefinitionDataAssociation>();
 	} 
 	
-	public HAPDefinitionDataAssociation getDataAssociation(String name) {  return this.m_dataAssociations.get(name);   }
-	public HAPDefinitionDataAssociation getDefaultDataAssociation() {  return this.m_dataAssociations.get(this.getDefaultName());   }
+//	public HAPDefinitionDataAssociation getDataAssociation(String name) {  return this.m_dataAssociations.get(name);   }
+//	public HAPDefinitionDataAssociation getDefaultDataAssociation() {  return this.m_dataAssociations.get(this.getDefaultName());   }
 	
-	public void addDataAssociation(String name, HAPDefinitionDataAssociation dataAssociation) {
-		if(HAPBasicUtility.isStringEmpty(name))  name = this.getDefaultName();
-		this.m_dataAssociations.put(name, dataAssociation);   
-	}
-	public void addDataAssociation(HAPDefinitionDataAssociation dataAssociation) {   this.addDataAssociation(null, dataAssociation);    }
+//	public void addDataAssociation(String name, HAPDefinitionDataAssociation dataAssociation) {
+//		if(HAPBasicUtility.isStringEmpty(name))  name = this.getDefaultName();
+//		this.m_dataAssociations.put(name, dataAssociation);   
+//	}
+//	public void addDataAssociation(HAPDefinitionDataAssociation dataAssociation) {   this.addDataAssociation(null, dataAssociation);    }
 	
-	public Map<String, HAPDefinitionDataAssociation> getDataAssociations(){  return this.m_dataAssociations;   }
+	public List<HAPDefinitionDataAssociation> getDataAssociations(){  return this.m_dataAssociations;   }
 
 	@Override
 	protected String buildJson(){
@@ -42,15 +44,28 @@ public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
-		JSONArray jsonArray = (JSONArray)json;
-		for(int i=0; i<jsonArray.length(); i++) {
-			JSONObject jsonObj = jsonArray.getJSONObject(i);
-			HAPDefinitionDataAssociation daItem = HAPParserDataAssociation.buildDefinitionByJson(jsonObj); 
-			String daName = daItem.getName();
-			if(HAPBasicUtility.isStringEmpty(daName))  daName = this.getDefaultName();
-			this.m_dataAssociations.put(daName, daItem);
+		if(json instanceof JSONArray) {
+			JSONArray jsonArray = (JSONArray)json;
+			for(int i=0; i<jsonArray.length(); i++) {
+				JSONObject jsonObj = jsonArray.getJSONObject(i);
+				HAPDefinitionDataAssociation daItem = buildDataAssociatioinByJson(jsonArray.getJSONObject(i));
+				this.m_dataAssociations.add(daItem);
+			}
 		}
+		else {
+			HAPDefinitionDataAssociation daItem = buildDataAssociatioinByJson((JSONObject)json);
+			this.m_dataAssociations.add(daItem);
+		}
+		
 		return true;
+	}
+	
+	private HAPDefinitionDataAssociation buildDataAssociatioinByJson(JSONObject jsonObj) {
+		HAPDefinitionDataAssociation out = HAPParserDataAssociation.buildDefinitionByJson(jsonObj); 
+		String daName = out.getName();
+		if(HAPBasicUtility.isStringEmpty(daName))  daName = this.getDefaultName();
+		out.setName(daName);
+		return out;
 	}
 	
 	private String getDefaultName() {  return HAPConstantShared.GLOBAL_VALUE_DEFAULT;   }

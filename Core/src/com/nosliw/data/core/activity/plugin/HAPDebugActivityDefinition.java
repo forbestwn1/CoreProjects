@@ -29,7 +29,7 @@ public class HAPDebugActivityDefinition extends HAPDefinitionActivityNormal{
 
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPDebugActivityDefinition out = new HAPDebugActivityDefinition(this.getType());
+		HAPDebugActivityDefinition out = new HAPDebugActivityDefinition(this.getActivityType());
 		this.cloneToNormalActivityDefinition(out);
 		return out;
 	}

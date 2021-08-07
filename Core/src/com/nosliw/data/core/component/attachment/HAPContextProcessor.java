@@ -5,18 +5,18 @@ import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPContextProcessAttachmentReference {
+public class HAPContextProcessor {
 
 	private HAPDefinitionEntityComplex m_complexEntity;
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 
-	public HAPContextProcessAttachmentReference(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPContextProcessor(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_complexEntity = complexEntity;
 	}
 	
-	public HAPResultProcessAttachmentReference processReference(String attachmentValueType, String attachmentName) {
+	public HAPResultProcessAttachmentReference processAttachmentReference(String attachmentValueType, String attachmentName) {
 		HAPAttachment attachment = this.m_complexEntity.getAttachment(attachmentValueType, attachmentName);
 		String attType = attachment.getType();
 		Object entity = null;

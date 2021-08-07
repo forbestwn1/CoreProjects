@@ -1,6 +1,6 @@
 package com.nosliw.uiresource.page.processor;
 
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.uiresource.HAPUIResourceManager;
@@ -28,10 +28,10 @@ public class HAPProcessorUIPage {
 		HAPProcessorInclude.expandInclude(uiPageDef, uiResourceParser, uiResourceMan, runtimeEnv.getResourceDefinitionManager());
 		
 		//process attachment
-		HAPProcessorAttachment.mergeAttachment(uiPageDef, null, uiTagMan);
+		HAPProcessorAttachment.mergeAttachment(uiPageDef, null);
 		
 		//expand referred context part
-		HAPProcessorUIValueStructure.expandValueStructureReference(uiPageDef, new HAPContextProcessAttachmentReference(uiPageDef, runtimeEnv), runtimeEnv);
+		HAPProcessorUIValueStructure.expandValueStructureReference(uiPageDef, new HAPContextProcessor(uiPageDef, runtimeEnv), runtimeEnv);
 //		HAPWrapperValueStructure valueStructureWrapper = uiPageDef.getValueStructureWrapper();
 //		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.process((HAPValueStructureInComponent)valueStructureWrapper.getValueStructure(), new HAPContextProcessAttachmentReference(uiPageDef, runtimeEnv), runtimeEnv));
 
@@ -48,7 +48,7 @@ public class HAPProcessorUIPage {
 		//----------------------  Build executable
 		HAPExecutableUIUnitPage out = new HAPExecutableUIUnitPage(uiPageDef, id);
 
-		//process context
+		//process value structure
 		HAPProcessorUIValueStructure.process(out, null, uiTagMan, runtimeEnv);
 
 		//process service

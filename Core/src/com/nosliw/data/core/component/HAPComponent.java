@@ -1,5 +1,6 @@
 package com.nosliw.data.core.component;
 
+import com.nosliw.data.core.component.command.HAPWithCommand;
 import com.nosliw.data.core.component.event.HAPWithEvent;
 
 //component contains two parts

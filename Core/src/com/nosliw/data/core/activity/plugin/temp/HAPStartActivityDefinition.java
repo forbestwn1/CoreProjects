@@ -22,7 +22,7 @@ public class HAPStartActivityDefinition extends HAPDefinitionActivity{
 	}
 
 	@Override
-	public String getType() {		return HAPConstantShared.ACTIVITY_TYPE_START;	}
+	public String getActivityType() {		return HAPConstantShared.ACTIVITY_TYPE_START;	}
 	
 	public HAPDefinitionSequenceFlow getFlow() {   return this.m_flow;   }
 	
@@ -49,7 +49,7 @@ public class HAPStartActivityDefinition extends HAPDefinitionActivity{
 
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPStartActivityDefinition out = new HAPStartActivityDefinition(this.getType());
+		HAPStartActivityDefinition out = new HAPStartActivityDefinition(this.getActivityType());
 		this.cloneToActivityDefinition(out);
 		out.m_flow = this.m_flow.cloneSequenceFlowDefinition();
 		return out;

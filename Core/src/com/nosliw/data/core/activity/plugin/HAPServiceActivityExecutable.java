@@ -23,7 +23,7 @@ public class HAPServiceActivityExecutable extends HAPExecutableActivity{
 	private String m_provider;
 	
 	public HAPServiceActivityExecutable(String id, HAPDefinitionActivityNormal activityDef) {
-		super(activityDef.getType(), id, activityDef);
+		super(activityDef.getActivityType(), id, activityDef);
 	}
 
 	public void setService(HAPExecutableServiceUse service) {   this.m_service = service;  }

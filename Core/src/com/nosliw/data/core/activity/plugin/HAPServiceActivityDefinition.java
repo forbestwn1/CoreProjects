@@ -43,7 +43,8 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		
-		Object serviceUseObj = jsonObj.get(SERVICEUSE);
+		JSONObject configureObj = this.getConfigurationObject(jsonObj);
+		Object serviceUseObj = configureObj.get(SERVICEUSE);
 		if(serviceUseObj instanceof JSONObject) {
 			this.m_serviceUse = new HAPDefinitionServiceUse();
 			this.m_serviceUse.buildObject(serviceUseObj, HAPSerializationFormat.JSON);
@@ -62,7 +63,7 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 	
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPServiceActivityDefinition out = new HAPServiceActivityDefinition(this.getType());
+		HAPServiceActivityDefinition out = new HAPServiceActivityDefinition(this.getActivityType());
 		this.cloneToNormalActivityDefinition(out);
 		out.m_serviceUse = this.m_serviceUse;
 		return out;

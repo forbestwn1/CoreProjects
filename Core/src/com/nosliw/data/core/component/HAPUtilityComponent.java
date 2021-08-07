@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPContextProcessAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.component.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.component.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
@@ -36,7 +36,11 @@ import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPUtilityComponent {
 
-	public static HAPResultSolveReference solveReference(Object refObj, String dataType, HAPContextProcessAttachmentReference context) {
+	public static void processAttachmentInChild(HAPWithAttachment child, HAPWithAttachment parent) {
+		HAPUtilityComponent.mergeWithParentAttachment(child, parent==null?null:parent.getAttachmentContainer());
+	}
+	
+	public static HAPResultSolveReference solveReference(Object refObj, String dataType, HAPContextProcessor context) {
 		HAPRuntimeEnvironment runtimeEnv = context.getRuntimeEnvironment();
 		
 		//figure out reference is resource id or attachment reference
@@ -59,7 +63,7 @@ public class HAPUtilityComponent {
 		}
 		
 		Object entity = null;
-		HAPContextProcessAttachmentReference contextResult = null;
+		HAPContextProcessor contextResult = null;
 		HAPDefinitionEntityComplex contextComplexEntity = null;
 		
 		if(resourceId!=null) {
@@ -69,13 +73,13 @@ public class HAPUtilityComponent {
 			if(context.getComplexEntity() instanceof HAPResourceDefinition) relatedResource = (HAPResourceDefinition)context.getComplexEntity();
 			entity = runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, relatedResource);
 			if(entity instanceof HAPWithComplexEntity)  contextComplexEntity = ((HAPWithComplexEntity)entity).getComplexEntity();
-			contextResult = new HAPContextProcessAttachmentReference(contextComplexEntity, runtimeEnv);
+			contextResult = new HAPContextProcessor(contextComplexEntity, runtimeEnv);
 			return HAPResultSolveReference.newResultFromResource(entity, contextResult);
 		}
 		else {
 			//reference name is reference to attachment
-			HAPResultProcessAttachmentReference result = context.processReference(attachmentReference.getDataType(), attachmentReference.getName());
-			contextResult = new HAPContextProcessAttachmentReference(result.getContextComplexEntity(), runtimeEnv);
+			HAPResultProcessAttachmentReference result = context.processAttachmentReference(attachmentReference.getDataType(), attachmentReference.getName());
+			contextResult = new HAPContextProcessor(result.getContextComplexEntity(), runtimeEnv);
 			entity = result.getEntity();
 			return HAPResultSolveReference.newResultFromAttachment(entity, (JSONObject)result.getAdaptor(), contextResult);
 		}

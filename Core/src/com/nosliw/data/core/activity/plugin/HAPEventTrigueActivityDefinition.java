@@ -38,7 +38,9 @@ public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNorma
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_eventName = (String)jsonObj.opt(EVENTNAME);
+		
+		JSONObject configureObj = this.getConfigurationObject(jsonObj);
+		this.m_eventName = (String)configureObj.opt(EVENTNAME);
 		return true;  
 	}
 
@@ -50,7 +52,7 @@ public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNorma
 	
 	@Override
 	public HAPDefinitionActivity cloneActivityDefinition() {
-		HAPEventTrigueActivityDefinition out = new HAPEventTrigueActivityDefinition(this.getType());
+		HAPEventTrigueActivityDefinition out = new HAPEventTrigueActivityDefinition(this.getActivityType());
 		this.cloneToNormalActivityDefinition(out);
 		out.m_eventName = this.m_eventName;
 		return out;
