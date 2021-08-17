@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.data.core.structure.reference.HAPInfoPathReference;
 
 public class HAPParserStructure {
 
@@ -75,14 +76,11 @@ public class HAPParserStructure {
 			//relative
 			contextRootDef = new HAPElementStructureLeafRelative();
 			HAPElementStructureLeafRelative relativeLeaf = (HAPElementStructureLeafRelative)contextRootDef;
-			String parent = (String)eleDefJson.opt(HAPElementStructureLeafRelative.PARENT);
-			relativeLeaf.setParent(parent);
-			if(pathObj instanceof String)	relativeLeaf.setReferencePath((String)pathObj);
-			else if(pathObj instanceof JSONObject){
-				HAPReferenceElement contextPath = new HAPReferenceElement();
-				contextPath.buildObject(pathObj, HAPSerializationFormat.JSON);
-				relativeLeaf.setReferencePath(contextPath.toStringValue(HAPSerializationFormat.LITERATE));
-			}
+			
+			HAPInfoPathReference path = new HAPInfoPathReference();
+			path.buildObject(eleDefJson.get(HAPElementStructureLeafRelative.PATH), HAPSerializationFormat.JSON);
+			relativeLeaf.setPath(path);
+			
 			Object resolvedPathObj = eleDefJson.opt(HAPElementStructureLeafRelative.RESOLVEDPATH);
 			if(resolvedPathObj!=null) {
 				if(resolvedPathObj instanceof String) {

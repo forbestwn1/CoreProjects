@@ -21,8 +21,12 @@ public interface HAPDataRule extends HAPEntityInfo{
 	
 	String getPath();
 	
+	void setPath(String path);
+	
 	//apply the rule and verify if the data is valid
 	HAPServiceData verify(HAPData data, HAPRuntimeEnvironment runtimeEnv);
 	
 	void process(HAPDataTypeCriteria criteria, HAPRuntimeEnvironment runtimeEnv);
+
+	HAPDataRule cloneDataRule();
 }

@@ -238,13 +238,12 @@
 			],
 			"result" : {
 				"success" : {
-					"output" : {
-						"output1" : {
-							"definition" : {
-								"path": "aaa"
-							}
+					"output" : [
+						{
+							"name" : "output1",
+							"refPath" : "aaa"
 						}
-					}
+					]
 				}
 			}
 		}

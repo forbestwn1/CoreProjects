@@ -11,6 +11,8 @@ import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
@@ -63,8 +65,8 @@ public class HAPProcessorEscalate {
 		HAPValueStructure parentStructure = parentNode.getValueStructureWrapper().getValueStructure();
 		
 		Pair<Boolean, HAPRootStructure> out = null;
-		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.analyzeElementReference(new HAPReferenceElement(path.getFullName()), parentStructure, HAPConstant.RESOLVEPARENTMODE_FIRST, null);
-		if(HAPUtilityStructure.isLogicallySolved(resolveInfo)) {
+		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(new HAPReferenceElement(path.getFullName()), parentStructure, HAPConstant.RESOLVEPARENTMODE_FIRST, null);
+		if(HAPUtilityStructureElementReference.isLogicallySolved(resolveInfo)) {
 			//find matched one
 			out = Pair.of(true, HAPUtilityStructure.createRootWithRelativeElement(resolveInfo.referredRoot, null, resolveInfo.path.getPathStr(), inheritanceExcludedInfo));
 		}

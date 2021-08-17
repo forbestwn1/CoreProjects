@@ -21,10 +21,11 @@ import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
-import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
-import com.nosliw.data.core.structure.HAPProcessorElementRelative;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
+import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.reference.HAPProcessorElementRelative;
+import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
@@ -82,7 +83,7 @@ public class HAPProcessorDataAssociationMapping {
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)contextEleInfo.getElement();
 					HAPElementStructure solidateSourceContextEle = sourceContextEle.getSolidStructureElement();
 					if(solidateSourceContextEle==null)    throw new RuntimeException();
-					HAPUtilityStructure.setDescendantByNamePath(input.getStructure(relativeEle.getParent()), new HAPComplexPath(relativeEle.getReferencePath()), solidateSourceContextEle.cloneStructureElement());
+					HAPUtilityStructure.setDescendantByNamePath(input.getStructure(relativeEle.getPath().getParent()), new HAPComplexPath(relativeEle.getPath().getReferencePath()), solidateSourceContextEle.cloneStructureElement());
 				}
 				else  throw new RuntimeException();
 			}
@@ -100,13 +101,13 @@ public class HAPProcessorDataAssociationMapping {
 							//only relative element
 							HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 							//if element path exist in output structure
-							HAPInfoReferenceResolve targetResolvedInfo = HAPUtilityStructure.resolveElementReference(eleInfo.getElementPath().getFullName(), outputStructure, processConfigure.elementReferenceResolveMode, null);
-							if(!HAPUtilityStructure.isLogicallySolved(targetResolvedInfo)) {
+							HAPInfoReferenceResolve targetResolvedInfo = HAPUtilityStructureElementReference.resolveElementReference(eleInfo.getElementPath().getFullName(), outputStructure, processConfigure.elementReferenceResolveMode, processConfigure.relativeInheritRule, null);
+							if(!HAPUtilityStructureElementReference.isLogicallySolved(targetResolvedInfo)) {
 								//target node in output according to path not exist
 								//element in input structure
-								HAPValueStructure sourceContextStructure = input.getStructure(relativeEle.getParent());
-								HAPInfoReferenceResolve sourceResolvedInfo = HAPUtilityStructure.resolveElementReference(relativeEle.getReferencePath(), sourceContextStructure, processConfigure.elementReferenceResolveMode, null);
-								if(HAPUtilityStructure.isLogicallySolved(sourceResolvedInfo)) {
+								HAPValueStructure sourceContextStructure = input.getStructure(relativeEle.getPath().getParent());
+								HAPInfoReferenceResolve sourceResolvedInfo = HAPUtilityStructureElementReference.resolveElementReference(relativeEle.getPath().getReferencePath(), sourceContextStructure, processConfigure.elementReferenceResolveMode, processConfigure.relativeInheritRule, null);
+								if(HAPUtilityStructureElementReference.isLogicallySolved(sourceResolvedInfo)) {
 									HAPElementStructure sourceEle = sourceResolvedInfo.resolvedElement;
 									if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 										HAPUtilityStructure.setDescendantByNamePath(outputStructure, eleInfo.getElementPath(), sourceEle.getSolidStructureElement());

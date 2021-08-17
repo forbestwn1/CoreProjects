@@ -14,6 +14,7 @@ import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
+import com.nosliw.data.core.structure.reference.HAPInfoPathReference;
 
 public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVariable{
 
@@ -22,9 +23,6 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 
 	@HAPAttribute
 	public static final String RESOLVEDPATH = "resolvedPath";
-
-	@HAPAttribute
-	public static final String PARENT = "parent";
 
 	@HAPAttribute
 	public static final String PARENTCATEGARY = "parentCategary";
@@ -41,15 +39,11 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	@HAPAttribute
 	public static final String REVERSEMATCHERS = "reverseMatchers";
 	
-	//definition of the path (reference + path)
-	private String m_referencePath;
-
+	private HAPInfoPathReference m_path;
+	
 	//path after resolve (root id + path)
 	private HAPComplexPath m_resolvedPath; 
 	private String m_unResolvedRemainPath;
-	
-	//parent name for referred context, for instance, self, external context
-	private String m_parent;
 	
 	private HAPElementStructure m_definition;
 	
@@ -68,7 +62,7 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	
 	public HAPElementStructureLeafRelative(String path) {
 		this();
-		this.setReferencePath(path);
+		this.m_path = new HAPInfoPathReference(path);
 	}
 	
 	@Override
@@ -77,12 +71,8 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	@Override
 	public HAPElementStructure getSolidStructureElement() {	return this.m_definition;	}
 
-	public String getParent() {
-		if(HAPBasicUtility.isStringNotEmpty(this.m_parent))   return this.m_parent;
-		return HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
-	}
-	
-	public void setParent(String parent) {		this.m_parent = parent;	}
+	public HAPInfoPathReference getPath() {    return this.m_path;    }
+	public void setPath(HAPInfoPathReference path) {   this.m_path = path;     }
 	
 	public HAPElementStructure getDefinition() {   return this.m_definition;   }
 	public void setDefinition(HAPElementStructure definition) {   this.m_definition = definition.getSolidStructureElement();   }
@@ -90,9 +80,6 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	public HAPInfoPathToSolidRoot getSolidNodeReference() {    return this.m_solidNodeRef;    }
 	public void setSolidNodeReference(HAPInfoPathToSolidRoot solidNodeRef) {    this.m_solidNodeRef = solidNodeRef;    }
 	
-	public String getReferencePath() {   return this.m_referencePath;    }
-	public void setReferencePath(String path) {  this.m_referencePath = path;	}
-
 	public HAPComplexPath getResolvedIdPath() {   return this.m_resolvedPath; }
 	public void setResolvedIdPath(HAPComplexPath resolvedPath) {   this.m_resolvedPath = resolvedPath;   }
 	
@@ -120,8 +107,7 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 		super.toStructureElement(out);
 		HAPElementStructureLeafRelative that = (HAPElementStructureLeafRelative)out;
 		if(this.m_resolvedPath!=null)	that.m_resolvedPath = this.m_resolvedPath.cloneComplexPath();
-		that.m_referencePath = this.m_referencePath; 
-		that.m_parent = this.m_parent; 
+		that.m_path = this.m_path.cloneReferencePathInfo(); 
 		if(this.m_definition!=null)  that.m_definition = this.m_definition.cloneStructureElement();
 		
 		for(String name : this.m_matchers.keySet()) 	that.m_matchers.put(name, this.m_matchers.get(name).cloneMatchers());
@@ -141,8 +127,8 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	public HAPElementStructure solidateConstantScript(Map<String, Object> constants,
 			HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructureLeafRelative out = (HAPElementStructureLeafRelative)this.cloneStructureElement();
-		out.m_referencePath = HAPUtilityScriptExpression.solidateLiterate(this.getReferencePath(), constants, runtimeEnv);
-		out.m_parent = this.m_parent;
+		out.getPath().setReferencePath(HAPUtilityScriptExpression.solidateLiterate(this.getPath().getReferencePath(), constants, runtimeEnv));
+		out.getPath().setParent(this.getPath().getParent());
 		if(this.m_definition!=null) 	out.m_definition = (HAPElementStructure)this.m_definition.solidateConstantScript(constants, runtimeEnv);
 		return out;
 	}
@@ -150,9 +136,8 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PATH, this.getReferencePath());
+		jsonMap.put(PATH, this.getPath().toStringValue(HAPSerializationFormat.JSON));
 		if(this.getResolvedIdPath()!=null)  jsonMap.put(RESOLVEDPATH, this.getResolvedIdPath().toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(PARENT, this.getParent());
 		jsonMap.put(DEFINITION, HAPJsonUtility.buildJson(this.m_definition, HAPSerializationFormat.JSON));
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){
 			jsonMap.put(MATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
@@ -168,7 +153,7 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 		boolean out = false;
 		if(obj instanceof HAPElementStructureLeafRelative) {
 			HAPElementStructureLeafRelative ele = (HAPElementStructureLeafRelative)obj;
-			if(!HAPBasicUtility.isEquals(this.getReferencePath(), ele.getReferencePath()))  return false;
+			if(!HAPBasicUtility.isEquals(this.getPath(), ele.getPath()))  return false;
 			if(!HAPBasicUtility.isEqualMaps(ele.m_matchers, this.m_matchers)) 	return false;
 			if(!HAPBasicUtility.isEqualMaps(ele.m_reverseMatchers, this.m_matchers))  return false;
 			if(!ele.m_definition.equals(this.m_definition))  return false;

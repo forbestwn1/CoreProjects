@@ -25,11 +25,12 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPInfoAlias;
-import com.nosliw.data.core.structure.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
+import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
@@ -174,7 +175,7 @@ public class HAPProcessorExpression {
 						String variablePath = variableOperand.getVariableName();
 						Set<String> types = new HashSet<String>();
 						types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA);
-						HAPInfoReferenceResolve resolve = HAPUtilityStructure.analyzeElementReference(variablePath, expressionExe.getValueStructureDefinitionWrapper().getValueStructure(), null, types);
+						HAPInfoReferenceResolve resolve = HAPUtilityStructureElementReference.analyzeElementReference(variablePath, expressionExe.getValueStructureDefinitionWrapper().getValueStructure(), null, types);
 						if(resolve==null || resolve.referredRoot==null || !resolve.realSolidSolved.remainPath.isEmpty()) {
 							//variable name cannot be resolved
 							HAPRootStructure root = resolve==null?null:resolve.referredRoot;
@@ -330,7 +331,7 @@ public class HAPProcessorExpression {
 						HAPOperandVariable variableOperand = (HAPOperandVariable)operand.getOperand();
 						Set<String> elementTypes = new HashSet<String>();
 						elementTypes.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA);
-						HAPInfoReferenceResolve resolve = HAPUtilityStructure.resolveElementReference(variableOperand.getVariableName(), structure, null, elementTypes);
+						HAPInfoReferenceResolve resolve = HAPUtilityStructureElementReference.resolveElementReference(variableOperand.getVariableName(), structure, null, null, elementTypes);
 						variableOperand.setVariableId(new HAPComplexPath(resolve.referredRoot.getLocalId(), new HAPComplexPath(variableOperand.getVariableName()).getPath()).getFullName());
 					}
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){

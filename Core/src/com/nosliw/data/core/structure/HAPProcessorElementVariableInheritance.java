@@ -5,6 +5,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
@@ -15,7 +16,7 @@ public class HAPProcessorElementVariableInheritance {
 		HAPValueStructure out = (HAPValueStructure)processConstant(orgContext);
 		for(String parentName : parent.getStructureNames()) {
 //			out = process(out, (HAPValueStructureDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedStructure(parentName, parent, orgContext), false), inheritMode, inheritanceExcludedInfo, runtimeEnv);
-			out = process(out, (HAPValueStructure)HAPUtilityStructure.getReferedStructure(parentName, parent, orgContext), inheritMode, inheritanceExcludedInfo, runtimeEnv);
+			out = process(out, (HAPValueStructure)HAPUtilityStructureElementReference.getReferedStructure(parentName, parent, orgContext), inheritMode, inheritanceExcludedInfo, runtimeEnv);
 		}
 		return out;
 	}

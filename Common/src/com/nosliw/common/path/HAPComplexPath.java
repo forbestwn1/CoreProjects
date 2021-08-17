@@ -108,4 +108,7 @@ public class HAPComplexPath extends HAPSerializableImp{
 		if(this.m_path!=null && !this.m_path.isEmpty()) jsonMap.put(PATH, this.m_path.getPath());
 	}
 
+	@Override
+	public String toString() {    return this.getFullName();    }
+	
 }

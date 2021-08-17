@@ -24,6 +24,8 @@ import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
+import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
@@ -40,7 +42,7 @@ public class HAPProcessorElementConstant {
 		//merge with parent
 		HAPStructure merged = structure;
 		for(String parentName : parent.getStructureNames()) {
-			merged = mergeWithParent(merged, HAPUtilityStructure.getReferedStructure(parentName, parent, merged), configure.inheritMode);
+			merged = mergeWithParent(merged, HAPUtilityStructureElementReference.getReferedStructure(parentName, parent, merged), configure.inheritMode);
 		}
 
 		//process constant ref in context
@@ -260,9 +262,9 @@ public class HAPProcessorElementConstant {
 			String constantId = constantDef.getId();
 			Set<String> types = new HashSet<String>();
 			types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT);
-			HAPInfoReferenceResolve resolveInfo = HAPUtilityStructure.analyzeElementReference(constantId, structure, configure.elementReferenceResolveMode, types);
+			HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(constantId, structure, configure.elementReferenceResolveMode, types);
 			solidateConstantDefEle((HAPElementStructureLeafConstant)resolveInfo.realSolved.resolvedElement, structure, configure, runtimeEnv);
-			constantsValue.put(constantId, ((HAPElementStructureLeafConstant)HAPUtilityStructure.resolveElement(resolveInfo.realSolved)).getValue());
+			constantsValue.put(constantId, ((HAPElementStructureLeafConstant)HAPUtilityStructureElementReference.resolveElement(resolveInfo.realSolved, configure.relativeInheritRule)).getValue());
 		}
 
 		//process script again with constant and discovery
