@@ -14,7 +14,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
@@ -143,7 +143,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		
 		//output
 		HAPDataTypeCriteria outputCriteria = this.m_expression.getExpressionItems().get(this.m_elementName).getOutputCriteria();
-		return HAPCriteriaUtility.isMatchable(outputCriteria, expectCriteria, dataTypeHelper);
+		return HAPUtilityCriteria.isMatchable(outputCriteria, expectCriteria, dataTypeHelper);
 	}
 	
 	@Override

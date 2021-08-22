@@ -42,7 +42,7 @@ public class HAPInfoCriteria extends HAPSerializableImp{
 
 	public static HAPInfoCriteria buildCriteriaInfo(HAPDataTypeCriteria criteria) {
 		HAPInfoCriteria out = new HAPInfoCriteria();
-		if(criteria!=null)		out.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
+		if(criteria!=null)		out.m_criteria = HAPUtilityCriteria.cloneDataTypeCriteria(criteria);
 		out.initWithDefault();
 		return out;
 	}
@@ -104,7 +104,7 @@ public class HAPInfoCriteria extends HAPSerializableImp{
 	public HAPInfoCriteria cloneCriteriaInfo() {
 		HAPInfoCriteria out = new HAPInfoCriteria();
 		out.m_status = this.m_status;
-		out.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(this.m_criteria);
+		out.m_criteria = HAPUtilityCriteria.cloneDataTypeCriteria(this.m_criteria);
 		return out;
 	}
 	

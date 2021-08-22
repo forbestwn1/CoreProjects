@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
@@ -35,14 +35,14 @@ public class HAPGatewayUITag extends HAPGatewayImp{
 			switch(command){
 			case COMMAND_GETDEFAULTTAG:
 			{
-				HAPUITageQueryData query = new HAPUITageQueryData(HAPCriteriaUtility.parseCriteria(parms.getString(COMMAND_GETDEFAULTTAG_CRITERIA)));
+				HAPUITageQueryData query = new HAPUITageQueryData(HAPUtilityCriteria.parseCriteria(parms.getString(COMMAND_GETDEFAULTTAG_CRITERIA)));
 				HAPUITagInfo result = this.m_uiTagMan.getDefaultUITagData(query);
 				out = this.createSuccessWithObject(result);
 				break;
 			}
 			case COMMAND_QUERYTAG:
 			{
-				HAPUITageQueryData query = new HAPUITageQueryData(HAPCriteriaUtility.parseCriteria(parms.getString(COMMAND_QUERYTAG_CRITERIA)));
+				HAPUITageQueryData query = new HAPUITageQueryData(HAPUtilityCriteria.parseCriteria(parms.getString(COMMAND_QUERYTAG_CRITERIA)));
 				HAPUITagQueryResultSet result = this.m_uiTagMan.queryUITagData(query);
 				out = this.createSuccessWithObject(result);
 				break;

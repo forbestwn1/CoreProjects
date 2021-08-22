@@ -15,7 +15,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.data.criteria.HAPParserCriteria;
-import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.matcher.HAPMatchersCombo;
@@ -137,10 +137,10 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 	
 	public HAPVariableDataInfo cloneVariableDataInfo() {
 		HAPVariableDataInfo out = new HAPVariableDataInfo();
-		out.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(this.m_criteria);
+		out.m_criteria = HAPUtilityCriteria.cloneDataTypeCriteria(this.m_criteria);
 		out.m_rules.addAll(this.m_rules);
 		if(this.m_ruleMatchers!=null) out.m_ruleMatchers = this.m_ruleMatchers.cloneMatchers();
-		if(this.m_ruleCriteria!=null)  out.m_ruleCriteria = HAPCriteriaUtility.cloneDataTypeCriteria(this.m_ruleCriteria);
+		if(this.m_ruleCriteria!=null)  out.m_ruleCriteria = HAPUtilityCriteria.cloneDataTypeCriteria(this.m_ruleCriteria);
 		return out;
 	}
 	

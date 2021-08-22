@@ -15,7 +15,7 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 	
 	public HAPDataTypeCriteriaExpression(String expression){
 		//escape    
-		this.m_expression = HAPCriteriaUtility.deescape(expression);
+		this.m_expression = HAPUtilityCriteria.deescape(expression);
 	}
 	
 	@Override
@@ -25,7 +25,7 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 	protected String buildLiterate(){
 		StringBuffer out = new StringBuffer();
 		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.START_EXPRESSION));
-		out.append(HAPCriteriaUtility.escape(this.m_expression));
+		out.append(HAPUtilityCriteria.escape(this.m_expression));
 		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.END_EXPRESSION));
 		return out.toString(); 
 	}

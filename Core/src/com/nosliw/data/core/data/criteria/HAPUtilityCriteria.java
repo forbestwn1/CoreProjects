@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
-public class HAPCriteriaUtility {
+public class HAPUtilityCriteria {
 
 	public static final String CHILD_ELEMENT = "element";
 

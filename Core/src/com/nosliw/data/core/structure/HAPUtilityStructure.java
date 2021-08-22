@@ -13,7 +13,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -317,7 +317,7 @@ public class HAPUtilityStructure {
 				HAPElementStructureLeafConstant dataOrigin = (HAPElementStructureLeafConstant)originDef.getSolidStructureElement();
 				HAPElementStructureLeafData dataExpect = (HAPElementStructureLeafData)expectDef;
 				//cal matchers
-				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(new HAPDataTypeCriteriaId(dataOrigin.getDataValue().getDataTypeId(), null)), dataExpect.getCriteria(), runtimeEnv.getDataTypeHelper()); 
+				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(new HAPDataTypeCriteriaId(dataOrigin.getDataValue().getDataTypeId(), null)), dataExpect.getCriteria(), runtimeEnv.getDataTypeHelper()); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}
@@ -330,7 +330,7 @@ public class HAPUtilityStructure {
 				HAPElementStructureLeafData dataOrigin = (HAPElementStructureLeafData)originDef;
 				 HAPElementStructureLeafConstant dataExpect = (HAPElementStructureLeafConstant)expectDef.getSolidStructureElement();
 				//cal matchers
-				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), new HAPDataTypeCriteriaId(dataExpect.getDataValue().getDataTypeId(), null), runtimeEnv.getDataTypeHelper()); 
+				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), new HAPDataTypeCriteriaId(dataExpect.getDataValue().getDataTypeId(), null), runtimeEnv.getDataTypeHelper()); 
 				if(!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}
@@ -344,7 +344,7 @@ public class HAPUtilityStructure {
 				HAPElementStructureLeafData dataOrigin = (HAPElementStructureLeafData)originDef.getSolidStructureElement();
 				HAPElementStructureLeafData dataExpect = (HAPElementStructureLeafData)expectDef;
 				//cal matchers
-				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), dataExpect.getCriteria(), runtimeEnv.getDataTypeHelper()); 
+				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataOrigin.getCriteria()), dataExpect.getCriteria(), runtimeEnv.getDataTypeHelper()); 
 				if(matcher!=null&&!matcher.isVoid())  matchers.put(path, matcher);
 				break;
 			}

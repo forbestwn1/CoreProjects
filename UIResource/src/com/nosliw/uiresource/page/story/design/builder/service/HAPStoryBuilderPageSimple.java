@@ -13,7 +13,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
@@ -445,7 +445,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			}
 			else if(dataTypeId.getFullName().contains("map")){
 				//map
-				List<String> names = HAPCriteriaUtility.getCriteriaChildrenNames(dataTypeCriteria);
+				List<String> names = HAPUtilityCriteria.getCriteriaChildrenNames(dataTypeCriteria);
 				for(String name : names) {
 					HAPDataUIInfo dataUIInfo = buildDataUINode(story, layoutUINode, "uiData", varName+"."+name, createChildDisplayLabelInfo(name, lableInfo.getDisplayResource()), dataFlow, changeRequest);
 					if(dataUIInfo!=null) {

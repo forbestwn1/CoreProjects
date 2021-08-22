@@ -3,7 +3,7 @@ package com.nosliw.test.criteria;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 
 public class HAPCriteriaEscape {
 
@@ -14,7 +14,7 @@ public class HAPCriteriaEscape {
 		  
 		System.out.println("Enter your string to escpate");  
 		String content=br.readLine();  
-		String escpateConent = HAPCriteriaUtility.escape(content);
+		String escpateConent = HAPUtilityCriteria.escape(content);
 		
 		System.out.println("Output "+escpateConent);  		
 	}

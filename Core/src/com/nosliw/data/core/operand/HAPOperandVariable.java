@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -58,7 +58,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 //			variablesInfo.addVariableCriteriaInfo(variableInfo, this.getVariableName());
 //		}
 		
-		HAPMatchers matchers = HAPCriteriaUtility.mergeVariableInfo(variableInfo, expectCriteria, dataTypeHelper);
+		HAPMatchers matchers = HAPUtilityCriteria.mergeVariableInfo(variableInfo, expectCriteria, dataTypeHelper);
 		
 		//set output criteria
 		this.setOutputCriteria(variableInfo.getCriteria());

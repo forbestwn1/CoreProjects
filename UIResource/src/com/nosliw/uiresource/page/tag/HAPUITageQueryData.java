@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute
@@ -34,7 +34,7 @@ public class HAPUITageQueryData extends HAPSerializableImp{
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_dataTypeCriteria = HAPCriteriaUtility.parseCriteria(jsonObj.getString(DATATYPECRITERIA));
+		this.m_dataTypeCriteria = HAPUtilityCriteria.parseCriteria(jsonObj.getString(DATATYPECRITERIA));
 		return true;  
 	}	
 }

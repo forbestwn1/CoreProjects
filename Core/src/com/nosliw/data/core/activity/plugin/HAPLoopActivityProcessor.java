@@ -6,7 +6,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
-import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
@@ -61,7 +61,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		out.setContainerDataPath(containerResolve.path);
 		HAPDataTypeCriteria containerCriteria = ((HAPElementStructureLeafData)containerResolve.resolvedElement.getSolidStructureElement()).getCriteria();
 		//find element data criteria from coontainer data criteria
-		HAPDataTypeCriteria elementCriteria = HAPCriteriaUtility.getChildCriteriaByPath(containerCriteria, "element");
+		HAPDataTypeCriteria elementCriteria = HAPUtilityCriteria.getChildCriteriaByPath(containerCriteria, "element");
 		//build element data context 
 		stepDataContext.addRoot(loopActivityDef.getElementName(), new HAPRootStructure(new HAPElementStructureLeafData(new HAPVariableDataInfo(elementCriteria))), HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 		

@@ -9,9 +9,11 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.data.core.data.criteria.HAPParserCriteria;
-import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.structure.reference.HAPInfoPathReference;
 
 @HAPEntityWithAttribute
@@ -23,12 +25,17 @@ public class HAPOutputInteractive extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String REFERENCE = "reference";
 
+	@HAPAttribute
+	public static String DATA = "data";
+
 	//data type
 	private HAPDataTypeCriteria m_criteria;
 	
 	//path to relative node
 	private HAPInfoPathReference m_reference;
 
+	private HAPData m_constantData;
+	
 	public HAPOutputInteractive() {}
 
 	public HAPOutputInteractive(HAPDataTypeCriteria criteria) {
@@ -38,6 +45,8 @@ public class HAPOutputInteractive extends HAPEntityInfoWritableImp{
 	public HAPDataTypeCriteria getCriteria() {   return this.m_criteria; }
 	public void setCriteria(HAPDataTypeCriteria criteria) {    this.m_criteria = criteria;     }
 
+	public HAPData getConstantData() {   return this.m_constantData;     }
+	
 	public HAPInfoPathReference getReferenceInfo() {   return this.m_reference;    }
 	
 	@Override
@@ -45,6 +54,7 @@ public class HAPOutputInteractive extends HAPEntityInfoWritableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.getCriteria()!=null)	jsonMap.put(CRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
 		if(this.m_reference!=null)  jsonMap.put(REFERENCE, this.m_reference.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_constantData!=null)  jsonMap.put(DATA, this.m_constantData.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -58,6 +68,8 @@ public class HAPOutputInteractive extends HAPEntityInfoWritableImp{
 			this.m_criteria = HAPParserCriteria.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
 			this.m_reference = new HAPInfoPathReference();
 			this.m_reference.buildObject(jsonValue.opt(REFERENCE), HAPSerializationFormat.JSON);
+			Object dataObj = jsonValue.opt(DATA);
+			if(dataObj!=null) 		HAPUtilityData.buildDataWrapperFromObject(dataObj);
 		}
 		return true;
 	}
@@ -65,8 +77,9 @@ public class HAPOutputInteractive extends HAPEntityInfoWritableImp{
 	public HAPOutputInteractive cloneInteractiveOutput() {
 		HAPOutputInteractive out = new HAPOutputInteractive();
 		this.cloneToEntityInfo(out);
-		out.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(this.m_criteria);
+		out.m_criteria = HAPUtilityCriteria.cloneDataTypeCriteria(this.m_criteria);
 		out.m_reference = this.m_reference;
+		out.m_constantData = this.m_constantData.cloneData();
 		return out;
 	}
 	
