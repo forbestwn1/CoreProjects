@@ -15,6 +15,7 @@ import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPEventTrigueActivityProcessor implements HAPProcessorActivity{
@@ -38,7 +39,7 @@ public class HAPEventTrigueActivityProcessor implements HAPProcessorActivity{
 			eventDef = ((HAPComponent)complexEntity).getEvent(trigueEventActDef.getEventName());
 		}
 
-		HAPExecutableEvent eventExe = HAPProcessEvent.process(eventDef, valueStructureWrapper.getValueStructure(), runtimeEnv);
+		HAPExecutableEvent eventExe = HAPProcessEvent.process(eventDef, HAPContainerStructure.createDefault(valueStructureWrapper.getValueStructure()), runtimeEnv);
 		out.setEvent(eventExe);
 		
 		//process input

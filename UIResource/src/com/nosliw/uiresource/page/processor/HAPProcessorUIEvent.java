@@ -12,6 +12,7 @@ import com.nosliw.data.core.component.event.HAPProcessEvent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
+import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
@@ -28,7 +29,7 @@ public class HAPProcessorUIEvent {
 		//process relative element in event defined in resource
 		List<HAPDefinitionEvent> eventsDef = uiUnitDef.getEvents();
 		for(HAPDefinitionEvent event : eventsDef) {
-			HAPExecutableEvent eventExe = HAPProcessEvent.process(event, uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure(), runtimeEnv);
+			HAPExecutableEvent eventExe = HAPProcessEvent.process(event, HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure()), runtimeEnv);
 			uiExe.getBody().addEventDefinition(eventExe);
 		}
 		

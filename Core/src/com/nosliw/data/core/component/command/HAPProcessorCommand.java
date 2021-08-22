@@ -19,7 +19,8 @@ public class HAPProcessorCommand {
 		commandDef.cloneToEntityInfo(out);
 		out.setTaskName(commandDef.getTaskName());
 		
-		HAPDefinitionCommand solidatedCommandDef = (HAPDefinitionCommand)HAPUtilityInteractive.solidateRelative(commandDef, parentStructures, null, true, null);
+		HAPDefinitionCommand solidatedCommandDef = commandDef.cloneCommandDefinition();
+		HAPUtilityInteractive.solidateRelative(solidatedCommandDef, parentStructures, null, true, null);
 		out.setCommand(solidatedCommandDef);
 
 		//build data association

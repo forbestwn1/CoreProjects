@@ -219,13 +219,12 @@
 	[
 		{
 			"name" : "event1",
-			"value" : {
-				"eventData1" : {
-					"definition" : {
-						"path": "aaa"
-					}
+			"output" : [
+				{
+					"name" : "eventData1",
+					"reference" : "aaa"
 				}
-			}
+			]
 		}
 	]
 	</event>

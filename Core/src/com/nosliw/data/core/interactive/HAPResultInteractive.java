@@ -30,10 +30,15 @@ public class HAPResultInteractive extends HAPEntityInfoWritableImp{
 	
 	public HAPResultInteractive cloneInteractiveResult() {
 		HAPResultInteractive out = new HAPResultInteractive();
-		for(HAPOutputInteractive output : this.m_output) {
-			out.addOutput(output.cloneInteractiveOutput());
-		}
+		this.cloneToInteractiveResult(out);
 		return out;
+	}
+	
+	protected void cloneToInteractiveResult(HAPResultInteractive result) {
+		this.cloneToEntityInfo(result);
+		for(HAPOutputInteractive output : this.m_output) {
+			result.addOutput(output.cloneInteractiveOutput());
+		}
 	}
 	
 	@Override

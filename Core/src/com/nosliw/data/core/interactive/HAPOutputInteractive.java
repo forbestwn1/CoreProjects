@@ -11,9 +11,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPParserCriteria;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.structure.reference.HAPInfoPathReference;
 
 @HAPEntityWithAttribute
@@ -79,7 +79,7 @@ public class HAPOutputInteractive extends HAPEntityInfoWritableImp{
 		this.cloneToEntityInfo(out);
 		out.m_criteria = HAPUtilityCriteria.cloneDataTypeCriteria(this.m_criteria);
 		out.m_reference = this.m_reference;
-		out.m_constantData = this.m_constantData.cloneData();
+		if(this.m_constantData!=null) out.m_constantData = this.m_constantData.cloneData();
 		return out;
 	}
 	

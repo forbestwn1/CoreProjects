@@ -28,11 +28,16 @@ public class HAPExecutableEvent extends HAPExecutableImpEntityInfo{
 	
 	private HAPExecutableDataAssociationMapping m_dataAssociation;
 	
+	public HAPExecutableEvent() {}
+	
 	public HAPExecutableEvent(HAPValueStructureDefinitionFlat dataDefinition, HAPExecutableDataAssociationMapping dataAssociation) {
 		this.m_dataDefinition = dataDefinition;
 		this.m_dataAssociation = dataAssociation;
 	}
 
+	public void setDataAssociation(HAPExecutableDataAssociationMapping dataAssociation) {    this.m_dataAssociation = dataAssociation;    }
+	public void setValueStructure(HAPValueStructureDefinitionFlat valueStructure) {   this.m_dataDefinition = valueStructure;    }
+	
 	public HAPExecutableEvent cloneExeEvent() {
 		HAPExecutableEvent out = new HAPExecutableEvent((HAPValueStructureDefinitionFlat)this.m_dataDefinition.cloneStructure(), this.m_dataAssociation);
 		this.cloneToEntityInfo(out);
