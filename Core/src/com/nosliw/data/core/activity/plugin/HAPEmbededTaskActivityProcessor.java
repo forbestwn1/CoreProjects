@@ -47,8 +47,8 @@ public class HAPEmbededTaskActivityProcessor implements HAPProcessorActivity{
 		HAPExecutableWrapperTask<HAPExecutableProcess> emProcessExe = processManager.getEmbededProcess(
 				processActivityDef.getProcess(),
 				processContext,
-				processActivityDef.getTaskMapping().getInputMapping(), 
-				processActivityDef.getTaskMapping().getOutputMapping(),
+				processActivityDef.getTaskMapping().getInDataAssociation(), 
+				processActivityDef.getTaskMapping().getOutDataAssociations(),
 				HAPContainerStructure.createDefault(processDataContext), 
 				HAPContainerStructure.createDefault(processDataContext)
 		);

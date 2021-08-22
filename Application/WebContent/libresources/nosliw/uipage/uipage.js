@@ -166,9 +166,11 @@ var node_createUIPage = function(uiView, style){
 				}
 			}
 			else{
-				return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-					return loc_getCurrent().command(command, parms, requestInfo);	
-				}, handlers, requestInfo);
+				return loc_getCurrent().getExecuteCommandRequest(command, parms, handlers, requestInfo);
+				
+//				return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+//					return loc_getCurrent().command(command, parms, requestInfo);	
+//				}, handlers, requestInfo);
 			}
 		},
 		executeExecuteCommandRequest : function(command, data, handlers, requestInfo){		node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(command, data, handlers, requestInfo));	},

@@ -192,7 +192,7 @@ public class HAPProcessorExpression2 {
 					JSONObject adaptorObj = (JSONObject)result.getAdaptor();
 					if(adaptorObj!=null) {
 						if(eleName==null)  eleName = (String)adaptorObj.opt(HAPOperandReference.ELEMENTNAME);
-						referenceOperand.setInputDataAssociation(HAPParserDataAssociation.buildDefinitionByJson(adaptorObj.optJSONObject(HAPOperandReference.VARMAPPING)));
+						referenceOperand.setInDataAssociation(HAPParserDataAssociation.buildDefinitionByJson(adaptorObj.optJSONObject(HAPOperandReference.VARMAPPING)));
 					}
 					referenceOperand.setElementName(eleName);
 					
@@ -225,7 +225,7 @@ public class HAPProcessorExpression2 {
 						normalizeReferencesInputMapping(referenceOperand.getReferedExpression());
 						
 						//variable mapping
-						HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputDataAssociation();
+						HAPDefinitionDataAssociation inputMapping = referenceOperand.getInDataAssociation();
 						HAPVariableInfoInStructure parentVarsContainer = expressionExe.getVarsInfo();
 						HAPVariableInfoInStructure referedVarsContainer = referenceOperand.getReferedExpression().getVarsInfo();
 						String inputMappingType = inputMapping.getType();
@@ -288,7 +288,7 @@ public class HAPProcessorExpression2 {
 						HAPUpdateName nameUpdate = HAPUtilityExpression.getUpdateNameGlobal((refExpression));
 						refExpression.updateVariableName(nameUpdate);
 						
-						HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputDataAssociation();
+						HAPDefinitionDataAssociation inputMapping = referenceOperand.getInDataAssociation();
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
@@ -325,7 +325,7 @@ public class HAPProcessorExpression2 {
 						HAPVariableInfoInStructure referedContainer = referenceOperand.getReferedExpression().getVarsInfo();
 
 						Map<String, String> nameMapping = new LinkedHashMap<String, String>();
-						HAPDefinitionDataAssociation inputMapping =	referenceOperand.getInputDataAssociation();
+						HAPDefinitionDataAssociation inputMapping =	referenceOperand.getInDataAssociation();
 						String inputMappingType = inputMapping.getType();
 						if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
 							HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;

@@ -65,7 +65,7 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 
 	public HAPDataTypeCriteria getSolidCriteria(){
 		if(this.m_criteria==null){
-			this.m_criteria = HAPCriteriaParser.getInstance().parseCriteria(m_literateValue);
+			this.m_criteria = HAPParserCriteria.getInstance().parseCriteria(m_literateValue);
 		}
 		return this.m_criteria;
 	}

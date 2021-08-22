@@ -7,8 +7,8 @@ import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 //input and result of task
 public interface HAPIOTask {
 
-	HAPContainerStructure getInContext();
+	HAPContainerStructure getInStructure();
 
-	Map<String, HAPContainerStructure> getOutResultContext();
+	Map<String, HAPContainerStructure> getOutResultStructure();
 
 }

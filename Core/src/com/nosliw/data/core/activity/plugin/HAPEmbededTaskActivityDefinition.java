@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataMappingTask;
+import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.task.HAPDefinitionTask;
@@ -26,7 +26,7 @@ public class HAPEmbededTaskActivityDefinition extends HAPDefinitionActivityNorma
 
 	private Object m_task;
 	
-	private HAPDefinitionDataMappingTask m_dataMapping;
+	private HAPDefinitionGroupDataAssociationForTask m_dataMapping;
 
 	public HAPEmbededTaskActivityDefinition(String type) {
 		super(type);
@@ -39,7 +39,7 @@ public class HAPEmbededTaskActivityDefinition extends HAPDefinitionActivityNorma
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_task = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS, jsonObj.opt(TASK));
-		this.m_dataMapping = new HAPDefinitionDataMappingTask();
+		this.m_dataMapping = new HAPDefinitionGroupDataAssociationForTask();
 		this.m_dataMapping.buildObject(jsonObj.optJSONObject(DATAMAPPING), HAPSerializationFormat.JSON);
 		return true;  
 	}

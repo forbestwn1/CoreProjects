@@ -45,14 +45,14 @@ public class HAPDataTypeCriteriaAnd extends HAPDataTypeCriteriaComplex{
 	@Override
 	protected String buildLiterate(){
 		StringBuffer out = new StringBuffer();
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_AND));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.START_AND));
 		int i = 0;
 		for(HAPDataTypeCriteria childCriteria : this.getChildren()){
-			if(i!=0)   out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.COMMAR));
+			if(i!=0)   out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.COMMAR));
 			out.append(HAPSerializeManager.getInstance().toStringValue(childCriteria, HAPSerializationFormat.LITERATE));
 			i++;
 		}
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_AND));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.END_AND));
 		return out.toString(); 
 	}
 

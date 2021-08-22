@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
-public class HAPDefinitionWrapperTask<T> extends HAPDefinitionDataMappingTask{
+public class HAPDefinitionWrapperTask<T> extends HAPDefinitionGroupDataAssociationForTask{
 
 	@HAPAttribute
 	public static String TASK = "task";

@@ -61,7 +61,7 @@ public class HAPCriteriaUtility {
 	public static HAPDataTypeCriteria cloneDataTypeCriteria(HAPDataTypeCriteria criteria) {
 		if(criteria==null)  return null;
 		String str = criteria.toStringValue(HAPSerializationFormat.LITERATE);
-		HAPDataTypeCriteria out = HAPCriteriaParser.getInstance().parseCriteria(str);
+		HAPDataTypeCriteria out = HAPParserCriteria.getInstance().parseCriteria(str);
 		if(criteria instanceof HAPDataTypeCriteriaAbstract) {
 			((HAPDataTypeCriteriaAbstract)out).setSolidCriteria(((HAPDataTypeCriteriaAbstract)criteria).getSoldCriteria());
 		}
@@ -123,6 +123,6 @@ public class HAPCriteriaUtility {
 	}
 	
 	  public static HAPDataTypeCriteria parseCriteria(String criteria){
-		  return HAPCriteriaParser.getInstance().parseCriteria(criteria);
+		  return HAPParserCriteria.getInstance().parseCriteria(criteria);
 	  }	
 }

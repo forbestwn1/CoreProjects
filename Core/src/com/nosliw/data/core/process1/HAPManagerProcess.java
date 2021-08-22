@@ -66,8 +66,8 @@ public class HAPManagerProcess {
 			Map<String, HAPContainerStructure> outputContext 
 		) {
 		HAPDefinitionWrapperTask<HAPEntityWithResourceContext> suiteWrapper = new HAPDefinitionWrapperTask(context.getResourceDefinition(processId));
-		suiteWrapper.setInputMapping(inputMapping);
-		suiteWrapper.setOutputMapping(outputMapping);
+		suiteWrapper.setInDataAssociation(inputMapping);
+		suiteWrapper.setOutDataAssociations(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, context);
 		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_runtimeEnv);
 		return out;
@@ -82,8 +82,8 @@ public class HAPManagerProcess {
 			HAPContainerStructure outputContext 
 		) {
 		HAPDefinitionWrapperTask<HAPEntityWithResourceContext> suiteWrapper = new HAPDefinitionWrapperTask(context.getResourceDefinition(processId));
-		suiteWrapper.setInputMapping(inputMapping);
-		suiteWrapper.setOutputMapping(outputMapping);
+		suiteWrapper.setInDataAssociation(inputMapping);
+		suiteWrapper.setOutDataAssociations(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, context);
 		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_runtimeEnv);
 		return out;
@@ -98,8 +98,8 @@ public class HAPManagerProcess {
 			HAPContainerStructure outputContext 
 		) {
 		HAPDefinitionWrapperTask<HAPEntityWithResourceContext> suiteWrapper = new HAPDefinitionWrapperTask(new HAPEntityWithResourceContext(new HAPResourceDefinitionProcess(suite, processId)));
-		suiteWrapper.setInputMapping(inputMapping);
-		suiteWrapper.setOutputMapping(outputMapping);
+		suiteWrapper.setInDataAssociation(inputMapping);
+		suiteWrapper.setOutDataAssociations(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, suite);
 		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_runtimeEnv);
 		return out;
@@ -114,8 +114,8 @@ public class HAPManagerProcess {
 			Map<String, HAPContainerStructure> outputContext 
 		) {
 		HAPDefinitionWrapperTask<HAPEntityWithResourceContext> suiteWrapper = new HAPDefinitionWrapperTask(new HAPEntityWithResourceContext(new HAPResourceDefinitionProcess(suite, processId)));
-		suiteWrapper.setInputMapping(inputMapping);
-		suiteWrapper.setOutputMapping(outputMapping);
+		suiteWrapper.setInDataAssociation(inputMapping);
+		suiteWrapper.setOutDataAssociations(outputMapping);
 		HAPExecutableProcess processExe = this.getProcess(processId, suite);
 		HAPExecutableWrapperTask<HAPExecutableProcess> out = HAPProcessorDataAssociation.processDataAssociationWithTask(suiteWrapper, processExe, inputContext, outputContext, null, this.m_runtimeEnv);
 		return out;

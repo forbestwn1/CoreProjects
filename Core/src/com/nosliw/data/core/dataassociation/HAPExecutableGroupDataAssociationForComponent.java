@@ -19,14 +19,14 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 @HAPEntityWithAttribute
-public class HAPExecutableGroupDataAssociation extends HAPSerializableImp implements HAPExecutable{
+public class HAPExecutableGroupDataAssociationForComponent extends HAPSerializableImp implements HAPExecutable{
 
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
 	private Map<String, HAPExecutableDataAssociation> m_dataAssociations;
 	
-	public HAPExecutableGroupDataAssociation() {
+	public HAPExecutableGroupDataAssociationForComponent() {
 		this.m_dataAssociations = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 	} 
 	

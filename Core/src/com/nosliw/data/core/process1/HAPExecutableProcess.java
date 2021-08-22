@@ -85,10 +85,10 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	}
  
 	@Override
-	public HAPContainerStructure getInContext() {	return HAPContainerStructure.createDefault(this.m_context.getChildContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC));	}
+	public HAPContainerStructure getInStructure() {	return HAPContainerStructure.createDefault(this.m_context.getChildContext(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC));	}
 
 	@Override
-	public Map<String, HAPContainerStructure> getOutResultContext() {
+	public Map<String, HAPContainerStructure> getOutResultStructure() {
 		Map<String, HAPContainerStructure> out = new LinkedHashMap<String, HAPContainerStructure>();
 		for(String resultName : this.m_results.keySet()) {
 //			out.put(resultName, HAPParentContext.createDefault(this.m_context));     //kkkkkk

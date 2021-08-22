@@ -81,14 +81,14 @@ public class HAPDataTypeCriteriaRange extends HAPDataTypeCriteriaImp implements 
 	@Override
 	protected String buildLiterate(){
 		StringBuffer out = new StringBuffer();
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_RANGE));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.START_RANGE));
 		if(this.m_from!=null)		out.append(HAPSerializeManager.getInstance().toStringValue(this.m_from, HAPSerializationFormat.LITERATE));
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.RANGE));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.RANGE));
 		if(this.m_to!=null)		out.append(HAPSerializeManager.getInstance().toStringValue(this.m_to, HAPSerializationFormat.LITERATE));
 		if(this.m_subCriteriaGroup!=null){
 			out.append(HAPSerializeManager.getInstance().toStringValue(m_subCriteriaGroup, HAPSerializationFormat.LITERATE));
 		}
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_RANGE));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.END_RANGE));
 		return out.toString(); 
 	}
 	

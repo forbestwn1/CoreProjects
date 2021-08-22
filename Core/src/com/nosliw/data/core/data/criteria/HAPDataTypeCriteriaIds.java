@@ -60,14 +60,14 @@ public class HAPDataTypeCriteriaIds extends HAPDataTypeCriteriaImp{
 	@Override
 	protected String buildLiterate(){
 		StringBuffer out = new StringBuffer();
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_IDS));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.START_IDS));
 		int i = 0;
 		for(HAPDataTypeCriteria idCriteria : this.getChildren()){
-			if(i!=0)   out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.COMMAR));
+			if(i!=0)   out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.COMMAR));
 			out.append(HAPSerializeManager.getInstance().toStringValue(idCriteria, HAPSerializationFormat.LITERATE));
 			i++;
 		}
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_IDS));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.END_IDS));
 
 		return out.toString(); 
 	}

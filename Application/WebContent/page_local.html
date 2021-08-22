@@ -38,7 +38,16 @@ $(document).on("nosliwActive", function(){
 					
 					uiResourceView.appendTo($('#testDiv'));
 
-					uiResourceView.executeExecuteCommandRequest("init", requestInfo);
+					uiResourceView.executeExecuteCommandRequest("command1", {
+						parm1 : {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "command input!"
+						}
+					}, {
+						success : function(request, taskResult){
+							
+						}
+					}, requestInfo);
 					
 					uiResourceView.registerEventListener(undefined, function(eventName, eventData, requestInfo){
 						alert(eventName + "  _______  " +JSON.stringify(eventData));

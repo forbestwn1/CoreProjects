@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.data.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.structure.reference.HAPInfoPathReference;
 
@@ -95,7 +95,7 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
 		if(value instanceof String) {
-			this.m_dataInfo.setCriteria(HAPCriteriaParser.getInstance().parseCriteria((String)value));
+			this.m_dataInfo.setCriteria(HAPParserCriteria.getInstance().parseCriteria((String)value));
 		}
 		else if(value instanceof JSONObject){
 			JSONObject jsonValue = (JSONObject)value;
@@ -106,8 +106,11 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 			
 			this.m_defaultValue = HAPUtilityData.buildDataWrapperFromObject(jsonValue.opt(DEFAULTVALUE));
 
-			this.m_reference = new HAPInfoPathReference();
-			this.m_reference.buildObject(jsonValue.opt(REFERENCE), HAPSerializationFormat.JSON);
+			Object referenceObj = jsonValue.opt(REFERENCE);
+			if(referenceObj!=null) {
+				this.m_reference = new HAPInfoPathReference();
+				this.m_reference.buildObject(referenceObj, HAPSerializationFormat.JSON);
+			}
 		}
 		return true;
 	}

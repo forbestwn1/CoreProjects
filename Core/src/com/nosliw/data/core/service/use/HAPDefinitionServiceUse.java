@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataMappingTask;
+import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
 
@@ -26,22 +26,22 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 	public static String PROVIDER = "provider";
 
 	@HAPAttribute
-	public static String DATAMAPPING = "dataMapping";
+	public static String DATAASSOCIATION = "dataAssociation";
 
 	private String m_provider;
 
 	private HAPResourceId m_interfaceId;
 
-	private HAPDefinitionDataMappingTask m_dataMapping;
+	private HAPDefinitionGroupDataAssociationForTask m_dataAssociations;
 	
 	public HAPDefinitionServiceUse() {
-		this.m_dataMapping = new HAPDefinitionDataMappingTask();
+		this.m_dataAssociations = new HAPDefinitionGroupDataAssociationForTask();
 	}
 	
-	public HAPDefinitionDataMappingTask getDataMapping() {   return this.m_dataMapping;    }
-	public void setServiceMapping(HAPDefinitionDataMappingTask dataMapping) {  this.m_dataMapping = dataMapping;  }
-	public void setParmMapping(HAPDefinitionDataAssociation parmMapping) {   this.m_dataMapping.setInputMapping(parmMapping);    }
-	public void addResultMapping(String name, HAPDefinitionDataAssociation result) {  this.m_dataMapping.addOutputMapping(name, result);   }
+	public HAPDefinitionGroupDataAssociationForTask getDataAssociations() {   return this.m_dataAssociations;    }
+	public void setDataAssociations(HAPDefinitionGroupDataAssociationForTask dataAssociations) {  this.m_dataAssociations = dataAssociations;  }
+	public void setParmDataAssociation(HAPDefinitionDataAssociation parmDataAssociation) {   this.m_dataAssociations.setInDataAssociation(parmDataAssociation);    }
+	public void addResultDataAssociation(String name, HAPDefinitionDataAssociation resultDataAssociation) {  this.m_dataAssociations.addOutDataAssociation(name, resultDataAssociation);   }
 	
 	public String getProvider() {   return this.m_provider;   }
 	public void setProvider(String provider) {   this.m_provider = provider;   }
@@ -57,7 +57,7 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PROVIDER, this.m_provider);
-		jsonMap.put(DATAMAPPING, HAPJsonUtility.buildJson(this.m_dataMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(DATAASSOCIATION, HAPJsonUtility.buildJson(this.m_dataAssociations, HAPSerializationFormat.JSON));
 		jsonMap.put(INTERFACE, HAPSerializeManager.getInstance().toStringValue(this.m_interfaceId, HAPSerializationFormat.JSON));
 	}
 
@@ -66,8 +66,8 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
 		this.m_interfaceId = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, jsonObj.opt(INTERFACE));
-		this.m_dataMapping = new HAPDefinitionDataMappingTask();
-		this.m_dataMapping.buildObject(jsonObj.optJSONObject(DATAMAPPING), HAPSerializationFormat.JSON);
+		this.m_dataAssociations = new HAPDefinitionGroupDataAssociationForTask();
+		this.m_dataAssociations.buildObject(jsonObj.optJSONObject(DATAASSOCIATION), HAPSerializationFormat.JSON);
 		this.m_provider = (String)jsonObj.opt(PROVIDER);
 		return true;  
 	}

@@ -90,12 +90,12 @@ public class HAPInfoCriteria extends HAPSerializableImp{
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
 		if(value instanceof String) {
-			this.m_criteria = HAPCriteriaParser.getInstance().parseCriteria((String)value);
+			this.m_criteria = HAPParserCriteria.getInstance().parseCriteria((String)value);
 		}
 		else if(value instanceof JSONObject){
 			JSONObject jsonValue = (JSONObject)value;
 			this.m_status = (String)jsonValue.opt(STATUS);
-			this.m_criteria = HAPCriteriaParser.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
+			this.m_criteria = HAPParserCriteria.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
 		}
 		this.initWithDefault();
 		return true;

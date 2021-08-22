@@ -73,12 +73,12 @@ public class HAPUtilityServiceInterface {
 		}
 		
 		@Override
-		public HAPContainerStructure getInContext() {
+		public HAPContainerStructure getInStructure() {
 			return HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromServiceParms(m_serviceInterface));
 		}
 
 		@Override
-		public Map<String, HAPContainerStructure> getOutResultContext() {
+		public Map<String, HAPContainerStructure> getOutResultStructure() {
 			Map<String, HAPContainerStructure> out = new LinkedHashMap<String, HAPContainerStructure>();
 			Map<String, HAPValueStructureDefinitionFlat> resultsContext = HAPUtilityServiceUse.buildValueStructureFromResultServiceOutputs(m_serviceInterface);
 			for(String resultName : resultsContext.keySet()) {

@@ -24,9 +24,9 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 	@Override
 	protected String buildLiterate(){
 		StringBuffer out = new StringBuffer();
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_EXPRESSION));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.START_EXPRESSION));
 		out.append(HAPCriteriaUtility.escape(this.m_expression));
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_EXPRESSION));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.END_EXPRESSION));
 		return out.toString(); 
 	}
 

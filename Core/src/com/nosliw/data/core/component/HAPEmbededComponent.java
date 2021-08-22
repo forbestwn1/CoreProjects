@@ -11,7 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForComponent;
 import com.nosliw.data.core.handler.HAPHandler;
 
 //a component reference embeded
@@ -33,9 +33,9 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 	//mapping reference name from attachment to internal name
 	private HAPNameMapping m_nameMapping;
 
-	private HAPDefinitionGroupDataAssociation m_outputMappings;
+	private HAPDefinitionGroupDataAssociationForComponent m_outputMappings;
 	
-	private HAPDefinitionGroupDataAssociation m_inputMappings;
+	private HAPDefinitionGroupDataAssociationForComponent m_inputMappings;
 	
 	//event handlers
 	private Set<HAPHandler> m_eventHandlers;
@@ -43,8 +43,8 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 	public HAPEmbededComponent() {
 		this.m_nameMapping = new HAPNameMapping();
 		this.m_eventHandlers = new HashSet<HAPHandler>();
-		this.m_outputMappings = new HAPDefinitionGroupDataAssociation();
-		this.m_inputMappings = new HAPDefinitionGroupDataAssociation();
+		this.m_outputMappings = new HAPDefinitionGroupDataAssociationForComponent();
+		this.m_inputMappings = new HAPDefinitionGroupDataAssociationForComponent();
 	}
 	
 	public void setNameMapping(HAPNameMapping nameMapping) {   if(nameMapping!=null)  this.m_nameMapping = nameMapping;  }
@@ -56,12 +56,12 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 	@Override
 	public void addEventHandler(HAPHandler eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
 
-	public HAPDefinitionGroupDataAssociation getInputMapping() {   return this.m_inputMappings;   }
-	public void setInputMapping(HAPDefinitionGroupDataAssociation contextMapping) {   this.m_inputMappings = contextMapping;   }
+	public HAPDefinitionGroupDataAssociationForComponent getInputMapping() {   return this.m_inputMappings;   }
+	public void setInputMapping(HAPDefinitionGroupDataAssociationForComponent contextMapping) {   this.m_inputMappings = contextMapping;   }
 	public void addInputMapping(String name, HAPDefinitionDataAssociation mapping) {   this.m_inputMappings.addDataAssociation(name, mapping);  }
 
-	public HAPDefinitionGroupDataAssociation getOutputMapping() {   return this.m_outputMappings;    }
-	public void setOutputMapping(HAPDefinitionGroupDataAssociation contextMapping) {   this.m_outputMappings = contextMapping;   }
+	public HAPDefinitionGroupDataAssociationForComponent getOutputMapping() {   return this.m_outputMappings;    }
+	public void setOutputMapping(HAPDefinitionGroupDataAssociationForComponent contextMapping) {   this.m_outputMappings = contextMapping;   }
 	public void addOutputMapping(String name, HAPDefinitionDataAssociation mapping) {   this.m_outputMappings.addDataAssociation(name, mapping);  }
 
 	@Override

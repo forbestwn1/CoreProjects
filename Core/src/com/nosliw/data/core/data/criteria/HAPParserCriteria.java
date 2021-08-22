@@ -15,12 +15,11 @@ import com.nosliw.data.imp.criteria.parser.generated.HAPCriteriaParserGenerated;
 import com.nosliw.data.imp.criteria.parser.generated.HAPCriteriaParserGeneratedConstants;
 import com.nosliw.data.imp.criteria.parser.generated.SimpleNode;
 
-
-public class HAPCriteriaParser implements HAPCriteriaParserGeneratedConstants{
+public class HAPParserCriteria implements HAPCriteriaParserGeneratedConstants{
 
 	List<String> m_tokens;
 	
-	private HAPCriteriaParser(){
+	private HAPParserCriteria(){
 		//build tokens
 		this.m_tokens = new ArrayList<String>();
 		for(String token : HAPCriteriaParserGeneratedConstants.tokenImage){
@@ -30,10 +29,10 @@ public class HAPCriteriaParser implements HAPCriteriaParserGeneratedConstants{
 			this.m_tokens.add(newToken);
 		}
 	}
-	private static HAPCriteriaParser m_instance;
+	private static HAPParserCriteria m_instance;
 	
-	public static HAPCriteriaParser getInstance(){
-		if(m_instance==null)   m_instance = new HAPCriteriaParser();
+	public static HAPParserCriteria getInstance(){
+		if(m_instance==null)   m_instance = new HAPParserCriteria();
 		return m_instance;
 	}
 	

@@ -41,7 +41,7 @@ public class HAPDataTypeCriteriaAny extends HAPDataTypeCriteriaImp{
 //	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {		return this;	}
 
 	@Override
-	protected String buildLiterate(){		return HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.ANY);	}
+	protected String buildLiterate(){		return HAPParserCriteria.getInstance().getToken(HAPParserCriteria.ANY);	}
 
 	@Override
 	public boolean equals(Object obj){

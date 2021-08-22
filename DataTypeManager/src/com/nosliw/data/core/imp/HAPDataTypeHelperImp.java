@@ -22,7 +22,7 @@ import com.nosliw.data.core.data.HAPDataTypeOperation;
 import com.nosliw.data.core.data.HAPOperationParm;
 import com.nosliw.data.core.data.HAPRelationship;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.data.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaExpression;
@@ -483,7 +483,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			HAPServiceData serviceData = this.m_runtimeEnv.getRuntime().executeExpressionSync(expressionStr, parms);
 			HAPData expressionResult = (HAPData)serviceData.getData();
 			String criteriaStr = expressionResult.getValue().toString();
-			HAPDataTypeCriteria solidCriteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
+			HAPDataTypeCriteria solidCriteria = HAPParserCriteria.getInstance().parseCriteria(criteriaStr);
 			expCriteria.setSolidCriteria(solidCriteria);
 		}
 	}

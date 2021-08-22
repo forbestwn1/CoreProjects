@@ -19,4 +19,5 @@ public interface HAPWithInteractive extends HAPSerializable{
 	
 	Map<String, HAPResultInteractive> getResults();
 
+	HAPWithInteractive cloneWithInteractive();
 }

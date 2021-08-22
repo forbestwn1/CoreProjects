@@ -13,7 +13,7 @@ import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationForComponent;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
@@ -50,9 +50,9 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	
 	private HAPExecutableModule m_module;
 	
-	private HAPExecutableGroupDataAssociation m_inputMapping;
+	private HAPExecutableGroupDataAssociationForComponent m_inputMapping;
 	
-	private HAPExecutableGroupDataAssociation m_outputMapping;
+	private HAPExecutableGroupDataAssociationForComponent m_outputMapping;
 
 	private HAPDefinitionAppModule m_definition;
 	
@@ -64,8 +64,8 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 		super(def);
 		this.m_eventHandlers = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
 		this.m_definition = def;
-		this.m_inputMapping = new HAPExecutableGroupDataAssociation();
-		this.m_outputMapping = new HAPExecutableGroupDataAssociation();
+		this.m_inputMapping = new HAPExecutableGroupDataAssociationForComponent();
+		this.m_outputMapping = new HAPExecutableGroupDataAssociationForComponent();
 		this.m_dataDependency = new HashSet<String>();
 	}
 

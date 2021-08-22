@@ -95,7 +95,7 @@ var node_createProcessRuntime = function(envObj){
 			var envObj = {
 				//add method for sync data from internal process context to external process context
 				getSyncOutRequest : function(internalValue, handlers, request){
-					var taskOutputDataAssociation = node_createDataAssociation(internalValue, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING][node_COMMONCONSTANT.NAME_DEFAULT], outputIODataSet, loc_buildTaskOutputDataAssociationName(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID]));
+					var taskOutputDataAssociation = node_createDataAssociation(internalValue, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEGROUPDATAASSOCIATIONFORTASK_OUT][node_COMMONCONSTANT.NAME_DEFAULT], outputIODataSet, loc_buildTaskOutputDataAssociationName(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK][node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ID]));
 					return taskOutputDataAssociation.getExecuteRequest(handlers, request);
 				}
 			};

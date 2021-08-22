@@ -270,7 +270,8 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, COMMAND);
 		for(Element childEle : childEles){
 			try {
-				JSONArray commandListJson = new JSONArray(childEle.html());
+				String html = childEle.html();
+				JSONArray commandListJson = new JSONArray(html);
 				for(int i=0; i<commandListJson.length(); i++) {
 					JSONObject commandJson = commandListJson.getJSONObject(i);
 					HAPDefinitionCommand commandDef = new HAPDefinitionCommand();

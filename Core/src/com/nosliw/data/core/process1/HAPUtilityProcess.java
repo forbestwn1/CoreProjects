@@ -163,15 +163,15 @@ public class HAPUtilityProcess {
 	//all the input and result output for activity is mirror 
 	public static HAPDefinitionWrapperTask parseTaskDefinition(HAPDefinitionActivityNormal activity, JSONObject jsonObj) {
 		HAPDefinitionWrapperTask out = new HAPDefinitionWrapperTask();
-		out.setInputMapping(activity.getInputDataAssociation());
+		out.setInDataAssociation(activity.getInputDataAssociation());
 		activity.setInputDataAssociation(new HAPDefinitionDataAssociationMirror());
 		
 		Map<String, HAPDefinitionResultActivityNormal> results = activity.getResults();
 		for(String resultName : results.keySet()) {
 			HAPDefinitionResultActivityNormal result = results.get(resultName);
 			HAPDefinitionDataAssociation dataAssociation = result.getOutputDataAssociation();
-			if(dataAssociation!=null)		out.addOutputMapping(resultName, dataAssociation.cloneDataAssocation());
-			else out.addOutputMapping(resultName, new HAPDefinitionDataAssociationNone());
+			if(dataAssociation!=null)		out.addOutDataAssociation(resultName, dataAssociation.cloneDataAssocation());
+			else out.addOutDataAssociation(resultName, new HAPDefinitionDataAssociationNone());
 			result.setOutputDataAssociation(new HAPDefinitionDataAssociationMirror());
 		}
 		return out;

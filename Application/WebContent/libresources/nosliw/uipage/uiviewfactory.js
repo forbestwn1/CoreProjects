@@ -30,7 +30,10 @@ var packageObj = library;
 	var node_UIDataOperation;
 	var node_contextUtility;
 	var node_IOTaskResult;
+	var node_taskUtility;
 	var node_createDynamicIOData;
+	var node_createIODataSet;
+	var node_IOTaskInfo;
 	var node_createViewContainer;
 	var node_UICommonUtility;
 	var node_createBatchUIDataOperationRequest;
@@ -174,6 +177,9 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	//context object for this ui resource view
 	var loc_context = context;
 
+	//commands
+	var loc_commands = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_COMMANDS];
+	
 	//all content expression objects
 	var loc_expressionContents = [];
 	var loc_scriptGroup = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPTGROUP];
@@ -326,6 +332,32 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		return handlerInfo;
 	};
 
+	var loc_getExecuteCommandRequest = function(commandName, parms, handlers, requestInfo){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+
+		var commandObj = loc_commands[commandName];
+		var commandDataAssociationGroup = commandObj[node_COMMONATRIBUTECONSTANT.EXECUTABLECOMMAND_DATAASSOCIATION];
+		
+		out.addRequest(node_taskUtility.getExecuteEmbededTaskRequest(
+				node_createIODataSet(parms), 
+				node_createIODataSet(), 
+				undefined, 
+				commandDataAssociationGroup, 
+				new node_IOTaskInfo(function(input, handlers, request){
+					var taskRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
+					var handlerInfo = loc_findHandlerLocally(commandObj[node_COMMONATRIBUTECONSTANT.EXECUTABLECOMMAND_TASK]);
+					taskRequest.addRequest(loc_getExecuteHandlerRequest(handlerInfo));
+					return taskRequest;
+				}, undefined, node_createIODataSet(loc_viewIO), node_createIODataSet(loc_viewIO)), 
+				{
+					success : function(request, taskResult){
+						return taskResult;
+					}
+				}));
+		
+		return out;
+	};
+	
 	var loc_executeHandler = function(handlerInfo, args){
 		if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_SCRIPT){
 			node_uiResourceUtility.callScriptFunction.apply(handlerInfo.uiUnit, [handlerInfo.handlerName, args]);
@@ -333,6 +365,19 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		else if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_TASK){
 			loc_taskRuntime.executeExecuteEmbededTaskInSuiteRequest(handlerInfo.handlerSuite, handlerInfo.handlerName, loc_viewIO);
 		}
+	};
+	
+	var loc_getExecuteHandlerRequest = function(handlerInfo, args, handlers, requestInfo){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+		if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_SCRIPT){
+			out.addRequest(node_createServiceRequestInfoSimple(function(request){
+				node_uiResourceUtility.callScriptFunction.apply(handlerInfo.uiUnit, [handlerInfo.handlerName, args]);
+			}));
+		}
+		else if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_TASK){
+			out.addRequest(loc_taskRuntime.getExecuteEmbededTaskInSuiteRequest(handlerInfo.handlerSuite, handlerInfo.handlerName, loc_viewIO));
+		}
+		return out;
 	};
 	
 	var lifecycleCallback = {};
@@ -640,6 +685,8 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		registerValueChangeEventListener : function(listener, handler, thisContext){    return loc_context.registerValueChangeEventListener(listener, handler, thisContext);     },
 		unregisterValueChangeEventListener : function(listener){	return loc_context.unregisterValueChangeEventListener(listener); },
 		
+		getExecuteCommandRequest : function(command, parms, handlers, requestInfo){		return loc_getExecuteCommandRequest(command, parms, handlers, requestInfo);		},
+		
 		command : function(command, data, requestInfo){			return this.prv_callScriptFunctionDown("command_"+command, data, requestInfo);		},
 		findFunctionDown : function(funName){  return this.prv_findFunctionDown(funName);  },
 	};
@@ -684,6 +731,9 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", functi
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uicommon.createViewContainer", function(){node_createViewContainer = this.getData();});
 nosliw.registerSetNodeDataEvent("uicommon.utility", function(){node_UICommonUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createBatchUIDataOperationRequest", function(){node_createBatchUIDataOperationRequest  = this.getData();});

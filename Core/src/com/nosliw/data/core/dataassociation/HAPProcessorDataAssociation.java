@@ -16,69 +16,51 @@ import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPProcessorDataAssociation {
 
-	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionDataMappingTask taskWrapperDef, HAPExecutableTask taskExe, HAPContainerStructure externalContext, HAPInfo configure, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
+	
+	
+	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionGroupDataAssociationForTask taskWrapperDef, HAPExecutableTask taskExe, HAPContainerStructure externalContext, HAPInfo configure, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
 		return processDataAssociationWithTask(taskWrapperDef, taskExe, externalContext, configure, externalContext, configure, attachmentContainer, runtimeEnv);
 	}
 
-	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionDataMappingTask taskWrapperDef, HAPExecutableTask taskExe, HAPContainerStructure inputContext, HAPInfo inputConfigure, HAPContainerStructure outputContext, HAPInfo outputConfigure, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionGroupDataAssociationForTask taskWrapperDef, HAPExecutableTask taskExe, HAPContainerStructure inputStructure, HAPInfo inputConfigure, HAPContainerStructure outputStructure, HAPInfo outputConfigure, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableWrapperTask out = new HAPExecutableWrapperTask();
 		out.setTask(taskExe);
 		//process input mapping
 		HAPDefinitionDataAssociation inputMapping = getInputMappingFromTaskDataMapping(taskWrapperDef);
-		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(inputContext, inputMapping, taskExe.getInContext(), inputConfigure, runtimeEnv));
+		out.setInDataAssociation(HAPProcessorDataAssociation.processDataAssociation(inputStructure, inputMapping, taskExe.getInStructure(), inputConfigure, runtimeEnv));
 		
-		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
+		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutDataAssociations();
 		for(String resultName : resultOutputMapping.keySet()) {
-			HAPContainerStructure inContext = taskExe.getOutResultContext().get(resultName);
-			out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(inContext, resultOutputMapping.get(resultName), outputContext, outputConfigure, runtimeEnv));
+			HAPContainerStructure inContext = taskExe.getOutResultStructure().get(resultName);
+			out.addOutDataAssociation(resultName, HAPProcessorDataAssociation.processDataAssociation(inContext, resultOutputMapping.get(resultName), outputStructure, outputConfigure, runtimeEnv));
 		}
 		String defaultResultName = HAPConstantShared.NAME_DEFAULT;
-		if(out.getOutputMapping(defaultResultName)==null) {
+		if(out.getOutDataAssociation(defaultResultName)==null) {
 			//if no default output mapping defined, then create default output with mirror data association
-			HAPContainerStructure inContext = taskExe.getOutResultContext().get(defaultResultName);
+			HAPContainerStructure inContext = taskExe.getOutResultStructure().get(defaultResultName);
 			if(inContext!=null) {
-				out.addOutputMapping(defaultResultName, HAPProcessorDataAssociation.processDataAssociation(inContext, new HAPDefinitionDataAssociationMirror(), outputContext, outputConfigure, runtimeEnv));
+				out.addOutDataAssociation(defaultResultName, HAPProcessorDataAssociation.processDataAssociation(inContext, new HAPDefinitionDataAssociationMirror(), outputStructure, outputConfigure, runtimeEnv));
 			}
 		}
 		return out;
 	}
 
-	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionDataMappingTask taskWrapperDef, HAPExecutableTask taskExe, HAPContainerStructure inputContext, Map<String, HAPContainerStructure> outputContexts, HAPContainerAttachment attachmentContainer, HAPInfo configure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPExecutableWrapperTask out = new HAPExecutableWrapperTask();
-		out.setTask(taskExe);
-		//process input mapping
-		HAPDefinitionDataAssociation inputMapping = getInputMappingFromTaskDataMapping(taskWrapperDef);
-		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(inputContext, inputMapping, taskExe.getInContext(), configure, runtimeEnv));
-		
-		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
-		Map<String, HAPContainerStructure> taskResults = taskExe.getOutResultContext();
-		for(String resultName : taskResults.keySet()) {
-			HAPDefinitionDataAssociation outputMapping = resultOutputMapping.get(resultName);
-			if(outputMapping==null)  outputMapping = new HAPDefinitionDataAssociationMirror();
-			HAPContainerStructure outputContext = outputContexts.get(resultName);
-//			if(outputContext==null)  outputContext = inputContext;
-			if(outputContext!=null) out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(taskResults.get(resultName), outputMapping, outputContext, configure, runtimeEnv));
-		}
-		
-		return out;
-	}
-
-	public static void enhanceDataAssociationWithTaskEndPointValueStructure(HAPIOTask taskIO, boolean taskIOEnhance, HAPDefinitionDataMappingTask taskWrapperDef, HAPContainerStructure externalValueStructure, boolean externalValueStructureEnhance, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceDataAssociationWithTaskEndPointValueStructure(HAPIOTask taskIO, boolean taskIOEnhance, HAPDefinitionGroupDataAssociationForTask taskWrapperDef, HAPContainerStructure externalValueStructure, boolean externalValueStructureEnhance, HAPRuntimeEnvironment runtimeEnv) {
 		enhanceDataAssociationWithTaskEndPointValueStructure(taskIO, taskIOEnhance, taskWrapperDef, externalValueStructure, externalValueStructureEnhance, externalValueStructure, externalValueStructureEnhance, runtimeEnv);
 	}
 
-	public static void enhanceDataAssociationWithTaskEndPointValueStructure(HAPIOTask taskIO, boolean taskIOEnhance, HAPDefinitionDataMappingTask taskWrapperDef, HAPContainerStructure inputContext, boolean inputContextEnhance, HAPContainerStructure outputContext, boolean outputContextEnhance, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceDataAssociationWithTaskEndPointValueStructure(HAPIOTask taskIO, boolean taskIOEnhance, HAPDefinitionGroupDataAssociationForTask taskWrapperDef, HAPContainerStructure inputContext, boolean inputContextEnhance, HAPContainerStructure outputContext, boolean outputContextEnhance, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionDataAssociation inputMapping = getInputMappingFromTaskDataMapping(taskWrapperDef);
-		enhanceDataAssociationEndPointValueStructure(inputContext, inputContextEnhance, inputMapping, taskIO.getInContext(), taskIOEnhance, runtimeEnv);
+		enhanceDataAssociationEndPointValueStructure(inputContext, inputContextEnhance, inputMapping, taskIO.getInStructure(), taskIOEnhance, runtimeEnv);
 
-		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
+		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutDataAssociations();
 		for(String resultName : resultOutputMapping.keySet()) {
-			enhanceDataAssociationEndPointValueStructure(taskIO.getOutResultContext().get(resultName), taskIOEnhance, resultOutputMapping.get(resultName), outputContext, outputContextEnhance, runtimeEnv);
+			enhanceDataAssociationEndPointValueStructure(taskIO.getOutResultStructure().get(resultName), taskIOEnhance, resultOutputMapping.get(resultName), outputContext, outputContextEnhance, runtimeEnv);
 		}
 	}
 
-	private static HAPDefinitionDataAssociation getInputMappingFromTaskDataMapping(HAPDefinitionDataMappingTask taskWrapperDef) {
-		HAPDefinitionDataAssociation out = taskWrapperDef.getInputMapping();
+	private static HAPDefinitionDataAssociation getInputMappingFromTaskDataMapping(HAPDefinitionGroupDataAssociationForTask taskWrapperDef) {
+		HAPDefinitionDataAssociation out = taskWrapperDef.getInDataAssociation();
 		if(out==null)  out = new HAPDefinitionDataAssociationMirror();   //if no input mapping defined, then use mirror
 		return out;
 	}

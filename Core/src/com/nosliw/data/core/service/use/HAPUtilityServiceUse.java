@@ -14,7 +14,7 @@ import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataMappingTask;
+import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.interactive.HAPOutputInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.definition.HAPDefinitionService;
@@ -28,11 +28,11 @@ public class HAPUtilityServiceUse {
 	public static HAPInfoServiceProvider parseServiceAttachment(HAPAttachment providerAttachment, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionService serviceDef = (HAPDefinitionService)HAPUtilityAttachment.getResourceDefinition(providerAttachment, runtimeEnv.getResourceDefinitionManager());
 
-		HAPDefinitionDataMappingTask dataMapping = null;
+		HAPDefinitionGroupDataAssociationForTask dataMapping = null;
 		Object adaptor = providerAttachment.getAdaptor();
 		if(adaptor!=null) {
 			JSONObject dataMappingObj = ((JSONObject)adaptor).optJSONObject(HAPInfoServiceProvider.DATAMAPPING);
-			dataMapping = new HAPDefinitionDataMappingTask();
+			dataMapping = new HAPDefinitionGroupDataAssociationForTask();
 			dataMapping.buildObject(dataMappingObj, HAPSerializationFormat.JSON);
 		}
 		

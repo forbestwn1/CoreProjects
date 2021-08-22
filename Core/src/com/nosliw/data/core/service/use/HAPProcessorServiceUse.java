@@ -39,7 +39,7 @@ public class HAPProcessorServiceUse {
 			HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
 			
 			//
-			HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointValueStructure(HAPUtilityServiceInterface.buildIOTaskByInterface(serviceInterface), false, definition.getDataMapping(), HAPContainerStructure.createDefault(globalValueStructure), true, runtimeEnv);
+			HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointValueStructure(HAPUtilityServiceInterface.buildIOTaskByInterface(serviceInterface), false, definition.getDataAssociations(), HAPContainerStructure.createDefault(globalValueStructure), true, runtimeEnv);
 		}
 	}
 
@@ -62,7 +62,7 @@ public class HAPProcessorServiceUse {
 
 		HAPExecutableTask taskExe = HAPUtilityServiceInterface.buildExecutableTaskByInterface(serviceInterface);
 		
-		HAPExecutableWrapperTask serviceMappingExe = HAPProcessorDataAssociation.processDataAssociationWithTask(definition.getDataMapping(), taskExe, HAPContainerStructure.createDefault(globalValueStructure), HAPUtilityDAProcess.withModifyInputStructureConfigureTrue(null), attachmentContainer, runtimeEnv);
+		HAPExecutableWrapperTask serviceMappingExe = HAPProcessorDataAssociation.processDataAssociationWithTask(definition.getDataAssociations(), taskExe, HAPContainerStructure.createDefault(globalValueStructure), HAPUtilityDAProcess.withModifyInputStructureConfigureTrue(null), attachmentContainer, runtimeEnv);
 		out.setServiceMapping(serviceMappingExe);
 		
 		//process service provider
@@ -74,11 +74,11 @@ public class HAPProcessorServiceUse {
 		if(serviceProviderInfo.getDataMapping()!=null) {
 			HAPExecutableProviderToUse providerToUseExe = new HAPExecutableProviderToUse();
 			
-			HAPExecutableDataAssociation parmDA = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromServiceParms(serviceInterface)), serviceProviderInfo.getDataMapping().getInputMapping(), HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromServiceParms(providerInterface)), null, runtimeEnv);;
+			HAPExecutableDataAssociation parmDA = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromServiceParms(serviceInterface)), serviceProviderInfo.getDataMapping().getInDataAssociation(), HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromServiceParms(providerInterface)), null, runtimeEnv);;
 			providerToUseExe.setParmMapping(parmDA);
 			
-			for(String result : serviceProviderInfo.getDataMapping().getOutputMapping().keySet()) {
-				HAPExecutableDataAssociation resultDA = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromResultServiceOutputs(providerInterface, result)), serviceProviderInfo.getDataMapping().getInputMapping(), HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromResultServiceOutputs(serviceInterface, result)), null, runtimeEnv);;
+			for(String result : serviceProviderInfo.getDataMapping().getOutDataAssociations().keySet()) {
+				HAPExecutableDataAssociation resultDA = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromResultServiceOutputs(providerInterface, result)), serviceProviderInfo.getDataMapping().getInDataAssociation(), HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromResultServiceOutputs(serviceInterface, result)), null, runtimeEnv);;
 				providerToUseExe.addResultMapping(result, resultDA);
 			}
 			out.setProviderMapping(providerToUseExe);

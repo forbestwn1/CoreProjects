@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.data.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaWithSubCriteria;
@@ -47,7 +47,7 @@ public class HAPGatewayCriteriaOperation extends HAPGatewayImp{
 		{
 			String childName = parms.getString(COMMAND_GETCHILDCRITERIA_CHILDNAME);
 			String criteriaStr = parms.getString(COMMAND_GETCHILDCRITERIA_CRITERIA);
-			HAPDataTypeCriteria criteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
+			HAPDataTypeCriteria criteria = HAPParserCriteria.getInstance().parseCriteria(criteriaStr);
 			HAPDataTypeCriteria childCriteria = null;
 			if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
 				childCriteria = HAPCriteriaUtility.getChildCriteria(criteria, childName); 
@@ -60,8 +60,8 @@ public class HAPGatewayCriteriaOperation extends HAPGatewayImp{
 			String criteriaStr = parms.getString(COMMAND_ADDCHILDCRITERIA_CRITERIA);
 			String childName = parms.getString(COMMAND_ADDCHILDCRITERIA_CHILDNAME);
 			String childCriteriaStr = parms.getString(COMMAND_ADDCHILDCRITERIA_CHILD);
-			HAPDataTypeCriteria criteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
-			HAPDataTypeCriteria childCriteria = HAPCriteriaParser.getInstance().parseCriteria(childCriteriaStr);
+			HAPDataTypeCriteria criteria = HAPParserCriteria.getInstance().parseCriteria(criteriaStr);
+			HAPDataTypeCriteria childCriteria = HAPParserCriteria.getInstance().parseCriteria(childCriteriaStr);
 			if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
 				((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria().addSubCriteria(childName, childCriteria);
 				out = this.createSuccessWithObject(criteria.toStringValue(HAPSerializationFormat.LITERATE));
@@ -70,7 +70,7 @@ public class HAPGatewayCriteriaOperation extends HAPGatewayImp{
 		}
 		case COMMAND_GETCHILDRENCRITERIA:{
 			String criteriaStr = parms.getString(COMMAND_GETCHILDRENCRITERIA_CRITERIA);
-			HAPDataTypeCriteria criteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
+			HAPDataTypeCriteria criteria = HAPParserCriteria.getInstance().parseCriteria(criteriaStr);
 			if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
 				Map<String, String> subCriterias = new LinkedHashMap<String, String>();
 				HAPDataTypeCriteriaWithSubCriteria criteriaWithSub = (HAPDataTypeCriteriaWithSubCriteria)criteria;

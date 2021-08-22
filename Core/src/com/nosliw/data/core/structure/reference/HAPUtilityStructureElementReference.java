@@ -24,6 +24,10 @@ import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPUtilityStructureElementReference {
 
+	public static HAPInfoReferenceResolve resolveElementReference(HAPInfoPathReference reference, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
+		return resolveElementReference(reference.getReferencePath(), parentStructures.getStructure(reference.getParent()), mode, relativeInheritRule, elementTypes);
+	}
+	
 	public static HAPInfoReferenceResolve resolveElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
 		HAPInfoReferenceResolve resolveInfo = analyzeElementReference(elementReferenceLiterate, parentStructure, mode, elementTypes);
 		if(resolveInfo!=null)  resolveInfo.resolvedElement = resolveElement(resolveInfo.realSolidSolved, relativeInheritRule);

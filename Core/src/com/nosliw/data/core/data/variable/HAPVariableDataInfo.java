@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.data.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.data.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -110,11 +110,11 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
 		if(value instanceof String) {
-			this.m_criteria = HAPCriteriaParser.getInstance().parseCriteria((String)value);
+			this.m_criteria = HAPParserCriteria.getInstance().parseCriteria((String)value);
 		}
 		else if(value instanceof JSONObject){
 			JSONObject jsonValue = (JSONObject)value;
-			this.m_criteria = HAPCriteriaParser.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
+			this.m_criteria = HAPParserCriteria.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
 			
 			JSONArray ruleJsonArray = jsonValue.optJSONArray(RULE);
 			if(ruleJsonArray!=null) {
@@ -130,7 +130,7 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 			}
 
 			String ruleCriteriaStr = (String)jsonValue.opt(RULECRITERIA);
-			if(ruleCriteriaStr!=null)	this.m_ruleCriteria = HAPCriteriaParser.getInstance().parseCriteria(ruleCriteriaStr);
+			if(ruleCriteriaStr!=null)	this.m_ruleCriteria = HAPParserCriteria.getInstance().parseCriteria(ruleCriteriaStr);
 		}
 		return true;
 	}

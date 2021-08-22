@@ -208,7 +208,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 					if(!serviceParmMapping.isEmpty()) {
 						HAPDefinitionDataAssociationMapping inputMapping = new HAPDefinitionDataAssociationMapping();
 						inputMapping.addAssociation(null, serviceParmMapping);
-						serviceUseDef.getDataMapping().setInputMapping(inputMapping);
+						serviceUseDef.getDataAssociations().setInDataAssociation(inputMapping);
 					}
 				}
 			}
@@ -236,10 +236,10 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 				if(!serviceParmMapping.isEmpty()) {
 					HAPDefinitionDataAssociationMapping outputMapping = new HAPDefinitionDataAssociationMapping();
 					outputMapping.addAssociation(null, serviceParmMapping);
-					serviceUseDef.getDataMapping().addOutputMapping("success", outputMapping);
+					serviceUseDef.getDataAssociations().addOutDataAssociation("success", outputMapping);
 				}
 			}
-			if(serviceUseDef.getDataMapping().getInputMapping()!=null || serviceUseDef.getDataMapping().getOutputMapping()!=null) {
+			if(serviceUseDef.getDataAssociations().getInDataAssociation()!=null || serviceUseDef.getDataAssociations().getOutDataAssociations()!=null) {
 				out.add(serviceUseDef);
 			}
 		}

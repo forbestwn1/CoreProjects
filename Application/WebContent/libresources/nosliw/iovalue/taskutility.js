@@ -30,9 +30,9 @@ var node_taskUtility = function(){
 			return loc_out.getExecuteTaskRequest(
 					inputIODataSet, 
 					extraInputData,
-					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], 
+					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEGROUPDATAASSOCIATIONFORTASK_IN], 
 					ioTaskInfo, 
-					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING], 
+					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEGROUPDATAASSOCIATIONFORTASK_OUT], 
 					outputIODataSet, 
 					handlers, 
 					request);
@@ -41,34 +41,63 @@ var node_taskUtility = function(){
 		getExecuteTaskRequest : function(inputIO, extraInputdata, inputDataAssociationDef, ioTaskInfo, outputDataAssociationByResult, outputIO, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association
-			var taskInputIO = node_createIODataSet();
-			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, taskInputIO, loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
+			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, ioTaskInfo.inIO!=undefined?ioTaskInfo.inIO:node_createIODataSet(), loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
 			out.addRequest(taskInputDataAssociation.getExecuteWithExtraDataRequest(extraInputdata, {
-				success : function(requestInfo, taskInputIO){
-					var taskInput = taskInputIO.getData();
-					//execute task
-					var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));
-					executeIOTaskRequest.addRequest(ioTaskInfo.taskRequestFun(taskInput, {
-						success : function(request, taskResult){
-							//process output association according to result name
-							var outputDataAssociationDef;
-							if(outputDataAssociationByResult!=undefined){
-								if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(taskResult.resultName);
-								else{
-									outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
-									if(outputDataAssociationDef==undefined)   outputDataAssociationDef = outputDataAssociationByResult[node_COMMONCONSTANT.NAME_DEFAULT];
-								}
-							}
+				success : function(requestInfo, taskInputDataSet){
+					
+					return taskInputDataSet.getGetDataValueRequest(undefined, {
+						success : function(request, taskInput){
+							//execute task
+							var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));
+							executeIOTaskRequest.addRequest(ioTaskInfo.taskRequestFun(taskInput, {
+								success : function(request, taskResult){
+									//process output association according to result name
+									var outputDataAssociationDef;
+									if(outputDataAssociationByResult!=undefined){
+										if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(taskResult.resultName);
+										else{
+											outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
+											if(outputDataAssociationDef==undefined)   outputDataAssociationDef = outputDataAssociationByResult[node_COMMONCONSTANT.NAME_DEFAULT];
+										}
+									}
 
-							var taskOutputDataAssociation = node_createDataAssociation(taskResult.resultValue, outputDataAssociationDef, outputIO, loc_buildTaskOutputDataAssociationName(ioTaskInfo.taskName));
-							return taskOutputDataAssociation.getExecuteRequest({
-								success :function(request, taskOutputDataSetIO){
-									return new node_IOTaskResult(taskResult.resultName, taskOutputDataSetIO);
+									var taskOutputDataAssociation = node_createDataAssociation(ioTaskInfo.outIO!=undefined?ioTaskInfo.outIO:taskResult.resultValue, outputDataAssociationDef, outputIO, loc_buildTaskOutputDataAssociationName(ioTaskInfo.taskName));
+									return taskOutputDataAssociation.getExecuteRequest({
+										success :function(request, taskOutputDataSetIO){
+											return new node_IOTaskResult(taskResult.resultName, taskOutputDataSetIO);
+										}
+									});
 								}
-							});
+							}));
+							return executeIOTaskRequest;
 						}
-					}));
-					return executeIOTaskRequest;
+					});
+					
+					
+//					var taskInput = taskInputDataSet.getData();
+//					//execute task
+//					var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));
+//					executeIOTaskRequest.addRequest(ioTaskInfo.taskRequestFun(taskInput, {
+//						success : function(request, taskResult){
+//							//process output association according to result name
+//							var outputDataAssociationDef;
+//							if(outputDataAssociationByResult!=undefined){
+//								if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(taskResult.resultName);
+//								else{
+//									outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
+//									if(outputDataAssociationDef==undefined)   outputDataAssociationDef = outputDataAssociationByResult[node_COMMONCONSTANT.NAME_DEFAULT];
+//								}
+//							}
+//
+//							var taskOutputDataAssociation = node_createDataAssociation(ioTaskInfo.outIO!=undefined?ioTaskInfo.outIO:taskResult.resultValue, outputDataAssociationDef, outputIO, loc_buildTaskOutputDataAssociationName(ioTaskInfo.taskName));
+//							return taskOutputDataAssociation.getExecuteRequest({
+//								success :function(request, taskOutputDataSetIO){
+//									return new node_IOTaskResult(taskResult.resultName, taskOutputDataSetIO);
+//								}
+//							});
+//						}
+//					}));
+//					return executeIOTaskRequest;
 				}
 			}));
 			return out;

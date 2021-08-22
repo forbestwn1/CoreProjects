@@ -25,9 +25,11 @@ var node_IOTaskResult = function(resultName, resultValue){
 	this.resultValue = resultValue; 
 };
 
-var node_IOTaskInfo = function(taskRequestFun, taskName){
+var node_IOTaskInfo = function(taskRequestFun, taskName, inIO, outIO){
 	this.taskRequestFun = taskRequestFun;
 	this.taskName = taskName;
+	this.inIO = inIO;
+	this.outIO = outIO;
 };
 
 //dynamic io data which read and write through function

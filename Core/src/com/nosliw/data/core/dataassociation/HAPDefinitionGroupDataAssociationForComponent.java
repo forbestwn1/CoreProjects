@@ -14,11 +14,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
+public class HAPDefinitionGroupDataAssociationForComponent extends HAPSerializableImp{
 
 	private List<HAPDefinitionDataAssociation> m_dataAssociations;
 	
-	public HAPDefinitionGroupDataAssociation() {
+	public HAPDefinitionGroupDataAssociationForComponent() {
 		this.m_dataAssociations = new ArrayList<HAPDefinitionDataAssociation>();
 	} 
 	
@@ -70,8 +70,8 @@ public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 	
 	private String getDefaultName() {  return HAPConstantShared.GLOBAL_VALUE_DEFAULT;   }
 	
-	public HAPDefinitionGroupDataAssociation cloneGroupDataAssociation() {
-		HAPDefinitionGroupDataAssociation out = new HAPDefinitionGroupDataAssociation();
+	public HAPDefinitionGroupDataAssociationForComponent cloneGroupDataAssociation() {
+		HAPDefinitionGroupDataAssociationForComponent out = new HAPDefinitionGroupDataAssociationForComponent();
 		for(String name : this.m_dataAssociations.keySet()) {
 			out.m_dataAssociations.put(name, this.m_dataAssociations.get(name).cloneDataAssocation());
 		}

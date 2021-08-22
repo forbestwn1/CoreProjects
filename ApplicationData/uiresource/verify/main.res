@@ -68,6 +68,14 @@
 			}
 		},
 	
+		"trigueEventForCommand":{
+			"taskType": "activity",
+			"activityType": "Event_trigue",
+			"configuration" : {
+				"eventName" : "event1"
+			}
+		},
+
 	}
 	</task>
 
@@ -120,8 +128,8 @@
 			"info" : {
 				"enhanceContext" : "true"
 			},
-			"dataMapping" :{
-				"inputMapping" : {
+			"dataAssociation" :{
+				"in" : {
 					"mapping" : {
 						"parm1" : {
 							"definition" : {
@@ -135,7 +143,7 @@
 						}
 					}
 				},
-				"outputMapping" : {
+				"out" : {
 					"success" : {
 						"mapping" : {
 							"ddd" : {
@@ -222,18 +230,18 @@
 	]
 	</event>
 	
-	<command>
+	<commands>
 	[
 		{
 			"name" : "command1",
-			"task" : "commandTask1",
+			"task" : "trigueEventForCommand",
 			"request" : [
 				{
 					"name" : "parm1",
 					"displayName" : "Parm1",
 					"dataInfo" : {
-						"refPath": "aaa",
 					},
+					"reference": "aaa",
 				},			
 			],
 			"result" : {
@@ -241,14 +249,14 @@
 					"output" : [
 						{
 							"name" : "output1",
-							"refPath" : "aaa"
+							"reference" : "aaa"
 						}
 					]
 				}
 			}
 		}
 	]
-	</command>
+	</commands>
 	
 </html>
 

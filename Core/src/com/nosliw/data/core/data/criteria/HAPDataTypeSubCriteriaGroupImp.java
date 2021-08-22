@@ -69,20 +69,20 @@ public class HAPDataTypeSubCriteriaGroupImp extends HAPSerializableImp implement
 	protected String buildLiterate(){
 		StringBuffer out = new StringBuffer();
 
-		if(this.m_isOpen)		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_SUBCRITERIA_OPEN));
-		else		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_SUBCRITERIA_CLOSE));
+		if(this.m_isOpen)		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.START_SUBCRITERIA_OPEN));
+		else		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.START_SUBCRITERIA_CLOSE));
 		
 		int i = 0;
 		for(String name : this.m_subCriterias.keySet()){
-			if(i!=0)   out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.COMMAR));
+			if(i!=0)   out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.COMMAR));
 			out.append(name);
-			out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.ASSIGNMENT));
+			out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.ASSIGNMENT));
 			out.append(HAPSerializeManager.getInstance().toStringValue(this.m_subCriterias.get(name), HAPSerializationFormat.LITERATE));
 			i++;
 		}
 		
-		if(this.m_isOpen)		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_SUBCRITERIA_OPEN));
-		else		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_SUBCRITERIA_CLOSE));
+		if(this.m_isOpen)		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.END_SUBCRITERIA_OPEN));
+		else		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.END_SUBCRITERIA_CLOSE));
 
 		return out.toString(); 
 	}

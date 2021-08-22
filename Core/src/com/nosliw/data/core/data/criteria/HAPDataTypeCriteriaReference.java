@@ -19,9 +19,9 @@ public class HAPDataTypeCriteriaReference extends HAPDataTypeCriteriaAbstract{
 	@Override
 	protected String buildLiterate(){
 		StringBuffer out = new StringBuffer();
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_REFERENCE));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.START_REFERENCE));
 		out.append(this.m_reference);
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_REFERENCE));
+		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.END_REFERENCE));
 		return out.toString(); 
 	}
 

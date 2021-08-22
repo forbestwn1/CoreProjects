@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPWithInteractiveImpBasic extends HAPEntityInfoWritableImp implements HAPWithInteractive{
+public abstract class HAPWithInteractiveImpBasic extends HAPEntityInfoWritableImp implements HAPWithInteractive{
 
 	//service input parms
 	private List<HAPVariableInfo> m_requestParms;
