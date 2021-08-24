@@ -17,8 +17,9 @@
 	</script>
 
 	<task>
-	{
-		"select1":{
+	[
+		{
+			"name" : "select1",
 			"taskType": "activity",
 			"activityType": "Event_trigue",
 			"configuration" : {
@@ -26,7 +27,7 @@
 			}
 		},
 	
-	}
+	]
 	</task>
 
 	<valuestructure>
@@ -65,13 +66,12 @@
 	[
 		{
 			"name" : "event1",
-			"value" : {
-				"eventData1" : {
-					"definition" : {
-						"path": "aaa"
-					}
+			"output" : [
+				{
+					"name" : "eventData1",
+					"reference" : "aaa"
 				}
-			}
+			]
 		}
 	]
 	</event>

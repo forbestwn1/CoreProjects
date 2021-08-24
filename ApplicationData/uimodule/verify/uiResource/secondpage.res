@@ -15,8 +15,8 @@
 	</script>
 
 	<task>
-	{
-	}
+	[
+	]
 	</task>
 
 	<valuestructure>

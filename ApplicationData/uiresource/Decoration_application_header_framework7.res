@@ -32,11 +32,11 @@
 	</scripts>
 
 
-	<contexts>
+	<valuestructure>
 	{
 		"group" : {
 			"public" : {
-				"element" : {
+				"flat" : {
 					"nosliw_ui_info" : {
 						"definition": {
 							"child" : {
@@ -56,7 +56,7 @@
 			}
 		}
 	}
-	</contexts>
+	</valuestructure>
 
 	<events>
 	[

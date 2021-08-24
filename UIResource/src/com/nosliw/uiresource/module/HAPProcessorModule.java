@@ -96,6 +96,7 @@ public class HAPProcessorModule {
 		//resolve page reference
 		HAPResultSolveReference refSolveResult = HAPUtilityComponent.solveReference(moduleUIDefinition.getPage(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, processContext);
 		HAPExecutableUIUnitPage pageExe = uiResourceMan.getUIPage((HAPDefinitionUIPage)refSolveResult.getEntity(), id, processContext);
+		out.setPage(pageExe);
 
 		//input data mapping between module and page
 		for(HAPDefinitionDataAssociation dataAssociation : moduleUIDefinition.getInDataAssociations().getDataAssociations()) {

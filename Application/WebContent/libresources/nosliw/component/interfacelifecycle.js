@@ -36,7 +36,7 @@ var INTERFACENAME = "componentLifecycle";
 
 
 /*
- * utility functions to build lifecycle object
+ * utility functions to build lifecycle object for component
  */
 var node_makeObjectWithComponentLifecycle = function(baseObject, lifecycleCallback, taskCallback, thisContext){
 	return node_buildInterface(baseObject, INTERFACENAME, loc_createComponentLifecycle(thisContext==undefined?baseObject:thisContext, lifecycleCallback, taskCallback));
@@ -62,6 +62,7 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback, task
 	
 	var loc_stateMachine;
 
+	//init statemachine for component
 	var loc_init = function(){
 		loc_stateMachineDef = node_createStateMachineDef();
 		var loc_validTransits = [

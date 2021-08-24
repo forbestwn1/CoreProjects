@@ -185,14 +185,14 @@
 				"name": "firstPage",
 				"referenceId": {
 					"structure" : "local",
-					"id" : "firstPage"
+					"id" : "firstpage"
 				},
 			},
 			{
 				"name": "secondPage",
 				"referenceId": {
 					"structure" : "local",
-					"id" : "secondePage"
+					"id" : "secondpage"
 				},
 			},
 		],

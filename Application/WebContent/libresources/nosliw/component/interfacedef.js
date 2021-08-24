@@ -135,7 +135,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 //Register Node by Name
 packageObj.createChildNode("buildDecorationPlugInObject", node_buildDecorationPlugInObject); 
 packageObj.createChildNode("buildComponentCore", node_buildComponentCore); 
-packageObj.createChildNode("node_buildComponentEnv", node_buildComponentEnv); 
+packageObj.createChildNode("buildComponentEnv", node_buildComponentEnv); 
 packageObj.createChildNode("createComponentManagementInterfaceDelegateObject", node_createComponentManagementInterfaceDelegateObject); 
 
 })(packageObj);
