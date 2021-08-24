@@ -129,7 +129,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 		}
 		jsonMap.put(PROCESS, HAPJsonUtility.buildMapJson(jsonProcessMap)); 
 
-		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
+		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildValueStructureInitScript(this.getContext()).getScript());
 		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
 
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));

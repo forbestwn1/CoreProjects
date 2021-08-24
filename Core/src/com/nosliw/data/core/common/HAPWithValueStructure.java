@@ -6,7 +6,7 @@ import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 public interface HAPWithValueStructure {
 
 	@HAPAttribute
-	public static String VALUESTRUCTURE = "valueStructure";
+	public static String VALUESTRUCTURE = "valuestructure";
 	
 	HAPWrapperValueStructure getValueStructureWrapper();
 	void setValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper);

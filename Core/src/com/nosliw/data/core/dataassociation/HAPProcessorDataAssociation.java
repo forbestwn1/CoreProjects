@@ -82,9 +82,9 @@ public class HAPProcessorDataAssociation {
 	}
 	
 	public static HAPExecutableDataAssociation processDataAssociation(HAPContainerStructure input, HAPDefinitionDataAssociation dataAssociation, HAPContainerStructure output, HAPInfo configure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPExecutableDataAssociation out = null;
 		if(dataAssociation==null)  dataAssociation = new HAPDefinitionDataAssociationNone();
 		String type = dataAssociation.getType();
-		
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
 			return HAPProcessorDataAssociationMapping.processDataAssociation(input, (HAPDefinitionDataAssociationMapping)dataAssociation, output, configure, runtimeEnv);
@@ -96,7 +96,7 @@ public class HAPProcessorDataAssociation {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_NONE:
 			return HAPProcessorDataAssociationNone.processDataAssociation(input, (HAPDefinitionDataAssociationNone)dataAssociation, output, configure, runtimeEnv);
 		}
-		
-		return null;
+		dataAssociation.cloneToEntityInfo(out);
+		return out;
 	}
 }

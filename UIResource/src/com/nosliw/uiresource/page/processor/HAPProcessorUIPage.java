@@ -1,8 +1,7 @@
 package com.nosliw.uiresource.page.processor;
 
-import com.nosliw.data.core.component.attachment.HAPContextProcessor;
+import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
@@ -15,7 +14,6 @@ public class HAPProcessorUIPage {
 	public static HAPExecutableUIUnitPage processUIResource(
 			HAPDefinitionUIPage uiPageDef,
 			String id,
-			HAPValueStructure parentContext,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,
 			HAPManagerUITag uiTagMan,  

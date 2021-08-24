@@ -21,10 +21,10 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPUtilityContextScript {
 
-	public static HAPJsonTypeScript buildContextInitScript(HAPValueStructureDefinitionGroup context) {
+	public static HAPJsonTypeScript buildValueStructureInitScript(HAPValueStructureDefinitionGroup valueStructure) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		//build init output object 
-		JSONObject output = HAPUtilityContextScript.buildDefaultJsonObject(context);
+		JSONObject output = HAPUtilityContextScript.buildDefaultJsonObject(valueStructure);
 		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
 
 		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityContextScript.class, "ContextInitFunction.temp");

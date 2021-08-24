@@ -122,7 +122,7 @@ public class HAPProcessMiniAppEntry {
 		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyOutputStructureConfigureFalse(new HAPInfoImpSimple());
 
 		//input data association
-		Map<String, HAPDefinitionDataAssociation> inputDas = module.getInputMapping().getDataAssociations();
+		Map<String, HAPDefinitionDataAssociation> inputDas = module.getInDataAssociations().getDataAssociations();
 		for(String inputDaName : inputDas.keySet()) {
 			HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(parentContext, inputDas.get(inputDaName), HAPContainerStructure.createDefault(moduleDef.getValueStructureGroup().getFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC)), daConfigure, runtimeEnv);
 			out.addInputDataAssociation(inputDaName, inputMapping);
@@ -130,7 +130,7 @@ public class HAPProcessMiniAppEntry {
 		
 		
 		//output data association
-		Map<String, HAPDefinitionDataAssociation> outputMapping = module.getOutputMapping().getDataAssociations();
+		Map<String, HAPDefinitionDataAssociation> outputMapping = module.getOutDataAssociations().getDataAssociations();
 		for(String outputTargetName : outputMapping.keySet()) {
 			HAPExecutableDataAssociation outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(moduleDef.getValueStructureGroup()), outputMapping.get(outputTargetName), parentContext, daConfigure, runtimeEnv);
 			out.addOutputDataAssociation(outputTargetName, outputMappingByTarget);

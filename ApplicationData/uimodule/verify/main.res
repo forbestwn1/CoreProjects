@@ -28,11 +28,18 @@
 							"value": "This is my world!"
 						}
 					},
+
+					"ccc_module":{
+						"definition" : {
+							"criteria": "test.string;1.0.0",
+						},
+					},
+
 				}
 			},
 			"protect": {
 				"flat": {
-					"eventDataInModule" : {
+					"eventData_module" : {
 						"definition": {
 							"criteria": "test.string;1.0.0",
 						}
@@ -43,33 +50,17 @@
 	},
 	"ui": [
 		{
-			"name": "schoolListUI",
+			"name": "firstPage",
 			"type": "list",
-			"page": "schoolListPage",
+			"page": "firstPage",
 			"status" : "disabled111",
-			"inputMapping": [
+			"in": [
 				{
 					"name" : "default",
 					"mapping": {
-						"schoolList": {
+						"aaa": {
 							"definition": {
-								"path": "schoolListInModule"
-							},
-							"info": {
-								"relativeConnection": "physical"
-							}
-						},
-						"schoolType": {
-							"definition": {
-								"path": "schoolTypeInModule"
-							},
-							"info": {
-								"relativeConnection": "physical"
-							}
-						},
-						"schoolRating": {
-							"definition": {
-								"path": "schoolRatingInModule"
+								"path": "aaa_module"
 							},
 							"info": {
 								"relativeConnection": "physical"
@@ -78,205 +69,108 @@
 					}
 				}
 			],
-			"outputMapping": [
-				{
-					"name" : "default",
-					"mapping" : {
-						"schoolListInModule": {
-							"definition": {
-								"path": "schoolList"
-							},
-							"info": {
-								"relativeConnection": "physical"
-							}
-						},
-						"schoolTypeInModule": {
-							"definition": {
-								"path": "schoolType"
-							},
-							"info": {
-								"relativeConnection": "physical"
-							}
-						},
-						"schoolRatingInModule": {
-							"definition": {
-								"path": "schoolRating"
-							},
-							"info": {
-								"relativeConnection": "physical"
-							}
-						}
-					}
-				}
+			"out": [
 			],
 			"eventHandler": [
 				{
-					"eventName" : "selectSchool",
+					"eventName" : "event1",
 					"dataMapping" : {
-						"selectSchoolInfoInModule" : "EVENT.data"
+						"eventData_module" : "EVENT.data"
 					},
 					"handler" : [
 						{
-							"task" : "showInfo",
+							"task" : "transitToSecondPage",
+						},
+						{
+							"task" : "initSecondPageData",
 						},
 					]
 				}
 			],
 		},
 		{
-			"name": "schoolInfoUI",
+			"name": "secondPage",
 			"type": "info",
-			"page": "schoolInfoPage",
+			"page": "secondPage",
 			"status" : "disabled111",
 			"inputMapping": [
 				{
 					"name" : "default",
 					"mapping": {
-						"schoolData": {
+						"bbb": {
 							"definition": {
-								"path": "selectSchoolInfoInModule"
+								"path": "bbb_module"
 							},
-							"defaultValue": {
-								"dataTypeId": "test.map;1.0.0",
-								"value": {
-									"schoolName": {
-										"dataTypeId": "test.string;1.0.0",
-										"value": "School5"
-									},
-									"schoolRating": {
-										"dataTypeId": "test.float;1.0.0",
-										"value": 6.0
-									},
-									"geo": {
-										"dataTypeId": "test.geo;1.0.0",
-										"value": {
-											"latitude": 43.651299,
-											"longitude": -79.579473
-										}
-									}
-								}
-							},
-							"info": {
-								"relativeConnection": "physical"
-							}
 						}
 					}
 				}
-			
 			]				
 		}
 	],
 	
 	"task" : [
-			{
-				"stepType" : "activity",
-				"activityType" : "transitPage",
-				"configuration" : {
-					"page" : "infoPage"
-				}
-			},
-			{
-				"stepType" : "activity",
-				"activityType" : "exeDA",
-				"configuration" : {
-					"path" : ""
-				}
-			},
-		
+		{
+			"name" : "submitService",
+			"taskType": "activity",
+			"activityType": "Service_request",
+			"configuration" : {
+				"serviceUse" : "simpleServiceWithoutInterface"
+			}
+		},
 	
+		{
+			"name" : "transitToSecondPage",
+			"stepType" : "activity",
+			"activityType" : "transitPage",
+			"configuration" : {
+				"page" : "infoPage"
+			}
+		},
+		{
+			"name" : "initSecondPageData",
+			"stepType" : "activity",
+			"activityType" : "exeDA",
+			"configuration" : {
+				"path" : ""
+			}
+		},
 	],
 	
 	"lifecycle" : [
 		{
 			"name" : "nosliw_INIT_ACTIVE",
-			"task" : "nosliw_INIT_ACTIVE"
+			"task" : "submitService"
 		}
 	], 
 	
 	"command" : [
-		{
-			"name" : "command1",
-			"task" : "commandTask1",
-			"request" : {
-				"eventData1" : {
-					"definition" : {
-						"path": "aaa"
-					}
-				}
-			},
-			"result" : {
-				"success" : {
-					"output" : {
-						"output1" : {
-							"definition" : {
-								"path": "aaa"
-							}
-						}
-					}
-				}
-			}
-		}
 	],
 	
 	"services":
 	[
 		{
-			"name" : "getSchoolData",
-			"interface" : {
-				"parm" : [
-					{
-						"name" : "schoolTypeInService",
-						"displayName" : "School Type",
-						"description" : "The type of school, public, private, ...",
-						"dataInfo" : {
-							"criteria": "test.string;1.0.0"
-						}
-					},
-					{
-						"name" : "schoolRatingInService",
-						"displayName" : "School Rating",
-						"description" : "The rating of school, 0--10",
-						"dataInfo" : {
-							"criteria": "test.float;1.0.0"
-						}
-					}
-				],
-				"result" : {
-					"success" : {
-						"output" : [
-							{
-								"name" : "outputInService",
-								"displayName": "All Schools",
-								"dataInfo" : {
-									"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0,geo:test.geo;1.0.0||%%||%%"
-								}
-							}
-						]
-					}
-				}
+			"name" : "simpleServiceWithoutInterface",
+			"status" : "enable",
+			"provider" : "simpleServiceWithInterfaceProvider",
+			"info" : {
+				"enhanceContext" : "true"
 			},
-			"provider" : "getSchoolDataService",
-			"dataMapping" :{
-				"inputMapping" : {
-					"element" : {
-						"schoolTypeInService" : {
+			"dataAssociation" :{
+				"in" : {
+					"mapping" : {
+						"parm1" : {
 							"definition" : {
-								"path" : "schoolType"
+								"path" : "ccc_module"
 							}
 						},
-						"schoolRatingInService" : {
-							"definition" : {
-								"path" : "schoolRating"
-							}
-						}
 					}
 				},
-				"outputMapping" : {
+				"out" : {
 					"success" : {
-						"element" : {
-							"schoolList" : {
+						"mapping" : {
+							"aaa" : {
 								"definition" : {
-									"path" : "outputInService"
+									"path" : "simpleOutput2"
 								}
 							}
 						}
@@ -285,61 +179,28 @@
 			}
 		}
 	],
-	"lifecycle" : [
-		{
-			"name" : "nosliw_INIT_ACTIVE",
-			"process" : "nosliw_INIT_ACTIVE"
-		}
-	], 
 	"attachment": {
 		"uiResource" : [
 			{
-				"name": "schoolListPage",
+				"name": "firstPage",
 				"referenceId": {
 					"structure" : "local",
-					"id" : "MySchool_SchoolList"
+					"id" : "firstPage"
 				},
 			},
 			{
-				"name": "schoolInfoPage",
-				"referenceId": "Page_MySchool_SchoolData",
-			}
+				"name": "secondPage",
+				"referenceId": {
+					"structure" : "local",
+					"id" : "secondePage"
+				},
+			},
 		],
 		"service" : [
 			{
-				"name" : "getSchoolDataService",
-				"referenceId" : "schoolService"
-			}
-			
+				"name": "simpleServiceWithInterfaceProvider",
+				"referenceId" : "simpleoutput_internalinterface"
+			},	
 		],
-		"process": [
-			{
-				"name" : "selectSchool",
-				"referenceId": {
-					"id" : "navigation"
-				},
-				"dataMapping" : {
-					"inputMapping" : {
-						"element": {
-							"toPageName": {
-								"definition": {
-									"value" : "schoolInfoUI"
-								},
-								"info": {
-									"relativeConnection": "physical"
-								}
-							}
-						}
-					}
-				}
-			},
-			{
-				"name" : "nosliw_INIT_ACTIVE",
-				"referenceId": {
-					"structure" : "local",
-					"id" : "init"
-				}
-			}
-		]
 	}
 }

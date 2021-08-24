@@ -2,8 +2,6 @@ package com.nosliw.data.core.component;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.component.attachment.HAPContextProcessor;
-
 public class HAPResultSolveReference {
 
 	private boolean m_isFromAttachment;

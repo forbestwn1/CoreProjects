@@ -1,9 +1,15 @@
-package com.nosliw.data.core.component.attachment;
+package com.nosliw.data.core.component;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.component.attachment.HAPAttachment;
+import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.attachment.HAPInfoAttachment;
+import com.nosliw.data.core.component.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPContextProcessor {
 
@@ -40,6 +46,10 @@ public class HAPContextProcessor {
 	}
 	
 	public HAPDefinitionEntityComplex getComplexEntity() {    return this.m_complexEntity;    }
+	
+	public HAPWrapperValueStructure getValueStructureWrapper() {   return this.m_complexEntity==null?null:this.m_complexEntity.getValueStructureWrapper();     }
+	
+	public HAPContainerAttachment getAttachmentContainer() {   return this.m_complexEntity==null?null:this.m_complexEntity.getAttachmentContainer();    }
 	
 	public HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;     }
 

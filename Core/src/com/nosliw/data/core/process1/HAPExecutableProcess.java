@@ -168,7 +168,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 		}
 		jsonMap.put(RESULT, HAPJsonUtility.buildMapJson(resultsJsonMap));
 	
-		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
+		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildValueStructureInitScript(this.getContext()).getScript());
 		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
 	}
 

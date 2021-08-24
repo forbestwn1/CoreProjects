@@ -192,7 +192,7 @@ public class HAPProcessorExpression2 {
 					JSONObject adaptorObj = (JSONObject)result.getAdaptor();
 					if(adaptorObj!=null) {
 						if(eleName==null)  eleName = (String)adaptorObj.opt(HAPOperandReference.ELEMENTNAME);
-						referenceOperand.setInDataAssociation(HAPParserDataAssociation.buildDefinitionByJson(adaptorObj.optJSONObject(HAPOperandReference.VARMAPPING)));
+						referenceOperand.setInDataAssociations(HAPParserDataAssociation.buildDefinitionByJson(adaptorObj.optJSONObject(HAPOperandReference.VARMAPPING)));
 					}
 					referenceOperand.setElementName(eleName);
 					

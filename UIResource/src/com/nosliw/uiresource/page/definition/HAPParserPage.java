@@ -230,12 +230,10 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, TASK);
 		for(Element childEle : childEles){
 			try {
-				JSONObject tasksObjJson = new JSONObject(childEle.html());
-				for(Object key : tasksObjJson.keySet()) {
-					String name = (String)key;
-					JSONObject taskJson = tasksObjJson.getJSONObject(name);
+				JSONArray tasksObjArray = new JSONArray(childEle.html());
+				for(int i=0; i<tasksObjArray.length(); i++) {
+					JSONObject taskJson = tasksObjArray.getJSONObject(i);
 					HAPDefinitionTask handler = HAPUtilityTask.parseTask(taskJson, resourceUnit, this.m_runtimeEnv.getTaskManager());
-					handler.setName(name);
 					resourceUnit.addHandler(handler);
 				}
 				break;

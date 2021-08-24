@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.component.attachment.HAPContextProcessor;
+import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.valuestructure.HAPProcessorValueStructureInComponent;
 import com.nosliw.data.core.component.valuestructure.HAPValueStructureInComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

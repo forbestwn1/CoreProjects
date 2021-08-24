@@ -84,18 +84,18 @@ public class HAPParserModule implements HAPParserResourceDefinition{
 
 		//input mapping
 //		out.getInputMapping().buildObject(jsonObj.optJSONArray(HAPDefinitionAppModule.INPUTMAPPING), HAPSerializationFormat.JSON);
-		JSONObject inputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.INPUTMAPPING);
+		JSONObject inputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.IN);
 		if(inputMappingJson!=null) {
 			HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildDefinitionByJson(inputMappingJson); 
-			out.addInputMapping(null, dataAssociation);
+			out.addInDataAssociation(dataAssociation);
 		}
 
 		//output mapping
 //		out.getOutputMapping().buildObject(jsonObj.optJSONArray(HAPDefinitionAppModule.OUTPUTMAPPING), HAPSerializationFormat.JSON);
-		JSONObject outputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.OUTPUTMAPPING);
+		JSONObject outputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.OUT);
 		if(outputMappingJson!=null) {
 			HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildDefinitionByJson(outputMappingJson);
-			out.addOutputMapping(null, dataAssociation);
+			out.addOutDataAssociation(dataAssociation);
 		}
 
 		//ui decoration
@@ -106,5 +106,4 @@ public class HAPParserModule implements HAPParserResourceDefinition{
 
 		return out;
 	}
-
 }

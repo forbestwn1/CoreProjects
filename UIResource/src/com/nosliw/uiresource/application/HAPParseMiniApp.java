@@ -85,8 +85,8 @@ public class HAPParseMiniApp {
 		out.setModule((String)moduleJson.opt(HAPDefinitionAppModule.MODULE));
 		out.setRole((String)moduleJson.opt(HAPDefinitionAppModule.ROLE));
 		out.setStatus((String)moduleJson.opt(HAPDefinitionModuleUI.STATUS));
-		out.getInputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.INPUTMAPPING), HAPSerializationFormat.JSON);
-		out.getOutputMapping().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.OUTPUTMAPPING), HAPSerializationFormat.JSON);
+		out.getInDataAssociations().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.IN), HAPSerializationFormat.JSON);
+		out.getOutDataAssociations().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.OUT), HAPSerializationFormat.JSON);
 		
 		HAPParserComponent.parseComponentChild(out, moduleJson);
 		return out;

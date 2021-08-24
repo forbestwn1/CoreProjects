@@ -2,17 +2,15 @@ package com.nosliw.uiresource;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPContextProcessor;
 import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPParserElement;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
@@ -116,14 +114,14 @@ public class HAPUIResourceManager {
 			moduleDef = (HAPDefinitionModule)defOrRef;
 			HAPUtilityComponent.mergeWithParentAttachment(moduleDef, attachmentEx);
 		}
-		return HAPProcessorModule.process(moduleDef, id, null, this.m_runtimeEnv, this);
+		return HAPProcessorModule.process(moduleDef, id, this.m_runtimeEnv, this);
 	}
 
 	
 	public HAPExecutableUIUnitPage getUIPage(HAPResourceId pageResourceId){
 		HAPExecutableUIUnitPage out = (HAPExecutableUIUnitPage)this.m_resourceCache.getResource(pageResourceId);
 		if(out==null) {
-			out = getEmbededUIPage(pageResourceId, pageResourceId.getCoreIdLiterate(), null, null, null, null);
+			out = getEmbededUIPage(pageResourceId, pageResourceId.getCoreIdLiterate(), null, null);
 		}
 		return out;
 	}
@@ -133,22 +131,27 @@ public class HAPUIResourceManager {
 		return pageDefinition;
 	}
 
-	public HAPExecutableUIUnitPage getEmbededUIPage(HAPEntityOrReference defOrRef, String id, HAPValueStructureDefinitionGroup context, HAPValueStructureDefinitionGroup parentContext, HAPContainerAttachment parentAttachment, HAPWithNameMapping withNameMapping){
+	public HAPExecutableUIUnitPage getEmbededUIPage(HAPEntityOrReference defOrRef, String id, HAPContextProcessor processContext, HAPWithNameMapping withNameMapping){
 		HAPDefinitionUIPage pageDef = null;
 		HAPContainerAttachment attachmentEx = null;
 		if(defOrRef instanceof HAPResourceId) {
 			HAPResourceId pageId = (HAPResourceId)defOrRef;
-			attachmentEx = HAPUtilityComponent.buildInternalAttachment(pageId, parentAttachment, withNameMapping);
+			attachmentEx = HAPUtilityComponent.buildInternalAttachment(pageId, processContext==null?null:processContext.getAttachmentContainer(), withNameMapping);
 			pageDef = getUIPageDefinition(pageId, attachmentEx);
 		}
 		
 		//compile it
-		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, parentContext, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
+		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
 		return out;
 	}
 	
-	public HAPExecutableUIUnitPage getUIPage(HAPDefinitionUIPage pageDef, String id, HAPValueStructure parentValueStructure, HAPContextProcessor attachmentReferenceContext) {
-		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, parentValueStructure, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
+	public HAPExecutableUIUnitPage getUIPage(HAPDefinitionUIPage pageDef, String id) {
+		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
+		return out;
+	}
+
+	public HAPExecutableUIUnitPage getUIPage(HAPDefinitionUIPage pageDef, String id, HAPContextProcessor processContext) {
+		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
 		return out;
 	}
 

@@ -1,7 +1,7 @@
 package com.nosliw.uiresource.page.processor;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.attachment.HAPContextProcessor;
+import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 import com.nosliw.data.core.task.HAPProcessorTaskSuite;

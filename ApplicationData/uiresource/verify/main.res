@@ -51,8 +51,9 @@
 	</script>
 
 	<task>
-	{
-		"submitSimpleServiceWithoutInterface2":{
+	[
+		{
+			"name" : "submitSimpleServiceWithoutInterface2",
 			"taskType": "activity",
 			"activityType": "Service_request",
 			"configuration" : {
@@ -60,7 +61,8 @@
 			}
 		},
 	
-		"trigueEvent":{
+		{
+			"name" : "trigueEvent",
 			"taskType": "activity",
 			"activityType": "Event_trigue",
 			"configuration" : {
@@ -68,7 +70,8 @@
 			}
 		},
 	
-		"trigueEventForCommand":{
+		{
+			"name" : "trigueEventForCommand",
 			"taskType": "activity",
 			"activityType": "Event_trigue",
 			"configuration" : {
@@ -76,7 +79,7 @@
 			}
 		},
 
-	}
+	]
 	</task>
 
 	<valuestructure>

@@ -35,7 +35,7 @@ public class HAPExecutableGroupDataAssociationForComponent extends HAPSerializab
 	
 	public Map<String, HAPExecutableDataAssociation> getDataAssociations(){  return this.m_dataAssociations;   }
 
-	public void addDataAssociation(String name, HAPExecutableDataAssociation dataAssociation) {   this.m_dataAssociations.put(name, dataAssociation);   }
+	public void addDataAssociation(HAPExecutableDataAssociation dataAssociation) {   this.m_dataAssociations.put(dataAssociation.getName(), dataAssociation);   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

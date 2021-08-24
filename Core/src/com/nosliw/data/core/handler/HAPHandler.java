@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -38,10 +37,10 @@ public class HAPHandler extends HAPEntityInfoImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
-		JSONArray stepsArray = jsonObj.getJSONArray(STEPS);
-		for(int i=0; i<stepsArray.length(); i++) {
-			this.m_steps.add(HAPParserHandlerStep.parse(stepsArray.getJSONObject(i)));
-		}
+//		JSONArray stepsArray = jsonObj.getJSONArray(STEPS);
+//		for(int i=0; i<stepsArray.length(); i++) {
+//			this.m_steps.add(HAPParserHandlerStep.parse(stepsArray.getJSONObject(i)));
+//		}
 		
 		return true;  
 	}

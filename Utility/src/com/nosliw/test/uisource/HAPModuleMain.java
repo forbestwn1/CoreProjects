@@ -2,6 +2,8 @@ package com.nosliw.test.uisource;
 
 import java.io.FileNotFoundException;
 
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 import com.nosliw.uiresource.resource.HAPResourceIdUIModule;
@@ -12,9 +14,9 @@ public class HAPModuleMain {
 
 		HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();
 		
-		HAPExecutableModule pageExe = runtimeEnvironment.getUIResourceManager().getUIModule(new HAPResourceIdUIModule("MySchoolResult"));
-//		System.out.println(pageExe.toStringValue(HAPSerializationFormat.JSON));
-		System.out.println(pageExe.toResourceData(runtimeEnvironment.getRuntime().getRuntimeInfo()));
+		HAPExecutableModule pageExe = runtimeEnvironment.getUIResourceManager().getUIModule(new HAPResourceIdUIModule("verify"));
+		System.out.println(HAPJsonUtility.formatJson(pageExe.toStringValue(HAPSerializationFormat.JSON)));
+//		System.out.println(pageExe.toResourceData(runtimeEnvironment.getRuntime().getRuntimeInfo()));
 		
 //		HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(new HAPUITagManager(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getResourceManager(), runtimeEnvironment.getRuntime(), HAPExpressionManager.dataTypeHelper);
 

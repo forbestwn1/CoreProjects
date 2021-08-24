@@ -1,9 +1,7 @@
 package com.nosliw.data.core.dataassociation;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,24 +20,20 @@ public class HAPDefinitionGroupDataAssociationForComponent extends HAPSerializab
 		this.m_dataAssociations = new ArrayList<HAPDefinitionDataAssociation>();
 	} 
 	
-//	public HAPDefinitionDataAssociation getDataAssociation(String name) {  return this.m_dataAssociations.get(name);   }
-//	public HAPDefinitionDataAssociation getDefaultDataAssociation() {  return this.m_dataAssociations.get(this.getDefaultName());   }
-	
-//	public void addDataAssociation(String name, HAPDefinitionDataAssociation dataAssociation) {
-//		if(HAPBasicUtility.isStringEmpty(name))  name = this.getDefaultName();
-//		this.m_dataAssociations.put(name, dataAssociation);   
-//	}
-//	public void addDataAssociation(HAPDefinitionDataAssociation dataAssociation) {   this.addDataAssociation(null, dataAssociation);    }
-	
 	public List<HAPDefinitionDataAssociation> getDataAssociations(){  return this.m_dataAssociations;   }
+	public void addDataAssociation(HAPDefinitionDataAssociation dataAssociation) 
+	{
+		if(HAPBasicUtility.isStringEmpty(dataAssociation.getName()))   dataAssociation.setName(getDefaultName());
+		this.m_dataAssociations.add(dataAssociation);
+	}
 
 	@Override
 	protected String buildJson(){
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		for(String name : this.m_dataAssociations.keySet()) {
-			jsonMap.put(name, this.m_dataAssociations.get(name).toStringValue(HAPSerializationFormat.JSON));
+		List<String> jsonArray = new ArrayList<String>();
+		for(HAPDefinitionDataAssociation dataAssociation : this.m_dataAssociations) {
+			jsonArray.add(dataAssociation.toStringValue(HAPSerializationFormat.JSON));
 		}
-		return HAPJsonUtility.buildMapJson(jsonMap); 
+		return HAPJsonUtility.buildArrayJson(jsonArray.toArray(new String[0]));
 	}
 	
 	@Override
@@ -72,8 +66,8 @@ public class HAPDefinitionGroupDataAssociationForComponent extends HAPSerializab
 	
 	public HAPDefinitionGroupDataAssociationForComponent cloneGroupDataAssociation() {
 		HAPDefinitionGroupDataAssociationForComponent out = new HAPDefinitionGroupDataAssociationForComponent();
-		for(String name : this.m_dataAssociations.keySet()) {
-			out.m_dataAssociations.put(name, this.m_dataAssociations.get(name).cloneDataAssocation());
+		for(HAPDefinitionDataAssociation dataAssociation : this.m_dataAssociations) {
+			out.addDataAssociation(dataAssociation.cloneDataAssocation());
 		}
 		return out;
 	}
