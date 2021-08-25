@@ -55,7 +55,7 @@ public class HAPUIResourceManager {
 		this.m_uiTagMan = uiTagMan;
 		this.m_resourceCache = new HAPResourceCache();
 		this.m_uiResourceParser = new HAPParserPage(null, m_idGengerator, runtimeEnv);
-		this.m_moduleParser = new HAPParserModule();
+		this.m_moduleParser = new HAPParserModule(runtimeEnv);
 		this.m_miniAppParser = new HAPParseMiniApp();
 
 		HAPParserElement.registerStoryNode(HAPStoryNodePage.STORYNODE_TYPE, HAPStoryNodePage.class);

@@ -12,11 +12,15 @@ import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.resource.HAPParserResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 public class HAPParserModule implements HAPParserResourceDefinition{
 
-	public HAPParserModule() {
+	HAPRuntimeEnvironment m_runtimeEnv;
+	
+	public HAPParserModule(HAPRuntimeEnvironment runtimeEnv) {
+		this.m_runtimeEnv = runtimeEnv;
 	}
 	
 	public HAPDefinitionModule parseFile(String fileName){		return parseFile(new File(fileName));	}
@@ -51,7 +55,7 @@ public class HAPParserModule implements HAPParserResourceDefinition{
 		HAPDefinitionModule out = new HAPDefinitionModule();
 
 		//build component part from json object
-		HAPParserComponent.parseComponent(out, jsonObj);
+		HAPParserComponent.parseComponent(out, jsonObj, this.m_runtimeEnv.getTaskManager());
 		
 		//ui decoration
 		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UIDECORATION);

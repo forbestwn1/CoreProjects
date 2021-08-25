@@ -91,7 +91,7 @@ public class HAPUtilityComponent {
 			HAPConfigureProcessorStructure contextProcessConfg,
 			HAPManagerActivityPlugin activityPluginMan
 			) {
-		HAPComponent component = componentExe.getDefinition();
+		HAPDefinitionComponent component = componentExe.getDefinition();
 		
 		//service providers
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(component.getAttachmentContainer(), null, runtimeEnv.getServiceManager().getServiceDefinitionManager()); 

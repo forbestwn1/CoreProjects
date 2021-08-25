@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
 import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
 import com.nosliw.data.core.component.HAPElementContainerResourceDefinitionEntityImpComponent;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
@@ -47,7 +47,7 @@ public class HAPElementContainerResourceDefinitionEntityExpressionSuite
 	public void addConstantDefinition(HAPDefinitionConstant constantDef) {	}
 
 	@Override
-	public HAPComponent cloneComponent() {  return (HAPComponent)this.cloneResourceDefinitionContainerElement(); }
+	public HAPDefinitionComponent cloneComponent() {  return (HAPDefinitionComponent)this.cloneResourceDefinitionContainerElement(); }
 
 	@Override
 	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {

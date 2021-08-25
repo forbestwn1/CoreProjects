@@ -14,9 +14,13 @@ import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
+import com.nosliw.data.core.task.HAPDefinitionTaskSuiteImp;
 
-abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp implements HAPComponent{
+abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionComplexImp implements HAPDefinitionComponent{
 
+	private HAPDefinitionTaskSuite m_taskSuite;
+	
 	//lifecycle definition
 	private Set<HAPHandlerLifecycle> m_lifecycleAction;
 	
@@ -30,18 +34,25 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	
 	private List<HAPDefinitionCommand> m_commands;
 	
-	public HAPComponentImp() {
+	public HAPDefinitionComponentImp() {
 		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
 		this.m_eventHandlers = new HashSet<HAPHandler>();
 		this.m_serviceUse = new LinkedHashMap<String, HAPDefinitionServiceUse>();
 		this.m_commands = new ArrayList<HAPDefinitionCommand>();
 		this.m_events = new ArrayList<HAPDefinitionEvent>();
+		this.m_taskSuite = new HAPDefinitionTaskSuiteImp(this);
 	}
 
-	public HAPComponentImp(String id) {
+	public HAPDefinitionComponentImp(String id) {
 		this();
 		this.setId(id);
 	}
+	
+	@Override
+	public HAPDefinitionTaskSuite getTaskSuite() {    return this.m_taskSuite;     }
+	
+	@Override
+	public void setTaskSuite(HAPDefinitionTaskSuite suite) {  this.m_taskSuite = suite;    }
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
@@ -84,7 +95,7 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 	@Override
 	public void addCommand(HAPDefinitionCommand command) {    this.m_commands.add(command);     }
 
-	protected void cloneToComponent(HAPComponent component, boolean cloneValueStructure) {
+	protected void cloneToComponent(HAPDefinitionComponent component, boolean cloneValueStructure) {
 		component.setId(this.getId());
 		this.cloneToComplexResourceDefinition(component, cloneValueStructure);
 		for(HAPHandlerLifecycle handler : this.m_lifecycleAction) {
@@ -99,6 +110,7 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 		for(HAPDefinitionEvent event : this.m_events) {
 			component.addEvent(event.cloneEventDefinition());
 		}
+		component.setTaskSuite(this.getTaskSuite().cloneTaskSuiteDefinition());
 	}
 	
 	@Override
@@ -108,5 +120,6 @@ abstract public class HAPComponentImp extends HAPResourceDefinitionComplexImp im
 //		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
 		jsonMap.put(COMMAND, HAPJsonUtility.buildJson(this.m_commands, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
+		jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_taskSuite, HAPSerializationFormat.JSON));
 	}
 }

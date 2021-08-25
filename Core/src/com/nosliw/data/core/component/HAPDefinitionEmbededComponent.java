@@ -15,7 +15,7 @@ import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationFor
 import com.nosliw.data.core.handler.HAPHandler;
 
 //a component reference embeded
-public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAPWithNameMapping, HAPWithEventHanlder{
+public class HAPDefinitionEmbededComponent extends HAPEntityInfoWritableImp implements HAPWithNameMapping, HAPWithEventHanlder{
 
 	@HAPAttribute
 	public static String NAMEMAPPING = "nameMapping";
@@ -40,7 +40,7 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 	//event handlers
 	private Set<HAPHandler> m_eventHandlers;
 	
-	public HAPEmbededComponent() {
+	public HAPDefinitionEmbededComponent() {
 		this.m_nameMapping = new HAPNameMapping();
 		this.m_eventHandlers = new HashSet<HAPHandler>();
 		this.m_outDataAssociations = new HAPDefinitionGroupDataAssociationForComponent();
@@ -81,7 +81,7 @@ public class HAPEmbededComponent extends HAPEntityInfoWritableImp implements HAP
 		return true;
 	}
 
-	protected void cloneToEmbededComponent(HAPEmbededComponent embededComponent) {
+	protected void cloneToEmbededComponent(HAPDefinitionEmbededComponent embededComponent) {
 		this.cloneToEntityInfo(embededComponent);
 		for(HAPHandler eventHandler : this.m_eventHandlers) {
 			embededComponent.addEventHandler(eventHandler.cloneHandler());

@@ -1,6 +1,6 @@
 package com.nosliw.data.core.component;
 
-public class HAPElementContainerResourceDefinitionEntityImpComponent extends HAPComponentImp implements HAPElementContainerResourceDefinitionEntity{
+public class HAPElementContainerResourceDefinitionEntityImpComponent extends HAPDefinitionComponentImp implements HAPElementContainerResourceDefinitionEntity{
 
 	public HAPElementContainerResourceDefinitionEntityImpComponent() {}
 	
@@ -23,6 +23,6 @@ public class HAPElementContainerResourceDefinitionEntityImpComponent extends HAP
 	}
 
 	@Override
-	public HAPComponent cloneComponent() {  return (HAPComponent)this.cloneResourceDefinitionContainerElement(); }
+	public HAPDefinitionComponent cloneComponent() {  return (HAPDefinitionComponent)this.cloneResourceDefinitionContainerElement(); }
 
 }

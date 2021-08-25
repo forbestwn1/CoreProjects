@@ -6,11 +6,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.component.HAPEmbededComponent;
+import com.nosliw.data.core.component.HAPDefinitionEmbededComponent;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionAppModule extends HAPEmbededComponent{
+public class HAPDefinitionAppModule extends HAPDefinitionEmbededComponent{
 
 	@HAPAttribute
 	public static final String MODULE = "module";

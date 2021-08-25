@@ -1,7 +1,7 @@
 package com.nosliw.uiresource.page.definition;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
 
 public class HAPDefinitionUITag extends HAPDefinitionUIUnit{
 
@@ -21,7 +21,7 @@ public class HAPDefinitionUITag extends HAPDefinitionUIUnit{
 	}
 
 	@Override
-	public HAPComponent cloneComponent() {
+	public HAPDefinitionComponent cloneComponent() {
 		// TODO Auto-generated method stub
 		return null;
 	}

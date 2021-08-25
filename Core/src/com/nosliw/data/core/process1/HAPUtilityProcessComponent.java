@@ -4,9 +4,9 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
-import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPDefinitionComponentImp;
 import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
@@ -18,9 +18,9 @@ import com.nosliw.data.core.process1.util.HAPParserProcessDefinition;
 
 public class HAPUtilityProcessComponent {
 
-	public static HAPResourceDefinitionProcessSuite buildProcessSuiteFromComponent(HAPComponent component, HAPManagerActivityPlugin activityPluginMan) {
+	public static HAPResourceDefinitionProcessSuite buildProcessSuiteFromComponent(HAPDefinitionComponent component, HAPManagerActivityPlugin activityPluginMan) {
 		HAPResourceDefinitionProcessSuite out = new HAPResourceDefinitionProcessSuite();
-		if(component instanceof HAPComponentImp) {
+		if(component instanceof HAPDefinitionComponentImp) {
 			component.cloneToComplexResourceDefinition(out);
 			Map<String, HAPAttachment> processAtts = component.getAttachmentContainer().getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS);
 			

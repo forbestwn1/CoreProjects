@@ -9,7 +9,7 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
-public abstract class HAPComponentUseServiceImp extends HAPComponentImp implements HAPWithServiceUse{
+public abstract class HAPComponentUseServiceImp extends HAPDefinitionComponentImp implements HAPWithServiceUse{
 
 	//service definition
 	private HAPDefinitionServiceInEntity m_serviceDefinition;

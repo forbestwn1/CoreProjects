@@ -7,14 +7,14 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPComponent;
-import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
+import com.nosliw.data.core.component.HAPDefinitionComponentImp;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
 
 //suite that contain multiple process
 @HAPEntityWithAttribute
-public class HAPResourceDefinitionTaskSuite extends HAPComponentImp implements HAPDefinitionTaskSuite{
+public class HAPResourceDefinitionTaskSuite extends HAPDefinitionComponentImp implements HAPDefinitionTaskSuite{
 
 	private Map<String, HAPDefinitionTask> m_tasks;
 	
@@ -40,7 +40,7 @@ public class HAPResourceDefinitionTaskSuite extends HAPComponentImp implements H
 	public void addEntityElement(HAPDefinitionTask entityElement) {  this.m_tasks.put(entityElement.getId(), entityElement); }
 
 	@Override
-	public HAPComponent cloneComponent() {  return (HAPComponent)cloneTaskSuiteDefinition();  }
+	public HAPDefinitionComponent cloneComponent() {  return (HAPDefinitionComponent)cloneTaskSuiteDefinition();  }
 
 	@Override
 	public HAPDefinitionTaskSuite cloneTaskSuiteDefinition() {

@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPInfoChildResource;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
@@ -70,5 +70,5 @@ public class HAPDefinitionAppElementUI  extends HAPDefinitionAppElement{
 	}
 	
 	@Override
-	public HAPComponent cloneComponent() {  return cloneAppUIElementDefinition();	}
+	public HAPDefinitionComponent cloneComponent() {  return cloneAppUIElementDefinition();	}
 }

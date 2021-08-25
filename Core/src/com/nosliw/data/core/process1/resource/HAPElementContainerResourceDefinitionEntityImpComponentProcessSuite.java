@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
 import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
 import com.nosliw.data.core.component.HAPElementContainerResourceDefinitionEntityImpComponent;
 import com.nosliw.data.core.process1.HAPDefinitionProcess;
@@ -56,8 +56,8 @@ public class HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite
 	}
 
 	@Override
-	public HAPComponent cloneComponent() {
-		return (HAPComponent)this.cloneResourceDefinitionContainerElement();
+	public HAPDefinitionComponent cloneComponent() {
+		return (HAPDefinitionComponent)this.cloneResourceDefinitionContainerElement();
 	}
 
 	@Override

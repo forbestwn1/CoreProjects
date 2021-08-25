@@ -120,7 +120,7 @@
 	
 		{
 			"name" : "transitToSecondPage",
-			"stepType" : "activity",
+			"taskType" : "activity",
 			"activityType" : "transitPage",
 			"configuration" : {
 				"page" : "infoPage"
@@ -128,7 +128,7 @@
 		},
 		{
 			"name" : "initSecondPageData",
-			"stepType" : "activity",
+			"taskType" : "activity",
 			"activityType" : "exeDA",
 			"configuration" : {
 				"path" : ""

@@ -8,7 +8,7 @@ import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.HAPExecutableResultActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.activity.HAPUtilityActivity;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -38,8 +38,8 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		if(serviceUse==null) {
 			//service use is reference
 			HAPDefinitionEntityComplex complexEntity = processContext.getComplexEntity();
-			if(complexEntity instanceof HAPComponent) {
-				serviceUse = ((HAPComponent)complexEntity).getService(serviceActDef.getServiceUseName());
+			if(complexEntity instanceof HAPDefinitionComponent) {
+				serviceUse = ((HAPDefinitionComponent)complexEntity).getService(serviceActDef.getServiceUseName());
 			}
 		}
 		

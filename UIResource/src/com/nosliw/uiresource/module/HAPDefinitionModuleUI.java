@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.HAPEmbededComponent;
+import com.nosliw.data.core.component.HAPDefinitionEmbededComponent;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 //each module ui is page unit in module that is alive in a module
@@ -17,7 +17,7 @@ import com.nosliw.uiresource.common.HAPInfoDecoration;
 //		where data come from: service provider
 //		how to interact with page : page event handler
 @HAPEntityWithAttribute
-public class HAPDefinitionModuleUI extends HAPEmbededComponent{
+public class HAPDefinitionModuleUI extends HAPDefinitionEmbededComponent{
 
 	@HAPAttribute
 	public static String PAGE = "page";

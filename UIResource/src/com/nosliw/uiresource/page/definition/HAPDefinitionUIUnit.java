@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPDefinitionComponentImp;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
@@ -19,7 +19,7 @@ import com.nosliw.data.core.task.HAPDefinitionTaskSuiteImp;
  * it contains all the information within its domain
  * 		that means, for ui resource instance, it does not contains infor within customer tag
  */
-public abstract class HAPDefinitionUIUnit extends HAPComponentImp{
+public abstract class HAPDefinitionUIUnit extends HAPDefinitionComponentImp{
  
 	//parent ui unit
 	private HAPDefinitionUIUnit m_parent;

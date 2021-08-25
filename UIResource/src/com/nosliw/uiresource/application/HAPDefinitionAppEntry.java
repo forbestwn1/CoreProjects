@@ -1,7 +1,7 @@
 package com.nosliw.uiresource.application;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
 
 public class HAPDefinitionAppEntry extends HAPComponentContainerElement{
@@ -20,7 +20,7 @@ public class HAPDefinitionAppEntry extends HAPComponentContainerElement{
 	public HAPDefinitionAppElementUI getEntry() {   return (HAPDefinitionAppElementUI)this.getComponentEntity();   }
 
 	@Override
-	public HAPComponent cloneComponent() {
+	public HAPDefinitionComponent cloneComponent() {
 		HAPDefinitionAppEntry out = new HAPDefinitionAppEntry();
 		this.cloneToComponentContainerElement(out);
 		return out;

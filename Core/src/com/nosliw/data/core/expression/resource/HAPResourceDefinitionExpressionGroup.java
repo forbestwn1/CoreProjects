@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
 import com.nosliw.data.core.component.HAPComponentContainerElement;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
@@ -31,7 +31,7 @@ public class HAPResourceDefinitionExpressionGroup  extends HAPComponentContainer
 	public HAPDefinitionExpression getEntityElement(String id) {  return this.getExpressionGroupEntity().getEntityElement(id);  }
 
 	@Override
-	public HAPComponent cloneComponent() {
+	public HAPDefinitionComponent cloneComponent() {
 		HAPResourceDefinitionExpressionGroup out = new HAPResourceDefinitionExpressionGroup();
 		this.cloneToComponentContainerElement(out);
 		return out;

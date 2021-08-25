@@ -23,7 +23,7 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
-public abstract class HAPComponentContainerElement extends HAPSerializableImp implements HAPComponent{
+public abstract class HAPComponentContainerElement extends HAPSerializableImp implements HAPDefinitionComponent{
 
 	@HAPAttribute
 	public static String CONTAINER = "container";
@@ -41,7 +41,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	private String m_elementId;
 	
 	//calculate out
-	private HAPComponent m_componentEntity;
+	private HAPDefinitionComponent m_componentEntity;
 	
 	//calculate out
 	private HAPWrapperValueStructure m_valueStructureWrapper;
@@ -51,7 +51,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public HAPComponentContainerElement(HAPResourceDefinitionContainer componentContainer, String elementId) {
 		this.m_componentContainer = componentContainer;
 		this.m_elementId = elementId;
-		this.m_componentEntity = ((HAPComponent)this.getResourceContainer().getContainerElement(this.getElementId())).cloneComponent();
+		this.m_componentEntity = ((HAPDefinitionComponent)this.getResourceContainer().getContainerElement(this.getElementId())).cloneComponent();
 		HAPUtilityComponent.mergeWithParentAttachment(this.m_componentEntity, this.m_componentContainer.getAttachmentContainer());    //build attachment
 		//build value structure
 		
@@ -75,7 +75,7 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 	public String getElementId() {   return this.m_elementId;   }
 	public void setElementId(String id) {   this.m_elementId = id;    }
 	
-	public HAPComponent getComponentEntity() {   return this.m_componentEntity;   }
+	public HAPDefinitionComponent getComponentEntity() {   return this.m_componentEntity;   }
 
 	@Override
 	public HAPResourceId getResourceId() {   return this.m_resourceId;   }

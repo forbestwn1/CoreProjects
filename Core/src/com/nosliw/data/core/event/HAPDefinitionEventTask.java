@@ -1,11 +1,11 @@
 package com.nosliw.data.core.event;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.component.HAPComponentImp;
+import com.nosliw.data.core.component.HAPDefinitionComponentImp;
 
 //task definition 
 //task definition describe how event trigure process 
-public class HAPDefinitionEventTask extends HAPComponentImp{
+public class HAPDefinitionEventTask extends HAPDefinitionComponentImp{
 
 	@HAPAttribute
 	public static String SOURCE = "source";

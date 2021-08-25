@@ -8,7 +8,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.data.core.component.HAPComponent;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceData;
@@ -23,7 +23,7 @@ public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implement
 	@HAPAttribute
 	public static String CONTEXT = "context";
 
-	private HAPComponent m_component;
+	private HAPDefinitionComponent m_component;
 	
 	// hook up with real data during runtime
 	private HAPValueStructure m_context;
@@ -32,12 +32,12 @@ public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implement
 
 	private Map<String, HAPDefinitionServiceProvider> m_serviceProviders;
 	
-	public HAPExecutableImpComponent(HAPComponent component) {
+	public HAPExecutableImpComponent(HAPDefinitionComponent component) {
 		super(component);
 		this.m_component = component;
 	}
 
-	public HAPComponent getDefinition() {   return this.m_component;    }
+	public HAPDefinitionComponent getDefinition() {   return this.m_component;    }
 	
 	public HAPValueStructure getContextStructure() {   return this.m_context;   }
 	public void setContextStructure(HAPValueStructure context) { 	this.m_context = context;	}
