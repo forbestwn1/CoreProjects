@@ -9,10 +9,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.event.HAPExecutableHandlerEvent;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationForComponent;
-import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -40,13 +39,13 @@ public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
 	private HAPExecutableGroupDataAssociationForComponent m_inDataAssociations;
 	private HAPExecutableGroupDataAssociationForComponent m_outDataAssociations;
 	
-	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_eventHandlers;
+	private Map<String, HAPExecutableHandlerEvent> m_eventHandlers;
 	
 	public HAPExecutableEmbededComponent(HAPEntityInfo entityDef) {
 		super(entityDef);
 		this.m_inDataAssociations = new HAPExecutableGroupDataAssociationForComponent();
 		this.m_outDataAssociations = new HAPExecutableGroupDataAssociationForComponent();
-		this.m_eventHandlers = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
+		this.m_eventHandlers = new LinkedHashMap<String, HAPExecutableHandlerEvent>();
 	}
 
 	public HAPExecutableComponent getComponent() {    return this.m_component;     }
@@ -58,7 +57,7 @@ public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
 	public void addOutDataAssociation(HAPExecutableDataAssociation dataAssociation) {   this.m_outDataAssociations.addDataAssociation(dataAssociation);	}
 	public HAPExecutableGroupDataAssociationForComponent getOutDataAssociations() {   return this.m_outDataAssociations;   }
 
-	public void addEventHandler(String eventName, HAPExecutableWrapperTask<HAPExecutableProcess> eventHander) {   this.m_eventHandlers.put(eventName, eventHander);   }
+	public void addEventHandler(HAPExecutableHandlerEvent eventHandler) {   this.m_eventHandlers.put(eventHandler.getEventName(), eventHandler);   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
@@ -92,7 +91,7 @@ public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.addAll(this.m_inDataAssociations.getResourceDependency(runtimeInfo, resourceManager));
 		out.addAll(this.m_outDataAssociations.getResourceDependency(runtimeInfo, resourceManager));
-		for(HAPExecutableWrapperTask eventHandler : this.m_eventHandlers.values()) {	out.addAll(eventHandler.getResourceDependency(runtimeInfo, resourceManager));	}
+		for(HAPExecutableHandlerEvent eventHandler : this.m_eventHandlers.values()) {	out.addAll(eventHandler.getResourceDependency(runtimeInfo, resourceManager));	}
 		out.addAll(this.m_component.getResourceDependency(runtimeInfo, resourceManager));
 		return out;
 	}

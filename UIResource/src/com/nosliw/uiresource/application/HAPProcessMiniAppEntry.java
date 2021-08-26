@@ -9,10 +9,10 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.component.HAPHandlerEvent;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
@@ -137,8 +137,8 @@ public class HAPProcessMiniAppEntry {
 		}
 		
 		//event handler
-		Set<HAPHandlerEvent> eventHandlerDefs = module.getEventHandlers();
-		for(HAPHandlerEvent eventHandlerDef :eventHandlerDefs) {
+		Set<HAPDefinitionHandlerEvent> eventHandlerDefs = module.getEventHandlers();
+		for(HAPDefinitionHandlerEvent eventHandlerDef :eventHandlerDefs) {
 			String eventName = eventHandlerDef.getName();
 			HAPResourceDefinitionProcess processDef = entryExe.getProcessDefinition(eventHandlerDef.getTask().getTaskDefinition());
 //			HAPDefinitionProcessSuiteElementEntity processDef = HAPUtilityProcess.getProcessDefinitionElementFromAttachment(eventHandlerDef.getProcess().getTaskDefinition(), moduleExe.getDefinition().getAttachmentContainer(), processMan.getPluginManager());

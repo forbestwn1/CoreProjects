@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -18,14 +19,14 @@ public class HAPHandler extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static String STEPS = "steps";
 
-	private List<HAPHandlerStep> m_steps;
+	private List<String> m_steps;
 	
 	public HAPHandler() {
-		this.m_steps = new ArrayList<HAPHandlerStep>();
+		this.m_steps = new ArrayList<String>();
 	}
 	
-	public void addStep(HAPHandlerStep step) {    this.m_steps.add(step);     }
-	public List<HAPHandlerStep> getSteps(){   return this.m_steps;  	}
+	public void addStep(String step) {    this.m_steps.add(step);     }
+	public List<String> getSteps(){   return this.m_steps;  	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -34,21 +35,25 @@ public class HAPHandler extends HAPEntityInfoImp{
 	}
 
 	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		this.buildEntityInfoByJson(jsonObj);
-//		JSONArray stepsArray = jsonObj.getJSONArray(STEPS);
-//		for(int i=0; i<stepsArray.length(); i++) {
-//			this.m_steps.add(HAPParserHandlerStep.parse(stepsArray.getJSONObject(i)));
-//		}
-		
+	protected boolean buildObjectByJson(Object obj){
+		if(obj instanceof String) {
+			this.m_steps.add((String)obj);
+		}
+		else if(obj instanceof JSONObject) {
+			JSONObject jsonObj = (JSONObject)obj;
+			this.buildEntityInfoByJson(jsonObj);
+			JSONArray stepsArray = jsonObj.getJSONArray(STEPS);
+			for(int i=0; i<stepsArray.length(); i++) {
+				this.m_steps.add(stepsArray.getString(i));
+			}
+		}
 		return true;  
 	}
 	
 	public HAPHandler cloneHandler() {
 		HAPHandler out = new HAPHandler();
-		for(HAPHandlerStep step : this.m_steps) {
-			out.addStep(step.cloneHandlerStep());
+		for(String step : this.m_steps) {
+			out.addStep(step);
 		}
 		return out;
 	}

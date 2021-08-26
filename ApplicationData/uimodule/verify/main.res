@@ -74,17 +74,12 @@
 			"eventHandler": [
 				{
 					"eventName" : "event1",
-					"dataMapping" : {
-						"eventData_module" : "EVENT.data"
+					"in" : {
+						"mapping" : {
+							"eventData_module" : "EVENT.data"
+						}
 					},
-					"handler" : [
-						{
-							"task" : "transitToSecondPage",
-						},
-						{
-							"task" : "initSecondPageData",
-						},
-					]
+					"handler" : "event1Handler"
 				}
 			],
 		},

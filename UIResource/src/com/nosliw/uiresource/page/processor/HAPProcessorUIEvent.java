@@ -29,7 +29,7 @@ public class HAPProcessorUIEvent {
 		//process relative element in event defined in resource
 		List<HAPDefinitionEvent> eventsDef = uiUnitDef.getEvents();
 		for(HAPDefinitionEvent event : eventsDef) {
-			HAPExecutableEvent eventExe = HAPProcessEvent.process(event, HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure()), runtimeEnv);
+			HAPExecutableEvent eventExe = HAPProcessEvent.processEventDefinition(event, HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure()), runtimeEnv);
 			uiExe.getBody().addEventDefinition(eventExe);
 		}
 		

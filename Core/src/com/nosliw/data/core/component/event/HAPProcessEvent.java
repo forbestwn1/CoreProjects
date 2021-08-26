@@ -1,8 +1,10 @@
 package com.nosliw.data.core.component.event;
 
+import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPExecutableDataAssociationMapping;
+import com.nosliw.data.core.handler.HAPExecutableHandler;
 import com.nosliw.data.core.interactive.HAPUtilityInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
@@ -10,7 +12,7 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPProcessEvent {
 
-	public static HAPExecutableEvent process(HAPDefinitionEvent eventDef, HAPContainerStructure parentStructures, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableEvent processEventDefinition(HAPDefinitionEvent eventDef, HAPContainerStructure parentStructures, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableEvent out = new HAPExecutableEvent();
 		
 		eventDef.cloneToEntityInfo(out);
@@ -28,6 +30,19 @@ public class HAPProcessEvent {
 		out.setValueStructure(valueStructure);
 		
 		
+		return out;
+	}
+	
+	public static HAPExecutableHandlerEvent processEventHandler(HAPDefinitionHandlerEvent eventHandlerDef, HAPExecutableEvent event, HAPContextProcessor processContext){
+		HAPExecutableHandlerEvent out = new HAPExecutableHandlerEvent();
+		out.setEventName(eventHandlerDef.getEventName());
+		out.setHandler(new HAPExecutableHandler(eventHandlerDef.getHandler()));
+		
+		out.setInDataAssociation(HAPProcessorDataAssociation.processDataAssociation(
+				HAPContainerStructure.createDefault(event.getValueStructure()), 
+				eventHandlerDef.getDataAssociation(), 
+				HAPContainerStructure.createDefault(processContext.getValueStructureWrapper().getValueStructure()), 
+				null, processContext.getRuntimeEnvironment()));
 		return out;
 	}
 }
