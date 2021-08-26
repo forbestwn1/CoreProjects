@@ -110,6 +110,47 @@
 	
 	"task" : [
 		{
+			"name" : "nosliw_INIT_ACTIVE",
+			"taskType": "sequence",
+			"step": [
+				{
+					"name" : "transitToFirstPage",
+					"taskType" : "activity",
+					"activityType" : "transitPage",
+					"configuration" : {
+						"page" : "firstPage"
+					}
+				},
+			]
+		},
+		{
+			"name" : "event1Handler",
+			"taskType": "sequence",
+			"step": [
+				{
+					"name" : "transitToSecondPage",
+					"taskType" : "activity",
+					"activityType" : "transitPage",
+					"configuration" : {
+						"page" : "secondPage"
+					}
+				},
+				{
+					"name" : "initSecondPageData",
+					"taskType" : "activity",
+					"activityType" : "exeDA",
+					"configuration" : {
+						"path" : [
+							{
+								"entityType" : "dataAssociation",
+								"path" : "default"
+							}
+						]
+					}
+				},
+			]
+		},
+		{
 			"name" : "submitService",
 			"taskType": "activity",
 			"activityType": "Service_request",
@@ -118,30 +159,7 @@
 			}
 		},
 	
-		{
-			"name" : "transitToSecondPage",
-			"taskType" : "activity",
-			"activityType" : "transitPage",
-			"configuration" : {
-				"page" : "infoPage"
-			}
-		},
-		{
-			"name" : "initSecondPageData",
-			"taskType" : "activity",
-			"activityType" : "exeDA",
-			"configuration" : {
-				"path" : ""
-			}
-		},
 	],
-	
-	"lifecycle" : [
-		{
-			"name" : "nosliw_INIT_ACTIVE",
-			"task" : "submitService"
-		}
-	], 
 	
 	"command" : [
 	],

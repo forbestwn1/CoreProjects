@@ -7,10 +7,9 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImpWrapper;
-import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.HAPExecutableComponent;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
@@ -18,24 +17,12 @@ import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructureScript;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 @HAPEntityWithAttribute
-public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
+public class HAPExecutableModule extends HAPExecutableComponent{
 
-	@HAPAttribute
-	public static String ID = "id";
-
-	@HAPAttribute
-	public static String VALUESTRUCTURE = "valueStructure";
-	
 	@HAPAttribute
 	public static String UI = "ui";
 	 
@@ -45,16 +32,8 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	@HAPAttribute
 	public static String LIFECYCLE = "lifecycle";
 
-	@HAPAttribute
-	public static String INITSCRIPT = "initScript";
-
 	private HAPDefinitionModule m_moduleDefinition;
 	
-	private String m_id;
-
-	// hook up with real data during runtime
-	private HAPWrapperValueStructure m_valueStructureWrapper;
-
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_processes;
 	
@@ -65,24 +44,14 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	private HAPResourceDefinitionProcessSuite m_processSuite;
 	
 	public HAPExecutableModule(HAPDefinitionModule moduleDefinition, String id) {
-		super(moduleDefinition);
+		super(moduleDefinition, id);
 		this.m_processes = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
 		this.m_lifecycle = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
 		this.m_uis = new ArrayList<HAPExecutableModuleUI>();
 		this.m_moduleDefinition = moduleDefinition;
-		this.m_id = id;
-		this.m_valueStructureWrapper = moduleDefinition.getValueStructureWrapper();
 	}
 
 	public HAPDefinitionModule getDefinition() {   return this.m_moduleDefinition;  }
-	
-	public HAPValueStructure getValueStructure() {   return this.m_valueStructureWrapper.getValueStructure();   }
-
-	public HAPExecutableValueStructure getValueStructureExe() {
-		return HAPUtilityValueStructure.buildExecuatableValueStructure(this.getValueStructure());
-	}
-
-	public void setValueStructure(HAPValueStructure valueStructure) { 	this.m_valueStructureWrapper.setValueStructure(valueStructure);	}
 	
 	public void addProcess(String name, HAPExecutableWrapperTask<HAPExecutableProcess> process) {		this.m_processes.put(name, process);	}
 
@@ -97,8 +66,6 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ID, this.m_id);
-		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildJson(this.m_valueStructureWrapper.getValueStructure(), HAPSerializationFormat.JSON));
 		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
 		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
 		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildJson(this.m_lifecycle, HAPSerializationFormat.JSON));
@@ -128,15 +95,13 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		}
 		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildMapJson(lifecycleJsonMap));
 
-		jsonMap.put(INITSCRIPT, HAPUtilityValueStructureScript.buildValueStructureInitScript(this.getValueStructureExe()).getScript());
-		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
-		
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
+		out.addAll(super.getResourceDependency(runtimeInfo, resourceManager));
 		for(HAPExecutableModuleUI ui : this.m_uis) {		out.addAll(ui.getResourceDependency(runtimeInfo, resourceManager));		}
 		for(HAPExecutableWrapperTask process : this.m_processes.values()) {		out.addAll(process.getResourceDependency(runtimeInfo, resourceManager));		}
 		for(HAPExecutableWrapperTask lifecycle : this.m_lifecycle.values()) {	out.addAll(lifecycle.getResourceDependency(runtimeInfo, resourceManager));	}
