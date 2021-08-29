@@ -34,7 +34,6 @@ public class HAPProcessorUIHandler {
 				null, 
 				uiUnitDef.getHandlers(),
 				contextProcess, 
-				null, 
 				runtimeEnv,
 				new HAPProcessTracker());
 		return out;

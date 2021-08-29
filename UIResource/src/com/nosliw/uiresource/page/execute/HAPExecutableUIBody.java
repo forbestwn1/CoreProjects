@@ -36,6 +36,7 @@ import com.nosliw.uiresource.page.definition.HAPElementEvent;
 
 @HAPEntityWithAttribute
 public class HAPExecutableUIBody extends HAPExecutableImp{
+//HAPExecutableComponent{
 
 	@HAPAttribute
 	public static final String VALUESTRUCTURE = "valueStructure";
@@ -117,6 +118,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	private String m_html;
 	
 	public HAPExecutableUIBody(HAPDefinitionUIUnit uiUnitDefinition, HAPExecutableUIUnit uiUnit) {
+//		super(uiUnitDefinition, null);
 		this.m_elementEvents = uiUnitDefinition.getNormalTagEvents();
 		this.m_tagEvents = uiUnitDefinition.getCustomTagEvents();
 		this.m_script = uiUnitDefinition.getScriptBlock();
@@ -197,6 +199,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUESTRUCTURE, this.getValueStructureExe().toStringValue(HAPSerializationFormat.JSON));
 		
 		List<String> eleEventsJsons = new ArrayList<String>();
@@ -242,6 +245,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		HAPJsonTypeScript script = this.m_script;
 		if(script!=null){
 			jsonMap.put(SCRIPT, script.toStringValue(HAPSerializationFormat.JSON_FULL));

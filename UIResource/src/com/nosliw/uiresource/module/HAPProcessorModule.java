@@ -4,12 +4,16 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.component.HAPDefinitionComponent;
+import com.nosliw.data.core.component.HAPExecutableComponent;
+import com.nosliw.data.core.component.HAPProcessorEmbededComponent;
 import com.nosliw.data.core.component.HAPResultSolveReference;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPRequirementContextProcessor;
@@ -34,6 +38,7 @@ public class HAPProcessorModule {
 		return HAPProcessorModule.process(moduleDefinition, id, runtimeEnv, uiResourceMan, processTracker);
 	}
 	
+	
 	private static HAPExecutableModule process(
 			HAPDefinitionModule moduleDefinition,
 			String id, 
@@ -45,6 +50,12 @@ public class HAPProcessorModule {
 
 		HAPRequirementContextProcessor contextProcessRequirement1 = HAPUtilityCommon.getDefaultContextProcessorRequirement(runtimeEnv.getResourceDefinitionManager(), runtimeEnv.getDataTypeHelper(), runtimeEnv.getRuntime(), runtimeEnv.getExpressionManager(), runtimeEnv.getServiceManager().getServiceDefinitionManager());
 		HAPConfigureProcessorStructure contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForModule();
+
+		//service
+		HAPProcessorServiceUse.process(definition, globalValueStructure, attachmentContainer, runtimeEnv)
+		
+		//task
+		
 		
 		//attachment
 //		HAPUtilityComponent.processAttachmentInChild(moduleDefinition, attachmentReferenceContext.getComplexEntity());
@@ -93,11 +104,16 @@ public class HAPProcessorModule {
 		
 		HAPDefinitionModule moduleDef = moduleExe.getDefinition();
 		
+		
 		//resolve page reference
 		HAPResultSolveReference refSolveResult = HAPUtilityComponent.solveReference(moduleUIDefinition.getPage(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, processContext);
 		HAPExecutableUIUnitPage pageExe = uiResourceMan.getUIPage((HAPDefinitionUIPage)refSolveResult.getEntity(), id, processContext);
 		out.setPage(pageExe);
 
+		HAPProcessorEmbededComponent.process(moduleUIDefinition, out, pageExe, moduleExe, runtimeEnv);
+		
+
+		
 		//input data mapping between module and page
 		for(HAPDefinitionDataAssociation dataAssociation : moduleUIDefinition.getInDataAssociations().getDataAssociations()) {
 			HAPExecutableDataAssociation inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(

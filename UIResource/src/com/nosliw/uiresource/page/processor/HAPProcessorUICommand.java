@@ -31,7 +31,7 @@ public class HAPProcessorUICommand {
 		//process relative element in command defined in resource
 		List<HAPDefinitionCommand> commandsDef = uiUnitDef.getCommands();
 		for(HAPDefinitionCommand commandDef : commandsDef) {
-			HAPExecutableCommand commandExe = HAPProcessorCommand.process(commandDef.cloneCommandDefinition(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure()), runtimeEnv);
+			HAPExecutableCommand commandExe = HAPProcessorCommand.process(commandDef.cloneCommandDefinition(), uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure(), runtimeEnv);
 			uiExe.getBody().addCommand(commandExe);
 		}
 

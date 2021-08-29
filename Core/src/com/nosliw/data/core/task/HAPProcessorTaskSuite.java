@@ -1,7 +1,5 @@
 package com.nosliw.data.core.task;
 
-import java.util.Map;
-
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -11,8 +9,7 @@ public class HAPProcessorTaskSuite {
 	public static HAPExecutableTaskSuite process(
 			String id,
 			HAPDefinitionTaskSuite taskSuiteDef,
-			HAPContextProcessor attachmentReferenceContext,
-			Map<String, String> configure,
+			HAPContextProcessor processContext,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		
@@ -21,12 +18,10 @@ public class HAPProcessorTaskSuite {
 		
 		for(HAPDefinitionTask taskDef : taskSuiteDef.getEntityElements()) {
 			HAPInfoTask taskInfo = runtimeEnv.getTaskManager().getTaskInfo(taskDef.getTaskType());
-			HAPExecutableTask taskExe = taskInfo.getProcessor().process(taskDef, id, attachmentReferenceContext, taskSuiteDef.getValueStructureWrapper(), processTracker);
+			HAPExecutableTask taskExe = taskInfo.getProcessor().process(taskDef, id, processContext, taskSuiteDef.getValueStructureWrapper(), processTracker);
 			out.addEntityElement(taskExe);
 		}
 		
 		return out;
 	}
-	
-	
 }

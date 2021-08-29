@@ -32,7 +32,6 @@ public class HAPManagerTask {
 				activitySuiteId.toStringValue(HAPSerializationFormat.LITERATE), 
 				activitySuiteResourceDef,
 				contextProcess, 
-				null, 
 				this.m_runtimeEnv,
 				new HAPProcessTracker());
 		return out;

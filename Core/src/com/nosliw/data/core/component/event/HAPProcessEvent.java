@@ -8,15 +8,18 @@ import com.nosliw.data.core.handler.HAPExecutableHandler;
 import com.nosliw.data.core.interactive.HAPUtilityInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPProcessEvent {
 
-	public static HAPExecutableEvent processEventDefinition(HAPDefinitionEvent eventDef, HAPContainerStructure parentStructures, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableEvent processEventDefinition(HAPDefinitionEvent eventDef, HAPValueStructure parentStructure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableEvent out = new HAPExecutableEvent();
 		
 		eventDef.cloneToEntityInfo(out);
 
+		HAPContainerStructure parentStructures = HAPContainerStructure.createDefault(parentStructure);
+		
 		HAPDefinitionEvent solidateEventDef = eventDef.cloneEventDefinition();
 		HAPUtilityInteractive.solidateInteractiveResult(solidateEventDef, parentStructures, null, true, null);
 		

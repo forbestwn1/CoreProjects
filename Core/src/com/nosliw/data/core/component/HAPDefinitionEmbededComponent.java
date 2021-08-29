@@ -29,7 +29,6 @@ public class HAPDefinitionEmbededComponent extends HAPEntityInfoWritableImp impl
 	@HAPAttribute
 	public static String EVENTHANDLER = "eventHandler";
 
-
 	//mapping reference name from attachment to internal name
 	private HAPNameMapping m_nameMapping;
 
