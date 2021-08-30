@@ -29,7 +29,7 @@ public class HAPProcessorUIEvent {
 		List<HAPDefinitionEvent> eventsDef = uiUnitDef.getEvents();
 		for(HAPDefinitionEvent event : eventsDef) {
 			HAPExecutableEvent eventExe = HAPProcessEvent.processEventDefinition(event, uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure(), runtimeEnv);
-			uiExe.getBody().addEventDefinition(eventExe);
+			uiExe.getBody().addEvent(eventExe);
 		}
 		
 		//child tag
@@ -48,10 +48,9 @@ public class HAPProcessorUIEvent {
 				
 				Map<String, String> nameMapping = HAPUtilityNamingConversion.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstantShared.UITAG_PARM_EVENT));
 				exeTag.setEventMapping(nameMapping);
-				List<HAPExecutableEvent> exeEventDefs = body.getEvents();
-				for(HAPExecutableEvent event : exeEventDefs) {
+				for(String eventName : body.getEventNames()) {
+					HAPExecutableEvent event = body.getEvent(eventName);
 					HAPExecutableEvent mappedEvent = event.cloneExeEvent();
-					String eventName = mappedEvent.getName();
 					String mappedName = nameMapping.get(eventName);
 					if(mappedName==null)   mappedName = eventName;
 					mappedEvent.setName(mappedName);
@@ -59,7 +58,6 @@ public class HAPProcessorUIEvent {
 				}
 				escalate(exeTag, mappedEventDefs);
 			}
-			
 		}
 
 		//child tag
@@ -73,8 +71,8 @@ public class HAPProcessorUIEvent {
 		HAPExecutableUIUnit parent = exeUnit.getParent();
 		if(parent==null) {
 			for(HAPExecutableEvent event : eventsDef) {
-				if(body.getEventDefinition(event.getName())==null) {
-					body.addEventDefinition(event);
+				if(body.getEvent(event.getName())==null) {
+					body.addEvent(event);
 				}
 			}
 		}

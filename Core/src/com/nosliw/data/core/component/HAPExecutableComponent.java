@@ -75,10 +75,10 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 //	
 //	public HAPExecutableTaskSuite getTaskSuite() {    return this.m_taskSuite;    }
 //	public void setTaskSuite(HAPExecutableTaskSuite taskSuite) {    this.m_taskSuite = taskSuite;     }
-//	
-//	public Set<String> getEventNames(){    return this.m_events.keySet();     }
-//	public HAPExecutableEvent getEvent(String eventName) {    return this.m_events.get(eventName);    }
-//	public void addEvent(HAPExecutableEvent event) {     this.m_events.put(event.getName(), event);    }
+	
+	public Set<String> getEventNames(){    return this.m_events.keySet();     }
+	public HAPExecutableEvent getEvent(String eventName) {    return this.m_events.get(eventName);    }
+	public void addEvent(HAPExecutableEvent event) {     this.m_events.put(event.getName(), event);    }
 	
 	public Set<String> getCommandNames(){   return this.m_commands.keySet();   }
 	public HAPExecutableCommand getCommand(String commandName) {    return this.m_commands.get(commandName);    }
@@ -90,7 +90,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 //		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildJson(this.m_valueStructureWrapper.getValueStructure(), HAPSerializationFormat.JSON));
 //		jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_taskSuite, HAPSerializationFormat.JSON));
 		jsonMap.put(SERVICE, HAPJsonUtility.buildJson(this.m_services, HAPSerializationFormat.JSON));
-//		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
 		jsonMap.put(COMMAND, HAPJsonUtility.buildJson(this.m_commands, HAPSerializationFormat.JSON));
 	}
 	
@@ -106,11 +106,11 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 			for(String serviceName : this.m_services.keySet()) 	serviceResourceMap.put(serviceName, this.m_services.get(serviceName).toResourceData(runtimeInfo).toString());
 			jsonMap.put(SERVICE, HAPJsonUtility.buildMapJson(serviceResourceMap));
 		}
-//		{
-//			Map<String, String> eventResourceMap = new LinkedHashMap<String, String>();
-//			for(String eventName : this.m_events.keySet()) 	eventResourceMap.put(eventName, this.m_events.get(eventName).toResourceData(runtimeInfo).toString());
-//			jsonMap.put(EVENT, HAPJsonUtility.buildMapJson(eventResourceMap));
-//		}
+		{
+			Map<String, String> eventResourceMap = new LinkedHashMap<String, String>();
+			for(String eventName : this.m_events.keySet()) 	eventResourceMap.put(eventName, this.m_events.get(eventName).toResourceData(runtimeInfo).toString());
+			jsonMap.put(EVENT, HAPJsonUtility.buildMapJson(eventResourceMap));
+		}
 		{		
 			Map<String, String> commandResourceMap = new LinkedHashMap<String, String>();
 			for(String commandName : this.m_commands.keySet()) 	commandResourceMap.put(commandName, this.m_commands.get(commandName).toResourceData(runtimeInfo).toString());
@@ -122,7 +122,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 //		out.addAll(this.m_taskSuite.getResourceDependency(runtimeInfo, resourceManager));
 		for(String serviceName : this.m_services.keySet()) 	dependency.addAll(this.m_services.get(serviceName).getResourceDependency(runtimeInfo, resourceManager));
-//		for(String eventName : this.m_events.keySet()) 	out.addAll(this.m_events.get(eventName).getResourceDependency(runtimeInfo, resourceManager));
+		for(String eventName : this.m_events.keySet()) 	dependency.addAll(this.m_events.get(eventName).getResourceDependency(runtimeInfo, resourceManager));
 		for(String commandName : this.m_commands.keySet()) 	dependency.addAll(this.m_commands.get(commandName).getResourceDependency(runtimeInfo, resourceManager));
 	}
 

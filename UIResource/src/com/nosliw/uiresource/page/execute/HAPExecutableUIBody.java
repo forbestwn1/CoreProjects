@@ -17,7 +17,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPExecutableComponent;
 import com.nosliw.data.core.component.command.HAPReferenceCommand;
-import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuiteImp;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -63,13 +62,9 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 	@HAPAttribute
 	public static final String EXPRESSIONS = "expressions";
 	@HAPAttribute
-	public static final String EVENTS = "events";
-	@HAPAttribute
 	public static final String HANDLERS = "handlers";
 	@HAPAttribute
 	public static final String SERVICEPROVIDERS = "serviceProviders";
-//	@HAPAttribute
-//	public static final String COMMANDS = "commands";
 
 	//context for content
 	private HAPTreeNodeValueStructure m_valueStructureDefinitionNode;
@@ -93,9 +88,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 	//executable script group
 	private HAPExecutableScriptGroup m_scriptGroupExe;
 	
-	//event definition 
-	private List<HAPExecutableEvent> m_events;
-
 	private List<HAPReferenceCommand> m_commandReferences;
 
 	private HAPExecutableTaskSuite m_handlers;
@@ -123,8 +115,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
 		this.m_valueStructureDefinitionNode = new HAPTreeNodeValueStructure();
 //		this.m_constants = new LinkedHashMap<String, Object>();
-		
-		this.m_events = new ArrayList<HAPExecutableEvent>();
 
 		//build tag trees according to definition
 		for(HAPDefinitionUITag tag : uiUnitDefinition.getUITags()) {
@@ -165,15 +155,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 	public HAPExecutableScriptGroup getScriptGroupExecutable() {   return this.m_scriptGroupExe;    }
 	public void setScriptGroupExecutable(HAPExecutableScriptGroup scriptGroupExe) {   this.m_scriptGroupExe = scriptGroupExe;     }
 	
-	public List<HAPExecutableEvent> getEvents(){  return this.m_events;    }
-	public HAPExecutableEvent getEventDefinition(String name) {   
-		for(HAPExecutableEvent event : this.m_events) {
-			if(name.equals(event.getName()))   return event;
-		}
-		return null;  
-	}
-	public void addEventDefinition(HAPExecutableEvent event) {  this.m_events.add(event);    }
-	
 	public HAPExecutableTaskSuite getHandlers() {    return this.m_handlers;     }
 	public void setHandlers(HAPExecutableTaskSuite handlers) {     this.m_handlers = handlers;     }
 	
@@ -194,8 +175,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 		
 //		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_processScriptContext.getConstantsValue(), HAPSerializationFormat.JSON));
 	
-		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
-
 		jsonMap.put(HANDLERS, this.m_handlers.toStringValue(HAPSerializationFormat.JSON));
 		
 		List<String> expressionContentJsons = new ArrayList<String>();
