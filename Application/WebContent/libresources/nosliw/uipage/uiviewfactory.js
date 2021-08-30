@@ -178,7 +178,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	var loc_context = context;
 
 	//commands
-	var loc_commands = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_COMMANDS];
+	var loc_commands = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLECOMPONENT_COMMAND];
 	
 	//all content expression objects
 	var loc_expressionContents = [];

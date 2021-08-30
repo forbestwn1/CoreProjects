@@ -16,7 +16,6 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPExecutableComponent;
-import com.nosliw.data.core.component.command.HAPExecutableCommand;
 import com.nosliw.data.core.component.command.HAPReferenceCommand;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuiteImp;
@@ -69,8 +68,8 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 	public static final String HANDLERS = "handlers";
 	@HAPAttribute
 	public static final String SERVICEPROVIDERS = "serviceProviders";
-	@HAPAttribute
-	public static final String COMMANDS = "commands";
+//	@HAPAttribute
+//	public static final String COMMANDS = "commands";
 
 	//context for content
 	private HAPTreeNodeValueStructure m_valueStructureDefinitionNode;
@@ -96,7 +95,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 	
 	//event definition 
 	private List<HAPExecutableEvent> m_events;
-	private List<HAPExecutableCommand> m_commands;
 
 	private List<HAPReferenceCommand> m_commandReferences;
 
@@ -127,7 +125,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 //		this.m_constants = new LinkedHashMap<String, Object>();
 		
 		this.m_events = new ArrayList<HAPExecutableEvent>();
-		this.m_commands = new ArrayList<HAPExecutableCommand>();
 
 		//build tag trees according to definition
 		for(HAPDefinitionUITag tag : uiUnitDefinition.getUITags()) {
@@ -177,10 +174,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 	}
 	public void addEventDefinition(HAPExecutableEvent event) {  this.m_events.add(event);    }
 	
-	public void addCommand(HAPExecutableCommand commandDef) {   this.m_commands.add(commandDef);   }
-	public List<HAPExecutableCommand> getCommands() {   return this.m_commands;  }
-//	public HAPDefinitionUICommand getCommandDefinition(String name) {   return this.m_commands.get(name);  }
-
 	public HAPExecutableTaskSuite getHandlers() {    return this.m_handlers;     }
 	public void setHandlers(HAPExecutableTaskSuite handlers) {     this.m_handlers = handlers;     }
 	
@@ -202,10 +195,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 //		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_processScriptContext.getConstantsValue(), HAPSerializationFormat.JSON));
 	
 		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
-
-		Map<String, String> commandJsonMap = new LinkedHashMap<String, String>();
-		for(HAPExecutableCommand command : this.m_commands) commandJsonMap.put(command.getName(), command.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(COMMANDS, HAPJsonUtility.buildMapJson(commandJsonMap));
 
 		jsonMap.put(HANDLERS, this.m_handlers.toStringValue(HAPSerializationFormat.JSON));
 		
@@ -248,10 +237,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 //		List<String> expressionTagAttributeJsons = new ArrayList<String>();
 //		for(HAPUIEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  expressionTagAttributeJsons.add(expressionTagAttr.toResourceData(runtimeInfo).toString());
 //		jsonMap.put(SCRIPTEXPRESSIONINTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
-
-		Map<String, String> commandJsonMap = new LinkedHashMap<String, String>();
-		for(HAPExecutableCommand command : this.m_commands) commandJsonMap.put(command.getName(), command.toResourceData(runtimeInfo).toString());
-		jsonMap.put(COMMANDS, HAPJsonUtility.buildMapJson(commandJsonMap));
 
 		jsonMap.put(SCRIPTGROUP, this.m_scriptGroupExe.toResourceData(runtimeInfo).toString());
 		
