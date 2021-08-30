@@ -193,7 +193,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	//object store all the functions for js block
 	var loc_scriptObject = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPT];
 	
-	var loc_services = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SERVICES]; 
+	var loc_services = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLECOMPONENT_SERVICE]; 
 	var loc_serviceProviders = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SERVICEPROVIDERS]; 
 	
 	//all customer tags

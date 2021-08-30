@@ -15,17 +15,16 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.HAPExecutableComponent;
 import com.nosliw.data.core.component.command.HAPExecutableCommand;
 import com.nosliw.data.core.component.command.HAPReferenceCommand;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuiteImp;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
-import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
@@ -35,8 +34,7 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPElementEvent;
 
 @HAPEntityWithAttribute
-public class HAPExecutableUIBody extends HAPExecutableImp{
-//HAPExecutableComponent{
+public class HAPExecutableUIBody extends HAPExecutableComponent{
 
 	@HAPAttribute
 	public static final String VALUESTRUCTURE = "valueStructure";
@@ -69,8 +67,6 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	public static final String EVENTS = "events";
 	@HAPAttribute
 	public static final String HANDLERS = "handlers";
-	@HAPAttribute
-	public static final String SERVICES = "services";
 	@HAPAttribute
 	public static final String SERVICEPROVIDERS = "serviceProviders";
 	@HAPAttribute
@@ -106,9 +102,6 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 
 	private HAPExecutableTaskSuite m_handlers;
 	
-	//service requirement definition
-	private Map<String, HAPExecutableServiceUse> m_services;
-
 	private Set<HAPElementEvent> m_elementEvents;
 	private Set<HAPElementEvent> m_tagEvents;
 
@@ -118,7 +111,7 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	private String m_html;
 	
 	public HAPExecutableUIBody(HAPDefinitionUIUnit uiUnitDefinition, HAPExecutableUIUnit uiUnit) {
-//		super(uiUnitDefinition, null);
+		super(uiUnitDefinition, null);
 		this.m_elementEvents = uiUnitDefinition.getNormalTagEvents();
 		this.m_tagEvents = uiUnitDefinition.getCustomTagEvents();
 		this.m_script = uiUnitDefinition.getScriptBlock();
@@ -136,8 +129,6 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		this.m_events = new ArrayList<HAPExecutableEvent>();
 		this.m_commands = new ArrayList<HAPExecutableCommand>();
 
-		this.m_services = new LinkedHashMap<String, HAPExecutableServiceUse>();
-		
 		//build tag trees according to definition
 		for(HAPDefinitionUITag tag : uiUnitDefinition.getUITags()) {
 			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag, tag.getId());
@@ -186,10 +177,6 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 	}
 	public void addEventDefinition(HAPExecutableEvent event) {  this.m_events.add(event);    }
 	
-	public void addServiceUse(String name, HAPExecutableServiceUse serviceDef) {   this.m_services.put(name, serviceDef);   }
-	public Map<String, HAPExecutableServiceUse> getServiceUses(){  return this.m_services;   }
-	public HAPExecutableServiceUse getServiceUse(String name) {   return this.m_services.get(name);  }
-
 	public void addCommand(HAPExecutableCommand commandDef) {   this.m_commands.add(commandDef);   }
 	public List<HAPExecutableCommand> getCommands() {   return this.m_commands;  }
 //	public HAPDefinitionUICommand getCommandDefinition(String name) {   return this.m_commands.get(name);  }
@@ -222,8 +209,6 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 
 		jsonMap.put(HANDLERS, this.m_handlers.toStringValue(HAPSerializationFormat.JSON));
 		
-		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_services, HAPSerializationFormat.JSON));
-
 		List<String> expressionContentJsons = new ArrayList<String>();
 		for(HAPUIEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(SCRIPTEXPRESSIONSINCONTENT, HAPJsonUtility.buildArrayJson(expressionContentJsons.toArray(new String[0])));
@@ -272,10 +257,6 @@ public class HAPExecutableUIBody extends HAPExecutableImp{
 		
 		jsonMap.put(HANDLERS, this.m_handlers.toResourceData(runtimeInfo).toString());
 
-		Map<String, String> serviceResourceMap = new LinkedHashMap<String, String>();
-		for(String serviceName : this.m_services.keySet()) 	serviceResourceMap.put(serviceName, this.m_services.get(serviceName).toResourceData(runtimeInfo).toString());
-		jsonMap.put(SERVICES, HAPJsonUtility.buildMapJson(serviceResourceMap));
-		
 		Map<String, String> uiTagJsons = new LinkedHashMap<String, String>();
 		for(String uiId : this.m_uiTags.keySet())	uiTagJsons.put(uiId, this.m_uiTags.get(uiId).toResourceData(runtimeInfo).toString());
 		jsonMap.put(UITAGS, HAPJsonUtility.buildMapJson(uiTagJsons));
