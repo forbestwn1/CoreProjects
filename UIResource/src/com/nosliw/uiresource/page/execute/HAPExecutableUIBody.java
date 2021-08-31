@@ -23,7 +23,6 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
-import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
@@ -90,8 +89,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 	
 	private List<HAPReferenceCommand> m_commandReferences;
 
-	private HAPExecutableTaskSuite m_handlers;
-	
 	private Set<HAPElementEvent> m_elementEvents;
 	private Set<HAPElementEvent> m_tagEvents;
 
@@ -155,9 +152,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 	public HAPExecutableScriptGroup getScriptGroupExecutable() {   return this.m_scriptGroupExe;    }
 	public void setScriptGroupExecutable(HAPExecutableScriptGroup scriptGroupExe) {   this.m_scriptGroupExe = scriptGroupExe;     }
 	
-	public HAPExecutableTaskSuite getHandlers() {    return this.m_handlers;     }
-	public void setHandlers(HAPExecutableTaskSuite handlers) {     this.m_handlers = handlers;     }
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -175,8 +169,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 		
 //		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_processScriptContext.getConstantsValue(), HAPSerializationFormat.JSON));
 	
-		jsonMap.put(HANDLERS, this.m_handlers.toStringValue(HAPSerializationFormat.JSON));
-		
 		List<String> expressionContentJsons = new ArrayList<String>();
 		for(HAPUIEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(SCRIPTEXPRESSIONSINCONTENT, HAPJsonUtility.buildArrayJson(expressionContentJsons.toArray(new String[0])));
@@ -219,8 +211,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 
 		jsonMap.put(SCRIPTGROUP, this.m_scriptGroupExe.toResourceData(runtimeInfo).toString());
 		
-		jsonMap.put(HANDLERS, this.m_handlers.toResourceData(runtimeInfo).toString());
-
 		Map<String, String> uiTagJsons = new LinkedHashMap<String, String>();
 		for(String uiId : this.m_uiTags.keySet())	uiTagJsons.put(uiId, this.m_uiTags.get(uiId).toResourceData(runtimeInfo).toString());
 		jsonMap.put(UITAGS, HAPJsonUtility.buildMapJson(uiTagJsons));

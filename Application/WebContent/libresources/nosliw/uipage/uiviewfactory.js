@@ -188,7 +188,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	var loc_elementEvents = [];
 
 	//handlers
-	var loc_tasks = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HANDLERS];
+	var loc_tasks = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLECOMPONENT_TASK];
 	
 	//object store all the functions for js block
 	var loc_scriptObject = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_SCRIPT];

@@ -17,15 +17,15 @@ public class HAPProcessorUIHandler {
 	}
 	
 	private static void processUnit(HAPExecutableUIUnit uiUnit, HAPRuntimeEnvironment runtimeEnv) {
-		HAPExecutableTaskSuite handlers = createHandler(uiUnit, runtimeEnv);
-		uiUnit.getBody().setHandlers(handlers);
+		HAPExecutableTaskSuite taskSuite = createTaskSuite(uiUnit, runtimeEnv);
+		uiUnit.getBody().setTaskSuite(taskSuite);
 		
 		for(HAPExecutableUIUnitTag tag: uiUnit.getBody().getUITags()) {
 			processUnit(tag, runtimeEnv);
 		}
 	}
 	
-	private static HAPExecutableTaskSuite createHandler(HAPExecutableUIUnit uiUnit, HAPRuntimeEnvironment runtimeEnv) {
+	private static HAPExecutableTaskSuite createTaskSuite(HAPExecutableUIUnit uiUnit, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionUIUnit uiUnitDef = uiUnit.getUIUnitDefinition();
 		
 		HAPContextProcessor contextProcess = new HAPContextProcessor(uiUnitDef, runtimeEnv);
