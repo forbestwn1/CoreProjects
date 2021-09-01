@@ -16,34 +16,44 @@ import com.nosliw.data.core.task.HAPProcessorTaskSuite;
 
 public class HAPProcessorComponent {
 
-	private static void processServiceUse(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
+	public static void process(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
+	
+		processServiceUse(definition, executable, runtimeEnv);
+		
+		processTask(definition, executable, runtimeEnv);
+
+		processEvent(definition, executable, runtimeEnv);
+
+		processCommand(definition, executable, runtimeEnv);
+		
+	}
+	
+	public static void processServiceUse(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 		for(String serviceName : definition.getAllServices()) {
 			HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(definition.getService(serviceName), definition.getValueStructureWrapper().getValueStructure(), definition.getAttachmentContainer(), runtimeEnv);
 			executable.addServiceUse(serviceName, serviceExe);
 		}
 	}
 
-	private static void processTask(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processTask(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionTaskSuite taskSuite = definition.getTaskSuite();
 		HAPContextProcessor processContext = new HAPContextProcessor(definition, runtimeEnv);
 		HAPExecutableTaskSuite taskSuiteExe = HAPProcessorTaskSuite.process(null, taskSuite, processContext, runtimeEnv, new HAPProcessTracker());
 		executable.setTaskSuite(taskSuiteExe);
 	}
 	
-	private static void processEvent(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processEvent(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 		for(HAPDefinitionEvent eventDef : definition.getEvents()) {
 			HAPExecutableEvent eventExe = HAPProcessEvent.processEventDefinition(eventDef, definition.getValueStructureWrapper().getValueStructure(), runtimeEnv);
 			executable.addEvent(eventExe);
 		}
 	}
 	
-	private static void processCommand(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processCommand(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 		for(HAPDefinitionCommand command : definition.getCommands()) {
 			HAPExecutableCommand commandExe = HAPProcessorCommand.process(command, definition.getValueStructureWrapper().getValueStructure(), runtimeEnv);
 			executable.addCommand(commandExe);
 		}
 	}
-	
-	
 	
 }

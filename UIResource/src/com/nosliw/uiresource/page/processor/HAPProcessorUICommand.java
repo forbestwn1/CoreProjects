@@ -5,8 +5,6 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
-import com.nosliw.data.core.component.command.HAPExecutableCommand;
-import com.nosliw.data.core.component.command.HAPProcessorCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -25,18 +23,6 @@ import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUICommand {
-
-	public static void processCommand(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
-		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
-		//process relative element in command defined in resource
-		List<HAPDefinitionCommand> commandsDef = uiUnitDef.getCommands();
-		for(HAPDefinitionCommand commandDef : commandsDef) {
-			HAPExecutableCommand commandExe = HAPProcessorCommand.process(commandDef.cloneCommandDefinition(), uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure(), runtimeEnv);
-			uiExe.getBody().addCommand(commandExe);
-		}
-
-		
-	}
 
 	public static void escalateCommand(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
 //		HAPExecutableUIBody body = exeUnit.getBody();

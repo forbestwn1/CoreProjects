@@ -1,6 +1,5 @@
 package com.nosliw.data.core.component.event;
 
-import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPExecutableDataAssociationMapping;
@@ -36,7 +35,7 @@ public class HAPProcessEvent {
 		return out;
 	}
 	
-	public static HAPExecutableHandlerEvent processEventHandler(HAPDefinitionHandlerEvent eventHandlerDef, HAPExecutableEvent event, HAPContextProcessor processContext){
+	public static HAPExecutableHandlerEvent processEventHandler(HAPDefinitionHandlerEvent eventHandlerDef, HAPExecutableEvent event, HAPValueStructure parentStructure, HAPRuntimeEnvironment runtimeEnv){
 		HAPExecutableHandlerEvent out = new HAPExecutableHandlerEvent();
 		out.setEventName(eventHandlerDef.getEventName());
 		out.setHandler(new HAPExecutableHandler(eventHandlerDef.getHandler()));
@@ -44,8 +43,8 @@ public class HAPProcessEvent {
 		out.setInDataAssociation(HAPProcessorDataAssociation.processDataAssociation(
 				HAPContainerStructure.createDefault(event.getValueStructure()), 
 				eventHandlerDef.getDataAssociation(), 
-				HAPContainerStructure.createDefault(processContext.getValueStructureWrapper().getValueStructure()), 
-				null, processContext.getRuntimeEnvironment()));
+				HAPContainerStructure.createDefault(parentStructure), 
+				null, runtimeEnv));
 		return out;
 	}
 }

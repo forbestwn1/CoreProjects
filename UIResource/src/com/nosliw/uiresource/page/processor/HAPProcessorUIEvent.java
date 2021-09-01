@@ -6,13 +6,8 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
-import com.nosliw.data.core.component.event.HAPProcessEvent;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
@@ -21,23 +16,6 @@ import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUIEvent {
 
-	public static void processEvent(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
-		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
-
-		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
-		//process relative element in event defined in resource
-		List<HAPDefinitionEvent> eventsDef = uiUnitDef.getEvents();
-		for(HAPDefinitionEvent event : eventsDef) {
-			HAPExecutableEvent eventExe = HAPProcessEvent.processEventDefinition(event, uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure(), runtimeEnv);
-			uiExe.getBody().addEvent(eventExe);
-		}
-		
-		//child tag
-		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
-			processEvent(childTag, runtimeEnv);
-		}
-	}
-	
 	public static void escalateEvent(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 

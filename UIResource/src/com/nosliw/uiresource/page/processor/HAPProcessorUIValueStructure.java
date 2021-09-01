@@ -133,7 +133,7 @@ public class HAPProcessorUIValueStructure {
 		}
 		
 		HAPTreeNodeValueStructure nodeInBody = unitExe.getBody().getValueStructureDefinitionNode();
-		nodeInBody.setValueStructureWrapper(unitExe.getUIUnitDefinition().getValueStructureWrapper());
+//		nodeInBody.setValueStructureWrapper(unitExe.getUIUnitDefinition().getValueStructureWrapper());
 		nodeInBody.setParent(parentNode);
 		
 		//child tag

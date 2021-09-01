@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.command.HAPExecutableCommand;
@@ -17,7 +18,11 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.task.HAPExecutableTaskSuite;
+import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
+import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
+import com.nosliw.data.core.valuestructure.HAPUtilityValueStructureScript;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 @HAPEntityWithAttribute
 public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
@@ -66,12 +71,10 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	public Map<String, HAPExecutableServiceUse> getServiceUses(){  return this.m_services;   }
 	public HAPExecutableServiceUse getServiceUse(String name) {   return this.m_services.get(name);  }
 
-//	public HAPValueStructure getValueStructure() {   return this.m_valueStructureWrapper.getValueStructure();   }
-//
-//	public HAPExecutableValueStructure getValueStructureExe() {
-//		return HAPUtilityValueStructure.buildExecuatableValueStructure(this.getValueStructure());
-//	}
-//
+	public HAPTreeNodeValueStructure getValueStructureDefinitionNode() {   return this.m_valueStructureNode;   }
+	public HAPValueStructure getValueStructure() {     return this.m_valueStructureNode.getValueStructureWrapper().getValueStructure();   }
+	public HAPExecutableValueStructure getValueStructureExe() {	return HAPUtilityValueStructure.buildExecuatableValueStructure(this.m_valueStructureNode.getValueStructureWrapper().getValueStructure());}
+
 //	public void setValueStructure(HAPValueStructure valueStructure) { 	this.m_valueStructureWrapper.setValueStructure(valueStructure);	}
 	
 	public HAPExecutableTaskSuite getTaskSuite() {    return this.m_taskSuite;    }
@@ -88,7 +91,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-//		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildJson(this.m_valueStructureWrapper.getValueStructure(), HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTURE, this.getValueStructureExe().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_taskSuite, HAPSerializationFormat.JSON));
 		jsonMap.put(SERVICE, HAPJsonUtility.buildJson(this.m_services, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
@@ -97,8 +100,8 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
-//		jsonMap.put(INITSCRIPT, HAPUtilityValueStructureScript.buildValueStructureInitScript(this.getValueStructureExe()).getScript());
-//		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
+		jsonMap.put(INITSCRIPT, HAPUtilityValueStructureScript.buildValueStructureInitScript(this.getValueStructureExe()).getScript());
+		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
 		
 		if(this.m_taskSuite!=null) jsonMap.put(TASK, this.m_taskSuite.toResourceData(runtimeInfo).toString());
 		

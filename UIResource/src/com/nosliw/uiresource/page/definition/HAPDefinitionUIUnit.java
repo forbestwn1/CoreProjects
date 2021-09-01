@@ -9,9 +9,6 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.data.core.component.HAPDefinitionComponentImp;
 import com.nosliw.data.core.component.HAPNameMapping;
-import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
-import com.nosliw.data.core.task.HAPDefinitionTaskSuiteImp;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -53,8 +50,6 @@ public abstract class HAPDefinitionUIUnit extends HAPDefinitionComponentImp{
 	//all the customer tag within the domain
 	private Map<String, HAPDefinitionUITag> m_uiTags; 
 
-	private HAPDefinitionTaskSuite m_handlers;
-	
 	//mapping from attachment name to internal name(service, resource, ...)
 	private HAPNameMapping m_nameMapping;
 	
@@ -71,7 +66,6 @@ public abstract class HAPDefinitionUIUnit extends HAPDefinitionComponentImp{
 //		this.m_eventsDefinition = new ArrayList<HAPDefinitionEvent>();
 //		this.m_commandsDefinition = new ArrayList<HAPDefinitionCommand>();
 		this.m_nameMapping = new HAPNameMapping();
-		this.m_handlers = new HAPDefinitionTaskSuiteImp(this);
 //		this.initValueStructure();
 	}
 	
@@ -96,7 +90,6 @@ public abstract class HAPDefinitionUIUnit extends HAPDefinitionComponentImp{
 //	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
 	public HAPDefinitionStyle getStyle() {    return this.m_style;    }
 	public void setStyle(HAPDefinitionStyle style) {   this.m_style = style;   }
-	public HAPDefinitionTaskSuite getHandlers() {   return this.m_handlers;   }
 	
 	public void setParent(HAPDefinitionUIUnit parent) {	this.m_parent = parent;	}
 	public void setJSBlock(HAPJsonTypeScript jsBlock){this.m_script = jsBlock;}
@@ -121,8 +114,6 @@ public abstract class HAPDefinitionUIUnit extends HAPDefinitionComponentImp{
 	
 	public void setNameMapping(HAPNameMapping nameMapping) {   this.m_nameMapping = nameMapping;   }
 	public HAPNameMapping getNameMapping(){   return this.m_nameMapping;    }
-	
-	public void addHandler(HAPDefinitionTask handler) {    this.m_handlers.addEntityElement(handler);    }
 	
 	public void postRead(){}
 	

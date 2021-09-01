@@ -10,9 +10,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForComponent;
-import com.nosliw.data.core.handler.HAPHandler;
 
 //a component reference embeded
 public class HAPDefinitionEmbededComponent extends HAPEntityInfoWritableImp implements HAPWithNameMapping, HAPWithEventHanlder{
@@ -37,11 +37,11 @@ public class HAPDefinitionEmbededComponent extends HAPEntityInfoWritableImp impl
 	private HAPDefinitionGroupDataAssociationForComponent m_inDataAssociations;
 	
 	//event handlers
-	private Set<HAPHandler> m_eventHandlers;
+	private Set<HAPDefinitionHandlerEvent> m_eventHandlers;
 	
 	public HAPDefinitionEmbededComponent() {
 		this.m_nameMapping = new HAPNameMapping();
-		this.m_eventHandlers = new HashSet<HAPHandler>();
+		this.m_eventHandlers = new HashSet<HAPDefinitionHandlerEvent>();
 		this.m_outDataAssociations = new HAPDefinitionGroupDataAssociationForComponent();
 		this.m_inDataAssociations = new HAPDefinitionGroupDataAssociationForComponent();
 	}
@@ -51,9 +51,9 @@ public class HAPDefinitionEmbededComponent extends HAPEntityInfoWritableImp impl
 	public HAPNameMapping getNameMapping() {    return this.m_nameMapping;   }
 
 	@Override
-	public Set<HAPHandler> getEventHandlers(){   return this.m_eventHandlers;   }
+	public Set<HAPDefinitionHandlerEvent> getEventHandlers(){   return this.m_eventHandlers;   }
 	@Override
-	public void addEventHandler(HAPHandler eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
+	public void addEventHandler(HAPDefinitionHandlerEvent eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
 
 	public HAPDefinitionGroupDataAssociationForComponent getInDataAssociations() {   return this.m_inDataAssociations;   }
 	public void setInDataAssociations(HAPDefinitionGroupDataAssociationForComponent dataAssociations) {   this.m_inDataAssociations = dataAssociations;   }
@@ -82,8 +82,8 @@ public class HAPDefinitionEmbededComponent extends HAPEntityInfoWritableImp impl
 
 	protected void cloneToEmbededComponent(HAPDefinitionEmbededComponent embededComponent) {
 		this.cloneToEntityInfo(embededComponent);
-		for(HAPHandler eventHandler : this.m_eventHandlers) {
-			embededComponent.addEventHandler(eventHandler.cloneHandler());
+		for(HAPDefinitionHandlerEvent eventHandler : this.m_eventHandlers) {
+			embededComponent.addEventHandler(eventHandler.cloneEventHandler());
 		}
 		if(this.m_nameMapping==null)   embededComponent.m_nameMapping = null;
 		else   embededComponent.m_nameMapping = this.m_nameMapping.cloneNameMapping();

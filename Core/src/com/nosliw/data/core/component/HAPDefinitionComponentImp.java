@@ -12,8 +12,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
-import com.nosliw.data.core.handler.HAPHandler;
+import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuiteImp;
 
@@ -25,7 +26,7 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 	private Set<HAPHandlerLifecycle> m_lifecycleAction;
 	
 	//event handlers
-	private Set<HAPHandler> m_eventHandlers;
+	private Set<HAPDefinitionHandlerEvent> m_eventHandlers;
 
 	//used service
 	private Map<String, HAPDefinitionServiceUse> m_serviceUse;
@@ -36,7 +37,7 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 	
 	public HAPDefinitionComponentImp() {
 		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
-		this.m_eventHandlers = new HashSet<HAPHandler>();
+		this.m_eventHandlers = new HashSet<HAPDefinitionHandlerEvent>();
 		this.m_serviceUse = new LinkedHashMap<String, HAPDefinitionServiceUse>();
 		this.m_commands = new ArrayList<HAPDefinitionCommand>();
 		this.m_events = new ArrayList<HAPDefinitionEvent>();
@@ -52,6 +53,9 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 	public HAPDefinitionTaskSuite getTaskSuite() {    return this.m_taskSuite;     }
 	
 	@Override
+	public void addTask(HAPDefinitionTask task) {   this.m_taskSuite.addEntityElement(task);   }
+
+	@Override
 	public void setTaskSuite(HAPDefinitionTaskSuite suite) {  this.m_taskSuite = suite;    }
 	
 	@Override
@@ -63,9 +67,9 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 	public void addLifecycleAction(HAPHandlerLifecycle lifecycleAction) {    this.m_lifecycleAction.add(lifecycleAction);    }
  	
 	@Override
-	public Set<HAPHandler> getEventHandlers(){   return this.m_eventHandlers;   }
+	public Set<HAPDefinitionHandlerEvent> getEventHandlers(){   return this.m_eventHandlers;   }
 	@Override
-	public void addEventHandler(HAPHandler eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
+	public void addEventHandler(HAPDefinitionHandlerEvent eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
  
 	@Override
 	public HAPDefinitionServiceUse getService(String name) {   return this.m_serviceUse.get(name);   }
@@ -101,8 +105,8 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 		for(HAPHandlerLifecycle handler : this.m_lifecycleAction) {
 			component.addLifecycleAction(handler.cloneLifecycleHander());
 		}
-		for(HAPHandler handler : this.m_eventHandlers) {
-			component.addEventHandler(handler.cloneHandler());
+		for(HAPDefinitionHandlerEvent handler : this.m_eventHandlers) {
+			component.addEventHandler(handler.cloneEventHandler());
 		}
 		for(HAPDefinitionCommand command : this.m_commands) {
 			component.addCommand(command.cloneCommandDefinition());

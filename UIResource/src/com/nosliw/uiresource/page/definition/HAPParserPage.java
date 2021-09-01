@@ -233,8 +233,8 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 				JSONArray tasksObjArray = new JSONArray(childEle.html());
 				for(int i=0; i<tasksObjArray.length(); i++) {
 					JSONObject taskJson = tasksObjArray.getJSONObject(i);
-					HAPDefinitionTask handler = HAPUtilityTask.parseTask(taskJson, resourceUnit, this.m_runtimeEnv.getTaskManager());
-					resourceUnit.addHandler(handler);
+					HAPDefinitionTask task = HAPUtilityTask.parseTask(taskJson, resourceUnit, this.m_runtimeEnv.getTaskManager());
+					resourceUnit.addTask(task);
 				}
 				break;
 			} catch (JSONException e) {

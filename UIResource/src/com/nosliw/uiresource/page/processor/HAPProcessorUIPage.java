@@ -1,12 +1,15 @@
 package com.nosliw.uiresource.page.processor;
 
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.component.HAPProcessorComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPProcessorUIPage {
@@ -49,8 +52,10 @@ public class HAPProcessorUIPage {
 		//process value structure
 		HAPProcessorUIValueStructure.process(out, null, uiTagMan, runtimeEnv);
 
+		//process component elements (event, command, service)
+		processComponent(out, runtimeEnv);
+		
 		//process service
-		HAPProcessorUIService.processService(out, runtimeEnv);
 		HAPProcessorUIService.escalate(out, uiTagMan);
 		
 		//process expression
@@ -58,14 +63,11 @@ public class HAPProcessorUIPage {
 		HAPProcessorUIExpressionScript.processUIScriptExpression(out, runtimeEnv);
 		
 		//process handler
-		HAPProcessorUIHandler.process(out, runtimeEnv);
 		
 		//process command
-		HAPProcessorUICommand.processCommand(out, runtimeEnv);
 		HAPProcessorUICommand.escalateCommand(out, uiTagMan);
 
 		//process event
-		HAPProcessorUIEvent.processEvent(out, runtimeEnv);
 		HAPProcessorUIEvent.escalateEvent(out, uiTagMan);
 		
 		//process style
@@ -75,18 +77,15 @@ public class HAPProcessorUIPage {
 		HAPProcessorUIValueStructure.buildExecutable(out);
 		
 		
-//		if(serviceProviders==null)  serviceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
-		
-		//compile definition to executable
-//		HAPProcessorCompile.process(out, null);
-
-//		HAPPorcessorResolveName.resolve(out);
-		
-//		HAPProcessorUIConstantInContext.resolveConstants(out, runtimeEnv.getRuntime());
-		
-//		HAPProcessorUIServiceEscalate.process(out, uiTagMan);
-		
 		return out;
 	}
 
+	public static void processComponent(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
+		HAPProcessorComponent.process(uiExe.getUIUnitDefinition(), uiExe.getBody(), runtimeEnv);
+		
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
+			processComponent(childTag, runtimeEnv);			
+		}
+	}
 }

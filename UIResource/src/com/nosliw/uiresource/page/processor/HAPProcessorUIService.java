@@ -32,21 +32,6 @@ public class HAPProcessorUIService {
 		}
 	}
 	
-	public static void processService(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
-		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
-		for(String serviceName : uiUnitDef.getAllServices()) {
-			HAPDefinitionServiceUse service = uiUnitDef.getService(serviceName);
-//			HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(service, uiExe.getBody().getFlatContext().getContext(), uiUnitDef.getAttachmentContainer(), runtimeEnv);   kkkk
-			HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(service, uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure(), uiUnitDef.getAttachmentContainer(), runtimeEnv);
-			uiExe.getBody().addServiceUse(serviceName, serviceExe);
-		}
-		
-		//child tag
-		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
-			processService(childTag, runtimeEnv);			
-		}
-	}
-	
 	public static void escalate(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {

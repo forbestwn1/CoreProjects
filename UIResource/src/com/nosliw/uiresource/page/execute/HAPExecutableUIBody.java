@@ -23,9 +23,6 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
-import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
-import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPElementEvent;
@@ -33,8 +30,8 @@ import com.nosliw.uiresource.page.definition.HAPElementEvent;
 @HAPEntityWithAttribute
 public class HAPExecutableUIBody extends HAPExecutableComponent{
 
-	@HAPAttribute
-	public static final String VALUESTRUCTURE = "valueStructure";
+//	@HAPAttribute
+//	public static final String VALUESTRUCTURE = "valueStructure";
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONSINCONTENT = "scriptExpressionsInContent";
 	@HAPAttribute
@@ -65,10 +62,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 	@HAPAttribute
 	public static final String SERVICEPROVIDERS = "serviceProviders";
 
-	//context for content
-	private HAPTreeNodeValueStructure m_valueStructureDefinitionNode;
-//	private HAPExecutableValueStructure m_valueStructureExe;
-	
 //	private Map<String, Object> m_constants;
 	
 	//expression unit
@@ -110,7 +103,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
 		this.m_processScriptContext = new HAPContextProcessExpressionScript();
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
-		this.m_valueStructureDefinitionNode = new HAPTreeNodeValueStructure();
 //		this.m_constants = new LinkedHashMap<String, Object>();
 
 		//build tag trees according to definition
@@ -119,14 +111,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 			this.m_uiTags.put(tag.getId(), exeTag);
 			exeTag.setParent(uiUnit);
 		}
-	}
-	
-	public HAPTreeNodeValueStructure getValueStructureDefinitionNode(){  return this.m_valueStructureDefinitionNode;   }
-	
-	
-//	public void setValueStructureExe(HAPExecutableValueStructure context) {  this.m_valueStructureExe = context;   }
-	public HAPExecutableValueStructure getValueStructureExe() {
-		return HAPUtilityValueStructure.buildExecuatableValueStructure(this.getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure());
 	}
 	
 //	public Map<String, Object> getConstantsValue(){   return this.m_processScriptContext.getConstantsValue();    }
@@ -155,7 +139,6 @@ public class HAPExecutableUIBody extends HAPExecutableComponent{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUESTRUCTURE, this.getValueStructureExe().toStringValue(HAPSerializationFormat.JSON));
 		
 		List<String> eleEventsJsons = new ArrayList<String>();
 		for(HAPElementEvent elementEvent : this.m_elementEvents)  eleEventsJsons.add(elementEvent.toStringValue(HAPSerializationFormat.JSON));

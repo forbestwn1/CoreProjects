@@ -8,9 +8,9 @@ import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.command.HAPWithCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
+import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.component.event.HAPWithEvent;
 import com.nosliw.data.core.component.valuestructure.HAParserComponentValueStructure;
-import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.data.core.task.HAPManagerTask;
@@ -75,9 +75,9 @@ public class HAPParserComponent {
 		JSONArray eventHandlersArray = jsonObj.optJSONArray(HAPWithEventHanlder.EVENTHANDLER);
 		if(eventHandlersArray!=null) {
 			for(int i=0; i<eventHandlersArray.length(); i++) {
-				HAPHandler eventHandlerTask = new HAPHandler();
-				eventHandlerTask.buildObject(eventHandlersArray.getJSONObject(i), HAPSerializationFormat.JSON);
-				withEventHandler.addEventHandler(eventHandlerTask);
+				HAPDefinitionHandlerEvent eventHandler = new HAPDefinitionHandlerEvent();
+				eventHandler.buildObject(eventHandlersArray.getJSONObject(i), HAPSerializationFormat.JSON);
+				withEventHandler.addEventHandler(eventHandler);
 			}
 		}
 		return withEventHandler;
