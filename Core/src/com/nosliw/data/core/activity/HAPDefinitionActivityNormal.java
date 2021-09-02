@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
@@ -93,6 +94,9 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
 	}
 	
+	@Override
+	public HAPDefinitionTask cloneTaskDefinition() {  return this.cloneActivityDefinition();  }
+
 	protected void cloneToNormalActivityDefinition(HAPDefinitionActivityNormal activity) {
 		this.cloneToActivityDefinition(activity);
 		if(this.m_inputDataAssociation!=null)  activity.m_inputDataAssociation = this.m_inputDataAssociation.cloneDataAssocation();

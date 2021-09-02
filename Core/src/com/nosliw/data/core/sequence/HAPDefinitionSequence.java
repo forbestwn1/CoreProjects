@@ -25,7 +25,9 @@ public class HAPDefinitionSequence extends HAPDefinitionTaskImp{
 		this.m_steps = new ArrayList<HAPDefinitionTask>();
 	}
 
-	public void addStep(HAPDefinitionTask step) {   this.m_steps.add(step);    }
+	public void addStep(HAPDefinitionTask step) {   
+		if(step!=null)  this.m_steps.add(step);    
+	}
 	
 	public List<HAPDefinitionTask> getSteps(){    return this.m_steps;     }
 	

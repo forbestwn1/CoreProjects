@@ -59,6 +59,7 @@ public class HAPParserComponent {
 		
 		parseTask(component, jsonObj, component, taskMan);
 
+		parseServiceUseDefinition(component, jsonObj);
 	}
 
 	public static HAPWithTask parseTask(HAPWithTask withTask, JSONObject jsonObj, HAPDefinitionEntityComplex complexEntity, HAPManagerTask taskMan) {
@@ -95,7 +96,7 @@ public class HAPParserComponent {
 		return withLifecycelAction;
 	}
 	
-	public static void parseServiceUseDefinition(HAPWithServiceUse serviceUse, JSONObject jsonObj) {
+	public static void parseServiceUseDefinition(HAPWithService serviceUse, JSONObject jsonObj) {
 		//service
 		JSONArray serviceUseListJson = jsonObj.optJSONArray(HAPWithServiceUse.SERVICE);
 		if(serviceUseListJson!=null) {
@@ -103,7 +104,7 @@ public class HAPParserComponent {
 				JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
 				HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
 				serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
-				serviceUse.addServiceUseDefinition(serviceUseDef);
+				serviceUse.addService(serviceUseDef);
 			}
 		}
 	}

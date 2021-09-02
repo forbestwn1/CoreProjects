@@ -9,14 +9,14 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.HAPPluginResourceIdActivity;
 import com.nosliw.data.core.process1.HAPActivityPluginId;
-import com.nosliw.data.core.process1.HAPExecutableActivityNormal;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public class HAPPresentUIActivityExecutable extends HAPExecutableActivityNormal{
+public class HAPPresentUIActivityExecutable extends HAPExecutableActivity{
 
 	@HAPAttribute
 	public static String UI = "ui";
@@ -29,8 +29,8 @@ public class HAPPresentUIActivityExecutable extends HAPExecutableActivityNormal{
 	private JSONObject m_setting;
 	
 	public HAPPresentUIActivityExecutable(String id, HAPPresentUIActivityDefinition activityDef) {
-		super(id, activityDef);
-		this.m_ui = activityDef.getUI();
+		super(activityDef.getActivityType(), id, activityDef);
+		this.m_ui = activityDef.getPage();
 		this.m_setting = activityDef.getSetting();
 	}
 	

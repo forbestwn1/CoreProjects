@@ -45,6 +45,8 @@ public class HAPProcessorModule {
 		HAPRequirementContextProcessor contextProcessRequirement1 = HAPUtilityCommon.getDefaultContextProcessorRequirement(runtimeEnv.getResourceDefinitionManager(), runtimeEnv.getDataTypeHelper(), runtimeEnv.getRuntime(), runtimeEnv.getExpressionManager(), runtimeEnv.getServiceManager().getServiceDefinitionManager());
 		HAPConfigureProcessorStructure contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForModule();
 
+		HAPProcessorComponent.normalize(moduleDefinition, runtimeEnv);
+		
 		HAPProcessorComponent.process(moduleDefinition, out, runtimeEnv);
 		
 		//attachment

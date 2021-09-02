@@ -12,7 +12,6 @@ import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
-import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal{
@@ -68,6 +67,4 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 		this.setInputDataAssociation(new HAPDefinitionDataAssociationMirror());
 	}
 
-	@Override
-	public HAPDefinitionTask cloneTaskDefinition() {  return this.cloneActivityDefinition();  }
 }

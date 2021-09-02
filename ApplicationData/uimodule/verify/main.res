@@ -111,7 +111,7 @@
 				{
 					"name" : "transitToFirstPage",
 					"taskType" : "activity",
-					"activityType" : "transitPage",
+					"activityType" : "UI_presentUI",
 					"configuration" : {
 						"page" : "firstPage"
 					}
@@ -125,13 +125,14 @@
 				{
 					"name" : "transitToSecondPage",
 					"taskType" : "activity",
-					"activityType" : "transitPage",
+					"activityType" : "UI_presentUI",
 					"configuration" : {
 						"page" : "secondPage"
 					}
 				},
 				{
 					"name" : "initSecondPageData",
+					"status" : "disabled",
 					"taskType" : "activity",
 					"activityType" : "exeDA",
 					"configuration" : {
@@ -181,7 +182,7 @@
 				"out" : {
 					"success" : {
 						"mapping" : {
-							"aaa" : {
+							"aaa_module" : {
 								"definition" : {
 									"path" : "simpleOutput2"
 								}

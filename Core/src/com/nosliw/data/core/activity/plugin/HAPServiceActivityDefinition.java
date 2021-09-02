@@ -13,7 +13,6 @@ import com.nosliw.data.core.activity.HAPDefinitionResultActivity;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
@@ -80,6 +79,4 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 		this.addResult(HAPConstantShared.SERVICE_RESULT_SUCCESS, result);
 	}
 
-	@Override
-	public HAPDefinitionTask cloneTaskDefinition() {   return this.cloneActivityDefinition();  }
 }

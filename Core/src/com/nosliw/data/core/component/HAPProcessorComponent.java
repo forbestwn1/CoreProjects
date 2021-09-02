@@ -8,6 +8,7 @@ import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
@@ -16,6 +17,12 @@ import com.nosliw.data.core.task.HAPProcessorTaskSuite;
 
 public class HAPProcessorComponent {
 
+	//normalize definition
+	public static void normalize(HAPDefinitionComponent definition, HAPRuntimeEnvironment runtimeEnv) {
+		normalizeService(definition, runtimeEnv);
+	}
+	
+	//process definition to executable
 	public static void process(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 	
 		processServiceUse(definition, executable, runtimeEnv);
@@ -27,6 +34,14 @@ public class HAPProcessorComponent {
 		processCommand(definition, executable, runtimeEnv);
 		
 	}
+	
+	public static void normalizeService(HAPDefinitionComponent definition, HAPRuntimeEnvironment runtimeEnv) {
+		for(String serviceName : definition.getAllServices()) {
+			HAPDefinitionServiceUse service = definition.getService(serviceName);
+			HAPProcessorServiceUse.normalizeServiceUse(service, definition.getAttachmentContainer(), runtimeEnv);
+		}
+	}
+
 	
 	public static void processServiceUse(HAPDefinitionComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 		for(String serviceName : definition.getAllServices()) {

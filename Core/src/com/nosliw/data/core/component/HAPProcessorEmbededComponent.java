@@ -37,7 +37,7 @@ public class HAPProcessorEmbededComponent {
 
 		//process event handler
 		for(HAPDefinitionHandlerEvent eventHandler : embededComponentDef.getEventHandlers()) {
-			HAPProcessEvent.processEventHandler(eventHandler, parentComponent.getEvent(eventHandler.getEventName()), parentComponent.getValueStructure(), runtimeEnv);
+			HAPProcessEvent.processEventHandler(eventHandler, childComponent.getEvent(eventHandler.getEventName()), parentComponent.getValueStructure(), runtimeEnv);
 		}
 		
 	}
