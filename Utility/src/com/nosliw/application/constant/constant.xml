@@ -572,6 +572,10 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_CODETABLE" value="codeTable"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE" value="valuestructure"/>
 
+			<definition name="RUNTIME_RESOURCE_TYPE_DATAASSOCIATION" value="dataAssociation"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UI" value="ui"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_PAGE" value="page"/>
+
 			<definition name="RUNTIME_RESOURCE_TYPE_MATCHER" value="matcher"/>
 
 			<definition type="space"/>

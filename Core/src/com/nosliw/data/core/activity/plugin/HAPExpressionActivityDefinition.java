@@ -36,14 +36,10 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	public HAPWrapperValueStructure getInputValueStructureWrapper() {  return this.m_valueStructure;   }
 
 	@Override
-	protected boolean buildObjectByJson(Object json){
-		super.buildObjectByJson(json);
-		JSONObject jsonObj = (JSONObject)json;
-		JSONObject configureObj = this.getConfigurationObject(jsonObj);
+	protected void buildConfigureByJson(JSONObject configurJsonObj) {
 		this.m_script = new HAPDefinitionScriptEntity();
-		this.m_script.buildObject(configureObj, HAPSerializationFormat.JSON);
+		this.m_script.buildObject(configurJsonObj, HAPSerializationFormat.JSON);
 		this.m_script.setId(null);
-		return true;  
 	}
 
 	@Override

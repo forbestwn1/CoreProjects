@@ -38,12 +38,8 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 	public HAPWrapperValueStructure getInputValueStructureWrapper() {  return this.m_valueStructure;   }
 
 	@Override
-	protected boolean buildObjectByJson(Object json){
-		super.buildObjectByJson(json);
-		JSONObject jsonObj = (JSONObject)json;
-		
-		JSONObject configureObj = this.getConfigurationObject(jsonObj);
-		Object serviceUseObj = configureObj.get(SERVICEUSE);
+	protected void buildConfigureByJson(JSONObject configurJsonObj) {
+		Object serviceUseObj = configurJsonObj.get(SERVICEUSE);
 		if(serviceUseObj instanceof JSONObject) {
 			this.m_serviceUse = new HAPDefinitionServiceUse();
 			this.m_serviceUse.buildObject(serviceUseObj, HAPSerializationFormat.JSON);
@@ -51,7 +47,6 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 		else {
 			this.m_serviceUseName = (String)serviceUseObj;
 		}
-		return true;  
 	}
 
 	@Override

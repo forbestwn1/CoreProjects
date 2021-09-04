@@ -60,11 +60,16 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 		}
 	}
 	
+	abstract protected void buildConfigureByJson(JSONObject configurJsonObj);
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{
 			super.buildObjectByJson(json);
 			JSONObject jsonObj = (JSONObject)json;
+			
+			JSONObject configureObj = this.getConfigurationObject(jsonObj);
+			buildConfigureByJson(configureObj);
 			
 			JSONObject inputJson = jsonObj.optJSONObject(INPUT);
 			if(inputJson!=null) {

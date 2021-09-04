@@ -32,12 +32,9 @@ public class HAPPresentUIActivityDefinition extends HAPDefinitionActivityNormal{
 	public JSONObject getSetting() {   return this.m_setting;   }
 
 	@Override
-	protected boolean buildObjectByJson(Object json){
-		super.buildObjectByJson(json);
-		JSONObject jsonObj = (JSONObject)json;
-		this.setPage(jsonObj.optString(PAGE));
-		this.m_setting = jsonObj.optJSONObject(SETTING);
-		return true;  
+	protected void buildConfigureByJson(JSONObject configurJsonObj) {
+		this.setPage(configurJsonObj.optString(PAGE));
+		this.m_setting = configurJsonObj.optJSONObject(SETTING);
 	}
 
 	@Override

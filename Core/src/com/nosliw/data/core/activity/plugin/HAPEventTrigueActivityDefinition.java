@@ -13,7 +13,6 @@ import com.nosliw.data.core.activity.HAPDefinitionResultActivity;
 import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNone;
-import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNormal{
@@ -35,13 +34,8 @@ public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNorma
 	public HAPWrapperValueStructure getInputValueStructureWrapper() {  return this.m_valueStructure;   }
 
 	@Override
-	protected boolean buildObjectByJson(Object json){
-		super.buildObjectByJson(json);
-		JSONObject jsonObj = (JSONObject)json;
-		
-		JSONObject configureObj = this.getConfigurationObject(jsonObj);
-		this.m_eventName = (String)configureObj.opt(EVENTNAME);
-		return true;  
+	protected void buildConfigureByJson(JSONObject configurJsonObj) {
+		this.m_eventName = (String)configurJsonObj.opt(EVENTNAME);
 	}
 
 	@Override
@@ -69,6 +63,4 @@ public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNorma
 		this.addResult(HAPConstantShared.SERVICE_RESULT_SUCCESS, result);
 	}
 
-	@Override
-	public HAPDefinitionTask cloneTaskDefinition() {   return this.cloneActivityDefinition();  }
 }

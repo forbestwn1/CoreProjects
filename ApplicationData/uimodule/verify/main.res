@@ -134,14 +134,9 @@
 					"name" : "initSecondPageData",
 					"status" : "disabled",
 					"taskType" : "activity",
-					"activityType" : "exeDA",
+					"activityType" : "DataAssociation_execute",
 					"configuration" : {
-						"path" : [
-							{
-								"entityType" : "dataAssociation",
-								"path" : "default"
-							}
-						]
+						"path" : "secondPage|ui.default" 
 					}
 				},
 			]
