@@ -68,7 +68,7 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 						});
 						stateData.uiData = uiData;
 					}
-				}, handlers, request);
+				});
 				_.each(loc_out.getUIs(), function(ui, index){	uiDataRequest.addRequest(ui.getId(), ui.getGetStateRequest());	});
 				out.addRequest(uiDataRequest);
 				
@@ -124,7 +124,7 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 
 	//initiate context data set with input value
 	var loc_initContextIODataSet = function(input, request){
-		var data = loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input);
+		var data = loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLECOMPONENT_INITSCRIPT](input);
 		loc_out.prv_componentData.contextDataSet.setData(undefined, data, request);
 	};
 
@@ -230,6 +230,8 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		getUI : function(id) {  return loc_out.prv_componentData.ui[id];   },
 		
 		getEventHandler : function(uiId, eventName){   return this.getUI(uiId).getEventHandler(eventName);   },
+		
+		getTaskSuite : function(){   return loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLECOMPONENT_TASK];  },
 		
 		getProcess : function(name){  return loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
 		getLifecycleProcess : function(name){  return loc_out.prv_componentData.componentDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_LIFECYCLE][name];  },

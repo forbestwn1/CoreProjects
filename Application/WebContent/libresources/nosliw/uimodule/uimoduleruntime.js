@@ -53,23 +53,18 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 
 	var loc_getModuleCore = function(){   return loc_componentCoreComplex.getCore();   };
 	var loc_getContextIODataSet = function(){  return loc_getModuleCore().getContextIODataSet();   };
-	var loc_getProcessEnv = function(){   return loc_componentCoreComplex.getInterface();    };
+	var loc_getTaskEnv = function(){   return loc_componentCoreComplex.getInterface();    };
 
-	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
-		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_getProcessEnv()).getExecuteWrappedProcessRequest(process, loc_getContextIODataSet(), extraInput, handlers, request);
+	var loc_getExecuteTaskRequest = function(task, extraInput, handlers, request){
+		return nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_getTaskEnv()).getExecuteEmbededTaskRequest(task, loc_getContextIODataSet(), handlers, request);
+	};
+
+	var loc_getExecuteTaskByNameRequest = function(taskName, extraInput, handlers, request){
+		var taskSuite = loc_getModuleCore().getTaskSuite();
+		return nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_getTaskEnv()).getExecuteEmbededTaskInSuiteRequest(taskSuite, taskName, loc_getContextIODataSet(), handlers, request);
 	};
 	
-	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){
-		var process = loc_getModuleCore().getProcess(processName);
-		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
-	};
-	
-	var loc_getExecuteModuleLifycycleProcessByNameRequest = function(processName, extraInput, handlers, request){
-		var process = loc_getModuleCore().getLifecycleProcess(processName);
-		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
-	};
-	
-	var loc_getProcessNameByLifecycle = function(lifecycleName){ return node_basicUtility.buildNosliwFullName(lifecycleName);	};
+	var loc_getTaskNameByLifecycle = function(lifecycleName){ return node_basicUtility.buildNosliwFullName(lifecycleName);	};
 	
 	//call back method for normal lifecycle change
 	var loc_getNormalLiefCycleCallBackRequestRequest = function(lifecycleName, handlers, request){
@@ -78,8 +73,8 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request)  }));
 		//execute complex lifecycle call back
 		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
-		//execute process defined in module by handler name 
-		out.addRequest(loc_getExecuteModuleLifycycleProcessByNameRequest(loc_getProcessNameByLifecycle(lifecycleName)));
+		//execute task defined in module by handler name 
+//		out.addRequest(loc_getExecuteTaskByNameRequest(loc_getTaskNameByLifecycle(lifecycleName)));
 		return out;
 	};
 	
@@ -107,7 +102,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 			}
 			else{
 				//normal, call both lifecycle and process
-				return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE);
+				return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE, undefined, request);
 			}
 		}));
 		return out;
@@ -138,10 +133,11 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	var loc_componentEnv = {
 		//process request
 		processRequest : function(request){  node_requestServiceProcessor.processRequest(request); },
+
 		//execute process
-		getExecuteProcessRequest : function(process, extraInput, handlers, request){  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);  },
+		getExecuteTaskRequest : function(task, extraInput, handlers, request){  return loc_getExecuteTaskRequest(task, extraInput, handlers, request);  },
 		//execute process
-		getExecuteProcessResourceRequest : function(processId, input, handlers, request){  return loc_getExecuteModuleProcessByNameRequest(processId, extraInput, handlers, request);  },
+		getExecuteTaskResourceRequest : function(taskId, input, handlers, request){  return loc_getExecuteTaskByNameRequest(taskId, extraInput, handlers, request);  },
 	};
 
 	//call back when start a statemachine task

@@ -53,7 +53,7 @@ var node_createUIModuleService = function(){
 							success : function(request, uiModuleRuntime){
 								return uiModuleRuntime;
 							}
-						});
+						}, request);
 					}
 				}));
 			

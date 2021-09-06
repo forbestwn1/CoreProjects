@@ -1,6 +1,5 @@
 package com.nosliw.data.core.component.event;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,10 +68,10 @@ public class HAPExecutableHandlerEvent extends HAPExecutableImpEntityInfo{
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		out.addAll(this.m_inDataAssociation.getResourceDependency(runtimeInfo, resourceManager));
-		out.addAll(this.m_handler.getResourceDependency(runtimeInfo, resourceManager));
-		return out;
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
+		this.buildResourceDependencyForExecutable(dependency, m_inDataAssociation, runtimeInfo, resourceManager);
+		this.buildResourceDependencyForExecutable(dependency, m_handler, runtimeInfo, resourceManager);
 	}
+
 }

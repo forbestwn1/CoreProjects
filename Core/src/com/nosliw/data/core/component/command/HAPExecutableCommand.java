@@ -1,6 +1,5 @@
 package com.nosliw.data.core.component.command;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,12 +56,10 @@ public class HAPExecutableCommand extends HAPExecutableImpEntityInfo{
 		if(this.m_dataAssociations!=null) 	jsonMap.put(DATAASSOCIATION, this.m_dataAssociations.toResourceData(runtimeInfo).toString());
 	}
 
-	
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		if(this.m_dataAssociations!=null)  out.addAll(this.m_dataAssociations.getResourceDependency(runtimeInfo, resourceManager));
-		return out;
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
+		this.buildResourceDependencyForExecutable(dependency, m_dataAssociations, runtimeInfo, resourceManager);
 	}
 
 }

@@ -49,7 +49,7 @@ var node_createComponentState = function(state, getGetStateDataRequest, getResto
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("component store state"), handlers, request);
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				var stateData = loc_state.getValue(loc_STATEDATA_NAME, request);
-				return loc_getRestoreStateDataRequest(stateData);
+				return loc_getRestoreStateDataRequest(stateData, undefined, request);
 			}));
 			return out;
 		},
@@ -71,7 +71,7 @@ var node_createComponentState = function(state, getGetStateDataRequest, getResto
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				var stateData = loc_stateDataForRollBack.pop();
-				return loc_getRestoreStateDataRequest(stateData);
+				return loc_getRestoreStateDataRequest(stateData, undefined, request);
 			}));
 			return out;
 		},

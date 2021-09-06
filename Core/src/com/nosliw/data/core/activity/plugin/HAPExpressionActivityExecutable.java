@@ -1,6 +1,5 @@
 package com.nosliw.data.core.activity.plugin;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,11 +52,10 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivity{
 	}
 	
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		out.add(new HAPResourceDependency(new HAPPluginResourceIdActivity(new HAPActivityPluginId(HAPConstantShared.ACTIVITY_TYPE_EXPRESSION))));
-		out.addAll(this.m_scriptExpression.getResourceDependency(runtimeInfo, resourceManager));
-		return out;
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
+		this.buildResourceDependencyForExecutable(dependency, m_scriptExpression, runtimeInfo, resourceManager);
+		dependency.add(new HAPResourceDependency(new HAPPluginResourceIdActivity(new HAPActivityPluginId(HAPConstantShared.ACTIVITY_TYPE_EXPRESSION))));
 	}
 
 	@Override

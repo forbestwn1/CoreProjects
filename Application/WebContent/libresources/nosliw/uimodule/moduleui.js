@@ -125,7 +125,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	};
 
 	
-	var loc_getId = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];   };
+	var loc_getId = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];   };
 	var loc_getName = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];   };
 	var loc_getTitle = function(){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];   };
 	
@@ -147,31 +147,39 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	};
 	
 	//data association from module context to page context
-	var loc_inputDataAssociation = node_createDataAssociation(moduleContextIODataSet, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], node_createDynamicIOData(
-		function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_page.getContextEleValueAsParmsRequest());
-			return out;
-		}, 
-		function(value, handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_updatePageContextRequest(value));
-			return out;
-		}
-	), node_dataAssociationUtility.buildDataAssociationName("MODULE", "CONTEXT", "PAGE", loc_page.getName()));
+	var loc_inputDataAssociations = {};
+	_.each(loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEEMBEDEDCOMPONENT_IN], function(dataAssociationDef, name){
+		var loc_inputDataAssociation = node_createDataAssociation(moduleContextIODataSet, dataAssociationDef, node_createDynamicIOData(
+				function(handlers, request){
+					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+					out.addRequest(loc_page.getContextEleValueAsParmsRequest());
+					return out;
+				}, 
+				function(value, handlers, request){
+					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+					out.addRequest(loc_updatePageContextRequest(value));
+					return out;
+				}
+			), node_dataAssociationUtility.buildDataAssociationName("MODULE", "CONTEXT", "PAGE", loc_page.getName()));
+		loc_inputDataAssociations[name] = loc_inputDataAssociation;
+	});
+		
+	var loc_outputDataAssociations = {};
+	_.each(loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEEMBEDEDCOMPONENT_OUT], function(dataAssociationDef, name){
+		var loc_outputDataAssociation = node_createDataAssociation(node_createDynamicIOData(
+				function(handlers, request){
+					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+					out.addRequest(loc_page.getBuildContextGroupRequest());
+					return out;
+				}
+			), 
+			loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], 
+			moduleContextIODataSet,
+			node_dataAssociationUtility.buildDataAssociationName("PAGE", loc_page.getName(), "MODULE", "CONTEXT"));
+		loc_outputDataAssociations[name] = loc_outputDataAssociation;
+	});
 	
-	//data association from page to module context
-	var loc_outputDataAssociation = node_createDataAssociation(node_createDynamicIOData(
-			function(handlers, request){
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				out.addRequest(loc_page.getBuildContextGroupRequest());
-				return out;
-			}
-		), 
-		loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], 
-		moduleContextIODataSet,
-		node_dataAssociationUtility.buildDataAssociationName("PAGE", loc_page.getName(), "MODULE", "CONTEXT"));
-
+	
 	var loc_getExecuteCommandRequest = function(commandName, parms, handlers, request){
 		var coreCommandName = node_basicUtility.getNosliwCoreName(commandName);
 		if(coreCommandName!=undefined){
@@ -245,8 +253,8 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},
 
 		getSynInMode : function(){  return loc_info[node_CONSTANT.CONFIGURE_KEY_SYNCIN] || node_CONSTANT.CONFIGURE_VALUE_SYNCIN_MANUAL;	},
-		getSynInDataRequest : function(handlers, request){  return loc_inputDataAssociation.getExecuteRequest(handlers, request);  },
-		executeSynInDataRequest : function(handlers, request){	node_requestServiceProcessor.processRequest(this.getSynInDataRequest(handlers, request));	},
+		getSynInDataRequest : function(dataAssociationName, handlers, request){  return loc_inputDataAssociations[dataAssociationName].getExecuteRequest(handlers, request);  },
+		executeSynInDataRequest : function(dataAssociationName, handlers, request){	node_requestServiceProcessor.processRequest(this.getSynInDataRequest(dataAssociationName, handlers, request));	},
 		
 		getSynOutMode : function(){  return loc_info[node_CONSTANT.CONFIGURE_KEY_SYNCOUT] || node_CONSTANT.CONFIGURE_VALUE_SYNCOUT_MANUAL;	},
 		getSynOutDataRequest : function(name, handlers, request){	return loc_outputDataAssociation.getExecuteRequest(handlers, request);	},

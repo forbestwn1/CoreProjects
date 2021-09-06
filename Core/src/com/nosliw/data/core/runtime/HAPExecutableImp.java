@@ -34,4 +34,8 @@ public abstract class HAPExecutableImp  extends HAPSerializableImp implements HA
 
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {}
 
+	protected void buildResourceDependencyForExecutable(List<HAPResourceDependency> dependency, HAPExecutable executable, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		List<HAPResourceDependency> resources = executable.getResourceDependency(runtimeInfo, resourceManager);
+		if(resources!=null)   dependency.addAll(resources);
+	}
 }

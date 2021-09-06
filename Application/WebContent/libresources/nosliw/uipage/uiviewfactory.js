@@ -391,7 +391,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 			var parentContext = parent==undefined?undefined:parent.getContext();
 //			loc_context = node_contextUtility.buildContext("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
 //			loc_context = node_contextUtility.buildContextFromFlat("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_CONTEXT], parentContext);
-			loc_context = node_contextUtility.buildContext("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_VALUESTRUCTURE][node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUESTRUCTURE_ROOT], parentContext);
+			loc_context = node_contextUtility.buildContext("View_"+id, loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLECOMPONENT_VALUESTRUCTURE][node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUESTRUCTURE_ROOT], parentContext);
 		}
 
 		var viewAttrs = {

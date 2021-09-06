@@ -157,7 +157,10 @@ var node_createStateMachineDef = function(){
 			return out;
 		},
 		
-		getCommandInfo : function(command, from){	return loc_commands[command][from];	},
+		getCommandInfo : function(command, from){
+			var commands = loc_commands[command];
+			return commands==undefined?undefined:commands[from];
+		},
 		
 		getNextsByTransitInfo : function(transitInfo){
 			if(loc_nextsByTranistInfo==undefined)  loc_buildNextsByTransitInfo();

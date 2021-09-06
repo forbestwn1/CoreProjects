@@ -133,7 +133,7 @@ node_createDebugTool = function(views, configureParms, resourceType, resourceId,
 				var resetView = views.resetView;
 				if(resetView!=undefined){
 					loc_resetView = node_createComponentResetView(function(resourceId, resourceType, inputValue, settingName, handlers, request){
-						return loc_getResetComponentRequest(resourceType, resourctId, inputValue, settingName, handlers, request);
+						return loc_getResetComponentRequest(resourceType, resourceId, inputValue, settingName, handlers, request);
 					}, resourceType, resourceId, inputValue, settingName);
 					$(resetView).append(loc_resetView.getView());
 				}
