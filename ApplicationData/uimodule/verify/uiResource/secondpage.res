@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    Within test.main.res
+    Within second page
     
     	<br>
 	EXPRESSION IN CONTENT :<%=?(bbb)?.value + '   6666 ' %>

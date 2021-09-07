@@ -209,7 +209,7 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 			node_requestServiceProcessor.processRequest(out);
 
 			
-			loc_trigueEvent(eventName, eventData, requestInfo);
+			loc_trigueEvent(eventName, eventDataInfo, requestInfo);
 			
 		}, ui);
 

@@ -63,7 +63,7 @@ function(gate){
 	var loc_currentUIChangeRequest = function(uiChangeSetting, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(loc_updatePageStatusRequest());
-		if(uiChangeSetting==undefined || uiChangeSetting.getSettingValue("updateData")!=false)  out.addRequest(loc_uiModule.getUI(loc_getCurrentUIId()).getSynInDataRequest());  //update ui data
+//		if(uiChangeSetting==undefined || uiChangeSetting.getSettingValue("updateData")!=false)  out.addRequest(loc_uiModule.getUI(loc_getCurrentUIId()).getSynInDataRequest());  //update ui data
 		return out;
 	};
 	
