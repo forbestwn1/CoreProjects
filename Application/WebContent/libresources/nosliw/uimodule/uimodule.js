@@ -286,6 +286,15 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 				getExecutePartCommandRequest : function(partId, commandName, commandData, handlers, requestInfo){
 					return loc_out.getPart(partId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
 				},
+				
+				getElement : function(elementPath){
+					var out = loc_out;
+					for(var i in elementPath){
+						if(out!=undefined)		out = out.getChild(elementPath[i]);
+					}
+					return out;
+				},
+
 			};
 		},
 		
@@ -360,6 +369,15 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		
 		startLifecycleTask : function(){	loc_componentState.initDataForRollBack();	},
 		endLifecycleTask : function(){ 	loc_componentState.clearDataFroRollBack();	},
+		
+		getChild : function(childId){
+			var type = childId[node_COMMONATRIBUTECONSTANT.PATHTOCHILDELEMENT_ELEMENTTYPE];
+			if(type==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UI){
+				var eleId = childId[node_COMMONATRIBUTECONSTANT.PATHTOCHILDELEMENT_ELEMENTID];
+				return loc_out.prv_componentData.ui[eleId];
+			}
+		},
+		
 	};
 
 	loc_init();

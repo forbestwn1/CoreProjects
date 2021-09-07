@@ -88,7 +88,7 @@
 			"type": "info",
 			"page": "secondPage",
 			"status" : "disabled111",
-			"inputMapping": [
+			"in": [
 				{
 					"name" : "default",
 					"mapping": {
@@ -132,11 +132,11 @@
 				},
 				{
 					"name" : "initSecondPageData",
-					"status" : "disabled",
+					"status" : "disabled1",
 					"taskType" : "activity",
 					"activityType" : "DataAssociation_execute",
 					"configuration" : {
-						"path" : "secondPage|ui.default" 
+						"path" : "secondPage|ui.in;default" 
 					}
 				},
 			]

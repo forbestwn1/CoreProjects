@@ -138,6 +138,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		getExecuteTaskRequest : function(task, extraInput, handlers, request){  return loc_getExecuteTaskRequest(task, extraInput, handlers, request);  },
 		//execute task
 		getExecuteTaskByNameRequest : function(taskId, extraInput, handlers, request){  return loc_getExecuteTaskByNameRequest(taskId, extraInput, handlers, request);  },
+		
 	};
 
 	//call back when start a statemachine task

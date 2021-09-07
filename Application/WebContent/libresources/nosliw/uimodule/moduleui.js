@@ -165,7 +165,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	});
 		
 	var loc_outputDataAssociations = {};
-	_.each(loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEEMBEDEDCOMPONENT_OUT], function(dataAssociationDef, name){
+	_.each(loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEEMBEDEDCOMPONENT_OUT][node_COMMONATRIBUTECONSTANT.EXECUTABLEGROUPDATAASSOCIATIONFORCOMPONENT_ELEMENT], function(dataAssociationDef, name){
 		var loc_outputDataAssociation = node_createDataAssociation(node_createDynamicIOData(
 				function(handlers, request){
 					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -275,6 +275,26 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		//event
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext);	},
 		registerValueChangeEventListener : function(listener, handler, thisContext){	return	loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext);	},
+		
+		getChild : function(childId){
+			var type = childId[node_COMMONATRIBUTECONSTANT.PATHTOCHILDELEMENT_ELEMENTTYPE];
+			if(type==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION){
+				var eleId = childId[node_COMMONATRIBUTECONSTANT.PATHTOCHILDELEMENT_ELEMENTID];
+				var index = eleId.indexOf(node_COMMONCONSTANT.SEPERATOR_LEVEL1);
+				var ioType;
+				var ioName = eleId;
+				if(index!=-1){
+					ioType = eleId.substring(0, index);
+					ioName = eleId.substring(index+1); 
+				}
+				if(ioType=="in"){
+					return loc_inputDataAssociations[ioName];
+				}
+				else if(ioType=="out"){
+					return loc_outputDataAssociations[ioName];
+				}
+			}
+		},
 	};
 	
 	//append resource and object life cycle method to out obj

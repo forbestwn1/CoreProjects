@@ -30,7 +30,7 @@
 					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 					
 					var path = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_PATH];
-					var dataAssociation = env.getChildElement(path);
+					var dataAssociation = env.getElement(path);
 					out.addRequest(dataAssociation.getExecuteRequest({
 						success : function(request, outputIO){
 							return outputIO.getGetDataValueRequest(undefined, {
