@@ -225,8 +225,7 @@ function(gate){
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE){
 				out.addRequest(loc_getRestoreStateDataForRollBackRequest());
 			}
-//			return out;
-			return;
+			return out;
 		},
 		
 		getRestoreStateDataRequest : function(handlers, request){

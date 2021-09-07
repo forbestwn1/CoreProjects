@@ -15,7 +15,7 @@
 						},
 						"defaultValue": {
 							"dataTypeId": "test.string;1.0.0",
-							"value": "This is my world!"
+							"value": "This is my world from module!"
 						}
 					},
 
@@ -25,7 +25,7 @@
 						},
 						"defaultValue": {
 							"dataTypeId": "test.string;1.0.0",
-							"value": "This is my world!"
+							"value": "This is my world from module!"
 						}
 					},
 

@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.data.core.component.HAPDefinitionEmbededComponent;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
@@ -50,6 +54,24 @@ public class HAPDefinitionModuleUI extends HAPDefinitionEmbededComponent{
 
 	public void setUIDecoration(List<HAPInfoDecoration> decs) {  this.m_uiDecoration = decs;    }
 	public List<HAPInfoDecoration> getUIDecoration(){  return this.m_uiDecoration;   }
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
+		JSONObject jsonObj = (JSONObject)json;
+
+		this.setPage(jsonObj.optString(HAPDefinitionModuleUI.PAGE));
+		this.setType(jsonObj.optString(HAPDefinitionModuleUI.TYPE));
+		this.setStatus(jsonObj.optString(HAPDefinitionModuleUI.STATUS));
+
+		//ui decoration
+		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModuleUI.UIDECORATION);
+		if(uiDecJsonArray!=null) {
+			this.setUIDecoration(HAPSerializeUtility.buildListFromJsonArray(HAPInfoDecoration.class.getName(), uiDecJsonArray));
+		}
+		
+		return true;
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

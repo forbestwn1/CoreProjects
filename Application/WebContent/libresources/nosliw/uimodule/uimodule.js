@@ -29,6 +29,8 @@ var packageObj = library;
 	var node_createEventInfo;
 	var node_eventUtility;
 	var node_basicUtility;
+	var node_requestServiceProcessor;
+	var node_createDataAssociation;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
@@ -48,6 +50,8 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	var loc_valueChangeEventSource = node_createEventObject();
 
 	var loc_componentState;
+	
+	var loc_componentEnv;
 	
 	var loc_getEventSourceInfo = function(){
 		return node_createEventSource(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULE, loc_out.getId());
@@ -188,8 +192,25 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		loc_out.prv_componentData.uiArray.push(ui);
 		loc_out.prv_componentData.ui[ui.getId()] = ui;
 		//register listener for module ui
-		ui.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
+		ui.registerEventListener(loc_eventListener, function(eventName, eventDataInfo, requestInfo){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("moduleUIEventHandler", undefined), undefined, requestInfo);
+			
+			var eventHandler = ui.getEventHandler(eventName);
+			//data association
+			var inDataAssociation = eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLEREVENT_IN];
+			out.addRequest(node_createDataAssociation(node_createIODataSet(eventDataInfo.getEventData()), inDataAssociation, loc_out.prv_componentData.contextDataSet).getExecuteRequest());
+			
+			//task
+			var steps = eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLEREVENT_HANDLER][node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLER_STEPS];
+			_.each(steps, function(step, i){
+				out.addRequest(loc_out.getComponentEnv().getExecuteTaskByNameRequest(step));
+			});
+			
+			node_requestServiceProcessor.processRequest(out);
+
+			
 			loc_trigueEvent(eventName, eventData, requestInfo);
+			
 		}, ui);
 
 // kkkk
@@ -207,6 +228,14 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		}, ui);
 	};
 
+	var loc_getTaskNameByLifecycle = function(lifecycleName){ return node_basicUtility.buildNosliwFullName(lifecycleName);	};
+
+	var loc_getExecuteLifecycleTaskRequest = function(lifecycleName, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getUIModuleNormalLiefCycleCallBackRequestRequest", {}), handlers, request);
+		out.addRequest(loc_out.getComponentEnv().getExecuteTaskByNameRequest(loc_getTaskNameByLifecycle(lifecycleName)));
+		return out;
+	}
+	
 	var loc_out = {
 		prv_componentData : {
 			id : id,              //
@@ -260,6 +289,10 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 			};
 		},
 		
+		//component runtime env
+		getComponentEnv : function(){   return loc_componentEnv;    },
+		setComponentEnv : function(componentEnv){   loc_componentEnv = componentEnv;     },
+
 		getValue : function(name){  return loc_out.prv_componentData.valueByName[name];    },
 		setValue : function(name, value){   loc_out.prv_componentData.valueByName[name] = value;   },
 		
@@ -291,26 +324,32 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 				}
 				else{
 					//active through normal way
+					out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
 				}
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
 				out.addRequest(loc_componentState.getSaveStateDataForRollBackRequest());
 				//reset context io
 				out.addRequest(loc_getInitIOContextRequest(handlers, request));
+				out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND){
 				out.addRequest(loc_componentState.getSaveStateDataForRollBackRequest());
 				out.addRequest(loc_componentState.getBackupStateRequest(handlers, request));
+				out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME){
 				out.addRequest(loc_componentState.getSaveStateDataForRollBackRequest());
+				out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
 				out.addRequest(loc_componentState.getSaveStateDataForRollBackRequest());
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){loc_destroy(request);}, handlers, request));
+				out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
 			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE){
 				out.addRequest(loc_componentState.getRestoreStateDataForRollBackRequest());
+				out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
 			}
 			return out;
 		},
@@ -362,6 +401,8 @@ nosliw.registerSetNodeDataEvent("common.event.createEventSource", function(){nod
 nosliw.registerSetNodeDataEvent("common.event.createEventInfo", function(){node_createEventInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIModuleComponentCore", node_createUIModuleComponentCore); 

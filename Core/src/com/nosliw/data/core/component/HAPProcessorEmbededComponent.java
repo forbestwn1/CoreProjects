@@ -1,6 +1,7 @@
 package com.nosliw.data.core.component;
 
 import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
+import com.nosliw.data.core.component.event.HAPExecutableHandlerEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
@@ -37,7 +38,8 @@ public class HAPProcessorEmbededComponent {
 
 		//process event handler
 		for(HAPDefinitionHandlerEvent eventHandler : embededComponentDef.getEventHandlers()) {
-			HAPProcessEvent.processEventHandler(eventHandler, childComponent.getEvent(eventHandler.getEventName()), parentComponent.getValueStructure(), runtimeEnv);
+			HAPExecutableHandlerEvent eventHandlerExe = HAPProcessEvent.processEventHandler(eventHandler, childComponent.getEvent(eventHandler.getEventName()), parentComponent.getValueStructure(), runtimeEnv);
+			embededComponentExe.addEventHandler(eventHandlerExe);
 		}
 		
 	}

@@ -1,7 +1,6 @@
 package com.nosliw.uiresource.module;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +9,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPExecutableEmbededComponent;
-import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 
@@ -57,21 +54,14 @@ public class HAPExecutableModuleUI extends HAPExecutableEmbededComponent{
 	}
 	
 	@Override
-	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
-		this.buildFullJsonMap(jsonMap, typeJsonMap);
-
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		jsonMap.put(PAGE, this.m_page.toResourceData(runtimeInfo).toString());
-		
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		out.addAll(super.getResourceDependency(runtimeInfo, resourceManager));
-		out.addAll(this.m_page.getResourceDependency(runtimeInfo, resourceManager));
-		return out;
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
+		this.buildResourceDependencyForExecutable(dependency, m_page, runtimeInfo, resourceManager);
 	}
 }

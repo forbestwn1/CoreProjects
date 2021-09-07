@@ -18,30 +18,8 @@ import com.nosliw.data.core.task.HAPUtilityTask;
 
 public class HAPParserComponent {
 
-	public static void parseComponentChild(HAPDefinitionEmbededComponent child, JSONObject jsonObj) {
-		child.buildEntityInfoByJson(jsonObj);
+	public static void parseEmbededComponent(HAPDefinitionEmbededComponent embededComponent, JSONObject jsonObj) {
 		
-		child.setNameMapping(HAPNameMapping.newNamingMapping(jsonObj.optJSONObject(HAPWithNameMapping.NAMEMAPPING)));
-		
-		//event handler
-		parseEventHandler(child, jsonObj);
-	}
-
-	public static void parseComplextResourceDefinition(HAPResourceDefinitionComplexImp complexResourceDef, JSONObject jsonObj) {
-		//entity info
-		complexResourceDef.buildEntityInfoByJson(jsonObj);
-		
-		//parse attachment
-		JSONObject pageInfoObj = jsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
-		if(pageInfoObj!=null) {
-			HAPUtilityAttachment.parseDefinition(pageInfoObj, complexResourceDef.getAttachmentContainer());
-		}
-		
-		//context
-		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPDefinitionComponentImp.VALUESTRUCTURE);
-		if(contextJsonObj!=null) {
-			complexResourceDef.setValueStructure(HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj));
-		}
 	}
 	
 	public static void parseComponent(HAPDefinitionComponentImp component, JSONObject jsonObj, HAPManagerTask taskMan) {
@@ -62,6 +40,23 @@ public class HAPParserComponent {
 		parseServiceUseDefinition(component, jsonObj);
 	}
 
+	public static void parseComplextResourceDefinition(HAPResourceDefinitionComplexImp complexResourceDef, JSONObject jsonObj) {
+		//entity info
+		complexResourceDef.buildEntityInfoByJson(jsonObj);
+		
+		//parse attachment
+		JSONObject pageInfoObj = jsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
+		if(pageInfoObj!=null) {
+			HAPUtilityAttachment.parseDefinition(pageInfoObj, complexResourceDef.getAttachmentContainer());
+		}
+		
+		//context
+		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPDefinitionComponentImp.VALUESTRUCTURE);
+		if(contextJsonObj!=null) {
+			complexResourceDef.setValueStructure(HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj));
+		}
+	}
+	
 	public static HAPWithTask parseTask(HAPWithTask withTask, JSONObject jsonObj, HAPDefinitionEntityComplex complexEntity, HAPManagerTask taskMan) {
 		JSONArray tasksArray = jsonObj.optJSONArray(HAPWithTask.TASK);
 		if(tasksArray!=null) {

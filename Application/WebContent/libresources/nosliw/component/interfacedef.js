@@ -54,6 +54,8 @@ var node_buildDecorationPlugInObject = function(rawPluginObj){
 //interface for component core 
 var node_buildComponentCore = function(rawComponentCore){
 	
+	var loc_componentEnv;
+	
 	var interfaceDef = {
 		//execute command
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
@@ -66,6 +68,10 @@ var node_buildComponentCore = function(rawComponentCore){
 		//set state for the component core
 		setState : function(state){   },
 
+		//component runtime env
+		getComponentEnv : function(){   return loc_componentEnv;    },
+		setComponentEnv : function(componentEnv){   loc_componentEnv = componentEnv;     },
+		
 		//value by name
 		getValue : function(name){},
 		setValue : function(name, value){},
@@ -97,9 +103,9 @@ var node_buildComponentEnv = function(rawComponentEnv){
 		//process request
 		processRequest : function(request){   },
 		//execute process
-		getExecuteProcessRequest : function(process, extraInput, handlers, request){    },
+		getExecuteTaskRequest : function(task, extraInput, handlers, request){    },
 		//execute process
-		getExecuteProcessResourceRequest : function(processId, input, handlers, request){    },
+		getExecuteTaskResourceRequest : function(taskId, input, handlers, request){    },
 	};
 	return _.extend({}, interfaceDef, rawComponentEnv);
 };

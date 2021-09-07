@@ -83,7 +83,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		loc_getModuleCore().setValue(node_CONSTANT.COMPONENT_VALUE_BACKUP, undefined);
 		//clear backup data
 		loc_state.clear(request); 
-	}
+	};
 	
 	//component lifecycle call back methods
 	var lifecycleCallback = {};
@@ -134,10 +134,10 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		//process request
 		processRequest : function(request){  node_requestServiceProcessor.processRequest(request); },
 
-		//execute process
+		//execute task
 		getExecuteTaskRequest : function(task, extraInput, handlers, request){  return loc_getExecuteTaskRequest(task, extraInput, handlers, request);  },
-		//execute process
-		getExecuteTaskResourceRequest : function(taskId, input, handlers, request){  return loc_getExecuteTaskByNameRequest(taskId, extraInput, handlers, request);  },
+		//execute task
+		getExecuteTaskByNameRequest : function(taskId, extraInput, handlers, request){  return loc_getExecuteTaskByNameRequest(taskId, extraInput, handlers, request);  },
 	};
 
 	//call back when start a statemachine task

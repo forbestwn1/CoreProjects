@@ -125,7 +125,9 @@ var node_createComponentCoreComplex = function(configure, componentEnv, state){
 			
 		setCore : function(core){
 			core.setState(loc_state.createChildState("core"));
-			loc_addLayer(node_buildComponentCore(core));	
+			var coreLayer = node_buildComponentCore(core);
+			coreLayer.setComponentEnv(loc_componentEnv);
+			loc_addLayer(coreLayer);	
 		},
 		
 		addDecorations : function(decorationInfos){	for(var i in decorationInfos){  loc_out.addDecoration(decorationInfos[i]);	}	},

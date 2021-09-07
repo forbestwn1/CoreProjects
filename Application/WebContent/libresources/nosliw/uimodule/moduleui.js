@@ -148,7 +148,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 	
 	//data association from module context to page context
 	var loc_inputDataAssociations = {};
-	_.each(loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEEMBEDEDCOMPONENT_IN], function(dataAssociationDef, name){
+	_.each(loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEEMBEDEDCOMPONENT_IN][node_COMMONATRIBUTECONSTANT.EXECUTABLEGROUPDATAASSOCIATIONFORCOMPONENT_ELEMENT], function(dataAssociationDef, name){
 		var loc_inputDataAssociation = node_createDataAssociation(moduleContextIODataSet, dataAssociationDef, node_createDynamicIOData(
 				function(handlers, request){
 					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -239,7 +239,7 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		getName : function(){	return loc_getName();	},
 		
 		//process that handle event
-		getEventHandler : function(eventName){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_EVENTHANDLER][eventName];   },
+		getEventHandler : function(eventName){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEEMBEDEDCOMPONENT_EVENTHANDLER][eventName];   },
 		
 		//handle state of ui
 		getGetStateRequest : function(handlers, requestInfo){  return loc_page.getGetPageStateRequest(handlers, requestInfo);  },
@@ -253,11 +253,16 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},
 
 		getSynInMode : function(){  return loc_info[node_CONSTANT.CONFIGURE_KEY_SYNCIN] || node_CONSTANT.CONFIGURE_VALUE_SYNCIN_MANUAL;	},
-		getSynInDataRequest : function(dataAssociationName, handlers, request){  return loc_inputDataAssociations[dataAssociationName].getExecuteRequest(handlers, request);  },
+		getSynInDataRequest : function(dataAssociationName, handlers, request){  
+			if(dataAssociationName==undefined)   dataAssociationName = node_COMMONCONSTANT.NAME_DEFAULT;
+			return loc_inputDataAssociations[dataAssociationName].getExecuteRequest(handlers, request);  
+		},
 		executeSynInDataRequest : function(dataAssociationName, handlers, request){	node_requestServiceProcessor.processRequest(this.getSynInDataRequest(dataAssociationName, handlers, request));	},
 		
 		getSynOutMode : function(){  return loc_info[node_CONSTANT.CONFIGURE_KEY_SYNCOUT] || node_CONSTANT.CONFIGURE_VALUE_SYNCOUT_MANUAL;	},
-		getSynOutDataRequest : function(name, handlers, request){	return loc_outputDataAssociation.getExecuteRequest(handlers, request);	},
+		getSynOutDataRequest : function(name, handlers, request){	
+			return loc_outputDataAssociation.getExecuteRequest(handlers, request);	
+		},
 		executeSynOutDataRequest : function(name, handlers, request){	node_requestServiceProcessor.processRequest(this.getSynOutDataRequest(name, handlers, request));	},
 		
 		//take command

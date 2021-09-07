@@ -19,7 +19,7 @@
 	<task>
 	[
 		{
-			"name" : "select1",
+			"name" : "trigueEvent",
 			"taskType": "activity",
 			"activityType": "Event_trigue",
 			"configuration" : {

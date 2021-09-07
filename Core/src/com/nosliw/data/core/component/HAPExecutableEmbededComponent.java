@@ -1,6 +1,5 @@
 package com.nosliw.data.core.component;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,12 +12,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.event.HAPExecutableHandlerEvent;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationForComponent;
-import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 @HAPEntityWithAttribute
 public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
@@ -71,11 +68,8 @@ public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
 	}
 	
 	@Override
-	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
-		this.buildFullJsonMap(jsonMap, typeJsonMap);
-
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		Map<String, String> eventJsonMap = new LinkedHashMap<String, String>();
 		for(String eventName :this.m_eventHandlers.keySet()) {	eventJsonMap.put(eventName, this.m_eventHandlers.get(eventName).toResourceData(runtimeInfo).toString());	}
 		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildMapJson(eventJsonMap));
@@ -84,17 +78,44 @@ public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
 		jsonMap.put(OUT, this.m_outDataAssociations.toResourceData(runtimeInfo).toString());
 		
 		jsonMap.put(COMPONENT, this.m_component.toResourceData(runtimeInfo).toString());
-
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
+	
+	
+//	@Override
+//	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
+//		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+//		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+//		this.buildFullJsonMap(jsonMap, typeJsonMap);
+//
+//		Map<String, String> eventJsonMap = new LinkedHashMap<String, String>();
+//		for(String eventName :this.m_eventHandlers.keySet()) {	eventJsonMap.put(eventName, this.m_eventHandlers.get(eventName).toResourceData(runtimeInfo).toString());	}
+//		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildMapJson(eventJsonMap));
+//
+//		jsonMap.put(IN, this.m_inDataAssociations.toResourceData(runtimeInfo).toString());
+//		jsonMap.put(OUT, this.m_outDataAssociations.toResourceData(runtimeInfo).toString());
+//		
+//		jsonMap.put(COMPONENT, this.m_component.toResourceData(runtimeInfo).toString());
+//
+//		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
+//	}
+
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		out.addAll(this.m_inDataAssociations.getResourceDependency(runtimeInfo, resourceManager));
-		out.addAll(this.m_outDataAssociations.getResourceDependency(runtimeInfo, resourceManager));
-		for(HAPExecutableHandlerEvent eventHandler : this.m_eventHandlers.values()) {	out.addAll(eventHandler.getResourceDependency(runtimeInfo, resourceManager));	}
-		out.addAll(this.m_component.getResourceDependency(runtimeInfo, resourceManager));
-		return out;
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
+		this.buildResourceDependencyForExecutable(dependency, m_inDataAssociations, runtimeInfo, resourceManager);
+		this.buildResourceDependencyForExecutable(dependency, m_outDataAssociations, runtimeInfo, resourceManager);
+		this.buildResourceDependencyForExecutable(dependency, m_component, runtimeInfo, resourceManager);
+		for(HAPExecutableHandlerEvent eventHandler : this.m_eventHandlers.values()) {	dependency.addAll(eventHandler.getResourceDependency(runtimeInfo, resourceManager));	}
 	}
+	
+//	@Override
+//	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+//		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
+//		out.addAll(this.m_inDataAssociations.getResourceDependency(runtimeInfo, resourceManager));
+//		out.addAll(this.m_outDataAssociations.getResourceDependency(runtimeInfo, resourceManager));
+//		for(HAPExecutableHandlerEvent eventHandler : this.m_eventHandlers.values()) {	out.addAll(eventHandler.getResourceDependency(runtimeInfo, resourceManager));	}
+//		out.addAll(this.m_component.getResourceDependency(runtimeInfo, resourceManager));
+//		return out;
+//	}
 }
