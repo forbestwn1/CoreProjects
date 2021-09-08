@@ -25,7 +25,7 @@ var node_createUIDecorationRequest = function(decorationId, configureValue, hand
 			var decoration = loc_createDecoration(page.getUIView(), page.getStyle());
 			if(configureValue==undefined)  return decoration; 
 			//update decoration with configure
-			return decoration.getUpdateContextRequest(configureValue, {
+			return decoration.getUpdateContextByNameRequest(configureValue, {
 				success : function(request){
 					return decoration;
 				}
@@ -142,6 +142,13 @@ var loc_createDecoration = function(uiView, style){
 			return out;
 		},
 		
+		getUpdateContextByNameRequest : function(parms, handlers, requestInfo){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+			out.addRequest(loc_uiView.getUpdateContextByNameRequest(parms));
+			if(loc_childUI!=undefined) out.addRequest(loc_childUI.getUpdateContextByNameRequest(parms));
+			return out;
+		},
+
 		command : function(command, parms, requestInfo){
 			//decoration process command first
 			var result = loc_uiView.command(node_COMMONCONSTANT.DECORATION_COMMAND_COMMANDPROCESS, 

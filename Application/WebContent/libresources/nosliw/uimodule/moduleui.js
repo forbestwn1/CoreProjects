@@ -139,11 +139,20 @@ var loc_createModuleUI = function(moduleUIDef, page, moduleContextIODataSet){
 		return out;
 	};
 	
+	var loc_updatePageContextByNameRequest = function(contextData, handlers, request){
+		loc_valueChangeEventEnabled = false;
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_page.getUpdateContextByNameRequest(contextData, {
+			success : function(request){  loc_valueChangeEventEnabled = true;  }
+		}));
+		return out;
+	};
+	
 	var loc_getUpdateSystemDataRequest = function(domain, systemData, handlers, request){
 		//update system data
 		loc_systemData.updateSystemData(domain, systemData);
 		//update page context
-		return loc_updatePageContextRequest(loc_systemData.buildSystemDataContextByDomain(domain), handlers, request);
+		return loc_updatePageContextByNameRequest(loc_systemData.buildSystemDataContextByDomain(domain), handlers, request);
 	};
 	
 	//data association from module context to page context

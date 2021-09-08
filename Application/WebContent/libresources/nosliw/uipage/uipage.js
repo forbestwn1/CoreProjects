@@ -139,6 +139,9 @@ var node_createUIPage = function(uiView, style){
 		getUpdateContextRequest : function(parms, handlers, requestInfo){	return loc_getCurrent().getUpdateContextRequest(parms, handlers, requestInfo);	},
 		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},
 
+		getUpdateContextByNameRequest : function(parms, handlers, requestInfo){	return loc_getCurrent().getUpdateContextByNameRequest(parms, handlers, requestInfo);	},
+		executeUpdateContextByNameRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextByNameRequest(parms, handlers, requestInfo));	},
+
 		//get page context value in the format of context group
 		getBuildContextGroupRequest : function(handlers, requestInfo){		return node_contextUtility.buildContextGroupRequest(loc_getCurrent().getContextElements(), handlers, requestInfo);	},
 		

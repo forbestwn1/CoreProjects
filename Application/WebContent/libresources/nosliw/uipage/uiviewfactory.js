@@ -380,6 +380,12 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		return out;
 	};
 	
+	var loc_getContextRootIdByName = function(name){
+		var out = loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLECOMPONENT_VALUESTRUCTURE][node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUESTRUCTURE_NAME2ID][name];
+		if(out==undefined)  out = name;
+		return out;
+	};
+	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(uiBody, attributes, id, parent, context, requestInfo){
 
@@ -600,6 +606,13 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		
 		getContext : function(){return loc_context;},
 		getUpdateContextRequest : function(values, handlers, requestInfo){	return loc_context.getUpdateContextRequest(values, handlers, requestInfo);		},
+		getUpdateContextByNameRequest : function(values, handlers, requestInfo){
+			var valuesById = {};
+			_.each(values, function(value, name){
+				valuesById[loc_getContextRootIdByName(name)] = value;
+			});
+			return this.getUpdateContextRequest(valuesById, handlers, requestInfo);
+		},
 		getContextElements : function(){  return this.getContext().prv_elements; },
 
 		getStartElement : function(){  return loc_viewContainer.getStartElement();   },
