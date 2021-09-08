@@ -14,11 +14,13 @@
 			    </div>
 			</div>
 
+			<nosliw-contextvalue/>
+
 			<div id="pleaseEmbed"/>
 		</div>
 </body>
 
-	<scripts>
+	<script>
 	{
 		transferBack : function(info, env){
 			event.preventDefault();
@@ -29,7 +31,7 @@
 			env.trigueNosliwEvent("module_application_refresh", info.eventData);
 		},
 	}
-	</scripts>
+	</script>
 
 
 	<valuestructure>
@@ -58,24 +60,20 @@
 	}
 	</valuestructure>
 
-	<events>
+	<event>
 	[
 		{
-			name : "transferBack",
-			data : {
-				element : {
-				}
-			}
+			"name" : "transferBack",
+			"output" : [
+			]
 		},
 		{
-			name : "refresh",
-			data : {
-				element : {
-				}
-			}
+			"name" : "refresh",
+			"output" : [
+			]
 		}
 	]
-	</events>
+	</event>
 
 </html>
 

@@ -80,7 +80,7 @@ var loc_moduleSetting = {
 		application : {
 			uiDecoration : 
 			{
-				parts1 : [
+				parts : [
 					{
 						id: 'Decoration_application_header_framework7'
 					}

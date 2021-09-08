@@ -70,7 +70,7 @@ $(document).on("nosliwActive", function(){
 	}, configureParms, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, parms.name, undefined, parms.setting, {
 		success : function(request, componentObj){
 			var lifecycleObj = node_getComponentLifecycleInterface(componentObj);
-//			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE, undefined, request);
+			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE, undefined, request);
 		}
 	});
 	

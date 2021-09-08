@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_dataUtility;
 	var node_createContext;
 	var node_createContextVariableInfo;
+	var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = {
@@ -190,6 +191,7 @@ nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", funct
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

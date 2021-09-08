@@ -196,18 +196,19 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("moduleUIEventHandler", undefined), undefined, requestInfo);
 			
 			var eventHandler = ui.getEventHandler(eventName);
-			//data association
-			var inDataAssociation = eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLEREVENT_IN];
-			out.addRequest(node_createDataAssociation(node_createIODataSet(eventDataInfo.getEventData()), inDataAssociation, loc_out.prv_componentData.contextDataSet).getExecuteRequest());
-			
-			//task
-			var steps = eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLEREVENT_HANDLER][node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLER_STEPS];
-			_.each(steps, function(step, i){
-				out.addRequest(loc_out.getComponentEnv().getExecuteTaskByNameRequest(step));
-			});
-			
-			node_requestServiceProcessor.processRequest(out);
-
+			if(eventHandler!=undefined){
+				//data association
+				var inDataAssociation = eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLEREVENT_IN];
+				out.addRequest(node_createDataAssociation(node_createIODataSet(eventDataInfo.getEventData()), inDataAssociation, loc_out.prv_componentData.contextDataSet).getExecuteRequest());
+				
+				//task
+				var steps = eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLEREVENT_HANDLER][node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLER_STEPS];
+				_.each(steps, function(step, i){
+					out.addRequest(loc_out.getComponentEnv().getExecuteTaskByNameRequest(step));
+				});
+				
+				node_requestServiceProcessor.processRequest(out);
+			}
 			
 			loc_trigueEvent(eventName, eventDataInfo, requestInfo);
 			
