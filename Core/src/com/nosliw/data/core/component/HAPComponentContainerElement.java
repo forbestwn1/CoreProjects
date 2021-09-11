@@ -15,7 +15,6 @@ import com.nosliw.data.core.common.HAPUtilityWithValueStructure;
 import com.nosliw.data.core.component.attachment.HAPAttachment;
 import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -139,30 +138,6 @@ public abstract class HAPComponentContainerElement extends HAPSerializableImp im
 
 	@Override
 	public void mergeBy(HAPWithAttachment parent, String mode) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Set<HAPHandlerLifecycle> getLifecycleAction() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addLifecycleAction(HAPHandlerLifecycle lifecycleAction) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Set<HAPDefinitionHandlerEvent> getEventHandlers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addEventHandler(HAPDefinitionHandlerEvent eventHandler) {
 		// TODO Auto-generated method stub
 		
 	}

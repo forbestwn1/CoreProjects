@@ -25,12 +25,6 @@ public class HAPParserComponent {
 	public static void parseComponent(HAPDefinitionComponentImp component, JSONObject jsonObj, HAPManagerTask taskMan) {
 		parseComplextResourceDefinition(component, jsonObj);
 		
-		//lifecycle
-		parseLifecycleAction(component, jsonObj);
-
-		//event handler
-		parseEventHandler(component, jsonObj);
-		
 		parseCommmendDefinition(component, jsonObj);
 
 		parseEventDefinition(component, jsonObj);
@@ -77,18 +71,6 @@ public class HAPParserComponent {
 			}
 		}
 		return withEventHandler;
-	}
-	
-	public static HAPWithLifecycleAction parseLifecycleAction(HAPWithLifecycleAction withLifecycelAction, JSONObject jsonObj) {
-		JSONArray lifecycleActionArray = jsonObj.optJSONArray(HAPWithLifecycleAction.LIFECYCLE);
-		if(lifecycleActionArray!=null) {
-			for(int i=0; i<lifecycleActionArray.length(); i++) {
-				HAPHandlerLifecycle lifecycleAction = new HAPHandlerLifecycle();
-				lifecycleAction.buildObject(lifecycleActionArray.getJSONObject(i), HAPSerializationFormat.JSON);
-				withLifecycelAction.addLifecycleAction(lifecycleAction);
-			}
-		}
-		return withLifecycelAction;
 	}
 	
 	public static void parseServiceUseDefinition(HAPWithService serviceUse, JSONObject jsonObj) {

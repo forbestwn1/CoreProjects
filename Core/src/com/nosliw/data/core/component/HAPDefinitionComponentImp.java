@@ -22,9 +22,6 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 
 	private HAPDefinitionTaskSuite m_taskSuite;
 	
-	//lifecycle definition
-	private Set<HAPHandlerLifecycle> m_lifecycleAction;
-	
 	//event handlers
 	private Set<HAPDefinitionHandlerEvent> m_eventHandlers;
 
@@ -36,7 +33,6 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 	private List<HAPDefinitionCommand> m_commands;
 	
 	public HAPDefinitionComponentImp() {
-		this.m_lifecycleAction = new HashSet<HAPHandlerLifecycle>();
 		this.m_eventHandlers = new HashSet<HAPDefinitionHandlerEvent>();
 		this.m_serviceUse = new LinkedHashMap<String, HAPDefinitionServiceUse>();
 		this.m_commands = new ArrayList<HAPDefinitionCommand>();
@@ -61,16 +57,6 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
 
-	@Override
-	public Set<HAPHandlerLifecycle> getLifecycleAction(){    return this.m_lifecycleAction;    }
-	@Override
-	public void addLifecycleAction(HAPHandlerLifecycle lifecycleAction) {    this.m_lifecycleAction.add(lifecycleAction);    }
- 	
-	@Override
-	public Set<HAPDefinitionHandlerEvent> getEventHandlers(){   return this.m_eventHandlers;   }
-	@Override
-	public void addEventHandler(HAPDefinitionHandlerEvent eventHandler) {  this.m_eventHandlers.add(eventHandler);   }
- 
 	@Override
 	public HAPDefinitionServiceUse getService(String name) {   return this.m_serviceUse.get(name);   }
 	
@@ -102,12 +88,6 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 	protected void cloneToComponent(HAPDefinitionComponent component, boolean cloneValueStructure) {
 		component.setId(this.getId());
 		this.cloneToComplexResourceDefinition(component, cloneValueStructure);
-		for(HAPHandlerLifecycle handler : this.m_lifecycleAction) {
-			component.addLifecycleAction(handler.cloneLifecycleHander());
-		}
-		for(HAPDefinitionHandlerEvent handler : this.m_eventHandlers) {
-			component.addEventHandler(handler.cloneEventHandler());
-		}
 		for(HAPDefinitionCommand command : this.m_commands) {
 			component.addCommand(command.cloneCommandDefinition());
 		}

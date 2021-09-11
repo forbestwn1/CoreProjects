@@ -17,6 +17,10 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+//task handle transaction ( multiple transition steps )
+//    handle success
+//    handle roll back when fail
+//    trigue event when task finish
 var node_createStateMachineTask = function(nexts, stateMachine){
 
 	var loc_stateMachine = stateMachine;
@@ -32,7 +36,7 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 	var loc_processNext = function(request){
 		loc_currentNext++;
 		if(loc_currentNext>=loc_nexts.length){
-			//finish
+			//finish successfully
 			loc_stateMachine.prv_finishTask();
 			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, undefined, request);
 		}
@@ -46,8 +50,8 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 					loc_currentNext = loc_currentNext - 2;
 					node_requestServiceProcessor.processRequest(loc_getRollBackRequest({
 						success : function(request){
+							//finish fail
 							loc_stateMachine.prv_finishTask();
-							//finish
 							loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, eventData, request);
 						}
 					}, request));
