@@ -9,16 +9,5 @@
 	}
 	</scripts>
 
-
-	<contexts>
-	{
-	}
-	</contexts>
-
-	<events>
-	[
-	]
-	</events>
-
 </html>
 

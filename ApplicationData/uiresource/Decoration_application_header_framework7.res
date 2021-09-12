@@ -33,47 +33,47 @@
 	}
 	</script>
 
-
-	<valuestructure>
+	<component>
 	{
-		"group" : {
-			"public" : {
-				"flat" : {
-					"nosliw_ui_info" : {
-						"definition": {
-							"child" : {
-								"id" : {},
-								"title" : {}
+		"valuestructure":
+		{
+			"group" : {
+				"public" : {
+					"flat" : {
+						"nosliw_ui_info" : {
+							"definition": {
+								"child" : {
+									"id" : {},
+									"title" : {}
+								}
 							}
-						}
-					},
-					"nosliw_module_application_ui_status" : {
-						"definition": {
-							"child" : {
-								"index" : {},
+						},
+						"nosliw_module_application_ui_status" : {
+							"definition": {
+								"child" : {
+									"index" : {},
+								}
 							}
-						}
-					},
+						},
+					}
 				}
 			}
-		}
-	}
-	</valuestructure>
-
-	<event>
-	[
-		{
-			"name" : "transferBack",
-			"output" : [
-			]
 		},
-		{
-			"name" : "refresh",
-			"output" : [
-			]
-		}
-	]
-	</event>
+		
+		"event" : [
+			{
+				"name" : "transferBack",
+				"output" : [
+				]
+			},
+			{
+				"name" : "refresh",
+				"output" : [
+				]
+			}
+		],
+		
+	}
+	</component>
 
 </html>
-

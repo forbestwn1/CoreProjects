@@ -14,51 +14,27 @@
 	}
 	</script>
 
-	<task>
-	[
-	]
-	</task>
-
-	<valuestructure>
+	<component>
 	{
-		"group" : {
-			"public" : {
-				"flat" : {
-					"bbb":{
-						definition : {
-							"criteria": "test.string;1.0.0",
+		"valuestructure":
+		{
+			"group" : {
+				"public" : {
+					"flat" : {
+						"bbb":{
+							definition : {
+								"criteria": "test.string;1.0.0",
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "This is my world bbb!"
+							}
 						},
-						"defaultValue": {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "This is my world aaa!"
-						}
 					},
-				},
+				}
 			}
-		}
+		},
 	}
-	</valuestructure>
+	</component>
 
-	
-	<contextref>
-	[
-	]
-	</contextref>
-
-	
-	<attachment>
-	{
-	}
-	</attachment>
-
-	<event>
-	[
-	]
-	</event>
-	
-	<commands>
-	[
-	]
-	</commands>
-	
 </html>

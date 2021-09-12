@@ -16,70 +16,51 @@
 	}
 	</script>
 
-	<task>
-	[
+	<component>
+	{
+		"valuestructure":
 		{
-			"name" : "trigueEvent",
-			"taskType": "activity",
-			"activityType": "Event_trigue",
-			"configuration" : {
-				"eventName" : "event1"
+			"group" : {
+				"public" : {
+					"flat" : {
+						"aaa":{
+							definition : {
+								"criteria": "test.string;1.0.0",
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "This is my world aaa!"
+							}
+						},
+					},
+				}
 			}
 		},
-	
-	]
-	</task>
-
-	<valuestructure>
-	{
-		"group" : {
-			"public" : {
-				"flat" : {
-					"aaa":{
-						definition : {
-							"criteria": "test.string;1.0.0",
-						},
-						"defaultValue": {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "This is my world aaa!"
-						}
-					},
-				},
-			}
-		}
-	}
-	</valuestructure>
-
-	
-	<contextref>
-	[
-	]
-	</contextref>
-
-	
-	<attachment>
-	{
-	}
-	</attachment>
-
-	<event>
-	[
-		{
-			"name" : "event1",
-			"output" : [
-				{
-					"name" : "eventData1",
-					"reference" : "aaa"
+		
+		"task" : [
+			{
+				"name" : "trigueEvent",
+				"taskType": "activity",
+				"activityType": "Event_trigue",
+				"configuration" : {
+					"eventName" : "event1"
 				}
-			]
-		}
-	]
-	</event>
-	
-	<commands>
-	[
-	]
-	</commands>
-	
+			},
+		],
+		
+		"event" : [
+			{
+				"name" : "event1",
+				"output" : [
+					{
+						"name" : "eventData1",
+						"reference" : "aaa"
+					}
+				]
+			}
+		],
+		
+	}
+	</component>
 </html>
 
