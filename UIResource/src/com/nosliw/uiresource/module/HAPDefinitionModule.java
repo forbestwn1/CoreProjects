@@ -10,9 +10,9 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPDefinitionComponent;
 import com.nosliw.data.core.component.HAPDefinitionComponentImp;
-import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPInfoChildResource;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
@@ -91,4 +91,7 @@ public class HAPDefinitionModule extends HAPDefinitionComponentImp{
 		}
 		return out;
 	}
+
+	@Override
+	public String getValueStructureTypeIfNotDefined() {  return HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP;  }
 }

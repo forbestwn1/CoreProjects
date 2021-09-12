@@ -50,215 +50,202 @@
 	}
 	</script>
 
-	<task>
-	[
-		{
-			"name" : "submitSimpleServiceWithoutInterface2",
-			"taskType": "activity",
-			"activityType": "Service_request",
-			"configuration" : {
-				"serviceUse" : "simpleServiceWithoutInterface"
-			}
-		},
-	
-		{
-			"name" : "trigueEvent",
-			"taskType": "activity",
-			"activityType": "Event_trigue",
-			"configuration" : {
-				"eventName" : "event1"
-			}
-		},
-	
-		{
-			"name" : "trigueEventForCommand",
-			"taskType": "activity",
-			"activityType": "Event_trigue",
-			"configuration" : {
-				"eventName" : "event1"
-			}
-		},
-
-	]
-	</task>
-
-	<valuestructure>
+	<component>
 	{
-		"group" : {
-			"public" : {
-				"flat" : {
-					"aaa":{
-						definition : {
-							"criteria": "test.string;1.0.0",
-						},
-						"defaultValue": {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "This is my world!"
-						}
-					},
-
-					"bbb":{
-						definition : {
-							"criteria": "test.string;1.0.0",
-						},
-						"defaultValue": {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "This is my world!"
-						}
-					},
-				},
-				"reference" : [
-					"internal", "*forlistservice_1_ex"
-				]
-			}
-		}
-	}
-	</valuestructure>
-
-	
-	<contextref>
-	[
-	]
-	</contextref>
-
-	
-	<service>
-	[
+		"valuestructure":
 		{
-			"name" : "simpleServiceWithoutInterface",
-			"status" : "enable",
-			"provider" : "simpleServiceWithInterfaceProvider",
-			"info" : {
-				"enhanceContext" : "true"
-			},
-			"dataAssociation" :{
-				"in" : {
-					"mapping" : {
-						"parm1" : {
-							"definition" : {
-								"path" : "aaa"
+			"group" : {
+				"public" : {
+					"flat" : {
+						"aaa":{
+							definition : {
+								"criteria": "test.string;1.0.0",
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "This is my world!"
 							}
 						},
-						"parm2" : {
-							"definition" : {
-								"path" : "ccc"
+	
+						"bbb":{
+							definition : {
+								"criteria": "test.string;1.0.0",
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "This is my world!"
+							}
+						},
+					},
+					"reference" : [
+						"internal", "*forlistservice_1_ex"
+					]
+				}
+			}
+		},
+		
+		"task" : [
+			{
+				"name" : "submitSimpleServiceWithoutInterface2",
+				"taskType": "activity",
+				"activityType": "Service_request",
+				"configuration" : {
+					"serviceUse" : "simpleServiceWithoutInterface"
+				}
+			},
+		
+			{
+				"name" : "trigueEvent",
+				"taskType": "activity",
+				"activityType": "Event_trigue",
+				"configuration" : {
+					"eventName" : "event1"
+				}
+			},
+		
+			{
+				"name" : "trigueEventForCommand",
+				"taskType": "activity",
+				"activityType": "Event_trigue",
+				"configuration" : {
+					"eventName" : "event1"
+				}
+			},
+	
+		],
+		
+		"service" : [
+			{
+				"name" : "simpleServiceWithoutInterface",
+				"status" : "enable",
+				"provider" : "simpleServiceWithInterfaceProvider",
+				"info" : {
+					"enhanceContext" : "true"
+				},
+				"dataAssociation" :{
+					"in" : {
+						"mapping" : {
+							"parm1" : {
+								"definition" : {
+									"path" : "aaa"
+								}
+							},
+							"parm2" : {
+								"definition" : {
+									"path" : "ccc"
+								}
 							}
 						}
-					}
-				},
-				"out" : {
-					"success" : {
-						"mapping" : {
-							"ddd" : {
-								"definition" : {
-									"path" : "simpleOutput2"
+					},
+					"out" : {
+						"success" : {
+							"mapping" : {
+								"ddd" : {
+									"definition" : {
+										"path" : "simpleOutput2"
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-		}
-	]
-	</service>
-
-
-	<attachment>
-	{
-		"service" : [
-			{
-				"name": "simpleServiceWithoutInterfaceProvider",
-				"referenceId" : "simpleoutput_refinterface"
-			},	
-			{
-				"name": "simpleServiceWithInterfaceProvider",
-				"referenceId" : "simpleoutput_internalinterface"
-			},	
 		],
-		"dataexpression" : [
-		],
-		"value" : [
+		
+		"event" : [
 			{
-				"name": "constantFromAtt1",
-				"entity" : 
-				{
-					"value" : {
-						dataTypeId: "test.string;1.0.0",
-						value: "Constant in attachment"
+				"name" : "event1",
+				"output" : [
+					{
+						"name" : "eventData1",
+						"reference" : "aaa"
 					}
-				}
-			},
-			{
-				"name": "constantFromAtt2",
-				"entity" : 
-				{
-					"value" : {
-							dataTypeId: "test.integer",
-							value: 15
-					}
-				}
-			},
+				]
+			}
 		],
-		"valuestructure" : [
+		
+		"command" : [
 			{
-				"name": "internal",
-				"entity": {
-					"internal": {
-						"definition": {
-							"criteria": "test.float;1.0.0"
+				"name" : "command1",
+				"task" : "trigueEventForCommand",
+				"request" : [
+					{
+						"name" : "parm1",
+						"displayName" : "Parm1",
+						"dataInfo" : {
 						},
-						"defaultValue": {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "Internal variable!"
-						}
-					},
-				} 
-			},
-		]
-	}
-	</attachment>
-
-	<event>
-	[
-		{
-			"name" : "event1",
-			"output" : [
-				{
-					"name" : "eventData1",
-					"reference" : "aaa"
-				}
-			]
-		}
-	]
-	</event>
-	
-	<commands>
-	[
-		{
-			"name" : "command1",
-			"task" : "trigueEventForCommand",
-			"request" : [
-				{
-					"name" : "parm1",
-					"displayName" : "Parm1",
-					"dataInfo" : {
-					},
-					"reference": "aaa",
-				},			
-			],
-			"result" : {
-				"success" : {
-					"output" : [
-						{
-							"name" : "output1",
-							"reference" : "aaa"
-						}
-					]
+						"reference": "aaa",
+					},			
+				],
+				"result" : {
+					"success" : {
+						"output" : [
+							{
+								"name" : "output1",
+								"reference" : "aaa"
+							}
+						]
+					}
 				}
 			}
-		}
-	]
-	</commands>
-	
+		],
+		
+		
+		"attachment" : {
+			"service" : [
+				{
+					"name": "simpleServiceWithoutInterfaceProvider",
+					"referenceId" : "simpleoutput_refinterface"
+				},	
+				{
+					"name": "simpleServiceWithInterfaceProvider",
+					"referenceId" : "simpleoutput_internalinterface"
+				},	
+			],
+			"dataexpression" : [
+			],
+			"value" : [
+				{
+					"name": "constantFromAtt1",
+					"entity" : 
+					{
+						"value" : {
+							dataTypeId: "test.string;1.0.0",
+							value: "Constant in attachment"
+						}
+					}
+				},
+				{
+					"name": "constantFromAtt2",
+					"entity" : 
+					{
+						"value" : {
+								dataTypeId: "test.integer",
+								value: 15
+						}
+					}
+				},
+			],
+			"valuestructure" : [
+				{
+					"name": "internal",
+					"entity": {
+						"internal": {
+							"definition": {
+								"criteria": "test.float;1.0.0"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "Internal variable!"
+							}
+						},
+					} 
+				},
+			]
+		},
+		
+	}
+	</component>
+
 </html>
 

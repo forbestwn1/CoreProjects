@@ -155,7 +155,7 @@
 	"command" : [
 	],
 	
-	"services":
+	"service":
 	[
 		{
 			"name" : "simpleServiceWithoutInterface",

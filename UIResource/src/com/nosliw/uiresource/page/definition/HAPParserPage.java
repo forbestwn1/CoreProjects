@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Attribute;
@@ -17,26 +15,16 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import com.nosliw.common.configure.HAPConfigure;
-import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
-import com.nosliw.data.core.component.command.HAPDefinitionCommand;
-import com.nosliw.data.core.component.event.HAPDefinitionEvent;
-import com.nosliw.data.core.component.valuestructure.HAPValueStructureGroupInComponent;
-import com.nosliw.data.core.component.valuestructure.HAParserComponentValueStructure;
+import com.nosliw.data.core.component.HAPParserComponent;
 import com.nosliw.data.core.resource.HAPParserResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.data.core.script.expression.imp.literate.HAPUtilityScriptLiterate;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPUtilityTask;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 
 /*
@@ -44,6 +32,7 @@ import com.nosliw.uiresource.common.HAPIdGenerator;
  * the id index start with 1 every processing start so that for same ui resource, we would get same result
  */ 
 public class HAPParserPage implements HAPParserResourceDefinition{
+	public static final String COMPONENT = "component";
 
 	public static final String EVENT = "event";
 	public static final String TASK = "task";
@@ -113,21 +102,9 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 	private void parseUIDefinitionUnit(HAPDefinitionUIUnit uiUnit, Element unitEle, HAPDefinitionUIUnit parentUIUnit){
 		//process script block
 		this.parseUnitScriptBlocks(unitEle, uiUnit);
-		//process value structure block
-		this.parseUnitValueStructureBlocks(unitEle, uiUnit);
 
-		//parse handlers
-		parseUnitHandlers(unitEle, uiUnit);
-		
-		//parse event definition block
-		this.parseEventBlocks(unitEle, uiUnit);
-		//parse service definition block
-		this.parseUnitServiceBlocks(unitEle, uiUnit);
-		//parse command definition block
-		this.parseCommandBlocks(unitEle, uiUnit);
-		
-		//parse attachment
-		parseAttachmentBlocks(unitEle, uiUnit);
+		//parse as component 
+		parseComponent(unitEle, uiUnit);
 		
 		//process key attribute
 		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType()))   parseKeyAttributeOnTag(unitEle, parentUIUnit, true);
@@ -157,6 +134,17 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		uiUnit.setContent(unitEle.html());
 	}
 
+	private void parseComponent(Element parentEle, HAPDefinitionUIUnit uiUnit) {
+		List<Element> componentEles = HAPUtilityUIResourceParser.getChildElementsByTag(parentEle, COMPONENT);
+		JSONObject componentObj = null;
+		if(componentEles.size()>0) {
+			Element componentEle = componentEles.get(0);
+			componentObj = new JSONObject(componentEle.html());
+		}
+		HAPParserComponent.parseComponent(uiUnit, componentObj, this.m_runtimeEnv.getTaskManager());
+		for(Element ele : componentEles)  ele.remove();
+	}
+	
 	/*
 	 * process all the descendant tags under element
 	 */
@@ -225,124 +213,11 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		parentUnit.setStyle(style);
 	}
 
-	//parse handlers
-	private void parseUnitHandlers(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, TASK);
-		for(Element childEle : childEles){
-			try {
-				JSONArray tasksObjArray = new JSONArray(childEle.html());
-				for(int i=0; i<tasksObjArray.length(); i++) {
-					JSONObject taskJson = tasksObjArray.getJSONObject(i);
-					HAPDefinitionTask task = HAPUtilityTask.parseTask(taskJson, resourceUnit, this.m_runtimeEnv.getTaskManager());
-					resourceUnit.addTask(task);
-				}
-				break;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		for(Element childEle : childEles)  childEle.remove();
-	}
-
-
-	private void parseEventBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EVENT);
-		for(Element childEle : childEles){
-			try {
-				JSONArray eventListJson = new JSONArray(childEle.html());
-				for(int i=0; i<eventListJson.length(); i++) {
-					JSONObject eventJson = eventListJson.getJSONObject(i);
-					HAPDefinitionEvent eventDef = new HAPDefinitionEvent();
-					eventDef.buildObject(eventJson, HAPSerializationFormat.JSON);
-					resourceUnit.addEvent(eventDef);
-				}
-				break;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		for(Element childEle : childEles)  childEle.remove();
-	}
-
-	private void parseCommandBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, COMMAND);
-		for(Element childEle : childEles){
-			try {
-				String html = childEle.html();
-				JSONArray commandListJson = new JSONArray(html);
-				for(int i=0; i<commandListJson.length(); i++) {
-					JSONObject commandJson = commandListJson.getJSONObject(i);
-					HAPDefinitionCommand commandDef = new HAPDefinitionCommand();
-					commandDef.buildObject(commandJson, HAPSerializationFormat.JSON);
-					resourceUnit.addCommand(commandDef);
-				}
-				break;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		for(Element childEle : childEles)  childEle.remove();
-	}
-	
-
-	private void parseAttachmentBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, ATTACHMENT);
-		for(Element childEle : childEles){
-			try {
-				JSONObject attachmentDefJson = new JSONObject(getElementText(childEle));
-				HAPUtilityAttachment.parseDefinition(attachmentDefJson, resourceUnit.getAttachmentContainer());
-				break;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		for(Element childEle : childEles)  childEle.remove();
-	}
-	
 	private String getElementText(Element ele) {
 		return StringEscapeUtils.unescapeHtml(ele.html());
 //		childEle.ownText().html()
 	}
 	
-	private void parseUnitServiceBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SERVICE);
-		for(Element childEle : childEles){
-			JSONArray serviceUseListJson = new JSONArray(childEle.html());
-			if(serviceUseListJson!=null) {
-				for(int i=0; i<serviceUseListJson.length(); i++) {
-					JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
-					if(HAPUtilityEntityInfo.isEnabled(serviceUseJson)) {
-						HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
-						serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
-						resourceUnit.addService(serviceUseDef);
-					}
-				}
-			}
-			break;
-		}
-		for(Element childEle : childEles)  childEle.remove();
-	}
-
-	private void parseUnitValueStructureBlocks(Element ele, HAPDefinitionUIUnit resourceUnit){
-		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, VALUESTRUCTURE);
-
-		JSONObject jsonObj = null;
-		for(Element childEle : childEles){
-			try {
-				jsonObj = HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html()));
-				break;
-			} catch (JSONException e) {
-				e.printStackTrace();
-				System.out.println(childEle.html());
-			}
-		}
-
-		HAPValueStructureGroupInComponent groupValueStructureInComponent = (HAPValueStructureGroupInComponent)HAParserComponentValueStructure.parseComponentValueStructure(jsonObj, HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP);
-		resourceUnit.setValueStructure(groupValueStructureInComponent);
-
-		for(Element childEle : childEles)  childEle.remove();
-	}
-
 	/*
 	 * process all script blocks under unit
 	 */

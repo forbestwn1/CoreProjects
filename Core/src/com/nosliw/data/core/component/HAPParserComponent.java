@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.command.HAPWithCommand;
@@ -23,6 +24,9 @@ public class HAPParserComponent {
 	}
 	
 	public static void parseComponent(HAPDefinitionComponentImp component, JSONObject jsonObj, HAPManagerTask taskMan) {
+		
+		if(jsonObj==null)  jsonObj = new JSONObject();
+		
 		parseComplextResourceDefinition(component, jsonObj);
 		
 		parseCommmendDefinition(component, jsonObj);
@@ -35,6 +39,7 @@ public class HAPParserComponent {
 	}
 
 	public static void parseComplextResourceDefinition(HAPResourceDefinitionComplexImp complexResourceDef, JSONObject jsonObj) {
+		
 		//entity info
 		complexResourceDef.buildEntityInfoByJson(jsonObj);
 		
@@ -44,11 +49,9 @@ public class HAPParserComponent {
 			HAPUtilityAttachment.parseDefinition(pageInfoObj, complexResourceDef.getAttachmentContainer());
 		}
 		
-		//context
-		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPDefinitionComponentImp.VALUESTRUCTURE);
-		if(contextJsonObj!=null) {
-			complexResourceDef.setValueStructure(HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj));
-		}
+		//value structure
+		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPWithValueStructure.VALUESTRUCTURE);
+		complexResourceDef.setValueStructure(HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj, complexResourceDef.getValueStructureTypeIfNotDefined()));
 	}
 	
 	public static HAPWithTask parseTask(HAPWithTask withTask, JSONObject jsonObj, HAPDefinitionEntityComplex complexEntity, HAPManagerTask taskMan) {

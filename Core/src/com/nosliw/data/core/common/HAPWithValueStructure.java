@@ -11,4 +11,5 @@ public interface HAPWithValueStructure {
 	HAPWrapperValueStructure getValueStructureWrapper();
 	void setValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper);
 
+	String getValueStructureTypeIfNotDefined();
 }

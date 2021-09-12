@@ -10,7 +10,7 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 public interface HAPWithService {
 
 	@HAPAttribute
-	public static String SERVICEUSE = "serviceUse";
+	public static String SERVICE = "service";
 
 	HAPDefinitionServiceUse getService(String name);
 	

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPDefinitionComponentImp;
 import com.nosliw.data.core.component.HAPNameMapping;
 
@@ -117,4 +118,7 @@ public abstract class HAPDefinitionUIUnit extends HAPDefinitionComponentImp{
 	
 	public void postRead(){}
 	
+	@Override
+	public String getValueStructureTypeIfNotDefined() {  return HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP;  }
+
 }

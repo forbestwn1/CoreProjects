@@ -10,6 +10,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRoot;
 import com.nosliw.data.core.structure.HAPRootStructure;
+import com.nosliw.data.core.structure.HAPStructure;
 
 public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitionImp{
 
@@ -42,7 +43,7 @@ public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitio
 	public List<HAPRootStructure> getAllRoots(){   return new ArrayList<HAPRootStructure>();      }
 
 	@Override
-	public HAPValueStructure cloneStructure() {
+	public HAPStructure cloneStructure() {
 		return  new HAPValueStructureDefinitionEmpty(this.m_isFlat);
 	}
 

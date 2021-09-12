@@ -15,11 +15,11 @@ public class HAParserComponentValueStructure {
 		return parseComponentValueStructure(jsonObj, null);
 	}
 	
-	public static HAPValueStructureInComponent parseComponentValueStructure(JSONObject jsonObj, String typeIfEmpty) {
+	public static HAPValueStructureInComponent parseComponentValueStructure(JSONObject jsonObj, String valueStructureTypeIfEmpty) {
 		
 		HAPValueStructureInComponent out = new HAPValueStructureEmptyInComponent();
 
-		HAPValueStructure valueStructure = HAPParserValueStructure.parseValueStructure(jsonObj, typeIfEmpty);
+		HAPValueStructure valueStructure = HAPParserValueStructure.parseValueStructure(jsonObj, valueStructureTypeIfEmpty);
 		
 		if(valueStructure.getStructureType().equals(HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT)) {
 			HAPValueStructureDefinitionFlat flatValueStructure = (HAPValueStructureDefinitionFlat)valueStructure;

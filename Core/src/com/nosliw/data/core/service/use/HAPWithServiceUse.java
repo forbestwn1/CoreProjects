@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 public interface HAPWithServiceUse {
 
 	@HAPAttribute
-	public static String SERVICE = "services";
+	public static String SERVICE = "service";
 	
 	Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions();
 

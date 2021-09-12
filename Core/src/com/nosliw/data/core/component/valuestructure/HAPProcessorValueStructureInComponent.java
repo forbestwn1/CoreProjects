@@ -27,7 +27,7 @@ public class HAPProcessorValueStructureInComponent {
 			HAPContextProcessor attachmentReferenceContext,
 			HAPRuntimeEnvironment runtimeEnv
 			) {
-		HAPValueStructure out = null;
+		HAPValueStructure out = valueStructureInComponent;
 		String type = valueStructureInComponent.getStructureType();
 		if(type.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT)) {
 			HAPValueStructureFlatInComponent flatIn = (HAPValueStructureFlatInComponent)valueStructureInComponent;
