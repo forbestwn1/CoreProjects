@@ -8,12 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.component.valuestructure.HAPProcessorValueStructureInComponent;
-import com.nosliw.data.core.component.valuestructure.HAPValueStructureInComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafValue;
 import com.nosliw.data.core.structure.HAPProcessorEscalate;
@@ -25,7 +20,6 @@ import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
@@ -49,31 +43,6 @@ public class HAPProcessorUIValueStructure {
 
 		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
 			enhanceValueStructure(uiTag);
-		}
-	}
-	
-	//expand context reference by using context definition in attachment
-	public static void expandValueStructureReference(HAPDefinitionUIUnit uiUnitDef, HAPContextProcessor attachmentReferenceContext, HAPRuntimeEnvironment runtimeEnv) {
-		HAPWrapperValueStructure valueStructureWrapper = uiUnitDef.getValueStructureWrapper();
-		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.process((HAPValueStructureInComponent)valueStructureWrapper.getValueStructure(), attachmentReferenceContext, runtimeEnv));
-		
-//		HAPUtilityComponent.resolveContextReference(uiUnitDef.getValueStructureWrapper().getValueStructure(), uiUnitDef.getContextReferences(), uiUnitDef.getAttachmentContainer(), resourceDefMan);
-		
-		//process child tags
-		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
-			expandValueStructureReference(uiTag, attachmentReferenceContext, runtimeEnv);
-		}
-	}
-	
-	public static void enhanceValueStructureByService(HAPDefinitionUIUnit uiUnitDef, HAPRuntimeEnvironment runtimeEnv) {
-		for(String serviceName : uiUnitDef.getAllServices()) {
-			HAPDefinitionServiceUse service = uiUnitDef.getService(serviceName);
-			HAPProcessorServiceUse.enhanceValueStructureByService(service, uiUnitDef.getValueStructureWrapper().getValueStructure(), runtimeEnv);
-		}
-		
-		//child tag
-		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
-			enhanceValueStructureByService(uiTag, runtimeEnv);
 		}
 	}
 	

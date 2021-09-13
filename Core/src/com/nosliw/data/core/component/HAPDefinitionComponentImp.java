@@ -1,7 +1,6 @@
 package com.nosliw.data.core.component;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
-import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
@@ -22,9 +20,6 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 
 	private HAPDefinitionTaskSuite m_taskSuite;
 	
-	//event handlers
-	private Set<HAPDefinitionHandlerEvent> m_eventHandlers;
-
 	//used service
 	private Map<String, HAPDefinitionServiceUse> m_serviceUse;
 	
@@ -33,7 +28,6 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 	private List<HAPDefinitionCommand> m_commands;
 	
 	public HAPDefinitionComponentImp() {
-		this.m_eventHandlers = new HashSet<HAPDefinitionHandlerEvent>();
 		this.m_serviceUse = new LinkedHashMap<String, HAPDefinitionServiceUse>();
 		this.m_commands = new ArrayList<HAPDefinitionCommand>();
 		this.m_events = new ArrayList<HAPDefinitionEvent>();
@@ -100,8 +94,6 @@ abstract public class HAPDefinitionComponentImp extends HAPResourceDefinitionCom
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-//		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildJson(this.m_lifecycleAction, HAPSerializationFormat.JSON));
-//		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
 		jsonMap.put(COMMAND, HAPJsonUtility.buildJson(this.m_commands, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
 		jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_taskSuite, HAPSerializationFormat.JSON));

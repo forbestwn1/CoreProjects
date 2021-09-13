@@ -7,6 +7,8 @@ import com.nosliw.data.core.component.command.HAPProcessorCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
+import com.nosliw.data.core.component.valuestructure.HAPProcessorValueStructureInComponent;
+import com.nosliw.data.core.component.valuestructure.HAPValueStructureInComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
@@ -14,12 +16,32 @@ import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
 import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 import com.nosliw.data.core.task.HAPProcessorTaskSuite;
+import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPProcessorComponent {
 
 	//normalize definition
-	public static void normalize(HAPDefinitionComponent definition, HAPRuntimeEnvironment runtimeEnv) {
-		normalizeService(definition, runtimeEnv);
+	public static HAPDefinitionComponent normalize(HAPDefinitionComponent definition, HAPContextProcessor processContext) {
+		
+		HAPWrapperValueStructure valueStructureWrapper = definition.getValueStructureWrapper();
+		
+		//expand reference in value structure
+		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.expandReference((HAPValueStructureInComponent)valueStructureWrapper.getValueStructure(), processContext));
+
+		//
+		normalizeService(definition, processContext.getRuntimeEnvironment());
+		
+		//enhance value structure according to mapping with service
+		for(String serviceName : definition.getAllServices()) {
+			HAPDefinitionServiceUse service = definition.getService(serviceName);
+			HAPProcessorServiceUse.enhanceValueStructureByService(service, valueStructureWrapper.getValueStructure(), processContext.getRuntimeEnvironment());
+		}
+
+		//enhance value structure according to mapping with command
+		
+		//enhance value structure according to event definition
+		
+		return definition;
 	}
 	
 	//process definition to executable

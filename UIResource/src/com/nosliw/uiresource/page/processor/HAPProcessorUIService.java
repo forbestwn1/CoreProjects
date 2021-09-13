@@ -5,13 +5,8 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
-import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
@@ -20,18 +15,6 @@ import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUIService {
 
-	public static void normalizeService(HAPDefinitionUIUnit uiUnitDef, HAPRuntimeEnvironment runtimeEnv) {
-		for(String serviceName : uiUnitDef.getAllServices()) {
-			HAPDefinitionServiceUse service = uiUnitDef.getService(serviceName);
-			HAPProcessorServiceUse.normalizeServiceUse(service, uiUnitDef.getAttachmentContainer(), runtimeEnv);
-		}
-		
-		//child tag
-		for(HAPDefinitionUITag uiTag : uiUnitDef.getUITags()) {
-			normalizeService(uiTag, runtimeEnv);
-		}
-	}
-	
 	public static void escalate(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
 		HAPExecutableUIBody body = exeUnit.getBody();
 		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {

@@ -6,6 +6,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
@@ -30,22 +32,13 @@ public class HAPProcessorUIPage {
 		
 		//process attachment
 		HAPProcessorAttachment.mergeAttachment(uiPageDef, null);
-		
-		//expand referred context part
-		HAPProcessorUIValueStructure.expandValueStructureReference(uiPageDef, new HAPContextProcessor(uiPageDef, runtimeEnv), runtimeEnv);
-//		HAPWrapperValueStructure valueStructureWrapper = uiPageDef.getValueStructureWrapper();
-//		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.process((HAPValueStructureInComponent)valueStructureWrapper.getValueStructure(), new HAPContextProcessAttachmentReference(uiPageDef, runtimeEnv), runtimeEnv));
 
 		//enhance value structure (error)
 		HAPProcessorUIValueStructure.enhanceValueStructure(uiPageDef);
 		
-		//normalize service use
-		HAPProcessorUIService.normalizeService(uiPageDef, runtimeEnv);
-		
-		//enhance context by service
-		HAPProcessorUIValueStructure.enhanceValueStructureByService(uiPageDef, runtimeEnv);
-		
-		
+		HAPContextProcessor processContext = new HAPContextProcessor(uiPageDef, runtimeEnv);
+		normalize(uiPageDef, processContext);
+
 		//----------------------  Build executable
 		HAPExecutableUIUnitPage out = new HAPExecutableUIUnitPage(uiPageDef, id);
 
@@ -80,6 +73,14 @@ public class HAPProcessorUIPage {
 		return out;
 	}
 
+	public static void normalize(HAPDefinitionUIUnit uiUnitDefinition, HAPContextProcessor processContext) {
+		HAPProcessorComponent.normalize(uiUnitDefinition, processContext);
+		//child tag
+		for(HAPDefinitionUITag uiTag : uiUnitDefinition.getUITags()) {
+			normalize(uiTag, processContext);
+		}
+	}
+	
 	public static void processComponent(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
 		HAPProcessorComponent.process(uiExe.getUIUnitDefinition(), uiExe.getBody(), runtimeEnv);
 		

@@ -32,7 +32,7 @@ public class HAPProcessorServiceUse {
 		return out;
 	}
 	
-	//enhance external context according to mapping with service
+	//enhance external value structure according to mapping with service
 	public static void enhanceValueStructureByService(HAPDefinitionServiceUse definition, HAPValueStructure globalValueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		if(HAPProcessorServiceUse.isEnhanceContextByService(definition)) {
 			//process service use

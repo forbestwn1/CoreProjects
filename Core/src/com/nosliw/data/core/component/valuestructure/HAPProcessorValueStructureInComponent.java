@@ -13,7 +13,6 @@ import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
@@ -22,10 +21,9 @@ import com.nosliw.data.core.valuestructure.resource.HAPResourceDefinitionValueSt
 
 public class HAPProcessorValueStructureInComponent {
 
-	public static HAPValueStructure process(
+	public static HAPValueStructure expandReference(
 			HAPValueStructureInComponent valueStructureInComponent,
-			HAPContextProcessor attachmentReferenceContext,
-			HAPRuntimeEnvironment runtimeEnv
+			HAPContextProcessor processContext
 			) {
 		HAPValueStructure out = valueStructureInComponent;
 		String type = valueStructureInComponent.getStructureType();
@@ -34,7 +32,7 @@ public class HAPProcessorValueStructureInComponent {
 			HAPValueStructureDefinitionFlat flatOut = new HAPValueStructureDefinitionFlat();
 			flatIn.cloneToFlatValueStructure(flatOut);
 			for(HAPInfoEntityReference reference : flatIn.getReferences()) {
-				List<HAPRootStructure> roots = buildRoot(reference, attachmentReferenceContext, runtimeEnv);
+				List<HAPRootStructure> roots = buildRoot(reference, processContext);
 				for(HAPRootStructure root : roots) {
 					flatOut.addRoot(root);
 				}
@@ -49,7 +47,7 @@ public class HAPProcessorValueStructureInComponent {
 			Map<String, List<HAPInfoEntityReference>> referencesByCategary = groupIn.getReferences();
 			for(String categary : referencesByCategary.keySet()) {
 				for(HAPInfoEntityReference reference : referencesByCategary.get(categary)) {
-					List<HAPRootStructure> roots = buildRoot(reference, attachmentReferenceContext, runtimeEnv);
+					List<HAPRootStructure> roots = buildRoot(reference, processContext);
 					for(HAPRootStructure root : roots) {
 						groupOut.addRootToCategary(categary, root);
 					}
@@ -61,13 +59,13 @@ public class HAPProcessorValueStructureInComponent {
 		return out;
 	}
 	
-	private static List<HAPRootStructure> buildRoot(HAPInfoEntityReference referenceInfo, HAPContextProcessor attachmentReferenceContext, HAPRuntimeEnvironment runtimeEnv){
+	private static List<HAPRootStructure> buildRoot(HAPInfoEntityReference referenceInfo, HAPContextProcessor processContext){
 		List<HAPRootStructure> out = new ArrayList<HAPRootStructure>();
 		Object ref = referenceInfo.getReference();
 		if(ref instanceof String && !HAPUtilityResourceId.isResourceIdLiterate((String)ref)) {
 			//attachment
 			String literate = (String)ref;
-			HAPResultProcessAttachmentReference result = attachmentReferenceContext.processAttachmentReference(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, literate);
+			HAPResultProcessAttachmentReference result = processContext.processAttachmentReference(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, literate);
 			out.addAll((List<HAPRootStructure>)result.getEntity());
 		}
 		else {
@@ -75,16 +73,16 @@ public class HAPProcessorValueStructureInComponent {
 			HAPResourceId resourceId = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, ref);
 			HAPResourceDefinition relatedResource = null;
 			HAPDefinitionEntityComplex contextComplexEntity = null;
-			if(attachmentReferenceContext.getComplexEntity() instanceof HAPResourceDefinition) relatedResource = (HAPResourceDefinition)attachmentReferenceContext.getComplexEntity();
-			HAPResourceDefinitionValueStructure resourceDefiniton = (HAPResourceDefinitionValueStructure)runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, relatedResource);
+			if(processContext.getComplexEntity() instanceof HAPResourceDefinition) relatedResource = (HAPResourceDefinition)processContext.getComplexEntity();
+			HAPResourceDefinitionValueStructure resourceDefiniton = (HAPResourceDefinitionValueStructure)processContext.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(resourceId, relatedResource);
 			out.addAll(resourceDefiniton.getRoots());
 
 			//reference in resource
 			if(resourceDefiniton instanceof HAPWithComplexEntity)  contextComplexEntity = ((HAPWithComplexEntity)resourceDefiniton).getComplexEntity();
-			HAPContextProcessor attachmentReferenceContextForRefValueStructure = new HAPContextProcessor(contextComplexEntity, runtimeEnv);
+			HAPContextProcessor processContextForRefValueStructure = new HAPContextProcessor(contextComplexEntity, processContext.getRuntimeEnvironment());
 			List<HAPInfoEntityReference> subReferences = resourceDefiniton.getReferences();
 			for(HAPInfoEntityReference subReference : subReferences) {
-				out.addAll(buildRoot(subReference, attachmentReferenceContextForRefValueStructure, runtimeEnv));
+				out.addAll(buildRoot(subReference, processContextForRefValueStructure));
 			}
 		}
 		return out;

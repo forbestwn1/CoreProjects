@@ -34,13 +34,6 @@ import com.nosliw.uiresource.common.HAPIdGenerator;
 public class HAPParserPage implements HAPParserResourceDefinition{
 	public static final String COMPONENT = "component";
 
-	public static final String EVENT = "event";
-	public static final String TASK = "task";
-	public static final String ATTACHMENT = "attachment";
-	public static final String SERVICE = "service";
-	public static final String VALUESTRUCTURE = "valuestructure";
-	public static final String CONTEXTREF = "contextref";
-	public static final String COMMAND = "commands";
 	public static final String EXPRESSION = "expressions";
 	public static final String SCRIPT = "script";
 	
