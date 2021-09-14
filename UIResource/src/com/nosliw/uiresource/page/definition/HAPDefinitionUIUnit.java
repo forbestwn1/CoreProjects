@@ -63,9 +63,6 @@ public abstract class HAPDefinitionUIUnit extends HAPDefinitionComponentImp{
 		this.m_normalTagEvents = new HashSet<HAPElementEvent>();
 		this.m_customTagEvents = new HashSet<HAPElementEvent>();
 		this.m_attributes = new LinkedHashMap<String, String>();
-//		this.m_expressionDefinitions = new LinkedHashMap<String, String>();
-//		this.m_eventsDefinition = new ArrayList<HAPDefinitionEvent>();
-//		this.m_commandsDefinition = new ArrayList<HAPDefinitionCommand>();
 		this.m_nameMapping = new HAPNameMapping();
 //		this.initValueStructure();
 	}
@@ -88,7 +85,6 @@ public abstract class HAPDefinitionUIUnit extends HAPDefinitionComponentImp{
 	public Set<HAPElementEvent> getCustomTagEvents(){   return this.m_customTagEvents;   }
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public String getContent() {  return this.m_content;  }
-//	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
 	public HAPDefinitionStyle getStyle() {    return this.m_style;    }
 	public void setStyle(HAPDefinitionStyle style) {   this.m_style = style;   }
 	
