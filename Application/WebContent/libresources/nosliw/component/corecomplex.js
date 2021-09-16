@@ -17,15 +17,15 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
 //decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
-var node_createComponentCoreComplex = function(configure, componentEnv, state){
+var node_createComponentCoreComplex = function(configure, componentEnv, stateService){
 	//external env
 	loc_componentEnv = componentEnv;
 	
 	//configuration for component core complex
 	var loc_configure = node_createConfigure(configure);
 	
-	//component core complex state
-	var loc_state = state;
+	//component core complex state service
+	var loc_stateService = stateService;
 	//component core and decoration layers
 	var loc_layers = [];
 	//exposed interface
@@ -73,11 +73,13 @@ var node_createComponentCoreComplex = function(configure, componentEnv, state){
 		return out;
 	};
 
-	loc_registerLayerEvent = function(layerNum){
+	var loc_registerLayerEvent = function(layerNum){
 		loc_layers[layerNum].registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
 			var processedEvent = event;
 			var processedEventData = eventData;
 			var processedRequest = requestInfo;
+			//when one layer trigue a event, the event will be processed by all upper layer
+			//every layer may have three choice: propagate the same event, propagate different event, not propagate
 			for(var i=layerNum+1; i<loc_layers.length; i++){
 				var eventResult = loc_layers[i].processComponentCoreEvent(processedEvent, processedEventData, processedRequest);
 				if(eventResult==true || eventResult==undefined){
@@ -100,6 +102,8 @@ var node_createComponentCoreComplex = function(configure, componentEnv, state){
 		});
 
 		loc_layers[layerNum].registerValueChangeEventListener(loc_valueChangeEventListener, function(event, eventData, requestInfo){
+			//for value change event, the event will be processed by all upper layer
+			//but upper layer won't modify the event
 			for(var i=layerNum+1; i<loc_layers.length; i++){
 				loc_layers[i].processComponentCoreValueChangeEvent(event, eventData, requestInfo);
 			}
@@ -109,7 +113,7 @@ var node_createComponentCoreComplex = function(configure, componentEnv, state){
 	
 	loc_addDecoration = function(decorationInfo){
 		var decName = decorationInfo.name;
-		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.resource, loc_componentEnv, decorationInfo.configure, loc_state.createChildState("dec_"+decorationInfo.id));
+		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.resource, loc_componentEnv, decorationInfo.configure, loc_stateService.createChildState("dec_"+decorationInfo.id));
 		loc_addLayer(decoration);
 	};
 	
@@ -124,7 +128,7 @@ var node_createComponentCoreComplex = function(configure, componentEnv, state){
 		getCore : function(){   return loc_getCore();    },
 			
 		setCore : function(core){
-			core.setState(loc_state.createChildState("core"));
+			core.setState(loc_stateService.createChildState("core"));
 			var coreLayer = node_buildComponentCore(core);
 			coreLayer.setComponentEnv(loc_componentEnv);
 			loc_addLayer(coreLayer);	

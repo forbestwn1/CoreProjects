@@ -26,8 +26,8 @@ var packageObj = library;
 var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, moduleDecorationInfos, uiDecorationInfos, rootView, ioInput, state, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
 	
-	var uiModuleCore = node_createUIModuleComponentCore(id, uiModuleDef, uiDecorationInfos, ioInput);
-	var runtime = loc_createModuleRuntime(uiModuleCore, configure, moduleDecorationInfos, rootView, state, request);
+	var componentCore = node_createUIModuleComponentCore(id, uiModuleDef, uiDecorationInfos, ioInput);
+	var runtime = loc_createModuleRuntime(componentCore, configure, moduleDecorationInfos, rootView, state, request);
 	out.addRequest(runtime.prv_getInitRequest({
 		success : function(request){
 			return request.getData();
@@ -36,7 +36,7 @@ var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, modul
 	return out;
 };
 
-var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorationInfos, rootView, state, request){
+var loc_createComponentRuntime = function(componentCore, configure, componentDecorationInfos, rootView, state, request){
 	
 	var loc_componentCoreComplex;
 	var loc_state = state;
@@ -44,9 +44,9 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 	
 	var loc_eventListener = node_createEventObject();
 
-	var loc_init = function(uiModuleCore, configure, componentDecorationInfos, rootView, state, request){
+	var loc_init = function(componentCore, configure, componentDecorationInfos, rootView, state, request){
 		loc_componentCoreComplex = node_createComponentCoreComplex(configure, loc_componentEnv, state);
-		loc_componentCoreComplex.setCore(uiModuleCore);
+		loc_componentCoreComplex.setCore(componentCore);
 		loc_componentCoreComplex.addDecorations(componentDecorationInfos);
 	};
 
@@ -178,7 +178,7 @@ var loc_createModuleRuntime = function(uiModuleCore, configure, componentDecorat
 		unregisterValueChangeEventListener : function(listener){   return loc_componentCoreComplex.unregisterValueChangeEventListener(listener);    }
 	};
 	
-	loc_init(uiModuleCore, configure, componentDecorationInfos, rootView, state, request);
+	loc_init(componentCore, configure, componentDecorationInfos, rootView, state, request);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
 	//listen to lifecycle event and update lifecycle status

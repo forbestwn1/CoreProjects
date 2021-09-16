@@ -95,7 +95,7 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 	var loc_version = version;   //component version
 	var loc_storeService = storeService;
 
-	var loc_state = node_createState();
+	var loc_state = loc_createState();
 	
 	var loc_requesters = {};
 	
@@ -103,7 +103,7 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 
 	//read backup data from store to state
 	//return whether store data exists
-	var loc_retrieveStateData = function(){  
+	var loc_retrieveStateData = function(){
 		loc_state.clear();
 		var storeData = loc_storeService.retrieveData(loc_componentType, loc_id);
 		loc_clearStateData();  //clear backup data after retrieve
@@ -207,7 +207,7 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 };
 
 
-var node_createState = function(){
+var loc_createState = function(){
 	var loc_stateValue = undefined;
 	
 	var loc_out = {

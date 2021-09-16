@@ -93,10 +93,10 @@ var node_createConfigure = function(definition, global, parms){
 		
 		//get children configure options
 		getChildrenIdSet : function(path){
+			var out = [];
 		    var segs = path.split('.');
 		    var childBase = node_objectOperationUtility.getObjectAttributeByPathSegs(loc_configure, segs);
 			if(childBase!=undefined){
-				var out = [];
 				_.each(childBase.parts, function(part, id){
 					out.push(id);
 				});

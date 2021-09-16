@@ -80,7 +80,7 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		
 		processRequest : function(request){   	loc_componentEnv.processRequest(request);  },
 		
-		getExecuteProcessRequest : function(process, extraInput, handlers, request){    return loc_componentEnv.getExecuteProcessRequest(process, extraInput, handlers, request);   },
+		getExecuteTaskRequest : function(task, extraInput, handlers, request){    return loc_componentEnv.getExecuteTaskRequest(task, extraInput, handlers, request);   },
 
 		getExecuteProcessResourceRequest : function(processId, input, handlers, request){   return loc_componentEnv.getExecuteProcessResourceRequest(processId, input, handlers, request);    },
 	};
