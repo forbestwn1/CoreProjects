@@ -61,12 +61,6 @@ var node_createUIModuleService = function(){
 							}
 						}).withData(runtime));
 						return createRuntimeRequest;
-						
-//						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationInfos, configure.getConfigureValue().root, ioInput, state, {
-//							success : function(request, uiModuleRuntime){
-//								return uiModuleRuntime;
-//							}
-//						}, request);
 					}
 				}));
 			

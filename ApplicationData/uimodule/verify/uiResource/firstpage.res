@@ -3,7 +3,9 @@
 <body>
     Within first page
     
-    	<br>
+   	<br>
+	<nosliw-string data="aaa"/>
+   	<br>
 	EXPRESSION IN CONTENT :<%=?(aaa)?.value + '   6666 ' %>
 	<br>
     	TRIGUE EVENT: 	<a href='' nosliw-event="click:trigueEvent">Submit</a>

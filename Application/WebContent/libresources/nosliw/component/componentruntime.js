@@ -22,20 +22,10 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-//runtime is the one that expose lifecycle and interface inteface
-var node_createModuleRuntimeRequest = function(id, uiModuleDef, configure, moduleDecorationInfos, uiDecorationInfos, rootView, ioInput, state, handlers, request){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
-	
-	var componentCore = node_createUIModuleComponentCore(id, uiModuleDef, uiDecorationInfos, ioInput);
-	var runtime = loc_createModuleRuntime(componentCore, configure, moduleDecorationInfos, rootView, state, request);
-	out.addRequest(runtime.prv_getInitRequest({
-		success : function(request){
-			return request.getData();
-		}
-	}).withData(runtime));
-	return out;
-};
-
+//runtime is the one that 
+//        expose lifecycle and interface inteface
+//        manage backup
+//        manage roll back
 var node_createComponentRuntime = function(componentCore, configure, componentDecorationInfos, rootView, backupState, request){
 	
 	var loc_componentCoreComplex;
