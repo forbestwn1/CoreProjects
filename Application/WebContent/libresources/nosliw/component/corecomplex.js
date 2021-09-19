@@ -5,7 +5,6 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
-	var node_createState;
 	var node_createConfigure;
 	var node_createComponentCoreDecoration;
 	var node_createServiceRequestInfoSequence;
@@ -17,15 +16,13 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
 //decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
-var node_createComponentCoreComplex = function(configure, componentEnv, stateService){
+var node_createComponentCoreComplex = function(configure, componentEnv){
 	//external env
 	loc_componentEnv = componentEnv;
 	
 	//configuration for component core complex
 	var loc_configure = node_createConfigure(configure);
 	
-	//component core complex state service
-	var loc_stateService = stateService;
 	//component core and decoration layers
 	var loc_layers = [];
 	//exposed interface
@@ -113,7 +110,7 @@ var node_createComponentCoreComplex = function(configure, componentEnv, stateSer
 	
 	loc_addDecoration = function(decorationInfo){
 		var decName = decorationInfo.name;
-		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.resource, loc_componentEnv, decorationInfo.configure, loc_stateService.createChildState("dec_"+decorationInfo.id));
+		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.resource, loc_componentEnv, decorationInfo.configure);
 		loc_addLayer(decoration);
 	};
 	
@@ -128,10 +125,17 @@ var node_createComponentCoreComplex = function(configure, componentEnv, stateSer
 		getCore : function(){   return loc_getCore();    },
 			
 		setCore : function(core){
-			core.setState(loc_stateService.createChildState("core"));
 			var coreLayer = node_buildComponentCore(core);
 			coreLayer.setComponentEnv(loc_componentEnv);
 			loc_addLayer(coreLayer);	
+		},
+		
+		getDecorations : function(){  
+			var out = [];
+			_.each(loc_layers, function(layer, i){
+				if(i!=0)  out.push(layer);
+			});
+			return out;
 		},
 		
 		addDecorations : function(decorationInfos){	for(var i in decorationInfos){  loc_out.addDecoration(decorationInfos[i]);	}	},
@@ -196,7 +200,6 @@ var node_createComponentCoreComplex = function(configure, componentEnv, stateSer
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("component.createState", function(){node_createState = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentCoreDecoration", function(){node_createComponentCoreDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});

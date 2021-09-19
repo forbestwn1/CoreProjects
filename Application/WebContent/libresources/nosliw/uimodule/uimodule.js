@@ -49,78 +49,74 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	var loc_valueChangeEventListener = node_createEventObject();
 	var loc_valueChangeEventSource = node_createEventObject();
 
-	var loc_componentState;
-	
 	var loc_componentEnv;
 	
 	var loc_getEventSourceInfo = function(){
 		return node_createEventSource(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULE, loc_out.getId());
 	};
 	
-	var loc_initState = function(state){
-		loc_componentState = node_createComponentState(state, 
-			function(handlers, request){
-				out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module get state data"), handlers, request);
+	var loc_getGetStateDataRequest = function(handlers, request){
+		out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module get state data"), handlers, request);
 		
-				var stateData = {};
-				//get state data for ui data
-				var uiDataRequest = node_createServiceRequestInfoSet(undefined, {
-					success : function(request, resultSet){
-						var uiData = {};
-						_.each(resultSet.getResults(), function(uiDataEle, uiId){
-							uiData[uiId] = uiDataEle;
-						});
-						stateData.uiData = uiData;
-					}
+		var stateData = {};
+		//get state data for ui data
+		var uiDataRequest = node_createServiceRequestInfoSet(undefined, {
+			success : function(request, resultSet){
+				var uiData = {};
+				_.each(resultSet.getResults(), function(uiDataEle, uiId){
+					uiData[uiId] = uiDataEle;
 				});
-				_.each(loc_out.getUIs(), function(ui, index){	uiDataRequest.addRequest(ui.getId(), ui.getGetStateRequest());	});
-				out.addRequest(uiDataRequest);
-				
-				//get state data for context data
-				out.addRequest(loc_out.prv_componentData.contextDataSet.getGetDataSetValueRequest({
-					success : function(request, contextDataSet){
-						stateData.context = contextDataSet;
-					}
-				}));
-				
-				//return state data
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){return stateData;}));
-				return out;
-			}, 
-			function(stateData, handlers, request){
-				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module restore state data"), handlers, request);
+				stateData.uiData = uiData;
+			}
+		});
+		_.each(loc_out.getUIs(), function(ui, index){	uiDataRequest.addRequest(ui.getId(), ui.getGetStateRequest());	});
+		out.addRequest(uiDataRequest);
+		
+		//get state data for context data
+		out.addRequest(loc_out.prv_componentData.contextDataSet.getGetDataSetValueRequest({
+			success : function(request, contextDataSet){
+				stateData.context = contextDataSet;
+			}
+		}));
+		
+		//return state data
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){return stateData;}));
+		return out;
+	};
+	
+	var loc_getRestoreStateDataRequest = function(stateData, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UI module restore state data"), handlers, request);
 
-				//ui data
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					var uiData = stateData.uiData;
-					var updateUIStateRequest = node_createServiceRequestInfoSequence(undefined);
-					_.each(loc_out.getUIs(), function(ui, index){
-						updateUIStateRequest.addRequest(ui.getSetStateRequest(uiData[ui.getId()]));	
-					});
-					return updateUIStateRequest;
-				}));
-
-				//context data
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					var backupContextData = stateData.context;
-					var updateContextStateRequest = node_createServiceRequestInfoSequence(undefined);
-					_.each(backupContextData, function(contextData, name){
-						updateContextStateRequest.addRequest(loc_out.prv_componentData.contextDataSet.getSetDataValueRequest(name, contextData));
-					});
-					return updateContextStateRequest;
-				}));
-				return out;
+		//ui data
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var uiData = stateData.uiData;
+			var updateUIStateRequest = node_createServiceRequestInfoSequence(undefined);
+			_.each(loc_out.getUIs(), function(ui, index){
+				updateUIStateRequest.addRequest(ui.getSetStateRequest(uiData[ui.getId()]));	
 			});
+			return updateUIStateRequest;
+		}));
+
+		//context data
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var backupContextData = stateData.context;
+			var updateContextStateRequest = node_createServiceRequestInfoSequence(undefined);
+			_.each(backupContextData, function(contextData, name){
+				updateContextStateRequest.addRequest(loc_out.prv_componentData.contextDataSet.getSetDataValueRequest(name, contextData));
+			});
+			return updateContextStateRequest;
+		}));
+		return out;
 	};
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){
-		if(node_componentUtility.isActive(loc_out.prv_componentData.lifecycleStatus)){
+		if(node_componentUtility.isActive(loc_componentEnv.getLifecycleStatus())){
 			//trigue event only in active status
 			node_eventUtility.triggerEventInfo(loc_eventSource, eventName, eventData, loc_getEventSourceInfo(), requestInfo);
 		}
 	};
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){
-		if(node_componentUtility.isActive(loc_out.prv_componentData.lifecycleStatus)){
+		if(node_componentUtility.isActive(loc_componentEnv.getLifecycleStatus())){
 			//trigue event only in active status
 			node_eventUtility.triggerEventInfo(loc_valueChangeEventSource, eventName, eventData, loc_getEventSourceInfo(), requestInfo);
 		}
@@ -204,7 +200,7 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 				//task
 				var steps = eventHandler[node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLEREVENT_HANDLER][node_COMMONATRIBUTECONSTANT.EXECUTABLEHANDLER_STEPS];
 				_.each(steps, function(step, i){
-					out.addRequest(loc_out.getComponentEnv().getExecuteTaskByNameRequest(step));
+					out.addRequest(loc_getExecuteTaskByNameRequest(step));
 				});
 				
 				node_requestServiceProcessor.processRequest(out);
@@ -233,18 +229,26 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 
 	var loc_getExecuteLifecycleTaskRequest = function(lifecycleName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getUIModuleNormalLiefCycleCallBackRequestRequest", {}), handlers, request);
-		out.addRequest(loc_out.getComponentEnv().getExecuteTaskByNameRequest(loc_getTaskNameByLifecycle(lifecycleName)));
+		out.addRequest(loc_getExecuteTaskByNameRequest(loc_getTaskNameByLifecycle(lifecycleName)));
 		return out;
-	}
+	};
+	
+	var loc_getExecuteTaskRequest = function(task, extraInput, handlers, request){
+		return nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_componentEnv.getTaskEnv()).getExecuteEmbededTaskRequest(task, loc_componentEnv.getContextIODataSet(), handlers, request);
+	};
+
+	var loc_getExecuteTaskByNameRequest = function(taskName, extraInput, handlers, request){
+		var taskSuite = loc_out.getTaskSuite();
+		return nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_componentEnv.getTaskEnv()).getExecuteEmbededTaskInSuiteRequest(taskSuite, taskName, loc_componentEnv.getContextIODataSet(), handlers, request);
+	};
+
 	
 	var loc_out = {
 		prv_componentData : {
 			id : id,              //
 			componentDef : uiModuleDef,   //
 			contextDataSet : node_createIODataSet(),   //module context data set
-			lifecycleStatus : undefined,  //current lifecycle status
 			valueByName : {},
-			stateDataForRollBack : [],
 			
 			rootView : undefined,
 			
@@ -306,8 +310,6 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		getValue : function(name){  return loc_out.prv_componentData.valueByName[name];    },
 		setValue : function(name, value){   loc_out.prv_componentData.valueByName[name] = value;   },
 		
-		setState : function(state){  loc_initState(state);	},
-		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
@@ -319,57 +321,24 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
-				//reset context io
-				out.addRequest(loc_getBuildModuleUIRequest());
-				out.addRequest(loc_getInitIOContextRequest());
-			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE){
-				out.addRequest(loc_componentState.getSaveStateDataForRollBackRequest());
-				if(loc_out.getValue(node_CONSTANT.COMPONENT_VALUE_BACKUP)==true){
-					//active through back up
-					out.addRequest(loc_componentState.getRestoreStateRequest());
-//					var kkkk = bbbb++;
-//					out.addRequest(node_createServiceRequestInfoError());
-				}
-				else{
-					//active through normal way
-					out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
-				}
-			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
-				out.addRequest(loc_componentState.getSaveStateDataForRollBackRequest());
-				//reset context io
-				out.addRequest(loc_getInitIOContextRequest(handlers, request));
+			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
 				out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
-			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND){
-				out.addRequest(loc_componentState.getSaveStateDataForRollBackRequest());
-				out.addRequest(loc_componentState.getBackupStateRequest(handlers, request));
-				out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
-			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME){
-				out.addRequest(loc_componentState.getSaveStateDataForRollBackRequest());
-				out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
-			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
-				out.addRequest(loc_componentState.getSaveStateDataForRollBackRequest());
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){loc_destroy(request);}, handlers, request));
-				out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
 			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE){
-				out.addRequest(loc_componentState.getRestoreStateDataForRollBackRequest());
+			else{
+				if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
+					//reset context io
+					out.addRequest(loc_getBuildModuleUIRequest());
+					out.addRequest(loc_getInitIOContextRequest());
+				}
+				else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
+					//reset context io
+					out.addRequest(loc_getInitIOContextRequest(handlers, request));
+				}
 				out.addRequest(loc_getExecuteLifecycleTaskRequest(transitName));
 			}
 			return out;
 		},
-		setLifeCycleStatus : function(status){
-			//lifecycle transit finish
-			loc_out.prv_componentData.lifecycleStatus = status;
-		},
-		
-		startLifecycleTask : function(){	loc_componentState.initDataForRollBack();	},
-		endLifecycleTask : function(){ 	loc_componentState.clearDataFroRollBack();	},
 		
 		getChild : function(childId){
 			var type = childId[node_COMMONATRIBUTECONSTANT.PATHTOCHILDELEMENT_ELEMENTTYPE];
@@ -378,6 +347,11 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 				return loc_out.prv_componentData.ui[eleId];
 			}
 		},
+		
+		getGetStateDataRequest : function(handlers, request){  return loc_getGetStateDataRequest(handlers, request);  },
+		
+		getRestoreStateDataRequest : function(stateData, handlers, request){   return loc_getRestoreStateDataRequest(stateData, handlers, request);   },
+
 		
 	};
 

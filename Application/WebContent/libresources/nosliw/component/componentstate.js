@@ -103,22 +103,31 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 
 	//read backup data from store to state
 	//return whether store data exists
-	var loc_retrieveStateData = function(){
+	var loc_retrieveStoreData = function(){
 		loc_state.clear();
 		var storeData = loc_storeService.retrieveData(loc_componentType, loc_id);
-		loc_clearStateData();  //clear backup data after retrieve
+//		loc_clearStoreData();  //clear backup data after retrieve
 		if(storeData!=undefined){
 			if(storeData.version!=loc_version)		storeData = undefined;   //when component version change, the data stored by previous component would not work
-			if(storeData!=undefined)	loc_state.setStateValue(storeData.data);  //update state data
+			if(storeData!=undefined){
+				loc_state.setStateValue(storeData.data);  //update state data
+			}
+			else{
+				loc_clearStoreData(); 
+			}
 		}
 		return storeData!=undefined;
+	};
+
+	var loc_clearStoreData = function(){  
+		loc_storeService.clearData(loc_componentType, loc_id);  
 	};
 	
 	//save state vlue to store
 	var loc_saveStateData = function(){
 		var stateData = loc_state.getStateValue();
 		if(stateData==undefined){
-			loc_clearStateData();
+			loc_clearStoreData();
 		}
 		else{
 			var storeData = {
@@ -129,38 +138,10 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 		}
 	};
 	
-	var loc_clearStateData = function(){  
-		loc_storeService.clearData(loc_componentType, loc_id);  
-	};
-	
-	//retrieve store to state if need
-	var loc_retrieveState = function(request){
-		var rootRequest = request.getRootRequest();
-		var requestId = rootRequest.getId();
-		if(loc_requesters[requestId]==undefined){
-			//first time for this request, retrieve state from store
-			loc_retrieveStateData();
-			
-			loc_requesters[requestId] = rootRequest;
-			rootRequest.registerEventListener(loc_eventObject, function(e, data, req){
-				if(e==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
-				}
-				else if(e==node_CONSTANT.REQUEST_EVENT_DONE){
-					//remove request
-					if(loc_requesters[requestId]!=undefined){
-						delete loc_requesters[requestId];
-						rootRequest.unregisterEventListener(loc_eventObject);
-					}
-				}
-			});
-		}
-	};
-	
 	var loc_out = {
 		//state as value
 		getStateValue : function(request){
-			loc_retrieveState(request);
-			return loc_state.getStateValue(request);
+			return this.getValue(undefined, request);
 		},
 		
 		//set state
@@ -169,8 +150,27 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 		},
 		
 		//get state value by name
-		getValue : function(path, request){		
-			loc_retrieveState(request);
+		getValue : function(path, request){	
+			var rootRequest = request.getRootRequest();
+			var requestId = rootRequest.getId();
+			if(loc_requesters[requestId]==undefined){
+				//first time for this request, retrieve state from store, avoid doing it every time 
+				loc_retrieveStoreData();
+				
+				loc_requesters[requestId] = rootRequest;
+				rootRequest.registerEventListener(loc_eventObject, function(e, data, req){
+					if(e==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
+					}
+					else if(e==node_CONSTANT.REQUEST_EVENT_DONE){
+						//remove request
+						if(loc_requesters[requestId]!=undefined){
+							delete loc_requesters[requestId];
+							rootRequest.unregisterEventListener(loc_eventObject);
+						}
+					}
+				});
+			}
+			
 			return loc_state.getValue(path, request);
 		},
 
@@ -194,7 +194,10 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 		},
 		
 		//clear state
-		clear : function(request){		loc_out.setStateValue(undefined, request);		},
+		clear : function(request){		
+			loc_state.clear(request);
+			loc_clearStoreData();
+		},
 		
 		//create child state by path
 		createChildState : function(path){	return loc_createChildState(loc_out, path); },
@@ -225,7 +228,7 @@ var loc_createState = function(){
 		},
 		
 		//clear state
-		clear : function(request){		loc_out.setStateValue(undefined, request);		},
+		clear : function(request){		loc_stateValue = undefined;		},
 		
 		//create child state by path
 		createChildState : function(path){	return loc_createChildState(loc_out, path); },

@@ -16,6 +16,8 @@ var packageObj = library.getChildPackage("service");
 	var node_loadComponentResourceRequest;
 	var node_getObjectType;
 	var node_componentUtility;
+	var node_createComponentRuntime;
+	var node_createUIModuleComponentCore;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -49,11 +51,22 @@ var node_createUIModuleService = function(){
 							//create by resource id, then version should be set according to resource version
 							state.setVersion("5.0.0");   //kkkkk
 						}
-						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationInfos, configure.getConfigureValue().root, ioInput, state, {
-							success : function(request, uiModuleRuntime){
-								return uiModuleRuntime;
+						
+						var createRuntimeRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":module}), undefined, request);
+						var componentCore = node_createUIModuleComponentCore(id, componentInfo.componentResource, uiDecorationInfos, ioInput);
+						var runtime = node_createComponentRuntime(componentCore, configure, componentInfo.decoration, configure.getConfigureValue().root, state, request);
+						createRuntimeRequest.addRequest(runtime.getInitRequest({
+							success : function(request){
+								return request.getData();
 							}
-						}, request);
+						}).withData(runtime));
+						return createRuntimeRequest;
+						
+//						return node_createModuleRuntimeRequest(id, componentInfo.componentResource, configure, componentInfo.decoration, uiDecorationInfos, configure.getConfigureValue().root, ioInput, state, {
+//							success : function(request, uiModuleRuntime){
+//								return uiModuleRuntime;
+//							}
+//						}, request);
 					}
 				}));
 			
@@ -88,6 +101,8 @@ nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_cre
 nosliw.registerSetNodeDataEvent("component.loadComponentResourceRequest", function(){node_loadComponentResourceRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createComponentRuntime", function(){node_createComponentRuntime = this.getData();});
+nosliw.registerSetNodeDataEvent("uimodule.createUIModuleComponentCore", function(){node_createUIModuleComponentCore = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIModuleService", node_createUIModuleService); 

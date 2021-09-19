@@ -31,6 +31,7 @@ var node_createTaskRuntime = function(envObj){
 	};
 	
 	var loc_getExecuteTaskRequest = function(task, input, handlers, request){
+		if(task==undefined)   return;
 		var out;
 		if(task[node_COMMONATRIBUTECONSTANT.EXECUTABLETASK_TASKTYPE]==node_COMMONCONSTANT.TASK_TYPE_ACTIVITY){
 			out = node_createActivity(task, input, loc_envObj).getExecuteRequest(handlers, request);

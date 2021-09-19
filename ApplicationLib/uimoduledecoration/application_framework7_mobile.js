@@ -95,7 +95,7 @@ function(gate){
 	var loc_getRestoreStateDataRequest = function(stateData, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			loc_gate.setState(stateData);
+//			loc_gate.setState(stateData);
 			var uiStack = loc_getUIStack();
 			loc_clearUIStack();
 			_.each(uiStack, function(stackEle, index){
@@ -104,17 +104,6 @@ function(gate){
 			});
 		}));
 		out.addRequest(loc_updatePageStatusRequest());
-		return out;
-	};
-
-
-	var loc_getRestoreStateDataForRollBackRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(loc_gate.getRestoreStateDataForRollBackRequest({
-			success : function(request, stateData){
-				return loc_getRestoreStateDataRequest(stateData);
-			} 
-		}));
 		return out;
 	};
 
@@ -201,29 +190,12 @@ function(gate){
 				}));
 				out.addRequest(initRequest);
 			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE){
-				out.addRequest(loc_gate.getSaveStateDataForRollBackRequest());
-				if(loc_gate.getValueFromCore(node_CONSTANT.COMPONENT_VALUE_BACKUP)==true){
-					//get state data from store
-					out.addRequest(loc_gate.getComponentState().getRestoreStateRequest());
-				}
-			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){ 
-				out.addRequest(loc_gate.getSaveStateDataForRollBackRequest());
 				loc_framework7View.destroy();
 				loc_applicationContainerView.remove();
 			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND){  
-				out.addRequest(loc_gate.getSaveStateDataForRollBackRequest());
-				//save state data to store
-				out.addRequest(loc_gate.getComponentState().getBackupStateRequest());
-			}
 			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
-				out.addRequest(loc_gate.getSaveStateDataForRollBackRequest());
 				loc_framework7View.router.clearPreviousHistory();
-			}
-			else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE){
-				out.addRequest(loc_getRestoreStateDataForRollBackRequest());
 			}
 			return out;
 		},

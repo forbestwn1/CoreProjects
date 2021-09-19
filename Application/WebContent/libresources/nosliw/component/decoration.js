@@ -15,7 +15,6 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_buildDecorationPlugInObject;
 	var node_basicUtility;
-	var node_createComponentState;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -25,8 +24,7 @@ var packageObj = library;
 // decorationResource: function to generate plugin object, plugin object defined the logic
 // componentEnv : component environment that decoration communicate with component env
 // configureData : configuration data for this decoration
-// state : state data
-var node_createComponentCoreDecoration = function(id, componentCore, decorationResource, componentEnv, configure, state){
+var node_createComponentCoreDecoration = function(id, componentCore, decorationResource, componentEnv, configure){
 	
 	var loc_id = id;
 	var loc_configure = configure;
@@ -65,16 +63,9 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		setStateValue : function(name, value){  loc_stateValueByName[name] = value;	},
 		setState : function(state){   loc_stateValueByName = state==undefined? {} : state;	},
 
-		getSaveStateDataForRollBackRequest : function(handlers, request){	return loc_componentState.getSaveStateDataForRollBackRequest(handlers, request);	},
-		
-		getRestoreStateDataForRollBackRequest : function(handlers, request){return loc_componentState.getRestoreStateDataForRollBackRequest(handlers, request);	},
-
 		getValueFromCore : function(name){  return loc_componentCore.getValue(name); },
 
-		//state operation
-		getComponentState : function(){  return loc_componentState;  },
-		
-		getLifecycleStatus : function(){   return loc_lifecycleStatus;    },
+		getLifecycleStatus : function(){   return componentEnv.getLifecycleStatus();    },
 		
 		trigueEvent : function(eventName, eventData, requestInfo){  loc_trigueEvent(eventName, eventData, requestInfo);	},
 		
@@ -88,25 +79,25 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 	//generate plug in object 
 	var loc_plugin = typeof decorationResource=='function' ?  node_buildDecorationPlugInObject(decorationResource(loc_gateForDecoration)) : decorationResource;
 	
-	var loc_componentState = node_createComponentState(state, 
-		function(handlers, request){  return node_createServiceRequestInfoSimple(undefined, function(){return loc_stateValueByName;}, handlers, request);}, 
-		function(stateData, handlers, request){
-			loc_stateValueByName = stateData;
-			return loc_plugin.getRestoreStateDataRequest(handlers, request);
-		});
-	
-	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){loc_valueChangeEventSource.triggerEvent(eventName, eventData, requestInfo); };
 
 	var loc_out = {
 		
+		getId : function(){   return loc_id;    },
+			
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
 		registerValueChangeEventListener : function(listener, handler, thisContext){	return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener); },
 
+		getGetStateDataRequest : function(handlers, request){  return node_createServiceRequestInfoSimple(undefined, function(){return loc_stateValueByName;}, handlers, request);},
+		getRestoreStateDataRequest : function(stateData, handlers, request){ 
+			loc_stateValueByName = stateData;
+			return loc_plugin.getRestoreStateDataRequest(handlers, request);
+		},
+		
 		processComponentCoreEvent : function(eventName, eventData, request){		return loc_plugin.processComponentCoreEvent(eventName, eventData, request);		},
 		processComponentCoreValueChangeEvent : function(eventName, eventData, request){		return loc_plugin.processComponentCoreValueChangeEvent(eventName, eventData, request);	},
 		
@@ -119,9 +110,6 @@ var node_createComponentCoreDecoration = function(id, componentCore, decorationR
 		//component decoration lifecycle call back
 		getLifeCycleRequest : function(transitName, handlers, request){  return loc_plugin.getLifeCycleRequest(transitName, handlers, request);	},
 		setLifeCycleStatus : function(status){   loc_lifecycleStatus = status;   },
-
-		startLifecycleTask : function(){  loc_componentState.initDataForRollBack();	},
-		endLifecycleTask : function(){    loc_componentState.clearDataFroRollBack();  },
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION);
@@ -144,7 +132,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("component.buildDecorationPlugInObject", function(){node_buildDecorationPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
-nosliw.registerSetNodeDataEvent("component.createComponentState", function(){node_createComponentState = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreDecoration", node_createComponentCoreDecoration); 
