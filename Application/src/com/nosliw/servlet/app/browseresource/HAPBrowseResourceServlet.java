@@ -24,7 +24,7 @@ import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.resource.HAPResourceIdUIModule;
 import com.nosliw.uiresource.resource.HAPResourceIdUIResource;
 
@@ -107,7 +107,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 		String url = "/nosliw/page.html?name="+resourceId.getCoreIdLiterate();
 		out.setUrl(url);
 		try {
-			HAPDefinitionUIPage pageDef = this.m_uiResourceMan.getUIPageDefinition(resourceId, null);
+			HAPDefinitionUIUnitPage pageDef = this.m_uiResourceMan.getUIPageDefinition(resourceId, null);
 			this.processChildren(out, pageDef.getChildrenReferencedResource());
 		}
 		catch(Throwable e) {

@@ -1,8 +1,8 @@
 package com.nosliw.data.core.expression;
 
-import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.component.attachment.HAPInfoAttachment;
-import com.nosliw.data.core.component.attachment.HAPProcessorAttachmentEntity;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.attachment.HAPInfoAttachment;
+import com.nosliw.data.core.complex.attachment.HAPProcessorAttachmentEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorAttachmentEntityExpression implements HAPProcessorAttachmentEntity{

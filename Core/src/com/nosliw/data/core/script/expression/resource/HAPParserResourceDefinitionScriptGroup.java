@@ -5,17 +5,17 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.HAPParserComponent;
-import com.nosliw.data.core.resource.HAPParserResourceDefinitionImp;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.component.HAPParserEntityComponent;
+import com.nosliw.data.core.resource.HAPParserResourceEntityImp;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 
-public class HAPParserResourceDefinitionScriptGroup extends HAPParserResourceDefinitionImp{
+public class HAPParserResourceDefinitionScriptGroup extends HAPParserResourceEntityImp{
 
 	@Override
-	public HAPResourceDefinition parseJson(JSONObject scriptResourceDefJson) {
+	public HAPResourceDefinition1 parseJson(JSONObject scriptResourceDefJson) {
 		HAPResourceDefinitionScriptGroup out = new HAPResourceDefinitionScriptGroup();
-		HAPParserComponent.parseComplextResourceDefinition(out, scriptResourceDefJson);
+		HAPParserEntityComponent.parseComplextResourceDefinition(out, scriptResourceDefJson);
 		
 		JSONArray elementsArrayJson = scriptResourceDefJson.getJSONArray(HAPResourceDefinitionScriptGroup.ELEMENT);
 		for(int i=0; i<elementsArrayJson.length(); i++) {

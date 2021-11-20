@@ -8,13 +8,13 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPParserComponent;
-import com.nosliw.data.core.resource.HAPParserResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.component.HAPParserEntityComponent;
+import com.nosliw.data.core.resource.HAPParserResourceEntity;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
-public class HAPParserModule implements HAPParserResourceDefinition{
+public class HAPParserModule implements HAPParserResourceEntity{
 
 	HAPRuntimeEnvironment m_runtimeEnv;
 	
@@ -40,7 +40,7 @@ public class HAPParserModule implements HAPParserResourceDefinition{
 	}
 
 	@Override
-	public HAPResourceDefinition parseContent(String content) {  return this.parseContent(content, null);	}
+	public HAPResourceDefinition1 parseContent(String content) {  return this.parseContent(content, null);	}
 
 	private HAPDefinitionModule parseContent(String content, String id) {
 		JSONObject jsonObj = new JSONObject(content);
@@ -54,7 +54,7 @@ public class HAPParserModule implements HAPParserResourceDefinition{
 		HAPDefinitionModule out = new HAPDefinitionModule();
 
 		//build component part from json object
-		HAPParserComponent.parseComponent(out, jsonObj, this.m_runtimeEnv.getTaskManager());
+		HAPParserEntityComponent.parseComponentEntity(out, jsonObj, this.m_runtimeEnv.getTaskManager());
 		
 		//ui decoration
 		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UIDECORATION);

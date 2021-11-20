@@ -8,10 +8,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.complex.attachment.HAPAttachment;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;

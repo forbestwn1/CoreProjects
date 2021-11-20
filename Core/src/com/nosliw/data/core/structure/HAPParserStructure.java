@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
-import com.nosliw.data.core.structure.reference.HAPInfoPathReference;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
 
 public class HAPParserStructure {
 
@@ -77,7 +77,7 @@ public class HAPParserStructure {
 			contextRootDef = new HAPElementStructureLeafRelative();
 			HAPElementStructureLeafRelative relativeLeaf = (HAPElementStructureLeafRelative)contextRootDef;
 			
-			HAPInfoPathReference path = new HAPInfoPathReference();
+			HAPReferenceElementInStructureComplex path = new HAPReferenceElementInStructureComplex();
 			path.buildObject(eleDefJson.get(HAPElementStructureLeafRelative.PATH), HAPSerializationFormat.JSON);
 			relativeLeaf.setPath(path);
 			

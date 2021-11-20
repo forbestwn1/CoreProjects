@@ -10,15 +10,15 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.component.HAPInfoChildResource;
+import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
+import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
-import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.uiresource.resource.HAPResourceIdUIAppEntry;
 import com.nosliw.uiresource.resource.HAPUIAppEntryId;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionApp extends HAPResourceDefinitionContainer<HAPDefinitionAppElement>{
+public class HAPDefinitionApp extends HAPDefinitionEntityContainer<HAPDefinitionAppElement>{
 
 	@HAPAttribute
 	public static final String ID = "id";
@@ -54,14 +54,14 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer<HAPDefiniti
 	}
 	
 	@Override
-	public HAPResourceDefinition getElementResourceDefinition(String eleName) {	return new HAPDefinitionAppEntry(this, eleName);	}
+	public HAPResourceDefinition1 getElementResourceDefinition(String eleName) {	return new HAPDefinitionAppEntry(this, eleName);	}
 
 	@Override
 	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
 		HAPContainerChildReferenceResource out = new HAPContainerChildReferenceResource();
 		//entry part
 		Set<HAPDefinitionAppElement> entrys = this.getContainerElements();
-		for(HAPElementContainerResourceDefinition entry : entrys) {
+		for(HAPElementInContainerEntityDefinition entry : entrys) {
 			out.addChildCompoentId(new HAPInfoChildResource(entry.getName(), new HAPResourceIdUIAppEntry(new HAPUIAppEntryId(this.getId(), entry.getName())), entry.getInfo()), this.getAttachmentContainer());
 		}
 		return out;
@@ -74,7 +74,7 @@ public class HAPDefinitionApp extends HAPResourceDefinitionContainer<HAPDefiniti
 	}
 
 	@Override
-	public HAPResourceDefinitionContainer cloneResourceDefinitionContainer() {
+	public HAPDefinitionEntityContainer cloneResourceDefinitionContainer() {
 		HAPDefinitionApp out = new HAPDefinitionApp(this.getId());
 		this.cloneToResourceDefinitionContainer(out);
 		for(String name : this.m_applicationData.keySet()) {

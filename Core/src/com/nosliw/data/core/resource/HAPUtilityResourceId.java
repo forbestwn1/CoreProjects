@@ -10,12 +10,13 @@ import java.util.List;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.component.HAPLocalReferenceBase;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityResourceId {
 
 	public static String buildResourceIdLiterate(HAPResourceId resourceId) {
-		return HAPUtilityNamingConversion.cascadeLevel2(new String[]{resourceId.getType(), buildResourceCoreIdLiterate(resourceId)});
+		return HAPUtilityNamingConversion.cascadeLevel2(new String[]{resourceId.getResourceType(), buildResourceCoreIdLiterate(resourceId)});
 	}
 	
 	//build literate for id part
@@ -117,11 +118,11 @@ public class HAPUtilityResourceId {
 		String localFile = isFileBased(resourceId);
 		if(localFile!=null) {
 			//if file base
-			return new HAPInfoResourceLocation(new File(localFile), localFile);
+			return new HAPInfoResourceLocation(new File(localFile), new HAPLocalReferenceBase(localFile));
 		}
 		else {
 			//check single file first
-			String basePath = HAPSystemFolderUtility.getResourceFolder(resourceId.getType());
+			String basePath = HAPSystemFolderUtility.getResourceFolder(resourceId.getResourceType());
 			file = new File(basePath+resourceId.getId()+".res");
 			if(!file.exists()) {
 				basePath = basePath+resourceId.getId()+"/";
@@ -143,7 +144,7 @@ public class HAPUtilityResourceId {
 
 	public static boolean isLocalReference(HAPResourceId resourceId) {
 		//kkk
-		if(resourceId.getType()==null)   return true;
+		if(resourceId.getResourceType()==null)   return true;
 		return false;
 	}
 	

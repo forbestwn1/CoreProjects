@@ -8,10 +8,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 
 @HAPEntityWithAttribute
-public class HAPReferenceRootInMapping extends HAPSerializableImp implements HAPReferenceRoot{
+public class HAPReferenceRootInMapping extends HAPSerializableImp implements HAPReferenceRootInStrucutre{
 
 	@HAPAttribute
 	public static final String NAME = "name";
@@ -55,5 +55,5 @@ public class HAPReferenceRootInMapping extends HAPSerializableImp implements HAP
 	}
 
 	@Override
-	public HAPReferenceRoot cloneStructureRootReference() {   return new HAPReferenceRootInMapping(this.m_name);  }
+	public HAPReferenceRootInStrucutre cloneStructureRootReference() {   return new HAPReferenceRootInMapping(this.m_name);  }
 }

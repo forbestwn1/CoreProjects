@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
 import com.nosliw.data.core.component.command.HAPExecutableCommand;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -22,7 +23,6 @@ import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructureScript;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 @HAPEntityWithAttribute
 public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
@@ -46,7 +46,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	public static final String SERVICE = "service";
 
 	// hook up with real data during runtime
-	private HAPTreeNodeValueStructure m_valueStructureNode;
+	private HAPComplexValueStructure m_valueStructure;
 	
 	private HAPExecutableTaskSuite m_taskSuite;
 
@@ -57,11 +57,11 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	//service requirement definition
 	private Map<String, HAPExecutableServiceUse> m_services;
 
-	public HAPExecutableComponent(HAPDefinitionComponent componentDefinition, String id) {
+	public HAPExecutableComponent(HAPDefinitionEntityComponent componentDefinition, String id) {
 		super(componentDefinition);
 		this.setId(id);
 		this.m_valueStructureNode = new HAPTreeNodeValueStructure();
-		this.m_valueStructureNode.setValueStructureWrapper(componentDefinition.getValueStructureWrapper());
+		this.m_valueStructureNode.setValueStructureComplex(componentDefinition.getValueStructureComplex());
 		this.m_services = new LinkedHashMap<String, HAPExecutableServiceUse>();
 		this.m_events = new LinkedHashMap<String, HAPExecutableEvent>();
 		this.m_commands = new LinkedHashMap<String, HAPExecutableCommand>();
@@ -72,11 +72,9 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	public HAPExecutableServiceUse getServiceUse(String name) {   return this.m_services.get(name);  }
 
 	public HAPTreeNodeValueStructure getValueStructureDefinitionNode() {   return this.m_valueStructureNode;   }
-	public HAPValueStructure getValueStructure() {     return this.m_valueStructureNode.getValueStructureWrapper().getValueStructure();   }
+	public HAPComplexValueStructure getValueStructureComplex() {     return this.m_valueStructureNode.getValueStructureComplex();   }
 	public HAPExecutableValueStructure getValueStructureExe() {	return HAPUtilityValueStructure.buildExecuatableValueStructure(this.m_valueStructureNode.getValueStructureWrapper().getValueStructure());}
 
-//	public void setValueStructure(HAPValueStructure valueStructure) { 	this.m_valueStructureWrapper.setValueStructure(valueStructure);	}
-	
 	public HAPExecutableTaskSuite getTaskSuite() {    return this.m_taskSuite;    }
 	public void setTaskSuite(HAPExecutableTaskSuite taskSuite) {    this.m_taskSuite = taskSuite;     }
 	

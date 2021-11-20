@@ -15,12 +15,12 @@ public interface HAPStructure extends HAPWithConstantScript, HAPSerializable{
 	List<HAPRootStructure> getAllRoots();
 	
 	//resolve root by reference, 
-	List<HAPRootStructure> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist);
+	List<HAPRootStructure> resolveRoot(HAPReferenceRootInStrucutre rootReference, boolean createIfNotExist);
 
 	List<HAPInfoAlias> discoverRootAliasById(String id);
-	HAPReferenceRoot getRootReferenceById(String id);
+	HAPReferenceRootInStrucutre getRootReferenceById(String id);
 	
-	HAPRootStructure addRoot(HAPReferenceRoot rootReference, HAPRootStructure root);
+	HAPRootStructure addRoot(HAPReferenceRootInStrucutre rootReference, HAPRootStructure root);
 	
 	void updateRootName(HAPUpdateName updateName);
 	

@@ -8,8 +8,8 @@ import java.util.Set;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPContextProcessExpressionScript implements HAPWithValueStructure, HAPWithConstantDefinition{
 

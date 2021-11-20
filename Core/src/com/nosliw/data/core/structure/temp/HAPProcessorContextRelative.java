@@ -25,7 +25,7 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoPathToSolidRoot;
-import com.nosliw.data.core.structure.HAPReferenceElement;
+import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
@@ -73,7 +73,7 @@ public class HAPProcessorContextRelative {
 			Map<String, HAPRootStructure> eles = out.getRootsByCategary(categary);
 			for(String eleName : eles.keySet()) {
 				HAPRootStructure contextRoot = eles.get(eleName);
-				contextRoot.setDefinition(processRelativeInContextDefinitionElement(new HAPInfoElement(contextRoot.getDefinition(), new HAPReferenceElement(categary, eleName)), parentName, parentContextGroup, dependency, errors, isParentFlat, configure, runtimeEnv));
+				contextRoot.setDefinition(processRelativeInContextDefinitionElement(new HAPInfoElement(contextRoot.getDefinition(), new HAPReferenceElementInStructure(categary, eleName)), parentName, parentContextGroup, dependency, errors, isParentFlat, configure, runtimeEnv));
 			}
 		}
 		return out;
@@ -111,7 +111,7 @@ public class HAPProcessorContextRelative {
 		HAPElementStructureLeafRelative defContextElementRelative = (HAPElementStructureLeafRelative)contextEleInfo.getElement();
 		HAPElementStructure out = defContextElementRelative;
 		
-		HAPReferenceElement path = defContextElementRelative.getPathFormat(); 
+		HAPReferenceElementInStructure path = defContextElementRelative.getPathFormat(); 
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.analyzeElementReference(path, parentContext, categaryes, configure.elementReferenceResolveMode);
 		
 		if(resolveInfo==null || resolveInfo.referredRoot==null) {

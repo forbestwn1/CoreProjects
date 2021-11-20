@@ -11,9 +11,9 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
-import com.nosliw.data.core.component.HAPDefinitionComponent;
-import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
-import com.nosliw.data.core.component.HAPElementContainerResourceDefinitionEntityImpComponent;
+import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
+import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinitionImpComplex;
+import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.process1.HAPDefinitionProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 
@@ -23,7 +23,7 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
  * Task is a sequence of steps
  */
 @HAPEntityWithAttribute
-public class HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite extends HAPElementContainerResourceDefinitionEntityImpComponent implements HAPDefinitionProcess{ 
+public class HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite extends HAPElementInContainerEntityDefinitionImpComplex implements HAPDefinitionProcess{ 
 
 	@HAPAttribute
 	public static String ACTIVITY = "activity";
@@ -40,7 +40,7 @@ public class HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite
 	}
  
 	@Override
-	public String getType() {	return HAPConstantShared.PROCESSSUITE_ELEMENTTYPE_ENTITY;	}
+	public String getElementType() {	return HAPConstantShared.PROCESSSUITE_ELEMENTTYPE_ENTITY;	}
 
 	//steps within task
 	public Map<String, HAPDefinitionActivity> getActivities(){  return this.m_activities;  }
@@ -56,12 +56,12 @@ public class HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite
 	}
 
 	@Override
-	public HAPDefinitionComponent cloneComponent() {
-		return (HAPDefinitionComponent)this.cloneResourceDefinitionContainerElement();
+	public HAPDefinitionEntityComponent cloneComponent() {
+		return (HAPDefinitionEntityComponent)this.cloneDefinitionEntityElementInContainer();
 	}
 
 	@Override
-	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {
+	public HAPElementInContainerEntityDefinition cloneDefinitionEntityElementInContainer() {
 		HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite out = new HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite();
 		this.cloneToComponent(out, true);
 		for(String name : this.m_activities.keySet()) {

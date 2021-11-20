@@ -47,7 +47,7 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 				cachedResources.put(resourceId, cachedResource);
 			}
 			else {
-				String type = resourceId.getType();
+				String type = resourceId.getResourceType();
 				List<HAPResourceId> typedResourcesId = sortedResourcesId.get(type);
 				if(typedResourcesId==null){
 					typedResourcesId = new ArrayList<HAPResourceId>();
@@ -72,7 +72,7 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 				out.addLoadedResource(resource);
 			}
 			else {
-				HAPLoadResourceResponse resourceResponse = resourceResponses.get(resourceId.getType());
+				HAPLoadResourceResponse resourceResponse = resourceResponses.get(resourceId.getResourceType());
 				resource = resourceResponse.getLoadedResource(resourceId);
 				if(resource!=null){
 					out.addLoadedResource(resource);
@@ -110,7 +110,7 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 	private void discoverResource(HAPResourceId resourceId, List<HAPResourceInfo> resourceInfos, Set<HAPResourceId> processedResourceIds, HAPRuntimeInfo runtimeInfo){
 		if(!processedResourceIds.contains(resourceId)){
 			processedResourceIds.add(resourceId);
-			HAPResourceInfo resourceInfo = this.getResourceManager(resourceId.getType()).discoverResource(resourceId, runtimeInfo);
+			HAPResourceInfo resourceInfo = this.getResourceManager(resourceId.getResourceType()).discoverResource(resourceId, runtimeInfo);
 			//add dependency first
 			List<HAPResourceDependency> dependencys = resourceInfo.getDependency();
 			for(HAPResourceDependency dependency : dependencys){

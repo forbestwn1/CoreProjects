@@ -9,6 +9,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.structure.HAPElementStructure;
@@ -16,7 +17,7 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPInfoAlias;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPUtilityValueStructure {
@@ -64,7 +65,7 @@ public class HAPUtilityValueStructure {
 	public static Map<String, Object> replaceValueNameWithId(HAPValueStructure valueStructure, Map<String, Object> values){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		for(String rootName : values.keySet()) {
-			HAPReferenceRoot rootReference = null;
+			HAPReferenceRootInStrucutre rootReference = null;
 			String structureType = valueStructure.getStructureType();
 			if(structureType.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP)) {
 				rootReference = new HAPReferenceRootInGroup(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, rootName);

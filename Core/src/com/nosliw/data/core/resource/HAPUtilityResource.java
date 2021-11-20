@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
+import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.system.HAPSystemUtility;
@@ -16,7 +16,7 @@ public class HAPUtilityResource {
 
 	public static Map<String, Object> buildResourceLoadPattern(HAPResourceId resourceId, Map<String, Object> info) {
 		if(info==null)   info = new LinkedHashMap<String, Object>();
-		if(isLoadResoureByFile(resourceId.getType())) {
+		if(isLoadResoureByFile(resourceId.getResourceType())) {
 			info.put(HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN, HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_FILE);
 		}
 		return info;
@@ -37,13 +37,13 @@ public class HAPUtilityResource {
 	}
 	
 
-	public static HAPResourceDefinition solidateResource(HAPEntityOrReference entityOrReference, HAPRuntimeEnvironment runtimeEnv) {
-		HAPResourceDefinition out = null;
+	public static HAPResourceDefinition1 solidateResource(HAPEntityOrReference entityOrReference, HAPRuntimeEnvironment runtimeEnv) {
+		HAPResourceDefinition1 out = null;
 		if(entityOrReference.getEntityOrReferenceType().equals(HAPConstantShared.REFERENCE)) {
 			out = runtimeEnv.getResourceDefinitionManager().getResourceDefinition((HAPResourceId)entityOrReference);
 		}
 		else {
-			out = (HAPResourceDefinition)entityOrReference;
+			out = (HAPResourceDefinition1)entityOrReference;
 		}
 		return out;
 	}
@@ -53,8 +53,8 @@ public class HAPUtilityResource {
 		if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE) && HAPUtilityResourceId.isLocalReference(resourceId)) {
 			//for reference local, get it from container
 			String id = ((HAPResourceIdSimple)resourceId).getId();
-			if(container instanceof HAPResourceDefinitionContainer) {
-				out = ((HAPResourceDefinitionContainer)container).getElementResourceDefinition(id);
+			if(container instanceof HAPDefinitionEntityContainer) {
+				out = ((HAPDefinitionEntityContainer)container).getElementResourceDefinition(id);
 			}
 			else if(container instanceof HAPWithEntityElement) {
 				out = ((HAPWithEntityElement)container).getEntityElement(id);
@@ -69,8 +69,8 @@ public class HAPUtilityResource {
 		return out;
 	}	
 
-	public static HAPResourceDefinition getImpliedResourceDefinition(HAPResourceId resourceId, HAPResourceDefinitionContainer container, HAPManagerResourceDefinition resourceDefMan) {
-		HAPResourceDefinition resourceDef = null;
+	public static HAPResourceDefinition1 getImpliedResourceDefinition(HAPResourceId resourceId, HAPDefinitionEntityContainer container, HAPManagerResourceDefinition resourceDefMan) {
+		HAPResourceDefinition1 resourceDef = null;
 		if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE) && HAPUtilityResourceId.isLocalReference(resourceId)) {
 			//for reference local, get it from container
 			resourceDef = container.getElementResourceDefinition(((HAPResourceIdSimple)resourceId).getId());

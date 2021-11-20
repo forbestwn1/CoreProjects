@@ -2,12 +2,12 @@ package com.nosliw.data.core.activity;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPProcessorTask;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPTaskInfoProcessorActivity implements HAPProcessorTask{
 

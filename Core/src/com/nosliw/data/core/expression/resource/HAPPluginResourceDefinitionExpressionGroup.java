@@ -1,12 +1,18 @@
 package com.nosliw.data.core.expression.resource;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.complex.HAPDomainDefinitionComplex;
+import com.nosliw.data.core.complex.HAPIdEntityInDomain;
+import com.nosliw.data.core.complex.HAPInfoComplexEntityInDomain;
+import com.nosliw.data.core.complex.HAPInfoParentEntity;
+import com.nosliw.data.core.component.HAPLocalReferenceBase;
 import com.nosliw.data.core.expression.HAPIdExpressionGroup;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPResultSimpleResource;
 
 public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginResourceDefinition{
 
@@ -20,28 +26,42 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION;	}
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
+	public HAPResultSimpleResource getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId, HAPDomainDefinitionComplex entityDomain) {
 		HAPResourceIdExpression expressionResourceId = new HAPResourceIdExpression(resourceId);
 		HAPResourceIdSimple expressionSuiteResourceId = expressionResourceId.getExpressionSuiteResourceId();
-		HAPResourceDefinitionExpressionSuite expressionSuiteDef = (HAPResourceDefinitionExpressionSuite)this.m_resourceDefMan.getResourceDefinition(expressionSuiteResourceId);
-		return new HAPResourceDefinitionExpressionGroup(expressionSuiteDef, expressionResourceId.getExpressionId().getExpressionGroupId());
+		
+		//get suite resource first
+		HAPResourceDefinition expressionSuiteResourceDef = this.m_resourceDefMan.getResourceDefinition(expressionSuiteResourceId, entityDomain, null);
+		
+		//get group entity id
+		HAPIdEntityInDomain groupEntityId = createGroupThroughSuite(expressionSuiteResourceDef.getEntityId(), expressionResourceId.getExpressionId().getExpressionGroupId(), entityDomain);
+		return new HAPResultSimpleResource(groupEntityId, expressionSuiteResourceDef.getLocalReferenceBase());
 	}
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId, HAPResourceDefinition relatedResource) {
+	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal resourceId, HAPLocalReferenceBase localRefBase, HAPDomainDefinitionComplex entityDomain) {
 		HAPIdExpressionGroup expressionGroupId = new HAPIdExpressionGroup(resourceId.getName());
 		
 		HAPResourceIdLocal suiteResourceId = new HAPResourceIdLocal(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE);
 		suiteResourceId.setName(expressionGroupId.getSuiteId());
-		suiteResourceId.setBasePath(resourceId.getBasePath());
 		suiteResourceId.setSupplement(resourceId.getSupplement());
 		
-		HAPResourceDefinitionExpressionSuite expressionSuiteDef = (HAPResourceDefinitionExpressionSuite)this.m_resourceDefMan.getResourceDefinition(suiteResourceId, relatedResource);
-		return new HAPResourceDefinitionExpressionGroup(expressionSuiteDef, expressionGroupId.getExpressionGroupId());
+		HAPResourceDefinition suiteResourceDefinition = this.m_resourceDefMan.getResourceDefinition(suiteResourceId, entityDomain, localRefBase);
+		
+		HAPIdEntityInDomain groupEntityId = createGroupThroughSuite(suiteResourceDefinition.getEntityId(), expressionGroupId.getExpressionGroupId(), entityDomain);
+		return groupEntityId;
+	}
+	
+	private HAPIdEntityInDomain createGroupThroughSuite(HAPIdEntityInDomain suitEntityId, String groupId, HAPDomainDefinitionComplex entityDomain) {
+		HAPResourceEntityExpressionSuite suite = (HAPResourceEntityExpressionSuite)entityDomain.getEntity(suitEntityId);
+		HAPElementContainerResourceDefinitionEntityExpressionSuite expressionGroup = suite.getContainerElement(groupId);
+		HAPIdEntityInDomain groupEntityId = entityDomain.addComplexEntity(new HAPInfoComplexEntityInDomain(expressionGroup, new HAPInfoParentEntity()));
+		return groupEntityId;
 	}
 
 	@Override
-	public HAPResourceDefinition parseResourceDefinition(Object content) {
+	public HAPIdEntityInDomain parseResourceEntity(Object content, HAPDomainDefinitionComplex entityDomain,
+			HAPLocalReferenceBase localRefBase) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,29 +1,23 @@
 package com.nosliw.uiresource.page.definition;
 
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPDefinitionComponent;
+import java.util.Map;
 
-public class HAPDefinitionUITag extends HAPDefinitionUIUnit{
+import com.nosliw.data.core.component.HAPDefinitionEmbededComponent;
+
+public class HAPDefinitionUITag extends HAPDefinitionEmbededComponent{
 
 	//name of this customer tag
 	private String m_tagName;
 
+	private HAPDefinitionUIUnit m_uiUnit;
+	
+	private Map<String, String> m_attributes;
+	
 	public HAPDefinitionUITag(String tagName, String id){
-		super(id);
 		this.m_tagName = tagName;
 	}
 	
-	public String getTagName(){	return this.m_tagName;}
+	public String getTagName(){	return this.m_tagName;  }
 	
-	@Override
-	public String getType() {
-		return HAPConstantShared.UIRESOURCE_TYPE_TAG;
-	}
-
-	@Override
-	public HAPDefinitionComponent cloneComponent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

@@ -9,15 +9,17 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.common.HAPWithValueStructure;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.component.attachment.HAPResultProcessAttachmentReference;
-import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPReferenceAttachment;
+import com.nosliw.data.core.complex.attachment.HAPResultProcessAttachmentReference;
+import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.process1.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
@@ -31,7 +33,6 @@ import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPUtilityComponent {
 
@@ -68,8 +69,52 @@ public class HAPUtilityComponent {
 		if(resourceId!=null) {
 			//is resource id
 			//reference name is resource id
-			HAPResourceDefinition relatedResource = null;
-			if(context.getComplexEntity() instanceof HAPResourceDefinition) relatedResource = (HAPResourceDefinition)context.getComplexEntity();
+			HAPResourceDefinition1 relatedResource = null;
+			HAPResourceDefinition1 resourceDef = runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, context.getComplexDefinitionDomain(), context.getLocalReferenceBase());
+			contextResult = new HAPContextProcessor(context.getComplexDefinitionDomain().getEntity(resourceDef.getEntityId()), resourceDef.getLocalReferenceBase(), context.getComplexDefinitionDomain(), runtimeEnv);
+			return HAPResultSolveReference.newResultFromResource(resourceDef.getEntityId(), contextResult);
+		}
+		else {
+			//reference name is reference to attachment
+			HAPResultProcessAttachmentReference result = context.processAttachmentReference(attachmentReference.getDataType(), attachmentReference.getName());
+			runtimeEnv.getResourceDefinitionManager().parseEntityDefinition(result.getEntity(), attachmentReference.getDataType(), domainPool, localRefBase);
+			contextResult = new HAPContextProcessor(result.getContextComplexEntity(), runtimeEnv);
+			entity = result.getEntity();
+			return HAPResultSolveReference.newResultFromAttachment(entity, (JSONObject)result.getAdaptor(), contextResult);
+		}
+	}
+	
+	public static HAPResultSolveReference solveReference1(Object refObj, String dataType, HAPContextProcessor context) {
+		HAPRuntimeEnvironment runtimeEnv = context.getRuntimeEnvironment();
+		
+		//figure out reference is resource id or attachment reference
+		HAPResourceId resourceId = null;
+		HAPReferenceAttachment attachmentReference = null;
+		
+		if(refObj instanceof String) {
+			String refStr = (String)refObj;
+			resourceId = HAPUtilityResourceId.buildResourceIdByLiterate(dataType, refStr, true);
+			if(resourceId==null)    attachmentReference = HAPReferenceAttachment.newInstance(refStr, dataType);
+		}
+		else if(refObj instanceof JSONObject) {
+			JSONObject refJsonObj = (JSONObject)refObj;
+			if(refJsonObj.opt(HAPReferenceAttachment.DATATYPE)!=null) {
+				attachmentReference = HAPReferenceAttachment.newInstance(refJsonObj, dataType);
+			}
+			else {
+				resourceId = HAPFactoryResourceId.newInstance(dataType, refObj);
+			}
+		}
+		
+		Object entity = null;
+		HAPContextProcessor contextResult = null;
+		HAPDefinitionEntityComplex contextComplexEntity = null;
+		
+		if(resourceId!=null) {
+			//is resource id
+			//reference name is resource id
+			HAPResourceDefinition1 relatedResource = null;
+			if(context.getComplexEntity() instanceof HAPResourceDefinition1) relatedResource = (HAPResourceDefinition1)context.getComplexEntity();
 			entity = runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, relatedResource);
 			if(entity instanceof HAPWithComplexEntity)  contextComplexEntity = ((HAPWithComplexEntity)entity).getComplexEntity();
 			contextResult = new HAPContextProcessor(contextComplexEntity, runtimeEnv);
@@ -91,7 +136,7 @@ public class HAPUtilityComponent {
 			HAPConfigureProcessorStructure contextProcessConfg,
 			HAPManagerActivityPlugin activityPluginMan
 			) {
-		HAPDefinitionComponent component = componentExe.getDefinition();
+		HAPDefinitionEntityComponent component = componentExe.getDefinition();
 		
 		//service providers
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(component.getAttachmentContainer(), null, runtimeEnv.getServiceManager().getServiceDefinitionManager()); 
@@ -162,8 +207,8 @@ public class HAPUtilityComponent {
 	
 	public static HAPWrapperValueStructure getValueStructure(Object def, HAPRuntimeEnvironment runtimeEnv) {
 		HAPWrapperValueStructure out = null;
-		if(def instanceof HAPComponentContainerElement) {
-			out = ((HAPComponentContainerElement)def).getValueStructureWrapper();
+		if(def instanceof HAPDefinitionEntityElementInContainerComponent) {
+			out = ((HAPDefinitionEntityElementInContainerComponent)def).getValueStructureWrapper();
 		}
 		else if(def instanceof HAPWithValueStructure){
 			out = ((HAPWithValueStructure)def).getValueStructureWrapper();

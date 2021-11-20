@@ -3,7 +3,7 @@ package com.nosliw.uiresource.resource;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
@@ -20,7 +20,7 @@ public class HAPResourceDefinitionPluginAppEntry implements HAPPluginResourceDef
 	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPPENTRY;  }
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition1 getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		HAPResourceIdUIAppEntry appEntryResourceId = new HAPResourceIdUIAppEntry(resourceId);
 		HAPResourceIdSimple appResourceId = appEntryResourceId.getUIAppResourceId();
 		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_resourceDefMan.getResourceDefinition(appResourceId);
@@ -28,7 +28,7 @@ public class HAPResourceDefinitionPluginAppEntry implements HAPPluginResourceDef
 	}
 
 	@Override
-	public HAPResourceDefinition parseResourceDefinition(Object content) {
+	public HAPResourceDefinition1 parseResourceEntity(Object content) {
 		// TODO Auto-generated method stub
 		return null;
 	}

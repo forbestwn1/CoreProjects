@@ -2,7 +2,7 @@ package com.nosliw.data.core.service.resource;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
@@ -19,19 +19,19 @@ public class HAPResourceDefinitionPluginServiceDefinition implements HAPPluginRe
 	public String getResourceType() {  return HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE;  }
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition1 getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		return this.m_serviceDefinitionMan.getDefinition(new HAPResourceIdServiceDefinition(resourceId).getServiceDefinitionId().getId());
 	}
 
 	@Override
-	public HAPResourceDefinition parseResourceDefinition(Object content) {
+	public HAPResourceDefinition1 parseResourceEntity(Object content) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId,
-			HAPResourceDefinition relatedResource) {
+	public HAPResourceDefinition1 getResourceEntityByLocalResourceId(HAPResourceIdLocal resourceId,
+			HAPResourceDefinition1 relatedResource) {
 		// TODO Auto-generated method stub
 		return null;
 	}

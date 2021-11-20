@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
-import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 
 public class HAPPresentUIActivityDefinition extends HAPDefinitionActivityNormal{
 

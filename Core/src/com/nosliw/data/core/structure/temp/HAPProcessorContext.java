@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPProcessorElementConstant;

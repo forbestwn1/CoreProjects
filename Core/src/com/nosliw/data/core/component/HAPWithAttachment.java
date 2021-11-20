@@ -2,9 +2,9 @@ package com.nosliw.data.core.component;
 
 import java.util.Map;
 
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPReferenceAttachment;
+import com.nosliw.data.core.complex.attachment.HAPAttachment;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPReferenceAttachment;
 
 public interface HAPWithAttachment {
 

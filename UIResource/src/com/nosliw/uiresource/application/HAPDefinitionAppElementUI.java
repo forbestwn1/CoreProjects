@@ -11,11 +11,11 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPInfoChildResource;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
-import com.nosliw.data.core.component.HAPDefinitionComponent;
+import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionAppElementUI  extends HAPDefinitionAppElement{
@@ -70,5 +70,5 @@ public class HAPDefinitionAppElementUI  extends HAPDefinitionAppElement{
 	}
 	
 	@Override
-	public HAPDefinitionComponent cloneComponent() {  return cloneAppUIElementDefinition();	}
+	public HAPDefinitionEntityComponent cloneComponent() {  return cloneAppUIElementDefinition();	}
 }

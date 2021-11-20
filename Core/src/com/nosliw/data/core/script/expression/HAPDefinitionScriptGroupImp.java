@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 
 public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implements HAPDefinitionScriptGroup{
 

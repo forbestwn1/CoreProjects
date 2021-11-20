@@ -17,7 +17,7 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 
 public class HAPProcessorModule {
@@ -82,7 +82,7 @@ public class HAPProcessorModule {
 		
 		//resolve page reference
 		HAPResultSolveReference refSolveResult = HAPUtilityComponent.solveReference(moduleUIDefinition.getPage(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, processContext);
-		HAPExecutableUIUnitPage pageExe = uiResourceMan.getUIPage((HAPDefinitionUIPage)refSolveResult.getEntity(), id, processContext);
+		HAPExecutableUIUnitPage pageExe = uiResourceMan.getUIPage((HAPDefinitionUIUnitPage)refSolveResult.getEntity(), id, processContext);
 		out.setPage(pageExe);
 
 		HAPProcessorEmbededComponent.process(moduleUIDefinition, out, pageExe.getBody(), moduleExe, runtimeEnv);

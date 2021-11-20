@@ -10,13 +10,13 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
-import com.nosliw.data.core.component.HAPDefinitionComponent;
-import com.nosliw.data.core.component.HAPDefinitionComponentImp;
+import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
+import com.nosliw.data.core.component.HAPDefinitionEntityComponentImp;
 import com.nosliw.data.core.component.HAPInfoChildResource;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
 /**
@@ -30,7 +30,7 @@ for instance, for a module that shows a school information, it contains two page
 Don't need to define service information here, as service information will be gathered from all the mdoule ui definition
  */
 @HAPEntityWithAttribute
-public class HAPDefinitionModule extends HAPDefinitionComponentImp{
+public class HAPDefinitionModule extends HAPDefinitionEntityComponentImp{
 	
 	@HAPAttribute
 	public static String UI = "ui";
@@ -80,7 +80,7 @@ public class HAPDefinitionModule extends HAPDefinitionComponentImp{
 	}
 
 	@Override
-	public HAPDefinitionComponent cloneComponent() {
+	public HAPDefinitionEntityComponent cloneComponent() {
 		HAPDefinitionModule out = new HAPDefinitionModule();
 		this.cloneToComponent(out, true);
 		for(HAPDefinitionModuleUI ui : this.m_uis) {

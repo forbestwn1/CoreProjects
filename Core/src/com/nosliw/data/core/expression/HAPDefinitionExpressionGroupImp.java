@@ -7,16 +7,18 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.complex.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
-public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements HAPDefinitionExpressionGroup, HAPWithValueStructure{
+//normal expression group
+public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements HAPDefinitionExpressionGroup{
 
 	private Map<String, HAPDefinitionExpression> m_elements;
 	
-	private HAPWrapperValueStructure m_valueStructureWrapper;
+	private HAPComplexValueStructure m_valueStructureComplex;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
@@ -30,26 +32,10 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	}
 
 	@Override
-	public HAPWrapperValueStructure getValueStructureWrapper() {   return this.m_valueStructureWrapper;  }
+	public HAPComplexValueStructure getValueStructureComplex() {  return this.m_valueStructureComplex;  }
 
-	@Override
-	public void setValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper) {  this.m_valueStructureWrapper = valueStructureWrapper;  }
+	public void setValueStructure(HAPValueStructure valueStructure) {	HAPUtilityComplexValueStructure.setValueStructureDefault(this, valueStructure); }
 
-	public HAPValueStructure getValueStructure() {
-		HAPValueStructure out = null;
-		if(this.getValueStructureWrapper()!=null) out = this.getValueStructureWrapper().getValueStructure();
-		return out;
-	}
-	
-	public void setValueStructure(HAPValueStructure valueStructure) {
-		if(this.m_valueStructureWrapper==null) {
-			this.m_valueStructureWrapper = new HAPWrapperValueStructure(valueStructure);
-		}
-		else {
-			this.m_valueStructureWrapper.setValueStructure(valueStructure);
-		}
-	}
-	
 	@Override
 	public Set<HAPDefinitionExpression> getEntityElements() {  return new HashSet<HAPDefinitionExpression>(this.m_elements.values()); }
 
@@ -74,7 +60,7 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 	@Override
 	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() {
 		HAPDefinitionExpressionGroupImp out = new HAPDefinitionExpressionGroupImp();
-		if(this.m_valueStructureWrapper!=null)	out.m_valueStructureWrapper = this.m_valueStructureWrapper.cloneValueStructureWrapper();
+		out.m_valueStructureComplex = this.m_valueStructureComplex.cloneValueStructureComplex();
 		for(String id : this.m_elements.keySet()) {
 			out.m_elements.put(id, this.m_elements.get(id).cloneDefinitionExpression());
 		}
@@ -83,4 +69,7 @@ public class HAPDefinitionExpressionGroupImp extends HAPEntityInfoImp implements
 		}
 		return out;
 	}
+
+	@Override
+	public String getValueStructureTypeIfNotDefined() {  return HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT;  }
 }

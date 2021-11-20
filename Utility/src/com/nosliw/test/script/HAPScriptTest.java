@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.value.HAPJsonValueUtility;
-import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;

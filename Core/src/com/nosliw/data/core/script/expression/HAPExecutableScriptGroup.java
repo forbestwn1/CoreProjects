@@ -13,13 +13,13 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 @HAPEntityWithAttribute
 public class HAPExecutableScriptGroup extends HAPExecutableImp{

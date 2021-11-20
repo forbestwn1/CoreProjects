@@ -9,6 +9,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPUtilityComponentConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroupImp;
@@ -19,7 +20,6 @@ import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptE
 import com.nosliw.data.core.script.expression.imp.literate.HAPProcessorScriptLiterate;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPProcessorScript {
 

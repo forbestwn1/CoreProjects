@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.reference.HAPProcessorElementRelative;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;

@@ -796,4 +796,17 @@ public class HAPConstantShared {
 		public static final String TASK_TYPE_PPROCESS = "process";
 
 
+
+		public static final String VALUESTRUCTUREPART_TYPE_SIMPLE = "simple";
+		public static final String VALUESTRUCTUREPART_TYPE_GROUP_WITHREFERENCE = "groupWithReference";
+		public static final String VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY = "groupWithEntity";
+
+
+
+		public static final String VALUESTRUCTUREPART_NAME_DEFAULT = "default";
+		public static final int VALUESTRUCTUREPART_PRIORITY_DEFAULT = 5;
+		public static final String VALUESTRUCTUREPART_NAME_FROMPARENT = "fromParent";
+		public static final int VALUESTRUCTUREPART_PRIORITY_FROMPARENT = 10;
+
+
 }

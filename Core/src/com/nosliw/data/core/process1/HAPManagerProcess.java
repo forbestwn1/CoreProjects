@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;

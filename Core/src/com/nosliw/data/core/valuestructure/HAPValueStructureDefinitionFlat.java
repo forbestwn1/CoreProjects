@@ -21,8 +21,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPInfoAlias;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.data.core.structure.HAPRootStructure;
+import com.nosliw.data.core.structure.HAPStructure;
 
 @HAPEntityWithAttribute
 public class HAPValueStructureDefinitionFlat extends HAPValueStructureDefinitionImp{
@@ -53,7 +54,7 @@ public class HAPValueStructureDefinitionFlat extends HAPValueStructureDefinition
 	public List<HAPRootStructure> getAllRoots(){   return new ArrayList<HAPRootStructure>(this.m_rootById.values());      }
 
 	@Override
-	public HAPRootStructure addRoot(HAPReferenceRoot rootReference, HAPRootStructure root) {
+	public HAPRootStructure addRoot(HAPReferenceRootInStrucutre rootReference, HAPRootStructure root) {
 		HAPReferenceRootInFlat flatRootReference = (HAPReferenceRootInFlat)rootReference;
 		root.setName(flatRootReference.getName());
 		return this.addRoot(root);
@@ -92,7 +93,7 @@ public class HAPValueStructureDefinitionFlat extends HAPValueStructureDefinition
 	}
 
 	@Override
-	public HAPReferenceRoot getRootReferenceById(String id) {
+	public HAPReferenceRootInStrucutre getRootReferenceById(String id) {
 		return new HAPReferenceRootInFlat(this.getNameById(id));
 	}
 
@@ -104,7 +105,7 @@ public class HAPValueStructureDefinitionFlat extends HAPValueStructureDefinition
 	public boolean isExternalVisible(String rootId) {  return true; }
 
 	@Override
-	public List<HAPRootStructure> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
+	public List<HAPRootStructure> resolveRoot(HAPReferenceRootInStrucutre rootReference, boolean createIfNotExist) {
 		HAPReferenceRootInFlat flatReference = (HAPReferenceRootInFlat)rootReference;
 		String rootName = flatReference.getName();
 		HAPRootStructure root = this.getRootByName(rootName);
@@ -167,7 +168,10 @@ public class HAPValueStructureDefinitionFlat extends HAPValueStructureDefinition
 	}
 	
 	@Override
-	public HAPValueStructure cloneStructure() {	
+	public HAPStructure cloneStructure() {	return this.cloneValueStructure();	}
+	
+	@Override
+	public HAPValueStructure cloneValueStructure() {	
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		out.empty();
 		this.cloneToFlatValueStructure(out);

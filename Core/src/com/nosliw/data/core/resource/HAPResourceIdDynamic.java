@@ -70,7 +70,7 @@ public class HAPResourceIdDynamic extends HAPResourceId{
 
 	@Override
 	public HAPResourceId clone() {
-		HAPResourceIdDynamic out = new HAPResourceIdDynamic(this.getType());
+		HAPResourceIdDynamic out = new HAPResourceIdDynamic(this.getResourceType());
 		out.m_builderId = this.m_builderId;
 		out.m_parms = this.m_parms;
 		return null;

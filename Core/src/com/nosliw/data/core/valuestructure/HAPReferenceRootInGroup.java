@@ -9,10 +9,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 
 @HAPEntityWithAttribute
-public class HAPReferenceRootInGroup extends HAPSerializableImp implements HAPReferenceRoot{
+public class HAPReferenceRootInGroup extends HAPSerializableImp implements HAPReferenceRootInStrucutre{
 
 	@HAPAttribute
 	public static final String CATEGARY = "categary";
@@ -52,7 +52,7 @@ public class HAPReferenceRootInGroup extends HAPSerializableImp implements HAPRe
 	public String getPathFormat() {  return HAPUtilityNamingConversion.buildPath(m_categary, m_name);   }
 	
 	@Override
-	public HAPReferenceRoot cloneStructureRootReference() {  return new HAPReferenceRootInGroup(this.m_categary, this.m_name);  }
+	public HAPReferenceRootInStrucutre cloneStructureRootReference() {  return new HAPReferenceRootInGroup(this.m_categary, this.m_name);  }
 
 	@Override
 	public String toString() {   return this.buildLiterate();	}

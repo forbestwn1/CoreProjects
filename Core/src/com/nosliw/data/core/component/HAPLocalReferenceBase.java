@@ -11,6 +11,8 @@ public class HAPLocalReferenceBase extends HAPSerializableImp{
 		this.m_path = path;
 	}
 	
+	public HAPLocalReferenceBase() {	}
+
 	public String getPath() {    return this.m_path;    }
 
 	public HAPLocalReferenceBase cloneLocalReferenceBase() {

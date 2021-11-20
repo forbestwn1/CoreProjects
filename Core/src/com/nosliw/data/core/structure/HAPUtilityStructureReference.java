@@ -11,9 +11,9 @@ import com.nosliw.data.core.valuestructure.HAPReferenceRootInGroup;
 
 public class HAPUtilityStructureReference {
 
-	public static HAPReferenceRoot parseRootReferenceJson(JSONObject rootRefJson) {
-		HAPReferenceRoot out = null;
-		String refStructureType = rootRefJson.getString(HAPReferenceRoot.STRUCTURETYPE);
+	public static HAPReferenceRootInStrucutre parseRootReferenceJson(JSONObject rootRefJson) {
+		HAPReferenceRootInStrucutre out = null;
+		String refStructureType = rootRefJson.getString(HAPReferenceRootInStrucutre.STRUCTURETYPE);
 		if(refStructureType.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP)) {
 			out = new HAPReferenceRootInGroup();
 		}
@@ -34,8 +34,8 @@ public class HAPUtilityStructureReference {
 	}
 	
 	
-	public static HAPReferenceRoot parseRootReferenceLiterate(String rootRefLiterate, String refStructureType) {
-		HAPReferenceRoot out = null;
+	public static HAPReferenceRootInStrucutre parseRootReferenceLiterate(String rootRefLiterate, String refStructureType) {
+		HAPReferenceRootInStrucutre out = null;
 		if(refStructureType.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP)) {
 			out = new HAPReferenceRootInGroup(rootRefLiterate);
 		}
@@ -54,7 +54,7 @@ public class HAPUtilityStructureReference {
 		return out;
 	}
 
-	public static HAPReferenceElement normalizeElementReference(HAPReferenceElement eleReference, String refStructureType) {
+	public static HAPReferenceElementInStructure normalizeElementReference(HAPReferenceElementInStructure eleReference, String refStructureType) {
 		if(eleReference.getRootReference().getStructureType().equals(HAPConstantShared.STRUCTURE_TYPE_UNKNOWN)) {
 			HAPReferenceRootUnknowType unknowTypeEle = (HAPReferenceRootUnknowType)eleReference.getRootReference();
 			eleReference.setRootReference(parseRootReferenceLiterate(unknowTypeEle.getContent(), refStructureType));

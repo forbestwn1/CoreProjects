@@ -14,10 +14,10 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 @HAPEntityWithAttribute

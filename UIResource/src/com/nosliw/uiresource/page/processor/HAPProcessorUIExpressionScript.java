@@ -17,9 +17,9 @@ import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit1;
+import com.nosliw.uiresource.page.execute.HAPExecutableUITag;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 
@@ -39,8 +39,8 @@ public class HAPProcessorUIExpressionScript {
 //		uiExe.getExpressionContext().addDataVariable(varName, varsInfo.get(varName));
 //	}
 	
-	public static void buildExpressionScriptProcessContext(HAPExecutableUIUnit exeUnit, HAPRuntimeEnvironment runtimeEnv){
-		HAPExecutableUIBody body = exeUnit.getBody();
+	public static void buildExpressionScriptProcessContext(HAPExecutableUIUnit1 exeUnit, HAPRuntimeEnvironment runtimeEnv){
+		HAPExecutableUIUnit body = exeUnit.getBody();
 		HAPDefinitionUIUnit uiUnitDef = exeUnit.getUIUnitDefinition();
 
 		HAPContextProcessExpressionScript processScriptContext = body.getProcessExpressionScriptContext();
@@ -59,13 +59,13 @@ public class HAPProcessorUIExpressionScript {
 		}
 		
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
+		for(HAPExecutableUITag childTag : body.getUITags()) {
 			buildExpressionScriptProcessContext(childTag, runtimeEnv);			
 		}
 	}
 	
-	public static void processUIScriptExpression(HAPExecutableUIUnit exeUnit, HAPRuntimeEnvironment runtimeEnv){
-		HAPExecutableUIBody body = exeUnit.getBody();
+	public static void processUIScriptExpression(HAPExecutableUIUnit1 exeUnit, HAPRuntimeEnvironment runtimeEnv){
+		HAPExecutableUIUnit body = exeUnit.getBody();
 		HAPDefinitionUIUnit uiUnitDef = exeUnit.getUIUnitDefinition();
 		
 		//embeded script in content
@@ -131,7 +131,7 @@ public class HAPProcessorUIExpressionScript {
 
 		
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
+		for(HAPExecutableUITag childTag : body.getUITags()) {
 			processUIScriptExpression(childTag, runtimeEnv);			
 		}
 	}

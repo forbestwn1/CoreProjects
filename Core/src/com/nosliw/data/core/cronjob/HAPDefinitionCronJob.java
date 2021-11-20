@@ -4,12 +4,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.HAPDefinitionComponent;
-import com.nosliw.data.core.component.HAPDefinitionComponentImp;
+import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
+import com.nosliw.data.core.component.HAPDefinitionEntityComponentImp;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
-import com.nosliw.data.core.component.HAPParserComponent;
+import com.nosliw.data.core.component.HAPParserEntityComponent;
 
-public class HAPDefinitionCronJob extends HAPDefinitionComponentImp{
+public class HAPDefinitionCronJob extends HAPDefinitionEntityComponentImp{
 
 	@HAPAttribute
 	public static String SCHEDULE = "schedule";
@@ -49,7 +49,7 @@ public class HAPDefinitionCronJob extends HAPDefinitionComponentImp{
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		HAPParserComponent.parseComponent(this, jsonObj);
+		HAPParserEntityComponent.parseComponent(this, jsonObj);
 		
 		HAPDefinitionSchedule schedule = new HAPDefinitionSchedule();
 		schedule.buildObject(jsonObj.getJSONObject(SCHEDULE), HAPSerializationFormat.JSON);
@@ -66,7 +66,7 @@ public class HAPDefinitionCronJob extends HAPDefinitionComponentImp{
 	}
 
 	@Override
-	public HAPDefinitionComponent cloneComponent() {
+	public HAPDefinitionEntityComponent cloneComponent() {
 		// TODO Auto-generated method stub
 		return null;
 	}

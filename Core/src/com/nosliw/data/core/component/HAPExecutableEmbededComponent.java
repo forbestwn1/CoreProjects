@@ -81,25 +81,6 @@ public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
 	}
 	
 	
-//	@Override
-//	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-//		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-//		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
-//		this.buildFullJsonMap(jsonMap, typeJsonMap);
-//
-//		Map<String, String> eventJsonMap = new LinkedHashMap<String, String>();
-//		for(String eventName :this.m_eventHandlers.keySet()) {	eventJsonMap.put(eventName, this.m_eventHandlers.get(eventName).toResourceData(runtimeInfo).toString());	}
-//		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildMapJson(eventJsonMap));
-//
-//		jsonMap.put(IN, this.m_inDataAssociations.toResourceData(runtimeInfo).toString());
-//		jsonMap.put(OUT, this.m_outDataAssociations.toResourceData(runtimeInfo).toString());
-//		
-//		jsonMap.put(COMPONENT, this.m_component.toResourceData(runtimeInfo).toString());
-//
-//		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
-//	}
-
-
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
@@ -108,14 +89,4 @@ public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
 		this.buildResourceDependencyForExecutable(dependency, m_component, runtimeInfo, resourceManager);
 		for(HAPExecutableHandlerEvent eventHandler : this.m_eventHandlers.values()) {	dependency.addAll(eventHandler.getResourceDependency(runtimeInfo, resourceManager));	}
 	}
-	
-//	@Override
-//	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-//		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-//		out.addAll(this.m_inDataAssociations.getResourceDependency(runtimeInfo, resourceManager));
-//		out.addAll(this.m_outDataAssociations.getResourceDependency(runtimeInfo, resourceManager));
-//		for(HAPExecutableHandlerEvent eventHandler : this.m_eventHandlers.values()) {	out.addAll(eventHandler.getResourceDependency(runtimeInfo, resourceManager));	}
-//		out.addAll(this.m_component.getResourceDependency(runtimeInfo, resourceManager));
-//		return out;
-//	}
 }

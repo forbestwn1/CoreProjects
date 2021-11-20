@@ -18,7 +18,7 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
-import com.nosliw.data.core.structure.reference.HAPInfoPathReference;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
@@ -62,7 +62,7 @@ public class HAPUtilityInteractive {
 		HAPDefinitionGroupDataAssociationForTask out = new HAPDefinitionGroupDataAssociationForTask();
 		HAPDefinitionDataAssociationMapping inputMapping = new HAPDefinitionDataAssociationMapping();
 		for(HAPVariableInfo parm : withInteractive.getRequestParms()) {
-			HAPInfoPathReference reference = parm.getReferenceInfo();
+			HAPReferenceElementInStructureComplex reference = parm.getReferenceInfo();
 			HAPValueMapping mapping = inputMapping.getMapping(reference.getParent(), true);
 			mapping.addMapping(reference.getReferencePath(), new HAPElementStructureLeafRelative(parm.getName()));
 		}
@@ -80,7 +80,7 @@ public class HAPUtilityInteractive {
 		HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
 		for(HAPOutputInteractive output : result.getOutput()) {
 			HAPValueMapping mapping = out.getMapping(null, true);
-			HAPInfoPathReference reference = output.getReferenceInfo();
+			HAPReferenceElementInStructureComplex reference = output.getReferenceInfo();
 			HAPData constantData = output.getConstantData();
 			if(reference!=null)		mapping.addMapping(output.getName(), new HAPElementStructureLeafRelative(reference.getReferencePath()));
 			else if(constantData!=null)    mapping.addMapping(output.getName(), new HAPElementStructureLeafConstant(constantData));
@@ -118,7 +118,7 @@ public class HAPUtilityInteractive {
 		return out;
 	}
 	
-	private static HAPDataTypeCriteria getDataTypeCriteriaFromReference(HAPInfoPathReference referenceInfo, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes) {
+	private static HAPDataTypeCriteria getDataTypeCriteriaFromReference(HAPReferenceElementInStructureComplex referenceInfo, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes) {
 		HAPDataTypeCriteria dataTypeCriteria = null;
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(referenceInfo, parentStructures, mode, relativeInheritRule, elementTypes);
 		HAPElementStructure resolvedEle = resolveInfo.resolvedElement;

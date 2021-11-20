@@ -73,7 +73,7 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 
 	@Override
 	public HAPResourceId clone() {
-		HAPResourceIdEmbeded out = new HAPResourceIdEmbeded(this.getType());
+		HAPResourceIdEmbeded out = new HAPResourceIdEmbeded(this.getResourceType());
 		out.m_path = this.m_path;
 		out.m_parentId = this.m_parentId.clone();
 		return out;

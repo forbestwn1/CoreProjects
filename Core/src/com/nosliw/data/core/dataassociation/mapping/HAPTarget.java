@@ -3,12 +3,12 @@ package com.nosliw.data.core.dataassociation.mapping;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.data.core.structure.HAPReferenceRootUnknowType;
 
 public class HAPTarget {
 
-	private HAPReferenceRoot m_rootReference;
+	private HAPReferenceRootInStrucutre m_rootReference;
 	
 	private String m_valueStructure;
 	
@@ -31,7 +31,7 @@ public class HAPTarget {
 		}
 	}
 	
-	public HAPReferenceRoot getRootNodeReference() {    return this.m_rootReference;    }
+	public HAPReferenceRootInStrucutre getRootNodeReference() {    return this.m_rootReference;    }
 	
 	public String getValueStructureName() {   return this.m_valueStructure;    }
 	

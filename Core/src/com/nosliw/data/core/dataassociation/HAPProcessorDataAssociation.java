@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPProcessorDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;

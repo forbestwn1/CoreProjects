@@ -19,17 +19,17 @@ import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.reference.HAPInfoDesendantResolve;
-import com.nosliw.data.core.structure.reference.HAPInfoPathReference;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 
 public class HAPUtilityStructure {
 
 	public static HAPRootStructure getRootFromStructure(HAPStructure structure, String rootRefLiterate) {
-		HAPReferenceRoot rootRef = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
+		HAPReferenceRootInStrucutre rootRef = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
 		return getRootFromStructure(structure, rootRef);
 	}
 
-	public static HAPRootStructure getRootFromStructure(HAPStructure structure, HAPReferenceRoot rootRef) {
+	public static HAPRootStructure getRootFromStructure(HAPStructure structure, HAPReferenceRootInStrucutre rootRef) {
 		List<HAPRootStructure> roots = structure.resolveRoot(rootRef, false);
 		if(roots==null || roots.size()==0)  return null;
 		return roots.get(0);
@@ -77,7 +77,7 @@ public class HAPUtilityStructure {
 	}
 
 	public static void setDescendantByNamePath(HAPStructure targetStructure, HAPComplexPath path, HAPElementStructure ele) {
-		HAPReferenceRoot rootRef = HAPUtilityStructureReference.parseRootReferenceLiterate(path.getRoot(), targetStructure.getStructureType());
+		HAPReferenceRootInStrucutre rootRef = HAPUtilityStructureReference.parseRootReferenceLiterate(path.getRoot(), targetStructure.getStructureType());
 		HAPRootStructure root = getRootFromStructure(targetStructure, rootRef);
 		if(root==null) {
 			root = new HAPRootStructure();
@@ -168,7 +168,7 @@ public class HAPUtilityStructure {
 	public static HAPRootStructure createRootWithRelativeElement(String refPath, String parentStructure) {
 		HAPRootStructure out = new HAPRootStructure();
 		HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
-		relativeEle.setPath(new HAPInfoPathReference(parentStructure, refPath));
+		relativeEle.setPath(new HAPReferenceElementInStructureComplex(parentStructure, refPath));
 		out.setDefinition(relativeEle);
 		return out;
 	}
@@ -183,7 +183,7 @@ public class HAPUtilityStructure {
 			out = new HAPRootStructure();
 			out.setInfo(parentNode.getInfo().cloneInfo(excludedInfo));
 			HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
-			relativeEle.setPath(new HAPInfoPathReference(parentStructure, elePath));
+			relativeEle.setPath(new HAPReferenceElementInStructureComplex(parentStructure, elePath));
 			relativeEle.setResolvedIdPath(new HAPComplexPath(parentNode.getLocalId(), elePath));
 			if(parentNode.getDefinition().isProcessed()) {
 //				relativeEle.setDefinition(parentNode.getDefinition().getSolidContextDefinitionElement());
@@ -262,7 +262,7 @@ public class HAPUtilityStructure {
 	}
 
 	public static List<HAPRootStructure> resolveRoot(String rootRefLiterate, HAPStructure structure, boolean createIfNotExist) {
-		HAPReferenceRoot rootReference = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
+		HAPReferenceRootInStrucutre rootReference = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
 		List<HAPRootStructure> out = structure.resolveRoot(rootReference, createIfNotExist);
 		return out;
 	}

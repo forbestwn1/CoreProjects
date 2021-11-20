@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.complex.attachment.HAPAttachment;
+import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
@@ -27,7 +27,7 @@ public class HAPProcessorInclude {
 			//get include page definition
 			String includePageName = includeTagUnit.getAttributes().get(HAPConstantShared.UITAG_NAME_INCLUDE_PARM_SOURCE);
 			HAPAttachment pageAtt = uiResourceDef.getAttachment(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, includePageName);
-			HAPDefinitionUIPage includePageDef = (HAPDefinitionUIPage)HAPUtilityAttachment.getResourceDefinition(pageAtt, resourceDefManager);
+			HAPDefinitionUIUnitPage includePageDef = (HAPDefinitionUIUnitPage)HAPUtilityAttachment.getResourceDefinition(pageAtt, resourceDefManager);
 			
 			//append include page to include tag
 			uiResourceParser.parseAndBuildUIDefinition(includeTagUnit, includePageDef.getSource());

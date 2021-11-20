@@ -9,13 +9,13 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.resource.HAPResourceDefinitionImp;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //contains all information related with service definition
 @HAPEntityWithAttribute
-public class HAPDefinitionService extends HAPResourceDefinitionImp{
+public class HAPDefinitionService extends HAPResourceDefinition{
 
 	public static final String CHILD_INTERFACE = "interface";
 	

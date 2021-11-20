@@ -27,7 +27,7 @@ import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
-import com.nosliw.data.core.structure.HAPReferenceElement;
+import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
@@ -94,7 +94,7 @@ public class HAPUtilityProcess {
 	public static void mergeDataVariableInActivityToProcessContext(Set<HAPVariableInfo> activityVariablesInfo, HAPValueStructureDefinitionFlat activityContext, HAPValueStructureDefinitionGroup processContext) {
 		Map<String, HAPVariableInfo> expectedVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		for(HAPVariableInfo expectedVarInfo : activityVariablesInfo) {
-			HAPReferenceElement varPath = new HAPReferenceElement(expectedVarInfo.getName());
+			HAPReferenceElementInStructure varPath = new HAPReferenceElementInStructure(expectedVarInfo.getName());
 			//affect global variable 
 			HAPRootStructure affectedRoot = activityContext.getRoot(varPath.getRootReference().getFullName());
 			if(affectedRoot!=null) {
@@ -109,7 +109,7 @@ public class HAPUtilityProcess {
 					}
 				}
 				HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)currentEle;
-				HAPReferenceElement relativeElePath = relativeEle.getPathFormat();
+				HAPReferenceElementInStructure relativeElePath = relativeEle.getPathFormat();
 				String fullName = relativeElePath.getFullPath();
 				for(int i=0;i<pathSegs.length; i++) {
 					fullName = HAPUtilityNamingConversion.buildPath(fullName, pathSegs[i]);
@@ -126,7 +126,7 @@ public class HAPUtilityProcess {
 
 		//affect parent context
 		for(String basePath : expectedVariablesInfo.keySet()) {
-			HAPReferenceElement cpath = new HAPReferenceElement(basePath);
+			HAPReferenceElementInStructure cpath = new HAPReferenceElementInStructure(basePath);
 			HAPElementStructureLeafData affectedEle = new HAPElementStructureLeafData(expectedVariablesInfo.get(basePath).getDataInfo());
 			HAPUtilityContext.updateDataDescendant(processContext, cpath.getRootReference().getCategary(), cpath.getPath(), affectedEle);
 		}

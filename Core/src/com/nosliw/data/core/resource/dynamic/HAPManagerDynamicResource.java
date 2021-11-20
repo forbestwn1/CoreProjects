@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 
 public class HAPManagerDynamicResource {
 
@@ -14,7 +14,7 @@ public class HAPManagerDynamicResource {
 		this.m_builders = new LinkedHashMap<String, HAPBuilderResourceDefinition>();
 	}
 
-	public HAPResourceDefinition buildResource(String builderId, Set<HAPParmDefinition> parms) {
+	public HAPResourceDefinition1 buildResource(String builderId, Set<HAPParmDefinition> parms) {
 		HAPOutputBuilder output = this.tryBuildResource(builderId, parms);
 		return output.getResourceDefinition();
 	}

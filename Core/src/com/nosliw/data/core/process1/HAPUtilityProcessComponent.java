@@ -4,23 +4,23 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
-import com.nosliw.data.core.component.HAPDefinitionComponent;
-import com.nosliw.data.core.component.HAPComponentContainerElement;
-import com.nosliw.data.core.component.HAPDefinitionComponentImp;
-import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
+import com.nosliw.data.core.complex.attachment.HAPAttachment;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
+import com.nosliw.data.core.component.HAPDefinitionEntityElementInContainerComponent;
+import com.nosliw.data.core.component.HAPDefinitionEntityComponentImp;
 import com.nosliw.data.core.process1.resource.HAPElementContainerResourceDefinitionReferenceProcessSuite;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.process1.util.HAPParserProcessDefinition;
 
 public class HAPUtilityProcessComponent {
 
-	public static HAPResourceDefinitionProcessSuite buildProcessSuiteFromComponent(HAPDefinitionComponent component, HAPManagerActivityPlugin activityPluginMan) {
+	public static HAPResourceDefinitionProcessSuite buildProcessSuiteFromComponent(HAPDefinitionEntityComponent component, HAPManagerActivityPlugin activityPluginMan) {
 		HAPResourceDefinitionProcessSuite out = new HAPResourceDefinitionProcessSuite();
-		if(component instanceof HAPDefinitionComponentImp) {
+		if(component instanceof HAPDefinitionEntityComponentImp) {
 			component.cloneToComplexResourceDefinition(out);
 			Map<String, HAPAttachment> processAtts = component.getAttachmentContainer().getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS);
 			
@@ -29,14 +29,14 @@ public class HAPUtilityProcessComponent {
 				out.addContainerElement(HAPUtilityProcessComponent.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan));
 			}
 		}
-		else if(component instanceof HAPComponentContainerElement) {
-			out = buildProcessSuiteFromComponent(((HAPComponentContainerElement)component).getComponentEntity(), activityPluginMan);
+		else if(component instanceof HAPDefinitionEntityElementInContainerComponent) {
+			out = buildProcessSuiteFromComponent(((HAPDefinitionEntityElementInContainerComponent)component).getComponentEntity(), activityPluginMan);
 		}
 		return out;
 	}
 	
-	public static HAPElementContainerResourceDefinition getProcessDefinitionElementFromAttachment(HAPAttachment attachment, HAPManagerActivityPlugin activityPluginMan) {
-		HAPElementContainerResourceDefinition out = null;
+	public static HAPElementInContainerEntityDefinition getProcessDefinitionElementFromAttachment(HAPAttachment attachment, HAPManagerActivityPlugin activityPluginMan) {
+		HAPElementInContainerEntityDefinition out = null;
 		if(HAPConstantShared.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
 			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntityJsonObj(), activityPluginMan);
@@ -53,7 +53,7 @@ public class HAPUtilityProcessComponent {
 		return out;
 	}
 	
-	public static HAPElementContainerResourceDefinition getProcessDefinitionElementFromAttachment(String name, HAPContainerAttachment attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
+	public static HAPElementInContainerEntityDefinition getProcessDefinitionElementFromAttachment(String name, HAPContainerAttachment attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
 		HAPAttachment attachment = attachmentContainer.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS, name);
 		return HAPUtilityProcessComponent.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan);
 	}

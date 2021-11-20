@@ -1,40 +1,42 @@
 package com.nosliw.uiresource.page.processor;
 
+import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPProcessorComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.common.HAPIdGenerator;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
+import com.nosliw.uiresource.page.execute.HAPExecutableUITag;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit1;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPProcessorUIPage {
 
 	public static HAPExecutableUIUnitPage processUIResource(
-			HAPDefinitionUIPage uiPageDef,
+			HAPDefinitionUIUnitPage uiPageDef,
 			String id,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPUIResourceManager uiResourceMan,
 			HAPManagerUITag uiTagMan,  
 			HAPParserPage uiResourceParser,
-			HAPIdGenerator idGengerator) {
+			HAPGeneratorId idGengerator) {
 		
 		//----------------------  Normalize definition
-		
 		//expand include and build mapping for include tag
 		HAPProcessorInclude.expandInclude(uiPageDef, uiResourceParser, uiResourceMan, runtimeEnv.getResourceDefinitionManager());
-		
+	
 		//process attachment
 		HAPProcessorAttachment.mergeAttachment(uiPageDef, null);
 
 		//enhance value structure (error)
 		HAPProcessorUIValueStructure.enhanceValueStructure(uiPageDef);
+		
+		
+		
 		
 		HAPContextProcessor processContext = new HAPContextProcessor(uiPageDef, runtimeEnv);
 		normalize(uiPageDef, processContext);
@@ -81,11 +83,11 @@ public class HAPProcessorUIPage {
 		}
 	}
 	
-	public static void processComponent(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processComponent(HAPExecutableUIUnit1 uiExe, HAPRuntimeEnvironment runtimeEnv) {
 		HAPProcessorComponent.process(uiExe.getUIUnitDefinition(), uiExe.getBody(), runtimeEnv);
 		
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
+		for(HAPExecutableUITag childTag : uiExe.getBody().getUITags()) {
 			processComponent(childTag, runtimeEnv);			
 		}
 	}

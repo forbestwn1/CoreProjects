@@ -8,7 +8,7 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoAlias;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPStructure;
 
@@ -43,9 +43,10 @@ public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitio
 	public List<HAPRootStructure> getAllRoots(){   return new ArrayList<HAPRootStructure>();      }
 
 	@Override
-	public HAPStructure cloneStructure() {
-		return  new HAPValueStructureDefinitionEmpty(this.m_isFlat);
-	}
+	public HAPStructure cloneStructure() {   return this.cloneValueStructure(); }
+
+	@Override
+	public HAPValueStructure cloneValueStructure() {		return  new HAPValueStructureDefinitionEmpty(this.m_isFlat);	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -67,7 +68,7 @@ public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitio
 	}
 
 	@Override
-	public List<HAPRootStructure> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
+	public List<HAPRootStructure> resolveRoot(HAPReferenceRootInStrucutre rootReference, boolean createIfNotExist) {
 		return new ArrayList<HAPRootStructure>();
 	}
 
@@ -78,7 +79,7 @@ public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitio
 	}
 
 	@Override
-	public HAPRootStructure addRoot(HAPReferenceRoot rootReference, HAPRootStructure root) {
+	public HAPRootStructure addRoot(HAPReferenceRootInStrucutre rootReference, HAPRootStructure root) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -90,7 +91,7 @@ public class HAPValueStructureDefinitionEmpty extends HAPValueStructureDefinitio
 	}
 
 	@Override
-	public HAPReferenceRoot getRootReferenceById(String id) {
+	public HAPReferenceRootInStrucutre getRootReferenceById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

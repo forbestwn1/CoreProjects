@@ -11,7 +11,7 @@ import com.nosliw.data.core.activity.HAPTaskInfoProcessorActivity;
 import com.nosliw.data.core.codetable.HAPGatewayCodeTable;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.codetable.HAPResourceManagerCodeTable;
-import com.nosliw.data.core.component.attachment.HAPManagerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
@@ -207,7 +207,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		//component
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, new HAPParserResourceValue()));
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE, new HAPParserResourceDefinitionExpressionSuite()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE, new HAPParserResourceDefinitionExpressionSuite(this.getTaskManager())));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionGroup(this.getResourceDefinitionManager()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION, new HAPParserResourceDefinitionScriptGroup()));
 

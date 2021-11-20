@@ -3,7 +3,7 @@ package com.nosliw.data.core.process1.resource;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -19,7 +19,7 @@ public class HAPPluginResourceDefinitionProcess implements HAPPluginResourceDefi
 	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS;	}
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition1 getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		HAPResourceIdProcess processResourceId = new HAPResourceIdProcess(resourceId);
 		HAPResourceIdSimple processSuiteResourceId = processResourceId.getProcessSuiteResourceId();
 		HAPResourceDefinitionProcessSuite processSuiteDef = (HAPResourceDefinitionProcessSuite)this.m_resourceDefMan.getResourceDefinition(processSuiteResourceId);
@@ -27,7 +27,7 @@ public class HAPPluginResourceDefinitionProcess implements HAPPluginResourceDefi
 	}
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal resourceId, HAPResourceDefinition relatedResource) {
+	public HAPResourceDefinition1 getResourceEntityByLocalResourceId(HAPResourceIdLocal resourceId, HAPResourceDefinition1 relatedResource) {
 		HAPIdProcess processId = new HAPIdProcess(resourceId.getName());
 		
 		HAPResourceIdLocal suiteResourceId = new HAPResourceIdLocal(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE);
@@ -40,7 +40,7 @@ public class HAPPluginResourceDefinitionProcess implements HAPPluginResourceDefi
 	}
 
 	@Override
-	public HAPResourceDefinition parseResourceDefinition(Object content) {
+	public HAPResourceDefinition1 parseResourceEntity(Object content) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -33,7 +33,7 @@ public class HAPUtilityRuntimeJSScript {
 	public static List<HAPJSScriptInfo> buildScriptForResource(HAPResourceInfo resourceInfo, HAPResource resource){
 		List<HAPJSScriptInfo> out = new ArrayList<HAPJSScriptInfo>();
 		//build library script info first
-		if(resource.getId().getType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY)){
+		if(resource.getId().getResourceType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY)){
 			out.addAll(buildScriptInfoForLibrary(resourceInfo, resource));
 		}
 		
@@ -105,7 +105,7 @@ public class HAPUtilityRuntimeJSScript {
 			File file = new File(uri);
 			String fileFullName = file.getAbsolutePath().replaceAll("\\\\", "/");
 			HAPJSScriptInfo scriptInfo = HAPJSScriptInfo.buildByFile(fileFullName, "Library__" + resource.getId().getCoreIdLiterate() + "__" + file.getName());
-			scriptInfo.setType(resource.getId().getType());
+			scriptInfo.setType(resource.getId().getResourceType());
 			out.add(scriptInfo);
 		}
 		out.add(buildScriptInfoForResourceWithScript(resourceInfo, resource, null));

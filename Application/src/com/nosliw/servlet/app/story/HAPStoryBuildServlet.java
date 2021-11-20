@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
@@ -109,7 +109,7 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 			String designId = parms.optString(COMMAND_CONVERTTOSHOW_DESIGNID);
 			HAPDesignStory design = storyManager.getStoryDesign(designId);
 			HAPStory story = design.getStory();
-			HAPResourceDefinition resourceDef = storyManager.buildShow(story);
+			HAPResourceDefinition1 resourceDef = storyManager.buildShow(story);
 			out = HAPServiceData.createSuccessData(resourceDef.getResourceId());
 			break;
 		}

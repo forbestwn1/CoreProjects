@@ -22,8 +22,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPInfoAlias;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.data.core.structure.HAPRootStructure;
+import com.nosliw.data.core.structure.HAPStructure;
 
 //a group of context
 //normally contexts are grouped according to type : public, private, ...
@@ -119,7 +120,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	}
 
 	@Override
-	public HAPReferenceRoot getRootReferenceById(String id) {
+	public HAPReferenceRootInStrucutre getRootReferenceById(String id) {
 		String categary = this.m_categaryById.get(id);
 		String name = this.getRoot(id).getName();
 		return new HAPReferenceRootInGroup(categary, name);
@@ -170,7 +171,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	}
 	
 	@Override
-	public HAPRootStructure addRoot(HAPReferenceRoot rootReference, HAPRootStructure root) {
+	public HAPRootStructure addRoot(HAPReferenceRootInStrucutre rootReference, HAPRootStructure root) {
 		HAPReferenceRootInGroup groupRootReference = (HAPReferenceRootInGroup)rootReference;
 		root.setName(groupRootReference.getName());
 		return this.addRootToCategary(groupRootReference.getCategary(), root);
@@ -192,7 +193,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	}
 
 	@Override
-	public List<HAPRootStructure> resolveRoot(HAPReferenceRoot rootReference, boolean createIfNotExist) {
+	public List<HAPRootStructure> resolveRoot(HAPReferenceRootInStrucutre rootReference, boolean createIfNotExist) {
 		HAPReferenceRootInGroup groupReference = (HAPReferenceRootInGroup)rootReference;
 		
 		//candidate categary
@@ -273,9 +274,10 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	}
 	
 	@Override
-	public HAPValueStructure cloneStructure() {
-		return this.cloneValueStructureGroup();
-	}
+	public HAPStructure cloneStructure() {		return this.cloneValueStructureGroup();	}
+	
+	@Override
+	public HAPValueStructure cloneValueStructure() {		return this.cloneValueStructureGroup();	}
 	
 	public HAPValueStructureDefinitionGroup cloneValueStructureGroup() {
 		HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();

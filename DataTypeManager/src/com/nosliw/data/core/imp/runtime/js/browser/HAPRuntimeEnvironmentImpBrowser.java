@@ -6,7 +6,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
-import com.nosliw.data.core.component.attachment.HAPManagerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;

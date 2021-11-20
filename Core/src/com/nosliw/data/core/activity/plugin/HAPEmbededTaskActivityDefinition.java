@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
-import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;

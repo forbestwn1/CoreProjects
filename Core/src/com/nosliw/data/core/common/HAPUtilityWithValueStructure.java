@@ -1,25 +1,25 @@
 package com.nosliw.data.core.common;
 
+import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.complex.valuestructure.HAPPartComplexValueStructureSimple;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPUtilityWithValueStructure {
 
-	public static HAPValueStructure getValueStructure(HAPWithValueStructure withValueStructure) {
-		HAPWrapperValueStructure valueStructureWrapper = withValueStructure.getValueStructureWrapper();
-		if(valueStructureWrapper==null)   return null;
-		else return valueStructureWrapper.getValueStructure();
+	public static void setValueStructure(HAPWithValueStructure withValueStructure, HAPValueStructure valueStructure) {
+		HAPComplexValueStructure valueStructureComplex = withValueStructure.getValueStructureComplex();
+		valueStructureComplex.addPart(new HAPPartComplexValueStructureSimple(valueStructure, null));
 	}
 	
-	public static void setValueStructure(HAPWithValueStructure withValueStructure, HAPValueStructure valueStructure) {
-		HAPWrapperValueStructure valueStructureWrapper = withValueStructure.getValueStructureWrapper();
-		if(valueStructureWrapper==null) {
-			withValueStructure.setValueStructureWrapper(new HAPWrapperValueStructure(valueStructure));
-		}
-		else{
-			valueStructureWrapper.setValueStructure(valueStructure);
-		}
-		
+	public static void setValueStructure(HAPWithValueStructure withValueStructure, HAPWrapperValueStructure valueStructure) {
+		HAPComplexValueStructure valueStructureComplex = withValueStructure.getValueStructureComplex();
+		valueStructureComplex.addPart(new HAPPartComplexValueStructureSimple(valueStructure, null));
+	}
+
+	public static HAPValueStructure getValueStructure(HAPWithValueStructure withValueStructure) {
+		HAPComplexValueStructure valueStructureComplex = withValueStructure.getValueStructureComplex();
+		return ((HAPPartComplexValueStructureSimple)valueStructureComplex.getPart(null)).getValueStructureWrapper().getValueStructure();
 	}
 	
 }

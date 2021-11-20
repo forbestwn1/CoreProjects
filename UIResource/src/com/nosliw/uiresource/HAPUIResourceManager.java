@@ -1,13 +1,14 @@
 package com.nosliw.uiresource;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.resource.HAPResourceCache;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPParserElement;
@@ -16,12 +17,11 @@ import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
 import com.nosliw.uiresource.application.HAPParseMiniApp;
 import com.nosliw.uiresource.application.HAPProcessMiniAppEntry;
-import com.nosliw.uiresource.common.HAPIdGenerator;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 import com.nosliw.uiresource.module.HAPParserModule;
 import com.nosliw.uiresource.module.HAPProcessorModule;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.processor.HAPProcessorUIPage;
@@ -39,7 +39,7 @@ public class HAPUIResourceManager {
 	
 	private HAPManagerUITag m_uiTagMan;
 	
-	private HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
+	private HAPGeneratorId m_idGengerator = new HAPGeneratorId(1);
 
 	private HAPParserPage m_uiResourceParser;
 	
@@ -110,7 +110,7 @@ public class HAPUIResourceManager {
 			moduleDef = getModuleDefinition(moduleId, attachmentEx);
 			id = moduleId.getCoreIdLiterate();
 		}
-		else if(defOrRef instanceof HAPResourceDefinition) {
+		else if(defOrRef instanceof HAPResourceDefinition1) {
 			moduleDef = (HAPDefinitionModule)defOrRef;
 			HAPUtilityComponent.mergeWithParentAttachment(moduleDef, attachmentEx);
 		}
@@ -126,13 +126,13 @@ public class HAPUIResourceManager {
 		return out;
 	}
 	
-	public HAPDefinitionUIPage getUIPageDefinition(HAPResourceId pageResourceId, HAPContainerAttachment parentAttachment) {
-		HAPDefinitionUIPage pageDefinition = (HAPDefinitionUIPage)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(pageResourceId, parentAttachment);
+	public HAPDefinitionUIUnitPage getUIPageDefinition(HAPResourceId pageResourceId, HAPContainerAttachment parentAttachment) {
+		HAPDefinitionUIUnitPage pageDefinition = (HAPDefinitionUIUnitPage)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(pageResourceId, parentAttachment);
 		return pageDefinition;
 	}
 
 	public HAPExecutableUIUnitPage getEmbededUIPage(HAPEntityOrReference defOrRef, String id, HAPContextProcessor processContext, HAPWithNameMapping withNameMapping){
-		HAPDefinitionUIPage pageDef = null;
+		HAPDefinitionUIUnitPage pageDef = null;
 		HAPContainerAttachment attachmentEx = null;
 		if(defOrRef instanceof HAPResourceId) {
 			HAPResourceId pageId = (HAPResourceId)defOrRef;
@@ -145,12 +145,12 @@ public class HAPUIResourceManager {
 		return out;
 	}
 	
-	public HAPExecutableUIUnitPage getUIPage(HAPDefinitionUIPage pageDef, String id) {
+	public HAPExecutableUIUnitPage getUIPage(HAPDefinitionUIUnitPage pageDef, String id) {
 		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
 		return out;
 	}
 
-	public HAPExecutableUIUnitPage getUIPage(HAPDefinitionUIPage pageDef, String id, HAPContextProcessor processContext) {
+	public HAPExecutableUIUnitPage getUIPage(HAPDefinitionUIUnitPage pageDef, String id, HAPContextProcessor processContext) {
 		HAPExecutableUIUnitPage out = HAPProcessorUIPage.processUIResource(pageDef, id, this.m_runtimeEnv, this, m_uiTagMan, this.m_uiResourceParser, m_idGengerator);
 		return out;
 	}

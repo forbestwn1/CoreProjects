@@ -1,9 +1,9 @@
 package com.nosliw.data.core.value;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.resource.HAPResourceDefinitionImp;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 
-public class HAPResourceDefinitionValue extends HAPResourceDefinitionImp {
+public class HAPResourceDefinitionValue extends HAPResourceDefinition {
 
 	private HAPValue m_value;
 	

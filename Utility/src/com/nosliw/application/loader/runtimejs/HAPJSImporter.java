@@ -209,7 +209,7 @@ public class HAPJSImporter {
 				break;
 			}
 			else{
-				if(resourceId.getId().getType().equals(resourceIdEle.getId().getType())){
+				if(resourceId.getId().getResourceType().equals(resourceIdEle.getId().getResourceType())){
 					//if found alias under same type, remove it
 					for(String aliasEle : alias){
 						resourceIdEle.removeAlias(aliasEle);

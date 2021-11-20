@@ -484,7 +484,14 @@ var COMMONCONSTANT=
   "STRUCTURE_TYPE_MAPPING": "mapping",
   "TASK_TYPE_ACTIVITY": "activity",
   "TASK_TYPE_SEQUENCE": "sequence",
-  "TASK_TYPE_PPROCESS": "process"
+  "TASK_TYPE_PPROCESS": "process",
+  "VALUESTRUCTUREPART_TYPE_SIMPLE": "simple",
+  "VALUESTRUCTUREPART_TYPE_GROUP_WITHREFERENCE": "groupWithReference",
+  "VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY": "groupWithEntity",
+  "VALUESTRUCTUREPART_NAME_DEFAULT": "default",
+  "VALUESTRUCTUREPART_PRIORITY_DEFAULT": 5,
+  "VALUESTRUCTUREPART_NAME_FROMPARENT": "fromParent",
+  "VALUESTRUCTUREPART_PRIORITY_FROMPARENT": 10
 };
 
 //*******************************************   End Node Definition  ************************************** 	

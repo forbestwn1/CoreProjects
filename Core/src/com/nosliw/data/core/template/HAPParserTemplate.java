@@ -9,9 +9,9 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPParserComponent;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.complex.attachment.HAPAttachment;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.component.HAPParserEntityComponent;
 import com.nosliw.data.core.resource.dynamic.HAPParmDefinition;
 
 public class HAPParserTemplate {
@@ -42,7 +42,7 @@ public class HAPParserTemplate {
 		HAPResourceDefinitionTemplate out = new HAPResourceDefinitionTemplate();
 
 		//build complex resource part from json object
-		HAPParserComponent.parseComplextResourceDefinition(out, jsonObj);
+		HAPParserEntityComponent.parseComplextResourceDefinition(out, jsonObj);
 
 		//builder id
 		out.setBuilderId(jsonObj.getString(HAPResourceDefinitionTemplate.BUILDERID));

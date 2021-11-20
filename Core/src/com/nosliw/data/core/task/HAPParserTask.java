@@ -1,6 +1,6 @@
 package com.nosliw.data.core.task;
 
-import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 
 public interface HAPParserTask {
 

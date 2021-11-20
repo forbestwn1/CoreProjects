@@ -4,14 +4,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.component.HAPParserComponent;
-import com.nosliw.data.core.resource.HAPParserResourceDefinitionImp;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.component.HAPParserEntityComponent;
+import com.nosliw.data.core.resource.HAPParserResourceEntityImp;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.task.HAPUtilityTask;
 
-public class HAPParserResourceDefinitionTaskSuite extends HAPParserResourceDefinitionImp{
+public class HAPParserResourceDefinitionTaskSuite extends HAPParserResourceEntityImp{
 
 	private HAPManagerTask m_taskMan;
 	
@@ -20,10 +20,10 @@ public class HAPParserResourceDefinitionTaskSuite extends HAPParserResourceDefin
 	}
 	
 	@Override
-	public HAPResourceDefinition parseJson(JSONObject jsonObj) {
+	public HAPResourceDefinition1 parseJson(JSONObject jsonObj) {
 		HAPResourceDefinitionTaskSuite out = new HAPResourceDefinitionTaskSuite();
 
-		HAPParserComponent.parseComplextResourceDefinition(out, jsonObj);
+		HAPParserEntityComponent.parseComplextResourceDefinition(out, jsonObj);
 		
 		JSONArray taskArrayJson = jsonObj.getJSONArray(HAPWithEntityElement.ELEMENT);
 		for(int i=0; i<taskArrayJson.length(); i++) {

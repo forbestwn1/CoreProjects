@@ -7,15 +7,15 @@ import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.HAPExecutableResultActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.activity.HAPUtilityActivity;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.component.HAPDefinitionComponent;
-import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPEventTrigueActivityProcessor implements HAPProcessorActivity{
 
@@ -34,8 +34,8 @@ public class HAPEventTrigueActivityProcessor implements HAPProcessorActivity{
 		//get event definition
 		HAPDefinitionEvent eventDef = null;
 		HAPDefinitionEntityComplex complexEntity = processContext.getComplexEntity();
-		if(complexEntity instanceof HAPDefinitionComponent) {
-			eventDef = ((HAPDefinitionComponent)complexEntity).getEvent(trigueEventActDef.getEventName());
+		if(complexEntity instanceof HAPDefinitionEntityComponent) {
+			eventDef = ((HAPDefinitionEntityComponent)complexEntity).getEvent(trigueEventActDef.getEventName());
 		}
 
 		HAPExecutableEvent eventExe = HAPProcessEvent.processEventDefinition(eventDef, valueStructureWrapper.getValueStructure(), runtimeEnv);

@@ -837,6 +837,17 @@
 			<definition name="TASK_TYPE_SEQUENCE" value="sequence"/>
 			<definition name="TASK_TYPE_PPROCESS" value="process"/>
 			
+			<definition type="space"/>
+			<definition name="VALUESTRUCTUREPART_TYPE_SIMPLE" value="simple"/>
+			<definition name="VALUESTRUCTUREPART_TYPE_GROUP_WITHREFERENCE" value="groupWithReference"/>
+			<definition name="VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY" value="groupWithEntity"/>
+
+			<definition type="space"/>
+			<definition name="VALUESTRUCTUREPART_NAME_DEFAULT" value="default"/>
+			<definition name="VALUESTRUCTUREPART_PRIORITY_DEFAULT" value="5" type="int"/>
+			<definition name="VALUESTRUCTUREPART_NAME_FROMPARENT" value="fromParent"/>
+			<definition name="VALUESTRUCTUREPART_PRIORITY_FROMPARENT" value="10" type="int"/>
+
 		</definitions>
 	</constants>
 </root>

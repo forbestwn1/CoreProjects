@@ -1,6 +1,6 @@
 package com.nosliw.data.core.event;
 
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.resource.HAPResourceEntityExpressionGroup;
 import com.nosliw.data.core.service.interfacee.HAPServiceRequest;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
@@ -10,7 +10,7 @@ public class HAPEventSourceService {
 	
 	private HAPDefinitionServiceProvider m_service;
 	
-	private HAPResourceDefinitionExpressionGroup m_criteria;
+	private HAPResourceEntityExpressionGroup m_criteria;
 	
 	
 	

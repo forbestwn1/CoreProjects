@@ -7,18 +7,18 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit1;
+import com.nosliw.uiresource.page.execute.HAPExecutableUITag;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUIService {
 
-	public static void escalate(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
-		HAPExecutableUIBody body = exeUnit.getBody();
+	public static void escalate(HAPExecutableUIUnit1 exeUnit, HAPManagerUITag uiTagMan) {
+		HAPExecutableUIUnit body = exeUnit.getBody();
 		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
-			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
+			HAPExecutableUITag exeTag = (HAPExecutableUITag)exeUnit;
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getValueStructureDefinition().getInfo())) {
 				Map<String, HAPExecutableServiceUse> mappedServiceDefs = new LinkedHashMap<String, HAPExecutableServiceUse>();
 				
@@ -35,13 +35,13 @@ public class HAPProcessorUIService {
 		}
 
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
+		for(HAPExecutableUITag childTag : body.getUITags()) {
 			escalate(childTag, uiTagMan);
 		}
 	}
 	
-	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPExecutableServiceUse> servicesDef, HAPManagerUITag uiTagMan) {
-		HAPExecutableUIBody body = exeUnit.getBody();
+	private static void escalate(HAPExecutableUIUnit1 exeUnit, Map<String, HAPExecutableServiceUse> servicesDef, HAPManagerUITag uiTagMan) {
+		HAPExecutableUIUnit body = exeUnit.getBody();
 		if(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
 			for(String serviceName : servicesDef.keySet()) {
 				if(body.getServiceUse(serviceName)==null) {
@@ -50,7 +50,7 @@ public class HAPProcessorUIService {
 			}
 		}
 		else {
-			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(((HAPExecutableUIUnitTag)exeUnit).getUIUnitTagDefinition().getTagName())).getValueStructureDefinition().getInfo())) {
+			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(((HAPExecutableUITag)exeUnit).getUIUnitTagDefinition().getTagName())).getValueStructureDefinition().getInfo())) {
 				escalate(exeUnit.getParent(), servicesDef, uiTagMan);
 			}
 		}

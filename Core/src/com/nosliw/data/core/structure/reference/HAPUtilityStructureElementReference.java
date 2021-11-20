@@ -9,22 +9,28 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.data.core.complex.HAPDomainValueStructure;
+import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.complex.valuestructure.HAPInfoPartSimple;
+import com.nosliw.data.core.complex.valuestructure.HAPPartComplexValueStructureSimple;
+import com.nosliw.data.core.complex.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
-import com.nosliw.data.core.structure.HAPReferenceElement;
+import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructureReference;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPUtilityStructureElementReference {
 
-	public static HAPInfoReferenceResolve resolveElementReference(HAPInfoPathReference reference, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
 		return resolveElementReference(reference.getReferencePath(), parentStructures.getStructure(reference.getParent()), mode, relativeInheritRule, elementTypes);
 	}
 	
@@ -35,12 +41,24 @@ public class HAPUtilityStructureElementReference {
 	}
 	
 	public static HAPInfoReferenceResolve analyzeElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
-		HAPReferenceElement elementReference = new HAPReferenceElement(elementReferenceLiterate); 
+		HAPReferenceElementInStructure elementReference = new HAPReferenceElementInStructure(elementReferenceLiterate); 
 		return analyzeElementReference(elementReference, parentStructure, mode, elementTypes);
 	}
 	
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
+		List<HAPInfoPartSimple> candidates = HAPUtilityComplexValueStructure.findCandidateSimplePart(reference.getParent(), parentValueStructureComplex);
+		for(HAPInfoPartSimple candidate : candidates) {
+			HAPPartComplexValueStructureSimple simplePart = candidate.getSimpleValueStructurePart();
+			HAPValueStructure valueStructure = valueStructureDomain.getValueStructureByRuntimeId(simplePart.getRuntimeId());
+			HAPInfoReferenceResolve resolve = analyzeElementReference(new HAPReferenceElementInStructure(reference.getReferencePath()), valueStructure, mode, elementTypes);
+			resolve.structureId = simplePart.getRuntimeId();
+			if(isLogicallySolved(resolve))  return resolve;
+		}
+		return null;
+	}
+	
 	//find best resolved element from structure 
-	public static HAPInfoReferenceResolve analyzeElementReference(HAPReferenceElement elementReference, HAPStructure parentStructure, String mode, Set<String> elementTypes){
+	public static HAPInfoReferenceResolve analyzeElementReference(HAPReferenceElementInStructure elementReference, HAPStructure parentStructure, String mode, Set<String> elementTypes){
 		if(parentStructure==null)   return null;
 		
 		//normalize element reference

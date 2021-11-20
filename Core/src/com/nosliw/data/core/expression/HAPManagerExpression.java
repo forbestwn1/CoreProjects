@@ -5,11 +5,12 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.common.HAPUtilityWithValueStructure;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.resource.HAPResourceEntityExpressionGroup;
+import com.nosliw.data.core.expression.resource.HAPResourceEntityExpressionSuite;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -33,18 +34,18 @@ public class HAPManagerExpression {
 	
 	public HAPParserExpression getExpressionParser() {   return this.m_expressionParser;    }
 	
-	public HAPResourceDefinitionExpressionSuite getExpressionSuiteDefinition(HAPResourceId suiteId, HAPContainerAttachment parentAttachment) {
-		HAPResourceDefinitionExpressionSuite suiteDef = (HAPResourceDefinitionExpressionSuite)getResourceDefinitionManager().getAdjustedComplextResourceDefinition(suiteId, parentAttachment);
+	public HAPResourceEntityExpressionSuite getExpressionSuiteDefinition(HAPResourceId suiteId, HAPContainerAttachment parentAttachment) {
+		HAPResourceEntityExpressionSuite suiteDef = (HAPResourceEntityExpressionSuite)getResourceDefinitionManager().getAdjustedComplextResourceDefinition(suiteId, parentAttachment);
 		return suiteDef;
 	}
 
-	public HAPResourceDefinitionExpressionGroup getExpressionDefinition(HAPResourceId expressionId, HAPContainerAttachment parentAttachment) {
-		HAPResourceDefinitionExpressionGroup expressionDef = (HAPResourceDefinitionExpressionGroup)getResourceDefinitionManager().getAdjustedComplextResourceDefinition(expressionId, parentAttachment);
+	public HAPResourceEntityExpressionGroup getExpressionDefinition(HAPResourceId expressionId, HAPContainerAttachment parentAttachment) {
+		HAPResourceEntityExpressionGroup expressionDef = (HAPResourceEntityExpressionGroup)getResourceDefinitionManager().getAdjustedComplextResourceDefinition(expressionId, parentAttachment);
 		return expressionDef;
 	}
 	
 	public HAPExecutableExpressionGroup getExpression(HAPResourceId expressionId, Map<String, String> configure) {
-		HAPResourceDefinitionExpressionGroup exressionGroupResourceDef = (HAPResourceDefinitionExpressionGroup)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionId);
+		HAPResourceEntityExpressionGroup exressionGroupResourceDef = (HAPResourceEntityExpressionGroup)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(expressionId);
 		HAPContextProcessor contextProcess = new HAPContextProcessor(exressionGroupResourceDef, this.m_runtimeEnv);
 		
 		if(configure==null) {
@@ -75,7 +76,7 @@ public class HAPManagerExpression {
 				valueStructure.addRoot(varName, new HAPElementStructureLeafData(varCriteria.get(varName)));
 			}
 		}
-		expressionGroupDef.setValueStructure(valueStructure);
+		HAPUtilityWithValueStructure.setValueStructure(expressionGroupDef, valueStructure);
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
@@ -86,7 +87,7 @@ public class HAPManagerExpression {
 	public HAPExecutableExpressionGroup getExpression(String expression) {
 		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
 		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
-		expressionGroupDef.setValueStructure(new HAPValueStructureDefinitionFlat());
+		HAPUtilityWithValueStructure.setValueStructure(expressionGroupDef, new HAPValueStructureDefinitionFlat());
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();

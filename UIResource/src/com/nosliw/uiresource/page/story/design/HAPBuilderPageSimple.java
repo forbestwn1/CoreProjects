@@ -15,15 +15,15 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.component.attachment.HAPAttachmentReferenceExternal;
+import com.nosliw.data.core.complex.attachment.HAPAttachment;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentReferenceExternal;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPValueMapping;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -42,7 +42,7 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITag;
@@ -67,7 +67,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 	}
 
 	@Override
-	public HAPResourceDefinition buildShow(HAPStory story) {
+	public HAPResourceDefinition1 buildShow(HAPStory story) {
 		this.m_story = story;
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		
@@ -98,12 +98,12 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		InputStream pageTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPBuilderPageSimple.class, "page_framework.temp");
 		String pageContent = HAPStringTemplateUtil.getStringValue(pageTemplateStream, templateParms);
 
-		HAPDefinitionUIPage pageDef = null;
+		HAPDefinitionUIUnitPage pageDef = null;
 		try {
 			pageDef = this.m_pageParser.parseUIDefinition(null, pageContent);
 		}
 		catch(Exception e){
-			pageDef = new HAPDefinitionUIPage(null, pageContent);
+			pageDef = new HAPDefinitionUIUnitPage(null, pageContent);
 			e.printStackTrace();
 		}
 		return pageDef;

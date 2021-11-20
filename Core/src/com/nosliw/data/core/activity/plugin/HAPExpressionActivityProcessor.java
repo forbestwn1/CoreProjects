@@ -8,6 +8,7 @@ import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.HAPExecutableResultActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.activity.HAPUtilityActivity;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
@@ -23,7 +24,6 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafValue;
 import com.nosliw.data.core.system.HAPSystemUtility;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 

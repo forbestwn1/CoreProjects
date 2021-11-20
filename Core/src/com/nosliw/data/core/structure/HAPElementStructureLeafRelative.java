@@ -14,7 +14,7 @@ import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
-import com.nosliw.data.core.structure.reference.HAPInfoPathReference;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
 
 public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVariable{
 
@@ -39,7 +39,7 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	@HAPAttribute
 	public static final String REVERSEMATCHERS = "reverseMatchers";
 	
-	private HAPInfoPathReference m_path;
+	private HAPReferenceElementInStructureComplex m_path;
 	
 	//path after resolve (root id + path)
 	private HAPComplexPath m_resolvedPath; 
@@ -62,7 +62,7 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	
 	public HAPElementStructureLeafRelative(String path) {
 		this();
-		this.m_path = new HAPInfoPathReference(path);
+		this.m_path = new HAPReferenceElementInStructureComplex(path);
 	}
 	
 	@Override
@@ -71,8 +71,8 @@ public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVari
 	@Override
 	public HAPElementStructure getSolidStructureElement() {	return this.m_definition;	}
 
-	public HAPInfoPathReference getPath() {    return this.m_path;    }
-	public void setPath(HAPInfoPathReference path) {   this.m_path = path;     }
+	public HAPReferenceElementInStructureComplex getPath() {    return this.m_path;    }
+	public void setPath(HAPReferenceElementInStructureComplex path) {   this.m_path = path;     }
 	
 	public HAPElementStructure getDefinition() {   return this.m_definition;   }
 	public void setDefinition(HAPElementStructure definition) {   this.m_definition = definition.getSolidStructureElement();   }

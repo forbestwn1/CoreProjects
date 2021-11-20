@@ -8,8 +8,8 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
-import com.nosliw.data.core.component.HAPParserComponent;
+import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
+import com.nosliw.data.core.component.HAPParserEntityComponent;
 import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
@@ -40,11 +40,11 @@ public class HAPParseMiniApp {
 	public HAPDefinitionApp parseMiniApp(JSONObject jsonObj) {
 		HAPDefinitionApp out = new HAPDefinitionApp(jsonObj.optString(HAPDefinitionApp.ID));
 
-		HAPParserComponent.parseComplextResourceDefinition(out, jsonObj);
+		HAPParserEntityComponent.parseComplextResourceDefinition(out, jsonObj);
 		
 		out.setApplicationData(HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(HAPDefinitionApp.APPLICATIONDATA)));
 
-		JSONArray entryArray = jsonObj.optJSONArray(HAPResourceDefinitionContainer.ELEMENT);
+		JSONArray entryArray = jsonObj.optJSONArray(HAPDefinitionEntityContainer.ELEMENT);
 		if(entryArray!=null) {
 			for(int i=0; i<entryArray.length(); i++) {
 				out.addEntry(this.parseAppEntry(entryArray.getJSONObject(i)));
@@ -56,7 +56,7 @@ public class HAPParseMiniApp {
 	private HAPDefinitionAppElementUI parseAppEntry(JSONObject jsonObj) {
 		HAPDefinitionAppElementUI out = new HAPDefinitionAppElementUI(null);
 
-		HAPParserComponent.parseComponent(out, jsonObj);
+		HAPParserEntityComponent.parseComponent(out, jsonObj);
 
 		JSONArray moduleArrayJson = jsonObj.optJSONArray(HAPDefinitionAppElementUI.MODULE);
 		for(int i=0; i<moduleArrayJson.length(); i++) {
@@ -88,7 +88,7 @@ public class HAPParseMiniApp {
 		out.getInDataAssociations().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.IN), HAPSerializationFormat.JSON);
 		out.getOutDataAssociations().buildObject(moduleJson.optJSONArray(HAPDefinitionAppModule.OUT), HAPSerializationFormat.JSON);
 		
-		HAPParserComponent.parseComponentChild(out, moduleJson);
+		HAPParserEntityComponent.parseComponentChild(out, moduleJson);
 		return out;
 	}
 }

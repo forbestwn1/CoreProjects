@@ -1,25 +1,36 @@
 package com.nosliw.data.core.component;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.component.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPInfoAttachment;
-import com.nosliw.data.core.component.attachment.HAPResultProcessAttachmentReference;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.complex.HAPContextDomain;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDomainDefinitionComplex;
+import com.nosliw.data.core.complex.attachment.HAPAttachment;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPInfoAttachment;
+import com.nosliw.data.core.complex.attachment.HAPResultProcessAttachmentReference;
+import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPContextProcessor {
 
-	private HAPDefinitionEntityComplex m_complexEntity;
+	private HAPContextDomain m_domainContext;
 	
+	//runtime
 	private HAPRuntimeEnvironment m_runtimeEnv;
-
-	public HAPContextProcessor(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
+	
+	//current complexe entity id 
+	private String m_complexEntityId;
+	
+	//local ref base for 
+	private HAPLocalReferenceBase m_localRefBase;
+	
+	public HAPContextProcessor(HAPDefinitionEntityComplex complexEntity, HAPLocalReferenceBase localRefBase, HAPDomainDefinitionComplex definitionDomain, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_complexEntity = complexEntity;
+		this.m_valueStructurePool = valueStructurePool;
 	}
 	
 	public HAPResultProcessAttachmentReference processAttachmentReference(String attachmentValueType, String attachmentName) {
@@ -36,18 +47,22 @@ public class HAPContextProcessor {
 			if(entity instanceof HAPDefinitionEntityComplex)  contextComplexEntity = (HAPDefinitionEntityComplex)entity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL)) {
-			HAPResourceDefinition relatedResource = null;
-			if(m_complexEntity instanceof HAPResourceDefinition)   relatedResource = (HAPResourceDefinition)m_complexEntity;
+			HAPResourceDefinition1 relatedResource = null;
+			if(m_complexEntity instanceof HAPResourceDefinition1)   relatedResource = (HAPResourceDefinition1)m_complexEntity;
 			entity = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(((HAPAttachmentReference)attachment).getReferenceId(), relatedResource);
 			if(entity instanceof HAPDefinitionEntityComplex)  contextComplexEntity = (HAPDefinitionEntityComplex)entity;
 		}
 		
 		return new HAPResultProcessAttachmentReference(entity, attachment.getAdaptor(), contextComplexEntity);
 	}
+
+	public HAPContextDomain getDomainContext() {    return this.m_domainContext;    }
+	public HAPDomainDefinitionComplex getComplexDefinitionDomain() {   return this.definitionDomain;   }
+	public HAPLocalReferenceBase getLocalReferenceBase() {   return this.m_localRefBase;    }
 	
 	public HAPDefinitionEntityComplex getComplexEntity() {    return this.m_complexEntity;    }
 	
-	public HAPWrapperValueStructure getValueStructureWrapper() {   return this.m_complexEntity==null?null:this.m_complexEntity.getValueStructureWrapper();     }
+	public HAPComplexValueStructure getValueStructureComplex() {   return this.m_complexEntity==null?null:this.m_complexEntity.getValueStructureComplex();     }
 	
 	public HAPContainerAttachment getAttachmentContainer() {   return this.m_complexEntity==null?null:this.m_complexEntity.getAttachmentContainer();    }
 	

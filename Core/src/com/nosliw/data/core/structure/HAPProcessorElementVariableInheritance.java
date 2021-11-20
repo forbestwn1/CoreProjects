@@ -28,7 +28,7 @@ public class HAPProcessorElementVariableInheritance {
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			for(HAPRootStructure root : parentValueStructure.getAllRoots()) {
 				if(parentValueStructure.isInheriable(root.getLocalId())) {
-					HAPReferenceRoot refToParent = parentValueStructure.getRootReferenceById(root.getLocalId());
+					HAPReferenceRootInStrucutre refToParent = parentValueStructure.getRootReferenceById(root.getLocalId());
 					if(isInheritable(out, refToParent, inheritMode)) {
 						HAPRootStructure newRootInChild = HAPUtilityStructure.createRootWithRelativeElement(root, refToParent.toStringValue(HAPSerializationFormat.LITERATE), inheritanceExcludedInfo);
 						out.addRoot(refToParent, newRootInChild);
@@ -51,7 +51,7 @@ public class HAPProcessorElementVariableInheritance {
 	}
 	
 	//whether child can herit from parent element
-	private static boolean isInheritable(HAPValueStructure childStructure, HAPReferenceRoot rootRef, String inheritMode) {
+	private static boolean isInheritable(HAPValueStructure childStructure, HAPReferenceRootInStrucutre rootRef, String inheritMode) {
 		boolean out = false;
 		HAPRootStructure childNode = HAPUtilityStructure.getRootFromStructure(childStructure, rootRef); 
 		if(childNode==null) 		out = true;

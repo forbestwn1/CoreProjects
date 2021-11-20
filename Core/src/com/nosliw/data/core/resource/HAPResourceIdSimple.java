@@ -35,7 +35,7 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	}
 
 	public HAPResourceIdSimple(HAPResourceIdSimple resourceId){
-		this(resourceId.getType());
+		this(resourceId.getResourceType());
 		this.cloneFrom(resourceId);
 	}
 
@@ -87,7 +87,7 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	
 	@Override
 	public HAPResourceIdSimple clone(){
-		HAPResourceIdSimple out = new HAPResourceIdSimple(this.getType());
+		HAPResourceIdSimple out = new HAPResourceIdSimple(this.getResourceType());
 		out.cloneFrom(this);
 		return out;
 	}
@@ -101,12 +101,12 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	protected boolean buildObjectByLiterate(String literateValue){	
 		String[] segs = HAPUtilityNamingConversion.parseLevel2(literateValue);
 		if(segs.length==2) {
-			this.setType(segs[0]);
+			this.setResourceType(segs[0]);
 			buildCoreIdByLiterate(segs[1]);
 		}
 		else if(segs.length==1) {
-			if(this.getType()!=null)  buildCoreIdByLiterate(literateValue);
-			else  this.setType(literateValue);
+			if(this.getResourceType()!=null)  buildCoreIdByLiterate(literateValue);
+			else  this.setResourceType(literateValue);
 		}
 		return true;  
 	}

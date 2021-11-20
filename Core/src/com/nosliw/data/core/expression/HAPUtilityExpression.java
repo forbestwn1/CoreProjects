@@ -7,13 +7,13 @@ import java.util.Set;
 
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.updatename.HAPUpdateNamePrefix;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPUtilityExpression {
 

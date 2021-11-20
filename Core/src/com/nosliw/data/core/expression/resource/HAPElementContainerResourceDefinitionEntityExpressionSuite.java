@@ -7,15 +7,15 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.component.HAPDefinitionComponent;
-import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
-import com.nosliw.data.core.component.HAPElementContainerResourceDefinitionEntityImpComponent;
+import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
+import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
+import com.nosliw.data.core.component.HAPElementInContainerEntityDefinitionImpComponent;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 
 //expression group within suite
 public class HAPElementContainerResourceDefinitionEntityExpressionSuite 
-		extends HAPElementContainerResourceDefinitionEntityImpComponent 
+		extends HAPElementInContainerEntityDefinitionImpComponent 
 		implements HAPDefinitionExpressionGroup{
 
 	private Map<String, HAPDefinitionExpression> m_element;
@@ -47,10 +47,10 @@ public class HAPElementContainerResourceDefinitionEntityExpressionSuite
 	public void addConstantDefinition(HAPDefinitionConstant constantDef) {	}
 
 	@Override
-	public HAPDefinitionComponent cloneComponent() {  return (HAPDefinitionComponent)this.cloneResourceDefinitionContainerElement(); }
+	public HAPDefinitionEntityComponent cloneComponent() {  return (HAPDefinitionEntityComponent)this.cloneDefinitionEntityElementInContainer(); }
 
 	@Override
-	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {
+	public HAPElementInContainerEntityDefinition cloneDefinitionEntityElementInContainer() {
 		HAPElementContainerResourceDefinitionEntityExpressionSuite out = new HAPElementContainerResourceDefinitionEntityExpressionSuite();
 		this.cloneToResourceDefinitionContainerElementEntityImpComponent(out, true);
 		for(String name : this.m_element.keySet()) {
@@ -60,6 +60,6 @@ public class HAPElementContainerResourceDefinitionEntityExpressionSuite
 	}
 
 	@Override
-	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() {  return (HAPDefinitionExpressionGroup)this.cloneResourceDefinitionContainerElement(); }
+	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() {  return (HAPDefinitionExpressionGroup)this.cloneDefinitionEntityElementInContainer(); }
 
 }

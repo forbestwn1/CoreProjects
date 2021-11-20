@@ -6,13 +6,13 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.value.HAPJsonValueUtility;
-import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroupInSuite;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
-import com.nosliw.data.core.expression.resource.HAPResourceDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.resource.HAPResourceEntityExpressionGroup;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskExpression;
@@ -35,7 +35,7 @@ public class HAPExpressionSuiteTest {
 			for(String id : ids) {
 				HAPResourceId resourceId = HAPUtilityExpressionResource.buildResourceId(suite, id);
 				
-				HAPResourceDefinitionExpressionGroup expressionDef = runtimeEnvironment.getExpressionManager().getExpressionDefinition(resourceId, null);
+				HAPResourceEntityExpressionGroup expressionDef = runtimeEnvironment.getExpressionManager().getExpressionDefinition(resourceId, null);
 				
 				HAPExecutableExpressionGroupInSuite expressionExe = (HAPExecutableExpressionGroupInSuite)runtimeEnvironment.getExpressionManager().getExpression(resourceId, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null));
 				System.out.println(expressionExe);

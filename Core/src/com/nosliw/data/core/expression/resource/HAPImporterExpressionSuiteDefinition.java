@@ -10,8 +10,8 @@ import com.nosliw.data.core.expression.HAPParserExpression;
 
 public class HAPImporterExpressionSuiteDefinition {
 
-	public static HAPResourceDefinitionExpressionSuite readProcessSuiteDefinitionFromFile(InputStream inputStream, HAPParserExpression expressionParser){
-		HAPResourceDefinitionExpressionSuite suite = null;
+	public static HAPResourceEntityExpressionSuite readProcessSuiteDefinitionFromFile(InputStream inputStream, HAPParserExpression expressionParser){
+		HAPResourceEntityExpressionSuite suite = null;
 		try{
 			String content = HAPFileUtility.readFile(inputStream);
 			JSONObject contentJson = HAPJsonUtility.newJsonObject(content);

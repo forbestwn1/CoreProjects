@@ -6,15 +6,15 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit1;
+import com.nosliw.uiresource.page.execute.HAPExecutableUITag;
 
 public class HAPProcessorUIConstantInValueStructure {
 
 	//resolve constants defined in context
-	public static void resolveConstants(HAPExecutableUIUnit exeUnit, HAPRuntime runtime) {
-		HAPExecutableUIBody body = exeUnit.getBody();
+	public static void resolveConstants(HAPExecutableUIUnit1 exeUnit, HAPRuntime runtime) {
+		HAPExecutableUIUnit body = exeUnit.getBody();
 		HAPContextProcessExpressionScript scriptContext = body.getProcessExpressionScriptContext();
 		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(body.getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure());
 		for(String id : constantsValue.keySet()) {
@@ -32,7 +32,7 @@ public class HAPProcessorUIConstantInValueStructure {
 //		}
 		
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
+		for(HAPExecutableUITag childTag : body.getUITags()) {
 			resolveConstants(childTag, runtime);			
 		}
 		

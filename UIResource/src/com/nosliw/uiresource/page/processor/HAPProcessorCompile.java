@@ -11,19 +11,19 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit1;
+import com.nosliw.uiresource.page.execute.HAPExecutableUITag;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 
 //compile definition to executable
 public class HAPProcessorCompile {
 
-	public static void process(HAPExecutableUIUnit exeUnit, HAPDefinitionUIUnit parentUnitDef, HAPRuntimeEnvironment runtimeEnv) {
+	public static void process(HAPExecutableUIUnit1 exeUnit, HAPDefinitionUIUnit parentUnitDef, HAPRuntimeEnvironment runtimeEnv) {
 		
 		HAPDefinitionUIUnit uiUnitDef = exeUnit.getUIUnitDefinition();
-		HAPExecutableUIBody body = exeUnit.getBody();
+		HAPExecutableUIUnit body = exeUnit.getBody();
 		
 		//attachment, merge with parent
 		if(parentUnitDef!=null)   HAPUtilityComponent.mergeWithParentAttachment(uiUnitDef, parentUnitDef.getAttachmentContainer());
@@ -61,7 +61,7 @@ public class HAPProcessorCompile {
 //		}
 
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
+		for(HAPExecutableUITag childTag : body.getUITags()) {
 			process(childTag, exeUnit.getUIUnitDefinition(), runtimeEnv);			
 		}
 		

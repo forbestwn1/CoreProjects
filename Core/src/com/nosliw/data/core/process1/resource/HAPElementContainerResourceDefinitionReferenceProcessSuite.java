@@ -5,12 +5,12 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
-import com.nosliw.data.core.component.HAPElementContainerResourceDefinitionReference;
+import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
+import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinitionReference;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 
-public class HAPElementContainerResourceDefinitionReferenceProcessSuite extends HAPEntityInfoWritableImp implements HAPElementContainerResourceDefinitionReference{
+public class HAPElementContainerResourceDefinitionReferenceProcessSuite extends HAPEntityInfoWritableImp implements HAPElementInContainerEntityDefinitionReference{
 
 	@HAPAttribute
 	public static String REFERENCE = "reference";
@@ -38,7 +38,7 @@ public class HAPElementContainerResourceDefinitionReferenceProcessSuite extends 
 	}
 
 	@Override
-	public HAPElementContainerResourceDefinition cloneResourceDefinitionContainerElement() {
+	public HAPElementInContainerEntityDefinition cloneDefinitionEntityElementInContainer() {
 		HAPElementContainerResourceDefinitionReferenceProcessSuite out = new HAPElementContainerResourceDefinitionReferenceProcessSuite();
 		this.cloneToEntityInfo(out);
 		out.m_resourceId = this.m_resourceId.clone();

@@ -10,9 +10,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.uiresource.common.HAPIdGenerator;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.processor.HAPProcessorUIConstantInValueStructure;
 
 public class HAPUIResourceConstantTest {

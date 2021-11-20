@@ -8,19 +8,19 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit1;
+import com.nosliw.uiresource.page.execute.HAPExecutableUITag;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUIEvent {
 
-	public static void escalateEvent(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
-		HAPExecutableUIBody body = exeUnit.getBody();
+	public static void escalateEvent(HAPExecutableUIUnit1 exeUnit, HAPManagerUITag uiTagMan) {
+		HAPExecutableUIUnit body = exeUnit.getBody();
 
 		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
-			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
+			HAPExecutableUITag exeTag = (HAPExecutableUITag)exeUnit;
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getValueStructureDefinition().getInfo())) {
 				List<HAPExecutableEvent> mappedEventDefs = new ArrayList<HAPExecutableEvent>();
 				
@@ -39,14 +39,14 @@ public class HAPProcessorUIEvent {
 		}
 
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : body.getUITags()) {
+		for(HAPExecutableUITag childTag : body.getUITags()) {
 			escalateEvent(childTag, uiTagMan);
 		}
 	}
 
-	private static void escalate(HAPExecutableUIUnit exeUnit, List<HAPExecutableEvent> eventsDef) {
-		HAPExecutableUIBody body = exeUnit.getBody();
-		HAPExecutableUIUnit parent = exeUnit.getParent();
+	private static void escalate(HAPExecutableUIUnit1 exeUnit, List<HAPExecutableEvent> eventsDef) {
+		HAPExecutableUIUnit body = exeUnit.getBody();
+		HAPExecutableUIUnit1 parent = exeUnit.getParent();
 		if(parent==null) {
 			for(HAPExecutableEvent event : eventsDef) {
 				if(body.getEvent(event.getName())==null) {

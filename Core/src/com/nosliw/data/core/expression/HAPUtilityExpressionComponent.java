@@ -6,14 +6,15 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.component.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.common.HAPUtilityWithValueStructure;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.attachment.HAPAttachment;
+import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.component.HAPUtilityComponentConstant;
-import com.nosliw.data.core.component.attachment.HAPAttachment;
-import com.nosliw.data.core.component.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPUtilityExpressionComponent {
 
@@ -22,7 +23,7 @@ public class HAPUtilityExpressionComponent {
 		
 		//build value structure
 		HAPWrapperValueStructure valueStructureWrapper = HAPUtilityExpression.getValueStructure(complexEntity, runtimeEnv);
-		out.setValueStructureWrapper(valueStructureWrapper);
+		HAPUtilityWithValueStructure.setValueStructure(out, valueStructureWrapper);
 		
 		//build constant from attachment
 		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildDataConstantDefinition(complexEntity.getAttachmentContainer())) {

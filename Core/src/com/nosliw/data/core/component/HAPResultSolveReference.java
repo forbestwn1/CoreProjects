@@ -2,28 +2,30 @@ package com.nosliw.data.core.component;
 
 import org.json.JSONObject;
 
+import com.nosliw.data.core.complex.HAPIdEntityInDomain;
+
 public class HAPResultSolveReference {
 
 	private boolean m_isFromAttachment;
 	
-	private Object m_entity;
+	private HAPIdEntityInDomain m_entityId;
 	
 	private JSONObject m_attachmentAdapter;
 	
 	private HAPContextProcessor m_context;
 	
-	public static HAPResultSolveReference newResultFromResource(Object entity, HAPContextProcessor context) {
+	public static HAPResultSolveReference newResultFromResource(HAPIdEntityInDomain entityId, HAPContextProcessor context) {
 		HAPResultSolveReference out = new HAPResultSolveReference();
 		out.m_isFromAttachment = false;
-		out.m_entity = entity;
+		out.m_entityId = entityId;
 		out.m_context = context;
 		return out;
 	}
 	
-	public static HAPResultSolveReference newResultFromAttachment(Object entity, JSONObject attachmentAdapter, HAPContextProcessor context) {
+	public static HAPResultSolveReference newResultFromAttachment(HAPIdEntityInDomain entityId, JSONObject attachmentAdapter, HAPContextProcessor context) {
 		HAPResultSolveReference out = new HAPResultSolveReference();
 		out.m_isFromAttachment = true;
-		out.m_entity = entity;
+		out.m_entityId = entityId;
 		out.m_context = context;
 		out.m_attachmentAdapter = attachmentAdapter;
 		return out;
@@ -31,7 +33,7 @@ public class HAPResultSolveReference {
 	
 	public boolean isFromAttachment() {   return this.m_isFromAttachment;     }
 	
-	public Object getEntity() {    return this.m_entity;     }
+	public HAPIdEntityInDomain getEntityId() {    return this.m_entityId;     }
 	
 	public JSONObject getAttachmentAdapter() {    return this.m_attachmentAdapter;     }
 	

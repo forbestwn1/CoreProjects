@@ -29,20 +29,20 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 	public static String SUP = "supliment";
 
 
-	private String m_type;
+	private String m_resourceType;
 
 	//all the supplement resource in order for this resource to be valid resource
 	private HAPSupplementResourceId m_supplement;
 
 	public HAPResourceId(String type) {
-		this.m_type = type;
+		this.m_resourceType = type;
 	}
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.REFERENCE;    }
 
-	public String getType() {  return this.m_type;  }
-	protected void setType(String type) {    this.m_type = type;    }
+	public String getResourceType() {  return this.m_resourceType;  }
+	protected void setResourceType(String type) {    this.m_resourceType = type;    }
 	
 	public abstract String getStructure();
 	
@@ -65,7 +65,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(RESOURCETYPE, this.getType());
+		jsonMap.put(RESOURCETYPE, this.getResourceType());
 		
 		Map<String, String> jsonMapId = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMapId = new LinkedHashMap<String, Class<?>>();
@@ -77,7 +77,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(RESOURCETYPE, this.getType());
+		jsonMap.put(RESOURCETYPE, this.getResourceType());
 		jsonMap.put(ID, HAPUtilityResourceId.buildResourceCoreIdLiterate(this));
 	}
 
@@ -86,7 +86,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 		boolean out = false;
 		if(o instanceof HAPResourceId){
 			HAPResourceId resourceId = (HAPResourceId)o;
-			if(HAPBasicUtility.isEquals(this.getType(), resourceId.getType())) {
+			if(HAPBasicUtility.isEquals(this.getResourceType(), resourceId.getResourceType())) {
 				return HAPBasicUtility.isEquals(this.m_supplement, resourceId.m_supplement);
 			}
 		}
@@ -97,7 +97,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 	public abstract HAPResourceId clone();
 
 	protected void cloneFrom(HAPResourceId resourceId){
-		this.m_type = resourceId.m_type;
+		this.m_resourceType = resourceId.m_resourceType;
 		this.m_supplement = resourceId.m_supplement;
 	}
 	

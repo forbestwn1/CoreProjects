@@ -1,7 +1,7 @@
 package com.nosliw.test.story;
 
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.design.HAPDesignStory;
 
@@ -17,7 +17,7 @@ public class HAPStoryTest {
 			
 			HAPDesignStory design = runtimeEnvironment.getStoryManager().getStoryDesign("1596913798816");
 			HAPStory story = design.getStory();
-			HAPResourceDefinition resourceDefinition = runtimeEnvironment.getStoryManager().buildShow(story);
+			HAPResourceDefinition1 resourceDefinition = runtimeEnvironment.getStoryManager().buildShow(story);
 			
 		}
 		catch(Throwable e) {

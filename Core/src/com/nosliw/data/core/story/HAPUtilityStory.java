@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
@@ -34,7 +34,7 @@ public class HAPUtilityStory {
 		return null;
 	}
 	
-	public static String exportBuildResourceDefinition(HAPStory story, HAPResourceDefinition resourceDef) {
+	public static String exportBuildResourceDefinition(HAPStory story, HAPResourceDefinition1 resourceDef) {
 		String fileName = story.getShowType() + "_" + story.getName() + "_" + index++;
 
 		File directory = new File(HAPSystemFolderUtility.getCurrentDynamicResourceExportFolder());

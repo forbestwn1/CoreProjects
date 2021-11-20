@@ -16,15 +16,15 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIBody;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit1;
+import com.nosliw.uiresource.page.execute.HAPExecutableUITag;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUICommand {
 
-	public static void escalateCommand(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
+	public static void escalateCommand(HAPExecutableUIUnit1 exeUnit, HAPManagerUITag uiTagMan) {
 //		HAPExecutableUIBody body = exeUnit.getBody();
 //
 //		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
@@ -51,7 +51,7 @@ public class HAPProcessorUICommand {
 	}
 
 	
-	private static void processInteractionElement(HAPExecutableUIUnit uiExe, HAPValueStructureDefinitionGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+	private static void processInteractionElement(HAPExecutableUIUnit1 uiExe, HAPValueStructureDefinitionGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
 		//process relative element in event defined in resource
 		List<HAPDefinitionEvent> eventsDef = uiUnitDef.getEvents();
@@ -85,12 +85,12 @@ public class HAPProcessorUICommand {
 //		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(serviceProviders, uiExe.getUIUnitDefinition(), contextProcessRequirement.serviceDefinitionManager); 
 				
 		//child tag
-		for(HAPExecutableUIUnitTag childTag : uiExe.getBody().getUITags()) {
+		for(HAPExecutableUITag childTag : uiExe.getBody().getUITags()) {
 			processInteractionElement(childTag, (HAPValueStructureDefinitionGroup)uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure(), null, contextProcessorConfig, uiTagMan, runtimeEnv);			
 		}
 	}
 	
-	public static void processCommand1(HAPExecutableUIUnit uiExe, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processCommand1(HAPExecutableUIUnit1 uiExe, HAPRuntimeEnvironment runtimeEnv) {
 //		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe.getType()); 
 //		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
 //		//process relative element in command defined in resource
@@ -113,7 +113,7 @@ public class HAPProcessorUICommand {
 		
 	}
 
-	public static void escalateCommand1(HAPExecutableUIUnit exeUnit, HAPManagerUITag uiTagMan) {
+	public static void escalateCommand1(HAPExecutableUIUnit1 exeUnit, HAPManagerUITag uiTagMan) {
 //		HAPExecutableUIBody body = exeUnit.getBody();
 //
 //		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
@@ -139,8 +139,8 @@ public class HAPProcessorUICommand {
 //		}
 	}
 	
-	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPDefinitionUICommand> commandsDef, HAPManagerUITag uiTagMan) {
-		HAPExecutableUIBody body = exeUnit.getBody();
+	private static void escalate(HAPExecutableUIUnit1 exeUnit, Map<String, HAPDefinitionUICommand> commandsDef, HAPManagerUITag uiTagMan) {
+		HAPExecutableUIUnit body = exeUnit.getBody();
 		if(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
 			for(String commandName : commandsDef.keySet()) {
 				if(body.getCommandDefinition(commandName)==null) {
@@ -149,7 +149,7 @@ public class HAPProcessorUICommand {
 			}
 		}
 		else {
-			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(((HAPExecutableUIUnitTag)exeUnit).getTagName())).getValueStructureDefinition().getInfo())) {
+			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(((HAPExecutableUITag)exeUnit).getTagName())).getValueStructureDefinition().getInfo())) {
 				escalate(exeUnit.getParent(), commandsDef, uiTagMan);
 			}
 		}

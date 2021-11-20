@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
@@ -15,7 +15,7 @@ public class HAPResourceDefinitionPluginTemplate implements HAPPluginResourceDef
 	}
 	
 	@Override
-	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
+	public HAPResourceDefinition1 getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		//read content
 		String file = HAPSystemFolderUtility.getTemplateFolder()+resourceId.getId()+".template";
 		//parse content
@@ -27,7 +27,7 @@ public class HAPResourceDefinitionPluginTemplate implements HAPPluginResourceDef
 	public String getResourceType() {		return HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEMPLATE;	}
 
 	@Override
-	public HAPResourceDefinition parseResourceDefinition(Object content) {
+	public HAPResourceDefinition1 parseResourceEntity(Object content) {
 		JSONObject jsonObj = (JSONObject)content;
 		return HAPParserTemplate.parseTemplateDefinition(jsonObj);
 	}

@@ -9,6 +9,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -21,7 +22,6 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
 

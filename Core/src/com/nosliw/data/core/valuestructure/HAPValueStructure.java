@@ -13,7 +13,6 @@ public interface HAPValueStructure extends HAPSerializable, HAPStructure{
 	@HAPAttribute
 	public static final String INFO = "info";
 	
-
 	//whether root is inherited by child
 	boolean isInheriable(String rootId);
 
@@ -25,4 +24,5 @@ public interface HAPValueStructure extends HAPSerializable, HAPStructure{
 	
 	void hardMergeWith(HAPValueStructure context);
 
+	HAPValueStructure cloneValueStructure();
 }

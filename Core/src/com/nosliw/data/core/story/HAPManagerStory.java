@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.change.HAPManagerChange;
@@ -82,8 +82,8 @@ public class HAPManagerStory {
 	}
 
 	//convert story to particular resouce
-	public HAPResourceDefinition buildShow(HAPStory story) {
-		HAPResourceDefinition out = this.m_resourceDefinitionBuilders.get(story.getShowType()).buildShow(story);
+	public HAPResourceDefinition1 buildShow(HAPStory story) {
+		HAPResourceDefinition1 out = this.m_resourceDefinitionBuilders.get(story.getShowType()).buildShow(story);
 		String tempFileName = HAPUtilityStory.exportBuildResourceDefinition(story, out);
 		out.setResourceId(HAPUtilityResourceId.createFileBaseResourceId(story.getShowType(), tempFileName));
 		return out;

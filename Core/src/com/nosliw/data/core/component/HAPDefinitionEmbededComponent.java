@@ -77,7 +77,7 @@ public class HAPDefinitionEmbededComponent extends HAPEntityInfoWritableImp impl
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_inDataAssociations.buildObject(jsonObj.optJSONArray(IN), HAPSerializationFormat.JSON);
 		this.m_outDataAssociations.buildObject(jsonObj.optJSONArray(OUT), HAPSerializationFormat.JSON);
-		HAPParserComponent.parseEventHandler(this, jsonObj);
+		HAPParserEntityComponent.parseEventHandler(this, jsonObj);
 		return true;
 	}
 

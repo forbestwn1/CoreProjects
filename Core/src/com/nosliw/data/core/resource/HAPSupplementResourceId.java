@@ -62,10 +62,10 @@ public class HAPSupplementResourceId  extends HAPSerializableImp{
 	}
 	
 	private void addSupplymentResource(String name, HAPResourceId resourceId) {
-		Map<String, HAPResourceId> byName = this.m_resources.get(resourceId.getType());
+		Map<String, HAPResourceId> byName = this.m_resources.get(resourceId.getResourceType());
 		if(byName==null) {
 			byName = new LinkedHashMap<String, HAPResourceId>();
-			this.m_resources.put(resourceId.getType(), byName);
+			this.m_resources.put(resourceId.getResourceType(), byName);
 		}
 		byName.put(name, resourceId);
 	}

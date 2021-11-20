@@ -14,6 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoValueUtility;
+import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
@@ -21,7 +22,6 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
 import com.nosliw.data.core.valuestructure.HAPReferenceRootInGroup;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
-import com.nosliw.data.core.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 public class HAPParserUITagDefinition {

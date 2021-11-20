@@ -19,39 +19,39 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.component.HAPParserComponent;
-import com.nosliw.data.core.resource.HAPParserResourceDefinition;
+import com.nosliw.data.core.component.HAPParserEntityComponent;
+import com.nosliw.data.core.resource.HAPParserResourceEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.data.core.script.expression.imp.literate.HAPUtilityScriptLiterate;
-import com.nosliw.uiresource.common.HAPIdGenerator;
 
 /*
  * This is a utility class that process ui resource file and create ui resource object
  * the id index start with 1 every processing start so that for same ui resource, we would get same result
  */ 
-public class HAPParserPage implements HAPParserResourceDefinition{
+public class HAPParserPage implements HAPParserResourceEntity{
 	public static final String COMPONENT = "component";
 
 	public static final String EXPRESSION = "expressions";
 	public static final String SCRIPT = "script";
 	
 	//for creating ui id
-	private HAPIdGenerator m_idGenerator;
+	private HAPGeneratorId m_idGenerator;
 	//configuration object
 	private HAPConfigure m_setting;
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
-	public HAPParserPage(HAPConfigure setting, HAPIdGenerator idGenerator, HAPRuntimeEnvironment runtimeEnv){
+	public HAPParserPage(HAPConfigure setting, HAPGeneratorId idGenerator, HAPRuntimeEnvironment runtimeEnv){
 		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
 		this.m_runtimeEnv = runtimeEnv;
 	}
 	
 	@Override
-	public HAPDefinitionUIPage parseFile(File file) {
+	public HAPDefinitionUIUnitPage parseFile(File file) {
 		//use file name as ui resource id
 		String resourceId = HAPFileUtility.getFileName(file);
 		String source = HAPFileUtility.readFile(file);
@@ -59,10 +59,10 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 	}
 
 	@Override
-	public HAPDefinitionUIPage parseContent(String content) {  return this.parseUIDefinition(null, content);  }
+	public HAPDefinitionUIUnitPage parseContent(String content) {  return this.parseUIDefinition(null, content);  }
 
 	@Override
-	public HAPDefinitionUIPage parseJson(JSONObject jsonObj) {
+	public HAPDefinitionUIUnitPage parseJson(JSONObject jsonObj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -79,13 +79,13 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		}
 	}
 	
-	public HAPDefinitionUIPage parseFile(String fileName){
+	public HAPDefinitionUIUnitPage parseFile(String fileName){
 		File file = new File(fileName);
 		return this.parseFile(file);
 	}
 
-	public HAPDefinitionUIPage parseUIDefinition(String resourceId, String content){
-		HAPDefinitionUIPage resource = new HAPDefinitionUIPage(resourceId, content);
+	public HAPDefinitionUIUnitPage parseUIDefinition(String resourceId, String content){
+		HAPDefinitionUIUnitPage resource = new HAPDefinitionUIUnitPage(resourceId, content);
 		Document doc = Jsoup.parse(content, "UTF-8");
 		this.parseUIDefinitionUnit(resource, doc.body(), null);
 		return resource;
@@ -134,7 +134,7 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 			Element componentEle = componentEles.get(0);
 			componentObj = new JSONObject(componentEle.html());
 		}
-		HAPParserComponent.parseComponent(uiUnit, componentObj, this.m_runtimeEnv.getTaskManager());
+		HAPParserEntityComponent.parseComponentEntity(uiUnit, componentObj, this.m_runtimeEnv.getTaskManager());
 		for(Element ele : componentEles)  ele.remove();
 	}
 	
@@ -147,7 +147,7 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 		for(Element e : eles){
 			if(HAPBasicUtility.isStringEmpty(HAPUtilityUIResourceParser.getUIIdInElement(e))){
 				//if tag have no ui id, then create ui id for it
-				String id = this.m_idGenerator.createId();
+				String id = this.m_idGenerator.generateId();
 				e.attr(HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID, id);
 			}
 			
@@ -246,7 +246,7 @@ public class HAPParserPage implements HAPParserResourceDefinition{
 					List<HAPScript> s = new ArrayList<HAPScript>(); 
 					s.add(scriptSeg);
 					String sStr = HAPUtilityScriptLiterate.buildScriptLiterate(s);
-					HAPDefinitionUIEmbededScriptExpressionInContent expressionContent = new HAPDefinitionUIEmbededScriptExpressionInContent(this.m_idGenerator.createId(), sStr);
+					HAPDefinitionUIEmbededScriptExpressionInContent expressionContent = new HAPDefinitionUIEmbededScriptExpressionInContent(this.m_idGenerator.generateId(), sStr);
 					newText.append("<span "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
 					resource.addScriptExpressionInContent(expressionContent);
 				}

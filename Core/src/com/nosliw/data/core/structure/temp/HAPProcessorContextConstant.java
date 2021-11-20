@@ -14,8 +14,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.component.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
@@ -27,7 +27,7 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstantReference;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPInfoElement;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
@@ -76,7 +76,7 @@ public class HAPProcessorContextConstant {
 				//merge constants with parent
 				for(HAPRootStructure root : parentValueStructure.getAllRoots()) {
 					if(root.isConstant()) {
-						HAPReferenceRoot rootReference = parentValueStructure.getRootReferenceById(root.getLocalId());
+						HAPReferenceRootInStrucutre rootReference = parentValueStructure.getRootReferenceById(root.getLocalId());
 						if(out.resolveRoot(rootReference, false)==null) {
 							out.addRoot(rootReference, root);
 						}

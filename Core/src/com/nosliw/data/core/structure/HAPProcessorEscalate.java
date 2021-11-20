@@ -65,7 +65,7 @@ public class HAPProcessorEscalate {
 		HAPValueStructure parentStructure = parentNode.getValueStructureWrapper().getValueStructure();
 		
 		Pair<Boolean, HAPRootStructure> out = null;
-		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(new HAPReferenceElement(path.getFullName()), parentStructure, HAPConstant.RESOLVEPARENTMODE_FIRST, null);
+		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(new HAPReferenceElementInStructure(path.getFullName()), parentStructure, HAPConstant.RESOLVEPARENTMODE_FIRST, null);
 		if(HAPUtilityStructureElementReference.isLogicallySolved(resolveInfo)) {
 			//find matched one
 			out = Pair.of(true, HAPUtilityStructure.createRootWithRelativeElement(resolveInfo.referredRoot, null, resolveInfo.path.getPathStr(), inheritanceExcludedInfo));

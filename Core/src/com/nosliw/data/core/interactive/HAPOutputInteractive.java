@@ -14,7 +14,7 @@ import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.structure.reference.HAPInfoPathReference;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
 
 @HAPEntityWithAttribute
 public class HAPOutputInteractive extends HAPEntityInfoWritableImp{
@@ -32,7 +32,7 @@ public class HAPOutputInteractive extends HAPEntityInfoWritableImp{
 	private HAPDataTypeCriteria m_criteria;
 	
 	//path to relative node
-	private HAPInfoPathReference m_reference;
+	private HAPReferenceElementInStructureComplex m_reference;
 
 	private HAPData m_constantData;
 	
@@ -47,7 +47,7 @@ public class HAPOutputInteractive extends HAPEntityInfoWritableImp{
 
 	public HAPData getConstantData() {   return this.m_constantData;     }
 	
-	public HAPInfoPathReference getReferenceInfo() {   return this.m_reference;    }
+	public HAPReferenceElementInStructureComplex getReferenceInfo() {   return this.m_reference;    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -66,7 +66,7 @@ public class HAPOutputInteractive extends HAPEntityInfoWritableImp{
 			JSONObject jsonValue = (JSONObject)value;
 			this.buildEntityInfoByJson(jsonValue);
 			this.m_criteria = HAPParserCriteria.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
-			this.m_reference = new HAPInfoPathReference();
+			this.m_reference = new HAPReferenceElementInStructureComplex();
 			this.m_reference.buildObject(jsonValue.opt(REFERENCE), HAPSerializationFormat.JSON);
 			Object dataObj = jsonValue.opt(DATA);
 			if(dataObj!=null) 		HAPUtilityData.buildDataWrapperFromObject(dataObj);

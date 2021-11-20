@@ -12,7 +12,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -20,7 +20,7 @@ import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
-import com.nosliw.data.core.structure.HAPReferenceElement;
+import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
@@ -75,7 +75,7 @@ public class HAPProcessorDataAssociationMapping2 {
 					//enhance input context according to error
 					HAPInfoElement contextEleInfo = (HAPInfoElement)error.getData();
 					//find referred element defined in output
-					HAPReferenceElement path = contextEleInfo.getElementPath();
+					HAPReferenceElementInStructure path = contextEleInfo.getElementPath();
 					HAPElementStructure sourceContextEle = HAPUtilityContext.getDescendant(outputStructure.getRoot(path.getRootReference().getName(), false).getDefinition(), path.getSubPath());
 					if(sourceContextEle==null)  throw new RuntimeException();
 					//update input: set referred element defined in output to input
@@ -142,7 +142,7 @@ public class HAPProcessorDataAssociationMapping2 {
 			out = new HAPValueStructureDefinitionFlat();
 			for(String eleName : origin.getRootNames()) {
 				String updatedName = eleName;
-				HAPInfoReferenceResolve resolvedInfo = HAPUtilityContext.analyzeElementReference(new HAPReferenceElement(eleName), (HAPValueStructureDefinitionGroup)outputStructure, null, null);
+				HAPInfoReferenceResolve resolvedInfo = HAPUtilityContext.analyzeElementReference(new HAPReferenceElementInStructure(eleName), (HAPValueStructureDefinitionGroup)outputStructure, null, null);
 				if(resolvedInfo!=null) 	updatedName = resolvedInfo.path.getRootReference().getFullName();
 				out.addRootToCategary(updatedName, origin.getRoot(eleName));
 			}

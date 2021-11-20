@@ -8,10 +8,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 
 @HAPEntityWithAttribute
-public class HAPReferenceRootInExecutable extends HAPSerializableImp implements HAPReferenceRoot{
+public class HAPReferenceRootInExecutable extends HAPSerializableImp implements HAPReferenceRootInStrucutre{
 
 	@HAPAttribute
 	public static final String ID = "id";
@@ -44,7 +44,7 @@ public class HAPReferenceRootInExecutable extends HAPSerializableImp implements 
 	public String getStructureType() {   return HAPConstantShared.STRUCTURE_TYPE_VALUEEXECUTABLE;  }
 
 	@Override
-	public HAPReferenceRoot cloneStructureRootReference() {  
+	public HAPReferenceRootInStrucutre cloneStructureRootReference() {  
 		HAPReferenceRootInExecutable out = new HAPReferenceRootInExecutable();
 		out.m_id = this.m_id;
 		out.m_name = this.m_name;

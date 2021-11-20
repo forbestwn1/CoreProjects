@@ -5,7 +5,7 @@ import java.io.File;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPParserComponent;
+import com.nosliw.data.core.component.HAPParserEntityComponent;
 import com.nosliw.data.core.story.HAPParserStory;
 import com.nosliw.data.core.story.HAPStoryImp;
 
@@ -37,7 +37,7 @@ public class HAPParserStoryResource {
 		HAPResourceDefinitionStory out = new HAPResourceDefinitionStory();
 
 		//build complex resource part from json object
-		HAPParserComponent.parseComplextResourceDefinition(out, jsonObj);
+		HAPParserEntityComponent.parseComplextResourceDefinition(out, jsonObj);
 
 		HAPStoryImp storyEntity = HAPParserStory.parseStory(jsonObj);
 		out.setStory(storyEntity);

@@ -1,62 +1,48 @@
 package com.nosliw.data.core.resource;
 
-import java.io.File;
-
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.complex.HAPDomainDefinitionComplex;
+import com.nosliw.data.core.complex.HAPIdEntityInDomain;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
 
-public class HAPPluginResourceDefinitionImp implements HAPPluginResourceDefinition{
+public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourceDefinition{
 
-	private HAPParserResourceDefinition m_parser;
-	
 	private String m_resourceType;
 	
-	public HAPPluginResourceDefinitionImp(String resourceType, HAPParserResourceDefinition parser) {
+	public HAPPluginResourceDefinitionImp(String resourceType) {
 		this.m_resourceType = resourceType;
-		this.m_parser = parser;
 	}
 	
 	@Override
 	public String getResourceType() {		return this.m_resourceType;	}
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionBySimpleResourceId(HAPResourceIdSimple resourceId) {
+	public HAPResultSimpleResource getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId, HAPDomainDefinitionComplex entityDomain) {
 		//get location information
 		HAPInfoResourceLocation resourceLocInfo = HAPUtilityResourceId.getResourceLocationInfo(resourceId);
 		//parse file
-		HAPResourceDefinition moduleDef = this.parseResourceDefinition(resourceLocInfo.getFiile()); 
-		//set local base path
-		moduleDef.setLocalReferenceBase(new HAPLocalReferenceBase(resourceLocInfo.getBasePath()));
-		return moduleDef;
+		HAPIdEntityInDomain entityId = this.parseResourceEntity(new JSONObject(HAPFileUtility.readFile(resourceLocInfo.getFiile())), entityDomain, resourceLocInfo.getBasePath());
+		return new HAPResultSimpleResource(entityId, resourceLocInfo.getBasePath());
 	}
 
 	@Override
-	public HAPResourceDefinition getResourceDefinitionByLocalResourceId(HAPResourceIdLocal localResourceId, HAPResourceDefinition relatedResource) {
-		HAPResourceDefinition out = null;
-		String path = relatedResource.getLocalReferenceBase().getPath() + localResourceId.getType() + "/" + localResourceId.getName() + ".res";
-		out = this.parseResourceDefinition(HAPFileUtility.readFile(path));
-		out.setLocalReferenceBase(relatedResource.getLocalReferenceBase());
-//		if(out instanceof HAPWithAttachment) {
-//			((HAPWithAttachment)out).setLocalReferenceBase(localResourceId.getBasePath());
-//		}
+	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal localResourceId, HAPLocalReferenceBase localRefBase, HAPDomainDefinitionComplex entityDomain) {
+		String path = localRefBase.getPath() + localResourceId.getResourceType() + "/" + localResourceId.getName() + ".res";
+		HAPIdEntityInDomain out = this.parseResourceEntity(HAPFileUtility.readFile(path), entityDomain, localRefBase);
 		return out;
 	}
 
 	@Override
-	public HAPResourceDefinition parseResourceDefinition(Object obj) {
-		HAPResourceDefinition out = null;
-		if(obj instanceof JSONObject) {
-			out = this.m_parser.parseJson((JSONObject)obj);
-		}
-		else if(obj instanceof File) {
-			out = m_parser.parseFile((File)obj);
-		}
-		else if(obj instanceof String) {
-			out = m_parser.parseContent((String)obj);
-		}
-		return out;
+	public HAPIdEntityInDomain parseResourceEntity(Object content, HAPDomainDefinitionComplex entityDomain, HAPLocalReferenceBase localRefBase) {
+		JSONObject jsonObj = null;
+		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
+		else if(content instanceof String)  jsonObj = new JSONObject(content);
+		
+		return this.parseJson(jsonObj, entityDomain, localRefBase);
 	}
 
+	abstract public HAPIdEntityInDomain parseJson(JSONObject jsonObj, HAPDomainDefinitionComplex entityDomain, HAPLocalReferenceBase localRefBase);
+	
 }

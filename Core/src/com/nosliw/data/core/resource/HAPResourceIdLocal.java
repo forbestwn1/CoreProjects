@@ -21,7 +21,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	@HAPAttribute
 	public static String NAME = "name";
 
-	private HAPLocalReferenceBase m_basePath;
+//	private HAPLocalReferenceBase m_basePath;
 	
 	private String m_name;
 
@@ -32,8 +32,8 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	@Override
 	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_LOCAL;  }
 
-	public HAPLocalReferenceBase getBasePath() {   return this.m_basePath;   }
-	public void setBasePath(HAPLocalReferenceBase base) {   this.m_basePath = base;   }
+//	public HAPLocalReferenceBase getBasePath() {   return this.m_basePath;   }
+//	public void setBasePath(HAPLocalReferenceBase base) {   this.m_basePath = base;   }
 	
 	public String getName() {   return this.m_name;   }
 	public void setName(String name) {    this.m_name = name;    }
@@ -69,7 +69,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 
 	@Override
 	public HAPResourceId clone() {
-		HAPResourceIdLocal out = new HAPResourceIdLocal(this.getType());
+		HAPResourceIdLocal out = new HAPResourceIdLocal(this.getResourceType());
 		out.cloneFrom(this);
 		return out;
 	}

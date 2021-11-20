@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.valuestructure.HAPInfoEntityReference;
-import com.nosliw.data.core.resource.HAPResourceDefinitionImp;
+import com.nosliw.data.core.complex.valuestructure.HAPInfoEntityReference;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.structure.HAPRootStructure;
 
-public class HAPResourceDefinitionValueStructure extends HAPResourceDefinitionImp{
+public class HAPResourceDefinitionValueStructure extends HAPResourceDefinition{
 
 	@HAPAttribute
 	public static String ROOT = "root";

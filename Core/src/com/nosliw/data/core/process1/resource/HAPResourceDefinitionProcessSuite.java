@@ -4,15 +4,15 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
+import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
-import com.nosliw.data.core.component.HAPElementContainerResourceDefinition;
-import com.nosliw.data.core.component.HAPResourceDefinitionContainer;
 import com.nosliw.data.core.process1.HAPDefinitionProcessSuite;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition1;
 
 //suite that contain multiple process
 @HAPEntityWithAttribute
-public class HAPResourceDefinitionProcessSuite extends HAPResourceDefinitionContainer<HAPElementContainerResourceDefinition> implements HAPDefinitionProcessSuite{
+public class HAPResourceDefinitionProcessSuite extends HAPDefinitionEntityContainer<HAPElementInContainerEntityDefinition> implements HAPDefinitionProcessSuite{
 
 	public HAPResourceDefinitionProcessSuite() {
 	}
@@ -21,7 +21,7 @@ public class HAPResourceDefinitionProcessSuite extends HAPResourceDefinitionCont
 	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE;  }
 
 	@Override
-	public HAPResourceDefinition getElementResourceDefinition(String eleName) {	return new HAPResourceDefinitionProcess(this, eleName);	}
+	public HAPResourceDefinition1 getElementResourceDefinition(String eleName) {	return new HAPResourceDefinitionProcess(this, eleName);	}
 
 	@Override
 	public HAPContainerChildReferenceResource getChildrenReferencedResource() {
@@ -40,6 +40,6 @@ public class HAPResourceDefinitionProcessSuite extends HAPResourceDefinitionCont
 	}
 
 	@Override
-	public HAPResourceDefinitionContainer cloneResourceDefinitionContainer() {	return this.cloneProcessSuiteDefinition();	}
+	public HAPDefinitionEntityContainer cloneResourceDefinitionContainer() {	return this.cloneProcessSuiteDefinition();	}
 
 }

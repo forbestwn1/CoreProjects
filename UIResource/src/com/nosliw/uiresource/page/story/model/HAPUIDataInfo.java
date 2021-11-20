@@ -10,7 +10,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
-import com.nosliw.data.core.structure.HAPReferenceRoot;
+import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.data.core.structure.HAPUtilityStructureReference;
 
 @HAPEntityWithAttribute
@@ -29,7 +29,7 @@ public class HAPUIDataInfo extends HAPSerializableImp{
 	
 	private HAPComplexPath m_idPath;
 	
-	private HAPReferenceRoot m_rootReference;
+	private HAPReferenceRootInStrucutre m_rootReference;
 	
 	public HAPVariableDataInfo getDataType() {	return this.m_dataType;	}
 	public void setDataType(HAPVariableDataInfo dataTypeCriteria) {    this.m_dataType = dataTypeCriteria;      }
@@ -37,8 +37,8 @@ public class HAPUIDataInfo extends HAPSerializableImp{
 	public HAPComplexPath getIdPath() {   return this.m_idPath;   }
 	public void setIdPath(HAPComplexPath contextPath) {    this.m_idPath = contextPath;    }
 	
-	public HAPReferenceRoot getRootReference() {  return this.m_rootReference;    }
-	public void setRootReference(HAPReferenceRoot rootRef) {    this.m_rootReference = rootRef;     }
+	public HAPReferenceRootInStrucutre getRootReference() {  return this.m_rootReference;    }
+	public void setRootReference(HAPReferenceRootInStrucutre rootRef) {    this.m_rootReference = rootRef;     }
 	
 	public HAPUIDataInfo cloneUIDataInfo() {
 		HAPUIDataInfo out = new HAPUIDataInfo();
