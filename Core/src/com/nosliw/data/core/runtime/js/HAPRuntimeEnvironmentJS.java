@@ -11,6 +11,7 @@ import com.nosliw.data.core.activity.HAPTaskInfoProcessorActivity;
 import com.nosliw.data.core.codetable.HAPGatewayCodeTable;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.codetable.HAPResourceManagerCodeTable;
+import com.nosliw.data.core.complex.HAPManagerComplexEntity;
 import com.nosliw.data.core.complex.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
@@ -29,7 +30,7 @@ import com.nosliw.data.core.process1.resource.HAPParserResourceDefinitionProcess
 import com.nosliw.data.core.process1.resource.HAPPluginResourceDefinitionProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceManagerProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
-import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
+import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImpSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
@@ -104,6 +105,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPManagerResourceDefinition m_resourceDefinitionManager;
 	
+	private HAPManagerComplexEntity m_complexEntityManager;
+ 	
 	private HAPManagerDynamicResource m_dynamicResourceManager;
 	
 	private HAPManagerCronJob m_cronJobManager;
@@ -129,12 +132,13 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerService serviceManager,
 		    HAPManagerDynamicResource dynamicResourceManager,
 		    HAPManagerResourceDefinition resourceDefManager,
+			HAPManagerComplexEntity complexEntityManager,
 			HAPManagerAttachment attachmentManager,
 		    HAPManagerCronJob cronJobManager,
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, attachmentManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, complexEntityManager, attachmentManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
@@ -152,6 +156,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			    HAPManagerService serviceManager,
 			    HAPManagerDynamicResource dynamicResourceManager,
 			    HAPManagerResourceDefinition resourceDefManager,
+				HAPManagerComplexEntity complexEntityManager,
 				HAPManagerAttachment attachmentManager,
 			    HAPManagerCronJob cronJobManager,
 			    HAPManagerStory storyManager,
@@ -167,6 +172,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_scriptManager = scriptManager;
 		this.m_serviceManager = serviceManager;
 		this.m_resourceDefinitionManager = resourceDefManager;
+		this.m_complexEntityManager = complexEntityManager;
 		this.m_attachmentManager = attachmentManager;
 		this.m_dynamicResourceManager = dynamicResourceManager;
 		this.m_storyManager = storyManager;
@@ -205,27 +211,27 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ACTIVITY, new HAPProcessorAttachmentEntityActivity(this.getActivityManager().getPluginManager()));
 		
 		//component
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, new HAPParserResourceValue()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, new HAPParserResourceValue()));
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE, new HAPParserResourceDefinitionExpressionSuite(this.getTaskManager())));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE, new HAPParserResourceDefinitionExpressionSuite(this.getTaskManager())));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionGroup(this.getResourceDefinitionManager()));
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION, new HAPParserResourceDefinitionScriptGroup()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION, new HAPParserResourceDefinitionScriptGroup()));
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginServiceDefinition(this.getServiceManager().getServiceDefinitionManager()));
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASKSUITE, new HAPParserResourceDefinitionTaskSuite(this.getTaskManager())));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASKSUITE, new HAPParserResourceDefinitionTaskSuite(this.getTaskManager())));
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASKSUITE, new HAPParserResourceDefinitionTaskSuite(this.getTaskManager())));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASKSUITE, new HAPParserResourceDefinitionTaskSuite(this.getTaskManager())));
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE, new HAPParserResourceDefinitionProcess(this.getProcessManager().getPluginManager())));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESSSUITE, new HAPParserResourceDefinitionProcess(this.getProcessManager().getPluginManager())));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionProcess(this.getResourceDefinitionManager()));
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginCronJob());
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginStory());
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, new HAPParserResourceDefinitionStructure()));
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, new HAPParserServiceInterfaceResource()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, new HAPParserResourceDefinitionStructure()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, new HAPParserServiceInterfaceResource()));
 
 		//runtime
 		this.m_runtime = runtime;
@@ -267,6 +273,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@Override
 	public HAPManagerResourceDefinition getResourceDefinitionManager() {  return this.m_resourceDefinitionManager;  }
+
+	@Override
+	public HAPManagerComplexEntity getComplexEntityManager() {   return this.m_complexEntityManager;   }
 
 	@Override
 	public HAPManagerAttachment getAttachmentManager() {    return this.m_attachmentManager;     }

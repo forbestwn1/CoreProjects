@@ -9,8 +9,12 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.complex.valuestructure.HAPInfoPartSimple;
+import com.nosliw.data.core.complex.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
@@ -62,6 +66,10 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 	
+	public static Map<String, Object> replaceValueNameWithId(HAPComplexValueStructure valueStructureComplex, Map<String, Object> values){
+
+	}
+	
 	public static Map<String, Object> replaceValueNameWithId(HAPValueStructure valueStructure, Map<String, Object> values){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		for(String rootName : values.keySet()) {
@@ -95,25 +103,41 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 
-	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(HAPValueStructure structure) {
+	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(String valueStructureComplexId, HAPDomainValueStructure valueStructureDomain) {
+		HAPComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
-		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
-		for(String idPath : dataVarsInfoByIdPath.keySet()) {
-			out.addVariable(idPath, dataVarsInfoByIdPath.get(idPath));
+		List<HAPInfoPartSimple> partsInfo = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
+		for(HAPInfoPartSimple partInfo : partsInfo) {
+			discoverDataVariablesInStructure(out, partInfo.getSimpleValueStructurePart().getRuntimeId(), partInfo.getSimpleValueStructurePart().getValueStructure());
 		}
 		return out;
 	}
 
-	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPValueStructure structure) {
+	public static void discoverDataVariablesInStructure(HAPContainerVariableCriteriaInfo varCriteriaInfoContainer, String sturctureId, HAPValueStructure structure) {
+		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
+		for(String idPath : dataVarsInfoByIdPath.keySet()) {
+			varCriteriaInfoContainer.addVariable(HAPUtilityNamingConversion.cascadeComponentPath(sturctureId, idPath), dataVarsInfoByIdPath.get(idPath));
+		}
+	}
+
+	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(String valueStructureComplexId, HAPDomainValueStructure valueStructureDomain) {
+		HAPComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
 		HAPVariableInfoInStructure out = new HAPVariableInfoInStructure();
+		List<HAPInfoPartSimple> partsInfo = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
+		for(HAPInfoPartSimple partInfo : partsInfo) {
+			discoverDataVariablesDefinitionInStructure(out, partInfo.getSimpleValueStructurePart().getRuntimeId(), partInfo.getSimpleValueStructurePart().getValueStructure());
+		}
+		return out;
+	}
+	
+	public static void discoverDataVariablesDefinitionInStructure(HAPVariableInfoInStructure varInfoInStructure, String sturctureId, HAPValueStructure structure) {
 		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {
 			HAPComplexPath path = new HAPComplexPath(idPath);
 			String id = path.getRoot();
 			List<HAPInfoAlias> aliases = structure.discoverRootAliasById(id);
-			out.addVariableCriteriaInfo(dataVarsInfoByIdPath.get(idPath), idPath, aliases);
+			varInfoInStructure.addVariableCriteriaInfo(dataVarsInfoByIdPath.get(idPath), HAPUtilityNamingConversion.cascadeComponentPath(sturctureId, idPath), aliases);
 		}
-		return out;
 	}
 	
 	

@@ -9,7 +9,6 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPDomainValueStructure;
 import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
 import com.nosliw.data.core.complex.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.complex.valuestructure.HAPPartComplexValueStructureSimple;
@@ -18,6 +17,7 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
@@ -43,6 +43,10 @@ public class HAPUtilityStructureElementReference {
 	public static HAPInfoReferenceResolve analyzeElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
 		HAPReferenceElementInStructure elementReference = new HAPReferenceElementInStructure(elementReferenceLiterate); 
 		return analyzeElementReference(elementReference, parentStructure, mode, elementTypes);
+	}
+
+	public static HAPInfoReferenceResolve resolveElementReference(String reference, HAPComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
+		return resolveElementReference(new HAPReferenceElementInStructureComplex(reference), parentValueStructureComplex, valueStructureDomain, mode, elementTypes);
 	}
 	
 	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {

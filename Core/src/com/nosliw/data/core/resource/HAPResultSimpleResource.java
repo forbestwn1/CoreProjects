@@ -1,7 +1,7 @@
 package com.nosliw.data.core.resource;
 
-import com.nosliw.data.core.complex.HAPIdEntityInDomain;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public class HAPResultSimpleResource {
 

@@ -1,8 +1,9 @@
-package com.nosliw.data.core.component;
+package com.nosliw.data.core.complex;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.complex.HAPIdEntityInDomain;
+import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public class HAPResultSolveReference {
 

@@ -7,10 +7,10 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPDefinitionEntityElementInContainerComponent;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup1;
 
 //expressioin group resource
-public class HAPResourceEntityExpressionGroup  extends HAPDefinitionEntityElementInContainerComponent implements HAPDefinitionExpressionGroup{
+public class HAPResourceEntityExpressionGroup  extends HAPDefinitionEntityElementInContainerComponent implements HAPDefinitionExpressionGroup1{
 
 	public HAPResourceEntityExpressionGroup() {}
 	
@@ -38,7 +38,7 @@ public class HAPResourceEntityExpressionGroup  extends HAPDefinitionEntityElemen
 	}
 
 	@Override
-	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() { return (HAPDefinitionExpressionGroup)cloneComponent();  }
+	public HAPDefinitionExpressionGroup1 cloneExpressionGroupDefinition() { return (HAPDefinitionExpressionGroup1)cloneComponent();  }
 
 	@Override
 	public void addEntityElement(HAPDefinitionExpression entityElement) {

@@ -11,12 +11,12 @@ import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.component.HAPElementInContainerEntityDefinitionImpComponent;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup1;
 
 //expression group within suite
 public class HAPElementContainerResourceDefinitionEntityExpressionSuite 
 		extends HAPElementInContainerEntityDefinitionImpComponent 
-		implements HAPDefinitionExpressionGroup{
+		implements HAPDefinitionExpressionGroup1{
 
 	private Map<String, HAPDefinitionExpression> m_element;
 	
@@ -60,6 +60,6 @@ public class HAPElementContainerResourceDefinitionEntityExpressionSuite
 	}
 
 	@Override
-	public HAPDefinitionExpressionGroup cloneExpressionGroupDefinition() {  return (HAPDefinitionExpressionGroup)this.cloneDefinitionEntityElementInContainer(); }
+	public HAPDefinitionExpressionGroup1 cloneExpressionGroupDefinition() {  return (HAPDefinitionExpressionGroup1)this.cloneDefinitionEntityElementInContainer(); }
 
 }

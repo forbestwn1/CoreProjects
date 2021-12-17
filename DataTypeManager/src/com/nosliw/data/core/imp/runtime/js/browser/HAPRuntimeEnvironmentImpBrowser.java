@@ -18,7 +18,7 @@ import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
-import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
+import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImpSimple;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -115,8 +115,8 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getGatewayManager().registerGateway(GATEWAY_UITAG, new HAPGatewayUITag(this.m_uiResourceManager.getUITagManager()));
 
 		//resource definition plugin
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, this.m_uiResourceManager.getUIResourceParser()));
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImp(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIMODULE, this.m_uiResourceManager.getModuleParser()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, this.m_uiResourceManager.getUIResourceParser()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIMODULE, this.m_uiResourceManager.getModuleParser()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginApp(this.m_uiResourceManager.getMinitAppParser()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginAppEntry(this.getResourceDefinitionManager()));
 

@@ -10,15 +10,15 @@ import org.json.JSONObject;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.complex.HAPDomainDefinitionComplex;
-import com.nosliw.data.core.complex.HAPIdEntityInDomain;
+import com.nosliw.data.core.complex.HAPResultSolveReference;
+import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.component.HAPResultSolveReference;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.component.HAPUtilityComponentConstant;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
@@ -46,7 +46,7 @@ public class HAPProcessorExpression2 {
 	 */
 	public static HAPExecutableExpressionGroup process(
 			String id, 
-			HAPDomainDefinitionComplex domainPool,
+			HAPDomainDefinitionEntity domainPool,
 			HAPIdEntityInDomain entityId
 			) {
 		
@@ -57,7 +57,7 @@ public class HAPProcessorExpression2 {
 	
 	public static HAPExecutableExpressionGroup process(
 			String id,
-			HAPDefinitionExpressionGroup expressionGroupDef,
+			HAPDefinitionExpressionGroup1 expressionGroupDef,
 			HAPContextProcessor attachmentReferenceContext,
 			Map<String, HAPDataTypeCriteria> expectOutput,
 			Map<String, String> configure,
@@ -214,7 +214,7 @@ public class HAPProcessorExpression2 {
 	//in some case, executable can be created based on one expression item in group, this is case when deal with reference expression 
 	private static HAPExecutableExpressionGroupInSuite createExecutable(
 			String id,
-			HAPDefinitionExpressionGroup expressionGroupDef, 
+			HAPDefinitionExpressionGroup1 expressionGroupDef, 
 			String expressionId,
 			HAPContextProcessor attachmentReferenceContext,
 			HAPRuntimeEnvironment runtimeEnv,
@@ -229,7 +229,7 @@ public class HAPProcessorExpression2 {
 		//constant
 		//constant --- discover constant from attachment and context
 		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>(); 
-		constants.putAll(HAPUtilityComponentConstant.getConstantsData(expressionGroupDef, HAPUtilityValueStructure.getValueStructureFromWrapper(out.getValueStructureDefinitionWrapper())));
+		constants.putAll(HAPUtilityComplexConstant.getConstantsData(expressionGroupDef, HAPUtilityValueStructure.getValueStructureFromWrapper(out.getValueStructureDefinitionWrapper())));
 		out.setDataConstants(constants);
 		
 		//expression element
@@ -312,7 +312,7 @@ public class HAPProcessorExpression2 {
 						referenceOperand.setElementName(eleName);
 						
 						//process refered expression
-						HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression2.createExecutable(expressionId+"_"+subId[0], (HAPDefinitionExpressionGroup)refSolveResult.getEntity(), eleName, refSolveResult.getContext(), runtimeEnv, processTracker);
+						HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression2.createExecutable(expressionId+"_"+subId[0], (HAPDefinitionExpressionGroup1)refSolveResult.getEntity(), eleName, refSolveResult.getContext(), runtimeEnv, processTracker);
 						expandReference(refExpressionExe, refSolveResult.getContext(), runtimeEnv, processTracker);
 						
 						referenceOperand.setReferedExpression(refExpressionExe);

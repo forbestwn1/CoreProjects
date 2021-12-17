@@ -11,8 +11,8 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPIdEntityInDomain;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public class HAPResourceDefinition extends HAPEntityInfoImp implements HAPResourceDefinitionOrId, HAPEntityInfo, HAPSerializable{
 
@@ -25,9 +25,6 @@ public class HAPResourceDefinition extends HAPEntityInfoImp implements HAPResour
 	//resource id
 	private HAPResourceId m_resourceId;
 
-	//local path base for local reference
-	private HAPLocalReferenceBase m_localRefBase;
-	
 	//data for resource
 	private HAPIdEntityInDomain m_entityId;
 	
@@ -45,10 +42,6 @@ public class HAPResourceDefinition extends HAPEntityInfoImp implements HAPResour
 	public HAPIdEntityInDomain getEntityId() {  return this.m_entityId;  }
 
 	public void setEntityId(HAPIdEntityInDomain entityId) {   this.m_entityId = entityId;  }
-
-	public HAPLocalReferenceBase getLocalReferenceBase() {   return this.m_localRefBase;  }
-
-	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {  this.m_localRefBase = localRefBase;  }
 
 //	public HAPResourceDefinitionOrId getChild(String path) {   return null;    }
 

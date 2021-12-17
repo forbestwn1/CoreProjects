@@ -4,9 +4,9 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.component.HAPUtilityComponentConstant;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite1;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
 import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -49,11 +49,11 @@ public class HAPProcessorUIExpressionScript {
 		processScriptContext.setValueStructureWrapper(body.getValueStructureDefinitionNode().getValueStructureWrapper());
 		
 		//expression suite from attachment
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressiionSuiteFromComponent(uiUnitDef, runtimeEnv);
+		HAPDefinitionExpressionSuite1 expressionSuite = HAPUtilityExpressionComponent.buildExpressiionSuiteFromComponent(uiUnitDef, runtimeEnv);
 		processScriptContext.setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment and context
-		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), body.getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure());
+		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComplexConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), body.getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure());
 		for(HAPDefinitionConstant constantDef : constantsDef) {
 			processScriptContext.addConstantDefinition(constantDef);
 		}
@@ -84,7 +84,7 @@ public class HAPProcessorUIExpressionScript {
 		
 		HAPDefinitionScriptGroupImp scriptGroup = new HAPDefinitionScriptGroupImp();
 		scriptGroup.setValueStructureWrapper(exeUnit.getBody().getValueStructureDefinitionNode().getValueStructureWrapper());
-		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), exeUnit.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure())) {
+		for(HAPDefinitionConstant constantDef : HAPUtilityComplexConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), exeUnit.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure())) {
 			scriptGroup.addConstantDefinition(constantDef);
 		}
 		

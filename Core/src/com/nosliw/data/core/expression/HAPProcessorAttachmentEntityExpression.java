@@ -15,7 +15,7 @@ public class HAPProcessorAttachmentEntityExpression implements HAPProcessorAttac
 	
 	@Override
 	public Object parseEntityAttachment(HAPInfoAttachment attachmentInfo, HAPDefinitionEntityComplex complexEntity) {
-		HAPDefinitionExpressionSuiteImp suite = HAPUtilityExpressionComponent.buildExpressiionSuiteFromComponent(complexEntity, this.m_runtimeEnv);
+		HAPDefinitionExpressionSuite suite = HAPUtilityExpressionComponent.buildExpressiionSuiteFromComponent(complexEntity, this.m_runtimeEnv);
 		return suite.getEntityElement(attachmentInfo.getName());
 	}
 

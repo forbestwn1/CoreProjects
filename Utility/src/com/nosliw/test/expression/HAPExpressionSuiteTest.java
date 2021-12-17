@@ -6,13 +6,16 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.value.HAPJsonValueUtility;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.data.core.domain.HAPInfoEntity;
+import com.nosliw.data.core.domain.HAPResultExecutableEntityInDomain;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroupInSuite;
-import com.nosliw.data.core.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
-import com.nosliw.data.core.expression.resource.HAPResourceEntityExpressionGroup;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskExpression;
@@ -35,21 +38,33 @@ public class HAPExpressionSuiteTest {
 			for(String id : ids) {
 				HAPResourceId resourceId = HAPUtilityExpressionResource.buildResourceId(suite, id);
 				
-				HAPResourceEntityExpressionGroup expressionDef = runtimeEnvironment.getExpressionManager().getExpressionDefinition(resourceId, null);
+				//process resource
+				HAPResultExecutableEntityInDomain expressionInDomain = runtimeEnvironment.getExpressionManager().getExecutableComplexEntity(resourceId);
 				
-				HAPExecutableExpressionGroupInSuite expressionExe = (HAPExecutableExpressionGroupInSuite)runtimeEnvironment.getExpressionManager().getExpression(resourceId, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null));
-				System.out.println(expressionExe);
+				//
+				HAPInfoEntity entityInfo = expressionInDomain.getComplexEntityInfoByExecutableId();
+				HAPExecutableExpressionGroupInSuite expresionExecutable = (HAPExecutableExpressionGroupInSuite)entityInfo.getExecutable();
+				HAPDefinitionEntityComplex expressionDef = entityInfo.getDefinition();
+				HAPComplexValueStructure valueStructureComplex = entityInfo.getValueStructureComplex();
+				HAPContainerAttachment attachmentContainer = entityInfo.getAttachmentContainer();
 
-				Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(expressionDef, testData);
-				Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(expressionExe.getValueStructureDefinitionWrapper().getValueStructure(), input);
+				//print out in json
+				System.out.println(expresionExecutable.toString(expressionInDomain.getDomainContext().getExecutableDomain()));
+
+				//input by name
+				Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(attachmentContainer, testData);
+				//input by id
+				Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(valueStructureComplex, input);
 				
+				//prepare variable with input value
 				Map<String, HAPData> varInput = new LinkedHashMap<String, HAPData>();
-				for(String varName : expressionExe.getVariablesInfo().getVariablesId()) {
+				for(String varName : expresionExecutable.getVariablesInfo().getVariablesId()) {
 					Object varValue = HAPJsonValueUtility.getValue(inputById, new HAPComplexPath(varName));
 					if(varValue!=null)   varInput.put(varName, HAPUtilityData.buildDataWrapperFromObject(varValue));					
 				}
 				
-				HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(new HAPInfoRuntimeTaskExpression(expressionExe, null, varInput, null), runtimeEnvironment);
+				//execute the expression
+				HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(new HAPInfoRuntimeTaskExpression(expresionExecutable, null, varInput, null), runtimeEnvironment);
 				HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 				System.out.println("--------------------   "+id+"    -------------------------");

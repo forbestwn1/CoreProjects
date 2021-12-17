@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup1;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;
@@ -17,7 +17,7 @@ public class HAPProcessorScriptLiterate {
 		HAPDefinitionScriptEntity scriptDef,
 		Map<String, Object> constantValues,
 		HAPUpdateName name2IdUpdate,
-		HAPDefinitionExpressionGroup expressionDef
+		HAPDefinitionExpressionGroup1 expressionDef
 	) {
 		HAPExecutableScriptEntityLiterate out = new HAPExecutableScriptEntityLiterate(id);
 		scriptDef.cloneToEntityInfo(out);

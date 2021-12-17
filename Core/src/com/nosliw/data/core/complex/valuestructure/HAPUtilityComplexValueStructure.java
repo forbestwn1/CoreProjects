@@ -97,7 +97,12 @@ public class HAPUtilityComplexValueStructure {
 		HAPComplexValueStructure valueStructureComplex = withValueStructure.getValueStructureComplex();
 		valueStructureComplex.addPartSimple(valueStructure, HAPUtilityComplexValueStructure.createPartInfoDefault());
 	}
+
+	public static void setValueStructureDefault(HAPComplexValueStructure valueStructureComplex, HAPValueStructure valueStructure) {
+		valueStructureComplex.addPartSimple(valueStructure, HAPUtilityComplexValueStructure.createPartInfoDefault());
+	}
 	
+
 	public static void setValueStructureFromParent(HAPWithValueStructure withValueStructure, List<HAPPartComplexValueStructure> partsFromParent) {
 		HAPComplexValueStructure valueStructureComplex = withValueStructure.getValueStructureComplex();
 		valueStructureComplex.addPartGroup(partsFromParent, HAPUtilityComplexValueStructure.createPartInfoFromParent());

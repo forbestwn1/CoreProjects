@@ -1,25 +1,15 @@
 package com.nosliw.data.core.component;
 
-import java.util.Map;
-
-import com.nosliw.data.core.complex.attachment.HAPAttachment;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPReferenceAttachment;
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public interface HAPWithAttachment {
 
+	@HAPAttribute
 	public static final String ATTACHMENT = "attachment";
 
-	//all attachments
-	HAPContainerAttachment getAttachmentContainer();
-	void setAttachmentContainer(HAPContainerAttachment attachmentContainer);
-	
-	Map<String, HAPAttachment> getAttachmentsByType(String type);
-	HAPAttachment getAttachment(String type, String name);
-	HAPAttachment getAttachment(HAPReferenceAttachment idAttachment);
+	HAPIdEntityInDomain getAttachmentContainerId();
 
-	//
-	void mergeBy(HAPWithAttachment parent, String mode);
+	void setAttachmentContainerId(HAPIdEntityInDomain attachmentId);
 
-	void cloneToAttachment(HAPWithAttachment withAttachment);
 }

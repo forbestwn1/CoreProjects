@@ -2,8 +2,8 @@ package com.nosliw.data.core.resource;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.data.core.complex.HAPIdEntityInDomain;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public interface HAPResourceDefinition1 extends HAPResourceDefinitionOrId, HAPEntityInfo, HAPSerializable{
 

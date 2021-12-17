@@ -3,6 +3,7 @@ package com.nosliw.data.core.expression;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 
 /**
@@ -27,7 +28,16 @@ public class HAPUtilityExpressionProcessConfigure {
 		}
 		return out;
 	}
+
+	static public boolean isDoDiscovery(HAPInfo info){
+		boolean out = true;
+		if(info!=null) {
+			out = "true".equals(info.getValue(CONFIGURE_DISCOVERY));
+		}
+		return out;
+	}
 	
+
 	static private Map<String, String> buildContextConfigure(Map<String, String> configure, String name, String value){
 		Map<String, String> out = configure;
 		if(out==null)	out = new LinkedHashMap<String, String>();

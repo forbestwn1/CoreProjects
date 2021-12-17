@@ -95,7 +95,11 @@ public class HAPUtilityAttachment {
 	public static Map<String, Object> getTestValueFromAttachment(HAPWithAttachment withAttachment, String name) {
 		return HAPUtilityAttachment.getContextValueFromAttachment(withAttachment.getAttachmentContainer(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
 	}
-	
+
+	public static Map<String, Object> getTestValueFromAttachment(HAPContainerAttachment attachment, String name) {
+		return HAPUtilityAttachment.getContextValueFromAttachment(attachment, HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
+	}
+
 	public static Map<String, Object> getContextValueFromAttachment(HAPContainerAttachment attContainer, String type, String name) {
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);

@@ -5,27 +5,27 @@ import java.util.Set;
 
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup1;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite1;
 import com.nosliw.data.core.resource.HAPEntityResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 
 public class HAPResourceEntityExpressionSuite 
 				extends HAPDefinitionEntityContainer<HAPElementContainerResourceDefinitionEntityExpressionSuite> 
-				implements HAPDefinitionExpressionSuite{
+				implements HAPDefinitionExpressionSuite1{
 
 	public HAPResourceEntityExpressionSuite() {
 	}
 
 	@Override
-	public Set<HAPDefinitionExpressionGroup> getEntityElements() {		return (Set)this.getContainerElements();	}
+	public Set<HAPDefinitionExpressionGroup1> getEntityElements() {		return (Set)this.getContainerElements();	}
 
 	@Override
-	public HAPDefinitionExpressionGroup getEntityElement(String id) {  return this.getContainerElement(id); }
+	public HAPDefinitionExpressionGroup1 getEntityElement(String id) {  return this.getContainerElement(id); }
 
 	@Override
-	public void addEntityElement(HAPDefinitionExpressionGroup entityElement) {  this.addContainerElement((HAPElementContainerResourceDefinitionEntityExpressionSuite)entityElement); }
+	public void addEntityElement(HAPDefinitionExpressionGroup1 entityElement) {  this.addContainerElement((HAPElementContainerResourceDefinitionEntityExpressionSuite)entityElement); }
 
 	@Override
 	public HAPResourceDefinition1 getElementResourceDefinition(String eleId) {  return new HAPResourceEntityExpressionGroup(this, eleId);  }
@@ -52,7 +52,7 @@ public class HAPResourceEntityExpressionSuite
 	}
 
 	@Override
-	public HAPDefinitionExpressionSuite cloneExpressionSuiteDefinition() {
+	public HAPDefinitionExpressionSuite1 cloneExpressionSuiteDefinition() {
 		HAPResourceEntityExpressionSuite out = new HAPResourceEntityExpressionSuite();
 		this.cloneToResourceDefinitionContainer(out);
 		return out;

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.component;
+package com.nosliw.data.core.complex;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -12,13 +12,19 @@ import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.complex.attachment.HAPAttachment;
 import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.value.HAPValue;
 
-public class HAPUtilityComponentConstant {
+public class HAPUtilityComplexConstant {
 
+	public static Map<String, HAPData> getConstantsData(HAPDefinitionEntityComplex complexEntityDef, HAPDomainValueStructure valueStructureDomain){
+	
+	}
+	
 	public static Map<String, HAPData> getConstantsData(HAPWithConstantDefinition defWithConstant, HAPStructure structure){
 		Map<String, HAPData> out = new LinkedHashMap<String, HAPData>();
 		for(HAPDefinitionConstant constantDef : getDataConstantsDefinition(defWithConstant, structure)) {

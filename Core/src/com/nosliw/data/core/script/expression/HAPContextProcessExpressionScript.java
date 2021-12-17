@@ -9,12 +9,12 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite1;
 
 public class HAPContextProcessExpressionScript implements HAPWithValueStructure, HAPWithConstantDefinition{
 
 	//all expression container
-	private HAPDefinitionExpressionSuite m_expressionSuiteDefinition;
+	private HAPDefinitionExpressionSuite1 m_expressionSuiteDefinition;
 
 	//all constant
 	private Map<String, HAPDefinitionConstant> m_constantsDefinition;
@@ -26,8 +26,8 @@ public class HAPContextProcessExpressionScript implements HAPWithValueStructure,
 		this.m_constantsDefinition = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 	
-	public HAPDefinitionExpressionSuite getExpressionDefinitionSuite(){		return this.m_expressionSuiteDefinition;	}
-	public void setExpressionDefinitionSuite(HAPDefinitionExpressionSuite expressionSuite) {   this.m_expressionSuiteDefinition = expressionSuite;    }
+	public HAPDefinitionExpressionSuite1 getExpressionDefinitionSuite(){		return this.m_expressionSuiteDefinition;	}
+	public void setExpressionDefinitionSuite(HAPDefinitionExpressionSuite1 expressionSuite) {   this.m_expressionSuiteDefinition = expressionSuite;    }
 
 	@Override
 	public Set<HAPDefinitionConstant> getConstantDefinitions() {  return new HashSet<HAPDefinitionConstant>(this.m_constantsDefinition.values()); }

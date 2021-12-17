@@ -3,9 +3,9 @@ package com.nosliw.uiresource.page.processor;
 import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.component.HAPUtilityComponentConstant;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionSuite1;
 import com.nosliw.data.core.expression.HAPUtilityExpressionComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
@@ -32,11 +32,11 @@ public class HAPProcessorCompile {
 		body.getProcessExpressionScriptContext().setValueStructureWrapper(body.getValueStructureDefinitionNode().getValueStructureWrapper());
 		
 		//expression suite from attachment
-		HAPDefinitionExpressionSuite expressionSuite = HAPUtilityExpressionComponent.buildExpressiionSuiteFromComponent(uiUnitDef, runtimeEnv);
+		HAPDefinitionExpressionSuite1 expressionSuite = HAPUtilityExpressionComponent.buildExpressiionSuiteFromComponent(uiUnitDef, runtimeEnv);
 		body.getProcessExpressionScriptContext().setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment
-		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComponentConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer());
+		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComplexConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer());
 		for(HAPDefinitionConstant constantDef : constantsDef) {
 			body.getProcessExpressionScriptContext().addConstantDefinition(constantDef);
 		}

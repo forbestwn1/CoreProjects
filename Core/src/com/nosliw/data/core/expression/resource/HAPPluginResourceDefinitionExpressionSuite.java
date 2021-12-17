@@ -5,16 +5,16 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
-import com.nosliw.data.core.complex.HAPDomainDefinitionComplex;
-import com.nosliw.data.core.complex.HAPIdEntityInDomain;
-import com.nosliw.data.core.complex.HAPInfoComplexEntityInDomain;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
+import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPInfoComplexEntityDefinition;
 import com.nosliw.data.core.expression.HAPParserExpressionDefinition;
-import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
+import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImpSimple;
 import com.nosliw.data.core.task.HAPManagerTask;
 
-public class HAPPluginResourceDefinitionExpressionSuite extends HAPPluginResourceDefinitionImp{
+public class HAPPluginResourceDefinitionExpressionSuite extends HAPPluginResourceDefinitionImpSimple{
 
 	private HAPManagerTask m_taskMan;
 
@@ -23,7 +23,10 @@ public class HAPPluginResourceDefinitionExpressionSuite extends HAPPluginResourc
 	}
 	
 	@Override
-	public HAPIdEntityInDomain parseJson(JSONObject jsonObj, HAPDomainDefinitionComplex entityDomain, HAPLocalReferenceBase localRefBase) {
+	public HAPIdEntityInDomain parseJson(JSONObject jsonObj, HAPDomainDefinitionEntity entityDomain, HAPLocalReferenceBase localRefBase) {
+		
+		
+		
 		HAPResourceEntityExpressionSuite suiteEntity = new HAPResourceEntityExpressionSuite();
 
 		HAPParserEntityComponent.parseComplextResourceDefinition(suiteEntity, jsonObj);
@@ -40,7 +43,7 @@ public class HAPPluginResourceDefinitionExpressionSuite extends HAPPluginResourc
 				//reference
 			}
 		}
-		HAPIdEntityInDomain entityId = entityDomain.addComplexEntity(new HAPInfoComplexEntityInDomain(suiteEntity, null));
+		HAPIdEntityInDomain entityId = entityDomain.addComplexEntity(new HAPInfoComplexEntityDefinition(suiteEntity, null));
 		
 		return entityId;
 	}

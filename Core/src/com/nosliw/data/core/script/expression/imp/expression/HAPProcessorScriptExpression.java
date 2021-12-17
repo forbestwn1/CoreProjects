@@ -8,7 +8,7 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup1;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScript;
 import com.nosliw.data.core.script.expression.HAPScript;
@@ -23,7 +23,7 @@ public class HAPProcessorScriptExpression {
 			HAPDefinitionScriptEntity scriptDef,
 			Map<String, Object> constantValues,
 			HAPUpdateName name2IdUpdate,
-			HAPDefinitionExpressionGroup expressionDef
+			HAPDefinitionExpressionGroup1 expressionDef
 		) {
 		HAPExecutableScriptEntityExpression out = new HAPExecutableScriptEntityExpression(id);
 		scriptDef.cloneToEntityInfo(out);
@@ -36,7 +36,7 @@ public class HAPProcessorScriptExpression {
 			HAPScript script,
 			Map<String, Object> constantValues,
 			HAPUpdateName name2IdUpdate,
-			HAPDefinitionExpressionGroup expressionGroup
+			HAPDefinitionExpressionGroup1 expressionGroup
 		) {
 		List<HAPExecutableScript> out = new ArrayList<HAPExecutableScript>();
 		List<HAPScript> scriptSegs = parseScript(script.getScript());

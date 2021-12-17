@@ -9,7 +9,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -25,10 +24,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpressionGroupImp{
 
-	private String m_id;
-	
-	private HAPWrapperValueStructure m_valueStructureWrapper;
-	
 	private Map<String, HAPExecutableExpression> m_expressionItem;
 	 
 	private HAPContainerVariableCriteriaInfo m_varInfos;
@@ -44,9 +39,8 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_varInfos;    }
 	
 	
-	public HAPExecutableExpressionGroupInSuite(String id) {
+	public HAPExecutableExpressionGroupInSuite() {
 		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpression>();
-		this.m_id = id;
 	}
 	
 	@Override
@@ -60,14 +54,6 @@ public class HAPExecutableExpressionGroupInSuite extends HAPExecutableExpression
 		return this.m_expressionItem;
 	}
 
-	@Override
-	public String getId() {  return this.m_id;  }
-	public void setId(String id) {   this.m_id = id;    }
-	
-	public HAPWrapperValueStructure getValueStructureDefinitionWrapper() {   return this.m_valueStructureWrapper;  }
-
-	public void setValueStructureDefinitionWrapper(HAPWrapperValueStructure structureDefinition) {	this.m_valueStructureWrapper = structureDefinition;	}
-	
 	@Override
 	public void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker) {
 		Map<String, HAPInfoCriteria> discoveredVarsInf = new LinkedHashMap<String, HAPInfoCriteria>();

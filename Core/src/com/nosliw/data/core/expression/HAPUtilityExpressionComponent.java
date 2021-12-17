@@ -8,25 +8,25 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPUtilityWithValueStructure;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.complex.attachment.HAPAttachment;
 import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
-import com.nosliw.data.core.component.HAPUtilityComponentConstant;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityExpressionComponent {
 
-	public static HAPDefinitionExpressionSuiteImp buildExpressiionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
-		HAPDefinitionExpressionSuiteImp out = new HAPDefinitionExpressionSuiteImp();
+	public static HAPDefinitionExpressionSuite buildExpressiionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
+		HAPDefinitionExpressionSuite out = new HAPDefinitionExpressionSuite();
 		
 		//build value structure
 		HAPWrapperValueStructure valueStructureWrapper = HAPUtilityExpression.getValueStructure(complexEntity, runtimeEnv);
 		HAPUtilityWithValueStructure.setValueStructure(out, valueStructureWrapper);
 		
 		//build constant from attachment
-		for(HAPDefinitionConstant constantDef : HAPUtilityComponentConstant.buildDataConstantDefinition(complexEntity.getAttachmentContainer())) {
+		for(HAPDefinitionConstant constantDef : HAPUtilityComplexConstant.buildDataConstantDefinition(complexEntity.getAttachmentContainer())) {
 			out.addConstantDefinition(constantDef);
 		}
 		
@@ -45,7 +45,7 @@ public class HAPUtilityExpressionComponent {
 		return out;
 	}
 	
-	public static void buildExpressionSuiteFromAttachment(HAPDefinitionExpressionSuite suite, HAPContainerAttachment attachmentContainer) {
+	public static void buildExpressionSuiteFromAttachment(HAPDefinitionExpressionSuite1 suite, HAPContainerAttachment attachmentContainer) {
 		Map<String, HAPAttachment> expressionAtts = attachmentContainer.getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION);
 		for(String name : expressionAtts.keySet()) {
 			HAPAttachment attachment = expressionAtts.get(name);
@@ -53,8 +53,8 @@ public class HAPUtilityExpressionComponent {
 		}
 	}
 
-	private static HAPDefinitionExpressionGroup buildExpressionGroup(HAPAttachment attachment) {
-		HAPDefinitionExpressionGroupImp out = new HAPDefinitionExpressionGroupImp();
+	private static HAPDefinitionExpressionGroup1 buildExpressionGroup(HAPAttachment attachment) {
+		HAPDefinitionExpressionGroup out = new HAPDefinitionExpressionGroup();
 		attachment.cloneToEntityInfo(out);
 		if(HAPConstantShared.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;

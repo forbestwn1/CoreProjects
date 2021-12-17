@@ -2,23 +2,20 @@ package com.nosliw.data.core.complex;
 
 import java.util.Set;
 
-public class HAPInfoParentEntity {
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
-	private String m_parentId;
-	private String m_alias;
+public class HAPConfigureParentRelationComplex {
 
 	private HAPConfigureComplexRelationValueStructure m_valueStructureConfigure;
 	private HAPConfigureComplexRelationAttachment m_attachmentMode;
 	private HAPConfigureComplexRelationInfo m_infoMode;
 	
-	public void replaceAliasWithId(Set<String> alias, String parentId) {
-		if(this.m_parentId==null&&alias.contains(m_alias)) {
-			this.m_alias = null;
+	public void replaceAliasWithId(Set<String> alias, HAPIdEntityInDomain parentId) {
+		if(this.m_parentId==null&&alias.contains(m_parentAlias)) {
+			this.m_parentAlias = null;
 			this.m_parentId = parentId;
 		}
 	}
-	
-	public String getParentId() {    return this.m_parentId;   }
 	
 	//attachment merge
 	public HAPConfigureComplexRelationAttachment getAttachmentRelationMode() {   return this.m_attachmentMode;    }

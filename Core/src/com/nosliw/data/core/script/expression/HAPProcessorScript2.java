@@ -7,12 +7,12 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.component.HAPUtilityComponentConstant;
+import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.expression.HAPContextProcessAttachmentReferenceExpression;
-import com.nosliw.data.core.expression.HAPDefinitionExpressionGroupImp;
+import com.nosliw.data.core.expression.HAPDefinitionExpressionGroup;
 import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPManagerExpression;
-import com.nosliw.data.core.expression.HAPProcessorExpression;
+import com.nosliw.data.core.expression.HAPPluginProcessorExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.imp.literate.HAPProcessorScriptLiterate;
@@ -69,14 +69,14 @@ public class HAPProcessorScript2 {
 		out.setContextStructure(contextStructure);
 
 		//constant
-		Map<String, Object> constantsValue = HAPUtilityComponentConstant.getConstantsValue(scriptGroupDef, out.getValueStructureFlat());
+		Map<String, Object> constantsValue = HAPUtilityComplexConstant.getConstantsValue(scriptGroupDef, out.getValueStructureFlat());
 		
 		//expression definition containing all expression in script 
-		HAPDefinitionExpressionGroupImp expressionGroupDef = new HAPDefinitionExpressionGroupImp();
+		HAPDefinitionExpressionGroup expressionGroupDef = new HAPDefinitionExpressionGroup();
 		expressionGroupDef.setValueContext(contextStructure);
 
 		//constant --- discover constant from attachment and context
-		for(HAPDefinitionConstant def : HAPUtilityComponentConstant.getValueConstantsDefinition(scriptGroupDef, out.getValueStructureFlat())) {
+		for(HAPDefinitionConstant def : HAPUtilityComplexConstant.getValueConstantsDefinition(scriptGroupDef, out.getValueStructureFlat())) {
 			expressionGroupDef.addConstantDefinition(def);
 		}
 		
@@ -106,7 +106,7 @@ public class HAPProcessorScript2 {
 			i++;
 		}
 		
-		HAPExecutableExpressionGroup expressionExe = HAPProcessorExpression.process(id, expressionGroupDef, processContext, null, null, expressionMan, configure, runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup expressionExe = HAPPluginProcessorExpression.process(id, expressionGroupDef, processContext, null, null, expressionMan, configure, runtimeEnv, processTracker);
 		out.setExpression(expressionExe);
 		
 		for(HAPExecutableScriptEntity script : out.getScripts()) {
