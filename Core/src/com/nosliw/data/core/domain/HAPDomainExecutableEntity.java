@@ -29,4 +29,12 @@ public class HAPDomainExecutableEntity {
 		this.m_executableEntity.put(entityId, executableEntity);
 		return entityId;
 	}
+
+	public HAPExecutableEntityComplex getExecutableEntity(HAPIdEntityInDomain entityId) {
+		
+	}
+	
+	public HAPDomainValueStructure getValueStructureDomain() {    return this.m_valueStructureDomain;     }
+	
+	public HAPDomainAttachment getAttachmentDomain() {}
 }

@@ -1,22 +1,30 @@
 package com.nosliw.data.core.complex;
 
-import com.nosliw.data.core.common.HAPWithValueStructure;
+import java.util.Map;
+
+import com.nosliw.data.core.domain.HAPContainerEntity;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPInfoContainerElement;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 
-public abstract class HAPExecutableEntityComplex extends HAPExecutableImpEntityInfo implements HAPWithValueStructure{
+public abstract class HAPExecutableEntityComplex extends HAPExecutableImpEntityInfo{
 
 	private String m_valueStructureComplexId;
 	
+	//simple attribute by name
+	private Map<String, HAPIdEntityInDomain> m_attributesSimple;
+	
+	//container attribute by name
+	private Map<String, HAPContainerEntity> m_attributeContainer;
+	
 	public abstract String getEntityType();
 	
-	@Override
-	public String getValueStructureComplexId() {  return this.m_valueStructureComplexId;  }
-
-	public void setValueStructureComplexId(String valueStructureComplexId) {    this.m_valueStructureComplexId = valueStructureComplexId;     }
+	public void setValueStructureComplexId(String id) {     this.m_valueStructureComplexId = id;      }
+	public String getValueStructureComplexId() {    return this.m_valueStructureComplexId;    }
 	
-	@Override
-	public String getValueStructureTypeIfNotDefined() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setSimpleComplexAttribute(String attrName, HAPIdEntityInDomain complexEntityExeId) {    this.m_attributesSimple.put(attrName, complexEntityExeId);    }
+	
+	public void addContainerAttributeElementComplex(String attribute, HAPInfoContainerElement elementInfo) {
+		
 	}
 }

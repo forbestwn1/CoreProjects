@@ -10,5 +10,9 @@ public class HAPUtilityDomain {
 		HAPContextProcessor out = new HAPContextProcessor(domainContext, entityInfo.getLocalBaseReference(), runtimeEnv);
 		return out;
 	}
+
+	public static void preProcess(HAPContextDomain domainContext, HAPIdEntityInDomain entityId, HAPRuntimeEnvironment runtimeEnv) {
+		//build executable
+	}
 	
 }

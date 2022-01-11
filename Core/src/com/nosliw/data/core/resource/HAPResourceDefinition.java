@@ -19,9 +19,6 @@ public class HAPResourceDefinition extends HAPEntityInfoImp implements HAPResour
 	@HAPAttribute
 	public static String RESOURCEID = "resourceId";
 
-	@HAPAttribute
-	public static String LOCALREFERENCEBASE = "localReferenceBase";
-
 	//resource id
 	private HAPResourceId m_resourceId;
 

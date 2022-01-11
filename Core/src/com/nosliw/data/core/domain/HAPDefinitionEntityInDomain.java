@@ -1,8 +1,10 @@
 package com.nosliw.data.core.domain;
 
-public interface HAPDefinitionEntityInDomain {
+import com.nosliw.common.info.HAPEntityInfo;
+
+public interface HAPDefinitionEntityInDomain extends HAPEntityInfo{
 
 	String getEntityType();
 
-	String getEntityId();
+	boolean isComplexEntity();
 }

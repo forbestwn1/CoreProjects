@@ -23,4 +23,7 @@ public class HAPInfoDefinitionEntityInDomainComplex extends HAPInfoDefinitionEnt
 	
 	public HAPDefinitionEntityComplex getComplexEntity() {     return (HAPDefinitionEntityComplex)this.getEntity();     }
 
+	@Override
+	public boolean isComplexEntity() {   return true;   }
+
 }

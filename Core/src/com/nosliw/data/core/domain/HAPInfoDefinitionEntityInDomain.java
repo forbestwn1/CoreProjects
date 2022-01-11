@@ -13,8 +13,14 @@ public class HAPInfoDefinitionEntityInDomain {
 	
 	//alias for this entity
 	private Set<String> m_alias;
+	
+	private HAPIdEntityInDomain m_entityId;
 
 	public HAPDefinitionEntityInDomain getEntity() {     return this.m_entity;     }
 	
 	public HAPLocalReferenceBase getLocalBaseReference() {     return this.m_basePath;     }
+
+	public boolean isComplexEntity() {   return false;   }
+	
+	public HAPIdEntityInDomain getEntityId() {    return this.m_entityId;     }
 }

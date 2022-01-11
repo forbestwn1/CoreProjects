@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.HAPUtilityComplexEntity;
 import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
 import com.nosliw.data.core.complex.valuestructure.HAPProcessorValueStructureInComponent;
@@ -27,7 +27,7 @@ import com.nosliw.data.core.structure.HAPProcessorStructure;
  */
 public class HAPDomainDefinitionEntity{
 	//all complex entity by id
-	private Map<HAPIdEntityInDomain, HAPInfoComplexEntityDefinition> m_complexEntity;
+	private Map<HAPIdEntityInDomain, HAPInfoDefinitionEntityInDomainComplex> m_complexEntity;
 	
 	//complex entity tree 
 	private Map<HAPIdEntityInDomain, Set<HAPIdEntityInDomain>> m_childrensByParent;
@@ -50,7 +50,7 @@ public class HAPDomainDefinitionEntity{
 	
 	public HAPDomainDefinitionEntity(HAPGeneratorId idGenerator, HAPDomainValueStructure valueStructureDomain) {
 		this.m_idGenerator = idGenerator;
-		this.m_complexEntity = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoComplexEntityDefinition>();
+		this.m_complexEntity = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoDefinitionEntityInDomainComplex>();
 		this.m_childrensByParent = new LinkedHashMap<HAPIdEntityInDomain, Set<HAPIdEntityInDomain>>();
 		this.m_parentByChild = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>();
 		this.m_rootEntity = new HashSet<HAPIdEntityInDomain>();
@@ -58,6 +58,9 @@ public class HAPDomainDefinitionEntity{
 		this.m_entity = new LinkedHashMap<HAPIdEntityInDomain, HAPEntityResourceDefinition>();
 	}
 
+	//complex entity tree root
+	public Set<HAPIdEntityInDomain> getRootComplexEntity(){     }
+	
 	public HAPIdEntityInDomain addEntity(HAPDefinitionEntityInDomain entity, HAPLocalReferenceBase m_basePath) {
 		
 	}
@@ -70,6 +73,8 @@ public class HAPDomainDefinitionEntity{
 		
 	}
 	
+	public Set<HAPInfoComplexEntityDefinition> getAllComplexEntities() {
+	}
 	
 	//add complex entity to domain, also add value structure
 	public HAPIdEntityInDomain addComplexEntity(HAPInfoComplexEntityDefinition complexEntityInfo, HAPComplexValueStructure valueStructureComplex) {

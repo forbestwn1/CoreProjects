@@ -2,41 +2,53 @@ package com.nosliw.data.core.complex;
 
 import java.util.Map;
 
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.complex.valuestructure.HAPPartComplexValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
+import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 //entity that have data value structure and attachment
-public class HAPDefinitionEntityComplex implements HAPDefinitionEntityInDomain, HAPWithValueStructure, HAPWithAttachment{
+public class HAPDefinitionEntityComplex extends HAPEntityInfoImp implements HAPDefinitionEntityInDomain, HAPWithValueStructure, HAPWithAttachment{
 
-	private Map<String, HAPIdEntityInDomain> m_attributesRef;
+	//simple attribute by name
+	private Map<String, HAPIdEntityInDomain> m_attributesSimple;
+	
+	//container attribute by name
+	private Map<String, HAPContainerEntity> m_attributeContainer;
 	
 	private String m_entityType;
 	
-	private String m_entityId;
-	
 	public HAPDefinitionEntityComplex (String entityType) {
 		this.m_entityType = entityType;
+		
 	}
 	
 	@Override
 	public String getEntityType() {  return this.m_entityType;	}
 
-	@Override
-	public String getEntityId() {    return this.m_entityId;    }
+	public HAPIdEntityInDomain getSimpleAttribute(String attributeName) {		return this.m_attributesSimple.get(attributeName);	}
+
+	public void setSimpleAttribute(String attributeName, HAPIdEntityInDomain entityId) {		this.m_attributesSimple.put(attributeName, entityId);	}
 	
-	public void setEntityId(String entityId) {    this.m_entityId = entityId;     }
-
-	public HAPIdEntityInDomain getAttributeReferenceId(String attributeName) {
-		return this.m_attributesRef.get(attributeName);
+	public void addContainerElementAttribute(String attributeName, HAPIdEntityInDomain entityId, String entityName) {
+		
 	}
-
-	public void setAttributeReferenceId(String attributeName, HAPIdEntityInDomain entityId) {
-		this.m_attributesRef.put(attributeName, entityId);
+	
+	public Map<String, HAPIdEntityInDomain> getSimpleAttributes(){    return this.m_attributesSimple;     }
+	
+	public Map<String, HAPContainerEntity> getContainerAttributes(){    return this.m_attributeContainer;     }
+	
+	public HAPIdEntityInDomain getContainerAttributeElement(String attributeName, String eleName) {
+		
+	}
+	
+	public HAPIdEntityInDomain getContainerAttributeElement(String attributeName, String eleName) {
+		
 	}
 	
 	@Override
