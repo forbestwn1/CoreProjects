@@ -39,7 +39,12 @@ public class HAPContextDomain {
 	public HAPDefinitionEntityComplex getDefinitionEntityByExecutableId(HAPIdEntityInDomain executableId) {
 		
 	}
+
+	public HAPIdEntityInDomain getExecutableIdByDefinitionId(HAPIdEntityInDomain executableId) {
+		
+	}
 	
+
 	public HAPDefinitionEntityComplex getDefinitionComplexEntity(HAPIdEntityInDomain entityId) {
 		
 	}

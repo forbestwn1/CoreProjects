@@ -11,16 +11,20 @@ import com.nosliw.data.core.complex.valuestructure.HAPUtilityComplexValueStructu
 import com.nosliw.data.core.complex.valuestructure.HAParserComponentValueStructure;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
 import com.nosliw.data.core.component.HAPWithAttachment;
+import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoComplexEntityDefinition;
 import com.nosliw.data.core.domain.HAPManagerDomainEntity;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginResourceDefinitionImpSimple implements HAPPluginResourceDefinition{
 
 	private String m_resourceType;
 	
 	private HAPManagerDomainEntity m_domainEntityManager;
+	
+	private HAPRuntimeEnvironment m_runtimeEnv;
 	
 	public HAPPluginResourceDefinitionImpSimple(String resourceType) {
 		this.m_resourceType = resourceType;
@@ -46,11 +50,11 @@ public class HAPPluginResourceDefinitionImpSimple implements HAPPluginResourceDe
 		return out;
 	}
 
-	private HAPIdEntityInDomain parseEntity(Object content, HAPDomainDefinitionEntity entityDomain, HAPLocalReferenceBase localRefBase) {
+	private HAPIdEntityInDomain parseEntity(Object content, HAPDomainDefinitionEntity definitionDomain, HAPLocalReferenceBase localRefBase) {
 		JSONObject jsonObj = null;
 		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
 		else if(content instanceof String)  jsonObj = new JSONObject(content);
-		HAPIdEntityInDomain entityId = this.m_domainEntityManager.parseDefinition(this.getResourceType(), jsonObj, entityDomain, localRefBase);
+		HAPIdEntityInDomain entityId = this.m_domainEntityManager.parseDefinition(this.getResourceType(), jsonObj, new HAPContextParser(definitionDomain, localRefBase));
 		return entityId;
 	}
 

@@ -12,7 +12,6 @@ import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResultSimpleResource;
 
 public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginResourceDefinition{
 
@@ -26,7 +25,7 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 	public String getResourceType() {	return HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION;	}
 
 	@Override
-	public HAPResultSimpleResource getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId, HAPDomainDefinitionEntity entityDomain) {
+	public HAPIdEntityInDomain getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId, HAPDomainDefinitionEntity entityDomain) {
 		HAPResourceIdExpression expressionResourceId = new HAPResourceIdExpression(resourceId);
 		HAPResourceIdSimple expressionSuiteResourceId = expressionResourceId.getExpressionSuiteResourceId();
 		
@@ -35,7 +34,7 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 		
 		//get group entity id
 		HAPIdEntityInDomain groupEntityId = createGroupThroughSuite(expressionSuiteResourceDef.getEntityId(), expressionResourceId.getExpressionId().getExpressionGroupId(), entityDomain);
-		return new HAPResultSimpleResource(groupEntityId, expressionSuiteResourceDef.getLocalReferenceBase());
+		return groupEntityId;
 	}
 
 	@Override
@@ -57,13 +56,6 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 		HAPElementContainerResourceDefinitionEntityExpressionSuite expressionGroup = suite.getContainerElement(groupId);
 		HAPIdEntityInDomain groupEntityId = entityDomain.addComplexEntity(new HAPInfoComplexEntityDefinition(expressionGroup, new HAPConfigureParentRelationComplex()));
 		return groupEntityId;
-	}
-
-	@Override
-	public HAPIdEntityInDomain parseResourceEntity(Object content, HAPDomainDefinitionEntity entityDomain,
-			HAPLocalReferenceBase localRefBase) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

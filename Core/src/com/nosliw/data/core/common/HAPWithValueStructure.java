@@ -13,4 +13,5 @@ public interface HAPWithValueStructure {
 	void setValueStructureComplexId(HAPIdEntityInDomain valueStructureComplexId);
 	
 	String getValueStructureTypeIfNotDefined();
+
 }

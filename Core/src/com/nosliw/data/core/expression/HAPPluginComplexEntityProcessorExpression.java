@@ -13,6 +13,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
+import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessor;
 import com.nosliw.data.core.complex.HAPResultSolveReference;
 import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.complex.HAPUtilityComplexEntity;
@@ -21,7 +22,6 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomain;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
@@ -39,41 +39,13 @@ import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementRefere
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
-public class HAPPluginProcessorExpression implements HAPPluginEntityDefinitionInDomain{
+public class HAPPluginComplexEntityProcessorExpression implements HAPPluginComplexEntityProcessor{
 
-	/*
-	 * id : executable id
-	 * domainPool : domain env 
-	 * entityId : entity for process
-	 * return entity id for exe
-	 */
 	@Override
-	public HAPIdEntityInDomain processDefinition(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
-		
-		//go through all complex entity in definition domain, create executable in executable domain
-		
-		//go though all complex entity, process all attachment, put attachments in executable domain
-		
-		//go through all complex entity, process all value structure complex, put them in executable domain
-		
-		//go through all complex entity, discover all implied value structure
-		
-		//      
-		
-		
-		//when a new complex entity definition added
-		//      
-		
-		
-		//
-		
-		
-		
-		//expand value structure
-		
-		//
-		
-		
+	public HAPExecutableEntityComplex newExecutable() {  return new HAPExecutableExpressionGroupInSuite(); }
+
+	@Override
+	public HAPIdEntityInDomain process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
 		HAPIdEntityInDomain out = HAPUtilityComplexEntity.newExecutableEntity(HAPExecutableExpressionGroupInSuite.class, complexEntityDefinitionId, processContext);
 
 		Triple<HAPDefinitionExpressionGroup1, HAPExecutableExpressionGroupInSuite, HAPComplexValueStructure> entityInfo = getComplexEntityByExecutableId(out, processContext);
@@ -417,12 +389,5 @@ public class HAPPluginProcessorExpression implements HAPPluginEntityDefinitionIn
 
 	}
 
-	@Override
-	public void enhanceValueStructure(HAPIdEntityInDomain complexEntityDefinitionId,
-			HAPContextProcessor processContext) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	
 }

@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.complex.HAPConfigureComplexRelationValueStructure;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
@@ -14,6 +16,12 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPUtilityComplexValueStructure {
 
+	public static void processValueStructureInheritance(String valueStructureComplexId, String parentValueStructureComplexId, HAPConfigureComplexRelationValueStructure configure, HAPDomainValueStructure valueStructureDomain) {
+		
+	}
+	
+
+	
 	public static List<HAPInfoPartSimple> findCandidateSimplePart(String partRef, HAPComplexValueStructure valueStructureComplex){
 		List<HAPInfoPartSimple> out = getAllSimpleParts(valueStructureComplex);
 		return out;

@@ -10,6 +10,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.complex.HAPConfigureComplexRelationAttachment;
 
 //store all attachment by type and by name
 @HAPEntityWithAttribute
@@ -45,6 +46,10 @@ public class HAPContainerAttachment extends HAPSerializableImp{
 		byName.put(attachment.getName(), attachment);
 	}
 
+	public void merge(HAPContainerAttachment parent, HAPConfigureComplexRelationAttachment mode) {
+		this.merge(parent, mode.getMergeMode());
+	}
+	
 	//merge with parent
 	public void merge(HAPContainerAttachment parent, String mode) {
 		if(parent==null)  return;

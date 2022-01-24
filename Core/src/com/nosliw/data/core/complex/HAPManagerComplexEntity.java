@@ -7,6 +7,10 @@ import java.util.Set;
 
 import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.complex.valuestructure.HAPInfoPartSimple;
+import com.nosliw.data.core.complex.valuestructure.HAPProcessorValueStructureInComponent;
+import com.nosliw.data.core.complex.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.complex.valuestructure.HAPValueStructureInComponent;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPContextDomain;
@@ -15,7 +19,6 @@ import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPDomainExecutableEntity;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoComplexEntityDefinition;
 import com.nosliw.data.core.domain.HAPInfoContainerElement;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomainComplex;
@@ -40,39 +43,93 @@ public class HAPManagerComplexEntity {
 		}
 		
 		//process attachment
-		processAttachmentTree(processContext);
-		
+		for(HAPIdEntityInDomain rootId : rootIds) {
+			processAttachmentTree(rootId, processContext);
+		}
+
+		//expand reference in value strucutre
+		for(HAPIdEntityInDomain rootId : rootIds) {
+			expandValueStructure(rootId, processContext);
+		}
+
 		//process value structure
-		processValueStructureTree(processContext);
-		
-		
+		for(HAPIdEntityInDomain rootId : rootIds) {
+			processValueStructureTree(rootId, processContext);
+		}
 		
 		HAPPluginComplexEntityProcessor processPlugin = this.m_processorPlugins.get(complexEntityDefinitionId.getEntityType());
 		processPlugin.process(complexEntityDefinitionId, processContext);
-		return out;
+		return domainContext.getExecutableIdByDefinitionId(complexEntityDefinitionId);
 	}
 
-	private void processAttachmentTree(HAPContextProcessor processContext) {
-		HAPContextDomain domainContext = processContext.getDomainContext();
-		HAPDomainDefinitionEntity defDomain = domainContext.getDefinitionDomain();
-		HAPDomainExecutableEntity exeDomain = domainContext.getExecutableDomain();
+	private void processAttachmentTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
+		HAPUtilityComplexEntity.traversComplexEntityTree(complexEntityDefinitionId, new HAPProcessorComplexEntity() {
+			@Override
+			public void process(HAPInfoDefinitionEntityInDomainComplex complexEntityInfo, HAPInfoDefinitionEntityInDomainComplex parentComplexEntityInfo,
+					HAPContextProcessor processContext) {
+				if(parentComplexEntityInfo!=null) {
+					HAPContextDomain domainContext = processContext.getDomainContext();
+					HAPDomainDefinitionEntity defDomain = domainContext.getDefinitionDomain();
+					HAPDomainExecutableEntity exeDomain = domainContext.getExecutableDomain();
+					HAPDomainAttachment attachmentDomain = exeDomain.getAttachmentDomain();
 
-		Set<HAPIdEntityInDomain> rootIds = defDomain.getRootComplexEntity();
-		for(HAPIdEntityInDomain rootId : rootIds) {
-			buildExecutableTree(rootId, processContext);
-		}
+					HAPInfoDefinitionEntityInDomainComplex entityDefInfo = defDomain.getComplexEntityInfo(complexEntityDefinitionId);
+					HAPDefinitionEntityComplex complexEntityDef = entityDefInfo.getComplexEntity();
+					HAPIdEntityInDomain complexEntityExeId = domainContext.getExecutableIdByDefinitionId(complexEntityDefinitionId);
+					HAPContainerAttachment parentAttachmentContainer =  attachmentDomain.getAttachmentContainer(complexEntityExeId);
+
+					HAPIdEntityInDomain childComplexEntityExeId = domainContext.getExecutableIdByDefinitionId(complexEntityInfo.getEntityId());
+					HAPContainerAttachment childAttachmentContainer =  attachmentDomain.getAttachmentContainer(childComplexEntityExeId);
+					childAttachmentContainer.merge(parentAttachmentContainer, complexEntityInfo.getParentRelationConfigure().getAttachmentRelationMode());
+				}
+
+			}}, processContext);
 	}
 	
-	private void processValueStructureTree(HAPContextProcessor processContext) {
-		HAPContextDomain domainContext = processContext.getDomainContext();
-		HAPDomainDefinitionEntity defDomain = domainContext.getDefinitionDomain();
-		HAPDomainExecutableEntity exeDomain = domainContext.getExecutableDomain();
+	private void expandValueStructure(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
+		HAPUtilityComplexEntity.traversComplexEntityTree(complexEntityDefinitionId, new HAPProcessorComplexEntity() {
+			@Override
+			public void process(HAPInfoDefinitionEntityInDomainComplex complexEntityInfo, HAPInfoDefinitionEntityInDomainComplex parentComplexEntityInfo,
+					HAPContextProcessor processContext) {
+				if(parentComplexEntityInfo!=null) {
+					HAPContextDomain domainContext = processContext.getDomainContext();
+					HAPDomainExecutableEntity exeDomain = domainContext.getExecutableDomain();
+					HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
 
-		//
-		Set<HAPInfoComplexEntityDefinition> complexEntityInfos = defDomain.getAllComplexEntities();
-		for(HAPInfoComplexEntityDefinition complexEntityInfo : complexEntityInfos) {
-			
-		}
+					HAPIdEntityInDomain complexEntityExeId = domainContext.getExecutableIdByDefinitionId(complexEntityDefinitionId);
+					HAPExecutableEntityComplex complexEntityExe = domainContext.getExecutableEntityByExecutableId(complexEntityExeId);
+
+					//expand reference
+					HAPComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(complexEntityExe.getValueStructureComplexId());
+					List<HAPInfoPartSimple> simpleValueStructureParts = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
+					for(HAPInfoPartSimple simpleValueStructurePart : simpleValueStructureParts) {
+						HAPProcessorValueStructureInComponent.expandReference((HAPValueStructureInComponent)simpleValueStructurePart.getSimpleValueStructurePart().getValueStructure(), processContext);
+					}
+				}
+
+			}}, processContext);
+	}
+	
+	private void processValueStructureTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
+		HAPUtilityComplexEntity.traversComplexEntityTree(complexEntityDefinitionId, new HAPProcessorComplexEntity() {
+			@Override
+			public void process(HAPInfoDefinitionEntityInDomainComplex complexEntityInfo, HAPInfoDefinitionEntityInDomainComplex parentComplexEntityInfo,
+					HAPContextProcessor processContext) {
+				if(parentComplexEntityInfo!=null) {
+					HAPContextDomain domainContext = processContext.getDomainContext();
+					HAPDomainExecutableEntity exeDomain = domainContext.getExecutableDomain();
+
+					HAPIdEntityInDomain complexEntityExeId = domainContext.getExecutableIdByDefinitionId(complexEntityDefinitionId);
+					HAPExecutableEntityComplex complexEntityExe = domainContext.getExecutableEntityByExecutableId(complexEntityExeId);
+
+					HAPIdEntityInDomain parentComplexEntityExeId = domainContext.getExecutableIdByDefinitionId(parentComplexEntityInfo.getEntityId());
+					HAPExecutableEntityComplex parentComplexEntityExe = domainContext.getExecutableEntityByExecutableId(parentComplexEntityExeId);
+
+					//process inheritance
+					HAPUtilityComplexValueStructure.processValueStructureInheritance(complexEntityExe.getValueStructureComplexId(), parentComplexEntityExe.getValueStructureComplexId(), parentComplexEntityInfo.getParentRelationConfigure().getValueStructureRelationMode(), exeDomain.getValueStructureDomain());
+				}
+
+			}}, processContext);
 	}
 	
 	private HAPIdEntityInDomain buildExecutableTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {

@@ -8,4 +8,8 @@ public class HAPInfoContainerElement {
 	
 	public HAPInfoContainerElement cloneElementInfo() {      }
 	
+	public HAPInfoContainerElement cloneInfoContainerElement() {
+		
+	}
+	
 }

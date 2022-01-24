@@ -4,13 +4,18 @@ import java.lang.reflect.Field;
 
 import org.json.JSONObject;
 
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+
 public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginEntityDefinitionInDomain{
 
+	private HAPRuntimeEnvironment m_runtimeEnv;
+	
 	private Class<? extends HAPDefinitionEntityInDomain> m_entityClass;
 	
 	private String m_entityType;
 	
-	public HAPPluginEntityDefinitionInDomainImp(Class<? extends HAPDefinitionEntityInDomain> entityClass) {
+	public HAPPluginEntityDefinitionInDomainImp(Class<? extends HAPDefinitionEntityInDomain> entityClass, HAPRuntimeEnvironment runtimeEnv) {
+		this.m_runtimeEnv = runtimeEnv;
 		this.m_entityClass = entityClass;
 		
 		//get entity type from class
@@ -36,7 +41,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 			out = parserContext.getDefinitionDomain().addEntity(entity, parserContext.getLocalReferenceBase());
 
 			//parse entity content
-			this.parseDefinitionContent(out, jsonObj, parserContext);
+			this.parseDefinitionContent(out, jsonObj, parserContext.getDefinitionDomain());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,5 +54,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		return entity;
 	}
 	
-	protected abstract void parseDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext);
+	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;    }
+
+	protected abstract void parseDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPDomainDefinitionEntity definitionDomain);
 }
