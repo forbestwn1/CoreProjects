@@ -5,12 +5,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplexContainer;
+import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.domain.HAPInfoContainerElementSet;
 
-public class HAPDefinitionExpressionSuite extends HAPDefinitionEntityComplexContainer{
+public class HAPDefinitionExpressionSuite extends HAPDefinitionEntityComplex{
+
+	@HAPAttribute
+	public static String ELEMENT = "element";
 
 	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE;
 	
@@ -21,9 +26,9 @@ public class HAPDefinitionExpressionSuite extends HAPDefinitionEntityComplexCont
 		this.m_constantDefinitions = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 
-	
-	
-	
+	public void addExpressionGroup(HAPInfoContainerElementSet eleInfo) {
+		this.addContainerElementAttribute(ELEMENT, eleInfo);
+	}
 	
 	
 	@Override

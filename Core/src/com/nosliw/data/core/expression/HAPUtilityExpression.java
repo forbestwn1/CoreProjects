@@ -31,7 +31,7 @@ public class HAPUtilityExpression {
 		return globalName.substring((expression.getId()+"_").length());
 	}
 
-	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPExecutableExpressionGroupInSuite expressionGroup) {
+	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPExecutableExpressionGroup expressionGroup) {
 		HAPVariableInfoInStructure allVarInfosInStructure = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(expressionGroup.getValueStructureDefinitionWrapper().getValueStructure());
 
 		Map<String, HAPInfoVariable> allVarInfosInExpression = new LinkedHashMap<String, HAPInfoVariable>(); 

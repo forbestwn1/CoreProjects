@@ -170,13 +170,13 @@ public class HAPManagerComplexEntity {
 		Map<String, HAPContainerEntity> containerAttributes = complexEntityDef.getContainerAttributes();
 		for(String attrName : containerAttributes.keySet()) {
 			HAPContainerEntity container = containerAttributes.get(attrName);
-			List<HAPInfoContainerElement> eleInfos = container.getElements();
+			List<HAPInfoContainerElement> eleInfos = container.getAllElementsInfo();
 			for(HAPInfoContainerElement eleInfo : eleInfos) {
 				HAPIdEntityInDomain eleId = eleInfo.getElementId();
 				HAPInfoDefinitionEntityInDomain eleEntityInfo = defDomain.getEntityInfo(eleId);
 				if(eleEntityInfo.isComplexEntity()) {
 					HAPIdEntityInDomain eleEntityExeId = buildExecutableTree(eleId, processContext);
-					HAPInfoContainerElement exeEleInfo = eleInfo.cloneElementInfo();
+					HAPInfoContainerElement exeEleInfo = eleInfo.cloneContainerElementInfo();
 					exeEleInfo.setElementId(eleEntityExeId);
 					complexEntityExe.addContainerAttributeElementComplex(attrName, exeEleInfo);
 				}

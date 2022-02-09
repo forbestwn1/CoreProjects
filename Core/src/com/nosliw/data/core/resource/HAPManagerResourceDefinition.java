@@ -8,8 +8,11 @@ import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPDefinitionResourceComplex;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
 import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 
 public class HAPManagerResourceDefinition {
@@ -22,8 +25,8 @@ public class HAPManagerResourceDefinition {
 		this.m_dynamicResourceManager = dynamicResourceMan;
 	}
 
-	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId) {
-		return getResourceDefinition(resourceId, null);
+	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId, HAPDomainDefinitionEntity entityDomain) {
+		return getResourceDefinition(resourceId, entityDomain, null);
 	}
 
 	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId, HAPDomainDefinitionEntity entityDomain, HAPLocalReferenceBase localRefBase) {
@@ -44,21 +47,15 @@ public class HAPManagerResourceDefinition {
 			HAPResourceIdEmbeded embededId = (HAPResourceIdEmbeded)resourceId;
 			//get parent resource def first
 			HAPResourceDefinition parentResourceDef = this.getResourceDefinition(embededId.getParentResourceId(), entityDomain, localRefBase);
+			HAPInfoDefinitionEntityInDomain parentEntityInfo = entityDomain.getEntityInfo(parentResourceDef.getEntityId());
+			HAPDefinitionEntityInDomain parentEntity = parentEntityInfo.getEntity();
 			//get child resource by path
-			HAPResourceDefinitionOrId defOrId = parentResourceDef.getChild(embededId.getPath());
-			if(HAPConstantShared.REFERENCE.equals(defOrId.getEntityOrReferenceType())) {
-				//resource id
-				out = this.getResourceDefinition((HAPResourceId)defOrId, entityDomain, parentResourceDef.getLocalReferenceBase());
-			}
-			else {
-				//resource def
-				out = (HAPResourceDefinition)defOrId;
-				out.setLocalReferenceBase(parentResourceDef.getLocalReferenceBase());
-			}
+			HAPIdEntityInDomain entityId = HAPUtilityDomain.getEntityDescent(parentEntityInfo.getEntityId(), embededId.getPath(), entityDomain);
+			out.setEntityId(entityId);
 		}
 		else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
-			HAPResourceIdDynamic dynamicResourceId = (HAPResourceIdDynamic)resourceId;
-			out = this.m_dynamicResourceManager.buildResource(dynamicResourceId.getBuilderId(), dynamicResourceId.getParms());
+//			HAPResourceIdDynamic dynamicResourceId = (HAPResourceIdDynamic)resourceId;
+//			out = this.m_dynamicResourceManager.buildResource(dynamicResourceId.getBuilderId(), dynamicResourceId.getParms());
 		} 
 		
 //		if(out instanceof HAPWithAttachment) {

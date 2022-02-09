@@ -61,10 +61,14 @@ public class HAPDomainDefinitionEntity{
 	//complex entity tree root
 	public Set<HAPIdEntityInDomain> getRootComplexEntity(){     }
 	
-	public HAPIdEntityInDomain addEntity(HAPDefinitionEntityInDomain entity, HAPLocalReferenceBase m_basePath) {
+	public HAPIdEntityInDomain addEntity(HAPDefinitionEntityInDomain entity, HAPLocalReferenceBase basePath) {
 		
 	}
-	
+
+	public HAPIdEntityInDomain addEntity(HAPDefinitionEntityInDomain entity, HAPInfoDefinitionEntityInDomain entityInfo) {
+		
+	}
+
 	public HAPInfoDefinitionEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {
 		
 	}

@@ -6,7 +6,7 @@ import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
 
 //related information related with complex entity
-public class HAPInfoEntity {
+public class HAPInfoEntityComplex {
 
 	private HAPDefinitionEntityComplex m_definition;
 	private HAPExecutableEntityComplex m_executable;

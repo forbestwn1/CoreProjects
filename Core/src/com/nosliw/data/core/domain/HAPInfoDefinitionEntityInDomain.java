@@ -14,6 +14,9 @@ public class HAPInfoDefinitionEntityInDomain {
 	//alias for this entity
 	private Set<String> m_alias;
 	
+	//for id from external system
+	private String m_globalId;
+	
 	private HAPIdEntityInDomain m_entityId;
 
 	public HAPDefinitionEntityInDomain getEntity() {     return this.m_entity;     }
@@ -23,4 +26,6 @@ public class HAPInfoDefinitionEntityInDomain {
 	public boolean isComplexEntity() {   return false;   }
 	
 	public HAPIdEntityInDomain getEntityId() {    return this.m_entityId;     }
+
+	public String getGlobalId() {    return this.m_globalId;    }
 }

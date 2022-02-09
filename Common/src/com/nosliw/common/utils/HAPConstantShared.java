@@ -811,4 +811,9 @@ public class HAPConstantShared {
 		public static final int VALUESTRUCTUREPART_PRIORITY_FROMPARENT = 10;
 
 
+
+		public static final String ENTITYCONTAINER_TYPE_SET = "set";
+		public static final String ENTITYCONTAINER_TYPE_LIST = "list";
+
+
 }

@@ -19,9 +19,12 @@ public class HAPConfigureParentRelationComplex {
 	
 	//attachment merge
 	public HAPConfigureComplexRelationAttachment getAttachmentRelationMode() {   return this.m_attachmentMode;    }
+	public void setAttachmentRelationMode(HAPConfigureComplexRelationAttachment attachmentRelationConfigure) {   this.m_attachmentMode = attachmentRelationConfigure;   }
 	
 	//info merge
 	public HAPConfigureComplexRelationInfo getInfoRelationMode() {    return this.m_infoMode;    }
+	public void setInfoRelationMode(HAPConfigureComplexRelationInfo infoRelationConfigure) {    this.m_infoMode = infoRelationConfigure;     }
 	
 	public HAPConfigureComplexRelationValueStructure getValueStructureRelationMode() {   return this.m_valueStructureConfigure;    }
+	public void setValueStructureRelationMode(HAPConfigureComplexRelationValueStructure valueStructureConfigure) {    this.m_valueStructureConfigure = valueStructureConfigure;    }
 }

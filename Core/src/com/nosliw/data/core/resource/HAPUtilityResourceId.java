@@ -131,7 +131,7 @@ public class HAPUtilityResourceId {
 					HAPErrorUtility.invalid("Cannot find module resource " + resourceId.getId());
 				}
 			}
-			return new HAPInfoResourceLocation(file, basePath);
+			return new HAPInfoResourceLocation(file, new HAPLocalReferenceBase(basePath));
 		}
 	}
 	

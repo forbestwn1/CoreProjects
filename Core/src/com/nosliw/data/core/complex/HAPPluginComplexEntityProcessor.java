@@ -6,7 +6,7 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 public interface HAPPluginComplexEntityProcessor {
 
 	//process definition
-	HAPIdEntityInDomain process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext);
+	void process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext);
 
 	//new executable
 	HAPExecutableEntityComplex newExecutable();

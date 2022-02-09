@@ -3,18 +3,10 @@ package com.nosliw.data.core.resource;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.common.HAPWithValueStructure;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
-import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
-import com.nosliw.data.core.complex.valuestructure.HAPUtilityComplexValueStructure;
-import com.nosliw.data.core.complex.valuestructure.HAParserComponentValueStructure;
 import com.nosliw.data.core.component.HAPLocalReferenceBase;
-import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoComplexEntityDefinition;
 import com.nosliw.data.core.domain.HAPManagerDomainEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -59,35 +51,35 @@ public class HAPPluginResourceDefinitionImpSimple implements HAPPluginResourceDe
 	}
 
 	
-	@Override
-	public HAPIdEntityInDomain parseResourceEntity(Object content, HAPDomainDefinitionEntity entityDomain, HAPLocalReferenceBase localRefBase) {
-		JSONObject jsonObj = null;
-		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
-		else if(content instanceof String)  jsonObj = new JSONObject(content);
-		
-		return this.parseJson(jsonObj, entityDomain, localRefBase);
-	}
-
-	protected HAPIdEntityInDomain addComplexEntity(HAPInfoComplexEntityDefinition complexEntityInfo, JSONObject entityJsonObj, HAPDomainDefinitionEntity definitionDomain) {
-	
-		HAPDefinitionEntityComplex complexResourceDef = complexEntityInfo.getComplexEntity();
-		
-		//entity info
-		complexResourceDef.buildEntityInfoByJson(entityJsonObj);
-		
-		//parse attachment
-		JSONObject pageInfoObj = entityJsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
-		if(pageInfoObj!=null) {
-			HAPUtilityAttachment.parseDefinition(pageInfoObj, complexResourceDef.getAttachmentContainer());
-		}
-		
-		//value structure
-		HAPComplexValueStructure valueStructureComplex = new HAPComplexValueStructure();
-		JSONObject valueStructureJsonObj = entityJsonObj.optJSONObject(HAPWithValueStructure.VALUESTRUCTURE);
-		HAPUtilityComplexValueStructure.setValueStructureDefault(valueStructureComplex, HAParserComponentValueStructure.parseComponentValueStructure(valueStructureJsonObj, complexResourceDef.getValueStructureTypeIfNotDefined()));
-		
-		return definitionDomain.addComplexEntity(complexEntityInfo, valueStructureComplex);
-	}
+//	@Override
+//	public HAPIdEntityInDomain parseResourceEntity(Object content, HAPDomainDefinitionEntity entityDomain, HAPLocalReferenceBase localRefBase) {
+//		JSONObject jsonObj = null;
+//		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
+//		else if(content instanceof String)  jsonObj = new JSONObject(content);
+//		
+//		return this.parseJson(jsonObj, entityDomain, localRefBase);
+//	}
+//
+//	protected HAPIdEntityInDomain addComplexEntity(HAPInfoComplexEntityDefinition complexEntityInfo, JSONObject entityJsonObj, HAPDomainDefinitionEntity definitionDomain) {
+//	
+//		HAPDefinitionEntityComplex complexResourceDef = complexEntityInfo.getComplexEntity();
+//		
+//		//entity info
+//		complexResourceDef.buildEntityInfoByJson(entityJsonObj);
+//		
+//		//parse attachment
+//		JSONObject pageInfoObj = entityJsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
+//		if(pageInfoObj!=null) {
+//			HAPUtilityAttachment.parseDefinition(pageInfoObj, complexResourceDef.getAttachmentContainer());
+//		}
+//		
+//		//value structure
+//		HAPComplexValueStructure valueStructureComplex = new HAPComplexValueStructure();
+//		JSONObject valueStructureJsonObj = entityJsonObj.optJSONObject(HAPWithValueStructure.VALUESTRUCTURE);
+//		HAPUtilityComplexValueStructure.setValueStructureDefault(valueStructureComplex, HAParserComponentValueStructure.parseComponentValueStructure(valueStructureJsonObj, complexResourceDef.getValueStructureTypeIfNotDefined()));
+//		
+//		return definitionDomain.addComplexEntity(complexEntityInfo, valueStructureComplex);
+//	}
 	
 	
 }

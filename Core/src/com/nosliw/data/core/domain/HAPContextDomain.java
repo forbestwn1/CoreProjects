@@ -40,7 +40,7 @@ public class HAPContextDomain {
 		
 	}
 
-	public HAPIdEntityInDomain getExecutableIdByDefinitionId(HAPIdEntityInDomain executableId) {
+	public HAPIdEntityInDomain getExecutableIdByDefinitionId(HAPIdEntityInDomain definitionEntityId) {
 		
 	}
 	
@@ -49,7 +49,7 @@ public class HAPContextDomain {
 		
 	}
 	
-	public HAPInfoEntity getComplexEntityInfoByExecutableId(HAPIdEntityInDomain executableId){
+	public HAPInfoEntityComplex getComplexEntityInfoByExecutableId(HAPIdEntityInDomain executableId){
 		
 	}
 }

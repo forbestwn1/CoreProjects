@@ -18,7 +18,7 @@ public class HAPResultExecutableEntityInDomain {
 		this.m_executableEntityId = executableEntityId;
 	}
 	
-	public HAPInfoEntity getComplexEntityInfoByExecutableId(){
+	public HAPInfoEntityComplex getComplexEntityInfoByExecutableId(){
 		Triple<HAPDefinitionEntityComplex, HAPExecutableEntityComplex, HAPComplexValueStructure> triple = this.m_domainContext.getComplexEntityInfoByExecutableId(this.m_executableEntityId);
 		return triple;
 	}

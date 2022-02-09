@@ -12,9 +12,9 @@ import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.domain.HAPInfoEntity;
+import com.nosliw.data.core.domain.HAPInfoEntityComplex;
 import com.nosliw.data.core.domain.HAPResultExecutableEntityInDomain;
-import com.nosliw.data.core.expression.HAPExecutableExpressionGroupInSuite;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.expression.HAPUtilityExpressionResource;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -29,7 +29,7 @@ public class HAPExpressionSuiteTest {
 		try {
 			String suite = "test1";
 			String[] ids1 = {"test10", "test11", "test12", "test20", "test21", "test22", "test23", "test24", "test25", "test26"};
-			String[] ids = {"test13"};
+			String[] ids = {"test10"};
 			String[] failure = {"test24"};
 			String testData = "testData1";
 
@@ -42,8 +42,8 @@ public class HAPExpressionSuiteTest {
 				HAPResultExecutableEntityInDomain expressionInDomain = runtimeEnvironment.getExpressionManager().getExecutableComplexEntity(resourceId);
 				
 				//
-				HAPInfoEntity entityInfo = expressionInDomain.getComplexEntityInfoByExecutableId();
-				HAPExecutableExpressionGroupInSuite expresionExecutable = (HAPExecutableExpressionGroupInSuite)entityInfo.getExecutable();
+				HAPInfoEntityComplex entityInfo = expressionInDomain.getComplexEntityInfoByExecutableId();
+				HAPExecutableExpressionGroup expresionExecutable = (HAPExecutableExpressionGroup)entityInfo.getExecutable();
 				HAPDefinitionEntityComplex expressionDef = entityInfo.getDefinition();
 				HAPComplexValueStructure valueStructureComplex = entityInfo.getValueStructureComplex();
 				HAPContainerAttachment attachmentContainer = entityInfo.getAttachmentContainer();

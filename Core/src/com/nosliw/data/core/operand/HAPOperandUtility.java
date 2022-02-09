@@ -22,7 +22,7 @@ import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.expression.HAPExecutableExpression;
-import com.nosliw.data.core.expression.HAPExecutableExpressionGroupInSuite;
+import com.nosliw.data.core.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandUtility {
@@ -324,7 +324,7 @@ public class HAPOperandUtility {
 					}
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-						HAPExecutableExpressionGroupInSuite refExpGroup = (HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression();
+						HAPExecutableExpressionGroup refExpGroup = (HAPExecutableExpressionGroup)referenceOperand.getReferedExpression();
 						Map<String, HAPExecutableExpression> expItems = refExpGroup.getExpressionItems();
 						for(HAPExecutableExpression expItem : expItems.values()) {
 							updateConstantData(expItem.getOperand(), refExpGroup.getDataConstants());
