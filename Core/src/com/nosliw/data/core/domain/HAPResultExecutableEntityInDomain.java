@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
-import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
 
 //
 public class HAPResultExecutableEntityInDomain {

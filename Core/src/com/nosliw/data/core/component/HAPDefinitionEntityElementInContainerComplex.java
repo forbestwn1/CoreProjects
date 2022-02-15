@@ -14,7 +14,7 @@ import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.complex.attachment.HAPAttachment;
 import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.complex.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 //component that defined as element of another container component

@@ -3,10 +3,11 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public abstract class HAPDefinitionEntityInDomain implements HAPEntityOrReference{
+public abstract class HAPDefinitionEntityInDomain extends HAPEntityInfoImp implements HAPEntityOrReference{
 
 	//simple attribute by name
 	private Map<String, HAPIdEntityInDomain> m_attributesSimple;
@@ -63,14 +64,15 @@ public abstract class HAPDefinitionEntityInDomain implements HAPEntityOrReferenc
 		container.addEntityElement(eleInfo);
 	}
 
-	protected void cloneToDefinitionEntityInDomain(HAPDefinitionEntityInDomain entityDefinitionInDomainImp) {
-		entityDefinitionInDomainImp.m_entityType = this.m_entityType;
+	protected void cloneToDefinitionEntityInDomain(HAPDefinitionEntityInDomain entityDefinitionInDomain) {
+		this.cloneToEntityInfo(entityDefinitionInDomain);
+		entityDefinitionInDomain.m_entityType = this.m_entityType;
 		for(String attrName : this.m_attributesSimple.keySet()) {
-			entityDefinitionInDomainImp.m_attributesSimple.put(attrName, this.m_attributesSimple.get(attrName));
+			entityDefinitionInDomain.m_attributesSimple.put(attrName, this.m_attributesSimple.get(attrName));
 		}
 		
 		for(String attrName : this.m_attributeContainer.keySet()) {
-			entityDefinitionInDomainImp.m_attributeContainer.put(attrName, this.m_attributeContainer.get(attrName));
+			entityDefinitionInDomain.m_attributeContainer.put(attrName, this.m_attributeContainer.get(attrName));
 		}
 	}
 }

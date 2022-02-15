@@ -26,4 +26,19 @@ public class HAPInfoDefinitionEntityInDomainComplex extends HAPInfoDefinitionEnt
 	@Override
 	public boolean isComplexEntity() {   return true;   }
 
+	@Override
+	public HAPInfoDefinitionEntityInDomain cloneEntityDefinitionInfo() {
+		HAPInfoDefinitionEntityInDomainComplex out = new HAPInfoDefinitionEntityInDomainComplex();
+		this.cloneToInfoDefinitionEntityInDomain(out);
+		return out;
+	}
+	
+	@Override
+	public void cloneToInfoDefinitionEntityInDomain(HAPInfoDefinitionEntityInDomain out) {
+		super.cloneToInfoDefinitionEntityInDomain(out);
+		if(out instanceof HAPInfoDefinitionEntityInDomainComplex) {
+			this.m_parentId = ((HAPInfoDefinitionEntityInDomainComplex)out).getParentId();
+		}
+	}
+
 }

@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplexImp;
-import com.nosliw.data.core.complex.valuestructure.HAPUtilityComplexValueStructure;
-import com.nosliw.data.core.complex.valuestructure.HAPValueStructureInComponent;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureInComplex;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -30,7 +30,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPDefinitionEntit
 	@Override
 	public HAPResourceId getResourceId() {   return this.m_resourceId;   }
 	
-	public void setDefaultValueStructure(HAPValueStructureInComponent valueStructure) {	HAPUtilityComplexValueStructure.setValueStructureDefault(this, valueStructure);	}
+	public void setDefaultValueStructure(HAPValueStructureInComplex valueStructure) {	HAPUtilityComplexValueStructure.setValueStructureDefault(this, valueStructure);	}
 	
 	@Override
 	public HAPResourceDefinitionOrId getChild(String path) {   return null;    }

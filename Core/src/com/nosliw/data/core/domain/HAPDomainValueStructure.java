@@ -5,11 +5,11 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
-import com.nosliw.data.core.complex.valuestructure.HAPPartComplexValueStructure;
-import com.nosliw.data.core.complex.valuestructure.HAPPartComplexValueStructureGroupWithEntity;
-import com.nosliw.data.core.complex.valuestructure.HAPPartComplexValueStructureSimple;
-import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureGroupWithEntity;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureSimple;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 //all value structure infor in domain

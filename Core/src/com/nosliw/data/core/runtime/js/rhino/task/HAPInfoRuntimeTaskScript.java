@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.expression.HAPExecutableExpression;
+import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.js.util.script.expressionscrip.HAPScriptFunctionInfo;
 import com.nosliw.data.core.runtime.js.util.script.expressionscrip.HAPUtilityScriptForExecuteJSScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;

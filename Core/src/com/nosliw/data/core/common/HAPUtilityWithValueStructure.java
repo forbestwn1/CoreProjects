@@ -1,8 +1,8 @@
 package com.nosliw.data.core.common;
 
-import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
-import com.nosliw.data.core.complex.valuestructure.HAPPartComplexValueStructureSimple;
-import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureSimple;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPUtilityWithValueStructure {

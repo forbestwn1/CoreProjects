@@ -5,7 +5,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.data.core.complex.valuestructure.HAPInfoEntityReference;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoEntityReference;
 import com.nosliw.data.core.resource.HAPParserResourceEntityImp;
 import com.nosliw.data.core.structure.HAPParserStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;

@@ -9,9 +9,9 @@ import com.nosliw.data.core.complex.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.complex.attachment.HAPInfoAttachment;
 import com.nosliw.data.core.complex.attachment.HAPResultProcessAttachmentReference;
-import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
 import com.nosliw.data.core.domain.HAPContextDomain;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 

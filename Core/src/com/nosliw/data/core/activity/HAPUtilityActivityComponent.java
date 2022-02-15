@@ -9,8 +9,8 @@ import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.attachment.HAPAttachment;
 import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityActivityComponent {

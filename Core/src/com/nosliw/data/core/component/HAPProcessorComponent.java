@@ -1,15 +1,15 @@
 package com.nosliw.data.core.component;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.complex.valuestructure.HAPProcessorValueStructureInComponent;
-import com.nosliw.data.core.complex.valuestructure.HAPValueStructureInComponent;
-import com.nosliw.data.core.complex.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.command.HAPExecutableCommand;
 import com.nosliw.data.core.component.command.HAPProcessorCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPProcessorValueStructureInComponent;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureInComplex;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
@@ -26,7 +26,7 @@ public class HAPProcessorComponent {
 		HAPWrapperValueStructure valueStructureWrapper = definition.getValueStructureWrapper();
 		
 		//expand reference in value structure
-		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.expandReference((HAPValueStructureInComponent)valueStructureWrapper.getValueStructure(), processContext));
+		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.expandReference((HAPValueStructureInComplex)valueStructureWrapper.getValueStructure(), processContext));
 
 		//
 		normalizeService(definition, processContext.getRuntimeEnvironment());

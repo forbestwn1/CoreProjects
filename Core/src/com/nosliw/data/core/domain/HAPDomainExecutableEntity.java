@@ -19,9 +19,8 @@ public class HAPDomainExecutableEntity {
 	//id generator
 	private HAPGeneratorId m_idGenerator;
 	
-	public HAPDomainExecutableEntity(HAPGeneratorId idGenerator, HAPDomainValueStructure valueStructureDomain) {
+	public HAPDomainExecutableEntity(HAPGeneratorId idGenerator) {
 		this.m_idGenerator = idGenerator;
-		this.m_valueStructureDomain = valueStructureDomain;
 	}
 	
 	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity) {

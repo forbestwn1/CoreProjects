@@ -1,6 +1,6 @@
 package com.nosliw.data.core.valuestructure;
 
-import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
 
 public class HAPTreeNodeValueStructure {
 

@@ -6,11 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.valuestructure.HAPComplexValueStructure;
-import com.nosliw.data.core.complex.valuestructure.HAPInfoPartSimple;
-import com.nosliw.data.core.complex.valuestructure.HAPProcessorValueStructureInComponent;
-import com.nosliw.data.core.complex.valuestructure.HAPUtilityComplexValueStructure;
-import com.nosliw.data.core.complex.valuestructure.HAPValueStructureInComponent;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPContextDomain;
@@ -22,6 +17,11 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoContainerElement;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPProcessorValueStructureInComponent;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureInComplex;
 
 public class HAPManagerComplexEntity {
 
@@ -103,7 +103,7 @@ public class HAPManagerComplexEntity {
 					HAPComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(complexEntityExe.getValueStructureComplexId());
 					List<HAPInfoPartSimple> simpleValueStructureParts = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
 					for(HAPInfoPartSimple simpleValueStructurePart : simpleValueStructureParts) {
-						HAPProcessorValueStructureInComponent.expandReference((HAPValueStructureInComponent)simpleValueStructurePart.getSimpleValueStructurePart().getValueStructure(), processContext);
+						HAPProcessorValueStructureInComponent.expandReference((HAPValueStructureInComplex)simpleValueStructurePart.getSimpleValueStructurePart().getValueStructure(), processContext);
 					}
 				}
 

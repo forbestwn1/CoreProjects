@@ -2,6 +2,7 @@ package com.nosliw.data.core.domain;
 
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 
@@ -20,8 +21,12 @@ public class HAPContextDomain {
 	//connection between executable entity to definition entity
 	private Map<String, String> m_definitionIdByExecutableId;
 
+	private HAPGeneratorId m_idGenerator;
+	
 	public HAPContextDomain() {
-		
+		this.m_idGenerator = new HAPGeneratorId();
+		this.m_definitionDomain = new HAPDomainDefinitionEntity(this.m_idGenerator);
+		this.m_executableDomain = new HAPDomainExecutableEntity(this.m_idGenerator);
 	}
 	
 	public HAPDomainValueStructure getValueStructureDomain() {   return null;    }
